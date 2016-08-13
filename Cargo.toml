@@ -1,0 +1,6 @@
+[workspace]
+members = [
+    "vk_loader",
+    "ash",
+    "examples",
+]

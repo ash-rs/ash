@@ -1,0 +1,371 @@
+#![allow(dead_code)]
+use std::ptr;
+use std::ffi::*;
+
+use std::error;
+use std::fmt;
+use std::mem;
+use std::sync::Arc;
+
+use vk_loader as vk;
+use feature;
+use load;
+use extensions::*;
+use std::os::raw::*;
+use std::cell::Cell;
+use surface;
+
+#[derive(Clone)]
+pub struct PhysicalDevice {
+    ip: vk::InstancePointers,
+    handle: vk::PhysicalDevice,
+}
+
+pub struct DebugCallback {
+    handle: vk::DebugReportCallbackEXT,
+    f: *mut Fn(String),
+}
+
+impl PhysicalDevice {
+    pub fn has_surface_support(&self, index: u32, surface: &Surface) -> bool {
+        unsafe {
+            let mut output: u32 = mem::uninitialized();
+            self.ip.GetPhysicalDeviceSurfaceSupportKHR(self.handle,
+                                                       index,
+                                                       surface.handle,
+                                                       &mut output);
+            output != 0
+        }
+    }
+
+    pub fn get_physical_device_infos(&self) -> PhysicalDeviceInfos {
+        PhysicalDeviceInfos {
+            properties: self.get_physical_device_properties(),
+            queue_families: self.get_queue_families(),
+            memory: self.get_memory_properties(),
+            features: self.get_device_features(),
+        }
+    }
+
+    pub fn get_physical_device_properties(&self) -> vk::PhysicalDeviceProperties {
+        unsafe {
+            let mut device_prop: vk::PhysicalDeviceProperties = mem::uninitialized();
+            self.ip.GetPhysicalDeviceProperties(self.handle, &mut device_prop);
+            device_prop
+        }
+    }
+
+    pub fn get_queue_families(&self) -> Vec<vk::QueueFamilyProperties> {
+        unsafe {
+            let mut queue_count = 0;
+            self.ip
+                .GetPhysicalDeviceQueueFamilyProperties(self.handle,
+                                                        &mut queue_count,
+                                                        ptr::null_mut());
+            let mut queue_families_vec = Vec::with_capacity(queue_count as usize);
+            self.ip
+                .GetPhysicalDeviceQueueFamilyProperties(self.handle,
+                                                        &mut queue_count,
+                                                        queue_families_vec.as_mut_ptr());
+            queue_families_vec.set_len(queue_count as usize);
+            queue_families_vec
+        }
+    }
+
+    pub fn get_memory_properties(&self) -> vk::PhysicalDeviceMemoryProperties {
+        unsafe {
+            let mut output = mem::uninitialized();
+            self.ip.GetPhysicalDeviceMemoryProperties(self.handle, &mut output);
+            output
+        }
+    }
+
+    pub fn get_device_features(&self) -> feature::Features {
+        let available_features: vk::PhysicalDeviceFeatures = unsafe {
+            let mut output = mem::uninitialized();
+            self.ip.GetPhysicalDeviceFeatures(self.handle, &mut output);
+            output
+        };
+        feature::Features::from(available_features)
+    }
+
+    pub fn create_device(&self,
+                         present: u32,
+                         ext: &DeviceExtension,
+                         features: &feature::Features)
+                         -> Device {
+        let f = vk::PhysicalDeviceFeatures::from(*features);
+        let priorities = [1.0];
+        let queue_info = vk::DeviceQueueCreateInfo {
+            sType: vk::STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO,
+            pNext: ptr::null(),
+            flags: 0,
+            queueFamilyIndex: present,
+            pQueuePriorities: priorities.as_ptr(),
+            queueCount: priorities.len() as u32,
+        };
+
+        let create_info = vk::DeviceCreateInfo {
+            sType: vk::STRUCTURE_TYPE_DEVICE_CREATE_INFO,
+            pNext: ptr::null(),
+            flags: 0,
+            queueCreateInfoCount: 1,
+            pQueueCreateInfos: &queue_info,
+            enabledLayerCount: 0,
+            ppEnabledLayerNames: ptr::null(),
+            enabledExtensionCount: 0,
+            ppEnabledExtensionNames: ptr::null(),
+            pEnabledFeatures: ptr::null(),
+        };
+
+        let mut vk_device = unsafe { mem::uninitialized() };
+        unsafe {
+            assert!(self.ip.CreateDevice(self.handle, &create_info, ptr::null(), &mut vk_device) ==
+                    0,
+                    "device");
+        }
+        let dp = vk::DevicePointers::load(|name| {
+            unsafe { self.ip.GetDeviceProcAddr(vk_device, name.as_ptr()) as *const _ }
+        });
+        Device {
+            dp: dp,
+            device: vk_device,
+        }
+    }
+}
+
+pub struct PhysicalDeviceInfos {
+    pub properties: vk::PhysicalDeviceProperties,
+    pub queue_families: Vec<vk::QueueFamilyProperties>,
+    pub memory: vk::PhysicalDeviceMemoryProperties,
+    pub features: feature::Features,
+}
+
+impl PhysicalDeviceInfos {
+    fn has_surface_support(&self) -> bool {
+        true
+    }
+}
+
+pub struct Instance {
+    pub instance: vk::Instance,
+    pub ip: vk::InstancePointers,
+    callback: Option<DebugCallback>,
+}
+
+unsafe impl Send for Instance {}
+unsafe impl Sync for Instance {}
+
+impl Drop for Instance {
+    fn drop(&mut self) {
+        unsafe {
+            if let Some(ref callback) = self.callback {
+                self.ip.DestroyDebugReportCallbackEXT(self.instance, callback.handle, ptr::null());
+                Box::from_raw(callback.f);
+            }
+            self.ip.DestroyInstance(self.instance, ptr::null());
+        }
+    }
+}
+
+pub struct ApplicationInfo {
+    pub name: String,
+}
+
+pub struct Surface<'r> {
+    instance: &'r Instance,
+    handle: vk::SurfaceKHR,
+}
+impl<'r> Drop for Surface<'r> {
+    fn drop(&mut self) {
+        unsafe {
+            self.instance.ip.DestroySurfaceKHR(self.instance.instance, self.handle, ptr::null());
+        }
+    }
+}
+
+impl Instance {
+    pub fn create_surface<S: surface::Surface>(&self, s: &S) -> Surface {
+        Surface {
+            instance: self,
+            handle: s.create_surface(self),
+        }
+    }
+
+    pub fn extenstion_properties() -> InstanceExtension {
+        let entry_points = load::entry_points().unwrap();
+        let extension_props = unsafe {
+            let mut num = 0;
+            entry_points.EnumerateInstanceExtensionProperties(ptr::null(), &mut num, ptr::null_mut());
+            let mut data = Vec::with_capacity(num as usize);
+            entry_points.EnumerateInstanceExtensionProperties(ptr::null(), &mut num, data.as_mut_ptr());
+            data.set_len(num as usize);
+            InstanceExtensionProperties { ext_props: data }
+        };
+        extension_props.into()
+    }
+    pub fn device_extension_properties(&self, device: vk::PhysicalDevice) -> DeviceExtension {
+        let extension_props = unsafe {
+            let mut num = 0;
+            self.ip
+                .EnumerateDeviceExtensionProperties(device, ptr::null(), &mut num, ptr::null_mut());
+            let mut data = Vec::with_capacity(num as usize);
+            self.ip.EnumerateDeviceExtensionProperties(device,
+                                                       ptr::null(),
+                                                       &mut num,
+                                                       data.as_mut_ptr());
+            data.set_len(num as usize);
+            DeviceExtensionProperties { ext_props: data }
+        };
+        extension_props.into()
+    }
+
+    pub fn new<F: Fn(String) + 'static>(app_info: &ApplicationInfo,
+                                        extensions: &InstanceExtension,
+                                        f: F)
+                                        -> Instance {
+        let entry_points = load::entry_points().unwrap();
+
+        unsafe {
+            let mut num = 0;
+            entry_points.EnumerateInstanceLayerProperties(&mut num, ptr::null_mut());
+
+            let mut v = Vec::with_capacity(num as usize);
+            entry_points.EnumerateInstanceLayerProperties(&mut num, v.as_mut_ptr());
+            v.set_len(num as usize);
+
+            for p in v {
+                // println!("layer {}", CStr::from_ptr(p.layerName.as_ptr()).to_str().unwrap());
+            }
+        }
+        let layername = CString::new("VK_LAYER_LUNARG_standard_validation").unwrap();
+        let layer = [layername.as_ptr()];
+
+        let c = CString::new(app_info.name.clone()).unwrap();
+        let raw_name = c.as_ptr();
+        let appinfo = vk::ApplicationInfo {
+            pApplicationName: raw_name,
+            sType: vk::STRUCTURE_TYPE_APPLICATION_INFO,
+            pNext: ptr::null(),
+            applicationVersion: 0,
+            pEngineName: raw_name,
+            engineVersion: 0,
+            apiVersion: 0,
+        };
+
+        let extension_list = extensions.extension_list();
+        let extension_list_raw =
+            extension_list.iter().map(|extension| extension.as_ptr()).collect::<Vec<_>>();
+        let create_info = vk::InstanceCreateInfo {
+            sType: vk::STRUCTURE_TYPE_INSTANCE_CREATE_INFO,
+            pApplicationInfo: &appinfo,
+            pNext: ptr::null(),
+            ppEnabledLayerNames: layer.as_ptr(),
+            enabledLayerCount: layer.len() as u32,
+            ppEnabledExtensionNames: extension_list_raw.as_ptr(),
+            enabledExtensionCount: extension_list_raw.len() as u32,
+            flags: 0,
+        };
+
+        let mut instance: vk::Instance = unsafe { mem::uninitialized() };
+        unsafe {
+            entry_points.CreateInstance(&create_info, ptr::null(), &mut instance);
+        }
+        let vk: vk::InstancePointers = {
+            let f = load::static_functions().unwrap();
+            vk::InstancePointers::load(|name| unsafe {
+                mem::transmute(f.GetInstanceProcAddr(instance, name.as_ptr()))
+            })
+        };
+        extern "system" fn debug_callback<F: Fn(String)>(flags: vk::DebugReportFlagsEXT,
+                                                         obj: vk::DebugReportObjectTypeEXT,
+                                                         u: u64,
+                                                         u1: usize,
+                                                         i: i32,
+                                                         chars: *const c_char,
+                                                         chars1: *const c_char,
+                                                         data: *mut c_void)
+                                                         -> u32 {
+            unsafe {
+                let f = &*(data as *mut F);
+                f(CStr::from_ptr(chars).to_str().unwrap().to_owned());
+                f(CStr::from_ptr(chars1).to_str().unwrap().to_owned());
+            }
+            1
+        }
+        let raw_boxed_f = Box::into_raw(Box::new(f));
+        let debug = vk::DebugReportCallbackCreateInfoEXT {
+            sType: 1000011000,
+            pNext: ptr::null(),
+            flags: vk::DEBUG_REPORT_ERROR_BIT_EXT | vk::DEBUG_REPORT_WARNING_BIT_EXT,
+            pfnCallback: debug_callback::<F>,
+            pUserData: raw_boxed_f as *mut c_void,
+        };
+        let callback = unsafe {
+            let mut callback: vk::DebugReportCallbackEXT = mem::uninitialized();
+
+            assert!(vk.CreateDebugReportCallbackEXT(instance,
+                                                    &debug,
+                                                    ptr::null(),
+                                                    &mut callback) == 0,
+                    "Debug");
+
+            DebugCallback {
+                f: raw_boxed_f,
+                handle: callback,
+            }
+        };
+        Instance {
+            ip: vk,
+            instance: instance,
+            callback: Some(callback),
+        }
+    }
+
+    pub fn get_pysical_devices(&self) -> Vec<PhysicalDevice> {
+        unsafe {
+            let mut num = 0;
+            self.ip
+                .EnumeratePhysicalDevices(self.instance, &mut num, ptr::null_mut());
+            let mut physical_devices = Vec::<vk::PhysicalDevice>::with_capacity(num as usize);
+            self.ip
+                .EnumeratePhysicalDevices(self.instance, &mut num, physical_devices.as_mut_ptr());
+            physical_devices.set_len(num as usize);
+            physical_devices.into_iter()
+                .map(|handle| {
+                    PhysicalDevice {
+                        ip: self.ip.clone(),
+                        handle: handle,
+                    }
+                })
+                .collect()
+        }
+    }
+}
+
+pub struct Queue {
+    handle: vk::Queue,
+}
+
+pub struct Device {
+    dp: vk::DevicePointers,
+    device: vk::Device,
+}
+
+impl Device {
+    pub fn get_device_queue(&self, family: u32, index: u32) -> Queue {
+        unsafe {
+            let mut queue = mem::uninitialized();
+            self.dp.GetDeviceQueue(self.device, family, index, &mut queue);
+            Queue { handle: queue }
+        }
+    }
+}
+
+impl Drop for Device {
+    fn drop(&mut self) {
+        unsafe {
+            self.dp.DestroyDevice(self.device, ptr::null());
+        }
+    }
+}
