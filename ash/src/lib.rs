@@ -9,3 +9,4 @@ pub mod extensions;
 pub mod surface;
 pub mod instance;
 pub mod feature;
+pub mod device;

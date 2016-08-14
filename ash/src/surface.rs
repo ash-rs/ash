@@ -4,11 +4,11 @@ use std::mem;
 use instance::Instance;
 use std::ptr;
 use std::os::raw::c_void;
-pub trait Surface {
+pub trait VulkanSurface {
     fn create_surface(&self, inst: &Instance) -> vk::SurfaceKHR;
 }
 
-impl Surface for Window {
+impl VulkanSurface for Window {
     fn create_surface(&self, inst: &Instance) -> vk::SurfaceKHR {
         unsafe {
             let x11_display = self.glfw.get_x11_display();
@@ -23,6 +23,18 @@ impl Surface for Window {
             };
             inst.ip.CreateXlibSurfaceKHR(inst.instance, &create_info, ptr::null(), &mut surface);
             surface
+        }
+    }
+}
+
+pub struct Surface<'r> {
+    pub instance: &'r Instance,
+    pub handle: vk::SurfaceKHR,
+}
+impl<'r> Drop for Surface<'r> {
+    fn drop(&mut self) {
+        unsafe {
+            self.instance.ip.DestroySurfaceKHR(self.instance.instance, self.handle, ptr::null());
         }
     }
 }
