@@ -4,6 +4,7 @@ use std::ptr;
 use feature;
 use surface;
 use extensions::*;
+
 #[derive(Clone)]
 pub struct PhysicalDevice {
     pub ip: vk::InstancePointers,
@@ -11,6 +12,30 @@ pub struct PhysicalDevice {
 }
 
 impl PhysicalDevice {
+    pub fn get_surface_formats(&self, surface: surface::Surface) -> Vec<surface::SurfaceFormat> {
+        unsafe {
+            let mut num = mem::uninitialized();
+            self.ip.GetPhysicalDeviceSurfaceFormatsKHR(self.handle,
+                                                       surface.handle,
+                                                       &mut num,
+                                                       ptr::null_mut());
+            let mut formats = Vec::with_capacity(num as usize);
+            self.ip.GetPhysicalDeviceSurfaceFormatsKHR(self.handle,
+                                                       surface.handle,
+                                                       &mut num,
+                                                       formats.as_mut_ptr());
+            formats.set_len(num as usize);
+            formats.into_iter()
+                .map(|f| {
+                    surface::SurfaceFormat {
+                        format: surface::Format::from_number(f.format)
+                            .expect("Unable to create a Format"),
+                    }
+                })
+                .collect()
+        }
+    }
+
     pub fn has_surface_support(&self, index: u32, surface: &surface::Surface) -> bool {
         unsafe {
             let mut output: u32 = mem::uninitialized();

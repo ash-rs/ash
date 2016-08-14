@@ -47,7 +47,6 @@ pub struct ApplicationInfo {
     pub name: String,
 }
 
-
 impl Instance {
     pub fn create_surface<S: surface::VulkanSurface>(&self, s: &S) -> surface::Surface {
         surface::Surface {

@@ -9,6 +9,8 @@ use ash::extensions::*;
 use glfw::*;
 use std::sync::Arc;
 use std::thread;
+use ash::device::*;
+
 fn main() {
     let mut glfw = glfw::init(glfw::FAIL_ON_ERRORS).unwrap();
 
@@ -40,6 +42,5 @@ fn main() {
         .nth(0)
         .expect("Unable to find suitable device") as u32;
     let ldevice = pdevice.create_device(index, &dext, &features);
-
-    let q = ldevice.get_device_queue(index, 0);
+    let queue = ldevice.get_device_queue(index, 0);
 }
