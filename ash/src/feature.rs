@@ -1,17 +1,17 @@
 #![allow(dead_code)]
 use vk_loader as vk;
 use std::fmt;
-macro_rules! features{
-    ($($name: ident => $vk: ident,)+) => {
+macro_rules! c_enum{
+    ($struct_name: ident, ($($from_type: tt)*), $($name: ident => $vk: ident,)+) => {
         #[derive(Debug, Copy, Clone)]
-        pub struct Features{
+        pub struct $struct_name{
             $(
                 pub $name: bool,
             )+
         }
-        impl Features{
-            pub fn empty() -> Features{
-                Features{
+        impl $struct_name{
+            pub fn empty() -> $struct_name{
+                $struct_name{
                     $(
                         $name: false,
                     )+
@@ -23,9 +23,9 @@ macro_rules! features{
         }
 
         //TODO: Probably just impl From with a cast?
-        impl From<vk::PhysicalDeviceFeatures> for Features{
-            fn from(features: vk::PhysicalDeviceFeatures) -> Features {
-                Features{
+        impl From<$($from_type)*> for $struct_name{
+            fn from(features: $($from_type)*) -> $struct_name {
+                $struct_name{
                     $(
                         $name: features.$vk != 0,
                     )+
@@ -33,9 +33,9 @@ macro_rules! features{
             }
         }
 
-        impl From<Features> for vk::PhysicalDeviceFeatures {
-            fn from(features: Features) -> vk::PhysicalDeviceFeatures {
-                vk::PhysicalDeviceFeatures{
+        impl From<$struct_name> for $($from_type)* {
+            fn from(features: $struct_name) -> $($from_type)* {
+                $($from_type)*{
                     $(
                         $vk: features.$name as u32,
                     )+
@@ -43,7 +43,61 @@ macro_rules! features{
             }
         }
 
-        impl fmt::Display for Features {
+        impl fmt::Display for $struct_name {
+            fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result{
+                $(
+                    if self.$name {
+                        try!(writeln!(f, "{},", stringify!($name)));
+                    }
+                )+
+                writeln!(f, "")
+            }
+        }
+    }
+}
+macro_rules! features{
+    ($struct_name: ident, ($($from_type: tt)*), $($name: ident => $vk: ident,)+) => {
+        #[derive(Debug, Copy, Clone)]
+        pub struct $struct_name{
+            $(
+                pub $name: bool,
+            )+
+        }
+        impl $struct_name{
+            pub fn empty() -> $struct_name{
+                $struct_name{
+                    $(
+                        $name: false,
+                    )+
+                }
+            }
+            pub fn subset(&self, other: &Self) -> bool{
+                $((!self.$name | other.$name))&&+
+            }
+        }
+
+        //TODO: Probably just impl From with a cast?
+        impl From<$($from_type)*> for $struct_name{
+            fn from(features: $($from_type)*) -> $struct_name {
+                $struct_name{
+                    $(
+                        $name: features.$vk != 0,
+                    )+
+                }
+            }
+        }
+
+        impl From<$struct_name> for $($from_type)* {
+            fn from(features: $struct_name) -> $($from_type)* {
+                $($from_type)*{
+                    $(
+                        $vk: features.$name as u32,
+                    )+
+                }
+            }
+        }
+
+        impl fmt::Display for $struct_name {
             fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result{
                 $(
                     if self.$name {
@@ -57,6 +111,8 @@ macro_rules! features{
 }
 
 features!{
+    Features,
+    (vk::PhysicalDeviceFeatures),
     robust_buffer_access => robustBufferAccess,
     full_draw_index_uint32 => fullDrawIndexUint32,
     image_cube_array => imageCubeArray,

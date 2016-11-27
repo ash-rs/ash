@@ -10,28 +10,43 @@ use std::sync::Arc;
 use vk_loader as vk;
 use feature;
 use load;
+use fence;
 use extensions::*;
 use std::os::raw::*;
 use std::cell::Cell;
 use surface;
 use device::*;
 
-
 pub struct DebugCallback {
     handle: vk::DebugReportCallbackEXT,
     f: *mut Fn(String),
 }
 
+#[derive(Clone)]
 pub struct Instance {
+    pub inner: Arc<InstanceImpl>,
+}
+
+pub struct InstanceImpl {
     pub instance: vk::Instance,
     pub ip: vk::InstancePointers,
     callback: Option<DebugCallback>,
 }
 
+impl Instance{
+    pub fn handle(&self) -> usize{
+        self.inner.instance
+    }
+
+    pub fn ip(&self) -> &vk::InstancePointers {
+        &self.inner.ip
+    }
+}
+
 unsafe impl Send for Instance {}
 unsafe impl Sync for Instance {}
 
-impl Drop for Instance {
+impl Drop for InstanceImpl {
     fn drop(&mut self) {
         unsafe {
             if let Some(ref callback) = self.callback {
@@ -50,7 +65,7 @@ pub struct ApplicationInfo {
 impl Instance {
     pub fn create_surface<S: surface::VulkanSurface>(&self, s: &S) -> surface::Surface {
         surface::Surface {
-            instance: self,
+            instance: self.clone(),
             handle: s.create_surface(self),
         }
     }
@@ -70,10 +85,10 @@ impl Instance {
     pub fn device_extension_properties(&self, device: vk::PhysicalDevice) -> DeviceExtension {
         let extension_props = unsafe {
             let mut num = 0;
-            self.ip
+            self.inner.ip
                 .EnumerateDeviceExtensionProperties(device, ptr::null(), &mut num, ptr::null_mut());
             let mut data = Vec::with_capacity(num as usize);
-            self.ip.EnumerateDeviceExtensionProperties(device,
+            self.inner.ip.EnumerateDeviceExtensionProperties(device,
                                                        ptr::null(),
                                                        &mut num,
                                                        data.as_mut_ptr());
@@ -179,25 +194,27 @@ impl Instance {
             }
         };
         Instance {
-            ip: vk,
-            instance: instance,
-            callback: Some(callback),
+            inner: Arc::new(InstanceImpl {
+                ip: vk,
+                instance: instance,
+                callback: Some(callback),
+            }),
         }
     }
 
     pub fn get_pysical_devices(&self) -> Vec<PhysicalDevice> {
         unsafe {
             let mut num = 0;
-            self.ip
-                .EnumeratePhysicalDevices(self.instance, &mut num, ptr::null_mut());
+            self.inner.ip
+                .EnumeratePhysicalDevices(self.inner.instance, &mut num, ptr::null_mut());
             let mut physical_devices = Vec::<vk::PhysicalDevice>::with_capacity(num as usize);
-            self.ip
-                .EnumeratePhysicalDevices(self.instance, &mut num, physical_devices.as_mut_ptr());
+            self.inner.ip
+                .EnumeratePhysicalDevices(self.inner.instance, &mut num, physical_devices.as_mut_ptr());
             physical_devices.set_len(num as usize);
             physical_devices.into_iter()
                 .map(|handle| {
                     PhysicalDevice {
-                        ip: self.ip.clone(),
+                        instance: self.clone(),
                         handle: handle,
                     }
                 })

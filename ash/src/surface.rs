@@ -21,40 +21,227 @@ impl VulkanSurface for Window {
                 window: x11_window as *mut c_void,
                 dpy: x11_display as *mut c_void,
             };
-            inst.ip.CreateXlibSurfaceKHR(inst.instance, &create_info, ptr::null(), &mut surface);
+            inst.inner.ip.CreateXlibSurfaceKHR(inst.inner.instance, &create_info, ptr::null(), &mut surface);
             surface
         }
     }
 }
-
+struct SurfaceCapabilities {
+}
 pub struct SurfaceFormat {
-   pub format: Format,
+    pub format: Format,
+    pub color_space: ColorSpace,
 }
 
-pub struct Surface<'r> {
-    pub instance: &'r Instance,
+pub struct Surface {
+    pub instance: Instance,
     pub handle: vk::SurfaceKHR,
 }
-impl<'r> Drop for Surface<'r> {
+
+impl Drop for Surface {
     fn drop(&mut self) {
         unsafe {
-            self.instance.ip.DestroySurfaceKHR(self.instance.instance, self.handle, ptr::null());
+            self.instance.inner.ip.DestroySurfaceKHR(self.instance.inner.instance, self.handle, ptr::null());
         }
     }
 }
 
+#[derive(Copy, Clone)]
+pub enum Format {
+    FormatUndefined,
+    FormatR4g4UnormPack8,
+    FormatR4g4b4a4UnormPack16,
+    FormatB4g4r4a4UnormPack16,
+    FormatR5g6b5UnormPack16,
+    FormatB5g6r5UnormPack16,
+    FormatR5g5b5a1UnormPack16,
+    FormatB5g5r5a1UnormPack16,
+    FormatA1r5g5b5UnormPack16,
+    FormatR8Unorm,
+    FormatR8Snorm,
+    FormatR8Uscaled,
+    FormatR8Sscaled,
+    FormatR8Uint,
+    FormatR8Sint,
+    FormatR8Srgb,
+    FormatR8G8Unorm,
+    FormatR8G8Snorm,
+    FormatR8G8Uscaled,
+    FormatR8G8Sscaled,
+    FormatR8G8Uint,
+    FormatR8G8Sint,
+    FormatR8G8Srgb,
+    FormatR8G8B8Unorm,
+    FormatR8G8B8Snorm,
+    FormatR8G8B8Uscaled,
+    FormatR8G8B8Sscaled,
+    FormatR8G8B8Uint,
+    FormatR8G8B8Sint,
+    FormatR8G8B8Srgb,
+    FormatB8G8r8Unorm,
+    FormatB8G8r8Snorm,
+    FormatB8G8r8Uscaled,
+    FormatB8G8r8Sscaled,
+    FormatB8G8r8Uint,
+    FormatB8G8r8Sint,
+    FormatB8G8r8Srgb,
+    FormatR8G8b8a8Unorm,
+    FormatR8G8b8a8Snorm,
+    FormatR8G8b8a8Uscaled,
+    FormatR8G8b8a8Sscaled,
+    FormatR8G8b8a8Uint,
+    FormatR8G8b8a8Sint,
+    FormatR8G8b8a8Srgb,
+    FormatB8G8r8a8Unorm,
+    FormatB8G8r8a8Snorm,
+    FormatB8G8r8a8Uscaled,
+    FormatB8G8r8a8Sscaled,
+    FormatB8G8r8a8Uint,
+    FormatB8G8r8a8Sint,
+    FormatB8G8r8a8Srgb,
+    FormatA8b8g8r8UnormPack32,
+    FormatA8b8g8r8SnormPack32,
+    FormatA8b8g8r8UscaledPack32,
+    FormatA8b8g8r8SscaledPack32,
+    FormatA8b8g8r8UintPack32,
+    FormatA8b8g8r8SintPack32,
+    FormatA8b8g8r8SrgbPack32,
+    FormatA2r10g10b10UnormPack32,
+    FormatA2r10g10b10SnormPack32,
+    FormatA2r10g10b10UscaledPack32,
+    FormatA2r10g10b10SscaledPack32,
+    FormatA2r10g10b10UintPack32,
+    FormatA2r10g10b10SintPack32,
+    FormatA2b10g10r10UnormPack32,
+    FormatA2b10g10r10SnormPack32,
+    FormatA2b10g10r10UscaledPack32,
+    FormatA2b10g10r10SscaledPack32,
+    FormatA2b10g10r10UintPack32,
+    FormatA2b10g10r10SintPack32,
+    FormatR16Unorm,
+    FormatR16Snorm,
+    FormatR16Uscaled,
+    FormatR16Sscaled,
+    FormatR16Uint,
+    FormatR16Sint,
+    FormatR16Sfloat,
+    FormatR16g16Unorm,
+    FormatR16g16Snorm,
+    FormatR16g16Uscaled,
+    FormatR16g16Sscaled,
+    FormatR16g16Uint,
+    FormatR16g16Sint,
+    FormatR16g16Sfloat,
+    FormatR16g16b16Unorm,
+    FormatR16g16b16Snorm,
+    FormatR16g16b16Uscaled,
+    FormatR16g16b16Sscaled,
+    FormatR16g16b16Uint,
+    FormatR16g16b16Sint,
+    FormatR16g16b16Sfloat,
+    FormatR16g16b16a16Unorm,
+    FormatR16g16b16a16Snorm,
+    FormatR16g16b16a16Uscaled,
+    FormatR16g16b16a16Sscaled,
+    FormatR16g16b16a16Uint,
+    FormatR16g16b16a16Sint,
+    FormatR16g16b16a16Sfloat,
+    FormatR32Uint,
+    FormatR32Sint,
+    FormatR32Sfloat,
+    FormatR32g32Uint,
+    FormatR32g32Sint,
+    FormatR32g32Sfloat,
+    FormatR32g32b32Uint,
+    FormatR32g32b32Sint,
+    FormatR32g32b32Sfloat,
+    FormatR32g32b32a32Uint,
+    FormatR32g32b32a32Sint,
+    FormatR32g32b32a32Sfloat,
+    FormatR64Uint,
+    FormatR64Sint,
+    FormatR64Sfloat,
+    FormatR64g64Uint,
+    FormatR64g64Sint,
+    FormatR64g64Sfloat,
+    FormatR64g64b64Uint,
+    FormatR64g64b64Sint,
+    FormatR64g64b64Sfloat,
+    FormatR64g64b64a64Uint,
+    FormatR64g64b64a64Sint,
+    FormatR64g64b64a64Sfloat,
+    FormatB10g11r11UfloatPack32,
+    FormatE5b9g9r9UfloatPack32,
+    FormatD16Unorm,
+    FormatX8D24UnormPack32,
+    FormatD32Sfloat,
+    FormatS8Uint,
+    FormatD16UnormS8Uint,
+    FormatD24UnormS8Uint,
+    FormatD32SfloatS8Uint,
+    FormatBc1RgbUnormBlock,
+    FormatBc1RgbSrgbBlock,
+    FormatBc1RgbaUnormBlock,
+    FormatBc1RgbaSrgbBlock,
+    FormatBc2UnormBlock,
+    FormatBc2SrgbBlock,
+    FormatBc3UnormBlock,
+    FormatBc3SrgbBlock,
+    FormatBc4UnormBlock,
+    FormatBc4SnormBlock,
+    FormatBc5UnormBlock,
+    FormatBc5SnormBlock,
+    FormatBc6hUfloatBlock,
+    FormatBc6hSfloatBlock,
+    FormatBc7UnormBlock,
+    FormatBc7SrgbBlock,
+    FormatEtc2R8G8B8UnormBlock,
+    FormatEtc2R8G8B8SrgbBlock,
+    FormatEtc2R8G8B8a1UnormBlock,
+    FormatEtc2R8G8B8a1SrgbBlock,
+    FormatEtc2R8G8B8a8UnormBlock,
+    FormatEtc2R8G8B8a8SrgbBlock,
+    FormatEacR11UnormBlock,
+    FormatEacR11SnormBlock,
+    FormatEacR11g11UnormBlock,
+    FormatEacR11g11SnormBlock,
+    FormatAstc4x4UnormBlock,
+    FormatAstc4x4SrgbBlock,
+    FormatAstc5x4UnormBlock,
+    FormatAstc5x4SrgbBlock,
+    FormatAstc5x5UnormBlock,
+    FormatAstc5x5SrgbBlock,
+    FormatAstc6x5UnormBlock,
+    FormatAstc6x5SrgbBlock,
+    FormatAstc6x6UnormBlock,
+    FormatAstc6x6SrgbBlock,
+    FormatAstc8x5UnormBlock,
+    FormatAstc8x5SrgbBlock,
+    FormatAstc8x6UnormBlock,
+    FormatAstc8x6SrgbBlock,
+    FormatAstc8x8UnormBlock,
+    FormatAstc8x8SrgbBlock,
+    FormatAstc10x5UnormBlock,
+    FormatAstc10x5SrgbBlock,
+    FormatAstc10x6UnormBlock,
+    FormatAstc10x6SrgbBlock,
+    FormatAstc10x8UnormBlock,
+    FormatAstc10x8SrgbBlock,
+    FormatAstc10x10UnormBlock,
+    FormatAstc10x10SrgbBlock,
+    FormatAstc12x10UnormBlock,
+    FormatAstc12x10SrgbBlock,
+    FormatAstc12x12UnormBlock,
+    FormatAstc12x12SrgbBlock,
+}
+
+pub enum SurfaceTransformFlags {
+}
 macro_rules! c_enum {
     (
-        pub enum $name:ident: $base_ty:ty {
-            $($var_name:ident = $var_value: path),+
-            $(,)*
-        }
+        $name:ident, $base_ty:ty,
+        $($var_name:ident = $var_value: path),+
     ) => {
-        pub enum $name {
-            $(
-                $var_name = $var_value as isize,
-            )+
-        }
         impl $name {
             pub fn from_number(val: $base_ty) -> Option<$name>{
                 match val {
@@ -64,11 +251,29 @@ macro_rules! c_enum {
                     _ => None
                 }
             }
+            pub fn to_number(self) -> $base_ty{
+                match self {
+                    $(
+                        $name::$var_name => $var_value,
+                    )+
+                }
+            }
         }
     }
 }
+
+#[derive(Copy, Clone)]
+pub enum ColorSpace {
+    SrgbNonlinear,
+}
+
 c_enum!{
-    pub enum Format: u32 {
+    ColorSpace, u32,
+    SrgbNonlinear = vk::COLOR_SPACE_SRGB_NONLINEAR_KHR
+}
+
+c_enum!{
+        Format, u32,
         FormatUndefined                = vk::FORMAT_UNDEFINED,
         FormatR4g4UnormPack8           = vk::FORMAT_R4G4_UNORM_PACK8,
         FormatR4g4b4a4UnormPack16      = vk::FORMAT_R4G4B4A4_UNORM_PACK16,
@@ -85,41 +290,41 @@ c_enum!{
         FormatR8Uint                   = vk::FORMAT_R8_UINT,
         FormatR8Sint                   = vk::FORMAT_R8_SINT,
         FormatR8Srgb                   = vk::FORMAT_R8_SRGB,
-        FormatR8g8Unorm                = vk::FORMAT_R8G8_UNORM,
-        FormatR8g8Snorm                = vk::FORMAT_R8G8_SNORM,
-        FormatR8g8Uscaled              = vk::FORMAT_R8G8_USCALED,
-        FormatR8g8Sscaled              = vk::FORMAT_R8G8_SSCALED,
-        FormatR8g8Uint                 = vk::FORMAT_R8G8_UINT,
-        FormatR8g8Sint                 = vk::FORMAT_R8G8_SINT,
-        FormatR8g8Srgb                 = vk::FORMAT_R8G8_SRGB,
-        FormatR8g8b8Unorm              = vk::FORMAT_R8G8B8_UNORM,
-        FormatR8g8b8Snorm              = vk::FORMAT_R8G8B8_SNORM,
-        FormatR8g8b8Uscaled            = vk::FORMAT_R8G8B8_USCALED,
-        FormatR8g8b8Sscaled            = vk::FORMAT_R8G8B8_SSCALED,
-        FormatR8g8b8Uint               = vk::FORMAT_R8G8B8_UINT,
-        FormatR8g8b8Sint               = vk::FORMAT_R8G8B8_SINT,
-        FormatR8g8b8Srgb               = vk::FORMAT_R8G8B8_SRGB,
-        FormatB8g8r8Unorm              = vk::FORMAT_B8G8R8_UNORM,
-        FormatB8g8r8Snorm              = vk::FORMAT_B8G8R8_SNORM,
-        FormatB8g8r8Uscaled            = vk::FORMAT_B8G8R8_USCALED,
-        FormatB8g8r8Sscaled            = vk::FORMAT_B8G8R8_SSCALED,
-        FormatB8g8r8Uint               = vk::FORMAT_B8G8R8_UINT,
-        FormatB8g8r8Sint               = vk::FORMAT_B8G8R8_SINT,
-        FormatB8g8r8Srgb               = vk::FORMAT_B8G8R8_SRGB,
-        FormatR8g8b8a8Unorm            = vk::FORMAT_R8G8B8A8_UNORM,
-        FormatR8g8b8a8Snorm            = vk::FORMAT_R8G8B8A8_SNORM,
-        FormatR8g8b8a8Uscaled          = vk::FORMAT_R8G8B8A8_USCALED,
-        FormatR8g8b8a8Sscaled          = vk::FORMAT_R8G8B8A8_SSCALED,
-        FormatR8g8b8a8Uint             = vk::FORMAT_R8G8B8A8_UINT,
-        FormatR8g8b8a8Sint             = vk::FORMAT_R8G8B8A8_SINT,
-        FormatR8g8b8a8Srgb             = vk::FORMAT_R8G8B8A8_SRGB,
-        FormatB8g8r8a8Unorm            = vk::FORMAT_B8G8R8A8_UNORM,
-        FormatB8g8r8a8Snorm            = vk::FORMAT_B8G8R8A8_SNORM,
-        FormatB8g8r8a8Uscaled          = vk::FORMAT_B8G8R8A8_USCALED,
-        FormatB8g8r8a8Sscaled          = vk::FORMAT_B8G8R8A8_SSCALED,
-        FormatB8g8r8a8Uint             = vk::FORMAT_B8G8R8A8_UINT,
-        FormatB8g8r8a8Sint             = vk::FORMAT_B8G8R8A8_SINT,
-        FormatB8g8r8a8Srgb             = vk::FORMAT_B8G8R8A8_SRGB,
+        FormatR8G8Unorm                = vk::FORMAT_R8G8_UNORM,
+        FormatR8G8Snorm                = vk::FORMAT_R8G8_SNORM,
+        FormatR8G8Uscaled              = vk::FORMAT_R8G8_USCALED,
+        FormatR8G8Sscaled              = vk::FORMAT_R8G8_SSCALED,
+        FormatR8G8Uint                 = vk::FORMAT_R8G8_UINT,
+        FormatR8G8Sint                 = vk::FORMAT_R8G8_SINT,
+        FormatR8G8Srgb                 = vk::FORMAT_R8G8_SRGB,
+        FormatR8G8B8Unorm              = vk::FORMAT_R8G8B8_UNORM,
+        FormatR8G8B8Snorm              = vk::FORMAT_R8G8B8_SNORM,
+        FormatR8G8B8Uscaled            = vk::FORMAT_R8G8B8_USCALED,
+        FormatR8G8B8Sscaled            = vk::FORMAT_R8G8B8_SSCALED,
+        FormatR8G8B8Uint               = vk::FORMAT_R8G8B8_UINT,
+        FormatR8G8B8Sint               = vk::FORMAT_R8G8B8_SINT,
+        FormatR8G8B8Srgb               = vk::FORMAT_R8G8B8_SRGB,
+        FormatB8G8r8Unorm              = vk::FORMAT_B8G8R8_UNORM,
+        FormatB8G8r8Snorm              = vk::FORMAT_B8G8R8_SNORM,
+        FormatB8G8r8Uscaled            = vk::FORMAT_B8G8R8_USCALED,
+        FormatB8G8r8Sscaled            = vk::FORMAT_B8G8R8_SSCALED,
+        FormatB8G8r8Uint               = vk::FORMAT_B8G8R8_UINT,
+        FormatB8G8r8Sint               = vk::FORMAT_B8G8R8_SINT,
+        FormatB8G8r8Srgb               = vk::FORMAT_B8G8R8_SRGB,
+        FormatR8G8b8a8Unorm            = vk::FORMAT_R8G8B8A8_UNORM,
+        FormatR8G8b8a8Snorm            = vk::FORMAT_R8G8B8A8_SNORM,
+        FormatR8G8b8a8Uscaled          = vk::FORMAT_R8G8B8A8_USCALED,
+        FormatR8G8b8a8Sscaled          = vk::FORMAT_R8G8B8A8_SSCALED,
+        FormatR8G8b8a8Uint             = vk::FORMAT_R8G8B8A8_UINT,
+        FormatR8G8b8a8Sint             = vk::FORMAT_R8G8B8A8_SINT,
+        FormatR8G8b8a8Srgb             = vk::FORMAT_R8G8B8A8_SRGB,
+        FormatB8G8r8a8Unorm            = vk::FORMAT_B8G8R8A8_UNORM,
+        FormatB8G8r8a8Snorm            = vk::FORMAT_B8G8R8A8_SNORM,
+        FormatB8G8r8a8Uscaled          = vk::FORMAT_B8G8R8A8_USCALED,
+        FormatB8G8r8a8Sscaled          = vk::FORMAT_B8G8R8A8_SSCALED,
+        FormatB8G8r8a8Uint             = vk::FORMAT_B8G8R8A8_UINT,
+        FormatB8G8r8a8Sint             = vk::FORMAT_B8G8R8A8_SINT,
+        FormatB8G8r8a8Srgb             = vk::FORMAT_B8G8R8A8_SRGB,
         FormatA8b8g8r8UnormPack32      = vk::FORMAT_A8B8G8R8_UNORM_PACK32,
         FormatA8b8g8r8SnormPack32      = vk::FORMAT_A8B8G8R8_SNORM_PACK32,
         FormatA8b8g8r8UscaledPack32    = vk::FORMAT_A8B8G8R8_USCALED_PACK32,
@@ -216,12 +421,12 @@ c_enum!{
         FormatBc6hSfloatBlock          = vk::FORMAT_BC6H_SFLOAT_BLOCK,
         FormatBc7UnormBlock            = vk::FORMAT_BC7_UNORM_BLOCK,
         FormatBc7SrgbBlock             = vk::FORMAT_BC7_SRGB_BLOCK,
-        FormatEtc2R8g8b8UnormBlock     = vk::FORMAT_ETC2_R8G8B8_UNORM_BLOCK,
-        FormatEtc2R8g8b8SrgbBlock      = vk::FORMAT_ETC2_R8G8B8_SRGB_BLOCK,
-        FormatEtc2R8g8b8a1UnormBlock   = vk::FORMAT_ETC2_R8G8B8A1_UNORM_BLOCK,
-        FormatEtc2R8g8b8a1SrgbBlock    = vk::FORMAT_ETC2_R8G8B8A1_SRGB_BLOCK,
-        FormatEtc2R8g8b8a8UnormBlock   = vk::FORMAT_ETC2_R8G8B8A8_UNORM_BLOCK,
-        FormatEtc2R8g8b8a8SrgbBlock    = vk::FORMAT_ETC2_R8G8B8A8_SRGB_BLOCK,
+        FormatEtc2R8G8B8UnormBlock     = vk::FORMAT_ETC2_R8G8B8_UNORM_BLOCK,
+        FormatEtc2R8G8B8SrgbBlock      = vk::FORMAT_ETC2_R8G8B8_SRGB_BLOCK,
+        FormatEtc2R8G8B8a1UnormBlock   = vk::FORMAT_ETC2_R8G8B8A1_UNORM_BLOCK,
+        FormatEtc2R8G8B8a1SrgbBlock    = vk::FORMAT_ETC2_R8G8B8A1_SRGB_BLOCK,
+        FormatEtc2R8G8B8a8UnormBlock   = vk::FORMAT_ETC2_R8G8B8A8_UNORM_BLOCK,
+        FormatEtc2R8G8B8a8SrgbBlock    = vk::FORMAT_ETC2_R8G8B8A8_SRGB_BLOCK,
         FormatEacR11UnormBlock         = vk::FORMAT_EAC_R11_UNORM_BLOCK,
         FormatEacR11SnormBlock         = vk::FORMAT_EAC_R11_SNORM_BLOCK,
         FormatEacR11g11UnormBlock      = vk::FORMAT_EAC_R11G11_UNORM_BLOCK,
@@ -253,6 +458,31 @@ c_enum!{
         FormatAstc12x10UnormBlock      = vk::FORMAT_ASTC_12x10_UNORM_BLOCK,
         FormatAstc12x10SrgbBlock       = vk::FORMAT_ASTC_12x10_SRGB_BLOCK,
         FormatAstc12x12UnormBlock      = vk::FORMAT_ASTC_12x12_UNORM_BLOCK,
-        FormatAstc12x12SrgbBlock       = vk::FORMAT_ASTC_12x12_SRGB_BLOCK,
-    }
+        FormatAstc12x12SrgbBlock       = vk::FORMAT_ASTC_12x12_SRGB_BLOCK
+}
+
+#[derive(Copy, Clone)]
+pub enum SurfaceTransform {
+    IdentityBit,
+    Rotate90Bit,
+    Rotate180Bit,
+    Rotate270Bit,
+    HorizontalMirrorBit,
+    HorizontalMirrorRotate90Bit,
+    HorizontalMirrorRotate180Bit,
+    HorizontalMirrorRotate270Bit,
+    InheritBit,
+}
+
+c_enum!{
+    SurfaceTransform, u32,
+    IdentityBit                  = vk::SURFACE_TRANSFORM_IDENTITY_BIT_KHR,
+    Rotate90Bit                  = vk::SURFACE_TRANSFORM_ROTATE_90_BIT_KHR,
+    Rotate180Bit                 = vk::SURFACE_TRANSFORM_ROTATE_180_BIT_KHR,
+    Rotate270Bit                 = vk::SURFACE_TRANSFORM_ROTATE_270_BIT_KHR,
+    HorizontalMirrorBit          = vk::SURFACE_TRANSFORM_HORIZONTAL_MIRROR_BIT_KHR,
+    HorizontalMirrorRotate90Bit  = vk::SURFACE_TRANSFORM_HORIZONTAL_MIRROR_ROTATE_90_BIT_KHR,
+    HorizontalMirrorRotate180Bit = vk::SURFACE_TRANSFORM_HORIZONTAL_MIRROR_ROTATE_180_BIT_KHR,
+    HorizontalMirrorRotate270Bit = vk::SURFACE_TRANSFORM_HORIZONTAL_MIRROR_ROTATE_270_BIT_KHR,
+    InheritBit                   = vk::SURFACE_TRANSFORM_INHERIT_BIT_KHR
 }

@@ -17,7 +17,7 @@ use shared_library;
 use vk_loader as vk;
 
 lazy_static! {
-    static ref VK_LIB: Result<shared_library::dynamic_library::DynamicLibrary, LoadingError> = {
+    pub static ref VK_LIB: Result<shared_library::dynamic_library::DynamicLibrary, LoadingError> = {
         #[cfg(windows)] fn get_path() -> &'static Path { Path::new("vulkan-1.dll") }
         #[cfg(all(unix, not(target_os = "android")))] fn get_path() -> &'static Path { Path::new("libvulkan.so.1") }
         #[cfg(target_os = "android")] fn get_path() -> &'static Path { Path::new("libvulkan.so") }

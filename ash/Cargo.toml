@@ -7,5 +7,6 @@ authors = ["maik klein <maikklein@googlemail.com>"]
 lazy_static = "0.2.1"
 shared_library = "0.1.5"
 glfw = "0.9.1"
+bitflags = "0.7.0"
 
 vk_loader = { version = "0.1.0", path = "../vk_loader"}
