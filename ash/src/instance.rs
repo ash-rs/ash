@@ -6,219 +6,337 @@ use std::error;
 use std::fmt;
 use std::mem;
 use std::sync::Arc;
-
-use vk_loader as vk;
-use feature;
-use load;
-use fence;
-use extensions::*;
 use std::os::raw::*;
 use std::cell::Cell;
-use surface;
-use device::*;
+use vk_loader2 as vk;
+// use feature;
+use load;
+// use fence;
+// use extensions::*;
+// use surface;
+// use device::*;
 
-pub struct DebugCallback {
-    handle: vk::DebugReportCallbackEXT,
-    f: *mut Fn(String),
-}
-
-#[derive(Clone)]
+#[derive(Debug)]
 pub struct Instance {
-    pub inner: Arc<InstanceImpl>,
+    handle: vk::Instance,
+    instance_fn: vk::InstanceFn,
 }
 
-pub struct InstanceImpl {
-    pub instance: vk::Instance,
-    pub ip: vk::InstancePointers,
-    callback: Option<DebugCallback>,
-}
-
-impl Instance{
-    pub fn handle(&self) -> usize{
-        self.inner.instance
-    }
-
-    pub fn ip(&self) -> &vk::InstancePointers {
-        &self.inner.ip
-    }
-}
-
-unsafe impl Send for Instance {}
-unsafe impl Sync for Instance {}
-
-impl Drop for InstanceImpl {
-    fn drop(&mut self) {
-        unsafe {
-            if let Some(ref callback) = self.callback {
-                self.ip.DestroyDebugReportCallbackEXT(self.instance, callback.handle, ptr::null());
-                Box::from_raw(callback.f);
+macro_rules! vk_error(
+    ($err_name: ident, $($raw_name: ident => $name: ident,)*) => {
+        #[derive(Debug)]
+        pub enum $err_name {
+            $(
+                $name,
+            )*
+        }
+        impl From<vk::Result> for $err_name {
+            fn from(r: vk::Result) -> $err_name {
+                match r {
+                    $(
+                        vk::Result::$raw_name => $err_name::$name,
+                    )*
+                    _ => panic!("Missing error case for '{}', please open an issue.", stringify!($err_name)),
+                }
             }
-            self.ip.DestroyInstance(self.instance, ptr::null());
         }
     }
-}
+);
 
-pub struct ApplicationInfo {
-    pub name: String,
-}
+vk_error!(
+    InstanceError,
+    ErrorOutOfHostMemory => OutOfHostMemory,
+    ErrorOutOfDeviceMemory => OutOfDeviceMemory,
+    ErrorInitializationFailed => InitializationFailed,
+    ErrorIncompatibleDriver => IncompatibleDriver,
+);
+
+vk_error!(
+    EnumerateDeviceError,
+    ErrorOutOfHostMemory => OutOfHostMemory,
+    ErrorOutOfDeviceMemory => OutOfDeviceMemory,
+    ErrorInitializationFailed => InitializationFailed,
+);
 
 impl Instance {
-    pub fn create_surface<S: surface::VulkanSurface>(&self, s: &S) -> surface::Surface {
-        surface::Surface {
-            instance: self.clone(),
-            handle: s.create_surface(self),
+    // FIX: Add loading error
+    pub fn create_instance<I: Into<vk::InstanceCreateInfo>>(i: I) -> Result<Instance, vk::Result> {
+        let create_info = i.into();
+        let static_fn = load::static_fn().unwrap();
+        let entry = load::entry_fn(&static_fn);
+        unsafe {
+            let mut instance: vk::Instance = mem::uninitialized();
+            let err_code = entry.create_instance(&create_info, ptr::null(), &mut instance);
+            if err_code != vk::Result::Success {
+                return Err(err_code);
+            }
+            let instance_fn = vk::InstanceFn::load(|name| unsafe {
+                    mem::transmute(static_fn.get_instance_proc_addr(instance, name.as_ptr()))
+                })
+                .unwrap();
+            Ok(Instance {
+                handle: instance,
+                instance_fn: instance_fn,
+            })
         }
     }
 
-    pub fn extenstion_properties() -> InstanceExtension {
-        let entry_points = load::entry_points().unwrap();
-        let extension_props = unsafe {
-            let mut num = 0;
-            entry_points.EnumerateInstanceExtensionProperties(ptr::null(), &mut num, ptr::null_mut());
-            let mut data = Vec::with_capacity(num as usize);
-            entry_points.EnumerateInstanceExtensionProperties(ptr::null(), &mut num, data.as_mut_ptr());
-            data.set_len(num as usize);
-            InstanceExtensionProperties { ext_props: data }
-        };
-        extension_props.into()
+    pub fn enumerate_physical_devices(&self) -> Result<Vec<vk::PhysicalDevice>, vk::Result> {
+        unsafe {
+            let mut num = mem::uninitialized();
+            self.instance_fn
+                .enumerate_physical_devices(self.handle, &mut num, ptr::null_mut());
+            let mut physical_devices = Vec::<vk::PhysicalDevice>::with_capacity(num as usize);
+            let err_code = self.instance_fn
+                .enumerate_physical_devices(self.handle, &mut num, physical_devices.as_mut_ptr());
+            physical_devices.set_len(num as usize);
+            match err_code {
+                vk::Result::Success => Ok(physical_devices),
+                _ => Err(err_code),
+            }
+        }
     }
-    pub fn device_extension_properties(&self, device: vk::PhysicalDevice) -> DeviceExtension {
-        let extension_props = unsafe {
+    pub fn enumerate_instance_layer_properties() -> Vec<vk::LayerProperties> {
+        let static_fn = load::static_fn().unwrap();
+        let entry = load::entry_fn(&static_fn);
+        unsafe {
             let mut num = 0;
-            self.inner.ip
-                .EnumerateDeviceExtensionProperties(device, ptr::null(), &mut num, ptr::null_mut());
+            entry.enumerate_instance_layer_properties(&mut num, ptr::null_mut());
+
+            let mut v = Vec::with_capacity(num as usize);
+            entry.enumerate_instance_layer_properties(&mut num, v.as_mut_ptr());
+            v.set_len(num as usize);
+            v
+        }
+    }
+
+    pub fn enumerate_device_extension_properties
+        (&self,
+         device: vk::PhysicalDevice)
+         -> Result<Vec<vk::ExtensionProperties>, vk::Result> {
+        unsafe {
+            let mut num = 0;
+            self.instance_fn
+                .enumerate_device_extension_properties(device,
+                                                       ptr::null(),
+                                                       &mut num,
+                                                       ptr::null_mut());
             let mut data = Vec::with_capacity(num as usize);
-            self.inner.ip.EnumerateDeviceExtensionProperties(device,
+            let err_code = self.instance_fn
+                .enumerate_device_extension_properties(device,
                                                        ptr::null(),
                                                        &mut num,
                                                        data.as_mut_ptr());
             data.set_len(num as usize);
-            DeviceExtensionProperties { ext_props: data }
-        };
-        extension_props.into()
-    }
-
-    pub fn new<F: Fn(String) + 'static>(app_info: &ApplicationInfo,
-                                        extensions: &InstanceExtension,
-                                        f: F)
-                                        -> Instance {
-        let entry_points = load::entry_points().unwrap();
-
-        unsafe {
-            let mut num = 0;
-            entry_points.EnumerateInstanceLayerProperties(&mut num, ptr::null_mut());
-
-            let mut v = Vec::with_capacity(num as usize);
-            entry_points.EnumerateInstanceLayerProperties(&mut num, v.as_mut_ptr());
-            v.set_len(num as usize);
-
-            for p in v {
-                // println!("layer {}", CStr::from_ptr(p.layerName.as_ptr()).to_str().unwrap());
+            match err_code {
+                vk::Result::Success => Ok(data),
+                _ => Err(err_code),
             }
-        }
-        let layername = CString::new("VK_LAYER_LUNARG_standard_validation").unwrap();
-        let layer = [layername.as_ptr()];
-
-        let c = CString::new(app_info.name.clone()).unwrap();
-        let raw_name = c.as_ptr();
-        let appinfo = vk::ApplicationInfo {
-            pApplicationName: raw_name,
-            sType: vk::STRUCTURE_TYPE_APPLICATION_INFO,
-            pNext: ptr::null(),
-            applicationVersion: 0,
-            pEngineName: raw_name,
-            engineVersion: 0,
-            apiVersion: 0,
-        };
-
-        let extension_list = extensions.extension_list();
-        let extension_list_raw =
-            extension_list.iter().map(|extension| extension.as_ptr()).collect::<Vec<_>>();
-        let create_info = vk::InstanceCreateInfo {
-            sType: vk::STRUCTURE_TYPE_INSTANCE_CREATE_INFO,
-            pApplicationInfo: &appinfo,
-            pNext: ptr::null(),
-            ppEnabledLayerNames: layer.as_ptr(),
-            enabledLayerCount: layer.len() as u32,
-            ppEnabledExtensionNames: extension_list_raw.as_ptr(),
-            enabledExtensionCount: extension_list_raw.len() as u32,
-            flags: 0,
-        };
-
-        let mut instance: vk::Instance = unsafe { mem::uninitialized() };
-        unsafe {
-            entry_points.CreateInstance(&create_info, ptr::null(), &mut instance);
-        }
-        let vk: vk::InstancePointers = {
-            let f = load::static_functions().unwrap();
-            vk::InstancePointers::load(|name| unsafe {
-                mem::transmute(f.GetInstanceProcAddr(instance, name.as_ptr()))
-            })
-        };
-        extern "system" fn debug_callback<F: Fn(String)>(flags: vk::DebugReportFlagsEXT,
-                                                         obj: vk::DebugReportObjectTypeEXT,
-                                                         u: u64,
-                                                         u1: usize,
-                                                         i: i32,
-                                                         chars: *const c_char,
-                                                         chars1: *const c_char,
-                                                         data: *mut c_void)
-                                                         -> u32 {
-            unsafe {
-                let f = &*(data as *mut F);
-                f(CStr::from_ptr(chars).to_str().unwrap().to_owned());
-                f(CStr::from_ptr(chars1).to_str().unwrap().to_owned());
-            }
-            1
-        }
-        let raw_boxed_f = Box::into_raw(Box::new(f));
-        let debug = vk::DebugReportCallbackCreateInfoEXT {
-            sType: 1000011000,
-            pNext: ptr::null(),
-            flags: vk::DEBUG_REPORT_ERROR_BIT_EXT | vk::DEBUG_REPORT_WARNING_BIT_EXT,
-            pfnCallback: debug_callback::<F>,
-            pUserData: raw_boxed_f as *mut c_void,
-        };
-        let callback = unsafe {
-            let mut callback: vk::DebugReportCallbackEXT = mem::uninitialized();
-
-            assert!(vk.CreateDebugReportCallbackEXT(instance,
-                                                    &debug,
-                                                    ptr::null(),
-                                                    &mut callback) == 0,
-                    "Debug");
-
-            DebugCallback {
-                f: raw_boxed_f,
-                handle: callback,
-            }
-        };
-        Instance {
-            inner: Arc::new(InstanceImpl {
-                ip: vk,
-                instance: instance,
-                callback: Some(callback),
-            }),
-        }
-    }
-
-    pub fn get_pysical_devices(&self) -> Vec<PhysicalDevice> {
-        unsafe {
-            let mut num = 0;
-            self.inner.ip
-                .EnumeratePhysicalDevices(self.inner.instance, &mut num, ptr::null_mut());
-            let mut physical_devices = Vec::<vk::PhysicalDevice>::with_capacity(num as usize);
-            self.inner.ip
-                .EnumeratePhysicalDevices(self.inner.instance, &mut num, physical_devices.as_mut_ptr());
-            physical_devices.set_len(num as usize);
-            physical_devices.into_iter()
-                .map(|handle| {
-                    PhysicalDevice {
-                        instance: self.clone(),
-                        handle: handle,
-                    }
-                })
-                .collect()
         }
     }
 }
+// pub struct DebugCallback {
+//    handle: vk::DebugReportCallbackEXT,
+//    f: *mut Fn(String),
+// }
+//
+// #[derive(Clone)]
+// pub struct Instance {
+//    pub inner: Arc<InstanceImpl>,
+// }
+//
+// pub struct InstanceImpl {
+//    pub instance: vk::Instance,
+//    pub ip: vk::InstancePointers,
+//    callback: Option<DebugCallback>,
+// }
+//
+// impl Instance{
+//    pub fn handle(&self) -> usize{
+//        self.inner.instance
+//    }
+//
+//    pub fn ip(&self) -> &vk::InstancePointers {
+//        &self.inner.ip
+//    }
+// }
+//
+// unsafe impl Send for Instance {}
+// unsafe impl Sync for Instance {}
+//
+// impl Drop for InstanceImpl {
+//    fn drop(&mut self) {
+//        unsafe {
+//            if let Some(ref callback) = self.callback {
+//                self.ip.DestroyDebugReportCallbackEXT(self.instance, callback.handle, ptr::null());
+//                Box::from_raw(callback.f);
+//            }
+//            self.ip.DestroyInstance(self.instance, ptr::null());
+//        }
+//    }
+// }
+//
+// pub struct ApplicationInfo {
+//    pub name: String,
+// }
+//
+// impl Instance {
+//    pub fn create_surface<S: surface::VulkanSurface>(&self, s: &S) -> surface::Surface {
+//        surface::Surface {
+//            instance: self.clone(),
+//            handle: s.create_surface(self),
+//        }
+//    }
+//
+//    pub fn extenstion_properties() -> InstanceExtension {
+//        let entry_points = load::entry_points().unwrap();
+//        let extension_props = unsafe {
+//            let mut num = 0;
+//            entry_points.EnumerateInstanceExtensionProperties(ptr::null(), &mut num, ptr::null_mut());
+//            let mut data = Vec::with_capacity(num as usize);
+//            entry_points.EnumerateInstanceExtensionProperties(ptr::null(), &mut num, data.as_mut_ptr());
+//            data.set_len(num as usize);
+//            InstanceExtensionProperties { ext_props: data }
+//        };
+//        extension_props.into()
+//    }
+//    pub fn device_extension_properties(&self, device: vk::PhysicalDevice) -> DeviceExtension {
+//        let extension_props = unsafe {
+//            let mut num = 0;
+//            self.inner.ip
+//                .EnumerateDeviceExtensionProperties(device, ptr::null(), &mut num, ptr::null_mut());
+//            let mut data = Vec::with_capacity(num as usize);
+//            self.inner.ip.EnumerateDeviceExtensionProperties(device,
+//                                                       ptr::null(),
+//                                                       &mut num,
+//                                                       data.as_mut_ptr());
+//            data.set_len(num as usize);
+//            DeviceExtensionProperties { ext_props: data }
+//        };
+//        extension_props.into()
+//    }
+//
+//    pub fn new<F: Fn(String) + 'static>(app_info: &ApplicationInfo,
+//                                        extensions: &InstanceExtension,
+//                                        f: F)
+//                                        -> Instance {
+//        let entry_points = load::entry_points().unwrap();
+//
+//        unsafe {
+//            let mut num = 0;
+//            entry_points.EnumerateInstanceLayerProperties(&mut num, ptr::null_mut());
+//
+//            let mut v = Vec::with_capacity(num as usize);
+//            entry_points.EnumerateInstanceLayerProperties(&mut num, v.as_mut_ptr());
+//            v.set_len(num as usize);
+//
+//            for p in v {
+//                // println!("layer {}", CStr::from_ptr(p.layerName.as_ptr()).to_str().unwrap());
+//            }
+//        }
+//        let layername = CString::new("VK_LAYER_LUNARG_standard_validation").unwrap();
+//        let layer = [layername.as_ptr()];
+//
+//        let c = CString::new(app_info.name.clone()).unwrap();
+//        let raw_name = c.as_ptr();
+//        let appinfo = vk::ApplicationInfo {
+//            pApplicationName: raw_name,
+//            sType: vk::STRUCTURE_TYPE_APPLICATION_INFO,
+//            pNext: ptr::null(),
+//            applicationVersion: 0,
+//            pEngineName: raw_name,
+//            engineVersion: 0,
+//            apiVersion: 0,
+//        };
+//
+//        let extension_list = extensions.extension_list();
+//        let extension_list_raw =
+//            extension_list.iter().map(|extension| extension.as_ptr()).collect::<Vec<_>>();
+//        let create_info = vk::InstanceCreateInfo {
+//            sType: vk::STRUCTURE_TYPE_INSTANCE_CREATE_INFO,
+//            pApplicationInfo: &appinfo,
+//            pNext: ptr::null(),
+//            ppEnabledLayerNames: layer.as_ptr(),
+//            enabledLayerCount: layer.len() as u32,
+//            ppEnabledExtensionNames: extension_list_raw.as_ptr(),
+//            enabledExtensionCount: extension_list_raw.len() as u32,
+//            flags: 0,
+//        };
+//
+//        let mut instance: vk::Instance = unsafe { mem::uninitialized() };
+//        unsafe {
+//            entry_points.CreateInstance(&create_info, ptr::null(), &mut instance);
+//        }
+//        let vk: vk::InstancePointers = {
+//            let f = load::static_functions().unwrap();
+//            vk::InstancePointers::load(|name| unsafe {
+//                mem::transmute(f.GetInstanceProcAddr(instance, name.as_ptr()))
+//            })
+//        };
+//        extern "system" fn debug_callback<F: Fn(String)>(flags: vk::DebugReportFlagsEXT,
+//                                                         obj: vk::DebugReportObjectTypeEXT,
+//                                                         u: u64,
+//                                                         u1: usize,
+//                                                         i: i32,
+//                                                         chars: *const c_char,
+//                                                         chars1: *const c_char,
+//                                                         data: *mut c_void)
+//                                                         -> u32 {
+//            unsafe {
+//                let f = &*(data as *mut F);
+//                f(CStr::from_ptr(chars).to_str().unwrap().to_owned());
+//                f(CStr::from_ptr(chars1).to_str().unwrap().to_owned());
+//            }
+//            1
+//        }
+//        let raw_boxed_f = Box::into_raw(Box::new(f));
+//        let debug = vk::DebugReportCallbackCreateInfoEXT {
+//            sType: 1000011000,
+//            pNext: ptr::null(),
+//            flags: vk::DEBUG_REPORT_ERROR_BIT_EXT | vk::DEBUG_REPORT_WARNING_BIT_EXT,
+//            pfnCallback: debug_callback::<F>,
+//            pUserData: raw_boxed_f as *mut c_void,
+//        };
+//        let callback = unsafe {
+//            let mut callback: vk::DebugReportCallbackEXT = mem::uninitialized();
+//
+//            assert!(vk.CreateDebugReportCallbackEXT(instance,
+//                                                    &debug,
+//                                                    ptr::null(),
+//                                                    &mut callback) == 0,
+//                    "Debug");
+//
+//            DebugCallback {
+//                f: raw_boxed_f,
+//                handle: callback,
+//            }
+//        };
+//        Instance {
+//            inner: Arc::new(InstanceImpl {
+//                ip: vk,
+//                instance: instance,
+//                callback: Some(callback),
+//            }),
+//        }
+//    }
+//
+//    pub fn get_pysical_devices(&self) -> Vec<PhysicalDevice> {
+//        unsafe {
+//            let mut num = 0;
+//            self.inner.ip
+//                .EnumeratePhysicalDevices(self.inner.instance, &mut num, ptr::null_mut());
+//            let mut physical_devices = Vec::<vk::PhysicalDevice>::with_capacity(num as usize);
+//            self.inner.ip
+//                .EnumeratePhysicalDevices(self.inner.instance, &mut num, physical_devices.as_mut_ptr());
+//            physical_devices.set_len(num as usize);
+//            physical_devices.into_iter()
+//                .map(|handle| {
+//                    PhysicalDevice {
+//                        instance: self.clone(),
+//                        handle: handle,
+//                    }
+//                })
+//                .collect()
+//        }
+//    }
+// }

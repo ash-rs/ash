@@ -14,7 +14,7 @@ use std::path::Path;
 use std::ptr;
 
 use shared_library;
-use vk_loader as vk;
+use vk_loader2 as vk;
 
 lazy_static! {
     pub static ref VK_LIB: Result<shared_library::dynamic_library::DynamicLibrary, LoadingError> = {
@@ -26,59 +26,81 @@ lazy_static! {
                                     .map_err(|err| LoadingError::LibraryLoadFailure(err))
     };
 
-    static ref VK_STATIC: Result<vk::Static, LoadingError> = {
-        match *VK_LIB {
-            Ok(ref lib) => {
-                let mut err = None;
-                let result = vk::Static::load(|name| unsafe {
-                    let name = name.to_str().unwrap();
-                    match lib.symbol(name) {
-                        Ok(s) => s,
-                        Err(_) => {     // TODO: return error?
-                            err = Some(LoadingError::MissingEntryPoint(name.to_owned()));
-                            ptr::null()
-                        }
-                    }
-                });
-
-                if let Some(err) = err {
-                    Err(err)
-                } else {
-                    Ok(result)
-                }
-            },
-            Err(ref err) => Err(err.clone()),
-        }
-    };
-
-    static ref VK_ENTRY: Result<vk::EntryPoints, LoadingError> = {
-        match *VK_STATIC {
-            Ok(ref lib) => {
-                // At this point we assume that if one of the functions fails to load, it is an
-                // implementation bug and not a real-life situation that could be handled by
-                // an error.
-                Ok(vk::EntryPoints::load(|name| unsafe {
-                    mem::transmute(lib.GetInstanceProcAddr(0, name.as_ptr()))
-                }))
-            },
-            Err(ref err) => Err(err.clone()),
-        }
-    };
+//    static ref VK_STATIC: Result<vk::Static, LoadingError> = {
+//        match *VK_LIB {
+//            Ok(ref lib) => {
+//                let mut err = None;
+//                let result = vk::Static::load(|name| unsafe {
+//                    let name = name.to_str().unwrap();
+//                    match lib.symbol(name) {
+//                        Ok(s) => s,
+//                        Err(_) => {     // TODO: return error?
+//                            err = Some(LoadingError::MissingEntryPoint(name.to_owned()));
+//                            ptr::null()
+//                        }
+//                    }
+//                });
+//
+//                if let Some(err) = err {
+//                    Err(err)
+//                } else {
+//                    Ok(result)
+//                }
+//            },
+//            Err(ref err) => Err(err.clone()),
+//        }
+//    };
+//
+//    static ref VK_ENTRY: Result<vk::EntryPoints, LoadingError> = {
+//        match *VK_STATIC {
+//            Ok(ref lib) => {
+//                // At this point we assume that if one of the functions fails to load, it is an
+//                // implementation bug and not a real-life situation that could be handled by
+//                // an error.
+//                Ok(vk::EntryPoints::load(|name| unsafe {
+//                    mem::transmute(lib.GetInstanceProcAddr(0, name.as_ptr()))
+//                }))
+//            },
+//            Err(ref err) => Err(err.clone()),
+//        }
+//    };
 }
 
 /// Returns the collection of static functions from the Vulkan loader, or an error if failed to
 /// open the loader.
-pub fn static_functions() -> Result<&'static vk::Static, LoadingError> {
-    VK_STATIC.as_ref().map_err(|err| err.clone())
+// pub fn static_functions() -> Result<&'static vk::Static, LoadingError> {
+//    VK_STATIC.as_ref().map_err(|err| err.clone())
+// }
+
+pub fn static_fn() -> Result<vk::Static, String> {
+    let r = match *VK_LIB {
+        Ok(ref lib) => {
+            vk::Static::load(|name| unsafe {
+                let name = name.to_str().unwrap();
+                match lib.symbol(name) {
+                    Ok(s) => s,
+                    Err(_) => ptr::null(),
+                }
+            })
+        }
+        Err(ref err) => return Err("Foo".to_string()),
+    };
+    Ok(r.unwrap())
+}
+pub fn entry_fn(static_fn: &vk::Static) -> vk::EntryFn {
+    let entry = vk::EntryFn::load(|name| unsafe {
+        mem::transmute(static_fn.get_instance_proc_addr(ptr::null_mut(), name.as_ptr()))
+    });
+    entry.unwrap()
 }
 
-/// Returns the collection of Vulkan entry points from the Vulkan loader, or an error if failed to
-/// open the loader.
-pub fn entry_points() -> Result<&'static vk::EntryPoints, LoadingError> {
-    VK_ENTRY.as_ref().map_err(|err| err.clone())
-}
-
-/// Error that can happen when loading the Vulkan loader.
+/// // Returns the collection of Vulkan entry points from the Vulkan loader, or an error if failed to
+/// // open the loader.
+/// pub fn entry_points() -> Result<&'static vk::EntryPoints, LoadingError> {
+///    VK_ENTRY.as_ref().map_err(|err| err.clone())
+/// }
+///
+/// // Error that can happen when loading the Vulkan loader.
 #[derive(Debug, Clone)]
 pub enum LoadingError {
     /// Failed to load the Vulkan shared library.

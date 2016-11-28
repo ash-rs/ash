@@ -3109,6 +3109,7 @@ pub type PFN_vkVoidFunction = unsafe extern "system" fn(
 );
 
 }
+//FIX: Need better error handling for extensions
 macro_rules! vk_functions {
     ($struct_name: ident, $($raw_name: expr, $name: ident ($($param_name: ident: $param: ty),*,) -> $ret: ty;)+) => {
         pub struct $struct_name{
@@ -3116,27 +3117,37 @@ macro_rules! vk_functions {
                 $name: extern "system" fn ($($param_name: $param),*) -> $ret,
             )+
         }
+
+        unsafe impl Send for $struct_name {}
+        unsafe impl Sync for $struct_name {}
+
         impl $struct_name {
-            pub fn load<F>(mut f: F) -> $struct_name
+            pub fn load<F>(mut f: F) -> ::std::result::Result<$struct_name, String>
                 where F: FnMut(&::std::ffi::CStr) -> *const c_void
             {
                 use std::ffi::{CString, CStr};
                 use std::mem;
-                $struct_name {
+                let s = $struct_name {
                     $(
                         $name: unsafe {
                             extern "system" fn $name($(_: $param),*) { panic!("function pointer `{}` not loaded", stringify!($name)) }
                             let cname = CString::new($raw_name).unwrap();
                             let val = f(&cname);
-                            if val.is_null() { mem::transmute($name as *const ()) } else { mem::transmute(val) }
+                            //if val.is_null() { mem::transmute($name as *const ()) } else { mem::transmute(val) }
+                            //if val.is_null(){
+                            //    return ::std::result::Result::Err($raw_name.to_string());
+                            //}
+                            mem::transmute(val)
                         },
                     )+
-                }
+                };
+                ::std::result::Result::Ok(s)
             }
             $(
                 #[inline]
                 pub unsafe fn $name(&self $(, $param_name: $param)*) -> $ret {
                     let fp = self.$name;
+                    assert!(!(self.$name as *const c_void).is_null(), "{} not loaded!.", stringify!($raw_name));
                     fp($($param_name),*)
                 }
             )+
@@ -3147,6 +3158,7 @@ macro_rules! vk_functions {
                 writeln!(fmt, stringify!($struct_name));
                 $(
                     write!(fmt, $raw_name);
+                    write!(fmt," is loaded = {:?}", !(self.$name as *const c_void).is_null());
                     writeln!(fmt, ", ");
                 )+
                 write!(fmt, "")
@@ -3235,6 +3247,7 @@ vk_functions!{
 
 vk_functions!{
     InstanceFn,
+
     "vkDestroyInstance", destroy_instance(
         instance: Instance,
         p_allocator: *const AllocationCallbacks,

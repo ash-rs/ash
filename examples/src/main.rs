@@ -5,42 +5,16 @@ extern crate ash;
 extern crate vk_loader2 as vk;
 extern crate glfw;
 
+use ash::instance::Instance;
 use std::ptr;
 use std::ffi::{CStr, CString};
 use std::mem;
 
-
-fn main(){
-
-    let vkstatic = match *ash::load::VK_LIB {
-        Ok(ref lib) => {
-            let mut err = None;
-            let result = vk::Static::load(|name| unsafe {
-                let name = name.to_str().unwrap();
-                match lib.symbol(name) {
-                    Ok(s) => s,
-                    Err(_) => {     // TODO: return error?
-                        err = Some(ash::load::LoadingError::MissingEntryPoint("".to_owned()));
-                        ptr::null()
-                    }
-                }
-            });
-            if let Some(err) = err {
-                Err(err)
-            } else {
-                Ok(result)
-            }
-        },
-        Err(ref err) => Err(err.clone()),
-    }.unwrap();
-
-    let entry = vk::EntryFn::load(|name| unsafe {
-        mem::transmute(vkstatic.get_instance_proc_addr(ptr::null_mut(), name.as_ptr()))
-
-    });
-    println!("{:?}", entry);
+fn main() {
     let app_name = CString::new("TEST").unwrap();
     let raw_name = app_name.as_ptr();
+    let lunarg_layer = CString::new("VK_LAYER_LUNARG_standard_validation").unwrap();
+    let layers = [lunarg_layer.as_ptr()];
     let appinfo = vk::ApplicationInfo {
         p_application_name: raw_name,
         s_type: vk::StructureType::ApplicationInfo,
@@ -51,87 +25,44 @@ fn main(){
         api_version: 0,
     };
     let create_info = vk::InstanceCreateInfo {
-        s_type: vk::StructureType::ApplicationInfo,
+        s_type: vk::StructureType::InstanceCreateInfo,
         p_application_info: &appinfo,
         p_next: ptr::null(),
-        pp_enabled_layer_names: ptr::null(),
-        enabled_layer_count: 0,
+        pp_enabled_layer_names: layers.as_ptr(),
+        enabled_layer_count: layers.len() as u32,
         pp_enabled_extension_names: ptr::null(),
         enabled_extension_count: 0,
         flags: 0,
     };
-    let mut instance: vk::Instance = unsafe { mem::uninitialized() };
+    let instance = Instance::create_instance(create_info).expect("Instance creation error");
     println!("{:?}", instance);
-    unsafe {
-        let i = entry.create_instance(&create_info, ptr::null(), &mut instance);
-        println!("{:?}", i);
-
-    }
-//    let r1 = vk::load_with(|name| unsafe {
-//            let cs = CString::new(name).unwrap();
-//            mem::transmute(vk::get_instance_proc_addr(ptr::null_mut(), cs.as_ptr()))
-//    });
-//    let app_name = CString::new("TEST").unwrap();
-//    let raw_name = app_name.as_ptr();
-//    let appinfo = vk::ApplicationInfo {
-//        p_application_name: raw_name,
-//        s_type: vk::StructureType::ApplicationInfo,
-//        p_next: ptr::null(),
-//        application_version: 0,
-//        p_engine_name: raw_name,
-//        engine_version: 0,
-//        api_version: 0,
-//    };
-//    let create_info = vk::InstanceCreateInfo {
-//        s_type: vk::StructureType::ApplicationInfo,
-//        p_application_info: &appinfo,
-//        p_next: ptr::null(),
-//        pp_enabled_layer_names: ptr::null(),
-//        enabled_layer_count: 0,
-//        pp_enabled_extension_names: ptr::null(),
-//        enabled_extension_count: 0,
-//        flags: 0,
-//    };
-//    let mut instance: vk::Instance = unsafe { mem::uninitialized() };
-//    println!("{:?}", instance);
-//    unsafe {
-//        let i = vk::create_instance(&create_info, ptr::null(), &mut instance);
-//        println!("{:?}", i);
-//
-//    }
-//    println!("{:?}", instance);
-//    let r2 = vk::load_with(|name| unsafe {
-//            let cs = CString::new(name).unwrap();
-//            mem::transmute(vk::get_instance_proc_addr(instance, cs.as_ptr()))
-//    });
-//    println!("{:?}", r2);
-//    let r3 = vk::load_with(|name| unsafe {
-//            let cs = CString::new(name).unwrap();
-//            mem::transmute(vk::get_instance_proc_addr(ptr::null_mut(), cs.as_ptr()))
-//    });
-//    println!("{:?}", r3);
+    let pdevices = instance.enumerate_physical_devices().expect("Physical device error");
+    println!("{:?}", pdevices);
+    let ext_props = instance.enumerate_device_extension_properties(pdevices[0])
+        .expect("Enumerate device error");
+    println!("{:?}", ext_props);
 }
-//use ash::instance::*;
-//use vk_loader as vk;
-//use ash::extensions::*;
-//use glfw::*;
-//use std::sync::Arc;
-//use std::thread;
-//use ash::device::*;
-//use ash::surface;
-//use ash::commandpool;
-//use std::cell::RefCell;
-//use std::marker;
-//use std::ptr;
-//use ash::device;
-//fn handle_window_event(window: &mut glfw::Window, event: glfw::WindowEvent) {
+// use ash::instance::*;
+// use vk_loader as vk;
+// use ash::extensions::*;
+// use glfw::*;
+// use std::sync::Arc;
+// use std::thread;
+// use ash::device::*;
+// use ash::surface;
+// use ash::commandpool;
+// use std::cell::RefCell;
+// use std::marker;
+// use std::ptr;
+// use ash::device;
+// fn handle_window_event(window: &mut glfw::Window, event: glfw::WindowEvent) {
 //    match event {
 //        glfw::WindowEvent::Key(Key::Escape, _, Action::Press, _) => window.set_should_close(true),
 //        _ => {}
 //    }
-//}
+// }
 //
-//fn main() {
+// fn main() {
 //    let mut glfw = glfw::init(glfw::FAIL_ON_ERRORS).unwrap();
 //
 //    let (mut window, events) = glfw.create_window(1920,
@@ -347,4 +278,4 @@ fn main(){
 //    //            handle_window_event(&mut window, event);
 //    //        }
 //    //    }
-//}
+// }

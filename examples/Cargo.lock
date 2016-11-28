@@ -19,6 +19,7 @@ dependencies = [
  "lazy_static 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "shared_library 0.1.5 (registry+https://github.com/rust-lang/crates.io-index)",
  "vk_loader 0.1.0",
+ "vk_loader2 0.1.0",
 ]
 
 [[package]]
