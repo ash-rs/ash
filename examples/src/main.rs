@@ -5,16 +5,45 @@ extern crate ash;
 extern crate vk_loader2 as vk;
 extern crate glfw;
 
-use ash::instance::Instance;
+use glfw::*;
+use ash::instance::{Entry, Instance};
 use std::ptr;
 use std::ffi::{CStr, CString};
 use std::mem;
+use std::path::Path;
+use std::os::raw::c_void;
 
+fn handle_window_event(window: &mut glfw::Window, event: glfw::WindowEvent) {
+    match event {
+        glfw::WindowEvent::Key(Key::Escape, _, Action::Press, _) => window.set_should_close(true),
+        _ => {}
+    }
+}
 fn main() {
+    let mut glfw = glfw::init(glfw::FAIL_ON_ERRORS).unwrap();
+
+    let (mut window, events) = glfw.create_window(1920,
+                       1080,
+                       "Hello this is window",
+                       glfw::WindowMode::Windowed)
+        .expect("Failed to create GLFW window.");
+
+    window.set_key_polling(true);
+    window.make_current();
+    let entry = Entry::load_vulkan().unwrap();
+    let instance_ext_props = entry.enumerate_instance_extension_properties().unwrap();
+    println!("{:?}", instance_ext_props);
     let app_name = CString::new("TEST").unwrap();
     let raw_name = app_name.as_ptr();
     let lunarg_layer = CString::new("VK_LAYER_LUNARG_standard_validation").unwrap();
     let layers = [lunarg_layer.as_ptr()];
+    let swapchain_ext_name = CString::new("VK_KHR_swapchain").unwrap();
+    let surface_ext_name = CString::new("VK_KHR_surface").unwrap();
+    let surface_xlib_ext_name = CString::new("VK_KHR_xlib_surface").unwrap();
+    let extensions = [// swapchain_ext_name.as_ptr(),
+                      surface_ext_name.as_ptr(),
+                      surface_xlib_ext_name.as_ptr()];
+    let tt = [vk::VK_KHR_SURFACE_EXTENSION_NAME];
     let appinfo = vk::ApplicationInfo {
         p_application_name: raw_name,
         s_type: vk::StructureType::ApplicationInfo,
@@ -30,17 +59,56 @@ fn main() {
         p_next: ptr::null(),
         pp_enabled_layer_names: layers.as_ptr(),
         enabled_layer_count: layers.len() as u32,
-        pp_enabled_extension_names: ptr::null(),
-        enabled_extension_count: 0,
+        pp_enabled_extension_names: extensions.as_ptr(),
+        enabled_extension_count: extensions.len() as u32,
         flags: 0,
     };
-    let instance = Instance::create_instance(create_info).expect("Instance creation error");
-    println!("{:?}", instance);
+    let instance = entry.create_instance(create_info).expect("Instance creation error");
+    let x11_display = window.glfw.get_x11_display();
+    let x11_window = window.get_x11_window();
+    let x11_create_info = vk::XlibSurfaceCreateInfoKHR {
+        s_type: vk::StructureType::XlibSurfaceCreateInfoKhr,
+        p_next: ptr::null(),
+        flags: 0,
+        window: x11_window as vk::Window,
+        dpy: x11_display as *mut vk::Display,
+    };
+    let surface = instance.create_xlib_surface_khr(x11_create_info).unwrap();
     let pdevices = instance.enumerate_physical_devices().expect("Physical device error");
-    println!("{:?}", pdevices);
-    let ext_props = instance.enumerate_device_extension_properties(pdevices[0])
-        .expect("Enumerate device error");
-    println!("{:?}", ext_props);
+    let pdevice = pdevices[0];
+    let pdevice_info = instance.get_physical_device_queue_family_properties(pdevice);
+    let (queue_family_index, _) = pdevice_info.iter()
+        .enumerate()
+        .filter(|&(index, ref info)| info.queue_flags.subset(vk::QUEUE_GRAPHICS_BIT))
+        .nth(0)
+        .expect("Could not find any suitable queue");
+    println!("{:?}", pdevice_info);
+    let priorities = [1.0];
+    let queue_info = vk::DeviceQueueCreateInfo {
+        s_type: vk::StructureType::DeviceQueueCreateInfo,
+        p_next: ptr::null(),
+        flags: 0,
+        queue_family_index: queue_family_index as u32,
+        p_queue_priorities: priorities.as_ptr(),
+        queue_count: priorities.len() as u32,
+    };
+    let device_create_info = vk::DeviceCreateInfo {
+        s_type: vk::StructureType::DeviceCreateInfo,
+        p_next: ptr::null(),
+        flags: 0,
+        queue_create_info_count: 1,
+        p_queue_create_infos: &queue_info,
+        enabled_layer_count: 0,
+        pp_enabled_layer_names: ptr::null(),
+        enabled_extension_count: 0,
+        pp_enabled_extension_names: ptr::null(),
+        p_enabled_features: ptr::null(),
+    };
+    let device = instance.create_device(pdevices[0], device_create_info).unwrap();
+
+    device.destroy_device();
+    instance.destroy_surface_khr(surface);
+    instance.destroy_instance();
 }
 // use ash::instance::*;
 // use vk_loader as vk;

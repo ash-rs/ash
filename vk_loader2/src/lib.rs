@@ -203,6 +203,19 @@ pub type uint64_t = u64;
 pub type uint8_t = u8;
 pub type c_float = f32;
 pub type int32_t = i32;
+pub type Display = *const ();
+pub type Window = *const ();
+pub type VisualID = *const ();
+pub type xcb_connection_t = *const ();
+pub type xcb_window_t = *const ();
+pub type xcb_visualid_t = *const ();
+pub type MirConnection = *const ();
+pub type MirSurface = *const ();
+pub type HINSTANCE = *const ();
+pub type HWND = *const ();
+pub type ANativeWindow = *const ();
+pub type wl_display = *const ();
+pub type wl_surface = *const ();
 
 pub type InstanceCreateFlags = Flags;
 pub type Flags = uint32_t;
@@ -236,6 +249,15 @@ pub type DescriptorPoolResetFlags = Flags;
 pub type FramebufferCreateFlags = Flags;
 pub type RenderPassCreateFlags = Flags;
 pub type SubpassDescriptionFlags = Flags;
+pub type XlibSurfaceCreateFlagsKHR = Flags;
+pub type XcbSurfaceCreateFlagsKHR = Flags;
+pub type MirSurfaceCreateFlagsKHR = Flags;
+pub type Win32SurfaceCreateFlagsKHR = Flags;
+pub type AndroidSurfaceCreateFlagsKHR = Flags;
+pub type WaylandSurfaceCreateFlagsKHR = Flags;
+pub type SwapchainCreateFlagsKHR = Flags;
+pub type DisplayModeCreateFlagsKHR = Flags;
+pub type DisplaySurfaceCreateFlagsKHR = Flags;
 
 pub const VK_MAX_PHYSICAL_DEVICE_NAME_SIZE: size_t = 256;
 pub const VK_UUID_SIZE: size_t = 16;
@@ -254,6 +276,26 @@ pub const VK_QUEUE_FAMILY_IGNORED: uint32_t = !0;
 pub const VK_SUBPASS_EXTERNAL: uint32_t = !0;
 pub const VK_KHR_SURFACE_SPEC_VERSION: uint32_t = 25;
 pub const VK_KHR_SURFACE_EXTENSION_NAME: &'static str = "VK_KHR_surface";
+pub const VK_KHR_XLIB_SURFACE_SPEC_VERSION: uint32_t = 6;
+pub const VK_KHR_XLIB_SURFACE_EXTENSION_NAME: &'static str = "VK_KHR_xlib_surface";
+pub const VK_KHR_XCB_SURFACE_SPEC_VERSION: uint32_t = 6;
+pub const VK_KHR_XCB_SURFACE_EXTENSION_NAME: &'static str = "VK_KHR_xcb_surface";
+pub const VK_KHR_MIR_SURFACE_SPEC_VERSION: uint32_t = 4;
+pub const VK_KHR_MIR_SURFACE_EXTENSION_NAME: &'static str = "VK_KHR_mir_surface";
+pub const VK_KHR_WIN32_SURFACE_SPEC_VERSION: uint32_t = 5;
+pub const VK_KHR_WIN32_SURFACE_EXTENSION_NAME: &'static str = "VK_KHR_win32_surface";
+pub const VK_KHR_ANDROID_SURFACE_SPEC_VERSION: uint32_t = 6;
+pub const VK_KHR_ANDROID_SURFACE_EXTENSION_NAME: &'static str = "VK_KHR_android_surface";
+pub const VK_KHR_WAYLAND_SURFACE_SPEC_VERSION: uint32_t = 5;
+pub const VK_KHR_WAYLAND_SURFACE_EXTENSION_NAME: &'static str = "VK_KHR_wayland_surface";
+pub const VK_KHR_SWAPCHAIN_SPEC_VERSION: uint32_t = 68;
+pub const VK_KHR_SWAPCHAIN_EXTENSION_NAME: &'static str = "VK_KHR_swapchain";
+pub const VK_KHR_DISPLAY_SWAPCHAIN_SPEC_VERSION: uint32_t = 9;
+pub const VK_KHR_DISPLAY_SWAPCHAIN_EXTENSION_NAME: &'static str = "VK_KHR_display_swapchain";
+pub const VK_KHR_DISPLAY_SPEC_VERSION: uint32_t = 21;
+pub const VK_KHR_DISPLAY_EXTENSION_NAME: &'static str = "VK_KHR_display";
+pub const VK_EXT_DEBUG_REPORT_SPEC_VERSION: uint32_t = 3;
+pub const VK_EXT_DEBUG_REPORT_EXTENSION_NAME: &'static str = "VK_EXT_debug_report";
 
 #[derive(Debug, Clone)]
 #[repr(C)]
@@ -2069,6 +2111,215 @@ pub struct SurfaceFormatKHR {
     pub color_space: ColorSpaceKHR,
 }
 
+#[derive(Debug, Clone)]
+#[repr(C)]
+pub struct XlibSurfaceCreateInfoKHR {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub flags: XlibSurfaceCreateFlagsKHR,
+    pub dpy: *mut Display,
+    pub window: Window,
+}
+
+#[derive(Debug, Clone)]
+#[repr(C)]
+pub struct XcbSurfaceCreateInfoKHR {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub flags: XcbSurfaceCreateFlagsKHR,
+    pub connection: *mut xcb_connection_t,
+    pub window: xcb_window_t,
+}
+
+#[derive(Debug, Clone)]
+#[repr(C)]
+pub struct MirSurfaceCreateInfoKHR {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub flags: MirSurfaceCreateFlagsKHR,
+    pub connection: *mut MirConnection,
+    pub mir_surface: *mut MirSurface,
+}
+
+#[derive(Debug, Clone)]
+#[repr(C)]
+pub struct Win32SurfaceCreateInfoKHR {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub flags: Win32SurfaceCreateFlagsKHR,
+    pub hinstance: HINSTANCE,
+    pub hwnd: HWND,
+}
+
+#[derive(Debug, Clone)]
+#[repr(C)]
+pub struct AndroidSurfaceCreateInfoKHR {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub flags: AndroidSurfaceCreateFlagsKHR,
+    pub window: *mut ANativeWindow,
+}
+
+#[derive(Debug, Clone)]
+#[repr(C)]
+pub struct WaylandSurfaceCreateInfoKHR {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub flags: WaylandSurfaceCreateFlagsKHR,
+    pub display: *mut wl_display,
+    pub surface: *mut wl_surface,
+}
+
+#[derive(Debug, Clone)]
+#[repr(C)]
+pub struct SwapchainCreateInfoKHR {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub flags: SwapchainCreateFlagsKHR,
+    pub surface: SurfaceKHR,
+    pub min_image_count: uint32_t,
+    pub image_format: Format,
+    pub image_color_space: ColorSpaceKHR,
+    pub image_extent: Extent2D,
+    pub image_array_layers: uint32_t,
+    pub image_usage: ImageUsageFlags,
+    pub image_sharing_mode: SharingMode,
+    pub queue_family_index_count: uint32_t,
+    pub p_queue_family_indices: *const uint32_t,
+    pub pre_transform: SurfaceTransformFlagsKHR,
+    pub composite_alpha: CompositeAlphaFlagsKHR,
+    pub present_mode: PresentModeKHR,
+    pub clipped: Bool32,
+    pub old_swapchain: SwapchainKHR,
+}
+
+#[derive(Debug, Clone)]
+#[repr(C)]
+pub struct PresentInfoKHR {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub wait_semaphore_count: uint32_t,
+    pub p_wait_semaphores: *const Semaphore,
+    pub swapchain_count: uint32_t,
+    pub p_swapchains: *const SwapchainKHR,
+    pub p_image_indices: *const uint32_t,
+    pub p_results: *mut Result,
+}
+
+#[derive(Debug, Clone)]
+#[repr(C)]
+pub struct DisplayPresentInfoKHR {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub src_rect: Rect2D,
+    pub dst_rect: Rect2D,
+    pub persistent: Bool32,
+}
+
+#[derive(Debug, Clone)]
+#[repr(C)]
+pub struct DisplayPropertiesKHR {
+    pub display: DisplayKHR,
+    pub display_name: *const c_char,
+    pub physical_dimensions: Extent2D,
+    pub physical_resolution: Extent2D,
+    pub supported_transforms: SurfaceTransformFlagsKHR,
+    pub plane_reorder_possible: Bool32,
+    pub persistent_content: Bool32,
+}
+
+#[derive(Debug, Clone)]
+#[repr(C)]
+pub struct DisplayModeParametersKHR {
+    pub visible_region: Extent2D,
+    pub refresh_rate: uint32_t,
+}
+
+#[derive(Debug, Clone)]
+#[repr(C)]
+pub struct DisplayModePropertiesKHR {
+    pub display_mode: DisplayModeKHR,
+    pub parameters: DisplayModeParametersKHR,
+}
+
+#[derive(Debug, Clone)]
+#[repr(C)]
+pub struct DisplayModeCreateInfoKHR {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub flags: DisplayModeCreateFlagsKHR,
+    pub parameters: DisplayModeParametersKHR,
+}
+
+#[derive(Debug, Clone)]
+#[repr(C)]
+pub struct DisplayPlaneCapabilitiesKHR {
+    pub supported_alpha: DisplayPlaneAlphaFlagsKHR,
+    pub min_src_position: Offset2D,
+    pub max_src_position: Offset2D,
+    pub min_src_extent: Extent2D,
+    pub max_src_extent: Extent2D,
+    pub min_dst_position: Offset2D,
+    pub max_dst_position: Offset2D,
+    pub min_dst_extent: Extent2D,
+    pub max_dst_extent: Extent2D,
+}
+
+#[derive(Debug, Clone)]
+#[repr(C)]
+pub struct DisplayPlanePropertiesKHR {
+    pub current_display: DisplayKHR,
+    pub current_stack_index: uint32_t,
+}
+
+#[derive(Debug, Clone)]
+#[repr(C)]
+pub struct DisplaySurfaceCreateInfoKHR {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub flags: DisplaySurfaceCreateFlagsKHR,
+    pub display_mode: DisplayModeKHR,
+    pub plane_index: uint32_t,
+    pub plane_stack_index: uint32_t,
+    pub transform: SurfaceTransformFlagsKHR,
+    pub global_alpha: c_float,
+    pub alpha_mode: DisplayPlaneAlphaFlagsKHR,
+    pub image_extent: Extent2D,
+}
+
+#[repr(C)]
+pub struct DebugReportCallbackCreateInfoEXT {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub flags: DebugReportFlagsEXT,
+    pub pfn_callback: PFN_vkDebugReportCallbackEXT,
+    pub p_user_data: *mut c_void,
+}
+
+impl Clone for DebugReportCallbackCreateInfoEXT {
+    fn clone(&self) -> DebugReportCallbackCreateInfoEXT {
+        DebugReportCallbackCreateInfoEXT {
+            s_type: self.s_type.clone(),
+            p_next: self.p_next.clone(),
+            flags: self.flags.clone(),
+            pfn_callback: self.pfn_callback,
+            p_user_data: self.p_user_data.clone(),
+        }
+    }
+}
+
+impl fmt::Debug for DebugReportCallbackCreateInfoEXT {
+    fn fmt(&self, fmt: &mut fmt::Formatter) -> ::std::result::Result<(), fmt::Error> {
+        fmt.debug_struct("DebugReportCallbackCreateInfoEXT")
+           .field("s_type", &self.s_type)
+           .field("p_next", &self.p_next)
+           .field("flags", &self.flags)
+           .field("pfn_callback", &(self.pfn_callback as *const ()))
+           .field("p_user_data", &self.p_user_data)
+            .finish()
+    }
+}
+
 
 /// Temporary Hard-Coded union hack; will be automatically generated when actual unions become stable
 #[repr(C)]
@@ -2242,6 +2493,18 @@ pub enum StructureType {
     MemoryBarrier = 46,
     LoaderInstanceCreateInfo = 47,
     LoaderDeviceCreateInfo = 48,
+    XlibSurfaceCreateInfoKhr = 1000004000,
+    XcbSurfaceCreateInfoKhr = 1000005000,
+    MirSurfaceCreateInfoKhr = 1000007000,
+    Win32SurfaceCreateInfoKhr = 1000009000,
+    AndroidSurfaceCreateInfoKhr = 1000008000,
+    WaylandSurfaceCreateInfoKhr = 1000006000,
+    SwapchainCreateInfoKhr = 1000001000,
+    PresentInfoKhr = 1000001001,
+    DisplayPresentInfoKhr = 1000003000,
+    DisplayModeCreateInfoKhr = 1000002000,
+    DisplaySurfaceCreateInfoKhr = 1000002001,
+    DebugReportCallbackCreateInfoExt = 1000011000,
 }
 
 #[repr(C)]
@@ -2283,6 +2546,10 @@ pub enum Result {
     ErrorFragmentedPool = -12,
     ErrorSurfaceLostKhr = -1000000000,
     ErrorNativeWindowInUseKhr = -1000000001,
+    SuboptimalKhr = 1000001003,
+    ErrorOutOfDateKhr = -1000001004,
+    ErrorIncompatibleDisplayKhr = -1000003001,
+    ErrorValidationFailedExt = -1000011001,
 }
 
 #[repr(C)]
@@ -2527,6 +2794,7 @@ pub enum ImageLayout {
     TransferSrcOptimal = 6,
     TransferDstOptimal = 7,
     Preinitialized = 8,
+    PresentSrcKhr = 1000001002,
 }
 
 #[repr(C)]
@@ -2794,6 +3062,47 @@ pub enum PresentModeKHR {
     FifoRelaxed = 3,
 }
 
+#[repr(C)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub enum DebugReportObjectTypeEXT {
+    Unknown = 0,
+    Instance = 1,
+    PhysicalDevice = 2,
+    Device = 3,
+    Queue = 4,
+    Semaphore = 5,
+    CommandBuffer = 6,
+    Fence = 7,
+    DeviceMemory = 8,
+    Buffer = 9,
+    Image = 10,
+    Ent = 11,
+    QueryPool = 12,
+    BufferView = 13,
+    ImageView = 14,
+    ShaderModule = 15,
+    PipelineCache = 16,
+    PipelineLayout = 17,
+    RenderPass = 18,
+    Pipeline = 19,
+    DescriptorSetLayout = 20,
+    Sampler = 21,
+    DescriptorPool = 22,
+    DescriptorSet = 23,
+    Framebuffer = 24,
+    CommandPool = 25,
+    SurfaceKhr = 26,
+    SwapchainKhr = 27,
+    DebugReport = 28,
+}
+
+#[repr(C)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub enum DebugReportErrorEXT {
+    None = 0,
+    CallbackRef = 1,
+}
+
 
 #[repr(C)]
 #[doc(hidden)]
@@ -2846,6 +3155,10 @@ handle_nondispatchable!(DescriptorSet);
 handle_nondispatchable!(Framebuffer);
 handle_nondispatchable!(CommandPool);
 handle_nondispatchable!(SurfaceKHR);
+handle_nondispatchable!(SwapchainKHR);
+handle_nondispatchable!(DisplayKHR);
+handle_nondispatchable!(DisplayModeKHR);
+handle_nondispatchable!(DebugReportCallbackEXT);
 
 pub const FORMAT_FEATURE_SAMPLED_IMAGE_BIT: FormatFeatureFlags = FormatFeatureFlags {flags: 0b1};
 pub const FORMAT_FEATURE_STORAGE_IMAGE_BIT: FormatFeatureFlags = FormatFeatureFlags {flags: 0b10};
@@ -3070,6 +3383,19 @@ pub const COMPOSITE_ALPHA_POST_MULTIPLIED_BIT_KHR: CompositeAlphaFlagsKHR = Comp
 pub const COMPOSITE_ALPHA_INHERIT_BIT_KHR: CompositeAlphaFlagsKHR = CompositeAlphaFlagsKHR {flags: 0b1000};
 vk_bitflags_wrapped!(CompositeAlphaFlagsKHR, 0b1111, Flags);
 
+pub const DISPLAY_PLANE_ALPHA_OPAQUE_BIT_KHR: DisplayPlaneAlphaFlagsKHR = DisplayPlaneAlphaFlagsKHR {flags: 0b1};
+pub const DISPLAY_PLANE_ALPHA_GLOBAL_BIT_KHR: DisplayPlaneAlphaFlagsKHR = DisplayPlaneAlphaFlagsKHR {flags: 0b10};
+pub const DISPLAY_PLANE_ALPHA_PER_PIXEL_BIT_KHR: DisplayPlaneAlphaFlagsKHR = DisplayPlaneAlphaFlagsKHR {flags: 0b100};
+pub const DISPLAY_PLANE_ALPHA_PER_PIXEL_PREMULTIPLIED_BIT_KHR: DisplayPlaneAlphaFlagsKHR = DisplayPlaneAlphaFlagsKHR {flags: 0b1000};
+vk_bitflags_wrapped!(DisplayPlaneAlphaFlagsKHR, 0b1111, Flags);
+
+pub const DEBUG_REPORT_INFORMATION_BIT_EXT: DebugReportFlagsEXT = DebugReportFlagsEXT {flags: 0b1};
+pub const DEBUG_REPORT_WARNING_BIT_EXT: DebugReportFlagsEXT = DebugReportFlagsEXT {flags: 0b10};
+pub const DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT: DebugReportFlagsEXT = DebugReportFlagsEXT {flags: 0b100};
+pub const DEBUG_REPORT_ERROR_BIT_EXT: DebugReportFlagsEXT = DebugReportFlagsEXT {flags: 0b1000};
+pub const DEBUG_REPORT_DEBUG_BIT_EXT: DebugReportFlagsEXT = DebugReportFlagsEXT {flags: 0b10000};
+vk_bitflags_wrapped!(DebugReportFlagsEXT, 0b11111, Flags);
+
 
 pub type PFN_vkAllocationFunction = unsafe extern "system" fn(
     *mut c_void,
@@ -3107,6 +3433,18 @@ pub type PFN_vkInternalFreeNotification = unsafe extern "system" fn(
 
 pub type PFN_vkVoidFunction = unsafe extern "system" fn(
 );
+
+pub type PFN_vkDebugReportCallbackEXT = unsafe extern "system" fn(
+    DebugReportFlagsEXT,
+    DebugReportObjectTypeEXT,
+    uint64_t,
+    size_t,
+    int32_t,
+    *const c_char,
+    *const c_char,
+    *mut c_void,
+) -> Bool32;
+
 
 }
 //FIX: Need better error handling for extensions
@@ -3165,51 +3503,6 @@ macro_rules! vk_functions {
 
             }
         }
-        //$(
-        //    pub unsafe extern "system" fn $name (
-        //        $($param_name: $param),*
-        //        ) -> $ret {
-        //        use std::mem;
-
-        //        mem::transmute::<_, $name::FnType>($name::fn_ptr)($($param_name),*)
-        //    }
-
-        //    pub mod $name {
-
-        //        use super::super::*;
-        //        #[allow(unused_imports)]
-        //        use super::super::libc_reexports::*;
-        //        pub const RAW_NAME: &'static str = $raw_name;
-        //        pub static mut fn_ptr: *const () = unloaded_function_panic as *const ();
-        //        #[doc(hidden)]
-        //        pub type FnType = unsafe extern "system" fn($($param),*) -> $ret;
-
-        //        pub fn is_loaded() -> bool {
-        //            unsafe{ fn_ptr == unloaded_function_panic as *const () }
-        //        }
-        //    }
-        //)+
-
-        //pub fn load_with<F: FnMut(&str) -> *const ()>(mut load_fn: F) -> ::std::result::Result<(), Vec<&'static str>> {unsafe{
-        //    use std::ptr; 
-        //    let mut fn_buf: *const (); 
-        //    let mut unloaded_fns = Vec::new();
-
-        //    $(
-        //        fn_buf = load_fn($raw_name);
-        //        if ptr::null() != fn_buf {
-        //            $name::fn_ptr = fn_buf;
-        //        } else if $name::fn_ptr != unloaded_function_panic as *const () {
-        //            unloaded_fns.push($raw_name)
-        //        }
-        //    )+
-
-        //    if 0 == unloaded_fns.len() {
-        //        Ok(())
-        //    } else {
-        //        Err(unloaded_fns)
-        //    }
-        //}}
     }
 }
 
@@ -3365,6 +3658,193 @@ vk_functions!{
         p_present_mode_count: *mut uint32_t,
         p_present_modes: *mut PresentModeKHR,
     ) -> Result;
+
+    "vkGetPhysicalDeviceXlibPresentationSupportKHR", get_physical_device_xlib_presentation_support_khr(
+        physical_device: PhysicalDevice,
+        queue_family_index: uint32_t,
+        dpy: *mut Display,
+        visual_id: VisualID,
+    ) -> Bool32;
+
+    "vkCreateXlibSurfaceKHR", create_xlib_surface_khr(
+        instance: Instance,
+        p_create_info: *const XlibSurfaceCreateInfoKHR,
+        p_allocator: *const AllocationCallbacks,
+        p_surface: *mut SurfaceKHR,
+    ) -> Result;
+
+    "vkCreateXcbSurfaceKHR", create_xcb_surface_khr(
+        instance: Instance,
+        p_create_info: *const XcbSurfaceCreateInfoKHR,
+        p_allocator: *const AllocationCallbacks,
+        p_surface: *mut SurfaceKHR,
+    ) -> Result;
+
+    "vkGetPhysicalDeviceXcbPresentationSupportKHR", get_physical_device_xcb_presentation_support_khr(
+        physical_device: PhysicalDevice,
+        queue_family_index: uint32_t,
+        connection: *mut xcb_connection_t,
+        visual_id: xcb_visualid_t,
+    ) -> Bool32;
+
+    "vkCreateMirSurfaceKHR", create_mir_surface_khr(
+        instance: Instance,
+        p_create_info: *const MirSurfaceCreateInfoKHR,
+        p_allocator: *const AllocationCallbacks,
+        p_surface: *mut SurfaceKHR,
+    ) -> Result;
+
+    "vkGetPhysicalDeviceMirPresentationSupportKHR", get_physical_device_mir_presentation_support_khr(
+        physical_device: PhysicalDevice,
+        queue_family_index: uint32_t,
+        connection: *mut MirConnection,
+    ) -> Bool32;
+
+    "vkCreateWin32SurfaceKHR", create_win32_surface_khr(
+        instance: Instance,
+        p_create_info: *const Win32SurfaceCreateInfoKHR,
+        p_allocator: *const AllocationCallbacks,
+        p_surface: *mut SurfaceKHR,
+    ) -> Result;
+
+    "vkGetPhysicalDeviceWin32PresentationSupportKHR", get_physical_device_win32_presentation_support_khr(
+        physical_device: PhysicalDevice,
+        queue_family_index: uint32_t,
+    ) -> Bool32;
+
+    "vkCreateAndroidSurfaceKHR", create_android_surface_khr(
+        instance: Instance,
+        p_create_info: *const AndroidSurfaceCreateInfoKHR,
+        p_allocator: *const AllocationCallbacks,
+        p_surface: *mut SurfaceKHR,
+    ) -> Result;
+
+    "vkCreateWaylandSurfaceKHR", create_wayland_surface_khr(
+        instance: Instance,
+        p_create_info: *const WaylandSurfaceCreateInfoKHR,
+        p_allocator: *const AllocationCallbacks,
+        p_surface: *mut SurfaceKHR,
+    ) -> Result;
+
+    "vkGetPhysicalDeviceWaylandPresentationSupportKHR", get_physical_device_wayland_presentation_support_khr(
+        physical_device: PhysicalDevice,
+        queue_family_index: uint32_t,
+        display: *mut wl_display,
+    ) -> Bool32;
+
+    "vkCreateSwapchainKHR", create_swapchain_khr(
+        device: Device,
+        p_create_info: *const SwapchainCreateInfoKHR,
+        p_allocator: *const AllocationCallbacks,
+        p_swapchain: *mut SwapchainKHR,
+    ) -> Result;
+
+    "vkDestroySwapchainKHR", destroy_swapchain_khr(
+        device: Device,
+        swapchain: SwapchainKHR,
+        p_allocator: *const AllocationCallbacks,
+    ) -> ();
+
+    "vkGetSwapchainImagesKHR", get_swapchain_images_khr(
+        device: Device,
+        swapchain: SwapchainKHR,
+        p_swapchain_image_count: *mut uint32_t,
+        p_swapchain_images: *mut Image,
+    ) -> Result;
+
+    "vkAcquireNextImageKHR", acquire_next_image_khr(
+        device: Device,
+        swapchain: SwapchainKHR,
+        timeout: uint64_t,
+        semaphore: Semaphore,
+        fence: Fence,
+        p_image_index: *mut uint32_t,
+    ) -> Result;
+
+    "vkQueuePresentKHR", queue_present_khr(
+        queue: Queue,
+        p_present_info: *const PresentInfoKHR,
+    ) -> Result;
+
+    "vkCreateSharedSwapchainsKHR", create_shared_swapchains_khr(
+        device: Device,
+        swapchain_count: uint32_t,
+        p_create_infos: *const SwapchainCreateInfoKHR,
+        p_allocator: *const AllocationCallbacks,
+        p_swapchains: *mut SwapchainKHR,
+    ) -> Result;
+
+    "vkGetPhysicalDeviceDisplayPropertiesKHR", get_physical_device_display_properties_khr(
+        physical_device: PhysicalDevice,
+        p_property_count: *mut uint32_t,
+        p_properties: *mut DisplayPropertiesKHR,
+    ) -> Result;
+
+    "vkGetPhysicalDeviceDisplayPlanePropertiesKHR", get_physical_device_display_plane_properties_khr(
+        physical_device: PhysicalDevice,
+        p_property_count: *mut uint32_t,
+        p_properties: *mut DisplayPlanePropertiesKHR,
+    ) -> Result;
+
+    "vkGetDisplayPlaneSupportedDisplaysKHR", get_display_plane_supported_displays_khr(
+        physical_device: PhysicalDevice,
+        plane_index: uint32_t,
+        p_display_count: *mut uint32_t,
+        p_displays: *mut DisplayKHR,
+    ) -> Result;
+
+    "vkGetDisplayModePropertiesKHR", get_display_mode_properties_khr(
+        physical_device: PhysicalDevice,
+        display: DisplayKHR,
+        p_property_count: *mut uint32_t,
+        p_properties: *mut DisplayModePropertiesKHR,
+    ) -> Result;
+
+    "vkCreateDisplayModeKHR", create_display_mode_khr(
+        physical_device: PhysicalDevice,
+        display: DisplayKHR,
+        p_create_info: *const DisplayModeCreateInfoKHR,
+        p_allocator: *const AllocationCallbacks,
+        p_mode: *mut DisplayModeKHR,
+    ) -> Result;
+
+    "vkGetDisplayPlaneCapabilitiesKHR", get_display_plane_capabilities_khr(
+        physical_device: PhysicalDevice,
+        mode: DisplayModeKHR,
+        plane_index: uint32_t,
+        p_capabilities: *mut DisplayPlaneCapabilitiesKHR,
+    ) -> Result;
+
+    "vkCreateDisplayPlaneSurfaceKHR", create_display_plane_surface_khr(
+        instance: Instance,
+        p_create_info: *const DisplaySurfaceCreateInfoKHR,
+        p_allocator: *const AllocationCallbacks,
+        p_surface: *mut SurfaceKHR,
+    ) -> Result;
+
+    "vkCreateDebugReportCallbackEXT", create_debug_report_callback_ext(
+        instance: Instance,
+        p_create_info: *const DebugReportCallbackCreateInfoEXT,
+        p_allocator: *const AllocationCallbacks,
+        p_callback: *mut DebugReportCallbackEXT,
+    ) -> Result;
+
+    "vkDestroyDebugReportCallbackEXT", destroy_debug_report_callback_ext(
+        instance: Instance,
+        callback: DebugReportCallbackEXT,
+        p_allocator: *const AllocationCallbacks,
+    ) -> ();
+
+    "vkDebugReportMessageEXT", debug_report_message_ext(
+        instance: Instance,
+        flags: DebugReportFlagsEXT,
+        object_type: DebugReportObjectTypeEXT,
+        object: uint64_t,
+        location: size_t,
+        message_code: int32_t,
+        p_layer_prefix: *const c_char,
+        p_message: *const c_char,
+    ) -> ();
 }
 
 vk_functions!{
