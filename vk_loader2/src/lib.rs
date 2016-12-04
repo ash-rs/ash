@@ -358,7 +358,7 @@ impl fmt::Debug for AllocationCallbacks {
     }
 }
 
-#[derive(Debug, Clone)]
+#[derive(Default, Debug, Clone)]
 #[repr(C)]
 pub struct PhysicalDeviceFeatures {
     pub robust_buffer_access: Bool32,
