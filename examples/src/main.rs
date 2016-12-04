@@ -12,18 +12,26 @@ use std::ffi::{CStr, CString};
 use std::mem;
 use std::path::Path;
 use std::os::raw::c_void;
-
+macro_rules! printlndb{
+    ($arg: tt) => {
+        println!("{:?}", $arg);
+    }
+}
 fn handle_window_event(window: &mut glfw::Window, event: glfw::WindowEvent) {
     match event {
         glfw::WindowEvent::Key(Key::Escape, _, Action::Press, _) => window.set_should_close(true),
         _ => {}
     }
 }
+
 fn main() {
     let mut glfw = glfw::init(glfw::FAIL_ON_ERRORS).unwrap();
 
-    let (mut window, events) = glfw.create_window(1920,
-                       1080,
+    let window_width = 1920;
+    let window_height = 1080;
+
+    let (mut window, events) = glfw.create_window(window_width,
+                       window_height,
                        "Hello this is window",
                        glfw::WindowMode::Windowed)
         .expect("Failed to create GLFW window.");
@@ -32,7 +40,6 @@ fn main() {
     window.make_current();
     let entry = Entry::load_vulkan().unwrap();
     let instance_ext_props = entry.enumerate_instance_extension_properties().unwrap();
-    // println!("{:?}", instance_ext_props);
     let app_name = CString::new("TEST").unwrap();
     let raw_name = app_name.as_ptr();
 
@@ -97,6 +104,7 @@ fn main() {
         .filter_map(|v| v)
         .nth(0)
         .expect("Couldn't find suitable device.");
+    let queue_family_index = queue_family_index as u32;
     let device_extension_names = [CString::new("VK_KHR_swapchain").unwrap()];
     let device_extension_names_raw: Vec<*const i8> = device_extension_names.iter()
         .map(|raw_name| raw_name.as_ptr())
@@ -124,8 +132,128 @@ fn main() {
         p_enabled_features: &features,
     };
     let device = instance.create_device(pdevice, device_create_info).unwrap();
+    let present_queue = device.get_device_queue(queue_family_index as u32, 0);
 
+    let surface_formats = instance.get_physical_device_surface_formats_khr(pdevice, surface)
+        .unwrap();
+    let surface_format = surface_formats.iter()
+        .map(|sfmt| {
+            match sfmt.format {
+                vk::Format::Undefined => {
+                    vk::SurfaceFormatKHR {
+                        format: vk::Format::B8g8r8Unorm,
+                        color_space: sfmt.color_space,
+                    }
+                }
+                _ => sfmt.clone(),
+            }
+        })
+        .nth(0)
+        .expect("Unable to find suitable surface format.");
+    let surface_capabilities =
+        instance.get_physical_device_surface_capabilities_khr(pdevice, surface).unwrap();
+    let desired_image_count = 2;
+    assert!(surface_capabilities.min_image_count <= desired_image_count &&
+            surface_capabilities.max_image_count >= desired_image_count,
+            "Image count err");
+    let surface_resoultion = match surface_capabilities.current_extent.width {
+        std::u32::MAX => {
+            vk::Extent2D {
+                width: window_width,
+                height: window_height,
+            }
+        }
+        _ => surface_capabilities.current_extent,
+    };
 
+    let pre_transform = if surface_capabilities.supported_transforms
+        .subset(vk::SURFACE_TRANSFORM_IDENTITY_BIT_KHR) {
+        vk::SURFACE_TRANSFORM_IDENTITY_BIT_KHR
+    } else {
+        surface_capabilities.current_transform
+    };
+    let present_modes = instance.get_physical_device_surface_present_modes_khr(pdevice, surface)
+        .unwrap();
+    let present_mode = present_modes.iter()
+        .cloned()
+        .find(|&mode| mode == vk::PresentModeKHR::Mailbox)
+        .unwrap_or(vk::PresentModeKHR::Fifo);
+    let swapchain_create_info = vk::SwapchainCreateInfoKHR {
+        s_type: vk::StructureType::SwapchainCreateInfoKhr,
+        p_next: ptr::null(),
+        flags: 0,
+        surface: surface,
+        min_image_count: desired_image_count,
+        image_color_space: surface_format.color_space,
+        image_format: surface_format.format,
+        image_extent: surface_resoultion,
+        image_usage: vk::IMAGE_USAGE_COLOR_ATTACHMENT_BIT,
+        image_sharing_mode: vk::SharingMode::Exclusive,
+        pre_transform: pre_transform,
+        composite_alpha: vk::COMPOSITE_ALPHA_OPAQUE_BIT_KHR,
+        present_mode: present_mode,
+        clipped: 1,
+        old_swapchain: unsafe { mem::transmute(0u64) },
+        // FIX ME: What is this?
+        image_array_layers: 1,
+        p_queue_family_indices: ptr::null(),
+        queue_family_index_count: 0,
+    };
+    let swapchain = device.create_swapchain_khr(swapchain_create_info).unwrap();
+    let pool_create_info = vk::CommandPoolCreateInfo {
+        s_type: vk::StructureType::CommandPoolCreateInfo,
+        p_next: ptr::null(),
+        flags: vk::COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT,
+        queue_family_index: queue_family_index,
+    };
+    let pool = device.create_command_pool(pool_create_info).unwrap();
+
+    let command_buffer_allocate_info = vk::CommandBufferAllocateInfo {
+        s_type: vk::StructureType::CommandBufferAllocateInfo,
+        p_next: ptr::null(),
+        command_buffer_count: 2,
+        command_pool: pool,
+        level: vk::CommandBufferLevel::Primary,
+    };
+
+    let command_buffers = device.allocate_command_buffers(command_buffer_allocate_info).unwrap();
+    let setup_command_buffer = command_buffers[0];
+    let draw_command_buffer = command_buffers[1];
+
+    let present_images = device.get_swapchain_images_khr(swapchain).unwrap();
+    printlndb!(present_images);
+    let present_image_views: Vec<vk::ImageView> = present_images.iter()
+        .map(|&image| {
+            let create_view_info = vk::ImageViewCreateInfo {
+                s_type: vk::StructureType::ImageViewCreateInfo,
+                p_next: ptr::null(),
+                flags: 0,
+                view_type: vk::ImageViewType::Type2d,
+                format: surface_format.format,
+                components: vk::ComponentMapping {
+                    r: vk::ComponentSwizzle::R,
+                    g: vk::ComponentSwizzle::G,
+                    b: vk::ComponentSwizzle::B,
+                    a: vk::ComponentSwizzle::A,
+                },
+                subresource_range: vk::ImageSubresourceRange {
+                    aspect_mask: vk::IMAGE_ASPECT_COLOR_BIT,
+                    base_mip_level: 0,
+                    level_count: 1,
+                    base_array_layer: 0,
+                    layer_count: 1,
+                },
+                image: image,
+            };
+            device.create_image_view(&create_view_info).unwrap()
+        })
+        .collect();
+
+    for image_view in present_image_views {
+        device.destroy_image_view(image_view);
+    }
+    device.destroy_command_pool(pool);
+    device.destroy_swapchain_khr(swapchain);
     device.destroy_device();
     instance.destroy_surface_khr(surface);
     instance.destroy_instance();

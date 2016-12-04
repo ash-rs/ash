@@ -3732,34 +3732,6 @@ vk_functions!{
         display: *mut wl_display,
     ) -> Bool32;
 
-    "vkCreateSwapchainKHR", create_swapchain_khr(
-        device: Device,
-        p_create_info: *const SwapchainCreateInfoKHR,
-        p_allocator: *const AllocationCallbacks,
-        p_swapchain: *mut SwapchainKHR,
-    ) -> Result;
-
-    "vkDestroySwapchainKHR", destroy_swapchain_khr(
-        device: Device,
-        swapchain: SwapchainKHR,
-        p_allocator: *const AllocationCallbacks,
-    ) -> ();
-
-    "vkGetSwapchainImagesKHR", get_swapchain_images_khr(
-        device: Device,
-        swapchain: SwapchainKHR,
-        p_swapchain_image_count: *mut uint32_t,
-        p_swapchain_images: *mut Image,
-    ) -> Result;
-
-    "vkAcquireNextImageKHR", acquire_next_image_khr(
-        device: Device,
-        swapchain: SwapchainKHR,
-        timeout: uint64_t,
-        semaphore: Semaphore,
-        fence: Fence,
-        p_image_index: *mut uint32_t,
-    ) -> Result;
 
     "vkQueuePresentKHR", queue_present_khr(
         queue: Queue,
@@ -4676,4 +4648,32 @@ vk_functions!{
         command_buffer_count: uint32_t,
         p_command_buffers: *const CommandBuffer,
     ) -> ();
+    "vkCreateSwapchainKHR", create_swapchain_khr(
+        device: Device,
+        p_create_info: *const SwapchainCreateInfoKHR,
+        p_allocator: *const AllocationCallbacks,
+        p_swapchain: *mut SwapchainKHR,
+    ) -> Result;
+
+    "vkDestroySwapchainKHR", destroy_swapchain_khr(
+        device: Device,
+        swapchain: SwapchainKHR,
+        p_allocator: *const AllocationCallbacks,
+    ) -> ();
+
+    "vkGetSwapchainImagesKHR", get_swapchain_images_khr(
+        device: Device,
+        swapchain: SwapchainKHR,
+        p_swapchain_image_count: *mut uint32_t,
+        p_swapchain_images: *mut Image,
+    ) -> Result;
+
+    "vkAcquireNextImageKHR", acquire_next_image_khr(
+        device: Device,
+        swapchain: SwapchainKHR,
+        timeout: uint64_t,
+        semaphore: Semaphore,
+        fence: Fence,
+        p_image_index: *mut uint32_t,
+    ) -> Result;
 }}
