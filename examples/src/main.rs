@@ -32,18 +32,19 @@ fn main() {
     window.make_current();
     let entry = Entry::load_vulkan().unwrap();
     let instance_ext_props = entry.enumerate_instance_extension_properties().unwrap();
-    println!("{:?}", instance_ext_props);
+    // println!("{:?}", instance_ext_props);
     let app_name = CString::new("TEST").unwrap();
     let raw_name = app_name.as_ptr();
-    let lunarg_layer = CString::new("VK_LAYER_LUNARG_standard_validation").unwrap();
-    let layers = [lunarg_layer.as_ptr()];
-    let swapchain_ext_name = CString::new("VK_KHR_swapchain").unwrap();
-    let surface_ext_name = CString::new("VK_KHR_surface").unwrap();
-    let surface_xlib_ext_name = CString::new("VK_KHR_xlib_surface").unwrap();
-    let extensions = [// swapchain_ext_name.as_ptr(),
-                      surface_ext_name.as_ptr(),
-                      surface_xlib_ext_name.as_ptr()];
-    let tt = [vk::VK_KHR_SURFACE_EXTENSION_NAME];
+
+    let layer_names = [CString::new("VK_LAYER_LUNARG_standard_validation").unwrap()];
+    let layers_names_raw: Vec<*const i8> = layer_names.iter()
+        .map(|raw_name| raw_name.as_ptr())
+        .collect();
+    let extension_names = [CString::new("VK_KHR_surface").unwrap(),
+                           CString::new("VK_KHR_xlib_surface").unwrap()];
+    let extension_names_raw: Vec<*const i8> = extension_names.iter()
+        .map(|raw_name| raw_name.as_ptr())
+        .collect();
     let appinfo = vk::ApplicationInfo {
         p_application_name: raw_name,
         s_type: vk::StructureType::ApplicationInfo,
@@ -57,10 +58,10 @@ fn main() {
         s_type: vk::StructureType::InstanceCreateInfo,
         p_application_info: &appinfo,
         p_next: ptr::null(),
-        pp_enabled_layer_names: layers.as_ptr(),
-        enabled_layer_count: layers.len() as u32,
-        pp_enabled_extension_names: extensions.as_ptr(),
-        enabled_extension_count: extensions.len() as u32,
+        pp_enabled_layer_names: layers_names_raw.as_ptr(),
+        enabled_layer_count: layers_names_raw.len() as u32,
+        pp_enabled_extension_names: extension_names_raw.as_ptr(),
+        enabled_extension_count: extension_names_raw.len() as u32,
         flags: 0,
     };
     let instance = entry.create_instance(create_info).expect("Instance creation error");
@@ -75,14 +76,32 @@ fn main() {
     };
     let surface = instance.create_xlib_surface_khr(x11_create_info).unwrap();
     let pdevices = instance.enumerate_physical_devices().expect("Physical device error");
-    let pdevice = pdevices[0];
-    let pdevice_info = instance.get_physical_device_queue_family_properties(pdevice);
-    let (queue_family_index, _) = pdevice_info.iter()
-        .enumerate()
-        .filter(|&(index, ref info)| info.queue_flags.subset(vk::QUEUE_GRAPHICS_BIT))
+    let (pdevice, queue_family_index) = pdevices.iter()
+        .map(|pdevice| {
+            instance.get_physical_device_queue_family_properties(*pdevice)
+                .iter()
+                .enumerate()
+                .filter_map(|(index, ref info)| {
+                    let supports_graphic_and_surface =
+                        info.queue_flags.subset(vk::QUEUE_GRAPHICS_BIT) &&
+                        instance.get_physical_device_surface_support_khr(*pdevice,
+                                                                         index as u32,
+                                                                         surface);
+                    match supports_graphic_and_surface {
+                        true => Some((*pdevice, index)),
+                        _ => None,
+                    }
+                })
+                .nth(0)
+        })
+        .filter_map(|v| v)
         .nth(0)
-        .expect("Could not find any suitable queue");
-    println!("{:?}", pdevice_info);
+        .expect("Couldn't find suitable device.");
+    let device_extension_names = [CString::new("VK_KHR_swapchain").unwrap()];
+    let device_extension_names_raw: Vec<*const i8> = device_extension_names.iter()
+        .map(|raw_name| raw_name.as_ptr())
+        .collect();
+    let features = vk::PhysicalDeviceFeatures { shader_clip_distance: 1, ..Default::default() };
     let priorities = [1.0];
     let queue_info = vk::DeviceQueueCreateInfo {
         s_type: vk::StructureType::DeviceQueueCreateInfo,
@@ -100,11 +119,12 @@ fn main() {
         p_queue_create_infos: &queue_info,
         enabled_layer_count: 0,
         pp_enabled_layer_names: ptr::null(),
-        enabled_extension_count: 0,
-        pp_enabled_extension_names: ptr::null(),
-        p_enabled_features: ptr::null(),
+        enabled_extension_count: device_extension_names_raw.len() as u32,
+        pp_enabled_extension_names: device_extension_names_raw.as_ptr(),
+        p_enabled_features: &features,
     };
-    let device = instance.create_device(pdevices[0], device_create_info).unwrap();
+    let device = instance.create_device(pdevice, device_create_info).unwrap();
+
 
     device.destroy_device();
     instance.destroy_surface_khr(surface);
