@@ -249,6 +249,40 @@ impl Device {
                 .cmd_set_scissor(command_buffer, 0, scissors.len() as u32, scissors.as_ptr());
         }
     }
+
+    pub fn cmd_bind_vertex_buffers(&self,
+                                   command_buffer: vk::CommandBuffer,
+                                   buffers: &[vk::Buffer],
+                                   offsets: &vk::DeviceSize) {
+        unsafe {
+            self.device_fn.cmd_bind_vertex_buffers(command_buffer,
+                                                   0,
+                                                   buffers.len() as u32,
+                                                   buffers.as_ptr(),
+                                                   offsets);
+        }
+    }
+
+    pub fn cmd_end_render_pass(&self, command_buffer: vk::CommandBuffer) {
+        unsafe {
+            self.device_fn.cmd_end_render_pass(command_buffer);
+        }
+    }
+    pub fn cmd_draw(&self,
+                    command_buffer: vk::CommandBuffer,
+                    vertex_count: u32,
+                    instance_count: u32,
+                    first_vertex: u32,
+                    first_instance: u32) {
+        unsafe {
+            self.device_fn.cmd_draw(command_buffer,
+                                    vertex_count,
+                                    instance_count,
+                                    first_vertex,
+                                    first_instance);
+        }
+    }
+
     pub fn cmd_set_viewport(&self, command_buffer: vk::CommandBuffer, viewports: &[vk::Viewport]) {
         unsafe {
             self.device_fn.cmd_set_viewport(command_buffer,
@@ -469,14 +503,38 @@ impl Device {
             }
         }
     }
+
+    pub fn queue_wait_idle(&self, queue: vk::Queue) -> VkResult<()> {
+        unsafe {
+            let err_code = self.device_fn.queue_wait_idle(queue);
+            match err_code {
+                vk::Result::Success => Ok(()),
+                _ => Err(err_code),
+            }
+        }
+    }
+
+    pub fn queue_present_khr(&self,
+                             queue: vk::Queue,
+                             create_info: &vk::PresentInfoKHR)
+                             -> VkResult<()> {
+        unsafe {
+            let err_code = self.device_fn
+                .queue_present_khr(queue, create_info);
+            match err_code {
+                vk::Result::Success => Ok(()),
+                _ => Err(err_code),
+            }
+        }
+    }
     pub fn queue_submit(&self,
                         queue: vk::Queue,
-                        submit_count: u32,
-                        p_submits: &vk::SubmitInfo,
+                        submits: &[vk::SubmitInfo],
                         fence: vk::Fence)
                         -> VkResult<()> {
         unsafe {
-            let err_code = self.device_fn.queue_submit(queue, submit_count, p_submits, fence);
+            let err_code = self.device_fn
+                .queue_submit(queue, submits.len() as u32, submits.as_ptr(), fence);
             match err_code {
                 vk::Result::Success => Ok(()),
                 _ => Err(err_code),

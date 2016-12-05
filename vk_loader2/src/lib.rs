@@ -3738,10 +3738,6 @@ vk_functions!{
     ) -> Bool32;
 
 
-    "vkQueuePresentKHR", queue_present_khr(
-        queue: Queue,
-        p_present_info: *const PresentInfoKHR,
-    ) -> Result;
 
     "vkCreateSharedSwapchainsKHR", create_shared_swapchains_khr(
         device: Device,
@@ -4680,5 +4676,10 @@ vk_functions!{
         semaphore: Semaphore,
         fence: Fence,
         p_image_index: *mut uint32_t,
+    ) -> Result;
+
+    "vkQueuePresentKHR", queue_present_khr(
+        queue: Queue,
+        p_present_info: *const PresentInfoKHR,
     ) -> Result;
 }}

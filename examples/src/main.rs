@@ -362,7 +362,7 @@ fn main() {
         p_command_buffers: &setup_command_buffer,
     };
     device.end_command_buffer(setup_command_buffer).unwrap();
-    device.queue_submit(present_queue, 1, &submit_info, submit_fence).unwrap();
+    device.queue_submit(present_queue, &[submit_info], submit_fence).unwrap();
     device.wait_for_fences(&[submit_fence], true, std::u64::MAX).unwrap();
     let depth_image_view_info = vk::ImageViewCreateInfo {
         s_type: vk::StructureType::ImageViewCreateInfo,
@@ -740,8 +740,7 @@ fn main() {
                                     present_complete_semaphore,
                                     vk::Fence::null())
             .unwrap();
-        printlndb!(present_index);
-        device.begin_command_buffer(draw_command_buffer, &command_buffer_begin_info);
+        device.begin_command_buffer(draw_command_buffer, &command_buffer_begin_info).unwrap();
         let layout_to_color = vk::ImageMemoryBarrier {
             s_type: vk::StructureType::ImageMemoryBarrier,
             p_next: ptr::null(),
@@ -787,19 +786,72 @@ fn main() {
             clear_value_count: clear_values.len() as u32,
             p_clear_values: clear_values.as_ptr(),
         };
-        //        vkCmdBeginRenderPass(
-        //            vkcontext.drawCmdBuffer, &renderPassBeginInfo,
-        //            VK_SUBPASS_CONTENTS_INLINE
-        //        );
-        //
-        //        vkCmdBindPipeline(vkcontext.drawCmdBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, vkcontext.pipeline);
-        //        vkCmdSetViewport(vkcontext.drawCmdBuffer, 0, 1, &viewport);
-        //        vkCmdSetScissor(vkcontext.drawCmdBuffer, 0 ,1, &scissors);
-        //
-        //        VkDeviceSize offsets;
-        //        vkCmdBindVertexBuffers( vkcontext.drawCmdBuffer, 0, 1, &vkcontext.vertexInputBuffer, &offsets );
-        //        vkCmdDraw( vkcontext.drawCmdBuffer, 3, 1, 0, 0 );
-        //        vkCmdEndRenderPass( vkcontext.drawCmdBuffer );
+        device.cmd_begin_render_pass(draw_command_buffer,
+                                     &render_pass_begin_info,
+                                     vk::SubpassContents::Inline);
+        device.cmd_bind_pipeline(draw_command_buffer,
+                                 vk::PipelineBindPoint::Graphics,
+                                 graphic_pipeline);
+        device.cmd_set_viewport(draw_command_buffer, &viewports);
+        device.cmd_set_scissor(draw_command_buffer, &scissors);
+        device.cmd_bind_vertex_buffers(draw_command_buffer, &[vertex_input_buffer], &0);
+        device.cmd_draw(draw_command_buffer, 3, 1, 0, 0);
+        device.cmd_end_render_pass(draw_command_buffer);
+        let pre_present_barrier = vk::ImageMemoryBarrier {
+            s_type: vk::StructureType::ImageMemoryBarrier,
+            p_next: ptr::null(),
+            src_access_mask: vk::ACCESS_COLOR_ATTACHMENT_WRITE_BIT,
+            dst_access_mask: vk::ACCESS_COLOR_ATTACHMENT_READ_BIT,
+            old_layout: vk::ImageLayout::ColorAttachmentOptimal,
+            new_layout: vk::ImageLayout::PresentSrcKhr,
+            src_queue_family_index: vk::VK_QUEUE_FAMILY_IGNORED,
+            dst_queue_family_index: vk::VK_QUEUE_FAMILY_IGNORED,
+            image: present_images[present_index as usize],
+            subresource_range: vk::ImageSubresourceRange {
+                aspect_mask: vk::IMAGE_ASPECT_COLOR_BIT,
+                base_mip_level: 0,
+                level_count: 1,
+                base_array_layer: 0,
+                layer_count: 1,
+            },
+        };
+        device.cmd_pipeline_barrier(draw_command_buffer,
+                                    vk::PIPELINE_STAGE_ALL_COMMANDS_BIT,
+                                    vk::PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT,
+                                    vk::DependencyFlags::empty(),
+                                    &[],
+                                    &[],
+                                    &[pre_present_barrier]);
+        device.end_command_buffer(draw_command_buffer);
+        let wait_render_mask = [vk::PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT];
+        let submit_info = vk::SubmitInfo {
+            s_type: vk::StructureType::SubmitInfo,
+            p_next: ptr::null(),
+            wait_semaphore_count: 1,
+            p_wait_semaphores: &present_complete_semaphore,
+            p_wait_dst_stage_mask: wait_render_mask.as_ptr(),
+            command_buffer_count: 1,
+            p_command_buffers: &draw_command_buffer,
+            signal_semaphore_count: 1,
+            p_signal_semaphores: &rendering_complete_semaphore,
+        };
+        device.queue_submit(present_queue, &[submit_info], vk::Fence::null()).unwrap();
+        device.queue_wait_idle(present_queue).unwrap();
+
+        let mut present_info_err = unsafe { mem::uninitialized() };
+        let present_info = vk::PresentInfoKHR {
+            s_type: vk::StructureType::PresentInfoKhr,
+            p_next: ptr::null(),
+            wait_semaphore_count: 1,
+            p_wait_semaphores: &rendering_complete_semaphore,
+            swapchain_count: 1,
+            p_swapchains: &swapchain,
+            p_image_indices: &present_index,
+            p_results: &mut present_info_err,
+        };
+
+        device.queue_present_khr(present_queue, &present_info).unwrap();
+        device.queue_wait_idle(present_queue).unwrap();
     }
 
     device.destroy_semaphore(present_complete_semaphore);
