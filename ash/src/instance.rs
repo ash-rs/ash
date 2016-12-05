@@ -195,6 +195,12 @@ impl Device {
         }
     }
 
+    pub fn destroy_pipeline_layout(&self, pipeline_layout: vk::PipelineLayout) {
+        unsafe {
+            self.device_fn.destroy_pipeline_layout(self.handle, pipeline_layout, ptr::null());
+        }
+    }
+
     pub fn destroy_buffer(&self, buffer: vk::Buffer) {
         unsafe {
             self.device_fn.destroy_buffer(self.handle, buffer, ptr::null());
@@ -204,6 +210,33 @@ impl Device {
     pub fn destroy_shader_module(&self, shader: vk::ShaderModule) {
         unsafe {
             self.device_fn.destroy_shader_module(self.handle, shader, ptr::null());
+        }
+    }
+
+    pub fn destroy_pipeline(&self, pipeline: vk::Pipeline) {
+        unsafe {
+            self.device_fn.destroy_pipeline(self.handle, pipeline, ptr::null());
+        }
+    }
+
+    pub fn create_graphics_pipelines(&self,
+                                     pipeline_cache: vk::PipelineCache,
+                                     create_infos: &[vk::GraphicsPipelineCreateInfo])
+                                     -> VkResult<Vec<vk::Pipeline>> {
+        unsafe {
+            let mut pipelines = Vec::with_capacity(create_infos.len());
+            let err_code = self.device_fn
+                .create_graphics_pipelines(self.handle,
+                                           pipeline_cache,
+                                           create_infos.len() as u32,
+                                           create_infos.as_ptr(),
+                                           ptr::null(),
+                                           pipelines.as_mut_ptr());
+            pipelines.set_len(create_infos.len());
+            match err_code {
+                vk::Result::Success => Ok(pipelines),
+                _ => Err(err_code),
+            }
         }
     }
     pub fn create_buffer(&self, create_info: &vk::BufferCreateInfo) -> VkResult<vk::Buffer> {
@@ -218,6 +251,22 @@ impl Device {
         }
     }
 
+    pub fn create_pipeline_layout(&self,
+                                  create_info: &vk::PipelineLayoutCreateInfo)
+                                  -> VkResult<vk::PipelineLayout> {
+        unsafe {
+            let mut pipeline_layout = mem::uninitialized();
+            let err_code = self.device_fn
+                .create_pipeline_layout(self.handle,
+                                        create_info,
+                                        ptr::null(),
+                                        &mut pipeline_layout);
+            match err_code {
+                vk::Result::Success => Ok(pipeline_layout),
+                _ => Err(err_code),
+            }
+        }
+    }
     pub fn map_memory<T>(&self,
                          memory: vk::DeviceMemory,
                          offset: vk::DeviceSize,
