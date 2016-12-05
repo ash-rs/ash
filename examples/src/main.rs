@@ -11,6 +11,8 @@ use std::ptr;
 use std::ffi::{CStr, CString};
 use std::mem;
 use std::path::Path;
+use std::fs::File;
+use std::io::Read;
 use std::os::raw::c_void;
 macro_rules! printlndb{
     ($arg: tt) => {
@@ -35,6 +37,13 @@ pub fn find_memorytype_index(memory_req: &vk::MemoryRequirements,
         memory_type_bits = memory_type_bits >> 1;
     }
     None
+}
+#[derive(Clone, Debug, Copy)]
+struct Vertex {
+    x: f32,
+    y: f32,
+    z: f32,
+    w: f32,
 }
 
 fn main() {
@@ -207,7 +216,7 @@ fn main() {
         composite_alpha: vk::COMPOSITE_ALPHA_OPAQUE_BIT_KHR,
         present_mode: present_mode,
         clipped: 1,
-        old_swapchain: unsafe { mem::transmute(0u64) },
+        old_swapchain: vk::SwapchainKHR::null(),
         // FIX ME: What is this?
         image_array_layers: 1,
         p_queue_family_indices: ptr::null(),
@@ -262,7 +271,7 @@ fn main() {
         })
         .collect();
     let device_memory_properties = instance.get_physical_device_memory_properties(pdevice);
-    let image_create_info = vk::ImageCreateInfo {
+    let depth_image_create_info = vk::ImageCreateInfo {
         s_type: vk::StructureType::ImageCreateInfo,
         p_next: ptr::null(),
         flags: vk::IMAGE_CREATE_SPARSE_BINDING_BIT,
@@ -283,7 +292,7 @@ fn main() {
         p_queue_family_indices: ptr::null(),
         initial_layout: vk::ImageLayout::Undefined,
     };
-    let depth_image = device.create_image(&image_create_info).unwrap();
+    let depth_image = device.create_image(&depth_image_create_info).unwrap();
     let depth_image_memory_req = device.get_image_memory_requirements(depth_image);
     let depth_image_memory_index = find_memorytype_index(&depth_image_memory_req,
                                                          &device_memory_properties,
@@ -311,7 +320,7 @@ fn main() {
         s_type: vk::StructureType::ImageMemoryBarrier,
         p_next: ptr::null(),
         // TODO Is this correct?
-        src_access_mask: vk::ACCESS_HOST_WRITE_BIT,
+        src_access_mask: vk::AccessFlags::empty(),
         dst_access_mask: vk::ACCESS_DEPTH_STENCIL_ATTACHMENT_READ_BIT |
                          vk::ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT,
         old_layout: vk::ImageLayout::Undefined,
@@ -331,17 +340,14 @@ fn main() {
                                 vk::PIPELINE_STAGE_TOP_OF_PIPE_BIT,
                                 vk::PIPELINE_STAGE_TOP_OF_PIPE_BIT,
                                 vk::DEPENDENCY_BY_REGION_BIT,
-                                0,
-                                ptr::null(),
-                                0,
-                                ptr::null(),
-                                1,
-                                &layout_transition_barrier);
+                                &[],
+                                &[],
+                                &[layout_transition_barrier]);
     let wait_stage_mask = [vk::PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT];
     let fence_create_info = vk::FenceCreateInfo {
         s_type: vk::StructureType::FenceCreateInfo,
         p_next: ptr::null(),
-        flags: vk::FENCE_CREATE_SIGNALED_BIT,
+        flags: vk::FenceCreateFlags::empty(),
     };
     let submit_fence = device.create_fence(&fence_create_info).unwrap();
     let submit_info = vk::SubmitInfo {
@@ -355,9 +361,193 @@ fn main() {
         command_buffer_count: 1,
         p_command_buffers: &setup_command_buffer,
     };
-    device.queue_submit(present_queue, 1, &submit_info, submit_fence);
-    device.destroy_fence(submit_fence);
     device.end_command_buffer(setup_command_buffer).unwrap();
+    device.queue_submit(present_queue, 1, &submit_info, submit_fence).unwrap();
+    device.wait_for_fences(&[submit_fence], true, std::u64::MAX).unwrap();
+    let depth_image_view_info = vk::ImageViewCreateInfo {
+        s_type: vk::StructureType::ImageViewCreateInfo,
+        p_next: ptr::null(),
+        flags: 0,
+        view_type: vk::ImageViewType::Type2d,
+        format: depth_image_create_info.format,
+        components: vk::ComponentMapping {
+            r: vk::ComponentSwizzle::Identity,
+            g: vk::ComponentSwizzle::Identity,
+            b: vk::ComponentSwizzle::Identity,
+            a: vk::ComponentSwizzle::Identity,
+        },
+        subresource_range: vk::ImageSubresourceRange {
+            aspect_mask: vk::IMAGE_ASPECT_DEPTH_BIT,
+            base_mip_level: 0,
+            level_count: 1,
+            base_array_layer: 0,
+            layer_count: 1,
+        },
+        image: depth_image,
+    };
+    let depth_image_view = device.create_image_view(&depth_image_view_info).unwrap();
+    let renderpass_attachments = [vk::AttachmentDescription {
+                                      format: surface_format.format,
+                                      flags: vk::AttachmentDescriptionFlags::empty(),
+                                      samples: vk::SAMPLE_COUNT_1_BIT,
+                                      load_op: vk::AttachmentLoadOp::Clear,
+                                      store_op: vk::AttachmentStoreOp::Store,
+                                      stencil_load_op: vk::AttachmentLoadOp::DontCare,
+                                      stencil_store_op: vk::AttachmentStoreOp::DontCare,
+                                      initial_layout: vk::ImageLayout::ColorAttachmentOptimal,
+                                      final_layout: vk::ImageLayout::ColorAttachmentOptimal,
+                                  },
+                                  vk::AttachmentDescription {
+                                      format: depth_image_create_info.format,
+                                      flags: vk::AttachmentDescriptionFlags::empty(),
+                                      samples: vk::SAMPLE_COUNT_1_BIT,
+                                      load_op: vk::AttachmentLoadOp::Clear,
+                                      store_op: vk::AttachmentStoreOp::DontCare,
+                                      stencil_load_op: vk::AttachmentLoadOp::DontCare,
+                                      stencil_store_op: vk::AttachmentStoreOp::DontCare,
+                                      initial_layout:
+                                          vk::ImageLayout::DepthStencilAttachmentOptimal,
+                                      final_layout: vk::ImageLayout::DepthStencilAttachmentOptimal,
+                                  }];
+    let color_attachment_ref = vk::AttachmentReference {
+        attachment: 0,
+        layout: vk::ImageLayout::ColorAttachmentOptimal,
+    };
+    let depth_attachment_ref = vk::AttachmentReference {
+        attachment: 1,
+        layout: vk::ImageLayout::DepthStencilAttachmentOptimal,
+    };
+    let subpass = vk::SubpassDescription {
+        color_attachment_count: 1,
+        p_color_attachments: &color_attachment_ref,
+        p_depth_stencil_attachment: &depth_attachment_ref,
+        // TODO: Why is there no wrapper?
+        flags: 0,
+        pipeline_bind_point: vk::PipelineBindPoint::Graphics,
+        input_attachment_count: 0,
+        p_input_attachments: ptr::null(),
+        p_resolve_attachments: ptr::null(),
+        preserve_attachment_count: 0,
+        p_preserve_attachments: ptr::null(),
+    };
+    let renderpass_create_info = vk::RenderPassCreateInfo {
+        s_type: vk::StructureType::RenderPassCreateInfo,
+        flags: 0,
+        p_next: ptr::null(),
+        attachment_count: renderpass_attachments.len() as u32,
+        p_attachments: renderpass_attachments.as_ptr(),
+        subpass_count: 1,
+        p_subpasses: &subpass,
+        dependency_count: 0,
+        p_dependencies: ptr::null(),
+    };
+    let renderpass = device.create_render_pass(&renderpass_create_info).unwrap();
+    let framebuffers: Vec<vk::Framebuffer> = present_image_views.iter()
+        .map(|&present_image_view| {
+            let framebuffer_attachments = [present_image_view, depth_image_view];
+            let frame_buffer_create_info = vk::FramebufferCreateInfo {
+                s_type: vk::StructureType::FramebufferCreateInfo,
+                p_next: ptr::null(),
+                flags: 0,
+                render_pass: renderpass,
+                attachment_count: framebuffer_attachments.len() as u32,
+                p_attachments: framebuffer_attachments.as_ptr(),
+                width: surface_resoultion.width,
+                height: surface_resoultion.height,
+                layers: 1,
+            };
+            device.create_framebuffer(&frame_buffer_create_info).unwrap()
+        })
+        .collect();
+    let vertex_input_buffer_info = vk::BufferCreateInfo {
+        s_type: vk::StructureType::BufferCreateInfo,
+        p_next: ptr::null(),
+        flags: vk::BufferCreateFlags::empty(),
+        size: 3 * std::mem::size_of::<Vertex>() as u64,
+        usage: vk::BUFFER_USAGE_VERTEX_BUFFER_BIT,
+        sharing_mode: vk::SharingMode::Exclusive,
+        queue_family_index_count: 0,
+        p_queue_family_indices: ptr::null(),
+    };
+    let vertex_input_buffer = device.create_buffer(&vertex_input_buffer_info).unwrap();
+    let vertex_input_buffer_memory_req = device.get_buffer_memory_requirements(vertex_input_buffer);
+    let vertex_input_buffer_memory_index =
+        find_memorytype_index(&vertex_input_buffer_memory_req,
+                              &device_memory_properties,
+                              vk::MEMORY_PROPERTY_HOST_VISIBLE_BIT)
+            .expect("Unable to find suitable memorytype for the vertex buffer.");
+
+    let vertex_buffer_allocate_info = vk::MemoryAllocateInfo {
+        s_type: vk::StructureType::MemoryAllocateInfo,
+        p_next: ptr::null(),
+        allocation_size: vertex_input_buffer_memory_req.size,
+        memory_type_index: vertex_input_buffer_memory_index,
+    };
+    let vertex_input_buffer_memory = device.allocate_memory(&vertex_buffer_allocate_info).unwrap();
+    let slice = device.map_memory::<Vertex>(vertex_input_buffer_memory,
+                              0,
+                              vertex_input_buffer_info.size,
+                              0)
+        .unwrap();
+    let vertices = [Vertex {
+                        x: -1.0,
+                        y: 1.0,
+                        z: 0.0,
+                        w: 1.0,
+                    },
+                    Vertex {
+                        x: 1.0,
+                        y: 1.0,
+                        z: 0.0,
+                        w: 1.0,
+                    },
+                    Vertex {
+                        x: 0.0,
+                        y: -1.0,
+                        z: 0.0,
+                        w: 1.0,
+                    }];
+
+    slice.copy_from_slice(&vertices);
+    printlndb!((slice));
+    device.unmap_memory(vertex_input_buffer_memory);
+    device.bind_buffer_memory(vertex_input_buffer, vertex_input_buffer_memory, 0).unwrap();
+    let vertex_spv_file = File::open(Path::new("vert.spv")).expect("Could not find vert.spv.");
+    let frag_spv_file = File::open(Path::new("frag.spv")).expect("Could not find frag.spv.");
+
+    let vertex_bytes: Vec<u8> = vertex_spv_file.bytes().filter_map(|byte| byte.ok()).collect();
+    let vertex_shader_info = vk::ShaderModuleCreateInfo {
+        s_type: vk::StructureType::ShaderModuleCreateInfo,
+        p_next: ptr::null(),
+        flags: 0,
+        code_size: vertex_bytes.len(),
+        p_code: vertex_bytes.as_ptr() as *const u32,
+    };
+    let frag_bytes: Vec<u8> = frag_spv_file.bytes().filter_map(|byte| byte.ok()).collect();
+    let frag_shader_info = vk::ShaderModuleCreateInfo {
+        s_type: vk::StructureType::ShaderModuleCreateInfo,
+        p_next: ptr::null(),
+        flags: 0,
+        code_size: frag_bytes.len(),
+        p_code: frag_bytes.as_ptr() as *const u32,
+    };
+    let vertex_shader_module = device.create_shader_module(&vertex_shader_info)
+        .expect("Vertex shader module error");
+    let frag_shader_module = device.create_shader_module(&frag_shader_info)
+        .expect("Fragment shader module error");
+
+
+
+    device.destroy_shader_module(vertex_shader_module);
+    device.destroy_shader_module(frag_shader_module);
+    device.free_memory(vertex_input_buffer_memory);
+    device.destroy_buffer(vertex_input_buffer);
+    for framebuffer in framebuffers {
+        device.destroy_framebuffer(framebuffer);
+    }
+    device.destroy_render_pass(renderpass);
+    device.destroy_image_view(depth_image_view);
+    device.destroy_fence(submit_fence);
     device.free_memory(depth_image_memory);
     device.destroy_image(depth_image);
     for image_view in present_image_views {

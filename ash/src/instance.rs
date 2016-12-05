@@ -183,6 +183,82 @@ impl Device {
         }
     }
 
+    pub fn destroy_render_pass(&self, renderpass: vk::RenderPass) {
+        unsafe {
+            self.device_fn.destroy_render_pass(self.handle, renderpass, ptr::null());
+        }
+    }
+
+    pub fn destroy_framebuffer(&self, framebuffer: vk::Framebuffer) {
+        unsafe {
+            self.device_fn.destroy_framebuffer(self.handle, framebuffer, ptr::null());
+        }
+    }
+
+    pub fn destroy_buffer(&self, buffer: vk::Buffer) {
+        unsafe {
+            self.device_fn.destroy_buffer(self.handle, buffer, ptr::null());
+        }
+    }
+
+    pub fn destroy_shader_module(&self, shader: vk::ShaderModule) {
+        unsafe {
+            self.device_fn.destroy_shader_module(self.handle, shader, ptr::null());
+        }
+    }
+    pub fn create_buffer(&self, create_info: &vk::BufferCreateInfo) -> VkResult<vk::Buffer> {
+        unsafe {
+            let mut buffer = mem::uninitialized();
+            let err_code = self.device_fn
+                .create_buffer(self.handle, create_info, ptr::null(), &mut buffer);
+            match err_code {
+                vk::Result::Success => Ok(buffer),
+                _ => Err(err_code),
+            }
+        }
+    }
+
+    pub fn map_memory<T>(&self,
+                         memory: vk::DeviceMemory,
+                         offset: vk::DeviceSize,
+                         size: vk::DeviceSize,
+                         flags: vk::MemoryMapFlags)
+                         -> VkResult<&mut [T]> {
+
+        unsafe {
+            let mut data: *mut () = mem::uninitialized();
+            let err_code = self.device_fn
+                .map_memory(self.handle, memory, offset, size, flags, &mut data);
+            let x: *mut T = data as *mut T;
+            match err_code {
+                vk::Result::Success => {
+                    Ok(::std::slice::from_raw_parts_mut(x, size as usize / mem::size_of::<T>()))
+                }
+                _ => Err(err_code),
+            }
+        }
+    }
+
+    pub fn unmap_memory(&self, memory: vk::DeviceMemory) {
+        unsafe {
+            self.device_fn.unmap_memory(self.handle, memory);
+        }
+    }
+
+    pub fn create_framebuffer(&self,
+                              create_info: &vk::FramebufferCreateInfo)
+                              -> VkResult<vk::Framebuffer> {
+        unsafe {
+            let mut framebuffer = mem::uninitialized();
+            let err_code = self.device_fn
+                .create_framebuffer(self.handle, create_info, ptr::null(), &mut framebuffer);
+            match err_code {
+                vk::Result::Success => Ok(framebuffer),
+                _ => Err(err_code),
+            }
+        }
+    }
+
     pub fn get_device_queue(&self, queue_family_index: u32, queue_index: u32) -> vk::Queue {
         unsafe {
             let mut queue = mem::uninitialized();
@@ -197,25 +273,37 @@ impl Device {
                                 src_stage_mask: vk::PipelineStageFlags,
                                 dst_stage_mask: vk::PipelineStageFlags,
                                 dependency_flags: vk::DependencyFlags,
-                                memory_barrier_count: u32,
-                                p_memory_barriers: *const vk::MemoryBarrier,
-                                buffer_memory_barrier_count: u32,
-                                p_buffer_memory_barriers: *const vk::BufferMemoryBarrier,
-                                image_memory_barrier_count: u32,
-                                p_image_memory_barriers: *const vk::ImageMemoryBarrier) {
+                                memory_barriers: &[vk::MemoryBarrier],
+                                buffer_memory_barriers: &[vk::BufferMemoryBarrier],
+                                image_memory_barriers: &[vk::ImageMemoryBarrier]) {
         unsafe {
             self.device_fn.cmd_pipeline_barrier(command_buffer,
                                                 src_stage_mask,
                                                 dst_stage_mask,
                                                 dependency_flags,
-                                                memory_barrier_count,
-                                                p_memory_barriers,
-                                                buffer_memory_barrier_count,
-                                                p_buffer_memory_barriers,
-                                                image_memory_barrier_count,
-                                                p_image_memory_barriers);
+                                                memory_barriers.len() as u32,
+                                                memory_barriers.as_ptr(),
+                                                buffer_memory_barriers.len() as u32,
+                                                buffer_memory_barriers.as_ptr(),
+                                                image_memory_barriers.len() as u32,
+                                                image_memory_barriers.as_ptr());
         }
     }
+
+    pub fn create_render_pass(&self,
+                              create_info: &vk::RenderPassCreateInfo)
+                              -> VkResult<vk::RenderPass> {
+        unsafe {
+            let mut renderpass = mem::uninitialized();
+            let err_code = self.device_fn
+                .create_render_pass(self.handle, create_info, ptr::null(), &mut renderpass);
+            match err_code {
+                vk::Result::Success => Ok(renderpass),
+                _ => Err(err_code),
+            }
+        }
+    }
+
     pub fn begin_command_buffer(&self,
                                 command_buffer: vk::CommandBuffer,
                                 create_info: &vk::CommandBufferBeginInfo)
@@ -241,6 +329,24 @@ impl Device {
         }
     }
 
+    pub fn wait_for_fences(&self,
+                           fences: &[vk::Fence],
+                           wait_all: bool,
+                           timeout: u64)
+                           -> VkResult<()> {
+        unsafe {
+            let err_code = self.device_fn
+                .wait_for_fences(self.handle,
+                                 fences.len() as u32,
+                                 fences.as_ptr(),
+                                 wait_all as u32,
+                                 timeout);
+            match err_code {
+                vk::Result::Success => Ok(()),
+                _ => Err(err_code),
+            }
+        }
+    }
     pub fn queue_submit(&self,
                         queue: vk::Queue,
                         submit_count: u32,
@@ -355,6 +461,15 @@ impl Device {
         }
     }
 
+    pub fn get_buffer_memory_requirements(&self, buffer: vk::Buffer) -> vk::MemoryRequirements {
+        unsafe {
+            let mut mem_req = mem::uninitialized();
+            self.device_fn
+                .get_buffer_memory_requirements(self.handle, buffer, &mut mem_req);
+            mem_req
+        }
+    }
+
     pub fn allocate_memory(&self,
                            create_info: &vk::MemoryAllocateInfo)
                            -> VkResult<vk::DeviceMemory> {
@@ -364,6 +479,20 @@ impl Device {
                 .allocate_memory(self.handle, create_info, ptr::null(), &mut memory);
             match err_code {
                 vk::Result::Success => Ok(memory),
+                _ => Err(err_code),
+            }
+        }
+    }
+
+    pub fn create_shader_module(&self,
+                                create_info: &vk::ShaderModuleCreateInfo)
+                                -> VkResult<vk::ShaderModule> {
+        unsafe {
+            let mut shader = mem::uninitialized();
+            let err_code = self.device_fn
+                .create_shader_module(self.handle, create_info, ptr::null(), &mut shader);
+            match err_code {
+                vk::Result::Success => Ok(shader),
                 _ => Err(err_code),
             }
         }
@@ -381,6 +510,20 @@ impl Device {
         }
     }
 
+    pub fn bind_buffer_memory(&self,
+                              buffer: vk::Buffer,
+                              device_memory: vk::DeviceMemory,
+                              offset: vk::DeviceSize)
+                              -> VkResult<()> {
+        unsafe {
+            let err_code = self.device_fn
+                .bind_buffer_memory(self.handle, buffer, device_memory, offset);
+            match err_code {
+                vk::Result::Success => Ok(()),
+                _ => Err(err_code),
+            }
+        }
+    }
     pub fn bind_image_memory(&self,
                              image: vk::Image,
                              device_memory: vk::DeviceMemory,

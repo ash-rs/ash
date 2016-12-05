@@ -14,6 +14,11 @@ macro_rules! handle_nondispatchable {
         #[derive(Eq, PartialEq, Ord, PartialOrd, Clone, Copy, Hash)]
         pub struct $name (uint64_t);
 
+        impl $name{
+            pub fn null() -> $name{
+                $name(0)
+            }
+        }
         impl fmt::Pointer for $name {
             fn fmt(&self, f: &mut fmt::Formatter) -> ::std::result::Result<(), fmt::Error> {
                 write!(f, "0x{:x}", self.0)
