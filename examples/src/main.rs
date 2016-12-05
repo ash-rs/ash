@@ -339,7 +339,7 @@ fn main() {
     device.cmd_pipeline_barrier(setup_command_buffer,
                                 vk::PIPELINE_STAGE_TOP_OF_PIPE_BIT,
                                 vk::PIPELINE_STAGE_TOP_OF_PIPE_BIT,
-                                vk::DEPENDENCY_BY_REGION_BIT,
+                                vk::DependencyFlags::empty(),
                                 &[],
                                 &[],
                                 &[layout_transition_barrier]);
@@ -686,10 +686,6 @@ fn main() {
         p_attachments: color_blend_attachment_states.as_ptr(),
         blend_constants: [0.0, 0.0, 0.0, 0.0],
     };
-    //        VkPipelineDynamicStateCreateInfo dynamicStateCreateInfo;
-    //    dynamicStateCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_DYNAMIC_STATE_CREATE_INFO;
-    //    dynamicStateCreateInfo.dynamicStateCount = 2;
-    //    dynamicStateCreateInfo.pDynamicStates = dynamicState.ptr;
     let dynamic_state = [vk::DynamicState::Viewport, vk::DynamicState::Scissor];
     let dynamic_state_info = vk::PipelineDynamicStateCreateInfo {
         s_type: vk::StructureType::PipelineDynamicStateCreateInfo,
@@ -719,14 +715,95 @@ fn main() {
         base_pipeline_handle: vk::Pipeline::null(),
         base_pipeline_index: 0,
     };
-
     let graphics_pipelines =
         device.create_graphics_pipelines(vk::PipelineCache::null(), &[graphic_pipeline_info])
             .unwrap();
 
     let graphic_pipeline = graphics_pipelines[0];
-    printlndb!(graphic_pipeline);
 
+
+    let semaphore_create_info = vk::SemaphoreCreateInfo {
+        s_type: vk::StructureType::SemaphoreCreateInfo,
+        p_next: ptr::null(),
+        flags: 0,
+    };
+    let present_complete_semaphore = device.create_semaphore(&semaphore_create_info).unwrap();
+    let rendering_complete_semaphore = device.create_semaphore(&semaphore_create_info).unwrap();
+
+    while !window.should_close() {
+        glfw.poll_events();
+        for (_, event) in glfw::flush_messages(&events) {
+            handle_window_event(&mut window, event);
+        }
+        let present_index = device.acquire_next_image_khr(swapchain,
+                                    std::u64::MAX,
+                                    present_complete_semaphore,
+                                    vk::Fence::null())
+            .unwrap();
+        printlndb!(present_index);
+        device.begin_command_buffer(draw_command_buffer, &command_buffer_begin_info);
+        let layout_to_color = vk::ImageMemoryBarrier {
+            s_type: vk::StructureType::ImageMemoryBarrier,
+            p_next: ptr::null(),
+            src_access_mask: vk::AccessFlags::empty(),
+            dst_access_mask: vk::ACCESS_COLOR_ATTACHMENT_READ_BIT |
+                             vk::ACCESS_COLOR_ATTACHMENT_WRITE_BIT,
+            old_layout: vk::ImageLayout::Undefined,
+            new_layout: vk::ImageLayout::ColorAttachmentOptimal,
+            src_queue_family_index: vk::VK_QUEUE_FAMILY_IGNORED,
+            dst_queue_family_index: vk::VK_QUEUE_FAMILY_IGNORED,
+            image: present_images[present_index as usize],
+            subresource_range: vk::ImageSubresourceRange {
+                aspect_mask: vk::IMAGE_ASPECT_COLOR_BIT,
+                base_mip_level: 0,
+                level_count: 1,
+                base_array_layer: 0,
+                layer_count: 1,
+            },
+        };
+        device.cmd_pipeline_barrier(draw_command_buffer,
+                                    vk::PIPELINE_STAGE_TOP_OF_PIPE_BIT,
+                                    vk::PIPELINE_STAGE_TOP_OF_PIPE_BIT,
+                                    vk::DependencyFlags::empty(),
+                                    &[],
+                                    &[],
+                                    &[layout_to_color]);
+        let clear_values =
+            [vk::ClearValue::new_color(vk::ClearColorValue::new_float32([1.0, 1.0, 1.0, 1.0])),
+             vk::ClearValue::new_depth_stencil(vk::ClearDepthStencilValue {
+                 depth: 1.0,
+                 stencil: 0,
+             })];
+
+        let render_pass_begin_info = vk::RenderPassBeginInfo {
+            s_type: vk::StructureType::RenderPassBeginInfo,
+            p_next: ptr::null(),
+            render_pass: renderpass,
+            framebuffer: framebuffers[present_index as usize],
+            render_area: vk::Rect2D {
+                offset: vk::Offset2D { x: 0, y: 0 },
+                extent: surface_resoultion.clone(),
+            },
+            clear_value_count: clear_values.len() as u32,
+            p_clear_values: clear_values.as_ptr(),
+        };
+        //        vkCmdBeginRenderPass(
+        //            vkcontext.drawCmdBuffer, &renderPassBeginInfo,
+        //            VK_SUBPASS_CONTENTS_INLINE
+        //        );
+        //
+        //        vkCmdBindPipeline(vkcontext.drawCmdBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, vkcontext.pipeline);
+        //        vkCmdSetViewport(vkcontext.drawCmdBuffer, 0, 1, &viewport);
+        //        vkCmdSetScissor(vkcontext.drawCmdBuffer, 0 ,1, &scissors);
+        //
+        //        VkDeviceSize offsets;
+        //        vkCmdBindVertexBuffers( vkcontext.drawCmdBuffer, 0, 1, &vkcontext.vertexInputBuffer, &offsets );
+        //        vkCmdDraw( vkcontext.drawCmdBuffer, 3, 1, 0, 0 );
+        //        vkCmdEndRenderPass( vkcontext.drawCmdBuffer );
+    }
+
+    device.destroy_semaphore(present_complete_semaphore);
+    device.destroy_semaphore(rendering_complete_semaphore);
     for pipeline in graphics_pipelines {
         device.destroy_pipeline(pipeline);
     }

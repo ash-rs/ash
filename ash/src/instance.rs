@@ -219,6 +219,79 @@ impl Device {
         }
     }
 
+    pub fn destroy_semaphore(&self, semaphore: vk::Semaphore) {
+        unsafe {
+            self.device_fn.destroy_semaphore(self.handle, semaphore, ptr::null());
+        }
+    }
+
+    pub fn cmd_begin_render_pass(&self,
+                                 command_buffer: vk::CommandBuffer,
+                                 create_info: &vk::RenderPassBeginInfo,
+                                 contents: vk::SubpassContents) {
+        unsafe {
+            self.device_fn.cmd_begin_render_pass(command_buffer, create_info, contents);
+        }
+    }
+
+    pub fn cmd_bind_pipeline(&self,
+                             command_buffer: vk::CommandBuffer,
+                             pipeline_bind_point: vk::PipelineBindPoint,
+                             pipeline: vk::Pipeline) {
+        unsafe {
+            self.device_fn.cmd_bind_pipeline(command_buffer, pipeline_bind_point, pipeline);
+        }
+    }
+
+    pub fn cmd_set_scissor(&self, command_buffer: vk::CommandBuffer, scissors: &[vk::Rect2D]) {
+        unsafe {
+            self.device_fn
+                .cmd_set_scissor(command_buffer, 0, scissors.len() as u32, scissors.as_ptr());
+        }
+    }
+    pub fn cmd_set_viewport(&self, command_buffer: vk::CommandBuffer, viewports: &[vk::Viewport]) {
+        unsafe {
+            self.device_fn.cmd_set_viewport(command_buffer,
+                                            0,
+                                            viewports.len() as u32,
+                                            viewports.as_ptr());
+        }
+    }
+    pub fn acquire_next_image_khr(&self,
+                                  swapchain: vk::SwapchainKHR,
+                                  timeout: u64,
+                                  semaphore: vk::Semaphore,
+                                  fence: vk::Fence)
+                                  -> VkResult<u32> {
+        unsafe {
+            let mut index = mem::uninitialized();
+            let err_code = self.device_fn
+                .acquire_next_image_khr(self.handle,
+                                        swapchain,
+                                        timeout,
+                                        semaphore,
+                                        fence,
+                                        &mut index);
+            match err_code {
+                vk::Result::Success => Ok(index),
+                _ => Err(err_code),
+            }
+        }
+    }
+    pub fn create_semaphore(&self,
+                            create_info: &vk::SemaphoreCreateInfo)
+                            -> VkResult<vk::Semaphore> {
+        unsafe {
+            let mut semaphore = mem::uninitialized();
+            let err_code = self.device_fn
+                .create_semaphore(self.handle, create_info, ptr::null(), &mut semaphore);
+            match err_code {
+                vk::Result::Success => Ok(semaphore),
+                _ => Err(err_code),
+            }
+        }
+    }
+
     pub fn create_graphics_pipelines(&self,
                                      pipeline_cache: vk::PipelineCache,
                                      create_infos: &[vk::GraphicsPipelineCreateInfo])
