@@ -1,6 +1,7 @@
 pub use std::os::raw::c_ulonglong;
 pub use self::types::*;
 pub use self::cmds::*;
+use std::default::Default;
 
 #[doc(hidden)]
 #[allow(dead_code)]
@@ -39,6 +40,11 @@ macro_rules! vk_bitflags_wrapped {
         #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
         pub struct $name {flags: $flag_type}
 
+        impl Default for $name{
+            fn default() -> $name {
+                $name {flags: 0}
+            }
+        }
         impl fmt::Debug for $name {
             fn fmt(&self, f: &mut fmt::Formatter) -> ::std::result::Result<(), fmt::Error> {
                 write!(f, "{}({:b})", stringify!($name), self.flags)
@@ -222,47 +228,86 @@ pub type ANativeWindow = *const ();
 pub type wl_display = *const ();
 pub type wl_surface = *const ();
 
-pub type InstanceCreateFlags = Flags;
 pub type Flags = uint32_t;
 pub type Bool32 = uint32_t;
 pub type DeviceSize = uint64_t;
-pub type DeviceCreateFlags = Flags;
-pub type DeviceQueueCreateFlags = Flags;
-pub type MemoryMapFlags = Flags;
-pub type SemaphoreCreateFlags = Flags;
-pub type EventCreateFlags = Flags;
-pub type QueryPoolCreateFlags = Flags;
-pub type BufferViewCreateFlags = Flags;
-pub type ImageViewCreateFlags = Flags;
-pub type ShaderModuleCreateFlags = Flags;
-pub type PipelineCacheCreateFlags = Flags;
-pub type PipelineShaderStageCreateFlags = Flags;
-pub type PipelineVertexInputStateCreateFlags = Flags;
-pub type PipelineInputAssemblyStateCreateFlags = Flags;
-pub type PipelineTessellationStateCreateFlags = Flags;
-pub type PipelineViewportStateCreateFlags = Flags;
-pub type PipelineRasterizationStateCreateFlags = Flags;
-pub type PipelineMultisampleStateCreateFlags = Flags;
 pub type SampleMask = uint32_t;
-pub type PipelineDepthStencilStateCreateFlags = Flags;
-pub type PipelineColorBlendStateCreateFlags = Flags;
-pub type PipelineDynamicStateCreateFlags = Flags;
-pub type PipelineLayoutCreateFlags = Flags;
-pub type SamplerCreateFlags = Flags;
-pub type DescriptorSetLayoutCreateFlags = Flags;
-pub type DescriptorPoolResetFlags = Flags;
-pub type FramebufferCreateFlags = Flags;
-pub type RenderPassCreateFlags = Flags;
-pub type SubpassDescriptionFlags = Flags;
-pub type XlibSurfaceCreateFlagsKHR = Flags;
-pub type XcbSurfaceCreateFlagsKHR = Flags;
-pub type MirSurfaceCreateFlagsKHR = Flags;
-pub type Win32SurfaceCreateFlagsKHR = Flags;
-pub type AndroidSurfaceCreateFlagsKHR = Flags;
-pub type WaylandSurfaceCreateFlagsKHR = Flags;
-pub type SwapchainCreateFlagsKHR = Flags;
-pub type DisplayModeCreateFlagsKHR = Flags;
-pub type DisplaySurfaceCreateFlagsKHR = Flags;
+
+//pub type InstanceCreateFlags = Flags;
+//pub type DeviceCreateFlags = Flags;
+//pub type DeviceQueueCreateFlags = Flags;
+//pub type MemoryMapFlags = Flags;
+//pub type SemaphoreCreateFlags = Flags;
+//pub type EventCreateFlags = Flags;
+//pub type QueryPoolCreateFlags = Flags;
+//pub type BufferViewCreateFlags = Flags;
+//pub type ImageViewCreateFlags = Flags;
+//pub type ShaderModuleCreateFlags = Flags;
+//pub type PipelineCacheCreateFlags = Flags;
+//pub type PipelineShaderStageCreateFlags = Flags;
+//pub type PipelineVertexInputStateCreateFlags = Flags;
+//pub type PipelineInputAssemblyStateCreateFlags = Flags;
+//pub type PipelineTessellationStateCreateFlags = Flags;
+//pub type PipelineViewportStateCreateFlags = Flags;
+//pub type PipelineRasterizationStateCreateFlags = Flags;
+//pub type PipelineMultisampleStateCreateFlags = Flags;
+//pub type PipelineDepthStencilStateCreateFlags = Flags;
+//pub type PipelineColorBlendStateCreateFlags = Flags;
+//pub type PipelineDynamicStateCreateFlags = Flags;
+//pub type PipelineLayoutCreateFlags = Flags;
+//pub type SamplerCreateFlags = Flags;
+//pub type DescriptorSetLayoutCreateFlags = Flags;
+//pub type DescriptorPoolResetFlags = Flags;
+//pub type FramebufferCreateFlags = Flags;
+//pub type RenderPassCreateFlags = Flags;
+//pub type SubpassDescriptionFlags = Flags;
+//pub type XlibSurfaceCreateFlagsKHR = Flags;
+//pub type XcbSurfaceCreateFlagsKHR = Flags;
+//pub type MirSurfaceCreateFlagsKHR = Flags;
+//pub type Win32SurfaceCreateFlagsKHR = Flags;
+//pub type AndroidSurfaceCreateFlagsKHR = Flags;
+//pub type WaylandSurfaceCreateFlagsKHR = Flags;
+//pub type SwapchainCreateFlagsKHR = Flags;
+//pub type DisplayModeCreateFlagsKHR = Flags;
+//pub type DisplaySurfaceCreateFlagsKHR = Flags;
+//vk_bitflags_wrapped!(FormatFeatureFlags, 0b1111111111111, Flags);
+vk_bitflags_wrapped!(InstanceCreateFlags, 0b1, Flags);
+vk_bitflags_wrapped!(DeviceCreateFlags, 0b1, Flags);
+vk_bitflags_wrapped!(DeviceQueueCreateFlags, 0b1, Flags);
+vk_bitflags_wrapped!(MemoryMapFlags, 0b1, Flags);
+vk_bitflags_wrapped!(SemaphoreCreateFlags, 0b1, Flags);
+vk_bitflags_wrapped!(EventCreateFlags, 0b1, Flags);
+vk_bitflags_wrapped!(QueryPoolCreateFlags, 0b1, Flags);
+vk_bitflags_wrapped!(BufferViewCreateFlags, 0b1, Flags);
+vk_bitflags_wrapped!(ImageViewCreateFlags, 0b1, Flags);
+vk_bitflags_wrapped!(ShaderModuleCreateFlags, 0b1, Flags);
+vk_bitflags_wrapped!(PipelineCacheCreateFlags, 0b1, Flags);
+vk_bitflags_wrapped!(PipelineShaderStageCreateFlags, 0b1, Flags);
+vk_bitflags_wrapped!(PipelineVertexInputStateCreateFlags, 0b1, Flags);
+vk_bitflags_wrapped!(PipelineInputAssemblyStateCreateFlags, 0b1, Flags);
+vk_bitflags_wrapped!(PipelineTessellationStateCreateFlags, 0b1, Flags);
+vk_bitflags_wrapped!(PipelineViewportStateCreateFlags, 0b1, Flags);
+vk_bitflags_wrapped!(PipelineRasterizationStateCreateFlags, 0b1, Flags);
+vk_bitflags_wrapped!(PipelineMultisampleStateCreateFlags, 0b1, Flags);
+vk_bitflags_wrapped!(PipelineDepthStencilStateCreateFlags, 0b1, Flags);
+vk_bitflags_wrapped!(PipelineColorBlendStateCreateFlags, 0b1, Flags);
+vk_bitflags_wrapped!(PipelineDynamicStateCreateFlags, 0b1, Flags);
+vk_bitflags_wrapped!(PipelineLayoutCreateFlags, 0b1, Flags);
+vk_bitflags_wrapped!(SamplerCreateFlags, 0b1, Flags);
+vk_bitflags_wrapped!(DescriptorSetLayoutCreateFlags, 0b1, Flags);
+vk_bitflags_wrapped!(DescriptorPoolResetFlags, 0b1, Flags);
+vk_bitflags_wrapped!(FramebufferCreateFlags, 0b1, Flags);
+vk_bitflags_wrapped!(RenderPassCreateFlags, 0b1, Flags);
+vk_bitflags_wrapped!(SubpassDescriptionFlags, 0b1, Flags);
+vk_bitflags_wrapped!(XlibSurfaceCreateFlagsKHR, 0b1, Flags);
+vk_bitflags_wrapped!(XcbSurfaceCreateFlagsKHR, 0b1, Flags);
+vk_bitflags_wrapped!(MirSurfaceCreateFlagsKHR, 0b1, Flags);
+vk_bitflags_wrapped!(Win32SurfaceCreateFlagsKHR, 0b1, Flags);
+vk_bitflags_wrapped!(AndroidSurfaceCreateFlagsKHR, 0b1, Flags);
+vk_bitflags_wrapped!(WaylandSurfaceCreateFlagsKHR, 0b1, Flags);
+vk_bitflags_wrapped!(SwapchainCreateFlagsKHR, 0b1, Flags);
+vk_bitflags_wrapped!(DisplayModeCreateFlagsKHR, 0b1, Flags);
+vk_bitflags_wrapped!(DisplaySurfaceCreateFlagsKHR, 0b1, Flags);
 
 pub const VK_MAX_PHYSICAL_DEVICE_NAME_SIZE: size_t = 256;
 pub const VK_UUID_SIZE: size_t = 16;

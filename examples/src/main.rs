@@ -2,11 +2,14 @@
 #![allow(dead_code)]
 extern crate owning_ref;
 extern crate ash;
+
 extern crate vk_loader2 as vk;
 extern crate glfw;
 
+use std::default::Default;
 use glfw::*;
 use ash::instance::{Entry, Instance};
+use ash::device::Device;
 use std::ptr;
 use std::ffi::{CStr, CString};
 use std::mem;
@@ -14,17 +17,14 @@ use std::path::Path;
 use std::fs::File;
 use std::io::Read;
 use std::os::raw::c_void;
-macro_rules! printlndb{
-    ($arg: tt) => {
-        println!("{:?}", $arg);
-    }
-}
+
 fn handle_window_event(window: &mut glfw::Window, event: glfw::WindowEvent) {
     match event {
         glfw::WindowEvent::Key(Key::Escape, _, Action::Press, _) => window.set_should_close(true),
         _ => {}
     }
 }
+
 pub fn find_memorytype_index(memory_req: &vk::MemoryRequirements,
                              memory_prop: &vk::PhysicalDeviceMemoryProperties,
                              flags: vk::MemoryPropertyFlags)
@@ -91,7 +91,7 @@ fn main() {
         enabled_layer_count: layers_names_raw.len() as u32,
         pp_enabled_extension_names: extension_names_raw.as_ptr(),
         enabled_extension_count: extension_names_raw.len() as u32,
-        flags: 0,
+        flags: Default::default(),
     };
     let instance = entry.create_instance(create_info).expect("Instance creation error");
     let x11_display = window.glfw.get_x11_display();
@@ -99,7 +99,7 @@ fn main() {
     let x11_create_info = vk::XlibSurfaceCreateInfoKHR {
         s_type: vk::StructureType::XlibSurfaceCreateInfoKhr,
         p_next: ptr::null(),
-        flags: 0,
+        flags: Default::default(),
         window: x11_window as vk::Window,
         dpy: x11_display as *mut vk::Display,
     };
@@ -136,7 +136,7 @@ fn main() {
     let queue_info = vk::DeviceQueueCreateInfo {
         s_type: vk::StructureType::DeviceQueueCreateInfo,
         p_next: ptr::null(),
-        flags: 0,
+        flags: Default::default(),
         queue_family_index: queue_family_index as u32,
         p_queue_priorities: priorities.as_ptr(),
         queue_count: priorities.len() as u32,
@@ -144,7 +144,7 @@ fn main() {
     let device_create_info = vk::DeviceCreateInfo {
         s_type: vk::StructureType::DeviceCreateInfo,
         p_next: ptr::null(),
-        flags: 0,
+        flags: Default::default(),
         queue_create_info_count: 1,
         p_queue_create_infos: &queue_info,
         enabled_layer_count: 0,
@@ -153,7 +153,7 @@ fn main() {
         pp_enabled_extension_names: device_extension_names_raw.as_ptr(),
         p_enabled_features: &features,
     };
-    let device: ash::instance::Device = instance.create_device(pdevice, device_create_info)
+    let device: Device = instance.create_device(pdevice, device_create_info)
         .unwrap();
     let present_queue = device.get_device_queue(queue_family_index as u32, 0);
 
@@ -204,7 +204,7 @@ fn main() {
     let swapchain_create_info = vk::SwapchainCreateInfoKHR {
         s_type: vk::StructureType::SwapchainCreateInfoKhr,
         p_next: ptr::null(),
-        flags: 0,
+        flags: Default::default(),
         surface: surface,
         min_image_count: desired_image_count,
         image_color_space: surface_format.color_space,
@@ -249,7 +249,7 @@ fn main() {
             let create_view_info = vk::ImageViewCreateInfo {
                 s_type: vk::StructureType::ImageViewCreateInfo,
                 p_next: ptr::null(),
-                flags: 0,
+                flags: Default::default(),
                 view_type: vk::ImageViewType::Type2d,
                 format: surface_format.format,
                 components: vk::ComponentMapping {
@@ -367,7 +367,7 @@ fn main() {
     let depth_image_view_info = vk::ImageViewCreateInfo {
         s_type: vk::StructureType::ImageViewCreateInfo,
         p_next: ptr::null(),
-        flags: 0,
+        flags: Default::default(),
         view_type: vk::ImageViewType::Type2d,
         format: depth_image_create_info.format,
         components: vk::ComponentMapping {
@@ -422,7 +422,7 @@ fn main() {
         p_color_attachments: &color_attachment_ref,
         p_depth_stencil_attachment: &depth_attachment_ref,
         // TODO: Why is there no wrapper?
-        flags: 0,
+        flags: Default::default(),
         pipeline_bind_point: vk::PipelineBindPoint::Graphics,
         input_attachment_count: 0,
         p_input_attachments: ptr::null(),
@@ -432,7 +432,7 @@ fn main() {
     };
     let renderpass_create_info = vk::RenderPassCreateInfo {
         s_type: vk::StructureType::RenderPassCreateInfo,
-        flags: 0,
+        flags: Default::default(),
         p_next: ptr::null(),
         attachment_count: renderpass_attachments.len() as u32,
         p_attachments: renderpass_attachments.as_ptr(),
@@ -448,7 +448,7 @@ fn main() {
             let frame_buffer_create_info = vk::FramebufferCreateInfo {
                 s_type: vk::StructureType::FramebufferCreateInfo,
                 p_next: ptr::null(),
-                flags: 0,
+                flags: Default::default(),
                 render_pass: renderpass,
                 attachment_count: framebuffer_attachments.len() as u32,
                 p_attachments: framebuffer_attachments.as_ptr(),
@@ -487,7 +487,7 @@ fn main() {
     let slice = device.map_memory::<Vertex>(vertex_input_buffer_memory,
                               0,
                               vertex_input_buffer_info.size,
-                              0)
+                              vk::MemoryMapFlags::empty())
         .unwrap();
     let vertices = [Vertex {
                         x: -1.0,
@@ -518,7 +518,7 @@ fn main() {
     let vertex_shader_info = vk::ShaderModuleCreateInfo {
         s_type: vk::StructureType::ShaderModuleCreateInfo,
         p_next: ptr::null(),
-        flags: 0,
+        flags: Default::default(),
         code_size: vertex_bytes.len(),
         p_code: vertex_bytes.as_ptr() as *const u32,
     };
@@ -526,7 +526,7 @@ fn main() {
     let frag_shader_info = vk::ShaderModuleCreateInfo {
         s_type: vk::StructureType::ShaderModuleCreateInfo,
         p_next: ptr::null(),
-        flags: 0,
+        flags: Default::default(),
         code_size: frag_bytes.len(),
         p_code: frag_bytes.as_ptr() as *const u32,
     };
@@ -539,7 +539,7 @@ fn main() {
     let layout_create_info = vk::PipelineLayoutCreateInfo {
         s_type: vk::StructureType::PipelineLayoutCreateInfo,
         p_next: ptr::null(),
-        flags: 0,
+        flags: Default::default(),
         set_layout_count: 0,
         p_set_layouts: ptr::null(),
         push_constant_range_count: 0,
@@ -552,7 +552,7 @@ fn main() {
     let shader_stage_create_infos = [vk::PipelineShaderStageCreateInfo {
                                          s_type: vk::StructureType::PipelineShaderStageCreateInfo,
                                          p_next: ptr::null(),
-                                         flags: 0,
+                                         flags: Default::default(),
                                          module: vertex_shader_module,
                                          p_name: shader_entry_name.as_ptr(),
                                          p_specialization_info: ptr::null(),
@@ -561,7 +561,7 @@ fn main() {
                                      vk::PipelineShaderStageCreateInfo {
                                          s_type: vk::StructureType::PipelineShaderStageCreateInfo,
                                          p_next: ptr::null(),
-                                         flags: 0,
+                                         flags: Default::default(),
                                          module: fragment_shader_module,
                                          p_name: shader_entry_name.as_ptr(),
                                          p_specialization_info: ptr::null(),
@@ -581,7 +581,7 @@ fn main() {
     let vertex_input_state_info = vk::PipelineVertexInputStateCreateInfo {
         s_type: vk::StructureType::PipelineVertexInputStateCreateInfo,
         p_next: ptr::null(),
-        flags: 0,
+        flags: Default::default(),
         vertex_attribute_description_count: vertex_input_attribute_descriptions.len() as u32,
         p_vertex_attribute_descriptions: vertex_input_attribute_descriptions.as_ptr(),
         vertex_binding_description_count: vertex_input_binding_descriptions.len() as u32,
@@ -589,7 +589,7 @@ fn main() {
     };
     let vertex_input_assembly_state_info = vk::PipelineInputAssemblyStateCreateInfo {
         s_type: vk::StructureType::PipelineInputAssemblyStateCreateInfo,
-        flags: 0,
+        flags: Default::default(),
         p_next: ptr::null(),
         primitive_restart_enable: 0,
         topology: vk::PrimitiveTopology::TriangleList,
@@ -609,7 +609,7 @@ fn main() {
     let viewport_state_info = vk::PipelineViewportStateCreateInfo {
         s_type: vk::StructureType::PipelineViewportStateCreateInfo,
         p_next: ptr::null(),
-        flags: 0,
+        flags: Default::default(),
         scissor_count: scissors.len() as u32,
         p_scissors: scissors.as_ptr(),
         viewport_count: viewports.len() as u32,
@@ -618,7 +618,7 @@ fn main() {
     let rasterization_info = vk::PipelineRasterizationStateCreateInfo {
         s_type: vk::StructureType::PipelineRasterizationStateCreateInfo,
         p_next: ptr::null(),
-        flags: 0,
+        flags: Default::default(),
         cull_mode: vk::CULL_MODE_NONE,
         depth_bias_clamp: 0.0,
         depth_bias_constant_factor: 0.0,
@@ -632,7 +632,7 @@ fn main() {
     };
     let multisample_state_info = vk::PipelineMultisampleStateCreateInfo {
         s_type: vk::StructureType::PipelineMultisampleStateCreateInfo,
-        flags: 0,
+        flags: Default::default(),
         p_next: ptr::null(),
         rasterization_samples: vk::SAMPLE_COUNT_1_BIT,
         sample_shading_enable: 0,
@@ -653,7 +653,7 @@ fn main() {
     let depth_state_info = vk::PipelineDepthStencilStateCreateInfo {
         s_type: vk::StructureType::PipelineDepthStencilStateCreateInfo,
         p_next: ptr::null(),
-        flags: 0,
+        flags: Default::default(),
         depth_test_enable: 1,
         depth_write_enable: 1,
         depth_compare_op: vk::CompareOp::LessOrEqual,
@@ -679,7 +679,7 @@ fn main() {
     let color_blend_state = vk::PipelineColorBlendStateCreateInfo {
         s_type: vk::StructureType::PipelineColorBlendStateCreateInfo,
         p_next: ptr::null(),
-        flags: 0,
+        flags: Default::default(),
         logic_op_enable: 0,
         logic_op: vk::LogicOp::Clear,
         attachment_count: color_blend_attachment_states.len() as u32,
@@ -690,7 +690,7 @@ fn main() {
     let dynamic_state_info = vk::PipelineDynamicStateCreateInfo {
         s_type: vk::StructureType::PipelineDynamicStateCreateInfo,
         p_next: ptr::null(),
-        flags: 0,
+        flags: Default::default(),
         dynamic_state_count: dynamic_state.len() as u32,
         p_dynamic_states: dynamic_state.as_ptr(),
     };
@@ -725,7 +725,7 @@ fn main() {
     let semaphore_create_info = vk::SemaphoreCreateInfo {
         s_type: vk::StructureType::SemaphoreCreateInfo,
         p_next: ptr::null(),
-        flags: 0,
+        flags: Default::default(),
     };
     let present_complete_semaphore = device.create_semaphore(&semaphore_create_info).unwrap();
     let rendering_complete_semaphore = device.create_semaphore(&semaphore_create_info).unwrap();
@@ -822,7 +822,7 @@ fn main() {
                                     &[],
                                     &[],
                                     &[pre_present_barrier]);
-        device.end_command_buffer(draw_command_buffer);
+        device.end_command_buffer(draw_command_buffer).unwrap();
         let wait_render_mask = [vk::PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT];
         let submit_info = vk::SubmitInfo {
             s_type: vk::StructureType::SubmitInfo,

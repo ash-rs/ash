@@ -2,6 +2,7 @@
 extern crate lazy_static;
 extern crate shared_library;
 extern crate vk_loader;
+#[macro_use]
 extern crate vk_loader2;
 extern crate glfw;
 #[macro_use]
@@ -12,7 +13,7 @@ pub mod load;
 //pub mod surface;
 pub mod instance;
 //pub mod feature;
-//pub mod device;
+pub mod device;
 //pub mod commandpool;
 //pub mod fence;
 //pub mod buffer;
