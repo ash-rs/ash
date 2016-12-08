@@ -74,6 +74,7 @@ fn main() {
 
     window.set_key_polling(true);
     window.make_current();
+    glfw.set_swap_interval(0);
     let entry = Entry::load_vulkan().unwrap();
     let instance_ext_props = entry.enumerate_instance_extension_properties().unwrap();
     let app_name = CString::new("TEST").unwrap();
