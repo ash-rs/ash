@@ -788,32 +788,6 @@ fn main() {
         let draw_fence = submit_fence;
         device.reset_command_buffer(draw_command_buffer, Default::default()).unwrap();
         device.begin_command_buffer(draw_command_buffer, &command_buffer_begin_info).unwrap();
-        //let layout_to_color = vk::ImageMemoryBarrier {
-        //    s_type: vk::StructureType::ImageMemoryBarrier,
-        //    p_next: ptr::null(),
-        //    src_access_mask: Default::default(),
-        //    dst_access_mask: vk::ACCESS_COLOR_ATTACHMENT_READ_BIT |
-        //                     vk::ACCESS_COLOR_ATTACHMENT_WRITE_BIT,
-        //    old_layout: vk::ImageLayout::Undefined,
-        //    new_layout: vk::ImageLayout::ColorAttachmentOptimal,
-        //    src_queue_family_index: vk::VK_QUEUE_FAMILY_IGNORED,
-        //    dst_queue_family_index: vk::VK_QUEUE_FAMILY_IGNORED,
-        //    image: present_images[present_index as usize],
-        //    subresource_range: vk::ImageSubresourceRange {
-        //        aspect_mask: vk::IMAGE_ASPECT_COLOR_BIT,
-        //        base_mip_level: 0,
-        //        level_count: 1,
-        //        base_array_layer: 0,
-        //        layer_count: 1,
-        //    },
-        //};
-        //device.cmd_pipeline_barrier(draw_command_buffer,
-        //                            vk::PIPELINE_STAGE_TOP_OF_PIPE_BIT,
-        //                            vk::PIPELINE_STAGE_TOP_OF_PIPE_BIT,
-        //                            vk::DependencyFlags::empty(),
-        //                            &[],
-        //                            &[],
-        //                            &[layout_to_color]);
         let clear_values =
             [vk::ClearValue::new_color(vk::ClearColorValue::new_float32([1.0, 1.0, 1.0, 1.0])),
              vk::ClearValue::new_depth_stencil(vk::ClearDepthStencilValue {
@@ -844,31 +818,6 @@ fn main() {
         device.cmd_bind_vertex_buffers(draw_command_buffer, &[vertex_input_buffer], &0);
         device.cmd_draw(draw_command_buffer, 3, 1, 0, 0);
         device.cmd_end_render_pass(draw_command_buffer);
-        //let pre_present_barrier = vk::ImageMemoryBarrier {
-        //    s_type: vk::StructureType::ImageMemoryBarrier,
-        //    p_next: ptr::null(),
-        //    src_access_mask: vk::ACCESS_MEMORY_READ_BIT,
-        //    dst_access_mask: vk::ACCESS_COLOR_ATTACHMENT_READ_BIT,
-        //    old_layout: vk::ImageLayout::ColorAttachmentOptimal,
-        //    new_layout: vk::ImageLayout::PresentSrcKhr,
-        //    src_queue_family_index: vk::VK_QUEUE_FAMILY_IGNORED,
-        //    dst_queue_family_index: vk::VK_QUEUE_FAMILY_IGNORED,
-        //    image: present_images[present_index as usize],
-        //    subresource_range: vk::ImageSubresourceRange {
-        //        aspect_mask: vk::IMAGE_ASPECT_COLOR_BIT,
-        //        base_mip_level: 0,
-        //        level_count: 1,
-        //        base_array_layer: 0,
-        //        layer_count: 1,
-        //    },
-        //};
-       // device.cmd_pipeline_barrier(draw_command_buffer,
-       //                             vk::PIPELINE_STAGE_ALL_COMMANDS_BIT,
-       //                             vk::PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT,
-       //                             vk::DependencyFlags::empty(),
-       //                             &[],
-       //                             &[],
-       //                             &[pre_present_barrier]);
         device.end_command_buffer(draw_command_buffer).unwrap();
         let wait_render_mask = [vk::PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT];
         let submit_info = vk::SubmitInfo {
@@ -884,7 +833,6 @@ fn main() {
         };
         device.queue_submit(present_queue, &[submit_info], draw_fence)
             .unwrap();
-        // device.queue_wait_idle(present_queue).unwrap();
 
         let mut present_info_err = unsafe { mem::uninitialized() };
         let present_info = vk::PresentInfoKHR {
