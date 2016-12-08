@@ -1,10 +1,11 @@
 #![feature(conservative_impl_trait)]
 #![allow(dead_code)]
-extern crate owning_ref;
 extern crate ash;
 
+#[macro_use]
 extern crate vk_loader2 as vk;
 extern crate glfw;
+extern crate time;
 
 use std::default::Default;
 use glfw::*;
@@ -18,6 +19,19 @@ use std::fs::File;
 use std::io::Read;
 use std::os::raw::c_void;
 
+unsafe extern "system" fn vulkan_debug_callback(flags: vk::DebugReportFlagsEXT,
+                                                obj_type: vk::DebugReportObjectTypeEXT,
+                                                obj: u64,
+                                                loc: usize,
+                                                message: i32,
+                                                p_layer_prefix: *const i8,
+                                                p_message: *const i8,
+                                                data: *mut ())
+                                                -> u32 {
+    let s = CStr::from_ptr(p_message);
+    println!("{:?}", s);
+    1
+}
 fn handle_window_event(window: &mut glfw::Window, event: glfw::WindowEvent) {
     match event {
         glfw::WindowEvent::Key(Key::Escape, _, Action::Press, _) => window.set_should_close(true),
@@ -70,7 +84,8 @@ fn main() {
         .map(|raw_name| raw_name.as_ptr())
         .collect();
     let extension_names = [CString::new("VK_KHR_surface").unwrap(),
-                           CString::new("VK_KHR_xlib_surface").unwrap()];
+                           CString::new("VK_KHR_xlib_surface").unwrap(),
+                           CString::new("VK_EXT_debug_report").unwrap()];
     let extension_names_raw: Vec<*const i8> = extension_names.iter()
         .map(|raw_name| raw_name.as_ptr())
         .collect();
@@ -81,19 +96,29 @@ fn main() {
         application_version: 0,
         p_engine_name: raw_name,
         engine_version: 0,
-        api_version: 0,
+        api_version: vk_make_version!(1, 0, 36),
     };
     let create_info = vk::InstanceCreateInfo {
         s_type: vk::StructureType::InstanceCreateInfo,
-        p_application_info: &appinfo,
         p_next: ptr::null(),
+        flags: Default::default(),
+        p_application_info: &appinfo,
         pp_enabled_layer_names: layers_names_raw.as_ptr(),
         enabled_layer_count: layers_names_raw.len() as u32,
         pp_enabled_extension_names: extension_names_raw.as_ptr(),
         enabled_extension_count: extension_names_raw.len() as u32,
-        flags: Default::default(),
     };
     let instance = entry.create_instance(create_info).expect("Instance creation error");
+    let debug_info = vk::DebugReportCallbackCreateInfoEXT {
+        s_type: vk::StructureType::DebugReportCallbackCreateInfoExt,
+        p_next: ptr::null(),
+        flags: vk::DEBUG_REPORT_ERROR_BIT_EXT | vk::DEBUG_REPORT_WARNING_BIT_EXT |
+               vk::DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT,
+        pfn_callback: vulkan_debug_callback,
+        p_user_data: ptr::null_mut(),
+    };
+    let debug_call_back = instance.create_debug_report_callback_ext(&debug_info).unwrap();
+    // println!("{:?}", instance);
     let x11_display = window.glfw.get_x11_display();
     let x11_window = window.get_x11_window();
     let x11_create_info = vk::XlibSurfaceCreateInfoKHR {
@@ -175,7 +200,7 @@ fn main() {
         .expect("Unable to find suitable surface format.");
     let surface_capabilities =
         instance.get_physical_device_surface_capabilities_khr(pdevice, surface).unwrap();
-    let desired_image_count = 2;
+    let desired_image_count = surface_capabilities.min_image_count + 1;
     assert!(surface_capabilities.min_image_count <= desired_image_count &&
             surface_capabilities.max_image_count >= desired_image_count,
             "Image count err");
@@ -200,7 +225,7 @@ fn main() {
     let present_mode = present_modes.iter()
         .cloned()
         .find(|&mode| mode == vk::PresentModeKHR::Mailbox)
-        .unwrap_or(vk::PresentModeKHR::Fifo);
+        .unwrap_or(vk::PresentModeKHR::Immediate);
     let swapchain_create_info = vk::SwapchainCreateInfoKHR {
         s_type: vk::StructureType::SwapchainCreateInfoKhr,
         p_next: ptr::null(),
@@ -238,6 +263,7 @@ fn main() {
         command_pool: pool,
         level: vk::CommandBufferLevel::Primary,
     };
+    // let draw_command_buffers = device.allocate_command_buffers(command_buffer_allocate_info).unwrap();
 
     let command_buffers = device.allocate_command_buffers(command_buffer_allocate_info).unwrap();
     let setup_command_buffer = command_buffers[0];
@@ -320,7 +346,7 @@ fn main() {
         s_type: vk::StructureType::ImageMemoryBarrier,
         p_next: ptr::null(),
         // TODO Is this correct?
-        src_access_mask: vk::AccessFlags::empty(),
+        src_access_mask: Default::default(),
         dst_access_mask: vk::ACCESS_DEPTH_STENCIL_ATTACHMENT_READ_BIT |
                          vk::ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT,
         old_layout: vk::ImageLayout::Undefined,
@@ -394,8 +420,8 @@ fn main() {
                                       store_op: vk::AttachmentStoreOp::Store,
                                       stencil_load_op: vk::AttachmentLoadOp::DontCare,
                                       stencil_store_op: vk::AttachmentStoreOp::DontCare,
-                                      initial_layout: vk::ImageLayout::ColorAttachmentOptimal,
-                                      final_layout: vk::ImageLayout::ColorAttachmentOptimal,
+                                      initial_layout: vk::ImageLayout::Undefined,
+                                      final_layout: vk::ImageLayout::PresentSrcKhr,
                                   },
                                   vk::AttachmentDescription {
                                       format: depth_image_create_info.format,
@@ -416,6 +442,15 @@ fn main() {
     let depth_attachment_ref = vk::AttachmentReference {
         attachment: 1,
         layout: vk::ImageLayout::DepthStencilAttachmentOptimal,
+    };
+    let dependency = vk::SubpassDependency{
+        dependency_flags: Default::default(),
+        src_subpass: vk::VK_SUBPASS_EXTERNAL,
+        dst_subpass: Default::default(),
+        src_stage_mask: vk::PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT,
+        src_access_mask: Default::default(),
+        dst_access_mask: vk::ACCESS_COLOR_ATTACHMENT_READ_BIT | vk::ACCESS_COLOR_ATTACHMENT_WRITE_BIT,
+        dst_stage_mask: vk::PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT
     };
     let subpass = vk::SubpassDescription {
         color_attachment_count: 1,
@@ -438,8 +473,8 @@ fn main() {
         p_attachments: renderpass_attachments.as_ptr(),
         subpass_count: 1,
         p_subpasses: &subpass,
-        dependency_count: 0,
-        p_dependencies: ptr::null(),
+        dependency_count: 1,
+        p_dependencies: &dependency,
     };
     let renderpass = device.create_render_pass(&renderpass_create_info).unwrap();
     let framebuffers: Vec<vk::Framebuffer> = present_image_views.iter()
@@ -721,7 +756,6 @@ fn main() {
 
     let graphic_pipeline = graphics_pipelines[0];
 
-
     let semaphore_create_info = vk::SemaphoreCreateInfo {
         s_type: vk::StructureType::SemaphoreCreateInfo,
         p_next: ptr::null(),
@@ -730,43 +764,55 @@ fn main() {
     let present_complete_semaphore = device.create_semaphore(&semaphore_create_info).unwrap();
     let rendering_complete_semaphore = device.create_semaphore(&semaphore_create_info).unwrap();
 
+    /// / println!("{:?}", present_image_views.len());
+    let mut current = time::precise_time_ns();
+    let mut last = current;
+    device.reset_fences(&[submit_fence]).unwrap();
     while !window.should_close() {
         glfw.poll_events();
+
         for (_, event) in glfw::flush_messages(&events) {
             handle_window_event(&mut window, event);
         }
+
+        current = time::precise_time_ns();
+        let dt = current - last;
+        last = current;
+        println!("dt: {}ms", dt/1000000);
         let present_index = device.acquire_next_image_khr(swapchain,
                                     std::u64::MAX,
                                     present_complete_semaphore,
                                     vk::Fence::null())
             .unwrap();
+        let draw_fence = submit_fence;
+        device.reset_command_buffer(draw_command_buffer, Default::default()).unwrap();
         device.begin_command_buffer(draw_command_buffer, &command_buffer_begin_info).unwrap();
-        let layout_to_color = vk::ImageMemoryBarrier {
-            s_type: vk::StructureType::ImageMemoryBarrier,
-            p_next: ptr::null(),
-            src_access_mask: vk::AccessFlags::empty(),
-            dst_access_mask: vk::ACCESS_COLOR_ATTACHMENT_READ_BIT |
-                             vk::ACCESS_COLOR_ATTACHMENT_WRITE_BIT,
-            old_layout: vk::ImageLayout::Undefined,
-            new_layout: vk::ImageLayout::ColorAttachmentOptimal,
-            src_queue_family_index: vk::VK_QUEUE_FAMILY_IGNORED,
-            dst_queue_family_index: vk::VK_QUEUE_FAMILY_IGNORED,
-            image: present_images[present_index as usize],
-            subresource_range: vk::ImageSubresourceRange {
-                aspect_mask: vk::IMAGE_ASPECT_COLOR_BIT,
-                base_mip_level: 0,
-                level_count: 1,
-                base_array_layer: 0,
-                layer_count: 1,
-            },
-        };
-        device.cmd_pipeline_barrier(draw_command_buffer,
-                                    vk::PIPELINE_STAGE_TOP_OF_PIPE_BIT,
-                                    vk::PIPELINE_STAGE_TOP_OF_PIPE_BIT,
-                                    vk::DependencyFlags::empty(),
-                                    &[],
-                                    &[],
-                                    &[layout_to_color]);
+        //let layout_to_color = vk::ImageMemoryBarrier {
+        //    s_type: vk::StructureType::ImageMemoryBarrier,
+        //    p_next: ptr::null(),
+        //    src_access_mask: Default::default(),
+        //    dst_access_mask: vk::ACCESS_COLOR_ATTACHMENT_READ_BIT |
+        //                     vk::ACCESS_COLOR_ATTACHMENT_WRITE_BIT,
+        //    old_layout: vk::ImageLayout::Undefined,
+        //    new_layout: vk::ImageLayout::ColorAttachmentOptimal,
+        //    src_queue_family_index: vk::VK_QUEUE_FAMILY_IGNORED,
+        //    dst_queue_family_index: vk::VK_QUEUE_FAMILY_IGNORED,
+        //    image: present_images[present_index as usize],
+        //    subresource_range: vk::ImageSubresourceRange {
+        //        aspect_mask: vk::IMAGE_ASPECT_COLOR_BIT,
+        //        base_mip_level: 0,
+        //        level_count: 1,
+        //        base_array_layer: 0,
+        //        layer_count: 1,
+        //    },
+        //};
+        //device.cmd_pipeline_barrier(draw_command_buffer,
+        //                            vk::PIPELINE_STAGE_TOP_OF_PIPE_BIT,
+        //                            vk::PIPELINE_STAGE_TOP_OF_PIPE_BIT,
+        //                            vk::DependencyFlags::empty(),
+        //                            &[],
+        //                            &[],
+        //                            &[layout_to_color]);
         let clear_values =
             [vk::ClearValue::new_color(vk::ClearColorValue::new_float32([1.0, 1.0, 1.0, 1.0])),
              vk::ClearValue::new_depth_stencil(vk::ClearDepthStencilValue {
@@ -797,31 +843,31 @@ fn main() {
         device.cmd_bind_vertex_buffers(draw_command_buffer, &[vertex_input_buffer], &0);
         device.cmd_draw(draw_command_buffer, 3, 1, 0, 0);
         device.cmd_end_render_pass(draw_command_buffer);
-        let pre_present_barrier = vk::ImageMemoryBarrier {
-            s_type: vk::StructureType::ImageMemoryBarrier,
-            p_next: ptr::null(),
-            src_access_mask: vk::ACCESS_COLOR_ATTACHMENT_WRITE_BIT,
-            dst_access_mask: vk::ACCESS_COLOR_ATTACHMENT_READ_BIT,
-            old_layout: vk::ImageLayout::ColorAttachmentOptimal,
-            new_layout: vk::ImageLayout::PresentSrcKhr,
-            src_queue_family_index: vk::VK_QUEUE_FAMILY_IGNORED,
-            dst_queue_family_index: vk::VK_QUEUE_FAMILY_IGNORED,
-            image: present_images[present_index as usize],
-            subresource_range: vk::ImageSubresourceRange {
-                aspect_mask: vk::IMAGE_ASPECT_COLOR_BIT,
-                base_mip_level: 0,
-                level_count: 1,
-                base_array_layer: 0,
-                layer_count: 1,
-            },
-        };
-        device.cmd_pipeline_barrier(draw_command_buffer,
-                                    vk::PIPELINE_STAGE_ALL_COMMANDS_BIT,
-                                    vk::PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT,
-                                    vk::DependencyFlags::empty(),
-                                    &[],
-                                    &[],
-                                    &[pre_present_barrier]);
+        //let pre_present_barrier = vk::ImageMemoryBarrier {
+        //    s_type: vk::StructureType::ImageMemoryBarrier,
+        //    p_next: ptr::null(),
+        //    src_access_mask: vk::ACCESS_MEMORY_READ_BIT,
+        //    dst_access_mask: vk::ACCESS_COLOR_ATTACHMENT_READ_BIT,
+        //    old_layout: vk::ImageLayout::ColorAttachmentOptimal,
+        //    new_layout: vk::ImageLayout::PresentSrcKhr,
+        //    src_queue_family_index: vk::VK_QUEUE_FAMILY_IGNORED,
+        //    dst_queue_family_index: vk::VK_QUEUE_FAMILY_IGNORED,
+        //    image: present_images[present_index as usize],
+        //    subresource_range: vk::ImageSubresourceRange {
+        //        aspect_mask: vk::IMAGE_ASPECT_COLOR_BIT,
+        //        base_mip_level: 0,
+        //        level_count: 1,
+        //        base_array_layer: 0,
+        //        layer_count: 1,
+        //    },
+        //};
+       // device.cmd_pipeline_barrier(draw_command_buffer,
+       //                             vk::PIPELINE_STAGE_ALL_COMMANDS_BIT,
+       //                             vk::PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT,
+       //                             vk::DependencyFlags::empty(),
+       //                             &[],
+       //                             &[],
+       //                             &[pre_present_barrier]);
         device.end_command_buffer(draw_command_buffer).unwrap();
         let wait_render_mask = [vk::PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT];
         let submit_info = vk::SubmitInfo {
@@ -835,8 +881,9 @@ fn main() {
             signal_semaphore_count: 1,
             p_signal_semaphores: &rendering_complete_semaphore,
         };
-        device.queue_submit(present_queue, &[submit_info], vk::Fence::null()).unwrap();
-        device.queue_wait_idle(present_queue).unwrap();
+        device.queue_submit(present_queue, &[submit_info], draw_fence)
+            .unwrap();
+        // device.queue_wait_idle(present_queue).unwrap();
 
         let mut present_info_err = unsafe { mem::uninitialized() };
         let present_info = vk::PresentInfoKHR {
@@ -849,11 +896,14 @@ fn main() {
             p_image_indices: &present_index,
             p_results: &mut present_info_err,
         };
-
         device.queue_present_khr(present_queue, &present_info).unwrap();
-        device.queue_wait_idle(present_queue).unwrap();
+        device.wait_for_fences(&[draw_fence], true, std::u64::MAX)
+            .unwrap();
+        device.reset_fences(&[draw_fence]).unwrap();
+        // device.queue_wait_idle(present_queue).unwrap();
     }
 
+    device.device_wait_idle().unwrap();
     device.destroy_semaphore(present_complete_semaphore);
     device.destroy_semaphore(rendering_complete_semaphore);
     for pipeline in graphics_pipelines {
@@ -879,5 +929,6 @@ fn main() {
     device.destroy_swapchain_khr(swapchain);
     device.destroy_device();
     instance.destroy_surface_khr(surface);
+    instance.destroy_debug_report_callback_ext(debug_call_back);
     instance.destroy_instance();
 }

@@ -11,18 +11,19 @@ use std::cell::Cell;
 use std::path::Path;
 use vk_loader2 as vk;
 // use feature;
-use load;
 
 type VkResult<T> = Result<T, vk::Result>;
-pub struct Device {
+pub struct Device<'r> {
     handle: vk::Device,
     device_fn: vk::DeviceFn,
+    _lifetime: ::std::marker::PhantomData<&'r ()>,
 }
-impl Device {
+impl<'r> Device<'r> {
     pub unsafe fn from_raw(handle: vk::Device, device_fn: vk::DeviceFn) -> Self {
         Device {
             handle: handle,
             device_fn: device_fn,
+            _lifetime: ::std::marker::PhantomData,
         }
     }
     pub fn destroy_device(&self) {
@@ -106,6 +107,39 @@ impl Device {
     pub fn destroy_semaphore(&self, semaphore: vk::Semaphore) {
         unsafe {
             self.device_fn.destroy_semaphore(self.handle, semaphore, ptr::null());
+        }
+    }
+    pub fn device_wait_idle(&self) -> VkResult<()> {
+        unsafe {
+            let err_code = self.device_fn.device_wait_idle(self.handle);
+            match err_code {
+                vk::Result::Success => Ok(()),
+                _ => Err(err_code),
+            }
+        }
+    }
+
+    pub fn reset_command_buffer(&self,
+                                command_buffer: vk::CommandBuffer,
+                                flags: vk::CommandBufferResetFlags)
+                                -> VkResult<()> {
+        unsafe {
+            let err_code = self.device_fn
+                .reset_command_buffer(command_buffer, flags);
+            match err_code {
+                vk::Result::Success => Ok(()),
+                _ => Err(err_code),
+            }
+        }
+    }
+    pub fn reset_fences(&self, fences: &[vk::Fence]) -> VkResult<()> {
+        unsafe {
+            let err_code = self.device_fn
+                .reset_fences(self.handle, fences.len() as u32, fences.as_ptr());
+            match err_code {
+                vk::Result::Success => Ok(()),
+                _ => Err(err_code),
+            }
         }
     }
 

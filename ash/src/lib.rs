@@ -1,14 +1,11 @@
 #[macro_use]
-extern crate lazy_static;
 extern crate shared_library;
 extern crate vk_loader;
 #[macro_use]
 extern crate vk_loader2;
 extern crate glfw;
-#[macro_use]
-extern crate bitflags;
 
-pub mod load;
+//pub mod load;
 //pub mod extensions;
 //pub mod surface;
 pub mod instance;

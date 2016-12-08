@@ -180,7 +180,7 @@ macro_rules! vk_bitflags_wrapped {
 
 #[macro_export]
 macro_rules! vk_make_version {
-    ($major: expr, $minor: expr, $patch: expr) => ((($major as uint32_t) << 22) | (($minor as uint32_t) << 12) | $patch as uint32_t)
+    ($major: expr, $minor: expr, $patch: expr) => ((($major as u32) << 22) | (($minor as u32) << 12) | $patch as u32)
 }
 
 #[macro_export]

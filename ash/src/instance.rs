@@ -1,17 +1,9 @@
 #![allow(dead_code)]
 use std::ptr;
-use std::ffi::*;
-
-use std::error;
-use std::fmt;
 use std::mem;
-use std::sync::Arc;
 use std::os::raw::*;
-use std::cell::Cell;
 use std::path::Path;
 use vk_loader2 as vk;
-// use feature;
-use load;
 use device::Device;
 use shared_library::dynamic_library::DynamicLibrary;
 
@@ -136,7 +128,7 @@ impl Entry {
 pub struct Instance<'r> {
     handle: vk::Instance,
     instance_fn: vk::InstanceFn,
-    _lifetime: ::std::marker::PhantomData<&'r i32>,
+    _lifetime: ::std::marker::PhantomData<&'r ()>,
 }
 impl<'r> Instance<'r> {
     pub fn destroy_instance(&self) {
@@ -144,7 +136,28 @@ impl<'r> Instance<'r> {
             self.instance_fn.destroy_instance(self.handle, ptr::null());
         }
     }
+    pub fn destroy_debug_report_callback_ext(&self, debug: vk::DebugReportCallbackEXT) {
+        unsafe {
+            self.instance_fn.destroy_debug_report_callback_ext(self.handle, debug, ptr::null());
+        }
+    }
 
+    pub fn create_debug_report_callback_ext(&self,
+                                            create_info: &vk::DebugReportCallbackCreateInfoEXT)
+                                            -> VkResult<vk::DebugReportCallbackEXT> {
+        unsafe {
+            let mut debug_cb = mem::uninitialized();
+            let err_code = self.instance_fn
+                .create_debug_report_callback_ext(self.handle,
+                                                  create_info,
+                                                  ptr::null(),
+                                                  &mut debug_cb);
+            match err_code {
+                vk::Result::Success => Ok(debug_cb),
+                _ => Err(err_code),
+            }
+        }
+    }
     pub fn get_physical_device_memory_properties(&self,
                                                  physical_device: vk::PhysicalDevice)
                                                  -> vk::PhysicalDeviceMemoryProperties {
