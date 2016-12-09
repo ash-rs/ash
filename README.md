@@ -1,5 +1,6 @@
 #Ash
 
+A very lightweight wrapper around Vulkan
 
 [![LICENSE](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE-MIT)
 [![LICENSE](https://img.shields.io/badge/license-apache-blue.svg)](LICENSE-APACHE)
