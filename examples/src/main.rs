@@ -19,6 +19,31 @@ use std::path::Path;
 use std::fs::File;
 use std::io::Read;
 
+// Simple offset_of macro akin to C++ offsetof
+macro_rules! offset_of{
+    ($base: path, $field: ident) => {
+        unsafe{
+            let b: $base = mem::uninitialized();
+            (&b.$field as *const _ as isize) - (&b as *const _ as isize)
+        }
+    }
+}
+
+// Cross platform surface creation with GLFW
+#[cfg(all(unix, not(target_os = "android")))]
+fn create_surface(instance: &Instance, window: &Window) -> Result<vk::SurfaceKHR, vk::Result> {
+    let x11_display = window.glfw.get_x11_display();
+    let x11_window = window.get_x11_window();
+    let x11_create_info = vk::XlibSurfaceCreateInfoKHR {
+        s_type: vk::StructureType::XlibSurfaceCreateInfoKhr,
+        p_next: ptr::null(),
+        flags: Default::default(),
+        window: x11_window as vk::Window,
+        dpy: x11_display as *mut vk::Display,
+    };
+    instance.create_xlib_surface_khr(&x11_create_info)
+}
+
 unsafe extern "system" fn vulkan_debug_callback(flags: vk::DebugReportFlagsEXT,
                                                 obj_type: vk::DebugReportObjectTypeEXT,
                                                 obj: u64,
@@ -116,16 +141,17 @@ fn main() {
         p_user_data: ptr::null_mut(),
     };
     let debug_call_back = instance.create_debug_report_callback_ext(&debug_info).unwrap();
-    let x11_display = window.glfw.get_x11_display();
-    let x11_window = window.get_x11_window();
-    let x11_create_info = vk::XlibSurfaceCreateInfoKHR {
-        s_type: vk::StructureType::XlibSurfaceCreateInfoKhr,
-        p_next: ptr::null(),
-        flags: Default::default(),
-        window: x11_window as vk::Window,
-        dpy: x11_display as *mut vk::Display,
-    };
-    let surface = instance.create_xlib_surface_khr(&x11_create_info).unwrap();
+    //let x11_display = window.glfw.get_x11_display();
+    //let x11_window = window.get_x11_window();
+    //let x11_create_info = vk::XlibSurfaceCreateInfoKHR {
+    //    s_type: vk::StructureType::XlibSurfaceCreateInfoKhr,
+    //    p_next: ptr::null(),
+    //    flags: Default::default(),
+    //    window: x11_window as vk::Window,
+    //    dpy: x11_display as *mut vk::Display,
+    //};
+    //let surface = instance.create_xlib_surface_khr(&x11_create_info).unwrap();
+    let surface = create_surface(&instance, &window).unwrap();
     let pdevices = instance.enumerate_physical_devices().expect("Physical device error");
     let (pdevice, queue_family_index) = pdevices.iter()
         .map(|pdevice| {
@@ -631,13 +657,13 @@ fn main() {
                                                    location: 0,
                                                    binding: 0,
                                                    format: vk::Format::R32g32b32a32Sfloat,
-                                                   offset: 0,
+                                                   offset: offset_of!(Vertex, pos) as u32,
                                                },
                                                vk::VertexInputAttributeDescription {
                                                    location: 1,
                                                    binding: 0,
                                                    format: vk::Format::R32g32b32a32Sfloat,
-                                                   offset: mem::size_of::<[f32; 4]>() as u32,
+                                                   offset: offset_of!(Vertex, color) as u32,
                                                }];
     let vertex_input_state_info = vk::PipelineVertexInputStateCreateInfo {
         s_type: vk::StructureType::PipelineVertexInputStateCreateInfo,
