@@ -24,11 +24,13 @@ impl<'r> Instance<'r> {
             _lifetime: ::std::marker::PhantomData,
         }
     }
+
     pub fn destroy_instance(&self) {
         unsafe {
             self.instance_fn.destroy_instance(self.handle, ptr::null());
         }
     }
+
     pub fn destroy_debug_report_callback_ext(&self, debug: vk::DebugReportCallbackEXT) {
         unsafe {
             self.instance_fn.destroy_debug_report_callback_ext(self.handle, debug, ptr::null());
@@ -51,6 +53,7 @@ impl<'r> Instance<'r> {
             }
         }
     }
+
     pub fn get_physical_device_memory_properties(&self,
                                                  physical_device: vk::PhysicalDevice)
                                                  -> vk::PhysicalDeviceMemoryProperties {
@@ -85,6 +88,7 @@ impl<'r> Instance<'r> {
             }
         }
     }
+
     pub fn get_physical_device_surface_capabilities_khr(&self,
                                                         physical_device: vk::PhysicalDevice,
                                                         surface: vk::SurfaceKHR)
@@ -131,6 +135,7 @@ impl<'r> Instance<'r> {
             self.instance_fn.destroy_surface_khr(self.handle, surface, ptr::null());
         }
     }
+
     pub fn create_xlib_surface_khr(&self,
                                    create_info: &vk::XlibSurfaceCreateInfoKHR)
                                    -> VkResult<vk::SurfaceKHR> {
@@ -145,6 +150,7 @@ impl<'r> Instance<'r> {
         }
 
     }
+
     pub fn get_physical_device_surface_support_khr(&self,
                                                    physical_device: vk::PhysicalDevice,
                                                    queue_index: vk::uint32_t,
@@ -159,8 +165,8 @@ impl<'r> Instance<'r> {
                                                          &mut b);
             b > 0
         }
-
     }
+
     pub fn get_physical_device_queue_family_properties(&self,
                                                        physical_device: vk::PhysicalDevice)
                                                        -> Vec<vk::QueueFamilyProperties> {

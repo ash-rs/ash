@@ -100,6 +100,7 @@ impl<'r> Device<'r> {
             self.device_fn.destroy_semaphore(self.handle, semaphore, ptr::null());
         }
     }
+
     pub fn device_wait_idle(&self) -> VkResult<()> {
         unsafe {
             let err_code = self.device_fn.device_wait_idle(self.handle);
@@ -123,6 +124,7 @@ impl<'r> Device<'r> {
             }
         }
     }
+
     pub fn reset_fences(&self, fences: &[vk::Fence]) -> VkResult<()> {
         unsafe {
             let err_code = self.device_fn
@@ -180,6 +182,7 @@ impl<'r> Device<'r> {
             self.device_fn.cmd_end_render_pass(command_buffer);
         }
     }
+
     pub fn cmd_draw(&self,
                     command_buffer: vk::CommandBuffer,
                     vertex_count: vk::uint32_t,
@@ -203,6 +206,7 @@ impl<'r> Device<'r> {
                                             viewports.as_ptr());
         }
     }
+
     pub fn acquire_next_image_khr(&self,
                                   swapchain: vk::SwapchainKHR,
                                   timeout: vk::uint64_t,
@@ -224,6 +228,7 @@ impl<'r> Device<'r> {
             }
         }
     }
+
     pub fn create_semaphore(&self,
                             create_info: &vk::SemaphoreCreateInfo)
                             -> VkResult<vk::Semaphore> {
@@ -258,6 +263,7 @@ impl<'r> Device<'r> {
             }
         }
     }
+
     pub fn create_buffer(&self, create_info: &vk::BufferCreateInfo) -> VkResult<vk::Buffer> {
         unsafe {
             let mut buffer = mem::uninitialized();
@@ -443,6 +449,7 @@ impl<'r> Device<'r> {
             }
         }
     }
+
     pub fn queue_submit(&self,
                         queue: vk::Queue,
                         submits: &[vk::SubmitInfo],
@@ -474,6 +481,7 @@ impl<'r> Device<'r> {
             }
         }
     }
+
     pub fn get_swapchain_images_khr(&self,
                                     swapchain: vk::SwapchainKHR)
                                     -> VkResult<Vec<vk::Image>> {
@@ -507,6 +515,7 @@ impl<'r> Device<'r> {
             }
         }
     }
+
     pub fn create_command_pool(&self,
                                create_info: &vk::CommandPoolCreateInfo)
                                -> VkResult<vk::CommandPool> {
@@ -520,6 +529,7 @@ impl<'r> Device<'r> {
             }
         }
     }
+
     pub fn create_swapchain_khr(&self,
                                 create_info: &vk::SwapchainCreateInfoKHR)
                                 -> VkResult<vk::SwapchainKHR> {
