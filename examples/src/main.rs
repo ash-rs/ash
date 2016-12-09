@@ -75,7 +75,7 @@ fn main() {
     glfw.set_swap_interval(0);
     let entry = Entry::load_vulkan().unwrap();
     let instance_ext_props = entry.enumerate_instance_extension_properties().unwrap();
-    let app_name = CString::new("TEST").unwrap();
+    let app_name = CString::new("VulkanTriangle").unwrap();
     let raw_name = app_name.as_ptr();
 
     let layer_names = [CString::new("VK_LAYER_LUNARG_standard_validation").unwrap()];
@@ -107,7 +107,7 @@ fn main() {
         pp_enabled_extension_names: extension_names_raw.as_ptr(),
         enabled_extension_count: extension_names_raw.len() as u32,
     };
-    let instance = entry.create_instance(create_info).expect("Instance creation error");
+    let instance: Instance = entry.create_instance(create_info).expect("Instance creation error");
     let debug_info = vk::DebugReportCallbackCreateInfoEXT {
         s_type: vk::StructureType::DebugReportCallbackCreateInfoExt,
         p_next: ptr::null(),
@@ -694,8 +694,7 @@ fn main() {
         stencil_test_enable: 0,
         front: noop_stencil_state.clone(),
         back: noop_stencil_state.clone(),
-        // TODO: correct?
-        max_depth_bounds: 0.0,
+        max_depth_bounds: 1.0,
         min_depth_bounds: 0.0,
     };
     let color_blend_attachment_states = [vk::PipelineColorBlendAttachmentState {
@@ -764,7 +763,7 @@ fn main() {
 
     let mut current = time::precise_time_ns();
     let mut last = current;
-    device.reset_fences(&[submit_fence]).unwrap();
+    let draw_fence = device.create_fence(&fence_create_info).unwrap();
     while !window.should_close() {
         glfw.poll_events();
 
@@ -780,11 +779,10 @@ fn main() {
                                     present_complete_semaphore,
                                     vk::Fence::null())
             .unwrap();
-        let draw_fence = submit_fence;
         device.reset_command_buffer(draw_command_buffer, Default::default()).unwrap();
         device.begin_command_buffer(draw_command_buffer, &command_buffer_begin_info).unwrap();
         let clear_values =
-            [vk::ClearValue::new_color(vk::ClearColorValue::new_float32([1.0, 1.0, 1.0, 1.0])),
+            [vk::ClearValue::new_color(vk::ClearColorValue::new_float32([0.0, 0.0, 0.0, 0.0])),
              vk::ClearValue::new_depth_stencil(vk::ClearDepthStencilValue {
                  depth: 1.0,
                  stencil: 0,
@@ -862,6 +860,7 @@ fn main() {
     device.destroy_render_pass(renderpass);
     device.destroy_image_view(depth_image_view);
     device.destroy_fence(submit_fence);
+    device.destroy_fence(draw_fence);
     device.free_memory(depth_image_memory);
     device.destroy_image(depth_image);
     for image_view in present_image_views {

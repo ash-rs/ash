@@ -1,16 +1,7 @@
 #![allow(dead_code)]
 use std::ptr;
-use std::ffi::*;
-
-use std::error;
-use std::fmt;
 use std::mem;
-use std::sync::Arc;
-use std::os::raw::*;
-use std::cell::Cell;
-use std::path::Path;
 use vk_loader2 as vk;
-// use feature;
 
 type VkResult<T> = Result<T, vk::Result>;
 pub struct Device<'r> {
