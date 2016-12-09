@@ -5,4 +5,3 @@ authors = ["maik klein <maikklein@googlemail.com>"]
 
 [dependencies]
 shared_library = "0.1.5"
-glfw = "0.11.0"
