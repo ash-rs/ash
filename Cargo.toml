@@ -2,6 +2,11 @@
 name = "ash"
 version = "0.1.0"
 authors = ["maik klein <maikklein@googlemail.com>"]
+description = "Vulkan bindings for Rust"
+license = "MIT, APACHE"
+repository = "https://github.com/MaikKlein/ash"
+readme = "README.md"
+keywords = ["vulkan", "graphic"]
 
 [dependencies]
 shared_library = "0.1.5"
