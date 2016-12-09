@@ -1,6 +1,8 @@
 #Ash
 A low level Vulkan wrapper for Rust
 
+## Stable yet?
+No.
 
 ## Why Ash?
 
@@ -95,10 +97,6 @@ You don't have to pass an Instance or Device handle anymore, this is done implic
                                -> VkResult<vk::CommandPool>;
 
     let pool = device.create_command_pool(&pool_create_info).unwrap();
-```
-```Rust
-```
-```Rust
 ```
 ## Example
 You can find the examples [here](https://github.com/MaikKlein/ash/tree/master/examples).
