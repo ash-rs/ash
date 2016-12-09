@@ -1,9 +1,8 @@
-#ASH
-
+#Ash
 A low level Vulkan wrapper for Rust
 
 
-## Why ASH?
+## Why Ash?
 
 Functions return a `type VkResult<T> = Result<T, vk::Result>` instead of an error code. No mutable references for the output are required.
 ```Rust
@@ -21,7 +20,7 @@ Always returns a `Vec<T>` for functions that output multiple values.
                                     -> VkResult<Vec<vk::Image>>;
     let present_images = device.get_swapchain_images_khr(swapchain).unwrap();
 ```
-Ash uses always uses slices in functions.
+Ash always uses slices in functions.
 ```Rust
     // C
     void vkCmdPipelineBarrier(
