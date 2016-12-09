@@ -54,10 +54,8 @@ pub fn find_memorytype_index(memory_req: &vk::MemoryRequirements,
 }
 #[derive(Clone, Debug, Copy)]
 struct Vertex {
-    x: f32,
-    y: f32,
-    z: f32,
-    w: f32,
+    pos: [f32; 4],
+    color: [f32; 4],
 }
 
 fn main() {
@@ -119,7 +117,6 @@ fn main() {
         p_user_data: ptr::null_mut(),
     };
     let debug_call_back = instance.create_debug_report_callback_ext(&debug_info).unwrap();
-    // println!("{:?}", instance);
     let x11_display = window.glfw.get_x11_display();
     let x11_window = window.get_x11_window();
     let x11_create_info = vk::XlibSurfaceCreateInfoKHR {
@@ -226,7 +223,7 @@ fn main() {
     let present_mode = present_modes.iter()
         .cloned()
         .find(|&mode| mode == vk::PresentModeKHR::Mailbox)
-        .unwrap_or(vk::PresentModeKHR::Immediate);
+        .unwrap_or(vk::PresentModeKHR::Fifo);
     let swapchain_create_info = vk::SwapchainCreateInfoKHR {
         s_type: vk::StructureType::SwapchainCreateInfoKhr,
         p_next: ptr::null(),
@@ -346,7 +343,6 @@ fn main() {
     let layout_transition_barrier = vk::ImageMemoryBarrier {
         s_type: vk::StructureType::ImageMemoryBarrier,
         p_next: ptr::null(),
-        // TODO Is this correct?
         src_access_mask: Default::default(),
         dst_access_mask: vk::ACCESS_DEPTH_STENCIL_ATTACHMENT_READ_BIT |
                          vk::ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT,
@@ -444,14 +440,15 @@ fn main() {
         attachment: 1,
         layout: vk::ImageLayout::DepthStencilAttachmentOptimal,
     };
-    let dependency = vk::SubpassDependency{
+    let dependency = vk::SubpassDependency {
         dependency_flags: Default::default(),
         src_subpass: vk::VK_SUBPASS_EXTERNAL,
         dst_subpass: Default::default(),
         src_stage_mask: vk::PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT,
         src_access_mask: Default::default(),
-        dst_access_mask: vk::ACCESS_COLOR_ATTACHMENT_READ_BIT | vk::ACCESS_COLOR_ATTACHMENT_WRITE_BIT,
-        dst_stage_mask: vk::PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT
+        dst_access_mask: vk::ACCESS_COLOR_ATTACHMENT_READ_BIT |
+                         vk::ACCESS_COLOR_ATTACHMENT_WRITE_BIT,
+        dst_stage_mask: vk::PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT,
     };
     let subpass = vk::SubpassDescription {
         color_attachment_count: 1,
@@ -526,22 +523,16 @@ fn main() {
                               vk::MemoryMapFlags::empty())
         .unwrap();
     let vertices = [Vertex {
-                        x: -1.0,
-                        y: 1.0,
-                        z: 0.0,
-                        w: 1.0,
+                        pos: [-1.0, 1.0, 0.0, 1.0],
+                        color: [0.0, 1.0, 0.0, 1.0],
                     },
                     Vertex {
-                        x: 1.0,
-                        y: 1.0,
-                        z: 0.0,
-                        w: 1.0,
+                        pos: [1.0, 1.0, 0.0, 1.0],
+                        color: [0.0, 0.0, 1.0, 1.0],
                     },
                     Vertex {
-                        x: 0.0,
-                        y: -1.0,
-                        z: 0.0,
-                        w: 1.0,
+                        pos: [0.0, -1.0, 0.0, 1.0],
+                        color: [1.0, 0.0, 0.0, 1.0],
                     }];
 
     slice.copy_from_slice(&vertices);
@@ -613,6 +604,12 @@ fn main() {
                                                    binding: 0,
                                                    format: vk::Format::R32g32b32a32Sfloat,
                                                    offset: 0,
+                                               },
+                                               vk::VertexInputAttributeDescription {
+                                                   location: 1,
+                                                   binding: 0,
+                                                   format: vk::Format::R32g32b32a32Sfloat,
+                                                   offset: mem::size_of::<[f32; 4]>() as u32,
                                                }];
     let vertex_input_state_info = vk::PipelineVertexInputStateCreateInfo {
         s_type: vk::StructureType::PipelineVertexInputStateCreateInfo,
@@ -765,7 +762,6 @@ fn main() {
     let present_complete_semaphore = device.create_semaphore(&semaphore_create_info).unwrap();
     let rendering_complete_semaphore = device.create_semaphore(&semaphore_create_info).unwrap();
 
-    /// / println!("{:?}", present_image_views.len());
     let mut current = time::precise_time_ns();
     let mut last = current;
     device.reset_fences(&[submit_fence]).unwrap();
@@ -779,7 +775,6 @@ fn main() {
         current = time::precise_time_ns();
         let dt = current - last;
         last = current;
-        println!("dt: {}ms", dt/1000000);
         let present_index = device.acquire_next_image_khr(swapchain,
                                     std::u64::MAX,
                                     present_complete_semaphore,
@@ -833,7 +828,6 @@ fn main() {
         };
         device.queue_submit(present_queue, &[submit_info], draw_fence)
             .unwrap();
-
         let mut present_info_err = unsafe { mem::uninitialized() };
         let present_info = vk::PresentInfoKHR {
             s_type: vk::StructureType::PresentInfoKhr,
@@ -849,7 +843,6 @@ fn main() {
         device.wait_for_fences(&[draw_fence], true, std::u64::MAX)
             .unwrap();
         device.reset_fences(&[draw_fence]).unwrap();
-        // device.queue_wait_idle(present_queue).unwrap();
     }
 
     device.device_wait_idle().unwrap();
