@@ -136,6 +136,53 @@ impl<'r> Device<'r> {
         }
     }
 
+    pub fn cmd_bind_index_buffer(&self,
+                                 command_buffer: vk::CommandBuffer,
+                                 buffer: vk::Buffer,
+                                 offset: vk::DeviceSize,
+                                 index_type: vk::IndexType) {
+        unsafe {
+            self.device_fn.cmd_bind_index_buffer(command_buffer, buffer, offset, index_type);
+        }
+    }
+
+    pub fn cmd_draw_indexed(&self,
+                            command_buffer: vk::CommandBuffer,
+                            index_count: vk::uint32_t,
+                            instance_count: vk::uint32_t,
+                            first_index: vk::uint32_t,
+                            vertex_offset: vk::int32_t,
+                            first_instance: vk::uint32_t) {
+
+        unsafe {
+            self.device_fn.cmd_draw_indexed(command_buffer,
+                                            index_count,
+                                            instance_count,
+                                            first_index,
+                                            vertex_offset,
+                                            first_instance);
+        }
+    }
+
+    pub fn cmd_bind_descriptor_sets(&self,
+                                    command_buffer: vk::CommandBuffer,
+                                    pipeline_bind_point: vk::PipelineBindPoint,
+                                    layout: vk::PipelineLayout,
+                                    first_set: vk::uint32_t,
+                                    descriptor_sets: &[vk::DescriptorSet],
+                                    dynamic_offsets: &[vk::uint32_t]) {
+        unsafe {
+            self.device_fn.cmd_bind_descriptor_sets(command_buffer,
+                                                    pipeline_bind_point,
+                                                    layout,
+                                                    first_set,
+                                                    descriptor_sets.len() as u32,
+                                                    descriptor_sets.as_ptr(),
+                                                    dynamic_offsets.len() as u32,
+                                                    dynamic_offsets.as_ptr())
+        }
+    }
+
     pub fn cmd_begin_render_pass(&self,
                                  command_buffer: vk::CommandBuffer,
                                  create_info: &vk::RenderPassBeginInfo,
@@ -628,6 +675,7 @@ impl<'r> Device<'r> {
             }
         }
     }
+
     pub fn bind_image_memory(&self,
                              image: vk::Image,
                              device_memory: vk::DeviceMemory,

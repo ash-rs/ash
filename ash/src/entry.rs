@@ -23,7 +23,7 @@ fn get_path() -> &'static Path {
 
 pub struct Entry {
     lib: DynamicLibrary,
-    static_fn: vk::Static,
+    static_fn: vk::StaticFn,
     entry_fn: vk::EntryFn,
 }
 
@@ -38,7 +38,7 @@ impl Entry {
     pub fn load_vulkan_path(path: &Path) -> Result<Entry, LoadingError> {
         let lib = try!(DynamicLibrary::open(Some(path))
             .map_err(|err| LoadingError::LibraryLoadFailure(err)));
-        let static_fn = try!(vk::Static::load(|name| unsafe {
+        let static_fn = try!(vk::StaticFn::load(|name| unsafe {
                 let name = name.to_str().unwrap();
                 let f = match lib.symbol(name) {
                     Ok(s) => s,

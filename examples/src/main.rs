@@ -239,7 +239,6 @@ fn main() {
         present_mode: present_mode,
         clipped: 1,
         old_swapchain: vk::SwapchainKHR::null(),
-        // FIX ME: What is this?
         image_array_layers: 1,
         p_queue_family_indices: ptr::null(),
         queue_family_index_count: 0,

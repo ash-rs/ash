@@ -5,13 +5,6 @@ extern crate vk_loader;
 extern crate vk_loader2;
 extern crate glfw;
 
-//pub mod load;
-//pub mod extensions;
-//pub mod surface;
 pub mod instance;
-//pub mod feature;
 pub mod device;
 pub mod entry;
-//pub mod commandpool;
-//pub mod fence;
-//pub mod buffer;

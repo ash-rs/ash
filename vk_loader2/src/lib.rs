@@ -3663,13 +3663,8 @@ macro_rules! vk_functions {
                 let s = $struct_name {
                     $(
                         $name: unsafe {
-                            extern "system" fn $name($(_: $param),*) { panic!("function pointer `{}` not loaded", stringify!($name)) }
                             let cname = CString::new($raw_name).unwrap();
                             let val = f(&cname);
-// if val.is_null() { mem::transmute($name as *const ()) } else { mem::transmute(val) }
-// if val.is_null(){
-//    return ::std::result::Result::Err($raw_name.to_string());
-// }
                             mem::transmute(val)
                         },
                     )+
@@ -3680,7 +3675,7 @@ macro_rules! vk_functions {
                 #[inline]
                 pub unsafe fn $name(&self $(, $param_name: $param)*) -> $ret {
                     let fp = self.$name;
-                    assert!(!(self.$name as *const c_void).is_null(), "{} not loaded!.", stringify!($raw_name));
+                    debug_assert!(!(self.$name as *const c_void).is_null(), "{} not loaded!.", stringify!($raw_name));
                     fp($($param_name),*)
                 }
             )+
@@ -3711,15 +3706,14 @@ pub mod cmds {
     #[allow(unused_imports)]
     use super::libc_reexports::*;
     vk_functions!{
-    Static,
+    StaticFn,
     "vkGetInstanceProcAddr", get_instance_proc_addr(
         instance: Instance,
         p_name: *const c_char,
     ) -> PFN_vkVoidFunction;
-
 }
 
-    vk_functions!{
+vk_functions!{
     EntryFn,
     "vkCreateInstance", create_instance(
         p_create_info: *const InstanceCreateInfo,
@@ -3739,7 +3733,7 @@ pub mod cmds {
     ) -> Result;
 }
 
-    vk_functions!{
+vk_functions!{
     InstanceFn,
 
     "vkDestroyInstance", destroy_instance(
@@ -4016,7 +4010,7 @@ pub mod cmds {
     ) -> ();
 }
 
-    vk_functions!{
+vk_functions!{
     DeviceFn,
     "vkDestroyDevice", destroy_device(
         device: Device,
