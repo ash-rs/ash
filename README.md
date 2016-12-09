@@ -156,5 +156,6 @@ let swapchain = swapchain_ext.create_swapchain_khr(&swapchain_create_info).unwra
 * [Api with no secrets](https://software.intel.com/en-us/articles/api-without-secrets-introduction-to-vulkan-part-1)
 * [Vulkan tutorial](http://av.dfki.de/~jhenriques/development.html)
 * [Vulkan examples](https://github.com/SaschaWillems/Vulkan)
+* [Vulkan tutorial](https://vulkan-tutorial.com/)
 * [Vulkano](https://github.com/tomaka/vulkano/)
 * [vk-rs](https://github.com/Osspial/vk-rs)
