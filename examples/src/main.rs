@@ -573,11 +573,6 @@ fn main() {
         memory_type_index: vertex_input_buffer_memory_index,
     };
     let vertex_input_buffer_memory = device.allocate_memory(&vertex_buffer_allocate_info).unwrap();
-    let slice = device.map_memory::<Vertex>(vertex_input_buffer_memory,
-                              0,
-                              vertex_input_buffer_info.size,
-                              vk::MemoryMapFlags::empty())
-        .unwrap();
     let vertices = [Vertex {
                         pos: [-1.0, 1.0, 0.0, 1.0],
                         color: [0.0, 1.0, 0.0, 1.0],
@@ -590,7 +585,11 @@ fn main() {
                         pos: [0.0, -1.0, 0.0, 1.0],
                         color: [1.0, 0.0, 0.0, 1.0],
                     }];
-
+    let slice = device.map_memory::<Vertex>(vertex_input_buffer_memory,
+                              0,
+                              vertex_input_buffer_info.size,
+                              vk::MemoryMapFlags::empty())
+        .unwrap();
     slice.copy_from_slice(&vertices);
     device.unmap_memory(vertex_input_buffer_memory);
     device.bind_buffer_memory(vertex_input_buffer, vertex_input_buffer_memory, 0).unwrap();

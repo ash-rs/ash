@@ -52,6 +52,15 @@ Ash always uses slices in functions.
                                 &[],
                                 &[],
                                 &[layout_transition_barrier]);
+
+    // or
+
+    let slice = device.map_memory::<Vertex>(vertex_input_buffer_memory,
+                              0,
+                              vertex_input_buffer_info.size,
+                              vk::MemoryMapFlags::empty())
+        .unwrap();
+    slice.copy_from_slice(&vertices);
 ```
 Ash still uses raw Vulkan structs. The only difference is type safety. Everything that can be an enum is an enum like `vk::StructureType`, flags are implemented similar to the `Bitflags` crate. Ash also follows the Rust style guide. The reason that Ash uses raw Vulkan structs is to be extensible, just like the Vulkan spec.
 ```Rust
@@ -91,6 +100,15 @@ You don't have to pass an Instance or Device handle anymore, this is done implic
 ```
 ```Rust
 ```
+## Example
+You can find the examples [here](https://github.com/MaikKlein/ash/tree/master/examples).
+### [Triangle](https://github.com/MaikKlein/ash/blob/master/examples/src/main.rs)
+Currently only runs under Linux (x11) and requires GLFW, the LunarG Validation layers, a Vulkan library. Ports for other operating systems are in progress. (Currently the GLFW wrapper only wraps the low level x11 bindings)
+
+The triangle example is written from top to bottom without many helper functions and external dependencies. It renders a color triangle.
+
+[screenshot here]()
+
 ## Complete
 
 ## In progress
