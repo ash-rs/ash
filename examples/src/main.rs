@@ -487,6 +487,39 @@ fn main() {
             device.create_framebuffer(&frame_buffer_create_info).unwrap()
         })
         .collect();
+    let index_buffer_data = [0u32, 1, 2];
+    let index_buffer_info = vk::BufferCreateInfo {
+        s_type: vk::StructureType::BufferCreateInfo,
+        p_next: ptr::null(),
+        flags: vk::BufferCreateFlags::empty(),
+        size: std::mem::size_of_val(&index_buffer_data) as u64,
+        usage: vk::BUFFER_USAGE_INDEX_BUFFER_BIT,
+        sharing_mode: vk::SharingMode::Exclusive,
+        queue_family_index_count: 0,
+        p_queue_family_indices: ptr::null(),
+    };
+    let index_buffer = device.create_buffer(&index_buffer_info).unwrap();
+    let index_buffer_memory_req = device.get_buffer_memory_requirements(index_buffer);
+    let index_buffer_memory_index = find_memorytype_index(&index_buffer_memory_req,
+                                                          &device_memory_properties,
+                                                          vk::MEMORY_PROPERTY_HOST_VISIBLE_BIT)
+        .expect("Unable to find suitable memorytype for the index buffer.");
+    let index_allocate_info = vk::MemoryAllocateInfo {
+        s_type: vk::StructureType::MemoryAllocateInfo,
+        p_next: ptr::null(),
+        allocation_size: index_buffer_memory_req.size,
+        memory_type_index: index_buffer_memory_index,
+    };
+    let index_buffer_memory = device.allocate_memory(&index_allocate_info).unwrap();
+    let index_slice = device.map_memory::<u32>(index_buffer_memory,
+                           0,
+                           index_buffer_info.size,
+                           vk::MemoryMapFlags::empty())
+        .unwrap();
+    index_slice.copy_from_slice(&index_buffer_data);
+    device.unmap_memory(index_buffer_memory);
+    device.bind_buffer_memory(index_buffer, index_buffer_memory, 0).unwrap();
+
     let vertex_input_buffer_info = vk::BufferCreateInfo {
         s_type: vk::StructureType::BufferCreateInfo,
         p_next: ptr::null(),
@@ -804,7 +837,15 @@ fn main() {
         device.cmd_set_viewport(draw_command_buffer, &viewports);
         device.cmd_set_scissor(draw_command_buffer, &scissors);
         device.cmd_bind_vertex_buffers(draw_command_buffer, &[vertex_input_buffer], &0);
-        device.cmd_draw(draw_command_buffer, 3, 1, 0, 0);
+        device.cmd_bind_index_buffer(draw_command_buffer, index_buffer, 0, vk::IndexType::Uint32);
+        device.cmd_draw_indexed(draw_command_buffer,
+                                index_buffer_data.len() as u32,
+                                1,
+                                0,
+                                0,
+                                1);
+        // Or draw without the index buffer
+        // device.cmd_draw(draw_command_buffer, 3, 1, 0, 0);
         device.cmd_end_render_pass(draw_command_buffer);
         device.end_command_buffer(draw_command_buffer).unwrap();
         let wait_render_mask = [vk::PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT];
@@ -847,6 +888,8 @@ fn main() {
     device.destroy_pipeline_layout(pipeline_layout);
     device.destroy_shader_module(vertex_shader_module);
     device.destroy_shader_module(fragment_shader_module);
+    device.free_memory(index_buffer_memory);
+    device.destroy_buffer(index_buffer);
     device.free_memory(vertex_input_buffer_memory);
     device.destroy_buffer(vertex_input_buffer);
     for framebuffer in framebuffers {

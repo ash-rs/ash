@@ -176,9 +176,9 @@ impl<'r> Device<'r> {
                                                     pipeline_bind_point,
                                                     layout,
                                                     first_set,
-                                                    descriptor_sets.len() as u32,
+                                                    descriptor_sets.len() as vk::uint32_t,
                                                     descriptor_sets.as_ptr(),
-                                                    dynamic_offsets.len() as u32,
+                                                    dynamic_offsets.len() as vk::uint32_t,
                                                     dynamic_offsets.as_ptr())
         }
     }
