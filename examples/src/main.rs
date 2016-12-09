@@ -9,7 +9,8 @@ extern crate time;
 
 use std::default::Default;
 use glfw::*;
-use ash::instance::{Entry, Instance};
+use ash::entry::Entry;
+use ash::instance::Instance;
 use ash::device::Device;
 use std::ptr;
 use std::ffi::{CStr, CString};
@@ -17,7 +18,6 @@ use std::mem;
 use std::path::Path;
 use std::fs::File;
 use std::io::Read;
-use std::os::raw::c_void;
 
 unsafe extern "system" fn vulkan_debug_callback(flags: vk::DebugReportFlagsEXT,
                                                 obj_type: vk::DebugReportObjectTypeEXT,
@@ -28,8 +28,7 @@ unsafe extern "system" fn vulkan_debug_callback(flags: vk::DebugReportFlagsEXT,
                                                 p_message: *const i8,
                                                 data: *mut ())
                                                 -> u32 {
-    let s = CStr::from_ptr(p_message);
-    println!("{:?}", s);
+    println!("{:?}", CStr::from_ptr(p_message));
     1
 }
 fn handle_window_event(window: &mut glfw::Window, event: glfw::WindowEvent) {
@@ -107,7 +106,7 @@ fn main() {
         pp_enabled_extension_names: extension_names_raw.as_ptr(),
         enabled_extension_count: extension_names_raw.len() as u32,
     };
-    let instance: Instance = entry.create_instance(create_info).expect("Instance creation error");
+    let instance: Instance = entry.create_instance(&create_info).expect("Instance creation error");
     let debug_info = vk::DebugReportCallbackCreateInfoEXT {
         s_type: vk::StructureType::DebugReportCallbackCreateInfoExt,
         p_next: ptr::null(),
@@ -126,7 +125,7 @@ fn main() {
         window: x11_window as vk::Window,
         dpy: x11_display as *mut vk::Display,
     };
-    let surface = instance.create_xlib_surface_khr(x11_create_info).unwrap();
+    let surface = instance.create_xlib_surface_khr(&x11_create_info).unwrap();
     let pdevices = instance.enumerate_physical_devices().expect("Physical device error");
     let (pdevice, queue_family_index) = pdevices.iter()
         .map(|pdevice| {
@@ -176,7 +175,7 @@ fn main() {
         pp_enabled_extension_names: device_extension_names_raw.as_ptr(),
         p_enabled_features: &features,
     };
-    let device: Device = instance.create_device(pdevice, device_create_info)
+    let device: Device = instance.create_device(pdevice, &device_create_info)
         .unwrap();
     let present_queue = device.get_device_queue(queue_family_index as u32, 0);
 
@@ -245,15 +244,14 @@ fn main() {
         p_queue_family_indices: ptr::null(),
         queue_family_index_count: 0,
     };
-    let swapchain = device.create_swapchain_khr(swapchain_create_info).unwrap();
+    let swapchain = device.create_swapchain_khr(&swapchain_create_info).unwrap();
     let pool_create_info = vk::CommandPoolCreateInfo {
         s_type: vk::StructureType::CommandPoolCreateInfo,
         p_next: ptr::null(),
         flags: vk::COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT,
         queue_family_index: queue_family_index,
     };
-    let pool = device.create_command_pool(pool_create_info).unwrap();
-
+    let pool = device.create_command_pool(&pool_create_info).unwrap();
     let command_buffer_allocate_info = vk::CommandBufferAllocateInfo {
         s_type: vk::StructureType::CommandBufferAllocateInfo,
         p_next: ptr::null(),
@@ -261,9 +259,7 @@ fn main() {
         command_pool: pool,
         level: vk::CommandBufferLevel::Primary,
     };
-    // let draw_command_buffers = device.allocate_command_buffers(command_buffer_allocate_info).unwrap();
-
-    let command_buffers = device.allocate_command_buffers(command_buffer_allocate_info).unwrap();
+    let command_buffers = device.allocate_command_buffers(&command_buffer_allocate_info).unwrap();
     let setup_command_buffer = command_buffers[0];
     let draw_command_buffer = command_buffers[1];
 

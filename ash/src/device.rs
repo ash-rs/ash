@@ -126,7 +126,7 @@ impl<'r> Device<'r> {
     pub fn reset_fences(&self, fences: &[vk::Fence]) -> VkResult<()> {
         unsafe {
             let err_code = self.device_fn
-                .reset_fences(self.handle, fences.len() as u32, fences.as_ptr());
+                .reset_fences(self.handle, fences.len() as vk::uint32_t, fences.as_ptr());
             match err_code {
                 vk::Result::Success => Ok(()),
                 _ => Err(err_code),
@@ -155,7 +155,10 @@ impl<'r> Device<'r> {
     pub fn cmd_set_scissor(&self, command_buffer: vk::CommandBuffer, scissors: &[vk::Rect2D]) {
         unsafe {
             self.device_fn
-                .cmd_set_scissor(command_buffer, 0, scissors.len() as u32, scissors.as_ptr());
+                .cmd_set_scissor(command_buffer,
+                                 0,
+                                 scissors.len() as vk::uint32_t,
+                                 scissors.as_ptr());
         }
     }
 
@@ -166,7 +169,7 @@ impl<'r> Device<'r> {
         unsafe {
             self.device_fn.cmd_bind_vertex_buffers(command_buffer,
                                                    0,
-                                                   buffers.len() as u32,
+                                                   buffers.len() as vk::uint32_t,
                                                    buffers.as_ptr(),
                                                    offsets);
         }
@@ -179,10 +182,10 @@ impl<'r> Device<'r> {
     }
     pub fn cmd_draw(&self,
                     command_buffer: vk::CommandBuffer,
-                    vertex_count: u32,
-                    instance_count: u32,
-                    first_vertex: u32,
-                    first_instance: u32) {
+                    vertex_count: vk::uint32_t,
+                    instance_count: vk::uint32_t,
+                    first_vertex: vk::uint32_t,
+                    first_instance: vk::uint32_t) {
         unsafe {
             self.device_fn.cmd_draw(command_buffer,
                                     vertex_count,
@@ -196,16 +199,16 @@ impl<'r> Device<'r> {
         unsafe {
             self.device_fn.cmd_set_viewport(command_buffer,
                                             0,
-                                            viewports.len() as u32,
+                                            viewports.len() as vk::uint32_t,
                                             viewports.as_ptr());
         }
     }
     pub fn acquire_next_image_khr(&self,
                                   swapchain: vk::SwapchainKHR,
-                                  timeout: u64,
+                                  timeout: vk::uint64_t,
                                   semaphore: vk::Semaphore,
                                   fence: vk::Fence)
-                                  -> VkResult<u32> {
+                                  -> VkResult<vk::uint32_t> {
         unsafe {
             let mut index = mem::uninitialized();
             let err_code = self.device_fn
@@ -244,7 +247,7 @@ impl<'r> Device<'r> {
             let err_code = self.device_fn
                 .create_graphics_pipelines(self.handle,
                                            pipeline_cache,
-                                           create_infos.len() as u32,
+                                           create_infos.len() as vk::uint32_t,
                                            create_infos.as_ptr(),
                                            ptr::null(),
                                            pipelines.as_mut_ptr());
@@ -297,7 +300,8 @@ impl<'r> Device<'r> {
             let x: *mut T = data as *mut T;
             match err_code {
                 vk::Result::Success => {
-                    Ok(::std::slice::from_raw_parts_mut(x, size as usize / mem::size_of::<T>()))
+                    Ok(::std::slice::from_raw_parts_mut(x,
+                                                        size as vk::size_t / mem::size_of::<T>()))
                 }
                 _ => Err(err_code),
             }
@@ -324,7 +328,10 @@ impl<'r> Device<'r> {
         }
     }
 
-    pub fn get_device_queue(&self, queue_family_index: u32, queue_index: u32) -> vk::Queue {
+    pub fn get_device_queue(&self,
+                            queue_family_index: vk::uint32_t,
+                            queue_index: vk::uint32_t)
+                            -> vk::Queue {
         unsafe {
             let mut queue = mem::uninitialized();
             self.device_fn
@@ -346,11 +353,11 @@ impl<'r> Device<'r> {
                                                 src_stage_mask,
                                                 dst_stage_mask,
                                                 dependency_flags,
-                                                memory_barriers.len() as u32,
+                                                memory_barriers.len() as vk::uint32_t,
                                                 memory_barriers.as_ptr(),
-                                                buffer_memory_barriers.len() as u32,
+                                                buffer_memory_barriers.len() as vk::uint32_t,
                                                 buffer_memory_barriers.as_ptr(),
-                                                image_memory_barriers.len() as u32,
+                                                image_memory_barriers.len() as vk::uint32_t,
                                                 image_memory_barriers.as_ptr());
         }
     }
@@ -397,14 +404,14 @@ impl<'r> Device<'r> {
     pub fn wait_for_fences(&self,
                            fences: &[vk::Fence],
                            wait_all: bool,
-                           timeout: u64)
+                           timeout: vk::uint64_t)
                            -> VkResult<()> {
         unsafe {
             let err_code = self.device_fn
                 .wait_for_fences(self.handle,
-                                 fences.len() as u32,
+                                 fences.len() as vk::uint32_t,
                                  fences.as_ptr(),
-                                 wait_all as u32,
+                                 wait_all as vk::uint32_t,
                                  timeout);
             match err_code {
                 vk::Result::Success => Ok(()),
@@ -443,7 +450,10 @@ impl<'r> Device<'r> {
                         -> VkResult<()> {
         unsafe {
             let err_code = self.device_fn
-                .queue_submit(queue, submits.len() as u32, submits.as_ptr(), fence);
+                .queue_submit(queue,
+                              submits.len() as vk::uint32_t,
+                              submits.as_ptr(),
+                              fence);
             match err_code {
                 vk::Result::Success => Ok(()),
                 _ => Err(err_code),
@@ -472,10 +482,10 @@ impl<'r> Device<'r> {
             self.device_fn
                 .get_swapchain_images_khr(self.handle, swapchain, &mut count, ptr::null_mut());
 
-            let mut v = Vec::with_capacity(count as usize);
+            let mut v = Vec::with_capacity(count as vk::size_t);
             let err_code = self.device_fn
                 .get_swapchain_images_khr(self.handle, swapchain, &mut count, v.as_mut_ptr());
-            v.set_len(count as usize);
+            v.set_len(count as vk::size_t);
             match err_code {
                 vk::Result::Success => Ok(v),
                 _ => Err(err_code),
@@ -483,45 +493,40 @@ impl<'r> Device<'r> {
         }
     }
 
-    pub fn allocate_command_buffers<I: Into<vk::CommandBufferAllocateInfo>>
-        (&self,
-         i: I)
-         -> VkResult<Vec<vk::CommandBuffer>> {
-        let create_info = i.into();
+    pub fn allocate_command_buffers(&self,
+                                    create_info: &vk::CommandBufferAllocateInfo)
+                                    -> VkResult<Vec<vk::CommandBuffer>> {
         unsafe {
-            let mut buffers = Vec::with_capacity(create_info.command_buffer_count as usize);
+            let mut buffers = Vec::with_capacity(create_info.command_buffer_count as vk::size_t);
             let err_code = self.device_fn
-                .allocate_command_buffers(self.handle, &create_info, buffers.as_mut_ptr());
-            buffers.set_len(create_info.command_buffer_count as usize);
+                .allocate_command_buffers(self.handle, create_info, buffers.as_mut_ptr());
+            buffers.set_len(create_info.command_buffer_count as vk::size_t);
             match err_code {
                 vk::Result::Success => Ok(buffers),
                 _ => Err(err_code),
             }
         }
     }
-    pub fn create_command_pool<I: Into<vk::CommandPoolCreateInfo>>(&self,
-                                                                   i: I)
-                                                                   -> VkResult<vk::CommandPool> {
-        let create_info = i.into();
+    pub fn create_command_pool(&self,
+                               create_info: &vk::CommandPoolCreateInfo)
+                               -> VkResult<vk::CommandPool> {
         unsafe {
             let mut pool = mem::uninitialized();
             let err_code = self.device_fn
-                .create_command_pool(self.handle, &create_info, ptr::null(), &mut pool);
+                .create_command_pool(self.handle, create_info, ptr::null(), &mut pool);
             match err_code {
                 vk::Result::Success => Ok(pool),
                 _ => Err(err_code),
             }
         }
     }
-    pub fn create_swapchain_khr<I: Into<vk::SwapchainCreateInfoKHR>>
-        (&self,
-         i: I)
-         -> VkResult<vk::SwapchainKHR> {
-        let create_info = i.into();
+    pub fn create_swapchain_khr(&self,
+                                create_info: &vk::SwapchainCreateInfoKHR)
+                                -> VkResult<vk::SwapchainKHR> {
         unsafe {
             let mut swapchain = mem::uninitialized();
             let err_code = self.device_fn
-                .create_swapchain_khr(self.handle, &create_info, ptr::null(), &mut swapchain);
+                .create_swapchain_khr(self.handle, create_info, ptr::null(), &mut swapchain);
             match err_code {
                 vk::Result::Success => Ok(swapchain),
                 _ => Err(err_code),

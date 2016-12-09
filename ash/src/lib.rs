@@ -11,6 +11,7 @@ extern crate glfw;
 pub mod instance;
 //pub mod feature;
 pub mod device;
+pub mod entry;
 //pub mod commandpool;
 //pub mod fence;
 //pub mod buffer;

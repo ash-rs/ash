@@ -9,120 +9,6 @@ use shared_library::dynamic_library::DynamicLibrary;
 
 type VkResult<T> = Result<T, vk::Result>;
 
-#[cfg(windows)]
-fn get_path() -> &'static Path {
-    Path::new("vulkan-1.dll")
-}
-
-#[cfg(all(unix, not(target_os = "android")))]
-fn get_path() -> &'static Path {
-    Path::new("libvulkan.so.1")
-}
-
-#[cfg(target_os = "android")]
-fn get_path() -> &'static Path {
-    Path::new("libvulkan.so")
-}
-
-
-pub struct Entry {
-    lib: DynamicLibrary,
-    static_fn: vk::Static,
-    entry_fn: vk::EntryFn,
-}
-
-#[derive(Debug)]
-pub enum LoadingError {
-    LibraryLoadFailure(String),
-    StaticLoadError(String),
-    EntryLoadError(String),
-}
-
-impl Entry {
-    pub fn load_vulkan_path(path: &Path) -> Result<Entry, LoadingError> {
-        let lib = try!(DynamicLibrary::open(Some(path))
-            .map_err(|err| LoadingError::LibraryLoadFailure(err)));
-        let static_fn = try!(vk::Static::load(|name| unsafe {
-                let name = name.to_str().unwrap();
-                let f = match lib.symbol(name) {
-                    Ok(s) => s,
-                    Err(_) => ptr::null(),
-                };
-                f
-            })
-            .map_err(|err| LoadingError::StaticLoadError(err)));
-        let entry_fn = try!(vk::EntryFn::load(|name| unsafe {
-                mem::transmute(static_fn.get_instance_proc_addr(ptr::null_mut(), name.as_ptr()))
-            })
-            .map_err(|err| LoadingError::EntryLoadError(err)));
-        Ok(Entry {
-            lib: lib,
-            static_fn: static_fn,
-            entry_fn: entry_fn,
-        })
-    }
-    pub fn load_vulkan() -> Result<Entry, LoadingError> {
-        Entry::load_vulkan_path(get_path())
-    }
-
-
-    pub fn create_instance<I: Into<vk::InstanceCreateInfo>>(&self,
-                                                            i: I)
-                                                            -> Result<Instance, vk::Result> {
-        let create_info = i.into();
-        unsafe {
-            let mut instance: vk::Instance = mem::uninitialized();
-            let err_code = self.entry_fn.create_instance(&create_info, ptr::null(), &mut instance);
-            if err_code != vk::Result::Success {
-                return Err(err_code);
-            }
-            let instance_fn = vk::InstanceFn::load(|name| unsafe {
-                    mem::transmute(self.static_fn.get_instance_proc_addr(instance, name.as_ptr()))
-                })
-                .unwrap();
-            Ok(Instance {
-                handle: instance,
-                instance_fn: instance_fn,
-                _lifetime: ::std::marker::PhantomData,
-            })
-        }
-    }
-
-    pub fn enumerate_instance_layer_properties(&self)
-                                               -> Result<Vec<vk::LayerProperties>, vk::Result> {
-        unsafe {
-            let mut num = 0;
-            self.entry_fn.enumerate_instance_layer_properties(&mut num, ptr::null_mut());
-
-            let mut v = Vec::with_capacity(num as usize);
-            let err_code = self.entry_fn
-                .enumerate_instance_layer_properties(&mut num, v.as_mut_ptr());
-            v.set_len(num as usize);
-            match err_code {
-                vk::Result::Success => Ok(v),
-                _ => Err(err_code),
-            }
-        }
-    }
-
-    pub fn enumerate_instance_extension_properties
-        (&self)
-         -> Result<Vec<vk::ExtensionProperties>, vk::Result> {
-        unsafe {
-            let mut num = 0;
-            self.entry_fn
-                .enumerate_instance_extension_properties(ptr::null(), &mut num, ptr::null_mut());
-            let mut data = Vec::with_capacity(num as usize);
-            let err_code = self.entry_fn
-                .enumerate_instance_extension_properties(ptr::null(), &mut num, data.as_mut_ptr());
-            data.set_len(num as usize);
-            match err_code {
-                vk::Result::Success => Ok(data),
-                _ => Err(err_code),
-            }
-        }
-    }
-}
 
 #[derive(Debug)]
 pub struct Instance<'r> {
@@ -131,6 +17,13 @@ pub struct Instance<'r> {
     _lifetime: ::std::marker::PhantomData<&'r ()>,
 }
 impl<'r> Instance<'r> {
+    pub unsafe fn from_raw(handle: vk::Instance, instance_fn: vk::InstanceFn) -> Self {
+        Instance {
+            handle: handle,
+            instance_fn: instance_fn,
+            _lifetime: ::std::marker::PhantomData,
+        }
+    }
     pub fn destroy_instance(&self) {
         unsafe {
             self.instance_fn.destroy_instance(self.handle, ptr::null());
@@ -238,15 +131,13 @@ impl<'r> Instance<'r> {
             self.instance_fn.destroy_surface_khr(self.handle, surface, ptr::null());
         }
     }
-    pub fn create_xlib_surface_khr<I: Into<vk::XlibSurfaceCreateInfoKHR>>
-        (&self,
-         i: I)
-         -> VkResult<vk::SurfaceKHR> {
-        let create_info = i.into();
+    pub fn create_xlib_surface_khr(&self,
+                                   create_info: &vk::XlibSurfaceCreateInfoKHR)
+                                   -> VkResult<vk::SurfaceKHR> {
         unsafe {
             let mut surface = mem::uninitialized();
             let err_code = self.instance_fn
-                .create_xlib_surface_khr(self.handle, &create_info, ptr::null(), &mut surface);
+                .create_xlib_surface_khr(self.handle, create_info, ptr::null(), &mut surface);
             match err_code {
                 vk::Result::Success => Ok(surface),
                 _ => Err(err_code),
@@ -256,7 +147,7 @@ impl<'r> Instance<'r> {
     }
     pub fn get_physical_device_surface_support_khr(&self,
                                                    physical_device: vk::PhysicalDevice,
-                                                   queue_index: u32,
+                                                   queue_index: vk::uint32_t,
                                                    surface: vk::SurfaceKHR)
                                                    -> bool {
         unsafe {
@@ -289,15 +180,14 @@ impl<'r> Instance<'r> {
         }
     }
 
-    pub fn create_device<I: Into<vk::DeviceCreateInfo>>(&self,
-                                                        physical_device: vk::PhysicalDevice,
-                                                        i: I)
-                                                        -> VkResult<Device> {
-        let create_info = i.into();
+    pub fn create_device(&self,
+                         physical_device: vk::PhysicalDevice,
+                         create_info: &vk::DeviceCreateInfo)
+                         -> VkResult<Device> {
         unsafe {
             let mut device = mem::uninitialized();
             let err_code = self.instance_fn
-                .create_device(physical_device, &create_info, ptr::null(), &mut device);
+                .create_device(physical_device, create_info, ptr::null(), &mut device);
             if err_code != vk::Result::Success {
                 return Err(err_code);
             }
