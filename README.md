@@ -107,14 +107,16 @@ Currently only runs under Linux (x11) and requires GLFW, the LunarG Validation l
 
 The triangle example is written from top to bottom without many helper functions and external dependencies. It renders a color triangle.
 
-[screenshot here]()
+![screenshot](http://i.imgur.com/PQZcL6w.jpg)
 
-## Complete
+## Roadmap
 
-## In progress
+### Complete
+
+### In progress
 
 - Wrapping the complete spec
 - Optional extension loading
 
-## Not started
+### Not started
 - Custom allocators
