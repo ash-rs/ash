@@ -2,7 +2,7 @@
 use prelude::*;
 use std::ptr;
 use std::mem;
-use vk_loader2 as vk;
+use vk;
 
 
 pub struct Device<'r> {

@@ -4,20 +4,14 @@ version = "0.1.0"
 dependencies = [
  "ash 0.1.0",
  "glfw 0.9.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "vk_loader 0.1.0",
- "vk_loader2 0.1.0",
 ]
 
 [[package]]
 name = "ash"
 version = "0.1.0"
 dependencies = [
- "bitflags 0.7.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "glfw 0.9.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "lazy_static 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "glfw 0.11.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "shared_library 0.1.5 (registry+https://github.com/rust-lang/crates.io-index)",
- "vk_loader 0.1.0",
- "vk_loader2 0.1.0",
 ]
 
 [[package]]
@@ -49,6 +43,20 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 [[package]]
 name = "glfw"
 version = "0.9.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+dependencies = [
+ "bitflags 0.7.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "enum_primitive 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "glfw-sys 3.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "libc 0.2.15 (registry+https://github.com/rust-lang/crates.io-index)",
+ "log 0.3.6 (registry+https://github.com/rust-lang/crates.io-index)",
+ "num 0.1.34 (registry+https://github.com/rust-lang/crates.io-index)",
+ "semver 0.2.3 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "glfw"
+version = "0.11.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "bitflags 0.7.0 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -184,25 +192,12 @@ dependencies = [
  "libc 0.2.15 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
-[[package]]
-name = "vk_loader"
-version = "0.1.0"
-dependencies = [
- "shared_library 0.1.5 (registry+https://github.com/rust-lang/crates.io-index)",
-]
-
-[[package]]
-name = "vk_loader2"
-version = "0.1.0"
-dependencies = [
- "shared_library 0.1.5 (registry+https://github.com/rust-lang/crates.io-index)",
-]
-
 [metadata]
 "checksum bitflags 0.7.0 (registry+https://github.com/rust-lang/crates.io-index)" = "aad18937a628ec6abcd26d1489012cc0e18c21798210f491af69ded9b881106d"
 "checksum cmake 0.1.17 (registry+https://github.com/rust-lang/crates.io-index)" = "dfcf5bcece56ef953b8ea042509e9dcbdfe97820b7e20d86beb53df30ed94978"
 "checksum enum_primitive 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = "f79eff5be92a4d7d5bddf7daa7d650717ea71628634efe6ca7bcda85b2183c23"
 "checksum gcc 0.3.32 (registry+https://github.com/rust-lang/crates.io-index)" = "dcb000abd6df9df4c637f75190297ebe56c1d7e66b56bbf3b4aa7aece15f61a2"
+"checksum glfw 0.11.0 (registry+https://github.com/rust-lang/crates.io-index)" = "a24b2a1988d70ae50fe2744927cc3816439d7b28ffb3e9a9bbd8acae7db68d00"
 "checksum glfw 0.9.1 (registry+https://github.com/rust-lang/crates.io-index)" = "b14e68c4ccefdf293ecb65390a5761971b83fcfc54d153a5b73d438327633965"
 "checksum glfw-sys 3.2.0 (registry+https://github.com/rust-lang/crates.io-index)" = "eaff144079cb22d6f17009e29e87c02f5fd6c4669093ce12b0b2faa6027f0d23"
 "checksum lazy_static 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)" = "49247ec2a285bb3dcb23cbd9c35193c025e7251bfce77c1d5da97e6362dffe7f"

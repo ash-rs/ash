@@ -1,7 +1,7 @@
 use prelude::*;
 use std::mem;
 use std::ptr;
-use vk_loader2 as vk;
+use vk;
 use instance::Instance;
 use shared_library::dynamic_library::DynamicLibrary;
 use std::path::Path;

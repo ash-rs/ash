@@ -1,10 +1,10 @@
 #![allow(dead_code)]
+#[macro_use]
 extern crate ash;
 
-#[macro_use]
-extern crate vk_loader2 as vk;
 extern crate glfw;
 
+use ash::vk;
 use std::default::Default;
 use glfw::*;
 use ash::entry::Entry;

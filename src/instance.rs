@@ -4,7 +4,7 @@ use std::ptr;
 use std::mem;
 use std::os::raw::*;
 use std::path::Path;
-use vk_loader2 as vk;
+use vk;
 use device::Device;
 use shared_library::dynamic_library::DynamicLibrary;
 
