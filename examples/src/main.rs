@@ -592,8 +592,8 @@ fn main() {
     slice.copy_from_slice(&vertices);
     device.unmap_memory(vertex_input_buffer_memory);
     device.bind_buffer_memory(vertex_input_buffer, vertex_input_buffer_memory, 0).unwrap();
-    let vertex_spv_file = File::open(Path::new("vert.spv")).expect("Could not find vert.spv.");
-    let frag_spv_file = File::open(Path::new("frag.spv")).expect("Could not find frag.spv.");
+    let vertex_spv_file = File::open(Path::new("shader/vert.spv")).expect("Could not find vert.spv.");
+    let frag_spv_file = File::open(Path::new("shader/frag.spv")).expect("Could not find frag.spv.");
 
     let vertex_bytes: Vec<u8> = vertex_spv_file.bytes().filter_map(|byte| byte.ok()).collect();
     let vertex_shader_info = vk::ShaderModuleCreateInfo {
