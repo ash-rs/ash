@@ -1,14 +1,16 @@
 #![allow(dead_code)]
+use prelude::*;
 use std::ptr;
 use std::mem;
 use vk_loader2 as vk;
 
-type VkResult<T> = Result<T, vk::Result>;
+
 pub struct Device<'r> {
     handle: vk::Device,
     device_fn: vk::DeviceFn,
     _lifetime: ::std::marker::PhantomData<&'r ()>,
 }
+
 impl<'r> Device<'r> {
     pub unsafe fn from_raw(handle: vk::Device, device_fn: vk::DeviceFn) -> Self {
         Device {

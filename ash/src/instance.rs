@@ -1,4 +1,5 @@
 #![allow(dead_code)]
+use prelude::*;
 use std::ptr;
 use std::mem;
 use std::os::raw::*;
@@ -7,8 +8,11 @@ use vk_loader2 as vk;
 use device::Device;
 use shared_library::dynamic_library::DynamicLibrary;
 
-type VkResult<T> = Result<T, vk::Result>;
-
+#[derive(Debug)]
+pub enum DeviceError {
+    LoadError(String),
+    VkError(vk::Result),
+}
 
 #[derive(Debug)]
 pub struct Instance<'r> {
@@ -16,12 +20,31 @@ pub struct Instance<'r> {
     instance_fn: vk::InstanceFn,
     _lifetime: ::std::marker::PhantomData<&'r ()>,
 }
+
 impl<'r> Instance<'r> {
     pub unsafe fn from_raw(handle: vk::Instance, instance_fn: vk::InstanceFn) -> Self {
         Instance {
             handle: handle,
             instance_fn: instance_fn,
             _lifetime: ::std::marker::PhantomData,
+        }
+    }
+
+    pub fn create_device(&self,
+                         physical_device: vk::PhysicalDevice,
+                         create_info: &vk::DeviceCreateInfo)
+                         -> Result<Device, DeviceError> {
+        unsafe {
+            let mut device = mem::uninitialized();
+            let err_code = self.instance_fn
+                .create_device(physical_device, create_info, ptr::null(), &mut device);
+            if err_code != vk::Result::Success {
+                return Err(DeviceError::VkError(err_code));
+            }
+            let device_fn = vk::DeviceFn::load(|name| unsafe {
+                    mem::transmute(self.instance_fn.get_device_proc_addr(device, name.as_ptr()))
+                }).map_err(|err| DeviceError::LoadError(err))?;
+            Ok(Device::from_raw(device, device_fn))
         }
     }
 
@@ -186,24 +209,6 @@ impl<'r> Instance<'r> {
         }
     }
 
-    pub fn create_device(&self,
-                         physical_device: vk::PhysicalDevice,
-                         create_info: &vk::DeviceCreateInfo)
-                         -> VkResult<Device> {
-        unsafe {
-            let mut device = mem::uninitialized();
-            let err_code = self.instance_fn
-                .create_device(physical_device, create_info, ptr::null(), &mut device);
-            if err_code != vk::Result::Success {
-                return Err(err_code);
-            }
-            let device_fn = vk::DeviceFn::load(|name| unsafe {
-                    mem::transmute(self.instance_fn.get_device_proc_addr(device, name.as_ptr()))
-                })
-                .unwrap();
-            Ok(Device::from_raw(device, device_fn))
-        }
-    }
 
     pub fn enumerate_physical_devices(&self) -> VkResult<Vec<vk::PhysicalDevice>> {
         unsafe {

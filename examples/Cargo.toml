@@ -5,7 +5,6 @@ authors = ["maik klein <maikklein@googlemail.com>"]
 
 [dependencies]
 glfw = "0.9.1"
-time = "0.1"
 vk_loader = { version = "0.1.0", path = "../vk_loader"}
 vk_loader2 = { version = "0.1.0", path = "../vk_loader2"}
 ash = { version = "0.1.0", path = "../ash"}

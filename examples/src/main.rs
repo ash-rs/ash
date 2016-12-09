@@ -5,7 +5,6 @@ extern crate ash;
 #[macro_use]
 extern crate vk_loader2 as vk;
 extern crate glfw;
-extern crate time;
 
 use std::default::Default;
 use glfw::*;
@@ -44,6 +43,20 @@ fn create_surface(instance: &Instance, window: &Window) -> Result<vk::SurfaceKHR
     instance.create_xlib_surface_khr(&x11_create_info)
 }
 
+#[cfg(all(unix, not(target_os = "android")))]
+fn extension_names() -> Vec<CString> {
+    vec![CString::new("VK_KHR_surface").unwrap(),
+         CString::new("VK_KHR_xlib_surface").unwrap(),
+         CString::new("VK_EXT_debug_report").unwrap()]
+}
+
+#[cfg(all(windows))]
+fn extension_names() -> Vec<CString> {
+    vec![CString::new("VK_KHR_surface").unwrap(),
+         CString::new("VK_KHR_win32_surface").unwrap(),
+         CString::new("VK_EXT_debug_report").unwrap()]
+}
+
 unsafe extern "system" fn vulkan_debug_callback(flags: vk::DebugReportFlagsEXT,
                                                 obj_type: vk::DebugReportObjectTypeEXT,
                                                 obj: u64,
@@ -76,6 +89,7 @@ pub fn find_memorytype_index(memory_req: &vk::MemoryRequirements,
     }
     None
 }
+
 #[derive(Clone, Debug, Copy)]
 struct Vertex {
     pos: [f32; 4],
@@ -106,9 +120,7 @@ fn main() {
     let layers_names_raw: Vec<*const i8> = layer_names.iter()
         .map(|raw_name| raw_name.as_ptr())
         .collect();
-    let extension_names = [CString::new("VK_KHR_surface").unwrap(),
-                           CString::new("VK_KHR_xlib_surface").unwrap(),
-                           CString::new("VK_EXT_debug_report").unwrap()];
+    let extension_names = extension_names();
     let extension_names_raw: Vec<*const i8> = extension_names.iter()
         .map(|raw_name| raw_name.as_ptr())
         .collect();
@@ -141,16 +153,6 @@ fn main() {
         p_user_data: ptr::null_mut(),
     };
     let debug_call_back = instance.create_debug_report_callback_ext(&debug_info).unwrap();
-    //let x11_display = window.glfw.get_x11_display();
-    //let x11_window = window.get_x11_window();
-    //let x11_create_info = vk::XlibSurfaceCreateInfoKHR {
-    //    s_type: vk::StructureType::XlibSurfaceCreateInfoKhr,
-    //    p_next: ptr::null(),
-    //    flags: Default::default(),
-    //    window: x11_window as vk::Window,
-    //    dpy: x11_display as *mut vk::Display,
-    //};
-    //let surface = instance.create_xlib_surface_khr(&x11_create_info).unwrap();
     let surface = create_surface(&instance, &window).unwrap();
     let pdevices = instance.enumerate_physical_devices().expect("Physical device error");
     let (pdevice, queue_family_index) = pdevices.iter()
@@ -815,19 +817,12 @@ fn main() {
     let present_complete_semaphore = device.create_semaphore(&semaphore_create_info).unwrap();
     let rendering_complete_semaphore = device.create_semaphore(&semaphore_create_info).unwrap();
 
-    let mut current = time::precise_time_ns();
-    let mut last = current;
     let draw_fence = device.create_fence(&fence_create_info).unwrap();
     while !window.should_close() {
         glfw.poll_events();
-
         for (_, event) in glfw::flush_messages(&events) {
             handle_window_event(&mut window, event);
         }
-
-        current = time::precise_time_ns();
-        let dt = current - last;
-        last = current;
         let present_index = device.acquire_next_image_khr(swapchain,
                                     std::u64::MAX,
                                     present_complete_semaphore,
