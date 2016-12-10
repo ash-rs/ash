@@ -123,6 +123,17 @@ impl<'r> Device<'r> {
                                                 descriptor_sets.as_ptr());
         }
     }
+    pub fn update_descriptor_sets(&self,
+                                  descriptor_writes: &[vk::WriteDescriptorSet],
+                                  descriptor_copies: &[vk::CopyDescriptorSet]) {
+        unsafe {
+            self.device_fn.update_descriptor_sets(self.handle,
+                                                  descriptor_writes.len() as u32,
+                                                  descriptor_writes.as_ptr(),
+                                                  descriptor_copies.len() as u32,
+                                                  descriptor_copies.as_ptr());
+        }
+    }
 
     pub fn allocate_descriptor_sets(&self,
                                     create_info: &vk::DescriptorSetAllocateInfo)

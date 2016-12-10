@@ -546,6 +546,42 @@ fn main() {
     device.unmap_memory(index_buffer_memory);
     device.bind_buffer_memory(index_buffer, index_buffer_memory, 0).unwrap();
 
+    let uniform_color_buffer_info = vk::BufferCreateInfo {
+        s_type: vk::StructureType::BufferCreateInfo,
+        p_next: ptr::null(),
+        flags: vk::BufferCreateFlags::empty(),
+        size: 3 * std::mem::size_of::<f32>() as u64,
+        usage: vk::BUFFER_USAGE_UNIFORM_BUFFER_BIT,
+        sharing_mode: vk::SharingMode::Exclusive,
+        queue_family_index_count: 0,
+        p_queue_family_indices: ptr::null(),
+    };
+    let uniform_color_buffer_data = [0.0f32, 1.0, 0.0];
+    let uniform_color_buffer = device.create_buffer(&uniform_color_buffer_info).unwrap();
+    let uniform_color_buffer_memory_req =
+        device.get_buffer_memory_requirements(uniform_color_buffer);
+    let uniform_color_buffer_memory_index =
+        find_memorytype_index(&uniform_color_buffer_memory_req,
+                              &device_memory_properties,
+                              vk::MEMORY_PROPERTY_HOST_VISIBLE_BIT)
+            .expect("Unable to find suitable memorytype for the vertex buffer.");
+
+    let uniform_color_buffer_allocate_info = vk::MemoryAllocateInfo {
+        s_type: vk::StructureType::MemoryAllocateInfo,
+        p_next: ptr::null(),
+        allocation_size: uniform_color_buffer_memory_req.size,
+        memory_type_index: uniform_color_buffer_memory_index,
+    };
+    let uniform_color_buffer_memory = device.allocate_memory(&uniform_color_buffer_allocate_info)
+        .unwrap();
+    let uniform_slice = device.map_memory::<f32>(uniform_color_buffer_memory,
+                           0,
+                           uniform_color_buffer_info.size,
+                           vk::MemoryMapFlags::empty())
+        .unwrap();
+    uniform_slice.copy_from_slice(&uniform_color_buffer_data[..]);
+    device.unmap_memory(uniform_color_buffer_memory);
+    device.bind_buffer_memory(uniform_color_buffer, uniform_color_buffer_memory, 0).unwrap();
     let vertex_input_buffer_info = vk::BufferCreateInfo {
         s_type: vk::StructureType::BufferCreateInfo,
         p_next: ptr::null(),
@@ -632,20 +668,25 @@ fn main() {
     };
     let descriptor_sets = device.allocate_descriptor_sets(&desc_alloc_info).unwrap();
 
-    let write_desc_sets = [
-        vk::WriteDescriptorSet{
-            s_type: vk::StructureType::WriteDescriptorSet,
-            p_next: ptr::null(),
-            dst_set: descriptor_sets[0],
-            dst_binding: 0,
-            dst_array_element: 0,
-            descriptor_count: 1,
-            descriptor_type: vk::DescriptorType::UniformBuffer,
-            p_image_info: ptr::null(),
-            p_buffer_info: ptr::null(),
-            p_texel_buffer_view: ptr::null(),
-        }
-    ];
+    let uniform_color_buffer_descriptor = vk::DescriptorBufferInfo {
+        buffer: uniform_color_buffer,
+        offset: 0,
+        range: mem::size_of_val(&uniform_color_buffer_data) as u64,
+    };
+
+    let write_desc_sets = [vk::WriteDescriptorSet {
+                               s_type: vk::StructureType::WriteDescriptorSet,
+                               p_next: ptr::null(),
+                               dst_set: descriptor_sets[0],
+                               dst_binding: 0,
+                               dst_array_element: 0,
+                               descriptor_count: 1,
+                               descriptor_type: vk::DescriptorType::UniformBuffer,
+                               p_image_info: ptr::null(),
+                               p_buffer_info: &uniform_color_buffer_descriptor,
+                               p_texel_buffer_view: ptr::null(),
+                           }];
+    device.update_descriptor_sets(&write_desc_sets[..], &[]);
     let vertex_spv_file = File::open(Path::new("shader/vert.spv"))
         .expect("Could not find vert.spv.");
     let frag_spv_file = File::open(Path::new("shader/frag.spv")).expect("Could not find frag.spv.");
@@ -905,6 +946,12 @@ fn main() {
         device.cmd_begin_render_pass(draw_command_buffer,
                                      &render_pass_begin_info,
                                      vk::SubpassContents::Inline);
+        device.cmd_bind_descriptor_sets(draw_command_buffer,
+                                        vk::PipelineBindPoint::Graphics,
+                                        pipeline_layout,
+                                        0,
+                                        &descriptor_sets[..],
+                                        &[]);
         device.cmd_bind_pipeline(draw_command_buffer,
                                  vk::PipelineBindPoint::Graphics,
                                  graphic_pipeline);
@@ -965,6 +1012,8 @@ fn main() {
     device.free_memory(index_buffer_memory);
     device.destroy_buffer(index_buffer);
     device.free_memory(vertex_input_buffer_memory);
+    device.destroy_buffer(uniform_color_buffer);
+    device.free_memory(uniform_color_buffer_memory);
     device.destroy_buffer(vertex_input_buffer);
     for framebuffer in framebuffers {
         device.destroy_framebuffer(framebuffer);
