@@ -108,7 +108,7 @@ You don't have to pass an Instance or Device handle anymore, this is done implic
 ```
 ## Example
 You can find the examples [here](https://github.com/MaikKlein/ash/tree/master/examples).
-### [Triangle](https://github.com/MaikKlein/ash/blob/master/examples/src/main.rs)
+### [Triangle](https://github.com/MaikKlein/ash/blob/master/examples/triangle/src/main.rs)
 Currently only runs under Linux (x11) and requires GLFW, the LunarG Validation layers, a Vulkan library. Ports for other operating systems are in progress. (Currently the GLFW wrapper only wraps the low level x11 bindings)
 
 The triangle example is written from top to bottom without many helper functions or external dependencies. It renders a colored triangle. The shaders a written in GLSL and compiled into SPIR-V with [glslang](https://github.com/KhronosGroup/glslang)
