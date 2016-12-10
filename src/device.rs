@@ -103,11 +103,49 @@ impl<'r> Device<'r> {
         }
     }
 
+    pub fn destroy_descriptor_pool(&self, pool: vk::DescriptorPool) {
+        unsafe {
+            self.device_fn.destroy_descriptor_pool(self.handle, pool, ptr::null());
+        }
+    }
+    pub fn destroy_descriptor_set_layout(&self, layout: vk::DescriptorSetLayout) {
+        unsafe {
+            self.device_fn.destroy_descriptor_set_layout(self.handle, layout, ptr::null());
+        }
+    }
+
+    pub fn create_descriptor_set_layout(&self,
+                                        create_info: &vk::DescriptorSetLayoutCreateInfo)
+                                        -> VkResult<vk::DescriptorSetLayout> {
+        unsafe {
+            let mut layout = mem::uninitialized();
+            let err_code = self.device_fn
+                .create_descriptor_set_layout(self.handle, create_info, ptr::null(), &mut layout);
+            match err_code {
+                vk::Result::Success => Ok(layout),
+                _ => Err(err_code),
+            }
+        }
+    }
     pub fn device_wait_idle(&self) -> VkResult<()> {
         unsafe {
             let err_code = self.device_fn.device_wait_idle(self.handle);
             match err_code {
                 vk::Result::Success => Ok(()),
+                _ => Err(err_code),
+            }
+        }
+    }
+
+    pub fn create_descriptor_pool(&self,
+                                  create_info: &vk::DescriptorPoolCreateInfo)
+                                  -> VkResult<vk::DescriptorPool> {
+        unsafe {
+            let mut pool = mem::uninitialized();
+            let err_code = self.device_fn
+                .create_descriptor_pool(self.handle, create_info, ptr::null(), &mut pool);
+            match err_code {
+                vk::Result::Success => Ok(pool),
                 _ => Err(err_code),
             }
         }
