@@ -113,7 +113,32 @@ impl<'r> Device<'r> {
             self.device_fn.destroy_descriptor_set_layout(self.handle, layout, ptr::null());
         }
     }
+    pub fn free_descriptor_sets(&self,
+                                pool: vk::DescriptorPool,
+                                descriptor_sets: &[vk::DescriptorSet]) {
+        unsafe {
+            self.device_fn.free_descriptor_sets(self.handle,
+                                                pool,
+                                                descriptor_sets.len() as u32,
+                                                descriptor_sets.as_ptr());
+        }
+    }
 
+    pub fn allocate_descriptor_sets(&self,
+                                    create_info: &vk::DescriptorSetAllocateInfo)
+                                    -> VkResult<Vec<vk::DescriptorSet>> {
+        unsafe {
+            let mut desc_set = Vec::with_capacity(create_info.descriptor_set_count as usize);
+            let err_code = self.device_fn
+                .allocate_descriptor_sets(self.handle, create_info, desc_set.as_mut_ptr());
+
+            desc_set.set_len(create_info.descriptor_set_count as usize);
+            match err_code {
+                vk::Result::Success => Ok(desc_set),
+                _ => Err(err_code),
+            }
+        }
+    }
     pub fn create_descriptor_set_layout(&self,
                                         create_info: &vk::DescriptorSetLayoutCreateInfo)
                                         -> VkResult<vk::DescriptorSetLayout> {

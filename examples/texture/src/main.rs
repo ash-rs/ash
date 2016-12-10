@@ -621,8 +621,31 @@ fn main() {
         p_bindings: desc_layout_bindings.as_ptr(),
     };
 
-    let desc_set_layout = device.create_descriptor_set_layout(&descriptor_info).unwrap();
 
+    let desc_set_layouts = [device.create_descriptor_set_layout(&descriptor_info).unwrap()];
+    let desc_alloc_info = vk::DescriptorSetAllocateInfo {
+        s_type: vk::StructureType::DescriptorSetAllocateInfo,
+        p_next: ptr::null(),
+        descriptor_pool: descriptor_pool,
+        descriptor_set_count: desc_set_layouts.len() as u32,
+        p_set_layouts: desc_set_layouts.as_ptr(),
+    };
+    let descriptor_sets = device.allocate_descriptor_sets(&desc_alloc_info).unwrap();
+
+    let write_desc_sets = [
+        vk::WriteDescriptorSet{
+            s_type: vk::StructureType::WriteDescriptorSet,
+            p_next: ptr::null(),
+            dst_set: descriptor_sets[0],
+            dst_binding: 0,
+            dst_array_element: 0,
+            descriptor_count: 1,
+            descriptor_type: vk::DescriptorType::UniformBuffer,
+            p_image_info: ptr::null(),
+            p_buffer_info: ptr::null(),
+            p_texel_buffer_view: ptr::null(),
+        }
+    ];
     let vertex_spv_file = File::open(Path::new("shader/vert.spv"))
         .expect("Could not find vert.spv.");
     let frag_spv_file = File::open(Path::new("shader/frag.spv")).expect("Could not find frag.spv.");
@@ -653,8 +676,8 @@ fn main() {
         s_type: vk::StructureType::PipelineLayoutCreateInfo,
         p_next: ptr::null(),
         flags: Default::default(),
-        set_layout_count: 0,
-        p_set_layouts: ptr::null(),
+        set_layout_count: desc_set_layouts.len() as u32,
+        p_set_layouts: desc_set_layouts.as_ptr(),
         push_constant_range_count: 0,
         p_push_constant_ranges: ptr::null(),
     };
@@ -955,7 +978,9 @@ fn main() {
     for image_view in present_image_views {
         device.destroy_image_view(image_view);
     }
-    device.destroy_descriptor_set_layout(desc_set_layout);
+    for &layout in desc_set_layouts.iter() {
+        device.destroy_descriptor_set_layout(layout);
+    }
     device.destroy_descriptor_pool(descriptor_pool);
     device.destroy_command_pool(pool);
     device.destroy_swapchain_khr(swapchain);
