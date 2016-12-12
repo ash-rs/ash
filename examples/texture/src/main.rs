@@ -735,7 +735,55 @@ fn main() {
                                 &[],
                                 &[],
                                 &[texture_barrier]);
-    let wait_stage_mask = [vk::PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT];
+    let buffer_copy_regions = [vk::BufferImageCopy {
+                                   image_subresource: vk::ImageSubresourceLayers {
+                                       aspect_mask: vk::IMAGE_ASPECT_COLOR_BIT,
+                                       mip_level: 0,
+                                       base_array_layer: 0,
+                                       layer_count: 1,
+                                   },
+                                   image_extent: vk::Extent3D {
+                                       width: image_dimensions.0,
+                                       height: image_dimensions.1,
+                                       depth: 1,
+                                   },
+                                   buffer_offset: 0,
+                                   // FIX ME
+                                   buffer_image_height: 0,
+                                   buffer_row_length: 0,
+                                   image_offset: vk::Offset3D { x: 0, y: 0, z: 0 },
+                               }];
+    device.cmd_copy_buffer_to_image(texture_command_buffer,
+                                    image_buffer,
+                                    texture_image,
+                                    vk::ImageLayout::TransferDstOptimal,
+                                    &buffer_copy_regions);
+    let texture_barrier_end = vk::ImageMemoryBarrier {
+        s_type: vk::StructureType::ImageMemoryBarrier,
+        p_next: ptr::null(),
+        src_access_mask: vk::ACCESS_TRANSFER_WRITE_BIT,
+        dst_access_mask: vk::ACCESS_SHADER_READ_BIT,
+        old_layout: vk::ImageLayout::TransferDstOptimal,
+        new_layout: vk::ImageLayout::ShaderReadOnlyOptimal,
+        src_queue_family_index: vk::VK_QUEUE_FAMILY_IGNORED,
+        dst_queue_family_index: vk::VK_QUEUE_FAMILY_IGNORED,
+        image: texture_image,
+        subresource_range: vk::ImageSubresourceRange {
+            aspect_mask: vk::IMAGE_ASPECT_COLOR_BIT,
+            base_mip_level: 0,
+            level_count: 1,
+            base_array_layer: 0,
+            layer_count: 1,
+        },
+    };
+    device.cmd_pipeline_barrier(texture_command_buffer,
+                                vk::PIPELINE_STAGE_TOP_OF_PIPE_BIT,
+                                vk::PIPELINE_STAGE_TOP_OF_PIPE_BIT,
+                                vk::DependencyFlags::empty(),
+                                &[],
+                                &[],
+                                &[texture_barrier_end]);
+    let wait_stage_mask = [vk::PIPELINE_STAGE_TOP_OF_PIPE_BIT];
     let texture_cb_fence = device.create_fence(&fence_create_info).unwrap();
     let tex_submit_info = vk::SubmitInfo {
         s_type: vk::StructureType::SubmitInfo,
@@ -752,6 +800,51 @@ fn main() {
     device.queue_submit(present_queue, &[tex_submit_info], texture_cb_fence).unwrap();
     device.wait_for_fences(&[texture_cb_fence], true, std::u64::MAX).unwrap();
 
+    let sampler_info = vk::SamplerCreateInfo{
+        s_type: vk::StructureType::SamplerCreateInfo,
+        p_next: ptr::null(),
+        flags: Default::default(),
+        mag_filter: vk::Filter::Linear,
+        min_filter: vk::Filter::Linear,
+        mipmap_mode: vk::SamplerMipmapMode::Linear,
+        address_mode_u: vk::SamplerAddressMode::MirroredRepeat,
+        address_mode_v: vk::SamplerAddressMode::MirroredRepeat,
+        address_mode_w: vk::SamplerAddressMode::MirroredRepeat,
+        mip_lod_bias: 0.0,
+        min_lod: 0.0,
+        max_lod: 0.0,
+        anisotropy_enable: 0,
+        max_anisotropy: 1.0,
+        border_color: vk::BorderColor::FloatOpaqueWhite,
+        compare_enable: 0,
+        compare_op: vk::CompareOp::Never,
+        unnormalized_coordinates: 0
+    };
+
+    let sampler = device.create_sampler(&sampler_info).unwrap();
+
+    let tex_image_view_info = vk::ImageViewCreateInfo {
+        s_type: vk::StructureType::ImageViewCreateInfo,
+        p_next: ptr::null(),
+        flags: Default::default(),
+        view_type: vk::ImageViewType::Type2d,
+        format: texture_create_info.format,
+        components: vk::ComponentMapping {
+            r: vk::ComponentSwizzle::R,
+            g: vk::ComponentSwizzle::G,
+            b: vk::ComponentSwizzle::B,
+            a: vk::ComponentSwizzle::A,
+        },
+        subresource_range: vk::ImageSubresourceRange {
+            aspect_mask: vk::IMAGE_ASPECT_COLOR_BIT,
+            base_mip_level: 0,
+            level_count: 1,
+            base_array_layer: 0,
+            layer_count: 1,
+        },
+        image: texture_image,
+    };
+    let tex_image_view = device.create_image_view(&depth_image_view_info).unwrap();
     let descriptor_sizes = [vk::DescriptorPoolSize {
                                 typ: vk::DescriptorType::UniformBuffer,
                                 descriptor_count: 1,
@@ -808,6 +901,12 @@ fn main() {
         range: mem::size_of_val(&uniform_color_buffer_data) as u64,
     };
 
+    let tex_descriptor = vk::DescriptorImageInfo{
+        image_layout: vk::ImageLayout::General,
+        image_view: tex_image_view,
+        sampler: sampler
+    };
+
     let write_desc_sets = [vk::WriteDescriptorSet {
                                s_type: vk::StructureType::WriteDescriptorSet,
                                p_next: ptr::null(),
@@ -818,6 +917,17 @@ fn main() {
                                descriptor_type: vk::DescriptorType::UniformBuffer,
                                p_image_info: ptr::null(),
                                p_buffer_info: &uniform_color_buffer_descriptor,
+                               p_texel_buffer_view: ptr::null(),
+                           },vk::WriteDescriptorSet {
+                               s_type: vk::StructureType::WriteDescriptorSet,
+                               p_next: ptr::null(),
+                               dst_set: descriptor_sets[0],
+                               dst_binding: 1,
+                               dst_array_element: 0,
+                               descriptor_count: 1,
+                               descriptor_type: vk::DescriptorType::CombinedImageSampler,
+                               p_image_info: &tex_descriptor,
+                               p_buffer_info: ptr::null(),
                                p_texel_buffer_view: ptr::null(),
                            }];
     device.update_descriptor_sets(&write_desc_sets[..], &[]);

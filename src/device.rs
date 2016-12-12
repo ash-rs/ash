@@ -108,11 +108,13 @@ impl<'r> Device<'r> {
             self.device_fn.destroy_descriptor_pool(self.handle, pool, ptr::null());
         }
     }
+
     pub fn destroy_descriptor_set_layout(&self, layout: vk::DescriptorSetLayout) {
         unsafe {
             self.device_fn.destroy_descriptor_set_layout(self.handle, layout, ptr::null());
         }
     }
+
     pub fn free_descriptor_sets(&self,
                                 pool: vk::DescriptorPool,
                                 descriptor_sets: &[vk::DescriptorSet]) {
@@ -123,6 +125,7 @@ impl<'r> Device<'r> {
                                                 descriptor_sets.as_ptr());
         }
     }
+
     pub fn update_descriptor_sets(&self,
                                   descriptor_writes: &[vk::WriteDescriptorSet],
                                   descriptor_copies: &[vk::CopyDescriptorSet]) {
@@ -132,6 +135,52 @@ impl<'r> Device<'r> {
                                                   descriptor_writes.as_ptr(),
                                                   descriptor_copies.len() as u32,
                                                   descriptor_copies.as_ptr());
+        }
+    }
+
+    pub fn create_sampler(&self, create_info: &vk::SamplerCreateInfo) -> VkResult<vk::Sampler> {
+        unsafe {
+            let mut sampler = mem::uninitialized();
+            let err_code = self.device_fn
+                .create_sampler(self.handle, create_info, ptr::null(), &mut sampler);
+            match err_code {
+                vk::Result::Success => Ok(sampler),
+                _ => Err(err_code),
+            }
+        }
+    }
+
+    pub fn cmd_copy_buffer_to_image(&self,
+                                    command_buffer: vk::CommandBuffer,
+                                    src_buffer: vk::Buffer,
+                                    dst_image: vk::Image,
+                                    dst_image_layout: vk::ImageLayout,
+                                    regions: &[vk::BufferImageCopy]) {
+        unsafe {
+            self.device_fn.cmd_copy_buffer_to_image(command_buffer,
+                                                    src_buffer,
+                                                    dst_image,
+                                                    dst_image_layout,
+                                                    regions.len() as u32,
+                                                    regions.as_ptr());
+        }
+    }
+
+    pub fn cmd_copy_image(&self,
+                          command_buffer: vk::CommandBuffer,
+                          src_image: vk::Image,
+                          src_image_layout: vk::ImageLayout,
+                          dst_image: vk::Image,
+                          dst_image_layout: vk::ImageLayout,
+                          regions: &[vk::ImageCopy]) {
+        unsafe {
+            self.device_fn.cmd_copy_image(command_buffer,
+                                          src_image,
+                                          src_image_layout,
+                                          dst_image,
+                                          dst_image_layout,
+                                          regions.len() as u32,
+                                          regions.as_ptr());
         }
     }
 
