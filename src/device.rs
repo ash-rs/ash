@@ -19,9 +19,16 @@ impl<'r> Device<'r> {
             _lifetime: ::std::marker::PhantomData,
         }
     }
+
     pub fn destroy_device(&self) {
         unsafe {
             self.device_fn.destroy_device(self.handle, ptr::null());
+        }
+    }
+
+    pub fn destroy_sampler(&self, sampler: vk::Sampler) {
+        unsafe {
+            self.device_fn.destroy_sampler(self.handle, sampler, ptr::null());
         }
     }
 

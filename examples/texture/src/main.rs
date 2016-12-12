@@ -586,19 +586,19 @@ fn main() {
     device.bind_buffer_memory(uniform_color_buffer, uniform_color_buffer_memory, 0).unwrap();
     let vertices = [Vertex {
                         pos: [-1.0, -1.0, 0.0, 1.0],
-                        uv: [0.0, 1.0],
-                    },
-                    Vertex {
-                        pos: [-1.0, 1.0, 0.0, 1.0],
                         uv: [0.0, 0.0],
                     },
                     Vertex {
+                        pos: [-1.0, 1.0, 0.0, 1.0],
+                        uv: [0.0, 1.0],
+                    },
+                    Vertex {
                         pos: [1.0, 1.0, 0.0, 1.0],
-                        uv: [1.0, 0.0],
+                        uv: [1.0, 1.0],
                     },
                     Vertex {
                         pos: [1.0, -1.0, 0.0, 1.0],
-                        uv: [1.0, 1.0],
+                        uv: [1.0, 0.0],
                     }];
     let vertex_input_buffer_info = vk::BufferCreateInfo {
         s_type: vk::StructureType::BufferCreateInfo,
@@ -844,7 +844,7 @@ fn main() {
         },
         image: texture_image,
     };
-    let tex_image_view = device.create_image_view(&depth_image_view_info).unwrap();
+    let tex_image_view = device.create_image_view(&tex_image_view_info).unwrap();
     let descriptor_sizes = [vk::DescriptorPoolSize {
                                 typ: vk::DescriptorType::UniformBuffer,
                                 descriptor_count: 1,
@@ -930,7 +930,7 @@ fn main() {
                                p_buffer_info: ptr::null(),
                                p_texel_buffer_view: ptr::null(),
                            }];
-    device.update_descriptor_sets(&write_desc_sets[..], &[]);
+    device.update_descriptor_sets(&write_desc_sets, &[]);
     let vertex_spv_file = File::open(Path::new("shader/vert.spv"))
         .expect("Could not find vert.spv.");
     let frag_spv_file = File::open(Path::new("shader/frag.spv")).expect("Could not find frag.spv.");
@@ -1156,7 +1156,7 @@ fn main() {
     let rendering_complete_semaphore = device.create_semaphore(&semaphore_create_info).unwrap();
 
     let draw_fence = device.create_fence(&fence_create_info).unwrap();
-    while window.should_close() {
+    while !window.should_close() {
         glfw.poll_events();
         for (_, event) in glfw::flush_messages(&events) {
             handle_window_event(&mut window, event);
@@ -1263,7 +1263,9 @@ fn main() {
         device.destroy_framebuffer(framebuffer);
     }
     device.destroy_render_pass(renderpass);
+    device.destroy_sampler(sampler);
     device.destroy_image_view(depth_image_view);
+    device.destroy_image_view(tex_image_view);
     device.destroy_fence(submit_fence);
     device.destroy_fence(draw_fence);
     device.destroy_fence(texture_cb_fence);
