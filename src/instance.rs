@@ -77,6 +77,17 @@ impl<'r> Instance<'r> {
         }
     }
 
+    pub fn get_physical_device_format_properties(&self,
+                                                 physical_device: vk::PhysicalDevice,
+                                                 format: vk::Format)
+                                                 -> vk::FormatProperties {
+        unsafe {
+            let mut format_prop = mem::uninitialized();
+            self.instance_fn
+                .get_physical_device_format_properties(physical_device, format, &mut format_prop);
+            format_prop
+        }
+    }
     pub fn get_physical_device_memory_properties(&self,
                                                  physical_device: vk::PhysicalDevice)
                                                  -> vk::PhysicalDeviceMemoryProperties {

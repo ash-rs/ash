@@ -3651,6 +3651,16 @@ macro_rules! vk_functions {
             )+
         }
 
+        impl Clone for $struct_name {
+            fn clone(&self) -> Self{
+                $struct_name {
+                    $(
+                        $name: self.$name,
+                    )+
+                }
+            }
+        }
+
         unsafe impl Send for $struct_name {}
         unsafe impl Sync for $struct_name {}
 

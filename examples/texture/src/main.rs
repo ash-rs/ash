@@ -1,6 +1,7 @@
 #![allow(dead_code)]
 #[macro_use]
 extern crate ash;
+extern crate image;
 
 extern crate glfw;
 
@@ -92,7 +93,7 @@ pub fn find_memorytype_index(memory_req: &vk::MemoryRequirements,
 #[derive(Clone, Debug, Copy)]
 struct Vertex {
     pos: [f32; 4],
-    color: [f32; 4],
+    uv: [f32; 2],
 }
 fn main() {
     let mut glfw = glfw::init(glfw::FAIL_ON_ERRORS).unwrap();
@@ -280,13 +281,14 @@ fn main() {
     let command_buffer_allocate_info = vk::CommandBufferAllocateInfo {
         s_type: vk::StructureType::CommandBufferAllocateInfo,
         p_next: ptr::null(),
-        command_buffer_count: 2,
+        command_buffer_count: 3,
         command_pool: pool,
         level: vk::CommandBufferLevel::Primary,
     };
     let command_buffers = device.allocate_command_buffers(&command_buffer_allocate_info).unwrap();
     let setup_command_buffer = command_buffers[0];
     let draw_command_buffer = command_buffers[1];
+    let texture_command_buffer = command_buffers[2];
 
     let present_images = device.get_swapchain_images_khr(swapchain).unwrap();
     let present_image_views: Vec<vk::ImageView> = present_images.iter()
@@ -513,7 +515,7 @@ fn main() {
             device.create_framebuffer(&frame_buffer_create_info).unwrap()
         })
         .collect();
-    let index_buffer_data = [0u32, 1, 2];
+    let index_buffer_data = [0u32, 1, 2, 2, 3, 0];
     let index_buffer_info = vk::BufferCreateInfo {
         s_type: vk::StructureType::BufferCreateInfo,
         p_next: ptr::null(),
@@ -556,7 +558,7 @@ fn main() {
         queue_family_index_count: 0,
         p_queue_family_indices: ptr::null(),
     };
-    let uniform_color_buffer_data = [0.0f32, 1.0, 0.0];
+    let uniform_color_buffer_data = [0.0f32, 1.0, 1.0];
     let uniform_color_buffer = device.create_buffer(&uniform_color_buffer_info).unwrap();
     let uniform_color_buffer_memory_req =
         device.get_buffer_memory_requirements(uniform_color_buffer);
@@ -582,11 +584,27 @@ fn main() {
     uniform_slice.copy_from_slice(&uniform_color_buffer_data[..]);
     device.unmap_memory(uniform_color_buffer_memory);
     device.bind_buffer_memory(uniform_color_buffer, uniform_color_buffer_memory, 0).unwrap();
+    let vertices = [Vertex {
+                        pos: [-1.0, -1.0, 0.0, 1.0],
+                        uv: [0.0, 1.0],
+                    },
+                    Vertex {
+                        pos: [-1.0, 1.0, 0.0, 1.0],
+                        uv: [0.0, 0.0],
+                    },
+                    Vertex {
+                        pos: [1.0, 1.0, 0.0, 1.0],
+                        uv: [1.0, 0.0],
+                    },
+                    Vertex {
+                        pos: [1.0, -1.0, 0.0, 1.0],
+                        uv: [1.0, 1.0],
+                    }];
     let vertex_input_buffer_info = vk::BufferCreateInfo {
         s_type: vk::StructureType::BufferCreateInfo,
         p_next: ptr::null(),
         flags: vk::BufferCreateFlags::empty(),
-        size: 3 * std::mem::size_of::<Vertex>() as u64,
+        size: std::mem::size_of_val(&vertices) as u64,
         usage: vk::BUFFER_USAGE_VERTEX_BUFFER_BIT,
         sharing_mode: vk::SharingMode::Exclusive,
         queue_family_index_count: 0,
@@ -607,18 +625,6 @@ fn main() {
         memory_type_index: vertex_input_buffer_memory_index,
     };
     let vertex_input_buffer_memory = device.allocate_memory(&vertex_buffer_allocate_info).unwrap();
-    let vertices = [Vertex {
-                        pos: [-1.0, 1.0, 0.0, 1.0],
-                        color: [0.0, 1.0, 0.0, 1.0],
-                    },
-                    Vertex {
-                        pos: [1.0, 1.0, 0.0, 1.0],
-                        color: [0.0, 0.0, 1.0, 1.0],
-                    },
-                    Vertex {
-                        pos: [0.0, -1.0, 0.0, 1.0],
-                        color: [1.0, 0.0, 0.0, 1.0],
-                    }];
     let slice = device.map_memory::<Vertex>(vertex_input_buffer_memory,
                               0,
                               vertex_input_buffer_info.size,
@@ -629,8 +635,129 @@ fn main() {
     device.bind_buffer_memory(vertex_input_buffer, vertex_input_buffer_memory, 0).unwrap();
 
 
+    let image = image::open("rust.png").unwrap().to_rgba();
+    let image_dimensions = image.dimensions();
+    let image_data = image.into_raw();
+    let image_buffer_info = vk::BufferCreateInfo {
+        s_type: vk::StructureType::BufferCreateInfo,
+        p_next: ptr::null(),
+        flags: vk::BufferCreateFlags::empty(),
+        size: (std::mem::size_of::<u8>() * image_data.len()) as u64,
+        usage: vk::BUFFER_USAGE_TRANSFER_SRC_BIT,
+        sharing_mode: vk::SharingMode::Exclusive,
+        queue_family_index_count: 0,
+        p_queue_family_indices: ptr::null(),
+    };
+    let image_buffer = device.create_buffer(&image_buffer_info).unwrap();
+    let image_buffer_memory_req = device.get_buffer_memory_requirements(image_buffer);
+    let image_buffer_memory_index = find_memorytype_index(&image_buffer_memory_req,
+                                                          &device_memory_properties,
+                                                          vk::MEMORY_PROPERTY_HOST_VISIBLE_BIT)
+        .expect("Unable to find suitable memorytype for the vertex buffer.");
+
+    let vertex_buffer_allocate_info = vk::MemoryAllocateInfo {
+        s_type: vk::StructureType::MemoryAllocateInfo,
+        p_next: ptr::null(),
+        allocation_size: image_buffer_memory_req.size,
+        memory_type_index: image_buffer_memory_index,
+    };
+    let image_buffer_memory = device.allocate_memory(&vertex_buffer_allocate_info).unwrap();
+    let image_buffer_slice = device.map_memory::<u8>(image_buffer_memory,
+                          0,
+                          image_buffer_info.size,
+                          vk::MemoryMapFlags::empty())
+        .unwrap();
+    image_buffer_slice.copy_from_slice(&image_data);
+    device.unmap_memory(image_buffer_memory);
+    device.bind_buffer_memory(image_buffer, image_buffer_memory, 0).unwrap();
+
+    let texture_create_info = vk::ImageCreateInfo {
+        s_type: vk::StructureType::ImageCreateInfo,
+        p_next: ptr::null(),
+        flags: Default::default(),
+        image_type: vk::ImageType::Type2d,
+        format: vk::Format::R8g8b8a8Unorm,
+        extent: vk::Extent3D {
+            width: image_dimensions.0,
+            height: image_dimensions.1,
+            depth: 1,
+        },
+        mip_levels: 1,
+        array_layers: 1,
+        samples: vk::SAMPLE_COUNT_1_BIT,
+        tiling: vk::ImageTiling::Optimal,
+        usage: vk::IMAGE_USAGE_TRANSFER_DST_BIT | vk::IMAGE_USAGE_SAMPLED_BIT,
+        sharing_mode: vk::SharingMode::Exclusive,
+        queue_family_index_count: 0,
+        p_queue_family_indices: ptr::null(),
+        initial_layout: vk::ImageLayout::Undefined,
+    };
+    let texture_image = device.create_image(&texture_create_info).unwrap();
+    let texture_memory_req = device.get_image_memory_requirements(texture_image);
+    let texture_memory_index = find_memorytype_index(&texture_memory_req,
+                                                     &device_memory_properties,
+                                                     vk::MEMORY_PROPERTY_DEVICE_LOCAL_BIT)
+        .expect("Unable to find suitable memory index for depth image.");
+
+    let texture_allocate_info = vk::MemoryAllocateInfo {
+        s_type: vk::StructureType::MemoryAllocateInfo,
+        p_next: ptr::null(),
+        allocation_size: texture_memory_req.size,
+        memory_type_index: texture_memory_index,
+    };
+    let texture_memory = device.allocate_memory(&texture_allocate_info).unwrap();
+    device.bind_image_memory(texture_image, texture_memory, 0)
+        .expect("Unable to bind depth image memory");
+
+    device.begin_command_buffer(texture_command_buffer, &command_buffer_begin_info).unwrap();
+    let texture_barrier = vk::ImageMemoryBarrier {
+        s_type: vk::StructureType::ImageMemoryBarrier,
+        p_next: ptr::null(),
+        src_access_mask: Default::default(),
+        dst_access_mask: vk::ACCESS_TRANSFER_WRITE_BIT,
+        old_layout: vk::ImageLayout::Undefined,
+        new_layout: vk::ImageLayout::TransferDstOptimal,
+        src_queue_family_index: vk::VK_QUEUE_FAMILY_IGNORED,
+        dst_queue_family_index: vk::VK_QUEUE_FAMILY_IGNORED,
+        image: texture_image,
+        subresource_range: vk::ImageSubresourceRange {
+            aspect_mask: vk::IMAGE_ASPECT_COLOR_BIT,
+            base_mip_level: 0,
+            level_count: 1,
+            base_array_layer: 0,
+            layer_count: 1,
+        },
+    };
+    device.cmd_pipeline_barrier(texture_command_buffer,
+                                vk::PIPELINE_STAGE_TOP_OF_PIPE_BIT,
+                                vk::PIPELINE_STAGE_TOP_OF_PIPE_BIT,
+                                vk::DependencyFlags::empty(),
+                                &[],
+                                &[],
+                                &[texture_barrier]);
+    let wait_stage_mask = [vk::PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT];
+    let texture_cb_fence = device.create_fence(&fence_create_info).unwrap();
+    let tex_submit_info = vk::SubmitInfo {
+        s_type: vk::StructureType::SubmitInfo,
+        p_next: ptr::null(),
+        wait_semaphore_count: 0,
+        p_wait_semaphores: ptr::null(),
+        signal_semaphore_count: 0,
+        p_signal_semaphores: ptr::null(),
+        p_wait_dst_stage_mask: wait_stage_mask.as_ptr(),
+        command_buffer_count: 1,
+        p_command_buffers: &texture_command_buffer,
+    };
+    device.end_command_buffer(texture_command_buffer).unwrap();
+    device.queue_submit(present_queue, &[tex_submit_info], texture_cb_fence).unwrap();
+    device.wait_for_fences(&[texture_cb_fence], true, std::u64::MAX).unwrap();
+
     let descriptor_sizes = [vk::DescriptorPoolSize {
                                 typ: vk::DescriptorType::UniformBuffer,
+                                descriptor_count: 1,
+                            },
+                            vk::DescriptorPoolSize {
+                                typ: vk::DescriptorType::CombinedImageSampler,
                                 descriptor_count: 1,
                             }];
     let descriptor_pool_info = vk::DescriptorPoolCreateInfo {
@@ -645,6 +772,13 @@ fn main() {
     let desc_layout_bindings = [vk::DescriptorSetLayoutBinding {
                                     binding: 0,
                                     descriptor_type: vk::DescriptorType::UniformBuffer,
+                                    descriptor_count: 1,
+                                    stage_flags: vk::SHADER_STAGE_FRAGMENT_BIT,
+                                    p_immutable_samplers: ptr::null(),
+                                },
+                                vk::DescriptorSetLayoutBinding {
+                                    binding: 1,
+                                    descriptor_type: vk::DescriptorType::CombinedImageSampler,
                                     descriptor_count: 1,
                                     stage_flags: vk::SHADER_STAGE_FRAGMENT_BIT,
                                     p_immutable_samplers: ptr::null(),
@@ -758,8 +892,8 @@ fn main() {
                                                vk::VertexInputAttributeDescription {
                                                    location: 1,
                                                    binding: 0,
-                                                   format: vk::Format::R32g32b32a32Sfloat,
-                                                   offset: offset_of!(Vertex, color) as u32,
+                                                   format: vk::Format::R32g32Sfloat,
+                                                   offset: offset_of!(Vertex, uv) as u32,
                                                }];
     let vertex_input_state_info = vk::PipelineVertexInputStateCreateInfo {
         s_type: vk::StructureType::PipelineVertexInputStateCreateInfo,
@@ -912,7 +1046,7 @@ fn main() {
     let rendering_complete_semaphore = device.create_semaphore(&semaphore_create_info).unwrap();
 
     let draw_fence = device.create_fence(&fence_create_info).unwrap();
-    while !window.should_close() {
+    while window.should_close() {
         glfw.poll_events();
         for (_, event) in glfw::flush_messages(&events) {
             handle_window_event(&mut window, event);
@@ -946,15 +1080,15 @@ fn main() {
         device.cmd_begin_render_pass(draw_command_buffer,
                                      &render_pass_begin_info,
                                      vk::SubpassContents::Inline);
+        device.cmd_bind_pipeline(draw_command_buffer,
+                                 vk::PipelineBindPoint::Graphics,
+                                 graphic_pipeline);
         device.cmd_bind_descriptor_sets(draw_command_buffer,
                                         vk::PipelineBindPoint::Graphics,
                                         pipeline_layout,
                                         0,
                                         &descriptor_sets[..],
                                         &[]);
-        device.cmd_bind_pipeline(draw_command_buffer,
-                                 vk::PipelineBindPoint::Graphics,
-                                 graphic_pipeline);
         device.cmd_set_viewport(draw_command_buffer, &viewports);
         device.cmd_set_scissor(draw_command_buffer, &scissors);
         device.cmd_bind_vertex_buffers(draw_command_buffer, &[vertex_input_buffer], &0);
@@ -1022,8 +1156,13 @@ fn main() {
     device.destroy_image_view(depth_image_view);
     device.destroy_fence(submit_fence);
     device.destroy_fence(draw_fence);
+    device.destroy_fence(texture_cb_fence);
     device.free_memory(depth_image_memory);
+    device.free_memory(texture_memory);
+    device.free_memory(image_buffer_memory);
     device.destroy_image(depth_image);
+    device.destroy_image(texture_image);
+    device.destroy_buffer(image_buffer);
     for image_view in present_image_views {
         device.destroy_image_view(image_view);
     }

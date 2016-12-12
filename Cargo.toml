@@ -10,3 +10,4 @@ keywords = ["vulkan", "graphic"]
 
 [dependencies]
 shared_library = "0.1.5"
+sharedlib = "6.0.0"
