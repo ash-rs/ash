@@ -120,8 +120,8 @@ cargo run
 
 ![screenshot](http://i.imgur.com/PQZcL6w.jpg)
 
-### [Triangle](https://github.com/MaikKlein/ash/blob/master/examples/texture/src/main.rs)
-Display a texture on a quad. Needs a cleanup.
+### [Texture](https://github.com/MaikKlein/ash/blob/master/examples/texture/src/main.rs)
+Display a texture on a quad. *Needs a cleanup*.
 ![texture](http://i.imgur.com/trow00H.png)
 
 ## Open questions
