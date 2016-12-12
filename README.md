@@ -114,14 +114,19 @@ Currently only runs under Linux (x11) and requires GLFW, the LunarG Validation l
 The triangle example is written from top to bottom without many helper functions or external dependencies. It renders a colored triangle. The shaders a written in GLSL and compiled into SPIR-V with [glslang](https://github.com/KhronosGroup/glslang)
 
 ```
-cd examples
+cd examples/triangle
 cargo run
 ```
 
 ![screenshot](http://i.imgur.com/PQZcL6w.jpg)
 
 ### [Texture](https://github.com/MaikKlein/ash/blob/master/examples/texture/src/main.rs)
-Display a texture on a quad. *Needs a cleanup*.
+Displays a texture on a quad. *Needs a cleanup*.
+
+```
+cd examples/texture
+cargo run
+```
 ![texture](http://i.imgur.com/trow00H.png)
 
 ## Open questions
