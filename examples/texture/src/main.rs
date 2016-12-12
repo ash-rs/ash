@@ -558,7 +558,7 @@ fn main() {
         queue_family_index_count: 0,
         p_queue_family_indices: ptr::null(),
     };
-    let uniform_color_buffer_data = [0.0f32, 1.0, 1.0];
+    let uniform_color_buffer_data = [0.0f32, 0.0, 1.0];
     let uniform_color_buffer = device.create_buffer(&uniform_color_buffer_info).unwrap();
     let uniform_color_buffer_memory_req =
         device.get_buffer_memory_requirements(uniform_color_buffer);

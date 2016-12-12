@@ -13,7 +13,6 @@ layout (location = 0) in vec2 o_uv;
 layout (location = 0) out vec4 uFragColor;
 
 void main() {
-    //uFragColor = o_color;
     vec4 color = texture(samplerColor, o_uv);
     uFragColor = color;
 }
