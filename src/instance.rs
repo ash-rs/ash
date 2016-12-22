@@ -2,8 +2,6 @@
 use prelude::*;
 use std::ptr;
 use std::mem;
-use std::os::raw::*;
-use std::path::Path;
 use vk;
 use device::Device;
 use shared_library::dynamic_library::DynamicLibrary;
@@ -15,18 +13,16 @@ pub enum DeviceError {
 }
 
 #[derive(Debug)]
-pub struct Instance<'r> {
+pub struct Instance {
     handle: vk::Instance,
     instance_fn: vk::InstanceFn,
-    _lifetime: ::std::marker::PhantomData<&'r ()>,
 }
 
-impl<'r> Instance<'r> {
+impl Instance {
     pub unsafe fn from_raw(handle: vk::Instance, instance_fn: vk::InstanceFn) -> Self {
         Instance {
             handle: handle,
             instance_fn: instance_fn,
-            _lifetime: ::std::marker::PhantomData,
         }
     }
 
@@ -41,7 +37,7 @@ impl<'r> Instance<'r> {
             if err_code != vk::Result::Success {
                 return Err(DeviceError::VkError(err_code));
             }
-            let device_fn = vk::DeviceFn::load(|name| unsafe {
+            let device_fn = vk::DeviceFn::load(|name| {
                     mem::transmute(self.instance_fn.get_device_proc_addr(device, name.as_ptr()))
                 }).map_err(|err| DeviceError::LoadError(err))?;
             Ok(Device::from_raw(device, device_fn))
@@ -211,7 +207,7 @@ impl<'r> Instance<'r> {
                                                              &mut queue_count,
                                                              ptr::null_mut());
             let mut queue_families_vec = Vec::with_capacity(queue_count as usize);
-            let err_code = self.instance_fn
+            self.instance_fn
                 .get_physical_device_queue_family_properties(physical_device,
                                                              &mut queue_count,
                                                              queue_families_vec.as_mut_ptr());

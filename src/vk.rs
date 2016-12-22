@@ -3668,7 +3668,7 @@ macro_rules! vk_functions {
             pub fn load<F>(mut f: F) -> ::std::result::Result<$struct_name, String>
                 where F: FnMut(&::std::ffi::CStr) -> *const c_void
             {
-                use std::ffi::{CString, CStr};
+                use std::ffi::{CString};
                 use std::mem;
                 let s = $struct_name {
                     $(
@@ -3693,16 +3693,16 @@ macro_rules! vk_functions {
         impl ::std::fmt::Debug for $struct_name {
             #[inline]
             fn fmt(&self, fmt: &mut ::std::fmt::Formatter) -> ::std::result::Result<(), ::std::fmt::Error> {
-                writeln!(fmt, stringify!($struct_name));
+                writeln!(fmt, stringify!($struct_name)).unwrap();
                 $(
                     if !(self.$name as *const c_void).is_null() {
-                        write!(fmt," Is loaded => " );
+                        write!(fmt," Is loaded => " ).unwrap();
                     }
                     else{
-                        write!(fmt," Is not loaded => " );
+                        write!(fmt," Is not loaded => " ).unwrap();
                     }
-                    write!(fmt, $raw_name);
-                    writeln!(fmt, ", ");
+                    write!(fmt, $raw_name).unwrap();
+                    writeln!(fmt, ", ").unwrap();
                 )+
                 write!(fmt, "")
             }

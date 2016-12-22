@@ -4,19 +4,23 @@ use std::ptr;
 use std::mem;
 use vk;
 
+unsafe impl Sync for Device{}
+unsafe impl Send for Device{}
 
-pub struct Device<'r> {
+pub struct Device {
     handle: vk::Device,
     device_fn: vk::DeviceFn,
-    _lifetime: ::std::marker::PhantomData<&'r ()>,
 }
 
-impl<'r> Device<'r> {
+pub struct Swapchain{
+
+}
+
+impl Device {
     pub unsafe fn from_raw(handle: vk::Device, device_fn: vk::DeviceFn) -> Self {
         Device {
             handle: handle,
             device_fn: device_fn,
-            _lifetime: ::std::marker::PhantomData,
         }
     }
 
@@ -157,6 +161,20 @@ impl<'r> Device<'r> {
         }
     }
 
+    pub fn cmd_copy_buffer(&self,
+                           command_buffer: vk::CommandBuffer,
+                           src_buffer: vk::Buffer,
+                           dst_buffer: vk::Buffer,
+                           regions: &[vk::BufferCopy]) {
+
+        unsafe {
+            self.device_fn.cmd_copy_buffer(command_buffer,
+                                           src_buffer,
+                                           dst_buffer,
+                                           regions.len() as u32,
+                                           regions.as_ptr());
+        }
+    }
     pub fn cmd_copy_buffer_to_image(&self,
                                     command_buffer: vk::CommandBuffer,
                                     src_buffer: vk::Buffer,
