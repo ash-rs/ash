@@ -3939,13 +3939,6 @@ vk_functions!{
 
 
 
-    "vkCreateSharedSwapchainsKHR", create_shared_swapchains_khr(
-        device: Device,
-        swapchain_count: uint32_t,
-        p_create_infos: *const SwapchainCreateInfoKHR,
-        p_allocator: *const AllocationCallbacks,
-        p_swapchains: *mut SwapchainKHR,
-    ) -> Result;
 
     "vkGetPhysicalDeviceDisplayPropertiesKHR", get_physical_device_display_properties_khr(
         physical_device: PhysicalDevice,
@@ -4849,6 +4842,22 @@ vk_functions!{
         command_buffer_count: uint32_t,
         p_command_buffers: *const CommandBuffer,
     ) -> ();
+
+    "vkQueuePresentKHR", queue_present_khr(
+        queue: Queue,
+        p_present_info: *const PresentInfoKHR,
+    ) -> Result;
+}
+vk_functions!{
+    SwapchainFn,
+    "vkCreateSharedSwapchainsKHR", create_shared_swapchains_khr(
+        device: Device,
+        swapchain_count: uint32_t,
+        p_create_infos: *const SwapchainCreateInfoKHR,
+        p_allocator: *const AllocationCallbacks,
+        p_swapchains: *mut SwapchainKHR,
+    ) -> Result;
+
     "vkCreateSwapchainKHR", create_swapchain_khr(
         device: Device,
         p_create_info: *const SwapchainCreateInfoKHR,
@@ -4876,11 +4885,6 @@ vk_functions!{
         semaphore: Semaphore,
         fence: Fence,
         p_image_index: *mut uint32_t,
-    ) -> Result;
-
-    "vkQueuePresentKHR", queue_present_khr(
-        queue: Queue,
-        p_present_info: *const PresentInfoKHR,
     ) -> Result;
 }
 }

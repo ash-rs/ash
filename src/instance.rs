@@ -14,8 +14,8 @@ pub enum DeviceError {
 
 #[derive(Debug)]
 pub struct Instance {
-    handle: vk::Instance,
-    instance_fn: vk::InstanceFn,
+    pub handle: vk::Instance,
+    pub instance_fn: vk::InstanceFn,
 }
 
 impl Instance {
