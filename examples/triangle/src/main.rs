@@ -249,6 +249,7 @@ fn main() {
         .cloned()
         .find(|&mode| mode == vk::PresentModeKHR::Mailbox)
         .unwrap_or(vk::PresentModeKHR::Fifo);
+    let swapchain_loader = device.load_swapchain(&instance);
     let swapchain_create_info = vk::SwapchainCreateInfoKHR {
         s_type: vk::StructureType::SwapchainCreateInfoKhr,
         p_next: ptr::null(),
@@ -269,7 +270,7 @@ fn main() {
         p_queue_family_indices: ptr::null(),
         queue_family_index_count: 0,
     };
-    let swapchain = device.create_swapchain_khr(&swapchain_create_info).unwrap();
+    let swapchain = swapchain_loader.create_swapchain_khr(&swapchain_create_info).unwrap();
     let pool_create_info = vk::CommandPoolCreateInfo {
         s_type: vk::StructureType::CommandPoolCreateInfo,
         p_next: ptr::null(),
@@ -288,7 +289,7 @@ fn main() {
     let setup_command_buffer = command_buffers[0];
     let draw_command_buffer = command_buffers[1];
 
-    let present_images = device.get_swapchain_images_khr(swapchain).unwrap();
+    let present_images = swapchain_loader.get_swapchain_images_khr(swapchain).unwrap();
     let present_image_views: Vec<vk::ImageView> = present_images.iter()
         .map(|&image| {
             let create_view_info = vk::ImageViewCreateInfo {
@@ -821,7 +822,7 @@ fn main() {
         for (_, event) in glfw::flush_messages(&events) {
             handle_window_event(&mut window, event);
         }
-        let present_index = device.acquire_next_image_khr(swapchain,
+        let present_index = swapchain_loader.acquire_next_image_khr(swapchain,
                                     std::u64::MAX,
                                     present_complete_semaphore,
                                     vk::Fence::null())
@@ -924,7 +925,7 @@ fn main() {
         device.destroy_image_view(image_view);
     }
     device.destroy_command_pool(pool);
-    device.destroy_swapchain_khr(swapchain);
+    swapchain_loader.destroy_swapchain_khr(swapchain);
     device.destroy_device();
     instance.destroy_surface_khr(surface);
     instance.destroy_debug_report_callback_ext(debug_call_back);
