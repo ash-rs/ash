@@ -152,6 +152,18 @@ let swapchain = swapchain_ext.create_swapchain_khr(&swapchain_create_info).unwra
 
 ## Roadmap
 
+### Extensions
+- [x] Swapchain
+- [x] Surface
+- [x] XlibSurface
+- [x] DebugReport
+- [] Win32Surface
+- [] MirSurface
+- [] XcbSurface
+- [] AndroidSurface
+- [] WaylandSurface
+- [] Display
+
 ### Complete
 
 ### In progress
