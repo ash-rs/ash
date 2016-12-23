@@ -3831,38 +3831,6 @@ vk_functions!{
         p_properties: *mut SparseImageFormatProperties,
     ) -> ();
 
-    "vkDestroySurfaceKHR", destroy_surface_khr(
-        instance: Instance,
-        surface: SurfaceKHR,
-        p_allocator: *const AllocationCallbacks,
-    ) -> ();
-
-    "vkGetPhysicalDeviceSurfaceSupportKHR", get_physical_device_surface_support_khr(
-        physical_device: PhysicalDevice,
-        queue_family_index: uint32_t,
-        surface: SurfaceKHR,
-        p_supported: *mut Bool32,
-    ) -> Result;
-
-    "vkGetPhysicalDeviceSurfaceCapabilitiesKHR", get_physical_device_surface_capabilities_khr(
-        physical_device: PhysicalDevice,
-        surface: SurfaceKHR,
-        p_surface_capabilities: *mut SurfaceCapabilitiesKHR,
-    ) -> Result;
-
-    "vkGetPhysicalDeviceSurfaceFormatsKHR", get_physical_device_surface_formats_khr(
-        physical_device: PhysicalDevice,
-        surface: SurfaceKHR,
-        p_surface_format_count: *mut uint32_t,
-        p_surface_formats: *mut SurfaceFormatKHR,
-    ) -> Result;
-
-    "vkGetPhysicalDeviceSurfacePresentModesKHR", get_physical_device_surface_present_modes_khr(
-        physical_device: PhysicalDevice,
-        surface: SurfaceKHR,
-        p_present_mode_count: *mut uint32_t,
-        p_present_modes: *mut PresentModeKHR,
-    ) -> Result;
 
     "vkGetPhysicalDeviceXlibPresentationSupportKHR", get_physical_device_xlib_presentation_support_khr(
         physical_device: PhysicalDevice,
@@ -4885,6 +4853,41 @@ vk_functions!{
         semaphore: Semaphore,
         fence: Fence,
         p_image_index: *mut uint32_t,
+    ) -> Result;
+}
+vk_functions!{
+    SurfaceFn,
+    "vkDestroySurfaceKHR", destroy_surface_khr(
+        instance: Instance,
+        surface: SurfaceKHR,
+        p_allocator: *const AllocationCallbacks,
+    ) -> ();
+
+    "vkGetPhysicalDeviceSurfaceSupportKHR", get_physical_device_surface_support_khr(
+        physical_device: PhysicalDevice,
+        queue_family_index: uint32_t,
+        surface: SurfaceKHR,
+        p_supported: *mut Bool32,
+    ) -> Result;
+
+    "vkGetPhysicalDeviceSurfaceCapabilitiesKHR", get_physical_device_surface_capabilities_khr(
+        physical_device: PhysicalDevice,
+        surface: SurfaceKHR,
+        p_surface_capabilities: *mut SurfaceCapabilitiesKHR,
+    ) -> Result;
+
+    "vkGetPhysicalDeviceSurfaceFormatsKHR", get_physical_device_surface_formats_khr(
+        physical_device: PhysicalDevice,
+        surface: SurfaceKHR,
+        p_surface_format_count: *mut uint32_t,
+        p_surface_formats: *mut SurfaceFormatKHR,
+    ) -> Result;
+
+    "vkGetPhysicalDeviceSurfacePresentModesKHR", get_physical_device_surface_present_modes_khr(
+        physical_device: PhysicalDevice,
+        surface: SurfaceKHR,
+        p_present_mode_count: *mut uint32_t,
+        p_present_modes: *mut PresentModeKHR,
     ) -> Result;
 }
 }

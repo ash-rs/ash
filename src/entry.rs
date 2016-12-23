@@ -23,8 +23,8 @@ fn get_path() -> &'static Path {
 
 pub struct Entry {
     lib: DynamicLibrary,
-    static_fn: vk::StaticFn,
-    entry_fn: vk::EntryFn,
+    pub static_fn: vk::StaticFn,
+    pub entry_fn: vk::EntryFn,
 }
 
 #[derive(Debug)]

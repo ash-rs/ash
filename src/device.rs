@@ -17,6 +17,7 @@ pub struct Swapchain {
     handle: vk::Device,
     swapchain_fn: vk::SwapchainFn,
 }
+
 impl Swapchain {
     pub fn destroy_swapchain_khr(&self, swapchain: vk::SwapchainKHR) {
         unsafe {
@@ -59,6 +60,7 @@ impl Swapchain {
             }
         }
     }
+
     pub fn get_swapchain_images_khr(&self,
                                     swapchain: vk::SwapchainKHR)
                                     -> VkResult<Vec<vk::Image>> {
@@ -93,6 +95,7 @@ impl Device {
             swapchain_fn: swapchain_fn,
         }
     }
+
     pub unsafe fn from_raw(handle: vk::Device, device_fn: vk::DeviceFn) -> Self {
         Device {
             handle: handle,
