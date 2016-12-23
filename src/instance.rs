@@ -19,7 +19,6 @@ pub struct Instance {
     pub instance_fn: vk::InstanceFn,
 }
 
-
 impl Instance {
     pub unsafe fn from_raw(handle: vk::Instance, instance_fn: vk::InstanceFn) -> Self {
         Instance {

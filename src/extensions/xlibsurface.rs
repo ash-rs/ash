@@ -11,21 +11,20 @@ pub struct XlibSurface {
 }
 
 impl XlibSurface {
-    pub fn new(entry: &Entry, instance: &Instance) -> XlibSurface {
+    pub fn new(entry: &Entry, instance: &Instance) -> Result<XlibSurface, String> {
         let surface_fn = vk::XlibSurfaceFn::load(|name| {
-                unsafe {
-                    mem::transmute(entry.static_fn
-                        .get_instance_proc_addr(instance.handle, name.as_ptr()))
-                }
-            })
-            .unwrap();
-        XlibSurface {
+            unsafe {
+                mem::transmute(entry.static_fn
+                    .get_instance_proc_addr(instance.handle, name.as_ptr()))
+            }
+        })?;
+        Ok(XlibSurface {
             handle: instance.handle,
             xlib_surface_fn: surface_fn,
-        }
+        })
     }
 
-   pub fn create_xlib_surface_khr(&self,
+    pub fn create_xlib_surface_khr(&self,
                                    create_info: &vk::XlibSurfaceCreateInfoKHR)
                                    -> VkResult<vk::SurfaceKHR> {
         unsafe {

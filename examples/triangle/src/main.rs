@@ -42,7 +42,7 @@ fn create_surface(instance: &Instance,
         window: x11_window as vk::Window,
         dpy: x11_display as *mut vk::Display,
     };
-    let xlib_surface_loader = XlibSurface::new(&entry, &instance);
+    let xlib_surface_loader = XlibSurface::new(&entry, &instance).expect("Unable to load xlib surface");
     xlib_surface_loader.create_xlib_surface_khr(&x11_create_info)
 }
 
@@ -154,12 +154,13 @@ fn main() {
         pfn_callback: vulkan_debug_callback,
         p_user_data: ptr::null_mut(),
     };
-    let debug_report_loader = DebugReport::new(&entry, &instance);
+    let debug_report_loader = DebugReport::new(&entry, &instance).expect("Unable to load debug report");
     let debug_call_back = debug_report_loader.create_debug_report_callback_ext(&debug_info)
         .unwrap();
     let surface = create_surface(&instance, &entry, &window).unwrap();
     let pdevices = instance.enumerate_physical_devices().expect("Physical device error");
-    let surface_loader = Surface::new(&entry, &instance);
+    let surface_loader = Surface::new(&entry, &instance)
+        .expect("Unable to load the Surface extension");
     let (pdevice, queue_family_index) = pdevices.iter()
         .map(|pdevice| {
             instance.get_physical_device_queue_family_properties(*pdevice)
@@ -257,7 +258,7 @@ fn main() {
         .cloned()
         .find(|&mode| mode == vk::PresentModeKHR::Mailbox)
         .unwrap_or(vk::PresentModeKHR::Fifo);
-    let swapchain_loader = Swapchain::new(&instance, &device);
+    let swapchain_loader = Swapchain::new(&instance, &device).expect("Unable to load swapchain");
     let swapchain_create_info = vk::SwapchainCreateInfoKHR {
         s_type: vk::StructureType::SwapchainCreateInfoKhr,
         p_next: ptr::null(),

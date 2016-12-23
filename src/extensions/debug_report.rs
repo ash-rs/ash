@@ -12,18 +12,17 @@ pub struct DebugReport {
 }
 
 impl DebugReport {
-    pub fn new(entry: &Entry, instance: &Instance) -> DebugReport {
+    pub fn new(entry: &Entry, instance: &Instance) -> Result<DebugReport, String> {
         let debug_report_fn = vk::DebugReportFn::load(|name| {
-                unsafe {
-                    mem::transmute(entry.static_fn
-                        .get_instance_proc_addr(instance.handle, name.as_ptr()))
-                }
-            })
-            .unwrap();
-        DebugReport {
+            unsafe {
+                mem::transmute(entry.static_fn
+                    .get_instance_proc_addr(instance.handle, name.as_ptr()))
+            }
+        })?;
+        Ok(DebugReport {
             handle: instance.handle,
             debug_report_fn: debug_report_fn,
-        }
+        })
     }
 
     pub fn destroy_debug_report_callback_ext(&self, debug: vk::DebugReportCallbackEXT) {

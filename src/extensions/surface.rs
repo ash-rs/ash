@@ -11,18 +11,17 @@ pub struct Surface {
 }
 
 impl Surface {
-    pub fn new(entry: &Entry, instance: &Instance) -> Surface {
+    pub fn new(entry: &Entry, instance: &Instance) -> Result<Surface, String> {
         let surface_fn = vk::SurfaceFn::load(|name| {
-                unsafe {
-                    mem::transmute(entry.static_fn
-                        .get_instance_proc_addr(instance.handle, name.as_ptr()))
-                }
-            })
-            .unwrap();
-        Surface {
+            unsafe {
+                mem::transmute(entry.static_fn
+                    .get_instance_proc_addr(instance.handle, name.as_ptr()))
+            }
+        })?;
+        Ok(Surface {
             handle: instance.handle,
             surface_fn: surface_fn,
-        }
+        })
     }
 
     pub fn get_physical_device_surface_support_khr(&self,
@@ -111,4 +110,3 @@ impl Surface {
         }
     }
 }
-

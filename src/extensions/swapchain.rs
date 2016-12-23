@@ -4,24 +4,24 @@ use std::mem;
 use instance::Instance;
 use device::Device;
 use vk;
+
 pub struct Swapchain {
     handle: vk::Device,
     swapchain_fn: vk::SwapchainFn,
 }
 
 impl Swapchain {
-    pub fn new(instance: &Instance, device: &Device) -> Swapchain {
+    pub fn new(instance: &Instance, device: &Device) -> Result<Swapchain, String> {
         let swapchain_fn = vk::SwapchainFn::load(|name| {
-                unsafe {
-                    mem::transmute(instance.instance_fn
-                        .get_device_proc_addr(device.handle, name.as_ptr()))
-                }
-            })
-            .unwrap();
-        Swapchain {
+            unsafe {
+                mem::transmute(instance.instance_fn
+                    .get_device_proc_addr(device.handle, name.as_ptr()))
+            }
+        })?;
+        Ok(Swapchain {
             handle: device.handle,
             swapchain_fn: swapchain_fn,
-        }
+        })
     }
 
     pub fn destroy_swapchain_khr(&self, swapchain: vk::SwapchainKHR) {
