@@ -1,7 +1,6 @@
 #![allow(dead_code)]
 #[macro_use]
 extern crate ash;
-
 extern crate glfw;
 
 use ash::vk;
@@ -9,6 +8,7 @@ use std::default::Default;
 use glfw::*;
 use ash::entry::Entry;
 use ash::instance::Instance;
+use ash::extensions::{Swapchain, XlibSurface, Surface, DebugReport};
 use ash::device::Device;
 use std::ptr;
 use std::ffi::{CStr, CString};
@@ -42,7 +42,7 @@ fn create_surface(instance: &Instance,
         window: x11_window as vk::Window,
         dpy: x11_display as *mut vk::Display,
     };
-    let xlib_surface_loader = instance.load_xlib_surface(&entry);
+    let xlib_surface_loader = XlibSurface::new(&entry, &instance);
     xlib_surface_loader.create_xlib_surface_khr(&x11_create_info)
 }
 
@@ -154,10 +154,12 @@ fn main() {
         pfn_callback: vulkan_debug_callback,
         p_user_data: ptr::null_mut(),
     };
-    let debug_call_back = instance.create_debug_report_callback_ext(&debug_info).unwrap();
+    let debug_report_loader = DebugReport::new(&entry, &instance);
+    let debug_call_back = debug_report_loader.create_debug_report_callback_ext(&debug_info)
+        .unwrap();
     let surface = create_surface(&instance, &entry, &window).unwrap();
     let pdevices = instance.enumerate_physical_devices().expect("Physical device error");
-    let surface_loader = instance.load_surface(&entry);
+    let surface_loader = Surface::new(&entry, &instance);
     let (pdevice, queue_family_index) = pdevices.iter()
         .map(|pdevice| {
             instance.get_physical_device_queue_family_properties(*pdevice)
@@ -255,7 +257,7 @@ fn main() {
         .cloned()
         .find(|&mode| mode == vk::PresentModeKHR::Mailbox)
         .unwrap_or(vk::PresentModeKHR::Fifo);
-    let swapchain_loader = device.load_swapchain(&instance);
+    let swapchain_loader = Swapchain::new(&instance, &device);
     let swapchain_create_info = vk::SwapchainCreateInfoKHR {
         s_type: vk::StructureType::SwapchainCreateInfoKhr,
         p_next: ptr::null(),
@@ -934,6 +936,6 @@ fn main() {
     swapchain_loader.destroy_swapchain_khr(swapchain);
     device.destroy_device();
     surface_loader.destroy_surface_khr(surface);
-    instance.destroy_debug_report_callback_ext(debug_call_back);
+    debug_report_loader.destroy_debug_report_callback_ext(debug_call_back);
     instance.destroy_instance();
 }

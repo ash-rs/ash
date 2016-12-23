@@ -3949,29 +3949,6 @@ vk_functions!{
         p_surface: *mut SurfaceKHR,
     ) -> Result;
 
-    "vkCreateDebugReportCallbackEXT", create_debug_report_callback_ext(
-        instance: Instance,
-        p_create_info: *const DebugReportCallbackCreateInfoEXT,
-        p_allocator: *const AllocationCallbacks,
-        p_callback: *mut DebugReportCallbackEXT,
-    ) -> Result;
-
-    "vkDestroyDebugReportCallbackEXT", destroy_debug_report_callback_ext(
-        instance: Instance,
-        callback: DebugReportCallbackEXT,
-        p_allocator: *const AllocationCallbacks,
-    ) -> ();
-
-    "vkDebugReportMessageEXT", debug_report_message_ext(
-        instance: Instance,
-        flags: DebugReportFlagsEXT,
-        object_type: DebugReportObjectTypeEXT,
-        object: uint64_t,
-        location: size_t,
-        message_code: int32_t,
-        p_layer_prefix: *const c_char,
-        p_message: *const c_char,
-    ) -> ();
 }
 
 vk_functions!{
@@ -4891,5 +4868,31 @@ vk_functions!{
         p_allocator: *const AllocationCallbacks,
         p_surface: *mut SurfaceKHR,
     ) -> Result;
+}
+vk_functions!{
+    DebugReportFn,
+    "vkCreateDebugReportCallbackEXT", create_debug_report_callback_ext(
+        instance: Instance,
+        p_create_info: *const DebugReportCallbackCreateInfoEXT,
+        p_allocator: *const AllocationCallbacks,
+        p_callback: *mut DebugReportCallbackEXT,
+    ) -> Result;
+
+    "vkDestroyDebugReportCallbackEXT", destroy_debug_report_callback_ext(
+        instance: Instance,
+        callback: DebugReportCallbackEXT,
+        p_allocator: *const AllocationCallbacks,
+    ) -> ();
+
+    "vkDebugReportMessageEXT", debug_report_message_ext(
+        instance: Instance,
+        flags: DebugReportFlagsEXT,
+        object_type: DebugReportObjectTypeEXT,
+        object: uint64_t,
+        location: size_t,
+        message_code: int32_t,
+        p_layer_prefix: *const c_char,
+        p_message: *const c_char,
+    ) -> ();
 }
 }

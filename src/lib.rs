@@ -6,3 +6,5 @@ pub mod entry;
 pub mod prelude;
 pub mod vk;
 pub mod allocator;
+
+pub mod extensions;
