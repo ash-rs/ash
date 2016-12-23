@@ -29,7 +29,10 @@ macro_rules! offset_of{
 
 // Cross platform surface creation with GLFW
 #[cfg(all(unix, not(target_os = "android")))]
-fn create_surface(instance: &Instance, window: &Window) -> Result<vk::SurfaceKHR, vk::Result> {
+fn create_surface(instance: &Instance,
+                  entry: &Entry,
+                  window: &Window)
+                  -> Result<vk::SurfaceKHR, vk::Result> {
     let x11_display = window.glfw.get_x11_display();
     let x11_window = window.get_x11_window();
     let x11_create_info = vk::XlibSurfaceCreateInfoKHR {
@@ -39,7 +42,8 @@ fn create_surface(instance: &Instance, window: &Window) -> Result<vk::SurfaceKHR
         window: x11_window as vk::Window,
         dpy: x11_display as *mut vk::Display,
     };
-    instance.create_xlib_surface_khr(&x11_create_info)
+    let xlib_surface_loader = instance.load_xlib_surface(&entry);
+    xlib_surface_loader.create_xlib_surface_khr(&x11_create_info)
 }
 
 #[cfg(all(unix, not(target_os = "android")))]
@@ -151,8 +155,9 @@ fn main() {
         p_user_data: ptr::null_mut(),
     };
     let debug_call_back = instance.create_debug_report_callback_ext(&debug_info).unwrap();
-    let surface = create_surface(&instance, &window).unwrap();
+    let surface = create_surface(&instance, &entry, &window).unwrap();
     let pdevices = instance.enumerate_physical_devices().expect("Physical device error");
+    let surface_loader = instance.load_surface(&entry);
     let (pdevice, queue_family_index) = pdevices.iter()
         .map(|pdevice| {
             instance.get_physical_device_queue_family_properties(*pdevice)
@@ -161,9 +166,9 @@ fn main() {
                 .filter_map(|(index, ref info)| {
                     let supports_graphic_and_surface =
                         info.queue_flags.subset(vk::QUEUE_GRAPHICS_BIT) &&
-                        instance.get_physical_device_surface_support_khr(*pdevice,
-                                                                         index as u32,
-                                                                         surface);
+                        surface_loader.get_physical_device_surface_support_khr(*pdevice,
+                                                                               index as u32,
+                                                                               surface);
                     match supports_graphic_and_surface {
                         true => Some((*pdevice, index)),
                         _ => None,
@@ -205,7 +210,7 @@ fn main() {
         .unwrap();
     let present_queue = device.get_device_queue(queue_family_index as u32, 0);
 
-    let surface_formats = instance.get_physical_device_surface_formats_khr(pdevice, surface)
+    let surface_formats = surface_loader.get_physical_device_surface_formats_khr(pdevice, surface)
         .unwrap();
     let surface_format = surface_formats.iter()
         .map(|sfmt| {
@@ -222,7 +227,7 @@ fn main() {
         .nth(0)
         .expect("Unable to find suitable surface format.");
     let surface_capabilities =
-        instance.get_physical_device_surface_capabilities_khr(pdevice, surface).unwrap();
+        surface_loader.get_physical_device_surface_capabilities_khr(pdevice, surface).unwrap();
     let desired_image_count = surface_capabilities.min_image_count + 1;
     assert!(surface_capabilities.min_image_count <= desired_image_count &&
             surface_capabilities.max_image_count >= desired_image_count,
@@ -243,8 +248,9 @@ fn main() {
     } else {
         surface_capabilities.current_transform
     };
-    let present_modes = instance.get_physical_device_surface_present_modes_khr(pdevice, surface)
-        .unwrap();
+    let present_modes =
+        surface_loader.get_physical_device_surface_present_modes_khr(pdevice, surface)
+            .unwrap();
     let present_mode = present_modes.iter()
         .cloned()
         .find(|&mode| mode == vk::PresentModeKHR::Mailbox)
@@ -927,7 +933,7 @@ fn main() {
     device.destroy_command_pool(pool);
     swapchain_loader.destroy_swapchain_khr(swapchain);
     device.destroy_device();
-    instance.destroy_surface_khr(surface);
+    surface_loader.destroy_surface_khr(surface);
     instance.destroy_debug_report_callback_ext(debug_call_back);
     instance.destroy_instance();
 }
