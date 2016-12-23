@@ -14,7 +14,14 @@ A very lightweight wrapper around Vulkan
 No.
 
 ## Why Ash?
+- [x] Lightweight Vulkan wrapper
+- [x] Low overhead
+- [x] Added type safety
+- [x] More convenient to use than raw Vulkan
+- [x] Includes a loader
+- [x] Extensions have their own loader
 
+## What does it do?
 Functions return a `type VkResult<T> = Result<T, vk::Result>` instead of an error code. No mutable references for the output are required.
 ```Rust
 pub fn create_swapchain_khr(&self,
