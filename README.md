@@ -130,26 +130,6 @@ cargo run
 ```
 ![texture](http://i.imgur.com/trow00H.png)
 
-## Open questions
-
-### Unsafe?
-Currently ash can be used without any unsafe keyword. I have looked at a few other c wrappers and it seems this is common practice. But Ash is not particular safe and I am thinking of marking every function `unsafe`.
-
-### Optional extension loading
-Currently extensions are loaded like normal vulkan functions. This means some extenstions can be loaded, for example the win32 surface on linux. Accessing a unloaded function currently triggers a `debug_assert`. I am thinking of seperating extensions into their own struct.
-
-```Rust
-impl Device{
-    pub fn load_swapchain(&self) -> Result<SwapchainExtension, Err>;
-}
-// Instead of
-//let swapchain = device.create_swapchain_khr(&swapchain_create_info).unwrap();
-
-let swapchain_ext = device.load_swapchain().unwrap();
-let swapchain = swapchain_ext.create_swapchain_khr(&swapchain_create_info).unwrap();
-```
-
-
 ## Roadmap
 
 ### Extensions
