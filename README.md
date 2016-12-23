@@ -91,7 +91,7 @@ let instance: Instance = entry.create_instance(&create_info).expect("Instance cr
 let device: Device = instance.create_device(pdevice, &device_create_info)
     .unwrap();
 ```
-Additionally, every Vulkan extensions has to be loaded explicity. You can find all extensions under [ash::extensions](https://github.com/MaikKlein/ash/tree/master/src/extensions). You still have to tell Vulkan which instance or device extensions you want to load.
+Additionally, every Vulkan extension has to be loaded explicity. You can find all extensions under [ash::extensions](https://github.com/MaikKlein/ash/tree/master/src/extensions). You still have to tell Vulkan which instance or device extensions you want to load.
 ```Rust
 use ash::extensions::Swapchain;
 let swapchain_loader = Swapchain::new(&instance, &device).expect("Unable to load swapchain");
