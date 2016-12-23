@@ -22,104 +22,104 @@ impl Device {
         }
     }
 
-    pub fn destroy_device(&self) {
+    pub unsafe fn destroy_device(&self) {
         unsafe {
             self.device_fn.destroy_device(self.handle, ptr::null());
         }
     }
 
-    pub fn destroy_sampler(&self, sampler: vk::Sampler) {
+    pub unsafe fn destroy_sampler(&self, sampler: vk::Sampler) {
         unsafe {
             self.device_fn.destroy_sampler(self.handle, sampler, ptr::null());
         }
     }
 
-    pub fn free_memory(&self, memory: vk::DeviceMemory) {
+    pub unsafe fn free_memory(&self, memory: vk::DeviceMemory) {
         unsafe {
             self.device_fn.free_memory(self.handle, memory, ptr::null());
         }
     }
 
-    pub fn destroy_fence(&self, fence: vk::Fence) {
+    pub unsafe fn destroy_fence(&self, fence: vk::Fence) {
         unsafe {
             self.device_fn.destroy_fence(self.handle, fence, ptr::null());
         }
     }
 
-    pub fn destroy_image(&self, image: vk::Image) {
+    pub unsafe fn destroy_image(&self, image: vk::Image) {
         unsafe {
             self.device_fn.destroy_image(self.handle, image, ptr::null());
         }
     }
 
-    pub fn destroy_command_pool(&self, pool: vk::CommandPool) {
+    pub unsafe fn destroy_command_pool(&self, pool: vk::CommandPool) {
         unsafe {
             self.device_fn.destroy_command_pool(self.handle, pool, ptr::null());
         }
     }
 
 
-    pub fn destroy_image_view(&self, image_view: vk::ImageView) {
+    pub unsafe fn destroy_image_view(&self, image_view: vk::ImageView) {
         unsafe {
             self.device_fn.destroy_image_view(self.handle, image_view, ptr::null());
         }
     }
 
-    pub fn destroy_render_pass(&self, renderpass: vk::RenderPass) {
+    pub unsafe fn destroy_render_pass(&self, renderpass: vk::RenderPass) {
         unsafe {
             self.device_fn.destroy_render_pass(self.handle, renderpass, ptr::null());
         }
     }
 
-    pub fn destroy_framebuffer(&self, framebuffer: vk::Framebuffer) {
+    pub unsafe fn destroy_framebuffer(&self, framebuffer: vk::Framebuffer) {
         unsafe {
             self.device_fn.destroy_framebuffer(self.handle, framebuffer, ptr::null());
         }
     }
 
-    pub fn destroy_pipeline_layout(&self, pipeline_layout: vk::PipelineLayout) {
+    pub unsafe fn destroy_pipeline_layout(&self, pipeline_layout: vk::PipelineLayout) {
         unsafe {
             self.device_fn.destroy_pipeline_layout(self.handle, pipeline_layout, ptr::null());
         }
     }
 
-    pub fn destroy_buffer(&self, buffer: vk::Buffer) {
+    pub unsafe fn destroy_buffer(&self, buffer: vk::Buffer) {
         unsafe {
             self.device_fn.destroy_buffer(self.handle, buffer, ptr::null());
         }
     }
 
-    pub fn destroy_shader_module(&self, shader: vk::ShaderModule) {
+    pub unsafe fn destroy_shader_module(&self, shader: vk::ShaderModule) {
         unsafe {
             self.device_fn.destroy_shader_module(self.handle, shader, ptr::null());
         }
     }
 
-    pub fn destroy_pipeline(&self, pipeline: vk::Pipeline) {
+    pub unsafe fn destroy_pipeline(&self, pipeline: vk::Pipeline) {
         unsafe {
             self.device_fn.destroy_pipeline(self.handle, pipeline, ptr::null());
         }
     }
 
-    pub fn destroy_semaphore(&self, semaphore: vk::Semaphore) {
+    pub unsafe fn destroy_semaphore(&self, semaphore: vk::Semaphore) {
         unsafe {
             self.device_fn.destroy_semaphore(self.handle, semaphore, ptr::null());
         }
     }
 
-    pub fn destroy_descriptor_pool(&self, pool: vk::DescriptorPool) {
+    pub unsafe fn destroy_descriptor_pool(&self, pool: vk::DescriptorPool) {
         unsafe {
             self.device_fn.destroy_descriptor_pool(self.handle, pool, ptr::null());
         }
     }
 
-    pub fn destroy_descriptor_set_layout(&self, layout: vk::DescriptorSetLayout) {
+    pub unsafe fn destroy_descriptor_set_layout(&self, layout: vk::DescriptorSetLayout) {
         unsafe {
             self.device_fn.destroy_descriptor_set_layout(self.handle, layout, ptr::null());
         }
     }
 
-    pub fn free_descriptor_sets(&self,
+    pub unsafe fn free_descriptor_sets(&self,
                                 pool: vk::DescriptorPool,
                                 descriptor_sets: &[vk::DescriptorSet]) {
         unsafe {
@@ -130,7 +130,7 @@ impl Device {
         }
     }
 
-    pub fn update_descriptor_sets(&self,
+    pub unsafe fn update_descriptor_sets(&self,
                                   descriptor_writes: &[vk::WriteDescriptorSet],
                                   descriptor_copies: &[vk::CopyDescriptorSet]) {
         unsafe {
@@ -154,7 +154,7 @@ impl Device {
         }
     }
 
-    pub fn cmd_copy_buffer(&self,
+    pub unsafe fn cmd_copy_buffer(&self,
                            command_buffer: vk::CommandBuffer,
                            src_buffer: vk::Buffer,
                            dst_buffer: vk::Buffer,
@@ -168,7 +168,7 @@ impl Device {
                                            regions.as_ptr());
         }
     }
-    pub fn cmd_copy_buffer_to_image(&self,
+    pub unsafe fn cmd_copy_buffer_to_image(&self,
                                     command_buffer: vk::CommandBuffer,
                                     src_buffer: vk::Buffer,
                                     dst_image: vk::Image,
@@ -184,7 +184,7 @@ impl Device {
         }
     }
 
-    pub fn cmd_copy_image(&self,
+    pub unsafe fn cmd_copy_image(&self,
                           command_buffer: vk::CommandBuffer,
                           src_image: vk::Image,
                           src_image_layout: vk::ImageLayout,
@@ -254,7 +254,7 @@ impl Device {
         }
     }
 
-    pub fn reset_command_buffer(&self,
+    pub unsafe fn reset_command_buffer(&self,
                                 command_buffer: vk::CommandBuffer,
                                 flags: vk::CommandBufferResetFlags)
                                 -> VkResult<()> {
@@ -268,7 +268,7 @@ impl Device {
         }
     }
 
-    pub fn reset_fences(&self, fences: &[vk::Fence]) -> VkResult<()> {
+    pub unsafe fn reset_fences(&self, fences: &[vk::Fence]) -> VkResult<()> {
         unsafe {
             let err_code = self.device_fn
                 .reset_fences(self.handle, fences.len() as vk::uint32_t, fences.as_ptr());
@@ -279,7 +279,7 @@ impl Device {
         }
     }
 
-    pub fn cmd_bind_index_buffer(&self,
+    pub unsafe fn cmd_bind_index_buffer(&self,
                                  command_buffer: vk::CommandBuffer,
                                  buffer: vk::Buffer,
                                  offset: vk::DeviceSize,
@@ -289,7 +289,7 @@ impl Device {
         }
     }
 
-    pub fn cmd_draw_indexed(&self,
+    pub unsafe fn cmd_draw_indexed(&self,
                             command_buffer: vk::CommandBuffer,
                             index_count: vk::uint32_t,
                             instance_count: vk::uint32_t,
@@ -307,7 +307,7 @@ impl Device {
         }
     }
 
-    pub fn cmd_bind_descriptor_sets(&self,
+    pub unsafe fn cmd_bind_descriptor_sets(&self,
                                     command_buffer: vk::CommandBuffer,
                                     pipeline_bind_point: vk::PipelineBindPoint,
                                     layout: vk::PipelineLayout,
@@ -326,7 +326,7 @@ impl Device {
         }
     }
 
-    pub fn cmd_begin_render_pass(&self,
+    pub unsafe fn cmd_begin_render_pass(&self,
                                  command_buffer: vk::CommandBuffer,
                                  create_info: &vk::RenderPassBeginInfo,
                                  contents: vk::SubpassContents) {
@@ -335,7 +335,7 @@ impl Device {
         }
     }
 
-    pub fn cmd_bind_pipeline(&self,
+    pub unsafe fn cmd_bind_pipeline(&self,
                              command_buffer: vk::CommandBuffer,
                              pipeline_bind_point: vk::PipelineBindPoint,
                              pipeline: vk::Pipeline) {
@@ -344,7 +344,7 @@ impl Device {
         }
     }
 
-    pub fn cmd_set_scissor(&self, command_buffer: vk::CommandBuffer, scissors: &[vk::Rect2D]) {
+    pub unsafe fn cmd_set_scissor(&self, command_buffer: vk::CommandBuffer, scissors: &[vk::Rect2D]) {
         unsafe {
             self.device_fn
                 .cmd_set_scissor(command_buffer,
@@ -354,7 +354,7 @@ impl Device {
         }
     }
 
-    pub fn cmd_bind_vertex_buffers(&self,
+    pub unsafe fn cmd_bind_vertex_buffers(&self,
                                    command_buffer: vk::CommandBuffer,
                                    buffers: &[vk::Buffer],
                                    offsets: &vk::DeviceSize) {
@@ -367,13 +367,13 @@ impl Device {
         }
     }
 
-    pub fn cmd_end_render_pass(&self, command_buffer: vk::CommandBuffer) {
+    pub unsafe fn cmd_end_render_pass(&self, command_buffer: vk::CommandBuffer) {
         unsafe {
             self.device_fn.cmd_end_render_pass(command_buffer);
         }
     }
 
-    pub fn cmd_draw(&self,
+    pub unsafe fn cmd_draw(&self,
                     command_buffer: vk::CommandBuffer,
                     vertex_count: vk::uint32_t,
                     instance_count: vk::uint32_t,
@@ -388,7 +388,7 @@ impl Device {
         }
     }
 
-    pub fn cmd_set_viewport(&self, command_buffer: vk::CommandBuffer, viewports: &[vk::Viewport]) {
+    pub unsafe fn cmd_set_viewport(&self, command_buffer: vk::CommandBuffer, viewports: &[vk::Viewport]) {
         unsafe {
             self.device_fn.cmd_set_viewport(command_buffer,
                                             0,
@@ -398,7 +398,7 @@ impl Device {
     }
 
 
-    pub fn create_semaphore(&self,
+    pub unsafe fn create_semaphore(&self,
                             create_info: &vk::SemaphoreCreateInfo)
                             -> VkResult<vk::Semaphore> {
         unsafe {
@@ -461,7 +461,7 @@ impl Device {
             }
         }
     }
-    pub fn map_memory<T>(&self,
+    pub unsafe fn map_memory<T>(&self,
                          memory: vk::DeviceMemory,
                          offset: vk::DeviceSize,
                          size: vk::DeviceSize,
@@ -483,7 +483,7 @@ impl Device {
         }
     }
 
-    pub fn unmap_memory(&self, memory: vk::DeviceMemory) {
+    pub unsafe fn unmap_memory(&self, memory: vk::DeviceMemory) {
         unsafe {
             self.device_fn.unmap_memory(self.handle, memory);
         }
@@ -551,7 +551,7 @@ impl Device {
         }
     }
 
-    pub fn begin_command_buffer(&self,
+    pub unsafe fn begin_command_buffer(&self,
                                 command_buffer: vk::CommandBuffer,
                                 create_info: &vk::CommandBufferBeginInfo)
                                 -> VkResult<()> {
@@ -565,7 +565,7 @@ impl Device {
         }
     }
 
-    pub fn end_command_buffer(&self, command_buffer: vk::CommandBuffer) -> VkResult<()> {
+    pub unsafe fn end_command_buffer(&self, command_buffer: vk::CommandBuffer) -> VkResult<()> {
         unsafe {
             let err_code = self.device_fn
                 .end_command_buffer(command_buffer);
@@ -605,7 +605,7 @@ impl Device {
         }
     }
 
-    pub fn queue_present_khr(&self,
+    pub unsafe fn queue_present_khr(&self,
                              queue: vk::Queue,
                              create_info: &vk::PresentInfoKHR)
                              -> VkResult<()> {
@@ -619,7 +619,7 @@ impl Device {
         }
     }
 
-    pub fn queue_submit(&self,
+    pub unsafe fn queue_submit(&self,
                         queue: vk::Queue,
                         submits: &[vk::SubmitInfo],
                         fence: vk::Fence)
@@ -752,7 +752,7 @@ impl Device {
         }
     }
 
-    pub fn bind_buffer_memory(&self,
+    pub unsafe fn bind_buffer_memory(&self,
                               buffer: vk::Buffer,
                               device_memory: vk::DeviceMemory,
                               offset: vk::DeviceSize)
@@ -767,7 +767,7 @@ impl Device {
         }
     }
 
-    pub fn bind_image_memory(&self,
+    pub unsafe fn bind_image_memory(&self,
                              image: vk::Image,
                              device_memory: vk::DeviceMemory,
                              offset: vk::DeviceSize)

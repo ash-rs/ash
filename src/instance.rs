@@ -45,7 +45,7 @@ impl Instance {
         }
     }
 
-    pub fn destroy_instance(&self) {
+    pub unsafe fn destroy_instance(&self) {
         unsafe {
             self.instance_fn.destroy_instance(self.handle, ptr::null());
         }
