@@ -1,7 +1,8 @@
 [root]
 name = "ash"
-version = "0.1.1"
+version = "0.2.0"
 dependencies = [
+ "lazy_static 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "shared_library 0.1.5 (registry+https://github.com/rust-lang/crates.io-index)",
  "sharedlib 6.0.0 (registry+https://github.com/rust-lang/crates.io-index)",
 ]

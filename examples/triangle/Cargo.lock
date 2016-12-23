@@ -2,14 +2,15 @@
 name = "example"
 version = "0.1.0"
 dependencies = [
- "ash 0.1.1",
+ "ash 0.2.0",
  "glfw 0.9.1 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
 name = "ash"
-version = "0.1.1"
+version = "0.2.0"
 dependencies = [
+ "lazy_static 0.2.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "shared_library 0.1.5 (registry+https://github.com/rust-lang/crates.io-index)",
  "sharedlib 6.0.0 (registry+https://github.com/rust-lang/crates.io-index)",
 ]

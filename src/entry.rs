@@ -5,6 +5,10 @@ use vk;
 use instance::Instance;
 use shared_library::dynamic_library::DynamicLibrary;
 use std::path::Path;
+use std::cell::UnsafeCell;
+use std::sync::{Once, ONCE_INIT};
+use std::sync::atomic::AtomicPtr;
+
 #[cfg(windows)]
 fn get_path() -> &'static Path {
     Path::new("vulkan-1.dll")
@@ -20,9 +24,12 @@ fn get_path() -> &'static Path {
     Path::new("libvulkan.so")
 }
 
+lazy_static!{
+    static ref VK_LIB: Result<DynamicLibrary, String> = DynamicLibrary::open(Some(get_path()));
+}
+
 
 pub struct Entry {
-    lib: DynamicLibrary,
     pub static_fn: vk::StaticFn,
     pub entry_fn: vk::EntryFn,
 }
@@ -41,29 +48,28 @@ pub enum InstanceError {
 }
 
 impl Entry {
-    pub fn load_vulkan_path(path: &Path) -> Result<Entry, LoadingError> {
-        let lib =
-            DynamicLibrary::open(Some(path)).map_err(|err| LoadingError::LibraryLoadFailure(err))?;
-        let static_fn = vk::StaticFn::load(|name| unsafe {
-                let name = name.to_str().unwrap();
-                let f = match lib.symbol(name) {
-                    Ok(s) => s,
-                    Err(_) => ptr::null(),
-                };
-                f
-            }).map_err(|err| LoadingError::StaticLoadError(err))?;
+    pub fn load_vulkan() -> Result<Entry, LoadingError> {
+        let static_fn = match *VK_LIB {
+            Ok(ref lib) => {
+                let static_fn = vk::StaticFn::load(|name| unsafe {
+                        let name = name.to_str().unwrap();
+                        let f = match lib.symbol(name) {
+                            Ok(s) => s,
+                            Err(_) => ptr::null(),
+                        };
+                        f
+                    }).map_err(|err| LoadingError::StaticLoadError(err))?;
+                Ok(static_fn)
+            }
+            Err(ref err) => Err(LoadingError::LibraryLoadFailure(err.clone())),
+        }?;
         let entry_fn = vk::EntryFn::load(|name| unsafe {
                 mem::transmute(static_fn.get_instance_proc_addr(ptr::null_mut(), name.as_ptr()))
             }).map_err(|err| LoadingError::EntryLoadError(err))?;
         Ok(Entry {
-            lib: lib,
             static_fn: static_fn,
             entry_fn: entry_fn,
         })
-    }
-
-    pub fn load_vulkan() -> Result<Entry, LoadingError> {
-        Entry::load_vulkan_path(get_path())
     }
 
     pub fn create_instance(&self,

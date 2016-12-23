@@ -1,4 +1,6 @@
 extern crate shared_library;
+#[macro_use]
+extern crate lazy_static;
 
 pub mod instance;
 pub mod device;
