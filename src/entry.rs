@@ -5,9 +5,6 @@ use vk;
 use instance::Instance;
 use shared_library::dynamic_library::DynamicLibrary;
 use std::path::Path;
-use std::cell::UnsafeCell;
-use std::sync::{Once, ONCE_INIT};
-use std::sync::atomic::AtomicPtr;
 
 #[cfg(windows)]
 fn get_path() -> &'static Path {
@@ -27,7 +24,6 @@ fn get_path() -> &'static Path {
 lazy_static!{
     static ref VK_LIB: Result<DynamicLibrary, String> = DynamicLibrary::open(Some(get_path()));
 }
-
 
 pub struct Entry {
     pub static_fn: vk::StaticFn,

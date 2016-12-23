@@ -10,6 +10,5 @@ keywords = ["vulkan", "graphic"]
 documentation = "https://docs.rs/ash"
 
 [dependencies]
-shared_library = "0.1.5"
 sharedlib = "6.0.0"
 lazy_static = "0.2.1"
