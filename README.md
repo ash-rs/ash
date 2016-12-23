@@ -157,12 +157,12 @@ let swapchain = swapchain_ext.create_swapchain_khr(&swapchain_create_info).unwra
 - [x] Surface
 - [x] XlibSurface
 - [x] DebugReport
-- [] Win32Surface
-- [] MirSurface
-- [] XcbSurface
-- [] AndroidSurface
-- [] WaylandSurface
-- [] Display
+- [ ] Win32Surface
+- [ ] MirSurface
+- [ ] XcbSurface
+- [ ] AndroidSurface
+- [ ] WaylandSurface
+- [ ] Display
 
 ### Complete
 
