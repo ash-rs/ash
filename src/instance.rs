@@ -19,10 +19,32 @@ pub struct Instance {
     pub instance_fn: vk::InstanceFn,
 }
 
+pub struct XlibSurface {
+    pub handle: vk::Instance,
+    pub xlib_surface_fn: vk::XlibSurfaceFn,
+}
+
+impl XlibSurface {
+    pub fn create_xlib_surface_khr(&self,
+                                   create_info: &vk::XlibSurfaceCreateInfoKHR)
+                                   -> VkResult<vk::SurfaceKHR> {
+        unsafe {
+            let mut surface = mem::uninitialized();
+            let err_code = self.xlib_surface_fn
+                .create_xlib_surface_khr(self.handle, create_info, ptr::null(), &mut surface);
+            match err_code {
+                vk::Result::Success => Ok(surface),
+                _ => Err(err_code),
+            }
+        }
+    }
+}
+
 pub struct Surface {
     pub handle: vk::Instance,
     pub surface_fn: vk::SurfaceFn,
 }
+
 impl Surface {
     pub fn get_physical_device_surface_support_khr(&self,
                                                    physical_device: vk::PhysicalDevice,
@@ -112,6 +134,19 @@ impl Surface {
 }
 
 impl Instance {
+    pub fn load_xlib_surface(&self, entry: &Entry) -> XlibSurface {
+        let surface_fn = vk::XlibSurfaceFn::load(|name| {
+                unsafe {
+                    mem::transmute(entry.static_fn
+                        .get_instance_proc_addr(self.handle, name.as_ptr()))
+                }
+            })
+            .unwrap();
+        XlibSurface {
+            handle: self.handle,
+            xlib_surface_fn: surface_fn,
+        }
+    }
     pub fn load_surface(&self, entry: &Entry) -> Surface {
         let surface_fn = vk::SurfaceFn::load(|name| {
                 unsafe {
@@ -200,22 +235,6 @@ impl Instance {
             memory_prop
         }
     }
-
-    pub fn create_xlib_surface_khr(&self,
-                                   create_info: &vk::XlibSurfaceCreateInfoKHR)
-                                   -> VkResult<vk::SurfaceKHR> {
-        unsafe {
-            let mut surface = mem::uninitialized();
-            let err_code = self.instance_fn
-                .create_xlib_surface_khr(self.handle, create_info, ptr::null(), &mut surface);
-            match err_code {
-                vk::Result::Success => Ok(surface),
-                _ => Err(err_code),
-            }
-        }
-
-    }
-
 
     pub fn get_physical_device_queue_family_properties(&self,
                                                        physical_device: vk::PhysicalDevice)

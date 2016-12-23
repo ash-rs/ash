@@ -3839,13 +3839,6 @@ vk_functions!{
         visual_id: VisualID,
     ) -> Bool32;
 
-    "vkCreateXlibSurfaceKHR", create_xlib_surface_khr(
-        instance: Instance,
-        p_create_info: *const XlibSurfaceCreateInfoKHR,
-        p_allocator: *const AllocationCallbacks,
-        p_surface: *mut SurfaceKHR,
-    ) -> Result;
-
     "vkCreateXcbSurfaceKHR", create_xcb_surface_khr(
         instance: Instance,
         p_create_info: *const XcbSurfaceCreateInfoKHR,
@@ -4888,6 +4881,15 @@ vk_functions!{
         surface: SurfaceKHR,
         p_present_mode_count: *mut uint32_t,
         p_present_modes: *mut PresentModeKHR,
+    ) -> Result;
+}
+vk_functions!{
+    XlibSurfaceFn,
+    "vkCreateXlibSurfaceKHR", create_xlib_surface_khr(
+        instance: Instance,
+        p_create_info: *const XlibSurfaceCreateInfoKHR,
+        p_allocator: *const AllocationCallbacks,
+        p_surface: *mut SurfaceKHR,
     ) -> Result;
 }
 }
