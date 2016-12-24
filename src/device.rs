@@ -14,7 +14,6 @@ pub struct Device {
 }
 
 impl Device {
-
     pub unsafe fn from_raw(handle: vk::Device, device_fn: vk::DeviceFn) -> Self {
         Device {
             handle: handle,
@@ -120,8 +119,8 @@ impl Device {
     }
 
     pub unsafe fn free_descriptor_sets(&self,
-                                pool: vk::DescriptorPool,
-                                descriptor_sets: &[vk::DescriptorSet]) {
+                                       pool: vk::DescriptorPool,
+                                       descriptor_sets: &[vk::DescriptorSet]) {
         unsafe {
             self.device_fn.free_descriptor_sets(self.handle,
                                                 pool,
@@ -131,8 +130,8 @@ impl Device {
     }
 
     pub unsafe fn update_descriptor_sets(&self,
-                                  descriptor_writes: &[vk::WriteDescriptorSet],
-                                  descriptor_copies: &[vk::CopyDescriptorSet]) {
+                                         descriptor_writes: &[vk::WriteDescriptorSet],
+                                         descriptor_copies: &[vk::CopyDescriptorSet]) {
         unsafe {
             self.device_fn.update_descriptor_sets(self.handle,
                                                   descriptor_writes.len() as u32,
@@ -155,10 +154,10 @@ impl Device {
     }
 
     pub unsafe fn cmd_copy_buffer(&self,
-                           command_buffer: vk::CommandBuffer,
-                           src_buffer: vk::Buffer,
-                           dst_buffer: vk::Buffer,
-                           regions: &[vk::BufferCopy]) {
+                                  command_buffer: vk::CommandBuffer,
+                                  src_buffer: vk::Buffer,
+                                  dst_buffer: vk::Buffer,
+                                  regions: &[vk::BufferCopy]) {
 
         unsafe {
             self.device_fn.cmd_copy_buffer(command_buffer,
@@ -169,11 +168,11 @@ impl Device {
         }
     }
     pub unsafe fn cmd_copy_buffer_to_image(&self,
-                                    command_buffer: vk::CommandBuffer,
-                                    src_buffer: vk::Buffer,
-                                    dst_image: vk::Image,
-                                    dst_image_layout: vk::ImageLayout,
-                                    regions: &[vk::BufferImageCopy]) {
+                                           command_buffer: vk::CommandBuffer,
+                                           src_buffer: vk::Buffer,
+                                           dst_image: vk::Image,
+                                           dst_image_layout: vk::ImageLayout,
+                                           regions: &[vk::BufferImageCopy]) {
         unsafe {
             self.device_fn.cmd_copy_buffer_to_image(command_buffer,
                                                     src_buffer,
@@ -185,12 +184,12 @@ impl Device {
     }
 
     pub unsafe fn cmd_copy_image(&self,
-                          command_buffer: vk::CommandBuffer,
-                          src_image: vk::Image,
-                          src_image_layout: vk::ImageLayout,
-                          dst_image: vk::Image,
-                          dst_image_layout: vk::ImageLayout,
-                          regions: &[vk::ImageCopy]) {
+                                 command_buffer: vk::CommandBuffer,
+                                 src_image: vk::Image,
+                                 src_image_layout: vk::ImageLayout,
+                                 dst_image: vk::Image,
+                                 dst_image_layout: vk::ImageLayout,
+                                 regions: &[vk::ImageCopy]) {
         unsafe {
             self.device_fn.cmd_copy_image(command_buffer,
                                           src_image,
@@ -202,9 +201,9 @@ impl Device {
         }
     }
 
-    pub fn allocate_descriptor_sets(&self,
-                                    create_info: &vk::DescriptorSetAllocateInfo)
-                                    -> VkResult<Vec<vk::DescriptorSet>> {
+    pub unsafe fn allocate_descriptor_sets(&self,
+                                           create_info: &vk::DescriptorSetAllocateInfo)
+                                           -> VkResult<Vec<vk::DescriptorSet>> {
         unsafe {
             let mut desc_set = Vec::with_capacity(create_info.descriptor_set_count as usize);
             let err_code = self.device_fn
@@ -255,9 +254,9 @@ impl Device {
     }
 
     pub unsafe fn reset_command_buffer(&self,
-                                command_buffer: vk::CommandBuffer,
-                                flags: vk::CommandBufferResetFlags)
-                                -> VkResult<()> {
+                                       command_buffer: vk::CommandBuffer,
+                                       flags: vk::CommandBufferResetFlags)
+                                       -> VkResult<()> {
         unsafe {
             let err_code = self.device_fn
                 .reset_command_buffer(command_buffer, flags);
@@ -280,22 +279,22 @@ impl Device {
     }
 
     pub unsafe fn cmd_bind_index_buffer(&self,
-                                 command_buffer: vk::CommandBuffer,
-                                 buffer: vk::Buffer,
-                                 offset: vk::DeviceSize,
-                                 index_type: vk::IndexType) {
+                                        command_buffer: vk::CommandBuffer,
+                                        buffer: vk::Buffer,
+                                        offset: vk::DeviceSize,
+                                        index_type: vk::IndexType) {
         unsafe {
             self.device_fn.cmd_bind_index_buffer(command_buffer, buffer, offset, index_type);
         }
     }
 
     pub unsafe fn cmd_draw_indexed(&self,
-                            command_buffer: vk::CommandBuffer,
-                            index_count: vk::uint32_t,
-                            instance_count: vk::uint32_t,
-                            first_index: vk::uint32_t,
-                            vertex_offset: vk::int32_t,
-                            first_instance: vk::uint32_t) {
+                                   command_buffer: vk::CommandBuffer,
+                                   index_count: vk::uint32_t,
+                                   instance_count: vk::uint32_t,
+                                   first_index: vk::uint32_t,
+                                   vertex_offset: vk::int32_t,
+                                   first_instance: vk::uint32_t) {
 
         unsafe {
             self.device_fn.cmd_draw_indexed(command_buffer,
@@ -308,12 +307,12 @@ impl Device {
     }
 
     pub unsafe fn cmd_bind_descriptor_sets(&self,
-                                    command_buffer: vk::CommandBuffer,
-                                    pipeline_bind_point: vk::PipelineBindPoint,
-                                    layout: vk::PipelineLayout,
-                                    first_set: vk::uint32_t,
-                                    descriptor_sets: &[vk::DescriptorSet],
-                                    dynamic_offsets: &[vk::uint32_t]) {
+                                           command_buffer: vk::CommandBuffer,
+                                           pipeline_bind_point: vk::PipelineBindPoint,
+                                           layout: vk::PipelineLayout,
+                                           first_set: vk::uint32_t,
+                                           descriptor_sets: &[vk::DescriptorSet],
+                                           dynamic_offsets: &[vk::uint32_t]) {
         unsafe {
             self.device_fn.cmd_bind_descriptor_sets(command_buffer,
                                                     pipeline_bind_point,
@@ -327,24 +326,26 @@ impl Device {
     }
 
     pub unsafe fn cmd_begin_render_pass(&self,
-                                 command_buffer: vk::CommandBuffer,
-                                 create_info: &vk::RenderPassBeginInfo,
-                                 contents: vk::SubpassContents) {
+                                        command_buffer: vk::CommandBuffer,
+                                        create_info: &vk::RenderPassBeginInfo,
+                                        contents: vk::SubpassContents) {
         unsafe {
             self.device_fn.cmd_begin_render_pass(command_buffer, create_info, contents);
         }
     }
 
     pub unsafe fn cmd_bind_pipeline(&self,
-                             command_buffer: vk::CommandBuffer,
-                             pipeline_bind_point: vk::PipelineBindPoint,
-                             pipeline: vk::Pipeline) {
+                                    command_buffer: vk::CommandBuffer,
+                                    pipeline_bind_point: vk::PipelineBindPoint,
+                                    pipeline: vk::Pipeline) {
         unsafe {
             self.device_fn.cmd_bind_pipeline(command_buffer, pipeline_bind_point, pipeline);
         }
     }
 
-    pub unsafe fn cmd_set_scissor(&self, command_buffer: vk::CommandBuffer, scissors: &[vk::Rect2D]) {
+    pub unsafe fn cmd_set_scissor(&self,
+                                  command_buffer: vk::CommandBuffer,
+                                  scissors: &[vk::Rect2D]) {
         unsafe {
             self.device_fn
                 .cmd_set_scissor(command_buffer,
@@ -355,9 +356,9 @@ impl Device {
     }
 
     pub unsafe fn cmd_bind_vertex_buffers(&self,
-                                   command_buffer: vk::CommandBuffer,
-                                   buffers: &[vk::Buffer],
-                                   offsets: &vk::DeviceSize) {
+                                          command_buffer: vk::CommandBuffer,
+                                          buffers: &[vk::Buffer],
+                                          offsets: &vk::DeviceSize) {
         unsafe {
             self.device_fn.cmd_bind_vertex_buffers(command_buffer,
                                                    0,
@@ -374,11 +375,11 @@ impl Device {
     }
 
     pub unsafe fn cmd_draw(&self,
-                    command_buffer: vk::CommandBuffer,
-                    vertex_count: vk::uint32_t,
-                    instance_count: vk::uint32_t,
-                    first_vertex: vk::uint32_t,
-                    first_instance: vk::uint32_t) {
+                           command_buffer: vk::CommandBuffer,
+                           vertex_count: vk::uint32_t,
+                           instance_count: vk::uint32_t,
+                           first_vertex: vk::uint32_t,
+                           first_instance: vk::uint32_t) {
         unsafe {
             self.device_fn.cmd_draw(command_buffer,
                                     vertex_count,
@@ -388,7 +389,9 @@ impl Device {
         }
     }
 
-    pub unsafe fn cmd_set_viewport(&self, command_buffer: vk::CommandBuffer, viewports: &[vk::Viewport]) {
+    pub unsafe fn cmd_set_viewport(&self,
+                                   command_buffer: vk::CommandBuffer,
+                                   viewports: &[vk::Viewport]) {
         unsafe {
             self.device_fn.cmd_set_viewport(command_buffer,
                                             0,
@@ -399,8 +402,8 @@ impl Device {
 
 
     pub unsafe fn create_semaphore(&self,
-                            create_info: &vk::SemaphoreCreateInfo)
-                            -> VkResult<vk::Semaphore> {
+                                   create_info: &vk::SemaphoreCreateInfo)
+                                   -> VkResult<vk::Semaphore> {
         unsafe {
             let mut semaphore = mem::uninitialized();
             let err_code = self.device_fn
@@ -462,11 +465,11 @@ impl Device {
         }
     }
     pub unsafe fn map_memory<T>(&self,
-                         memory: vk::DeviceMemory,
-                         offset: vk::DeviceSize,
-                         size: vk::DeviceSize,
-                         flags: vk::MemoryMapFlags)
-                         -> VkResult<&mut [T]> {
+                                memory: vk::DeviceMemory,
+                                offset: vk::DeviceSize,
+                                size: vk::DeviceSize,
+                                flags: vk::MemoryMapFlags)
+                                -> VkResult<&mut [T]> {
 
         unsafe {
             let mut data: *mut () = mem::uninitialized();
@@ -515,14 +518,14 @@ impl Device {
         }
     }
 
-    pub fn cmd_pipeline_barrier(&self,
-                                command_buffer: vk::CommandBuffer,
-                                src_stage_mask: vk::PipelineStageFlags,
-                                dst_stage_mask: vk::PipelineStageFlags,
-                                dependency_flags: vk::DependencyFlags,
-                                memory_barriers: &[vk::MemoryBarrier],
-                                buffer_memory_barriers: &[vk::BufferMemoryBarrier],
-                                image_memory_barriers: &[vk::ImageMemoryBarrier]) {
+    pub unsafe fn cmd_pipeline_barrier(&self,
+                                       command_buffer: vk::CommandBuffer,
+                                       src_stage_mask: vk::PipelineStageFlags,
+                                       dst_stage_mask: vk::PipelineStageFlags,
+                                       dependency_flags: vk::DependencyFlags,
+                                       memory_barriers: &[vk::MemoryBarrier],
+                                       buffer_memory_barriers: &[vk::BufferMemoryBarrier],
+                                       image_memory_barriers: &[vk::ImageMemoryBarrier]) {
         unsafe {
             self.device_fn.cmd_pipeline_barrier(command_buffer,
                                                 src_stage_mask,
@@ -552,9 +555,9 @@ impl Device {
     }
 
     pub unsafe fn begin_command_buffer(&self,
-                                command_buffer: vk::CommandBuffer,
-                                create_info: &vk::CommandBufferBeginInfo)
-                                -> VkResult<()> {
+                                       command_buffer: vk::CommandBuffer,
+                                       create_info: &vk::CommandBufferBeginInfo)
+                                       -> VkResult<()> {
         unsafe {
             let err_code = self.device_fn
                 .begin_command_buffer(command_buffer, create_info);
@@ -606,9 +609,9 @@ impl Device {
     }
 
     pub unsafe fn queue_present_khr(&self,
-                             queue: vk::Queue,
-                             create_info: &vk::PresentInfoKHR)
-                             -> VkResult<()> {
+                                    queue: vk::Queue,
+                                    create_info: &vk::PresentInfoKHR)
+                                    -> VkResult<()> {
         unsafe {
             let err_code = self.device_fn
                 .queue_present_khr(queue, create_info);
@@ -620,10 +623,10 @@ impl Device {
     }
 
     pub unsafe fn queue_submit(&self,
-                        queue: vk::Queue,
-                        submits: &[vk::SubmitInfo],
-                        fence: vk::Fence)
-                        -> VkResult<()> {
+                               queue: vk::Queue,
+                               submits: &[vk::SubmitInfo],
+                               fence: vk::Fence)
+                               -> VkResult<()> {
         unsafe {
             let err_code = self.device_fn
                 .queue_submit(queue,
@@ -652,9 +655,9 @@ impl Device {
     }
 
 
-    pub fn allocate_command_buffers(&self,
-                                    create_info: &vk::CommandBufferAllocateInfo)
-                                    -> VkResult<Vec<vk::CommandBuffer>> {
+    pub unsafe fn allocate_command_buffers(&self,
+                                           create_info: &vk::CommandBufferAllocateInfo)
+                                           -> VkResult<Vec<vk::CommandBuffer>> {
         unsafe {
             let mut buffers = Vec::with_capacity(create_info.command_buffer_count as vk::size_t);
             let err_code = self.device_fn
@@ -753,10 +756,10 @@ impl Device {
     }
 
     pub unsafe fn bind_buffer_memory(&self,
-                              buffer: vk::Buffer,
-                              device_memory: vk::DeviceMemory,
-                              offset: vk::DeviceSize)
-                              -> VkResult<()> {
+                                     buffer: vk::Buffer,
+                                     device_memory: vk::DeviceMemory,
+                                     offset: vk::DeviceSize)
+                                     -> VkResult<()> {
         unsafe {
             let err_code = self.device_fn
                 .bind_buffer_memory(self.handle, buffer, device_memory, offset);
@@ -768,10 +771,10 @@ impl Device {
     }
 
     pub unsafe fn bind_image_memory(&self,
-                             image: vk::Image,
-                             device_memory: vk::DeviceMemory,
-                             offset: vk::DeviceSize)
-                             -> VkResult<()> {
+                                    image: vk::Image,
+                                    device_memory: vk::DeviceMemory,
+                                    offset: vk::DeviceSize)
+                                    -> VkResult<()> {
         unsafe {
             let err_code = self.device_fn
                 .bind_image_memory(self.handle, image, device_memory, offset);
