@@ -157,15 +157,11 @@ cargo run
 - [ ] WaylandSurface
 - [ ] Display
 
-### Complete
-
 ### In progress
-
 - Wrapping the complete spec
-- Optional extension loading
 
 ### Not started
-- [Custom allocators](https://github.com/MaikKlein/ash/issues/2)
+- [Custom allocators](https://github.com/MaikKlein/ash/issues/2.static_fn)
 
 ## A thanks to
 
