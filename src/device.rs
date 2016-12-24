@@ -9,11 +9,15 @@ unsafe impl Sync for Device {}
 unsafe impl Send for Device {}
 
 pub struct Device {
-    pub handle: vk::Device,
-    pub device_fn: vk::DeviceFn,
+    handle: vk::Device,
+    device_fn: vk::DeviceFn,
 }
 
 impl Device {
+    pub fn handle(&self) -> vk::Device{
+        self.handle
+    }
+
     pub unsafe fn from_raw(handle: vk::Device, device_fn: vk::DeviceFn) -> Self {
         Device {
             handle: handle,

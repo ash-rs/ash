@@ -15,11 +15,14 @@ pub enum DeviceError {
 
 #[derive(Debug)]
 pub struct Instance {
-    pub handle: vk::Instance,
-    pub instance_fn: vk::InstanceFn,
+    handle: vk::Instance,
+    instance_fn: vk::InstanceFn,
 }
 
 impl Instance {
+    pub fn handle(&self) -> vk::Instance{
+        self.handle
+    }
     pub unsafe fn from_raw(handle: vk::Instance, instance_fn: vk::InstanceFn) -> Self {
         Instance {
             handle: handle,

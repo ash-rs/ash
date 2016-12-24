@@ -14,11 +14,11 @@ impl Swapchain {
     pub fn new(instance: &Instance, device: &Device) -> Result<Swapchain, String> {
         let swapchain_fn = vk::SwapchainFn::load(|name| {
             unsafe {
-                mem::transmute(instance.get_device_proc_addr(device.handle, name.as_ptr()))
+                mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
             }
         })?;
         Ok(Swapchain {
-            handle: device.handle,
+            handle: device.handle(),
             swapchain_fn: swapchain_fn,
         })
     }

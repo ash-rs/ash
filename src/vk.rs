@@ -3234,13 +3234,13 @@ pub mod types {
     pub type Queue = *mut Queue_T;
 
 
-    handle_nondispatchable!(Semaphore);
     #[repr(C)]
     #[doc(hidden)]
     pub struct CommandBuffer_T(u8);
     pub type CommandBuffer = *mut CommandBuffer_T;
 
 
+    handle_nondispatchable!(Semaphore);
     handle_nondispatchable!(Fence);
     handle_nondispatchable!(DeviceMemory);
     handle_nondispatchable!(Buffer);

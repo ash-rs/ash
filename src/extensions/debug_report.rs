@@ -7,20 +7,19 @@ use vk;
 
 
 pub struct DebugReport {
-    pub handle: vk::Instance,
-    pub debug_report_fn: vk::DebugReportFn,
+    handle: vk::Instance,
+    debug_report_fn: vk::DebugReportFn,
 }
 
 impl DebugReport {
     pub fn new(entry: &Entry, instance: &Instance) -> Result<DebugReport, String> {
         let debug_report_fn = vk::DebugReportFn::load(|name| {
             unsafe {
-                mem::transmute(entry.static_fn
-                    .get_instance_proc_addr(instance.handle, name.as_ptr()))
+                mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
             }
         })?;
         Ok(DebugReport {
-            handle: instance.handle,
+            handle: instance.handle(),
             debug_report_fn: debug_report_fn,
         })
     }

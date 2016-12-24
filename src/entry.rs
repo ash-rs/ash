@@ -26,8 +26,8 @@ lazy_static!{
 }
 
 pub struct Entry {
-    pub static_fn: vk::StaticFn,
-    pub entry_fn: vk::EntryFn,
+    static_fn: vk::StaticFn,
+    entry_fn: vk::EntryFn,
 }
 
 #[derive(Debug)]

@@ -14,12 +14,11 @@ impl XlibSurface {
     pub fn new(entry: &Entry, instance: &Instance) -> Result<XlibSurface, String> {
         let surface_fn = vk::XlibSurfaceFn::load(|name| {
             unsafe {
-                mem::transmute(entry.static_fn
-                    .get_instance_proc_addr(instance.handle, name.as_ptr()))
+                mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
             }
         })?;
         Ok(XlibSurface {
-            handle: instance.handle,
+            handle: instance.handle(),
             xlib_surface_fn: surface_fn,
         })
     }
