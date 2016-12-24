@@ -25,7 +25,7 @@ impl DebugReport {
         })
     }
 
-    pub fn destroy_debug_report_callback_ext(&self, debug: vk::DebugReportCallbackEXT) {
+    pub unsafe fn destroy_debug_report_callback_ext(&self, debug: vk::DebugReportCallbackEXT) {
         unsafe {
             self.debug_report_fn.destroy_debug_report_callback_ext(self.handle, debug, ptr::null());
         }

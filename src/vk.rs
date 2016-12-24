@@ -3693,16 +3693,16 @@ macro_rules! vk_functions {
         impl ::std::fmt::Debug for $struct_name {
             #[inline]
             fn fmt(&self, fmt: &mut ::std::fmt::Formatter) -> ::std::result::Result<(), ::std::fmt::Error> {
-                writeln!(fmt, stringify!($struct_name)).unwrap();
+                writeln!(fmt, stringify!($struct_name))?;
                 $(
                     if !(self.$name as *const c_void).is_null() {
-                        write!(fmt," Is loaded => " ).unwrap();
+                        write!(fmt," Is loaded => " )?;
                     }
                     else{
-                        write!(fmt," Is not loaded => " ).unwrap();
+                        write!(fmt," Is not loaded => " )?;
                     }
-                    write!(fmt, $raw_name).unwrap();
-                    writeln!(fmt, ", ").unwrap();
+                    write!(fmt, $raw_name)?;
+                    writeln!(fmt, ", ")?;
                 )+
                 write!(fmt, "")
             }

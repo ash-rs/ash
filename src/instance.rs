@@ -45,6 +45,13 @@ impl Instance {
         }
     }
 
+    pub fn get_device_proc_addr(&self,
+                                device: vk::Device,
+                                p_name: *const vk::c_char)
+                                -> vk::PFN_vkVoidFunction {
+        unsafe { self.instance_fn.get_device_proc_addr(device, p_name) }
+    }
+
     pub unsafe fn destroy_instance(&self) {
         unsafe {
             self.instance_fn.destroy_instance(self.handle, ptr::null());
