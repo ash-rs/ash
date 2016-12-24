@@ -165,7 +165,7 @@ cargo run
 - Optional extension loading
 
 ### Not started
-- Custom allocators
+- [Custom allocators](https://github.com/MaikKlein/ash/issues/2)
 
 ## A thanks to
 
