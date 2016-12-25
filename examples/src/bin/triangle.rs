@@ -1,22 +1,15 @@
-#![allow(dead_code)]
 #[macro_use]
 extern crate ash;
-extern crate winit;
 extern crate examples;
 
 use ash::vk;
 use std::default::Default;
-use ash::entry::Entry;
-use ash::instance::Instance;
-use ash::extensions::{Swapchain, XlibSurface, Surface, DebugReport};
-use ash::device::Device;
 use std::ptr;
-use std::ffi::{CStr, CString};
+use std::ffi::CString;
 use std::mem;
 use std::path::Path;
 use std::fs::File;
 use std::io::Read;
-use winit::os::unix::WindowExt;
 use examples::*;
 
 #[derive(Clone, Debug, Copy)]
@@ -28,17 +21,6 @@ struct Vertex {
 fn main() {
     unsafe {
         let base = ExampleBase::new(1920, 1080);
-        let fence_create_info = vk::FenceCreateInfo {
-            s_type: vk::StructureType::FenceCreateInfo,
-            p_next: ptr::null(),
-            flags: vk::FenceCreateFlags::empty(),
-        };
-        let command_buffer_begin_info = vk::CommandBufferBeginInfo {
-            s_type: vk::StructureType::CommandBufferBeginInfo,
-            p_next: ptr::null(),
-            p_inheritance_info: ptr::null(),
-            flags: vk::COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT,
-        };
         let renderpass_attachments =
             [vk::AttachmentDescription {
                  format: base.surface_format.format,
@@ -484,7 +466,7 @@ fn main() {
                 // device.cmd_draw(draw_command_buffer, 3, 1, 0, 0);
                 device.cmd_end_render_pass(draw_command_buffer);
             });
-            let mut present_info_err = unsafe { mem::uninitialized() };
+            let mut present_info_err = mem::uninitialized();
             let present_info = vk::PresentInfoKHR {
                 s_type: vk::StructureType::PresentInfoKhr,
                 p_next: ptr::null(),

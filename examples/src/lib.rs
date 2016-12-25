@@ -22,9 +22,12 @@ use std::ops::Drop;
 #[macro_export]
 macro_rules! offset_of{
     ($base: path, $field: ident) => {
-        unsafe{
-            let b: $base = mem::uninitialized();
-            (&b.$field as *const _ as isize) - (&b as *const _ as isize)
+        {
+            #[allow(unused_unsafe)]
+            unsafe{
+                let b: $base = mem::uninitialized();
+                (&b.$field as *const _ as isize) - (&b as *const _ as isize)
+            }
         }
     }
 }
