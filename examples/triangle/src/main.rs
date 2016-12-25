@@ -1,11 +1,10 @@
 #![allow(dead_code)]
 #[macro_use]
 extern crate ash;
-extern crate glfw;
+extern crate winit;
 
 use ash::vk;
 use std::default::Default;
-use glfw::*;
 use ash::entry::Entry;
 use ash::instance::Instance;
 use ash::extensions::{Swapchain, XlibSurface, Surface, DebugReport};
@@ -16,6 +15,7 @@ use std::mem;
 use std::path::Path;
 use std::fs::File;
 use std::io::Read;
+use winit::os::unix::WindowExt;
 
 // Simple offset_of macro akin to C++ offsetof
 macro_rules! offset_of{
@@ -31,10 +31,10 @@ macro_rules! offset_of{
 #[cfg(all(unix, not(target_os = "android")))]
 fn create_surface(instance: &Instance,
                   entry: &Entry,
-                  window: &Window)
+                  window: &winit::Window)
                   -> Result<vk::SurfaceKHR, vk::Result> {
-    let x11_display = window.glfw.get_x11_display();
-    let x11_window = window.get_x11_window();
+    let x11_display = window.get_xlib_display().unwrap();
+    let x11_window = window.get_xlib_window().unwrap();
     let x11_create_info = vk::XlibSurfaceCreateInfoKHR {
         s_type: vk::StructureType::XlibSurfaceCreateInfoKhr,
         p_next: ptr::null(),
@@ -73,12 +73,6 @@ unsafe extern "system" fn vulkan_debug_callback(flags: vk::DebugReportFlagsEXT,
     println!("{:?}", CStr::from_ptr(p_message));
     1
 }
-fn handle_window_event(window: &mut glfw::Window, event: glfw::WindowEvent) {
-    match event {
-        glfw::WindowEvent::Key(Key::Escape, _, Action::Press, _) => window.set_should_close(true),
-        _ => {}
-    }
-}
 
 pub fn find_memorytype_index(memory_req: &vk::MemoryRequirements,
                              memory_prop: &vk::PhysicalDeviceMemoryProperties,
@@ -99,357 +93,441 @@ struct Vertex {
     pos: [f32; 4],
     color: [f32; 4],
 }
-fn main() {
-    unsafe {
-        let mut glfw = glfw::init(glfw::FAIL_ON_ERRORS).unwrap();
+fn resize_callback(width: u32, height: u32) {
+    println!("Window resized to {}x{}", width, height);
+}
 
-        let window_width = 1920;
-        let window_height = 1080;
+pub struct ExampleBase {
+    pub entry: Entry,
+    pub instance: Instance,
+    pub device: Device,
+    pub surface_loader: Surface,
+    pub swapchain_loader: Swapchain,
+    pub window: winit::Window,
 
-        let (mut window, events) = glfw.create_window(window_width,
-                           window_height,
-                           "Hello this is window",
-                           glfw::WindowMode::Windowed)
-            .expect("Failed to create GLFW window.");
+    pub pdevice: vk::PhysicalDevice,
+    pub device_memory_properties: vk::PhysicalDeviceMemoryProperties,
+    pub queue_family_index: u32,
+    pub present_queue: vk::Queue,
+    pub surface_format: vk::SurfaceFormatKHR,
+    pub surface_resolution: vk::Extent2D,
+    pub swapchain: vk::SwapchainKHR,
 
-        window.set_key_polling(true);
-        window.make_current();
-        glfw.set_swap_interval(0);
-        let entry = Entry::load_vulkan().unwrap();
-        let instance_ext_props = entry.enumerate_instance_extension_properties().unwrap();
-        let app_name = CString::new("VulkanTriangle").unwrap();
-        let raw_name = app_name.as_ptr();
+    pub present_images: Vec<vk::Image>,
+    pub present_image_views: Vec<vk::ImageView>,
+    pub pool: vk::CommandPool,
+    pub draw_command_buffer: vk::CommandBuffer,
+    pub setup_command_buffer: vk::CommandBuffer,
 
-        let layer_names = [CString::new("VK_LAYER_LUNARG_standard_validation").unwrap()];
-        let layers_names_raw: Vec<*const i8> = layer_names.iter()
-            .map(|raw_name| raw_name.as_ptr())
-            .collect();
-        let extension_names = extension_names();
-        let extension_names_raw: Vec<*const i8> = extension_names.iter()
-            .map(|raw_name| raw_name.as_ptr())
-            .collect();
-        let appinfo = vk::ApplicationInfo {
-            p_application_name: raw_name,
-            s_type: vk::StructureType::ApplicationInfo,
-            p_next: ptr::null(),
-            application_version: 0,
-            p_engine_name: raw_name,
-            engine_version: 0,
-            api_version: vk_make_version!(1, 0, 36),
-        };
-        let create_info = vk::InstanceCreateInfo {
-            s_type: vk::StructureType::InstanceCreateInfo,
-            p_next: ptr::null(),
-            flags: Default::default(),
-            p_application_info: &appinfo,
-            pp_enabled_layer_names: layers_names_raw.as_ptr(),
-            enabled_layer_count: layers_names_raw.len() as u32,
-            pp_enabled_extension_names: extension_names_raw.as_ptr(),
-            enabled_extension_count: extension_names_raw.len() as u32,
-        };
-        let instance: Instance = entry.create_instance(&create_info)
-            .expect("Instance creation error");
-        let debug_info = vk::DebugReportCallbackCreateInfoEXT {
-            s_type: vk::StructureType::DebugReportCallbackCreateInfoExt,
-            p_next: ptr::null(),
-            flags: vk::DEBUG_REPORT_ERROR_BIT_EXT | vk::DEBUG_REPORT_WARNING_BIT_EXT |
-                   vk::DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT,
-            pfn_callback: vulkan_debug_callback,
-            p_user_data: ptr::null_mut(),
-        };
-        let debug_report_loader = DebugReport::new(&entry, &instance)
-            .expect("Unable to load debug report");
-        let debug_call_back = debug_report_loader.create_debug_report_callback_ext(&debug_info)
-            .unwrap();
-        let surface = create_surface(&instance, &entry, &window).unwrap();
-        let pdevices = instance.enumerate_physical_devices().expect("Physical device error");
-        let surface_loader = Surface::new(&entry, &instance)
-            .expect("Unable to load the Surface extension");
-        let (pdevice, queue_family_index) = pdevices.iter()
-            .map(|pdevice| {
-                instance.get_physical_device_queue_family_properties(*pdevice)
-                    .iter()
-                    .enumerate()
-                    .filter_map(|(index, ref info)| {
-                        let supports_graphic_and_surface =
-                            info.queue_flags.subset(vk::QUEUE_GRAPHICS_BIT) &&
-                            surface_loader.get_physical_device_surface_support_khr(*pdevice,
-                                                                                   index as u32,
-                                                                                   surface);
-                        match supports_graphic_and_surface {
-                            true => Some((*pdevice, index)),
-                            _ => None,
-                        }
-                    })
-                    .nth(0)
-            })
-            .filter_map(|v| v)
-            .nth(0)
-            .expect("Couldn't find suitable device.");
-        let queue_family_index = queue_family_index as u32;
-        let device_extension_names = [CString::new("VK_KHR_swapchain").unwrap()];
-        let device_extension_names_raw: Vec<*const i8> = device_extension_names.iter()
-            .map(|raw_name| raw_name.as_ptr())
-            .collect();
-        let features = vk::PhysicalDeviceFeatures { shader_clip_distance: 1, ..Default::default() };
-        let priorities = [1.0];
-        let queue_info = vk::DeviceQueueCreateInfo {
-            s_type: vk::StructureType::DeviceQueueCreateInfo,
-            p_next: ptr::null(),
-            flags: Default::default(),
-            queue_family_index: queue_family_index as u32,
-            p_queue_priorities: priorities.as_ptr(),
-            queue_count: priorities.len() as u32,
-        };
-        let device_create_info = vk::DeviceCreateInfo {
-            s_type: vk::StructureType::DeviceCreateInfo,
-            p_next: ptr::null(),
-            flags: Default::default(),
-            queue_create_info_count: 1,
-            p_queue_create_infos: &queue_info,
-            enabled_layer_count: 0,
-            pp_enabled_layer_names: ptr::null(),
-            enabled_extension_count: device_extension_names_raw.len() as u32,
-            pp_enabled_extension_names: device_extension_names_raw.as_ptr(),
-            p_enabled_features: &features,
-        };
-        let device: Device = instance.create_device(pdevice, &device_create_info)
-            .unwrap();
-        let present_queue = device.get_device_queue(queue_family_index as u32, 0);
+    pub depth_image: vk::Image,
+    pub depth_image_view: vk::ImageView,
+}
 
-        let surface_formats =
-            surface_loader.get_physical_device_surface_formats_khr(pdevice, surface)
-                .unwrap();
-        let surface_format = surface_formats.iter()
-            .map(|sfmt| {
-                match sfmt.format {
-                    vk::Format::Undefined => {
-                        vk::SurfaceFormatKHR {
-                            format: vk::Format::B8g8r8Unorm,
-                            color_space: sfmt.color_space,
-                        }
-                    }
-                    _ => sfmt.clone(),
-                }
-            })
-            .nth(0)
-            .expect("Unable to find suitable surface format.");
-        let surface_capabilities =
-            surface_loader.get_physical_device_surface_capabilities_khr(pdevice, surface).unwrap();
-        let desired_image_count = surface_capabilities.min_image_count + 1;
-        assert!(surface_capabilities.min_image_count <= desired_image_count &&
-                surface_capabilities.max_image_count >= desired_image_count,
-                "Image count err");
-        let surface_resoultion = match surface_capabilities.current_extent.width {
-            std::u32::MAX => {
-                vk::Extent2D {
-                    width: window_width,
-                    height: window_height,
+impl ExampleBase {
+    pub fn render_loop<F: Fn()>(&self, f: F) {
+        'render: loop {
+            for event in self.window.poll_events() {
+                match event {
+                    winit::Event::KeyboardInput(_, _, Some(winit::VirtualKeyCode::Escape)) |
+                    winit::Event::Closed => break 'render,
+                    _ => (),
                 }
             }
-            _ => surface_capabilities.current_extent,
-        };
-
-        let pre_transform = if surface_capabilities.supported_transforms
-            .subset(vk::SURFACE_TRANSFORM_IDENTITY_BIT_KHR) {
-            vk::SURFACE_TRANSFORM_IDENTITY_BIT_KHR
-        } else {
-            surface_capabilities.current_transform
-        };
-        let present_modes =
-            surface_loader.get_physical_device_surface_present_modes_khr(pdevice, surface)
+            f();
+        }
+    }
+    pub fn new(window_width: u32, window_height: u32) -> Self {
+        unsafe {
+            let window = winit::WindowBuilder::new()
+                .with_title("A fantastic window!")
+                .with_dimensions(window_width, window_height)
+                .with_window_resize_callback(resize_callback)
+                .build()
                 .unwrap();
-        let present_mode = present_modes.iter()
-            .cloned()
-            .find(|&mode| mode == vk::PresentModeKHR::Mailbox)
-            .unwrap_or(vk::PresentModeKHR::Fifo);
-        let swapchain_loader = Swapchain::new(&instance, &device)
-            .expect("Unable to load swapchain");
-        let swapchain_create_info = vk::SwapchainCreateInfoKHR {
-            s_type: vk::StructureType::SwapchainCreateInfoKhr,
-            p_next: ptr::null(),
-            flags: Default::default(),
-            surface: surface,
-            min_image_count: desired_image_count,
-            image_color_space: surface_format.color_space,
-            image_format: surface_format.format,
-            image_extent: surface_resoultion.clone(),
-            image_usage: vk::IMAGE_USAGE_COLOR_ATTACHMENT_BIT,
-            image_sharing_mode: vk::SharingMode::Exclusive,
-            pre_transform: pre_transform,
-            composite_alpha: vk::COMPOSITE_ALPHA_OPAQUE_BIT_KHR,
-            present_mode: present_mode,
-            clipped: 1,
-            old_swapchain: vk::SwapchainKHR::null(),
-            image_array_layers: 1,
-            p_queue_family_indices: ptr::null(),
-            queue_family_index_count: 0,
-        };
-        let swapchain = swapchain_loader.create_swapchain_khr(&swapchain_create_info).unwrap();
-        let pool_create_info = vk::CommandPoolCreateInfo {
-            s_type: vk::StructureType::CommandPoolCreateInfo,
-            p_next: ptr::null(),
-            flags: vk::COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT,
-            queue_family_index: queue_family_index,
-        };
-        let pool = device.create_command_pool(&pool_create_info).unwrap();
-        let command_buffer_allocate_info = vk::CommandBufferAllocateInfo {
-            s_type: vk::StructureType::CommandBufferAllocateInfo,
-            p_next: ptr::null(),
-            command_buffer_count: 2,
-            command_pool: pool,
-            level: vk::CommandBufferLevel::Primary,
-        };
-        let command_buffers = device.allocate_command_buffers(&command_buffer_allocate_info)
-            .unwrap();
-        let setup_command_buffer = command_buffers[0];
-        let draw_command_buffer = command_buffers[1];
+            let entry = Entry::load_vulkan().unwrap();
+            let instance_ext_props = entry.enumerate_instance_extension_properties().unwrap();
+            let app_name = CString::new("VulkanTriangle").unwrap();
+            let raw_name = app_name.as_ptr();
 
-        let present_images = swapchain_loader.get_swapchain_images_khr(swapchain).unwrap();
-        let present_image_views: Vec<vk::ImageView> = present_images.iter()
-            .map(|&image| {
-                let create_view_info = vk::ImageViewCreateInfo {
-                    s_type: vk::StructureType::ImageViewCreateInfo,
-                    p_next: ptr::null(),
-                    flags: Default::default(),
-                    view_type: vk::ImageViewType::Type2d,
-                    format: surface_format.format,
-                    components: vk::ComponentMapping {
-                        r: vk::ComponentSwizzle::R,
-                        g: vk::ComponentSwizzle::G,
-                        b: vk::ComponentSwizzle::B,
-                        a: vk::ComponentSwizzle::A,
-                    },
-                    subresource_range: vk::ImageSubresourceRange {
-                        aspect_mask: vk::IMAGE_ASPECT_COLOR_BIT,
-                        base_mip_level: 0,
-                        level_count: 1,
-                        base_array_layer: 0,
-                        layer_count: 1,
-                    },
-                    image: image,
-                };
-                device.create_image_view(&create_view_info).unwrap()
-            })
-            .collect();
-        let device_memory_properties = instance.get_physical_device_memory_properties(pdevice);
-        let depth_image_create_info = vk::ImageCreateInfo {
-            s_type: vk::StructureType::ImageCreateInfo,
-            p_next: ptr::null(),
-            flags: vk::IMAGE_CREATE_SPARSE_BINDING_BIT,
-            image_type: vk::ImageType::Type2d,
-            format: vk::Format::D16Unorm,
-            extent: vk::Extent3D {
-                width: surface_resoultion.width,
-                height: surface_resoultion.height,
-                depth: 1,
-            },
-            mip_levels: 1,
-            array_layers: 1,
-            samples: vk::SAMPLE_COUNT_1_BIT,
-            tiling: vk::ImageTiling::Optimal,
-            usage: vk::IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT,
-            sharing_mode: vk::SharingMode::Exclusive,
-            queue_family_index_count: 0,
-            p_queue_family_indices: ptr::null(),
-            initial_layout: vk::ImageLayout::Undefined,
-        };
-        let depth_image = device.create_image(&depth_image_create_info).unwrap();
-        let depth_image_memory_req = device.get_image_memory_requirements(depth_image);
-        let depth_image_memory_index = find_memorytype_index(&depth_image_memory_req,
-                                                             &device_memory_properties,
-                                                             vk::MEMORY_PROPERTY_DEVICE_LOCAL_BIT)
-            .expect("Unable to find suitable memory index for depth image.");
+            let layer_names = [CString::new("VK_LAYER_LUNARG_standard_validation").unwrap()];
+            let layers_names_raw: Vec<*const i8> = layer_names.iter()
+                .map(|raw_name| raw_name.as_ptr())
+                .collect();
+            let extension_names = extension_names();
+            let extension_names_raw: Vec<*const i8> = extension_names.iter()
+                .map(|raw_name| raw_name.as_ptr())
+                .collect();
+            let appinfo = vk::ApplicationInfo {
+                p_application_name: raw_name,
+                s_type: vk::StructureType::ApplicationInfo,
+                p_next: ptr::null(),
+                application_version: 0,
+                p_engine_name: raw_name,
+                engine_version: 0,
+                api_version: vk_make_version!(1, 0, 36),
+            };
+            let create_info = vk::InstanceCreateInfo {
+                s_type: vk::StructureType::InstanceCreateInfo,
+                p_next: ptr::null(),
+                flags: Default::default(),
+                p_application_info: &appinfo,
+                pp_enabled_layer_names: layers_names_raw.as_ptr(),
+                enabled_layer_count: layers_names_raw.len() as u32,
+                pp_enabled_extension_names: extension_names_raw.as_ptr(),
+                enabled_extension_count: extension_names_raw.len() as u32,
+            };
+            let instance: Instance = entry.create_instance(&create_info)
+                .expect("Instance creation error");
+            let debug_info = vk::DebugReportCallbackCreateInfoEXT {
+                s_type: vk::StructureType::DebugReportCallbackCreateInfoExt,
+                p_next: ptr::null(),
+                flags: vk::DEBUG_REPORT_ERROR_BIT_EXT | vk::DEBUG_REPORT_WARNING_BIT_EXT |
+                       vk::DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT,
+                pfn_callback: vulkan_debug_callback,
+                p_user_data: ptr::null_mut(),
+            };
+            let debug_report_loader = DebugReport::new(&entry, &instance)
+                .expect("Unable to load debug report");
+            let debug_call_back = debug_report_loader.create_debug_report_callback_ext(&debug_info)
+                .unwrap();
+            let surface = create_surface(&instance, &entry, &window).unwrap();
+            let pdevices = instance.enumerate_physical_devices().expect("Physical device error");
+            let surface_loader = Surface::new(&entry, &instance)
+                .expect("Unable to load the Surface extension");
+            let (pdevice, queue_family_index) = pdevices.iter()
+                .map(|pdevice| {
+                    instance.get_physical_device_queue_family_properties(*pdevice)
+                        .iter()
+                        .enumerate()
+                        .filter_map(|(index, ref info)| {
+                            let supports_graphic_and_surface =
+                                info.queue_flags.subset(vk::QUEUE_GRAPHICS_BIT) &&
+                                surface_loader.get_physical_device_surface_support_khr(*pdevice,
+                                                                             index as u32,
+                                                                             surface);
+                            match supports_graphic_and_surface {
+                                true => Some((*pdevice, index)),
+                                _ => None,
+                            }
+                        })
+                        .nth(0)
+                })
+                .filter_map(|v| v)
+                .nth(0)
+                .expect("Couldn't find suitable device.");
+            let queue_family_index = queue_family_index as u32;
+            let device_extension_names = [CString::new("VK_KHR_swapchain").unwrap()];
+            let device_extension_names_raw: Vec<*const i8> = device_extension_names.iter()
+                .map(|raw_name| raw_name.as_ptr())
+                .collect();
+            let features =
+                vk::PhysicalDeviceFeatures { shader_clip_distance: 1, ..Default::default() };
+            let priorities = [1.0];
+            let queue_info = vk::DeviceQueueCreateInfo {
+                s_type: vk::StructureType::DeviceQueueCreateInfo,
+                p_next: ptr::null(),
+                flags: Default::default(),
+                queue_family_index: queue_family_index as u32,
+                p_queue_priorities: priorities.as_ptr(),
+                queue_count: priorities.len() as u32,
+            };
+            let device_create_info = vk::DeviceCreateInfo {
+                s_type: vk::StructureType::DeviceCreateInfo,
+                p_next: ptr::null(),
+                flags: Default::default(),
+                queue_create_info_count: 1,
+                p_queue_create_infos: &queue_info,
+                enabled_layer_count: 0,
+                pp_enabled_layer_names: ptr::null(),
+                enabled_extension_count: device_extension_names_raw.len() as u32,
+                pp_enabled_extension_names: device_extension_names_raw.as_ptr(),
+                p_enabled_features: &features,
+            };
+            let device: Device = instance.create_device(pdevice, &device_create_info)
+                .unwrap();
+            let present_queue = device.get_device_queue(queue_family_index as u32, 0);
 
-        let depth_image_allocate_info = vk::MemoryAllocateInfo {
-            s_type: vk::StructureType::MemoryAllocateInfo,
-            p_next: ptr::null(),
-            allocation_size: depth_image_memory_req.size,
-            memory_type_index: depth_image_memory_index,
-        };
-        let depth_image_memory = device.allocate_memory(&depth_image_allocate_info).unwrap();
-        device.bind_image_memory(depth_image, depth_image_memory, 0)
-            .expect("Unable to bind depth image memory");
+            let surface_formats =
+                surface_loader.get_physical_device_surface_formats_khr(pdevice, surface)
+                    .unwrap();
+            let surface_format = surface_formats.iter()
+                .map(|sfmt| {
+                    match sfmt.format {
+                        vk::Format::Undefined => {
+                            vk::SurfaceFormatKHR {
+                                format: vk::Format::B8g8r8Unorm,
+                                color_space: sfmt.color_space,
+                            }
+                        }
+                        _ => sfmt.clone(),
+                    }
+                })
+                .nth(0)
+                .expect("Unable to find suitable surface format.");
+            let surface_capabilities =
+                surface_loader.get_physical_device_surface_capabilities_khr(pdevice, surface)
+                    .unwrap();
+            let desired_image_count = surface_capabilities.min_image_count + 1;
+            assert!(surface_capabilities.min_image_count <= desired_image_count &&
+                    surface_capabilities.max_image_count >= desired_image_count,
+                    "Image count err");
+            let surface_resolution = match surface_capabilities.current_extent.width {
+                std::u32::MAX => {
+                    vk::Extent2D {
+                        width: window_width,
+                        height: window_height,
+                    }
+                }
+                _ => surface_capabilities.current_extent,
+            };
 
+            let pre_transform = if surface_capabilities.supported_transforms
+                .subset(vk::SURFACE_TRANSFORM_IDENTITY_BIT_KHR) {
+                vk::SURFACE_TRANSFORM_IDENTITY_BIT_KHR
+            } else {
+                surface_capabilities.current_transform
+            };
+            let present_modes =
+                surface_loader.get_physical_device_surface_present_modes_khr(pdevice, surface)
+                    .unwrap();
+            let present_mode = present_modes.iter()
+                .cloned()
+                .find(|&mode| mode == vk::PresentModeKHR::Mailbox)
+                .unwrap_or(vk::PresentModeKHR::Fifo);
+            let swapchain_loader = Swapchain::new(&instance, &device)
+                .expect("Unable to load swapchain");
+            let swapchain_create_info = vk::SwapchainCreateInfoKHR {
+                s_type: vk::StructureType::SwapchainCreateInfoKhr,
+                p_next: ptr::null(),
+                flags: Default::default(),
+                surface: surface,
+                min_image_count: desired_image_count,
+                image_color_space: surface_format.color_space,
+                image_format: surface_format.format,
+                image_extent: surface_resolution.clone(),
+                image_usage: vk::IMAGE_USAGE_COLOR_ATTACHMENT_BIT,
+                image_sharing_mode: vk::SharingMode::Exclusive,
+                pre_transform: pre_transform,
+                composite_alpha: vk::COMPOSITE_ALPHA_OPAQUE_BIT_KHR,
+                present_mode: present_mode,
+                clipped: 1,
+                old_swapchain: vk::SwapchainKHR::null(),
+                image_array_layers: 1,
+                p_queue_family_indices: ptr::null(),
+                queue_family_index_count: 0,
+            };
+            let swapchain = swapchain_loader.create_swapchain_khr(&swapchain_create_info).unwrap();
+            let pool_create_info = vk::CommandPoolCreateInfo {
+                s_type: vk::StructureType::CommandPoolCreateInfo,
+                p_next: ptr::null(),
+                flags: vk::COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT,
+                queue_family_index: queue_family_index,
+            };
+            let pool = device.create_command_pool(&pool_create_info).unwrap();
+            let command_buffer_allocate_info = vk::CommandBufferAllocateInfo {
+                s_type: vk::StructureType::CommandBufferAllocateInfo,
+                p_next: ptr::null(),
+                command_buffer_count: 2,
+                command_pool: pool,
+                level: vk::CommandBufferLevel::Primary,
+            };
+            let command_buffer_allocate_info = vk::CommandBufferAllocateInfo {
+                s_type: vk::StructureType::CommandBufferAllocateInfo,
+                p_next: ptr::null(),
+                command_buffer_count: 2,
+                command_pool: pool,
+                level: vk::CommandBufferLevel::Primary,
+            };
+            let command_buffers = device.allocate_command_buffers(&command_buffer_allocate_info)
+                .unwrap();
+            let setup_command_buffer = command_buffers[0];
+            let draw_command_buffer = command_buffers[1];
+
+            let present_images = swapchain_loader.get_swapchain_images_khr(swapchain).unwrap();
+            let present_image_views: Vec<vk::ImageView> = present_images.iter()
+                .map(|&image| {
+                    let create_view_info = vk::ImageViewCreateInfo {
+                        s_type: vk::StructureType::ImageViewCreateInfo,
+                        p_next: ptr::null(),
+                        flags: Default::default(),
+                        view_type: vk::ImageViewType::Type2d,
+                        format: surface_format.format,
+                        components: vk::ComponentMapping {
+                            r: vk::ComponentSwizzle::R,
+                            g: vk::ComponentSwizzle::G,
+                            b: vk::ComponentSwizzle::B,
+                            a: vk::ComponentSwizzle::A,
+                        },
+                        subresource_range: vk::ImageSubresourceRange {
+                            aspect_mask: vk::IMAGE_ASPECT_COLOR_BIT,
+                            base_mip_level: 0,
+                            level_count: 1,
+                            base_array_layer: 0,
+                            layer_count: 1,
+                        },
+                        image: image,
+                    };
+                    device.create_image_view(&create_view_info).unwrap()
+                })
+                .collect();
+            let device_memory_properties = instance.get_physical_device_memory_properties(pdevice);
+            let depth_image_create_info = vk::ImageCreateInfo {
+                s_type: vk::StructureType::ImageCreateInfo,
+                p_next: ptr::null(),
+                flags: vk::IMAGE_CREATE_SPARSE_BINDING_BIT,
+                image_type: vk::ImageType::Type2d,
+                format: vk::Format::D16Unorm,
+                extent: vk::Extent3D {
+                    width: surface_resolution.width,
+                    height: surface_resolution.height,
+                    depth: 1,
+                },
+                mip_levels: 1,
+                array_layers: 1,
+                samples: vk::SAMPLE_COUNT_1_BIT,
+                tiling: vk::ImageTiling::Optimal,
+                usage: vk::IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT,
+                sharing_mode: vk::SharingMode::Exclusive,
+                queue_family_index_count: 0,
+                p_queue_family_indices: ptr::null(),
+                initial_layout: vk::ImageLayout::Undefined,
+            };
+            let depth_image = device.create_image(&depth_image_create_info).unwrap();
+            let depth_image_memory_req = device.get_image_memory_requirements(depth_image);
+            let depth_image_memory_index =
+                find_memorytype_index(&depth_image_memory_req,
+                                      &device_memory_properties,
+                                      vk::MEMORY_PROPERTY_DEVICE_LOCAL_BIT)
+                    .expect("Unable to find suitable memory index for depth image.");
+
+            let depth_image_allocate_info = vk::MemoryAllocateInfo {
+                s_type: vk::StructureType::MemoryAllocateInfo,
+                p_next: ptr::null(),
+                allocation_size: depth_image_memory_req.size,
+                memory_type_index: depth_image_memory_index,
+            };
+            let depth_image_memory = device.allocate_memory(&depth_image_allocate_info).unwrap();
+            device.bind_image_memory(depth_image, depth_image_memory, 0)
+                .expect("Unable to bind depth image memory");
+
+            let command_buffer_begin_info = vk::CommandBufferBeginInfo {
+                s_type: vk::StructureType::CommandBufferBeginInfo,
+                p_next: ptr::null(),
+                p_inheritance_info: ptr::null(),
+                flags: vk::COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT,
+            };
+            device.begin_command_buffer(setup_command_buffer, &command_buffer_begin_info).unwrap();
+            let layout_transition_barrier = vk::ImageMemoryBarrier {
+                s_type: vk::StructureType::ImageMemoryBarrier,
+                p_next: ptr::null(),
+                src_access_mask: Default::default(),
+                dst_access_mask: vk::ACCESS_DEPTH_STENCIL_ATTACHMENT_READ_BIT |
+                                 vk::ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT,
+                old_layout: vk::ImageLayout::Undefined,
+                new_layout: vk::ImageLayout::DepthStencilAttachmentOptimal,
+                src_queue_family_index: vk::VK_QUEUE_FAMILY_IGNORED,
+                dst_queue_family_index: vk::VK_QUEUE_FAMILY_IGNORED,
+                image: depth_image,
+                subresource_range: vk::ImageSubresourceRange {
+                    aspect_mask: vk::IMAGE_ASPECT_DEPTH_BIT,
+                    base_mip_level: 0,
+                    level_count: 1,
+                    base_array_layer: 0,
+                    layer_count: 1,
+                },
+            };
+            device.cmd_pipeline_barrier(setup_command_buffer,
+                                        vk::PIPELINE_STAGE_TOP_OF_PIPE_BIT,
+                                        vk::PIPELINE_STAGE_TOP_OF_PIPE_BIT,
+                                        vk::DependencyFlags::empty(),
+                                        &[],
+                                        &[],
+                                        &[layout_transition_barrier]);
+            let wait_stage_mask = [vk::PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT];
+            let fence_create_info = vk::FenceCreateInfo {
+                s_type: vk::StructureType::FenceCreateInfo,
+                p_next: ptr::null(),
+                flags: vk::FenceCreateFlags::empty(),
+            };
+            let submit_fence = device.create_fence(&fence_create_info).unwrap();
+            let submit_info = vk::SubmitInfo {
+                s_type: vk::StructureType::SubmitInfo,
+                p_next: ptr::null(),
+                wait_semaphore_count: 0,
+                p_wait_semaphores: ptr::null(),
+                signal_semaphore_count: 0,
+                p_signal_semaphores: ptr::null(),
+                p_wait_dst_stage_mask: wait_stage_mask.as_ptr(),
+                command_buffer_count: 1,
+                p_command_buffers: &setup_command_buffer,
+            };
+            device.end_command_buffer(setup_command_buffer).unwrap();
+            device.queue_submit(present_queue, &[submit_info], submit_fence).unwrap();
+            device.wait_for_fences(&[submit_fence], true, std::u64::MAX).unwrap();
+            let depth_image_view_info = vk::ImageViewCreateInfo {
+                s_type: vk::StructureType::ImageViewCreateInfo,
+                p_next: ptr::null(),
+                flags: Default::default(),
+                view_type: vk::ImageViewType::Type2d,
+                format: depth_image_create_info.format,
+                components: vk::ComponentMapping {
+                    r: vk::ComponentSwizzle::Identity,
+                    g: vk::ComponentSwizzle::Identity,
+                    b: vk::ComponentSwizzle::Identity,
+                    a: vk::ComponentSwizzle::Identity,
+                },
+                subresource_range: vk::ImageSubresourceRange {
+                    aspect_mask: vk::IMAGE_ASPECT_DEPTH_BIT,
+                    base_mip_level: 0,
+                    level_count: 1,
+                    base_array_layer: 0,
+                    layer_count: 1,
+                },
+                image: depth_image,
+            };
+            let depth_image_view = device.create_image_view(&depth_image_view_info).unwrap();
+            ExampleBase {
+                entry: entry,
+                instance: instance,
+                device: device,
+                queue_family_index: queue_family_index,
+                pdevice: pdevice,
+                device_memory_properties: device_memory_properties,
+                window: window,
+                surface_loader: surface_loader,
+                surface_format: surface_format,
+                present_queue: present_queue,
+                surface_resolution: surface_resolution,
+                swapchain_loader: swapchain_loader,
+                swapchain: swapchain,
+                present_images: present_images,
+                present_image_views: present_image_views,
+                pool: pool,
+                draw_command_buffer: draw_command_buffer,
+                setup_command_buffer: setup_command_buffer,
+                depth_image: depth_image,
+                depth_image_view: depth_image_view,
+            }
+        }
+    }
+}
+fn main() {
+    unsafe {
+        let base = ExampleBase::new(1920, 1080);
+        let fence_create_info = vk::FenceCreateInfo {
+            s_type: vk::StructureType::FenceCreateInfo,
+            p_next: ptr::null(),
+            flags: vk::FenceCreateFlags::empty(),
+        };
         let command_buffer_begin_info = vk::CommandBufferBeginInfo {
             s_type: vk::StructureType::CommandBufferBeginInfo,
             p_next: ptr::null(),
             p_inheritance_info: ptr::null(),
             flags: vk::COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT,
         };
-        device.begin_command_buffer(setup_command_buffer, &command_buffer_begin_info).unwrap();
-        let layout_transition_barrier = vk::ImageMemoryBarrier {
-            s_type: vk::StructureType::ImageMemoryBarrier,
-            p_next: ptr::null(),
-            src_access_mask: Default::default(),
-            dst_access_mask: vk::ACCESS_DEPTH_STENCIL_ATTACHMENT_READ_BIT |
-                             vk::ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT,
-            old_layout: vk::ImageLayout::Undefined,
-            new_layout: vk::ImageLayout::DepthStencilAttachmentOptimal,
-            src_queue_family_index: vk::VK_QUEUE_FAMILY_IGNORED,
-            dst_queue_family_index: vk::VK_QUEUE_FAMILY_IGNORED,
-            image: depth_image,
-            subresource_range: vk::ImageSubresourceRange {
-                aspect_mask: vk::IMAGE_ASPECT_DEPTH_BIT,
-                base_mip_level: 0,
-                level_count: 1,
-                base_array_layer: 0,
-                layer_count: 1,
-            },
-        };
-        device.cmd_pipeline_barrier(setup_command_buffer,
-                                    vk::PIPELINE_STAGE_TOP_OF_PIPE_BIT,
-                                    vk::PIPELINE_STAGE_TOP_OF_PIPE_BIT,
-                                    vk::DependencyFlags::empty(),
-                                    &[],
-                                    &[],
-                                    &[layout_transition_barrier]);
-        let wait_stage_mask = [vk::PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT];
-        let fence_create_info = vk::FenceCreateInfo {
-            s_type: vk::StructureType::FenceCreateInfo,
-            p_next: ptr::null(),
-            flags: vk::FenceCreateFlags::empty(),
-        };
-        let submit_fence = device.create_fence(&fence_create_info).unwrap();
-        let submit_info = vk::SubmitInfo {
-            s_type: vk::StructureType::SubmitInfo,
-            p_next: ptr::null(),
-            wait_semaphore_count: 0,
-            p_wait_semaphores: ptr::null(),
-            signal_semaphore_count: 0,
-            p_signal_semaphores: ptr::null(),
-            p_wait_dst_stage_mask: wait_stage_mask.as_ptr(),
-            command_buffer_count: 1,
-            p_command_buffers: &setup_command_buffer,
-        };
-        device.end_command_buffer(setup_command_buffer).unwrap();
-        device.queue_submit(present_queue, &[submit_info], submit_fence).unwrap();
-        device.wait_for_fences(&[submit_fence], true, std::u64::MAX).unwrap();
-        let depth_image_view_info = vk::ImageViewCreateInfo {
-            s_type: vk::StructureType::ImageViewCreateInfo,
-            p_next: ptr::null(),
-            flags: Default::default(),
-            view_type: vk::ImageViewType::Type2d,
-            format: depth_image_create_info.format,
-            components: vk::ComponentMapping {
-                r: vk::ComponentSwizzle::Identity,
-                g: vk::ComponentSwizzle::Identity,
-                b: vk::ComponentSwizzle::Identity,
-                a: vk::ComponentSwizzle::Identity,
-            },
-            subresource_range: vk::ImageSubresourceRange {
-                aspect_mask: vk::IMAGE_ASPECT_DEPTH_BIT,
-                base_mip_level: 0,
-                level_count: 1,
-                base_array_layer: 0,
-                layer_count: 1,
-            },
-            image: depth_image,
-        };
-        let depth_image_view = device.create_image_view(&depth_image_view_info).unwrap();
         let renderpass_attachments =
             [vk::AttachmentDescription {
-                 format: surface_format.format,
+                 format: base.surface_format.format,
                  flags: vk::AttachmentDescriptionFlags::empty(),
                  samples: vk::SAMPLE_COUNT_1_BIT,
                  load_op: vk::AttachmentLoadOp::Clear,
@@ -460,7 +538,7 @@ fn main() {
                  final_layout: vk::ImageLayout::PresentSrcKhr,
              },
              vk::AttachmentDescription {
-                 format: depth_image_create_info.format,
+                 format: vk::Format::D16Unorm,
                  flags: vk::AttachmentDescriptionFlags::empty(),
                  samples: vk::SAMPLE_COUNT_1_BIT,
                  load_op: vk::AttachmentLoadOp::Clear,
@@ -512,10 +590,11 @@ fn main() {
             dependency_count: 1,
             p_dependencies: &dependency,
         };
-        let renderpass = device.create_render_pass(&renderpass_create_info).unwrap();
-        let framebuffers: Vec<vk::Framebuffer> = present_image_views.iter()
+        let renderpass = base.device.create_render_pass(&renderpass_create_info).unwrap();
+        let framebuffers: Vec<vk::Framebuffer> = base.present_image_views
+            .iter()
             .map(|&present_image_view| {
-                let framebuffer_attachments = [present_image_view, depth_image_view];
+                let framebuffer_attachments = [present_image_view, base.depth_image_view];
                 let frame_buffer_create_info = vk::FramebufferCreateInfo {
                     s_type: vk::StructureType::FramebufferCreateInfo,
                     p_next: ptr::null(),
@@ -523,11 +602,11 @@ fn main() {
                     render_pass: renderpass,
                     attachment_count: framebuffer_attachments.len() as u32,
                     p_attachments: framebuffer_attachments.as_ptr(),
-                    width: surface_resoultion.width,
-                    height: surface_resoultion.height,
+                    width: base.surface_resolution.width,
+                    height: base.surface_resolution.height,
                     layers: 1,
                 };
-                device.create_framebuffer(&frame_buffer_create_info).unwrap()
+                base.device.create_framebuffer(&frame_buffer_create_info).unwrap()
             })
             .collect();
         let index_buffer_data = [0u32, 1, 2];
@@ -541,10 +620,10 @@ fn main() {
             queue_family_index_count: 0,
             p_queue_family_indices: ptr::null(),
         };
-        let index_buffer = device.create_buffer(&index_buffer_info).unwrap();
-        let index_buffer_memory_req = device.get_buffer_memory_requirements(index_buffer);
+        let index_buffer = base.device.create_buffer(&index_buffer_info).unwrap();
+        let index_buffer_memory_req = base.device.get_buffer_memory_requirements(index_buffer);
         let index_buffer_memory_index = find_memorytype_index(&index_buffer_memory_req,
-                                                              &device_memory_properties,
+                                                              &base.device_memory_properties,
                                                               vk::MEMORY_PROPERTY_HOST_VISIBLE_BIT)
             .expect("Unable to find suitable memorytype for the index buffer.");
         let index_allocate_info = vk::MemoryAllocateInfo {
@@ -553,15 +632,16 @@ fn main() {
             allocation_size: index_buffer_memory_req.size,
             memory_type_index: index_buffer_memory_index,
         };
-        let index_buffer_memory = device.allocate_memory(&index_allocate_info).unwrap();
-        let index_slice = device.map_memory::<u32>(index_buffer_memory,
+        let index_buffer_memory = base.device.allocate_memory(&index_allocate_info).unwrap();
+        let index_slice = base.device
+            .map_memory::<u32>(index_buffer_memory,
                                0,
                                index_buffer_info.size,
                                vk::MemoryMapFlags::empty())
             .unwrap();
         index_slice.copy_from_slice(&index_buffer_data);
-        device.unmap_memory(index_buffer_memory);
-        device.bind_buffer_memory(index_buffer, index_buffer_memory, 0).unwrap();
+        base.device.unmap_memory(index_buffer_memory);
+        base.device.bind_buffer_memory(index_buffer, index_buffer_memory, 0).unwrap();
 
         let vertex_input_buffer_info = vk::BufferCreateInfo {
             s_type: vk::StructureType::BufferCreateInfo,
@@ -573,12 +653,12 @@ fn main() {
             queue_family_index_count: 0,
             p_queue_family_indices: ptr::null(),
         };
-        let vertex_input_buffer = device.create_buffer(&vertex_input_buffer_info).unwrap();
-        let vertex_input_buffer_memory_req =
-            device.get_buffer_memory_requirements(vertex_input_buffer);
+        let vertex_input_buffer = base.device.create_buffer(&vertex_input_buffer_info).unwrap();
+        let vertex_input_buffer_memory_req = base.device
+            .get_buffer_memory_requirements(vertex_input_buffer);
         let vertex_input_buffer_memory_index =
             find_memorytype_index(&vertex_input_buffer_memory_req,
-                                  &device_memory_properties,
+                                  &base.device_memory_properties,
                                   vk::MEMORY_PROPERTY_HOST_VISIBLE_BIT)
                 .expect("Unable to find suitable memorytype for the vertex buffer.");
 
@@ -588,7 +668,8 @@ fn main() {
             allocation_size: vertex_input_buffer_memory_req.size,
             memory_type_index: vertex_input_buffer_memory_index,
         };
-        let vertex_input_buffer_memory = device.allocate_memory(&vertex_buffer_allocate_info)
+        let vertex_input_buffer_memory = base.device
+            .allocate_memory(&vertex_buffer_allocate_info)
             .unwrap();
         let vertices = [Vertex {
                             pos: [-1.0, 1.0, 0.0, 1.0],
@@ -602,14 +683,15 @@ fn main() {
                             pos: [0.0, -1.0, 0.0, 1.0],
                             color: [1.0, 0.0, 0.0, 1.0],
                         }];
-        let slice = device.map_memory::<Vertex>(vertex_input_buffer_memory,
+        let slice = base.device
+            .map_memory::<Vertex>(vertex_input_buffer_memory,
                                   0,
                                   vertex_input_buffer_info.size,
                                   vk::MemoryMapFlags::empty())
             .unwrap();
         slice.copy_from_slice(&vertices);
-        device.unmap_memory(vertex_input_buffer_memory);
-        device.bind_buffer_memory(vertex_input_buffer, vertex_input_buffer_memory, 0).unwrap();
+        base.device.unmap_memory(vertex_input_buffer_memory);
+        base.device.bind_buffer_memory(vertex_input_buffer, vertex_input_buffer_memory, 0).unwrap();
         let vertex_spv_file = File::open(Path::new("shader/vert.spv"))
             .expect("Could not find vert.spv.");
         let frag_spv_file = File::open(Path::new("shader/frag.spv"))
@@ -631,10 +713,12 @@ fn main() {
             code_size: frag_bytes.len(),
             p_code: frag_bytes.as_ptr() as *const u32,
         };
-        let vertex_shader_module = device.create_shader_module(&vertex_shader_info)
+        let vertex_shader_module = base.device
+            .create_shader_module(&vertex_shader_info)
             .expect("Vertex shader module error");
 
-        let fragment_shader_module = device.create_shader_module(&frag_shader_info)
+        let fragment_shader_module = base.device
+            .create_shader_module(&frag_shader_info)
             .expect("Fragment shader module error");
 
         let layout_create_info = vk::PipelineLayoutCreateInfo {
@@ -647,7 +731,7 @@ fn main() {
             p_push_constant_ranges: ptr::null(),
         };
 
-        let pipeline_layout = device.create_pipeline_layout(&layout_create_info).unwrap();
+        let pipeline_layout = base.device.create_pipeline_layout(&layout_create_info).unwrap();
 
         let shader_entry_name = CString::new("main").unwrap();
         let shader_stage_create_infos =
@@ -705,14 +789,14 @@ fn main() {
         let viewports = [vk::Viewport {
                              x: 0.0,
                              y: 0.0,
-                             width: surface_resoultion.width as f32,
-                             height: surface_resoultion.height as f32,
+                             width: base.surface_resolution.width as f32,
+                             height: base.surface_resolution.height as f32,
                              min_depth: 0.0,
                              max_depth: 1.0,
                          }];
         let scissors = [vk::Rect2D {
                             offset: vk::Offset2D { x: 0, y: 0 },
-                            extent: surface_resoultion.clone(),
+                            extent: base.surface_resolution.clone(),
                         }];
         let viewport_state_info = vk::PipelineViewportStateCreateInfo {
             s_type: vk::StructureType::PipelineViewportStateCreateInfo,
@@ -822,9 +906,9 @@ fn main() {
             base_pipeline_handle: vk::Pipeline::null(),
             base_pipeline_index: 0,
         };
-        let graphics_pipelines =
-            device.create_graphics_pipelines(vk::PipelineCache::null(), &[graphic_pipeline_info])
-                .unwrap();
+        let graphics_pipelines = base.device
+            .create_graphics_pipelines(vk::PipelineCache::null(), &[graphic_pipeline_info])
+            .unwrap();
 
         let graphic_pipeline = graphics_pipelines[0];
 
@@ -833,22 +917,23 @@ fn main() {
             p_next: ptr::null(),
             flags: Default::default(),
         };
-        let present_complete_semaphore = device.create_semaphore(&semaphore_create_info).unwrap();
-        let rendering_complete_semaphore = device.create_semaphore(&semaphore_create_info).unwrap();
+        let present_complete_semaphore =
+            base.device.create_semaphore(&semaphore_create_info).unwrap();
+        let rendering_complete_semaphore =
+            base.device.create_semaphore(&semaphore_create_info).unwrap();
 
-        let draw_fence = device.create_fence(&fence_create_info).unwrap();
-        while !window.should_close() {
-            glfw.poll_events();
-            for (_, event) in glfw::flush_messages(&events) {
-                handle_window_event(&mut window, event);
-            }
-            let present_index = swapchain_loader.acquire_next_image_khr(swapchain,
+        let draw_fence = base.device.create_fence(&fence_create_info).unwrap();
+        base.render_loop(|| {
+            let present_index = base.swapchain_loader
+                .acquire_next_image_khr(base.swapchain,
                                         std::u64::MAX,
                                         present_complete_semaphore,
                                         vk::Fence::null())
                 .unwrap();
-            device.reset_command_buffer(draw_command_buffer, Default::default()).unwrap();
-            device.begin_command_buffer(draw_command_buffer, &command_buffer_begin_info).unwrap();
+            base.device.reset_command_buffer(base.draw_command_buffer, Default::default()).unwrap();
+            base.device
+                .begin_command_buffer(base.draw_command_buffer, &command_buffer_begin_info)
+                .unwrap();
             let clear_values =
                 [vk::ClearValue::new_color(vk::ClearColorValue::new_float32([0.0, 0.0, 0.0, 0.0])),
                  vk::ClearValue::new_depth_stencil(vk::ClearDepthStencilValue {
@@ -863,31 +948,35 @@ fn main() {
                 framebuffer: framebuffers[present_index as usize],
                 render_area: vk::Rect2D {
                     offset: vk::Offset2D { x: 0, y: 0 },
-                    extent: surface_resoultion.clone(),
+                    extent: base.surface_resolution.clone(),
                 },
                 clear_value_count: clear_values.len() as u32,
                 p_clear_values: clear_values.as_ptr(),
             };
-            device.cmd_begin_render_pass(draw_command_buffer,
-                                         &render_pass_begin_info,
-                                         vk::SubpassContents::Inline);
-            device.cmd_bind_pipeline(draw_command_buffer,
-                                     vk::PipelineBindPoint::Graphics,
-                                     graphic_pipeline);
-            device.cmd_set_viewport(draw_command_buffer, &viewports);
-            device.cmd_set_scissor(draw_command_buffer, &scissors);
-            device.cmd_bind_vertex_buffers(draw_command_buffer, &[vertex_input_buffer], &0);
-            device.cmd_bind_index_buffer(draw_command_buffer, index_buffer, 0, vk::IndexType::Uint32);
-            device.cmd_draw_indexed(draw_command_buffer,
-                                    index_buffer_data.len() as u32,
-                                    1,
-                                    0,
-                                    0,
-                                    1);
+            base.device.cmd_begin_render_pass(base.draw_command_buffer,
+                                              &render_pass_begin_info,
+                                              vk::SubpassContents::Inline);
+            base.device.cmd_bind_pipeline(base.draw_command_buffer,
+                                          vk::PipelineBindPoint::Graphics,
+                                          graphic_pipeline);
+            base.device.cmd_set_viewport(base.draw_command_buffer, &viewports);
+            base.device.cmd_set_scissor(base.draw_command_buffer, &scissors);
+            base.device
+                .cmd_bind_vertex_buffers(base.draw_command_buffer, &[vertex_input_buffer], &0);
+            base.device.cmd_bind_index_buffer(base.draw_command_buffer,
+                                              index_buffer,
+                                              0,
+                                              vk::IndexType::Uint32);
+            base.device.cmd_draw_indexed(base.draw_command_buffer,
+                                         index_buffer_data.len() as u32,
+                                         1,
+                                         0,
+                                         0,
+                                         1);
             // Or draw without the index buffer
             // device.cmd_draw(draw_command_buffer, 3, 1, 0, 0);
-            device.cmd_end_render_pass(draw_command_buffer);
-            device.end_command_buffer(draw_command_buffer).unwrap();
+            base.device.cmd_end_render_pass(base.draw_command_buffer);
+            base.device.end_command_buffer(base.draw_command_buffer).unwrap();
             let wait_render_mask = [vk::PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT];
             let submit_info = vk::SubmitInfo {
                 s_type: vk::StructureType::SubmitInfo,
@@ -896,11 +985,12 @@ fn main() {
                 p_wait_semaphores: &present_complete_semaphore,
                 p_wait_dst_stage_mask: wait_render_mask.as_ptr(),
                 command_buffer_count: 1,
-                p_command_buffers: &draw_command_buffer,
+                p_command_buffers: &base.draw_command_buffer,
                 signal_semaphore_count: 1,
                 p_signal_semaphores: &rendering_complete_semaphore,
             };
-            device.queue_submit(present_queue, &[submit_info], draw_fence)
+            base.device
+                .queue_submit(base.present_queue, &[submit_info], draw_fence)
                 .unwrap();
             let mut present_info_err = unsafe { mem::uninitialized() };
             let present_info = vk::PresentInfoKHR {
@@ -909,46 +999,47 @@ fn main() {
                 wait_semaphore_count: 1,
                 p_wait_semaphores: &rendering_complete_semaphore,
                 swapchain_count: 1,
-                p_swapchains: &swapchain,
+                p_swapchains: &base.swapchain,
                 p_image_indices: &present_index,
                 p_results: &mut present_info_err,
             };
-            device.queue_present_khr(present_queue, &present_info).unwrap();
-            device.wait_for_fences(&[draw_fence], true, std::u64::MAX)
+            base.device.queue_present_khr(base.present_queue, &present_info).unwrap();
+            base.device
+                .wait_for_fences(&[draw_fence], true, std::u64::MAX)
                 .unwrap();
-            device.reset_fences(&[draw_fence]).unwrap();
-        }
+            base.device.reset_fences(&[draw_fence]).unwrap();
+        });
 
-        device.device_wait_idle().unwrap();
-        device.destroy_semaphore(present_complete_semaphore);
-        device.destroy_semaphore(rendering_complete_semaphore);
-        for pipeline in graphics_pipelines {
-            device.destroy_pipeline(pipeline);
-        }
-        device.destroy_pipeline_layout(pipeline_layout);
-        device.destroy_shader_module(vertex_shader_module);
-        device.destroy_shader_module(fragment_shader_module);
-        device.free_memory(index_buffer_memory);
-        device.destroy_buffer(index_buffer);
-        device.free_memory(vertex_input_buffer_memory);
-        device.destroy_buffer(vertex_input_buffer);
-        for framebuffer in framebuffers {
-            device.destroy_framebuffer(framebuffer);
-        }
-        device.destroy_render_pass(renderpass);
-        device.destroy_image_view(depth_image_view);
-        device.destroy_fence(submit_fence);
-        device.destroy_fence(draw_fence);
-        device.free_memory(depth_image_memory);
-        device.destroy_image(depth_image);
-        for image_view in present_image_views {
-            device.destroy_image_view(image_view);
-        }
-        device.destroy_command_pool(pool);
-        swapchain_loader.destroy_swapchain_khr(swapchain);
-        device.destroy_device();
-        surface_loader.destroy_surface_khr(surface);
-        debug_report_loader.destroy_debug_report_callback_ext(debug_call_back);
-        instance.destroy_instance();
+        // device.device_wait_idle().unwrap();
+        // device.destroy_semaphore(present_complete_semaphore);
+        // device.destroy_semaphore(rendering_complete_semaphore);
+        // for pipeline in graphics_pipelines {
+        //    device.destroy_pipeline(pipeline);
+        // }
+        // device.destroy_pipeline_layout(pipeline_layout);
+        // device.destroy_shader_module(vertex_shader_module);
+        // device.destroy_shader_module(fragment_shader_module);
+        // device.free_memory(index_buffer_memory);
+        // device.destroy_buffer(index_buffer);
+        // device.free_memory(vertex_input_buffer_memory);
+        // device.destroy_buffer(vertex_input_buffer);
+        // for framebuffer in framebuffers {
+        //    device.destroy_framebuffer(framebuffer);
+        // }
+        // device.destroy_render_pass(renderpass);
+        // device.destroy_image_view(depth_image_view);
+        // device.destroy_fence(submit_fence);
+        // device.destroy_fence(draw_fence);
+        // device.free_memory(depth_image_memory);
+        // device.destroy_image(depth_image);
+        // for image_view in present_image_views {
+        //    device.destroy_image_view(image_view);
+        // }
+        // device.destroy_command_pool(pool);
+        // swapchain_loader.destroy_swapchain_khr(swapchain);
+        // device.destroy_device();
+        // surface_loader.destroy_surface_khr(surface);
+        // debug_report_loader.destroy_debug_report_callback_ext(debug_call_back);
+        // instance.destroy_instance();
     }
 }
