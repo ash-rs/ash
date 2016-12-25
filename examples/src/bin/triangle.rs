@@ -188,9 +188,9 @@ fn main() {
         slice.copy_from_slice(&vertices);
         base.device.unmap_memory(vertex_input_buffer_memory);
         base.device.bind_buffer_memory(vertex_input_buffer, vertex_input_buffer_memory, 0).unwrap();
-        let vertex_spv_file = File::open(Path::new("shader/vert.spv"))
+        let vertex_spv_file = File::open(Path::new("shader/triangle/vert.spv"))
             .expect("Could not find vert.spv.");
-        let frag_spv_file = File::open(Path::new("shader/frag.spv"))
+        let frag_spv_file = File::open(Path::new("shader/triangle/frag.spv"))
             .expect("Could not find frag.spv.");
 
         let vertex_bytes: Vec<u8> = vertex_spv_file.bytes().filter_map(|byte| byte.ok()).collect();
@@ -416,6 +416,25 @@ fn main() {
                                         base.present_complete_semaphore,
                                         vk::Fence::null())
                 .unwrap();
+            let clear_values =
+                [vk::ClearValue::new_color(vk::ClearColorValue::new_float32([0.0, 0.0, 0.0, 0.0])),
+                 vk::ClearValue::new_depth_stencil(vk::ClearDepthStencilValue {
+                     depth: 1.0,
+                     stencil: 0,
+                 })];
+
+            let render_pass_begin_info = vk::RenderPassBeginInfo {
+                s_type: vk::StructureType::RenderPassBeginInfo,
+                p_next: ptr::null(),
+                render_pass: renderpass,
+                framebuffer: framebuffers[present_index as usize],
+                render_area: vk::Rect2D {
+                    offset: vk::Offset2D { x: 0, y: 0 },
+                    extent: base.surface_resolution.clone(),
+                },
+                clear_value_count: clear_values.len() as u32,
+                p_clear_values: clear_values.as_ptr(),
+            };
             record_submit_commandbuffer(&base.device,
                                         base.draw_command_buffer,
                                         base.present_queue,
@@ -423,26 +442,6 @@ fn main() {
                                         &[base.present_complete_semaphore],
                                         &[base.rendering_complete_semaphore],
                                         |device, draw_command_buffer| {
-                let clear_values =
-                    [vk::ClearValue::new_color(vk::ClearColorValue::new_float32([0.0, 0.0, 0.0,
-                                                                                 0.0])),
-                     vk::ClearValue::new_depth_stencil(vk::ClearDepthStencilValue {
-                         depth: 1.0,
-                         stencil: 0,
-                     })];
-
-                let render_pass_begin_info = vk::RenderPassBeginInfo {
-                    s_type: vk::StructureType::RenderPassBeginInfo,
-                    p_next: ptr::null(),
-                    render_pass: renderpass,
-                    framebuffer: framebuffers[present_index as usize],
-                    render_area: vk::Rect2D {
-                        offset: vk::Offset2D { x: 0, y: 0 },
-                        extent: base.surface_resolution.clone(),
-                    },
-                    clear_value_count: clear_values.len() as u32,
-                    p_clear_values: clear_values.as_ptr(),
-                };
                 device.cmd_begin_render_pass(draw_command_buffer,
                                              &render_pass_begin_info,
                                              vk::SubpassContents::Inline);
