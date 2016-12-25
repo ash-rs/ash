@@ -122,24 +122,21 @@ let pool = device.create_command_pool(&pool_create_info).unwrap();
 ```
 ## Example
 You can find the examples [here](https://github.com/MaikKlein/ash/tree/master/examples).
-### [Triangle](https://github.com/MaikKlein/ash/blob/master/examples/triangle/src/main.rs)
-Currently only runs under Linux (x11) and requires GLFW, the LunarG Validation layers, a Vulkan library. Ports for other operating systems are in progress. (Currently the GLFW wrapper only wraps the low level x11 bindings)
-
-The triangle example is written from top to bottom without many helper functions or external dependencies. It renders a colored triangle. The shaders are written in GLSL and compiled into SPIR-V with [glslang](https://github.com/KhronosGroup/glslang)
-
+All examples currently require: the LunarG Validation layers and a Vulkan library that is visible in your `PATH`.
+### [Triangle](https://github.com/MaikKlein/ash/blob/master/examples/src/bin/triangle.rs)
+Display a triangle with vertex colors.
 ```
-cd examples/triangle
-cargo run
+cd examples
+cargo run --bin triangle
 ```
 
 ![screenshot](http://i.imgur.com/PQZcL6w.jpg)
 
-### [Texture](https://github.com/MaikKlein/ash/blob/master/examples/texture/src/main.rs)
+### [Texture](https://github.com/MaikKlein/ash/blob/master/examples/src/bin/texture.rs)
 Displays a texture on a quad. *Needs a cleanup*.
-
 ```
-cd examples/texture
-cargo run
+cd examples
+cargo run --bin texture
 ```
 ![texture](http://i.imgur.com/trow00H.png)
 
