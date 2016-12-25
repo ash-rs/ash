@@ -13,7 +13,9 @@ pub struct Surface {
 impl Surface {
     pub fn new(entry: &Entry, instance: &Instance) -> Result<Surface, String> {
         let surface_fn = vk::SurfaceFn::load(|name| {
-            unsafe { mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr())) }
+            unsafe {
+                mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
+            }
         })?;
         Ok(Surface {
             handle: instance.handle(),
@@ -102,8 +104,6 @@ impl Surface {
     }
 
     pub unsafe fn destroy_surface_khr(&self, surface: vk::SurfaceKHR) {
-        unsafe {
-            self.surface_fn.destroy_surface_khr(self.handle, surface, ptr::null());
-        }
+        self.surface_fn.destroy_surface_khr(self.handle, surface, ptr::null());
     }
 }

@@ -13,9 +13,7 @@ pub struct Swapchain {
 impl Swapchain {
     pub fn new(instance: &Instance, device: &Device) -> Result<Swapchain, String> {
         let swapchain_fn = vk::SwapchainFn::load(|name| {
-            unsafe {
-                mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
-            }
+            unsafe { mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr())) }
         })?;
         Ok(Swapchain {
             handle: device.handle(),
@@ -23,31 +21,27 @@ impl Swapchain {
         })
     }
 
-    pub fn destroy_swapchain_khr(&self, swapchain: vk::SwapchainKHR) {
-        unsafe {
-            self.swapchain_fn.destroy_swapchain_khr(self.handle, swapchain, ptr::null());
-        }
+    pub unsafe fn destroy_swapchain_khr(&self, swapchain: vk::SwapchainKHR) {
+        self.swapchain_fn.destroy_swapchain_khr(self.handle, swapchain, ptr::null());
     }
 
-    pub fn acquire_next_image_khr(&self,
-                                  swapchain: vk::SwapchainKHR,
-                                  timeout: vk::uint64_t,
-                                  semaphore: vk::Semaphore,
-                                  fence: vk::Fence)
-                                  -> VkResult<vk::uint32_t> {
-        unsafe {
-            let mut index = mem::uninitialized();
-            let err_code = self.swapchain_fn
-                .acquire_next_image_khr(self.handle,
-                                        swapchain,
-                                        timeout,
-                                        semaphore,
-                                        fence,
-                                        &mut index);
-            match err_code {
-                vk::Result::Success => Ok(index),
-                _ => Err(err_code),
-            }
+    pub unsafe fn acquire_next_image_khr(&self,
+                                         swapchain: vk::SwapchainKHR,
+                                         timeout: vk::uint64_t,
+                                         semaphore: vk::Semaphore,
+                                         fence: vk::Fence)
+                                         -> VkResult<vk::uint32_t> {
+        let mut index = mem::uninitialized();
+        let err_code = self.swapchain_fn
+            .acquire_next_image_khr(self.handle,
+                                    swapchain,
+                                    timeout,
+                                    semaphore,
+                                    fence,
+                                    &mut index);
+        match err_code {
+            vk::Result::Success => Ok(index),
+            _ => Err(err_code),
         }
     }
 

@@ -1,0 +1,16 @@
+   Compiling ash v0.2.0 (file:///home/maik/projects/engine/ash)
+   Compiling ash v0.2.0 (file:///home/maik/projects/engine/ash)
+error: unknown debugging option: `--error-format`
+
+thread 'main' panicked at 'Box<Any>', /buildslave/rust-buildbot/slave/nightly-dist-rustc-linux/build/src/librustc/session/mod.rs:731
+note: Run with `RUST_BACKTRACE=1` for a backtrace.
+error: unknown debugging option: `--error-format`
+
+thread 'main' panicked at 'Box<Any>', /buildslave/rust-buildbot/slave/nightly-dist-rustc-linux/build/src/librustc/session/mod.rs:731
+note: Run with `RUST_BACKTRACE=1` for a backtrace.
+error: Could not compile `ash`.
+
+To learn more, run the command again with --verbose.
+error: Could not compile `ash`.
+
+To learn more, run the command again with --verbose.

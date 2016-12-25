@@ -4,8 +4,6 @@ use std::ptr;
 use std::mem;
 use vk;
 use device::Device;
-use entry::Entry;
-use shared_library::dynamic_library::DynamicLibrary;
 
 #[derive(Debug)]
 pub enum DeviceError {
@@ -20,10 +18,11 @@ pub struct Instance {
 }
 
 impl Instance {
-    pub fn handle(&self) -> vk::Instance{
+    pub fn handle(&self) -> vk::Instance {
         self.handle
     }
-    pub unsafe fn from_raw(handle: vk::Instance, instance_fn: vk::InstanceFn) -> Self {
+
+    pub fn from_raw(handle: vk::Instance, instance_fn: vk::InstanceFn) -> Self {
         Instance {
             handle: handle,
             instance_fn: instance_fn,
@@ -56,9 +55,7 @@ impl Instance {
     }
 
     pub unsafe fn destroy_instance(&self) {
-        unsafe {
-            self.instance_fn.destroy_instance(self.handle, ptr::null());
-        }
+        self.instance_fn.destroy_instance(self.handle, ptr::null());
     }
 
     pub fn get_physical_device_format_properties(&self,

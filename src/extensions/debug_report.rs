@@ -5,7 +5,6 @@ use instance::Instance;
 use entry::Entry;
 use vk;
 
-
 pub struct DebugReport {
     handle: vk::Instance,
     debug_report_fn: vk::DebugReportFn,
@@ -25,9 +24,7 @@ impl DebugReport {
     }
 
     pub unsafe fn destroy_debug_report_callback_ext(&self, debug: vk::DebugReportCallbackEXT) {
-        unsafe {
             self.debug_report_fn.destroy_debug_report_callback_ext(self.handle, debug, ptr::null());
-        }
     }
 
     pub fn create_debug_report_callback_ext(&self,
