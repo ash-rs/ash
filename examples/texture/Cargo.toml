@@ -1,9 +1,0 @@
-[package]
-name = "example"
-version = "0.1.0"
-authors = ["maik klein <maikklein@googlemail.com>"]
-
-[dependencies]
-glfw = "0.9.1"
-image = "*"
-ash = { version = "0.1.0", path = "../../"}

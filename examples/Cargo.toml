@@ -1,9 +1,9 @@
 [package]
-name = "example"
+name = "examples"
 version = "0.1.0"
 authors = ["maik klein <maikklein@googlemail.com>"]
 
 [dependencies]
 glfw = "0.9.1"
 winit = "0.5.6"
-ash = { version = "*", path = "../../"}
+ash = { version = "*", path = "../"}

@@ -1,5 +1,5 @@
 [root]
-name = "example"
+name = "examples"
 version = "0.1.0"
 dependencies = [
  "ash 0.2.0",
