@@ -5,6 +5,7 @@ dependencies = [
  "ash 0.2.0",
  "glfw 0.9.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "image 0.10.4 (registry+https://github.com/rust-lang/crates.io-index)",
+ "user32-sys 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "winit 0.5.6 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
@@ -581,6 +582,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "user32-sys"
+version = "0.2.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+dependencies = [
+ "winapi 0.2.8 (registry+https://github.com/rust-lang/crates.io-index)",
+ "winapi-build 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
 name = "wayland-client"
 version = "0.7.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -755,6 +765,7 @@ dependencies = [
 "checksum target_build_utils 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)" = "54c550e226618cd35334b75e92bfa5437c61474bdb75c38bf330ab5a8037b77c"
 "checksum tempfile 2.1.4 (registry+https://github.com/rust-lang/crates.io-index)" = "9270837a93bad1b1dac18fe67e786b3c960513af86231f6f4f57fddd594ff0c8"
 "checksum user32-sys 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)" = "6717129de5ac253f5642fc78a51d0c7de6f9f53d617fc94e9bae7f6e71cf5504"
+"checksum user32-sys 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)" = "4ef4711d107b21b410a3a974b1204d9accc8b10dad75d8324b5d755de1617d47"
 "checksum wayland-client 0.7.6 (registry+https://github.com/rust-lang/crates.io-index)" = "8c3e3edc131b755a1c6ab9873ce27557f5c5f075959597cd201bc00019555c9e"
 "checksum wayland-kbd 0.6.2 (registry+https://github.com/rust-lang/crates.io-index)" = "7707deadab966d6ea58651f4150add1fc442058a9598c3da11f0ce27c99f440f"
 "checksum wayland-scanner 0.7.6 (registry+https://github.com/rust-lang/crates.io-index)" = "c7459efa4b7bab8f34657ce6167ff470871cc7932d75cfc8db7e2ef99f81397b"

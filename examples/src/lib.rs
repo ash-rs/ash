@@ -2,6 +2,8 @@
 #[macro_use]
 extern crate ash;
 extern crate winit;
+#[cfg(windows)]
+extern crate user32;
 
 use ash::vk;
 use std::default::Default;
@@ -11,11 +13,6 @@ use ash::extensions::{Swapchain, XlibSurface, Surface, DebugReport};
 use ash::device::Device;
 use std::ptr;
 use std::ffi::{CStr, CString};
-use std::mem;
-use std::path::Path;
-use std::fs::File;
-use std::io::Read;
-use winit::os::unix::WindowExt;
 use std::ops::Drop;
 
 // Simple offset_of macro akin to C++ offsetof
@@ -41,7 +38,8 @@ pub fn record_submit_commandbuffer<F: FnOnce(&Device, vk::CommandBuffer)>(device
                                                              f: F) {
     unsafe {
         device.reset_command_buffer(command_buffer,
-                                    vk::COMMAND_BUFFER_RESET_RELEASE_RESOURCES_BIT);
+                                  vk::COMMAND_BUFFER_RESET_RELEASE_RESOURCES_BIT)
+            .expect("Reset command buffer failed.");
         let command_buffer_begin_info = vk::CommandBufferBeginInfo {
             s_type: vk::StructureType::CommandBufferBeginInfo,
             p_next: ptr::null(),
@@ -57,7 +55,7 @@ pub fn record_submit_commandbuffer<F: FnOnce(&Device, vk::CommandBuffer)>(device
             p_next: ptr::null(),
             flags: vk::FenceCreateFlags::empty(),
         };
-        let submit_fence = device.create_fence(&fence_create_info).unwrap();
+        let submit_fence = device.create_fence(&fence_create_info).expect("Create fence failed.");
         let submit_info = vk::SubmitInfo {
             s_type: vk::StructureType::SubmitInfo,
             p_next: ptr::null(),
@@ -69,8 +67,10 @@ pub fn record_submit_commandbuffer<F: FnOnce(&Device, vk::CommandBuffer)>(device
             signal_semaphore_count: signal_semaphores.len() as u32,
             p_signal_semaphores: signal_semaphores.as_ptr(),
         };
-        device.queue_submit(submit_queue, &[submit_info], submit_fence);
-        device.wait_for_fences(&[submit_fence], true, std::u64::MAX);
+        device.queue_submit(submit_queue, &[submit_info], submit_fence)
+            .expect("queue submit failed.");
+        device.wait_for_fences(&[submit_fence], true, std::u64::MAX)
+            .expect("Wait for fence failed.");
         device.destroy_fence(submit_fence);
     }
 }
@@ -80,6 +80,7 @@ fn create_surface(instance: &Instance,
                   entry: &Entry,
                   window: &winit::Window)
                   -> Result<vk::SurfaceKHR, vk::Result> {
+    use winit::os::unix::WindowExt;
     let x11_display = window.get_xlib_display().unwrap();
     let x11_window = window.get_xlib_window().unwrap();
     let x11_create_info = vk::XlibSurfaceCreateInfoKHR {
@@ -92,6 +93,26 @@ fn create_surface(instance: &Instance,
     let xlib_surface_loader = XlibSurface::new(&entry, &instance)
         .expect("Unable to load xlib surface");
     xlib_surface_loader.create_xlib_surface_khr(&x11_create_info)
+}
+
+#[cfg(windows)]
+fn create_surface(instance: &Instance,
+                  entry: &Entry,
+                  window: &winit::Window)
+                  -> Result<vk::SurfaceKHR, vk::Result> {
+    use winit::os::windows::WindowExt;
+    let hwnd = window.get_hwnd();
+    let hinstance = user32::GetWindow(hwnd, 0);
+    let win32_create_info = vk::Win32SurfaceCreateInfoKHR {
+        s_type: vk::StructureType::Win32SurfaceCreateInfoKhr,
+        p_next: ptr::null(),
+        flags: Default::default(),
+        hinstance: hinstance,
+        hwnd: hwnd,
+    };
+    let win32_surface_loader = Win32Surface::new(&entry, &instance)
+        .expect("Unable to load win32 surface");
+    win32_surface_loader.create_win32_surface_khr(&win32create_info)
 }
 
 #[cfg(all(unix, not(target_os = "android")))]
@@ -108,14 +129,14 @@ fn extension_names() -> Vec<CString> {
          CString::new("VK_EXT_debug_report").unwrap()]
 }
 
-unsafe extern "system" fn vulkan_debug_callback(flags: vk::DebugReportFlagsEXT,
-                                                obj_type: vk::DebugReportObjectTypeEXT,
-                                                obj: u64,
-                                                loc: usize,
-                                                message: i32,
-                                                p_layer_prefix: *const i8,
+unsafe extern "system" fn vulkan_debug_callback(_: vk::DebugReportFlagsEXT,
+                                                _: vk::DebugReportObjectTypeEXT,
+                                                _: u64,
+                                                _: usize,
+                                                _: i32,
+                                                _: *const i8,
                                                 p_message: *const i8,
-                                                data: *mut ())
+                                                _: *mut ())
                                                 -> u32 {
     println!("{:?}", CStr::from_ptr(p_message));
     1
@@ -195,7 +216,6 @@ impl ExampleBase {
                 .build()
                 .unwrap();
             let entry = Entry::load_vulkan().unwrap();
-            let instance_ext_props = entry.enumerate_instance_extension_properties().unwrap();
             let app_name = CString::new("VulkanTriangle").unwrap();
             let raw_name = app_name.as_ptr();
 
@@ -374,13 +394,6 @@ impl ExampleBase {
                 queue_family_index: queue_family_index,
             };
             let pool = device.create_command_pool(&pool_create_info).unwrap();
-            let command_buffer_allocate_info = vk::CommandBufferAllocateInfo {
-                s_type: vk::StructureType::CommandBufferAllocateInfo,
-                p_next: ptr::null(),
-                command_buffer_count: 2,
-                command_pool: pool,
-                level: vk::CommandBufferLevel::Primary,
-            };
             let command_buffer_allocate_info = vk::CommandBufferAllocateInfo {
                 s_type: vk::StructureType::CommandBufferAllocateInfo,
                 p_next: ptr::null(),

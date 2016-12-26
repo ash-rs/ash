@@ -3831,14 +3831,6 @@ vk_functions!{
         p_properties: *mut SparseImageFormatProperties,
     ) -> ();
 
-
-    "vkGetPhysicalDeviceXlibPresentationSupportKHR", get_physical_device_xlib_presentation_support_khr(
-        physical_device: PhysicalDevice,
-        queue_family_index: uint32_t,
-        dpy: *mut Display,
-        visual_id: VisualID,
-    ) -> Bool32;
-
     "vkCreateXcbSurfaceKHR", create_xcb_surface_khr(
         instance: Instance,
         p_create_info: *const XcbSurfaceCreateInfoKHR,
@@ -3864,18 +3856,6 @@ vk_functions!{
         physical_device: PhysicalDevice,
         queue_family_index: uint32_t,
         connection: *mut MirConnection,
-    ) -> Bool32;
-
-    "vkCreateWin32SurfaceKHR", create_win32_surface_khr(
-        instance: Instance,
-        p_create_info: *const Win32SurfaceCreateInfoKHR,
-        p_allocator: *const AllocationCallbacks,
-        p_surface: *mut SurfaceKHR,
-    ) -> Result;
-
-    "vkGetPhysicalDeviceWin32PresentationSupportKHR", get_physical_device_win32_presentation_support_khr(
-        physical_device: PhysicalDevice,
-        queue_family_index: uint32_t,
     ) -> Bool32;
 
     "vkCreateAndroidSurfaceKHR", create_android_surface_khr(
@@ -4868,6 +4848,13 @@ vk_functions!{
         p_allocator: *const AllocationCallbacks,
         p_surface: *mut SurfaceKHR,
     ) -> Result;
+
+    "vkGetPhysicalDeviceXlibPresentationSupportKHR", get_physical_device_xlib_presentation_support_khr(
+        physical_device: PhysicalDevice,
+        queue_family_index: uint32_t,
+        dpy: *mut Display,
+        visual_id: VisualID,
+    ) -> Bool32;
 }
 vk_functions!{
     DebugReportFn,
@@ -4894,5 +4881,19 @@ vk_functions!{
         p_layer_prefix: *const c_char,
         p_message: *const c_char,
     ) -> ();
+}
+vk_functions!{
+    Win32SurfaceFn,
+    "vkCreateWin32SurfaceKHR", create_win32_surface_khr(
+        instance: Instance,
+        p_create_info: *const Win32SurfaceCreateInfoKHR,
+        p_allocator: *const AllocationCallbacks,
+        p_surface: *mut SurfaceKHR,
+    ) -> Result;
+
+    "vkGetPhysicalDeviceWin32PresentationSupportKHR", get_physical_device_win32_presentation_support_khr(
+        physical_device: PhysicalDevice,
+        queue_family_index: uint32_t,
+    ) -> Bool32;
 }
 }
