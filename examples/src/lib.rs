@@ -101,7 +101,7 @@ fn create_surface(instance: &Instance,
                   window: &winit::Window)
                   -> Result<vk::SurfaceKHR, vk::Result> {
     use winit::os::windows::WindowExt;
-    let hwnd = window.get_hwnd();
+    let hwnd = window.get_hwnd() as *const ();
     let hinstance = user32::GetWindow(hwnd, 0);
     let win32_create_info = vk::Win32SurfaceCreateInfoKHR {
         s_type: vk::StructureType::Win32SurfaceCreateInfoKhr,
