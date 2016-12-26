@@ -1,5 +1,6 @@
 #[macro_use]
 extern crate ash;
+#[macro_use]
 extern crate examples;
 extern crate image;
 
