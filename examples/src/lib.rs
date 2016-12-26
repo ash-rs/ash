@@ -9,7 +9,7 @@ use ash::vk;
 use std::default::Default;
 use ash::entry::Entry;
 use ash::instance::Instance;
-use ash::extensions::{Swapchain, XlibSurface, Surface, DebugReport};
+use ash::extensions::{Swapchain, XlibSurface, Surface, DebugReport, Win32Surface};
 use ash::device::Device;
 use std::ptr;
 use std::ffi::{CStr, CString};
@@ -102,7 +102,7 @@ fn create_surface(instance: &Instance,
                   -> Result<vk::SurfaceKHR, vk::Result> {
     use winit::os::windows::WindowExt;
     let hwnd = window.get_hwnd() as *const ();
-    let hinstance = user32::GetWindow(hwnd, 0);
+    let hinstance = user32::GetWindow(hwnd, 0) as *const ();
     let win32_create_info = vk::Win32SurfaceCreateInfoKHR {
         s_type: vk::StructureType::Win32SurfaceCreateInfoKhr,
         p_next: ptr::null(),
