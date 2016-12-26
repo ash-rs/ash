@@ -104,7 +104,7 @@ fn create_surface(instance: &Instance,
                   -> Result<vk::SurfaceKHR, vk::Result> {
     use winit::os::windows::WindowExt;
     let hwnd = unsafe {window.get_hwnd() as *mut winapi::windef::HWND__ };
-    let hinstance = user32::GetWindow(hwnd, 0) as *const ();
+    let hinstance = unsafe {user32::GetWindow(hwnd, 0) as *const ()};
     let win32_create_info = vk::Win32SurfaceCreateInfoKHR {
         s_type: vk::StructureType::Win32SurfaceCreateInfoKhr,
         p_next: ptr::null(),
