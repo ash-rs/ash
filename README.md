@@ -124,7 +124,7 @@ let pool = device.create_command_pool(&pool_create_info).unwrap();
 You can find the examples [here](https://github.com/MaikKlein/ash/tree/master/examples).
 All examples currently require: the LunarG Validation layers and a Vulkan library that is visible in your `PATH`.
 ### [Triangle](https://github.com/MaikKlein/ash/blob/master/examples/src/bin/triangle.rs)
-Display a triangle with vertex colors.
+Displays a triangle with vertex colors.
 ```
 cd examples
 cargo run --bin triangle
@@ -133,7 +133,7 @@ cargo run --bin triangle
 ![screenshot](http://i.imgur.com/PQZcL6w.jpg)
 
 ### [Texture](https://github.com/MaikKlein/ash/blob/master/examples/src/bin/texture.rs)
-Displays a texture on a quad. *Needs a cleanup*.
+Displays a texture on a quad.
 ```
 cd examples
 cargo run --bin texture
