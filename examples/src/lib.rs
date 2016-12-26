@@ -114,7 +114,7 @@ fn create_surface(instance: &Instance,
     };
     let win32_surface_loader = Win32Surface::new(&entry, &instance)
         .expect("Unable to load win32 surface");
-    win32_surface_loader.create_win32_surface_khr(&win32create_info)
+    win32_surface_loader.create_win32_surface_khr(&win32_create_info)
 }
 
 #[cfg(all(unix, not(target_os = "android")))]
