@@ -66,7 +66,6 @@ fn main() {
             color_attachment_count: 1,
             p_color_attachments: &color_attachment_ref,
             p_depth_stencil_attachment: &depth_attachment_ref,
-            // TODO: Why is there no wrapper?
             flags: Default::default(),
             pipeline_bind_point: vk::PipelineBindPoint::Graphics,
             input_attachment_count: 0,
