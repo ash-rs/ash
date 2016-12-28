@@ -57,7 +57,8 @@ pub fn record_submit_commandbuffer<F: FnOnce(&Device, vk::CommandBuffer)>(device
             p_next: ptr::null(),
             flags: vk::FenceCreateFlags::empty(),
         };
-        let submit_fence = device.create_fence(&fence_create_info).expect("Create fence failed.");
+        let submit_fence = device.create_fence(&fence_create_info, None)
+            .expect("Create fence failed.");
         let submit_info = vk::SubmitInfo {
             s_type: vk::StructureType::SubmitInfo,
             p_next: ptr::null(),
@@ -73,7 +74,7 @@ pub fn record_submit_commandbuffer<F: FnOnce(&Device, vk::CommandBuffer)>(device
             .expect("queue submit failed.");
         device.wait_for_fences(&[submit_fence], true, std::u64::MAX)
             .expect("Wait for fence failed.");
-        device.destroy_fence(submit_fence);
+        device.destroy_fence(submit_fence, None);
     }
 }
 
@@ -119,20 +120,12 @@ fn create_surface(instance: &Instance,
 
 #[cfg(all(unix, not(target_os = "android")))]
 fn extension_names() -> Vec<*const i8> {
-    vec![
-        Surface::name().as_ptr(),
-        XlibSurface::name().as_ptr(),
-        DebugReport::name().as_ptr()
-    ]
+    vec![Surface::name().as_ptr(), XlibSurface::name().as_ptr(), DebugReport::name().as_ptr()]
 }
 
 #[cfg(all(windows))]
 fn extension_names() -> Vec<*const i8> {
-    vec![
-        Surface::name().as_ptr(),
-        Win32Surface::name().as_ptr(),
-        DebugReport::name().as_ptr()
-    ]
+    vec![Surface::name().as_ptr(), Win32Surface::name().as_ptr(), DebugReport::name().as_ptr()]
 }
 
 unsafe extern "system" fn vulkan_debug_callback(_: vk::DebugReportFlagsEXT,
@@ -313,7 +306,7 @@ impl ExampleBase {
                 pp_enabled_extension_names: device_extension_names_raw.as_ptr(),
                 p_enabled_features: &features,
             };
-            let device: Device = instance.create_device(pdevice, &device_create_info)
+            let device: Device = instance.create_device(pdevice, &device_create_info, None)
                 .unwrap();
             let present_queue = device.get_device_queue(queue_family_index as u32, 0);
 
@@ -393,7 +386,7 @@ impl ExampleBase {
                 flags: vk::COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT,
                 queue_family_index: queue_family_index,
             };
-            let pool = device.create_command_pool(&pool_create_info).unwrap();
+            let pool = device.create_command_pool(&pool_create_info, None).unwrap();
             let command_buffer_allocate_info = vk::CommandBufferAllocateInfo {
                 s_type: vk::StructureType::CommandBufferAllocateInfo,
                 p_next: ptr::null(),
@@ -430,7 +423,7 @@ impl ExampleBase {
                         },
                         image: image,
                     };
-                    device.create_image_view(&create_view_info).unwrap()
+                    device.create_image_view(&create_view_info, None).unwrap()
                 })
                 .collect();
             let device_memory_properties = instance.get_physical_device_memory_properties(pdevice);
@@ -455,7 +448,7 @@ impl ExampleBase {
                 p_queue_family_indices: ptr::null(),
                 initial_layout: vk::ImageLayout::Undefined,
             };
-            let depth_image = device.create_image(&depth_image_create_info).unwrap();
+            let depth_image = device.create_image(&depth_image_create_info, None).unwrap();
             let depth_image_memory_req = device.get_image_memory_requirements(depth_image);
             let depth_image_memory_index =
                 find_memorytype_index(&depth_image_memory_req,
@@ -469,7 +462,8 @@ impl ExampleBase {
                 allocation_size: depth_image_memory_req.size,
                 memory_type_index: depth_image_memory_index,
             };
-            let depth_image_memory = device.allocate_memory(&depth_image_allocate_info).unwrap();
+            let depth_image_memory = device.allocate_memory(&depth_image_allocate_info, None)
+                .unwrap();
             device.bind_image_memory(depth_image, depth_image_memory, 0)
                 .expect("Unable to bind depth image memory");
 
@@ -512,7 +506,7 @@ impl ExampleBase {
                 p_next: ptr::null(),
                 flags: vk::FenceCreateFlags::empty(),
             };
-            let submit_fence = device.create_fence(&fence_create_info).unwrap();
+            let submit_fence = device.create_fence(&fence_create_info, None).unwrap();
             let submit_info = vk::SubmitInfo {
                 s_type: vk::StructureType::SubmitInfo,
                 p_next: ptr::null(),
@@ -548,15 +542,15 @@ impl ExampleBase {
                 },
                 image: depth_image,
             };
-            let depth_image_view = device.create_image_view(&depth_image_view_info).unwrap();
+            let depth_image_view = device.create_image_view(&depth_image_view_info, None).unwrap();
             let semaphore_create_info = vk::SemaphoreCreateInfo {
                 s_type: vk::StructureType::SemaphoreCreateInfo,
                 p_next: ptr::null(),
                 flags: Default::default(),
             };
-            let present_complete_semaphore = device.create_semaphore(&semaphore_create_info)
+            let present_complete_semaphore = device.create_semaphore(&semaphore_create_info, None)
                 .unwrap();
-            let rendering_complete_semaphore = device.create_semaphore(&semaphore_create_info)
+            let rendering_complete_semaphore = device.create_semaphore(&semaphore_create_info, None)
                 .unwrap();
             ExampleBase {
                 entry: entry,
@@ -593,17 +587,17 @@ impl Drop for ExampleBase {
     fn drop(&mut self) {
         unsafe {
             self.device.device_wait_idle().unwrap();
-            self.device.destroy_semaphore(self.present_complete_semaphore);
-            self.device.destroy_semaphore(self.rendering_complete_semaphore);
-            self.device.destroy_image_view(self.depth_image_view);
-            self.device.destroy_image(self.depth_image);
-            self.device.free_memory(self.depth_image_memory);
+            self.device.destroy_semaphore(self.present_complete_semaphore, None);
+            self.device.destroy_semaphore(self.rendering_complete_semaphore, None);
+            self.device.destroy_image_view(self.depth_image_view, None);
+            self.device.destroy_image(self.depth_image, None);
+            self.device.free_memory(self.depth_image_memory, None);
             for &image_view in self.present_image_views.iter() {
-                self.device.destroy_image_view(image_view);
+                self.device.destroy_image_view(image_view, None);
             }
-            self.device.destroy_command_pool(self.pool);
+            self.device.destroy_command_pool(self.pool, None);
             self.swapchain_loader.destroy_swapchain_khr(self.swapchain);
-            self.device.destroy_device();
+            self.device.destroy_device(None);
             self.surface_loader.destroy_surface_khr(self.surface);
             self.debug_report_loader.destroy_debug_report_callback_ext(self.debug_call_back);
             self.instance.destroy_instance();
