@@ -79,7 +79,7 @@ pub fn record_submit_commandbuffer<F: FnOnce(&Device, vk::CommandBuffer)>(device
 }
 
 #[cfg(all(unix, not(target_os = "android")))]
-fn create_surface(instance: &Instance,
+unsafe fn create_surface(instance: &Instance,
                   entry: &Entry,
                   window: &winit::Window)
                   -> Result<vk::SurfaceKHR, vk::Result> {
@@ -95,11 +95,11 @@ fn create_surface(instance: &Instance,
     };
     let xlib_surface_loader = XlibSurface::new(&entry, &instance)
         .expect("Unable to load xlib surface");
-    xlib_surface_loader.create_xlib_surface_khr(&x11_create_info)
+    xlib_surface_loader.create_xlib_surface_khr(&x11_create_info, None)
 }
 
 #[cfg(windows)]
-fn create_surface(instance: &Instance,
+unsafe fn create_surface(instance: &Instance,
                   entry: &Entry,
                   window: &winit::Window)
                   -> Result<vk::SurfaceKHR, vk::Result> {
@@ -254,7 +254,7 @@ impl ExampleBase {
             };
             let debug_report_loader = DebugReport::new(&entry, &instance)
                 .expect("Unable to load debug report");
-            let debug_call_back = debug_report_loader.create_debug_report_callback_ext(&debug_info)
+            let debug_call_back = debug_report_loader.create_debug_report_callback_ext(&debug_info, None)
                 .unwrap();
             let surface = create_surface(&instance, &entry, &window).unwrap();
             let pdevices = instance.enumerate_physical_devices().expect("Physical device error");
@@ -379,7 +379,7 @@ impl ExampleBase {
                 p_queue_family_indices: ptr::null(),
                 queue_family_index_count: 0,
             };
-            let swapchain = swapchain_loader.create_swapchain_khr(&swapchain_create_info).unwrap();
+            let swapchain = swapchain_loader.create_swapchain_khr(&swapchain_create_info, None).unwrap();
             let pool_create_info = vk::CommandPoolCreateInfo {
                 s_type: vk::StructureType::CommandPoolCreateInfo,
                 p_next: ptr::null(),
@@ -596,11 +596,11 @@ impl Drop for ExampleBase {
                 self.device.destroy_image_view(image_view, None);
             }
             self.device.destroy_command_pool(self.pool, None);
-            self.swapchain_loader.destroy_swapchain_khr(self.swapchain);
+            self.swapchain_loader.destroy_swapchain_khr(self.swapchain, None);
             self.device.destroy_device(None);
-            self.surface_loader.destroy_surface_khr(self.surface);
-            self.debug_report_loader.destroy_debug_report_callback_ext(self.debug_call_back);
-            self.instance.destroy_instance();
+            self.surface_loader.destroy_surface_khr(self.surface, None);
+            self.debug_report_loader.destroy_debug_report_callback_ext(self.debug_call_back, None);
+            self.instance.destroy_instance(None);
         }
     }
 }

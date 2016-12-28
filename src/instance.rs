@@ -31,14 +31,17 @@ impl Instance {
     }
 
     pub unsafe fn create_device(&self,
-                         physical_device: vk::PhysicalDevice,
-                         create_info: &vk::DeviceCreateInfo,
-                         allocation_callbacks: Option<&vk::AllocationCallbacks>)
-                         -> Result<Device, DeviceError> {
+                                physical_device: vk::PhysicalDevice,
+                                create_info: &vk::DeviceCreateInfo,
+                                allocation_callbacks: Option<&vk::AllocationCallbacks>)
+                                -> Result<Device, DeviceError> {
         unsafe {
             let mut device: vk::Device = mem::uninitialized();
             let err_code = self.instance_fn
-                .create_device(physical_device, create_info, allocation_callbacks.as_raw_ptr(), &mut device);
+                .create_device(physical_device,
+                               create_info,
+                               allocation_callbacks.as_raw_ptr(),
+                               &mut device);
             if err_code != vk::Result::Success {
                 return Err(DeviceError::VkError(err_code));
             }
@@ -56,8 +59,8 @@ impl Instance {
         unsafe { self.instance_fn.get_device_proc_addr(device, p_name) }
     }
 
-    pub unsafe fn destroy_instance(&self) {
-        self.instance_fn.destroy_instance(self.handle, ptr::null());
+    pub unsafe fn destroy_instance(&self, allocation_callbacks: Option<&vk::AllocationCallbacks>) {
+        self.instance_fn.destroy_instance(self.handle, allocation_callbacks.as_raw_ptr());
     }
 
     pub fn get_physical_device_format_properties(&self,

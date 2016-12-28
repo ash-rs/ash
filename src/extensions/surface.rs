@@ -5,6 +5,7 @@ use instance::Instance;
 use entry::Entry;
 use vk;
 use std::ffi::CStr;
+use ::RawPtr;
 
 pub struct Surface {
     pub handle: vk::Instance,
@@ -108,7 +109,7 @@ impl Surface {
         }
     }
 
-    pub unsafe fn destroy_surface_khr(&self, surface: vk::SurfaceKHR) {
-        self.surface_fn.destroy_surface_khr(self.handle, surface, ptr::null());
+    pub unsafe fn destroy_surface_khr(&self, surface: vk::SurfaceKHR, allocation_callbacks: Option<&vk::AllocationCallbacks>) {
+        self.surface_fn.destroy_surface_khr(self.handle, surface, allocation_callbacks.as_raw_ptr());
     }
 }

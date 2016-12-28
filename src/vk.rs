@@ -3708,7 +3708,8 @@ pub mod cmds {
     use super::*;
     #[allow(unused_imports)]
     use super::libc_reexports::*;
-    vk_functions!{
+
+vk_functions!{
     StaticFn,
     "vkGetInstanceProcAddr", get_instance_proc_addr(
         instance: Instance,
