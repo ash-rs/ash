@@ -144,10 +144,10 @@ impl Device {
                                               descriptor_copies.as_ptr());
     }
 
-    pub fn create_sampler(&self,
-                          create_info: &vk::SamplerCreateInfo,
-                          allocation_callbacks: Option<&vk::AllocationCallbacks>)
-                          -> VkResult<vk::Sampler> {
+    pub unsafe fn create_sampler(&self,
+                                 create_info: &vk::SamplerCreateInfo,
+                                 allocation_callbacks: Option<&vk::AllocationCallbacks>)
+                                 -> VkResult<vk::Sampler> {
         unsafe {
             let mut sampler = mem::uninitialized();
             let err_code = self.device_fn
@@ -219,7 +219,7 @@ impl Device {
         }
     }
 
-    pub fn create_descriptor_set_layout(&self,
+    pub unsafe fn create_descriptor_set_layout(&self,
                                         create_info: &vk::DescriptorSetLayoutCreateInfo,
                                         allocation_callbacks: Option<&vk::AllocationCallbacks>)
                                         -> VkResult<vk::DescriptorSetLayout> {
@@ -247,10 +247,10 @@ impl Device {
         }
     }
 
-    pub fn create_descriptor_pool(&self,
-                                  create_info: &vk::DescriptorPoolCreateInfo,
-                                  allocation_callbacks: Option<&vk::AllocationCallbacks>)
-                                  -> VkResult<vk::DescriptorPool> {
+    pub unsafe fn create_descriptor_pool(&self,
+                                         create_info: &vk::DescriptorPoolCreateInfo,
+                                         allocation_callbacks: Option<&vk::AllocationCallbacks>)
+                                         -> VkResult<vk::DescriptorPool> {
         unsafe {
             let mut pool = mem::uninitialized();
             let err_code = self.device_fn
@@ -388,10 +388,10 @@ impl Device {
                                         viewports.as_ptr());
     }
 
-    pub fn create_semaphore(&self,
-                            create_info: &vk::SemaphoreCreateInfo,
-                            allocation_callbacks: Option<&vk::AllocationCallbacks>)
-                            -> VkResult<vk::Semaphore> {
+    pub unsafe fn create_semaphore(&self,
+                                   create_info: &vk::SemaphoreCreateInfo,
+                                   allocation_callbacks: Option<&vk::AllocationCallbacks>)
+                                   -> VkResult<vk::Semaphore> {
         unsafe {
             let mut semaphore = mem::uninitialized();
             let err_code = self.device_fn
@@ -406,7 +406,7 @@ impl Device {
         }
     }
 
-    pub fn create_graphics_pipelines(&self,
+    pub unsafe fn create_graphics_pipelines(&self,
                                      pipeline_cache: vk::PipelineCache,
                                      create_infos: &[vk::GraphicsPipelineCreateInfo],
                                      allocation_callbacks: Option<&vk::AllocationCallbacks>)
@@ -428,10 +428,10 @@ impl Device {
         }
     }
 
-    pub fn create_buffer(&self,
-                         create_info: &vk::BufferCreateInfo,
-                         allocation_callbacks: Option<&vk::AllocationCallbacks>)
-                         -> VkResult<vk::Buffer> {
+    pub unsafe fn create_buffer(&self,
+                                create_info: &vk::BufferCreateInfo,
+                                allocation_callbacks: Option<&vk::AllocationCallbacks>)
+                                -> VkResult<vk::Buffer> {
         unsafe {
             let mut buffer = mem::uninitialized();
             let err_code = self.device_fn
@@ -505,10 +505,10 @@ impl Device {
         }
     }
 
-    pub fn get_device_queue(&self,
-                            queue_family_index: vk::uint32_t,
-                            queue_index: vk::uint32_t)
-                            -> vk::Queue {
+    pub unsafe fn get_device_queue(&self,
+                                   queue_family_index: vk::uint32_t,
+                                   queue_index: vk::uint32_t)
+                                   -> vk::Queue {
         unsafe {
             let mut queue = mem::uninitialized();
             self.device_fn
@@ -537,10 +537,10 @@ impl Device {
                                             image_memory_barriers.as_ptr());
     }
 
-    pub fn create_render_pass(&self,
-                              create_info: &vk::RenderPassCreateInfo,
-                              allocation_callbacks: Option<&vk::AllocationCallbacks>)
-                              -> VkResult<vk::RenderPass> {
+    pub unsafe fn create_render_pass(&self,
+                                     create_info: &vk::RenderPassCreateInfo,
+                                     allocation_callbacks: Option<&vk::AllocationCallbacks>)
+                                     -> VkResult<vk::RenderPass> {
         unsafe {
             let mut renderpass = mem::uninitialized();
             let err_code = self.device_fn
@@ -576,11 +576,11 @@ impl Device {
         }
     }
 
-    pub fn wait_for_fences(&self,
-                           fences: &[vk::Fence],
-                           wait_all: bool,
-                           timeout: vk::uint64_t)
-                           -> VkResult<()> {
+    pub unsafe fn wait_for_fences(&self,
+                                  fences: &[vk::Fence],
+                                  wait_all: bool,
+                                  timeout: vk::uint64_t)
+                                  -> VkResult<()> {
         unsafe {
             let err_code = self.device_fn
                 .wait_for_fences(self.handle,
@@ -595,7 +595,7 @@ impl Device {
         }
     }
 
-    pub fn queue_wait_idle(&self, queue: vk::Queue) -> VkResult<()> {
+    pub unsafe fn queue_wait_idle(&self, queue: vk::Queue) -> VkResult<()> {
         unsafe {
             let err_code = self.device_fn.queue_wait_idle(queue);
             match err_code {
@@ -633,10 +633,10 @@ impl Device {
         }
     }
 
-    pub fn create_image_view(&self,
-                             create_info: &vk::ImageViewCreateInfo,
-                             allocation_callbacks: Option<&vk::AllocationCallbacks>)
-                             -> VkResult<vk::ImageView> {
+    pub unsafe fn create_image_view(&self,
+                                    create_info: &vk::ImageViewCreateInfo,
+                                    allocation_callbacks: Option<&vk::AllocationCallbacks>)
+                                    -> VkResult<vk::ImageView> {
         unsafe {
             let mut image_view = mem::uninitialized();
             let err_code = self.device_fn
@@ -665,10 +665,10 @@ impl Device {
         }
     }
 
-    pub fn create_command_pool(&self,
-                               create_info: &vk::CommandPoolCreateInfo,
-                               allocation_callbacks: Option<&vk::AllocationCallbacks>)
-                               -> VkResult<vk::CommandPool> {
+    pub unsafe fn create_command_pool(&self,
+                                      create_info: &vk::CommandPoolCreateInfo,
+                                      allocation_callbacks: Option<&vk::AllocationCallbacks>)
+                                      -> VkResult<vk::CommandPool> {
         unsafe {
             let mut pool = mem::uninitialized();
             let err_code = self.device_fn
@@ -683,10 +683,10 @@ impl Device {
         }
     }
 
-    pub fn create_image(&self,
-                        create_info: &vk::ImageCreateInfo,
-                        allocation_callbacks: Option<&vk::AllocationCallbacks>)
-                        -> VkResult<vk::Image> {
+    pub unsafe fn create_image(&self,
+                               create_info: &vk::ImageCreateInfo,
+                               allocation_callbacks: Option<&vk::AllocationCallbacks>)
+                               -> VkResult<vk::Image> {
         unsafe {
             let mut image = mem::uninitialized();
             let err_code = self.device_fn
@@ -719,10 +719,10 @@ impl Device {
         }
     }
 
-    pub fn allocate_memory(&self,
-                           create_info: &vk::MemoryAllocateInfo,
-                           allocation_callbacks: Option<&vk::AllocationCallbacks>)
-                           -> VkResult<vk::DeviceMemory> {
+    pub unsafe fn allocate_memory(&self,
+                                  create_info: &vk::MemoryAllocateInfo,
+                                  allocation_callbacks: Option<&vk::AllocationCallbacks>)
+                                  -> VkResult<vk::DeviceMemory> {
         unsafe {
             let mut memory = mem::uninitialized();
             let err_code = self.device_fn
@@ -737,10 +737,10 @@ impl Device {
         }
     }
 
-    pub fn create_shader_module(&self,
-                                create_info: &vk::ShaderModuleCreateInfo,
-                                allocation_callbacks: Option<&vk::AllocationCallbacks>)
-                                -> VkResult<vk::ShaderModule> {
+    pub unsafe fn create_shader_module(&self,
+                                       create_info: &vk::ShaderModuleCreateInfo,
+                                       allocation_callbacks: Option<&vk::AllocationCallbacks>)
+                                       -> VkResult<vk::ShaderModule> {
         unsafe {
             let mut shader = mem::uninitialized();
             let err_code = self.device_fn
@@ -755,10 +755,10 @@ impl Device {
         }
     }
 
-    pub fn create_fence(&self,
-                        create_info: &vk::FenceCreateInfo,
-                        allocation_callbacks: Option<&vk::AllocationCallbacks>)
-                        -> VkResult<vk::Fence> {
+    pub unsafe fn create_fence(&self,
+                               create_info: &vk::FenceCreateInfo,
+                               allocation_callbacks: Option<&vk::AllocationCallbacks>)
+                               -> VkResult<vk::Fence> {
         unsafe {
             let mut fence = mem::uninitialized();
             let err_code = self.device_fn

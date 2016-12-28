@@ -5,6 +5,7 @@ use instance::Instance;
 use entry::Entry;
 use vk;
 use std::ffi::CStr;
+use ::RawPtr;
 
 pub struct DebugReport {
     handle: vk::Instance,
@@ -24,23 +25,25 @@ impl DebugReport {
         })
     }
 
-    pub fn name() -> &'static CStr{
+    pub fn name() -> &'static CStr {
         CStr::from_bytes_with_nul(b"VK_EXT_debug_report\0").expect("Wrong extension string")
     }
 
-    pub unsafe fn destroy_debug_report_callback_ext(&self, debug: vk::DebugReportCallbackEXT) {
-            self.debug_report_fn.destroy_debug_report_callback_ext(self.handle, debug, ptr::null());
+    pub unsafe fn destroy_debug_report_callback_ext(&self, debug: vk::DebugReportCallbackEXT, allocation_callbacks: Option<&vk::AllocationCallbacks>) {
+        self.debug_report_fn.destroy_debug_report_callback_ext(self.handle,
+                                                               debug,
+                                                               allocation_callbacks.as_raw_ptr());
     }
 
-    pub fn create_debug_report_callback_ext(&self,
-                                            create_info: &vk::DebugReportCallbackCreateInfoEXT)
+    pub unsafe fn create_debug_report_callback_ext(&self,
+                                            create_info: &vk::DebugReportCallbackCreateInfoEXT, allocation_callbacks: Option<&vk::AllocationCallbacks>)
                                             -> VkResult<vk::DebugReportCallbackEXT> {
         unsafe {
             let mut debug_cb = mem::uninitialized();
             let err_code = self.debug_report_fn
                 .create_debug_report_callback_ext(self.handle,
                                                   create_info,
-                                                  ptr::null(),
+                                                  allocation_callbacks.as_raw_ptr(),
                                                   &mut debug_cb);
             match err_code {
                 vk::Result::Success => Ok(debug_cb),

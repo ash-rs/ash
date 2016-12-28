@@ -5,6 +5,7 @@ use vk;
 use instance::Instance;
 use shared_library::dynamic_library::DynamicLibrary;
 use std::path::Path;
+use ::RawPtr;
 
 #[cfg(windows)]
 fn get_path() -> &'static Path {
@@ -73,7 +74,6 @@ impl Entry {
                            allocation_callbacks: Option<&vk::AllocationCallbacks>)
                            -> Result<Instance, InstanceError> {
         unsafe {
-            use ::RawPtr;
             let mut instance: vk::Instance = mem::uninitialized();
             let err_code = self.entry_fn.create_instance(create_info,
                                                          allocation_callbacks.as_raw_ptr(),

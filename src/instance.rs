@@ -30,7 +30,7 @@ impl Instance {
         }
     }
 
-    pub fn create_device(&self,
+    pub unsafe fn create_device(&self,
                          physical_device: vk::PhysicalDevice,
                          create_info: &vk::DeviceCreateInfo,
                          allocation_callbacks: Option<&vk::AllocationCallbacks>)

@@ -5,6 +5,7 @@ use instance::Instance;
 use entry::Entry;
 use vk;
 use std::ffi::CStr;
+use ::RawPtr;
 
 pub struct Win32Surface {
     pub handle: vk::Instance,
@@ -24,17 +25,21 @@ impl Win32Surface {
         })
     }
 
-    pub fn name() -> &'static CStr{
+    pub fn name() -> &'static CStr {
         CStr::from_bytes_with_nul(b"VK_KHR_win32_surface\0").expect("Wrong extension string")
     }
 
-    pub fn create_win32_surface_khr(&self,
-                                    create_info: &vk::Win32SurfaceCreateInfoKHR)
-                                    -> VkResult<vk::SurfaceKHR> {
+    pub unsafe fn create_win32_surface_khr(&self,
+                                           create_info: &vk::Win32SurfaceCreateInfoKHR,
+                                           allocation_callbacks: Option<&vk::AllocationCallbacks>)
+                                           -> VkResult<vk::SurfaceKHR> {
         unsafe {
             let mut surface = mem::uninitialized();
             let err_code = self.win32_surface_fn
-                .create_win32_surface_khr(self.handle, create_info, ptr::null(), &mut surface);
+                .create_win32_surface_khr(self.handle,
+                                          create_info,
+                                          allocation_callbacks.as_raw_ptr(),
+                                          &mut surface);
             match err_code {
                 vk::Result::Success => Ok(surface),
                 _ => Err(err_code),
