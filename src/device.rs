@@ -59,7 +59,6 @@ impl Device {
         self.device_fn.destroy_command_pool(self.handle, pool, allocation_callbacks.as_raw_ptr());
     }
 
-
     pub unsafe fn destroy_image_view(&self,
                                      image_view: vk::ImageView,
                                      allocation_callbacks: Option<&vk::AllocationCallbacks>) {
@@ -175,6 +174,7 @@ impl Device {
                                        regions.len() as u32,
                                        regions.as_ptr());
     }
+
     pub unsafe fn cmd_copy_buffer_to_image(&self,
                                            command_buffer: vk::CommandBuffer,
                                            src_buffer: vk::Buffer,
@@ -218,6 +218,7 @@ impl Device {
             _ => Err(err_code),
         }
     }
+
     pub fn create_descriptor_set_layout(&self,
                                         create_info: &vk::DescriptorSetLayoutCreateInfo,
                                         allocation_callbacks: Option<&vk::AllocationCallbacks>)
@@ -235,6 +236,7 @@ impl Device {
             }
         }
     }
+
     pub fn device_wait_idle(&self) -> VkResult<()> {
         unsafe {
             let err_code = self.device_fn.device_wait_idle(self.handle);
@@ -386,7 +388,6 @@ impl Device {
                                         viewports.as_ptr());
     }
 
-
     pub fn create_semaphore(&self,
                             create_info: &vk::SemaphoreCreateInfo,
                             allocation_callbacks: Option<&vk::AllocationCallbacks>)
@@ -462,6 +463,7 @@ impl Device {
             }
         }
     }
+
     pub unsafe fn map_memory<T>(&self,
                                 memory: vk::DeviceMemory,
                                 offset: vk::DeviceSize,
@@ -680,7 +682,6 @@ impl Device {
             }
         }
     }
-
 
     pub fn create_image(&self,
                         create_info: &vk::ImageCreateInfo,

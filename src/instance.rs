@@ -101,7 +101,6 @@ impl Instance {
         }
     }
 
-
     pub fn enumerate_physical_devices(&self) -> VkResult<Vec<vk::PhysicalDevice>> {
         unsafe {
             let mut num = mem::uninitialized();
