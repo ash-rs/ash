@@ -4,6 +4,7 @@ use std::mem;
 use instance::Instance;
 use entry::Entry;
 use vk;
+use std::ffi::CStr;
 
 pub struct Win32Surface {
     pub handle: vk::Instance,
@@ -21,6 +22,10 @@ impl Win32Surface {
             handle: instance.handle(),
             win32_surface_fn: surface_fn,
         })
+    }
+
+    pub fn name() -> &'static CStr{
+        CStr::from_bytes_with_nul(b"VK_KHR_win32_surface\0").expect("Wrong extension string")
     }
 
     pub fn create_win32_surface_khr(&self,

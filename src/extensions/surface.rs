@@ -4,6 +4,7 @@ use std::mem;
 use instance::Instance;
 use entry::Entry;
 use vk;
+use std::ffi::CStr;
 
 pub struct Surface {
     pub handle: vk::Instance,
@@ -21,6 +22,10 @@ impl Surface {
             handle: instance.handle(),
             surface_fn: surface_fn,
         })
+    }
+
+    pub fn name() -> &'static CStr{
+        CStr::from_bytes_with_nul(b"VK_KHR_surface\0").expect("Wrong extension string")
     }
 
     pub fn get_physical_device_surface_support_khr(&self,

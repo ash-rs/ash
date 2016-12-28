@@ -3224,13 +3224,6 @@ pub mod types {
                     }
                 }
             }
-
-            impl ::std::ops::Deref for $name{
-                type Target = *mut u8;
-                fn deref(&self) -> &Self::Target{
-                    &self.ptr
-                }
-            }
         }
     }
 

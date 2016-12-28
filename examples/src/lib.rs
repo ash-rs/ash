@@ -104,7 +104,7 @@ fn create_surface(instance: &Instance,
                   -> Result<vk::SurfaceKHR, vk::Result> {
     use winit::os::windows::WindowExt;
     let hwnd = window.get_hwnd() as *mut winapi::windef::HWND__;
-    let hinstance = unsafe {user32::GetWindow(hwnd, 0) as *const ()};
+    let hinstance = unsafe { user32::GetWindow(hwnd, 0) as *const () };
     let win32_create_info = vk::Win32SurfaceCreateInfoKHR {
         s_type: vk::StructureType::Win32SurfaceCreateInfoKhr,
         p_next: ptr::null(),
@@ -118,17 +118,21 @@ fn create_surface(instance: &Instance,
 }
 
 #[cfg(all(unix, not(target_os = "android")))]
-fn extension_names() -> Vec<CString> {
-    vec![CString::new("VK_KHR_surface").unwrap(),
-         CString::new("VK_KHR_xlib_surface").unwrap(),
-         CString::new("VK_EXT_debug_report").unwrap()]
+fn extension_names() -> Vec<*const i8> {
+    vec![
+        Surface::name().as_ptr(),
+        XlibSurface::name().as_ptr(),
+        DebugReport::name().as_ptr()
+    ]
 }
 
 #[cfg(all(windows))]
-fn extension_names() -> Vec<CString> {
-    vec![CString::new("VK_KHR_surface").unwrap(),
-         CString::new("VK_KHR_win32_surface").unwrap(),
-         CString::new("VK_EXT_debug_report").unwrap()]
+fn extension_names() -> Vec<*const i8> {
+    vec![
+        Surface::name().as_ptr(),
+        Win32Surface::name().as_ptr(),
+        DebugReport::name().as_ptr()
+    ]
 }
 
 unsafe extern "system" fn vulkan_debug_callback(_: vk::DebugReportFlagsEXT,
@@ -225,10 +229,7 @@ impl ExampleBase {
             let layers_names_raw: Vec<*const i8> = layer_names.iter()
                 .map(|raw_name| raw_name.as_ptr())
                 .collect();
-            let extension_names = extension_names();
-            let extension_names_raw: Vec<*const i8> = extension_names.iter()
-                .map(|raw_name| raw_name.as_ptr())
-                .collect();
+            let extension_names_raw = extension_names();
             let appinfo = vk::ApplicationInfo {
                 p_application_name: raw_name,
                 s_type: vk::StructureType::ApplicationInfo,
@@ -288,10 +289,7 @@ impl ExampleBase {
                 .nth(0)
                 .expect("Couldn't find suitable device.");
             let queue_family_index = queue_family_index as u32;
-            let device_extension_names = [CString::new("VK_KHR_swapchain").unwrap()];
-            let device_extension_names_raw: Vec<*const i8> = device_extension_names.iter()
-                .map(|raw_name| raw_name.as_ptr())
-                .collect();
+            let device_extension_names_raw = [Swapchain::name().as_ptr()];
             let features =
                 vk::PhysicalDeviceFeatures { shader_clip_distance: 1, ..Default::default() };
             let priorities = [1.0];

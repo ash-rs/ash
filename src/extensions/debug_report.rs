@@ -4,6 +4,7 @@ use std::mem;
 use instance::Instance;
 use entry::Entry;
 use vk;
+use std::ffi::CStr;
 
 pub struct DebugReport {
     handle: vk::Instance,
@@ -21,6 +22,10 @@ impl DebugReport {
             handle: instance.handle(),
             debug_report_fn: debug_report_fn,
         })
+    }
+
+    pub fn name() -> &'static CStr{
+        CStr::from_bytes_with_nul(b"VK_EXT_debug_report\0").expect("Wrong extension string")
     }
 
     pub unsafe fn destroy_debug_report_callback_ext(&self, debug: vk::DebugReportCallbackEXT) {

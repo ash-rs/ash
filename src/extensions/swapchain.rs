@@ -4,6 +4,7 @@ use std::mem;
 use instance::Instance;
 use device::Device;
 use vk;
+use std::ffi::CStr;
 
 pub struct Swapchain {
     handle: vk::Device,
@@ -19,6 +20,10 @@ impl Swapchain {
             handle: device.handle(),
             swapchain_fn: swapchain_fn,
         })
+    }
+
+    pub fn name() -> &'static CStr{
+        CStr::from_bytes_with_nul(b"VK_KHR_swapchain\0").expect("Wrong extension string")
     }
 
     pub unsafe fn destroy_swapchain_khr(&self, swapchain: vk::SwapchainKHR) {
