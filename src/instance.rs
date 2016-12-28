@@ -34,7 +34,7 @@ impl Instance {
                          create_info: &vk::DeviceCreateInfo)
                          -> Result<Device, DeviceError> {
         unsafe {
-            let mut device = mem::uninitialized();
+            let mut device: vk::Device = mem::uninitialized();
             let err_code = self.instance_fn
                 .create_device(physical_device, create_info, ptr::null(), &mut device);
             if err_code != vk::Result::Success {

@@ -3209,36 +3209,36 @@ pub mod types {
         CallbackRef = 1,
     }
 
+    macro_rules! vk_define_handle{
+        ($name: ident) => {
+            #[derive(Clone, Copy, Debug)]
+            #[repr(C)]
+            pub struct $name{
+                ptr: *mut u8
+            }
 
-    #[repr(C)]
-    #[doc(hidden)]
-    pub struct Instance_T(u8);
-    pub type Instance = *mut Instance_T;
+            impl $name{
+                pub unsafe fn null() -> Self{
+                    $name{
+                        ptr: ::std::ptr::null_mut()
+                    }
+                }
+            }
 
+            impl ::std::ops::Deref for $name{
+                type Target = *mut u8;
+                fn deref(&self) -> &Self::Target{
+                    &self.ptr
+                }
+            }
+        }
+    }
 
-    #[repr(C)]
-    #[doc(hidden)]
-    pub struct PhysicalDevice_T(u8);
-    pub type PhysicalDevice = *mut PhysicalDevice_T;
-
-
-    #[repr(C)]
-    #[doc(hidden)]
-    pub struct Device_T(u8);
-    pub type Device = *mut Device_T;
-
-
-    #[repr(C)]
-    #[doc(hidden)]
-    pub struct Queue_T(u8);
-    pub type Queue = *mut Queue_T;
-
-
-    #[repr(C)]
-    #[doc(hidden)]
-    pub struct CommandBuffer_T(u8);
-    pub type CommandBuffer = *mut CommandBuffer_T;
-
+    vk_define_handle!(Instance);
+    vk_define_handle!(Device);
+    vk_define_handle!(PhysicalDevice);
+    vk_define_handle!(Queue);
+    vk_define_handle!(CommandBuffer);
 
     handle_nondispatchable!(Semaphore);
     handle_nondispatchable!(Fence);

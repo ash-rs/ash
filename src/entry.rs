@@ -60,7 +60,7 @@ impl Entry {
             Err(ref err) => Err(LoadingError::LibraryLoadFailure(err.clone())),
         }?;
         let entry_fn = vk::EntryFn::load(|name| unsafe {
-                mem::transmute(static_fn.get_instance_proc_addr(ptr::null_mut(), name.as_ptr()))
+                mem::transmute(static_fn.get_instance_proc_addr(vk::Instance::null(), name.as_ptr()))
             }).map_err(|err| LoadingError::EntryLoadError(err))?;
         Ok(Entry {
             static_fn: static_fn,
