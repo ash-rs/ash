@@ -121,6 +121,19 @@ pub fn create_command_pool(&self,
 
 let pool = device.create_command_pool(&pool_create_info).unwrap();
 ```
+
+Support for extension names
+```Rust
+use ash::extensions::{Swapchain, XlibSurface, Surface, DebugReport};
+#[cfg(all(unix, not(target_os = "android")))]
+fn extension_names() -> Vec<*const i8> {
+    vec![
+        Surface::name().as_ptr(),
+        XlibSurface::name().as_ptr(),
+        DebugReport::name().as_ptr()
+    ]
+}
+```
 ## Example
 You can find the examples [here](https://github.com/MaikKlein/ash/tree/master/examples).
 All examples currently require: the LunarG Validation layers and a Vulkan library that is visible in your `PATH`.
