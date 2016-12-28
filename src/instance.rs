@@ -4,6 +4,7 @@ use std::ptr;
 use std::mem;
 use vk;
 use device::Device;
+use ::RawPtr;
 
 #[derive(Debug)]
 pub enum DeviceError {
@@ -31,12 +32,13 @@ impl Instance {
 
     pub fn create_device(&self,
                          physical_device: vk::PhysicalDevice,
-                         create_info: &vk::DeviceCreateInfo)
+                         create_info: &vk::DeviceCreateInfo,
+                         allocation_callbacks: Option<&vk::AllocationCallbacks>)
                          -> Result<Device, DeviceError> {
         unsafe {
             let mut device: vk::Device = mem::uninitialized();
             let err_code = self.instance_fn
-                .create_device(physical_device, create_info, ptr::null(), &mut device);
+                .create_device(physical_device, create_info, allocation_callbacks.as_raw_ptr(), &mut device);
             if err_code != vk::Result::Success {
                 return Err(DeviceError::VkError(err_code));
             }

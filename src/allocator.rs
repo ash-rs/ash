@@ -36,7 +36,37 @@ pub trait VkAllocation {
 }
 
 pub struct DefaultAllocatorCallback;
+pub struct TestAlloc;
 
+impl VkAllocation for TestAlloc {
+    unsafe extern "system" fn allocation(_: *mut (),
+                                         _: vk::size_t,
+                                         _: vk::size_t,
+                                         _: vk::SystemAllocationScope)
+                                         -> *mut () {
+        ptr::null_mut()
+    }
+
+    unsafe extern "system" fn reallocation(_: *mut vk::c_void,
+                                           _: *mut vk::c_void,
+                                           _: vk::size_t,
+                                           _: vk::size_t,
+                                           _: vk::SystemAllocationScope)
+                                           -> *mut vk::c_void {
+        ptr::null_mut()
+    }
+    unsafe extern "system" fn free(_: *mut vk::c_void, _: *mut vk::c_void) {}
+    unsafe extern "system" fn internal_allocation(_: *mut vk::c_void,
+                                                  _: vk::size_t,
+                                                  _: vk::InternalAllocationType,
+                                                  _: vk::SystemAllocationScope) {
+    }
+    unsafe extern "system" fn internal_free(_: *mut vk::c_void,
+                                            _: vk::size_t,
+                                            _: vk::InternalAllocationType,
+                                            _: vk::SystemAllocationScope) {
+    }
+}
 impl VkAllocation for DefaultAllocatorCallback {
     unsafe extern "system" fn allocation(_: *mut (),
                                          _: vk::size_t,

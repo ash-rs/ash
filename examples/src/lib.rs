@@ -249,7 +249,7 @@ impl ExampleBase {
                 pp_enabled_extension_names: extension_names_raw.as_ptr(),
                 enabled_extension_count: extension_names_raw.len() as u32,
             };
-            let instance: Instance = entry.create_instance(&create_info)
+            let instance: Instance = entry.create_instance(&create_info, None)
                 .expect("Instance creation error");
             let debug_info = vk::DebugReportCallbackCreateInfoEXT {
                 s_type: vk::StructureType::DebugReportCallbackCreateInfoExt,

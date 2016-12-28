@@ -69,11 +69,15 @@ impl Entry {
     }
 
     pub fn create_instance(&self,
-                           create_info: &vk::InstanceCreateInfo)
+                           create_info: &vk::InstanceCreateInfo,
+                           allocation_callbacks: Option<&vk::AllocationCallbacks>)
                            -> Result<Instance, InstanceError> {
         unsafe {
+            use ::RawPtr;
             let mut instance: vk::Instance = mem::uninitialized();
-            let err_code = self.entry_fn.create_instance(create_info, ptr::null(), &mut instance);
+            let err_code = self.entry_fn.create_instance(create_info,
+                                                         allocation_callbacks.as_raw_ptr(),
+                                                         &mut instance);
             if err_code != vk::Result::Success {
                 return Err(InstanceError::VkError(err_code));
             }
