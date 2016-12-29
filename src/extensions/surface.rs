@@ -1,3 +1,4 @@
+#![allow(dead_code)]
 use prelude::*;
 use std::ptr;
 use std::mem;
