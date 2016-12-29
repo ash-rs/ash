@@ -26,6 +26,7 @@ lazy_static!{
     static ref VK_LIB: Result<DynamicLibrary, String> = DynamicLibrary::open(Some(get_path()));
 }
 
+#[derive(Clone)]
 pub struct Entry {
     static_fn: vk::StaticFn,
     entry_fn: vk::EntryFn,
