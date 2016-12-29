@@ -481,6 +481,7 @@ fn main() {
             base.swapchain_loader.queue_present_khr(base.present_queue, &present_info).unwrap();
         });
 
+        base.device.device_wait_idle().unwrap();
         for pipeline in graphics_pipelines {
             base.device.destroy_pipeline(pipeline, None);
         }

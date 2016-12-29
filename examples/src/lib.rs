@@ -80,9 +80,9 @@ pub fn record_submit_commandbuffer<F: FnOnce(&Device, vk::CommandBuffer)>(device
 
 #[cfg(all(unix, not(target_os = "android")))]
 unsafe fn create_surface(instance: &Instance,
-                  entry: &Entry,
-                  window: &winit::Window)
-                  -> Result<vk::SurfaceKHR, vk::Result> {
+                         entry: &Entry,
+                         window: &winit::Window)
+                         -> Result<vk::SurfaceKHR, vk::Result> {
     use winit::os::unix::WindowExt;
     let x11_display = window.get_xlib_display().unwrap();
     let x11_window = window.get_xlib_window().unwrap();
@@ -100,9 +100,9 @@ unsafe fn create_surface(instance: &Instance,
 
 #[cfg(windows)]
 unsafe fn create_surface(instance: &Instance,
-                  entry: &Entry,
-                  window: &winit::Window)
-                  -> Result<vk::SurfaceKHR, vk::Result> {
+                         entry: &Entry,
+                         window: &winit::Window)
+                         -> Result<vk::SurfaceKHR, vk::Result> {
     use winit::os::windows::WindowExt;
     let hwnd = window.get_hwnd() as *mut winapi::windef::HWND__;
     let hinstance = unsafe { user32::GetWindow(hwnd, 0) as *const () };
@@ -141,19 +141,45 @@ unsafe extern "system" fn vulkan_debug_callback(_: vk::DebugReportFlagsEXT,
     1
 }
 
+
 pub fn find_memorytype_index(memory_req: &vk::MemoryRequirements,
                              memory_prop: &vk::PhysicalDeviceMemoryProperties,
                              flags: vk::MemoryPropertyFlags)
                              -> Option<u32> {
+    // Try to find an exactly matching memory flag
+    let best_suitable_index =
+        find_memorytype_index_f(memory_req,
+                                memory_prop,
+                                flags,
+                                |property_flags, flags| property_flags == flags);
+    if best_suitable_index.is_some() {
+        return best_suitable_index;
+    }
+    // Otherwise find a memory flag that works
+    find_memorytype_index_f(memory_req,
+                            memory_prop,
+                            flags,
+                            |property_flags, flags| property_flags & flags == flags)
+}
+
+pub fn find_memorytype_index_f<F: Fn(vk::MemoryPropertyFlags, vk::MemoryPropertyFlags) -> bool>
+    (memory_req: &vk::MemoryRequirements,
+     memory_prop: &vk::PhysicalDeviceMemoryProperties,
+     flags: vk::MemoryPropertyFlags,
+     f: F)
+     -> Option<u32> {
     let mut memory_type_bits = memory_req.memory_type_bits;
     for (index, ref memory_type) in memory_prop.memory_types.iter().enumerate() {
-        if (memory_type.property_flags & flags) == flags {
-            return Some(index as u32);
+        if memory_type_bits & 1 == 1 {
+            if f(memory_type.property_flags, flags) {
+                return Some(index as u32);
+            }
         }
         memory_type_bits = memory_type_bits >> 1;
     }
     None
 }
+
 fn resize_callback(width: u32, height: u32) {
     println!("Window resized to {}x{}", width, height);
 }
@@ -254,8 +280,9 @@ impl ExampleBase {
             };
             let debug_report_loader = DebugReport::new(&entry, &instance)
                 .expect("Unable to load debug report");
-            let debug_call_back = debug_report_loader.create_debug_report_callback_ext(&debug_info, None)
-                .unwrap();
+            let debug_call_back =
+                debug_report_loader.create_debug_report_callback_ext(&debug_info, None)
+                    .unwrap();
             let surface = create_surface(&instance, &entry, &window).unwrap();
             let pdevices = instance.enumerate_physical_devices().expect("Physical device error");
             let surface_loader = Surface::new(&entry, &instance)
@@ -379,7 +406,8 @@ impl ExampleBase {
                 p_queue_family_indices: ptr::null(),
                 queue_family_index_count: 0,
             };
-            let swapchain = swapchain_loader.create_swapchain_khr(&swapchain_create_info, None).unwrap();
+            let swapchain = swapchain_loader.create_swapchain_khr(&swapchain_create_info, None)
+                .unwrap();
             let pool_create_info = vk::CommandPoolCreateInfo {
                 s_type: vk::StructureType::CommandPoolCreateInfo,
                 p_next: ptr::null(),
@@ -473,54 +501,40 @@ impl ExampleBase {
                 p_inheritance_info: ptr::null(),
                 flags: vk::COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT,
             };
-            device.begin_command_buffer(setup_command_buffer, &command_buffer_begin_info).unwrap();
-            let layout_transition_barrier = vk::ImageMemoryBarrier {
-                s_type: vk::StructureType::ImageMemoryBarrier,
-                p_next: ptr::null(),
-                src_access_mask: Default::default(),
-                dst_access_mask: vk::ACCESS_DEPTH_STENCIL_ATTACHMENT_READ_BIT |
-                                 vk::ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT,
-                old_layout: vk::ImageLayout::Undefined,
-                new_layout: vk::ImageLayout::DepthStencilAttachmentOptimal,
-                src_queue_family_index: vk::VK_QUEUE_FAMILY_IGNORED,
-                dst_queue_family_index: vk::VK_QUEUE_FAMILY_IGNORED,
-                image: depth_image,
-                subresource_range: vk::ImageSubresourceRange {
-                    aspect_mask: vk::IMAGE_ASPECT_DEPTH_BIT,
-                    base_mip_level: 0,
-                    level_count: 1,
-                    base_array_layer: 0,
-                    layer_count: 1,
-                },
-            };
-            device.cmd_pipeline_barrier(setup_command_buffer,
-                                        vk::PIPELINE_STAGE_TOP_OF_PIPE_BIT,
-                                        vk::PIPELINE_STAGE_TOP_OF_PIPE_BIT,
-                                        vk::DependencyFlags::empty(),
+            record_submit_commandbuffer(&device,
+                                        setup_command_buffer,
+                                        present_queue,
+                                        &[vk::PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT],
                                         &[],
                                         &[],
-                                        &[layout_transition_barrier]);
-            let wait_stage_mask = [vk::PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT];
-            let fence_create_info = vk::FenceCreateInfo {
-                s_type: vk::StructureType::FenceCreateInfo,
-                p_next: ptr::null(),
-                flags: vk::FenceCreateFlags::empty(),
-            };
-            let submit_fence = device.create_fence(&fence_create_info, None).unwrap();
-            let submit_info = vk::SubmitInfo {
-                s_type: vk::StructureType::SubmitInfo,
-                p_next: ptr::null(),
-                wait_semaphore_count: 0,
-                p_wait_semaphores: ptr::null(),
-                signal_semaphore_count: 0,
-                p_signal_semaphores: ptr::null(),
-                p_wait_dst_stage_mask: wait_stage_mask.as_ptr(),
-                command_buffer_count: 1,
-                p_command_buffers: &setup_command_buffer,
-            };
-            device.end_command_buffer(setup_command_buffer).unwrap();
-            device.queue_submit(present_queue, &[submit_info], submit_fence).unwrap();
-            device.wait_for_fences(&[submit_fence], true, std::u64::MAX).unwrap();
+                                        |device, setup_command_buffer| {
+                let layout_transition_barrier = vk::ImageMemoryBarrier {
+                    s_type: vk::StructureType::ImageMemoryBarrier,
+                    p_next: ptr::null(),
+                    src_access_mask: Default::default(),
+                    dst_access_mask: vk::ACCESS_DEPTH_STENCIL_ATTACHMENT_READ_BIT |
+                                     vk::ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT,
+                    old_layout: vk::ImageLayout::Undefined,
+                    new_layout: vk::ImageLayout::DepthStencilAttachmentOptimal,
+                    src_queue_family_index: vk::VK_QUEUE_FAMILY_IGNORED,
+                    dst_queue_family_index: vk::VK_QUEUE_FAMILY_IGNORED,
+                    image: depth_image,
+                    subresource_range: vk::ImageSubresourceRange {
+                        aspect_mask: vk::IMAGE_ASPECT_DEPTH_BIT,
+                        base_mip_level: 0,
+                        level_count: 1,
+                        base_array_layer: 0,
+                        layer_count: 1,
+                    },
+                };
+                device.cmd_pipeline_barrier(setup_command_buffer,
+                                            vk::PIPELINE_STAGE_TOP_OF_PIPE_BIT,
+                                            vk::PIPELINE_STAGE_TOP_OF_PIPE_BIT,
+                                            vk::DependencyFlags::empty(),
+                                            &[],
+                                            &[],
+                                            &[layout_transition_barrier]);
+            });
             let depth_image_view_info = vk::ImageViewCreateInfo {
                 s_type: vk::StructureType::ImageViewCreateInfo,
                 p_next: ptr::null(),
@@ -589,9 +603,9 @@ impl Drop for ExampleBase {
             self.device.device_wait_idle().unwrap();
             self.device.destroy_semaphore(self.present_complete_semaphore, None);
             self.device.destroy_semaphore(self.rendering_complete_semaphore, None);
+            self.device.free_memory(self.depth_image_memory, None);
             self.device.destroy_image_view(self.depth_image_view, None);
             self.device.destroy_image(self.depth_image, None);
-            self.device.free_memory(self.depth_image_memory, None);
             for &image_view in self.present_image_views.iter() {
                 self.device.destroy_image_view(image_view, None);
             }

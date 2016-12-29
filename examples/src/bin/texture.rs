@@ -830,6 +830,7 @@ fn main() {
             };
             base.swapchain_loader.queue_present_khr(base.present_queue, &present_info).unwrap();
         });
+        base.device.device_wait_idle().unwrap();
 
         for pipeline in graphics_pipelines {
             base.device.destroy_pipeline(pipeline, None);
@@ -837,10 +838,22 @@ fn main() {
         base.device.destroy_pipeline_layout(pipeline_layout, None);
         base.device.destroy_shader_module(vertex_shader_module, None);
         base.device.destroy_shader_module(fragment_shader_module, None);
+        base.device.free_memory(image_buffer_memory, None);
+        base.device.destroy_buffer(image_buffer, None);
+        base.device.free_memory(texture_memory, None);
+        base.device.destroy_image_view(tex_image_view, None);
+        base.device.destroy_image(texture_image, None);
         base.device.free_memory(index_buffer_memory, None);
         base.device.destroy_buffer(index_buffer, None);
+        base.device.free_memory(uniform_color_buffer_memory, None);
+        base.device.destroy_buffer(uniform_color_buffer, None);
         base.device.free_memory(vertex_input_buffer_memory, None);
         base.device.destroy_buffer(vertex_input_buffer, None);
+        for &descriptor_set_layout in desc_set_layouts.iter() {
+            base.device.destroy_descriptor_set_layout(descriptor_set_layout, None);
+        }
+        base.device.destroy_descriptor_pool(descriptor_pool, None);
+        base.device.destroy_sampler(sampler, None);
         for framebuffer in framebuffers {
             base.device.destroy_framebuffer(framebuffer, None);
         }
