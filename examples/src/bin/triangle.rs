@@ -478,7 +478,7 @@ fn main() {
                 p_image_indices: &present_index,
                 p_results: &mut present_info_err,
             };
-            base.device.queue_present_khr(base.present_queue, &present_info).unwrap();
+            base.swapchain_loader.queue_present_khr(base.present_queue, &present_info).unwrap();
         });
 
         for pipeline in graphics_pipelines {
