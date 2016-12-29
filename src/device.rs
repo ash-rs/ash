@@ -584,18 +584,6 @@ impl Device {
         }
     }
 
-    pub unsafe fn queue_present_khr(&self,
-                                    queue: vk::Queue,
-                                    create_info: &vk::PresentInfoKHR)
-                                    -> VkResult<()> {
-        let err_code = self.device_fn
-            .queue_present_khr(queue, create_info);
-        match err_code {
-            vk::Result::Success => Ok(()),
-            _ => Err(err_code),
-        }
-    }
-
     pub unsafe fn queue_submit(&self,
                                queue: vk::Queue,
                                submits: &[vk::SubmitInfo],

@@ -3825,104 +3825,6 @@ vk_functions!{
         p_properties: *mut SparseImageFormatProperties,
     ) -> ();
 
-    "vkCreateXcbSurfaceKHR", create_xcb_surface_khr(
-        instance: Instance,
-        p_create_info: *const XcbSurfaceCreateInfoKHR,
-        p_allocator: *const AllocationCallbacks,
-        p_surface: *mut SurfaceKHR,
-    ) -> Result;
-
-    "vkGetPhysicalDeviceXcbPresentationSupportKHR", get_physical_device_xcb_presentation_support_khr(
-        physical_device: PhysicalDevice,
-        queue_family_index: uint32_t,
-        connection: *mut xcb_connection_t,
-        visual_id: xcb_visualid_t,
-    ) -> Bool32;
-
-    "vkCreateMirSurfaceKHR", create_mir_surface_khr(
-        instance: Instance,
-        p_create_info: *const MirSurfaceCreateInfoKHR,
-        p_allocator: *const AllocationCallbacks,
-        p_surface: *mut SurfaceKHR,
-    ) -> Result;
-
-    "vkGetPhysicalDeviceMirPresentationSupportKHR", get_physical_device_mir_presentation_support_khr(
-        physical_device: PhysicalDevice,
-        queue_family_index: uint32_t,
-        connection: *mut MirConnection,
-    ) -> Bool32;
-
-    "vkCreateAndroidSurfaceKHR", create_android_surface_khr(
-        instance: Instance,
-        p_create_info: *const AndroidSurfaceCreateInfoKHR,
-        p_allocator: *const AllocationCallbacks,
-        p_surface: *mut SurfaceKHR,
-    ) -> Result;
-
-    "vkCreateWaylandSurfaceKHR", create_wayland_surface_khr(
-        instance: Instance,
-        p_create_info: *const WaylandSurfaceCreateInfoKHR,
-        p_allocator: *const AllocationCallbacks,
-        p_surface: *mut SurfaceKHR,
-    ) -> Result;
-
-    "vkGetPhysicalDeviceWaylandPresentationSupportKHR", get_physical_device_wayland_presentation_support_khr(
-        physical_device: PhysicalDevice,
-        queue_family_index: uint32_t,
-        display: *mut wl_display,
-    ) -> Bool32;
-
-
-
-
-    "vkGetPhysicalDeviceDisplayPropertiesKHR", get_physical_device_display_properties_khr(
-        physical_device: PhysicalDevice,
-        p_property_count: *mut uint32_t,
-        p_properties: *mut DisplayPropertiesKHR,
-    ) -> Result;
-
-    "vkGetPhysicalDeviceDisplayPlanePropertiesKHR", get_physical_device_display_plane_properties_khr(
-        physical_device: PhysicalDevice,
-        p_property_count: *mut uint32_t,
-        p_properties: *mut DisplayPlanePropertiesKHR,
-    ) -> Result;
-
-    "vkGetDisplayPlaneSupportedDisplaysKHR", get_display_plane_supported_displays_khr(
-        physical_device: PhysicalDevice,
-        plane_index: uint32_t,
-        p_display_count: *mut uint32_t,
-        p_displays: *mut DisplayKHR,
-    ) -> Result;
-
-    "vkGetDisplayModePropertiesKHR", get_display_mode_properties_khr(
-        physical_device: PhysicalDevice,
-        display: DisplayKHR,
-        p_property_count: *mut uint32_t,
-        p_properties: *mut DisplayModePropertiesKHR,
-    ) -> Result;
-
-    "vkCreateDisplayModeKHR", create_display_mode_khr(
-        physical_device: PhysicalDevice,
-        display: DisplayKHR,
-        p_create_info: *const DisplayModeCreateInfoKHR,
-        p_allocator: *const AllocationCallbacks,
-        p_mode: *mut DisplayModeKHR,
-    ) -> Result;
-
-    "vkGetDisplayPlaneCapabilitiesKHR", get_display_plane_capabilities_khr(
-        physical_device: PhysicalDevice,
-        mode: DisplayModeKHR,
-        plane_index: uint32_t,
-        p_capabilities: *mut DisplayPlaneCapabilitiesKHR,
-    ) -> Result;
-
-    "vkCreateDisplayPlaneSurfaceKHR", create_display_plane_surface_khr(
-        instance: Instance,
-        p_create_info: *const DisplaySurfaceCreateInfoKHR,
-        p_allocator: *const AllocationCallbacks,
-        p_surface: *mut SurfaceKHR,
-    ) -> Result;
-
 }
 
 vk_functions!{
@@ -4754,11 +4656,6 @@ vk_functions!{
         command_buffer_count: uint32_t,
         p_command_buffers: *const CommandBuffer,
     ) -> ();
-
-    "vkQueuePresentKHR", queue_present_khr(
-        queue: Queue,
-        p_present_info: *const PresentInfoKHR,
-    ) -> Result;
 }
 vk_functions!{
     SwapchainFn,
@@ -4797,6 +4694,11 @@ vk_functions!{
         semaphore: Semaphore,
         fence: Fence,
         p_image_index: *mut uint32_t,
+    ) -> Result;
+
+    "vkQueuePresentKHR", queue_present_khr(
+        queue: Queue,
+        p_present_info: *const PresentInfoKHR,
     ) -> Result;
 }
 vk_functions!{
@@ -4889,5 +4791,111 @@ vk_functions!{
         physical_device: PhysicalDevice,
         queue_family_index: uint32_t,
     ) -> Bool32;
+}
+vk_functions!{
+    MirSurfaceFn,
+    "vkCreateMirSurfaceKHR", create_mir_surface_khr(
+        instance: Instance,
+        p_create_info: *const MirSurfaceCreateInfoKHR,
+        p_allocator: *const AllocationCallbacks,
+        p_surface: *mut SurfaceKHR,
+    ) -> Result;
+
+    "vkGetPhysicalDeviceMirPresentationSupportKHR", get_physical_device_mir_presentation_support_khr(
+        physical_device: PhysicalDevice,
+        queue_family_index: uint32_t,
+        connection: *mut MirConnection,
+    ) -> Bool32;
+}
+vk_functions!{
+    XcbSurfaceFn,
+    "vkCreateXcbSurfaceKHR", create_xcb_surface_khr(
+        instance: Instance,
+        p_create_info: *const XcbSurfaceCreateInfoKHR,
+        p_allocator: *const AllocationCallbacks,
+        p_surface: *mut SurfaceKHR,
+    ) -> Result;
+
+    "vkGetPhysicalDeviceXcbPresentationSupportKHR", get_physical_device_xcb_presentation_support_khr(
+        physical_device: PhysicalDevice,
+        queue_family_index: uint32_t,
+        connection: *mut xcb_connection_t,
+        visual_id: xcb_visualid_t,
+    ) -> Bool32;
+}
+vk_functions!{
+    AndroidSurfaceFn,
+    "vkCreateAndroidSurfaceKHR", create_android_surface_khr(
+        instance: Instance,
+        p_create_info: *const AndroidSurfaceCreateInfoKHR,
+        p_allocator: *const AllocationCallbacks,
+        p_surface: *mut SurfaceKHR,
+    ) -> Result;
+
+}
+vk_functions!{
+    WaylandSurfaceFn,
+    "vkCreateWaylandSurfaceKHR", create_wayland_surface_khr(
+        instance: Instance,
+        p_create_info: *const WaylandSurfaceCreateInfoKHR,
+        p_allocator: *const AllocationCallbacks,
+        p_surface: *mut SurfaceKHR,
+    ) -> Result;
+
+    "vkGetPhysicalDeviceWaylandPresentationSupportKHR", get_physical_device_wayland_presentation_support_khr(
+        physical_device: PhysicalDevice,
+        queue_family_index: uint32_t,
+        display: *mut wl_display,
+    ) -> Bool32;
+}
+vk_functions!{
+    DisplayFn,
+    "vkGetPhysicalDeviceDisplayPropertiesKHR", get_physical_device_display_properties_khr(
+        physical_device: PhysicalDevice,
+        p_property_count: *mut uint32_t,
+        p_properties: *mut DisplayPropertiesKHR,
+    ) -> Result;
+
+    "vkGetPhysicalDeviceDisplayPlanePropertiesKHR", get_physical_device_display_plane_properties_khr(
+        physical_device: PhysicalDevice,
+        p_property_count: *mut uint32_t,
+        p_properties: *mut DisplayPlanePropertiesKHR,
+    ) -> Result;
+
+    "vkGetDisplayPlaneSupportedDisplaysKHR", get_display_plane_supported_displays_khr(
+        physical_device: PhysicalDevice,
+        plane_index: uint32_t,
+        p_display_count: *mut uint32_t,
+        p_displays: *mut DisplayKHR,
+    ) -> Result;
+
+    "vkGetDisplayModePropertiesKHR", get_display_mode_properties_khr(
+        physical_device: PhysicalDevice,
+        display: DisplayKHR,
+        p_property_count: *mut uint32_t,
+        p_properties: *mut DisplayModePropertiesKHR,
+    ) -> Result;
+
+    "vkCreateDisplayModeKHR", create_display_mode_khr(
+        physical_device: PhysicalDevice,
+        display: DisplayKHR,
+        p_create_info: *const DisplayModeCreateInfoKHR,
+        p_allocator: *const AllocationCallbacks,
+        p_mode: *mut DisplayModeKHR,
+    ) -> Result;
+
+    "vkGetDisplayPlaneCapabilitiesKHR", get_display_plane_capabilities_khr(
+        physical_device: PhysicalDevice,
+        mode: DisplayModeKHR,
+        plane_index: uint32_t,
+        p_capabilities: *mut DisplayPlaneCapabilitiesKHR,
+    ) -> Result;
+
+    "vkCreateDisplayPlaneSurfaceKHR", create_display_plane_surface_khr(
+        instance: Instance,
+        p_create_info: *const DisplaySurfaceCreateInfoKHR,
+        p_allocator: *const AllocationCallbacks,
+        p_surface: *mut SurfaceKHR,
+    ) -> Result;
 }
 }

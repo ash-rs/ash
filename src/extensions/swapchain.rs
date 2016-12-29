@@ -70,6 +70,18 @@ impl Swapchain {
         }
     }
 
+    pub unsafe fn queue_present_khr(&self,
+                                    queue: vk::Queue,
+                                    create_info: &vk::PresentInfoKHR)
+                                    -> VkResult<()> {
+        let err_code = self.swapchain_fn
+            .queue_present_khr(queue, create_info);
+        match err_code {
+            vk::Result::Success => Ok(()),
+            _ => Err(err_code),
+        }
+    }
+
     pub fn get_swapchain_images_khr(&self,
                                     swapchain: vk::SwapchainKHR)
                                     -> VkResult<Vec<vk::Image>> {
