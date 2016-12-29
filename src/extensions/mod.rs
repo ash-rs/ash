@@ -3,9 +3,17 @@ pub use self::surface::Surface;
 pub use self::xlibsurface::XlibSurface;
 pub use self::debug_report::DebugReport;
 pub use self::win32_surface::Win32Surface;
+pub use self::mir_surface::MirSurface;
+pub use self::xcb_surface::XcbSurface;
+pub use self::wayland_surface::WaylandSurface;
+pub use self::android_surface::AndroidSurface;
 
 mod swapchain;
 mod surface;
 mod xlibsurface;
 mod debug_report;
 mod win32_surface;
+mod mir_surface;
+mod android_surface;
+mod wayland_surface;
+mod xcb_surface;

@@ -3824,7 +3824,6 @@ vk_functions!{
         p_property_count: *mut uint32_t,
         p_properties: *mut SparseImageFormatProperties,
     ) -> ();
-
 }
 
 vk_functions!{
