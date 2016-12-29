@@ -1,5 +1,4 @@
 use prelude::*;
-use std::ptr;
 use std::mem;
 use instance::Instance;
 use entry::Entry;
@@ -30,17 +29,18 @@ impl XlibSurface {
     }
 
     pub unsafe fn create_xlib_surface_khr(&self,
-                                   create_info: &vk::XlibSurfaceCreateInfoKHR,
-                                   allocation_callbacks: Option<&vk::AllocationCallbacks>)
-                                   -> VkResult<vk::SurfaceKHR> {
-        unsafe {
-            let mut surface = mem::uninitialized();
-            let err_code = self.xlib_surface_fn
-                .create_xlib_surface_khr(self.handle, create_info, allocation_callbacks.as_raw_ptr(), &mut surface);
-            match err_code {
-                vk::Result::Success => Ok(surface),
-                _ => Err(err_code),
-            }
+                                          create_info: &vk::XlibSurfaceCreateInfoKHR,
+                                          allocation_callbacks: Option<&vk::AllocationCallbacks>)
+                                          -> VkResult<vk::SurfaceKHR> {
+        let mut surface = mem::uninitialized();
+        let err_code = self.xlib_surface_fn
+            .create_xlib_surface_khr(self.handle,
+                                     create_info,
+                                     allocation_callbacks.as_raw_ptr(),
+                                     &mut surface);
+        match err_code {
+            vk::Result::Success => Ok(surface),
+            _ => Err(err_code),
         }
     }
 }

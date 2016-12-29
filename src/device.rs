@@ -1,6 +1,5 @@
 #![allow(dead_code)]
 use prelude::*;
-use std::ptr;
 use std::mem;
 use vk;
 use ::RawPtr;
@@ -148,17 +147,15 @@ impl Device {
                                  create_info: &vk::SamplerCreateInfo,
                                  allocation_callbacks: Option<&vk::AllocationCallbacks>)
                                  -> VkResult<vk::Sampler> {
-        unsafe {
-            let mut sampler = mem::uninitialized();
-            let err_code = self.device_fn
-                .create_sampler(self.handle,
-                                create_info,
-                                allocation_callbacks.as_raw_ptr(),
-                                &mut sampler);
-            match err_code {
-                vk::Result::Success => Ok(sampler),
-                _ => Err(err_code),
-            }
+        let mut sampler = mem::uninitialized();
+        let err_code = self.device_fn
+            .create_sampler(self.handle,
+                            create_info,
+                            allocation_callbacks.as_raw_ptr(),
+                            &mut sampler);
+        match err_code {
+            vk::Result::Success => Ok(sampler),
+            _ => Err(err_code),
         }
     }
 
@@ -223,17 +220,15 @@ impl Device {
                                         create_info: &vk::DescriptorSetLayoutCreateInfo,
                                         allocation_callbacks: Option<&vk::AllocationCallbacks>)
                                         -> VkResult<vk::DescriptorSetLayout> {
-        unsafe {
-            let mut layout = mem::uninitialized();
-            let err_code = self.device_fn
-                .create_descriptor_set_layout(self.handle,
-                                              create_info,
-                                              allocation_callbacks.as_raw_ptr(),
-                                              &mut layout);
-            match err_code {
-                vk::Result::Success => Ok(layout),
-                _ => Err(err_code),
-            }
+        let mut layout = mem::uninitialized();
+        let err_code = self.device_fn
+            .create_descriptor_set_layout(self.handle,
+                                          create_info,
+                                          allocation_callbacks.as_raw_ptr(),
+                                          &mut layout);
+        match err_code {
+            vk::Result::Success => Ok(layout),
+            _ => Err(err_code),
         }
     }
 
@@ -251,17 +246,15 @@ impl Device {
                                          create_info: &vk::DescriptorPoolCreateInfo,
                                          allocation_callbacks: Option<&vk::AllocationCallbacks>)
                                          -> VkResult<vk::DescriptorPool> {
-        unsafe {
-            let mut pool = mem::uninitialized();
-            let err_code = self.device_fn
-                .create_descriptor_pool(self.handle,
-                                        create_info,
-                                        allocation_callbacks.as_raw_ptr(),
-                                        &mut pool);
-            match err_code {
-                vk::Result::Success => Ok(pool),
-                _ => Err(err_code),
-            }
+        let mut pool = mem::uninitialized();
+        let err_code = self.device_fn
+            .create_descriptor_pool(self.handle,
+                                    create_info,
+                                    allocation_callbacks.as_raw_ptr(),
+                                    &mut pool);
+        match err_code {
+            vk::Result::Success => Ok(pool),
+            _ => Err(err_code),
         }
     }
 
@@ -392,17 +385,15 @@ impl Device {
                                    create_info: &vk::SemaphoreCreateInfo,
                                    allocation_callbacks: Option<&vk::AllocationCallbacks>)
                                    -> VkResult<vk::Semaphore> {
-        unsafe {
-            let mut semaphore = mem::uninitialized();
-            let err_code = self.device_fn
-                .create_semaphore(self.handle,
-                                  create_info,
-                                  allocation_callbacks.as_raw_ptr(),
-                                  &mut semaphore);
-            match err_code {
-                vk::Result::Success => Ok(semaphore),
-                _ => Err(err_code),
-            }
+        let mut semaphore = mem::uninitialized();
+        let err_code = self.device_fn
+            .create_semaphore(self.handle,
+                              create_info,
+                              allocation_callbacks.as_raw_ptr(),
+                              &mut semaphore);
+        match err_code {
+            vk::Result::Success => Ok(semaphore),
+            _ => Err(err_code),
         }
     }
 
@@ -411,20 +402,18 @@ impl Device {
                                      create_infos: &[vk::GraphicsPipelineCreateInfo],
                                      allocation_callbacks: Option<&vk::AllocationCallbacks>)
                                      -> VkResult<Vec<vk::Pipeline>> {
-        unsafe {
-            let mut pipelines = Vec::with_capacity(create_infos.len());
-            let err_code = self.device_fn
-                .create_graphics_pipelines(self.handle,
-                                           pipeline_cache,
-                                           create_infos.len() as vk::uint32_t,
-                                           create_infos.as_ptr(),
-                                           allocation_callbacks.as_raw_ptr(),
-                                           pipelines.as_mut_ptr());
-            pipelines.set_len(create_infos.len());
-            match err_code {
-                vk::Result::Success => Ok(pipelines),
-                _ => Err(err_code),
-            }
+        let mut pipelines = Vec::with_capacity(create_infos.len());
+        let err_code = self.device_fn
+            .create_graphics_pipelines(self.handle,
+                                       pipeline_cache,
+                                       create_infos.len() as vk::uint32_t,
+                                       create_infos.as_ptr(),
+                                       allocation_callbacks.as_raw_ptr(),
+                                       pipelines.as_mut_ptr());
+        pipelines.set_len(create_infos.len());
+        match err_code {
+            vk::Result::Success => Ok(pipelines),
+            _ => Err(err_code),
         }
     }
 
@@ -432,17 +421,15 @@ impl Device {
                                 create_info: &vk::BufferCreateInfo,
                                 allocation_callbacks: Option<&vk::AllocationCallbacks>)
                                 -> VkResult<vk::Buffer> {
-        unsafe {
-            let mut buffer = mem::uninitialized();
-            let err_code = self.device_fn
-                .create_buffer(self.handle,
-                               create_info,
-                               allocation_callbacks.as_raw_ptr(),
-                               &mut buffer);
-            match err_code {
-                vk::Result::Success => Ok(buffer),
-                _ => Err(err_code),
-            }
+        let mut buffer = mem::uninitialized();
+        let err_code = self.device_fn
+            .create_buffer(self.handle,
+                           create_info,
+                           allocation_callbacks.as_raw_ptr(),
+                           &mut buffer);
+        match err_code {
+            vk::Result::Success => Ok(buffer),
+            _ => Err(err_code),
         }
     }
 
@@ -509,12 +496,10 @@ impl Device {
                                    queue_family_index: vk::uint32_t,
                                    queue_index: vk::uint32_t)
                                    -> vk::Queue {
-        unsafe {
-            let mut queue = mem::uninitialized();
-            self.device_fn
-                .get_device_queue(self.handle, queue_family_index, queue_index, &mut queue);
-            queue
-        }
+        let mut queue = mem::uninitialized();
+        self.device_fn
+            .get_device_queue(self.handle, queue_family_index, queue_index, &mut queue);
+        queue
     }
 
     pub unsafe fn cmd_pipeline_barrier(&self,
@@ -541,17 +526,15 @@ impl Device {
                                      create_info: &vk::RenderPassCreateInfo,
                                      allocation_callbacks: Option<&vk::AllocationCallbacks>)
                                      -> VkResult<vk::RenderPass> {
-        unsafe {
-            let mut renderpass = mem::uninitialized();
-            let err_code = self.device_fn
-                .create_render_pass(self.handle,
-                                    create_info,
-                                    allocation_callbacks.as_raw_ptr(),
-                                    &mut renderpass);
-            match err_code {
-                vk::Result::Success => Ok(renderpass),
-                _ => Err(err_code),
-            }
+        let mut renderpass = mem::uninitialized();
+        let err_code = self.device_fn
+            .create_render_pass(self.handle,
+                                create_info,
+                                allocation_callbacks.as_raw_ptr(),
+                                &mut renderpass);
+        match err_code {
+            vk::Result::Success => Ok(renderpass),
+            _ => Err(err_code),
         }
     }
 
@@ -581,27 +564,23 @@ impl Device {
                                   wait_all: bool,
                                   timeout: vk::uint64_t)
                                   -> VkResult<()> {
-        unsafe {
-            let err_code = self.device_fn
-                .wait_for_fences(self.handle,
-                                 fences.len() as vk::uint32_t,
-                                 fences.as_ptr(),
-                                 wait_all as vk::uint32_t,
-                                 timeout);
-            match err_code {
-                vk::Result::Success => Ok(()),
-                _ => Err(err_code),
-            }
+        let err_code = self.device_fn
+            .wait_for_fences(self.handle,
+                             fences.len() as vk::uint32_t,
+                             fences.as_ptr(),
+                             wait_all as vk::uint32_t,
+                             timeout);
+        match err_code {
+            vk::Result::Success => Ok(()),
+            _ => Err(err_code),
         }
     }
 
     pub unsafe fn queue_wait_idle(&self, queue: vk::Queue) -> VkResult<()> {
-        unsafe {
-            let err_code = self.device_fn.queue_wait_idle(queue);
-            match err_code {
-                vk::Result::Success => Ok(()),
-                _ => Err(err_code),
-            }
+        let err_code = self.device_fn.queue_wait_idle(queue);
+        match err_code {
+            vk::Result::Success => Ok(()),
+            _ => Err(err_code),
         }
     }
 
@@ -637,17 +616,15 @@ impl Device {
                                     create_info: &vk::ImageViewCreateInfo,
                                     allocation_callbacks: Option<&vk::AllocationCallbacks>)
                                     -> VkResult<vk::ImageView> {
-        unsafe {
-            let mut image_view = mem::uninitialized();
-            let err_code = self.device_fn
-                .create_image_view(self.handle,
-                                   create_info,
-                                   allocation_callbacks.as_raw_ptr(),
-                                   &mut image_view);
-            match err_code {
-                vk::Result::Success => Ok(image_view),
-                _ => Err(err_code),
-            }
+        let mut image_view = mem::uninitialized();
+        let err_code = self.device_fn
+            .create_image_view(self.handle,
+                               create_info,
+                               allocation_callbacks.as_raw_ptr(),
+                               &mut image_view);
+        match err_code {
+            vk::Result::Success => Ok(image_view),
+            _ => Err(err_code),
         }
     }
 
@@ -669,17 +646,15 @@ impl Device {
                                       create_info: &vk::CommandPoolCreateInfo,
                                       allocation_callbacks: Option<&vk::AllocationCallbacks>)
                                       -> VkResult<vk::CommandPool> {
-        unsafe {
-            let mut pool = mem::uninitialized();
-            let err_code = self.device_fn
-                .create_command_pool(self.handle,
-                                     create_info,
-                                     allocation_callbacks.as_raw_ptr(),
-                                     &mut pool);
-            match err_code {
-                vk::Result::Success => Ok(pool),
-                _ => Err(err_code),
-            }
+        let mut pool = mem::uninitialized();
+        let err_code = self.device_fn
+            .create_command_pool(self.handle,
+                                 create_info,
+                                 allocation_callbacks.as_raw_ptr(),
+                                 &mut pool);
+        match err_code {
+            vk::Result::Success => Ok(pool),
+            _ => Err(err_code),
         }
     }
 
@@ -687,17 +662,15 @@ impl Device {
                                create_info: &vk::ImageCreateInfo,
                                allocation_callbacks: Option<&vk::AllocationCallbacks>)
                                -> VkResult<vk::Image> {
-        unsafe {
-            let mut image = mem::uninitialized();
-            let err_code = self.device_fn
-                .create_image(self.handle,
-                              create_info,
-                              allocation_callbacks.as_raw_ptr(),
-                              &mut image);
-            match err_code {
-                vk::Result::Success => Ok(image),
-                _ => Err(err_code),
-            }
+        let mut image = mem::uninitialized();
+        let err_code = self.device_fn
+            .create_image(self.handle,
+                          create_info,
+                          allocation_callbacks.as_raw_ptr(),
+                          &mut image);
+        match err_code {
+            vk::Result::Success => Ok(image),
+            _ => Err(err_code),
         }
     }
 
@@ -723,17 +696,15 @@ impl Device {
                                   create_info: &vk::MemoryAllocateInfo,
                                   allocation_callbacks: Option<&vk::AllocationCallbacks>)
                                   -> VkResult<vk::DeviceMemory> {
-        unsafe {
-            let mut memory = mem::uninitialized();
-            let err_code = self.device_fn
-                .allocate_memory(self.handle,
-                                 create_info,
-                                 allocation_callbacks.as_raw_ptr(),
-                                 &mut memory);
-            match err_code {
-                vk::Result::Success => Ok(memory),
-                _ => Err(err_code),
-            }
+        let mut memory = mem::uninitialized();
+        let err_code = self.device_fn
+            .allocate_memory(self.handle,
+                             create_info,
+                             allocation_callbacks.as_raw_ptr(),
+                             &mut memory);
+        match err_code {
+            vk::Result::Success => Ok(memory),
+            _ => Err(err_code),
         }
     }
 
@@ -741,17 +712,15 @@ impl Device {
                                        create_info: &vk::ShaderModuleCreateInfo,
                                        allocation_callbacks: Option<&vk::AllocationCallbacks>)
                                        -> VkResult<vk::ShaderModule> {
-        unsafe {
-            let mut shader = mem::uninitialized();
-            let err_code = self.device_fn
-                .create_shader_module(self.handle,
-                                      create_info,
-                                      allocation_callbacks.as_raw_ptr(),
-                                      &mut shader);
-            match err_code {
-                vk::Result::Success => Ok(shader),
-                _ => Err(err_code),
-            }
+        let mut shader = mem::uninitialized();
+        let err_code = self.device_fn
+            .create_shader_module(self.handle,
+                                  create_info,
+                                  allocation_callbacks.as_raw_ptr(),
+                                  &mut shader);
+        match err_code {
+            vk::Result::Success => Ok(shader),
+            _ => Err(err_code),
         }
     }
 
@@ -759,17 +728,15 @@ impl Device {
                                create_info: &vk::FenceCreateInfo,
                                allocation_callbacks: Option<&vk::AllocationCallbacks>)
                                -> VkResult<vk::Fence> {
-        unsafe {
-            let mut fence = mem::uninitialized();
-            let err_code = self.device_fn
-                .create_fence(self.handle,
-                              create_info,
-                              allocation_callbacks.as_raw_ptr(),
-                              &mut fence);
-            match err_code {
-                vk::Result::Success => Ok(fence),
-                _ => Err(err_code),
-            }
+        let mut fence = mem::uninitialized();
+        let err_code = self.device_fn
+            .create_fence(self.handle,
+                          create_info,
+                          allocation_callbacks.as_raw_ptr(),
+                          &mut fence);
+        match err_code {
+            vk::Result::Success => Ok(fence),
+            _ => Err(err_code),
         }
     }
 

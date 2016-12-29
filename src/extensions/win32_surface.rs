@@ -1,5 +1,4 @@
 use prelude::*;
-use std::ptr;
 use std::mem;
 use instance::Instance;
 use entry::Entry;
@@ -33,17 +32,15 @@ impl Win32Surface {
                                            create_info: &vk::Win32SurfaceCreateInfoKHR,
                                            allocation_callbacks: Option<&vk::AllocationCallbacks>)
                                            -> VkResult<vk::SurfaceKHR> {
-        unsafe {
-            let mut surface = mem::uninitialized();
-            let err_code = self.win32_surface_fn
-                .create_win32_surface_khr(self.handle,
-                                          create_info,
-                                          allocation_callbacks.as_raw_ptr(),
-                                          &mut surface);
-            match err_code {
-                vk::Result::Success => Ok(surface),
-                _ => Err(err_code),
-            }
+        let mut surface = mem::uninitialized();
+        let err_code = self.win32_surface_fn
+            .create_win32_surface_khr(self.handle,
+                                      create_info,
+                                      allocation_callbacks.as_raw_ptr(),
+                                      &mut surface);
+        match err_code {
+            vk::Result::Success => Ok(surface),
+            _ => Err(err_code),
         }
     }
 }

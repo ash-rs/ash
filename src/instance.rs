@@ -35,21 +35,19 @@ impl Instance {
                                 create_info: &vk::DeviceCreateInfo,
                                 allocation_callbacks: Option<&vk::AllocationCallbacks>)
                                 -> Result<Device, DeviceError> {
-        unsafe {
-            let mut device: vk::Device = mem::uninitialized();
-            let err_code = self.instance_fn
-                .create_device(physical_device,
-                               create_info,
-                               allocation_callbacks.as_raw_ptr(),
-                               &mut device);
-            if err_code != vk::Result::Success {
-                return Err(DeviceError::VkError(err_code));
-            }
-            let device_fn = vk::DeviceFn::load(|name| {
-                    mem::transmute(self.instance_fn.get_device_proc_addr(device, name.as_ptr()))
-                }).map_err(|err| DeviceError::LoadError(err))?;
-            Ok(Device::from_raw(device, device_fn))
+        let mut device: vk::Device = mem::uninitialized();
+        let err_code = self.instance_fn
+            .create_device(physical_device,
+                           create_info,
+                           allocation_callbacks.as_raw_ptr(),
+                           &mut device);
+        if err_code != vk::Result::Success {
+            return Err(DeviceError::VkError(err_code));
         }
+        let device_fn = vk::DeviceFn::load(|name| {
+                mem::transmute(self.instance_fn.get_device_proc_addr(device, name.as_ptr()))
+            }).map_err(|err| DeviceError::LoadError(err))?;
+        Ok(Device::from_raw(device, device_fn))
     }
 
     pub fn get_device_proc_addr(&self,

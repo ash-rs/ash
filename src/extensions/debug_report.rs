@@ -1,5 +1,4 @@
 use prelude::*;
-use std::ptr;
 use std::mem;
 use instance::Instance;
 use entry::Entry;
@@ -38,17 +37,15 @@ impl DebugReport {
     pub unsafe fn create_debug_report_callback_ext(&self,
                                             create_info: &vk::DebugReportCallbackCreateInfoEXT, allocation_callbacks: Option<&vk::AllocationCallbacks>)
                                             -> VkResult<vk::DebugReportCallbackEXT> {
-        unsafe {
-            let mut debug_cb = mem::uninitialized();
-            let err_code = self.debug_report_fn
-                .create_debug_report_callback_ext(self.handle,
-                                                  create_info,
-                                                  allocation_callbacks.as_raw_ptr(),
-                                                  &mut debug_cb);
-            match err_code {
-                vk::Result::Success => Ok(debug_cb),
-                _ => Err(err_code),
-            }
+        let mut debug_cb = mem::uninitialized();
+        let err_code = self.debug_report_fn
+            .create_debug_report_callback_ext(self.handle,
+                                              create_info,
+                                              allocation_callbacks.as_raw_ptr(),
+                                              &mut debug_cb);
+        match err_code {
+            vk::Result::Success => Ok(debug_cb),
+            _ => Err(err_code),
         }
     }
 }

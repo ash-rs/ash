@@ -58,17 +58,15 @@ impl Swapchain {
                                        create_info: &vk::SwapchainCreateInfoKHR,
                                        allocation_callbacks: Option<&vk::AllocationCallbacks>)
                                        -> VkResult<vk::SwapchainKHR> {
-        unsafe {
-            let mut swapchain = mem::uninitialized();
-            let err_code = self.swapchain_fn
-                .create_swapchain_khr(self.handle,
-                                      create_info,
-                                      allocation_callbacks.as_raw_ptr(),
-                                      &mut swapchain);
-            match err_code {
-                vk::Result::Success => Ok(swapchain),
-                _ => Err(err_code),
-            }
+        let mut swapchain = mem::uninitialized();
+        let err_code = self.swapchain_fn
+            .create_swapchain_khr(self.handle,
+                                  create_info,
+                                  allocation_callbacks.as_raw_ptr(),
+                                  &mut swapchain);
+        match err_code {
+            vk::Result::Success => Ok(swapchain),
+            _ => Err(err_code),
         }
     }
 
