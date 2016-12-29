@@ -13,7 +13,7 @@ pub struct AndroidSurface {
 }
 
 impl AndroidSurface {
-    pub fn new(entry: &Entry, instance: &Instance) -> Result<AndroidSurface, String> {
+    pub fn new(entry: &Entry, instance: &Instance) -> Result<AndroidSurface, Vec<&'static str>> {
         let surface_fn = vk::AndroidSurfaceFn::load(|name| {
             unsafe {
                 mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))

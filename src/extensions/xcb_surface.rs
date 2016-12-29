@@ -13,7 +13,7 @@ pub struct XcbSurface {
 }
 
 impl XcbSurface {
-    pub fn new(entry: &Entry, instance: &Instance) -> Result<XcbSurface, String> {
+    pub fn new(entry: &Entry, instance: &Instance) -> Result<XcbSurface, Vec<&'static str>> {
         let surface_fn = vk::XcbSurfaceFn::load(|name| {
             unsafe {
                 mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))

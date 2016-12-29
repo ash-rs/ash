@@ -7,6 +7,7 @@ use ::RawPtr;
 unsafe impl Sync for Device {}
 unsafe impl Send for Device {}
 
+#[derive(Clone)]
 pub struct Device {
     handle: vk::Device,
     device_fn: vk::DeviceFn,

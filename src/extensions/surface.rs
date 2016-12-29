@@ -14,7 +14,7 @@ pub struct Surface {
 }
 
 impl Surface {
-    pub fn new(entry: &Entry, instance: &Instance) -> Result<Surface, String> {
+    pub fn new(entry: &Entry, instance: &Instance) -> Result<Surface, Vec<&'static str>> {
         let surface_fn = vk::SurfaceFn::load(|name| {
             unsafe {
                 mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))

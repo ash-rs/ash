@@ -33,14 +33,14 @@ pub struct Entry {
 
 #[derive(Debug)]
 pub enum LoadingError {
-    LibraryLoadFailure(String),
-    StaticLoadError(String),
-    EntryLoadError(String),
+    LibraryLoadError(String),
+    EntryLoadError(Vec<&'static str>),
+    StaticLoadError(Vec<&'static str>),
 }
 
 #[derive(Debug)]
 pub enum InstanceError {
-    LoadError(String),
+    LoadError(Vec<&'static str>),
     VkError(vk::Result),
 }
 
@@ -58,7 +58,7 @@ impl Entry {
                     }).map_err(|err| LoadingError::StaticLoadError(err))?;
                 Ok(static_fn)
             }
-            Err(ref err) => Err(LoadingError::LibraryLoadFailure(err.clone())),
+            Err(ref err) => Err(LoadingError::LibraryLoadError(err.clone())),
         }?;
         let entry_fn = vk::EntryFn::load(|name| unsafe {
                 mem::transmute(static_fn.get_instance_proc_addr(vk::Instance::null(), name.as_ptr()))

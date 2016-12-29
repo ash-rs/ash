@@ -3658,47 +3658,39 @@ macro_rules! vk_functions {
         unsafe impl Sync for $struct_name {}
 
         impl $struct_name {
-            pub fn load<F>(mut f: F) -> ::std::result::Result<$struct_name, String>
+            pub fn load<F>(mut f: F) -> ::std::result::Result<$struct_name, Vec<&'static str>>
                 where F: FnMut(&::std::ffi::CStr) -> *const c_void
             {
                 use std::ffi::{CString};
                 use std::mem;
+                let mut err_str = Vec::new();
                 let s = $struct_name {
                     $(
                         $name: unsafe {
                             let cname = CString::new($raw_name).unwrap();
                             let val = f(&cname);
+                            if val.is_null(){
+                                err_str.push(stringify!($raw_name));
+                            }
                             mem::transmute(val)
                         },
                     )+
                 };
-                ::std::result::Result::Ok(s)
+
+                if err_str.is_empty() {
+                    Ok(s)
+                }
+                else{
+                    Err(err_str)
+                }
             }
             $(
                 #[inline]
                 pub unsafe fn $name(&self $(, $param_name: $param)*) -> $ret {
                     let fp = self.$name;
-                    debug_assert!(!(self.$name as *const c_void).is_null(), "{} not loaded!.", stringify!($raw_name));
                     fp($($param_name),*)
                 }
             )+
-        }
-        impl ::std::fmt::Debug for $struct_name {
-            #[inline]
-            fn fmt(&self, fmt: &mut ::std::fmt::Formatter) -> ::std::result::Result<(), ::std::fmt::Error> {
-                writeln!(fmt, stringify!($struct_name))?;
-                $(
-                    if !(self.$name as *const c_void).is_null() {
-                        write!(fmt," Is loaded => " )?;
-                    }
-                    else{
-                        write!(fmt," Is not loaded => " )?;
-                    }
-                    write!(fmt, $raw_name)?;
-                    writeln!(fmt, ", ")?;
-                )+
-                write!(fmt, "")
-            }
         }
     }
 }
@@ -4830,7 +4822,6 @@ vk_functions!{
         p_allocator: *const AllocationCallbacks,
         p_surface: *mut SurfaceKHR,
     ) -> Result;
-
 }
 vk_functions!{
     WaylandSurfaceFn,

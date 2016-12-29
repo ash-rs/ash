@@ -8,11 +8,11 @@ use ::RawPtr;
 
 #[derive(Debug)]
 pub enum DeviceError {
-    LoadError(String),
+    LoadError(Vec<&'static str>),
     VkError(vk::Result),
 }
 
-#[derive(Debug)]
+#[derive(Clone)]
 pub struct Instance {
     handle: vk::Instance,
     instance_fn: vk::InstanceFn,

@@ -13,7 +13,7 @@ pub struct MirSurface {
 }
 
 impl MirSurface {
-    pub fn new(entry: &Entry, instance: &Instance) -> Result<MirSurface, String> {
+    pub fn new(entry: &Entry, instance: &Instance) -> Result<MirSurface, Vec<&'static str>> {
         let surface_fn = vk::MirSurfaceFn::load(|name| {
             unsafe {
                 mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))

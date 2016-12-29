@@ -12,7 +12,7 @@ pub struct WaylandSurface {
 }
 
 impl WaylandSurface {
-    pub fn new(entry: &Entry, instance: &Instance) -> Result<WaylandSurface, String> {
+    pub fn new(entry: &Entry, instance: &Instance) -> Result<WaylandSurface, Vec<&'static str>> {
         let surface_fn = vk::WaylandSurfaceFn::load(|name| {
             unsafe {
                 mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))

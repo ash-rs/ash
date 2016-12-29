@@ -13,7 +13,7 @@ pub struct XlibSurface {
 }
 
 impl XlibSurface {
-    pub fn new(entry: &Entry, instance: &Instance) -> Result<XlibSurface, String> {
+    pub fn new(entry: &Entry, instance: &Instance) -> Result<XlibSurface, Vec<&'static str>> {
         let surface_fn = vk::XlibSurfaceFn::load(|name| {
             unsafe {
                 mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
