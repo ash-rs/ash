@@ -7,6 +7,7 @@ use vk;
 use std::ffi::CStr;
 use ::RawPtr;
 
+#[derive(Clone)]
 pub struct XcbSurface {
     handle: vk::Instance,
     xcb_surface_fn: vk::XcbSurfaceFn,

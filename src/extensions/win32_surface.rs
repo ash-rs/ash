@@ -7,6 +7,7 @@ use vk;
 use std::ffi::CStr;
 use ::RawPtr;
 
+#[derive(Clone)]
 pub struct Win32Surface {
     handle: vk::Instance,
     win32_surface_fn: vk::Win32SurfaceFn,

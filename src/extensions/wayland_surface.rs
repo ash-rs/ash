@@ -6,6 +6,7 @@ use vk;
 use std::ffi::CStr;
 use ::RawPtr;
 
+#[derive(Clone)]
 pub struct WaylandSurface {
     handle: vk::Instance,
     wayland_surface_fn: vk::WaylandSurfaceFn,

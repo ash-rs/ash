@@ -7,6 +7,7 @@ use vk;
 use std::ffi::CStr;
 use ::RawPtr;
 
+#[derive(Clone)]
 pub struct AndroidSurface {
     handle: vk::Instance,
     android_surface_fn: vk::AndroidSurfaceFn,

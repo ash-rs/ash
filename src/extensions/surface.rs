@@ -8,6 +8,7 @@ use vk;
 use std::ffi::CStr;
 use ::RawPtr;
 
+#[derive(Clone)]
 pub struct Surface {
     handle: vk::Instance,
     surface_fn: vk::SurfaceFn,

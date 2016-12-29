@@ -6,6 +6,7 @@ use vk;
 use std::ffi::CStr;
 use ::RawPtr;
 
+#[derive(Clone)]
 pub struct DebugReport {
     handle: vk::Instance,
     debug_report_fn: vk::DebugReportFn,

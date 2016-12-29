@@ -7,6 +7,7 @@ use vk;
 use std::ffi::CStr;
 use ::RawPtr;
 
+#[derive(Clone)]
 pub struct MirSurface {
     handle: vk::Instance,
     mir_surface_fn: vk::MirSurfaceFn,

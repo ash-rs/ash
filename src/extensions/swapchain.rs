@@ -7,6 +7,7 @@ use vk;
 use std::ffi::CStr;
 use ::RawPtr;
 
+#[derive(Clone)]
 pub struct Swapchain {
     handle: vk::Device,
     swapchain_fn: vk::SwapchainFn,
