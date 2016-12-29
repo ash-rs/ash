@@ -1,6 +1,6 @@
 pub use self::swapchain::Swapchain;
 pub use self::surface::Surface;
-pub use self::xlibsurface::XlibSurface;
+pub use self::xlib_surface::XlibSurface;
 pub use self::debug_report::DebugReport;
 pub use self::win32_surface::Win32Surface;
 pub use self::mir_surface::MirSurface;
@@ -10,7 +10,7 @@ pub use self::android_surface::AndroidSurface;
 
 mod swapchain;
 mod surface;
-mod xlibsurface;
+mod xlib_surface;
 mod win32_surface;
 mod debug_report;
 mod mir_surface;
