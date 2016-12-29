@@ -494,13 +494,6 @@ impl ExampleBase {
                 .unwrap();
             device.bind_image_memory(depth_image, depth_image_memory, 0)
                 .expect("Unable to bind depth image memory");
-
-            let command_buffer_begin_info = vk::CommandBufferBeginInfo {
-                s_type: vk::StructureType::CommandBufferBeginInfo,
-                p_next: ptr::null(),
-                p_inheritance_info: ptr::null(),
-                flags: vk::COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT,
-            };
             record_submit_commandbuffer(&device,
                                         setup_command_buffer,
                                         present_queue,
