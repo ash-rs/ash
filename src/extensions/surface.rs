@@ -8,8 +8,8 @@ use std::ffi::CStr;
 use ::RawPtr;
 
 pub struct Surface {
-    pub handle: vk::Instance,
-    pub surface_fn: vk::SurfaceFn,
+    handle: vk::Instance,
+    surface_fn: vk::SurfaceFn,
 }
 
 impl Surface {

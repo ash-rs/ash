@@ -7,8 +7,8 @@ use std::ffi::CStr;
 use ::RawPtr;
 
 pub struct Win32Surface {
-    pub handle: vk::Instance,
-    pub win32_surface_fn: vk::Win32SurfaceFn,
+    handle: vk::Instance,
+    win32_surface_fn: vk::Win32SurfaceFn,
 }
 
 impl Win32Surface {

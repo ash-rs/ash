@@ -7,8 +7,8 @@ use std::ffi::CStr;
 use ::RawPtr;
 
 pub struct XlibSurface {
-    pub handle: vk::Instance,
-    pub xlib_surface_fn: vk::XlibSurfaceFn,
+    handle: vk::Instance,
+    xlib_surface_fn: vk::XlibSurfaceFn,
 }
 
 impl XlibSurface {
