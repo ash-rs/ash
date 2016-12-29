@@ -12,7 +12,7 @@ A very lightweight wrapper around Vulkan
 [![](https://tokei.rs/b1/github/maikklein/ash)](https://github.com/MaikKlein/ash)
 
 ## Stable yet?
-No.
+I don't expect any big changes anymore. The library will still remain < 1.0 until I had time to use it in a real project. If you encounter any problems, feel free to open an [Issue](https://github.com/MaikKlein/ash/issues).
 
 ## Why Ash?
 - [x] Lightweight Vulkan wrapper
@@ -27,10 +27,12 @@ No.
 ### Explicit returns with `Result`
 Functions return a `type VkResult<T> = Result<T, vk::Result>` instead of an error code. No mutable references for the output are required.
 ```Rust
-pub fn create_swapchain_khr(&self,
-                            create_info: &vk::SwapchainCreateInfoKHR)
-                            -> VkResult<vk::SwapchainKHR>;
-let swapchain = device.create_swapchain_khr(&swapchain_create_info).unwrap();
+pub fn create_instance(&self,
+                       create_info: &vk::InstanceCreateInfo,
+                       allocation_callbacks: Option<&vk::AllocationCallbacks>)
+                       -> Result<Instance, InstanceError> {
+let instance: Instance = entry.create_instance(&create_info, None)
+    .expect("Instance creation error");
 ```
 
 
@@ -39,7 +41,7 @@ Always returns a `Vec<T>` for functions that output multiple values.
 pub fn get_swapchain_images_khr(&self,
                                 swapchain: vk::SwapchainKHR)
                                 -> VkResult<Vec<vk::Image>>;
-let present_images = device.get_swapchain_images_khr(swapchain).unwrap();
+let present_images = swapchain_loader.get_swapchain_images_khr(swapchain).unwrap();
 ```
 
 ### Slices
@@ -95,7 +97,7 @@ let pool_create_info = vk::CommandPoolCreateInfo {
     flags: vk::COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT,
     queue_family_index: queue_family_index,
 };
-let pool = device.create_command_pool(&pool_create_info).unwrap();
+let pool = device.create_command_pool(&pool_create_info, None).unwrap();
 ```
 
 Additionally pointers like `Instance`, `Device`, `Queue` etc are hidden behind a type. Those pointers can only be constructed from within `Ash` which elimites invalid API usage and has the benefit of making some functions in Vulkan **safe**.
@@ -119,7 +121,7 @@ let swapchain = swapchain_loader.create_swapchain_khr(&swapchain_create_info).un
 ```
 
 ### Implicit handles
-You don't have to pass an Instance or Device handle anymore, this is done implicitly for you.
+You don't have to pass an Instance or Device handle anymore, this is done implicitly for you. This makes sure that you will always use the most optimal implementation for your `Device`.
 ```Rust
 // C
 VkResult vkCreateCommandPool(
@@ -150,7 +152,7 @@ fn extension_names() -> Vec<*const i8> {
 ```
 ## Example
 You can find the examples [here](https://github.com/MaikKlein/ash/tree/master/examples).
-All examples currently require: the LunarG Validation layers and a Vulkan library that is visible in your `PATH`.
+All examples currently require: the LunarG Validation layers and a Vulkan library that is visible in your `PATH`. An easy way to get start is to use the [LunarG Vulkan SDK](https://lunarg.com/vulkan-sdk/)
 ### [Triangle](https://github.com/MaikKlein/ash/blob/master/examples/src/bin/triangle.rs)
 Displays a triangle with vertex colors.
 ```
@@ -175,18 +177,15 @@ cargo run --bin texture
 - [x] Surface
 - [x] XlibSurface
 - [x] DebugReport
-- [ ] Win32Surface
-- [ ] MirSurface
-- [ ] XcbSurface
-- [ ] AndroidSurface
-- [ ] WaylandSurface
+- [x] Win32Surface
+- [x] MirSurface
+- [x] XcbSurface
+- [x] AndroidSurface
+- [x] WaylandSurface
 - [ ] Display
 
 ### In progress
 - Wrapping the complete spec
-
-### Not started
-- [Custom allocators](https://github.com/MaikKlein/ash/issues/2.static_fn)
 
 ## A thanks to
 
