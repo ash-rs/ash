@@ -16,7 +16,7 @@ pub struct Win32Surface {
 
 
 impl Win32Surface {
-    pub fn new(entry: &Entry, instance: &Instance<V1_0>) -> Result<Win32Surface, Vec<&'static str>> {
+    pub fn new(entry: &Entry<V1_0>, instance: &Instance<V1_0>) -> Result<Win32Surface, Vec<&'static str>> {
         let surface_fn = vk::Win32SurfaceFn::load(|name| {
             unsafe {
                 mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))

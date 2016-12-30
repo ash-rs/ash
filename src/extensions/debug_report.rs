@@ -14,7 +14,7 @@ pub struct DebugReport {
 }
 
 impl DebugReport {
-    pub fn new(entry: &Entry, instance: &Instance<V1_0>) -> Result<DebugReport, Vec<&'static str>> {
+    pub fn new(entry: &Entry<V1_0>, instance: &Instance<V1_0>) -> Result<DebugReport, Vec<&'static str>> {
         let debug_report_fn = vk::DebugReportFn::load(|name| {
             unsafe {
                 mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))

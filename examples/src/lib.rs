@@ -17,7 +17,7 @@ use std::ptr;
 use std::ffi::{CStr, CString};
 use std::ops::Drop;
 pub use ash::instance::{V1_0, InstanceV1_0};
-pub use ash::device::{DeviceV1_0};
+pub use ash::device::DeviceV1_0;
 
 // Simple offset_of macro akin to C++ offsetof
 #[macro_export]
@@ -82,7 +82,7 @@ pub fn record_submit_commandbuffer<F: FnOnce(&Device<V1_0>, vk::CommandBuffer)>(
 
 #[cfg(all(unix, not(target_os = "android")))]
 unsafe fn create_surface(instance: &Instance<V1_0>,
-                         entry: &Entry,
+                         entry: &Entry<V1_0>,
                          window: &winit::Window)
                          -> Result<vk::SurfaceKHR, vk::Result> {
     use winit::os::unix::WindowExt;
@@ -187,7 +187,7 @@ fn resize_callback(width: u32, height: u32) {
 }
 
 pub struct ExampleBase {
-    pub entry: Entry,
+    pub entry: Entry<V1_0>,
     pub instance: Instance<V1_0>,
     pub device: Device<V1_0>,
     pub surface_loader: Surface,

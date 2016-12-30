@@ -6,6 +6,8 @@ use instance::{Instance, V1_0, InstanceFpV1_0};
 use shared_library::dynamic_library::DynamicLibrary;
 use std::path::Path;
 use ::RawPtr;
+use std::marker::PhantomData;
+use instance::VkVersion;
 
 #[cfg(windows)]
 fn get_path() -> &'static Path {
@@ -27,9 +29,11 @@ lazy_static!{
 }
 
 #[derive(Clone)]
-pub struct Entry {
+pub struct Entry<V: VkVersion> {
     static_fn: vk::StaticFn,
     entry_fn: vk::EntryFn,
+    _v: PhantomData<V>
+
 }
 
 #[derive(Debug)]
@@ -45,8 +49,28 @@ pub enum InstanceError {
     VkError(vk::Result),
 }
 
-impl Entry {
-    pub fn load_vulkan() -> Result<Entry, LoadingError> {
+impl Entry<V1_0>{
+    pub fn create_instance(&self,
+                           create_info: &vk::InstanceCreateInfo,
+                           allocation_callbacks: Option<&vk::AllocationCallbacks>)
+                           -> Result<Instance<V1_0>, InstanceError> {
+        unsafe {
+            let mut instance: vk::Instance = mem::uninitialized();
+            let err_code = self.entry_fn.create_instance(create_info,
+                                                         allocation_callbacks.as_raw_ptr(),
+                                                         &mut instance);
+            if err_code != vk::Result::Success {
+                return Err(InstanceError::VkError(err_code));
+            }
+            let instance_fn = vk::InstanceFn::load(|name| {
+                    mem::transmute(self.static_fn.get_instance_proc_addr(instance, name.as_ptr()))
+                }).map_err(|err| InstanceError::LoadError(err))?;
+            Ok(Instance::from_raw(instance, InstanceFpV1_0 { instance_fn: instance_fn }))
+        }
+    }
+}
+impl<V: VkVersion> Entry<V> {
+    pub fn load_vulkan() -> Result<Entry<V>, LoadingError> {
         let static_fn = match *VK_LIB {
             Ok(ref lib) => {
                 let static_fn = vk::StaticFn::load(|name| unsafe {
@@ -67,26 +91,8 @@ impl Entry {
         Ok(Entry {
             static_fn: static_fn,
             entry_fn: entry_fn,
+            _v: PhantomData
         })
-    }
-
-    pub fn create_instance(&self,
-                           create_info: &vk::InstanceCreateInfo,
-                           allocation_callbacks: Option<&vk::AllocationCallbacks>)
-                           -> Result<Instance<V1_0>, InstanceError> {
-        unsafe {
-            let mut instance: vk::Instance = mem::uninitialized();
-            let err_code = self.entry_fn.create_instance(create_info,
-                                                         allocation_callbacks.as_raw_ptr(),
-                                                         &mut instance);
-            if err_code != vk::Result::Success {
-                return Err(InstanceError::VkError(err_code));
-            }
-            let instance_fn = vk::InstanceFn::load(|name| {
-                    mem::transmute(self.static_fn.get_instance_proc_addr(instance, name.as_ptr()))
-                }).map_err(|err| InstanceError::LoadError(err))?;
-            Ok(Instance::from_raw(instance, InstanceFpV1_0 { instance_fn: instance_fn }))
-        }
     }
 
     pub fn enumerate_instance_layer_properties(&self) -> VkResult<Vec<vk::LayerProperties>> {
