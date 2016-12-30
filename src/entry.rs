@@ -2,7 +2,7 @@ use prelude::*;
 use std::mem;
 use std::ptr;
 use vk;
-use instance::Instance;
+use instance::{Instance, V1_0, InstanceFpV1_0};
 use shared_library::dynamic_library::DynamicLibrary;
 use std::path::Path;
 use ::RawPtr;
@@ -73,7 +73,7 @@ impl Entry {
     pub fn create_instance(&self,
                            create_info: &vk::InstanceCreateInfo,
                            allocation_callbacks: Option<&vk::AllocationCallbacks>)
-                           -> Result<Instance, InstanceError> {
+                           -> Result<Instance<V1_0>, InstanceError> {
         unsafe {
             let mut instance: vk::Instance = mem::uninitialized();
             let err_code = self.entry_fn.create_instance(create_info,
@@ -85,7 +85,7 @@ impl Entry {
             let instance_fn = vk::InstanceFn::load(|name| {
                     mem::transmute(self.static_fn.get_instance_proc_addr(instance, name.as_ptr()))
                 }).map_err(|err| InstanceError::LoadError(err))?;
-            Ok(Instance::from_raw(instance, instance_fn))
+            Ok(Instance::from_raw(instance, InstanceFpV1_0 { instance_fn: instance_fn }))
         }
     }
 

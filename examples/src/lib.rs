@@ -16,6 +16,7 @@ use ash::device::Device;
 use std::ptr;
 use std::ffi::{CStr, CString};
 use std::ops::Drop;
+use ash::instance::InstanceMajor1Minor0;
 
 // Simple offset_of macro akin to C++ offsetof
 #[macro_export]

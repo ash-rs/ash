@@ -6,6 +6,7 @@ use device::Device;
 use vk;
 use std::ffi::CStr;
 use ::RawPtr;
+use instance::InstanceMajor1Minor0;
 
 #[derive(Clone)]
 pub struct Swapchain {
