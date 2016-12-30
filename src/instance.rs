@@ -26,7 +26,7 @@ impl VkVersion for V1_0 {
 
 #[warn(non_camel_case_types)]
 pub struct InstanceFpV1_0 {
-    pub instance_fn: vk::InstanceFn,
+    pub instance_fn: vk::InstanceFnV1_0,
 }
 
 #[derive(Clone)]
@@ -40,7 +40,7 @@ impl InstanceV1_0 for Instance<V1_0> {
         self.handle
     }
 
-    fn fp_v1_0(&self) -> &vk::InstanceFn {
+    fn fp_v1_0(&self) -> &vk::InstanceFnV1_0 {
         &self.instance_fp.instance_fn
     }
 }
@@ -72,7 +72,7 @@ impl Instance<V1_0> {
         if err_code != vk::Result::Success {
             return Err(DeviceError::VkError(err_code));
         }
-        let device_fn = vk::DeviceFn::load(|name| {
+        let device_fn = vk::DeviceFnV1_0::load(|name| {
                 mem::transmute(self.fp_v1_0().get_device_proc_addr(device, name.as_ptr()))
             }).map_err(|err| DeviceError::LoadError(err))?;
         Ok(Device::from_raw(device, DeviceFpV1_0 { device_fn: device_fn }))
@@ -82,7 +82,7 @@ impl Instance<V1_0> {
 #[warn(non_camel_case_types)]
 pub trait InstanceV1_0 {
     fn handle(&self) -> vk::Instance;
-    fn fp_v1_0(&self) -> &vk::InstanceFn;
+    fn fp_v1_0(&self) -> &vk::InstanceFnV1_0;
     fn get_device_proc_addr(&self,
                             device: vk::Device,
                             p_name: *const vk::c_char)

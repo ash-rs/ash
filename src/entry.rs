@@ -62,7 +62,7 @@ impl Entry<V1_0>{
             if err_code != vk::Result::Success {
                 return Err(InstanceError::VkError(err_code));
             }
-            let instance_fn = vk::InstanceFn::load(|name| {
+            let instance_fn = vk::InstanceFnV1_0::load(|name| {
                     mem::transmute(self.static_fn.get_instance_proc_addr(instance, name.as_ptr()))
                 }).map_err(|err| InstanceError::LoadError(err))?;
             Ok(Instance::from_raw(instance, InstanceFpV1_0 { instance_fn: instance_fn }))

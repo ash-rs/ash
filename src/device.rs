@@ -10,12 +10,12 @@ use instance::{VkVersion, V1_0};
 // unsafe impl Send for Device {}
 
 pub struct DeviceFpV1_0 {
-    pub device_fn: vk::DeviceFn,
+    pub device_fn: vk::DeviceFnV1_0,
 }
 
 pub trait DeviceV1_0 {
     fn handle(&self) -> vk::Device;
-    fn fp_v1_0(&self) -> &vk::DeviceFn;
+    fn fp_v1_0(&self) -> &vk::DeviceFnV1_0;
     unsafe fn destroy_device(&self, allocation_callbacks: Option<&vk::AllocationCallbacks>) {
         self.fp_v1_0().destroy_device(self.handle(), allocation_callbacks.as_raw_ptr());
     }
@@ -761,7 +761,7 @@ impl DeviceV1_0 for Device<V1_0> {
         self.handle
     }
 
-    fn fp_v1_0(&self) -> &vk::DeviceFn {
+    fn fp_v1_0(&self) -> &vk::DeviceFnV1_0 {
         &self.device_fn.device_fn
     }
 }

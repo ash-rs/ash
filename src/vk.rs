@@ -3730,7 +3730,7 @@ vk_functions!{
 }
 
 vk_functions!{
-    InstanceFn,
+    InstanceFnV1_0,
 
     "vkDestroyInstance", destroy_instance(
         instance: Instance,
@@ -3819,7 +3819,7 @@ vk_functions!{
 }
 
 vk_functions!{
-    DeviceFn,
+    DeviceFnV1_0,
     "vkDestroyDevice", destroy_device(
         device: Device,
         p_allocator: *const AllocationCallbacks,
