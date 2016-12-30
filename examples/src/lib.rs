@@ -16,7 +16,8 @@ use ash::device::Device;
 use std::ptr;
 use std::ffi::{CStr, CString};
 use std::ops::Drop;
-use ash::instance::{V1_0, InstanceV1_0};
+pub use ash::instance::{V1_0, InstanceV1_0};
+pub use ash::device::{DeviceV1_0};
 
 // Simple offset_of macro akin to C++ offsetof
 #[macro_export]
@@ -32,7 +33,7 @@ macro_rules! offset_of{
     }
 }
 
-pub fn record_submit_commandbuffer<F: FnOnce(&Device, vk::CommandBuffer)>(device: &Device,
+pub fn record_submit_commandbuffer<F: FnOnce(&Device<V1_0>, vk::CommandBuffer)>(device: &Device<V1_0>,
                                                              command_buffer: vk::CommandBuffer,
                                                              submit_queue: vk::Queue,
                                                              wait_mask: &[vk::PipelineStageFlags],
@@ -188,7 +189,7 @@ fn resize_callback(width: u32, height: u32) {
 pub struct ExampleBase {
     pub entry: Entry,
     pub instance: Instance<V1_0>,
-    pub device: Device,
+    pub device: Device<V1_0>,
     pub surface_loader: Surface,
     pub swapchain_loader: Swapchain,
     pub debug_report_loader: DebugReport,
@@ -334,7 +335,7 @@ impl ExampleBase {
                 pp_enabled_extension_names: device_extension_names_raw.as_ptr(),
                 p_enabled_features: &features,
             };
-            let device: Device = instance.create_device(pdevice, &device_create_info, None)
+            let device: Device<V1_0> = instance.create_device(pdevice, &device_create_info, None)
                 .unwrap();
             let present_queue = device.get_device_queue(queue_family_index as u32, 0);
 

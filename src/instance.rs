@@ -3,7 +3,7 @@ use prelude::*;
 use std::ptr;
 use std::mem;
 use vk;
-use device::Device;
+use device::{Device, DeviceFpV1_0};
 use ::RawPtr;
 
 #[derive(Debug)]
@@ -12,36 +12,35 @@ pub enum DeviceError {
     VkError(vk::Result),
 }
 
-pub trait VkVersion{
+pub trait VkVersion {
     type InstanceFp;
     type DeviceFp;
 }
 
-
 #[warn(non_camel_case_types)]
 pub struct V1_0;
-impl VkVersion for V1_0{
+impl VkVersion for V1_0 {
     type InstanceFp = InstanceFpV1_0;
-    type DeviceFp = ();
+    type DeviceFp = DeviceFpV1_0;
 }
 
 #[warn(non_camel_case_types)]
-pub struct InstanceFpV1_0{
-    pub instance_fn: vk::InstanceFn
+pub struct InstanceFpV1_0 {
+    pub instance_fn: vk::InstanceFn,
 }
 
 #[derive(Clone)]
 pub struct Instance<V: VkVersion> {
     handle: vk::Instance,
-    instance_fp: V::InstanceFp
+    instance_fp: V::InstanceFp,
 }
 
-impl InstanceV1_0 for Instance<V1_0>{
-    fn handle(&self) -> vk::Instance{
+impl InstanceV1_0 for Instance<V1_0> {
+    fn handle(&self) -> vk::Instance {
         self.handle
     }
 
-    fn fp_v1_0(&self) -> &vk::InstanceFn{
+    fn fp_v1_0(&self) -> &vk::InstanceFn {
         &self.instance_fp.instance_fn
     }
 }
@@ -53,21 +52,17 @@ impl<V: VkVersion> Instance<V> {
     pub fn from_raw(handle: vk::Instance, version: V::InstanceFp) -> Self {
         Instance {
             handle: handle,
-            instance_fp: version
+            instance_fp: version,
         }
     }
-
 }
 
-#[warn(non_camel_case_types)]
-pub trait InstanceV1_0 {
-    fn handle(&self) -> vk::Instance;
-    fn fp_v1_0(&self) -> &vk::InstanceFn;
-    unsafe fn create_device(&self,
-                            physical_device: vk::PhysicalDevice,
-                            create_info: &vk::DeviceCreateInfo,
-                            allocation_callbacks: Option<&vk::AllocationCallbacks>)
-                            -> Result<Device, DeviceError> {
+impl Instance<V1_0> {
+    pub unsafe fn create_device(&self,
+                                physical_device: vk::PhysicalDevice,
+                                create_info: &vk::DeviceCreateInfo,
+                                allocation_callbacks: Option<&vk::AllocationCallbacks>)
+                                -> Result<Device<V1_0>, DeviceError> {
         let mut device: vk::Device = mem::uninitialized();
         let err_code = self.fp_v1_0()
             .create_device(physical_device,
@@ -80,12 +75,18 @@ pub trait InstanceV1_0 {
         let device_fn = vk::DeviceFn::load(|name| {
                 mem::transmute(self.fp_v1_0().get_device_proc_addr(device, name.as_ptr()))
             }).map_err(|err| DeviceError::LoadError(err))?;
-        Ok(Device::from_raw(device, device_fn))
+        Ok(Device::from_raw(device, DeviceFpV1_0 { device_fn: device_fn }))
     }
+}
+
+#[warn(non_camel_case_types)]
+pub trait InstanceV1_0 {
+    fn handle(&self) -> vk::Instance;
+    fn fp_v1_0(&self) -> &vk::InstanceFn;
     fn get_device_proc_addr(&self,
-                                device: vk::Device,
-                                p_name: *const vk::c_char)
-                                -> vk::PFN_vkVoidFunction {
+                            device: vk::Device,
+                            p_name: *const vk::c_char)
+                            -> vk::PFN_vkVoidFunction {
         unsafe { self.fp_v1_0().get_device_proc_addr(device, p_name) }
     }
 
@@ -94,9 +95,9 @@ pub trait InstanceV1_0 {
     }
 
     fn get_physical_device_format_properties(&self,
-                                                 physical_device: vk::PhysicalDevice,
-                                                 format: vk::Format)
-                                                 -> vk::FormatProperties {
+                                             physical_device: vk::PhysicalDevice,
+                                             format: vk::Format)
+                                             -> vk::FormatProperties {
         unsafe {
             let mut format_prop = mem::uninitialized();
             self.fp_v1_0()
@@ -105,8 +106,8 @@ pub trait InstanceV1_0 {
         }
     }
     fn get_physical_device_memory_properties(&self,
-                                                 physical_device: vk::PhysicalDevice)
-                                                 -> vk::PhysicalDeviceMemoryProperties {
+                                             physical_device: vk::PhysicalDevice)
+                                             -> vk::PhysicalDeviceMemoryProperties {
         unsafe {
             let mut memory_prop = mem::uninitialized();
             self.fp_v1_0()
@@ -116,8 +117,8 @@ pub trait InstanceV1_0 {
     }
 
     fn get_physical_device_queue_family_properties(&self,
-                                                       physical_device: vk::PhysicalDevice)
-                                                       -> Vec<vk::QueueFamilyProperties> {
+                                                   physical_device: vk::PhysicalDevice)
+                                                   -> Vec<vk::QueueFamilyProperties> {
         unsafe {
             let mut queue_count = 0;
             self.fp_v1_0()
@@ -176,6 +177,5 @@ pub trait InstanceV1_0 {
     }
 }
 
-//pub trait InstanceMajor1Minor1: InstanceMajor1Minor0 {}
-//pub trait InstanceMajor1Minor2: InstanceMajor1Minor1 {}
-
+// pub trait InstanceMajor1Minor1: InstanceMajor1Minor0 {}
+// pub trait InstanceMajor1Minor2: InstanceMajor1Minor1 {}
