@@ -6,6 +6,7 @@ use entry::Entry;
 use vk;
 use std::ffi::CStr;
 use ::RawPtr;
+use instance::{V1_0, InstanceV1_0};
 
 #[derive(Clone)]
 pub struct XlibSurface {
@@ -14,7 +15,7 @@ pub struct XlibSurface {
 }
 
 impl XlibSurface {
-    pub fn new(entry: &Entry, instance: &Instance) -> Result<XlibSurface, Vec<&'static str>> {
+    pub fn new(entry: &Entry, instance: &Instance<V1_0>) -> Result<XlibSurface, Vec<&'static str>> {
         let surface_fn = vk::XlibSurfaceFn::load(|name| {
             unsafe {
                 mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))

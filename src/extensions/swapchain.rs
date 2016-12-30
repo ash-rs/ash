@@ -6,7 +6,7 @@ use device::Device;
 use vk;
 use std::ffi::CStr;
 use ::RawPtr;
-use instance::InstanceMajor1Minor0;
+use instance::{V1_0, InstanceV1_0};
 
 #[derive(Clone)]
 pub struct Swapchain {
@@ -15,7 +15,7 @@ pub struct Swapchain {
 }
 
 impl Swapchain {
-    pub fn new(instance: &Instance, device: &Device) -> Result<Swapchain, Vec<&'static str>> {
+    pub fn new(instance: &Instance<V1_0>, device: &Device) -> Result<Swapchain, Vec<&'static str>> {
         let swapchain_fn = vk::SwapchainFn::load(|name| {
             unsafe { mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr())) }
         })?;

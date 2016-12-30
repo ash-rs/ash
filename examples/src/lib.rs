@@ -16,7 +16,7 @@ use ash::device::Device;
 use std::ptr;
 use std::ffi::{CStr, CString};
 use std::ops::Drop;
-use ash::instance::InstanceMajor1Minor0;
+use ash::instance::{V1_0, InstanceV1_0};
 
 // Simple offset_of macro akin to C++ offsetof
 #[macro_export]
@@ -80,7 +80,7 @@ pub fn record_submit_commandbuffer<F: FnOnce(&Device, vk::CommandBuffer)>(device
 }
 
 #[cfg(all(unix, not(target_os = "android")))]
-unsafe fn create_surface(instance: &Instance,
+unsafe fn create_surface(instance: &Instance<V1_0>,
                          entry: &Entry,
                          window: &winit::Window)
                          -> Result<vk::SurfaceKHR, vk::Result> {
@@ -187,7 +187,7 @@ fn resize_callback(width: u32, height: u32) {
 
 pub struct ExampleBase {
     pub entry: Entry,
-    pub instance: Instance,
+    pub instance: Instance<V1_0>,
     pub device: Device,
     pub surface_loader: Surface,
     pub swapchain_loader: Swapchain,
@@ -269,7 +269,7 @@ impl ExampleBase {
                 pp_enabled_extension_names: extension_names_raw.as_ptr(),
                 enabled_extension_count: extension_names_raw.len() as u32,
             };
-            let instance: Instance = entry.create_instance(&create_info, None)
+            let instance: Instance<V1_0> = entry.create_instance(&create_info, None)
                 .expect("Instance creation error");
             let debug_info = vk::DebugReportCallbackCreateInfoEXT {
                 s_type: vk::StructureType::DebugReportCallbackCreateInfoExt,

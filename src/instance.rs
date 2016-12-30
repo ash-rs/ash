@@ -17,6 +17,7 @@ pub trait VkVersion{
     type DeviceFp;
 }
 
+
 #[warn(non_camel_case_types)]
 pub struct V1_0;
 impl VkVersion for V1_0{
