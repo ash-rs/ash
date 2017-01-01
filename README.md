@@ -116,13 +116,14 @@ let instance = entry.create_instance(...).expect("Instance creation error.");
 let device = instance.create_device(...).expect("Device creation error.");
 ```
 
+A `V1_X` struct is used to indicate the version.
 ```Rust
 // Define your types
 type YourDevice = Device<V1_0>;
 type YourInstance = Instance<V1_0>;
 ```
 
-You can upgrade to future version without any breakage. 
+You can upgrade to a future version without any breakage.
 ```Rust
 // For example, switching from V1_0 to V1_3 will not cause any breakage.
 type YourDevice = Device<V1_3>;
@@ -181,7 +182,7 @@ let pool = device.create_command_pool(&pool_create_info).unwrap();
 
 ## Example
 You can find the examples [here](https://github.com/MaikKlein/ash/tree/master/examples).
-All examples currently require: the LunarG Validation layers and a Vulkan library that is visible in your `PATH`. An easy way to get start is to use the [LunarG Vulkan SDK](https://lunarg.com/vulkan-sdk/)
+All examples currently require: the LunarG Validation layers and a Vulkan library that is visible in your `PATH`. An easy way to get started is to use the [LunarG Vulkan SDK](https://lunarg.com/vulkan-sdk/)
 ### [Triangle](https://github.com/MaikKlein/ash/blob/master/examples/src/bin/triangle.rs)
 Displays a triangle with vertex colors.
 ```
