@@ -100,8 +100,8 @@ unsafe fn create_surface(instance: &Instance<V1_0>,
 }
 
 #[cfg(windows)]
-unsafe fn create_surface(instance: &Instance,
-                         entry: &Entry,
+unsafe fn create_surface(instance: &Instance<V1_0>,
+                         entry: &Entry<V1_0>,
                          window: &winit::Window)
                          -> Result<vk::SurfaceKHR, vk::Result> {
     use winit::os::windows::WindowExt;
