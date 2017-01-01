@@ -220,6 +220,7 @@ cargo run --bin texture
 
 ### In progress
 - Wrapping the complete spec
+- Version specific loader
 
 ## A thanks to
 
