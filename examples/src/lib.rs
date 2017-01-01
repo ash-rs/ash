@@ -9,15 +9,15 @@ extern crate winapi;
 
 use ash::vk;
 use std::default::Default;
-use ash::entry::Entry;
-use ash::instance::Instance;
+use ash::Entry;
+use ash::Instance;
+use ash::Device;
+pub use ash::version::{FunctionPointers, V1_0, InstanceV1_0, DeviceV1_0};
 use ash::extensions::{Swapchain, XlibSurface, Surface, DebugReport, Win32Surface};
-use ash::device::Device;
 use std::ptr;
 use std::ffi::{CStr, CString};
 use std::ops::Drop;
-pub use ash::instance::{V1_0, InstanceV1_0};
-pub use ash::device::DeviceV1_0;
+use ash::entry::EntryExt;
 
 // Simple offset_of macro akin to C++ offsetof
 #[macro_export]
@@ -33,7 +33,7 @@ macro_rules! offset_of{
     }
 }
 
-pub fn record_submit_commandbuffer<F: FnOnce(&Device<V1_0>, vk::CommandBuffer)>(device: &Device<V1_0>,
+pub fn record_submit_commandbuffer<D: DeviceV1_0, F: FnOnce(&D, vk::CommandBuffer)>(device: &D,
                                                              command_buffer: vk::CommandBuffer,
                                                              submit_queue: vk::Queue,
                                                              wait_mask: &[vk::PipelineStageFlags],
@@ -592,6 +592,7 @@ impl ExampleBase {
         }
     }
 }
+
 impl Drop for ExampleBase {
     fn drop(&mut self) {
         unsafe {

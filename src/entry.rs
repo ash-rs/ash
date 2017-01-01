@@ -2,12 +2,12 @@ use prelude::*;
 use std::mem;
 use std::ptr;
 use vk;
-use instance::{Instance, V1_0, InstanceFpV1_0};
+use instance::Instance;
 use shared_library::dynamic_library::DynamicLibrary;
 use std::path::Path;
 use ::RawPtr;
 use std::marker::PhantomData;
-use instance::VkVersion;
+use version::{FunctionPointers, V1_0, InstanceFpV1_0, InstanceLoader};
 
 #[cfg(windows)]
 fn get_path() -> &'static Path {
@@ -29,11 +29,10 @@ lazy_static!{
 }
 
 #[derive(Clone)]
-pub struct Entry<V: VkVersion> {
+pub struct Entry<V: FunctionPointers> {
     static_fn: vk::StaticFn,
     entry_fn: vk::EntryFn,
-    _v: PhantomData<V>
-
+    _v: PhantomData<V>,
 }
 
 #[derive(Debug)]
@@ -48,12 +47,39 @@ pub enum InstanceError {
     LoadError(Vec<&'static str>),
     VkError(vk::Result),
 }
-
-impl Entry<V1_0>{
+pub trait EntryExt {
+    fn load_vulkan<V: FunctionPointers>() -> Result<Entry<V>, LoadingError> {
+        let static_fn = match *VK_LIB {
+            Ok(ref lib) => {
+                let static_fn = vk::StaticFn::load(|name| unsafe {
+                        let name = name.to_str().unwrap();
+                        let f = match lib.symbol(name) {
+                            Ok(s) => s,
+                            Err(_) => ptr::null(),
+                        };
+                        f
+                    }).map_err(|err| LoadingError::StaticLoadError(err))?;
+                Ok(static_fn)
+            }
+            Err(ref err) => Err(LoadingError::LibraryLoadError(err.clone())),
+        }?;
+        let entry_fn = vk::EntryFn::load(|name| unsafe {
+                mem::transmute(static_fn.get_instance_proc_addr(vk::Instance::null(), name.as_ptr()))
+            }).map_err(|err| LoadingError::EntryLoadError(err))?;
+        Ok(Entry {
+            static_fn: static_fn,
+            entry_fn: entry_fn,
+            _v: PhantomData,
+        })
+    }
+}
+impl<V: FunctionPointers> EntryExt for Entry<V> {}
+impl Entry<V1_0> {}
+impl<V: FunctionPointers> Entry<V> {
     pub fn create_instance(&self,
                            create_info: &vk::InstanceCreateInfo,
                            allocation_callbacks: Option<&vk::AllocationCallbacks>)
-                           -> Result<Instance<V1_0>, InstanceError> {
+                           -> Result<Instance<V>, InstanceError> {
         unsafe {
             let mut instance: vk::Instance = mem::uninitialized();
             let err_code = self.entry_fn.create_instance(create_info,
@@ -62,14 +88,10 @@ impl Entry<V1_0>{
             if err_code != vk::Result::Success {
                 return Err(InstanceError::VkError(err_code));
             }
-            let instance_fn = vk::InstanceFnV1_0::load(|name| {
-                    mem::transmute(self.static_fn.get_instance_proc_addr(instance, name.as_ptr()))
-                }).map_err(|err| InstanceError::LoadError(err))?;
-            Ok(Instance::from_raw(instance, InstanceFpV1_0 { instance_fn: instance_fn }))
+            let instance_fp = V::InstanceFp::load(&self.static_fn, instance).map_err(|err| InstanceError::LoadError(err))?;
+            Ok(Instance::from_raw(instance, instance_fp))
         }
     }
-}
-impl<V: VkVersion> Entry<V> {
     pub fn load_vulkan() -> Result<Entry<V>, LoadingError> {
         let static_fn = match *VK_LIB {
             Ok(ref lib) => {
@@ -91,7 +113,7 @@ impl<V: VkVersion> Entry<V> {
         Ok(Entry {
             static_fn: static_fn,
             entry_fn: entry_fn,
-            _v: PhantomData
+            _v: PhantomData,
         })
     }
 

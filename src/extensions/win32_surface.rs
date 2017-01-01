@@ -6,7 +6,8 @@ use entry::Entry;
 use vk;
 use std::ffi::CStr;
 use ::RawPtr;
-use instance::{V1_0, InstanceV1_0};
+use instance::InstanceV1_0;
+use version::{V1_0};
 
 #[derive(Clone)]
 pub struct Win32Surface {

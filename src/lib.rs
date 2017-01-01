@@ -1,13 +1,18 @@
 extern crate shared_library;
 #[macro_use]
 extern crate lazy_static;
-pub mod instance;
-pub mod device;
+pub use instance::Instance;
+pub use device::Device;
+pub use entry::Entry;
+
+mod instance;
+mod device;
 pub mod entry;
 pub mod prelude;
 pub mod vk;
 pub mod allocator;
 pub mod extensions;
+pub mod version;
 
 pub trait RawPtr<T>{
     fn as_raw_ptr(&self) -> *const T;

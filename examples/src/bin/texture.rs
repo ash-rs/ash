@@ -22,7 +22,7 @@ struct Vertex {
 
 fn main() {
     unsafe {
-        let base: ExampleBase = ExampleBase::new(1920, 1080);
+        let base = ExampleBase::new(1920, 1080);
         let renderpass_attachments =
             [vk::AttachmentDescription {
                  format: base.surface_format.format,

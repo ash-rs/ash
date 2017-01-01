@@ -3,8 +3,11 @@ use prelude::*;
 use std::ptr;
 use std::mem;
 use vk;
-use device::{Device, DeviceFpV1_0};
+use device::Device;
 use ::RawPtr;
+use version::{FunctionPointers, V1_0, InstanceFpV1_0, DeviceFpV1_0};
+use version::{InstanceLoader, DeviceLoader};
+
 
 #[derive(Debug)]
 pub enum DeviceError {
@@ -12,25 +15,9 @@ pub enum DeviceError {
     VkError(vk::Result),
 }
 
-pub trait VkVersion {
-    type InstanceFp;
-    type DeviceFp;
-}
-
-#[warn(non_camel_case_types)]
-pub struct V1_0;
-impl VkVersion for V1_0 {
-    type InstanceFp = InstanceFpV1_0;
-    type DeviceFp = DeviceFpV1_0;
-}
-
-#[warn(non_camel_case_types)]
-pub struct InstanceFpV1_0 {
-    pub instance_fn: vk::InstanceFnV1_0,
-}
 
 #[derive(Clone)]
-pub struct Instance<V: VkVersion> {
+pub struct Instance<V: FunctionPointers> {
     handle: vk::Instance,
     instance_fp: V::InstanceFp,
 }
@@ -44,7 +31,7 @@ impl InstanceV1_0 for Instance<V1_0> {
         &self.instance_fp.instance_fn
     }
 }
-impl<V: VkVersion> Instance<V> {
+impl<V: FunctionPointers> Instance<V> {
     pub fn handle(&self) -> vk::Instance {
         self.handle
     }
@@ -57,14 +44,15 @@ impl<V: VkVersion> Instance<V> {
     }
 }
 
-impl Instance<V1_0> {
+impl<V: FunctionPointers> Instance<V> {
     pub unsafe fn create_device(&self,
                                 physical_device: vk::PhysicalDevice,
                                 create_info: &vk::DeviceCreateInfo,
                                 allocation_callbacks: Option<&vk::AllocationCallbacks>)
-                                -> Result<Device<V1_0>, DeviceError> {
+                                -> Result<Device<V>, DeviceError> {
         let mut device: vk::Device = mem::uninitialized();
-        let err_code = self.fp_v1_0()
+        let err_code = self.instance_fp
+            .fp_v1_0()
             .create_device(physical_device,
                            create_info,
                            allocation_callbacks.as_raw_ptr(),
@@ -72,10 +60,8 @@ impl Instance<V1_0> {
         if err_code != vk::Result::Success {
             return Err(DeviceError::VkError(err_code));
         }
-        let device_fn = vk::DeviceFnV1_0::load(|name| {
-                mem::transmute(self.fp_v1_0().get_device_proc_addr(device, name.as_ptr()))
-            }).map_err(|err| DeviceError::LoadError(err))?;
-        Ok(Device::from_raw(device, DeviceFpV1_0 { device_fn: device_fn }))
+        let device_fn = V::DeviceFp::load(self.instance_fp.fp_v1_0(), device).map_err(|err| DeviceError::LoadError(err))?;
+        Ok(Device::from_raw(device, device_fn))
     }
 }
 

@@ -4,14 +4,11 @@ use std::mem;
 use vk;
 use ::RawPtr;
 
-use instance::{VkVersion, V1_0};
+use version::{FunctionPointers, V1_0, DeviceFpV1_0};
 
 // unsafe impl Sync for Device {}
 // unsafe impl Send for Device {}
 
-pub struct DeviceFpV1_0 {
-    pub device_fn: vk::DeviceFnV1_0,
-}
 
 pub trait DeviceV1_0 {
     fn handle(&self) -> vk::Device;
@@ -751,7 +748,7 @@ pub trait DeviceV1_0 {
 }
 
 #[derive(Clone)]
-pub struct Device<V: VkVersion> {
+pub struct Device<V: FunctionPointers> {
     handle: vk::Device,
     device_fn: V::DeviceFp,
 }
@@ -766,7 +763,7 @@ impl DeviceV1_0 for Device<V1_0> {
     }
 }
 
-impl<V: VkVersion> Device<V> {
+impl<V: FunctionPointers> Device<V> {
     pub fn handle(&self) -> vk::Device {
         self.handle
     }
