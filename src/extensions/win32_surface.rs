@@ -15,7 +15,6 @@ pub struct Win32Surface {
     win32_surface_fn: vk::Win32SurfaceFn,
 }
 
-
 impl Win32Surface {
     pub fn new(entry: &Entry<V1_0>, instance: &Instance<V1_0>) -> Result<Win32Surface, Vec<&'static str>> {
         let surface_fn = vk::Win32SurfaceFn::load(|name| {

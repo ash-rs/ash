@@ -3638,6 +3638,7 @@ pub mod types {
 // FIX: Need better error handling for extensions
 macro_rules! vk_functions {
     ($struct_name: ident, $($raw_name: expr, $name: ident ($($param_name: ident: $param: ty),*,) -> $ret: ty;)+) => {
+        #[allow(non_camel_case_types)]
         pub struct $struct_name{
             $(
                 $name: extern "system" fn ($($param_name: $param),*) -> $ret,
