@@ -111,7 +111,7 @@ use ash::{Device, Instance};
 use ash::version::V1_0;
 // Those traits implement the version specific functions
 use ash::{InstanceV1_0, DeviceV1_0};
-let entry = Entry::<V1_0>::load_vulkan().unwrap();
+let entry = Entry::<V1_0>::new().unwrap();
 let instance = entry.create_instance(...).expect("Instance creation error.");
 let device = instance.create_device(...).expect("Device creation error.");
 ```

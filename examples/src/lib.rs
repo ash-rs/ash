@@ -241,7 +241,7 @@ impl ExampleBase {
                 .with_window_resize_callback(resize_callback)
                 .build()
                 .unwrap();
-            let entry = Entry::load_vulkan().unwrap();
+            let entry = Entry::new().unwrap();
             let app_name = CString::new("VulkanTriangle").unwrap();
             let raw_name = app_name.as_ptr();
 

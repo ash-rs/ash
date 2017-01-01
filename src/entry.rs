@@ -65,7 +65,7 @@ impl<V: FunctionPointers> Entry<V> {
             Ok(Instance::from_raw(instance, instance_fp))
         }
     }
-    pub fn load_vulkan() -> Result<Entry<V>, LoadingError> {
+    pub fn new() -> Result<Entry<V>, LoadingError> {
         let static_fn = match *VK_LIB {
             Ok(ref lib) => {
                 let static_fn = vk::StaticFn::load(|name| unsafe {
