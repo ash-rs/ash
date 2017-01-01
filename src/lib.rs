@@ -7,7 +7,7 @@ pub use entry::Entry;
 
 mod instance;
 mod device;
-pub mod entry;
+mod entry;
 pub mod prelude;
 pub mod vk;
 pub mod allocator;

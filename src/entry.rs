@@ -47,34 +47,7 @@ pub enum InstanceError {
     LoadError(Vec<&'static str>),
     VkError(vk::Result),
 }
-pub trait EntryExt {
-    fn load_vulkan<V: FunctionPointers>() -> Result<Entry<V>, LoadingError> {
-        let static_fn = match *VK_LIB {
-            Ok(ref lib) => {
-                let static_fn = vk::StaticFn::load(|name| unsafe {
-                        let name = name.to_str().unwrap();
-                        let f = match lib.symbol(name) {
-                            Ok(s) => s,
-                            Err(_) => ptr::null(),
-                        };
-                        f
-                    }).map_err(|err| LoadingError::StaticLoadError(err))?;
-                Ok(static_fn)
-            }
-            Err(ref err) => Err(LoadingError::LibraryLoadError(err.clone())),
-        }?;
-        let entry_fn = vk::EntryFn::load(|name| unsafe {
-                mem::transmute(static_fn.get_instance_proc_addr(vk::Instance::null(), name.as_ptr()))
-            }).map_err(|err| LoadingError::EntryLoadError(err))?;
-        Ok(Entry {
-            static_fn: static_fn,
-            entry_fn: entry_fn,
-            _v: PhantomData,
-        })
-    }
-}
-impl<V: FunctionPointers> EntryExt for Entry<V> {}
-impl Entry<V1_0> {}
+
 impl<V: FunctionPointers> Entry<V> {
     pub fn create_instance(&self,
                            create_info: &vk::InstanceCreateInfo,

@@ -17,7 +17,6 @@ use ash::extensions::{Swapchain, XlibSurface, Surface, DebugReport, Win32Surface
 use std::ptr;
 use std::ffi::{CStr, CString};
 use std::ops::Drop;
-use ash::entry::EntryExt;
 
 // Simple offset_of macro akin to C++ offsetof
 #[macro_export]
