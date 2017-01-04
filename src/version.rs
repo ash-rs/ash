@@ -5,6 +5,7 @@ use std::mem;
 pub trait FunctionPointers {
     type InstanceFp: InstanceLoader;
     type DeviceFp: DeviceLoader;
+    type EntryFp: EntryLoader;
 }
 
 #[allow(non_camel_case_types)]
@@ -12,11 +13,34 @@ pub struct V1_0;
 impl FunctionPointers for V1_0 {
     type InstanceFp = InstanceFpV1_0;
     type DeviceFp = DeviceFpV1_0;
+    type EntryFp = EntryFpV1_0;
 }
 
 #[allow(non_camel_case_types)]
 pub struct InstanceFpV1_0 {
     pub instance_fn: vk::InstanceFnV1_0,
+}
+
+#[allow(non_camel_case_types)]
+pub struct EntryFpV1_0 {
+    pub entry_fn: vk::EntryFnV1_0,
+}
+
+impl EntryLoader for EntryFpV1_0 {
+    fn fp_v1_0(&self) -> &vk::EntryFnV1_0 {
+        &self.entry_fn
+    }
+    unsafe fn load(static_fn: &vk::StaticFn) -> Result<Self, Vec<&'static str>> {
+        let entry_fn = vk::EntryFnV1_0::load(|name| {
+            mem::transmute(static_fn.get_instance_proc_addr(vk::Instance::null(), name.as_ptr()))
+        })?;
+        Ok(EntryFpV1_0 { entry_fn: entry_fn })
+    }
+}
+
+pub trait EntryLoader: Sized {
+    fn fp_v1_0(&self) -> &vk::EntryFnV1_0;
+    unsafe fn load(static_fn: &vk::StaticFn) -> Result<Self, Vec<&'static str>>;
 }
 
 pub trait InstanceLoader: Sized {
@@ -44,7 +68,7 @@ impl DeviceLoader for DeviceFpV1_0 {
 }
 
 impl InstanceLoader for InstanceFpV1_0 {
-    fn fp_v1_0(&self) -> &vk::InstanceFnV1_0{
+    fn fp_v1_0(&self) -> &vk::InstanceFnV1_0 {
         &self.instance_fn
     }
     unsafe fn load(static_fn: &vk::StaticFn,

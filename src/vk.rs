@@ -3711,7 +3711,7 @@ vk_functions!{
 }
 
 vk_functions!{
-    EntryFn,
+    EntryFnV1_0,
     "vkCreateInstance", create_instance(
         p_create_info: *const InstanceCreateInfo,
         p_allocator: *const AllocationCallbacks,

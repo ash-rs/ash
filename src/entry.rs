@@ -7,7 +7,7 @@ use shared_library::dynamic_library::DynamicLibrary;
 use std::path::Path;
 use ::RawPtr;
 use std::marker::PhantomData;
-use version::{FunctionPointers, V1_0, InstanceFpV1_0, InstanceLoader};
+use version::{FunctionPointers, V1_0, InstanceFpV1_0, InstanceLoader, EntryLoader};
 
 #[cfg(windows)]
 fn get_path() -> &'static Path {
@@ -31,7 +31,7 @@ lazy_static!{
 #[derive(Clone)]
 pub struct Entry<V: FunctionPointers> {
     static_fn: vk::StaticFn,
-    entry_fn: vk::EntryFn,
+    entry_fn: V::EntryFp,
     _v: PhantomData<V>,
 }
 
@@ -47,7 +47,6 @@ pub enum InstanceError {
     LoadError(Vec<&'static str>),
     VkError(vk::Result),
 }
-
 impl<V: FunctionPointers> Entry<V> {
     pub fn create_instance(&self,
                            create_info: &vk::InstanceCreateInfo,
@@ -55,9 +54,10 @@ impl<V: FunctionPointers> Entry<V> {
                            -> Result<Instance<V>, InstanceError> {
         unsafe {
             let mut instance: vk::Instance = mem::uninitialized();
-            let err_code = self.entry_fn.create_instance(create_info,
-                                                         allocation_callbacks.as_raw_ptr(),
-                                                         &mut instance);
+            let err_code =
+                self.entry_fn.fp_v1_0().create_instance(create_info,
+                                                        allocation_callbacks.as_raw_ptr(),
+                                                        &mut instance);
             if err_code != vk::Result::Success {
                 return Err(InstanceError::VkError(err_code));
             }
@@ -80,9 +80,7 @@ impl<V: FunctionPointers> Entry<V> {
             }
             Err(ref err) => Err(LoadingError::LibraryLoadError(err.clone())),
         }?;
-        let entry_fn = vk::EntryFn::load(|name| unsafe {
-                mem::transmute(static_fn.get_instance_proc_addr(vk::Instance::null(), name.as_ptr()))
-            }).map_err(|err| LoadingError::EntryLoadError(err))?;
+        let entry_fn = unsafe { V::EntryFp::load(&static_fn).unwrap() };
         Ok(Entry {
             static_fn: static_fn,
             entry_fn: entry_fn,
@@ -93,10 +91,11 @@ impl<V: FunctionPointers> Entry<V> {
     pub fn enumerate_instance_layer_properties(&self) -> VkResult<Vec<vk::LayerProperties>> {
         unsafe {
             let mut num = 0;
-            self.entry_fn.enumerate_instance_layer_properties(&mut num, ptr::null_mut());
+            self.entry_fn.fp_v1_0().enumerate_instance_layer_properties(&mut num, ptr::null_mut());
 
             let mut v = Vec::with_capacity(num as usize);
             let err_code = self.entry_fn
+                .fp_v1_0()
                 .enumerate_instance_layer_properties(&mut num, v.as_mut_ptr());
             v.set_len(num as usize);
             match err_code {
@@ -111,9 +110,11 @@ impl<V: FunctionPointers> Entry<V> {
         unsafe {
             let mut num = 0;
             self.entry_fn
+                .fp_v1_0()
                 .enumerate_instance_extension_properties(ptr::null(), &mut num, ptr::null_mut());
             let mut data = Vec::with_capacity(num as usize);
             let err_code = self.entry_fn
+                .fp_v1_0()
                 .enumerate_instance_extension_properties(ptr::null(), &mut num, data.as_mut_ptr());
             data.set_len(num as usize);
             match err_code {
