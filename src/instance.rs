@@ -8,13 +8,11 @@ use ::RawPtr;
 use version::{FunctionPointers, V1_0, InstanceFpV1_0, DeviceFpV1_0};
 use version::{InstanceLoader, DeviceLoader};
 
-
 #[derive(Debug)]
 pub enum DeviceError {
     LoadError(Vec<&'static str>),
     VkError(vk::Result),
 }
-
 
 #[derive(Clone)]
 pub struct Instance<V: FunctionPointers> {
@@ -23,6 +21,7 @@ pub struct Instance<V: FunctionPointers> {
 }
 
 impl InstanceV1_0 for Instance<V1_0> {
+    type Fp = V1_0;
     fn handle(&self) -> vk::Instance {
         self.handle
     }
@@ -44,15 +43,18 @@ impl<V: FunctionPointers> Instance<V> {
     }
 }
 
-impl<V: FunctionPointers> Instance<V> {
-    pub unsafe fn create_device(&self,
-                                physical_device: vk::PhysicalDevice,
-                                create_info: &vk::DeviceCreateInfo,
-                                allocation_callbacks: Option<&vk::AllocationCallbacks>)
-                                -> Result<Device<V>, DeviceError> {
+#[warn(non_camel_case_types)]
+pub trait InstanceV1_0 {
+    type Fp: FunctionPointers;
+    fn handle(&self) -> vk::Instance;
+    fn fp_v1_0(&self) -> &vk::InstanceFnV1_0;
+    unsafe fn create_device(&self,
+                            physical_device: vk::PhysicalDevice,
+                            create_info: &vk::DeviceCreateInfo,
+                            allocation_callbacks: Option<&vk::AllocationCallbacks>)
+                            -> Result<Device<Self::Fp>, DeviceError> {
         let mut device: vk::Device = mem::uninitialized();
-        let err_code = self.instance_fp
-            .fp_v1_0()
+        let err_code = self.fp_v1_0()
             .create_device(physical_device,
                            create_info,
                            allocation_callbacks.as_raw_ptr(),
@@ -60,15 +62,11 @@ impl<V: FunctionPointers> Instance<V> {
         if err_code != vk::Result::Success {
             return Err(DeviceError::VkError(err_code));
         }
-        let device_fn = V::DeviceFp::load(self.instance_fp.fp_v1_0(), device).map_err(|err| DeviceError::LoadError(err))?;
+        let device_fn =
+            <<Self as InstanceV1_0>::Fp as FunctionPointers>::DeviceFp::load(self.fp_v1_0(), device).map_err(|err| DeviceError::LoadError(err))?;
         Ok(Device::from_raw(device, device_fn))
     }
-}
 
-#[warn(non_camel_case_types)]
-pub trait InstanceV1_0 {
-    fn handle(&self) -> vk::Instance;
-    fn fp_v1_0(&self) -> &vk::InstanceFnV1_0;
     fn get_device_proc_addr(&self,
                             device: vk::Device,
                             p_name: *const vk::c_char)
@@ -91,6 +89,7 @@ pub trait InstanceV1_0 {
             format_prop
         }
     }
+
     fn get_physical_device_memory_properties(&self,
                                              physical_device: vk::PhysicalDevice)
                                              -> vk::PhysicalDeviceMemoryProperties {
