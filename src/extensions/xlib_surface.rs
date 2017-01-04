@@ -7,7 +7,7 @@ use vk;
 use std::ffi::CStr;
 use ::RawPtr;
 use instance::InstanceV1_0;
-use version::{V1_0};
+use version::{V1_0, EntryV1_0};
 
 #[derive(Clone)]
 pub struct XlibSurface {

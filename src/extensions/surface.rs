@@ -7,7 +7,7 @@ use entry::Entry;
 use vk;
 use std::ffi::CStr;
 use ::RawPtr;
-use version::{V1_0};
+use version::{V1_0, EntryV1_0};
 
 #[derive(Clone)]
 pub struct Surface {
@@ -16,7 +16,9 @@ pub struct Surface {
 }
 
 impl Surface {
-    pub fn new(entry: &Entry<V1_0>, instance: &Instance<V1_0>) -> Result<Surface, Vec<&'static str>> {
+    pub fn new(entry: &Entry<V1_0>,
+               instance: &Instance<V1_0>)
+               -> Result<Surface, Vec<&'static str>> {
         let surface_fn = vk::SurfaceFn::load(|name| {
             unsafe {
                 mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
@@ -28,7 +30,7 @@ impl Surface {
         })
     }
 
-    pub fn name() -> &'static CStr{
+    pub fn name() -> &'static CStr {
         CStr::from_bytes_with_nul(b"VK_KHR_surface\0").expect("Wrong extension string")
     }
 
@@ -112,7 +114,10 @@ impl Surface {
         }
     }
 
-    pub unsafe fn destroy_surface_khr(&self, surface: vk::SurfaceKHR, allocation_callbacks: Option<&vk::AllocationCallbacks>) {
-        self.surface_fn.destroy_surface_khr(self.handle, surface, allocation_callbacks.as_raw_ptr());
+    pub unsafe fn destroy_surface_khr(&self,
+                                      surface: vk::SurfaceKHR,
+                                      allocation_callbacks: Option<&vk::AllocationCallbacks>) {
+        self.surface_fn
+            .destroy_surface_khr(self.handle, surface, allocation_callbacks.as_raw_ptr());
     }
 }

@@ -47,6 +47,62 @@ pub enum InstanceError {
     LoadError(Vec<&'static str>),
     VkError(vk::Result),
 }
+pub trait EntryV1_0{
+    fn fp_v1_0(&self) -> &vk::EntryFnV1_0;
+    fn static_fn(&self) -> &vk::StaticFn;
+    fn enumerate_instance_layer_properties(&self) -> VkResult<Vec<vk::LayerProperties>> {
+        unsafe {
+            let mut num = 0;
+            self.fp_v1_0().enumerate_instance_layer_properties(&mut num, ptr::null_mut());
+
+            let mut v = Vec::with_capacity(num as usize);
+            let err_code = self
+                .fp_v1_0()
+                .enumerate_instance_layer_properties(&mut num, v.as_mut_ptr());
+            v.set_len(num as usize);
+            match err_code {
+                vk::Result::Success => Ok(v),
+                _ => Err(err_code),
+            }
+        }
+    }
+
+    fn enumerate_instance_extension_properties(&self)
+                                                   -> VkResult<Vec<vk::ExtensionProperties>> {
+        unsafe {
+            let mut num = 0;
+            self
+                .fp_v1_0()
+                .enumerate_instance_extension_properties(ptr::null(), &mut num, ptr::null_mut());
+            let mut data = Vec::with_capacity(num as usize);
+            let err_code = self
+                .fp_v1_0()
+                .enumerate_instance_extension_properties(ptr::null(), &mut num, data.as_mut_ptr());
+            data.set_len(num as usize);
+            match err_code {
+                vk::Result::Success => Ok(data),
+                _ => Err(err_code),
+            }
+        }
+    }
+
+    fn get_instance_proc_addr(&self,
+                                  instance: vk::Instance,
+                                  p_name: *const vk::c_char)
+                                  -> vk::PFN_vkVoidFunction {
+        unsafe { self.static_fn().get_instance_proc_addr(instance, p_name) }
+    }
+}
+
+impl EntryV1_0 for Entry<V1_0>{
+    fn fp_v1_0(&self) -> &vk::EntryFnV1_0{
+        self.entry_fn.fp_v1_0()
+    }
+    fn static_fn(&self) -> &vk::StaticFn{
+        &self.static_fn
+    }
+}
+
 impl<V: FunctionPointers> Entry<V> {
     pub fn create_instance(&self,
                            create_info: &vk::InstanceCreateInfo,
@@ -86,48 +142,5 @@ impl<V: FunctionPointers> Entry<V> {
             entry_fn: entry_fn,
             _v: PhantomData,
         })
-    }
-
-    pub fn enumerate_instance_layer_properties(&self) -> VkResult<Vec<vk::LayerProperties>> {
-        unsafe {
-            let mut num = 0;
-            self.entry_fn.fp_v1_0().enumerate_instance_layer_properties(&mut num, ptr::null_mut());
-
-            let mut v = Vec::with_capacity(num as usize);
-            let err_code = self.entry_fn
-                .fp_v1_0()
-                .enumerate_instance_layer_properties(&mut num, v.as_mut_ptr());
-            v.set_len(num as usize);
-            match err_code {
-                vk::Result::Success => Ok(v),
-                _ => Err(err_code),
-            }
-        }
-    }
-
-    pub fn enumerate_instance_extension_properties(&self)
-                                                   -> VkResult<Vec<vk::ExtensionProperties>> {
-        unsafe {
-            let mut num = 0;
-            self.entry_fn
-                .fp_v1_0()
-                .enumerate_instance_extension_properties(ptr::null(), &mut num, ptr::null_mut());
-            let mut data = Vec::with_capacity(num as usize);
-            let err_code = self.entry_fn
-                .fp_v1_0()
-                .enumerate_instance_extension_properties(ptr::null(), &mut num, data.as_mut_ptr());
-            data.set_len(num as usize);
-            match err_code {
-                vk::Result::Success => Ok(data),
-                _ => Err(err_code),
-            }
-        }
-    }
-
-    pub fn get_instance_proc_addr(&self,
-                                  instance: vk::Instance,
-                                  p_name: *const vk::c_char)
-                                  -> vk::PFN_vkVoidFunction {
-        unsafe { self.static_fn.get_instance_proc_addr(instance, p_name) }
     }
 }

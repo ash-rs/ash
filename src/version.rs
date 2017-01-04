@@ -1,6 +1,7 @@
 use vk;
 pub use instance::InstanceV1_0;
 pub use device::DeviceV1_0;
+pub use entry::EntryV1_0;
 use std::mem;
 pub trait FunctionPointers {
     type InstanceFp: InstanceLoader;
