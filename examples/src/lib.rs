@@ -286,6 +286,7 @@ impl ExampleBase {
                     .unwrap();
             let surface = create_surface(&entry, &instance, &window).unwrap();
             let pdevices = instance.enumerate_physical_devices().expect("Physical device error");
+            println!("pdevices: {:?}", pdevices);
             let surface_loader = Surface::new(&entry, &instance)
                 .expect("Unable to load the Surface extension");
             let (pdevice, queue_family_index) = pdevices.iter()
