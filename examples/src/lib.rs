@@ -358,7 +358,8 @@ impl ExampleBase {
             let surface_capabilities =
                 surface_loader.get_physical_device_surface_capabilities_khr(pdevice, surface)
                     .unwrap();
-            let desired_image_count = surface_capabilities.min_image_count + 1;
+            // Stick with the min image count for now
+            let desired_image_count = surface_capabilities.min_image_count;
             assert!(surface_capabilities.min_image_count <= desired_image_count &&
                     surface_capabilities.max_image_count >= desired_image_count,
                     "Image count err");
