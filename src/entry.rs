@@ -68,6 +68,7 @@ pub trait EntryV1_0 {
             Ok(Instance::from_raw(instance, instance_fp))
         }
     }
+
     fn enumerate_instance_layer_properties(&self) -> VkResult<Vec<vk::LayerProperties>> {
         unsafe {
             let mut num = 0;
@@ -134,7 +135,7 @@ impl<V: FunctionPointers> Entry<V> {
             }
             Err(ref err) => Err(LoadingError::LibraryLoadError(err.clone())),
         }?;
-        let entry_fn = unsafe { V::EntryFp::load(&static_fn).unwrap() };
+        let entry_fn = unsafe { V::EntryFp::load(&static_fn).map_err(|err| LoadingError::EntryLoadError(err))? };
         Ok(Entry {
             static_fn: static_fn,
             entry_fn: entry_fn,
