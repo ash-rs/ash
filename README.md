@@ -110,7 +110,7 @@ use ash::{Device, Instance};
 // Specifies the version that you want to load
 use ash::version::V1_0;
 // Those traits implement the version specific functions
-use ash::{InstanceV1_0, DeviceV1_0};
+use ash::{InstanceV1_0, DeviceV1_0, EntryV1_0};
 let entry = Entry::<V1_0>::new().unwrap();
 let instance = entry.create_instance(...).expect("Instance creation error.");
 let device = instance.create_device(...).expect("Device creation error.");
