@@ -424,6 +424,8 @@ fn main() {
                                         base.present_complete_semaphore,
                                         fence)
                 .unwrap();
+            base.device.wait_for_fences(&[fence], true, std::u64::MAX);
+            base.device.reset_fences(&[fence]);
             let clear_values =
                 [vk::ClearValue::new_color(vk::ClearColorValue::new_float32([0.0, 0.0, 0.0, 0.0])),
                  vk::ClearValue::new_depth_stencil(vk::ClearDepthStencilValue {
@@ -485,8 +487,6 @@ fn main() {
                 p_results: &mut present_info_err,
             };
             base.swapchain_loader.queue_present_khr(base.present_queue, &present_info).unwrap();
-            base.device.wait_for_fences(&[fence], true, std::u64::MAX);
-            base.device.reset_fences(&[fence]);
         });
 
         base.device.destroy_fence(fence, None);
