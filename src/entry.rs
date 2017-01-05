@@ -6,7 +6,6 @@ use instance::Instance;
 use shared_library::dynamic_library::DynamicLibrary;
 use std::path::Path;
 use ::RawPtr;
-use std::marker::PhantomData;
 use version::{FunctionPointers, V1_0, InstanceLoader, EntryLoader};
 
 #[cfg(windows)]
@@ -32,7 +31,6 @@ lazy_static!{
 pub struct Entry<V: FunctionPointers> {
     static_fn: vk::StaticFn,
     entry_fn: V::EntryFp,
-    _v: PhantomData<V>,
 }
 
 #[derive(Debug)]
@@ -143,7 +141,6 @@ impl<V: FunctionPointers> Entry<V> {
         Ok(Entry {
             static_fn: static_fn,
             entry_fn: entry_fn,
-            _v: PhantomData,
         })
     }
 }
