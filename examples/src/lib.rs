@@ -236,7 +236,7 @@ impl ExampleBase {
     pub fn new(window_width: u32, window_height: u32) -> Self {
         unsafe {
             let window = winit::WindowBuilder::new()
-                .with_title("A fantastic window!")
+                .with_title("Ash - Example")
                 .with_dimensions(window_width, window_height)
                 .with_window_resize_callback(resize_callback)
                 .build()
