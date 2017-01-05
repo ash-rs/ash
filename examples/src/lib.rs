@@ -383,6 +383,7 @@ impl ExampleBase {
             let present_modes =
                 surface_loader.get_physical_device_surface_present_modes_khr(pdevice, surface)
                     .unwrap();
+            println!("{:?}", present_modes);
             let present_mode = present_modes.iter()
                 .cloned()
                 .find(|&mode| mode == vk::PresentModeKHR::Mailbox)
