@@ -29,7 +29,7 @@ pub fn create_instance(&self,
                        create_info: &vk::InstanceCreateInfo,
                        allocation_callbacks: Option<&vk::AllocationCallbacks>)
                        -> Result<Instance, InstanceError> {
-let instance: Instance = entry.create_instance(&create_info, None)
+let instance = entry.create_instance(&create_info, None)
     .expect("Instance creation error");
 ```
 
