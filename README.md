@@ -106,11 +106,11 @@ Ash also takes care of loading the function pointers. Function pointers are spli
 Ash also manages multiple versions of Vulkan without any breakage. You will never run into any runtime error because you tried to access a function pointer that failed to load. Function pointers either load successfully or fail and return an error.
 
 ```Rust
-use ash::{Device, Instance};
+use ash::version::{Device, Instance};
 // Specifies the version that you want to load
 use ash::version::V1_0;
 // Those traits implement the version specific functions
-use ash::{InstanceV1_0, DeviceV1_0, EntryV1_0};
+use ash::version::{InstanceV1_0, DeviceV1_0, EntryV1_0};
 let entry = Entry::<V1_0>::new().unwrap();
 let instance = entry.create_instance(...).expect("Instance creation error.");
 let device = instance.create_device(...).expect("Device creation error.");
