@@ -384,10 +384,11 @@ impl ExampleBase {
                 surface_loader.get_physical_device_surface_present_modes_khr(pdevice, surface)
                     .unwrap();
             println!("{:?}", present_modes);
-            let present_mode = present_modes.iter()
-                .cloned()
-                .find(|&mode| mode == vk::PresentModeKHR::Mailbox)
-                .unwrap_or(vk::PresentModeKHR::Fifo);
+            //let present_mode = present_modes.iter()
+            //    .cloned()
+            //    .find(|&mode| mode == vk::PresentModeKHR::Mailbox)
+            //    .unwrap_or(vk::PresentModeKHR::Fifo);
+            let present_mode = vk::PresentModeKHR::Fifo;
             let swapchain_loader = Swapchain::new(&instance, &device)
                 .expect("Unable to load swapchain");
             let swapchain_create_info = vk::SwapchainCreateInfoKHR {
