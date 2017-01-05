@@ -98,10 +98,10 @@ let pool_create_info = vk::CommandPoolCreateInfo {
 let pool = device.create_command_pool(&pool_create_info, None).unwrap();
 ```
 
-Additionally pointers like `Instance`, `Device`, `Queue` etc are hidden behind a type. Those pointers can only be constructed from within `Ash` which elimites invalid API usage and has the benefit of making some functions in Vulkan **safe**.
+Additionally pointers like `Instance`, `Device`, `Queue` etc are hidden behind a type. Those pointers can only be constructed from within `Ash` which eliminates some invalid API usage and has the benefit of making some functions in Vulkan **safe**.
 
 ### Function pointer loading
-Ash also takes care of loading the function pointers. Function pointers are split into 3 categories. Entry, Instance and Device. The reason for not loading it into a global is that in Vulkan you can have multiple devices and each device must load its own function pointers.
+Ash also takes care of loading the function pointers. Function pointers are split into 3 categories, Entry, Instance and Device. The reason for not loading it into a global is that in Vulkan you can have multiple devices and each device will load its own function pointers to achieve better performance. Click [here](https://github.com/KhronosGroup/Vulkan-LoaderAndValidationLayers/blob/sdk-1.0.3/loader/LoaderAndLayerInterface.md) for more information.
 
 Ash also manages multiple versions of Vulkan without any breakage. You will never run into any runtime error because you tried to access a function pointer that failed to load. Function pointers either load successfully or fail and return an error.
 
@@ -142,7 +142,7 @@ fn do_something_with_a_device<Device: DeviceV1_0>(device: &Device){}
 ```
 
 ### Extension loading
-Additionally, every Vulkan extension has to be loaded explicity. You can find all extensions under [ash::extensions](https://github.com/MaikKlein/ash/tree/master/src/extensions). You still have to tell Vulkan which instance or device extensions you want to load.
+Additionally, every Vulkan extension has to be loaded explicitly. You can find all extensions under [ash::extensions](https://github.com/MaikKlein/ash/tree/master/src/extensions). You still have to tell Vulkan which instance or device extensions you want to load.
 ```Rust
 use ash::extensions::Swapchain;
 let swapchain_loader = Swapchain::new(&instance, &device).expect("Unable to load swapchain");
