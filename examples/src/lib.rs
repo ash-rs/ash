@@ -360,6 +360,7 @@ impl ExampleBase {
                     .unwrap();
             // Stick with the min image count for now
             let desired_image_count = surface_capabilities.min_image_count;
+            println!("{:?}", surface_capabilities);
             assert!(surface_capabilities.min_image_count <= desired_image_count &&
                     (surface_capabilities.max_image_count >= desired_image_count ||
                      surface_capabilities.max_image_count == 0),

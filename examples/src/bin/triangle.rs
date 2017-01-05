@@ -411,12 +411,18 @@ fn main() {
         let graphic_pipeline = graphics_pipelines[0];
 
 
+        let fence_info = vk::FenceCreateInfo{
+            s_type: vk::StructureType::FenceCreateInfo,
+            p_next: ptr::null(),
+            flags: Default::default()
+        };
+        let fence = base.device.create_fence(&fence_info, None).expect("Failed to create fence");
         base.render_loop(|| {
             let present_index = base.swapchain_loader
                 .acquire_next_image_khr(base.swapchain,
                                         std::u64::MAX,
                                         base.present_complete_semaphore,
-                                        vk::Fence::null())
+                                        fence)
                 .unwrap();
             let clear_values =
                 [vk::ClearValue::new_color(vk::ClearColorValue::new_float32([0.0, 0.0, 0.0, 0.0])),
@@ -479,8 +485,11 @@ fn main() {
                 p_results: &mut present_info_err,
             };
             base.swapchain_loader.queue_present_khr(base.present_queue, &present_info).unwrap();
+            base.device.wait_for_fences(&[fence], true, std::u64::MAX);
+            base.device.reset_fences(&[fence]);
         });
 
+        base.device.destroy_fence(fence, None);
         base.device.device_wait_idle().unwrap();
         for pipeline in graphics_pipelines {
             base.device.destroy_pipeline(pipeline, None);
