@@ -12,7 +12,7 @@ use std::default::Default;
 use ash::Entry;
 use ash::Instance;
 use ash::Device;
-pub use ash::version::{FunctionPointers, V1_0, InstanceV1_0, DeviceV1_0};
+pub use ash::version::{V1_0, InstanceV1_0, DeviceV1_0, EntryV1_0};
 use ash::extensions::{Swapchain, XlibSurface, Surface, DebugReport, Win32Surface};
 use std::ptr;
 use std::ffi::{CStr, CString};
