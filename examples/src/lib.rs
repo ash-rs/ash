@@ -80,10 +80,10 @@ pub fn record_submit_commandbuffer<D: DeviceV1_0, F: FnOnce(&D, vk::CommandBuffe
 }
 
 #[cfg(all(unix, not(target_os = "android")))]
-unsafe fn create_surface(instance: &Instance<V1_0>,
-                         entry: &Entry<V1_0>,
-                         window: &winit::Window)
-                         -> Result<vk::SurfaceKHR, vk::Result> {
+unsafe fn create_surface<E: EntryV1_0, I: InstanceV1_0>(entry: &E,
+                                                        instance: &I,
+                                                        window: &winit::Window)
+                                                        -> Result<vk::SurfaceKHR, vk::Result> {
     use winit::os::unix::WindowExt;
     let x11_display = window.get_xlib_display().unwrap();
     let x11_window = window.get_xlib_window().unwrap();
@@ -94,16 +94,16 @@ unsafe fn create_surface(instance: &Instance<V1_0>,
         window: x11_window as vk::Window,
         dpy: x11_display as *mut vk::Display,
     };
-    let xlib_surface_loader = XlibSurface::new(&entry, &instance)
+    let xlib_surface_loader = XlibSurface::new(entry, instance)
         .expect("Unable to load xlib surface");
     xlib_surface_loader.create_xlib_surface_khr(&x11_create_info, None)
 }
 
 #[cfg(windows)]
-unsafe fn create_surface(instance: &Instance<V1_0>,
-                         entry: &Entry<V1_0>,
-                         window: &winit::Window)
-                         -> Result<vk::SurfaceKHR, vk::Result> {
+unsafe fn create_surface<E: EntryV1_0, I: InstanceV1_0>(entry: &E,
+                                                        instance: &I,
+                                                        window: &winit::Window)
+                                                        -> Result<vk::SurfaceKHR, vk::Result> {
     use winit::os::windows::WindowExt;
     let hwnd = window.get_hwnd() as *mut winapi::windef::HWND__;
     let hinstance = unsafe { user32::GetWindow(hwnd, 0) as *const () };
@@ -114,7 +114,7 @@ unsafe fn create_surface(instance: &Instance<V1_0>,
         hinstance: hinstance,
         hwnd: hwnd as *const (),
     };
-    let win32_surface_loader = Win32Surface::new(&entry, &instance)
+    let win32_surface_loader = Win32Surface::new(entry, instance)
         .expect("Unable to load win32 surface");
     win32_surface_loader.create_win32_surface_khr(&win32_create_info, None)
 }
@@ -284,7 +284,7 @@ impl ExampleBase {
             let debug_call_back =
                 debug_report_loader.create_debug_report_callback_ext(&debug_info, None)
                     .unwrap();
-            let surface = create_surface(&instance, &entry, &window).unwrap();
+            let surface = create_surface(&entry, &instance, &window).unwrap();
             let pdevices = instance.enumerate_physical_devices().expect("Physical device error");
             let surface_loader = Surface::new(&entry, &instance)
                 .expect("Unable to load the Surface extension");

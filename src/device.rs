@@ -3,13 +3,9 @@ use prelude::*;
 use std::mem;
 use vk;
 use ::RawPtr;
+use version::{FunctionPointers, V1_0};
 
-use version::{FunctionPointers, V1_0, DeviceFpV1_0};
-
-// unsafe impl Sync for Device {}
-// unsafe impl Send for Device {}
-
-
+#[allow(non_camel_case_types)]
 pub trait DeviceV1_0 {
     fn handle(&self) -> vk::Device;
     fn fp_v1_0(&self) -> &vk::DeviceFnV1_0;

@@ -7,7 +7,7 @@ use shared_library::dynamic_library::DynamicLibrary;
 use std::path::Path;
 use ::RawPtr;
 use std::marker::PhantomData;
-use version::{FunctionPointers, V1_0, InstanceFpV1_0, InstanceLoader, EntryLoader};
+use version::{FunctionPointers, V1_0, InstanceLoader, EntryLoader};
 
 #[cfg(windows)]
 fn get_path() -> &'static Path {
@@ -47,6 +47,8 @@ pub enum InstanceError {
     LoadError(Vec<&'static str>),
     VkError(vk::Result),
 }
+
+#[allow(non_camel_case_types)]
 pub trait EntryV1_0 {
     type Fp: FunctionPointers;
     fn fp_v1_0(&self) -> &vk::EntryFnV1_0;
@@ -135,7 +137,9 @@ impl<V: FunctionPointers> Entry<V> {
             }
             Err(ref err) => Err(LoadingError::LibraryLoadError(err.clone())),
         }?;
-        let entry_fn = unsafe { V::EntryFp::load(&static_fn).map_err(|err| LoadingError::EntryLoadError(err))? };
+        let entry_fn = unsafe {
+            V::EntryFp::load(&static_fn).map_err(|err| LoadingError::EntryLoadError(err))?
+        };
         Ok(Entry {
             static_fn: static_fn,
             entry_fn: entry_fn,

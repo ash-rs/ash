@@ -5,8 +5,8 @@ use std::mem;
 use vk;
 use device::Device;
 use ::RawPtr;
-use version::{FunctionPointers, V1_0, InstanceFpV1_0, DeviceFpV1_0};
-use version::{InstanceLoader, DeviceLoader};
+use version::{FunctionPointers, V1_0};
+use version::DeviceLoader;
 
 #[derive(Debug)]
 pub enum DeviceError {
@@ -43,7 +43,7 @@ impl<V: FunctionPointers> Instance<V> {
     }
 }
 
-#[warn(non_camel_case_types)]
+#[allow(non_camel_case_types)]
 pub trait InstanceV1_0 {
     type Fp: FunctionPointers;
     fn handle(&self) -> vk::Instance;

@@ -2,12 +2,10 @@
 use prelude::*;
 use std::ptr;
 use std::mem;
-use instance::Instance;
-use entry::Entry;
 use vk;
 use std::ffi::CStr;
 use ::RawPtr;
-use version::{V1_0, EntryV1_0};
+use version::{EntryV1_0, InstanceV1_0};
 
 #[derive(Clone)]
 pub struct Surface {
@@ -16,9 +14,9 @@ pub struct Surface {
 }
 
 impl Surface {
-    pub fn new(entry: &Entry<V1_0>,
-               instance: &Instance<V1_0>)
-               -> Result<Surface, Vec<&'static str>> {
+    pub fn new<E: EntryV1_0, I: InstanceV1_0>(entry: &E,
+                                              instance: &I)
+                                              -> Result<Surface, Vec<&'static str>> {
         let surface_fn = vk::SurfaceFn::load(|name| {
             unsafe {
                 mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
