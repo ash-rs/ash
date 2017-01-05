@@ -10,8 +10,8 @@ mod device;
 mod entry;
 pub mod prelude;
 pub mod vk;
-pub mod allocator;
-mod extensions;
+mod allocator;
+pub mod extensions;
 pub mod version;
 
 pub trait RawPtr<T>{
