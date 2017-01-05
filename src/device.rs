@@ -422,20 +422,18 @@ pub trait DeviceV1_0 {
     }
 
     unsafe fn create_pipeline_layout(&self,
-                              create_info: &vk::PipelineLayoutCreateInfo,
-                              allocation_callbacks: Option<&vk::AllocationCallbacks>)
-                              -> VkResult<vk::PipelineLayout> {
-        unsafe {
-            let mut pipeline_layout = mem::uninitialized();
-            let err_code = self.fp_v1_0()
-                .create_pipeline_layout(self.handle(),
-                                        create_info,
-                                        allocation_callbacks.as_raw_ptr(),
-                                        &mut pipeline_layout);
-            match err_code {
-                vk::Result::Success => Ok(pipeline_layout),
-                _ => Err(err_code),
-            }
+                                     create_info: &vk::PipelineLayoutCreateInfo,
+                                     allocation_callbacks: Option<&vk::AllocationCallbacks>)
+                                     -> VkResult<vk::PipelineLayout> {
+        let mut pipeline_layout = mem::uninitialized();
+        let err_code = self.fp_v1_0()
+            .create_pipeline_layout(self.handle(),
+                                    create_info,
+                                    allocation_callbacks.as_raw_ptr(),
+                                    &mut pipeline_layout);
+        match err_code {
+            vk::Result::Success => Ok(pipeline_layout),
+            _ => Err(err_code),
         }
     }
 
@@ -463,20 +461,18 @@ pub trait DeviceV1_0 {
     }
 
     unsafe fn create_framebuffer(&self,
-                          create_info: &vk::FramebufferCreateInfo,
-                          allocation_callbacks: Option<&vk::AllocationCallbacks>)
-                          -> VkResult<vk::Framebuffer> {
-        unsafe {
-            let mut framebuffer = mem::uninitialized();
-            let err_code = self.fp_v1_0()
-                .create_framebuffer(self.handle(),
-                                    create_info,
-                                    allocation_callbacks.as_raw_ptr(),
-                                    &mut framebuffer);
-            match err_code {
-                vk::Result::Success => Ok(framebuffer),
-                _ => Err(err_code),
-            }
+                                 create_info: &vk::FramebufferCreateInfo,
+                                 allocation_callbacks: Option<&vk::AllocationCallbacks>)
+                                 -> VkResult<vk::Framebuffer> {
+        let mut framebuffer = mem::uninitialized();
+        let err_code = self.fp_v1_0()
+            .create_framebuffer(self.handle(),
+                                create_info,
+                                allocation_callbacks.as_raw_ptr(),
+                                &mut framebuffer);
+        match err_code {
+            vk::Result::Success => Ok(framebuffer),
+            _ => Err(err_code),
         }
     }
 
