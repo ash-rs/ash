@@ -423,7 +423,7 @@ fn main() {
                                         std::u64::MAX,
                                         base.present_complete_semaphore,
                                         fence)
-                .unwrap();
+                .expect("Acquire image failed.");
             base.device.wait_for_fences(&[fence], true, std::u64::MAX);
             base.device.reset_fences(&[fence]);
             let clear_values =
