@@ -361,7 +361,8 @@ impl ExampleBase {
             // Stick with the min image count for now
             let desired_image_count = surface_capabilities.min_image_count;
             assert!(surface_capabilities.min_image_count <= desired_image_count &&
-                    surface_capabilities.max_image_count >= desired_image_count,
+                    (surface_capabilities.max_image_count >= desired_image_count ||
+                     surface_capabilities.max_image_count == 0),
                     "Image count err");
             let surface_resolution = match surface_capabilities.current_extent.width {
                 std::u32::MAX => {
