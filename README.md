@@ -101,7 +101,7 @@ let pool = device.create_command_pool(&pool_create_info, None).unwrap();
 Additionally pointers like `Instance`, `Device`, `Queue` etc are hidden behind a type. Those pointers can only be constructed from within `Ash` which eliminates some invalid API usage and has the benefit of making some functions in Vulkan **safe**.
 
 ### Function pointer loading
-Ash also takes care of loading the function pointers. Function pointers are split into 3 categories, Entry, Instance and Device. The reason for not loading it into a global is that in Vulkan you can have multiple devices and each device will load its own function pointers to achieve better performance. Click [here](https://github.com/KhronosGroup/Vulkan-LoaderAndValidationLayers/blob/sdk-1.0.3/loader/LoaderAndLayerInterface.md) for more information.
+Ash also takes care of loading the function pointers. Function pointers are split into 3 categories, Entry, Instance and Device. The reason for not loading it into a global is that in Vulkan you can have multiple devices and each device will load its own function pointers to achieve better performance. Click [here](https://github.com/KhronosGroup/Vulkan-LoaderAndValidationLayers/blob/master/loader/LoaderAndLayerInterface.md) for more information.
 
 Ash also manages multiple versions of Vulkan without any breakage. You will never run into any runtime error because you tried to access a function pointer that failed to load. Function pointers either load successfully or fail and return an error.
 
