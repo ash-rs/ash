@@ -1,10 +1,10 @@
+#![allow(dead_code)]
 use prelude::*;
 use std::mem;
-use instance::Instance;
-use entry::Entry;
 use vk;
 use std::ffi::CStr;
 use ::RawPtr;
+use version::{EntryV1_0, InstanceV1_0};
 
 #[derive(Clone)]
 pub struct WaylandSurface {
@@ -13,7 +13,9 @@ pub struct WaylandSurface {
 }
 
 impl WaylandSurface {
-    pub fn new(entry: &Entry, instance: &Instance) -> Result<WaylandSurface, Vec<&'static str>> {
+    pub fn new<E: EntryV1_0, I: InstanceV1_0>(entry: &E,
+                                              instance: &I)
+                                              -> Result<WaylandSurface, Vec<&'static str>> {
         let surface_fn = vk::WaylandSurfaceFn::load(|name| {
             unsafe {
                 mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
@@ -36,9 +38,9 @@ impl WaylandSurface {
         let mut surface = mem::uninitialized();
         let err_code = self.wayland_surface_fn
             .create_wayland_surface_khr(self.handle,
-                                      create_info,
-                                      allocation_callbacks.as_raw_ptr(),
-                                      &mut surface);
+                                        create_info,
+                                        allocation_callbacks.as_raw_ptr(),
+                                        &mut surface);
         match err_code {
             vk::Result::Success => Ok(surface),
             _ => Err(err_code),
