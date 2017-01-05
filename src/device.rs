@@ -421,7 +421,7 @@ pub trait DeviceV1_0 {
         }
     }
 
-    fn create_pipeline_layout(&self,
+    unsafe fn create_pipeline_layout(&self,
                               create_info: &vk::PipelineLayoutCreateInfo,
                               allocation_callbacks: Option<&vk::AllocationCallbacks>)
                               -> VkResult<vk::PipelineLayout> {
@@ -462,7 +462,7 @@ pub trait DeviceV1_0 {
         self.fp_v1_0().unmap_memory(self.handle(), memory);
     }
 
-    fn create_framebuffer(&self,
+    unsafe fn create_framebuffer(&self,
                           create_info: &vk::FramebufferCreateInfo,
                           allocation_callbacks: Option<&vk::AllocationCallbacks>)
                           -> VkResult<vk::Framebuffer> {
