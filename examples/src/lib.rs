@@ -358,12 +358,10 @@ impl ExampleBase {
             let surface_capabilities =
                 surface_loader.get_physical_device_surface_capabilities_khr(pdevice, surface)
                     .unwrap();
-            // Stick with the min image count for now
-            let desired_image_count = surface_capabilities.min_image_count;
-            assert!(surface_capabilities.min_image_count <= desired_image_count &&
-                    (surface_capabilities.max_image_count >= desired_image_count ||
-                     surface_capabilities.max_image_count == 0),
-                    "Image count err");
+            let mut desired_image_count = surface_capabilities.min_image_count + 1;
+            if surface_capabilities.max_image_count > 0 && desired_image_count > surface_capabilities.max_image_count{
+                desired_image_count = surface_capabilities.max_image_count;
+            }
             let surface_resolution = match surface_capabilities.current_extent.width {
                 std::u32::MAX => {
                     vk::Extent2D {
@@ -373,7 +371,6 @@ impl ExampleBase {
                 }
                 _ => surface_capabilities.current_extent,
             };
-
             let pre_transform = if surface_capabilities.supported_transforms
                 .subset(vk::SURFACE_TRANSFORM_IDENTITY_BIT_KHR) {
                 vk::SURFACE_TRANSFORM_IDENTITY_BIT_KHR
