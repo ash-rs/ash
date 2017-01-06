@@ -440,7 +440,7 @@ fn main() {
             record_submit_commandbuffer(&base.device,
                                         base.draw_command_buffer,
                                         base.present_queue,
-                                        &[vk::PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT],
+                                        &[vk::PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT],
                                         &[base.present_complete_semaphore],
                                         &[base.rendering_complete_semaphore],
                                         |device, draw_command_buffer| {
