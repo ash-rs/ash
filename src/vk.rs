@@ -432,7 +432,7 @@ pub mod types {
         pub inherited_queries: Bool32,
     }
 
-    #[derive(Debug, Clone)]
+    #[derive(Debug, Clone, Hash)]
     #[repr(C)]
     pub struct FormatProperties {
         pub linear_tiling_features: FormatFeatureFlags,
@@ -440,7 +440,7 @@ pub mod types {
         pub buffer_features: FormatFeatureFlags,
     }
 
-    #[derive(Debug, Clone)]
+    #[derive(Debug, Clone, Hash)]
     #[repr(C)]
     pub struct ImageFormatProperties {
         pub max_extent: Extent3D,
@@ -450,7 +450,7 @@ pub mod types {
         pub max_resource_size: DeviceSize,
     }
 
-    #[derive(Debug, Clone)]
+    #[derive(Debug, Clone, Hash)]
     #[repr(C)]
     pub struct Extent3D {
         pub width: uint32_t,
@@ -990,7 +990,7 @@ pub mod types {
         }
     }
 
-    #[derive(Debug, Clone)]
+    #[derive(Debug, Clone, Hash)]
     #[repr(C)]
     pub struct PhysicalDeviceSparseProperties {
         pub residency_standard2dblock_shape: Bool32,
@@ -1000,7 +1000,7 @@ pub mod types {
         pub residency_non_resident_strict: Bool32,
     }
 
-    #[derive(Debug, Clone)]
+    #[derive(Debug, Clone, Hash)]
     #[repr(C)]
     pub struct QueueFamilyProperties {
         pub queue_flags: QueueFlags,
@@ -1055,14 +1055,14 @@ pub mod types {
         }
     }
 
-    #[derive(Debug, Clone)]
+    #[derive(Debug, Clone, Hash)]
     #[repr(C)]
     pub struct MemoryType {
         pub property_flags: MemoryPropertyFlags,
         pub heap_index: uint32_t,
     }
 
-    #[derive(Debug, Clone)]
+    #[derive(Debug, Clone, Hash)]
     #[repr(C)]
     pub struct MemoryHeap {
         pub size: DeviceSize,
@@ -1211,7 +1211,7 @@ pub mod types {
         pub size: DeviceSize,
     }
 
-    #[derive(Debug, Clone)]
+    #[derive(Debug, Clone, Hash)]
     #[repr(C)]
     pub struct MemoryRequirements {
         pub size: DeviceSize,
@@ -1219,7 +1219,7 @@ pub mod types {
         pub memory_type_bits: uint32_t,
     }
 
-    #[derive(Debug, Clone)]
+    #[derive(Debug, Clone, Hash)]
     #[repr(C)]
     pub struct SparseImageMemoryRequirements {
         pub format_properties: SparseImageFormatProperties,
@@ -1229,7 +1229,7 @@ pub mod types {
         pub image_mip_tail_stride: DeviceSize,
     }
 
-    #[derive(Debug, Clone)]
+    #[derive(Debug, Clone, Hash)]
     #[repr(C)]
     pub struct SparseImageFormatProperties {
         pub aspect_mask: ImageAspectFlags,
@@ -1262,7 +1262,7 @@ pub mod types {
         pub p_binds: *const SparseMemoryBind,
     }
 
-    #[derive(Debug, Clone)]
+    #[derive(Debug, Clone, Hash)]
     #[repr(C)]
     pub struct SparseMemoryBind {
         pub resource_offset: DeviceSize,
@@ -1299,7 +1299,7 @@ pub mod types {
         pub flags: SparseMemoryBindFlags,
     }
 
-    #[derive(Debug, Clone)]
+    #[derive(Debug, Clone, Hash)]
     #[repr(C)]
     pub struct ImageSubresource {
         pub aspect_mask: ImageAspectFlags,
@@ -1307,7 +1307,7 @@ pub mod types {
         pub array_layer: uint32_t,
     }
 
-    #[derive(Debug, Clone)]
+    #[derive(Debug, Clone, Hash)]
     #[repr(C)]
     pub struct Offset3D {
         pub x: int32_t,
@@ -1395,7 +1395,7 @@ pub mod types {
         pub initial_layout: ImageLayout,
     }
 
-    #[derive(Debug, Clone)]
+    #[derive(Debug, Clone, Hash)]
     #[repr(C)]
     pub struct SubresourceLayout {
         pub offset: DeviceSize,
@@ -1418,7 +1418,7 @@ pub mod types {
         pub subresource_range: ImageSubresourceRange,
     }
 
-    #[derive(Debug, Clone)]
+    #[derive(Debug, Clone, Hash)]
     #[repr(C)]
     pub struct ComponentMapping {
         pub r: ComponentSwizzle,
@@ -1427,7 +1427,7 @@ pub mod types {
         pub a: ComponentSwizzle,
     }
 
-    #[derive(Debug, Clone)]
+    #[derive(Debug, Clone, Hash)]
     #[repr(C)]
     pub struct ImageSubresourceRange {
         pub aspect_mask: ImageAspectFlags,
@@ -1502,7 +1502,7 @@ pub mod types {
         pub p_data: *const c_void,
     }
 
-    #[derive(Debug, Clone)]
+    #[derive(Debug, Clone, Hash)]
     #[repr(C)]
     pub struct SpecializationMapEntry {
         pub constant_id: uint32_t,
@@ -1522,7 +1522,7 @@ pub mod types {
         pub p_vertex_attribute_descriptions: *const VertexInputAttributeDescription,
     }
 
-    #[derive(Debug, Clone)]
+    #[derive(Debug, Clone, Hash)]
     #[repr(C)]
     pub struct VertexInputBindingDescription {
         pub binding: uint32_t,
@@ -1530,7 +1530,7 @@ pub mod types {
         pub input_rate: VertexInputRate,
     }
 
-    #[derive(Debug, Clone)]
+    #[derive(Debug, Clone, Hash)]
     #[repr(C)]
     pub struct VertexInputAttributeDescription {
         pub location: uint32_t,
@@ -1581,21 +1581,21 @@ pub mod types {
         pub max_depth: c_float,
     }
 
-    #[derive(Debug, Clone)]
+    #[derive(Debug, Clone, Hash)]
     #[repr(C)]
     pub struct Rect2D {
         pub offset: Offset2D,
         pub extent: Extent2D,
     }
 
-    #[derive(Debug, Clone)]
+    #[derive(Debug, Clone, Hash)]
     #[repr(C)]
     pub struct Offset2D {
         pub x: int32_t,
         pub y: int32_t,
     }
 
-    #[derive(Debug, Clone)]
+    #[derive(Debug, Clone, Hash)]
     #[repr(C)]
     pub struct Extent2D {
         pub width: uint32_t,
@@ -1713,7 +1713,7 @@ pub mod types {
         }
     }
 
-    #[derive(Debug, Clone)]
+    #[derive(Debug, Clone, Hash)]
     #[repr(C)]
     pub struct PipelineColorBlendAttachmentState {
         pub blend_enable: Bool32,
@@ -1760,7 +1760,7 @@ pub mod types {
         pub p_push_constant_ranges: *const PushConstantRange,
     }
 
-    #[derive(Debug, Clone)]
+    #[derive(Debug, Clone, Hash)]
     #[repr(C)]
     pub struct PushConstantRange {
         pub stage_flags: ShaderStageFlags,
@@ -1822,7 +1822,7 @@ pub mod types {
         pub p_pool_sizes: *const DescriptorPoolSize,
     }
 
-    #[derive(Debug, Clone)]
+    #[derive(Debug, Clone, Hash)]
     #[repr(C)]
     pub struct DescriptorPoolSize {
         pub typ: DescriptorType,
@@ -1854,7 +1854,7 @@ pub mod types {
         pub p_texel_buffer_view: *const BufferView,
     }
 
-    #[derive(Debug, Clone)]
+    #[derive(Debug, Clone, Hash)]
     #[repr(C)]
     pub struct DescriptorImageInfo {
         pub sampler: Sampler,
@@ -1912,7 +1912,7 @@ pub mod types {
         pub p_dependencies: *const SubpassDependency,
     }
 
-    #[derive(Debug, Clone)]
+    #[derive(Debug, Clone, Hash)]
     #[repr(C)]
     pub struct AttachmentDescription {
         pub flags: AttachmentDescriptionFlags,
@@ -1941,14 +1941,14 @@ pub mod types {
         pub p_preserve_attachments: *const uint32_t,
     }
 
-    #[derive(Debug, Clone)]
+    #[derive(Debug, Clone, Hash)]
     #[repr(C)]
     pub struct AttachmentReference {
         pub attachment: uint32_t,
         pub layout: ImageLayout,
     }
 
-    #[derive(Debug, Clone)]
+    #[derive(Debug, Clone, Hash)]
     #[repr(C)]
     pub struct SubpassDependency {
         pub src_subpass: uint32_t,
@@ -2001,7 +2001,7 @@ pub mod types {
         pub pipeline_statistics: QueryPipelineStatisticFlags,
     }
 
-    #[derive(Debug, Clone)]
+    #[derive(Debug, Clone, Hash)]
     #[repr(C)]
     pub struct BufferCopy {
         pub src_offset: DeviceSize,
@@ -2009,7 +2009,7 @@ pub mod types {
         pub size: DeviceSize,
     }
 
-    #[derive(Debug, Clone)]
+    #[derive(Debug, Clone, Hash)]
     #[repr(C)]
     pub struct ImageCopy {
         pub src_subresource: ImageSubresourceLayers,
@@ -2019,7 +2019,7 @@ pub mod types {
         pub extent: Extent3D,
     }
 
-    #[derive(Debug, Clone)]
+    #[derive(Debug, Clone, Hash)]
     #[repr(C)]
     pub struct ImageSubresourceLayers {
         pub aspect_mask: ImageAspectFlags,
@@ -2074,7 +2074,7 @@ pub mod types {
         }
     }
 
-    #[derive(Debug, Clone)]
+    #[derive(Debug, Clone, Hash)]
     #[repr(C)]
     pub struct BufferImageCopy {
         pub buffer_offset: DeviceSize,
@@ -2092,7 +2092,7 @@ pub mod types {
         pub stencil: uint32_t,
     }
 
-    #[derive(Debug, Clone)]
+    #[derive(Debug, Clone, Hash)]
     #[repr(C)]
     pub struct ClearAttachment {
         pub aspect_mask: ImageAspectFlags,
@@ -2100,7 +2100,7 @@ pub mod types {
         pub clear_value: ClearValue,
     }
 
-    #[derive(Debug, Clone)]
+    #[derive(Debug, Clone, Hash)]
     #[repr(C)]
     pub struct ClearRect {
         pub rect: Rect2D,
@@ -2108,7 +2108,7 @@ pub mod types {
         pub layer_count: uint32_t,
     }
 
-    #[derive(Debug, Clone)]
+    #[derive(Debug, Clone, Hash)]
     #[repr(C)]
     pub struct ImageResolve {
         pub src_subresource: ImageSubresourceLayers,
@@ -2495,7 +2495,7 @@ pub mod types {
 
     /// Temporary Hard-Coded union hack; will be automatically generated when actual unions become stable
     #[repr(C)]
-    #[derive(Debug, Clone)]
+    #[derive(Debug, Clone, Hash)]
     pub struct ClearValue {
         data: [u8; 16],
     }
