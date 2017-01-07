@@ -101,6 +101,17 @@ pub trait InstanceV1_0 {
         }
     }
 
+    fn get_physical_device_properties(&self,
+                                      physical_device: vk::PhysicalDevice)
+                                      -> vk::PhysicalDeviceProperties {
+        unsafe {
+            let mut prop = mem::uninitialized();
+            self.fp_v1_0()
+                .get_physical_device_properties(physical_device, &mut prop);
+            prop
+        }
+    }
+
     fn get_physical_device_queue_family_properties(&self,
                                                    physical_device: vk::PhysicalDevice)
                                                    -> Vec<vk::QueueFamilyProperties> {
