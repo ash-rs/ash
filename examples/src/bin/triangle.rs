@@ -467,7 +467,7 @@ fn main() {
                 // device.cmd_draw(draw_command_buffer, 3, 1, 0, 0);
                 device.cmd_end_render_pass(draw_command_buffer);
             });
-            let mut present_info_err = mem::uninitialized();
+            //let mut present_info_err = mem::uninitialized();
             let present_info = vk::PresentInfoKHR {
                 s_type: vk::StructureType::PresentInfoKhr,
                 p_next: ptr::null(),
@@ -476,7 +476,7 @@ fn main() {
                 swapchain_count: 1,
                 p_swapchains: &base.swapchain,
                 p_image_indices: &present_index,
-                p_results: &mut present_info_err,
+                p_results: ptr::null_mut(),
             };
             base.swapchain_loader.queue_present_khr(base.present_queue, &present_info).unwrap();
         });
