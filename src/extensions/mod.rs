@@ -1,4 +1,5 @@
 pub use self::swapchain::Swapchain;
+pub use self::display_swapchain::DisplaySwapchain;
 pub use self::surface::Surface;
 pub use self::xlib_surface::XlibSurface;
 pub use self::debug_report::DebugReport;
@@ -9,6 +10,7 @@ pub use self::wayland_surface::WaylandSurface;
 pub use self::android_surface::AndroidSurface;
 
 mod swapchain;
+mod display_swapchain;
 mod surface;
 mod xlib_surface;
 mod win32_surface;

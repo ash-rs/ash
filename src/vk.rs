@@ -4649,8 +4649,9 @@ vk_functions!{
         p_command_buffers: *const CommandBuffer,
     ) -> ();
 }
+
 vk_functions!{
-    SwapchainFn,
+    DisplaySwapchainFn,
     "vkCreateSharedSwapchainsKHR", create_shared_swapchains_khr(
         device: Device,
         swapchain_count: uint32_t,
@@ -4658,7 +4659,10 @@ vk_functions!{
         p_allocator: *const AllocationCallbacks,
         p_swapchains: *mut SwapchainKHR,
     ) -> Result;
+}
 
+vk_functions!{
+    SwapchainFn,
     "vkCreateSwapchainKHR", create_swapchain_khr(
         device: Device,
         p_create_info: *const SwapchainCreateInfoKHR,
@@ -4693,6 +4697,7 @@ vk_functions!{
         p_present_info: *const PresentInfoKHR,
     ) -> Result;
 }
+
 vk_functions!{
     SurfaceFn,
     "vkDestroySurfaceKHR", destroy_surface_khr(
