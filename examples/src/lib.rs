@@ -458,7 +458,7 @@ impl ExampleBase {
             let depth_image_create_info = vk::ImageCreateInfo {
                 s_type: vk::StructureType::ImageCreateInfo,
                 p_next: ptr::null(),
-                flags: vk::IMAGE_CREATE_SPARSE_BINDING_BIT,
+                flags: Default::default(),
                 image_type: vk::ImageType::Type2d,
                 format: vk::Format::D16Unorm,
                 extent: vk::Extent3D {
