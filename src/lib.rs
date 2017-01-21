@@ -3,7 +3,7 @@ extern crate shared_library;
 extern crate lazy_static;
 pub use instance::Instance;
 pub use device::Device;
-pub use entry::Entry;
+pub use entry::{Entry, LoadingError};
 
 mod instance;
 mod device;
