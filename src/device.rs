@@ -2,7 +2,7 @@
 use prelude::*;
 use std::mem;
 use vk;
-use ::RawPtr;
+use RawPtr;
 use version::{FunctionPointers, V1_0};
 
 #[allow(non_camel_case_types)]
@@ -23,6 +23,15 @@ pub trait DeviceV1_0 {
                           memory: vk::DeviceMemory,
                           allocation_callbacks: Option<&vk::AllocationCallbacks>) {
         self.fp_v1_0().free_memory(self.handle(), memory, allocation_callbacks.as_raw_ptr());
+    }
+
+    unsafe fn free_command_buffers(&self,
+                                   command_pool: vk::CommandPool,
+                                   command_buffers: &[vk::CommandBuffer]) {
+        self.fp_v1_0().free_command_buffers(self.handle(),
+                                            command_pool,
+                                            command_buffers.len() as vk::uint32_t,
+                                            command_buffers.as_ptr());
     }
 
     unsafe fn destroy_fence(&self,
