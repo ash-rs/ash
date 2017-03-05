@@ -316,6 +316,21 @@ pub trait DeviceV1_0 {
                                         first_instance);
     }
 
+    unsafe fn cmd_push_constants<T>(&self,
+                                    command_buffer: vk::CommandBuffer,
+                                    layout: vk::PipelineLayout,
+                                    stage_flags: vk::ShaderStageFlags,
+                                    offset: vk::uint32_t,
+                                    size: vk::uint32_t,
+                                    p_values: &T) {
+        self.fp_v1_0().cmd_push_constants(command_buffer,
+                                          layout,
+                                          stage_flags,
+                                          offset,
+                                          size,
+                                          p_values as *const T as *const ())
+    }
+
     unsafe fn cmd_bind_descriptor_sets(&self,
                                        command_buffer: vk::CommandBuffer,
                                        pipeline_bind_point: vk::PipelineBindPoint,
