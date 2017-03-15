@@ -3217,6 +3217,9 @@ pub mod types {
                 ptr: *mut u8
             }
 
+            unsafe impl Send for $name {}
+            unsafe impl Sync for $name {}
+
             impl $name{
                 pub unsafe fn null() -> Self{
                     $name{
