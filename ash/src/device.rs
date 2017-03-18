@@ -355,6 +355,12 @@ pub trait DeviceV1_0 {
         self.fp_v1_0().cmd_begin_render_pass(command_buffer, create_info, contents);
     }
 
+    unsafe fn cmd_next_subpass(&self,
+                               command_buffer: vk::CommandBuffer,
+                               contents: vk::SubpassContents) {
+        self.fp_v1_0().cmd_next_subpass(command_buffer, contents);
+    }
+
     unsafe fn cmd_bind_pipeline(&self,
                                 command_buffer: vk::CommandBuffer,
                                 pipeline_bind_point: vk::PipelineBindPoint,
