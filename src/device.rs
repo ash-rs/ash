@@ -286,6 +286,20 @@ pub trait DeviceV1_0 {
         self.fp_v1_0().cmd_bind_index_buffer(command_buffer, buffer, offset, index_type);
     }
 
+    unsafe fn cmd_clear_color_image(&self,
+                                    command_buffer: vk::CommandBuffer,
+                                    image: vk::Image,
+                                    image_layout: vk::ImageLayout,
+                                    clear_color_value: &vk::ClearColorValue,
+                                    ranges: &[vk::ImageSubresourceRange]) {
+        self.fp_v1_0().cmd_clear_color_image(command_buffer,
+                                             image,
+                                             image_layout,
+                                             clear_color_value,
+                                             ranges.len() as vk::uint32_t,
+                                             ranges.as_ptr());
+    }
+
     unsafe fn cmd_draw_indexed(&self,
                                command_buffer: vk::CommandBuffer,
                                index_count: vk::uint32_t,
@@ -343,13 +357,15 @@ pub trait DeviceV1_0 {
 
     unsafe fn cmd_bind_vertex_buffers(&self,
                                       command_buffer: vk::CommandBuffer,
+                                      first_binding: vk::uint32_t,
                                       buffers: &[vk::Buffer],
-                                      offsets: &vk::DeviceSize) {
+                                      offsets: &[vk::DeviceSize]) {
+        debug_assert_eq!(buffers.len(), offsets.len());
         self.fp_v1_0().cmd_bind_vertex_buffers(command_buffer,
-                                               0,
+                                               first_binding,
                                                buffers.len() as vk::uint32_t,
                                                buffers.as_ptr(),
-                                               offsets);
+                                               offsets.as_ptr());
     }
 
     unsafe fn cmd_end_render_pass(&self, command_buffer: vk::CommandBuffer) {
@@ -367,6 +383,17 @@ pub trait DeviceV1_0 {
                                 instance_count,
                                 first_vertex,
                                 first_instance);
+    }
+
+    unsafe fn cmd_dispatch(&self,
+                           command_buffer: vk::CommandBuffer,
+                           group_count_x: vk::uint32_t,
+                           group_count_y: vk::uint32_t,
+                           group_count_z: vk::uint32_t) {
+        self.fp_v1_0().cmd_dispatch(command_buffer,
+                                    group_count_x,
+                                    group_count_y,
+                                    group_count_z);
     }
 
     unsafe fn cmd_set_viewport(&self,
