@@ -1,6 +1,6 @@
 [package]
 name = "ash"
-version = "0.14.3"
+version = "0.15.3"
 authors = ["maik klein <maikklein@googlemail.com>"]
 description = "Vulkan bindings for Rust"
 license = "MIT"
