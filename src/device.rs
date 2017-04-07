@@ -425,7 +425,7 @@ pub trait DeviceV1_0 {
                                         pipeline_cache: vk::PipelineCache,
                                         create_infos: &[vk::GraphicsPipelineCreateInfo],
                                         allocation_callbacks: Option<&vk::AllocationCallbacks>)
-                                        -> (Vec<vk::Pipeline>, VkResult<()>) {
+                                        -> Result<Vec<vk::Pipeline>, (Vec<vk::Pipeline>, vk::Result)>{
         let mut pipelines = Vec::with_capacity(create_infos.len());
         let err_code = self.fp_v1_0()
             .create_graphics_pipelines(self.handle(),
@@ -436,8 +436,8 @@ pub trait DeviceV1_0 {
                                        pipelines.as_mut_ptr());
         pipelines.set_len(create_infos.len());
         match err_code {
-            vk::Result::Success => (pipelines, Ok(())),
-            _ => (pipelines, Err(err_code)),
+            vk::Result::Success => Ok(pipelines),
+            _ => Err((pipelines,err_code)),
         }
     }
 
