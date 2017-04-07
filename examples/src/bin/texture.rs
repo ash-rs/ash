@@ -802,7 +802,7 @@ fn main() {
                                          graphic_pipeline);
                 device.cmd_set_viewport(draw_command_buffer, &viewports);
                 device.cmd_set_scissor(draw_command_buffer, &scissors);
-                device.cmd_bind_vertex_buffers(draw_command_buffer, &[vertex_input_buffer], &0);
+                device.cmd_bind_vertex_buffers(draw_command_buffer, 0, &[vertex_input_buffer], &[0]);
                 device.cmd_bind_index_buffer(draw_command_buffer,
                                              index_buffer,
                                              0,

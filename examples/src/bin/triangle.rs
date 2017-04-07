@@ -405,8 +405,7 @@ fn main() {
             base_pipeline_index: 0,
         };
         let graphics_pipelines = base.device
-            .create_graphics_pipelines(vk::PipelineCache::null(), &[graphic_pipeline_info], None)
-            .unwrap();
+            .create_graphics_pipelines(vk::PipelineCache::null(), &[graphic_pipeline_info], None).expect("Unable to create graphics pipeline");
 
         let graphic_pipeline = graphics_pipelines[0];
 
@@ -452,7 +451,7 @@ fn main() {
                                          graphic_pipeline);
                 device.cmd_set_viewport(draw_command_buffer, &viewports);
                 device.cmd_set_scissor(draw_command_buffer, &scissors);
-                device.cmd_bind_vertex_buffers(draw_command_buffer, &[vertex_input_buffer], &0);
+                device.cmd_bind_vertex_buffers(draw_command_buffer,0 , &[vertex_input_buffer], &[0]);
                 device.cmd_bind_index_buffer(draw_command_buffer,
                                              index_buffer,
                                              0,
