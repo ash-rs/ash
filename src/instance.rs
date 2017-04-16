@@ -4,7 +4,7 @@ use std::ptr;
 use std::mem;
 use vk;
 use device::Device;
-use ::RawPtr;
+use RawPtr;
 use version::{FunctionPointers, V1_0};
 use version::DeviceLoader;
 
@@ -75,7 +75,8 @@ pub trait InstanceV1_0 {
     }
 
     unsafe fn destroy_instance(&self, allocation_callbacks: Option<&vk::AllocationCallbacks>) {
-        self.fp_v1_0().destroy_instance(self.handle(), allocation_callbacks.as_raw_ptr());
+        self.fp_v1_0()
+            .destroy_instance(self.handle(), allocation_callbacks.as_raw_ptr());
     }
 
     fn get_physical_device_format_properties(&self,
@@ -131,14 +132,28 @@ pub trait InstanceV1_0 {
         }
     }
 
+    fn get_physical_device_features(&self,
+                                    physical_device: vk::PhysicalDevice)
+                                    -> vk::PhysicalDeviceFeatures {
+        unsafe {
+            let mut prop = mem::uninitialized();
+            self.fp_v1_0()
+                .get_physical_device_features(physical_device, &mut prop);
+            prop
+        }
+    }
+
     fn enumerate_physical_devices(&self) -> VkResult<Vec<vk::PhysicalDevice>> {
         unsafe {
             let mut num = mem::uninitialized();
             self.fp_v1_0()
                 .enumerate_physical_devices(self.handle(), &mut num, ptr::null_mut());
             let mut physical_devices = Vec::<vk::PhysicalDevice>::with_capacity(num as usize);
-            let err_code = self.fp_v1_0()
-                .enumerate_physical_devices(self.handle(), &mut num, physical_devices.as_mut_ptr());
+            let err_code =
+                self.fp_v1_0()
+                    .enumerate_physical_devices(self.handle(),
+                                                &mut num,
+                                                physical_devices.as_mut_ptr());
             physical_devices.set_len(num as usize);
             match err_code {
                 vk::Result::Success => Ok(physical_devices),
