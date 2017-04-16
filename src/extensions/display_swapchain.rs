@@ -1,6 +1,5 @@
 #![allow(dead_code)]
 use prelude::*;
-use std::ptr;
 use std::mem;
 use vk;
 use std::ffi::CStr;
