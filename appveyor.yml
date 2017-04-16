@@ -13,5 +13,5 @@ install:
   - rustc -vV
   - cargo -vV
 build_script:
-  - cargo build
-  - cd examples && cargo build
+  - cargo build --manifest-path ash/Cargo.toml
+  - cargo build --manifest-path examples/Cargo.toml
