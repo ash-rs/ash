@@ -1,14 +1,5 @@
-[package]
-name = "ash"
-version = "0.15.5-pre"
-authors = ["maik klein <maikklein@googlemail.com>"]
-description = "Vulkan bindings for Rust"
-license = "MIT"
-repository = "https://github.com/MaikKlein/ash"
-readme = "README.md"
-keywords = ["vulkan", "graphic"]
-documentation = "https://docs.rs/ash"
-
-[dependencies]
-shared_library = "0.1.5"
-lazy_static = "0.2.1"
+[workspace]
+members = [
+    "examples",
+    "ash"
+]
