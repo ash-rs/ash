@@ -142,7 +142,7 @@ fn do_something_with_a_device<Device: DeviceV1_0>(device: &Device){}
 ```
 
 ### Extension loading
-Additionally, every Vulkan extension has to be loaded explicitly. You can find all extensions under [ash::extensions](https://github.com/MaikKlein/ash/tree/master/src/extensions). You still have to tell Vulkan which instance or device extensions you want to load.
+Additionally, every Vulkan extension has to be loaded explicitly. You can find all extensions under [ash::extensions](https://github.com/MaikKlein/ash/tree/master/ash/src/extensions). You still have to tell Vulkan which instance or device extensions you want to load.
 ```Rust
 use ash::extensions::Swapchain;
 let swapchain_loader = Swapchain::new(&instance, &device).expect("Unable to load swapchain");
