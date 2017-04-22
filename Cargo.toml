@@ -3,6 +3,3 @@ members = [
     "examples",
     "ash"
 ]
-
-[package.metadata.release]
-no-dev-version = true
