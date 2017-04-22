@@ -5,7 +5,7 @@ authors = ["maik klein <maikklein@googlemail.com>"]
 description = "Vulkan bindings for Rust"
 license = "MIT"
 repository = "https://github.com/MaikKlein/ash"
-readme = "README.md"
+readme = "../README.md"
 keywords = ["vulkan", "graphic"]
 documentation = "https://docs.rs/ash"
 
