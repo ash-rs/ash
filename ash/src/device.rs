@@ -636,6 +636,15 @@ pub trait DeviceV1_0 {
         }
     }
 
+    unsafe fn get_fence_status(&self, fence: vk::Fence) -> VkResult<()> {
+        let err_code = self.fp_v1_0()
+            .get_fence_status(self.handle(), fence);
+        match err_code {
+            vk::Result::Success => Ok(()),
+            _ => Err(err_code),
+        }
+    }
+
     unsafe fn queue_wait_idle(&self, queue: vk::Queue) -> VkResult<()> {
         let err_code = self.fp_v1_0().queue_wait_idle(queue);
         match err_code {
