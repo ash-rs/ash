@@ -481,6 +481,27 @@ pub trait DeviceV1_0 {
         }
     }
 
+    unsafe fn create_compute_pipelines
+        (&self,
+         pipeline_cache: vk::PipelineCache,
+         create_infos: &[vk::ComputePipelineCreateInfo],
+         allocation_callbacks: Option<&vk::AllocationCallbacks>)
+         -> Result<Vec<vk::Pipeline>, (Vec<vk::Pipeline>, vk::Result)> {
+        let mut pipelines = Vec::with_capacity(create_infos.len());
+        let err_code = self.fp_v1_0()
+            .create_compute_pipelines(self.handle(),
+                                       pipeline_cache,
+                                       create_infos.len() as vk::uint32_t,
+                                       create_infos.as_ptr(),
+                                       allocation_callbacks.as_raw_ptr(),
+                                       pipelines.as_mut_ptr());
+        pipelines.set_len(create_infos.len());
+        match err_code {
+            vk::Result::Success => Ok(pipelines),
+            _ => Err((pipelines, err_code)),
+        }
+    }
+
     unsafe fn create_buffer(&self,
                             create_info: &vk::BufferCreateInfo,
                             allocation_callbacks: Option<&vk::AllocationCallbacks>)
