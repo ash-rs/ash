@@ -25,10 +25,11 @@ I don't expect any big changes anymore. The library will still remain < 1.0 unti
 ### Explicit returns with `Result`
 Functions return a `type VkResult<T> = Result<T, vk::Result>` instead of an error code. No mutable references for the output are required.
 ```Rust
+// function signature
 pub fn create_instance(&self,
                        create_info: &vk::InstanceCreateInfo,
                        allocation_callbacks: Option<&vk::AllocationCallbacks>)
-                       -> Result<Instance, InstanceError> {
+                       -> Result<Instance, InstanceError> { .. }
 let instance = entry.create_instance(&create_info, None)
     .expect("Instance creation error");
 ```
