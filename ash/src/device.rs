@@ -351,6 +351,16 @@ pub trait DeviceV1_0 {
                               first_instance);
     }
 
+    unsafe fn cmd_execute_commands(&self,
+                                   primary_command_buffer: vk::CommandBuffer,
+                                   secondary_command_buffers: &[vk::CommandBuffer]) {
+
+        self.fp_v1_0()
+            .cmd_execute_commands(primary_command_buffer,
+                                  secondary_command_buffers.len() as vk::uint32_t,
+                                  secondary_command_buffers.as_ptr());
+    }
+
     unsafe fn cmd_bind_descriptor_sets(&self,
                                        command_buffer: vk::CommandBuffer,
                                        pipeline_bind_point: vk::PipelineBindPoint,
@@ -490,11 +500,11 @@ pub trait DeviceV1_0 {
         let mut pipelines = Vec::with_capacity(create_infos.len());
         let err_code = self.fp_v1_0()
             .create_compute_pipelines(self.handle(),
-                                       pipeline_cache,
-                                       create_infos.len() as vk::uint32_t,
-                                       create_infos.as_ptr(),
-                                       allocation_callbacks.as_raw_ptr(),
-                                       pipelines.as_mut_ptr());
+                                      pipeline_cache,
+                                      create_infos.len() as vk::uint32_t,
+                                      create_infos.as_ptr(),
+                                      allocation_callbacks.as_raw_ptr(),
+                                      pipelines.as_mut_ptr());
         pipelines.set_len(create_infos.len());
         match err_code {
             vk::Result::Success => Ok(pipelines),
@@ -658,8 +668,7 @@ pub trait DeviceV1_0 {
     }
 
     unsafe fn get_fence_status(&self, fence: vk::Fence) -> VkResult<()> {
-        let err_code = self.fp_v1_0()
-            .get_fence_status(self.handle(), fence);
+        let err_code = self.fp_v1_0().get_fence_status(self.handle(), fence);
         match err_code {
             vk::Result::Success => Ok(()),
             _ => Err(err_code),
