@@ -91,6 +91,15 @@ pub trait DeviceV1_0 {
                                      allocation_callbacks.as_raw_ptr());
     }
 
+    unsafe fn destroy_pipeline_cache(&self,
+                                     pipeline_cache: vk::PipelineCache,
+                                     allocation_callbacks: Option<&vk::AllocationCallbacks>) {
+        self.fp_v1_0()
+                .destroy_pipeline_cache(self.handle(),
+                                    pipeline_cache,
+                                    allocation_callbacks.as_raw_ptr());
+    }
+
     unsafe fn destroy_buffer(&self,
                              buffer: vk::Buffer,
                              allocation_callbacks: Option<&vk::AllocationCallbacks>) {
@@ -543,6 +552,22 @@ pub trait DeviceV1_0 {
             _ => Err(err_code),
         }
     }
+
+    unsafe fn create_pipeline_cache(&self,
+                                    create_info: &vk::PipelineCacheCreateInfo,
+                                    allocation_callbacks: Option<&vk::AllocationCallbacks>)
+                                    -> VkResult<vk::PipelineCache> {
+        let mut pipeline_cache = mem::uninitialized();
+        let err_code = self.fp_v1_0()
+            .create_pipeline_cache(self.handle(),
+                                   create_info, allocation_callbacks.as_raw_ptr(),
+                                   &mut pipeline_cache);
+		
+        match err_code {
+            vk::Result::Success => Ok(pipeline_cache),
+            _ => Err(err_code),
+        }
+	}
 
     unsafe fn map_memory<T>(&self,
                             memory: vk::DeviceMemory,
