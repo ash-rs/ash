@@ -370,6 +370,21 @@ pub trait DeviceV1_0 {
                                   secondary_command_buffers.as_ptr());
     }
 
+    unsafe fn cmd_push_constants<T>(&self,
+                                    command_buffer: vk::CommandBuffer,
+                                    layout: vk::PipelineLayout,
+                                    stage_flags: vk::ShaderStageFlags,
+                                    offset: vk::uint32_t,
+                                    size: vk::uint32_t,
+                                    p_values: &T) {
+        self.fp_v1_0().cmd_push_constants(command_buffer,
+                                          layout,
+                                          stage_flags,
+                                          offset,
+                                          size,
+                                          p_values as *const T as *const ())
+    }
+
     unsafe fn cmd_bind_descriptor_sets(&self,
                                        command_buffer: vk::CommandBuffer,
                                        pipeline_bind_point: vk::PipelineBindPoint,
@@ -394,6 +409,12 @@ pub trait DeviceV1_0 {
                                     contents: vk::SubpassContents) {
         self.fp_v1_0()
             .cmd_begin_render_pass(command_buffer, create_info, contents);
+    }
+
+    unsafe fn cmd_next_subpass(&self,
+                               command_buffer: vk::CommandBuffer,
+                               contents: vk::SubpassContents) {
+        self.fp_v1_0().cmd_next_subpass(command_buffer, contents);
     }
 
     unsafe fn cmd_bind_pipeline(&self,
