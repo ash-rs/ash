@@ -95,7 +95,7 @@ pub trait DeviceV1_0 {
                                      pipeline_cache: vk::PipelineCache,
                                      allocation_callbacks: Option<&vk::AllocationCallbacks>) {
         self.fp_v1_0()
-                .destroy_pipeline_cache(self.handle(),
+            .destroy_pipeline_cache(self.handle(),
                                     pipeline_cache,
                                     allocation_callbacks.as_raw_ptr());
     }
@@ -301,8 +301,7 @@ pub trait DeviceV1_0 {
                                    command_buffer: vk::CommandBuffer,
                                    flags: vk::CommandBufferResetFlags)
                                    -> VkResult<()> {
-        let err_code = self.fp_v1_0()
-            .reset_command_buffer(command_buffer, flags);
+        let err_code = self.fp_v1_0().reset_command_buffer(command_buffer, flags);
         match err_code {
             vk::Result::Success => Ok(()),
             _ => Err(err_code),
@@ -560,30 +559,28 @@ pub trait DeviceV1_0 {
         let mut pipeline_cache = mem::uninitialized();
         let err_code = self.fp_v1_0()
             .create_pipeline_cache(self.handle(),
-                                   create_info, allocation_callbacks.as_raw_ptr(),
+                                   create_info,
+                                   allocation_callbacks.as_raw_ptr(),
                                    &mut pipeline_cache);
-		
+
         match err_code {
             vk::Result::Success => Ok(pipeline_cache),
             _ => Err(err_code),
         }
-	}
+    }
 
-    unsafe fn map_memory<T>(&self,
-                            memory: vk::DeviceMemory,
-                            offset: vk::DeviceSize,
-                            size: vk::DeviceSize,
-                            flags: vk::MemoryMapFlags)
-                            -> VkResult<&mut [T]> {
+    unsafe fn map_memory(&self,
+                         memory: vk::DeviceMemory,
+                         offset: vk::DeviceSize,
+                         size: vk::DeviceSize,
+                         flags: vk::MemoryMapFlags)
+                         -> VkResult<*mut ()> {
 
         let mut data: *mut () = mem::uninitialized();
         let err_code = self.fp_v1_0()
             .map_memory(self.handle(), memory, offset, size, flags, &mut data);
-        let x: *mut T = data as *mut T;
         match err_code {
-            vk::Result::Success => {
-                Ok(::std::slice::from_raw_parts_mut(x, size as vk::size_t / mem::size_of::<T>()))
-            }
+            vk::Result::Success => Ok(data),
             _ => Err(err_code),
         }
     }
