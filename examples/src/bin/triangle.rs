@@ -11,6 +11,7 @@ use std::path::Path;
 use std::fs::File;
 use std::io::Read;
 use examples::*;
+use ash::util::*;
 
 #[derive(Clone, Debug, Copy)]
 struct Vertex {
@@ -85,7 +86,9 @@ fn main() {
             dependency_count: 1,
             p_dependencies: &dependency,
         };
-        let renderpass = base.device.create_render_pass(&renderpass_create_info, None).unwrap();
+        let renderpass = base.device
+            .create_render_pass(&renderpass_create_info, None)
+            .unwrap();
         let framebuffers: Vec<vk::Framebuffer> = base.present_image_views
             .iter()
             .map(|&present_image_view| {
@@ -101,7 +104,9 @@ fn main() {
                     height: base.surface_resolution.height,
                     layers: 1,
                 };
-                base.device.create_framebuffer(&frame_buffer_create_info, None).unwrap()
+                base.device
+                    .create_framebuffer(&frame_buffer_create_info, None)
+                    .unwrap()
             })
             .collect();
         let index_buffer_data = [0u32, 1, 2];
@@ -117,26 +122,34 @@ fn main() {
         };
         let index_buffer = base.device.create_buffer(&index_buffer_info, None).unwrap();
         let index_buffer_memory_req = base.device.get_buffer_memory_requirements(index_buffer);
-        let index_buffer_memory_index = find_memorytype_index(&index_buffer_memory_req,
-                                                              &base.device_memory_properties,
-                                                              vk::MEMORY_PROPERTY_HOST_VISIBLE_BIT)
-            .expect("Unable to find suitable memorytype for the index buffer.");
+        let index_buffer_memory_index =
+            find_memorytype_index(&index_buffer_memory_req,
+                                  &base.device_memory_properties,
+                                  vk::MEMORY_PROPERTY_HOST_VISIBLE_BIT)
+                    .expect("Unable to find suitable memorytype for the index buffer.");
         let index_allocate_info = vk::MemoryAllocateInfo {
             s_type: vk::StructureType::MemoryAllocateInfo,
             p_next: ptr::null(),
             allocation_size: index_buffer_memory_req.size,
             memory_type_index: index_buffer_memory_index,
         };
-        let index_buffer_memory = base.device.allocate_memory(&index_allocate_info, None).unwrap();
-        let index_slice = base.device
-            .map_memory::<u32>(index_buffer_memory,
-                               0,
-                               index_buffer_info.size,
-                               vk::MemoryMapFlags::empty())
+        let index_buffer_memory = base.device
+            .allocate_memory(&index_allocate_info, None)
             .unwrap();
+        let mut index_ptr = base.device
+            .map_memory(index_buffer_memory,
+                        0,
+                        index_buffer_memory_req.size,
+                        vk::MemoryMapFlags::empty())
+            .unwrap();
+        let mut index_slice = Align::new(index_ptr,
+                                         index_buffer_memory_req.alignment as usize,
+                                         index_buffer_memory_req.size as usize);
         index_slice.copy_from_slice(&index_buffer_data);
         base.device.unmap_memory(index_buffer_memory);
-        base.device.bind_buffer_memory(index_buffer, index_buffer_memory, 0).unwrap();
+        base.device
+            .bind_buffer_memory(index_buffer, index_buffer_memory, 0)
+            .unwrap();
 
         let vertex_input_buffer_info = vk::BufferCreateInfo {
             s_type: vk::StructureType::BufferCreateInfo,
@@ -148,15 +161,17 @@ fn main() {
             queue_family_index_count: 0,
             p_queue_family_indices: ptr::null(),
         };
-        let vertex_input_buffer =
-            base.device.create_buffer(&vertex_input_buffer_info, None).unwrap();
-        let vertex_input_buffer_memory_req = base.device
-            .get_buffer_memory_requirements(vertex_input_buffer);
+        let vertex_input_buffer = base.device
+            .create_buffer(&vertex_input_buffer_info, None)
+            .unwrap();
+        let vertex_input_buffer_memory_req =
+            base.device
+                .get_buffer_memory_requirements(vertex_input_buffer);
         let vertex_input_buffer_memory_index =
             find_memorytype_index(&vertex_input_buffer_memory_req,
                                   &base.device_memory_properties,
                                   vk::MEMORY_PROPERTY_HOST_VISIBLE_BIT)
-                .expect("Unable to find suitable memorytype for the vertex buffer.");
+                    .expect("Unable to find suitable memorytype for the vertex buffer.");
 
         let vertex_buffer_allocate_info = vk::MemoryAllocateInfo {
             s_type: vk::StructureType::MemoryAllocateInfo,
@@ -179,21 +194,29 @@ fn main() {
                             pos: [0.0, -1.0, 0.0, 1.0],
                             color: [1.0, 0.0, 0.0, 1.0],
                         }];
-        let slice = base.device
-            .map_memory::<Vertex>(vertex_input_buffer_memory,
-                                  0,
-                                  vertex_input_buffer_info.size,
-                                  vk::MemoryMapFlags::empty())
+        let vert_ptr = base.device
+            .map_memory(vertex_input_buffer_memory,
+                        0,
+                        vertex_input_buffer_memory_req.size,
+                        vk::MemoryMapFlags::empty())
             .unwrap();
-        slice.copy_from_slice(&vertices);
+        let mut vert_align = Align::new(vert_ptr,
+                               vertex_input_buffer_memory_req.alignment as usize,
+                               vertex_input_buffer_memory_req.size as usize);
+        vert_align.copy_from_slice(&vertices);
         base.device.unmap_memory(vertex_input_buffer_memory);
-        base.device.bind_buffer_memory(vertex_input_buffer, vertex_input_buffer_memory, 0).unwrap();
+        base.device
+            .bind_buffer_memory(vertex_input_buffer, vertex_input_buffer_memory, 0)
+            .unwrap();
         let vertex_spv_file = File::open(Path::new("shader/triangle/vert.spv"))
             .expect("Could not find vert.spv.");
         let frag_spv_file = File::open(Path::new("shader/triangle/frag.spv"))
             .expect("Could not find frag.spv.");
 
-        let vertex_bytes: Vec<u8> = vertex_spv_file.bytes().filter_map(|byte| byte.ok()).collect();
+        let vertex_bytes: Vec<u8> = vertex_spv_file
+            .bytes()
+            .filter_map(|byte| byte.ok())
+            .collect();
         let vertex_shader_info = vk::ShaderModuleCreateInfo {
             s_type: vk::StructureType::ShaderModuleCreateInfo,
             p_next: ptr::null(),
@@ -227,8 +250,9 @@ fn main() {
             p_push_constant_ranges: ptr::null(),
         };
 
-        let pipeline_layout =
-            base.device.create_pipeline_layout(&layout_create_info, None).unwrap();
+        let pipeline_layout = base.device
+            .create_pipeline_layout(&layout_create_info, None)
+            .unwrap();
 
         let shader_entry_name = CString::new("main").unwrap();
         let shader_stage_create_infos =
@@ -404,7 +428,8 @@ fn main() {
             base_pipeline_index: 0,
         };
         let graphics_pipelines = base.device
-            .create_graphics_pipelines(vk::PipelineCache::null(), &[graphic_pipeline_info], None).expect("Unable to create graphics pipeline");
+            .create_graphics_pipelines(vk::PipelineCache::null(), &[graphic_pipeline_info], None)
+            .expect("Unable to create graphics pipeline");
 
         let graphic_pipeline = graphics_pipelines[0];
 
@@ -419,9 +444,9 @@ fn main() {
             let clear_values =
                 [vk::ClearValue::new_color(vk::ClearColorValue::new_float32([0.0, 0.0, 0.0, 0.0])),
                  vk::ClearValue::new_depth_stencil(vk::ClearDepthStencilValue {
-                     depth: 1.0,
-                     stencil: 0,
-                 })];
+                                                       depth: 1.0,
+                                                       stencil: 0,
+                                                   })];
 
             let render_pass_begin_info = vk::RenderPassBeginInfo {
                 s_type: vk::StructureType::RenderPassBeginInfo,
@@ -450,7 +475,8 @@ fn main() {
                                          graphic_pipeline);
                 device.cmd_set_viewport(draw_command_buffer, &viewports);
                 device.cmd_set_scissor(draw_command_buffer, &scissors);
-                device.cmd_bind_vertex_buffers(draw_command_buffer,0 , &[vertex_input_buffer], &[0]);
+                device
+                    .cmd_bind_vertex_buffers(draw_command_buffer, 0, &[vertex_input_buffer], &[0]);
                 device.cmd_bind_index_buffer(draw_command_buffer,
                                              index_buffer,
                                              0,
@@ -476,7 +502,9 @@ fn main() {
                 p_image_indices: &present_index,
                 p_results: ptr::null_mut(),
             };
-            base.swapchain_loader.queue_present_khr(base.present_queue, &present_info).unwrap();
+            base.swapchain_loader
+                .queue_present_khr(base.present_queue, &present_info)
+                .unwrap();
         });
 
         base.device.device_wait_idle().unwrap();
@@ -484,8 +512,10 @@ fn main() {
             base.device.destroy_pipeline(pipeline, None);
         }
         base.device.destroy_pipeline_layout(pipeline_layout, None);
-        base.device.destroy_shader_module(vertex_shader_module, None);
-        base.device.destroy_shader_module(fragment_shader_module, None);
+        base.device
+            .destroy_shader_module(vertex_shader_module, None);
+        base.device
+            .destroy_shader_module(fragment_shader_module, None);
         base.device.free_memory(index_buffer_memory, None);
         base.device.destroy_buffer(index_buffer, None);
         base.device.free_memory(vertex_input_buffer_memory, None);
