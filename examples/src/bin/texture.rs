@@ -21,10 +21,6 @@ struct Vertex {
     uv: [f32; 2],
 }
 
-pub fn test(r: Result<u32, vk::Result>) -> Result<(), vk::Result> {
-    r?;
-    Ok(())
-}
 fn main() {
     unsafe {
         let base = ExampleBase::new(1920, 1080);
