@@ -20,11 +20,12 @@ impl AlignByteSlice {
         let mut current = 0;
         for slice in slices{
             unsafe {
-                let ptr = (self.ptr as *mut u8).offset(current);
+                assert!(current <= self.size, "");
+                let ptr = (self.ptr as *mut u8).offset(current as isize);
                 let raw_slice = ::std::slice::from_raw_parts_mut(ptr, slice.len());
                 raw_slice.copy_from_slice(slice);
-                current += slice.len() as isize;
-                let padding = current % self.alignment as isize;
+                current += slice.len();
+                let padding = current % self.alignment;
                 current += padding;
             }
         }
@@ -32,7 +33,7 @@ impl AlignByteSlice {
 }
 
 impl AlignByteSlice {
-    pub fn new(ptr: *mut (), alignment: usize, size: usize) -> Self {
+    pub unsafe fn new(ptr: *mut (), alignment: usize, size: usize) -> Self {
         AlignByteSlice {
             ptr,
             size,
@@ -73,7 +74,7 @@ impl<T: Copy> Align<T> {
 }
 
 impl<T> Align<T> {
-    pub fn new(ptr: *mut (), alignment: usize, size: usize) -> Self {
+    pub unsafe fn new(ptr: *mut (), alignment: usize, size: usize) -> Self {
         let offset = size_of::<T>() + size_of::<T>() % alignment;
         Align {
             ptr,
