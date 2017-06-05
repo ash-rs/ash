@@ -138,7 +138,7 @@ fn main() {
         let index_buffer_memory = base.device
             .allocate_memory(&index_allocate_info, None)
             .unwrap();
-        let mut index_ptr = base.device
+        let index_ptr = base.device
             .map_memory(index_buffer_memory,
                         0,
                         index_buffer_memory_req.size,
@@ -200,7 +200,7 @@ fn main() {
         let vertex_input_buffer_memory = base.device
             .allocate_memory(&vertex_buffer_allocate_info, None)
             .unwrap();
-        let mut vert_ptr = base.device
+        let vert_ptr = base.device
             .map_memory(vertex_input_buffer_memory,
                         0,
                         vertex_input_buffer_memory_req.size,
@@ -291,7 +291,7 @@ fn main() {
         let image_buffer_memory = base.device
             .allocate_memory(&image_buffer_allocate_info, None)
             .unwrap();
-        let mut image_ptr = base.device
+        let image_ptr = base.device
             .map_memory(image_buffer_memory,
                         0,
                         image_buffer_memory_req.size,

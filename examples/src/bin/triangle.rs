@@ -136,7 +136,7 @@ fn main() {
         let index_buffer_memory = base.device
             .allocate_memory(&index_allocate_info, None)
             .unwrap();
-        let mut index_ptr = base.device
+        let index_ptr = base.device
             .map_memory(index_buffer_memory,
                         0,
                         index_buffer_memory_req.size,
