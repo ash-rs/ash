@@ -1,6 +1,7 @@
 pub use std::os::raw::c_ulonglong;
 pub use self::types::*;
 pub use self::cmds::*;
+use std::error::Error;
 use std::default::Default;
 
 #[doc(hidden)]
@@ -679,13 +680,17 @@ pub mod types {
                 max_tessellation_generation_level: self.max_tessellation_generation_level.clone(),
                 max_tessellation_patch_size: self.max_tessellation_patch_size.clone(),
                 max_tessellation_control_per_vertex_input_components:
-                    self.max_tessellation_control_per_vertex_input_components.clone(),
+                    self.max_tessellation_control_per_vertex_input_components
+                        .clone(),
                 max_tessellation_control_per_vertex_output_components:
-                    self.max_tessellation_control_per_vertex_output_components.clone(),
+                    self.max_tessellation_control_per_vertex_output_components
+                        .clone(),
                 max_tessellation_control_per_patch_output_components:
-                    self.max_tessellation_control_per_patch_output_components.clone(),
+                    self.max_tessellation_control_per_patch_output_components
+                        .clone(),
                 max_tessellation_control_total_output_components:
-                    self.max_tessellation_control_total_output_components.clone(),
+                    self.max_tessellation_control_total_output_components
+                        .clone(),
                 max_tessellation_evaluation_input_components:
                     self.max_tessellation_evaluation_input_components.clone(),
                 max_tessellation_evaluation_output_components:
@@ -2658,6 +2663,71 @@ pub mod types {
         ErrorValidationFailedExt = -1000011001,
     }
 
+    impl fmt::Display for Result {
+        fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+            writeln!(fmt, "vk::Result::{:?}", self)?;
+            match *self {
+                Result::Success => write!(fmt, "Command successfully completed"),
+                Result::NotReady => write!(fmt, "A fence or query has not yet completed"),
+                Result::Timeout => {
+                    write!(fmt,
+                           "A wait operation has not completed in the specified time")
+                }
+                Result::EventSet => write!(fmt, "An event is signaled"),
+                Result::EventReset => write!(fmt, "An event is unsignaled"),
+                Result::Incomplete => write!(fmt, "A return array was too small for the result"),
+                Result::ErrorOutOfHostMemory => write!(fmt, "A host memory allocation has failed."),
+                Result::ErrorOutOfDeviceMemory => {
+                    write!(fmt, "A device memory allocation has failed.")
+                }
+                Result::ErrorInitializationFailed => {
+                    write!(fmt,
+                           "Initialization of an object could not be completed for implementation-specific reasons.")
+                }
+                Result::ErrorDeviceLost => {
+                    write!(fmt,
+                           "The logical or physical device has been lost. See Lost Device")
+                }
+                Result::ErrorMemoryMapFailed => {
+                    write!(fmt, "Mapping of a memory object has failed.")
+                }
+                Result::ErrorLayerNotPresent => {
+                    write!(fmt,
+                           "A requested layer is not present or could not be loaded.")
+                }
+                Result::ErrorExtensionNotPresent => {
+                    write!(fmt, "A requested extension is not supported.")
+                }
+                Result::ErrorFeatureNotPresent => {
+                    write!(fmt, "A requested feature is not supported.")
+                }
+                Result::ErrorIncompatibleDriver => {
+                    write!(fmt,
+                           "The requested version of Vulkan is not supported by the driver or is otherwise incompatible for implementation-specific reasons.")
+                }
+                Result::ErrorTooManyObjects => {
+                    write!(fmt,
+                           "Too many objects of the type have already been created.")
+                }
+
+                Result::ErrorFormatNotSupported => {
+                    write!(fmt, "A requested format is not supported on this device.")
+                }
+                Result::ErrorFragmentedPool => {
+                    write!(fmt,
+                           "A pool allocation has failed due to fragmentation of the pool’s memory. This must only be returned if no attempt to allocate host or device memory was made to accomodate the new allocation.")
+                }
+                _ => write!(fmt, ""),
+            }
+        }
+    }
+
+    impl Error for Result {
+        fn description(&self) -> &str {
+            "vk::Result"
+        }
+    }
+
     #[repr(C)]
     #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub enum Format {
@@ -3705,7 +3775,7 @@ pub mod cmds {
     #[allow(unused_imports)]
     use super::libc_reexports::*;
 
-vk_functions!{
+    vk_functions!{
     StaticFn,
     "vkGetInstanceProcAddr", get_instance_proc_addr(
         instance: Instance,
@@ -3713,7 +3783,7 @@ vk_functions!{
     ) -> PFN_vkVoidFunction;
 }
 
-vk_functions!{
+    vk_functions!{
     EntryFnV1_0,
     "vkCreateInstance", create_instance(
         p_create_info: *const InstanceCreateInfo,
@@ -3733,7 +3803,7 @@ vk_functions!{
     ) -> Result;
 }
 
-vk_functions!{
+    vk_functions!{
     InstanceFnV1_0,
 
     "vkDestroyInstance", destroy_instance(
@@ -3822,7 +3892,7 @@ vk_functions!{
     ) -> ();
 }
 
-vk_functions!{
+    vk_functions!{
     DeviceFnV1_0,
     "vkDestroyDevice", destroy_device(
         device: Device,
@@ -4653,7 +4723,7 @@ vk_functions!{
     ) -> ();
 }
 
-vk_functions!{
+    vk_functions!{
     DisplaySwapchainFn,
     "vkCreateSharedSwapchainsKHR", create_shared_swapchains_khr(
         device: Device,
@@ -4664,7 +4734,7 @@ vk_functions!{
     ) -> Result;
 }
 
-vk_functions!{
+    vk_functions!{
     SwapchainFn,
     "vkCreateSwapchainKHR", create_swapchain_khr(
         device: Device,
@@ -4701,7 +4771,7 @@ vk_functions!{
     ) -> Result;
 }
 
-vk_functions!{
+    vk_functions!{
     SurfaceFn,
     "vkDestroySurfaceKHR", destroy_surface_khr(
         instance: Instance,
@@ -4736,7 +4806,7 @@ vk_functions!{
         p_present_modes: *mut PresentModeKHR,
     ) -> Result;
 }
-vk_functions!{
+    vk_functions!{
     XlibSurfaceFn,
     "vkCreateXlibSurfaceKHR", create_xlib_surface_khr(
         instance: Instance,
@@ -4752,7 +4822,7 @@ vk_functions!{
         visual_id: VisualID,
     ) -> Bool32;
 }
-vk_functions!{
+    vk_functions!{
     DebugReportFn,
     "vkCreateDebugReportCallbackEXT", create_debug_report_callback_ext(
         instance: Instance,
@@ -4778,7 +4848,7 @@ vk_functions!{
         p_message: *const c_char,
     ) -> ();
 }
-vk_functions!{
+    vk_functions!{
     Win32SurfaceFn,
     "vkCreateWin32SurfaceKHR", create_win32_surface_khr(
         instance: Instance,
@@ -4792,7 +4862,7 @@ vk_functions!{
         queue_family_index: uint32_t,
     ) -> Bool32;
 }
-vk_functions!{
+    vk_functions!{
     MirSurfaceFn,
     "vkCreateMirSurfaceKHR", create_mir_surface_khr(
         instance: Instance,
@@ -4807,7 +4877,7 @@ vk_functions!{
         connection: *mut MirConnection,
     ) -> Bool32;
 }
-vk_functions!{
+    vk_functions!{
     XcbSurfaceFn,
     "vkCreateXcbSurfaceKHR", create_xcb_surface_khr(
         instance: Instance,
@@ -4823,7 +4893,7 @@ vk_functions!{
         visual_id: xcb_visualid_t,
     ) -> Bool32;
 }
-vk_functions!{
+    vk_functions!{
     AndroidSurfaceFn,
     "vkCreateAndroidSurfaceKHR", create_android_surface_khr(
         instance: Instance,
@@ -4832,7 +4902,7 @@ vk_functions!{
         p_surface: *mut SurfaceKHR,
     ) -> Result;
 }
-vk_functions!{
+    vk_functions!{
     WaylandSurfaceFn,
     "vkCreateWaylandSurfaceKHR", create_wayland_surface_khr(
         instance: Instance,
@@ -4847,7 +4917,7 @@ vk_functions!{
         display: *mut wl_display,
     ) -> Bool32;
 }
-vk_functions!{
+    vk_functions!{
     DisplayFn,
     "vkGetPhysicalDeviceDisplayPropertiesKHR", get_physical_device_display_properties_khr(
         physical_device: PhysicalDevice,
