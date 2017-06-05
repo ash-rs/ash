@@ -4,6 +4,8 @@ use std::ptr;
 use std::mem;
 use vk;
 use device::Device;
+use std::error::Error;
+use std::fmt;
 use RawPtr;
 use version::{FunctionPointers, V1_0};
 use version::DeviceLoader;
@@ -12,6 +14,25 @@ use version::DeviceLoader;
 pub enum DeviceError {
     LoadError(Vec<&'static str>),
     VkError(vk::Result),
+}
+
+impl fmt::Display for DeviceError{
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result{
+        write!(f, "DeviceError::{:?}", self)
+    }
+}
+
+impl Error for DeviceError {
+    fn description(&self) -> &str {
+        "DeviceErrorr"
+    }
+
+    fn cause(&self) -> Option<&Error>{
+        if let &DeviceError::VkError(ref err) = self{
+            return err.cause();
+        }
+        None
+    }
 }
 
 #[derive(Clone)]
