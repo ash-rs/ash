@@ -6,7 +6,6 @@ use std::mem::size_of;
 /// align slices at runtime. One example would be to align different images in one buffer.
 /// There is usually no indicates of how big an image is at compile time and `AlignByteSlice`
 /// will align those image byte slices at runtime.
-
 #[derive(Debug, Clone)]
 pub struct AlignByteSlice {
     ptr: *mut (),
@@ -18,7 +17,7 @@ impl AlignByteSlice {
     pub fn copy_from_slices(&mut self, slices: &[&[u8]]) {
         self.ptr as *mut u8;
         let mut current = 0;
-        for slice in slices{
+        for slice in slices {
             unsafe {
                 assert!(current <= self.size, "");
                 let ptr = (self.ptr as *mut u8).offset(current as isize);
@@ -37,7 +36,7 @@ impl AlignByteSlice {
         AlignByteSlice {
             ptr,
             size,
-            alignment
+            alignment,
         }
     }
 }
@@ -50,7 +49,6 @@ impl AlignByteSlice {
 /// expects a 4 byte padding in between each Vec3<f32>, if the alignment is 16 bytes.
 /// `Vec3<f32>, 4bytes, Vec3<f32>, 4bytes, Vec3<f32>...`. Align is able to take a slice
 /// that is allocated on 4 bytes boundries, and insert the correct amount of paddings.
-
 #[derive(Debug, Clone)]
 pub struct Align<T> {
     ptr: *mut (),
@@ -73,9 +71,13 @@ impl<T: Copy> Align<T> {
     }
 }
 
+fn calc_padding(adr: usize, align: usize) -> usize {
+    (align - adr % align) % align
+}
+
 impl<T> Align<T> {
     pub unsafe fn new(ptr: *mut (), alignment: usize, size: usize) -> Self {
-        let offset = size_of::<T>() + size_of::<T>() % alignment;
+        let offset = size_of::<T>() + calc_padding(size_of::<T>(), alignment);
         Align {
             ptr,
             offset,
