@@ -81,14 +81,6 @@ device.cmd_pipeline_barrier(setup_command_buffer,
                             &[],
                             &[layout_transition_barrier]);
 
-// or
-
-let slice = device.map_memory::<Vertex>(vertex_input_buffer_memory,
-                          0,
-                          vertex_input_buffer_info.size,
-                          vk::MemoryMapFlags::empty())
-    .unwrap();
-slice.copy_from_slice(&vertices);
 ```
 
 ### Type safety
