@@ -1,4 +1,3 @@
-#[macro_use]
 extern crate ash;
 #[macro_use]
 extern crate examples;
@@ -19,6 +18,13 @@ use ash::util::*;
 struct Vertex {
     pos: [f32; 4],
     uv: [f32; 2],
+}
+
+#[derive(Clone, Debug, Copy)]
+pub struct Vector3 {
+    pub x: f32,
+    pub y: f32,
+    pub z: f32,
 }
 
 fn main() {
@@ -145,8 +151,8 @@ fn main() {
                         vk::MemoryMapFlags::empty())
             .unwrap();
         let mut index_slice = Align::new(index_ptr,
-                                         index_buffer_memory_req.alignment as usize,
-                                         index_buffer_memory_req.size as usize);
+                                         index_buffer_memory_req.alignment,
+                                         index_buffer_memory_req.size);
         index_slice.copy_from_slice(&index_buffer_data);
         base.device.unmap_memory(index_buffer_memory);
         base.device
@@ -207,15 +213,19 @@ fn main() {
                         vk::MemoryMapFlags::empty())
             .unwrap();
         let mut slice = Align::new(vert_ptr,
-                                   vertex_input_buffer_memory_req.alignment as usize,
-                                   vertex_input_buffer_memory_req.size as usize);
+                                   vertex_input_buffer_memory_req.alignment,
+                                   vertex_input_buffer_memory_req.size);
         slice.copy_from_slice(&vertices);
         base.device.unmap_memory(vertex_input_buffer_memory);
         base.device
             .bind_buffer_memory(vertex_input_buffer, vertex_input_buffer_memory, 0)
             .unwrap();
 
-        let uniform_color_buffer_data = [0.0f32, 0.0, 1.0];
+        let uniform_color_buffer_data = Vector3 {
+            x: 1.0,
+            y: 1.0,
+            z: 1.0,
+        };
         let uniform_color_buffer_info = vk::BufferCreateInfo {
             s_type: vk::StructureType::BufferCreateInfo,
             p_next: ptr::null(),
@@ -247,15 +257,16 @@ fn main() {
         let uniform_color_buffer_memory = base.device
             .allocate_memory(&uniform_color_buffer_allocate_info, None)
             .unwrap();
-        //let mut uniform_slice = base.device
-        //    .map_memory::<f32>(uniform_color_buffer_memory,
-        //                       0,
-        //                       12,
-        //                       vk::MemoryMapFlags::empty(),
-        //                       4)
-        //    .unwrap();
-        // println!("{:?}", uniform_slice);
-        // uniform_slice.copy_from_slice(&uniform_color_buffer_data[..]);
+        let uniform_ptr = base.device
+            .map_memory(uniform_color_buffer_memory,
+                        0,
+                        uniform_color_buffer_memory_req.size,
+                        vk::MemoryMapFlags::empty())
+            .unwrap();
+        let mut uniform_aligned_slice = Align::new(uniform_ptr,
+                                                   uniform_color_buffer_memory_req.alignment,
+                                                   uniform_color_buffer_memory_req.size);
+        uniform_aligned_slice.copy_from_slice(&[uniform_color_buffer_data]);
         base.device.unmap_memory(uniform_color_buffer_memory);
         base.device
             .bind_buffer_memory(uniform_color_buffer, uniform_color_buffer_memory, 0)
@@ -298,8 +309,8 @@ fn main() {
                         vk::MemoryMapFlags::empty())
             .unwrap();
         let mut image_slice = AlignByteSlice::new(image_ptr,
-                                                  image_buffer_memory_req.alignment as usize,
-                                                  image_buffer_memory_req.size as usize);
+                                                  image_buffer_memory_req.alignment,
+                                                  image_buffer_memory_req.size);
         image_slice.copy_from_slices(&[&image_data]);
         base.device.unmap_memory(image_buffer_memory);
         base.device

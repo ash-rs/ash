@@ -1,6 +1,7 @@
 use std::iter::Iterator;
 use std::marker::PhantomData;
 use std::mem::size_of;
+use vk;
 
 /// AlignByteSlice is the dynamic alternative to `Align`. Sometimes the user wants to
 /// align slices at runtime. One example would be to align different images in one buffer.
@@ -9,8 +10,8 @@ use std::mem::size_of;
 #[derive(Debug, Clone)]
 pub struct AlignByteSlice {
     ptr: *mut (),
-    alignment: usize,
-    size: usize,
+    alignment: vk::DeviceSize,
+    size: vk::DeviceSize,
 }
 
 impl AlignByteSlice {
@@ -23,7 +24,7 @@ impl AlignByteSlice {
                 let ptr = (self.ptr as *mut u8).offset(current as isize);
                 let raw_slice = ::std::slice::from_raw_parts_mut(ptr, slice.len());
                 raw_slice.copy_from_slice(slice);
-                current += slice.len();
+                current += slice.len() as vk::DeviceSize;
                 let padding = current % self.alignment;
                 current += padding;
             }
@@ -32,7 +33,7 @@ impl AlignByteSlice {
 }
 
 impl AlignByteSlice {
-    pub unsafe fn new(ptr: *mut (), alignment: usize, size: usize) -> Self {
+    pub unsafe fn new(ptr: *mut (), alignment: vk::DeviceSize, size: vk::DeviceSize) -> Self {
         AlignByteSlice {
             ptr,
             size,
@@ -52,15 +53,15 @@ impl AlignByteSlice {
 #[derive(Debug, Clone)]
 pub struct Align<T> {
     ptr: *mut (),
-    offset: usize,
-    size: usize,
+    offset: vk::DeviceSize,
+    size: vk::DeviceSize,
     _m: PhantomData<T>,
 }
 
 #[derive(Debug)]
 pub struct AlignIter<'a, T: 'a> {
     align: &'a mut Align<T>,
-    current: usize,
+    current: vk::DeviceSize,
 }
 
 impl<T: Copy> Align<T> {
@@ -71,13 +72,14 @@ impl<T: Copy> Align<T> {
     }
 }
 
-fn calc_padding(adr: usize, align: usize) -> usize {
+fn calc_padding(adr: vk::DeviceSize, align: vk::DeviceSize) -> vk::DeviceSize {
     (align - adr % align) % align
 }
 
 impl<T> Align<T> {
-    pub unsafe fn new(ptr: *mut (), alignment: usize, size: usize) -> Self {
-        let offset = size_of::<T>() + calc_padding(size_of::<T>(), alignment);
+    pub unsafe fn new(ptr: *mut (), alignment: vk::DeviceSize, size: vk::DeviceSize) -> Self {
+        let offset = size_of::<T>() as vk::DeviceSize +
+                     calc_padding(size_of::<T>() as vk::DeviceSize, alignment);
         Align {
             ptr,
             offset,

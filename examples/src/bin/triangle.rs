@@ -143,8 +143,8 @@ fn main() {
                         vk::MemoryMapFlags::empty())
             .unwrap();
         let mut index_slice = Align::new(index_ptr,
-                                         index_buffer_memory_req.alignment as usize,
-                                         index_buffer_memory_req.size as usize);
+                                         index_buffer_memory_req.alignment,
+                                         index_buffer_memory_req.size);
         index_slice.copy_from_slice(&index_buffer_data);
         base.device.unmap_memory(index_buffer_memory);
         base.device
@@ -201,8 +201,8 @@ fn main() {
                         vk::MemoryMapFlags::empty())
             .unwrap();
         let mut vert_align = Align::new(vert_ptr,
-                               vertex_input_buffer_memory_req.alignment as usize,
-                               vertex_input_buffer_memory_req.size as usize);
+                                        vertex_input_buffer_memory_req.alignment,
+                                        vertex_input_buffer_memory_req.size);
         vert_align.copy_from_slice(&vertices);
         base.device.unmap_memory(vertex_input_buffer_memory);
         base.device
