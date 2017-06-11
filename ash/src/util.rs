@@ -78,8 +78,9 @@ fn calc_padding(adr: vk::DeviceSize, align: vk::DeviceSize) -> vk::DeviceSize {
 
 impl<T> Align<T> {
     pub unsafe fn new(ptr: *mut (), alignment: vk::DeviceSize, size: vk::DeviceSize) -> Self {
-        let offset = size_of::<T>() as vk::DeviceSize +
-                     calc_padding(size_of::<T>() as vk::DeviceSize, alignment);
+        let padding = calc_padding(size_of::<T>() as vk::DeviceSize, alignment);
+        let offset = size_of::<T>() as vk::DeviceSize + padding;
+        assert!(calc_padding(size, alignment) == 0, "size must be aligned");
         Align {
             ptr,
             offset,
