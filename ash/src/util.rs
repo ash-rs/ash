@@ -53,7 +53,7 @@ impl AlignByteSlice {
 #[derive(Debug, Clone)]
 pub struct Align<T> {
     ptr: *mut (),
-    offset: vk::DeviceSize,
+    elem_size: vk::DeviceSize,
     size: vk::DeviceSize,
     _m: PhantomData<T>,
 }
@@ -66,8 +66,17 @@ pub struct AlignIter<'a, T: 'a> {
 
 impl<T: Copy> Align<T> {
     pub fn copy_from_slice(&mut self, slice: &[T]) {
-        for (i, val) in self.iter_mut().enumerate() {
-            *val = slice[i];
+        use std::slice::from_raw_parts_mut;
+        if self.elem_size == size_of::<T>() as u64 {
+            unsafe {
+                let mapped_slice = from_raw_parts_mut(self.ptr as *mut T, slice.len());
+                mapped_slice.copy_from_slice(slice);
+            }
+        }
+        else{
+            for (i, val) in self.iter_mut().enumerate() {
+                *val = slice[i];
+            }
         }
     }
 }
@@ -79,11 +88,11 @@ fn calc_padding(adr: vk::DeviceSize, align: vk::DeviceSize) -> vk::DeviceSize {
 impl<T> Align<T> {
     pub unsafe fn new(ptr: *mut (), alignment: vk::DeviceSize, size: vk::DeviceSize) -> Self {
         let padding = calc_padding(size_of::<T>() as vk::DeviceSize, alignment);
-        let offset = size_of::<T>() as vk::DeviceSize + padding;
+        let elem_size = size_of::<T>() as vk::DeviceSize + padding;
         assert!(calc_padding(size, alignment) == 0, "size must be aligned");
         Align {
             ptr,
-            offset,
+            elem_size,
             size,
             _m: PhantomData,
         }
@@ -106,7 +115,7 @@ impl<'a, T: Copy + 'a> Iterator for AlignIter<'a, T> {
         unsafe {
             // Need to cast to *mut u8 because () has size 0
             let ptr = (self.align.ptr as *mut u8).offset(self.current as isize) as *mut T;
-            self.current += self.align.offset;
+            self.current += self.align.elem_size;
             Some(&mut *ptr)
         }
     }
