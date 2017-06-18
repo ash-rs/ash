@@ -72,9 +72,8 @@ impl<T: Copy> Align<T> {
                 let mapped_slice = from_raw_parts_mut(self.ptr as *mut T, slice.len());
                 mapped_slice.copy_from_slice(slice);
             }
-        }
-        else{
-            for (i, val) in self.iter_mut().enumerate() {
+        } else {
+            for (i, val) in self.iter_mut().enumerate().take(slice.len()) {
                 *val = slice[i];
             }
         }
