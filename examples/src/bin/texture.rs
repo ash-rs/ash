@@ -13,6 +13,7 @@ use std::fs::File;
 use std::io::Read;
 use examples::*;
 use ash::util::*;
+use std::mem::align_of;
 
 #[derive(Clone, Debug, Copy)]
 struct Vertex {
@@ -30,29 +31,30 @@ pub struct Vector3 {
 fn main() {
     unsafe {
         let base = ExampleBase::new(1920, 1080);
-        let renderpass_attachments =
-            [vk::AttachmentDescription {
-                 format: base.surface_format.format,
-                 flags: vk::AttachmentDescriptionFlags::empty(),
-                 samples: vk::SAMPLE_COUNT_1_BIT,
-                 load_op: vk::AttachmentLoadOp::Clear,
-                 store_op: vk::AttachmentStoreOp::Store,
-                 stencil_load_op: vk::AttachmentLoadOp::DontCare,
-                 stencil_store_op: vk::AttachmentStoreOp::DontCare,
-                 initial_layout: vk::ImageLayout::Undefined,
-                 final_layout: vk::ImageLayout::PresentSrcKhr,
-             },
-             vk::AttachmentDescription {
-                 format: vk::Format::D16Unorm,
-                 flags: vk::AttachmentDescriptionFlags::empty(),
-                 samples: vk::SAMPLE_COUNT_1_BIT,
-                 load_op: vk::AttachmentLoadOp::Clear,
-                 store_op: vk::AttachmentStoreOp::DontCare,
-                 stencil_load_op: vk::AttachmentLoadOp::DontCare,
-                 stencil_store_op: vk::AttachmentStoreOp::DontCare,
-                 initial_layout: vk::ImageLayout::DepthStencilAttachmentOptimal,
-                 final_layout: vk::ImageLayout::DepthStencilAttachmentOptimal,
-             }];
+        let renderpass_attachments = [
+            vk::AttachmentDescription {
+                format: base.surface_format.format,
+                flags: vk::AttachmentDescriptionFlags::empty(),
+                samples: vk::SAMPLE_COUNT_1_BIT,
+                load_op: vk::AttachmentLoadOp::Clear,
+                store_op: vk::AttachmentStoreOp::Store,
+                stencil_load_op: vk::AttachmentLoadOp::DontCare,
+                stencil_store_op: vk::AttachmentStoreOp::DontCare,
+                initial_layout: vk::ImageLayout::Undefined,
+                final_layout: vk::ImageLayout::PresentSrcKhr,
+            },
+            vk::AttachmentDescription {
+                format: vk::Format::D16Unorm,
+                flags: vk::AttachmentDescriptionFlags::empty(),
+                samples: vk::SAMPLE_COUNT_1_BIT,
+                load_op: vk::AttachmentLoadOp::Clear,
+                store_op: vk::AttachmentStoreOp::DontCare,
+                stencil_load_op: vk::AttachmentLoadOp::DontCare,
+                stencil_store_op: vk::AttachmentStoreOp::DontCare,
+                initial_layout: vk::ImageLayout::DepthStencilAttachmentOptimal,
+                final_layout: vk::ImageLayout::DepthStencilAttachmentOptimal,
+            },
+        ];
         let color_attachment_ref = vk::AttachmentReference {
             attachment: 0,
             layout: vk::ImageLayout::ColorAttachmentOptimal,
@@ -68,7 +70,7 @@ fn main() {
             src_stage_mask: vk::PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT,
             src_access_mask: Default::default(),
             dst_access_mask: vk::ACCESS_COLOR_ATTACHMENT_READ_BIT |
-                             vk::ACCESS_COLOR_ATTACHMENT_WRITE_BIT,
+                vk::ACCESS_COLOR_ATTACHMENT_WRITE_BIT,
             dst_stage_mask: vk::PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT,
         };
         let subpass = vk::SubpassDescription {
@@ -131,10 +133,11 @@ fn main() {
         let index_buffer = base.device.create_buffer(&index_buffer_info, None).unwrap();
         let index_buffer_memory_req = base.device.get_buffer_memory_requirements(index_buffer);
         let index_buffer_memory_index =
-            find_memorytype_index(&index_buffer_memory_req,
-                                  &base.device_memory_properties,
-                                  vk::MEMORY_PROPERTY_HOST_VISIBLE_BIT)
-                    .expect("Unable to find suitable memorytype for the index buffer.");
+            find_memorytype_index(
+                &index_buffer_memory_req,
+                &base.device_memory_properties,
+                vk::MEMORY_PROPERTY_HOST_VISIBLE_BIT,
+            ).expect("Unable to find suitable memorytype for the index buffer.");
         let index_allocate_info = vk::MemoryAllocateInfo {
             s_type: vk::StructureType::MemoryAllocateInfo,
             p_next: ptr::null(),
@@ -145,36 +148,42 @@ fn main() {
             .allocate_memory(&index_allocate_info, None)
             .unwrap();
         let index_ptr = base.device
-            .map_memory(index_buffer_memory,
-                        0,
-                        index_buffer_memory_req.size,
-                        vk::MemoryMapFlags::empty())
+            .map_memory(
+                index_buffer_memory,
+                0,
+                index_buffer_memory_req.size,
+                vk::MemoryMapFlags::empty(),
+            )
             .unwrap();
-        let mut index_slice = Align::new(index_ptr,
-                                         index_buffer_memory_req.alignment,
-                                         index_buffer_memory_req.size);
+        let mut index_slice = Align::new(
+            index_ptr,
+            align_of::<u32>() as u64,
+            index_buffer_memory_req.size,
+        );
         index_slice.copy_from_slice(&index_buffer_data);
         base.device.unmap_memory(index_buffer_memory);
         base.device
             .bind_buffer_memory(index_buffer, index_buffer_memory, 0)
             .unwrap();
 
-        let vertices = [Vertex {
-                            pos: [-1.0, -1.0, 0.0, 1.0],
-                            uv: [0.0, 0.0],
-                        },
-                        Vertex {
-                            pos: [-1.0, 1.0, 0.0, 1.0],
-                            uv: [0.0, 1.0],
-                        },
-                        Vertex {
-                            pos: [1.0, 1.0, 0.0, 1.0],
-                            uv: [1.0, 1.0],
-                        },
-                        Vertex {
-                            pos: [1.0, -1.0, 0.0, 1.0],
-                            uv: [1.0, 0.0],
-                        }];
+        let vertices = [
+            Vertex {
+                pos: [-1.0, -1.0, 0.0, 1.0],
+                uv: [0.0, 0.0],
+            },
+            Vertex {
+                pos: [-1.0, 1.0, 0.0, 1.0],
+                uv: [0.0, 1.0],
+            },
+            Vertex {
+                pos: [1.0, 1.0, 0.0, 1.0],
+                uv: [1.0, 1.0],
+            },
+            Vertex {
+                pos: [1.0, -1.0, 0.0, 1.0],
+                uv: [1.0, 0.0],
+            },
+        ];
         let vertex_input_buffer_info = vk::BufferCreateInfo {
             s_type: vk::StructureType::BufferCreateInfo,
             p_next: ptr::null(),
@@ -188,14 +197,15 @@ fn main() {
         let vertex_input_buffer = base.device
             .create_buffer(&vertex_input_buffer_info, None)
             .unwrap();
-        let vertex_input_buffer_memory_req =
-            base.device
-                .get_buffer_memory_requirements(vertex_input_buffer);
+        let vertex_input_buffer_memory_req = base.device.get_buffer_memory_requirements(
+            vertex_input_buffer,
+        );
         let vertex_input_buffer_memory_index =
-            find_memorytype_index(&vertex_input_buffer_memory_req,
-                                  &base.device_memory_properties,
-                                  vk::MEMORY_PROPERTY_HOST_VISIBLE_BIT)
-                    .expect("Unable to find suitable memorytype for the vertex buffer.");
+            find_memorytype_index(
+                &vertex_input_buffer_memory_req,
+                &base.device_memory_properties,
+                vk::MEMORY_PROPERTY_HOST_VISIBLE_BIT,
+            ).expect("Unable to find suitable memorytype for the vertex buffer.");
 
         let vertex_buffer_allocate_info = vk::MemoryAllocateInfo {
             s_type: vk::StructureType::MemoryAllocateInfo,
@@ -207,14 +217,18 @@ fn main() {
             .allocate_memory(&vertex_buffer_allocate_info, None)
             .unwrap();
         let vert_ptr = base.device
-            .map_memory(vertex_input_buffer_memory,
-                        0,
-                        vertex_input_buffer_memory_req.size,
-                        vk::MemoryMapFlags::empty())
+            .map_memory(
+                vertex_input_buffer_memory,
+                0,
+                vertex_input_buffer_memory_req.size,
+                vk::MemoryMapFlags::empty(),
+            )
             .unwrap();
-        let mut slice = Align::new(vert_ptr,
-                                   vertex_input_buffer_memory_req.alignment,
-                                   vertex_input_buffer_memory_req.size);
+        let mut slice = Align::new(
+            vert_ptr,
+            align_of::<Vertex>() as u64,
+            vertex_input_buffer_memory_req.size,
+        );
         slice.copy_from_slice(&vertices);
         base.device.unmap_memory(vertex_input_buffer_memory);
         base.device
@@ -239,14 +253,15 @@ fn main() {
         let uniform_color_buffer = base.device
             .create_buffer(&uniform_color_buffer_info, None)
             .unwrap();
-        let uniform_color_buffer_memory_req =
-            base.device
-                .get_buffer_memory_requirements(uniform_color_buffer);
+        let uniform_color_buffer_memory_req = base.device.get_buffer_memory_requirements(
+            uniform_color_buffer,
+        );
         let uniform_color_buffer_memory_index =
-            find_memorytype_index(&uniform_color_buffer_memory_req,
-                                  &base.device_memory_properties,
-                                  vk::MEMORY_PROPERTY_HOST_VISIBLE_BIT)
-                    .expect("Unable to find suitable memorytype for the vertex buffer.");
+            find_memorytype_index(
+                &uniform_color_buffer_memory_req,
+                &base.device_memory_properties,
+                vk::MEMORY_PROPERTY_HOST_VISIBLE_BIT,
+            ).expect("Unable to find suitable memorytype for the vertex buffer.");
 
         let uniform_color_buffer_allocate_info = vk::MemoryAllocateInfo {
             s_type: vk::StructureType::MemoryAllocateInfo,
@@ -258,14 +273,18 @@ fn main() {
             .allocate_memory(&uniform_color_buffer_allocate_info, None)
             .unwrap();
         let uniform_ptr = base.device
-            .map_memory(uniform_color_buffer_memory,
-                        0,
-                        uniform_color_buffer_memory_req.size,
-                        vk::MemoryMapFlags::empty())
+            .map_memory(
+                uniform_color_buffer_memory,
+                0,
+                uniform_color_buffer_memory_req.size,
+                vk::MemoryMapFlags::empty(),
+            )
             .unwrap();
-        let mut uniform_aligned_slice = Align::new(uniform_ptr,
-                                                   uniform_color_buffer_memory_req.alignment,
-                                                   uniform_color_buffer_memory_req.size);
+        let mut uniform_aligned_slice = Align::new(
+            uniform_ptr,
+            align_of::<Vector3>() as u64,
+            uniform_color_buffer_memory_req.size,
+        );
         uniform_aligned_slice.copy_from_slice(&[uniform_color_buffer_data]);
         base.device.unmap_memory(uniform_color_buffer_memory);
         base.device
@@ -288,10 +307,11 @@ fn main() {
         let image_buffer = base.device.create_buffer(&image_buffer_info, None).unwrap();
         let image_buffer_memory_req = base.device.get_buffer_memory_requirements(image_buffer);
         let image_buffer_memory_index =
-            find_memorytype_index(&image_buffer_memory_req,
-                                  &base.device_memory_properties,
-                                  vk::MEMORY_PROPERTY_HOST_VISIBLE_BIT)
-                    .expect("Unable to find suitable memorytype for the vertex buffer.");
+            find_memorytype_index(
+                &image_buffer_memory_req,
+                &base.device_memory_properties,
+                vk::MEMORY_PROPERTY_HOST_VISIBLE_BIT,
+            ).expect("Unable to find suitable memorytype for the vertex buffer.");
 
         let image_buffer_allocate_info = vk::MemoryAllocateInfo {
             s_type: vk::StructureType::MemoryAllocateInfo,
@@ -303,14 +323,18 @@ fn main() {
             .allocate_memory(&image_buffer_allocate_info, None)
             .unwrap();
         let image_ptr = base.device
-            .map_memory(image_buffer_memory,
-                        0,
-                        image_buffer_memory_req.size,
-                        vk::MemoryMapFlags::empty())
+            .map_memory(
+                image_buffer_memory,
+                0,
+                image_buffer_memory_req.size,
+                vk::MemoryMapFlags::empty(),
+            )
             .unwrap();
-        let mut image_slice = AlignByteSlice::new(image_ptr,
-                                                  image_buffer_memory_req.alignment,
-                                                  image_buffer_memory_req.size);
+        let mut image_slice = AlignByteSlice::new(
+            image_ptr,
+            image_buffer_memory_req.alignment,
+            image_buffer_memory_req.size,
+        );
         image_slice.copy_from_slices(&[&image_data]);
         base.device.unmap_memory(image_buffer_memory);
         base.device
@@ -343,10 +367,11 @@ fn main() {
             .unwrap();
         let texture_memory_req = base.device.get_image_memory_requirements(texture_image);
         let texture_memory_index =
-            find_memorytype_index(&texture_memory_req,
-                                  &base.device_memory_properties,
-                                  vk::MEMORY_PROPERTY_DEVICE_LOCAL_BIT)
-                    .expect("Unable to find suitable memory index for depth image.");
+            find_memorytype_index(
+                &texture_memory_req,
+                &base.device_memory_properties,
+                vk::MEMORY_PROPERTY_DEVICE_LOCAL_BIT,
+            ).expect("Unable to find suitable memory index for depth image.");
 
         let texture_allocate_info = vk::MemoryAllocateInfo {
             s_type: vk::StructureType::MemoryAllocateInfo,
@@ -492,14 +517,16 @@ fn main() {
         let tex_image_view = base.device
             .create_image_view(&tex_image_view_info, None)
             .unwrap();
-        let descriptor_sizes = [vk::DescriptorPoolSize {
-                                    typ: vk::DescriptorType::UniformBuffer,
-                                    descriptor_count: 1,
-                                },
-                                vk::DescriptorPoolSize {
-                                    typ: vk::DescriptorType::CombinedImageSampler,
-                                    descriptor_count: 1,
-                                }];
+        let descriptor_sizes = [
+            vk::DescriptorPoolSize {
+                typ: vk::DescriptorType::UniformBuffer,
+                descriptor_count: 1,
+            },
+            vk::DescriptorPoolSize {
+                typ: vk::DescriptorType::CombinedImageSampler,
+                descriptor_count: 1,
+            },
+        ];
         let descriptor_pool_info = vk::DescriptorPoolCreateInfo {
             s_type: vk::StructureType::DescriptorPoolCreateInfo,
             p_next: ptr::null(),
@@ -511,20 +538,22 @@ fn main() {
         let descriptor_pool = base.device
             .create_descriptor_pool(&descriptor_pool_info, None)
             .unwrap();
-        let desc_layout_bindings = [vk::DescriptorSetLayoutBinding {
-                                        binding: 0,
-                                        descriptor_type: vk::DescriptorType::UniformBuffer,
-                                        descriptor_count: 1,
-                                        stage_flags: vk::SHADER_STAGE_FRAGMENT_BIT,
-                                        p_immutable_samplers: ptr::null(),
-                                    },
-                                    vk::DescriptorSetLayoutBinding {
-                                        binding: 1,
-                                        descriptor_type: vk::DescriptorType::CombinedImageSampler,
-                                        descriptor_count: 1,
-                                        stage_flags: vk::SHADER_STAGE_FRAGMENT_BIT,
-                                        p_immutable_samplers: ptr::null(),
-                                    }];
+        let desc_layout_bindings = [
+            vk::DescriptorSetLayoutBinding {
+                binding: 0,
+                descriptor_type: vk::DescriptorType::UniformBuffer,
+                descriptor_count: 1,
+                stage_flags: vk::SHADER_STAGE_FRAGMENT_BIT,
+                p_immutable_samplers: ptr::null(),
+            },
+            vk::DescriptorSetLayoutBinding {
+                binding: 1,
+                descriptor_type: vk::DescriptorType::CombinedImageSampler,
+                descriptor_count: 1,
+                stage_flags: vk::SHADER_STAGE_FRAGMENT_BIT,
+                p_immutable_samplers: ptr::null(),
+            },
+        ];
         let descriptor_info = vk::DescriptorSetLayoutCreateInfo {
             s_type: vk::StructureType::DescriptorSetLayoutCreateInfo,
             p_next: ptr::null(),
@@ -534,9 +563,11 @@ fn main() {
         };
 
 
-        let desc_set_layouts = [base.device
-                                    .create_descriptor_set_layout(&descriptor_info, None)
-                                    .unwrap()];
+        let desc_set_layouts = [
+            base.device
+                .create_descriptor_set_layout(&descriptor_info, None)
+                .unwrap(),
+        ];
         let desc_alloc_info = vk::DescriptorSetAllocateInfo {
             s_type: vk::StructureType::DescriptorSetAllocateInfo,
             p_next: ptr::null(),
@@ -560,36 +591,38 @@ fn main() {
             sampler: sampler,
         };
 
-        let write_desc_sets = [vk::WriteDescriptorSet {
-                                   s_type: vk::StructureType::WriteDescriptorSet,
-                                   p_next: ptr::null(),
-                                   dst_set: descriptor_sets[0],
-                                   dst_binding: 0,
-                                   dst_array_element: 0,
-                                   descriptor_count: 1,
-                                   descriptor_type: vk::DescriptorType::UniformBuffer,
-                                   p_image_info: ptr::null(),
-                                   p_buffer_info: &uniform_color_buffer_descriptor,
-                                   p_texel_buffer_view: ptr::null(),
-                               },
-                               vk::WriteDescriptorSet {
-                                   s_type: vk::StructureType::WriteDescriptorSet,
-                                   p_next: ptr::null(),
-                                   dst_set: descriptor_sets[0],
-                                   dst_binding: 1,
-                                   dst_array_element: 0,
-                                   descriptor_count: 1,
-                                   descriptor_type: vk::DescriptorType::CombinedImageSampler,
-                                   p_image_info: &tex_descriptor,
-                                   p_buffer_info: ptr::null(),
-                                   p_texel_buffer_view: ptr::null(),
-                               }];
+        let write_desc_sets = [
+            vk::WriteDescriptorSet {
+                s_type: vk::StructureType::WriteDescriptorSet,
+                p_next: ptr::null(),
+                dst_set: descriptor_sets[0],
+                dst_binding: 0,
+                dst_array_element: 0,
+                descriptor_count: 1,
+                descriptor_type: vk::DescriptorType::UniformBuffer,
+                p_image_info: ptr::null(),
+                p_buffer_info: &uniform_color_buffer_descriptor,
+                p_texel_buffer_view: ptr::null(),
+            },
+            vk::WriteDescriptorSet {
+                s_type: vk::StructureType::WriteDescriptorSet,
+                p_next: ptr::null(),
+                dst_set: descriptor_sets[0],
+                dst_binding: 1,
+                dst_array_element: 0,
+                descriptor_count: 1,
+                descriptor_type: vk::DescriptorType::CombinedImageSampler,
+                p_image_info: &tex_descriptor,
+                p_buffer_info: ptr::null(),
+                p_texel_buffer_view: ptr::null(),
+            },
+        ];
         base.device.update_descriptor_sets(&write_desc_sets, &[]);
 
-        let vertex_spv_file = File::open(Path::new("shader/texture/vert.spv"))
-            .expect("Could not find vert.spv.");
-        let frag_spv_file = File::open(Path::new("shader/texture/frag.spv"))
-            .expect("Could not find frag.spv.");
+        let vertex_spv_file =
+            File::open(Path::new("shader/texture/vert.spv")).expect("Could not find vert.spv.");
+        let frag_spv_file =
+            File::open(Path::new("shader/texture/frag.spv")).expect("Could not find frag.spv.");
 
         let vertex_bytes: Vec<u8> = vertex_spv_file
             .bytes()
@@ -633,42 +666,47 @@ fn main() {
             .unwrap();
 
         let shader_entry_name = CString::new("main").unwrap();
-        let shader_stage_create_infos =
-            [vk::PipelineShaderStageCreateInfo {
-                 s_type: vk::StructureType::PipelineShaderStageCreateInfo,
-                 p_next: ptr::null(),
-                 flags: Default::default(),
-                 module: vertex_shader_module,
-                 p_name: shader_entry_name.as_ptr(),
-                 p_specialization_info: ptr::null(),
-                 stage: vk::SHADER_STAGE_VERTEX_BIT,
-             },
-             vk::PipelineShaderStageCreateInfo {
-                 s_type: vk::StructureType::PipelineShaderStageCreateInfo,
-                 p_next: ptr::null(),
-                 flags: Default::default(),
-                 module: fragment_shader_module,
-                 p_name: shader_entry_name.as_ptr(),
-                 p_specialization_info: ptr::null(),
-                 stage: vk::SHADER_STAGE_FRAGMENT_BIT,
-             }];
-        let vertex_input_binding_descriptions = [vk::VertexInputBindingDescription {
-                                                     binding: 0,
-                                                     stride: mem::size_of::<Vertex>() as u32,
-                                                     input_rate: vk::VertexInputRate::Vertex,
-                                                 }];
-        let vertex_input_attribute_descriptions = [vk::VertexInputAttributeDescription {
-                                                       location: 0,
-                                                       binding: 0,
-                                                       format: vk::Format::R32g32b32a32Sfloat,
-                                                       offset: offset_of!(Vertex, pos) as u32,
-                                                   },
-                                                   vk::VertexInputAttributeDescription {
-                                                       location: 1,
-                                                       binding: 0,
-                                                       format: vk::Format::R32g32b32a32Sfloat,
-                                                       offset: offset_of!(Vertex, uv) as u32,
-                                                   }];
+        let shader_stage_create_infos = [
+            vk::PipelineShaderStageCreateInfo {
+                s_type: vk::StructureType::PipelineShaderStageCreateInfo,
+                p_next: ptr::null(),
+                flags: Default::default(),
+                module: vertex_shader_module,
+                p_name: shader_entry_name.as_ptr(),
+                p_specialization_info: ptr::null(),
+                stage: vk::SHADER_STAGE_VERTEX_BIT,
+            },
+            vk::PipelineShaderStageCreateInfo {
+                s_type: vk::StructureType::PipelineShaderStageCreateInfo,
+                p_next: ptr::null(),
+                flags: Default::default(),
+                module: fragment_shader_module,
+                p_name: shader_entry_name.as_ptr(),
+                p_specialization_info: ptr::null(),
+                stage: vk::SHADER_STAGE_FRAGMENT_BIT,
+            },
+        ];
+        let vertex_input_binding_descriptions = [
+            vk::VertexInputBindingDescription {
+                binding: 0,
+                stride: mem::size_of::<Vertex>() as u32,
+                input_rate: vk::VertexInputRate::Vertex,
+            },
+        ];
+        let vertex_input_attribute_descriptions = [
+            vk::VertexInputAttributeDescription {
+                location: 0,
+                binding: 0,
+                format: vk::Format::R32g32b32a32Sfloat,
+                offset: offset_of!(Vertex, pos) as u32,
+            },
+            vk::VertexInputAttributeDescription {
+                location: 1,
+                binding: 0,
+                format: vk::Format::R32g32b32a32Sfloat,
+                offset: offset_of!(Vertex, uv) as u32,
+            },
+        ];
         let vertex_input_state_info = vk::PipelineVertexInputStateCreateInfo {
             s_type: vk::StructureType::PipelineVertexInputStateCreateInfo,
             p_next: ptr::null(),
@@ -685,18 +723,22 @@ fn main() {
             primitive_restart_enable: 0,
             topology: vk::PrimitiveTopology::TriangleList,
         };
-        let viewports = [vk::Viewport {
-                             x: 0.0,
-                             y: 0.0,
-                             width: base.surface_resolution.width as f32,
-                             height: base.surface_resolution.height as f32,
-                             min_depth: 0.0,
-                             max_depth: 1.0,
-                         }];
-        let scissors = [vk::Rect2D {
-                            offset: vk::Offset2D { x: 0, y: 0 },
-                            extent: base.surface_resolution.clone(),
-                        }];
+        let viewports = [
+            vk::Viewport {
+                x: 0.0,
+                y: 0.0,
+                width: base.surface_resolution.width as f32,
+                height: base.surface_resolution.height as f32,
+                min_depth: 0.0,
+                max_depth: 1.0,
+            },
+        ];
+        let scissors = [
+            vk::Rect2D {
+                offset: vk::Offset2D { x: 0, y: 0 },
+                extent: base.surface_resolution.clone(),
+            },
+        ];
         let viewport_state_info = vk::PipelineViewportStateCreateInfo {
             s_type: vk::StructureType::PipelineViewportStateCreateInfo,
             p_next: ptr::null(),
@@ -755,17 +797,18 @@ fn main() {
             max_depth_bounds: 1.0,
             min_depth_bounds: 0.0,
         };
-        let color_blend_attachment_states = [vk::PipelineColorBlendAttachmentState {
-                                                 blend_enable: 0,
-                                                 src_color_blend_factor: vk::BlendFactor::SrcColor,
-                                                 dst_color_blend_factor:
-                                                     vk::BlendFactor::OneMinusDstColor,
-                                                 color_blend_op: vk::BlendOp::Add,
-                                                 src_alpha_blend_factor: vk::BlendFactor::Zero,
-                                                 dst_alpha_blend_factor: vk::BlendFactor::Zero,
-                                                 alpha_blend_op: vk::BlendOp::Add,
-                                                 color_write_mask: vk::ColorComponentFlags::all(),
-                                             }];
+        let color_blend_attachment_states = [
+            vk::PipelineColorBlendAttachmentState {
+                blend_enable: 0,
+                src_color_blend_factor: vk::BlendFactor::SrcColor,
+                dst_color_blend_factor: vk::BlendFactor::OneMinusDstColor,
+                color_blend_op: vk::BlendOp::Add,
+                src_alpha_blend_factor: vk::BlendFactor::Zero,
+                dst_alpha_blend_factor: vk::BlendFactor::Zero,
+                alpha_blend_op: vk::BlendOp::Add,
+                color_write_mask: vk::ColorComponentFlags::all(),
+            },
+        ];
         let color_blend_state = vk::PipelineColorBlendStateCreateInfo {
             s_type: vk::StructureType::PipelineColorBlendStateCreateInfo,
             p_next: ptr::null(),
@@ -896,10 +939,14 @@ fn main() {
             base.device.destroy_pipeline(pipeline, None);
         }
         base.device.destroy_pipeline_layout(pipeline_layout, None);
-        base.device
-            .destroy_shader_module(vertex_shader_module, None);
-        base.device
-            .destroy_shader_module(fragment_shader_module, None);
+        base.device.destroy_shader_module(
+            vertex_shader_module,
+            None,
+        );
+        base.device.destroy_shader_module(
+            fragment_shader_module,
+            None,
+        );
         base.device.free_memory(image_buffer_memory, None);
         base.device.destroy_buffer(image_buffer, None);
         base.device.free_memory(texture_memory, None);
@@ -912,8 +959,10 @@ fn main() {
         base.device.free_memory(vertex_input_buffer_memory, None);
         base.device.destroy_buffer(vertex_input_buffer, None);
         for &descriptor_set_layout in desc_set_layouts.iter() {
-            base.device
-                .destroy_descriptor_set_layout(descriptor_set_layout, None);
+            base.device.destroy_descriptor_set_layout(
+                descriptor_set_layout,
+                None,
+            );
         }
         base.device.destroy_descriptor_pool(descriptor_pool, None);
         base.device.destroy_sampler(sampler, None);
