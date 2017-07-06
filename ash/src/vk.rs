@@ -366,8 +366,10 @@ pub mod types {
                 .field("pfn_allocation", &(self.pfn_allocation as *const ()))
                 .field("pfn_reallocation", &(self.pfn_reallocation as *const ()))
                 .field("pfn_free", &(self.pfn_free as *const ()))
-                .field("pfn_internal_allocation",
-                       &(self.pfn_internal_allocation as *const ()))
+                .field(
+                    "pfn_internal_allocation",
+                    &(self.pfn_internal_allocation as *const ()),
+                )
                 .field("pfn_internal_free", &(self.pfn_internal_free as *const ()))
                 .finish()
         }
@@ -513,8 +515,9 @@ pub mod types {
                 .field("vendor_id", &self.vendor_id)
                 .field("device_id", &self.device_id)
                 .field("device_type", &self.device_type)
-                .field("device_name",
-                       &unsafe { CStr::from_ptr(&self.device_name[0]) })
+                .field("device_name", &unsafe {
+                    CStr::from_ptr(&self.device_name[0])
+                })
                 .field("pipeline_cache_uuid", &&self.pipeline_cache_uuid[..])
                 .field("limits", &self.limits)
                 .field("sparse_properties", &self.sparse_properties)
@@ -834,151 +837,267 @@ pub mod types {
                 .field("max_uniform_buffer_range", &self.max_uniform_buffer_range)
                 .field("max_storage_buffer_range", &self.max_storage_buffer_range)
                 .field("max_push_constants_size", &self.max_push_constants_size)
-                .field("max_memory_allocation_count",
-                       &self.max_memory_allocation_count)
-                .field("max_sampler_allocation_count",
-                       &self.max_sampler_allocation_count)
+                .field(
+                    "max_memory_allocation_count",
+                    &self.max_memory_allocation_count,
+                )
+                .field(
+                    "max_sampler_allocation_count",
+                    &self.max_sampler_allocation_count,
+                )
                 .field("buffer_image_granularity", &self.buffer_image_granularity)
                 .field("sparse_address_space_size", &self.sparse_address_space_size)
                 .field("max_bound_descriptor_sets", &self.max_bound_descriptor_sets)
-                .field("max_per_stage_descriptor_samplers",
-                       &self.max_per_stage_descriptor_samplers)
-                .field("max_per_stage_descriptor_uniform_buffers",
-                       &self.max_per_stage_descriptor_uniform_buffers)
-                .field("max_per_stage_descriptor_storage_buffers",
-                       &self.max_per_stage_descriptor_storage_buffers)
-                .field("max_per_stage_descriptor_sampled_images",
-                       &self.max_per_stage_descriptor_sampled_images)
-                .field("max_per_stage_descriptor_storage_images",
-                       &self.max_per_stage_descriptor_storage_images)
-                .field("max_per_stage_descriptor_input_attachments",
-                       &self.max_per_stage_descriptor_input_attachments)
+                .field(
+                    "max_per_stage_descriptor_samplers",
+                    &self.max_per_stage_descriptor_samplers,
+                )
+                .field(
+                    "max_per_stage_descriptor_uniform_buffers",
+                    &self.max_per_stage_descriptor_uniform_buffers,
+                )
+                .field(
+                    "max_per_stage_descriptor_storage_buffers",
+                    &self.max_per_stage_descriptor_storage_buffers,
+                )
+                .field(
+                    "max_per_stage_descriptor_sampled_images",
+                    &self.max_per_stage_descriptor_sampled_images,
+                )
+                .field(
+                    "max_per_stage_descriptor_storage_images",
+                    &self.max_per_stage_descriptor_storage_images,
+                )
+                .field(
+                    "max_per_stage_descriptor_input_attachments",
+                    &self.max_per_stage_descriptor_input_attachments,
+                )
                 .field("max_per_stage_resources", &self.max_per_stage_resources)
-                .field("max_descriptor_set_samplers",
-                       &self.max_descriptor_set_samplers)
-                .field("max_descriptor_set_uniform_buffers",
-                       &self.max_descriptor_set_uniform_buffers)
-                .field("max_descriptor_set_uniform_buffers_dynamic",
-                       &self.max_descriptor_set_uniform_buffers_dynamic)
-                .field("max_descriptor_set_storage_buffers",
-                       &self.max_descriptor_set_storage_buffers)
-                .field("max_descriptor_set_storage_buffers_dynamic",
-                       &self.max_descriptor_set_storage_buffers_dynamic)
-                .field("max_descriptor_set_sampled_images",
-                       &self.max_descriptor_set_sampled_images)
-                .field("max_descriptor_set_storage_images",
-                       &self.max_descriptor_set_storage_images)
-                .field("max_descriptor_set_input_attachments",
-                       &self.max_descriptor_set_input_attachments)
-                .field("max_vertex_input_attributes",
-                       &self.max_vertex_input_attributes)
+                .field(
+                    "max_descriptor_set_samplers",
+                    &self.max_descriptor_set_samplers,
+                )
+                .field(
+                    "max_descriptor_set_uniform_buffers",
+                    &self.max_descriptor_set_uniform_buffers,
+                )
+                .field(
+                    "max_descriptor_set_uniform_buffers_dynamic",
+                    &self.max_descriptor_set_uniform_buffers_dynamic,
+                )
+                .field(
+                    "max_descriptor_set_storage_buffers",
+                    &self.max_descriptor_set_storage_buffers,
+                )
+                .field(
+                    "max_descriptor_set_storage_buffers_dynamic",
+                    &self.max_descriptor_set_storage_buffers_dynamic,
+                )
+                .field(
+                    "max_descriptor_set_sampled_images",
+                    &self.max_descriptor_set_sampled_images,
+                )
+                .field(
+                    "max_descriptor_set_storage_images",
+                    &self.max_descriptor_set_storage_images,
+                )
+                .field(
+                    "max_descriptor_set_input_attachments",
+                    &self.max_descriptor_set_input_attachments,
+                )
+                .field(
+                    "max_vertex_input_attributes",
+                    &self.max_vertex_input_attributes,
+                )
                 .field("max_vertex_input_bindings", &self.max_vertex_input_bindings)
-                .field("max_vertex_input_attribute_offset",
-                       &self.max_vertex_input_attribute_offset)
-                .field("max_vertex_input_binding_stride",
-                       &self.max_vertex_input_binding_stride)
-                .field("max_vertex_output_components",
-                       &self.max_vertex_output_components)
-                .field("max_tessellation_generation_level",
-                       &self.max_tessellation_generation_level)
-                .field("max_tessellation_patch_size",
-                       &self.max_tessellation_patch_size)
-                .field("max_tessellation_control_per_vertex_input_components",
-                       &self.max_tessellation_control_per_vertex_input_components)
-                .field("max_tessellation_control_per_vertex_output_components",
-                       &self.max_tessellation_control_per_vertex_output_components)
-                .field("max_tessellation_control_per_patch_output_components",
-                       &self.max_tessellation_control_per_patch_output_components)
-                .field("max_tessellation_control_total_output_components",
-                       &self.max_tessellation_control_total_output_components)
-                .field("max_tessellation_evaluation_input_components",
-                       &self.max_tessellation_evaluation_input_components)
-                .field("max_tessellation_evaluation_output_components",
-                       &self.max_tessellation_evaluation_output_components)
-                .field("max_geometry_shader_invocations",
-                       &self.max_geometry_shader_invocations)
-                .field("max_geometry_input_components",
-                       &self.max_geometry_input_components)
-                .field("max_geometry_output_components",
-                       &self.max_geometry_output_components)
-                .field("max_geometry_output_vertices",
-                       &self.max_geometry_output_vertices)
-                .field("max_geometry_total_output_components",
-                       &self.max_geometry_total_output_components)
-                .field("max_fragment_input_components",
-                       &self.max_fragment_input_components)
-                .field("max_fragment_output_attachments",
-                       &self.max_fragment_output_attachments)
-                .field("max_fragment_dual_src_attachments",
-                       &self.max_fragment_dual_src_attachments)
-                .field("max_fragment_combined_output_resources",
-                       &self.max_fragment_combined_output_resources)
-                .field("max_compute_shared_memory_size",
-                       &self.max_compute_shared_memory_size)
-                .field("max_compute_work_group_count",
-                       &&self.max_compute_work_group_count[..])
-                .field("max_compute_work_group_invocations",
-                       &self.max_compute_work_group_invocations)
-                .field("max_compute_work_group_size",
-                       &&self.max_compute_work_group_size[..])
+                .field(
+                    "max_vertex_input_attribute_offset",
+                    &self.max_vertex_input_attribute_offset,
+                )
+                .field(
+                    "max_vertex_input_binding_stride",
+                    &self.max_vertex_input_binding_stride,
+                )
+                .field(
+                    "max_vertex_output_components",
+                    &self.max_vertex_output_components,
+                )
+                .field(
+                    "max_tessellation_generation_level",
+                    &self.max_tessellation_generation_level,
+                )
+                .field(
+                    "max_tessellation_patch_size",
+                    &self.max_tessellation_patch_size,
+                )
+                .field(
+                    "max_tessellation_control_per_vertex_input_components",
+                    &self.max_tessellation_control_per_vertex_input_components,
+                )
+                .field(
+                    "max_tessellation_control_per_vertex_output_components",
+                    &self.max_tessellation_control_per_vertex_output_components,
+                )
+                .field(
+                    "max_tessellation_control_per_patch_output_components",
+                    &self.max_tessellation_control_per_patch_output_components,
+                )
+                .field(
+                    "max_tessellation_control_total_output_components",
+                    &self.max_tessellation_control_total_output_components,
+                )
+                .field(
+                    "max_tessellation_evaluation_input_components",
+                    &self.max_tessellation_evaluation_input_components,
+                )
+                .field(
+                    "max_tessellation_evaluation_output_components",
+                    &self.max_tessellation_evaluation_output_components,
+                )
+                .field(
+                    "max_geometry_shader_invocations",
+                    &self.max_geometry_shader_invocations,
+                )
+                .field(
+                    "max_geometry_input_components",
+                    &self.max_geometry_input_components,
+                )
+                .field(
+                    "max_geometry_output_components",
+                    &self.max_geometry_output_components,
+                )
+                .field(
+                    "max_geometry_output_vertices",
+                    &self.max_geometry_output_vertices,
+                )
+                .field(
+                    "max_geometry_total_output_components",
+                    &self.max_geometry_total_output_components,
+                )
+                .field(
+                    "max_fragment_input_components",
+                    &self.max_fragment_input_components,
+                )
+                .field(
+                    "max_fragment_output_attachments",
+                    &self.max_fragment_output_attachments,
+                )
+                .field(
+                    "max_fragment_dual_src_attachments",
+                    &self.max_fragment_dual_src_attachments,
+                )
+                .field(
+                    "max_fragment_combined_output_resources",
+                    &self.max_fragment_combined_output_resources,
+                )
+                .field(
+                    "max_compute_shared_memory_size",
+                    &self.max_compute_shared_memory_size,
+                )
+                .field(
+                    "max_compute_work_group_count",
+                    &&self.max_compute_work_group_count[..],
+                )
+                .field(
+                    "max_compute_work_group_invocations",
+                    &self.max_compute_work_group_invocations,
+                )
+                .field(
+                    "max_compute_work_group_size",
+                    &&self.max_compute_work_group_size[..],
+                )
                 .field("sub_pixel_precision_bits", &self.sub_pixel_precision_bits)
                 .field("sub_texel_precision_bits", &self.sub_texel_precision_bits)
                 .field("mipmap_precision_bits", &self.mipmap_precision_bits)
-                .field("max_draw_indexed_index_value",
-                       &self.max_draw_indexed_index_value)
+                .field(
+                    "max_draw_indexed_index_value",
+                    &self.max_draw_indexed_index_value,
+                )
                 .field("max_draw_indirect_count", &self.max_draw_indirect_count)
                 .field("max_sampler_lod_bias", &self.max_sampler_lod_bias)
                 .field("max_sampler_anisotropy", &self.max_sampler_anisotropy)
                 .field("max_viewports", &self.max_viewports)
-                .field("max_viewport_dimensions",
-                       &&self.max_viewport_dimensions[..])
+                .field(
+                    "max_viewport_dimensions",
+                    &&self.max_viewport_dimensions[..],
+                )
                 .field("viewport_bounds_range", &&self.viewport_bounds_range[..])
                 .field("viewport_sub_pixel_bits", &self.viewport_sub_pixel_bits)
                 .field("min_memory_map_alignment", &self.min_memory_map_alignment)
-                .field("min_texel_buffer_offset_alignment",
-                       &self.min_texel_buffer_offset_alignment)
-                .field("min_uniform_buffer_offset_alignment",
-                       &self.min_uniform_buffer_offset_alignment)
-                .field("min_storage_buffer_offset_alignment",
-                       &self.min_storage_buffer_offset_alignment)
+                .field(
+                    "min_texel_buffer_offset_alignment",
+                    &self.min_texel_buffer_offset_alignment,
+                )
+                .field(
+                    "min_uniform_buffer_offset_alignment",
+                    &self.min_uniform_buffer_offset_alignment,
+                )
+                .field(
+                    "min_storage_buffer_offset_alignment",
+                    &self.min_storage_buffer_offset_alignment,
+                )
                 .field("min_texel_offset", &self.min_texel_offset)
                 .field("max_texel_offset", &self.max_texel_offset)
                 .field("min_texel_gather_offset", &self.min_texel_gather_offset)
                 .field("max_texel_gather_offset", &self.max_texel_gather_offset)
                 .field("min_interpolation_offset", &self.min_interpolation_offset)
                 .field("max_interpolation_offset", &self.max_interpolation_offset)
-                .field("sub_pixel_interpolation_offset_bits",
-                       &self.sub_pixel_interpolation_offset_bits)
+                .field(
+                    "sub_pixel_interpolation_offset_bits",
+                    &self.sub_pixel_interpolation_offset_bits,
+                )
                 .field("max_framebuffer_width", &self.max_framebuffer_width)
                 .field("max_framebuffer_height", &self.max_framebuffer_height)
                 .field("max_framebuffer_layers", &self.max_framebuffer_layers)
-                .field("framebuffer_color_sample_counts",
-                       &self.framebuffer_color_sample_counts)
-                .field("framebuffer_depth_sample_counts",
-                       &self.framebuffer_depth_sample_counts)
-                .field("framebuffer_stencil_sample_counts",
-                       &self.framebuffer_stencil_sample_counts)
-                .field("framebuffer_no_attachments_sample_counts",
-                       &self.framebuffer_no_attachments_sample_counts)
+                .field(
+                    "framebuffer_color_sample_counts",
+                    &self.framebuffer_color_sample_counts,
+                )
+                .field(
+                    "framebuffer_depth_sample_counts",
+                    &self.framebuffer_depth_sample_counts,
+                )
+                .field(
+                    "framebuffer_stencil_sample_counts",
+                    &self.framebuffer_stencil_sample_counts,
+                )
+                .field(
+                    "framebuffer_no_attachments_sample_counts",
+                    &self.framebuffer_no_attachments_sample_counts,
+                )
                 .field("max_color_attachments", &self.max_color_attachments)
-                .field("sampled_image_color_sample_counts",
-                       &self.sampled_image_color_sample_counts)
-                .field("sampled_image_integer_sample_counts",
-                       &self.sampled_image_integer_sample_counts)
-                .field("sampled_image_depth_sample_counts",
-                       &self.sampled_image_depth_sample_counts)
-                .field("sampled_image_stencil_sample_counts",
-                       &self.sampled_image_stencil_sample_counts)
-                .field("storage_image_sample_counts",
-                       &self.storage_image_sample_counts)
+                .field(
+                    "sampled_image_color_sample_counts",
+                    &self.sampled_image_color_sample_counts,
+                )
+                .field(
+                    "sampled_image_integer_sample_counts",
+                    &self.sampled_image_integer_sample_counts,
+                )
+                .field(
+                    "sampled_image_depth_sample_counts",
+                    &self.sampled_image_depth_sample_counts,
+                )
+                .field(
+                    "sampled_image_stencil_sample_counts",
+                    &self.sampled_image_stencil_sample_counts,
+                )
+                .field(
+                    "storage_image_sample_counts",
+                    &self.storage_image_sample_counts,
+                )
                 .field("max_sample_mask_words", &self.max_sample_mask_words)
-                .field("timestamp_compute_and_graphics",
-                       &self.timestamp_compute_and_graphics)
+                .field(
+                    "timestamp_compute_and_graphics",
+                    &self.timestamp_compute_and_graphics,
+                )
                 .field("timestamp_period", &self.timestamp_period)
                 .field("max_clip_distances", &self.max_clip_distances)
                 .field("max_cull_distances", &self.max_cull_distances)
-                .field("max_combined_clip_and_cull_distances",
-                       &self.max_combined_clip_and_cull_distances)
+                .field(
+                    "max_combined_clip_and_cull_distances",
+                    &self.max_combined_clip_and_cull_distances,
+                )
                 .field("discrete_queue_priorities", &self.discrete_queue_priorities)
                 .field("point_size_range", &&self.point_size_range[..])
                 .field("line_width_range", &&self.line_width_range[..])
@@ -986,10 +1105,14 @@ pub mod types {
                 .field("line_width_granularity", &self.line_width_granularity)
                 .field("strict_lines", &self.strict_lines)
                 .field("standard_sample_locations", &self.standard_sample_locations)
-                .field("optimal_buffer_copy_offset_alignment",
-                       &self.optimal_buffer_copy_offset_alignment)
-                .field("optimal_buffer_copy_row_pitch_alignment",
-                       &self.optimal_buffer_copy_row_pitch_alignment)
+                .field(
+                    "optimal_buffer_copy_offset_alignment",
+                    &self.optimal_buffer_copy_offset_alignment,
+                )
+                .field(
+                    "optimal_buffer_copy_row_pitch_alignment",
+                    &self.optimal_buffer_copy_row_pitch_alignment,
+                )
                 .field("non_coherent_atom_size", &self.non_coherent_atom_size)
                 .finish()
         }
@@ -1127,8 +1250,9 @@ pub mod types {
     impl fmt::Debug for ExtensionProperties {
         fn fmt(&self, fmt: &mut fmt::Formatter) -> ::std::result::Result<(), fmt::Error> {
             fmt.debug_struct("ExtensionProperties")
-                .field("extension_name",
-                       &unsafe { CStr::from_ptr(&self.extension_name[0]) })
+                .field("extension_name", &unsafe {
+                    CStr::from_ptr(&self.extension_name[0])
+                })
                 .field("spec_version", &self.spec_version)
                 .finish()
         }
@@ -1173,12 +1297,15 @@ pub mod types {
     impl fmt::Debug for LayerProperties {
         fn fmt(&self, fmt: &mut fmt::Formatter) -> ::std::result::Result<(), fmt::Error> {
             fmt.debug_struct("LayerProperties")
-                .field("layer_name",
-                       &unsafe { CStr::from_ptr(&self.layer_name[0]) })
+                .field(
+                    "layer_name",
+                    &unsafe { CStr::from_ptr(&self.layer_name[0]) },
+                )
                 .field("spec_version", &self.spec_version)
                 .field("implementation_version", &self.implementation_version)
-                .field("description",
-                       &unsafe { CStr::from_ptr(&self.description[0]) })
+                .field("description", &unsafe {
+                    CStr::from_ptr(&self.description[0])
+                })
                 .finish()
         }
     }
@@ -2670,8 +2797,10 @@ pub mod types {
                 Result::Success => write!(fmt, "Command successfully completed"),
                 Result::NotReady => write!(fmt, "A fence or query has not yet completed"),
                 Result::Timeout => {
-                    write!(fmt,
-                           "A wait operation has not completed in the specified time")
+                    write!(
+                        fmt,
+                        "A wait operation has not completed in the specified time"
+                    )
                 }
                 Result::EventSet => write!(fmt, "An event is signaled"),
                 Result::EventReset => write!(fmt, "An event is unsignaled"),
@@ -2681,19 +2810,25 @@ pub mod types {
                     write!(fmt, "A device memory allocation has failed.")
                 }
                 Result::ErrorInitializationFailed => {
-                    write!(fmt,
-                           "Initialization of an object could not be completed for implementation-specific reasons.")
+                    write!(
+                        fmt,
+                        "Initialization of an object could not be completed for implementation-specific reasons."
+                    )
                 }
                 Result::ErrorDeviceLost => {
-                    write!(fmt,
-                           "The logical or physical device has been lost. See Lost Device")
+                    write!(
+                        fmt,
+                        "The logical or physical device has been lost. See Lost Device"
+                    )
                 }
                 Result::ErrorMemoryMapFailed => {
                     write!(fmt, "Mapping of a memory object has failed.")
                 }
                 Result::ErrorLayerNotPresent => {
-                    write!(fmt,
-                           "A requested layer is not present or could not be loaded.")
+                    write!(
+                        fmt,
+                        "A requested layer is not present or could not be loaded."
+                    )
                 }
                 Result::ErrorExtensionNotPresent => {
                     write!(fmt, "A requested extension is not supported.")
@@ -2702,20 +2837,26 @@ pub mod types {
                     write!(fmt, "A requested feature is not supported.")
                 }
                 Result::ErrorIncompatibleDriver => {
-                    write!(fmt,
-                           "The requested version of Vulkan is not supported by the driver or is otherwise incompatible for implementation-specific reasons.")
+                    write!(
+                        fmt,
+                        "The requested version of Vulkan is not supported by the driver or is otherwise incompatible for implementation-specific reasons."
+                    )
                 }
                 Result::ErrorTooManyObjects => {
-                    write!(fmt,
-                           "Too many objects of the type have already been created.")
+                    write!(
+                        fmt,
+                        "Too many objects of the type have already been created."
+                    )
                 }
 
                 Result::ErrorFormatNotSupported => {
                     write!(fmt, "A requested format is not supported on this device.")
                 }
                 Result::ErrorFragmentedPool => {
-                    write!(fmt,
-                           "A pool allocation has failed due to fragmentation of the pool’s memory. This must only be returned if no attempt to allocate host or device memory was made to accomodate the new allocation.")
+                    write!(
+                        fmt,
+                        "A pool allocation has failed due to fragmentation of the pool’s memory. This must only be returned if no attempt to allocate host or device memory was made to accomodate the new allocation."
+                    )
                 }
                 _ => write!(fmt, ""),
             }

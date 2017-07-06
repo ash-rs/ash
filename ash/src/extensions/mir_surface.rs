@@ -3,7 +3,7 @@ use prelude::*;
 use std::mem;
 use vk;
 use std::ffi::CStr;
-use ::RawPtr;
+use RawPtr;
 use version::{EntryV1_0, InstanceV1_0};
 
 #[derive(Clone)]
@@ -13,13 +13,15 @@ pub struct MirSurface {
 }
 
 impl MirSurface {
-    pub fn new<E: EntryV1_0, I: InstanceV1_0>(entry: &E,
-                                              instance: &I)
-                                              -> Result<MirSurface, Vec<&'static str>> {
-        let surface_fn = vk::MirSurfaceFn::load(|name| {
-            unsafe {
-                mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
-            }
+    pub fn new<E: EntryV1_0, I: InstanceV1_0>(
+        entry: &E,
+        instance: &I,
+    ) -> Result<MirSurface, Vec<&'static str>> {
+        let surface_fn = vk::MirSurfaceFn::load(|name| unsafe {
+            mem::transmute(entry.get_instance_proc_addr(
+                instance.handle(),
+                name.as_ptr(),
+            ))
         })?;
         Ok(MirSurface {
             handle: instance.handle(),
@@ -31,16 +33,18 @@ impl MirSurface {
         CStr::from_bytes_with_nul(b"VK_KHR_mir_surface\0").expect("Wrong extension string")
     }
 
-    pub unsafe fn create_mir_surface_khr(&self,
-                                         create_info: &vk::MirSurfaceCreateInfoKHR,
-                                         allocation_callbacks: Option<&vk::AllocationCallbacks>)
-                                         -> VkResult<vk::SurfaceKHR> {
+    pub unsafe fn create_mir_surface_khr(
+        &self,
+        create_info: &vk::MirSurfaceCreateInfoKHR,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+    ) -> VkResult<vk::SurfaceKHR> {
         let mut surface = mem::uninitialized();
-        let err_code = self.mir_surface_fn
-            .create_mir_surface_khr(self.handle,
-                                    create_info,
-                                    allocation_callbacks.as_raw_ptr(),
-                                    &mut surface);
+        let err_code = self.mir_surface_fn.create_mir_surface_khr(
+            self.handle,
+            create_info,
+            allocation_callbacks.as_raw_ptr(),
+            &mut surface,
+        );
         match err_code {
             vk::Result::Success => Ok(surface),
             _ => Err(err_code),

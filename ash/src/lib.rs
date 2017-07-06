@@ -15,15 +15,15 @@ pub mod extensions;
 pub mod version;
 pub mod util;
 
-pub trait RawPtr<T>{
+pub trait RawPtr<T> {
     fn as_raw_ptr(&self) -> *const T;
 }
 
-impl<'r, T> RawPtr<T> for Option<&'r T>{
-    fn as_raw_ptr(&self) -> *const T{
-        match self{
+impl<'r, T> RawPtr<T> for Option<&'r T> {
+    fn as_raw_ptr(&self) -> *const T {
+        match self {
             &Some(inner) => inner as *const T,
-            _ => ::std::ptr::null()
+            _ => ::std::ptr::null(),
         }
     }
 }

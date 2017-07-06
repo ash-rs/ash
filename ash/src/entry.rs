@@ -48,8 +48,8 @@ pub enum InstanceError {
     VkError(vk::Result),
 }
 
-impl fmt::Display for InstanceError{
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result{
+impl fmt::Display for InstanceError {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "InstanceError::{:?}", self)
     }
 }
@@ -59,8 +59,8 @@ impl Error for InstanceError {
         "InstanceError"
     }
 
-    fn cause(&self) -> Option<&Error>{
-        if let &InstanceError::VkError(ref err) = self{
+    fn cause(&self) -> Option<&Error> {
+        if let &InstanceError::VkError(ref err) = self {
             return err.cause();
         }
         None
@@ -73,23 +73,26 @@ pub trait EntryV1_0 {
     fn fp_v1_0(&self) -> &vk::EntryFnV1_0;
     fn static_fn(&self) -> &vk::StaticFn;
 
-    fn create_instance(&self,
-                       create_info: &vk::InstanceCreateInfo,
-                       allocation_callbacks: Option<&vk::AllocationCallbacks>)
-                       -> Result<Instance<Self::Fp>, InstanceError> {
+    fn create_instance(
+        &self,
+        create_info: &vk::InstanceCreateInfo,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+    ) -> Result<Instance<Self::Fp>, InstanceError> {
         unsafe {
             let mut instance: vk::Instance = mem::uninitialized();
-            let err_code = self.fp_v1_0()
-                .create_instance(create_info,
-                                 allocation_callbacks.as_raw_ptr(),
-                                 &mut instance);
+            let err_code = self.fp_v1_0().create_instance(
+                create_info,
+                allocation_callbacks.as_raw_ptr(),
+                &mut instance,
+            );
             if err_code != vk::Result::Success {
                 return Err(InstanceError::VkError(err_code));
             }
             let instance_fp =
-                <<Self as EntryV1_0>::Fp as FunctionPointers>::InstanceFp::load(&self.static_fn(),
-                                                                                instance)
-                        .map_err(|err| InstanceError::LoadError(err))?;
+                <<Self as EntryV1_0>::Fp as FunctionPointers>::InstanceFp::load(
+                    &self.static_fn(),
+                    instance,
+                ).map_err(|err| InstanceError::LoadError(err))?;
             Ok(Instance::from_raw(instance, instance_fp))
         }
     }
@@ -97,12 +100,16 @@ pub trait EntryV1_0 {
     fn enumerate_instance_layer_properties(&self) -> VkResult<Vec<vk::LayerProperties>> {
         unsafe {
             let mut num = 0;
-            self.fp_v1_0()
-                .enumerate_instance_layer_properties(&mut num, ptr::null_mut());
+            self.fp_v1_0().enumerate_instance_layer_properties(
+                &mut num,
+                ptr::null_mut(),
+            );
 
             let mut v = Vec::with_capacity(num as usize);
-            let err_code = self.fp_v1_0()
-                .enumerate_instance_layer_properties(&mut num, v.as_mut_ptr());
+            let err_code = self.fp_v1_0().enumerate_instance_layer_properties(
+                &mut num,
+                v.as_mut_ptr(),
+            );
             v.set_len(num as usize);
             match err_code {
                 vk::Result::Success => Ok(v),
@@ -114,14 +121,17 @@ pub trait EntryV1_0 {
     fn enumerate_instance_extension_properties(&self) -> VkResult<Vec<vk::ExtensionProperties>> {
         unsafe {
             let mut num = 0;
-            self.fp_v1_0()
-                .enumerate_instance_extension_properties(ptr::null(), &mut num, ptr::null_mut());
+            self.fp_v1_0().enumerate_instance_extension_properties(
+                ptr::null(),
+                &mut num,
+                ptr::null_mut(),
+            );
             let mut data = Vec::with_capacity(num as usize);
-            let err_code =
-                self.fp_v1_0()
-                    .enumerate_instance_extension_properties(ptr::null(),
-                                                             &mut num,
-                                                             data.as_mut_ptr());
+            let err_code = self.fp_v1_0().enumerate_instance_extension_properties(
+                ptr::null(),
+                &mut num,
+                data.as_mut_ptr(),
+            );
             data.set_len(num as usize);
             match err_code {
                 vk::Result::Success => Ok(data),
@@ -130,10 +140,11 @@ pub trait EntryV1_0 {
         }
     }
 
-    fn get_instance_proc_addr(&self,
-                              instance: vk::Instance,
-                              p_name: *const vk::c_char)
-                              -> vk::PFN_vkVoidFunction {
+    fn get_instance_proc_addr(
+        &self,
+        instance: vk::Instance,
+        p_name: *const vk::c_char,
+    ) -> vk::PFN_vkVoidFunction {
         unsafe { self.static_fn().get_instance_proc_addr(instance, p_name) }
     }
 }
@@ -153,25 +164,25 @@ impl<V: FunctionPointers> Entry<V> {
         let static_fn = match *VK_LIB {
             Ok(ref lib) => {
                 let static_fn = vk::StaticFn::load(|name| unsafe {
-                                                       let name = name.to_str().unwrap();
-                                                       let f = match lib.symbol(name) {
-                                                           Ok(s) => s,
-                                                           Err(_) => ptr::null(),
-                                                       };
-                                                       f
-                                                   })
-                        .map_err(|err| LoadingError::StaticLoadError(err))?;
+                    let name = name.to_str().unwrap();
+                    let f = match lib.symbol(name) {
+                        Ok(s) => s,
+                        Err(_) => ptr::null(),
+                    };
+                    f
+                }).map_err(|err| LoadingError::StaticLoadError(err))?;
                 Ok(static_fn)
             }
             Err(ref err) => Err(LoadingError::LibraryLoadError(err.clone())),
         }?;
         let entry_fn = unsafe {
-            V::EntryFp::load(&static_fn)
-                .map_err(|err| LoadingError::EntryLoadError(err))?
+            V::EntryFp::load(&static_fn).map_err(|err| {
+                LoadingError::EntryLoadError(err)
+            })?
         };
         Ok(Entry {
-               static_fn: static_fn,
-               entry_fn: entry_fn,
-           })
+            static_fn: static_fn,
+            entry_fn: entry_fn,
+        })
     }
 }
