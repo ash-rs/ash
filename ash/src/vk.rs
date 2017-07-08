@@ -206,7 +206,6 @@ pub mod types {
     use std::ffi::CStr;
     use super::*;
     use libc;
-
     pub type c_void = libc::c_void;
     pub type c_char = libc::c_char;
     pub type uint32_t = libc::uint32_t;
@@ -215,19 +214,19 @@ pub mod types {
     pub type uint8_t = libc::uint8_t;
     pub type c_float = libc::c_float;
     pub type int32_t = libc::int32_t;
-    pub type Display = *const ();
-    pub type Window = *const ();
-    pub type VisualID = *const ();
-    pub type xcb_connection_t = *const ();
-    pub type xcb_window_t = *const ();
-    pub type xcb_visualid_t = *const ();
-    pub type MirConnection = *const ();
-    pub type MirSurface = *const ();
-    pub type HINSTANCE = *const ();
-    pub type HWND = *const ();
-    pub type ANativeWindow = *const ();
-    pub type wl_display = *const ();
-    pub type wl_surface = *const ();
+    pub type Display = *const c_void;
+    pub type Window = *const c_void;
+    pub type VisualID = *const c_void;
+    pub type xcb_connection_t = *const c_void;
+    pub type xcb_window_t = *const c_void;
+    pub type xcb_visualid_t = *const c_void;
+    pub type MirConnection = *const c_void;
+    pub type MirSurface = *const c_void;
+    pub type HINSTANCE = *const c_void;
+    pub type HWND = *const c_void;
+    pub type ANativeWindow = *const c_void;
+    pub type wl_display = *const c_void;
+    pub type wl_surface = *const c_void;
 
     pub type Flags = uint32_t;
     pub type Bool32 = uint32_t;
