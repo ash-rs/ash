@@ -147,7 +147,7 @@ fn main() {
         let index_buffer_memory = base.device
             .allocate_memory(&index_allocate_info, None)
             .unwrap();
-        let index_ptr = base.device
+        let index_ptr: *mut vk::c_void = base.device
             .map_memory(
                 index_buffer_memory,
                 0,
@@ -330,12 +330,12 @@ fn main() {
                 vk::MemoryMapFlags::empty(),
             )
             .unwrap();
-        let mut image_slice = AlignByteSlice::new(
+        let mut image_slice = Align::new(
             image_ptr,
-            image_buffer_memory_req.alignment,
+            std::mem::align_of::<u8>() as u64,
             image_buffer_memory_req.size,
         );
-        image_slice.copy_from_slices(&[&image_data]);
+        image_slice.copy_from_slice(&image_data);
         base.device.unmap_memory(image_buffer_memory);
         base.device
             .bind_buffer_memory(image_buffer, image_buffer_memory, 0)

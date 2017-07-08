@@ -199,23 +199,22 @@ macro_rules! vk_version_patch {
     ($minor: expr) => (($minor as uint32_t) & 0xfff)
 }
 
-mod libc_reexports {}
 pub mod types {
 #![allow(non_camel_case_types, dead_code)]
     use std::ops::*;
     use std::fmt;
     use std::ffi::CStr;
     use super::*;
-    #[allow(unused_imports)]
-    use super::libc_reexports::*;
-    pub type c_void = ();
-    pub type c_char = i8;
-    pub type uint32_t = u32;
-    pub type size_t = usize;
-    pub type uint64_t = u64;
-    pub type uint8_t = u8;
-    pub type c_float = f32;
-    pub type int32_t = i32;
+    use libc;
+
+    pub type c_void = libc::c_void;
+    pub type c_char = libc::c_char;
+    pub type uint32_t = libc::uint32_t;
+    pub type size_t = libc::size_t;
+    pub type uint64_t = libc::uint64_t;
+    pub type uint8_t = libc::uint8_t;
+    pub type c_float = libc::c_float;
+    pub type int32_t = libc::int32_t;
     pub type Display = *const ();
     pub type Window = *const ();
     pub type VisualID = *const ();
@@ -3913,8 +3912,6 @@ macro_rules! vk_functions {
 pub mod cmds {
 #![allow(dead_code)]
     use super::*;
-    #[allow(unused_imports)]
-    use super::libc_reexports::*;
 
     vk_functions!{
     StaticFn,

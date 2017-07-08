@@ -1,3 +1,4 @@
+extern crate libc;
 extern crate shared_library;
 #[macro_use]
 extern crate lazy_static;
@@ -10,7 +11,7 @@ mod device;
 mod entry;
 pub mod prelude;
 pub mod vk;
-mod allocator;
+//mod allocator;
 pub mod extensions;
 pub mod version;
 pub mod util;

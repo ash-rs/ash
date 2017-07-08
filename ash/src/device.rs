@@ -753,9 +753,9 @@ pub trait DeviceV1_0 {
         offset: vk::DeviceSize,
         size: vk::DeviceSize,
         flags: vk::MemoryMapFlags,
-    ) -> VkResult<*mut ()> {
+    ) -> VkResult<*mut vk::c_void> {
 
-        let mut data: *mut () = mem::uninitialized();
+        let mut data: *mut vk::c_void = mem::uninitialized();
         let err_code = self.fp_v1_0().map_memory(
             self.handle(),
             memory,

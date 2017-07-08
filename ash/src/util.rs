@@ -52,7 +52,7 @@ impl AlignByteSlice {
 /// that is allocated on 4 bytes boundries, and insert the correct amount of paddings.
 #[derive(Debug, Clone)]
 pub struct Align<T> {
-    ptr: *mut (),
+    ptr: *mut vk::c_void,
     elem_size: vk::DeviceSize,
     size: vk::DeviceSize,
     _m: PhantomData<T>,
@@ -85,7 +85,11 @@ fn calc_padding(adr: vk::DeviceSize, align: vk::DeviceSize) -> vk::DeviceSize {
 }
 
 impl<T> Align<T> {
-    pub unsafe fn new(ptr: *mut (), alignment: vk::DeviceSize, size: vk::DeviceSize) -> Self {
+    pub unsafe fn new(
+        ptr: *mut vk::c_void,
+        alignment: vk::DeviceSize,
+        size: vk::DeviceSize,
+    ) -> Self {
         let padding = calc_padding(size_of::<T>() as vk::DeviceSize, alignment);
         let elem_size = size_of::<T>() as vk::DeviceSize + padding;
         assert!(calc_padding(size, alignment) == 0, "size must be aligned");
