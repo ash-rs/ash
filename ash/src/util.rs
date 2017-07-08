@@ -3,45 +3,6 @@ use std::marker::PhantomData;
 use std::mem::size_of;
 use vk;
 
-/// AlignByteSlice is the dynamic alternative to `Align`. Sometimes the user wants to
-/// align slices at runtime. One example would be to align different images in one buffer.
-/// There is usually no indicates of how big an image is at compile time and `AlignByteSlice`
-/// will align those image byte slices at runtime.
-#[derive(Debug, Clone)]
-pub struct AlignByteSlice {
-    ptr: *mut (),
-    alignment: vk::DeviceSize,
-    size: vk::DeviceSize,
-}
-
-impl AlignByteSlice {
-    pub fn copy_from_slices(&mut self, slices: &[&[u8]]) {
-        self.ptr as *mut u8;
-        let mut current = 0;
-        for slice in slices {
-            unsafe {
-                assert!(current <= self.size, "");
-                let ptr = (self.ptr as *mut u8).offset(current as isize);
-                let raw_slice = ::std::slice::from_raw_parts_mut(ptr, slice.len());
-                raw_slice.copy_from_slice(slice);
-                current += slice.len() as vk::DeviceSize;
-                let padding = current % self.alignment;
-                current += padding;
-            }
-        }
-    }
-}
-
-impl AlignByteSlice {
-    pub unsafe fn new(ptr: *mut (), alignment: vk::DeviceSize, size: vk::DeviceSize) -> Self {
-        AlignByteSlice {
-            ptr,
-            size,
-            alignment,
-        }
-    }
-}
-
 /// `Align` handles dynamic alignment. x86 aligns on 4 byte boundries but GPUs
 /// sometimes have different requirements. For example if the user wants to create
 /// a Uniform buffer of a Vec3<f32>, `get_buffer_memory_requirements` might return
