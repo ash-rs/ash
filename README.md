@@ -14,10 +14,6 @@ A very lightweight wrapper around Vulkan
 ## Stable yet?
 I don't expect any big changes anymore. The library will still remain < 1.0 until I had time to use it in a real project. If you encounter any problems, feel free to open an [Issue](https://github.com/MaikKlein/ash/issues).
 
-## Breaking changes:
-- 0.15.8 -> 0.16.0: `map_memory` now returns a void ptr. `ash::util::Align` is a helper struct that
-can write to aligned memory.
-
 ## Why Ash?
 - [x] Lightweight Vulkan wrapper
 - [x] Low overhead
