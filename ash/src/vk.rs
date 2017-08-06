@@ -451,7 +451,7 @@ pub mod types {
         pub max_resource_size: DeviceSize,
     }
 
-    #[derive(Debug, Clone, Hash)]
+    #[derive(Debug, Clone, PartialEq, Eq, Hash)]
     #[repr(C)]
     pub struct Extent3D {
         pub width: uint32_t,
