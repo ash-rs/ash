@@ -495,6 +495,23 @@ pub trait DeviceV1_0 {
         );
     }
 
+    unsafe fn cmd_draw_indexed_indirect(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        buffer: vk::Buffer,
+        offset: vk::DeviceSize,
+        draw_count: vk::uint32_t,
+        stride: vk::uint32_t,
+    ) {
+        self.fp_v1_0().cmd_draw_indexed_indirect(
+            command_buffer,
+            buffer,
+            offset,
+            draw_count,
+            stride,
+        );
+    }
+
     unsafe fn cmd_execute_commands(
         &self,
         primary_command_buffer: vk::CommandBuffer,
@@ -538,6 +555,17 @@ pub trait DeviceV1_0 {
         self.fp_v1_0().cmd_begin_render_pass(
             command_buffer,
             create_info,
+            contents,
+        );
+    }
+
+    unsafe fn cmd_next_subpass(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        contents: vk::SubpassContents,
+    ) {
+        self.fp_v1_0().cmd_next_subpass(
+            command_buffer,
             contents,
         );
     }
@@ -602,6 +630,23 @@ pub trait DeviceV1_0 {
         );
     }
 
+    unsafe fn cmd_draw_indirect(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        buffer: vk::Buffer,
+        offset: vk::DeviceSize,
+        draw_count: vk::uint32_t,
+        stride: vk::uint32_t,
+    ) {
+        self.fp_v1_0().cmd_draw_indirect(
+            command_buffer,
+            buffer,
+            offset,
+            draw_count,
+            stride,
+        );
+    }
+
     unsafe fn cmd_dispatch(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -617,6 +662,19 @@ pub trait DeviceV1_0 {
         );
     }
 
+    unsafe fn cmd_dispatch_indirect(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        buffer: vk::Buffer,
+        offset: vk::DeviceSize,
+    ) {
+        self.fp_v1_0().cmd_dispatch_indirect(
+            command_buffer,
+            buffer,
+            offset,
+        );
+    }
+
     unsafe fn cmd_set_viewport(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -627,6 +685,30 @@ pub trait DeviceV1_0 {
             0,
             viewports.len() as vk::uint32_t,
             viewports.as_ptr(),
+        );
+    }
+
+    unsafe fn cmd_set_blend_constants(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        blend_constants: [f32; 4],
+    ) {
+        self.fp_v1_0().cmd_set_blend_constants(
+            command_buffer,
+            &blend_constants,
+        );
+    }
+
+    unsafe fn cmd_set_stencil_reference(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        face_mask: vk::StencilFaceFlags,
+        reference: u32,
+    ) {
+        self.fp_v1_0().cmd_set_stencil_reference(
+            command_buffer,
+            face_mask,
+            reference,
         );
     }
 
