@@ -475,6 +475,24 @@ pub trait DeviceV1_0 {
         );
     }
 
+    unsafe fn cmd_clear_depth_stencil_image(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        image: vk::Image,
+        image_layout: vk::ImageLayout,
+        clear_depth_stencil_value: &vk::ClearDepthStencilValue,
+        ranges: &[vk::ImageSubresourceRange],
+    ) {
+        self.fp_v1_0().cmd_clear_depth_stencil_image(
+            command_buffer,
+            image,
+            image_layout,
+            clear_depth_stencil_value,
+            ranges.len() as vk::uint32_t,
+            ranges.as_ptr(),
+        );
+    }
+
     unsafe fn cmd_draw_indexed(
         &self,
         command_buffer: vk::CommandBuffer,
