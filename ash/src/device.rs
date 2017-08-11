@@ -266,6 +266,26 @@ pub trait DeviceV1_0 {
         }
     }
 
+    unsafe fn cmd_resolve_image(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        src_image: vk::Image,
+        src_image_layout: vk::ImageLayout,
+        dst_image: vk::Image,
+        dst_image_layout: vk::ImageLayout,
+        regions: &[vk::ImageResolve],
+    ) {
+        self.fp_v1_0().cmd_resolve_image(
+            command_buffer,
+            src_image,
+            src_image_layout,
+            dst_image,
+            dst_image_layout,
+            regions.len() as u32,
+            regions.as_ptr(),
+        );
+    }
+
     unsafe fn cmd_copy_buffer(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -273,7 +293,6 @@ pub trait DeviceV1_0 {
         dst_buffer: vk::Buffer,
         regions: &[vk::BufferCopy],
     ) {
-
         self.fp_v1_0().cmd_copy_buffer(
             command_buffer,
             src_buffer,
