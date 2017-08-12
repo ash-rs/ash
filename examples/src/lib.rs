@@ -106,13 +106,13 @@ unsafe fn create_surface<E: EntryV1_0, I: InstanceV1_0>(entry: &E,
                                                         -> Result<vk::SurfaceKHR, vk::Result> {
     use winit::os::windows::WindowExt;
     let hwnd = window.get_hwnd() as *mut winapi::windef::HWND__;
-    let hinstance = unsafe { user32::GetWindow(hwnd, 0) as *const () };
+    let hinstance = unsafe { user32::GetWindow(hwnd, 0) as *const vk::c_void };
     let win32_create_info = vk::Win32SurfaceCreateInfoKHR {
         s_type: vk::StructureType::Win32SurfaceCreateInfoKhr,
         p_next: ptr::null(),
         flags: Default::default(),
         hinstance: hinstance,
-        hwnd: hwnd as *const (),
+        hwnd: hwnd as *const vk::c_void,
     };
     let win32_surface_loader = Win32Surface::new(entry, instance)
         .expect("Unable to load win32 surface");
