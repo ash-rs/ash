@@ -302,6 +302,24 @@ pub trait DeviceV1_0 {
         );
     }
 
+    unsafe fn cmd_copy_image_to_buffer(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        src_image: vk::Image,
+        src_image_layout: vk::ImageLayout,
+        dst_buffer: vk::Buffer,
+        regions: &[vk::BufferImageCopy],
+    ) {
+        self.fp_v1_0().cmd_copy_image_to_buffer(
+            command_buffer,
+            src_image,
+            src_image_layout,
+            dst_buffer,
+            regions.len() as vk::uint32_t,
+            regions.as_ptr(),
+        );
+    }
+
     unsafe fn cmd_copy_buffer_to_image(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -601,10 +619,7 @@ pub trait DeviceV1_0 {
         command_buffer: vk::CommandBuffer,
         contents: vk::SubpassContents,
     ) {
-        self.fp_v1_0().cmd_next_subpass(
-            command_buffer,
-            contents,
-        );
+        self.fp_v1_0().cmd_next_subpass(command_buffer, contents);
     }
 
     unsafe fn cmd_bind_pipeline(
