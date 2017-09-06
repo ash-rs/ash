@@ -286,6 +286,39 @@ pub trait DeviceV1_0 {
         );
     }
 
+    unsafe fn cmd_fill_buffer(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        buffer: vk::Buffer,
+        offset: vk::DeviceSize,
+        size: vk::DeviceSize,
+        data: vk::uint32_t,
+    ) {
+        self.fp_v1_0().cmd_fill_buffer(
+            command_buffer,
+            buffer,
+            offset,
+            size,
+            data,
+        );
+    }
+
+    unsafe fn cmd_update_buffer(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        buffer: vk::Buffer,
+        offset: vk::DeviceSize,
+        data: &[u8],
+    ) {
+        self.fp_v1_0().cmd_update_buffer(
+            command_buffer,
+            buffer,
+            offset,
+            data.len() as u64,
+            data.as_ptr() as _,
+        );
+    }
+
     unsafe fn cmd_copy_buffer(
         &self,
         command_buffer: vk::CommandBuffer,
