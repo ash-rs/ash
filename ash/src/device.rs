@@ -941,6 +941,34 @@ pub trait DeviceV1_0 {
         self.fp_v1_0().unmap_memory(self.handle(), memory);
     }
 
+    unsafe fn invalidate_mapped_memory_ranges(&self, ranges: &[vk::MappedMemoryRange])
+        -> VkResult<()>
+    {
+        let err_code = self.fp_v1_0().invalidate_mapped_memory_ranges(
+            self.handle(),
+            ranges.len() as vk::uint32_t,
+            ranges.as_ptr()
+        );
+        match err_code {
+            vk::Result::Success => Ok(()),
+            _ => Err(err_code),
+        }
+    }
+
+    unsafe fn flush_mapped_memory_ranges(&self, ranges: &[vk::MappedMemoryRange])
+        -> VkResult<()>
+    {
+        let err_code = self.fp_v1_0().flush_mapped_memory_ranges(
+            self.handle(),
+            ranges.len() as vk::uint32_t,
+            ranges.as_ptr()
+        );
+        match err_code {
+            vk::Result::Success => Ok(()),
+            _ => Err(err_code),
+        }
+    }
+
     unsafe fn create_framebuffer(
         &self,
         create_info: &vk::FramebufferCreateInfo,
