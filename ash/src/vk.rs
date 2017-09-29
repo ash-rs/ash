@@ -451,7 +451,7 @@ pub mod types {
         pub max_resource_size: DeviceSize,
     }
 
-    #[derive(Debug, Clone, PartialEq, Eq, Hash)]
+    #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
     #[repr(C)]
     pub struct Extent3D {
         pub width: uint32_t,
@@ -3867,6 +3867,7 @@ macro_rules! vk_functions {
             }
         }
 
+        impl Copy for $struct_name {}
         unsafe impl Send for $struct_name {}
         unsafe impl Sync for $struct_name {}
 

@@ -4,13 +4,13 @@ pub use device::DeviceV1_0;
 pub use entry::EntryV1_0;
 use std::mem;
 pub trait FunctionPointers {
-    type InstanceFp: InstanceLoader + Clone;
-    type DeviceFp: DeviceLoader + Clone;
-    type EntryFp: EntryLoader + Clone;
+    type InstanceFp: InstanceLoader + Copy;
+    type DeviceFp: DeviceLoader + Copy;
+    type EntryFp: EntryLoader + Copy;
 }
 
 #[allow(non_camel_case_types)]
-#[derive(Clone)]
+#[derive(Clone, Copy)]
 pub struct V1_0;
 impl FunctionPointers for V1_0 {
     type InstanceFp = InstanceFpV1_0;
@@ -19,13 +19,13 @@ impl FunctionPointers for V1_0 {
 }
 
 #[allow(non_camel_case_types)]
-#[derive(Clone)]
+#[derive(Clone, Copy)]
 pub struct InstanceFpV1_0 {
     pub instance_fn: vk::InstanceFnV1_0,
 }
 
 #[allow(non_camel_case_types)]
-#[derive(Clone)]
+#[derive(Clone, Copy)]
 pub struct EntryFpV1_0 {
     pub entry_fn: vk::EntryFnV1_0,
 }
@@ -93,7 +93,7 @@ impl InstanceLoader for InstanceFpV1_0 {
 }
 
 #[allow(non_camel_case_types)]
-#[derive(Clone)]
+#[derive(Clone, Copy)]
 pub struct DeviceFpV1_0 {
     pub device_fn: vk::DeviceFnV1_0,
 }

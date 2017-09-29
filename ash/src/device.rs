@@ -1307,7 +1307,7 @@ pub trait DeviceV1_0 {
     }
 }
 
-#[derive(Clone)]
+#[derive(Clone, Copy)]
 pub struct Device<V: FunctionPointers> {
     handle: vk::Device,
     device_fn: V::DeviceFp,
