@@ -563,6 +563,21 @@ pub trait DeviceV1_0 {
         );
     }
 
+    unsafe fn cmd_clear_attachments(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        attachments: &[vk::ClearAttachment],
+        rects: &[vk::ClearRect],
+    ) {
+        self.fp_v1_0().cmd_clear_attachments(
+            command_buffer,
+            attachments.len() as vk::uint32_t,
+            attachments.as_ptr(),
+            rects.len() as vk::uint32_t,
+            rects.as_ptr(),
+        );
+    }
+
     unsafe fn cmd_draw_indexed(
         &self,
         command_buffer: vk::CommandBuffer,
