@@ -3867,6 +3867,7 @@ macro_rules! vk_functions {
             }
         }
 
+        impl Copy for $struct_name {}
         unsafe impl Send for $struct_name {}
         unsafe impl Sync for $struct_name {}
 
