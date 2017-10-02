@@ -8,7 +8,7 @@ use std::path::Path;
 use std::error::Error;
 use std::fmt;
 use RawPtr;
-use version::{FunctionPointers, V1_0, InstanceLoader, EntryLoader};
+use version::{EntryLoader, FunctionPointers, InstanceLoader, V1_0};
 
 #[cfg(windows)]
 fn get_path() -> &'static Path {
@@ -98,16 +98,12 @@ pub trait EntryV1_0 {
     fn enumerate_instance_layer_properties(&self) -> VkResult<Vec<vk::LayerProperties>> {
         unsafe {
             let mut num = 0;
-            self.fp_v1_0().enumerate_instance_layer_properties(
-                &mut num,
-                ptr::null_mut(),
-            );
+            self.fp_v1_0()
+                .enumerate_instance_layer_properties(&mut num, ptr::null_mut());
 
             let mut v = Vec::with_capacity(num as usize);
-            let err_code = self.fp_v1_0().enumerate_instance_layer_properties(
-                &mut num,
-                v.as_mut_ptr(),
-            );
+            let err_code = self.fp_v1_0()
+                .enumerate_instance_layer_properties(&mut num, v.as_mut_ptr());
             v.set_len(num as usize);
             match err_code {
                 vk::Result::Success => Ok(v),
@@ -161,22 +157,21 @@ impl<V: FunctionPointers> Entry<V> {
     pub fn new() -> Result<Entry<V>, LoadingError> {
         let static_fn = match *VK_LIB {
             Ok(ref lib) => {
-                let static_fn = vk::StaticFn::load(|name| unsafe {
-                    let name = name.to_str().unwrap();
-                    let f = match lib.symbol(name) {
-                        Ok(s) => s,
-                        Err(_) => ptr::null(),
-                    };
-                    f
-                }).map_err(|err| LoadingError::StaticLoadError(err))?;
+                let static_fn =
+                    vk::StaticFn::load(|name| unsafe {
+                        let name = name.to_str().unwrap();
+                        let f = match lib.symbol(name) {
+                            Ok(s) => s,
+                            Err(_) => ptr::null(),
+                        };
+                        f
+                    }).map_err(|err| LoadingError::StaticLoadError(err))?;
                 Ok(static_fn)
             }
             Err(ref err) => Err(LoadingError::LibraryLoadError(err.clone())),
         }?;
         let entry_fn = unsafe {
-            V::EntryFp::load(&static_fn).map_err(|err| {
-                LoadingError::EntryLoadError(err)
-            })?
+            V::EntryFp::load(&static_fn).map_err(|err| LoadingError::EntryLoadError(err))?
         };
         Ok(Entry {
             static_fn: static_fn,
