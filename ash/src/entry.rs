@@ -73,28 +73,26 @@ pub trait EntryV1_0 {
     fn fp_v1_0(&self) -> &vk::EntryFnV1_0;
     fn static_fn(&self) -> &vk::StaticFn;
 
-    fn create_instance(
+    unsafe fn create_instance(
         &self,
         create_info: &vk::InstanceCreateInfo,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> Result<Instance<Self::Fp>, InstanceError> {
-        unsafe {
-            let mut instance: vk::Instance = mem::uninitialized();
-            let err_code = self.fp_v1_0().create_instance(
-                create_info,
-                allocation_callbacks.as_raw_ptr(),
-                &mut instance,
-            );
-            if err_code != vk::Result::Success {
-                return Err(InstanceError::VkError(err_code));
-            }
-            let instance_fp =
-                <<Self as EntryV1_0>::Fp as FunctionPointers>::InstanceFp::load(
-                    &self.static_fn(),
-                    instance,
-                ).map_err(|err| InstanceError::LoadError(err))?;
-            Ok(Instance::from_raw(instance, instance_fp))
+        let mut instance: vk::Instance = mem::uninitialized();
+        let err_code = self.fp_v1_0().create_instance(
+            create_info,
+            allocation_callbacks.as_raw_ptr(),
+            &mut instance,
+        );
+        if err_code != vk::Result::Success {
+            return Err(InstanceError::VkError(err_code));
         }
+        let instance_fp =
+            <<Self as EntryV1_0>::Fp as FunctionPointers>::InstanceFp::load(
+                &self.static_fn(),
+                instance,
+            ).map_err(|err| InstanceError::LoadError(err))?;
+        Ok(Instance::from_raw(instance, instance_fp))
     }
 
     fn enumerate_instance_layer_properties(&self) -> VkResult<Vec<vk::LayerProperties>> {
