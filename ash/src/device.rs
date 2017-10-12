@@ -1135,6 +1135,24 @@ pub trait DeviceV1_0 {
         }
     }
 
+    unsafe fn create_buffer_view(
+        &self,
+        create_info: &vk::BufferViewCreateInfo,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+    ) -> VkResult<vk::BufferView> {
+        let mut buffer_view = mem::uninitialized();
+        let err_code = self.fp_v1_0().create_buffer_view(
+            self.handle(),
+            create_info,
+            allocation_callbacks.as_raw_ptr(),
+            &mut buffer_view,
+        );
+        match err_code {
+            vk::Result::Success => Ok(buffer_view),
+            _ => Err(err_code),
+        }
+    }
+
     unsafe fn create_image_view(
         &self,
         create_info: &vk::ImageViewCreateInfo,
