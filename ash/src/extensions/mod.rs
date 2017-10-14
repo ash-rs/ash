@@ -8,6 +8,8 @@ pub use self::mir_surface::MirSurface;
 pub use self::xcb_surface::XcbSurface;
 pub use self::wayland_surface::WaylandSurface;
 pub use self::android_surface::AndroidSurface;
+pub use self::macos_surface::MacOSSurface;
+pub use self::ios_surface::IOSSurface;
 
 mod swapchain;
 mod display_swapchain;
@@ -19,3 +21,5 @@ mod mir_surface;
 mod android_surface;
 mod wayland_surface;
 mod xcb_surface;
+mod macos_surface;
+mod ios_surface;
