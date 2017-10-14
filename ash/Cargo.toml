@@ -16,7 +16,6 @@ libc = "0.2.26"
 
 [features]
 default = []
-moltenvk = []
 
 [package.metadata.release]
 no-dev-version = true
