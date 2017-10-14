@@ -215,10 +215,10 @@ pub mod types {
     pub type c_float = libc::c_float;
     pub type int32_t = libc::int32_t;
     pub type Display = *const c_void;
-    pub type Window = *const c_void;
+    pub type Window = libc::c_ulong;
     pub type VisualID = *const c_void;
     pub type xcb_connection_t = *const c_void;
-    pub type xcb_window_t = *const c_void;
+    pub type xcb_window_t = u32;
     pub type xcb_visualid_t = *const c_void;
     pub type MirConnection = *const c_void;
     pub type MirSurface = *const c_void;
