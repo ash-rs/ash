@@ -15,7 +15,7 @@ fn get_path() -> &'static Path {
     Path::new("vulkan-1.dll")
 }
 
-#[cfg(all(unix, not(target_os = "android")))]
+#[cfg(all(unix, not(any(target_os = "macos", target_os = "ios", target_os = "android"))))]
 fn get_path() -> &'static Path {
     Path::new("libvulkan.so.1")
 }
@@ -23,6 +23,11 @@ fn get_path() -> &'static Path {
 #[cfg(target_os = "android")]
 fn get_path() -> &'static Path {
     Path::new("libvulkan.so")
+}
+
+#[cfg(any(target_os = "macos", target_os = "ios"))]
+fn get_path() -> &'static Path {
+    Path::new("libMoltenVK.dylib")
 }
 
 lazy_static!{
