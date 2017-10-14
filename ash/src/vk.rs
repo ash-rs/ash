@@ -270,6 +270,8 @@ pub mod types {
     vk_bitflags_wrapped!(SwapchainCreateFlagsKHR, 0b0, Flags);
     vk_bitflags_wrapped!(DisplayModeCreateFlagsKHR, 0b0, Flags);
     vk_bitflags_wrapped!(DisplaySurfaceCreateFlagsKHR, 0b0, Flags);
+    vk_bitflags_wrapped!(IOSSurfaceCreateFlagsMVK, 0b0, Flags);
+    vk_bitflags_wrapped!(MacOSSurfaceCreateFlagsMVK, 0b0, Flags);
 
     pub const VK_MAX_PHYSICAL_DEVICE_NAME_SIZE: size_t = 256;
     pub const VK_UUID_SIZE: size_t = 16;
@@ -308,6 +310,10 @@ pub mod types {
     pub const VK_KHR_DISPLAY_EXTENSION_NAME: &'static str = "VK_KHR_display";
     pub const VK_EXT_DEBUG_REPORT_SPEC_VERSION: uint32_t = 3;
     pub const VK_EXT_DEBUG_REPORT_EXTENSION_NAME: &'static str = "VK_EXT_debug_report";
+    pub const VK_MVK_IOS_SURFACE_SPEC_VERSION: uint32_t = 2;
+    pub const VK_MVK_IOS_SURFACE_EXTENSION_NAME: &'static str = "VK_MVK_ios_surface";
+    pub const VK_MVK_MACOS_SURFACE_SPEC_VERSION: uint32_t = 2;
+    pub const VK_MVK_MACOS_SURFACE_EXTENSION_NAME: &'static str = "VK_MVK_macos_surface";
 
     #[derive(Debug, Clone)]
     #[repr(C)]
@@ -2556,6 +2562,23 @@ pub mod types {
         }
     }
 
+    #[derive(Debug, Clone)]
+    #[repr(C)]
+    pub struct IOSSurfaceCreateInfoMVK {
+        pub s_type: StructureType,
+        pub p_next: *const c_void,
+        pub flags: IOSSurfaceCreateFlagsMVK,
+        pub p_view: *const c_void,
+    }
+
+    #[derive(Debug, Clone)]
+    #[repr(C)]
+    pub struct MacOSSurfaceCreateInfoMVK {
+        pub s_type: StructureType,
+        pub p_next: *const c_void,
+        pub flags: MacOSSurfaceCreateFlagsMVK,
+        pub p_view: *const c_void,
+    }
 
     /// Temporary Hard-Coded union hack; will be automatically generated when actual unions become stable
     #[repr(C)]
@@ -2741,6 +2764,8 @@ pub mod types {
         DisplayModeCreateInfoKhr = 1000002000,
         DisplaySurfaceCreateInfoKhr = 1000002001,
         DebugReportCallbackCreateInfoExt = 1000011000,
+        IOSSurfaceCreateInfoMvk = 1000122000,
+        MacOSSurfaceCreateInfoMvk = 1000123000,
     }
 
     #[repr(C)]
@@ -5100,6 +5125,26 @@ pub mod cmds {
     "vkCreateDisplayPlaneSurfaceKHR", create_display_plane_surface_khr(
         instance: Instance,
         p_create_info: *const DisplaySurfaceCreateInfoKHR,
+        p_allocator: *const AllocationCallbacks,
+        p_surface: *mut SurfaceKHR,
+    ) -> Result;
+}
+
+    vk_functions!{
+    IOSSurfaceFn,
+    "vkCreateIOSSurfaceMVK", create_ios_surface_mvk(
+        instance: Instance,
+        p_create_info: *const IOSSurfaceCreateInfoMVK,
+        p_allocator: *const AllocationCallbacks,
+        p_surface: *mut SurfaceKHR,
+    ) -> Result;
+}
+
+    vk_functions!{
+    MacOSSurfaceFn,
+    "vkCreateMacOSSurfaceMVK", create_macos_surface_mvk(
+        instance: Instance,
+        p_create_info: *const MacOSSurfaceCreateInfoMVK,
         p_allocator: *const AllocationCallbacks,
         p_surface: *mut SurfaceKHR,
     ) -> Result;
