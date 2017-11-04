@@ -649,6 +649,24 @@ pub trait DeviceV1_0 {
         )
     }
 
+    unsafe fn cmd_push_constants(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        layout: vk::PipelineLayout,
+        stage_flags: vk::ShaderStageFlags,
+        offset: vk::uint32_t,
+        constants: &[u32]
+    ) {
+        self.fp_v1_0().cmd_push_constants(
+            command_buffer,
+            layout,
+            stage_flags,
+            offset,
+            constants.len() as vk::uint32_t,
+            constants.as_ptr() as _,
+        );
+    }
+
     unsafe fn cmd_begin_render_pass(
         &self,
         command_buffer: vk::CommandBuffer,
