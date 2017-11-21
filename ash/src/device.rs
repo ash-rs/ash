@@ -1119,10 +1119,11 @@ pub trait DeviceV1_0 {
         }
     }
 
-    unsafe fn get_fence_status(&self, fence: vk::Fence) -> VkResult<()> {
+    unsafe fn get_fence_status(&self, fence: vk::Fence) -> VkResult<bool> {
         let err_code = self.fp_v1_0().get_fence_status(self.handle(), fence);
         match err_code {
-            vk::Result::Success => Ok(()),
+            vk::Result::Success => Ok(true),
+            vk::Result::NotReady => Ok(false),
             _ => Err(err_code),
         }
     }
