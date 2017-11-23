@@ -209,6 +209,18 @@ pub trait DeviceV1_0 {
         );
     }
 
+    unsafe fn destroy_query_pool(
+        &self,
+        pool: vk::QueryPool,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+    ) {
+        self.fp_v1_0().destroy_query_pool(
+            self.handle(),
+            pool,
+            allocation_callbacks.as_raw_ptr(),
+        );
+    }
+
     unsafe fn destroy_descriptor_set_layout(
         &self,
         layout: vk::DescriptorSetLayout,
@@ -830,6 +842,64 @@ pub trait DeviceV1_0 {
         );
     }
 
+    unsafe fn cmd_begin_query(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        query_pool: vk::QueryPool,
+        query: u32,
+        flags: vk::QueryControlFlags,
+    ) {
+        self.fp_v1_0().cmd_begin_query(
+            command_buffer,
+            query_pool,
+            query,
+            flags,
+        );
+    }
+
+    unsafe fn cmd_end_query(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        query_pool: vk::QueryPool,
+        query: u32,
+    ) {
+        self.fp_v1_0().cmd_end_query(
+            command_buffer,
+            query_pool,
+            query,
+        );
+    }
+
+    unsafe fn cmd_reset_query_pool(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        pool: vk::QueryPool,
+        first_query: u32,
+        query_count: u32,
+    ) {
+        self.fp_v1_0().cmd_reset_query_pool(
+            command_buffer,
+            pool,
+            first_query,
+            query_count,
+        );
+    }
+
+    unsafe fn cmd_write_timestamp(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        pipeline_stage: vk::PipelineStageFlags,
+        query_pool: vk::QueryPool,
+        query: u32,
+    ) {
+        self.fp_v1_0().cmd_write_timestamp(
+            command_buffer,
+            pipeline_stage,
+            query_pool,
+            query,
+        );
+    }
+
     unsafe fn create_semaphore(
         &self,
         create_info: &vk::SemaphoreCreateInfo,
@@ -1214,6 +1284,24 @@ pub trait DeviceV1_0 {
     ) -> VkResult<vk::CommandPool> {
         let mut pool = mem::uninitialized();
         let err_code = self.fp_v1_0().create_command_pool(
+            self.handle(),
+            create_info,
+            allocation_callbacks.as_raw_ptr(),
+            &mut pool,
+        );
+        match err_code {
+            vk::Result::Success => Ok(pool),
+            _ => Err(err_code),
+        }
+    }
+
+    unsafe fn create_query_pool(
+        &self,
+        create_info: &vk::QueryPoolCreateInfo,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+    ) -> VkResult<vk::QueryPool> {
+        let mut pool = mem::uninitialized();
+        let err_code = self.fp_v1_0().create_query_pool(
             self.handle(),
             create_info,
             allocation_callbacks.as_raw_ptr(),
