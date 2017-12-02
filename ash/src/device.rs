@@ -667,14 +667,14 @@ pub trait DeviceV1_0 {
         layout: vk::PipelineLayout,
         stage_flags: vk::ShaderStageFlags,
         offset: vk::uint32_t,
-        constants: &[u32]
+        constants: &[u8]
     ) {
         self.fp_v1_0().cmd_push_constants(
             command_buffer,
             layout,
             stage_flags,
             offset,
-            constants.len() as vk::uint32_t,
+            constants.len() as _,
             constants.as_ptr() as _,
         );
     }
