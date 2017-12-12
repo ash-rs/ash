@@ -705,7 +705,7 @@ fn main() {
             vk::VertexInputAttributeDescription {
                 location: 1,
                 binding: 0,
-                format: vk::Format::R32g32b32a32Sfloat,
+                format: vk::Format::R32g32Sfloat,
                 offset: offset_of!(Vertex, uv) as u32,
             },
         ];
