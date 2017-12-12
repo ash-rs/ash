@@ -414,8 +414,8 @@ fn main() {
                 },
             };
             device.cmd_pipeline_barrier(texture_command_buffer,
-                                        vk::PIPELINE_STAGE_TOP_OF_PIPE_BIT,
-                                        vk::PIPELINE_STAGE_TOP_OF_PIPE_BIT,
+                                        vk::PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT,
+                                        vk::PIPELINE_STAGE_TRANSFER_BIT,
                                         vk::DependencyFlags::empty(),
                                         &[],
                                         &[],
@@ -462,8 +462,8 @@ fn main() {
                 },
             };
             device.cmd_pipeline_barrier(texture_command_buffer,
-                                        vk::PIPELINE_STAGE_TOP_OF_PIPE_BIT,
-                                        vk::PIPELINE_STAGE_TOP_OF_PIPE_BIT,
+                                        vk::PIPELINE_STAGE_TRANSFER_BIT,
+                                        vk::PIPELINE_STAGE_FRAGMENT_SHADER_BIT,
                                         vk::DependencyFlags::empty(),
                                         &[],
                                         &[],
