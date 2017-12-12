@@ -26,6 +26,7 @@ pub struct Vector3 {
     pub x: f32,
     pub y: f32,
     pub z: f32,
+    pub _pad: f32
 }
 
 fn main() {
@@ -239,6 +240,7 @@ fn main() {
             x: 1.0,
             y: 1.0,
             z: 1.0,
+            _pad: 0.0
         };
         let uniform_color_buffer_info = vk::BufferCreateInfo {
             s_type: vk::StructureType::BufferCreateInfo,
