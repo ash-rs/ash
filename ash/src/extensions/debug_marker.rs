@@ -44,4 +44,35 @@ impl DebugMarker {
             _ => Err(err_code)
         }
     }
+
+    pub unsafe fn cmd_debug_marker_begin_ext(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        marker_info: &vk::DebugMarkerMarkerInfoEXT
+    ) {
+        self.debug_marker_fn.cmd_debug_marker_begin_ext(
+            command_buffer,
+            marker_info
+        );
+    }
+
+    pub unsafe fn cmd_debug_marker_end_ext(
+        &self,
+        command_buffer: vk::CommandBuffer,
+    ) {
+        self.debug_marker_fn.cmd_debug_marker_end_ext(
+            command_buffer,
+        );
+    }
+
+    pub unsafe fn cmd_debug_marker_insert_ext(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        marker_info: &vk::DebugMarkerMarkerInfoEXT
+    ) {
+        self.debug_marker_fn.cmd_debug_marker_insert_ext(
+            command_buffer,
+            marker_info
+        );
+    }
 }
