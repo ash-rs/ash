@@ -2530,6 +2530,15 @@ pub mod types {
     }
 
     #[repr(C)]
+    pub struct DebugMarkerObjectNameInfoEXT {
+        pub s_type: StructureType,
+        pub p_next: *const c_void,
+        pub object_type: DebugReportObjectTypeEXT,
+        pub object: uint64_t,
+        pub p_object_name: *const c_char,
+    }
+
+    #[repr(C)]
     pub struct DebugReportCallbackCreateInfoEXT {
         pub s_type: StructureType,
         pub p_next: *const c_void,
@@ -2763,6 +2772,7 @@ pub mod types {
         DisplayPresentInfoKhr = 1000003000,
         DisplayModeCreateInfoKhr = 1000002000,
         DisplaySurfaceCreateInfoKhr = 1000002001,
+        DebugMarkerObjectNameInfoEXT = 1000022000,
         DebugReportCallbackCreateInfoExt = 1000011000,
         IOSSurfaceCreateInfoMvk = 1000122000,
         MacOSSurfaceCreateInfoMvk = 1000123000,
@@ -4983,6 +4993,13 @@ pub mod cmds {
         dpy: *mut Display,
         visual_id: VisualID,
     ) -> Bool32;
+}
+    vk_functions!{
+    DebugMarkerFn,
+    "vkDebugMarkerSetObjectNameEXT", debug_marker_set_object_name_ext(
+        device: Device,
+        p_name_info: *const DebugMarkerObjectNameInfoEXT,
+    ) -> Result;
 }
     vk_functions!{
     DebugReportFn,
