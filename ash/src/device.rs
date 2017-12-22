@@ -808,11 +808,12 @@ pub trait DeviceV1_0 {
     unsafe fn cmd_set_viewport(
         &self,
         command_buffer: vk::CommandBuffer,
+        first_viewport: vk::uint32_t,
         viewports: &[vk::Viewport],
     ) {
         self.fp_v1_0().cmd_set_viewport(
             command_buffer,
-            0,
+            first_viewport,
             viewports.len() as vk::uint32_t,
             viewports.as_ptr(),
         );
