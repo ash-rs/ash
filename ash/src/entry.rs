@@ -93,10 +93,10 @@ pub trait EntryV1_0 {
             return Err(InstanceError::VkError(err_code));
         }
         let instance_fp =
-            <<Self as EntryV1_0>::Fp as FunctionPointers>::InstanceFp::load(
+            <Self::Fp as FunctionPointers>::InstanceFp::load(
                 &self.static_fn(),
                 instance,
-            ).map_err(|err| InstanceError::LoadError(err))?;
+            ).map_err(InstanceError::LoadError)?;
         Ok(Instance::from_raw(instance, instance_fp))
     }
 
@@ -159,28 +159,23 @@ impl EntryV1_0 for Entry<V1_0> {
 }
 
 impl<V: FunctionPointers> Entry<V> {
-    pub fn new() -> Result<Entry<V>, LoadingError> {
-        let static_fn = match *VK_LIB {
-            Ok(ref lib) => {
-                let static_fn =
-                    vk::StaticFn::load(|name| unsafe {
-                        let name = name.to_str().unwrap();
-                        let f = match lib.symbol(name) {
-                            Ok(s) => s,
-                            Err(_) => ptr::null(),
-                        };
-                        f
-                    }).map_err(|err| LoadingError::StaticLoadError(err))?;
-                Ok(static_fn)
-            }
-            Err(ref err) => Err(LoadingError::LibraryLoadError(err.clone())),
-        }?;
+    pub fn new() -> Result<Self, LoadingError> {
+        let lib = VK_LIB
+            .as_ref()
+            .map_err(|err| LoadingError::LibraryLoadError(err.clone()))?;
+
+        let static_fn = vk::StaticFn::load(|name| unsafe {
+            lib.symbol(name.to_str().unwrap())
+                .unwrap_or(ptr::null_mut())
+        }).map_err(LoadingError::StaticLoadError)?;
+
         let entry_fn = unsafe {
-            V::EntryFp::load(&static_fn).map_err(|err| LoadingError::EntryLoadError(err))?
-        };
+            V::EntryFp::load(&static_fn)
+        }.map_err(LoadingError::EntryLoadError)?;
+
         Ok(Entry {
-            static_fn: static_fn,
-            entry_fn: entry_fn,
+            static_fn,
+            entry_fn,
         })
     }
 }
