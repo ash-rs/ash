@@ -2228,7 +2228,6 @@ pub mod types {
         pub stencil: uint32_t,
     }
 
-    #[derive(Debug, Clone, Copy, Hash)]
     #[repr(C)]
     pub struct ClearAttachment {
         pub aspect_mask: ImageAspectFlags,
@@ -2597,119 +2596,20 @@ pub mod types {
         pub p_view: *const c_void,
     }
 
-    /// Temporary Hard-Coded union hack; will be automatically generated when actual unions become stable
     #[repr(C)]
-    #[derive(Debug, Clone)]
-    pub struct ClearColorValue {
-        data: [u8; 16],
+    #[derive(Copy, Clone)]
+    pub union ClearValue {
+        pub depth: ClearDepthStencilValue,
+        pub color: ClearColorValue
     }
 
-    impl ClearColorValue {
-        pub unsafe fn float32(&self) -> &[c_float; 4] {
-            use std::mem;
-            mem::transmute(&self.data)
-        }
-
-        pub unsafe fn int32(&self) -> &[int32_t; 4] {
-            use std::mem;
-            mem::transmute(&self.data)
-        }
-
-        pub unsafe fn uint32(&self) -> &[uint32_t; 4] {
-            use std::mem;
-            mem::transmute(&self.data)
-        }
-
-        pub unsafe fn float32_mut(&mut self) -> &mut [c_float; 4] {
-            use std::mem;
-            mem::transmute(&mut self.data)
-        }
-
-        pub unsafe fn int32_mut(&mut self) -> &mut [int32_t; 4] {
-            use std::mem;
-            mem::transmute(&mut self.data)
-        }
-
-        pub unsafe fn uint32_mut(&mut self) -> &mut [uint32_t; 4] {
-            use std::mem;
-            mem::transmute(&mut self.data)
-        }
-
-        pub fn new_float32(float32: [c_float; 4]) -> ClearColorValue {
-            use std::mem;
-            unsafe {
-                let mut union: ClearColorValue = mem::zeroed();
-                union.data = mem::transmute(float32);
-                union
-            }
-        }
-
-        pub fn new_int32(int32: [int32_t; 4]) -> ClearColorValue {
-            use std::mem;
-            unsafe {
-                let mut union: ClearColorValue = mem::zeroed();
-                union.data = mem::transmute(int32);
-                union
-            }
-        }
-
-        pub fn new_uint32(uint32: [uint32_t; 4]) -> ClearColorValue {
-            use std::mem;
-            unsafe {
-                let mut union: ClearColorValue = mem::zeroed();
-                union.data = mem::transmute(uint32);
-                union
-            }
-        }
-    }
-
-    /// Temporary Hard-Coded union hack; will be automatically generated when actual unions become stable
     #[repr(C)]
-    #[derive(Debug, Clone, Copy, Hash)]
-    pub struct ClearValue {
-        data: [u8; 16],
+    #[derive(Copy, Clone)]
+    pub union ClearColorValue{
+        pub float32: [f32; 4],
+        pub int32: [i32; 4],
+        pub uint32: [u32; 4],
     }
-
-    impl ClearValue {
-        pub unsafe fn color(&self) -> &ClearColorValue {
-            use std::mem;
-            mem::transmute(&self.data)
-        }
-
-        pub unsafe fn depth_stencil(&self) -> &ClearDepthStencilValue {
-            use std::mem;
-            mem::transmute(&self.data)
-        }
-
-        pub unsafe fn color_mut(&mut self) -> &mut ClearColorValue {
-            use std::mem;
-            mem::transmute(&mut self.data)
-        }
-
-        pub unsafe fn depth_stencil_mut(&mut self) -> &mut ClearDepthStencilValue {
-            use std::mem;
-            mem::transmute(&mut self.data)
-        }
-
-        pub fn new_color(color: ClearColorValue) -> ClearValue {
-            use std::mem;
-            unsafe {
-                let mut union: ClearValue = mem::zeroed();
-                union.data = mem::transmute(color);
-                union
-            }
-        }
-
-        pub fn new_depth_stencil(depth_stencil: ClearDepthStencilValue) -> ClearValue {
-            use std::mem;
-            unsafe {
-                let mut union: ClearValue = mem::zeroed();
-                union.data = mem::transmute_copy(&depth_stencil);
-                union
-            }
-        }
-    }
-
 
     #[repr(C)]
     #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
