@@ -61,8 +61,8 @@ fn main() {
             dst_subpass: Default::default(),
             src_stage_mask: vk::PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT,
             src_access_mask: Default::default(),
-            dst_access_mask: vk::ACCESS_COLOR_ATTACHMENT_READ_BIT |
-                vk::ACCESS_COLOR_ATTACHMENT_WRITE_BIT,
+            dst_access_mask: vk::ACCESS_COLOR_ATTACHMENT_READ_BIT
+                | vk::ACCESS_COLOR_ATTACHMENT_WRITE_BIT,
             dst_stage_mask: vk::PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT,
         };
         let subpass = vk::SubpassDescription {
@@ -171,9 +171,8 @@ fn main() {
         let vertex_input_buffer = base.device
             .create_buffer(&vertex_input_buffer_info, None)
             .unwrap();
-        let vertex_input_buffer_memory_req = base.device.get_buffer_memory_requirements(
-            vertex_input_buffer,
-        );
+        let vertex_input_buffer_memory_req = base.device
+            .get_buffer_memory_requirements(vertex_input_buffer);
         let vertex_input_buffer_memory_index =
             find_memorytype_index(
                 &vertex_input_buffer_memory_req,
@@ -457,20 +456,28 @@ fn main() {
 
         let graphic_pipeline = graphics_pipelines[0];
 
-
         base.render_loop(|| {
             let present_index = base.swapchain_loader
-                .acquire_next_image_khr(base.swapchain,
-                                        std::u64::MAX,
-                                        base.present_complete_semaphore,
-                                        vk::Fence::null())
+                .acquire_next_image_khr(
+                    base.swapchain,
+                    std::u64::MAX,
+                    base.present_complete_semaphore,
+                    vk::Fence::null(),
+                )
                 .unwrap();
-            let clear_values =
-                [vk::ClearValue::new_color(vk::ClearColorValue::new_float32([0.0, 0.0, 0.0, 0.0])),
-                 vk::ClearValue::new_depth_stencil(vk::ClearDepthStencilValue {
-                                                       depth: 1.0,
-                                                       stencil: 0,
-                                                   })];
+            let clear_values = [
+                vk::ClearValue {
+                    color: vk::ClearColorValue {
+                        float32: [0.0, 0.0, 0.0, 0.0],
+                    },
+                },
+                vk::ClearValue {
+                    depth: vk::ClearDepthStencilValue {
+                        depth: 1.0,
+                        stencil: 0,
+                    },
+                },
+            ];
 
             let render_pass_begin_info = vk::RenderPassBeginInfo {
                 s_type: vk::StructureType::RenderPassBeginInfo,
@@ -484,37 +491,51 @@ fn main() {
                 clear_value_count: clear_values.len() as u32,
                 p_clear_values: clear_values.as_ptr(),
             };
-            record_submit_commandbuffer(&base.device,
-                                        base.draw_command_buffer,
-                                        base.present_queue,
-                                        &[vk::PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT],
-                                        &[base.present_complete_semaphore],
-                                        &[base.rendering_complete_semaphore],
-                                        |device, draw_command_buffer| {
-                device.cmd_begin_render_pass(draw_command_buffer,
-                                             &render_pass_begin_info,
-                                             vk::SubpassContents::Inline);
-                device.cmd_bind_pipeline(draw_command_buffer,
-                                         vk::PipelineBindPoint::Graphics,
-                                         graphic_pipeline);
-                device.cmd_set_viewport(draw_command_buffer, 0, &viewports);
-                device.cmd_set_scissor(draw_command_buffer, &scissors);
-                device
-                    .cmd_bind_vertex_buffers(draw_command_buffer, 0, &[vertex_input_buffer], &[0]);
-                device.cmd_bind_index_buffer(draw_command_buffer,
-                                             index_buffer,
-                                             0,
-                                             vk::IndexType::Uint32);
-                device.cmd_draw_indexed(draw_command_buffer,
-                                        index_buffer_data.len() as u32,
-                                        1,
-                                        0,
-                                        0,
-                                        1);
-                // Or draw without the index buffer
-                // device.cmd_draw(draw_command_buffer, 3, 1, 0, 0);
-                device.cmd_end_render_pass(draw_command_buffer);
-            });
+            record_submit_commandbuffer(
+                &base.device,
+                base.draw_command_buffer,
+                base.present_queue,
+                &[vk::PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT],
+                &[base.present_complete_semaphore],
+                &[base.rendering_complete_semaphore],
+                |device, draw_command_buffer| {
+                    device.cmd_begin_render_pass(
+                        draw_command_buffer,
+                        &render_pass_begin_info,
+                        vk::SubpassContents::Inline,
+                    );
+                    device.cmd_bind_pipeline(
+                        draw_command_buffer,
+                        vk::PipelineBindPoint::Graphics,
+                        graphic_pipeline,
+                    );
+                    device.cmd_set_viewport(draw_command_buffer, 0, &viewports);
+                    device.cmd_set_scissor(draw_command_buffer, &scissors);
+                    device.cmd_bind_vertex_buffers(
+                        draw_command_buffer,
+                        0,
+                        &[vertex_input_buffer],
+                        &[0],
+                    );
+                    device.cmd_bind_index_buffer(
+                        draw_command_buffer,
+                        index_buffer,
+                        0,
+                        vk::IndexType::Uint32,
+                    );
+                    device.cmd_draw_indexed(
+                        draw_command_buffer,
+                        index_buffer_data.len() as u32,
+                        1,
+                        0,
+                        0,
+                        1,
+                    );
+                    // Or draw without the index buffer
+                    // device.cmd_draw(draw_command_buffer, 3, 1, 0, 0);
+                    device.cmd_end_render_pass(draw_command_buffer);
+                },
+            );
             //let mut present_info_err = mem::uninitialized();
             let present_info = vk::PresentInfoKHR {
                 s_type: vk::StructureType::PresentInfoKhr,
@@ -536,14 +557,10 @@ fn main() {
             base.device.destroy_pipeline(pipeline, None);
         }
         base.device.destroy_pipeline_layout(pipeline_layout, None);
-        base.device.destroy_shader_module(
-            vertex_shader_module,
-            None,
-        );
-        base.device.destroy_shader_module(
-            fragment_shader_module,
-            None,
-        );
+        base.device
+            .destroy_shader_module(vertex_shader_module, None);
+        base.device
+            .destroy_shader_module(fragment_shader_module, None);
         base.device.free_memory(index_buffer_memory, None);
         base.device.destroy_buffer(index_buffer, None);
         base.device.free_memory(vertex_input_buffer_memory, None);
