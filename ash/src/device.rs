@@ -278,6 +278,28 @@ pub trait DeviceV1_0 {
         }
     }
 
+    unsafe fn cmd_blit_image(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        src_image: vk::Image,
+        src_image_layout: vk::ImageLayout,
+        dst_image: vk::Image,
+        dst_image_layout: vk::ImageLayout,
+        regions: &[vk::ImageBlit],
+        filter: vk::Filter,
+    ) {
+        self.fp_v1_0().cmd_blit_image(
+            command_buffer,
+            src_image,
+            src_image_layout,
+            dst_image,
+            dst_image_layout,
+            regions.len() as _,
+            regions.as_ptr(),
+            filter,
+        );
+    }
+
     unsafe fn cmd_resolve_image(
         &self,
         command_buffer: vk::CommandBuffer,
