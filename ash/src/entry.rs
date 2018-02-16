@@ -4,34 +4,26 @@ use std::ptr;
 use vk;
 use instance::Instance;
 use shared_library::dynamic_library::DynamicLibrary;
-use std::path::Path;
 use std::error::Error;
 use std::fmt;
+use std::path::Path;
 use RawPtr;
 use version::{EntryLoader, FunctionPointers, InstanceLoader, V1_0};
 
 #[cfg(windows)]
-fn get_path() -> &'static Path {
-    Path::new("vulkan-1.dll")
-}
+const LIB_PATH: &'static str = "vulkan-1.dll";
 
 #[cfg(all(unix, not(any(target_os = "macos", target_os = "ios", target_os = "android"))))]
-fn get_path() -> &'static Path {
-    Path::new("libvulkan.so.1")
-}
+const LIB_PATH: &'static str = "libvulkan.so.1";
 
 #[cfg(target_os = "android")]
-fn get_path() -> &'static Path {
-    Path::new("libvulkan.so")
-}
+const LIB_PATH: &'static str = "libvulkan.so";
 
 #[cfg(any(target_os = "macos", target_os = "ios"))]
-fn get_path() -> &'static Path {
-    Path::new("libMoltenVK.dylib")
-}
+const LIB_PATH: &'static str = "libMoltenVK.dylib";
 
 lazy_static!{
-    static ref VK_LIB: Result<DynamicLibrary, String> = DynamicLibrary::open(Some(get_path()));
+    static ref VK_LIB: Result<DynamicLibrary, String> = DynamicLibrary::open(Some(&Path::new(LIB_PATH)));
 }
 
 #[derive(Clone)]
@@ -165,7 +157,7 @@ impl<V: FunctionPointers> Entry<V> {
             .map_err(|err| LoadingError::LibraryLoadError(err.clone()))?;
 
         let static_fn = vk::StaticFn::load(|name| unsafe {
-            lib.symbol(name.to_str().unwrap())
+            lib.symbol(&*name.to_string_lossy())
                 .unwrap_or(ptr::null_mut())
         }).map_err(LoadingError::StaticLoadError)?;
 
