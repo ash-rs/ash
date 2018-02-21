@@ -165,7 +165,6 @@ unsafe extern "system" fn vulkan_debug_callback(
     1
 }
 
-
 pub fn find_memorytype_index(
     memory_req: &vk::MemoryRequirements,
     memory_prop: &vk::PhysicalDeviceMemoryProperties,
@@ -244,25 +243,25 @@ pub struct ExampleBase {
 }
 
 impl ExampleBase {
-    pub fn render_loop<F: Fn()>(&self, f: F) {
+    pub fn render_loop<F: FnMut()>(&self, mut f: F) {
         use winit::*;
-        self.events_loop.borrow_mut().run_forever(|event| {
+        let mut should_close = false;
+        while !should_close {
             f();
-            match event {
-                Event::WindowEvent { event, .. } => match event {
-                    WindowEvent::KeyboardInput { input, .. } => {
-                        if let Some(VirtualKeyCode::Escape) = input.virtual_keycode {
-                            ControlFlow::Break
-                        } else {
-                            ControlFlow::Continue
+            self.events_loop
+                .borrow_mut()
+                .poll_events(|event| match event {
+                    Event::WindowEvent { event, .. } => match event {
+                        WindowEvent::KeyboardInput { input, .. } => {
+                            if let Some(VirtualKeyCode::Escape) = input.virtual_keycode {
+                                should_close = true;
+                            }
                         }
-                    }
-                    WindowEvent::Closed => winit::ControlFlow::Break,
-                    _ => ControlFlow::Continue,
-                },
-                _ => ControlFlow::Continue,
-            }
-        });
+                        _ => ()
+                    },
+                    _ => (),
+                });
+        }
     }
     pub fn new(window_width: u32, window_height: u32) -> Self {
         unsafe {

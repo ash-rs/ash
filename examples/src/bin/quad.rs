@@ -31,12 +31,37 @@ pub struct Vector4 {
     pub z: f32,
     pub w: f32
 }
-unsafe fn create_buffer(base: &ExampleBase, uniform_color_buffer_data: Vector4) -> vk::Buffer{
+use std::marker::PhantomData;
+pub struct Buffer<T>{
+    pub buffer: vk::Buffer,
+    pub memory: vk::DeviceMemory,
+    pub req: vk::MemoryRequirements,
+    _m: PhantomData<T>
+}
+impl<T: Copy> Buffer<T> {
+    pub unsafe fn update(&mut self, base: &ExampleBase, t: T){
+        let uniform_ptr = base.device
+            .map_memory(
+                self.memory,
+                0,
+                self.req.size,
+                vk::MemoryMapFlags::empty(),
+            )
+            .unwrap();
+        let mut uniform_aligned_slice = Align::new(
+            uniform_ptr,
+            align_of::<T>() as u64,
+            self.req.size,
+        );
+        uniform_aligned_slice.copy_from_slice(&[t]);
+        base.device.unmap_memory(self.memory);
+    }
+    pub unsafe fn new(base: &ExampleBase, uniform_color_buffer_data: T) -> Self{
         let uniform_color_buffer_info = vk::BufferCreateInfo {
             s_type: vk::StructureType::BufferCreateInfo,
             p_next: ptr::null(),
             flags: vk::BufferCreateFlags::empty(),
-            size: std::mem::size_of_val(&uniform_color_buffer_data) as u64,
+            size: std::mem::size_of::<T>() as u64,
             usage: vk::BUFFER_USAGE_UNIFORM_BUFFER_BIT,
             sharing_mode: vk::SharingMode::Exclusive,
             queue_family_index_count: 0,
@@ -64,6 +89,9 @@ unsafe fn create_buffer(base: &ExampleBase, uniform_color_buffer_data: Vector4) 
         let uniform_color_buffer_memory = base.device
             .allocate_memory(&uniform_color_buffer_allocate_info, None)
             .unwrap();
+        base.device
+            .bind_buffer_memory(uniform_color_buffer, uniform_color_buffer_memory, 0)
+            .unwrap();
         let uniform_ptr = base.device
             .map_memory(
                 uniform_color_buffer_memory,
@@ -74,14 +102,70 @@ unsafe fn create_buffer(base: &ExampleBase, uniform_color_buffer_data: Vector4) 
             .unwrap();
         let mut uniform_aligned_slice = Align::new(
             uniform_ptr,
-            align_of::<Vector4>() as u64,
+            align_of::<T>() as u64,
             uniform_color_buffer_memory_req.size,
         );
         uniform_aligned_slice.copy_from_slice(&[uniform_color_buffer_data]);
         base.device.unmap_memory(uniform_color_buffer_memory);
+        Buffer{
+            buffer: uniform_color_buffer,
+            memory: uniform_color_buffer_memory,
+            req: uniform_color_buffer_memory_req,
+            _m: PhantomData
+        }
+    }
+}
+unsafe fn create_buffer<T: Copy>(base: &ExampleBase, uniform_color_buffer_data: T) -> vk::Buffer{
+        let uniform_color_buffer_info = vk::BufferCreateInfo {
+            s_type: vk::StructureType::BufferCreateInfo,
+            p_next: ptr::null(),
+            flags: vk::BufferCreateFlags::empty(),
+            size: std::mem::size_of::<T>() as u64,
+            usage: vk::BUFFER_USAGE_UNIFORM_BUFFER_BIT,
+            sharing_mode: vk::SharingMode::Exclusive,
+            queue_family_index_count: 0,
+            p_queue_family_indices: ptr::null(),
+        };
+        let uniform_color_buffer = base.device
+            .create_buffer(&uniform_color_buffer_info, None)
+            .unwrap();
+        let uniform_color_buffer_memory_req = base.device.get_buffer_memory_requirements(
+            uniform_color_buffer,
+        );
+        let uniform_color_buffer_memory_index =
+            find_memorytype_index(
+                &uniform_color_buffer_memory_req,
+                &base.device_memory_properties,
+                vk::MEMORY_PROPERTY_HOST_VISIBLE_BIT,
+            ).expect("Unable to find suitable memorytype for the vertex buffer.");
+
+        let uniform_color_buffer_allocate_info = vk::MemoryAllocateInfo {
+            s_type: vk::StructureType::MemoryAllocateInfo,
+            p_next: ptr::null(),
+            allocation_size: uniform_color_buffer_memory_req.size,
+            memory_type_index: uniform_color_buffer_memory_index,
+        };
+        let uniform_color_buffer_memory = base.device
+            .allocate_memory(&uniform_color_buffer_allocate_info, None)
+            .unwrap();
         base.device
             .bind_buffer_memory(uniform_color_buffer, uniform_color_buffer_memory, 0)
             .unwrap();
+        let uniform_ptr = base.device
+            .map_memory(
+                uniform_color_buffer_memory,
+                0,
+                uniform_color_buffer_memory_req.size,
+                vk::MemoryMapFlags::empty(),
+            )
+            .unwrap();
+        let mut uniform_aligned_slice = Align::new(
+            uniform_ptr,
+            align_of::<T>() as u64,
+            uniform_color_buffer_memory_req.size,
+        );
+        uniform_aligned_slice.copy_from_slice(&[uniform_color_buffer_data]);
+        base.device.unmap_memory(uniform_color_buffer_memory);
         uniform_color_buffer
 }
 fn main() {
@@ -292,12 +376,13 @@ fn main() {
             .unwrap();
 
 
-        let uniform_color_buffer = create_buffer(&base, Vector4{x: 1.0, y: 0.0, z: 0.0, w: 1.0});
-        let uniform_color_buffer2 = create_buffer(&base, Vector4{x: 0.0, y: 0.0, z: 1.0, w: 1.0});
+        let uniform_color_buffer = Buffer::new(&base, Vector4{x: 1.0, y: 0.0, z: 0.0, w: 1.0});
+        let uniform_color_buffer2 = Buffer::new(&base, Vector4{x: 0.0, y: 0.0, z: 1.0, w: 1.0});
+        let mut uniform_time_buffer = Buffer::new(&base, Vector4{x: 0.5, y: 0.0, z: 1.0, w: 1.0});
         let descriptor_sizes = [
             vk::DescriptorPoolSize {
                 typ: vk::DescriptorType::UniformBuffer,
-                descriptor_count: 2,
+                descriptor_count: 3,
             },
         ];
         let descriptor_pool_info = vk::DescriptorPoolCreateInfo {
@@ -321,6 +406,13 @@ fn main() {
             },
             vk::DescriptorSetLayoutBinding {
                 binding: 1,
+                descriptor_type: vk::DescriptorType::UniformBuffer,
+                descriptor_count: 1,
+                stage_flags: vk::SHADER_STAGE_FRAGMENT_BIT,
+                p_immutable_samplers: ptr::null(),
+            },
+            vk::DescriptorSetLayoutBinding {
+                binding: 2,
                 descriptor_type: vk::DescriptorType::UniformBuffer,
                 descriptor_count: 1,
                 stage_flags: vk::SHADER_STAGE_FRAGMENT_BIT,
@@ -352,13 +444,18 @@ fn main() {
             .unwrap();
 
         let uniform_color_buffer_descriptor = vk::DescriptorBufferInfo {
-            buffer: uniform_color_buffer,
+            buffer: uniform_color_buffer.buffer,
             offset: 0,
             range: mem::size_of::<Vector4>() as u64,
         };
 
         let uniform_color_buffer_descriptor2 = vk::DescriptorBufferInfo {
-            buffer: uniform_color_buffer2,
+            buffer: uniform_color_buffer2.buffer,
+            offset: 0,
+            range: mem::size_of::<Vector4>() as u64,
+        };
+        let uniform_time_buffer_descriptor = vk::DescriptorBufferInfo {
+            buffer: uniform_time_buffer.buffer,
             offset: 0,
             range: mem::size_of::<Vector4>() as u64,
         };
@@ -386,6 +483,18 @@ fn main() {
                 descriptor_type: vk::DescriptorType::UniformBuffer,
                 p_image_info: ptr::null(),
                 p_buffer_info: &uniform_color_buffer_descriptor2,
+                p_texel_buffer_view: ptr::null(),
+            },
+            vk::WriteDescriptorSet {
+                s_type: vk::StructureType::WriteDescriptorSet,
+                p_next: ptr::null(),
+                dst_set: descriptor_sets[0],
+                dst_binding: 2,
+                dst_array_element: 0,
+                descriptor_count: 1,
+                descriptor_type: vk::DescriptorType::UniformBuffer,
+                p_image_info: ptr::null(),
+                p_buffer_info: &uniform_time_buffer_descriptor,
                 p_texel_buffer_view: ptr::null(),
             },
         ];
@@ -615,7 +724,18 @@ fn main() {
         let graphic_pipeline = graphics_pipelines[0];
 
 
+        use std::time::{Duration, SystemTime};
+
+        let start = SystemTime::now();
         base.render_loop(|| {
+            let current = SystemTime::now();
+            let duration = current.duration_since(start).expect("dur");
+            let secs = duration.as_secs() as f64;
+            let subsecconds = duration.subsec_nanos() as f64 / 1_000_000_000.0;
+
+            let time = (secs + subsecconds) as f32;
+            //println!("{}", time);
+            uniform_time_buffer.update(&base, Vector4{x:time, y:0.0, z:0.0, w:1.0});
             let present_index = base.swapchain_loader
                 .acquire_next_image_khr(base.swapchain,
                                         std::u64::MAX,
