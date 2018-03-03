@@ -164,7 +164,6 @@ unsafe extern "system" fn vulkan_debug_callback(
     1
 }
 
-
 pub fn find_memorytype_index(
     memory_req: &vk::MemoryRequirements,
     memory_prop: &vk::PhysicalDeviceMemoryProperties,
@@ -259,6 +258,7 @@ impl ExampleBase {
             }
         });
     }
+
     pub fn new(window_width: u32, window_height: u32) -> Self {
         unsafe {
             let events_loop = winit::EventsLoop::new();
