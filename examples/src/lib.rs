@@ -1,8 +1,5 @@
-#![allow(dead_code)]
 #[macro_use]
 extern crate ash;
-#[cfg(windows)]
-extern crate user32;
 #[cfg(windows)]
 extern crate winapi;
 extern crate winit;
@@ -118,9 +115,12 @@ unsafe fn create_surface<E: EntryV1_0, I: InstanceV1_0>(
     instance: &I,
     window: &winit::Window,
 ) -> Result<vk::SurfaceKHR, vk::Result> {
+    use winapi::shared::windef::HWND;
+    use winapi::um::winuser::GetWindow;
     use winit::os::windows::WindowExt;
-    let hwnd = window.get_hwnd() as *mut winapi::windef::HWND__;
-    let hinstance = unsafe { user32::GetWindow(hwnd, 0) as *const vk::c_void };
+
+    let hwnd = window.get_hwnd() as HWND;
+    let hinstance = GetWindow(hwnd, 0) as *const vk::c_void;
     let win32_create_info = vk::Win32SurfaceCreateInfoKHR {
         s_type: vk::StructureType::Win32SurfaceCreateInfoKhr,
         p_next: ptr::null(),
@@ -165,7 +165,6 @@ unsafe extern "system" fn vulkan_debug_callback(
     1
 }
 
-
 pub fn find_memorytype_index(
     memory_req: &vk::MemoryRequirements,
     memory_prop: &vk::PhysicalDeviceMemoryProperties,
@@ -201,10 +200,6 @@ pub fn find_memorytype_index_f<F: Fn(vk::MemoryPropertyFlags, vk::MemoryProperty
         memory_type_bits = memory_type_bits >> 1;
     }
     None
-}
-
-fn resize_callback(width: u32, height: u32) {
-    println!("Window resized to {}x{}", width, height);
 }
 
 pub struct ExampleBase {
@@ -264,13 +259,13 @@ impl ExampleBase {
             }
         });
     }
+
     pub fn new(window_width: u32, window_height: u32) -> Self {
         unsafe {
             let events_loop = winit::EventsLoop::new();
             let window = winit::WindowBuilder::new()
                 .with_title("Ash - Example")
                 .with_dimensions(window_width, window_height)
-                //.with_window_resize_callback(resize_callback)
                 .build(&events_loop)
                 .unwrap();
             let entry = Entry::new().unwrap();
