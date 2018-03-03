@@ -1,8 +1,6 @@
 #[macro_use]
 extern crate ash;
 #[cfg(windows)]
-extern crate user32;
-#[cfg(windows)]
 extern crate winapi;
 extern crate winit;
 
@@ -117,9 +115,12 @@ unsafe fn create_surface<E: EntryV1_0, I: InstanceV1_0>(
     instance: &I,
     window: &winit::Window,
 ) -> Result<vk::SurfaceKHR, vk::Result> {
+    use winapi::shared::windef::HWND;
+    use winapi::um::winuser::GetWindow;
     use winit::os::windows::WindowExt;
-    let hwnd = window.get_hwnd() as *mut winapi::windef::HWND__;
-    let hinstance = user32::GetWindow(hwnd, 0) as *const vk::c_void;
+
+    let hwnd = window.get_hwnd() as HWND;
+    let hinstance = GetWindow(hwnd, 0) as *const vk::c_void;
     let win32_create_info = vk::Win32SurfaceCreateInfoKHR {
         s_type: vk::StructureType::Win32SurfaceCreateInfoKhr,
         p_next: ptr::null(),

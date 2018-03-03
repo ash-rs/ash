@@ -4,10 +4,9 @@ version = "0.1.0"
 authors = ["maik klein <maikklein@googlemail.com>"]
 
 [dependencies]
-winit = "0.9.0"
+winit = "0.11.1"
 image = "0.10.4"
 ash = { path = "../ash" }
 
 [target.'cfg(windows)'.dependencies]
-user32-sys = "0.2.0"
-winapi = "0.2.8"
+winapi = { version = "0.3.4", features = ["windef", "winuser"] }
