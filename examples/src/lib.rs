@@ -1,4 +1,3 @@
-#![allow(dead_code)]
 #[macro_use]
 extern crate ash;
 #[cfg(windows)]
@@ -120,7 +119,7 @@ unsafe fn create_surface<E: EntryV1_0, I: InstanceV1_0>(
 ) -> Result<vk::SurfaceKHR, vk::Result> {
     use winit::os::windows::WindowExt;
     let hwnd = window.get_hwnd() as *mut winapi::windef::HWND__;
-    let hinstance = unsafe { user32::GetWindow(hwnd, 0) as *const vk::c_void };
+    let hinstance = user32::GetWindow(hwnd, 0) as *const vk::c_void;
     let win32_create_info = vk::Win32SurfaceCreateInfoKHR {
         s_type: vk::StructureType::Win32SurfaceCreateInfoKhr,
         p_next: ptr::null(),
@@ -203,10 +202,6 @@ pub fn find_memorytype_index_f<F: Fn(vk::MemoryPropertyFlags, vk::MemoryProperty
     None
 }
 
-fn resize_callback(width: u32, height: u32) {
-    println!("Window resized to {}x{}", width, height);
-}
-
 pub struct ExampleBase {
     pub entry: Entry<V1_0>,
     pub instance: Instance<V1_0>,
@@ -270,7 +265,6 @@ impl ExampleBase {
             let window = winit::WindowBuilder::new()
                 .with_title("Ash - Example")
                 .with_dimensions(window_width, window_height)
-                //.with_window_resize_callback(resize_callback)
                 .build(&events_loop)
                 .unwrap();
             let entry = Entry::new().unwrap();
