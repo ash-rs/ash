@@ -798,6 +798,33 @@ pub trait DeviceV1_0 {
             .cmd_set_stencil_reference(command_buffer, face_mask, reference);
     }
 
+    unsafe fn get_query_pool_results<T>(
+        &self,
+        query_pool: vk::QueryPool,
+        first_query: vk::uint32_t,
+        query_count: vk::uint32_t,
+        flags: vk::QueryResultFlags,
+    ) -> VkResult<Vec<T>> {
+        let data_length = query_count as usize;
+        let data_size = mem::size_of::<T>() * data_length;
+        let mut data = Vec::<T>::with_capacity(data_length);
+        let err_code = self.fp_v1_0().get_query_pool_results(
+            self.handle(),
+            query_pool,
+            first_query,
+            query_count,
+            data_size,
+            data.as_mut_ptr() as *mut _,
+            0,
+            flags
+        );
+        data.set_len(data_length);
+
+        match err_code {
+            vk::Result::Success => Ok(data),
+            _ => Err(err_code),
+        }
+    }
     unsafe fn cmd_begin_query(
         &self,
         command_buffer: vk::CommandBuffer,
