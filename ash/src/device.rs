@@ -803,11 +803,19 @@ pub trait DeviceV1_0 {
         query_pool: vk::QueryPool,
         first_query: vk::uint32_t,
         query_count: vk::uint32_t,
+        data: &mut [T],
         flags: vk::QueryResultFlags,
-    ) -> VkResult<Vec<T>> {
+    ) -> VkResult<()> {
         let data_length = query_count as usize;
+        assert!(
+            mem::size_of::<T>() <= mem::size_of::<u64>(),
+            "T can not be bigger than an u64"
+        );
+        assert!(
+            data_length <= data.len(),
+            "query_count was higher than the length of the slice"
+        );
         let data_size = mem::size_of::<T>() * data_length;
-        let mut data = Vec::<T>::with_capacity(data_length);
         let err_code = self.fp_v1_0().get_query_pool_results(
             self.handle(),
             query_pool,
@@ -815,16 +823,16 @@ pub trait DeviceV1_0 {
             query_count,
             data_size,
             data.as_mut_ptr() as *mut _,
-            0,
-            flags
+            mem::size_of::<T>() as _,
+            flags,
         );
-        data.set_len(data_length);
 
         match err_code {
-            vk::Result::Success => Ok(data),
+            vk::Result::Success => Ok(()),
             _ => Err(err_code),
         }
     }
+
     unsafe fn cmd_begin_query(
         &self,
         command_buffer: vk::CommandBuffer,
