@@ -57,12 +57,21 @@ impl FieldExt for vkxml::Field {
     }
 
     fn type_ident(&self) -> Ident {
-        let prefix = &self.basetype[0..2];
-        if prefix == "Vk" {
-            Ident::from(&self.basetype[2..])
-        } else {
-            Ident::from(&self.basetype[..])
-        }
+        let new_name = match self.basetype.as_str() {
+            "void" => "c_void",
+            "char" => "c_char",
+            "float" => "c_float",
+            "long" => "c_ulong",
+            _ => {
+                let prefix = &self.basetype[0..2];
+                if prefix == "Vk" {
+                    &self.basetype[2..]
+                } else {
+                    self.basetype.as_str()
+                }
+            }
+        };
+        Ident::from(new_name)
     }
 }
 use std::collections::HashMap;
@@ -109,12 +118,12 @@ pub fn gen_load(feature: &vkxml::Feature, commands: &CommandMap) -> quote::Token
                 .map(|field| {
                     let name = field.param_ident();
                     let ty = field.type_ident();
-                    quote!{#name: vk::#ty}
+                    quote!{#name: #ty}
                 })
                 .collect();
             let return_ty = cmd.return_type.type_ident();
             quote!{
-                #fn_name_snake: extern "system" fn(#(#params,)*) -> vk::#return_ty
+                #fn_name_snake: extern "system" fn(#(#params,)*) -> #return_ty
             }
         })
         .collect();

@@ -5,7 +5,7 @@ use std::collections::HashMap;
 use std::io::Write;
 
 fn main() {
-    let file = File::open("vk_new.xml").expect("vk");
+    let file = File::open("New-Vulkan-XML-Format/vk_new.xml").expect("vknew");
     let spec = vkxml::Registry::from_file(file).expect("");
 
     let commands: HashMap<vkxml::Identifier, &vkxml::Command> = spec.elements
