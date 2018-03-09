@@ -85,10 +85,8 @@ pub trait EntryV1_0 {
             return Err(InstanceError::VkError(err_code));
         }
         let instance_fp =
-            <Self::Fp as FunctionPointers>::InstanceFp::load(
-                &self.static_fn(),
-                instance,
-            ).map_err(InstanceError::LoadError)?;
+            <Self::Fp as FunctionPointers>::InstanceFp::load(&self.static_fn(), instance)
+                .map_err(InstanceError::LoadError)?;
         Ok(Instance::from_raw(instance, instance_fp))
     }
 
@@ -161,9 +159,8 @@ impl<V: FunctionPointers> Entry<V> {
                 .unwrap_or(ptr::null_mut())
         }).map_err(LoadingError::StaticLoadError)?;
 
-        let entry_fn = unsafe {
-            V::EntryFp::load(&static_fn)
-        }.map_err(LoadingError::EntryLoadError)?;
+        let entry_fn =
+            unsafe { V::EntryFp::load(&static_fn) }.map_err(LoadingError::EntryLoadError)?;
 
         Ok(Entry {
             static_fn,

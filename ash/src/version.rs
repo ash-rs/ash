@@ -36,10 +36,7 @@ impl EntryLoader for EntryFpV1_0 {
     }
     unsafe fn load(static_fn: &vk::StaticFn) -> Result<Self, Vec<&'static str>> {
         let entry_fn = vk::EntryFnV1_0::load(|name| {
-            mem::transmute(static_fn.get_instance_proc_addr(
-                vk::Instance::null(),
-                name.as_ptr(),
-            ))
+            mem::transmute(static_fn.get_instance_proc_addr(vk::Instance::null(), name.as_ptr()))
         })?;
         Ok(EntryFpV1_0 { entry_fn: entry_fn })
     }
@@ -73,7 +70,9 @@ impl DeviceLoader for DeviceFpV1_0 {
         let device_fn = vk::DeviceFnV1_0::load(|name| {
             mem::transmute(instance_fn.get_device_proc_addr(device, name.as_ptr()))
         })?;
-        Ok(DeviceFpV1_0 { device_fn: device_fn })
+        Ok(DeviceFpV1_0 {
+            device_fn: device_fn,
+        })
     }
 }
 
@@ -88,7 +87,9 @@ impl InstanceLoader for InstanceFpV1_0 {
         let instance_fn = vk::InstanceFnV1_0::load(|name| {
             mem::transmute(static_fn.get_instance_proc_addr(instance, name.as_ptr()))
         })?;
-        Ok(InstanceFpV1_0 { instance_fn: instance_fn })
+        Ok(InstanceFpV1_0 {
+            instance_fn: instance_fn,
+        })
     }
 }
 

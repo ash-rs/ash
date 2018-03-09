@@ -19,10 +19,7 @@ impl Surface {
         instance: &I,
     ) -> Result<Surface, Vec<&'static str>> {
         let surface_fn = vk::SurfaceFn::load(|name| unsafe {
-            mem::transmute(entry.get_instance_proc_addr(
-                instance.handle(),
-                name.as_ptr(),
-            ))
+            mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         })?;
         Ok(Surface {
             handle: instance.handle(),

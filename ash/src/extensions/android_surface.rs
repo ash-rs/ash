@@ -18,10 +18,7 @@ impl AndroidSurface {
         instance: &I,
     ) -> Result<AndroidSurface, Vec<&'static str>> {
         let surface_fn = vk::AndroidSurfaceFn::load(|name| unsafe {
-            mem::transmute(entry.get_instance_proc_addr(
-                instance.handle(),
-                name.as_ptr(),
-            ))
+            mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         })?;
         Ok(AndroidSurface {
             handle: instance.handle(),

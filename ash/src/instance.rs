@@ -85,11 +85,10 @@ pub trait InstanceV1_0 {
         if err_code != vk::Result::Success {
             return Err(DeviceError::VkError(err_code));
         }
-        let device_fn =
-            <<Self as InstanceV1_0>::Fp as FunctionPointers>::DeviceFp::load(
-                self.fp_v1_0(),
-                device,
-            ).map_err(|err| DeviceError::LoadError(err))?;
+        let device_fn = <<Self as InstanceV1_0>::Fp as FunctionPointers>::DeviceFp::load(
+            self.fp_v1_0(),
+            device,
+        ).map_err(|err| DeviceError::LoadError(err))?;
         Ok(Device::from_raw(device, device_fn))
     }
 
@@ -102,10 +101,8 @@ pub trait InstanceV1_0 {
     }
 
     unsafe fn destroy_instance(&self, allocation_callbacks: Option<&vk::AllocationCallbacks>) {
-        self.fp_v1_0().destroy_instance(
-            self.handle(),
-            allocation_callbacks.as_raw_ptr(),
-        );
+        self.fp_v1_0()
+            .destroy_instance(self.handle(), allocation_callbacks.as_raw_ptr());
     }
 
     fn get_physical_device_format_properties(
@@ -158,10 +155,8 @@ pub trait InstanceV1_0 {
     ) -> vk::PhysicalDeviceMemoryProperties {
         unsafe {
             let mut memory_prop = mem::uninitialized();
-            self.fp_v1_0().get_physical_device_memory_properties(
-                physical_device,
-                &mut memory_prop,
-            );
+            self.fp_v1_0()
+                .get_physical_device_memory_properties(physical_device, &mut memory_prop);
             memory_prop
         }
     }
@@ -172,10 +167,8 @@ pub trait InstanceV1_0 {
     ) -> vk::PhysicalDeviceProperties {
         unsafe {
             let mut prop = mem::uninitialized();
-            self.fp_v1_0().get_physical_device_properties(
-                physical_device,
-                &mut prop,
-            );
+            self.fp_v1_0()
+                .get_physical_device_properties(physical_device, &mut prop);
             prop
         }
     }
@@ -208,10 +201,8 @@ pub trait InstanceV1_0 {
     ) -> vk::PhysicalDeviceFeatures {
         unsafe {
             let mut prop = mem::uninitialized();
-            self.fp_v1_0().get_physical_device_features(
-                physical_device,
-                &mut prop,
-            );
+            self.fp_v1_0()
+                .get_physical_device_features(physical_device, &mut prop);
             prop
         }
     }
@@ -219,11 +210,8 @@ pub trait InstanceV1_0 {
     fn enumerate_physical_devices(&self) -> VkResult<Vec<vk::PhysicalDevice>> {
         unsafe {
             let mut num = mem::uninitialized();
-            self.fp_v1_0().enumerate_physical_devices(
-                self.handle(),
-                &mut num,
-                ptr::null_mut(),
-            );
+            self.fp_v1_0()
+                .enumerate_physical_devices(self.handle(), &mut num, ptr::null_mut());
             let mut physical_devices = Vec::<vk::PhysicalDevice>::with_capacity(num as usize);
             let err_code = self.fp_v1_0().enumerate_physical_devices(
                 self.handle(),

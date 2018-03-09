@@ -18,10 +18,7 @@ impl MirSurface {
         instance: &I,
     ) -> Result<MirSurface, Vec<&'static str>> {
         let surface_fn = vk::MirSurfaceFn::load(|name| unsafe {
-            mem::transmute(entry.get_instance_proc_addr(
-                instance.handle(),
-                name.as_ptr(),
-            ))
+            mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         })?;
         Ok(MirSurface {
             handle: instance.handle(),

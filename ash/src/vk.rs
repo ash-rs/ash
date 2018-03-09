@@ -200,7 +200,7 @@ macro_rules! vk_version_patch {
 }
 
 pub mod types {
-#![allow(non_camel_case_types, dead_code)]
+    #![allow(non_camel_case_types, dead_code)]
     use std::ops::*;
     use std::fmt;
     use std::ffi::CStr;
@@ -1301,10 +1301,9 @@ pub mod types {
     impl fmt::Debug for LayerProperties {
         fn fmt(&self, fmt: &mut fmt::Formatter) -> ::std::result::Result<(), fmt::Error> {
             fmt.debug_struct("LayerProperties")
-                .field(
-                    "layer_name",
-                    &unsafe { CStr::from_ptr(&self.layer_name[0]) },
-                )
+                .field("layer_name", &unsafe {
+                    CStr::from_ptr(&self.layer_name[0])
+                })
                 .field("spec_version", &self.spec_version)
                 .field("implementation_version", &self.implementation_version)
                 .field("description", &unsafe {
@@ -2542,7 +2541,7 @@ pub mod types {
         pub s_type: StructureType,
         pub p_next: *const c_void,
         pub p_marker_name: *const c_char,
-        pub color: [f32; 4]
+        pub color: [f32; 4],
     }
 
     #[repr(C)]
@@ -2600,12 +2599,12 @@ pub mod types {
     #[derive(Copy, Clone)]
     pub union ClearValue {
         pub depth: ClearDepthStencilValue,
-        pub color: ClearColorValue
+        pub color: ClearColorValue,
     }
 
     #[repr(C)]
     #[derive(Copy, Clone)]
-    pub union ClearColorValue{
+    pub union ClearColorValue {
         pub float32: [f32; 4],
         pub int32: [i32; 4],
         pub uint32: [u32; 4],
@@ -3434,13 +3433,19 @@ pub mod types {
     pub const FORMAT_FEATURE_COLOR_ATTACHMENT_BLEND_BIT: FormatFeatureFlags =
         FormatFeatureFlags { flags: 0b100000000 };
     pub const FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT: FormatFeatureFlags =
-        FormatFeatureFlags { flags: 0b1000000000 };
-    pub const FORMAT_FEATURE_BLIT_SRC_BIT: FormatFeatureFlags =
-        FormatFeatureFlags { flags: 0b10000000000 };
-    pub const FORMAT_FEATURE_BLIT_DST_BIT: FormatFeatureFlags =
-        FormatFeatureFlags { flags: 0b100000000000 };
+        FormatFeatureFlags {
+            flags: 0b1000000000,
+        };
+    pub const FORMAT_FEATURE_BLIT_SRC_BIT: FormatFeatureFlags = FormatFeatureFlags {
+        flags: 0b10000000000,
+    };
+    pub const FORMAT_FEATURE_BLIT_DST_BIT: FormatFeatureFlags = FormatFeatureFlags {
+        flags: 0b100000000000,
+    };
     pub const FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_LINEAR_BIT: FormatFeatureFlags =
-        FormatFeatureFlags { flags: 0b1000000000000 };
+        FormatFeatureFlags {
+            flags: 0b1000000000000,
+        };
     vk_bitflags_wrapped!(FormatFeatureFlags, 0b1111111111111, Flags);
 
     pub const IMAGE_USAGE_TRANSFER_SRC_BIT: ImageUsageFlags = ImageUsageFlags { flags: 0b1 };
@@ -3515,22 +3520,30 @@ pub mod types {
         PipelineStageFlags { flags: 0b10000000 };
     pub const PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT: PipelineStageFlags =
         PipelineStageFlags { flags: 0b100000000 };
-    pub const PIPELINE_STAGE_LATE_FRAGMENT_TESTS_BIT: PipelineStageFlags =
-        PipelineStageFlags { flags: 0b1000000000 };
-    pub const PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT: PipelineStageFlags =
-        PipelineStageFlags { flags: 0b10000000000 };
-    pub const PIPELINE_STAGE_COMPUTE_SHADER_BIT: PipelineStageFlags =
-        PipelineStageFlags { flags: 0b100000000000 };
-    pub const PIPELINE_STAGE_TRANSFER_BIT: PipelineStageFlags =
-        PipelineStageFlags { flags: 0b1000000000000 };
-    pub const PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT: PipelineStageFlags =
-        PipelineStageFlags { flags: 0b10000000000000 };
-    pub const PIPELINE_STAGE_HOST_BIT: PipelineStageFlags =
-        PipelineStageFlags { flags: 0b100000000000000 };
-    pub const PIPELINE_STAGE_ALL_GRAPHICS_BIT: PipelineStageFlags =
-        PipelineStageFlags { flags: 0b1000000000000000 };
-    pub const PIPELINE_STAGE_ALL_COMMANDS_BIT: PipelineStageFlags =
-        PipelineStageFlags { flags: 0b10000000000000000 };
+    pub const PIPELINE_STAGE_LATE_FRAGMENT_TESTS_BIT: PipelineStageFlags = PipelineStageFlags {
+        flags: 0b1000000000,
+    };
+    pub const PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT: PipelineStageFlags = PipelineStageFlags {
+        flags: 0b10000000000,
+    };
+    pub const PIPELINE_STAGE_COMPUTE_SHADER_BIT: PipelineStageFlags = PipelineStageFlags {
+        flags: 0b100000000000,
+    };
+    pub const PIPELINE_STAGE_TRANSFER_BIT: PipelineStageFlags = PipelineStageFlags {
+        flags: 0b1000000000000,
+    };
+    pub const PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT: PipelineStageFlags = PipelineStageFlags {
+        flags: 0b10000000000000,
+    };
+    pub const PIPELINE_STAGE_HOST_BIT: PipelineStageFlags = PipelineStageFlags {
+        flags: 0b100000000000000,
+    };
+    pub const PIPELINE_STAGE_ALL_GRAPHICS_BIT: PipelineStageFlags = PipelineStageFlags {
+        flags: 0b1000000000000000,
+    };
+    pub const PIPELINE_STAGE_ALL_COMMANDS_BIT: PipelineStageFlags = PipelineStageFlags {
+        flags: 0b10000000000000000,
+    };
     vk_bitflags_wrapped!(PipelineStageFlags, 0b11111111111111111, Flags);
 
     pub const IMAGE_ASPECT_COLOR_BIT: ImageAspectFlags = ImageAspectFlags { flags: 0b1 };
@@ -3556,18 +3569,30 @@ pub mod types {
 
     pub const QUERY_PIPELINE_STATISTIC_INPUT_ASSEMBLY_VERTICES_BIT: QueryPipelineStatisticFlags =
         QueryPipelineStatisticFlags { flags: 0b1 };
-    pub const QUERY_PIPELINE_STATISTIC_INPUT_ASSEMBLY_PRIMITIVES_BIT: QueryPipelineStatisticFlags = QueryPipelineStatisticFlags {flags: 0b10};
-    pub const QUERY_PIPELINE_STATISTIC_VERTEX_SHADER_INVOCATIONS_BIT: QueryPipelineStatisticFlags = QueryPipelineStatisticFlags {flags: 0b100};
-    pub const QUERY_PIPELINE_STATISTIC_GEOMETRY_SHADER_INVOCATIONS_BIT: QueryPipelineStatisticFlags = QueryPipelineStatisticFlags {flags: 0b1000};
-    pub const QUERY_PIPELINE_STATISTIC_GEOMETRY_SHADER_PRIMITIVES_BIT: QueryPipelineStatisticFlags = QueryPipelineStatisticFlags {flags: 0b10000};
+    pub const QUERY_PIPELINE_STATISTIC_INPUT_ASSEMBLY_PRIMITIVES_BIT: QueryPipelineStatisticFlags =
+        QueryPipelineStatisticFlags { flags: 0b10 };
+    pub const QUERY_PIPELINE_STATISTIC_VERTEX_SHADER_INVOCATIONS_BIT: QueryPipelineStatisticFlags =
+        QueryPipelineStatisticFlags { flags: 0b100 };
+    pub const QUERY_PIPELINE_STATISTIC_GEOMETRY_SHADER_INVOCATIONS_BIT:
+        QueryPipelineStatisticFlags = QueryPipelineStatisticFlags { flags: 0b1000 };
+    pub const QUERY_PIPELINE_STATISTIC_GEOMETRY_SHADER_PRIMITIVES_BIT: QueryPipelineStatisticFlags =
+        QueryPipelineStatisticFlags { flags: 0b10000 };
     pub const QUERY_PIPELINE_STATISTIC_CLIPPING_INVOCATIONS_BIT: QueryPipelineStatisticFlags =
         QueryPipelineStatisticFlags { flags: 0b100000 };
     pub const QUERY_PIPELINE_STATISTIC_CLIPPING_PRIMITIVES_BIT: QueryPipelineStatisticFlags =
         QueryPipelineStatisticFlags { flags: 0b1000000 };
-    pub const QUERY_PIPELINE_STATISTIC_FRAGMENT_SHADER_INVOCATIONS_BIT: QueryPipelineStatisticFlags = QueryPipelineStatisticFlags {flags: 0b10000000};
-    pub const QUERY_PIPELINE_STATISTIC_TESSELLATION_CONTROL_SHADER_PATCHES_BIT: QueryPipelineStatisticFlags = QueryPipelineStatisticFlags {flags: 0b100000000};
-    pub const QUERY_PIPELINE_STATISTIC_TESSELLATION_EVALUATION_SHADER_INVOCATIONS_BIT: QueryPipelineStatisticFlags = QueryPipelineStatisticFlags {flags: 0b1000000000};
-    pub const QUERY_PIPELINE_STATISTIC_COMPUTE_SHADER_INVOCATIONS_BIT: QueryPipelineStatisticFlags = QueryPipelineStatisticFlags {flags: 0b10000000000};
+    pub const QUERY_PIPELINE_STATISTIC_FRAGMENT_SHADER_INVOCATIONS_BIT:
+        QueryPipelineStatisticFlags = QueryPipelineStatisticFlags { flags: 0b10000000 };
+    pub const QUERY_PIPELINE_STATISTIC_TESSELLATION_CONTROL_SHADER_PATCHES_BIT:
+        QueryPipelineStatisticFlags = QueryPipelineStatisticFlags { flags: 0b100000000 };
+    pub const QUERY_PIPELINE_STATISTIC_TESSELLATION_EVALUATION_SHADER_INVOCATIONS_BIT:
+        QueryPipelineStatisticFlags = QueryPipelineStatisticFlags {
+        flags: 0b1000000000,
+    };
+    pub const QUERY_PIPELINE_STATISTIC_COMPUTE_SHADER_INVOCATIONS_BIT: QueryPipelineStatisticFlags =
+        QueryPipelineStatisticFlags {
+            flags: 0b10000000000,
+        };
     vk_bitflags_wrapped!(QueryPipelineStatisticFlags, 0b11111111111, Flags);
 
     pub const QUERY_RESULT_64_BIT: QueryResultFlags = QueryResultFlags { flags: 0b1 };
@@ -3620,8 +3645,9 @@ pub mod types {
     pub const SHADER_STAGE_FRAGMENT_BIT: ShaderStageFlags = ShaderStageFlags { flags: 0b10000 };
     pub const SHADER_STAGE_COMPUTE_BIT: ShaderStageFlags = ShaderStageFlags { flags: 0b100000 };
     pub const SHADER_STAGE_ALL_GRAPHICS: ShaderStageFlags = ShaderStageFlags { flags: 0b11111 };
-    pub const SHADER_STAGE_ALL: ShaderStageFlags =
-        ShaderStageFlags { flags: 0b1111111111111111111111111111111 };
+    pub const SHADER_STAGE_ALL: ShaderStageFlags = ShaderStageFlags {
+        flags: 0b1111111111111111111111111111111,
+    };
     vk_bitflags_wrapped!(ShaderStageFlags, 0b1111111111111111111111111111111, Flags);
 
     pub const CULL_MODE_NONE: CullModeFlags = CullModeFlags { flags: 0b0 };
@@ -3653,16 +3679,30 @@ pub mod types {
     pub const ACCESS_SHADER_WRITE_BIT: AccessFlags = AccessFlags { flags: 0b1000000 };
     pub const ACCESS_COLOR_ATTACHMENT_READ_BIT: AccessFlags = AccessFlags { flags: 0b10000000 };
     pub const ACCESS_COLOR_ATTACHMENT_WRITE_BIT: AccessFlags = AccessFlags { flags: 0b100000000 };
-    pub const ACCESS_DEPTH_STENCIL_ATTACHMENT_READ_BIT: AccessFlags =
-        AccessFlags { flags: 0b1000000000 };
-    pub const ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT: AccessFlags =
-        AccessFlags { flags: 0b10000000000 };
-    pub const ACCESS_TRANSFER_READ_BIT: AccessFlags = AccessFlags { flags: 0b100000000000 };
-    pub const ACCESS_TRANSFER_WRITE_BIT: AccessFlags = AccessFlags { flags: 0b1000000000000 };
-    pub const ACCESS_HOST_READ_BIT: AccessFlags = AccessFlags { flags: 0b10000000000000 };
-    pub const ACCESS_HOST_WRITE_BIT: AccessFlags = AccessFlags { flags: 0b100000000000000 };
-    pub const ACCESS_MEMORY_READ_BIT: AccessFlags = AccessFlags { flags: 0b1000000000000000 };
-    pub const ACCESS_MEMORY_WRITE_BIT: AccessFlags = AccessFlags { flags: 0b10000000000000000 };
+    pub const ACCESS_DEPTH_STENCIL_ATTACHMENT_READ_BIT: AccessFlags = AccessFlags {
+        flags: 0b1000000000,
+    };
+    pub const ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT: AccessFlags = AccessFlags {
+        flags: 0b10000000000,
+    };
+    pub const ACCESS_TRANSFER_READ_BIT: AccessFlags = AccessFlags {
+        flags: 0b100000000000,
+    };
+    pub const ACCESS_TRANSFER_WRITE_BIT: AccessFlags = AccessFlags {
+        flags: 0b1000000000000,
+    };
+    pub const ACCESS_HOST_READ_BIT: AccessFlags = AccessFlags {
+        flags: 0b10000000000000,
+    };
+    pub const ACCESS_HOST_WRITE_BIT: AccessFlags = AccessFlags {
+        flags: 0b100000000000000,
+    };
+    pub const ACCESS_MEMORY_READ_BIT: AccessFlags = AccessFlags {
+        flags: 0b1000000000000000,
+    };
+    pub const ACCESS_MEMORY_WRITE_BIT: AccessFlags = AccessFlags {
+        flags: 0b10000000000000000,
+    };
     vk_bitflags_wrapped!(AccessFlags, 0b11111111111111111, Flags);
 
     pub const DEPENDENCY_BY_REGION_BIT: DependencyFlags = DependencyFlags { flags: 0b1 };
@@ -3750,45 +3790,43 @@ pub mod types {
         DebugReportFlagsEXT { flags: 0b10000 };
     vk_bitflags_wrapped!(DebugReportFlagsEXT, 0b11111, Flags);
 
+    pub type PFN_vkAllocationFunction =
+        unsafe extern "system" fn(*mut c_void, size_t, size_t, SystemAllocationScope)
+            -> *mut c_void;
 
-    pub type PFN_vkAllocationFunction = unsafe extern "system" fn(*mut c_void,
-                                                                  size_t,
-                                                                  size_t,
-                                                                  SystemAllocationScope)
-                                                                  -> *mut c_void;
-
-    pub type PFN_vkReallocationFunction = unsafe extern "system" fn(*mut c_void,
-                                                                    *mut c_void,
-                                                                    size_t,
-                                                                    size_t,
-                                                                    SystemAllocationScope)
-                                                                    -> *mut c_void;
+    pub type PFN_vkReallocationFunction =
+        unsafe extern "system" fn(*mut c_void, *mut c_void, size_t, size_t, SystemAllocationScope)
+            -> *mut c_void;
 
     pub type PFN_vkFreeFunction = unsafe extern "system" fn(*mut c_void, *mut c_void);
 
     pub type PFN_vkInternalAllocationNotification =
-        unsafe extern "system" fn(*mut c_void,
-                                  size_t,
-                                  InternalAllocationType,
-                                  SystemAllocationScope);
+        unsafe extern "system" fn(
+            *mut c_void,
+            size_t,
+            InternalAllocationType,
+            SystemAllocationScope,
+        );
 
-    pub type PFN_vkInternalFreeNotification = unsafe extern "system" fn(*mut c_void,
-                                                                        size_t,
-                                                                        InternalAllocationType,
-                                                                        SystemAllocationScope);
+    pub type PFN_vkInternalFreeNotification = unsafe extern "system" fn(
+        *mut c_void,
+        size_t,
+        InternalAllocationType,
+        SystemAllocationScope,
+    );
 
     pub type PFN_vkVoidFunction = unsafe extern "system" fn();
 
-    pub type PFN_vkDebugReportCallbackEXT = unsafe extern "system" fn(DebugReportFlagsEXT,
-                                                                      DebugReportObjectTypeEXT,
-                                                                      uint64_t,
-                                                                      size_t,
-                                                                      int32_t,
-                                                                      *const c_char,
-                                                                      *const c_char,
-                                                                      *mut c_void)
-                                                                      -> Bool32;
-
+    pub type PFN_vkDebugReportCallbackEXT = unsafe extern "system" fn(
+        DebugReportFlagsEXT,
+        DebugReportObjectTypeEXT,
+        uint64_t,
+        size_t,
+        int32_t,
+        *const c_char,
+        *const c_char,
+        *mut c_void,
+    ) -> Bool32;
 
 }
 // FIX: Need better error handling for extensions
@@ -3853,1237 +3891,1237 @@ macro_rules! vk_functions {
 }
 
 pub mod cmds {
-#![allow(dead_code)]
+    #![allow(dead_code)]
     use super::*;
 
     vk_functions!{
-    StaticFn,
-    "vkGetInstanceProcAddr", get_instance_proc_addr(
-        instance: Instance,
-        p_name: *const c_char,
-    ) -> PFN_vkVoidFunction;
-}
+        StaticFn,
+        "vkGetInstanceProcAddr", get_instance_proc_addr(
+            instance: Instance,
+            p_name: *const c_char,
+        ) -> PFN_vkVoidFunction;
+    }
 
     vk_functions!{
-    EntryFnV1_0,
-    "vkCreateInstance", create_instance(
-        p_create_info: *const InstanceCreateInfo,
-        p_allocator: *const AllocationCallbacks,
-        p_instance: *mut Instance,
-    ) -> Result;
+        EntryFnV1_0,
+        "vkCreateInstance", create_instance(
+            p_create_info: *const InstanceCreateInfo,
+            p_allocator: *const AllocationCallbacks,
+            p_instance: *mut Instance,
+        ) -> Result;
 
-    "vkEnumerateInstanceExtensionProperties", enumerate_instance_extension_properties(
-        p_layer_name: *const c_char,
-        p_property_count: *mut uint32_t,
-        p_properties: *mut ExtensionProperties,
-    ) -> Result;
+        "vkEnumerateInstanceExtensionProperties", enumerate_instance_extension_properties(
+            p_layer_name: *const c_char,
+            p_property_count: *mut uint32_t,
+            p_properties: *mut ExtensionProperties,
+        ) -> Result;
 
-    "vkEnumerateInstanceLayerProperties", enumerate_instance_layer_properties(
-        p_property_count: *mut uint32_t,
-        p_properties: *mut LayerProperties,
-    ) -> Result;
-}
-
-    vk_functions!{
-    InstanceFnV1_0,
-
-    "vkDestroyInstance", destroy_instance(
-        instance: Instance,
-        p_allocator: *const AllocationCallbacks,
-    ) -> ();
-
-    "vkEnumeratePhysicalDevices", enumerate_physical_devices(
-        instance: Instance,
-        p_physical_device_count: *mut uint32_t,
-        p_physical_devices: *mut PhysicalDevice,
-    ) -> Result;
-
-    "vkGetPhysicalDeviceFeatures", get_physical_device_features(
-        physical_device: PhysicalDevice,
-        p_features: *mut PhysicalDeviceFeatures,
-    ) -> ();
-
-    "vkGetPhysicalDeviceFormatProperties", get_physical_device_format_properties(
-        physical_device: PhysicalDevice,
-        format: Format,
-        p_format_properties: *mut FormatProperties,
-    ) -> ();
-
-    "vkGetPhysicalDeviceImageFormatProperties", get_physical_device_image_format_properties(
-        physical_device: PhysicalDevice,
-        format: Format,
-        typ: ImageType,
-        tiling: ImageTiling,
-        usage: ImageUsageFlags,
-        flags: ImageCreateFlags,
-        p_image_format_properties: *mut ImageFormatProperties,
-    ) -> Result;
-
-    "vkGetPhysicalDeviceProperties", get_physical_device_properties(
-        physical_device: PhysicalDevice,
-        p_properties: *mut PhysicalDeviceProperties,
-    ) -> ();
-
-    "vkGetPhysicalDeviceQueueFamilyProperties", get_physical_device_queue_family_properties(
-        physical_device: PhysicalDevice,
-        p_queue_family_property_count: *mut uint32_t,
-        p_queue_family_properties: *mut QueueFamilyProperties,
-    ) -> ();
-
-    "vkGetPhysicalDeviceMemoryProperties", get_physical_device_memory_properties(
-        physical_device: PhysicalDevice,
-        p_memory_properties: *mut PhysicalDeviceMemoryProperties,
-    ) -> ();
-
-    "vkGetDeviceProcAddr", get_device_proc_addr(
-        device: Device,
-        p_name: *const c_char,
-    ) -> PFN_vkVoidFunction;
-
-    "vkCreateDevice", create_device(
-        physical_device: PhysicalDevice,
-        p_create_info: *const DeviceCreateInfo,
-        p_allocator: *const AllocationCallbacks,
-        p_device: *mut Device,
-    ) -> Result;
-
-    "vkEnumerateDeviceExtensionProperties", enumerate_device_extension_properties(
-        physical_device: PhysicalDevice,
-        p_layer_name: *const c_char,
-        p_property_count: *mut uint32_t,
-        p_properties: *mut ExtensionProperties,
-    ) -> Result;
-
-
-    "vkEnumerateDeviceLayerProperties", enumerate_device_layer_properties(
-        physical_device: PhysicalDevice,
-        p_property_count: *mut uint32_t,
-        p_properties: *mut LayerProperties,
-    ) -> Result;
-
-    "vkGetPhysicalDeviceSparseImageFormatProperties", get_physical_device_sparse_image_format_properties(
-        physical_device: PhysicalDevice,
-        format: Format,
-        typ: ImageType,
-        samples: SampleCountFlags,
-        usage: ImageUsageFlags,
-        tiling: ImageTiling,
-        p_property_count: *mut uint32_t,
-        p_properties: *mut SparseImageFormatProperties,
-    ) -> ();
-}
+        "vkEnumerateInstanceLayerProperties", enumerate_instance_layer_properties(
+            p_property_count: *mut uint32_t,
+            p_properties: *mut LayerProperties,
+        ) -> Result;
+    }
 
     vk_functions!{
-    DeviceFnV1_0,
-    "vkDestroyDevice", destroy_device(
-        device: Device,
-        p_allocator: *const AllocationCallbacks,
-    ) -> ();
-
-    "vkGetDeviceQueue", get_device_queue(
-        device: Device,
-        queue_family_index: uint32_t,
-        queue_index: uint32_t,
-        p_queue: *mut Queue,
-    ) -> ();
-
-    "vkQueueSubmit", queue_submit(
-        queue: Queue,
-        submit_count: uint32_t,
-        p_submits: *const SubmitInfo,
-        fence: Fence,
-    ) -> Result;
-
-    "vkQueueWaitIdle", queue_wait_idle(
-        queue: Queue,
-    ) -> Result;
-
-    "vkDeviceWaitIdle", device_wait_idle(
-        device: Device,
-    ) -> Result;
-
-    "vkAllocateMemory", allocate_memory(
-        device: Device,
-        p_allocate_info: *const MemoryAllocateInfo,
-        p_allocator: *const AllocationCallbacks,
-        p_memory: *mut DeviceMemory,
-    ) -> Result;
-
-    "vkFreeMemory", free_memory(
-        device: Device,
-        memory: DeviceMemory,
-        p_allocator: *const AllocationCallbacks,
-    ) -> ();
-
-    "vkMapMemory", map_memory(
-        device: Device,
-        memory: DeviceMemory,
-        offset: DeviceSize,
-        size: DeviceSize,
-        flags: MemoryMapFlags,
-        pp_data: *mut *mut c_void,
-    ) -> Result;
-
-    "vkUnmapMemory", unmap_memory(
-        device: Device,
-        memory: DeviceMemory,
-    ) -> ();
-
-    "vkFlushMappedMemoryRanges", flush_mapped_memory_ranges(
-        device: Device,
-        memory_range_count: uint32_t,
-        p_memory_ranges: *const MappedMemoryRange,
-    ) -> Result;
-
-    "vkInvalidateMappedMemoryRanges", invalidate_mapped_memory_ranges(
-        device: Device,
-        memory_range_count: uint32_t,
-        p_memory_ranges: *const MappedMemoryRange,
-    ) -> Result;
-
-    "vkGetDeviceMemoryCommitment", get_device_memory_commitment(
-        device: Device,
-        memory: DeviceMemory,
-        p_committed_memory_in_bytes: *mut DeviceSize,
-    ) -> ();
-
-    "vkBindBufferMemory", bind_buffer_memory(
-        device: Device,
-        buffer: Buffer,
-        memory: DeviceMemory,
-        memory_offset: DeviceSize,
-    ) -> Result;
-
-    "vkBindImageMemory", bind_image_memory(
-        device: Device,
-        image: Image,
-        memory: DeviceMemory,
-        memory_offset: DeviceSize,
-    ) -> Result;
-
-    "vkGetBufferMemoryRequirements", get_buffer_memory_requirements(
-        device: Device,
-        buffer: Buffer,
-        p_memory_requirements: *mut MemoryRequirements,
-    ) -> ();
-
-    "vkGetImageMemoryRequirements", get_image_memory_requirements(
-        device: Device,
-        image: Image,
-        p_memory_requirements: *mut MemoryRequirements,
-    ) -> ();
-
-    "vkGetImageSparseMemoryRequirements", get_image_sparse_memory_requirements(
-        device: Device,
-        image: Image,
-        p_sparse_memory_requirement_count: *mut uint32_t,
-        p_sparse_memory_requirements: *mut SparseImageMemoryRequirements,
-    ) -> ();
-
-    "vkQueueBindSparse", queue_bind_sparse(
-        queue: Queue,
-        bind_info_count: uint32_t,
-        p_bind_info: *const BindSparseInfo,
-        fence: Fence,
-    ) -> Result;
-
-    "vkCreateFence", create_fence(
-        device: Device,
-        p_create_info: *const FenceCreateInfo,
-        p_allocator: *const AllocationCallbacks,
-        p_fence: *mut Fence,
-    ) -> Result;
-
-    "vkDestroyFence", destroy_fence(
-        device: Device,
-        fence: Fence,
-        p_allocator: *const AllocationCallbacks,
-    ) -> ();
-
-    "vkResetFences", reset_fences(
-        device: Device,
-        fence_count: uint32_t,
-        p_fences: *const Fence,
-    ) -> Result;
-
-    "vkGetFenceStatus", get_fence_status(
-        device: Device,
-        fence: Fence,
-    ) -> Result;
-
-    "vkWaitForFences", wait_for_fences(
-        device: Device,
-        fence_count: uint32_t,
-        p_fences: *const Fence,
-        wait_all: Bool32,
-        timeout: uint64_t,
-    ) -> Result;
-
-    "vkCreateSemaphore", create_semaphore(
-        device: Device,
-        p_create_info: *const SemaphoreCreateInfo,
-        p_allocator: *const AllocationCallbacks,
-        p_semaphore: *mut Semaphore,
-    ) -> Result;
-
-    "vkDestroySemaphore", destroy_semaphore(
-        device: Device,
-        semaphore: Semaphore,
-        p_allocator: *const AllocationCallbacks,
-    ) -> ();
-
-    "vkCreateEvent", create_event(
-        device: Device,
-        p_create_info: *const EventCreateInfo,
-        p_allocator: *const AllocationCallbacks,
-        p_event: *mut Event,
-    ) -> Result;
-
-    "vkDestroyEvent", destroy_event(
-        device: Device,
-        event: Event,
-        p_allocator: *const AllocationCallbacks,
-    ) -> ();
-
-    "vkGetEventStatus", get_event_status(
-        device: Device,
-        event: Event,
-    ) -> Result;
-
-    "vkSetEvent", set_event(
-        device: Device,
-        event: Event,
-    ) -> Result;
-
-    "vkResetEvent", reset_event(
-        device: Device,
-        event: Event,
-    ) -> Result;
-
-    "vkCreateQueryPool", create_query_pool(
-        device: Device,
-        p_create_info: *const QueryPoolCreateInfo,
-        p_allocator: *const AllocationCallbacks,
-        p_query_pool: *mut QueryPool,
-    ) -> Result;
-
-    "vkDestroyQueryPool", destroy_query_pool(
-        device: Device,
-        query_pool: QueryPool,
-        p_allocator: *const AllocationCallbacks,
-    ) -> ();
-
-    "vkGetQueryPoolResults", get_query_pool_results(
-        device: Device,
-        query_pool: QueryPool,
-        first_query: uint32_t,
-        query_count: uint32_t,
-        data_size: size_t,
-        p_data: *mut c_void,
-        stride: DeviceSize,
-        flags: QueryResultFlags,
-    ) -> Result;
-
-    "vkCreateBuffer", create_buffer(
-        device: Device,
-        p_create_info: *const BufferCreateInfo,
-        p_allocator: *const AllocationCallbacks,
-        p_buffer: *mut Buffer,
-    ) -> Result;
-
-    "vkDestroyBuffer", destroy_buffer(
-        device: Device,
-        buffer: Buffer,
-        p_allocator: *const AllocationCallbacks,
-    ) -> ();
-
-    "vkCreateBufferView", create_buffer_view(
-        device: Device,
-        p_create_info: *const BufferViewCreateInfo,
-        p_allocator: *const AllocationCallbacks,
-        p_view: *mut BufferView,
-    ) -> Result;
-
-    "vkDestroyBufferView", destroy_buffer_view(
-        device: Device,
-        buffer_view: BufferView,
-        p_allocator: *const AllocationCallbacks,
-    ) -> ();
-
-    "vkCreateImage", create_image(
-        device: Device,
-        p_create_info: *const ImageCreateInfo,
-        p_allocator: *const AllocationCallbacks,
-        p_image: *mut Image,
-    ) -> Result;
-
-    "vkDestroyImage", destroy_image(
-        device: Device,
-        image: Image,
-        p_allocator: *const AllocationCallbacks,
-    ) -> ();
-
-    "vkGetImageSubresourceLayout", get_image_subresource_layout(
-        device: Device,
-        image: Image,
-        p_subresource: *const ImageSubresource,
-        p_layout: *mut SubresourceLayout,
-    ) -> ();
-
-    "vkCreateImageView", create_image_view(
-        device: Device,
-        p_create_info: *const ImageViewCreateInfo,
-        p_allocator: *const AllocationCallbacks,
-        p_view: *mut ImageView,
-    ) -> Result;
-
-    "vkDestroyImageView", destroy_image_view(
-        device: Device,
-        image_view: ImageView,
-        p_allocator: *const AllocationCallbacks,
-    ) -> ();
-
-    "vkCreateShaderModule", create_shader_module(
-        device: Device,
-        p_create_info: *const ShaderModuleCreateInfo,
-        p_allocator: *const AllocationCallbacks,
-        p_shader_module: *mut ShaderModule,
-    ) -> Result;
-
-    "vkDestroyShaderModule", destroy_shader_module(
-        device: Device,
-        shader_module: ShaderModule,
-        p_allocator: *const AllocationCallbacks,
-    ) -> ();
-
-    "vkCreatePipelineCache", create_pipeline_cache(
-        device: Device,
-        p_create_info: *const PipelineCacheCreateInfo,
-        p_allocator: *const AllocationCallbacks,
-        p_pipeline_cache: *mut PipelineCache,
-    ) -> Result;
-
-    "vkDestroyPipelineCache", destroy_pipeline_cache(
-        device: Device,
-        pipeline_cache: PipelineCache,
-        p_allocator: *const AllocationCallbacks,
-    ) -> ();
-
-    "vkGetPipelineCacheData", get_pipeline_cache_data(
-        device: Device,
-        pipeline_cache: PipelineCache,
-        p_data_size: *mut size_t,
-        p_data: *mut c_void,
-    ) -> Result;
-
-    "vkMergePipelineCaches", merge_pipeline_caches(
-        device: Device,
-        dst_cache: PipelineCache,
-        src_cache_count: uint32_t,
-        p_src_caches: *const PipelineCache,
-    ) -> Result;
-
-    "vkCreateGraphicsPipelines", create_graphics_pipelines(
-        device: Device,
-        pipeline_cache: PipelineCache,
-        create_info_count: uint32_t,
-        p_create_infos: *const GraphicsPipelineCreateInfo,
-        p_allocator: *const AllocationCallbacks,
-        p_pipelines: *mut Pipeline,
-    ) -> Result;
-
-    "vkCreateComputePipelines", create_compute_pipelines(
-        device: Device,
-        pipeline_cache: PipelineCache,
-        create_info_count: uint32_t,
-        p_create_infos: *const ComputePipelineCreateInfo,
-        p_allocator: *const AllocationCallbacks,
-        p_pipelines: *mut Pipeline,
-    ) -> Result;
-
-    "vkDestroyPipeline", destroy_pipeline(
-        device: Device,
-        pipeline: Pipeline,
-        p_allocator: *const AllocationCallbacks,
-    ) -> ();
-
-    "vkCreatePipelineLayout", create_pipeline_layout(
-        device: Device,
-        p_create_info: *const PipelineLayoutCreateInfo,
-        p_allocator: *const AllocationCallbacks,
-        p_pipeline_layout: *mut PipelineLayout,
-    ) -> Result;
-
-    "vkDestroyPipelineLayout", destroy_pipeline_layout(
-        device: Device,
-        pipeline_layout: PipelineLayout,
-        p_allocator: *const AllocationCallbacks,
-    ) -> ();
-
-    "vkCreateSampler", create_sampler(
-        device: Device,
-        p_create_info: *const SamplerCreateInfo,
-        p_allocator: *const AllocationCallbacks,
-        p_sampler: *mut Sampler,
-    ) -> Result;
-
-    "vkDestroySampler", destroy_sampler(
-        device: Device,
-        sampler: Sampler,
-        p_allocator: *const AllocationCallbacks,
-    ) -> ();
-
-    "vkCreateDescriptorSetLayout", create_descriptor_set_layout(
-        device: Device,
-        p_create_info: *const DescriptorSetLayoutCreateInfo,
-        p_allocator: *const AllocationCallbacks,
-        p_set_layout: *mut DescriptorSetLayout,
-    ) -> Result;
-
-    "vkDestroyDescriptorSetLayout", destroy_descriptor_set_layout(
-        device: Device,
-        descriptor_set_layout: DescriptorSetLayout,
-        p_allocator: *const AllocationCallbacks,
-    ) -> ();
-
-    "vkCreateDescriptorPool", create_descriptor_pool(
-        device: Device,
-        p_create_info: *const DescriptorPoolCreateInfo,
-        p_allocator: *const AllocationCallbacks,
-        p_descriptor_pool: *mut DescriptorPool,
-    ) -> Result;
-
-    "vkDestroyDescriptorPool", destroy_descriptor_pool(
-        device: Device,
-        descriptor_pool: DescriptorPool,
-        p_allocator: *const AllocationCallbacks,
-    ) -> ();
-
-    "vkResetDescriptorPool", reset_descriptor_pool(
-        device: Device,
-        descriptor_pool: DescriptorPool,
-        flags: DescriptorPoolResetFlags,
-    ) -> Result;
-
-    "vkAllocateDescriptorSets", allocate_descriptor_sets(
-        device: Device,
-        p_allocate_info: *const DescriptorSetAllocateInfo,
-        p_descriptor_sets: *mut DescriptorSet,
-    ) -> Result;
-
-    "vkFreeDescriptorSets", free_descriptor_sets(
-        device: Device,
-        descriptor_pool: DescriptorPool,
-        descriptor_set_count: uint32_t,
-        p_descriptor_sets: *const DescriptorSet,
-    ) -> Result;
-
-    "vkUpdateDescriptorSets", update_descriptor_sets(
-        device: Device,
-        descriptor_write_count: uint32_t,
-        p_descriptor_writes: *const WriteDescriptorSet,
-        descriptor_copy_count: uint32_t,
-        p_descriptor_copies: *const CopyDescriptorSet,
-    ) -> ();
-
-    "vkCreateFramebuffer", create_framebuffer(
-        device: Device,
-        p_create_info: *const FramebufferCreateInfo,
-        p_allocator: *const AllocationCallbacks,
-        p_framebuffer: *mut Framebuffer,
-    ) -> Result;
-
-    "vkDestroyFramebuffer", destroy_framebuffer(
-        device: Device,
-        framebuffer: Framebuffer,
-        p_allocator: *const AllocationCallbacks,
-    ) -> ();
-
-    "vkCreateRenderPass", create_render_pass(
-        device: Device,
-        p_create_info: *const RenderPassCreateInfo,
-        p_allocator: *const AllocationCallbacks,
-        p_render_pass: *mut RenderPass,
-    ) -> Result;
-
-    "vkDestroyRenderPass", destroy_render_pass(
-        device: Device,
-        render_pass: RenderPass,
-        p_allocator: *const AllocationCallbacks,
-    ) -> ();
-
-    "vkGetRenderAreaGranularity", get_render_area_granularity(
-        device: Device,
-        render_pass: RenderPass,
-        p_granularity: *mut Extent2D,
-    ) -> ();
-
-    "vkCreateCommandPool", create_command_pool(
-        device: Device,
-        p_create_info: *const CommandPoolCreateInfo,
-        p_allocator: *const AllocationCallbacks,
-        p_command_pool: *mut CommandPool,
-    ) -> Result;
-
-    "vkDestroyCommandPool", destroy_command_pool(
-        device: Device,
-        command_pool: CommandPool,
-        p_allocator: *const AllocationCallbacks,
-    ) -> ();
-
-    "vkResetCommandPool", reset_command_pool(
-        device: Device,
-        command_pool: CommandPool,
-        flags: CommandPoolResetFlags,
-    ) -> Result;
-
-    "vkAllocateCommandBuffers", allocate_command_buffers(
-        device: Device,
-        p_allocate_info: *const CommandBufferAllocateInfo,
-        p_command_buffers: *mut CommandBuffer,
-    ) -> Result;
-
-    "vkFreeCommandBuffers", free_command_buffers(
-        device: Device,
-        command_pool: CommandPool,
-        command_buffer_count: uint32_t,
-        p_command_buffers: *const CommandBuffer,
-    ) -> ();
-
-    "vkBeginCommandBuffer", begin_command_buffer(
-        command_buffer: CommandBuffer,
-        p_begin_info: *const CommandBufferBeginInfo,
-    ) -> Result;
-
-    "vkEndCommandBuffer", end_command_buffer(
-        command_buffer: CommandBuffer,
-    ) -> Result;
-
-    "vkResetCommandBuffer", reset_command_buffer(
-        command_buffer: CommandBuffer,
-        flags: CommandBufferResetFlags,
-    ) -> Result;
-
-    "vkCmdBindPipeline", cmd_bind_pipeline(
-        command_buffer: CommandBuffer,
-        pipeline_bind_point: PipelineBindPoint,
-        pipeline: Pipeline,
-    ) -> ();
-
-    "vkCmdSetViewport", cmd_set_viewport(
-        command_buffer: CommandBuffer,
-        first_viewport: uint32_t,
-        viewport_count: uint32_t,
-        p_viewports: *const Viewport,
-    ) -> ();
-
-    "vkCmdSetScissor", cmd_set_scissor(
-        command_buffer: CommandBuffer,
-        first_scissor: uint32_t,
-        scissor_count: uint32_t,
-        p_scissors: *const Rect2D,
-    ) -> ();
-
-    "vkCmdSetLineWidth", cmd_set_line_width(
-        command_buffer: CommandBuffer,
-        line_width: c_float,
-    ) -> ();
-
-    "vkCmdSetDepthBias", cmd_set_depth_bias(
-        command_buffer: CommandBuffer,
-        depth_bias_constant_factor: c_float,
-        depth_bias_clamp: c_float,
-        depth_bias_slope_factor: c_float,
-    ) -> ();
-
-    "vkCmdSetBlendConstants", cmd_set_blend_constants(
-        command_buffer: CommandBuffer,
-        blend_constants: *const [c_float; 4],
-    ) -> ();
-
-    "vkCmdSetDepthBounds", cmd_set_depth_bounds(
-        command_buffer: CommandBuffer,
-        min_depth_bounds: c_float,
-        max_depth_bounds: c_float,
-    ) -> ();
-
-    "vkCmdSetStencilCompareMask", cmd_set_stencil_compare_mask(
-        command_buffer: CommandBuffer,
-        face_mask: StencilFaceFlags,
-        compare_mask: uint32_t,
-    ) -> ();
-
-    "vkCmdSetStencilWriteMask", cmd_set_stencil_write_mask(
-        command_buffer: CommandBuffer,
-        face_mask: StencilFaceFlags,
-        write_mask: uint32_t,
-    ) -> ();
-
-    "vkCmdSetStencilReference", cmd_set_stencil_reference(
-        command_buffer: CommandBuffer,
-        face_mask: StencilFaceFlags,
-        reference: uint32_t,
-    ) -> ();
-
-    "vkCmdBindDescriptorSets", cmd_bind_descriptor_sets(
-        command_buffer: CommandBuffer,
-        pipeline_bind_point: PipelineBindPoint,
-        layout: PipelineLayout,
-        first_set: uint32_t,
-        descriptor_set_count: uint32_t,
-        p_descriptor_sets: *const DescriptorSet,
-        dynamic_offset_count: uint32_t,
-        p_dynamic_offsets: *const uint32_t,
-    ) -> ();
-
-    "vkCmdBindIndexBuffer", cmd_bind_index_buffer(
-        command_buffer: CommandBuffer,
-        buffer: Buffer,
-        offset: DeviceSize,
-        index_type: IndexType,
-    ) -> ();
-
-    "vkCmdBindVertexBuffers", cmd_bind_vertex_buffers(
-        command_buffer: CommandBuffer,
-        first_binding: uint32_t,
-        binding_count: uint32_t,
-        p_buffers: *const Buffer,
-        p_offsets: *const DeviceSize,
-    ) -> ();
-
-    "vkCmdDraw", cmd_draw(
-        command_buffer: CommandBuffer,
-        vertex_count: uint32_t,
-        instance_count: uint32_t,
-        first_vertex: uint32_t,
-        first_instance: uint32_t,
-    ) -> ();
-
-    "vkCmdDrawIndexed", cmd_draw_indexed(
-        command_buffer: CommandBuffer,
-        index_count: uint32_t,
-        instance_count: uint32_t,
-        first_index: uint32_t,
-        vertex_offset: int32_t,
-        first_instance: uint32_t,
-    ) -> ();
-
-    "vkCmdDrawIndirect", cmd_draw_indirect(
-        command_buffer: CommandBuffer,
-        buffer: Buffer,
-        offset: DeviceSize,
-        draw_count: uint32_t,
-        stride: uint32_t,
-    ) -> ();
-
-    "vkCmdDrawIndexedIndirect", cmd_draw_indexed_indirect(
-        command_buffer: CommandBuffer,
-        buffer: Buffer,
-        offset: DeviceSize,
-        draw_count: uint32_t,
-        stride: uint32_t,
-    ) -> ();
-
-    "vkCmdDispatch", cmd_dispatch(
-        command_buffer: CommandBuffer,
-        x: uint32_t,
-        y: uint32_t,
-        z: uint32_t,
-    ) -> ();
-
-    "vkCmdDispatchIndirect", cmd_dispatch_indirect(
-        command_buffer: CommandBuffer,
-        buffer: Buffer,
-        offset: DeviceSize,
-    ) -> ();
-
-    "vkCmdCopyBuffer", cmd_copy_buffer(
-        command_buffer: CommandBuffer,
-        src_buffer: Buffer,
-        dst_buffer: Buffer,
-        region_count: uint32_t,
-        p_regions: *const BufferCopy,
-    ) -> ();
-
-    "vkCmdCopyImage", cmd_copy_image(
-        command_buffer: CommandBuffer,
-        src_image: Image,
-        src_image_layout: ImageLayout,
-        dst_image: Image,
-        dst_image_layout: ImageLayout,
-        region_count: uint32_t,
-        p_regions: *const ImageCopy,
-    ) -> ();
-
-    "vkCmdBlitImage", cmd_blit_image(
-        command_buffer: CommandBuffer,
-        src_image: Image,
-        src_image_layout: ImageLayout,
-        dst_image: Image,
-        dst_image_layout: ImageLayout,
-        region_count: uint32_t,
-        p_regions: *const ImageBlit,
-        filter: Filter,
-    ) -> ();
-
-    "vkCmdCopyBufferToImage", cmd_copy_buffer_to_image(
-        command_buffer: CommandBuffer,
-        src_buffer: Buffer,
-        dst_image: Image,
-        dst_image_layout: ImageLayout,
-        region_count: uint32_t,
-        p_regions: *const BufferImageCopy,
-    ) -> ();
-
-    "vkCmdCopyImageToBuffer", cmd_copy_image_to_buffer(
-        command_buffer: CommandBuffer,
-        src_image: Image,
-        src_image_layout: ImageLayout,
-        dst_buffer: Buffer,
-        region_count: uint32_t,
-        p_regions: *const BufferImageCopy,
-    ) -> ();
-
-    "vkCmdUpdateBuffer", cmd_update_buffer(
-        command_buffer: CommandBuffer,
-        dst_buffer: Buffer,
-        dst_offset: DeviceSize,
-        data_size: DeviceSize,
-        p_data: *const c_void,
-    ) -> ();
-
-    "vkCmdFillBuffer", cmd_fill_buffer(
-        command_buffer: CommandBuffer,
-        dst_buffer: Buffer,
-        dst_offset: DeviceSize,
-        size: DeviceSize,
-        data: uint32_t,
-    ) -> ();
-
-    "vkCmdClearColorImage", cmd_clear_color_image(
-        command_buffer: CommandBuffer,
-        image: Image,
-        image_layout: ImageLayout,
-        p_color: *const ClearColorValue,
-        range_count: uint32_t,
-        p_ranges: *const ImageSubresourceRange,
-    ) -> ();
-
-    "vkCmdClearDepthStencilImage", cmd_clear_depth_stencil_image(
-        command_buffer: CommandBuffer,
-        image: Image,
-        image_layout: ImageLayout,
-        p_depth_stencil: *const ClearDepthStencilValue,
-        range_count: uint32_t,
-        p_ranges: *const ImageSubresourceRange,
-    ) -> ();
-
-    "vkCmdClearAttachments", cmd_clear_attachments(
-        command_buffer: CommandBuffer,
-        attachment_count: uint32_t,
-        p_attachments: *const ClearAttachment,
-        rect_count: uint32_t,
-        p_rects: *const ClearRect,
-    ) -> ();
-
-    "vkCmdResolveImage", cmd_resolve_image(
-        command_buffer: CommandBuffer,
-        src_image: Image,
-        src_image_layout: ImageLayout,
-        dst_image: Image,
-        dst_image_layout: ImageLayout,
-        region_count: uint32_t,
-        p_regions: *const ImageResolve,
-    ) -> ();
-
-    "vkCmdSetEvent", cmd_set_event(
-        command_buffer: CommandBuffer,
-        event: Event,
-        stage_mask: PipelineStageFlags,
-    ) -> ();
-
-    "vkCmdResetEvent", cmd_reset_event(
-        command_buffer: CommandBuffer,
-        event: Event,
-        stage_mask: PipelineStageFlags,
-    ) -> ();
-
-    "vkCmdWaitEvents", cmd_wait_events(
-        command_buffer: CommandBuffer,
-        event_count: uint32_t,
-        p_events: *const Event,
-        src_stage_mask: PipelineStageFlags,
-        dst_stage_mask: PipelineStageFlags,
-        memory_barrier_count: uint32_t,
-        p_memory_barriers: *const MemoryBarrier,
-        buffer_memory_barrier_count: uint32_t,
-        p_buffer_memory_barriers: *const BufferMemoryBarrier,
-        image_memory_barrier_count: uint32_t,
-        p_image_memory_barriers: *const ImageMemoryBarrier,
-    ) -> ();
-
-    "vkCmdPipelineBarrier", cmd_pipeline_barrier(
-        command_buffer: CommandBuffer,
-        src_stage_mask: PipelineStageFlags,
-        dst_stage_mask: PipelineStageFlags,
-        dependency_flags: DependencyFlags,
-        memory_barrier_count: uint32_t,
-        p_memory_barriers: *const MemoryBarrier,
-        buffer_memory_barrier_count: uint32_t,
-        p_buffer_memory_barriers: *const BufferMemoryBarrier,
-        image_memory_barrier_count: uint32_t,
-        p_image_memory_barriers: *const ImageMemoryBarrier,
-    ) -> ();
-
-    "vkCmdBeginQuery", cmd_begin_query(
-        command_buffer: CommandBuffer,
-        query_pool: QueryPool,
-        query: uint32_t,
-        flags: QueryControlFlags,
-    ) -> ();
-
-    "vkCmdEndQuery", cmd_end_query(
-        command_buffer: CommandBuffer,
-        query_pool: QueryPool,
-        query: uint32_t,
-    ) -> ();
-
-    "vkCmdResetQueryPool", cmd_reset_query_pool(
-        command_buffer: CommandBuffer,
-        query_pool: QueryPool,
-        first_query: uint32_t,
-        query_count: uint32_t,
-    ) -> ();
-
-    "vkCmdWriteTimestamp", cmd_write_timestamp(
-        command_buffer: CommandBuffer,
-        pipeline_stage: PipelineStageFlags,
-        query_pool: QueryPool,
-        query: uint32_t,
-    ) -> ();
-
-    "vkCmdCopyQueryPoolResults", cmd_copy_query_pool_results(
-        command_buffer: CommandBuffer,
-        query_pool: QueryPool,
-        first_query: uint32_t,
-        query_count: uint32_t,
-        dst_buffer: Buffer,
-        dst_offset: DeviceSize,
-        stride: DeviceSize,
-        flags: QueryResultFlags,
-    ) -> ();
-
-    "vkCmdPushConstants", cmd_push_constants(
-        command_buffer: CommandBuffer,
-        layout: PipelineLayout,
-        stage_flags: ShaderStageFlags,
-        offset: uint32_t,
-        size: uint32_t,
-        p_values: *const c_void,
-    ) -> ();
-
-    "vkCmdBeginRenderPass", cmd_begin_render_pass(
-        command_buffer: CommandBuffer,
-        p_render_pass_begin: *const RenderPassBeginInfo,
-        contents: SubpassContents,
-    ) -> ();
-
-    "vkCmdNextSubpass", cmd_next_subpass(
-        command_buffer: CommandBuffer,
-        contents: SubpassContents,
-    ) -> ();
-
-    "vkCmdEndRenderPass", cmd_end_render_pass(
-        command_buffer: CommandBuffer,
-    ) -> ();
-
-    "vkCmdExecuteCommands", cmd_execute_commands(
-        command_buffer: CommandBuffer,
-        command_buffer_count: uint32_t,
-        p_command_buffers: *const CommandBuffer,
-    ) -> ();
-}
+        InstanceFnV1_0,
+
+        "vkDestroyInstance", destroy_instance(
+            instance: Instance,
+            p_allocator: *const AllocationCallbacks,
+        ) -> ();
+
+        "vkEnumeratePhysicalDevices", enumerate_physical_devices(
+            instance: Instance,
+            p_physical_device_count: *mut uint32_t,
+            p_physical_devices: *mut PhysicalDevice,
+        ) -> Result;
+
+        "vkGetPhysicalDeviceFeatures", get_physical_device_features(
+            physical_device: PhysicalDevice,
+            p_features: *mut PhysicalDeviceFeatures,
+        ) -> ();
+
+        "vkGetPhysicalDeviceFormatProperties", get_physical_device_format_properties(
+            physical_device: PhysicalDevice,
+            format: Format,
+            p_format_properties: *mut FormatProperties,
+        ) -> ();
+
+        "vkGetPhysicalDeviceImageFormatProperties", get_physical_device_image_format_properties(
+            physical_device: PhysicalDevice,
+            format: Format,
+            typ: ImageType,
+            tiling: ImageTiling,
+            usage: ImageUsageFlags,
+            flags: ImageCreateFlags,
+            p_image_format_properties: *mut ImageFormatProperties,
+        ) -> Result;
+
+        "vkGetPhysicalDeviceProperties", get_physical_device_properties(
+            physical_device: PhysicalDevice,
+            p_properties: *mut PhysicalDeviceProperties,
+        ) -> ();
+
+        "vkGetPhysicalDeviceQueueFamilyProperties", get_physical_device_queue_family_properties(
+            physical_device: PhysicalDevice,
+            p_queue_family_property_count: *mut uint32_t,
+            p_queue_family_properties: *mut QueueFamilyProperties,
+        ) -> ();
+
+        "vkGetPhysicalDeviceMemoryProperties", get_physical_device_memory_properties(
+            physical_device: PhysicalDevice,
+            p_memory_properties: *mut PhysicalDeviceMemoryProperties,
+        ) -> ();
+
+        "vkGetDeviceProcAddr", get_device_proc_addr(
+            device: Device,
+            p_name: *const c_char,
+        ) -> PFN_vkVoidFunction;
+
+        "vkCreateDevice", create_device(
+            physical_device: PhysicalDevice,
+            p_create_info: *const DeviceCreateInfo,
+            p_allocator: *const AllocationCallbacks,
+            p_device: *mut Device,
+        ) -> Result;
+
+        "vkEnumerateDeviceExtensionProperties", enumerate_device_extension_properties(
+            physical_device: PhysicalDevice,
+            p_layer_name: *const c_char,
+            p_property_count: *mut uint32_t,
+            p_properties: *mut ExtensionProperties,
+        ) -> Result;
+
+
+        "vkEnumerateDeviceLayerProperties", enumerate_device_layer_properties(
+            physical_device: PhysicalDevice,
+            p_property_count: *mut uint32_t,
+            p_properties: *mut LayerProperties,
+        ) -> Result;
+
+        "vkGetPhysicalDeviceSparseImageFormatProperties", get_physical_device_sparse_image_format_properties(
+            physical_device: PhysicalDevice,
+            format: Format,
+            typ: ImageType,
+            samples: SampleCountFlags,
+            usage: ImageUsageFlags,
+            tiling: ImageTiling,
+            p_property_count: *mut uint32_t,
+            p_properties: *mut SparseImageFormatProperties,
+        ) -> ();
+    }
 
     vk_functions!{
-    DisplaySwapchainFn,
-    "vkCreateSharedSwapchainsKHR", create_shared_swapchains_khr(
-        device: Device,
-        swapchain_count: uint32_t,
-        p_create_infos: *const SwapchainCreateInfoKHR,
-        p_allocator: *const AllocationCallbacks,
-        p_swapchains: *mut SwapchainKHR,
-    ) -> Result;
-}
+        DeviceFnV1_0,
+        "vkDestroyDevice", destroy_device(
+            device: Device,
+            p_allocator: *const AllocationCallbacks,
+        ) -> ();
+
+        "vkGetDeviceQueue", get_device_queue(
+            device: Device,
+            queue_family_index: uint32_t,
+            queue_index: uint32_t,
+            p_queue: *mut Queue,
+        ) -> ();
+
+        "vkQueueSubmit", queue_submit(
+            queue: Queue,
+            submit_count: uint32_t,
+            p_submits: *const SubmitInfo,
+            fence: Fence,
+        ) -> Result;
+
+        "vkQueueWaitIdle", queue_wait_idle(
+            queue: Queue,
+        ) -> Result;
+
+        "vkDeviceWaitIdle", device_wait_idle(
+            device: Device,
+        ) -> Result;
+
+        "vkAllocateMemory", allocate_memory(
+            device: Device,
+            p_allocate_info: *const MemoryAllocateInfo,
+            p_allocator: *const AllocationCallbacks,
+            p_memory: *mut DeviceMemory,
+        ) -> Result;
+
+        "vkFreeMemory", free_memory(
+            device: Device,
+            memory: DeviceMemory,
+            p_allocator: *const AllocationCallbacks,
+        ) -> ();
+
+        "vkMapMemory", map_memory(
+            device: Device,
+            memory: DeviceMemory,
+            offset: DeviceSize,
+            size: DeviceSize,
+            flags: MemoryMapFlags,
+            pp_data: *mut *mut c_void,
+        ) -> Result;
+
+        "vkUnmapMemory", unmap_memory(
+            device: Device,
+            memory: DeviceMemory,
+        ) -> ();
+
+        "vkFlushMappedMemoryRanges", flush_mapped_memory_ranges(
+            device: Device,
+            memory_range_count: uint32_t,
+            p_memory_ranges: *const MappedMemoryRange,
+        ) -> Result;
+
+        "vkInvalidateMappedMemoryRanges", invalidate_mapped_memory_ranges(
+            device: Device,
+            memory_range_count: uint32_t,
+            p_memory_ranges: *const MappedMemoryRange,
+        ) -> Result;
+
+        "vkGetDeviceMemoryCommitment", get_device_memory_commitment(
+            device: Device,
+            memory: DeviceMemory,
+            p_committed_memory_in_bytes: *mut DeviceSize,
+        ) -> ();
+
+        "vkBindBufferMemory", bind_buffer_memory(
+            device: Device,
+            buffer: Buffer,
+            memory: DeviceMemory,
+            memory_offset: DeviceSize,
+        ) -> Result;
+
+        "vkBindImageMemory", bind_image_memory(
+            device: Device,
+            image: Image,
+            memory: DeviceMemory,
+            memory_offset: DeviceSize,
+        ) -> Result;
+
+        "vkGetBufferMemoryRequirements", get_buffer_memory_requirements(
+            device: Device,
+            buffer: Buffer,
+            p_memory_requirements: *mut MemoryRequirements,
+        ) -> ();
+
+        "vkGetImageMemoryRequirements", get_image_memory_requirements(
+            device: Device,
+            image: Image,
+            p_memory_requirements: *mut MemoryRequirements,
+        ) -> ();
+
+        "vkGetImageSparseMemoryRequirements", get_image_sparse_memory_requirements(
+            device: Device,
+            image: Image,
+            p_sparse_memory_requirement_count: *mut uint32_t,
+            p_sparse_memory_requirements: *mut SparseImageMemoryRequirements,
+        ) -> ();
+
+        "vkQueueBindSparse", queue_bind_sparse(
+            queue: Queue,
+            bind_info_count: uint32_t,
+            p_bind_info: *const BindSparseInfo,
+            fence: Fence,
+        ) -> Result;
+
+        "vkCreateFence", create_fence(
+            device: Device,
+            p_create_info: *const FenceCreateInfo,
+            p_allocator: *const AllocationCallbacks,
+            p_fence: *mut Fence,
+        ) -> Result;
+
+        "vkDestroyFence", destroy_fence(
+            device: Device,
+            fence: Fence,
+            p_allocator: *const AllocationCallbacks,
+        ) -> ();
+
+        "vkResetFences", reset_fences(
+            device: Device,
+            fence_count: uint32_t,
+            p_fences: *const Fence,
+        ) -> Result;
+
+        "vkGetFenceStatus", get_fence_status(
+            device: Device,
+            fence: Fence,
+        ) -> Result;
+
+        "vkWaitForFences", wait_for_fences(
+            device: Device,
+            fence_count: uint32_t,
+            p_fences: *const Fence,
+            wait_all: Bool32,
+            timeout: uint64_t,
+        ) -> Result;
+
+        "vkCreateSemaphore", create_semaphore(
+            device: Device,
+            p_create_info: *const SemaphoreCreateInfo,
+            p_allocator: *const AllocationCallbacks,
+            p_semaphore: *mut Semaphore,
+        ) -> Result;
+
+        "vkDestroySemaphore", destroy_semaphore(
+            device: Device,
+            semaphore: Semaphore,
+            p_allocator: *const AllocationCallbacks,
+        ) -> ();
+
+        "vkCreateEvent", create_event(
+            device: Device,
+            p_create_info: *const EventCreateInfo,
+            p_allocator: *const AllocationCallbacks,
+            p_event: *mut Event,
+        ) -> Result;
+
+        "vkDestroyEvent", destroy_event(
+            device: Device,
+            event: Event,
+            p_allocator: *const AllocationCallbacks,
+        ) -> ();
+
+        "vkGetEventStatus", get_event_status(
+            device: Device,
+            event: Event,
+        ) -> Result;
+
+        "vkSetEvent", set_event(
+            device: Device,
+            event: Event,
+        ) -> Result;
+
+        "vkResetEvent", reset_event(
+            device: Device,
+            event: Event,
+        ) -> Result;
+
+        "vkCreateQueryPool", create_query_pool(
+            device: Device,
+            p_create_info: *const QueryPoolCreateInfo,
+            p_allocator: *const AllocationCallbacks,
+            p_query_pool: *mut QueryPool,
+        ) -> Result;
+
+        "vkDestroyQueryPool", destroy_query_pool(
+            device: Device,
+            query_pool: QueryPool,
+            p_allocator: *const AllocationCallbacks,
+        ) -> ();
+
+        "vkGetQueryPoolResults", get_query_pool_results(
+            device: Device,
+            query_pool: QueryPool,
+            first_query: uint32_t,
+            query_count: uint32_t,
+            data_size: size_t,
+            p_data: *mut c_void,
+            stride: DeviceSize,
+            flags: QueryResultFlags,
+        ) -> Result;
+
+        "vkCreateBuffer", create_buffer(
+            device: Device,
+            p_create_info: *const BufferCreateInfo,
+            p_allocator: *const AllocationCallbacks,
+            p_buffer: *mut Buffer,
+        ) -> Result;
+
+        "vkDestroyBuffer", destroy_buffer(
+            device: Device,
+            buffer: Buffer,
+            p_allocator: *const AllocationCallbacks,
+        ) -> ();
+
+        "vkCreateBufferView", create_buffer_view(
+            device: Device,
+            p_create_info: *const BufferViewCreateInfo,
+            p_allocator: *const AllocationCallbacks,
+            p_view: *mut BufferView,
+        ) -> Result;
+
+        "vkDestroyBufferView", destroy_buffer_view(
+            device: Device,
+            buffer_view: BufferView,
+            p_allocator: *const AllocationCallbacks,
+        ) -> ();
+
+        "vkCreateImage", create_image(
+            device: Device,
+            p_create_info: *const ImageCreateInfo,
+            p_allocator: *const AllocationCallbacks,
+            p_image: *mut Image,
+        ) -> Result;
+
+        "vkDestroyImage", destroy_image(
+            device: Device,
+            image: Image,
+            p_allocator: *const AllocationCallbacks,
+        ) -> ();
+
+        "vkGetImageSubresourceLayout", get_image_subresource_layout(
+            device: Device,
+            image: Image,
+            p_subresource: *const ImageSubresource,
+            p_layout: *mut SubresourceLayout,
+        ) -> ();
+
+        "vkCreateImageView", create_image_view(
+            device: Device,
+            p_create_info: *const ImageViewCreateInfo,
+            p_allocator: *const AllocationCallbacks,
+            p_view: *mut ImageView,
+        ) -> Result;
+
+        "vkDestroyImageView", destroy_image_view(
+            device: Device,
+            image_view: ImageView,
+            p_allocator: *const AllocationCallbacks,
+        ) -> ();
+
+        "vkCreateShaderModule", create_shader_module(
+            device: Device,
+            p_create_info: *const ShaderModuleCreateInfo,
+            p_allocator: *const AllocationCallbacks,
+            p_shader_module: *mut ShaderModule,
+        ) -> Result;
+
+        "vkDestroyShaderModule", destroy_shader_module(
+            device: Device,
+            shader_module: ShaderModule,
+            p_allocator: *const AllocationCallbacks,
+        ) -> ();
+
+        "vkCreatePipelineCache", create_pipeline_cache(
+            device: Device,
+            p_create_info: *const PipelineCacheCreateInfo,
+            p_allocator: *const AllocationCallbacks,
+            p_pipeline_cache: *mut PipelineCache,
+        ) -> Result;
+
+        "vkDestroyPipelineCache", destroy_pipeline_cache(
+            device: Device,
+            pipeline_cache: PipelineCache,
+            p_allocator: *const AllocationCallbacks,
+        ) -> ();
+
+        "vkGetPipelineCacheData", get_pipeline_cache_data(
+            device: Device,
+            pipeline_cache: PipelineCache,
+            p_data_size: *mut size_t,
+            p_data: *mut c_void,
+        ) -> Result;
+
+        "vkMergePipelineCaches", merge_pipeline_caches(
+            device: Device,
+            dst_cache: PipelineCache,
+            src_cache_count: uint32_t,
+            p_src_caches: *const PipelineCache,
+        ) -> Result;
+
+        "vkCreateGraphicsPipelines", create_graphics_pipelines(
+            device: Device,
+            pipeline_cache: PipelineCache,
+            create_info_count: uint32_t,
+            p_create_infos: *const GraphicsPipelineCreateInfo,
+            p_allocator: *const AllocationCallbacks,
+            p_pipelines: *mut Pipeline,
+        ) -> Result;
+
+        "vkCreateComputePipelines", create_compute_pipelines(
+            device: Device,
+            pipeline_cache: PipelineCache,
+            create_info_count: uint32_t,
+            p_create_infos: *const ComputePipelineCreateInfo,
+            p_allocator: *const AllocationCallbacks,
+            p_pipelines: *mut Pipeline,
+        ) -> Result;
+
+        "vkDestroyPipeline", destroy_pipeline(
+            device: Device,
+            pipeline: Pipeline,
+            p_allocator: *const AllocationCallbacks,
+        ) -> ();
+
+        "vkCreatePipelineLayout", create_pipeline_layout(
+            device: Device,
+            p_create_info: *const PipelineLayoutCreateInfo,
+            p_allocator: *const AllocationCallbacks,
+            p_pipeline_layout: *mut PipelineLayout,
+        ) -> Result;
+
+        "vkDestroyPipelineLayout", destroy_pipeline_layout(
+            device: Device,
+            pipeline_layout: PipelineLayout,
+            p_allocator: *const AllocationCallbacks,
+        ) -> ();
+
+        "vkCreateSampler", create_sampler(
+            device: Device,
+            p_create_info: *const SamplerCreateInfo,
+            p_allocator: *const AllocationCallbacks,
+            p_sampler: *mut Sampler,
+        ) -> Result;
+
+        "vkDestroySampler", destroy_sampler(
+            device: Device,
+            sampler: Sampler,
+            p_allocator: *const AllocationCallbacks,
+        ) -> ();
+
+        "vkCreateDescriptorSetLayout", create_descriptor_set_layout(
+            device: Device,
+            p_create_info: *const DescriptorSetLayoutCreateInfo,
+            p_allocator: *const AllocationCallbacks,
+            p_set_layout: *mut DescriptorSetLayout,
+        ) -> Result;
+
+        "vkDestroyDescriptorSetLayout", destroy_descriptor_set_layout(
+            device: Device,
+            descriptor_set_layout: DescriptorSetLayout,
+            p_allocator: *const AllocationCallbacks,
+        ) -> ();
+
+        "vkCreateDescriptorPool", create_descriptor_pool(
+            device: Device,
+            p_create_info: *const DescriptorPoolCreateInfo,
+            p_allocator: *const AllocationCallbacks,
+            p_descriptor_pool: *mut DescriptorPool,
+        ) -> Result;
+
+        "vkDestroyDescriptorPool", destroy_descriptor_pool(
+            device: Device,
+            descriptor_pool: DescriptorPool,
+            p_allocator: *const AllocationCallbacks,
+        ) -> ();
+
+        "vkResetDescriptorPool", reset_descriptor_pool(
+            device: Device,
+            descriptor_pool: DescriptorPool,
+            flags: DescriptorPoolResetFlags,
+        ) -> Result;
+
+        "vkAllocateDescriptorSets", allocate_descriptor_sets(
+            device: Device,
+            p_allocate_info: *const DescriptorSetAllocateInfo,
+            p_descriptor_sets: *mut DescriptorSet,
+        ) -> Result;
+
+        "vkFreeDescriptorSets", free_descriptor_sets(
+            device: Device,
+            descriptor_pool: DescriptorPool,
+            descriptor_set_count: uint32_t,
+            p_descriptor_sets: *const DescriptorSet,
+        ) -> Result;
+
+        "vkUpdateDescriptorSets", update_descriptor_sets(
+            device: Device,
+            descriptor_write_count: uint32_t,
+            p_descriptor_writes: *const WriteDescriptorSet,
+            descriptor_copy_count: uint32_t,
+            p_descriptor_copies: *const CopyDescriptorSet,
+        ) -> ();
+
+        "vkCreateFramebuffer", create_framebuffer(
+            device: Device,
+            p_create_info: *const FramebufferCreateInfo,
+            p_allocator: *const AllocationCallbacks,
+            p_framebuffer: *mut Framebuffer,
+        ) -> Result;
+
+        "vkDestroyFramebuffer", destroy_framebuffer(
+            device: Device,
+            framebuffer: Framebuffer,
+            p_allocator: *const AllocationCallbacks,
+        ) -> ();
+
+        "vkCreateRenderPass", create_render_pass(
+            device: Device,
+            p_create_info: *const RenderPassCreateInfo,
+            p_allocator: *const AllocationCallbacks,
+            p_render_pass: *mut RenderPass,
+        ) -> Result;
+
+        "vkDestroyRenderPass", destroy_render_pass(
+            device: Device,
+            render_pass: RenderPass,
+            p_allocator: *const AllocationCallbacks,
+        ) -> ();
+
+        "vkGetRenderAreaGranularity", get_render_area_granularity(
+            device: Device,
+            render_pass: RenderPass,
+            p_granularity: *mut Extent2D,
+        ) -> ();
+
+        "vkCreateCommandPool", create_command_pool(
+            device: Device,
+            p_create_info: *const CommandPoolCreateInfo,
+            p_allocator: *const AllocationCallbacks,
+            p_command_pool: *mut CommandPool,
+        ) -> Result;
+
+        "vkDestroyCommandPool", destroy_command_pool(
+            device: Device,
+            command_pool: CommandPool,
+            p_allocator: *const AllocationCallbacks,
+        ) -> ();
+
+        "vkResetCommandPool", reset_command_pool(
+            device: Device,
+            command_pool: CommandPool,
+            flags: CommandPoolResetFlags,
+        ) -> Result;
+
+        "vkAllocateCommandBuffers", allocate_command_buffers(
+            device: Device,
+            p_allocate_info: *const CommandBufferAllocateInfo,
+            p_command_buffers: *mut CommandBuffer,
+        ) -> Result;
+
+        "vkFreeCommandBuffers", free_command_buffers(
+            device: Device,
+            command_pool: CommandPool,
+            command_buffer_count: uint32_t,
+            p_command_buffers: *const CommandBuffer,
+        ) -> ();
+
+        "vkBeginCommandBuffer", begin_command_buffer(
+            command_buffer: CommandBuffer,
+            p_begin_info: *const CommandBufferBeginInfo,
+        ) -> Result;
+
+        "vkEndCommandBuffer", end_command_buffer(
+            command_buffer: CommandBuffer,
+        ) -> Result;
+
+        "vkResetCommandBuffer", reset_command_buffer(
+            command_buffer: CommandBuffer,
+            flags: CommandBufferResetFlags,
+        ) -> Result;
+
+        "vkCmdBindPipeline", cmd_bind_pipeline(
+            command_buffer: CommandBuffer,
+            pipeline_bind_point: PipelineBindPoint,
+            pipeline: Pipeline,
+        ) -> ();
+
+        "vkCmdSetViewport", cmd_set_viewport(
+            command_buffer: CommandBuffer,
+            first_viewport: uint32_t,
+            viewport_count: uint32_t,
+            p_viewports: *const Viewport,
+        ) -> ();
+
+        "vkCmdSetScissor", cmd_set_scissor(
+            command_buffer: CommandBuffer,
+            first_scissor: uint32_t,
+            scissor_count: uint32_t,
+            p_scissors: *const Rect2D,
+        ) -> ();
+
+        "vkCmdSetLineWidth", cmd_set_line_width(
+            command_buffer: CommandBuffer,
+            line_width: c_float,
+        ) -> ();
+
+        "vkCmdSetDepthBias", cmd_set_depth_bias(
+            command_buffer: CommandBuffer,
+            depth_bias_constant_factor: c_float,
+            depth_bias_clamp: c_float,
+            depth_bias_slope_factor: c_float,
+        ) -> ();
+
+        "vkCmdSetBlendConstants", cmd_set_blend_constants(
+            command_buffer: CommandBuffer,
+            blend_constants: *const [c_float; 4],
+        ) -> ();
+
+        "vkCmdSetDepthBounds", cmd_set_depth_bounds(
+            command_buffer: CommandBuffer,
+            min_depth_bounds: c_float,
+            max_depth_bounds: c_float,
+        ) -> ();
+
+        "vkCmdSetStencilCompareMask", cmd_set_stencil_compare_mask(
+            command_buffer: CommandBuffer,
+            face_mask: StencilFaceFlags,
+            compare_mask: uint32_t,
+        ) -> ();
+
+        "vkCmdSetStencilWriteMask", cmd_set_stencil_write_mask(
+            command_buffer: CommandBuffer,
+            face_mask: StencilFaceFlags,
+            write_mask: uint32_t,
+        ) -> ();
+
+        "vkCmdSetStencilReference", cmd_set_stencil_reference(
+            command_buffer: CommandBuffer,
+            face_mask: StencilFaceFlags,
+            reference: uint32_t,
+        ) -> ();
+
+        "vkCmdBindDescriptorSets", cmd_bind_descriptor_sets(
+            command_buffer: CommandBuffer,
+            pipeline_bind_point: PipelineBindPoint,
+            layout: PipelineLayout,
+            first_set: uint32_t,
+            descriptor_set_count: uint32_t,
+            p_descriptor_sets: *const DescriptorSet,
+            dynamic_offset_count: uint32_t,
+            p_dynamic_offsets: *const uint32_t,
+        ) -> ();
+
+        "vkCmdBindIndexBuffer", cmd_bind_index_buffer(
+            command_buffer: CommandBuffer,
+            buffer: Buffer,
+            offset: DeviceSize,
+            index_type: IndexType,
+        ) -> ();
+
+        "vkCmdBindVertexBuffers", cmd_bind_vertex_buffers(
+            command_buffer: CommandBuffer,
+            first_binding: uint32_t,
+            binding_count: uint32_t,
+            p_buffers: *const Buffer,
+            p_offsets: *const DeviceSize,
+        ) -> ();
+
+        "vkCmdDraw", cmd_draw(
+            command_buffer: CommandBuffer,
+            vertex_count: uint32_t,
+            instance_count: uint32_t,
+            first_vertex: uint32_t,
+            first_instance: uint32_t,
+        ) -> ();
+
+        "vkCmdDrawIndexed", cmd_draw_indexed(
+            command_buffer: CommandBuffer,
+            index_count: uint32_t,
+            instance_count: uint32_t,
+            first_index: uint32_t,
+            vertex_offset: int32_t,
+            first_instance: uint32_t,
+        ) -> ();
+
+        "vkCmdDrawIndirect", cmd_draw_indirect(
+            command_buffer: CommandBuffer,
+            buffer: Buffer,
+            offset: DeviceSize,
+            draw_count: uint32_t,
+            stride: uint32_t,
+        ) -> ();
+
+        "vkCmdDrawIndexedIndirect", cmd_draw_indexed_indirect(
+            command_buffer: CommandBuffer,
+            buffer: Buffer,
+            offset: DeviceSize,
+            draw_count: uint32_t,
+            stride: uint32_t,
+        ) -> ();
+
+        "vkCmdDispatch", cmd_dispatch(
+            command_buffer: CommandBuffer,
+            x: uint32_t,
+            y: uint32_t,
+            z: uint32_t,
+        ) -> ();
+
+        "vkCmdDispatchIndirect", cmd_dispatch_indirect(
+            command_buffer: CommandBuffer,
+            buffer: Buffer,
+            offset: DeviceSize,
+        ) -> ();
+
+        "vkCmdCopyBuffer", cmd_copy_buffer(
+            command_buffer: CommandBuffer,
+            src_buffer: Buffer,
+            dst_buffer: Buffer,
+            region_count: uint32_t,
+            p_regions: *const BufferCopy,
+        ) -> ();
+
+        "vkCmdCopyImage", cmd_copy_image(
+            command_buffer: CommandBuffer,
+            src_image: Image,
+            src_image_layout: ImageLayout,
+            dst_image: Image,
+            dst_image_layout: ImageLayout,
+            region_count: uint32_t,
+            p_regions: *const ImageCopy,
+        ) -> ();
+
+        "vkCmdBlitImage", cmd_blit_image(
+            command_buffer: CommandBuffer,
+            src_image: Image,
+            src_image_layout: ImageLayout,
+            dst_image: Image,
+            dst_image_layout: ImageLayout,
+            region_count: uint32_t,
+            p_regions: *const ImageBlit,
+            filter: Filter,
+        ) -> ();
+
+        "vkCmdCopyBufferToImage", cmd_copy_buffer_to_image(
+            command_buffer: CommandBuffer,
+            src_buffer: Buffer,
+            dst_image: Image,
+            dst_image_layout: ImageLayout,
+            region_count: uint32_t,
+            p_regions: *const BufferImageCopy,
+        ) -> ();
+
+        "vkCmdCopyImageToBuffer", cmd_copy_image_to_buffer(
+            command_buffer: CommandBuffer,
+            src_image: Image,
+            src_image_layout: ImageLayout,
+            dst_buffer: Buffer,
+            region_count: uint32_t,
+            p_regions: *const BufferImageCopy,
+        ) -> ();
+
+        "vkCmdUpdateBuffer", cmd_update_buffer(
+            command_buffer: CommandBuffer,
+            dst_buffer: Buffer,
+            dst_offset: DeviceSize,
+            data_size: DeviceSize,
+            p_data: *const c_void,
+        ) -> ();
+
+        "vkCmdFillBuffer", cmd_fill_buffer(
+            command_buffer: CommandBuffer,
+            dst_buffer: Buffer,
+            dst_offset: DeviceSize,
+            size: DeviceSize,
+            data: uint32_t,
+        ) -> ();
+
+        "vkCmdClearColorImage", cmd_clear_color_image(
+            command_buffer: CommandBuffer,
+            image: Image,
+            image_layout: ImageLayout,
+            p_color: *const ClearColorValue,
+            range_count: uint32_t,
+            p_ranges: *const ImageSubresourceRange,
+        ) -> ();
+
+        "vkCmdClearDepthStencilImage", cmd_clear_depth_stencil_image(
+            command_buffer: CommandBuffer,
+            image: Image,
+            image_layout: ImageLayout,
+            p_depth_stencil: *const ClearDepthStencilValue,
+            range_count: uint32_t,
+            p_ranges: *const ImageSubresourceRange,
+        ) -> ();
+
+        "vkCmdClearAttachments", cmd_clear_attachments(
+            command_buffer: CommandBuffer,
+            attachment_count: uint32_t,
+            p_attachments: *const ClearAttachment,
+            rect_count: uint32_t,
+            p_rects: *const ClearRect,
+        ) -> ();
+
+        "vkCmdResolveImage", cmd_resolve_image(
+            command_buffer: CommandBuffer,
+            src_image: Image,
+            src_image_layout: ImageLayout,
+            dst_image: Image,
+            dst_image_layout: ImageLayout,
+            region_count: uint32_t,
+            p_regions: *const ImageResolve,
+        ) -> ();
+
+        "vkCmdSetEvent", cmd_set_event(
+            command_buffer: CommandBuffer,
+            event: Event,
+            stage_mask: PipelineStageFlags,
+        ) -> ();
+
+        "vkCmdResetEvent", cmd_reset_event(
+            command_buffer: CommandBuffer,
+            event: Event,
+            stage_mask: PipelineStageFlags,
+        ) -> ();
+
+        "vkCmdWaitEvents", cmd_wait_events(
+            command_buffer: CommandBuffer,
+            event_count: uint32_t,
+            p_events: *const Event,
+            src_stage_mask: PipelineStageFlags,
+            dst_stage_mask: PipelineStageFlags,
+            memory_barrier_count: uint32_t,
+            p_memory_barriers: *const MemoryBarrier,
+            buffer_memory_barrier_count: uint32_t,
+            p_buffer_memory_barriers: *const BufferMemoryBarrier,
+            image_memory_barrier_count: uint32_t,
+            p_image_memory_barriers: *const ImageMemoryBarrier,
+        ) -> ();
+
+        "vkCmdPipelineBarrier", cmd_pipeline_barrier(
+            command_buffer: CommandBuffer,
+            src_stage_mask: PipelineStageFlags,
+            dst_stage_mask: PipelineStageFlags,
+            dependency_flags: DependencyFlags,
+            memory_barrier_count: uint32_t,
+            p_memory_barriers: *const MemoryBarrier,
+            buffer_memory_barrier_count: uint32_t,
+            p_buffer_memory_barriers: *const BufferMemoryBarrier,
+            image_memory_barrier_count: uint32_t,
+            p_image_memory_barriers: *const ImageMemoryBarrier,
+        ) -> ();
+
+        "vkCmdBeginQuery", cmd_begin_query(
+            command_buffer: CommandBuffer,
+            query_pool: QueryPool,
+            query: uint32_t,
+            flags: QueryControlFlags,
+        ) -> ();
+
+        "vkCmdEndQuery", cmd_end_query(
+            command_buffer: CommandBuffer,
+            query_pool: QueryPool,
+            query: uint32_t,
+        ) -> ();
+
+        "vkCmdResetQueryPool", cmd_reset_query_pool(
+            command_buffer: CommandBuffer,
+            query_pool: QueryPool,
+            first_query: uint32_t,
+            query_count: uint32_t,
+        ) -> ();
+
+        "vkCmdWriteTimestamp", cmd_write_timestamp(
+            command_buffer: CommandBuffer,
+            pipeline_stage: PipelineStageFlags,
+            query_pool: QueryPool,
+            query: uint32_t,
+        ) -> ();
+
+        "vkCmdCopyQueryPoolResults", cmd_copy_query_pool_results(
+            command_buffer: CommandBuffer,
+            query_pool: QueryPool,
+            first_query: uint32_t,
+            query_count: uint32_t,
+            dst_buffer: Buffer,
+            dst_offset: DeviceSize,
+            stride: DeviceSize,
+            flags: QueryResultFlags,
+        ) -> ();
+
+        "vkCmdPushConstants", cmd_push_constants(
+            command_buffer: CommandBuffer,
+            layout: PipelineLayout,
+            stage_flags: ShaderStageFlags,
+            offset: uint32_t,
+            size: uint32_t,
+            p_values: *const c_void,
+        ) -> ();
+
+        "vkCmdBeginRenderPass", cmd_begin_render_pass(
+            command_buffer: CommandBuffer,
+            p_render_pass_begin: *const RenderPassBeginInfo,
+            contents: SubpassContents,
+        ) -> ();
+
+        "vkCmdNextSubpass", cmd_next_subpass(
+            command_buffer: CommandBuffer,
+            contents: SubpassContents,
+        ) -> ();
+
+        "vkCmdEndRenderPass", cmd_end_render_pass(
+            command_buffer: CommandBuffer,
+        ) -> ();
+
+        "vkCmdExecuteCommands", cmd_execute_commands(
+            command_buffer: CommandBuffer,
+            command_buffer_count: uint32_t,
+            p_command_buffers: *const CommandBuffer,
+        ) -> ();
+    }
 
     vk_functions!{
-    SwapchainFn,
-    "vkCreateSwapchainKHR", create_swapchain_khr(
-        device: Device,
-        p_create_info: *const SwapchainCreateInfoKHR,
-        p_allocator: *const AllocationCallbacks,
-        p_swapchain: *mut SwapchainKHR,
-    ) -> Result;
-
-    "vkDestroySwapchainKHR", destroy_swapchain_khr(
-        device: Device,
-        swapchain: SwapchainKHR,
-        p_allocator: *const AllocationCallbacks,
-    ) -> ();
-
-    "vkGetSwapchainImagesKHR", get_swapchain_images_khr(
-        device: Device,
-        swapchain: SwapchainKHR,
-        p_swapchain_image_count: *mut uint32_t,
-        p_swapchain_images: *mut Image,
-    ) -> Result;
-
-    "vkAcquireNextImageKHR", acquire_next_image_khr(
-        device: Device,
-        swapchain: SwapchainKHR,
-        timeout: uint64_t,
-        semaphore: Semaphore,
-        fence: Fence,
-        p_image_index: *mut uint32_t,
-    ) -> Result;
-
-    "vkQueuePresentKHR", queue_present_khr(
-        queue: Queue,
-        p_present_info: *const PresentInfoKHR,
-    ) -> Result;
-}
+        DisplaySwapchainFn,
+        "vkCreateSharedSwapchainsKHR", create_shared_swapchains_khr(
+            device: Device,
+            swapchain_count: uint32_t,
+            p_create_infos: *const SwapchainCreateInfoKHR,
+            p_allocator: *const AllocationCallbacks,
+            p_swapchains: *mut SwapchainKHR,
+        ) -> Result;
+    }
 
     vk_functions!{
-    SurfaceFn,
-    "vkDestroySurfaceKHR", destroy_surface_khr(
-        instance: Instance,
-        surface: SurfaceKHR,
-        p_allocator: *const AllocationCallbacks,
-    ) -> ();
+        SwapchainFn,
+        "vkCreateSwapchainKHR", create_swapchain_khr(
+            device: Device,
+            p_create_info: *const SwapchainCreateInfoKHR,
+            p_allocator: *const AllocationCallbacks,
+            p_swapchain: *mut SwapchainKHR,
+        ) -> Result;
 
-    "vkGetPhysicalDeviceSurfaceSupportKHR", get_physical_device_surface_support_khr(
-        physical_device: PhysicalDevice,
-        queue_family_index: uint32_t,
-        surface: SurfaceKHR,
-        p_supported: *mut Bool32,
-    ) -> Result;
+        "vkDestroySwapchainKHR", destroy_swapchain_khr(
+            device: Device,
+            swapchain: SwapchainKHR,
+            p_allocator: *const AllocationCallbacks,
+        ) -> ();
 
-    "vkGetPhysicalDeviceSurfaceCapabilitiesKHR", get_physical_device_surface_capabilities_khr(
-        physical_device: PhysicalDevice,
-        surface: SurfaceKHR,
-        p_surface_capabilities: *mut SurfaceCapabilitiesKHR,
-    ) -> Result;
+        "vkGetSwapchainImagesKHR", get_swapchain_images_khr(
+            device: Device,
+            swapchain: SwapchainKHR,
+            p_swapchain_image_count: *mut uint32_t,
+            p_swapchain_images: *mut Image,
+        ) -> Result;
 
-    "vkGetPhysicalDeviceSurfaceFormatsKHR", get_physical_device_surface_formats_khr(
-        physical_device: PhysicalDevice,
-        surface: SurfaceKHR,
-        p_surface_format_count: *mut uint32_t,
-        p_surface_formats: *mut SurfaceFormatKHR,
-    ) -> Result;
+        "vkAcquireNextImageKHR", acquire_next_image_khr(
+            device: Device,
+            swapchain: SwapchainKHR,
+            timeout: uint64_t,
+            semaphore: Semaphore,
+            fence: Fence,
+            p_image_index: *mut uint32_t,
+        ) -> Result;
 
-    "vkGetPhysicalDeviceSurfacePresentModesKHR", get_physical_device_surface_present_modes_khr(
-        physical_device: PhysicalDevice,
-        surface: SurfaceKHR,
-        p_present_mode_count: *mut uint32_t,
-        p_present_modes: *mut PresentModeKHR,
-    ) -> Result;
-}
-    vk_functions!{
-    XlibSurfaceFn,
-    "vkCreateXlibSurfaceKHR", create_xlib_surface_khr(
-        instance: Instance,
-        p_create_info: *const XlibSurfaceCreateInfoKHR,
-        p_allocator: *const AllocationCallbacks,
-        p_surface: *mut SurfaceKHR,
-    ) -> Result;
-
-    "vkGetPhysicalDeviceXlibPresentationSupportKHR", get_physical_device_xlib_presentation_support_khr(
-        physical_device: PhysicalDevice,
-        queue_family_index: uint32_t,
-        dpy: *mut Display,
-        visual_id: VisualID,
-    ) -> Bool32;
-}
-    vk_functions!{
-    DebugMarkerFn,
-    "vkDebugMarkerSetObjectNameEXT", debug_marker_set_object_name_ext(
-        device: Device,
-        p_name_info: *const DebugMarkerObjectNameInfoEXT,
-    ) -> Result;
-    "vkCmdDebugMarkerBeginEXT", cmd_debug_marker_begin_ext(
-        command_buffer: CommandBuffer,
-        p_marker_info: *const DebugMarkerMarkerInfoEXT,
-    ) -> ();
-    "vkCmdDebugMarkerEndEXT", cmd_debug_marker_end_ext(
-        command_buffer: CommandBuffer,
-    ) -> ();
-    "vkCmdDebugMarkerInsertEXT", cmd_debug_marker_insert_ext(
-        command_buffer: CommandBuffer,
-        p_marker_info: *const DebugMarkerMarkerInfoEXT,
-    ) -> ();
-}
-    vk_functions!{
-    DebugReportFn,
-    "vkCreateDebugReportCallbackEXT", create_debug_report_callback_ext(
-        instance: Instance,
-        p_create_info: *const DebugReportCallbackCreateInfoEXT,
-        p_allocator: *const AllocationCallbacks,
-        p_callback: *mut DebugReportCallbackEXT,
-    ) -> Result;
-
-    "vkDestroyDebugReportCallbackEXT", destroy_debug_report_callback_ext(
-        instance: Instance,
-        callback: DebugReportCallbackEXT,
-        p_allocator: *const AllocationCallbacks,
-    ) -> ();
-
-    "vkDebugReportMessageEXT", debug_report_message_ext(
-        instance: Instance,
-        flags: DebugReportFlagsEXT,
-        object_type: DebugReportObjectTypeEXT,
-        object: uint64_t,
-        location: size_t,
-        message_code: int32_t,
-        p_layer_prefix: *const c_char,
-        p_message: *const c_char,
-    ) -> ();
-}
-    vk_functions!{
-    Win32SurfaceFn,
-    "vkCreateWin32SurfaceKHR", create_win32_surface_khr(
-        instance: Instance,
-        p_create_info: *const Win32SurfaceCreateInfoKHR,
-        p_allocator: *const AllocationCallbacks,
-        p_surface: *mut SurfaceKHR,
-    ) -> Result;
-
-    "vkGetPhysicalDeviceWin32PresentationSupportKHR", get_physical_device_win32_presentation_support_khr(
-        physical_device: PhysicalDevice,
-        queue_family_index: uint32_t,
-    ) -> Bool32;
-}
-    vk_functions!{
-    MirSurfaceFn,
-    "vkCreateMirSurfaceKHR", create_mir_surface_khr(
-        instance: Instance,
-        p_create_info: *const MirSurfaceCreateInfoKHR,
-        p_allocator: *const AllocationCallbacks,
-        p_surface: *mut SurfaceKHR,
-    ) -> Result;
-
-    "vkGetPhysicalDeviceMirPresentationSupportKHR", get_physical_device_mir_presentation_support_khr(
-        physical_device: PhysicalDevice,
-        queue_family_index: uint32_t,
-        connection: *mut MirConnection,
-    ) -> Bool32;
-}
-    vk_functions!{
-    XcbSurfaceFn,
-    "vkCreateXcbSurfaceKHR", create_xcb_surface_khr(
-        instance: Instance,
-        p_create_info: *const XcbSurfaceCreateInfoKHR,
-        p_allocator: *const AllocationCallbacks,
-        p_surface: *mut SurfaceKHR,
-    ) -> Result;
-
-    "vkGetPhysicalDeviceXcbPresentationSupportKHR", get_physical_device_xcb_presentation_support_khr(
-        physical_device: PhysicalDevice,
-        queue_family_index: uint32_t,
-        connection: *mut xcb_connection_t,
-        visual_id: xcb_visualid_t,
-    ) -> Bool32;
-}
-    vk_functions!{
-    AndroidSurfaceFn,
-    "vkCreateAndroidSurfaceKHR", create_android_surface_khr(
-        instance: Instance,
-        p_create_info: *const AndroidSurfaceCreateInfoKHR,
-        p_allocator: *const AllocationCallbacks,
-        p_surface: *mut SurfaceKHR,
-    ) -> Result;
-}
-    vk_functions!{
-    WaylandSurfaceFn,
-    "vkCreateWaylandSurfaceKHR", create_wayland_surface_khr(
-        instance: Instance,
-        p_create_info: *const WaylandSurfaceCreateInfoKHR,
-        p_allocator: *const AllocationCallbacks,
-        p_surface: *mut SurfaceKHR,
-    ) -> Result;
-
-    "vkGetPhysicalDeviceWaylandPresentationSupportKHR", get_physical_device_wayland_presentation_support_khr(
-        physical_device: PhysicalDevice,
-        queue_family_index: uint32_t,
-        display: *mut wl_display,
-    ) -> Bool32;
-}
-    vk_functions!{
-    DisplayFn,
-    "vkGetPhysicalDeviceDisplayPropertiesKHR", get_physical_device_display_properties_khr(
-        physical_device: PhysicalDevice,
-        p_property_count: *mut uint32_t,
-        p_properties: *mut DisplayPropertiesKHR,
-    ) -> Result;
-
-    "vkGetPhysicalDeviceDisplayPlanePropertiesKHR", get_physical_device_display_plane_properties_khr(
-        physical_device: PhysicalDevice,
-        p_property_count: *mut uint32_t,
-        p_properties: *mut DisplayPlanePropertiesKHR,
-    ) -> Result;
-
-    "vkGetDisplayPlaneSupportedDisplaysKHR", get_display_plane_supported_displays_khr(
-        physical_device: PhysicalDevice,
-        plane_index: uint32_t,
-        p_display_count: *mut uint32_t,
-        p_displays: *mut DisplayKHR,
-    ) -> Result;
-
-    "vkGetDisplayModePropertiesKHR", get_display_mode_properties_khr(
-        physical_device: PhysicalDevice,
-        display: DisplayKHR,
-        p_property_count: *mut uint32_t,
-        p_properties: *mut DisplayModePropertiesKHR,
-    ) -> Result;
-
-    "vkCreateDisplayModeKHR", create_display_mode_khr(
-        physical_device: PhysicalDevice,
-        display: DisplayKHR,
-        p_create_info: *const DisplayModeCreateInfoKHR,
-        p_allocator: *const AllocationCallbacks,
-        p_mode: *mut DisplayModeKHR,
-    ) -> Result;
-
-    "vkGetDisplayPlaneCapabilitiesKHR", get_display_plane_capabilities_khr(
-        physical_device: PhysicalDevice,
-        mode: DisplayModeKHR,
-        plane_index: uint32_t,
-        p_capabilities: *mut DisplayPlaneCapabilitiesKHR,
-    ) -> Result;
-
-    "vkCreateDisplayPlaneSurfaceKHR", create_display_plane_surface_khr(
-        instance: Instance,
-        p_create_info: *const DisplaySurfaceCreateInfoKHR,
-        p_allocator: *const AllocationCallbacks,
-        p_surface: *mut SurfaceKHR,
-    ) -> Result;
-}
+        "vkQueuePresentKHR", queue_present_khr(
+            queue: Queue,
+            p_present_info: *const PresentInfoKHR,
+        ) -> Result;
+    }
 
     vk_functions!{
-    IOSSurfaceFn,
-    "vkCreateIOSSurfaceMVK", create_ios_surface_mvk(
-        instance: Instance,
-        p_create_info: *const IOSSurfaceCreateInfoMVK,
-        p_allocator: *const AllocationCallbacks,
-        p_surface: *mut SurfaceKHR,
-    ) -> Result;
-}
+        SurfaceFn,
+        "vkDestroySurfaceKHR", destroy_surface_khr(
+            instance: Instance,
+            surface: SurfaceKHR,
+            p_allocator: *const AllocationCallbacks,
+        ) -> ();
+
+        "vkGetPhysicalDeviceSurfaceSupportKHR", get_physical_device_surface_support_khr(
+            physical_device: PhysicalDevice,
+            queue_family_index: uint32_t,
+            surface: SurfaceKHR,
+            p_supported: *mut Bool32,
+        ) -> Result;
+
+        "vkGetPhysicalDeviceSurfaceCapabilitiesKHR", get_physical_device_surface_capabilities_khr(
+            physical_device: PhysicalDevice,
+            surface: SurfaceKHR,
+            p_surface_capabilities: *mut SurfaceCapabilitiesKHR,
+        ) -> Result;
+
+        "vkGetPhysicalDeviceSurfaceFormatsKHR", get_physical_device_surface_formats_khr(
+            physical_device: PhysicalDevice,
+            surface: SurfaceKHR,
+            p_surface_format_count: *mut uint32_t,
+            p_surface_formats: *mut SurfaceFormatKHR,
+        ) -> Result;
+
+        "vkGetPhysicalDeviceSurfacePresentModesKHR", get_physical_device_surface_present_modes_khr(
+            physical_device: PhysicalDevice,
+            surface: SurfaceKHR,
+            p_present_mode_count: *mut uint32_t,
+            p_present_modes: *mut PresentModeKHR,
+        ) -> Result;
+    }
+    vk_functions!{
+        XlibSurfaceFn,
+        "vkCreateXlibSurfaceKHR", create_xlib_surface_khr(
+            instance: Instance,
+            p_create_info: *const XlibSurfaceCreateInfoKHR,
+            p_allocator: *const AllocationCallbacks,
+            p_surface: *mut SurfaceKHR,
+        ) -> Result;
+
+        "vkGetPhysicalDeviceXlibPresentationSupportKHR", get_physical_device_xlib_presentation_support_khr(
+            physical_device: PhysicalDevice,
+            queue_family_index: uint32_t,
+            dpy: *mut Display,
+            visual_id: VisualID,
+        ) -> Bool32;
+    }
+    vk_functions!{
+        DebugMarkerFn,
+        "vkDebugMarkerSetObjectNameEXT", debug_marker_set_object_name_ext(
+            device: Device,
+            p_name_info: *const DebugMarkerObjectNameInfoEXT,
+        ) -> Result;
+        "vkCmdDebugMarkerBeginEXT", cmd_debug_marker_begin_ext(
+            command_buffer: CommandBuffer,
+            p_marker_info: *const DebugMarkerMarkerInfoEXT,
+        ) -> ();
+        "vkCmdDebugMarkerEndEXT", cmd_debug_marker_end_ext(
+            command_buffer: CommandBuffer,
+        ) -> ();
+        "vkCmdDebugMarkerInsertEXT", cmd_debug_marker_insert_ext(
+            command_buffer: CommandBuffer,
+            p_marker_info: *const DebugMarkerMarkerInfoEXT,
+        ) -> ();
+    }
+    vk_functions!{
+        DebugReportFn,
+        "vkCreateDebugReportCallbackEXT", create_debug_report_callback_ext(
+            instance: Instance,
+            p_create_info: *const DebugReportCallbackCreateInfoEXT,
+            p_allocator: *const AllocationCallbacks,
+            p_callback: *mut DebugReportCallbackEXT,
+        ) -> Result;
+
+        "vkDestroyDebugReportCallbackEXT", destroy_debug_report_callback_ext(
+            instance: Instance,
+            callback: DebugReportCallbackEXT,
+            p_allocator: *const AllocationCallbacks,
+        ) -> ();
+
+        "vkDebugReportMessageEXT", debug_report_message_ext(
+            instance: Instance,
+            flags: DebugReportFlagsEXT,
+            object_type: DebugReportObjectTypeEXT,
+            object: uint64_t,
+            location: size_t,
+            message_code: int32_t,
+            p_layer_prefix: *const c_char,
+            p_message: *const c_char,
+        ) -> ();
+    }
+    vk_functions!{
+        Win32SurfaceFn,
+        "vkCreateWin32SurfaceKHR", create_win32_surface_khr(
+            instance: Instance,
+            p_create_info: *const Win32SurfaceCreateInfoKHR,
+            p_allocator: *const AllocationCallbacks,
+            p_surface: *mut SurfaceKHR,
+        ) -> Result;
+
+        "vkGetPhysicalDeviceWin32PresentationSupportKHR", get_physical_device_win32_presentation_support_khr(
+            physical_device: PhysicalDevice,
+            queue_family_index: uint32_t,
+        ) -> Bool32;
+    }
+    vk_functions!{
+        MirSurfaceFn,
+        "vkCreateMirSurfaceKHR", create_mir_surface_khr(
+            instance: Instance,
+            p_create_info: *const MirSurfaceCreateInfoKHR,
+            p_allocator: *const AllocationCallbacks,
+            p_surface: *mut SurfaceKHR,
+        ) -> Result;
+
+        "vkGetPhysicalDeviceMirPresentationSupportKHR", get_physical_device_mir_presentation_support_khr(
+            physical_device: PhysicalDevice,
+            queue_family_index: uint32_t,
+            connection: *mut MirConnection,
+        ) -> Bool32;
+    }
+    vk_functions!{
+        XcbSurfaceFn,
+        "vkCreateXcbSurfaceKHR", create_xcb_surface_khr(
+            instance: Instance,
+            p_create_info: *const XcbSurfaceCreateInfoKHR,
+            p_allocator: *const AllocationCallbacks,
+            p_surface: *mut SurfaceKHR,
+        ) -> Result;
+
+        "vkGetPhysicalDeviceXcbPresentationSupportKHR", get_physical_device_xcb_presentation_support_khr(
+            physical_device: PhysicalDevice,
+            queue_family_index: uint32_t,
+            connection: *mut xcb_connection_t,
+            visual_id: xcb_visualid_t,
+        ) -> Bool32;
+    }
+    vk_functions!{
+        AndroidSurfaceFn,
+        "vkCreateAndroidSurfaceKHR", create_android_surface_khr(
+            instance: Instance,
+            p_create_info: *const AndroidSurfaceCreateInfoKHR,
+            p_allocator: *const AllocationCallbacks,
+            p_surface: *mut SurfaceKHR,
+        ) -> Result;
+    }
+    vk_functions!{
+        WaylandSurfaceFn,
+        "vkCreateWaylandSurfaceKHR", create_wayland_surface_khr(
+            instance: Instance,
+            p_create_info: *const WaylandSurfaceCreateInfoKHR,
+            p_allocator: *const AllocationCallbacks,
+            p_surface: *mut SurfaceKHR,
+        ) -> Result;
+
+        "vkGetPhysicalDeviceWaylandPresentationSupportKHR", get_physical_device_wayland_presentation_support_khr(
+            physical_device: PhysicalDevice,
+            queue_family_index: uint32_t,
+            display: *mut wl_display,
+        ) -> Bool32;
+    }
+    vk_functions!{
+        DisplayFn,
+        "vkGetPhysicalDeviceDisplayPropertiesKHR", get_physical_device_display_properties_khr(
+            physical_device: PhysicalDevice,
+            p_property_count: *mut uint32_t,
+            p_properties: *mut DisplayPropertiesKHR,
+        ) -> Result;
+
+        "vkGetPhysicalDeviceDisplayPlanePropertiesKHR", get_physical_device_display_plane_properties_khr(
+            physical_device: PhysicalDevice,
+            p_property_count: *mut uint32_t,
+            p_properties: *mut DisplayPlanePropertiesKHR,
+        ) -> Result;
+
+        "vkGetDisplayPlaneSupportedDisplaysKHR", get_display_plane_supported_displays_khr(
+            physical_device: PhysicalDevice,
+            plane_index: uint32_t,
+            p_display_count: *mut uint32_t,
+            p_displays: *mut DisplayKHR,
+        ) -> Result;
+
+        "vkGetDisplayModePropertiesKHR", get_display_mode_properties_khr(
+            physical_device: PhysicalDevice,
+            display: DisplayKHR,
+            p_property_count: *mut uint32_t,
+            p_properties: *mut DisplayModePropertiesKHR,
+        ) -> Result;
+
+        "vkCreateDisplayModeKHR", create_display_mode_khr(
+            physical_device: PhysicalDevice,
+            display: DisplayKHR,
+            p_create_info: *const DisplayModeCreateInfoKHR,
+            p_allocator: *const AllocationCallbacks,
+            p_mode: *mut DisplayModeKHR,
+        ) -> Result;
+
+        "vkGetDisplayPlaneCapabilitiesKHR", get_display_plane_capabilities_khr(
+            physical_device: PhysicalDevice,
+            mode: DisplayModeKHR,
+            plane_index: uint32_t,
+            p_capabilities: *mut DisplayPlaneCapabilitiesKHR,
+        ) -> Result;
+
+        "vkCreateDisplayPlaneSurfaceKHR", create_display_plane_surface_khr(
+            instance: Instance,
+            p_create_info: *const DisplaySurfaceCreateInfoKHR,
+            p_allocator: *const AllocationCallbacks,
+            p_surface: *mut SurfaceKHR,
+        ) -> Result;
+    }
 
     vk_functions!{
-    MacOSSurfaceFn,
-    "vkCreateMacOSSurfaceMVK", create_macos_surface_mvk(
-        instance: Instance,
-        p_create_info: *const MacOSSurfaceCreateInfoMVK,
-        p_allocator: *const AllocationCallbacks,
-        p_surface: *mut SurfaceKHR,
-    ) -> Result;
-}
+        IOSSurfaceFn,
+        "vkCreateIOSSurfaceMVK", create_ios_surface_mvk(
+            instance: Instance,
+            p_create_info: *const IOSSurfaceCreateInfoMVK,
+            p_allocator: *const AllocationCallbacks,
+            p_surface: *mut SurfaceKHR,
+        ) -> Result;
+    }
+
+    vk_functions!{
+        MacOSSurfaceFn,
+        "vkCreateMacOSSurfaceMVK", create_macos_surface_mvk(
+            instance: Instance,
+            p_create_info: *const MacOSSurfaceCreateInfoMVK,
+            p_allocator: *const AllocationCallbacks,
+            p_surface: *mut SurfaceKHR,
+        ) -> Result;
+    }
 }

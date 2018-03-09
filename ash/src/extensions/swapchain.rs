@@ -5,7 +5,7 @@ use std::mem;
 use vk;
 use std::ffi::CStr;
 use RawPtr;
-use version::{InstanceV1_0, DeviceV1_0};
+use version::{DeviceV1_0, InstanceV1_0};
 
 #[derive(Clone)]
 pub struct Swapchain {
@@ -19,10 +19,7 @@ impl Swapchain {
         device: &D,
     ) -> Result<Swapchain, Vec<&'static str>> {
         let swapchain_fn = vk::SwapchainFn::load(|name| unsafe {
-            mem::transmute(instance.get_device_proc_addr(
-                device.handle(),
-                name.as_ptr(),
-            ))
+            mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         })?;
         Ok(Swapchain {
             handle: device.handle(),
