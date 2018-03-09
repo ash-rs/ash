@@ -140,9 +140,19 @@ pub fn gen_load(feature: &vkxml::Feature, commands: &CommandMap) -> quote::Token
                 }
             })
             .collect();
+        let names: Vec<_> = commands.iter().map(|cmd| cmd.command_ident()).collect();
+        let names_left = &names;
+        let names_right = &names;
         quote!{
             pub struct #ident {
                 #(#function_pointers,)*
+            }
+            impl ::std::clone::Clone for #ident {
+                pub fn clone(&self) -> Self {
+                    #ident{
+                        #(#names_left: self.#names_right,)*
+                    }
+                }
             }
         }
     }
