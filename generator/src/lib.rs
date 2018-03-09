@@ -11,6 +11,18 @@ use heck::SnakeCase;
 
 use syn::Ident;
 
+pub trait FeatureExt {
+    fn version_string(&self) -> String;
+}
+impl FeatureExt for vkxml::Feature {
+    fn version_string(&self) -> String {
+        let version = format!("{:.10}", self.version);
+        let first_0 = version.find("0").expect("should have at least one 0");
+        // + 1 is correct here because we always have 10 zeroes.
+        let (version, _) = version.split_at(first_0 + 1);
+        version.replace(".", "_")
+    }
+}
 pub trait CommandExt {
     /// Returns the ident in snake_case and without the 'vk' prefix.
     fn is_device_command(&self) -> bool;
@@ -100,36 +112,52 @@ pub fn gen_load(feature: &vkxml::Feature, commands: &CommandMap) -> quote::Token
         })
         .filter_map(|cmd_ref| commands.get(&cmd_ref.name))
         .fold((Vec::new(), Vec::new()), |mut acc, &cmd_ref| {
-            let basetype = cmd_ref.param[0].basetype.as_str();
-            match basetype {
-                "VkDevice" | "VkCommandBuffer" | "VkQueue" => acc.0.push(cmd_ref),
-                _ => acc.1.push(cmd_ref),
+            if cmd_ref.is_device_command() {
+                acc.0.push(cmd_ref);
+            } else {
+                acc.1.push(cmd_ref);
             };
             acc
         });
     let name = Ident::from("Test");
-    let function_pointers: Vec<_> = instance_commands
-        .iter()
-        .map(|cmd| {
-            let fn_name_raw = cmd.name.as_str();
-            let fn_name_snake = cmd.command_ident();
-            let params: Vec<_> = cmd.param
-                .iter()
-                .map(|field| {
-                    let name = field.param_ident();
-                    let ty = field.type_ident();
-                    quote!{#name: #ty}
-                })
-                .collect();
-            let return_ty = cmd.return_type.type_ident();
-            quote!{
-                #fn_name_snake: extern "system" fn(#(#params,)*) -> #return_ty
+    fn generate_function_pointers(ident: Ident, commands: &[&vkxml::Command]) -> quote::Tokens {
+        let function_pointers: Vec<_> = commands
+            .iter()
+            .map(|cmd| {
+                let fn_name_raw = cmd.name.as_str();
+                let fn_name_snake = cmd.command_ident();
+                let params: Vec<_> = cmd.param
+                    .iter()
+                    .map(|field| {
+                        let name = field.param_ident();
+                        let ty = field.type_ident();
+                        quote!{#name: #ty}
+                    })
+                    .collect();
+                let return_ty = cmd.return_type.type_ident();
+                quote!{
+                    #fn_name_snake: extern "system" fn(#(#params,)*) -> #return_ty
+                }
+            })
+            .collect();
+        quote!{
+            pub struct #ident {
+                #(#function_pointers,)*
             }
-        })
-        .collect();
-    quote!{
-        pub struct #name {
-            #(#function_pointers,)*
         }
+    }
+    let version = feature.version_string();
+    let instance = generate_function_pointers(
+        Ident::from(format!("InstanceFnV{}", version).as_str()),
+        &instance_commands,
+    );
+    let device = generate_function_pointers(
+        Ident::from(format!("DeviceFnV{}", version).as_str()),
+        &instance_commands,
+    );
+    quote! {
+        #instance
+
+        #device
     }
 }
