@@ -1,0 +1,10 @@
+[package]
+name = "generator"
+version = "0.1.0"
+authors = ["Maik Klein <maikklein@googlemail.com>"]
+
+[dependencies]
+vkxml = {git = "https://github.com/maikklein/vkxml"}
+quote = "0.4.2"
+syn = "0.12.14"
+heck = "0.3.0"
