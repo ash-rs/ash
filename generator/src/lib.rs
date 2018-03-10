@@ -9,7 +9,7 @@ extern crate syn;
 pub extern crate vkxml;
 
 use quote::Tokens;
-use heck::SnakeCase;
+use heck::{CamelCase, SnakeCase};
 
 use syn::Ident;
 
@@ -60,6 +60,33 @@ pub trait FieldExt {
     fn type_tokens(&self) -> Tokens;
 }
 
+fn to_type_tokens(type_name: &str, reference: Option<&vkxml::ReferenceType>) -> Tokens {
+    let new_name = match type_name {
+        "void" => "c_void",
+        "char" => "c_char",
+        "float" => "c_float",
+        "long" => "c_ulong",
+        _ => {
+            let prefix = &type_name[0..2];
+            if prefix == "Vk" {
+                &type_name[2..]
+            } else {
+                type_name
+            }
+        }
+    };
+    let ptr_name = reference
+        .as_ref()
+        .map(|reference| match *reference {
+            &vkxml::ReferenceType::Pointer => "*mut",
+            &vkxml::ReferenceType::PointerToPointer => "*mut",
+            &vkxml::ReferenceType::PointerToConstPointer => "*const",
+        })
+        .unwrap_or("");
+    let ty: syn::Type = syn::parse_str(&format!("{} {}", ptr_name, new_name)).expect("parse field");
+    quote!{#ty}
+}
+
 impl FieldExt for vkxml::Field {
     fn param_ident(&self) -> Ident {
         let name = self.name.as_ref().map(|s| s.as_str()).unwrap_or("field");
@@ -71,31 +98,7 @@ impl FieldExt for vkxml::Field {
     }
 
     fn type_tokens(&self) -> Tokens {
-        let new_name = match self.basetype.as_str() {
-            "void" => "c_void",
-            "char" => "c_char",
-            "float" => "c_float",
-            "long" => "c_ulong",
-            _ => {
-                let prefix = &self.basetype[0..2];
-                if prefix == "Vk" {
-                    &self.basetype[2..]
-                } else {
-                    self.basetype.as_str()
-                }
-            }
-        };
-        let ptr_name = self.reference
-            .as_ref()
-            .map(|reference| match *reference {
-                vkxml::ReferenceType::Pointer => "*mut",
-                vkxml::ReferenceType::PointerToPointer => "*mut",
-                vkxml::ReferenceType::PointerToConstPointer => "*const",
-            })
-            .unwrap_or("");
-        let ty: syn::Type =
-            syn::parse_str(&format!("{} {}", ptr_name, new_name)).expect("parse field");
-        quote!{#ty}
+        to_type_tokens(&self.basetype, self.reference.as_ref())
     }
 }
 use std::collections::HashMap;
@@ -212,6 +215,88 @@ fn generate_function_pointers(ident: Ident, commands: &[&vkxml::Command]) -> quo
         }
     }
 }
+pub fn generate_extension(extension: &vkxml::Extension, commands: &CommandMap) -> quote::Tokens {
+    let extension_commands: Vec<&vkxml::Command> = extension
+        .elements
+        .iter()
+        .flat_map(|extension| {
+            if let &vkxml::ExtensionElement::Require(ref spec) = extension {
+                spec.elements
+                    .iter()
+                    .filter_map(|extension_spec| {
+                        if let &vkxml::ExtensionSpecificationElement::CommandReference(
+                            ref cmd_ref,
+                        ) = extension_spec
+                        {
+                            Some(cmd_ref)
+                        } else {
+                            None
+                        }
+                    })
+                    .collect()
+            } else {
+                vec![]
+            }
+        })
+        .filter_map(|cmd_ref| commands.get(&cmd_ref.name))
+        .map(|&cmd| cmd)
+        .collect();
+    if extension_commands.is_empty() {
+        return quote!{};
+    }
+    let name = format!("{}Fn", extension.name.to_camel_case());
+    let ident = Ident::from(&name[2..]);
+    generate_function_pointers(ident, &extension_commands)
+}
+pub fn generate_typedef(typedef: &vkxml::Typedef) -> Tokens {
+    let typedef_name = to_type_tokens(&typedef.name, None);
+    let typedef_ty = to_type_tokens(&typedef.basetype, None);
+    quote!{
+        type #typedef_name = #typedef_ty;
+    }
+}
+pub fn generate_bitmask(bitmask: &vkxml::Bitmask) -> Tokens {
+    println!("{:#?}", bitmask);
+    let ident = Ident::from(&bitmask.name[2..]);
+    let type_token = to_type_tokens(&bitmask.basetype, None);
+    quote!{
+        vk_bitflags_wrapped!(#ident, 0b0, #type_token);
+    }
+}
+pub fn generate_enumeration(_enum: &vkxml::EnumerationDeclaration) -> Tokens {
+    quote!{}
+}
+pub fn generate_struct(_struct: &vkxml::Struct) -> Tokens {
+    let name = Ident::from(&_struct.name[2..]);
+    let params = _struct
+        .elements
+        .iter()
+        .filter_map(|elem| match *elem {
+            vkxml::StructElement::Member(ref field) => Some(field),
+            _ => None,
+        })
+        .map(|field| {
+            let param_ident = field.param_ident();
+            let param_ty_tokens = field.type_tokens();
+            quote!{pub #param_ident: #param_ty_tokens}
+        });
+    quote!{
+        #[derive(Clone, Debug)]
+        #[repr(C)]
+        pub struct #name {
+            #(#params,)*
+        }
+    }
+}
+pub fn generate_definition(definition: &vkxml::DefinitionsElement) -> Tokens {
+    match *definition {
+        vkxml::DefinitionsElement::Typedef(ref typedef) => generate_typedef(typedef),
+        vkxml::DefinitionsElement::Struct(ref _struct) => generate_struct(_struct),
+        vkxml::DefinitionsElement::Enumeration(ref _enum) => generate_enumeration(_enum),
+        vkxml::DefinitionsElement::Bitmask(ref mask) => generate_bitmask(mask),
+        _ => quote!{},
+    }
+}
 pub fn generate_core_spec(feature: &vkxml::Feature, commands: &CommandMap) -> quote::Tokens {
     let (device_commands, instance_commands) = feature
         .elements
@@ -257,4 +342,63 @@ pub fn generate_core_spec(feature: &vkxml::Feature, commands: &CommandMap) -> qu
         #instance
         #device
     }
+}
+
+pub fn write_source_code(spec: &vkxml::Registry) {
+    use std::io::Write;
+    use std::fs::File;
+    let commands: HashMap<vkxml::Identifier, &vkxml::Command> = spec.elements
+        .iter()
+        .filter_map(|elem| match elem {
+            &vkxml::RegistryElement::Commands(ref cmds) => Some(cmds),
+            _ => None,
+        })
+        .flat_map(|cmds| cmds.elements.iter().map(|cmd| (cmd.name.clone(), cmd)))
+        .collect();
+
+    let features: Vec<&vkxml::Feature> = spec.elements
+        .iter()
+        .filter_map(|elem| match elem {
+            &vkxml::RegistryElement::Features(ref features) => Some(features),
+            _ => None,
+        })
+        .flat_map(|features| features.elements.iter().map(|feature| feature))
+        .collect();
+
+    let extensions: Vec<&vkxml::Extension> = spec.elements
+        .iter()
+        .filter_map(|elem| match elem {
+            &vkxml::RegistryElement::Extensions(ref extensions) => Some(extensions),
+            _ => None,
+        })
+        .flat_map(|extensions| extensions.elements.iter().map(|extension| extension))
+        .collect();
+
+    let definitions: Vec<&vkxml::DefinitionsElement> = spec.elements
+        .iter()
+        .filter_map(|elem| match elem {
+            &vkxml::RegistryElement::Definitions(ref definitions) => Some(definitions),
+            _ => None,
+        })
+        .flat_map(|definitions| definitions.elements.iter().map(|definition| definition))
+        .collect();
+
+    let definition_code: Vec<_> = definitions.into_iter().map(generate_definition).collect();
+
+    let feature_code: Vec<_> = features
+        .iter()
+        .map(|feature| generate_core_spec(feature, &commands))
+        .collect();
+
+    let extension_code: Vec<_> = extensions
+        .iter()
+        .map(|ext| generate_extension(ext, &commands))
+        .collect();
+    let mut file = File::create("vk_test.rs").expect("vk");
+    let source_code = quote!{
+        //#(#feature_code)*
+        //#(#extension_code)*
+        #(#definition_code)*
+    };
+    write!(&mut file, "{}", source_code);
 }
