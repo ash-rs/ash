@@ -1,3 +1,4 @@
+#![recursion_limit = "256"]
 // extern crate serde;
 // #[macro_use]
 // extern crate serde_derive;
@@ -88,7 +89,119 @@ impl FieldExt for vkxml::Field {
 }
 use std::collections::HashMap;
 pub type CommandMap<'a> = HashMap<vkxml::Identifier, &'a vkxml::Command>;
-pub fn gen_load(feature: &vkxml::Feature, commands: &CommandMap) -> quote::Tokens {
+
+fn generate_function_pointers(ident: Ident, commands: &[&vkxml::Command]) -> quote::Tokens {
+    let names: Vec<_> = commands.iter().map(|cmd| cmd.command_ident()).collect();
+    let names_ref = &names;
+    let raw_names: Vec<_> = commands
+        .iter()
+        .map(|cmd| Ident::from(cmd.name.as_str()))
+        .collect();
+    let raw_names_ref = &raw_names;
+    let names_left = &names;
+    let names_right = &names;
+
+    let params: Vec<Vec<(Ident, Ident)>> = commands
+        .iter()
+        .map(|cmd| {
+            let fn_name_raw = cmd.name.as_str();
+            let fn_name_snake = cmd.command_ident();
+            let params: Vec<_> = cmd.param
+                .iter()
+                .map(|field| {
+                    let name = field.param_ident();
+                    let ty = field.type_ident();
+                    (name, ty)
+                })
+                .collect();
+            params
+        })
+        .collect();
+
+    let params_names: Vec<Vec<_>> = params
+        .iter()
+        .map(|inner_params| {
+            inner_params
+                .iter()
+                .map(|&(param_name, _)| param_name)
+                .collect()
+        })
+        .collect();
+    let param_names_ref = &params_names;
+    let expanded_params: Vec<_> = params
+        .iter()
+        .map(|inner_params| {
+            let inner_params_iter = inner_params.iter().map(|&(param_name, param_ty)| {
+                quote!{#param_name: #param_ty}
+            });
+            quote!{
+                #(#inner_params_iter,)*
+            }
+        })
+        .collect();
+    let expanded_params_ref = &expanded_params;
+
+    let params_ref = &params;
+    let return_types: Vec<_> = commands
+        .iter()
+        .map(|cmd| cmd.return_type.type_ident())
+        .collect();
+    let return_types_ref = &return_types;
+    quote!{
+        pub struct #ident {
+            #(
+                #names_ref: extern "system" fn(#expanded_params_ref) -> #return_types_ref,
+            )*
+        }
+
+        unsafe impl Send for #ident {}
+        unsafe impl Sync for #ident {}
+
+        impl ::std::clone::Clone for #ident {
+            pub fn clone(&self) -> Self {
+                #ident{
+                    #(#names_left: self.#names_right,)*
+                }
+            }
+        }
+        impl #ident {
+            pub fn load<F>(mut f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+                where F: FnMut(&::std::ffi::CStr) -> *const c_void
+            {
+                use std::ffi::CString;
+                use std::mem;
+                let mut err_str = Vec::new();
+                let s = #ident {
+                    #(
+                        #names_ref: unsafe {
+                            let raw_name = stringify!(#raw_names_ref);
+                            let cname = CString::new(raw_name).unwrap();
+                            let val = f(&cname);
+                            if val.is_null(){
+                                err_str.push(raw_name);
+                            }
+                            mem::transmute(val)
+                        },
+                    )*
+                };
+
+                if err_str.is_empty() {
+                    Ok(s)
+                }
+                else{
+                    Err(err_str)
+                }
+
+            }
+            #(
+                pub fn #names_ref(#expanded_params_ref) -> #return_types_ref {
+                    (self.#names_left)(#(#param_names_ref,)*)
+                }
+            )*
+        }
+    }
+}
+pub fn generate_core_spec(feature: &vkxml::Feature, commands: &CommandMap) -> quote::Tokens {
     let (device_commands, instance_commands) = feature
         .elements
         .iter()
@@ -120,42 +233,6 @@ pub fn gen_load(feature: &vkxml::Feature, commands: &CommandMap) -> quote::Token
             acc
         });
     let name = Ident::from("Test");
-    fn generate_function_pointers(ident: Ident, commands: &[&vkxml::Command]) -> quote::Tokens {
-        let function_pointers: Vec<_> = commands
-            .iter()
-            .map(|cmd| {
-                let fn_name_raw = cmd.name.as_str();
-                let fn_name_snake = cmd.command_ident();
-                let params: Vec<_> = cmd.param
-                    .iter()
-                    .map(|field| {
-                        let name = field.param_ident();
-                        let ty = field.type_ident();
-                        quote!{#name: #ty}
-                    })
-                    .collect();
-                let return_ty = cmd.return_type.type_ident();
-                quote!{
-                    #fn_name_snake: extern "system" fn(#(#params,)*) -> #return_ty
-                }
-            })
-            .collect();
-        let names: Vec<_> = commands.iter().map(|cmd| cmd.command_ident()).collect();
-        let names_left = &names;
-        let names_right = &names;
-        quote!{
-            pub struct #ident {
-                #(#function_pointers,)*
-            }
-            impl ::std::clone::Clone for #ident {
-                pub fn clone(&self) -> Self {
-                    #ident{
-                        #(#names_left: self.#names_right,)*
-                    }
-                }
-            }
-        }
-    }
     let version = feature.version_string();
     let instance = generate_function_pointers(
         Ident::from(format!("InstanceFnV{}", version).as_str()),
@@ -163,11 +240,10 @@ pub fn gen_load(feature: &vkxml::Feature, commands: &CommandMap) -> quote::Token
     );
     let device = generate_function_pointers(
         Ident::from(format!("DeviceFnV{}", version).as_str()),
-        &instance_commands,
+        &device_commands,
     );
     quote! {
         #instance
-
         #device
     }
 }

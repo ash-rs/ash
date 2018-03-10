@@ -26,11 +26,12 @@ fn main() {
         .flat_map(|features| features.elements.iter().map(|feature| feature))
         .collect();
 
-    let source_code: Vec<_> = features.iter().map(|feature| gen_load(feature, &commands)).collect();
+    let source_code: Vec<_> = features
+        .iter()
+        .map(|feature| generate_core_spec(feature, &commands))
+        .collect();
     let mut file = File::create("vk_test.rs").expect("vk");
     for source_code in &source_code {
         write!(&mut file, "{}", source_code);
     }
-    
-
 }
