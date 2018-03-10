@@ -8,6 +8,7 @@ extern crate quote;
 extern crate syn;
 pub extern crate vkxml;
 
+use quote::Tokens;
 use heck::SnakeCase;
 
 use syn::Ident;
@@ -56,7 +57,7 @@ pub trait FieldExt {
     fn param_ident(&self) -> Ident;
 
     /// Returns the basetype ident and removes the 'Vk' prefix
-    fn type_ident(&self) -> Ident;
+    fn type_tokens(&self) -> Tokens;
 }
 
 impl FieldExt for vkxml::Field {
@@ -69,7 +70,7 @@ impl FieldExt for vkxml::Field {
         Ident::from(name_corrected.to_snake_case().as_str())
     }
 
-    fn type_ident(&self) -> Ident {
+    fn type_tokens(&self) -> Tokens {
         let new_name = match self.basetype.as_str() {
             "void" => "c_void",
             "char" => "c_char",
@@ -84,7 +85,17 @@ impl FieldExt for vkxml::Field {
                 }
             }
         };
-        Ident::from(new_name)
+        let ptr_name = self.reference
+            .as_ref()
+            .map(|reference| match *reference {
+                vkxml::ReferenceType::Pointer => "*mut",
+                vkxml::ReferenceType::PointerToPointer => "*mut",
+                vkxml::ReferenceType::PointerToConstPointer => "*const",
+            })
+            .unwrap_or("");
+        let ty: syn::Type =
+            syn::parse_str(&format!("{} {}", ptr_name, new_name)).expect("parse field");
+        quote!{#ty}
     }
 }
 use std::collections::HashMap;
@@ -101,7 +112,7 @@ fn generate_function_pointers(ident: Ident, commands: &[&vkxml::Command]) -> quo
     let names_left = &names;
     let names_right = &names;
 
-    let params: Vec<Vec<(Ident, Ident)>> = commands
+    let params: Vec<Vec<(Ident, Tokens)>> = commands
         .iter()
         .map(|cmd| {
             let fn_name_raw = cmd.name.as_str();
@@ -110,7 +121,7 @@ fn generate_function_pointers(ident: Ident, commands: &[&vkxml::Command]) -> quo
                 .iter()
                 .map(|field| {
                     let name = field.param_ident();
-                    let ty = field.type_ident();
+                    let ty = field.type_tokens();
                     (name, ty)
                 })
                 .collect();
@@ -131,7 +142,7 @@ fn generate_function_pointers(ident: Ident, commands: &[&vkxml::Command]) -> quo
     let expanded_params: Vec<_> = params
         .iter()
         .map(|inner_params| {
-            let inner_params_iter = inner_params.iter().map(|&(param_name, param_ty)| {
+            let inner_params_iter = inner_params.iter().map(|&(ref param_name, ref param_ty)| {
                 quote!{#param_name: #param_ty}
             });
             quote!{
@@ -144,7 +155,7 @@ fn generate_function_pointers(ident: Ident, commands: &[&vkxml::Command]) -> quo
     let params_ref = &params;
     let return_types: Vec<_> = commands
         .iter()
-        .map(|cmd| cmd.return_type.type_ident())
+        .map(|cmd| cmd.return_type.type_tokens())
         .collect();
     let return_types_ref = &return_types;
     quote!{
