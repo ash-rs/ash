@@ -1204,6 +1204,18 @@ pub trait DeviceV1_0 {
         }
     }
 
+    unsafe fn destroy_buffer_view(
+        &self,
+        buffer_view: vk::BufferView,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+    ) {
+        self.fp_v1_0().destroy_buffer_view(
+            self.handle(),
+            buffer_view,
+            allocation_callbacks.as_raw_ptr(),
+        );
+    }
+
     unsafe fn create_image_view(
         &self,
         create_info: &vk::ImageViewCreateInfo,
