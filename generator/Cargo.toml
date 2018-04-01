@@ -4,13 +4,15 @@ version = "0.1.0"
 authors = ["Maik Klein <maikklein@googlemail.com>"]
 
 [dependencies]
-vkxml = {git = "https://github.com/maikklein/vkxml"}
+vkxml = {path = "/home/maik/projects/vkxml"}
+#vkxml = {git = "https://github.com/maikklein/vkxml"}
 heck = "0.3.0"
+proc-macro2 = "0.2.3"
 
 [dependencies.quote]
 version = "0.4.2"
 
 [dependencies.syn]
-vesion = "0.12.14"
+version = "0.12.14"
 features = ["full", "extra-traits"]
 

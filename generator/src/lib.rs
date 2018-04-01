@@ -3,16 +3,84 @@
 // #[macro_use]
 // extern crate serde_derive;
 extern crate heck;
+extern crate proc_macro2;
 #[macro_use]
 extern crate quote;
 extern crate syn;
 pub extern crate vkxml;
 
+use proc_macro2::Term;
 use quote::Tokens;
-use heck::{CamelCase, SnakeCase};
-
+use heck::{CamelCase, ShoutySnakeCase, SnakeCase};
 use syn::Ident;
 
+pub enum Constant {
+    Number(i32),
+    Hex(String),
+    BitPos(u32),
+    CExpr(vkxml::CExpression),
+    Text(String),
+}
+impl Constant {
+    pub fn value(&self) -> Option<i64> {
+        match *self {
+            Constant::Number(n) => Some(n as i64),
+            Constant::Hex(ref hex) => Some(hex.parse().expect("hex parse")),
+            Constant::BitPos(pos) => Some((1 << pos) as i64),
+            _ => None,
+        }
+    }
+    pub fn to_tokens(&self) -> Tokens {
+        match *self {
+            Constant::Number(n) => {
+                let term = Term::intern(&n.to_string());
+                quote!{#term}
+            }
+            Constant::Hex(ref s) => {
+                let term = Term::intern(s);
+                quote!{#term}
+            }
+            Constant::Text(ref text) => {
+                quote!{#text}
+            }
+            Constant::CExpr(ref cexpr) => {
+                let rexpr = cexpr.replace("~", "!").replace("U", "u32");
+                let term = Term::intern(&rexpr);
+                quote!{#term}
+            }
+            Constant::BitPos(pos) => {
+                let value = 1 << pos;
+                let term = Term::intern(&format!("0b{:b}", value));
+                quote!{#term}
+            }
+        }
+    }
+
+    pub fn from_constant(constant: &vkxml::Constant) -> Self {
+        let number = constant.number.map(|n| Constant::Number(n));
+        let hex = constant.hex.as_ref().map(|hex| Constant::Hex(hex.clone()));
+        let bitpos = constant.bitpos.map(|bit| Constant::BitPos(bit));
+        let expr = constant
+            .c_expression
+            .as_ref()
+            .map(|e| Constant::CExpr(e.clone()));
+        number.or(hex).or(bitpos).or(expr).expect("")
+    }
+    pub fn from_extension(extension: &vkxml::ExtensionConstant) -> Self {
+        let number = extension.number.map(|n| Constant::Number(n));
+        let hex = extension.hex.as_ref().map(|hex| Constant::Hex(hex.clone()));
+        let bitpos = extension.bitpos.map(|bit| Constant::BitPos(bit));
+        let expr = extension
+            .c_expression
+            .as_ref()
+            .map(|e| Constant::CExpr(e.clone()));
+        let text = extension.text.as_ref().map(|e| Constant::Text(e.clone()));
+        number.or(hex).or(bitpos).or(expr).or(text).expect("")
+    }
+}
+
+pub trait ConstantExt {}
+impl ConstantExt for vkxml::Constant {}
 pub trait FeatureExt {
     fn version_string(&self) -> String;
 }
@@ -252,19 +320,109 @@ pub fn generate_typedef(typedef: &vkxml::Typedef) -> Tokens {
     let typedef_name = to_type_tokens(&typedef.name, None);
     let typedef_ty = to_type_tokens(&typedef.basetype, None);
     quote!{
-        type #typedef_name = #typedef_ty;
+        pub type #typedef_name = #typedef_ty;
     }
 }
 pub fn generate_bitmask(bitmask: &vkxml::Bitmask) -> Tokens {
-    println!("{:#?}", bitmask);
-    let ident = Ident::from(&bitmask.name[2..]);
+    let name = &bitmask.name[2..];
+    let name_without_flags = name.replace("Flags", "");
+    let ident = Ident::from(name);
+    let ident_without_flags = Ident::from(name_without_flags.as_str());
     let type_token = to_type_tokens(&bitmask.basetype, None);
     quote!{
-        vk_bitflags_wrapped!(#ident, 0b0, #type_token);
+        pub type #ident = BitFlags<flags::#ident_without_flags>;
     }
 }
-pub fn generate_enumeration(_enum: &vkxml::EnumerationDeclaration) -> Tokens {
-    quote!{}
+pub fn to_variant_ident(enum_name: &str, variant_name: &str) -> Ident {
+    let tag = ["AMD", "NN", "KHR", "NV", "EXT", "NVX", "KHX"]
+        .iter()
+        .filter_map(|tag| {
+            if enum_name.ends_with(tag) {
+                Some(tag)
+            } else {
+                None
+            }
+        })
+        .nth(0);
+
+    let name_without_tag = tag.map(|t| enum_name.replace(t, ""))
+        .unwrap_or(enum_name.into());
+    let variant_without_tag = tag.map(|t| variant_name.replace(t, ""))
+        .unwrap_or(variant_name.into());
+    let camel_case_name_enum = &name_without_tag.to_camel_case();
+    let name = variant_without_tag.to_camel_case()[2..].replace(camel_case_name_enum, "");
+    let is_digit = name.chars().nth(0).map(|c| c.is_digit(10)).unwrap_or(false);
+    if is_digit {
+        Ident::from(format!("Type{}", name).as_str())
+    } else {
+        Ident::from(name)
+    }
+}
+
+pub enum EnumType {
+    Bitflags(Tokens),
+    Enum(Tokens),
+}
+
+pub fn generate_enum(_enum: &vkxml::Enumeration) -> EnumType {
+    let name = &_enum.name[2..];
+    let _name = name.replace("FlagBits", "");
+    if name.contains("Bit") {
+        let variants = _enum.elements.iter().filter_map(|elem| {
+            let (variant_name, value) = match *elem {
+                vkxml::EnumerationElement::Enum(ref constant) => {
+                    let c = Constant::from_constant(constant);
+                    if c.value().map(|v| v == 0).unwrap_or(false) {
+                        return None;
+                    }
+                    (constant.name.as_str(), c.to_tokens())
+                }
+                _ => {
+                    return None;
+                }
+            };
+
+            let variant_ident = to_variant_ident(&_name, variant_name);
+            Some(quote!{
+                #variant_ident = #value
+            })
+        });
+        let ident = Ident::from(_name.as_str());
+        let q = quote!{
+            #[derive(Copy, Clone, Debug, EnumFlags)]
+            pub enum #ident {
+                #(#variants,)*
+            }
+        };
+        EnumType::Bitflags(q)
+    } else {
+        let variants = _enum.elements.iter().filter_map(|elem| {
+            let (variant_name, value) = match *elem {
+                vkxml::EnumerationElement::Enum(ref constant) => {
+                    let c = Constant::from_constant(constant);
+                    println!("value {:?}", c.value());
+                    (constant.name.as_str(), c.to_tokens())
+                }
+                _ => {
+                    return None;
+                }
+            };
+
+            let variant_ident = to_variant_ident(&_name, variant_name);
+            Some(quote!{
+                #variant_ident = #value
+            })
+        });
+        let ident = Ident::from(_name.as_str());
+        let q = quote!{
+            #[derive(Copy, Clone, Debug)]
+            #[repr(C)]
+            pub enum #ident {
+                #(#variants,)*
+            }
+        };
+        EnumType::Enum(q)
+    }
 }
 pub fn generate_struct(_struct: &vkxml::Struct) -> Tokens {
     let name = Ident::from(&_struct.name[2..]);
@@ -292,7 +450,6 @@ pub fn generate_definition(definition: &vkxml::DefinitionsElement) -> Tokens {
     match *definition {
         vkxml::DefinitionsElement::Typedef(ref typedef) => generate_typedef(typedef),
         vkxml::DefinitionsElement::Struct(ref _struct) => generate_struct(_struct),
-        vkxml::DefinitionsElement::Enumeration(ref _enum) => generate_enumeration(_enum),
         vkxml::DefinitionsElement::Bitmask(ref mask) => generate_bitmask(mask),
         _ => quote!{},
     }
@@ -383,6 +540,42 @@ pub fn write_source_code(spec: &vkxml::Registry) {
         .flat_map(|definitions| definitions.elements.iter().map(|definition| definition))
         .collect();
 
+    let enums: Vec<&vkxml::Enumeration> = spec.elements
+        .iter()
+        .filter_map(|elem| match elem {
+            &vkxml::RegistryElement::Enums(ref enums) => Some(enums),
+            _ => None,
+        })
+        .flat_map(|enums| {
+            enums.elements.iter().filter_map(|_enum| match *_enum {
+                vkxml::EnumsElement::Enumeration(ref e) => Some(e),
+                _ => None,
+            })
+        })
+        .collect();
+
+    let constants: Vec<&vkxml::Constant> = spec.elements
+        .iter()
+        .filter_map(|elem| match elem {
+            &vkxml::RegistryElement::Constants(ref constants) => Some(constants),
+            _ => None,
+        })
+        .flat_map(|constants| constants.elements.iter())
+        .collect();
+
+    //println!("{:#?}", constants);
+
+    let (enum_code, bitflags_code) = enums.into_iter().map(generate_enum).fold(
+        (Vec::new(), Vec::new()),
+        |mut acc, elem| {
+            match elem {
+                EnumType::Enum(token) => acc.0.push(token),
+                EnumType::Bitflags(token) => acc.1.push(token),
+            };
+            acc
+        },
+    );
+
     let definition_code: Vec<_> = definitions.into_iter().map(generate_definition).collect();
 
     let feature_code: Vec<_> = features
@@ -394,11 +587,15 @@ pub fn write_source_code(spec: &vkxml::Registry) {
         .iter()
         .map(|ext| generate_extension(ext, &commands))
         .collect();
-    let mut file = File::create("vk_test.rs").expect("vk");
+    let mut file = File::create("../ash/src/vk_test.rs").expect("vk");
     let source_code = quote!{
         //#(#feature_code)*
         //#(#extension_code)*
-        #(#definition_code)*
+        //#(#definition_code)*
+        //#(#enum_code)*
+        pub mod flags {
+            #(#bitflags_code)*
+        }
     };
     write!(&mut file, "{}", source_code);
 }
