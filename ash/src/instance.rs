@@ -132,7 +132,7 @@ pub trait InstanceV1_0 {
         tiling: vk::ImageTiling,
         usage: vk::ImageUsageFlags,
         flags: vk::ImageCreateFlags,
-    ) -> Result<vk::ImageFormatProperties, vk::Result> {
+    ) -> VkResult<vk::ImageFormatProperties> {
         unsafe {
             let mut image_format_prop = mem::uninitialized();
             let err_code = self.fp_v1_0().get_physical_device_image_format_properties(
