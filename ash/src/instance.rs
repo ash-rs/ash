@@ -124,6 +124,34 @@ pub trait InstanceV1_0 {
         }
     }
 
+    fn get_physical_device_image_format_properties(
+        &self,
+        physical_device: vk::PhysicalDevice,
+        format: vk::Format,
+        typ: vk::ImageType,
+        tiling: vk::ImageTiling,
+        usage: vk::ImageUsageFlags,
+        flags: vk::ImageCreateFlags,
+    ) -> Result<vk::ImageFormatProperties, vk::Result> {
+        unsafe {
+            let mut image_format_prop = mem::uninitialized();
+            let err_code = self.fp_v1_0().get_physical_device_image_format_properties(
+                physical_device,
+                format,
+                typ,
+                tiling,
+                usage,
+                flags,
+                &mut image_format_prop,
+            );
+            if err_code == vk::Result::Success {
+                Ok(image_format_prop)
+            } else {
+                Err(err_code)
+            }
+        }
+    }
+
     fn get_physical_device_memory_properties(
         &self,
         physical_device: vk::PhysicalDevice,
