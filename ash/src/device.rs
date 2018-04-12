@@ -685,10 +685,15 @@ pub trait DeviceV1_0 {
             .cmd_bind_pipeline(command_buffer, pipeline_bind_point, pipeline);
     }
 
-    unsafe fn cmd_set_scissor(&self, command_buffer: vk::CommandBuffer, scissors: &[vk::Rect2D]) {
+    unsafe fn cmd_set_scissor(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        first_scissor: vk::uint32_t,
+        scissors: &[vk::Rect2D],
+    ) {
         self.fp_v1_0().cmd_set_scissor(
             command_buffer,
-            0,
+            first_scissor,
             scissors.len() as vk::uint32_t,
             scissors.as_ptr(),
         );

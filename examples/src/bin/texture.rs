@@ -910,7 +910,7 @@ fn main() {
                                          vk::PipelineBindPoint::Graphics,
                                          graphic_pipeline);
                 device.cmd_set_viewport(draw_command_buffer, 0, &viewports);
-                device.cmd_set_scissor(draw_command_buffer, &scissors);
+                device.cmd_set_scissor(draw_command_buffer, 0, &scissors);
                 device
                     .cmd_bind_vertex_buffers(draw_command_buffer, 0, &[vertex_input_buffer], &[0]);
                 device.cmd_bind_index_buffer(draw_command_buffer,
