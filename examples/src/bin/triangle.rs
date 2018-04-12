@@ -510,7 +510,7 @@ fn main() {
                         graphic_pipeline,
                     );
                     device.cmd_set_viewport(draw_command_buffer, 0, &viewports);
-                    device.cmd_set_scissor(draw_command_buffer, &scissors);
+                    device.cmd_set_scissor(draw_command_buffer, 0, &scissors);
                     device.cmd_bind_vertex_buffers(
                         draw_command_buffer,
                         0,
