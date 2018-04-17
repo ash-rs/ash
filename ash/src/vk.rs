@@ -186,12 +186,12 @@ macro_rules! vk_make_version {
 
 #[macro_export]
 macro_rules! vk_version_major {
-    ($major: expr) => (($major as uint32_t) << 22)
+    ($major: expr) => (($major as uint32_t) >> 22)
 }
 
 #[macro_export]
 macro_rules! vk_version_minor {
-    ($minor: expr) => ((($minor as uint32_t) << 12) & 0x3ff)
+    ($minor: expr) => ((($minor as uint32_t) >> 12) & 0x3ff)
 }
 
 #[macro_export]
