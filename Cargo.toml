@@ -1,5 +1,6 @@
 [workspace]
 members = [
     "examples",
-    "ash"
+    "ash",
+    "vk-registry",
 ]
