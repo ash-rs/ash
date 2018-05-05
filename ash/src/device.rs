@@ -793,6 +793,16 @@ pub trait DeviceV1_0 {
             .cmd_set_blend_constants(command_buffer, &blend_constants);
     }
 
+    unsafe fn cmd_set_depth_bounds(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        min_depth_bounds: f32,
+        max_depth_bounds: f32,
+    ) {
+        self.fp_v1_0()
+            .cmd_set_depth_bounds(command_buffer, min_depth_bounds, max_depth_bounds);
+    }
+
     unsafe fn cmd_set_stencil_reference(
         &self,
         command_buffer: vk::CommandBuffer,
