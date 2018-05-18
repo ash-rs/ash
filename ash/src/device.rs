@@ -699,6 +699,17 @@ pub trait DeviceV1_0 {
         );
     }
 
+    unsafe fn cmd_set_line_width(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        line_width: f32,
+    ) {
+        self.fp_v1_0().cmd_set_line_width(
+            command_buffer,
+            line_width,
+        );
+    }
+
     unsafe fn cmd_bind_vertex_buffers(
         &self,
         command_buffer: vk::CommandBuffer,
