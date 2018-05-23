@@ -1331,6 +1331,19 @@ pub trait DeviceV1_0 {
         }
     }
 
+    fn get_image_subresource_layout(
+        &self,
+        image: vk::Image,
+        subresource: vk::ImageSubresource,
+    ) -> vk::SubresourceLayout {
+        unsafe {
+            let mut layout = mem::uninitialized();
+            self.fp_v1_0()
+                .get_image_subresource_layout(self.handle(), image, &subresource, &mut layout);
+            layout
+        }
+    }
+
     fn get_image_memory_requirements(&self, image: vk::Image) -> vk::MemoryRequirements {
         unsafe {
             let mut mem_req = mem::uninitialized();
