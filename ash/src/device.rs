@@ -795,6 +795,21 @@ pub trait DeviceV1_0 {
         );
     }
 
+    unsafe fn cmd_set_depth_bias(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        constant_factor: f32,
+        clamp: f32,
+        slope_factor: f32,
+    ) {
+        self.fp_v1_0().cmd_set_depth_bias(
+            command_buffer,
+            constant_factor,
+            clamp,
+            slope_factor,
+        );
+    }
+
     unsafe fn cmd_set_blend_constants(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -812,6 +827,26 @@ pub trait DeviceV1_0 {
     ) {
         self.fp_v1_0()
             .cmd_set_depth_bounds(command_buffer, min_depth_bounds, max_depth_bounds);
+    }
+
+    unsafe fn cmd_set_stencil_compare_mask(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        face_mask: vk::StencilFaceFlags,
+        compare_mask: u32,
+    ) {
+        self.fp_v1_0()
+            .cmd_set_stencil_compare_mask(command_buffer, face_mask, compare_mask);
+    }
+
+    unsafe fn cmd_set_stencil_write_mask(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        face_mask: vk::StencilFaceFlags,
+        write_mask: u32,
+    ) {
+        self.fp_v1_0()
+            .cmd_set_stencil_write_mask(command_buffer, face_mask, write_mask);
     }
 
     unsafe fn cmd_set_stencil_reference(
