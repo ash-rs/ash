@@ -7,11 +7,12 @@ extern crate proc_macro2;
 #[macro_use]
 extern crate quote;
 extern crate syn;
+pub extern crate vk_parse;
 pub extern crate vkxml;
 
+use heck::{CamelCase, ShoutySnakeCase, SnakeCase};
 use proc_macro2::Term;
 use quote::Tokens;
-use heck::{CamelCase, ShoutySnakeCase, SnakeCase};
 use syn::Ident;
 
 pub enum Constant {
@@ -25,7 +26,7 @@ impl Constant {
     pub fn value(&self) -> Option<i64> {
         match *self {
             Constant::Number(n) => Some(n as i64),
-            Constant::Hex(ref hex) => Some(hex.parse().expect("hex parse")),
+            Constant::Hex(ref hex) => i64::from_str_radix(&hex, 16).ok(),
             Constant::BitPos(pos) => Some((1 << pos) as i64),
             _ => None,
         }
@@ -37,7 +38,7 @@ impl Constant {
                 quote!{#term}
             }
             Constant::Hex(ref s) => {
-                let term = Term::intern(s);
+                let term = Term::intern(&format!("0x{}", s));
                 quote!{#term}
             }
             Constant::Text(ref text) => {
@@ -323,15 +324,19 @@ pub fn generate_typedef(typedef: &vkxml::Typedef) -> Tokens {
         pub type #typedef_name = #typedef_ty;
     }
 }
-pub fn generate_bitmask(bitmask: &vkxml::Bitmask) -> Tokens {
+pub fn generate_bitmask(bitmask: &vkxml::Bitmask) -> Option<Tokens> {
+    // Workaround for empty bitmask
+    if bitmask.name.len() == 0 {
+        return None;
+    }
     let name = &bitmask.name[2..];
     let name_without_flags = name.replace("Flags", "");
     let ident = Ident::from(name);
     let ident_without_flags = Ident::from(name_without_flags.as_str());
     let type_token = to_type_tokens(&bitmask.basetype, None);
-    quote!{
+    Some(quote!{
         pub type #ident = BitFlags<flags::#ident_without_flags>;
-    }
+    })
 }
 pub fn to_variant_ident(enum_name: &str, variant_name: &str) -> Ident {
     let tag = ["AMD", "NN", "KHR", "NV", "EXT", "NVX", "KHX"]
@@ -400,7 +405,7 @@ pub fn generate_enum(_enum: &vkxml::Enumeration) -> EnumType {
             let (variant_name, value) = match *elem {
                 vkxml::EnumerationElement::Enum(ref constant) => {
                     let c = Constant::from_constant(constant);
-                    println!("value {:?}", c.value());
+                    //println!("value {:?}", c.value());
                     (constant.name.as_str(), c.to_tokens())
                 }
                 _ => {
@@ -446,12 +451,12 @@ pub fn generate_struct(_struct: &vkxml::Struct) -> Tokens {
         }
     }
 }
-pub fn generate_definition(definition: &vkxml::DefinitionsElement) -> Tokens {
+pub fn generate_definition(definition: &vkxml::DefinitionsElement) -> Option<Tokens> {
     match *definition {
-        vkxml::DefinitionsElement::Typedef(ref typedef) => generate_typedef(typedef),
-        vkxml::DefinitionsElement::Struct(ref _struct) => generate_struct(_struct),
+        vkxml::DefinitionsElement::Typedef(ref typedef) => Some(generate_typedef(typedef)),
+        vkxml::DefinitionsElement::Struct(ref _struct) => Some(generate_struct(_struct)),
         vkxml::DefinitionsElement::Bitmask(ref mask) => generate_bitmask(mask),
-        _ => quote!{},
+        _ => None,
     }
 }
 pub fn generate_core_spec(feature: &vkxml::Feature, commands: &CommandMap) -> quote::Tokens {
@@ -502,8 +507,8 @@ pub fn generate_core_spec(feature: &vkxml::Feature, commands: &CommandMap) -> qu
 }
 
 pub fn write_source_code(spec: &vkxml::Registry) {
-    use std::io::Write;
     use std::fs::File;
+    use std::io::Write;
     let commands: HashMap<vkxml::Identifier, &vkxml::Command> = spec.elements
         .iter()
         .filter_map(|elem| match elem {
@@ -576,7 +581,7 @@ pub fn write_source_code(spec: &vkxml::Registry) {
         },
     );
 
-    let definition_code: Vec<_> = definitions.into_iter().map(generate_definition).collect();
+    let definition_code: Vec<_> = definitions.into_iter().filter_map(generate_definition).collect();
 
     let feature_code: Vec<_> = features
         .iter()
