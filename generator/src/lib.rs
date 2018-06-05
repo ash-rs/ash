@@ -370,34 +370,47 @@ pub enum EnumType {
 }
 
 pub fn generate_enum(_enum: &vkxml::Enumeration) -> EnumType {
+    println!("{}", _enum.name);
     let name = &_enum.name[2..];
-    let _name = name.replace("FlagBits", "");
+    let _name = name.replace("FlagBits", "Flags");
     if name.contains("Bit") {
+        let ident = Ident::from(_name.as_str());
+        let all_bits = _enum
+            .elements
+            .iter()
+            .filter_map(|elem| match elem {
+                vkxml::EnumerationElement::Enum(ref constant) => {
+                    let c = Constant::from_constant(constant);
+                    c.value()
+                }
+                _ => None,
+            })
+            .fold(0, |acc, next| acc | next);
+        let all_bits_term = Term::intern(&format!("0b{:b}", all_bits));
+
         let variants = _enum.elements.iter().filter_map(|elem| {
             let (variant_name, value) = match *elem {
                 vkxml::EnumerationElement::Enum(ref constant) => {
+                    let variant_name = &constant.name[3..];
                     let c = Constant::from_constant(constant);
                     if c.value().map(|v| v == 0).unwrap_or(false) {
                         return None;
                     }
-                    (constant.name.as_str(), c.to_tokens())
+                    (variant_name, c.to_tokens())
                 }
                 _ => {
                     return None;
                 }
             };
 
-            let variant_ident = to_variant_ident(&_name, variant_name);
+            let variant_ident = Ident::from(variant_name);
             Some(quote!{
-                #variant_ident = #value
+                pub const #variant_ident: #ident = #ident { flags: #value };
             })
         });
-        let ident = Ident::from(_name.as_str());
         let q = quote!{
-            #[derive(Copy, Clone, Debug, EnumFlags)]
-            pub enum #ident {
-                #(#variants,)*
-            }
+            #(#variants)*
+            vk_bitflags_wrapped!(#ident, #all_bits_term, Flags);
         };
         EnumType::Bitflags(q)
     } else {
@@ -581,7 +594,10 @@ pub fn write_source_code(spec: &vkxml::Registry) {
         },
     );
 
-    let definition_code: Vec<_> = definitions.into_iter().filter_map(generate_definition).collect();
+    let definition_code: Vec<_> = definitions
+        .into_iter()
+        .filter_map(generate_definition)
+        .collect();
 
     let feature_code: Vec<_> = features
         .iter()
