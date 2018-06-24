@@ -2,6 +2,8 @@
 // extern crate serde;
 // #[macro_use]
 // extern crate serde_derive;
+#[macro_use]
+extern crate nom;
 extern crate heck;
 extern crate proc_macro2;
 #[macro_use]
@@ -11,10 +13,289 @@ pub extern crate vk_parse;
 pub extern crate vkxml;
 
 use heck::{CamelCase, ShoutySnakeCase, SnakeCase};
-use proc_macro2::Term;
+use proc_macro2::{Term, TokenTree};
 use quote::Tokens;
+use std::collections::HashMap;
 use syn::Ident;
 
+#[derive(Copy, Clone, Debug)]
+pub enum CType {
+    USize,
+    U32,
+    U64,
+    Float,
+}
+impl CType {
+    fn to_tokens(&self) -> Tokens {
+        let term = match self {
+            CType::USize => Term::intern("usize"),
+            CType::U32 => Term::intern("u32"),
+            CType::U64 => Term::intern("u64"),
+            CType::Float => Term::intern("f32"),
+        };
+        quote!{#term}
+    }
+}
+
+named!(ctype<&str, CType>, 
+    alt!(
+        tag!("ULL") => { |_| CType::U64 } |
+        tag!("U") => { |_| CType::U32  } 
+    )
+);
+named!(cexpr<&str, (CType, String)>,
+       alt!(
+           map!(cfloat, |f| (CType::Float, format!("{:.2}", f))) |
+           inverse_number
+       )
+);
+
+named!(inverse_number<&str, (CType, String)>,
+    do_parse!(
+        tag!("(")>>
+        tag!("~") >>
+        s: take_while1!(|c: char| c.is_digit(10)) >> 
+        ctype: ctype >>
+        minus_num: opt!(
+            do_parse!(
+                tag!("-") >>
+                n: take_while1!(|c: char| c.is_digit(10)) >> 
+                (n)
+            )
+        ) >>
+        tag!(")") >>
+        (
+            {
+                let expr = if let Some(minus) = minus_num {
+                    format!("!{}-{}", s, minus)
+                }
+                else{
+                    format!("!{}", s)
+                };
+                (ctype, expr)
+            }
+        )
+    )
+);
+
+named!(cfloat<&str, f32>,
+    terminated!(nom::float_s, char!('f'))
+);
+
+pub fn define_handle_macro() -> Tokens {
+    quote! {
+        macro_rules! define_handle{
+            ($name: ident) => {
+                #[derive(Clone, Copy, Debug)]
+                #[repr(C)]
+                pub struct $name{
+                    ptr: *mut u8
+                }
+
+                unsafe impl Send for $name {}
+                unsafe impl Sync for $name {}
+
+                impl $name{
+                    pub unsafe fn null() -> Self{
+                        $name{
+                            ptr: ::std::ptr::null_mut()
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+pub fn handle_nondispatchable_macro() -> Tokens {
+    quote!{
+        macro_rules! handle_nondispatchable {
+            ($name: ident) => {
+                #[repr(C)]
+                #[derive(Eq, PartialEq, Ord, PartialOrd, Clone, Copy, Hash)]
+                pub struct $name (uint64_t);
+
+                impl $name{
+                    pub fn null() -> $name{
+                        $name(0)
+                    }
+                }
+                impl ::std::fmt::Pointer for $name {
+                    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::result::Result<(), ::std::fmt::Error> {
+                        write!(f, "0x{:x}", self.0)
+                    }
+                }
+
+                impl ::std::fmt::Debug for $name {
+                    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::result::Result<(), ::std::fmt::Error> {
+                        write!(f, "0x{:x}", self.0)
+                    }
+                }
+            }
+        }
+    }
+}
+pub fn vk_bitflags_wrapped_macro() -> Tokens {
+    quote!{
+        macro_rules! vk_bitflags_wrapped {
+            ($name: ident, $all: expr, $flag_type: ty) => {
+                #[repr(C)]
+                #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+                pub struct $name {flags: $flag_type}
+
+                impl Default for $name{
+                    fn default() -> $name {
+                        $name {flags: 0}
+                    }
+                }
+                impl ::std::fmt::Debug for $name {
+                    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::result::Result<(), ::std::fmt::Error> {
+                        write!(f, "{}({:b})", stringify!($name), self.flags)
+                    }
+                }
+
+                impl $name {
+                    #[inline]
+                    pub fn empty() -> $name {
+                        $name {flags: 0}
+                    }
+
+                    #[inline]
+                    pub fn all() -> $name {
+                        $name {flags: $all}
+                    }
+
+                    #[inline]
+                    pub fn flags(self) -> $flag_type {
+                        self.flags
+                    }
+
+                    #[inline]
+                    pub fn from_flags(flags: $flag_type) -> Option<$name> {
+                        if flags & !$all == 0 {
+                            Some($name {flags: flags})
+                        } else {
+                            None
+                        }
+                    }
+
+                    #[inline]
+                    pub fn from_flags_truncate(flags: $flag_type) -> $name {
+                        $name {flags: flags & $all}
+                    }
+
+                    #[inline]
+                    pub fn is_empty(self) -> bool {
+                        self == $name::empty()
+                    }
+
+                    #[inline]
+                    pub fn is_all(self) -> bool {
+                        self & $name::all() == $name::all()
+                    }
+
+                    #[inline]
+                    pub fn intersects(self, other: $name) -> bool {
+                        self & other != $name::empty()
+                    }
+
+                    /// Returns true of `other` is a subset of `self`
+                    #[inline]
+                    pub fn subset(self, other: $name) -> bool {
+                        self & other == other
+                    }
+                }
+
+                impl ::std::ops::BitOr for $name {
+                    type Output = $name;
+
+                    #[inline]
+                    fn bitor(self, rhs: $name) -> $name {
+                        $name {flags: self.flags | rhs.flags }
+                    }
+                }
+
+                impl ::std::ops::BitOrAssign for $name {
+                    #[inline]
+                    fn bitor_assign(&mut self, rhs: $name) {
+                        *self = *self | rhs
+                    }
+                }
+
+                impl ::std::ops::BitAnd for $name {
+                    type Output = $name;
+
+                    #[inline]
+                    fn bitand(self, rhs: $name) -> $name {
+                        $name {flags: self.flags & rhs.flags}
+                    }
+                }
+
+                impl ::std::ops::BitAndAssign for $name {
+                    #[inline]
+                    fn bitand_assign(&mut self, rhs: $name) {
+                        *self = *self & rhs
+                    }
+                }
+
+                impl ::std::ops::BitXor for $name {
+                    type Output = $name;
+
+                    #[inline]
+                    fn bitxor(self, rhs: $name) -> $name {
+                        $name {flags: self.flags ^ rhs.flags}
+                    }
+                }
+
+                impl ::std::ops::BitXorAssign for $name {
+                    #[inline]
+                    fn bitxor_assign(&mut self, rhs: $name) {
+                        *self = *self ^ rhs
+                    }
+                }
+
+                impl ::std::ops::Sub for $name {
+                    type Output = $name;
+
+                    #[inline]
+                    fn sub(self, rhs: $name) -> $name {
+                        self & !rhs
+                    }
+                }
+
+                impl ::std::ops::SubAssign for $name {
+                    #[inline]
+                    fn sub_assign(&mut self, rhs: $name) {
+                        *self = *self - rhs
+                    }
+                }
+
+                impl ::std::ops::Not for $name {
+                    type Output = $name;
+
+                    #[inline]
+                    fn not(self) -> $name {
+                        self ^ $name::all()
+                    }
+                }
+            }
+        }
+    }
+}
+#[derive(Debug, Copy, Clone)]
+pub enum ConstVal {
+    U32(u32),
+    U64(u64),
+    Float(f32),
+}
+impl ConstVal {
+    pub fn bits(&self) -> u64 {
+        match self {
+            ConstVal::U64(n) => *n,
+            _ => panic!("Constval not supported"),
+        }
+    }
+}
 pub enum Constant {
     Number(i32),
     Hex(String),
@@ -22,15 +303,39 @@ pub enum Constant {
     CExpr(vkxml::CExpression),
     Text(String),
 }
+impl quote::ToTokens for ConstVal {
+    fn to_tokens(&self, tokens: &mut Tokens) {
+        match self {
+            ConstVal::U32(n) => n.to_tokens(tokens),
+            ConstVal::U64(n) => n.to_tokens(tokens),
+            ConstVal::Float(f) => f.to_tokens(tokens),
+        }
+    }
+}
 impl Constant {
-    pub fn value(&self) -> Option<i64> {
+    // pub fn type(&self) -> Type {
+
+    // }
+    pub fn value(&self) -> Option<ConstVal> {
         match *self {
-            Constant::Number(n) => Some(n as i64),
-            Constant::Hex(ref hex) => i64::from_str_radix(&hex, 16).ok(),
-            Constant::BitPos(pos) => Some((1 << pos) as i64),
+            Constant::Number(n) => Some(ConstVal::U64(n as u64)),
+            Constant::Hex(ref hex) => u64::from_str_radix(&hex, 16).ok().map(ConstVal::U64),
+            Constant::BitPos(pos) => Some(ConstVal::U64((1 << pos) as u64)),
             _ => None,
         }
     }
+
+    pub fn ty(&self) -> CType {
+        match self {
+            Constant::Number(_) | Constant::Hex(_) => CType::USize,
+            Constant::CExpr(expr) => {
+                let (_, (ty, _)) = cexpr(expr).expect("Unable to parse cexpr");
+                ty
+            }
+            _ => unimplemented!(),
+        }
+    }
+
     pub fn to_tokens(&self) -> Tokens {
         match *self {
             Constant::Number(n) => {
@@ -44,9 +349,9 @@ impl Constant {
             Constant::Text(ref text) => {
                 quote!{#text}
             }
-            Constant::CExpr(ref cexpr) => {
-                let rexpr = cexpr.replace("~", "!").replace("U", "u32");
-                let term = Term::intern(&rexpr);
+            Constant::CExpr(ref expr) => {
+                let (_, (_, rexpr)) = cexpr(expr).expect("Unable to parse cexpr");
+                let term = Term::intern(rexpr.as_str());
                 quote!{#term}
             }
             Constant::BitPos(pos) => {
@@ -127,36 +432,60 @@ pub trait FieldExt {
 
     /// Returns the basetype ident and removes the 'Vk' prefix
     fn type_tokens(&self) -> Tokens;
+    fn is_clone(&self) -> bool;
 }
 
-fn to_type_tokens(type_name: &str, reference: Option<&vkxml::ReferenceType>) -> Tokens {
+pub trait ToTokens {
+    fn to_tokens(&self) -> Tokens;
+}
+impl ToTokens for vkxml::ReferenceType {
+    fn to_tokens(&self) -> Tokens {
+        let ptr_name = match self {
+            vkxml::ReferenceType::Pointer => "*mut",
+            vkxml::ReferenceType::PointerToPointer => "*mut",
+            vkxml::ReferenceType::PointerToConstPointer => "*const",
+        };
+        let ident = Term::intern(ptr_name);
+        quote!{
+            #ident
+        }
+    }
+}
+fn name_to_tokens(type_name: &str) -> Tokens {
     let new_name = match type_name {
+        "HANDLE" => "*const c_void",
+        "LPCWSTR" => "*const wchar_t",
+        "DWORD" => "c_uint",
+        "int" => "c_int",
         "void" => "c_void",
         "char" => "c_char",
         "float" => "c_float",
         "long" => "c_ulong",
         _ => {
-            let prefix = &type_name[0..2];
-            if prefix == "Vk" {
+            if type_name.starts_with("Vk") {
                 &type_name[2..]
             } else {
                 type_name
             }
         }
     };
-    let ptr_name = reference
-        .as_ref()
-        .map(|reference| match *reference {
-            &vkxml::ReferenceType::Pointer => "*mut",
-            &vkxml::ReferenceType::PointerToPointer => "*mut",
-            &vkxml::ReferenceType::PointerToConstPointer => "*const",
-        })
-        .unwrap_or("");
-    let ty: syn::Type = syn::parse_str(&format!("{} {}", ptr_name, new_name)).expect("parse field");
-    quote!{#ty}
+    let new_name = new_name.replace("FlagBits", "Flags");
+    let name = Term::intern(new_name.as_str());
+    quote! {
+        #name
+    }
+}
+fn to_type_tokens(type_name: &str, reference: Option<&vkxml::ReferenceType>) -> Tokens {
+    let new_name = name_to_tokens(type_name);
+    let ptr_name = reference.map(|r| r.to_tokens()).unwrap_or(quote!{});
+    // let ty: syn::Type = syn::parse_str(&format!("{} {}", ptr_name, new_name)).expect("parse field");
+    quote!{#ptr_name #new_name}
 }
 
 impl FieldExt for vkxml::Field {
+    fn is_clone(&self) -> bool {
+        true
+    }
     fn param_ident(&self) -> Ident {
         let name = self.name.as_ref().map(|s| s.as_str()).unwrap_or("field");
         let name_corrected = match name {
@@ -167,10 +496,31 @@ impl FieldExt for vkxml::Field {
     }
 
     fn type_tokens(&self) -> Tokens {
-        to_type_tokens(&self.basetype, self.reference.as_ref())
+        let ty = name_to_tokens(&self.basetype);
+        let pointer = self.reference
+            .as_ref()
+            .map(|r| r.to_tokens())
+            .unwrap_or(quote!{});
+        let pointer_ty = quote!{
+            #pointer #ty
+        };
+        let array = self.array.as_ref().and_then(|arraytype| match arraytype {
+            vkxml::ArrayType::Static => {
+                let size = self.size
+                    .as_ref()
+                    .or(self.size_enumref.as_ref())
+                    .expect("Should have size");
+                let size = Term::intern(size);
+                Some(quote!{
+                    [#ty; #size]
+                })
+            }
+            _ => None,
+        });
+        array.unwrap_or(pointer_ty)
     }
 }
-use std::collections::HashMap;
+
 pub type CommandMap<'a> = HashMap<vkxml::Identifier, &'a vkxml::Command>;
 
 fn generate_function_pointers(ident: Ident, commands: &[&vkxml::Command]) -> quote::Tokens {
@@ -241,7 +591,7 @@ fn generate_function_pointers(ident: Ident, commands: &[&vkxml::Command]) -> quo
         unsafe impl Sync for #ident {}
 
         impl ::std::clone::Clone for #ident {
-            pub fn clone(&self) -> Self {
+            fn clone(&self) -> Self {
                 #ident{
                     #(#names_left: self.#names_right,)*
                 }
@@ -277,7 +627,7 @@ fn generate_function_pointers(ident: Ident, commands: &[&vkxml::Command]) -> quo
 
             }
             #(
-                pub fn #names_ref(#expanded_params_ref) -> #return_types_ref {
+                pub fn #names_ref(&self, #expanded_params_ref) -> #return_types_ref {
                     (self.#names_left)(#(#param_names_ref,)*)
                 }
             )*
@@ -329,13 +679,15 @@ pub fn generate_bitmask(bitmask: &vkxml::Bitmask) -> Option<Tokens> {
     if bitmask.name.len() == 0 {
         return None;
     }
+    // If this enum has constants, then it will generated later in generate_enums.
+    if bitmask.enumref.is_some() {
+        return None;
+    }
+
     let name = &bitmask.name[2..];
-    let name_without_flags = name.replace("Flags", "");
     let ident = Ident::from(name);
-    let ident_without_flags = Ident::from(name_without_flags.as_str());
-    let type_token = to_type_tokens(&bitmask.basetype, None);
     Some(quote!{
-        pub type #ident = BitFlags<flags::#ident_without_flags>;
+        vk_bitflags_wrapped!(#ident, 0b0, Flags);
     })
 }
 pub fn to_variant_ident(enum_name: &str, variant_name: &str) -> Ident {
@@ -370,7 +722,6 @@ pub enum EnumType {
 }
 
 pub fn generate_enum(_enum: &vkxml::Enumeration) -> EnumType {
-    println!("{}", _enum.name);
     let name = &_enum.name[2..];
     let _name = name.replace("FlagBits", "Flags");
     if name.contains("Bit") {
@@ -385,7 +736,7 @@ pub fn generate_enum(_enum: &vkxml::Enumeration) -> EnumType {
                 }
                 _ => None,
             })
-            .fold(0, |acc, next| acc | next);
+            .fold(0, |acc, next| acc | next.bits());
         let all_bits_term = Term::intern(&format!("0b{:b}", all_bits));
 
         let variants = _enum.elements.iter().filter_map(|elem| {
@@ -393,7 +744,7 @@ pub fn generate_enum(_enum: &vkxml::Enumeration) -> EnumType {
                 vkxml::EnumerationElement::Enum(ref constant) => {
                     let variant_name = &constant.name[3..];
                     let c = Constant::from_constant(constant);
-                    if c.value().map(|v| v == 0).unwrap_or(false) {
+                    if c.value().map(|v| v.bits() == 0).unwrap_or(false) {
                         return None;
                     }
                     (variant_name, c.to_tokens())
@@ -442,8 +793,9 @@ pub fn generate_enum(_enum: &vkxml::Enumeration) -> EnumType {
         EnumType::Enum(q)
     }
 }
+pub trait StructExt {}
 pub fn generate_struct(_struct: &vkxml::Struct) -> Tokens {
-    let name = Ident::from(&_struct.name[2..]);
+    let name = to_type_tokens(&_struct.name, None);
     let params = _struct
         .elements
         .iter()
@@ -457,18 +809,56 @@ pub fn generate_struct(_struct: &vkxml::Struct) -> Tokens {
             quote!{pub #param_ident: #param_ty_tokens}
         });
     quote!{
-        #[derive(Clone, Debug)]
+        //#[derive(Clone, Debug)]
         #[repr(C)]
         pub struct #name {
             #(#params,)*
         }
     }
 }
+
+pub fn generate_handle(handle: &vkxml::Handle) -> Option<Tokens> {
+    if handle.name == "" {
+        return None;
+    }
+    let tokens = match handle.ty {
+        vkxml::HandleType::Dispatch => {
+            let name = &handle.name[2..];
+            let name = Ident::from(name);
+            quote! {
+                define_handle!(#name);
+            }
+        }
+        vkxml::HandleType::NoDispatch => {
+            let name = &handle.name[2..];
+            let name = Ident::from(name);
+            quote! {
+                handle_nondispatchable!(#name);
+            }
+        }
+    };
+    Some(tokens)
+}
+fn generate_funcptr(fnptr: &vkxml::FunctionPointer) -> Tokens {
+    println!("{:#?}", fnptr);
+    let name = Ident::from(fnptr.name.as_str());
+    let ret_ty_tokens = fnptr.return_type.type_tokens();
+    quote!{
+        pub type #name = unsafe extern "system" fn() -> #ret_ty_tokens;
+    }
+}
+fn generate_union(union: &vkxml::Union) -> Tokens {
+    println!("{:#?}", union);
+    quote!{}
+}
 pub fn generate_definition(definition: &vkxml::DefinitionsElement) -> Option<Tokens> {
     match *definition {
         vkxml::DefinitionsElement::Typedef(ref typedef) => Some(generate_typedef(typedef)),
         vkxml::DefinitionsElement::Struct(ref _struct) => Some(generate_struct(_struct)),
         vkxml::DefinitionsElement::Bitmask(ref mask) => generate_bitmask(mask),
+        vkxml::DefinitionsElement::Handle(ref handle) => generate_handle(handle),
+        vkxml::DefinitionsElement::FuncPtr(ref fp) => Some(generate_funcptr(fp)),
+        vkxml::DefinitionsElement::Union(ref union) => Some(generate_union(union)),
         _ => None,
     }
 }
@@ -518,10 +908,20 @@ pub fn generate_core_spec(feature: &vkxml::Feature, commands: &CommandMap) -> qu
         #device
     }
 }
+pub fn generate_constant(constant: &vkxml::Constant) -> Tokens {
+    let c = Constant::from_constant(constant);
+    let ident = Ident::from(constant.name.as_str());
+    let value = c.to_tokens();
+    let ty = c.ty().to_tokens();
+    quote!{
+        pub const #ident: #ty = #value;
+    }
+}
 
 pub fn write_source_code(spec: &vkxml::Registry) {
     use std::fs::File;
     use std::io::Write;
+    println!("{:#?}", spec);
     let commands: HashMap<vkxml::Identifier, &vkxml::Command> = spec.elements
         .iter()
         .filter_map(|elem| match elem {
@@ -581,8 +981,6 @@ pub fn write_source_code(spec: &vkxml::Registry) {
         .flat_map(|constants| constants.elements.iter())
         .collect();
 
-    //println!("{:#?}", constants);
-
     let (enum_code, bitflags_code) = enums.into_iter().map(generate_enum).fold(
         (Vec::new(), Vec::new()),
         |mut acc, elem| {
@@ -608,15 +1006,26 @@ pub fn write_source_code(spec: &vkxml::Registry) {
         .iter()
         .map(|ext| generate_extension(ext, &commands))
         .collect();
+    let constants_code: Vec<_> = constants
+        .iter()
+        .map(|constant| generate_constant(constant))
+        .collect();
     let mut file = File::create("../ash/src/vk_test.rs").expect("vk");
+    let bitflags_macro = vk_bitflags_wrapped_macro();
+    let handle_nondispatchable_macro = handle_nondispatchable_macro();
+    let define_handle_macro = define_handle_macro();
     let source_code = quote!{
-        //#(#feature_code)*
-        //#(#extension_code)*
-        //#(#definition_code)*
-        //#(#enum_code)*
-        pub mod flags {
-            #(#bitflags_code)*
-        }
+        use libc::*;
+        // #bitflags_macro
+        // #handle_nondispatchable_macro
+        // #define_handle_macro
+        // #(#feature_code)*
+        // #(#extension_code)*
+        // #(#definition_code)*
+        // #(#enum_code)*
+        // #(#bitflags_code)*
+        #(#constants_code)*
     };
+    println!("{:?}", cexpr("(~0UL)"));
     write!(&mut file, "{}", source_code);
 }

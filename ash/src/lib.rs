@@ -14,8 +14,7 @@ pub mod vk;
 pub mod extensions;
 pub mod version;
 pub mod util;
-// mod vk_test;
-
+mod vk_test;
 pub trait RawPtr<T> {
     fn as_raw_ptr(&self) -> *const T;
 }

@@ -7,8 +7,9 @@ authors = ["Maik Klein <maikklein@googlemail.com>"]
 vk-parse = {git = "https://github.com/krolli/vk-parse"}
 vkxml = {git = "https://github.com/terrybrashaw/vkxml"}
 #vkxml = {git = "https://github.com/maikklein/vkxml"}
-heck = "0.3.0"
-proc-macro2 = "0.2.3"
+nom = "4.0"
+heck = "0.3"
+proc-macro2 = "0.2"
 
 [dependencies.quote]
 version = "0.4.2"
