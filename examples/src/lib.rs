@@ -162,7 +162,7 @@ unsafe extern "system" fn vulkan_debug_callback(
     _: *mut vk::c_void,
 ) -> u32 {
     println!("{:?}", CStr::from_ptr(p_message));
-    1
+    vk::VK_FALSE
 }
 
 pub fn find_memorytype_index(
