@@ -765,32 +765,93 @@ pub fn generate_enum(_enum: &vkxml::Enumeration) -> EnumType {
         };
         EnumType::Bitflags(q)
     } else {
-        let variants = _enum.elements.iter().filter_map(|elem| {
-            let (variant_name, value) = match *elem {
-                vkxml::EnumerationElement::Enum(ref constant) => {
-                    let c = Constant::from_constant(constant);
-                    //println!("value {:?}", c.value());
-                    (constant.name.as_str(), c.to_tokens())
-                }
-                _ => {
-                    return None;
-                }
-            };
+        let q = match _name.as_str() {
+            "Result" => generate_result(&_name, _enum),
+            _ => {
+                let ident = Ident::from(_name.as_str());
+                let variants = _enum.elements.iter().filter_map(|elem| {
+                    let (variant_name, value) = match *elem {
+                        vkxml::EnumerationElement::Enum(ref constant) => {
+                            let c = Constant::from_constant(constant);
+                            //println!("value {:?}", c.value());
+                            (constant.name.as_str(), c.to_tokens())
+                        }
+                        _ => {
+                            return None;
+                        }
+                    };
 
-            let variant_ident = to_variant_ident(&_name, variant_name);
-            Some(quote!{
-                #variant_ident = #value
-            })
-        });
-        let ident = Ident::from(_name.as_str());
-        let q = quote!{
-            #[derive(Copy, Clone, Debug)]
-            #[repr(C)]
-            pub enum #ident {
-                #(#variants,)*
+                    let variant_ident = to_variant_ident(&_name, variant_name);
+                    Some(quote!{
+                        #variant_ident = #value
+                    })
+                });
+                quote!{
+                    #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+                    #[repr(C)]
+                    pub enum #ident {
+                        #(#variants,)*
+                    }
+                }
             }
         };
         EnumType::Enum(q)
+    }
+}
+pub fn generate_result(name: &str, _enum: &vkxml::Enumeration) -> Tokens {
+    let ident = Ident::from(name);
+    let variants = _enum.elements.iter().filter_map(|elem| {
+        let (variant_name, value) = match *elem {
+            vkxml::EnumerationElement::Enum(ref constant) => {
+                let c = Constant::from_constant(constant);
+                //println!("value {:?}", c.value());
+                (constant.name.as_str(), c.to_tokens())
+            }
+            _ => {
+                return None;
+            }
+        };
+        let variant_ident = to_variant_ident(&name, variant_name);
+        Some(quote!{
+            #variant_ident = #value
+        })
+    });
+    let notation = _enum.elements.iter().filter_map(|elem| {
+        let (variant_name, notation) = match *elem {
+            vkxml::EnumerationElement::Enum(ref constant) => (
+                constant.name.as_str(),
+                constant.notation.as_ref().map(|s| s.as_str()).unwrap_or(""),
+            ),
+            _ => {
+                return None;
+            }
+        };
+
+        let variant_ident = to_variant_ident(&name, variant_name);
+        Some(quote!{
+            #ident::#variant_ident => write!(fmt, #notation)
+        })
+    });
+
+    quote!{
+        #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+        #[repr(C)]
+        pub enum #ident {
+            #(#variants,)*
+        }
+        impl ::std::error::Error for #ident {
+            fn description(&self) -> &str {
+                "vk::Result"
+            }
+        }
+        impl ::std::fmt::Display for #ident {
+            fn fmt(&self, fmt: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+                writeln!(fmt, "vk::Result::{:?}", self)?;
+                match self {
+                    #(#notation),*
+                }
+            }
+        }
     }
 }
 pub trait StructExt {}
@@ -809,7 +870,7 @@ pub fn generate_struct(_struct: &vkxml::Struct) -> Tokens {
             quote!{pub #param_ident: #param_ty_tokens}
         });
     quote!{
-        //#[derive(Clone, Debug)]
+        #[derive(Copy, Clone)]
         #[repr(C)]
         pub struct #name {
             #(#params,)*
