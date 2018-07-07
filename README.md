@@ -186,6 +186,12 @@ Displays a triangle with vertex colors.
 cd examples
 cargo run --bin triangle
 ```
+#### macOS
+Install the [LunarG Vulkan SDK](https://lunarg.com/vulkan-sdk/). This basically entails extracting the downloaded tarball to any location you choose and then setting a few environment variables. Specifically, if `SDK_PATH` is set to the root extracted SDK directory,
+
+* `DYLD_LIBRARY_PATH = $SDK_PATH/macOS/lib`
+* `VK_ICD_FILENAMES = $SDK_PATH/macOS/etc/vulkan/icd.d/MoltenVK_icd.json`
+* `VK_LAYER_PATH = $SDK_PATH/macOS/etc/vulkan/explicit_layer.d`
 
 ![screenshot](http://i.imgur.com/PQZcL6w.jpg)
 

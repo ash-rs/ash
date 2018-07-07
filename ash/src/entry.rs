@@ -19,7 +19,10 @@ const LIB_PATH: &'static str = "libvulkan.so.1";
 #[cfg(target_os = "android")]
 const LIB_PATH: &'static str = "libvulkan.so";
 
-#[cfg(any(target_os = "macos", target_os = "ios"))]
+#[cfg(target_os = "macos")]
+const LIB_PATH: &'static str = "libvulkan.1.dylib";
+
+#[cfg(target_os = "ios")]
 const LIB_PATH: &'static str = "libMoltenVK.dylib";
 
 lazy_static!{
