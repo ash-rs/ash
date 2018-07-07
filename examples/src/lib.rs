@@ -1,8 +1,25 @@
 #[macro_use]
 extern crate ash;
-#[cfg(windows)]
+#[cfg(target_os = "windows")]
 extern crate winapi;
 extern crate winit;
+
+#[cfg(target_os = "macos")]
+extern crate objc;
+#[cfg(target_os = "macos")]
+extern crate cocoa;
+#[cfg(target_os = "macos")]
+extern crate metal_rs as metal;
+#[cfg(target_os = "macos")]
+use cocoa::appkit::{NSView, NSWindow};
+#[cfg(target_os = "macos")]
+use cocoa::base::id as cocoa_id;
+#[cfg(target_os = "macos")]
+use metal::CoreAnimationLayer;
+#[cfg(target_os = "macos")]
+use objc::runtime::YES;
+#[cfg(target_os = "macos")]
+use std::mem;
 
 use ash::vk;
 use std::default::Default;
@@ -10,7 +27,13 @@ use ash::Entry;
 use ash::Instance;
 use ash::Device;
 pub use ash::version::{DeviceV1_0, EntryV1_0, InstanceV1_0, V1_0};
-use ash::extensions::{DebugReport, Surface, Swapchain, Win32Surface, XlibSurface};
+use ash::extensions::{DebugReport, Surface, Swapchain};
+#[cfg(target_os = "windows")]
+use ash::extensions::Win32Surface;
+#[cfg(all(unix, not(target_os = "android"), not(target_os = "macos")))]
+use ash::extensions::XlibSurface;
+#[cfg(target_os = "macos")]
+use ash::extensions::MacOSSurface;
 use std::cell::RefCell;
 use std::ptr;
 use std::ffi::{CStr, CString};
@@ -88,7 +111,7 @@ pub fn record_submit_commandbuffer<D: DeviceV1_0, F: FnOnce(&D, vk::CommandBuffe
     }
 }
 
-#[cfg(all(unix, not(target_os = "android")))]
+#[cfg(all(unix, not(target_os = "android"), not(target_os = "macos")))]
 unsafe fn create_surface<E: EntryV1_0, I: InstanceV1_0>(
     entry: &E,
     instance: &I,
@@ -109,7 +132,41 @@ unsafe fn create_surface<E: EntryV1_0, I: InstanceV1_0>(
     xlib_surface_loader.create_xlib_surface_khr(&x11_create_info, None)
 }
 
-#[cfg(windows)]
+#[cfg(target_os = "macos")]
+unsafe fn create_surface<E: EntryV1_0, I: InstanceV1_0>(
+    entry: &E,
+    instance: &I,
+    window: &winit::Window,
+) -> Result<vk::SurfaceKHR, vk::Result> {
+    use winit::os::macos::WindowExt;
+
+    let wnd: cocoa_id = mem::transmute(window.get_nswindow());
+
+    let layer = CoreAnimationLayer::new();
+
+    layer.set_edge_antialiasing_mask(0);
+    layer.set_presents_with_transaction(false);
+    layer.remove_all_animations();
+
+    let view = wnd.contentView();
+
+    layer.set_contents_scale(view.backingScaleFactor());
+    view.setLayer(mem::transmute(layer.as_ref()));
+    view.setWantsLayer(YES);
+
+    let create_info = vk::MacOSSurfaceCreateInfoMVK {
+        s_type: vk::StructureType::MacOSSurfaceCreateInfoMvk,
+        p_next: ptr::null(),
+        flags: Default::default(),
+        p_view: window.get_nsview() as *const vk::types::c_void
+    };
+
+    let macos_surface_loader =
+        MacOSSurface::new(entry, instance).expect("Unable to load macOS surface");
+    macos_surface_loader.create_macos_surface_mvk(&create_info, None)
+}
+
+#[cfg(target_os = "windows")]
 unsafe fn create_surface<E: EntryV1_0, I: InstanceV1_0>(
     entry: &E,
     instance: &I,
@@ -133,11 +190,20 @@ unsafe fn create_surface<E: EntryV1_0, I: InstanceV1_0>(
     win32_surface_loader.create_win32_surface_khr(&win32_create_info, None)
 }
 
-#[cfg(all(unix, not(target_os = "android")))]
+#[cfg(all(unix, not(target_os = "android"), not(target_os = "macos")))]
 fn extension_names() -> Vec<*const i8> {
     vec![
         Surface::name().as_ptr(),
         XlibSurface::name().as_ptr(),
+        DebugReport::name().as_ptr(),
+    ]
+}
+
+#[cfg(target_os = "macos")]
+fn extension_names() -> Vec<*const i8> {
+    vec![
+        Surface::name().as_ptr(),
+        MacOSSurface::name().as_ptr(),
         DebugReport::name().as_ptr(),
     ]
 }
@@ -272,11 +338,17 @@ impl ExampleBase {
             let app_name = CString::new("VulkanTriangle").unwrap();
             let raw_name = app_name.as_ptr();
 
+            // MoltenVK does not support LunarG validation layer
+            // #[cfg(not(target_os = "macos"))]
             let layer_names = [CString::new("VK_LAYER_LUNARG_standard_validation").unwrap()];
+            // #[cfg(not(target_os = "macos"))]
             let layers_names_raw: Vec<*const i8> = layer_names
                 .iter()
                 .map(|raw_name| raw_name.as_ptr())
                 .collect();
+            // #[cfg(target_os = "macos")]
+            // let layers_names_raw: Vec<*const i8> = Vec::new();
+
             let extension_names_raw = extension_names();
             let appinfo = vk::ApplicationInfo {
                 p_application_name: raw_name,
