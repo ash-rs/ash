@@ -338,16 +338,11 @@ impl ExampleBase {
             let app_name = CString::new("VulkanTriangle").unwrap();
             let raw_name = app_name.as_ptr();
 
-            // MoltenVK does not support LunarG validation layer
-            // #[cfg(not(target_os = "macos"))]
             let layer_names = [CString::new("VK_LAYER_LUNARG_standard_validation").unwrap()];
-            // #[cfg(not(target_os = "macos"))]
             let layers_names_raw: Vec<*const i8> = layer_names
                 .iter()
                 .map(|raw_name| raw_name.as_ptr())
                 .collect();
-            // #[cfg(target_os = "macos")]
-            // let layers_names_raw: Vec<*const i8> = Vec::new();
 
             let extension_names_raw = extension_names();
             let appinfo = vk::ApplicationInfo {
