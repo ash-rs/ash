@@ -908,9 +908,23 @@ fn generate_funcptr(fnptr: &vkxml::FunctionPointer) -> Tokens {
         pub type #name = unsafe extern "system" fn() -> #ret_ty_tokens;
     }
 }
+
 fn generate_union(union: &vkxml::Union) -> Tokens {
-    println!("{:#?}", union);
-    quote!{}
+    let name = to_type_tokens(&union.name, None);
+    let fields = union.elements.iter().map(|field| {
+        let name = field.param_ident();
+        let ty = field.type_tokens();
+        quote!{
+            pub #name: #ty
+        }
+    });
+    quote!{
+        #[repr(C)]
+        #[derive(Copy, Clone)]
+        pub union #name {
+            #(#fields),*
+        }
+    }
 }
 pub fn generate_definition(definition: &vkxml::DefinitionsElement) -> Option<Tokens> {
     match *definition {
