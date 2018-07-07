@@ -1,15 +1,15 @@
 #![allow(dead_code)]
 use prelude::*;
-use std::mem;
-use vk;
 use std::ffi::CStr;
-use RawPtr;
+use std::mem;
 use version::{EntryV1_0, InstanceV1_0};
+use vk;
+use RawPtr;
 
 #[derive(Clone)]
 pub struct WaylandSurface {
     handle: vk::Instance,
-    wayland_surface_fn: vk::WaylandSurfaceFn,
+    wayland_surface_fn: vk::KhrWaylandSurfaceFn,
 }
 
 impl WaylandSurface {
@@ -17,7 +17,7 @@ impl WaylandSurface {
         entry: &E,
         instance: &I,
     ) -> Result<WaylandSurface, Vec<&'static str>> {
-        let surface_fn = vk::WaylandSurfaceFn::load(|name| unsafe {
+        let surface_fn = vk::KhrWaylandSurfaceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         })?;
         Ok(WaylandSurface {

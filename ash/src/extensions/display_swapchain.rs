@@ -1,15 +1,15 @@
 #![allow(dead_code)]
 use prelude::*;
-use std::mem;
-use vk;
 use std::ffi::CStr;
-use RawPtr;
+use std::mem;
 use version::{DeviceV1_0, InstanceV1_0};
+use vk;
+use RawPtr;
 
 #[derive(Clone)]
 pub struct DisplaySwapchain {
     handle: vk::Device,
-    swapchain_fn: vk::DisplaySwapchainFn,
+    swapchain_fn: vk::KhrDisplaySwapchainFn,
 }
 
 impl DisplaySwapchain {
@@ -17,7 +17,7 @@ impl DisplaySwapchain {
         instance: &I,
         device: &D,
     ) -> Result<DisplaySwapchain, Vec<&'static str>> {
-        let swapchain_fn = vk::DisplaySwapchainFn::load(|name| unsafe {
+        let swapchain_fn = vk::KhrDisplaySwapchainFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         })?;
         Ok(DisplaySwapchain {

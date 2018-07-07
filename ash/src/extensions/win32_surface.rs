@@ -1,15 +1,15 @@
 #![allow(dead_code)]
 use prelude::*;
-use std::mem;
-use vk;
 use std::ffi::CStr;
-use RawPtr;
+use std::mem;
 use version::{EntryV1_0, InstanceV1_0};
+use vk;
+use RawPtr;
 
 #[derive(Clone)]
 pub struct Win32Surface {
     handle: vk::Instance,
-    win32_surface_fn: vk::Win32SurfaceFn,
+    win32_surface_fn: vk::KhrWin32SurfaceFn,
 }
 
 impl Win32Surface {
@@ -17,7 +17,7 @@ impl Win32Surface {
         entry: &E,
         instance: &I,
     ) -> Result<Win32Surface, Vec<&'static str>> {
-        let surface_fn = vk::Win32SurfaceFn::load(|name| unsafe {
+        let surface_fn = vk::KhrWin32SurfaceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         })?;
         Ok(Win32Surface {

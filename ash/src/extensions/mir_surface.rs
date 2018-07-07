@@ -1,15 +1,15 @@
 #![allow(dead_code)]
 use prelude::*;
-use std::mem;
-use vk;
 use std::ffi::CStr;
-use RawPtr;
+use std::mem;
 use version::{EntryV1_0, InstanceV1_0};
+use vk;
+use RawPtr;
 
 #[derive(Clone)]
 pub struct MirSurface {
     handle: vk::Instance,
-    mir_surface_fn: vk::MirSurfaceFn,
+    mir_surface_fn: vk::KhrMirSurfaceFn,
 }
 
 impl MirSurface {
@@ -17,7 +17,7 @@ impl MirSurface {
         entry: &E,
         instance: &I,
     ) -> Result<MirSurface, Vec<&'static str>> {
-        let surface_fn = vk::MirSurfaceFn::load(|name| unsafe {
+        let surface_fn = vk::KhrMirSurfaceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         })?;
         Ok(MirSurface {

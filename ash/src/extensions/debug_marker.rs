@@ -1,13 +1,13 @@
 #![allow(dead_code)]
 use prelude::*;
-use std::mem;
-use vk;
 use std::ffi::CStr;
+use std::mem;
 use version::{DeviceV1_0, InstanceV1_0};
+use vk;
 
 #[derive(Clone)]
 pub struct DebugMarker {
-    debug_marker_fn: vk::DebugMarkerFn,
+    debug_marker_fn: vk::ExtDebugMarkerFn,
 }
 
 impl DebugMarker {
@@ -15,7 +15,7 @@ impl DebugMarker {
         instance: &I,
         device: &D,
     ) -> Result<DebugMarker, Vec<&'static str>> {
-        let debug_marker_fn = vk::DebugMarkerFn::load(|name| unsafe {
+        let debug_marker_fn = vk::ExtDebugMarkerFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         })?;
         Ok(DebugMarker {
@@ -32,7 +32,8 @@ impl DebugMarker {
         device: vk::Device,
         name_info: &vk::DebugMarkerObjectNameInfoEXT,
     ) -> VkResult<()> {
-        let err_code = self.debug_marker_fn
+        let err_code = self
+            .debug_marker_fn
             .debug_marker_set_object_name_ext(device, name_info);
         match err_code {
             vk::Result::Success => Ok(()),

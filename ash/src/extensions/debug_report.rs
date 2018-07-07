@@ -1,15 +1,15 @@
 #![allow(dead_code)]
 use prelude::*;
-use std::mem;
-use vk;
 use std::ffi::CStr;
-use RawPtr;
+use std::mem;
 use version::{EntryV1_0, InstanceV1_0};
+use vk;
+use RawPtr;
 
 #[derive(Clone)]
 pub struct DebugReport {
     handle: vk::Instance,
-    debug_report_fn: vk::DebugReportFn,
+    debug_report_fn: vk::ExtDebugReportFn,
 }
 
 impl DebugReport {
@@ -17,7 +17,7 @@ impl DebugReport {
         entry: &E,
         instance: &I,
     ) -> Result<DebugReport, Vec<&'static str>> {
-        let debug_report_fn = vk::DebugReportFn::load(|name| unsafe {
+        let debug_report_fn = vk::ExtDebugReportFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         })?;
         Ok(DebugReport {

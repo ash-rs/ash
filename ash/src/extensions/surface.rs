@@ -1,16 +1,16 @@
 #![allow(dead_code)]
 use prelude::*;
-use std::ptr;
-use std::mem;
-use vk;
 use std::ffi::CStr;
-use RawPtr;
+use std::mem;
+use std::ptr;
 use version::{EntryV1_0, InstanceV1_0};
+use vk;
+use RawPtr;
 
 #[derive(Clone)]
 pub struct Surface {
     handle: vk::Instance,
-    surface_fn: vk::SurfaceFn,
+    surface_fn: vk::KhrSurfaceFn,
 }
 
 impl Surface {
@@ -18,7 +18,7 @@ impl Surface {
         entry: &E,
         instance: &I,
     ) -> Result<Surface, Vec<&'static str>> {
-        let surface_fn = vk::SurfaceFn::load(|name| unsafe {
+        let surface_fn = vk::KhrSurfaceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         })?;
         Ok(Surface {
@@ -63,7 +63,8 @@ impl Surface {
                     ptr::null_mut(),
                 );
             let mut v = Vec::with_capacity(count as usize);
-            let err_code = self.surface_fn
+            let err_code = self
+                .surface_fn
                 .get_physical_device_surface_present_modes_khr(
                     physical_device,
                     surface,
@@ -85,7 +86,8 @@ impl Surface {
     ) -> VkResult<vk::SurfaceCapabilitiesKHR> {
         unsafe {
             let mut surface_capabilities = mem::uninitialized();
-            let err_code = self.surface_fn
+            let err_code = self
+                .surface_fn
                 .get_physical_device_surface_capabilities_khr(
                     physical_device,
                     surface,
