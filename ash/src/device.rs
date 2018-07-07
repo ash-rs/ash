@@ -1,9 +1,9 @@
 #![allow(dead_code)]
 use prelude::*;
 use std::mem;
+use version::{FunctionPointers, V1_0};
 use vk;
 use RawPtr;
-use version::{FunctionPointers, V1_0};
 
 #[allow(non_camel_case_types)]
 pub trait DeviceV1_0 {
@@ -463,7 +463,8 @@ pub trait DeviceV1_0 {
         pool: vk::DescriptorPool,
         flags: vk::DescriptorPoolResetFlags,
     ) -> VkResult<()> {
-        let err_code = self.fp_v1_0()
+        let err_code = self
+            .fp_v1_0()
             .reset_descriptor_pool(self.handle(), pool, flags);
         match err_code {
             vk::Result::Success => Ok(()),
@@ -476,7 +477,8 @@ pub trait DeviceV1_0 {
         command_pool: vk::CommandPool,
         flags: vk::CommandPoolResetFlags,
     ) -> VkResult<()> {
-        let err_code = self.fp_v1_0()
+        let err_code = self
+            .fp_v1_0()
             .reset_command_pool(self.handle(), command_pool, flags);
         match err_code {
             vk::Result::Success => Ok(()),
@@ -636,7 +638,7 @@ pub trait DeviceV1_0 {
             descriptor_sets.as_ptr(),
             dynamic_offsets.len() as vk::uint32_t,
             dynamic_offsets.as_ptr(),
-        )
+        );
     }
 
     unsafe fn cmd_push_constants(
@@ -699,15 +701,9 @@ pub trait DeviceV1_0 {
         );
     }
 
-    unsafe fn cmd_set_line_width(
-        &self,
-        command_buffer: vk::CommandBuffer,
-        line_width: f32,
-    ) {
-        self.fp_v1_0().cmd_set_line_width(
-            command_buffer,
-            line_width,
-        );
+    unsafe fn cmd_set_line_width(&self, command_buffer: vk::CommandBuffer, line_width: f32) {
+        self.fp_v1_0()
+            .cmd_set_line_width(command_buffer, line_width);
     }
 
     unsafe fn cmd_bind_vertex_buffers(
@@ -802,12 +798,8 @@ pub trait DeviceV1_0 {
         clamp: f32,
         slope_factor: f32,
     ) {
-        self.fp_v1_0().cmd_set_depth_bias(
-            command_buffer,
-            constant_factor,
-            clamp,
-            slope_factor,
-        );
+        self.fp_v1_0()
+            .cmd_set_depth_bias(command_buffer, constant_factor, clamp, slope_factor);
     }
 
     unsafe fn cmd_set_blend_constants(
@@ -816,7 +808,7 @@ pub trait DeviceV1_0 {
         blend_constants: [f32; 4],
     ) {
         self.fp_v1_0()
-            .cmd_set_blend_constants(command_buffer, &blend_constants);
+            .cmd_set_blend_constants(command_buffer, blend_constants);
     }
 
     unsafe fn cmd_set_depth_bounds(
@@ -1178,7 +1170,8 @@ pub trait DeviceV1_0 {
         command_buffer: vk::CommandBuffer,
         create_info: &vk::CommandBufferBeginInfo,
     ) -> VkResult<()> {
-        let err_code = self.fp_v1_0()
+        let err_code = self
+            .fp_v1_0()
             .begin_command_buffer(command_buffer, create_info);
         match err_code {
             vk::Result::Success => Ok(()),
@@ -1373,8 +1366,12 @@ pub trait DeviceV1_0 {
     ) -> vk::SubresourceLayout {
         unsafe {
             let mut layout = mem::uninitialized();
-            self.fp_v1_0()
-                .get_image_subresource_layout(self.handle(), image, &subresource, &mut layout);
+            self.fp_v1_0().get_image_subresource_layout(
+                self.handle(),
+                image,
+                &subresource,
+                &mut layout,
+            );
             layout
         }
     }

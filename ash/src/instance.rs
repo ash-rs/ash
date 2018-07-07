@@ -1,14 +1,14 @@
 #![allow(dead_code)]
-use prelude::*;
-use std::ptr;
-use std::mem;
-use vk;
 use device::Device;
+use prelude::*;
 use std::error::Error;
 use std::fmt;
-use RawPtr;
-use version::{FunctionPointers, V1_0};
+use std::mem;
+use std::ptr;
 use version::DeviceLoader;
+use version::{FunctionPointers, V1_0};
+use vk;
+use RawPtr;
 
 #[derive(Debug)]
 pub enum DeviceError {

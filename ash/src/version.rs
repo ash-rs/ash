@@ -1,8 +1,8 @@
-use vk;
-pub use instance::InstanceV1_0;
 pub use device::DeviceV1_0;
 pub use entry::EntryV1_0;
+pub use instance::InstanceV1_0;
 use std::mem;
+use vk;
 pub trait FunctionPointers {
     type InstanceFp: InstanceLoader + Clone;
     type DeviceFp: DeviceLoader + Clone;

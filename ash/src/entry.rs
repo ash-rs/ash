@@ -1,14 +1,14 @@
-use prelude::*;
-use std::mem;
-use std::ptr;
-use vk;
 use instance::Instance;
+use prelude::*;
 use shared_library::dynamic_library::DynamicLibrary;
 use std::error::Error;
 use std::fmt;
+use std::mem;
 use std::path::Path;
-use RawPtr;
+use std::ptr;
 use version::{EntryLoader, FunctionPointers, InstanceLoader, V1_0};
+use vk;
+use RawPtr;
 
 #[cfg(windows)]
 const LIB_PATH: &'static str = "vulkan-1.dll";
@@ -22,8 +22,9 @@ const LIB_PATH: &'static str = "libvulkan.so";
 #[cfg(any(target_os = "macos", target_os = "ios"))]
 const LIB_PATH: &'static str = "libMoltenVK.dylib";
 
-lazy_static!{
-    static ref VK_LIB: Result<DynamicLibrary, String> = DynamicLibrary::open(Some(&Path::new(LIB_PATH)));
+lazy_static! {
+    static ref VK_LIB: Result<DynamicLibrary, String> =
+        DynamicLibrary::open(Some(&Path::new(LIB_PATH)));
 }
 
 #[derive(Clone)]
@@ -97,7 +98,8 @@ pub trait EntryV1_0 {
                 .enumerate_instance_layer_properties(&mut num, ptr::null_mut());
 
             let mut v = Vec::with_capacity(num as usize);
-            let err_code = self.fp_v1_0()
+            let err_code = self
+                .fp_v1_0()
                 .enumerate_instance_layer_properties(&mut num, v.as_mut_ptr());
             v.set_len(num as usize);
             match err_code {

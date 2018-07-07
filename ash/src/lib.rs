@@ -2,19 +2,18 @@
 extern crate lazy_static;
 extern crate libc;
 extern crate shared_library;
-pub use instance::{DeviceError, Instance};
 pub use device::Device;
 pub use entry::{Entry, InstanceError, LoadingError};
+pub use instance::{DeviceError, Instance};
 
-mod instance;
 mod device;
 mod entry;
-pub mod prelude;
-pub mod vk;
 pub mod extensions;
-pub mod version;
+mod instance;
+pub mod prelude;
 pub mod util;
-mod vk_test;
+pub mod version;
+pub mod vk;
 pub trait RawPtr<T> {
     fn as_raw_ptr(&self) -> *const T;
 }

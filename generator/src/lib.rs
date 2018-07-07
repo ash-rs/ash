@@ -282,6 +282,41 @@ pub fn vk_bitflags_wrapped_macro() -> Tokens {
         }
     }
 }
+
+pub fn platform_specific_types() -> Tokens {
+    quote! {
+        pub type RROutput = c_ulong;
+        pub type VisualID = c_uint;
+        pub type Display = *const c_void;
+        pub type Window = c_ulong;
+        #[allow(non_camel_case_types)]
+        pub type xcb_connection_t = *const c_void;
+        #[allow(non_camel_case_types)]
+        pub type xcb_window_t = u32;
+        #[allow(non_camel_case_types)]
+        pub type xcb_visualid_t = *const c_void;
+        pub type MirConnection = *const c_void;
+        pub type MirSurface = *const c_void;
+        pub type HINSTANCE = *const c_void;
+        pub type HWND = *const c_void;
+        #[allow(non_camel_case_types)]
+        pub type wl_display = *const c_void;
+        #[allow(non_camel_case_types)]
+        pub type wl_surface = *const c_void;
+        pub type HANDLE = *mut c_void;
+        pub type DWORD = c_ulong;
+        pub type WCHAR = wchar_t;
+        pub type LPCWSTR = *const WCHAR;
+
+        // FIXME: Platform specific types that should come from a library
+        // typedefs are only here so that the code compiles for now
+        #[allow(non_camel_case_types)]
+        pub type SECURITY_ATTRIBUTES = ();
+        // Opage types
+        pub type ANativeWindow = c_void;
+        pub type AHardwareBuffer = c_void;
+    }
+}
 #[derive(Debug, Copy, Clone)]
 pub enum ConstVal {
     U32(u32),
@@ -392,16 +427,23 @@ pub trait FeatureExt {
 }
 impl FeatureExt for vkxml::Feature {
     fn version_string(&self) -> String {
-        let version = format!("{:.10}", self.version);
-        let first_0 = version.find("0").expect("should have at least one 0");
-        // + 1 is correct here because we always have 10 zeroes.
-        let (version, _) = version.split_at(first_0 + 1);
+        let mut version = format!("{}", self.version);
+        if version.len() == 1 {
+            version = format!("{}_0", version)
+        }
         version.replace(".", "_")
     }
 }
+#[derive(Debug, Copy, Clone)]
+pub enum FunctionType {
+    Static,
+    Entry,
+    Instance,
+    Device,
+}
 pub trait CommandExt {
     /// Returns the ident in snake_case and without the 'vk' prefix.
-    fn is_device_command(&self) -> bool;
+    fn function_type(&self) -> FunctionType;
     ///
     /// Returns true if the command is a device level command. This is indicated by
     /// the type of the first parameter.
@@ -413,15 +455,31 @@ impl CommandExt for vkxml::Command {
         Ident::from(self.name[2..].to_snake_case().as_str())
     }
 
-    fn is_device_command(&self) -> bool {
-        self.param
+    fn function_type(&self) -> FunctionType {
+        let is_first_param_device = self
+            .param
             .iter()
             .nth(0)
             .map(|field| match field.basetype.as_str() {
                 "VkDevice" | "VkCommandBuffer" | "VkQueue" => true,
                 _ => false,
             })
-            .unwrap_or(false)
+            .unwrap_or(false);
+        match self.name.as_str() {
+            "vkGetInstanceProcAddr" => FunctionType::Static,
+            "vkCreateInstance"
+            | "vkEnumerateInstanceLayerProperties"
+            | "vkEnumerateInstanceExtensionProperties" => FunctionType::Entry,
+            // This is actually not a device level function
+            "vkGetDeviceProcAddr" => FunctionType::Instance,
+            _ => {
+                if is_first_param_device {
+                    FunctionType::Device
+                } else {
+                    FunctionType::Instance
+                }
+            }
+        }
     }
 }
 
@@ -441,8 +499,8 @@ pub trait ToTokens {
 impl ToTokens for vkxml::ReferenceType {
     fn to_tokens(&self) -> Tokens {
         let ptr_name = match self {
-            vkxml::ReferenceType::Pointer => "*mut",
-            vkxml::ReferenceType::PointerToPointer => "*mut",
+            vkxml::ReferenceType::Pointer => "*const",
+            vkxml::ReferenceType::PointerToPointer => "*mut *mut",
             vkxml::ReferenceType::PointerToConstPointer => "*const",
         };
         let ident = Term::intern(ptr_name);
@@ -453,9 +511,6 @@ impl ToTokens for vkxml::ReferenceType {
 }
 fn name_to_tokens(type_name: &str) -> Tokens {
     let new_name = match type_name {
-        "HANDLE" => "*const c_void",
-        "LPCWSTR" => "*const wchar_t",
-        "DWORD" => "c_uint",
         "int" => "c_int",
         "void" => "c_void",
         "char" => "c_char",
@@ -478,7 +533,6 @@ fn name_to_tokens(type_name: &str) -> Tokens {
 fn to_type_tokens(type_name: &str, reference: Option<&vkxml::ReferenceType>) -> Tokens {
     let new_name = name_to_tokens(type_name);
     let ptr_name = reference.map(|r| r.to_tokens()).unwrap_or(quote!{});
-    // let ty: syn::Type = syn::parse_str(&format!("{} {}", ptr_name, new_name)).expect("parse field");
     quote!{#ptr_name #new_name}
 }
 
@@ -497,7 +551,8 @@ impl FieldExt for vkxml::Field {
 
     fn type_tokens(&self) -> Tokens {
         let ty = name_to_tokens(&self.basetype);
-        let pointer = self.reference
+        let pointer = self
+            .reference
             .as_ref()
             .map(|r| r.to_tokens())
             .unwrap_or(quote!{});
@@ -506,7 +561,8 @@ impl FieldExt for vkxml::Field {
         };
         let array = self.array.as_ref().and_then(|arraytype| match arraytype {
             vkxml::ArrayType::Static => {
-                let size = self.size
+                let size = self
+                    .size
                     .as_ref()
                     .or(self.size_enumref.as_ref())
                     .expect("Should have size");
@@ -539,7 +595,8 @@ fn generate_function_pointers(ident: Ident, commands: &[&vkxml::Command]) -> quo
         .map(|cmd| {
             let fn_name_raw = cmd.name.as_str();
             let fn_name_snake = cmd.command_ident();
-            let params: Vec<_> = cmd.param
+            let params: Vec<_> = cmd
+                .param
                 .iter()
                 .map(|field| {
                     let name = field.param_ident();
@@ -598,36 +655,34 @@ fn generate_function_pointers(ident: Ident, commands: &[&vkxml::Command]) -> quo
             }
         }
         impl #ident {
-            pub fn load<F>(mut f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+            pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
                 where F: FnMut(&::std::ffi::CStr) -> *const c_void
             {
-                use std::ffi::CString;
-                use std::mem;
-                let mut err_str = Vec::new();
+                let mut _err_str = Vec::new();
                 let s = #ident {
                     #(
                         #names_ref: unsafe {
                             let raw_name = stringify!(#raw_names_ref);
-                            let cname = CString::new(raw_name).unwrap();
-                            let val = f(&cname);
+                            let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                            let val = _f(&cname);
                             if val.is_null(){
-                                err_str.push(raw_name);
+                                _err_str.push(raw_name);
                             }
-                            mem::transmute(val)
+                            ::std::mem::transmute(val)
                         },
                     )*
                 };
 
-                if err_str.is_empty() {
+                if _err_str.is_empty() {
                     Ok(s)
                 }
                 else{
-                    Err(err_str)
+                    Err(_err_str)
                 }
 
             }
             #(
-                pub fn #names_ref(&self, #expanded_params_ref) -> #return_types_ref {
+                pub unsafe fn #names_ref(&self, #expanded_params_ref) -> #return_types_ref {
                     (self.#names_left)(#(#param_names_ref,)*)
                 }
             )*
@@ -702,9 +757,11 @@ pub fn to_variant_ident(enum_name: &str, variant_name: &str) -> Ident {
         })
         .nth(0);
 
-    let name_without_tag = tag.map(|t| enum_name.replace(t, ""))
+    let name_without_tag = tag
+        .map(|t| enum_name.replace(t, ""))
         .unwrap_or(enum_name.into());
-    let variant_without_tag = tag.map(|t| variant_name.replace(t, ""))
+    let variant_without_tag = tag
+        .map(|t| variant_name.replace(t, ""))
         .unwrap_or(variant_name.into());
     let camel_case_name_enum = &name_without_tag.to_camel_case();
     let name = variant_without_tag.to_camel_case()[2..].replace(camel_case_name_enum, "");
@@ -753,7 +810,6 @@ pub fn generate_enum(_enum: &vkxml::Enumeration) -> EnumType {
                     return None;
                 }
             };
-
             let variant_ident = Ident::from(variant_name);
             Some(quote!{
                 pub const #variant_ident: #ident = #ident { flags: #value };
@@ -857,21 +913,38 @@ pub fn generate_result(name: &str, _enum: &vkxml::Enumeration) -> Tokens {
 pub trait StructExt {}
 pub fn generate_struct(_struct: &vkxml::Struct) -> Tokens {
     let name = to_type_tokens(&_struct.name, None);
-    let params = _struct
-        .elements
-        .iter()
-        .filter_map(|elem| match *elem {
-            vkxml::StructElement::Member(ref field) => Some(field),
-            _ => None,
-        })
-        .map(|field| {
-            let param_ident = field.param_ident();
-            let param_ty_tokens = field.type_tokens();
-            quote!{pub #param_ident: #param_ty_tokens}
-        });
+    let members = _struct.elements.iter().filter_map(|elem| match *elem {
+        vkxml::StructElement::Member(ref field) => Some(field),
+        _ => None,
+    });
+
+    let params = members.clone().map(|field| {
+        let param_ident = field.param_ident();
+        let param_ty_tokens = field.type_tokens();
+        quote!{pub #param_ident: #param_ty_tokens}
+    });
+
+    let contains_pfn = members.clone().any(|field| {
+        field
+            .name
+            .as_ref()
+            .map(|n| n.contains("pfn"))
+            .unwrap_or(false)
+    });
+
+    let derive = if contains_pfn {
+        quote!{
+            #[derive(Copy, Clone)]
+        }
+    } else {
+        // FIXME: Properly derive Debug
+        quote!{
+            #[derive(Copy, Clone)]
+        }
+    };
     quote!{
-        #[derive(Copy, Clone)]
         #[repr(C)]
+        #derive
         pub struct #name {
             #(#params,)*
         }
@@ -901,10 +974,10 @@ pub fn generate_handle(handle: &vkxml::Handle) -> Option<Tokens> {
     Some(tokens)
 }
 fn generate_funcptr(fnptr: &vkxml::FunctionPointer) -> Tokens {
-    println!("{:#?}", fnptr);
     let name = Ident::from(fnptr.name.as_str());
     let ret_ty_tokens = fnptr.return_type.type_tokens();
     quote!{
+        #[allow(non_camel_case_types)]
         pub type #name = unsafe extern "system" fn() -> #ret_ty_tokens;
     }
 }
@@ -937,8 +1010,8 @@ pub fn generate_definition(definition: &vkxml::DefinitionsElement) -> Option<Tok
         _ => None,
     }
 }
-pub fn generate_core_spec(feature: &vkxml::Feature, commands: &CommandMap) -> quote::Tokens {
-    let (device_commands, instance_commands) = feature
+pub fn generate_feature(feature: &vkxml::Feature, commands: &CommandMap) -> quote::Tokens {
+    let (static_commands, entry_commands, device_commands, instance_commands) = feature
         .elements
         .iter()
         .flat_map(|feature| {
@@ -960,16 +1033,36 @@ pub fn generate_core_spec(feature: &vkxml::Feature, commands: &CommandMap) -> qu
             }
         })
         .filter_map(|cmd_ref| commands.get(&cmd_ref.name))
-        .fold((Vec::new(), Vec::new()), |mut acc, &cmd_ref| {
-            if cmd_ref.is_device_command() {
-                acc.0.push(cmd_ref);
-            } else {
-                acc.1.push(cmd_ref);
-            };
-            acc
-        });
-    let name = Ident::from("Test");
+        .fold(
+            (Vec::new(), Vec::new(), Vec::new(), Vec::new()),
+            |mut acc, &cmd_ref| {
+                match cmd_ref.function_type() {
+                    FunctionType::Static => {
+                        acc.0.push(cmd_ref);
+                    }
+                    FunctionType::Entry => {
+                        acc.1.push(cmd_ref);
+                    }
+                    FunctionType::Device => {
+                        acc.2.push(cmd_ref);
+                    }
+                    FunctionType::Instance => {
+                        acc.3.push(cmd_ref);
+                    }
+                }
+                acc
+            },
+        );
     let version = feature.version_string();
+    let static_fn = if feature.version == 1.0 {
+        generate_function_pointers(Ident::from("StaticFn"), &static_commands)
+    } else {
+        quote!{}
+    };
+    let entry = generate_function_pointers(
+        Ident::from(format!("EntryFnV{}", version).as_str()),
+        &entry_commands,
+    );
     let instance = generate_function_pointers(
         Ident::from(format!("InstanceFnV{}", version).as_str()),
         &instance_commands,
@@ -979,6 +1072,8 @@ pub fn generate_core_spec(feature: &vkxml::Feature, commands: &CommandMap) -> qu
         &device_commands,
     );
     quote! {
+        #static_fn
+        #entry
         #instance
         #device
     }
@@ -997,7 +1092,8 @@ pub fn write_source_code(spec: &vkxml::Registry) {
     use std::fs::File;
     use std::io::Write;
     println!("{:#?}", spec);
-    let commands: HashMap<vkxml::Identifier, &vkxml::Command> = spec.elements
+    let commands: HashMap<vkxml::Identifier, &vkxml::Command> = spec
+        .elements
         .iter()
         .filter_map(|elem| match elem {
             &vkxml::RegistryElement::Commands(ref cmds) => Some(cmds),
@@ -1006,7 +1102,8 @@ pub fn write_source_code(spec: &vkxml::Registry) {
         .flat_map(|cmds| cmds.elements.iter().map(|cmd| (cmd.name.clone(), cmd)))
         .collect();
 
-    let features: Vec<&vkxml::Feature> = spec.elements
+    let features: Vec<&vkxml::Feature> = spec
+        .elements
         .iter()
         .filter_map(|elem| match elem {
             &vkxml::RegistryElement::Features(ref features) => Some(features),
@@ -1015,7 +1112,8 @@ pub fn write_source_code(spec: &vkxml::Registry) {
         .flat_map(|features| features.elements.iter().map(|feature| feature))
         .collect();
 
-    let extensions: Vec<&vkxml::Extension> = spec.elements
+    let extensions: Vec<&vkxml::Extension> = spec
+        .elements
         .iter()
         .filter_map(|elem| match elem {
             &vkxml::RegistryElement::Extensions(ref extensions) => Some(extensions),
@@ -1024,7 +1122,8 @@ pub fn write_source_code(spec: &vkxml::Registry) {
         .flat_map(|extensions| extensions.elements.iter().map(|extension| extension))
         .collect();
 
-    let definitions: Vec<&vkxml::DefinitionsElement> = spec.elements
+    let definitions: Vec<&vkxml::DefinitionsElement> = spec
+        .elements
         .iter()
         .filter_map(|elem| match elem {
             &vkxml::RegistryElement::Definitions(ref definitions) => Some(definitions),
@@ -1033,7 +1132,8 @@ pub fn write_source_code(spec: &vkxml::Registry) {
         .flat_map(|definitions| definitions.elements.iter().map(|definition| definition))
         .collect();
 
-    let enums: Vec<&vkxml::Enumeration> = spec.elements
+    let enums: Vec<&vkxml::Enumeration> = spec
+        .elements
         .iter()
         .filter_map(|elem| match elem {
             &vkxml::RegistryElement::Enums(ref enums) => Some(enums),
@@ -1047,7 +1147,8 @@ pub fn write_source_code(spec: &vkxml::Registry) {
         })
         .collect();
 
-    let constants: Vec<&vkxml::Constant> = spec.elements
+    let constants: Vec<&vkxml::Constant> = spec
+        .elements
         .iter()
         .filter_map(|elem| match elem {
             &vkxml::RegistryElement::Constants(ref constants) => Some(constants),
@@ -1074,7 +1175,7 @@ pub fn write_source_code(spec: &vkxml::Registry) {
 
     let feature_code: Vec<_> = features
         .iter()
-        .map(|feature| generate_core_spec(feature, &commands))
+        .map(|feature| generate_feature(feature, &commands))
         .collect();
 
     let extension_code: Vec<_> = extensions
@@ -1089,18 +1190,19 @@ pub fn write_source_code(spec: &vkxml::Registry) {
     let bitflags_macro = vk_bitflags_wrapped_macro();
     let handle_nondispatchable_macro = handle_nondispatchable_macro();
     let define_handle_macro = define_handle_macro();
+    let platform_specific_types = platform_specific_types();
     let source_code = quote!{
-        use libc::*;
-        // #bitflags_macro
-        // #handle_nondispatchable_macro
-        // #define_handle_macro
-        // #(#feature_code)*
-        // #(#extension_code)*
-        // #(#definition_code)*
-        // #(#enum_code)*
-        // #(#bitflags_code)*
+        pub use libc::*;
+        #platform_specific_types
+        #bitflags_macro
+        #handle_nondispatchable_macro
+        #define_handle_macro
+        #(#feature_code)*
+        #(#definition_code)*
+        #(#enum_code)*
+        #(#bitflags_code)*
         #(#constants_code)*
+        #(#extension_code)*
     };
-    println!("{:?}", cexpr("(~0UL)"));
     write!(&mut file, "{}", source_code);
 }
