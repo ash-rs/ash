@@ -8,11 +8,13 @@ extern crate heck;
 extern crate proc_macro2;
 #[macro_use]
 extern crate quote;
+extern crate itertools;
 extern crate syn;
 pub extern crate vk_parse;
 pub extern crate vkxml;
 
 use heck::{CamelCase, ShoutySnakeCase, SnakeCase};
+use itertools::Itertools;
 use proc_macro2::{Term, TokenTree};
 use quote::Tokens;
 use std::collections::HashMap;
@@ -132,6 +134,37 @@ pub fn handle_nondispatchable_macro() -> Tokens {
                     }
                 }
             }
+        }
+    }
+}
+pub fn vk_version_macros() -> Tokens {
+    quote!{
+        #[macro_export]
+        macro_rules! vk_make_version {
+            ($major:expr, $minor:expr, $patch:expr) => {
+                (($major as u32) << 22) | (($minor as u32) << 12) | $patch as u32
+            };
+        }
+
+        #[macro_export]
+        macro_rules! vk_version_major {
+            ($major:expr) => {
+                ($major as uint32_t) >> 22
+            };
+        }
+
+        #[macro_export]
+        macro_rules! vk_version_minor {
+            ($minor:expr) => {
+                (($minor as uint32_t) >> 12) & 0x3ff
+            };
+        }
+
+        #[macro_export]
+        macro_rules! vk_version_patch {
+            ($minor:expr) => {
+                ($minor as uint32_t) & 0xfff
+            };
         }
     }
 }
@@ -697,15 +730,15 @@ pub fn generate_extension(extension: &vkxml::Extension, commands: &CommandMap) -
             if let &vkxml::ExtensionElement::Require(ref spec) = extension {
                 spec.elements
                     .iter()
-                    .filter_map(|extension_spec| {
-                        if let &vkxml::ExtensionSpecificationElement::CommandReference(
-                            ref cmd_ref,
-                        ) = extension_spec
-                        {
+                    .filter_map(|extension_spec| match extension_spec {
+                        vkxml::ExtensionSpecificationElement::CommandReference(ref cmd_ref) => {
                             Some(cmd_ref)
-                        } else {
+                        }
+                        vkxml::ExtensionSpecificationElement::DefinitionReference(ref field) => {
+                            println!("EXT {:?}", field);
                             None
                         }
+                        _ => None,
                     })
                     .collect()
             } else {
@@ -778,7 +811,10 @@ pub enum EnumType {
     Enum(Tokens),
 }
 
-pub fn generate_enum(_enum: &vkxml::Enumeration) -> EnumType {
+pub fn generate_enum(
+    _enum: &vkxml::Enumeration,
+    create_info_constants: &[&vkxml::Constant],
+) -> EnumType {
     let name = &_enum.name[2..];
     let _name = name.replace("FlagBits", "Flags");
     if name.contains("Bit") {
@@ -822,6 +858,7 @@ pub fn generate_enum(_enum: &vkxml::Enumeration) -> EnumType {
         EnumType::Bitflags(q)
     } else {
         let q = match _name.as_str() {
+            "StructureType" => generate_structure_type(&_name, _enum, create_info_constants),
             "Result" => generate_result(&_name, _enum),
             _ => {
                 let ident = Ident::from(_name.as_str());
@@ -852,6 +889,38 @@ pub fn generate_enum(_enum: &vkxml::Enumeration) -> EnumType {
             }
         };
         EnumType::Enum(q)
+    }
+}
+pub fn generate_structure_type(
+    name: &str,
+    _enum: &vkxml::Enumeration,
+    create_info_constants: &[&vkxml::Constant],
+) -> Tokens {
+    let ident = Ident::from(name);
+    let constants: Vec<_> = _enum
+        .elements
+        .iter()
+        .filter_map(|elem| match elem {
+            vkxml::EnumerationElement::Enum(constant) => Some(constant),
+            _ => None,
+        })
+        .collect();
+    let variants = constants
+        .iter()
+        .chain(create_info_constants.into_iter())
+        .map(|constant| {
+            let value_tokens = Constant::from_constant(constant).to_tokens();
+            let variant_ident = to_variant_ident(&name, &constant.name);
+            quote!{
+                #variant_ident = #value_tokens
+            }
+        });
+    quote!{
+        #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+        #[repr(C)]
+        pub enum #ident {
+            #(#variants,)*
+        }
     }
 }
 pub fn generate_result(name: &str, _enum: &vkxml::Enumeration) -> Tokens {
@@ -1157,16 +1226,29 @@ pub fn write_source_code(spec: &vkxml::Registry) {
         .flat_map(|constants| constants.elements.iter())
         .collect();
 
-    let (enum_code, bitflags_code) = enums.into_iter().map(generate_enum).fold(
-        (Vec::new(), Vec::new()),
-        |mut acc, elem| {
+    let (create_info_constants, constants): (Vec<_>, Vec<_>) =
+        constants.iter().partition_map(|&c| {
+            if c.name.contains("CreateInfo") {
+                itertools::Either::Left(c)
+            } else {
+                itertools::Either::Right(c)
+            }
+        });
+
+    let (enum_code, bitflags_code) = enums
+        .into_iter()
+        .map(|e| generate_enum(e, &create_info_constants))
+        .fold((Vec::new(), Vec::new()), |mut acc, elem| {
             match elem {
                 EnumType::Enum(token) => acc.0.push(token),
                 EnumType::Bitflags(token) => acc.1.push(token),
             };
             acc
-        },
-    );
+        });
+    let constants_code: Vec<_> = constants
+        .iter()
+        .map(|constant| generate_constant(constant))
+        .collect();
 
     let definition_code: Vec<_> = definitions
         .into_iter()
@@ -1182,17 +1264,15 @@ pub fn write_source_code(spec: &vkxml::Registry) {
         .iter()
         .map(|ext| generate_extension(ext, &commands))
         .collect();
-    let constants_code: Vec<_> = constants
-        .iter()
-        .map(|constant| generate_constant(constant))
-        .collect();
     let mut file = File::create("../ash/src/vk_test.rs").expect("vk");
     let bitflags_macro = vk_bitflags_wrapped_macro();
     let handle_nondispatchable_macro = handle_nondispatchable_macro();
     let define_handle_macro = define_handle_macro();
+    let version_macros = vk_version_macros();
     let platform_specific_types = platform_specific_types();
     let source_code = quote!{
         pub use libc::*;
+        #version_macros
         #platform_specific_types
         #bitflags_macro
         #handle_nondispatchable_macro
