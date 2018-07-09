@@ -82,7 +82,7 @@ pub trait InstanceV1_0 {
             allocation_callbacks.as_raw_ptr(),
             &mut device,
         );
-        if err_code != vk::Result::Success {
+        if err_code != vk::Result::SUCCESS {
             return Err(DeviceError::VkError(err_code));
         }
         let device_fn = <<Self as InstanceV1_0>::Fp as FunctionPointers>::DeviceFp::load(
@@ -141,7 +141,7 @@ pub trait InstanceV1_0 {
                 flags,
                 &mut image_format_prop,
             );
-            if err_code == vk::Result::Success {
+            if err_code == vk::Result::SUCCESS {
                 Ok(image_format_prop)
             } else {
                 Err(err_code)
@@ -220,7 +220,7 @@ pub trait InstanceV1_0 {
             );
             physical_devices.set_len(num as usize);
             match err_code {
-                vk::Result::Success => Ok(physical_devices),
+                vk::Result::SUCCESS => Ok(physical_devices),
                 _ => Err(err_code),
             }
         }
@@ -247,7 +247,7 @@ pub trait InstanceV1_0 {
             );
             data.set_len(num as usize);
             match err_code {
-                vk::Result::Success => Ok(data),
+                vk::Result::SUCCESS => Ok(data),
                 _ => Err(err_code),
             }
         }

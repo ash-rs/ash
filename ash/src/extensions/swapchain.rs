@@ -60,7 +60,7 @@ impl Swapchain {
             &mut index,
         );
         match err_code {
-            vk::Result::Success => Ok(index),
+            vk::Result::SUCCESS => Ok(index),
             _ => Err(err_code),
         }
     }
@@ -78,7 +78,7 @@ impl Swapchain {
             &mut swapchain,
         );
         match err_code {
-            vk::Result::Success => Ok(swapchain),
+            vk::Result::SUCCESS => Ok(swapchain),
             _ => Err(err_code),
         }
     }
@@ -90,7 +90,7 @@ impl Swapchain {
     ) -> VkResult<()> {
         let err_code = self.swapchain_fn.queue_present_khr(queue, create_info);
         match err_code {
-            vk::Result::Success => Ok(()),
+            vk::Result::SUCCESS => Ok(()),
             _ => Err(err_code),
         }
     }
@@ -117,7 +117,7 @@ impl Swapchain {
             );
             v.set_len(count as vk::size_t);
             match err_code {
-                vk::Result::Success => Ok(v),
+                vk::Result::SUCCESS => Ok(v),
                 _ => Err(err_code),
             }
         }

@@ -36,7 +36,7 @@ impl DebugMarker {
             .debug_marker_fn
             .debug_marker_set_object_name_ext(device, name_info);
         match err_code {
-            vk::Result::Success => Ok(()),
+            vk::Result::SUCCESS => Ok(()),
             _ => Err(err_code),
         }
     }

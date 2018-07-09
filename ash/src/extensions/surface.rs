@@ -73,7 +73,7 @@ impl Surface {
                 );
             v.set_len(count as usize);
             match err_code {
-                vk::Result::Success => Ok(v),
+                vk::Result::SUCCESS => Ok(v),
                 _ => Err(err_code),
             }
         }
@@ -94,7 +94,7 @@ impl Surface {
                     &mut surface_capabilities,
                 );
             match err_code {
-                vk::Result::Success => Ok(surface_capabilities),
+                vk::Result::SUCCESS => Ok(surface_capabilities),
                 _ => Err(err_code),
             }
         }
@@ -122,7 +122,7 @@ impl Surface {
             );
             v.set_len(count as usize);
             match err_code {
-                vk::Result::Success => Ok(v),
+                vk::Result::SUCCESS => Ok(v),
                 _ => Err(err_code),
             }
         }

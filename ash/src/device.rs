@@ -247,7 +247,7 @@ pub trait DeviceV1_0 {
             &mut sampler,
         );
         match err_code {
-            vk::Result::Success => Ok(sampler),
+            vk::Result::SUCCESS => Ok(sampler),
             _ => Err(err_code),
         }
     }
@@ -407,7 +407,7 @@ pub trait DeviceV1_0 {
 
         desc_set.set_len(create_info.descriptor_set_count as usize);
         match err_code {
-            vk::Result::Success => Ok(desc_set),
+            vk::Result::SUCCESS => Ok(desc_set),
             _ => Err(err_code),
         }
     }
@@ -425,7 +425,7 @@ pub trait DeviceV1_0 {
             &mut layout,
         );
         match err_code {
-            vk::Result::Success => Ok(layout),
+            vk::Result::SUCCESS => Ok(layout),
             _ => Err(err_code),
         }
     }
@@ -434,7 +434,7 @@ pub trait DeviceV1_0 {
         unsafe {
             let err_code = self.fp_v1_0().device_wait_idle(self.handle());
             match err_code {
-                vk::Result::Success => Ok(()),
+                vk::Result::SUCCESS => Ok(()),
                 _ => Err(err_code),
             }
         }
@@ -453,7 +453,7 @@ pub trait DeviceV1_0 {
             &mut pool,
         );
         match err_code {
-            vk::Result::Success => Ok(pool),
+            vk::Result::SUCCESS => Ok(pool),
             _ => Err(err_code),
         }
     }
@@ -467,7 +467,7 @@ pub trait DeviceV1_0 {
             .fp_v1_0()
             .reset_descriptor_pool(self.handle(), pool, flags);
         match err_code {
-            vk::Result::Success => Ok(()),
+            vk::Result::SUCCESS => Ok(()),
             _ => Err(err_code),
         }
     }
@@ -481,7 +481,7 @@ pub trait DeviceV1_0 {
             .fp_v1_0()
             .reset_command_pool(self.handle(), command_pool, flags);
         match err_code {
-            vk::Result::Success => Ok(()),
+            vk::Result::SUCCESS => Ok(()),
             _ => Err(err_code),
         }
     }
@@ -493,7 +493,7 @@ pub trait DeviceV1_0 {
     ) -> VkResult<()> {
         let err_code = self.fp_v1_0().reset_command_buffer(command_buffer, flags);
         match err_code {
-            vk::Result::Success => Ok(()),
+            vk::Result::SUCCESS => Ok(()),
             _ => Err(err_code),
         }
     }
@@ -505,7 +505,7 @@ pub trait DeviceV1_0 {
             fences.as_ptr(),
         );
         match err_code {
-            vk::Result::Success => Ok(()),
+            vk::Result::SUCCESS => Ok(()),
             _ => Err(err_code),
         }
     }
@@ -881,7 +881,7 @@ pub trait DeviceV1_0 {
         );
 
         match err_code {
-            vk::Result::Success => Ok(()),
+            vk::Result::SUCCESS => Ok(()),
             _ => Err(err_code),
         }
     }
@@ -942,7 +942,7 @@ pub trait DeviceV1_0 {
             &mut semaphore,
         );
         match err_code {
-            vk::Result::Success => Ok(semaphore),
+            vk::Result::SUCCESS => Ok(semaphore),
             _ => Err(err_code),
         }
     }
@@ -964,7 +964,7 @@ pub trait DeviceV1_0 {
         );
         pipelines.set_len(create_infos.len());
         match err_code {
-            vk::Result::Success => Ok(pipelines),
+            vk::Result::SUCCESS => Ok(pipelines),
             _ => Err((pipelines, err_code)),
         }
     }
@@ -986,7 +986,7 @@ pub trait DeviceV1_0 {
         );
         pipelines.set_len(create_infos.len());
         match err_code {
-            vk::Result::Success => Ok(pipelines),
+            vk::Result::SUCCESS => Ok(pipelines),
             _ => Err((pipelines, err_code)),
         }
     }
@@ -1004,7 +1004,7 @@ pub trait DeviceV1_0 {
             &mut buffer,
         );
         match err_code {
-            vk::Result::Success => Ok(buffer),
+            vk::Result::SUCCESS => Ok(buffer),
             _ => Err(err_code),
         }
     }
@@ -1022,7 +1022,7 @@ pub trait DeviceV1_0 {
             &mut pipeline_layout,
         );
         match err_code {
-            vk::Result::Success => Ok(pipeline_layout),
+            vk::Result::SUCCESS => Ok(pipeline_layout),
             _ => Err(err_code),
         }
     }
@@ -1041,7 +1041,7 @@ pub trait DeviceV1_0 {
         );
 
         match err_code {
-            vk::Result::Success => Ok(pipeline_cache),
+            vk::Result::SUCCESS => Ok(pipeline_cache),
             _ => Err(err_code),
         }
     }
@@ -1058,7 +1058,7 @@ pub trait DeviceV1_0 {
             self.fp_v1_0()
                 .map_memory(self.handle(), memory, offset, size, flags, &mut data);
         match err_code {
-            vk::Result::Success => Ok(data),
+            vk::Result::SUCCESS => Ok(data),
             _ => Err(err_code),
         }
     }
@@ -1077,7 +1077,7 @@ pub trait DeviceV1_0 {
             ranges.as_ptr(),
         );
         match err_code {
-            vk::Result::Success => Ok(()),
+            vk::Result::SUCCESS => Ok(()),
             _ => Err(err_code),
         }
     }
@@ -1089,7 +1089,7 @@ pub trait DeviceV1_0 {
             ranges.as_ptr(),
         );
         match err_code {
-            vk::Result::Success => Ok(()),
+            vk::Result::SUCCESS => Ok(()),
             _ => Err(err_code),
         }
     }
@@ -1107,7 +1107,7 @@ pub trait DeviceV1_0 {
             &mut framebuffer,
         );
         match err_code {
-            vk::Result::Success => Ok(framebuffer),
+            vk::Result::SUCCESS => Ok(framebuffer),
             _ => Err(err_code),
         }
     }
@@ -1160,7 +1160,7 @@ pub trait DeviceV1_0 {
             &mut renderpass,
         );
         match err_code {
-            vk::Result::Success => Ok(renderpass),
+            vk::Result::SUCCESS => Ok(renderpass),
             _ => Err(err_code),
         }
     }
@@ -1174,7 +1174,7 @@ pub trait DeviceV1_0 {
             .fp_v1_0()
             .begin_command_buffer(command_buffer, create_info);
         match err_code {
-            vk::Result::Success => Ok(()),
+            vk::Result::SUCCESS => Ok(()),
             _ => Err(err_code),
         }
     }
@@ -1182,7 +1182,7 @@ pub trait DeviceV1_0 {
     unsafe fn end_command_buffer(&self, command_buffer: vk::CommandBuffer) -> VkResult<()> {
         let err_code = self.fp_v1_0().end_command_buffer(command_buffer);
         match err_code {
-            vk::Result::Success => Ok(()),
+            vk::Result::SUCCESS => Ok(()),
             _ => Err(err_code),
         }
     }
@@ -1201,7 +1201,7 @@ pub trait DeviceV1_0 {
             timeout,
         );
         match err_code {
-            vk::Result::Success => Ok(()),
+            vk::Result::SUCCESS => Ok(()),
             _ => Err(err_code),
         }
     }
@@ -1209,7 +1209,7 @@ pub trait DeviceV1_0 {
     unsafe fn get_fence_status(&self, fence: vk::Fence) -> VkResult<()> {
         let err_code = self.fp_v1_0().get_fence_status(self.handle(), fence);
         match err_code {
-            vk::Result::Success => Ok(()),
+            vk::Result::SUCCESS => Ok(()),
             _ => Err(err_code),
         }
     }
@@ -1217,7 +1217,7 @@ pub trait DeviceV1_0 {
     unsafe fn queue_wait_idle(&self, queue: vk::Queue) -> VkResult<()> {
         let err_code = self.fp_v1_0().queue_wait_idle(queue);
         match err_code {
-            vk::Result::Success => Ok(()),
+            vk::Result::SUCCESS => Ok(()),
             _ => Err(err_code),
         }
     }
@@ -1235,7 +1235,7 @@ pub trait DeviceV1_0 {
             fence,
         );
         match err_code {
-            vk::Result::Success => Ok(()),
+            vk::Result::SUCCESS => Ok(()),
             _ => Err(err_code),
         }
     }
@@ -1253,7 +1253,7 @@ pub trait DeviceV1_0 {
             &mut buffer_view,
         );
         match err_code {
-            vk::Result::Success => Ok(buffer_view),
+            vk::Result::SUCCESS => Ok(buffer_view),
             _ => Err(err_code),
         }
     }
@@ -1283,7 +1283,7 @@ pub trait DeviceV1_0 {
             &mut image_view,
         );
         match err_code {
-            vk::Result::Success => Ok(image_view),
+            vk::Result::SUCCESS => Ok(image_view),
             _ => Err(err_code),
         }
     }
@@ -1300,7 +1300,7 @@ pub trait DeviceV1_0 {
         );
         buffers.set_len(create_info.command_buffer_count as vk::size_t);
         match err_code {
-            vk::Result::Success => Ok(buffers),
+            vk::Result::SUCCESS => Ok(buffers),
             _ => Err(err_code),
         }
     }
@@ -1318,7 +1318,7 @@ pub trait DeviceV1_0 {
             &mut pool,
         );
         match err_code {
-            vk::Result::Success => Ok(pool),
+            vk::Result::SUCCESS => Ok(pool),
             _ => Err(err_code),
         }
     }
@@ -1336,7 +1336,7 @@ pub trait DeviceV1_0 {
             &mut pool,
         );
         match err_code {
-            vk::Result::Success => Ok(pool),
+            vk::Result::SUCCESS => Ok(pool),
             _ => Err(err_code),
         }
     }
@@ -1354,7 +1354,7 @@ pub trait DeviceV1_0 {
             &mut image,
         );
         match err_code {
-            vk::Result::Success => Ok(image),
+            vk::Result::SUCCESS => Ok(image),
             _ => Err(err_code),
         }
     }
@@ -1407,7 +1407,7 @@ pub trait DeviceV1_0 {
             &mut memory,
         );
         match err_code {
-            vk::Result::Success => Ok(memory),
+            vk::Result::SUCCESS => Ok(memory),
             _ => Err(err_code),
         }
     }
@@ -1425,7 +1425,7 @@ pub trait DeviceV1_0 {
             &mut shader,
         );
         match err_code {
-            vk::Result::Success => Ok(shader),
+            vk::Result::SUCCESS => Ok(shader),
             _ => Err(err_code),
         }
     }
@@ -1443,7 +1443,7 @@ pub trait DeviceV1_0 {
             &mut fence,
         );
         match err_code {
-            vk::Result::Success => Ok(fence),
+            vk::Result::SUCCESS => Ok(fence),
             _ => Err(err_code),
         }
     }
@@ -1458,7 +1458,7 @@ pub trait DeviceV1_0 {
             self.fp_v1_0()
                 .bind_buffer_memory(self.handle(), buffer, device_memory, offset);
         match err_code {
-            vk::Result::Success => Ok(()),
+            vk::Result::SUCCESS => Ok(()),
             _ => Err(err_code),
         }
     }
@@ -1473,7 +1473,7 @@ pub trait DeviceV1_0 {
             self.fp_v1_0()
                 .bind_image_memory(self.handle(), image, device_memory, offset);
         match err_code {
-            vk::Result::Success => Ok(()),
+            vk::Result::SUCCESS => Ok(()),
             _ => Err(err_code),
         }
     }

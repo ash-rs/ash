@@ -43,7 +43,7 @@ impl IOSSurface {
             &mut surface,
         );
         match err_code {
-            vk::Result::Success => Ok(surface),
+            vk::Result::SUCCESS => Ok(surface),
             _ => Err(err_code),
         }
     }

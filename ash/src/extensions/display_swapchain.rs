@@ -45,7 +45,7 @@ impl DisplaySwapchain {
         );
         swapchains.set_len(create_infos.len());
         match err_code {
-            vk::Result::Success => Ok(swapchains),
+            vk::Result::SUCCESS => Ok(swapchains),
             _ => Err(err_code),
         }
     }

@@ -55,7 +55,7 @@ impl DebugReport {
             &mut debug_cb,
         );
         match err_code {
-            vk::Result::Success => Ok(debug_cb),
+            vk::Result::SUCCESS => Ok(debug_cb),
             _ => Err(err_code),
         }
     }

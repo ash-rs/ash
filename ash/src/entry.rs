@@ -82,7 +82,7 @@ pub trait EntryV1_0 {
             allocation_callbacks.as_raw_ptr(),
             &mut instance,
         );
-        if err_code != vk::Result::Success {
+        if err_code != vk::Result::SUCCESS {
             return Err(InstanceError::VkError(err_code));
         }
         let instance_fp =
@@ -103,7 +103,7 @@ pub trait EntryV1_0 {
                 .enumerate_instance_layer_properties(&mut num, v.as_mut_ptr());
             v.set_len(num as usize);
             match err_code {
-                vk::Result::Success => Ok(v),
+                vk::Result::SUCCESS => Ok(v),
                 _ => Err(err_code),
             }
         }
@@ -125,7 +125,7 @@ pub trait EntryV1_0 {
             );
             data.set_len(num as usize);
             match err_code {
-                vk::Result::Success => Ok(data),
+                vk::Result::SUCCESS => Ok(data),
                 _ => Err(err_code),
             }
         }
