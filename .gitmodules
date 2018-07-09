@@ -1,0 +1,4 @@
+[submodule "generator/New-Vulkan-XML-Format"]
+	url = https://github.com/NicolBolas/New-Vulkan-XML-Format
+[submodule "generator/Vulkan-Docs"]
+	url = https://github.com/KhronosGroup/Vulkan-Docs
