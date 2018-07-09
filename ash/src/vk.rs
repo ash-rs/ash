@@ -51,11 +51,6 @@ pub type ANativeWindow = c_void;
 pub type AHardwareBuffer = c_void;
 macro_rules! vk_bitflags_wrapped {
     ($name:ident, $all:expr, $flag_type:ty) => {
-        #[repr(C)]
-        #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-        pub struct $name {
-            flags: $flag_type,
-        }
         impl Default for $name {
             fn default() -> $name {
                 $name { flags: 0 }
@@ -4573,51 +4568,281 @@ pub type SampleMask = uint32_t;
 pub type Bool32 = uint32_t;
 pub type Flags = uint32_t;
 pub type DeviceSize = uint64_t;
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct FramebufferCreateFlags {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(FramebufferCreateFlags, 0b0, Flags);
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct QueryPoolCreateFlags {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(QueryPoolCreateFlags, 0b0, Flags);
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct RenderPassCreateFlags {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(RenderPassCreateFlags, 0b0, Flags);
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct SamplerCreateFlags {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(SamplerCreateFlags, 0b0, Flags);
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct PipelineLayoutCreateFlags {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(PipelineLayoutCreateFlags, 0b0, Flags);
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct PipelineCacheCreateFlags {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(PipelineCacheCreateFlags, 0b0, Flags);
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct PipelineDepthStencilStateCreateFlags {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(PipelineDepthStencilStateCreateFlags, 0b0, Flags);
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct PipelineDynamicStateCreateFlags {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(PipelineDynamicStateCreateFlags, 0b0, Flags);
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct PipelineColorBlendStateCreateFlags {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(PipelineColorBlendStateCreateFlags, 0b0, Flags);
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct PipelineMultisampleStateCreateFlags {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(PipelineMultisampleStateCreateFlags, 0b0, Flags);
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct PipelineRasterizationStateCreateFlags {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(PipelineRasterizationStateCreateFlags, 0b0, Flags);
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct PipelineViewportStateCreateFlags {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(PipelineViewportStateCreateFlags, 0b0, Flags);
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct PipelineTessellationStateCreateFlags {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(PipelineTessellationStateCreateFlags, 0b0, Flags);
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct PipelineInputAssemblyStateCreateFlags {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(PipelineInputAssemblyStateCreateFlags, 0b0, Flags);
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct PipelineVertexInputStateCreateFlags {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(PipelineVertexInputStateCreateFlags, 0b0, Flags);
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct PipelineShaderStageCreateFlags {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(PipelineShaderStageCreateFlags, 0b0, Flags);
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct BufferViewCreateFlags {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(BufferViewCreateFlags, 0b0, Flags);
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct InstanceCreateFlags {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(InstanceCreateFlags, 0b0, Flags);
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct DeviceCreateFlags {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(DeviceCreateFlags, 0b0, Flags);
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct ImageViewCreateFlags {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(ImageViewCreateFlags, 0b0, Flags);
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct SemaphoreCreateFlags {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(SemaphoreCreateFlags, 0b0, Flags);
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct ShaderModuleCreateFlags {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(ShaderModuleCreateFlags, 0b0, Flags);
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct EventCreateFlags {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(EventCreateFlags, 0b0, Flags);
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct MemoryMapFlags {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(MemoryMapFlags, 0b0, Flags);
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct DescriptorPoolResetFlags {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(DescriptorPoolResetFlags, 0b0, Flags);
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct DescriptorUpdateTemplateCreateFlags {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(DescriptorUpdateTemplateCreateFlags, 0b0, Flags);
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct DisplayModeCreateFlagsKHR {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(DisplayModeCreateFlagsKHR, 0b0, Flags);
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct DisplaySurfaceCreateFlagsKHR {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(DisplaySurfaceCreateFlagsKHR, 0b0, Flags);
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct AndroidSurfaceCreateFlagsKHR {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(AndroidSurfaceCreateFlagsKHR, 0b0, Flags);
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct MirSurfaceCreateFlagsKHR {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(MirSurfaceCreateFlagsKHR, 0b0, Flags);
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct ViSurfaceCreateFlagsNN {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(ViSurfaceCreateFlagsNN, 0b0, Flags);
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct WaylandSurfaceCreateFlagsKHR {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(WaylandSurfaceCreateFlagsKHR, 0b0, Flags);
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct Win32SurfaceCreateFlagsKHR {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(Win32SurfaceCreateFlagsKHR, 0b0, Flags);
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct XlibSurfaceCreateFlagsKHR {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(XlibSurfaceCreateFlagsKHR, 0b0, Flags);
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct XcbSurfaceCreateFlagsKHR {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(XcbSurfaceCreateFlagsKHR, 0b0, Flags);
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct IOSSurfaceCreateFlagsMVK {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(IOSSurfaceCreateFlagsMVK, 0b0, Flags);
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct MacOSSurfaceCreateFlagsMVK {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(MacOSSurfaceCreateFlagsMVK, 0b0, Flags);
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct CommandPoolTrimFlags {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(CommandPoolTrimFlags, 0b0, Flags);
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct PipelineViewportSwizzleStateCreateFlagsNV {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(PipelineViewportSwizzleStateCreateFlagsNV, 0b0, Flags);
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct PipelineDiscardRectangleStateCreateFlagsEXT {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(PipelineDiscardRectangleStateCreateFlagsEXT, 0b0, Flags);
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct PipelineCoverageToColorStateCreateFlagsNV {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(PipelineCoverageToColorStateCreateFlagsNV, 0b0, Flags);
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct PipelineCoverageModulationStateCreateFlagsNV {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(PipelineCoverageModulationStateCreateFlagsNV, 0b0, Flags);
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct ValidationCacheCreateFlagsEXT {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(ValidationCacheCreateFlagsEXT, 0b0, Flags);
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct DebugUtilsMessengerCreateFlagsEXT {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(DebugUtilsMessengerCreateFlagsEXT, 0b0, Flags);
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct DebugUtilsMessengerCallbackDataFlagsEXT {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(DebugUtilsMessengerCallbackDataFlagsEXT, 0b0, Flags);
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct PipelineRasterizationConservativeStateCreateFlagsEXT {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(
     PipelineRasterizationConservativeStateCreateFlagsEXT,
     0b0,
@@ -7992,548 +8217,582 @@ pub struct ExternalFormatANDROID {
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum ImageLayout {
-    Undefined = 0,
-    General = 1,
-    ColorAttachmentOptimal = 2,
-    DepthStencilAttachmentOptimal = 3,
-    DepthStencilReadOnlyOptimal = 4,
-    ShaderReadOnlyOptimal = 5,
-    TransferSrcOptimal = 6,
-    TransferDstOptimal = 7,
-    Preinitialized = 8,
+pub struct ImageLayout(pub i32);
+impl ImageLayout {
+    pub const UNDEFINED: Self = ImageLayout(0);
+    pub const GENERAL: Self = ImageLayout(1);
+    pub const COLOR_ATTACHMENT_OPTIMAL: Self = ImageLayout(2);
+    pub const DEPTH_STENCIL_ATTACHMENT_OPTIMAL: Self = ImageLayout(3);
+    pub const DEPTH_STENCIL_READ_ONLY_OPTIMAL: Self = ImageLayout(4);
+    pub const SHADER_READ_ONLY_OPTIMAL: Self = ImageLayout(5);
+    pub const TRANSFER_SRC_OPTIMAL: Self = ImageLayout(6);
+    pub const TRANSFER_DST_OPTIMAL: Self = ImageLayout(7);
+    pub const PREINITIALIZED: Self = ImageLayout(8);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum AttachmentLoadOp {
-    Load = 0,
-    Clear = 1,
-    DontCare = 2,
+pub struct AttachmentLoadOp(pub i32);
+impl AttachmentLoadOp {
+    pub const LOAD: Self = AttachmentLoadOp(0);
+    pub const CLEAR: Self = AttachmentLoadOp(1);
+    pub const DONT_CARE: Self = AttachmentLoadOp(2);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum AttachmentStoreOp {
-    Store = 0,
-    DontCare = 1,
+pub struct AttachmentStoreOp(pub i32);
+impl AttachmentStoreOp {
+    pub const STORE: Self = AttachmentStoreOp(0);
+    pub const DONT_CARE: Self = AttachmentStoreOp(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum ImageType {
-    Type1d = 0,
-    Type2d = 1,
-    Type3d = 2,
+pub struct ImageType(pub i32);
+impl ImageType {
+    pub const TYPE_1D: Self = ImageType(0);
+    pub const TYPE_2D: Self = ImageType(1);
+    pub const TYPE_3D: Self = ImageType(2);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum ImageTiling {
-    Optimal = 0,
-    Linear = 1,
+pub struct ImageTiling(pub i32);
+impl ImageTiling {
+    pub const OPTIMAL: Self = ImageTiling(0);
+    pub const LINEAR: Self = ImageTiling(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum ImageViewType {
-    Type1d = 0,
-    Type2d = 1,
-    Type3d = 2,
-    Cube = 3,
-    Type1dArray = 4,
-    Type2dArray = 5,
-    CubeArray = 6,
+pub struct ImageViewType(pub i32);
+impl ImageViewType {
+    pub const TYPE_1D: Self = ImageViewType(0);
+    pub const TYPE_2D: Self = ImageViewType(1);
+    pub const TYPE_3D: Self = ImageViewType(2);
+    pub const CUBE: Self = ImageViewType(3);
+    pub const TYPE_1D_ARRAY: Self = ImageViewType(4);
+    pub const TYPE_2D_ARRAY: Self = ImageViewType(5);
+    pub const CUBE_ARRAY: Self = ImageViewType(6);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum CommandBufferLevel {
-    Primary = 0,
-    Secondary = 1,
+pub struct CommandBufferLevel(pub i32);
+impl CommandBufferLevel {
+    pub const PRIMARY: Self = CommandBufferLevel(0);
+    pub const SECONDARY: Self = CommandBufferLevel(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum ComponentSwizzle {
-    Identity = 0,
-    Zero = 1,
-    One = 2,
-    R = 3,
-    G = 4,
-    B = 5,
-    A = 6,
+pub struct ComponentSwizzle(pub i32);
+impl ComponentSwizzle {
+    pub const IDENTITY: Self = ComponentSwizzle(0);
+    pub const ZERO: Self = ComponentSwizzle(1);
+    pub const ONE: Self = ComponentSwizzle(2);
+    pub const R: Self = ComponentSwizzle(3);
+    pub const G: Self = ComponentSwizzle(4);
+    pub const B: Self = ComponentSwizzle(5);
+    pub const A: Self = ComponentSwizzle(6);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum DescriptorType {
-    Sampler = 0,
-    CombinedImageSampler = 1,
-    SampledImage = 2,
-    StorageImage = 3,
-    UniformTexelBuffer = 4,
-    StorageTexelBuffer = 5,
-    UniformBuffer = 6,
-    StorageBuffer = 7,
-    UniformBufferDynamic = 8,
-    StorageBufferDynamic = 9,
-    InputAttachment = 10,
+pub struct DescriptorType(pub i32);
+impl DescriptorType {
+    pub const SAMPLER: Self = DescriptorType(0);
+    pub const COMBINED_IMAGE_SAMPLER: Self = DescriptorType(1);
+    pub const SAMPLED_IMAGE: Self = DescriptorType(2);
+    pub const STORAGE_IMAGE: Self = DescriptorType(3);
+    pub const UNIFORM_TEXEL_BUFFER: Self = DescriptorType(4);
+    pub const STORAGE_TEXEL_BUFFER: Self = DescriptorType(5);
+    pub const UNIFORM_BUFFER: Self = DescriptorType(6);
+    pub const STORAGE_BUFFER: Self = DescriptorType(7);
+    pub const UNIFORM_BUFFER_DYNAMIC: Self = DescriptorType(8);
+    pub const STORAGE_BUFFER_DYNAMIC: Self = DescriptorType(9);
+    pub const INPUT_ATTACHMENT: Self = DescriptorType(10);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum QueryType {
-    Occlusion = 0,
-    PipelineStatistics = 1,
-    Timestamp = 2,
+pub struct QueryType(pub i32);
+impl QueryType {
+    pub const OCCLUSION: Self = QueryType(0);
+    pub const PIPELINE_STATISTICS: Self = QueryType(1);
+    pub const TIMESTAMP: Self = QueryType(2);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum BorderColor {
-    FloatTransparentBlack = 0,
-    IntTransparentBlack = 1,
-    FloatOpaqueBlack = 2,
-    IntOpaqueBlack = 3,
-    FloatOpaqueWhite = 4,
-    IntOpaqueWhite = 5,
+pub struct BorderColor(pub i32);
+impl BorderColor {
+    pub const FLOAT_TRANSPARENT_BLACK: Self = BorderColor(0);
+    pub const INT_TRANSPARENT_BLACK: Self = BorderColor(1);
+    pub const FLOAT_OPAQUE_BLACK: Self = BorderColor(2);
+    pub const INT_OPAQUE_BLACK: Self = BorderColor(3);
+    pub const FLOAT_OPAQUE_WHITE: Self = BorderColor(4);
+    pub const INT_OPAQUE_WHITE: Self = BorderColor(5);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum PipelineBindPoint {
-    Graphics = 0,
-    Compute = 1,
+pub struct PipelineBindPoint(pub i32);
+impl PipelineBindPoint {
+    pub const GRAPHICS: Self = PipelineBindPoint(0);
+    pub const COMPUTE: Self = PipelineBindPoint(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum PipelineCacheHeaderVersion {
-    One = 1,
+pub struct PipelineCacheHeaderVersion(pub i32);
+impl PipelineCacheHeaderVersion {
+    pub const ONE: Self = PipelineCacheHeaderVersion(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum PrimitiveTopology {
-    PointList = 0,
-    LineList = 1,
-    LineStrip = 2,
-    TriangleList = 3,
-    TriangleStrip = 4,
-    TriangleFan = 5,
-    LineListWithAdjacency = 6,
-    LineStripWithAdjacency = 7,
-    TriangleListWithAdjacency = 8,
-    TriangleStripWithAdjacency = 9,
-    PatchList = 10,
+pub struct PrimitiveTopology(pub i32);
+impl PrimitiveTopology {
+    pub const POINT_LIST: Self = PrimitiveTopology(0);
+    pub const LINE_LIST: Self = PrimitiveTopology(1);
+    pub const LINE_STRIP: Self = PrimitiveTopology(2);
+    pub const TRIANGLE_LIST: Self = PrimitiveTopology(3);
+    pub const TRIANGLE_STRIP: Self = PrimitiveTopology(4);
+    pub const TRIANGLE_FAN: Self = PrimitiveTopology(5);
+    pub const LINE_LIST_WITH_ADJACENCY: Self = PrimitiveTopology(6);
+    pub const LINE_STRIP_WITH_ADJACENCY: Self = PrimitiveTopology(7);
+    pub const TRIANGLE_LIST_WITH_ADJACENCY: Self = PrimitiveTopology(8);
+    pub const TRIANGLE_STRIP_WITH_ADJACENCY: Self = PrimitiveTopology(9);
+    pub const PATCH_LIST: Self = PrimitiveTopology(10);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum SharingMode {
-    Exclusive = 0,
-    Concurrent = 1,
+pub struct SharingMode(pub i32);
+impl SharingMode {
+    pub const EXCLUSIVE: Self = SharingMode(0);
+    pub const CONCURRENT: Self = SharingMode(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum IndexType {
-    Uint16 = 0,
-    Uint32 = 1,
+pub struct IndexType(pub i32);
+impl IndexType {
+    pub const UINT16: Self = IndexType(0);
+    pub const UINT32: Self = IndexType(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum Filter {
-    Nearest = 0,
-    Linear = 1,
+pub struct Filter(pub i32);
+impl Filter {
+    pub const NEAREST: Self = Filter(0);
+    pub const LINEAR: Self = Filter(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum SamplerMipmapMode {
-    Nearest = 0,
-    Linear = 1,
+pub struct SamplerMipmapMode(pub i32);
+impl SamplerMipmapMode {
+    pub const NEAREST: Self = SamplerMipmapMode(0);
+    pub const LINEAR: Self = SamplerMipmapMode(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum SamplerAddressMode {
-    Repeat = 0,
-    MirroredRepeat = 1,
-    ClampToEdge = 2,
-    ClampToBorder = 3,
+pub struct SamplerAddressMode(pub i32);
+impl SamplerAddressMode {
+    pub const REPEAT: Self = SamplerAddressMode(0);
+    pub const MIRRORED_REPEAT: Self = SamplerAddressMode(1);
+    pub const CLAMP_TO_EDGE: Self = SamplerAddressMode(2);
+    pub const CLAMP_TO_BORDER: Self = SamplerAddressMode(3);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum CompareOp {
-    Never = 0,
-    Less = 1,
-    Equal = 2,
-    LessOrEqual = 3,
-    Greater = 4,
-    NotEqual = 5,
-    GreaterOrEqual = 6,
-    Always = 7,
+pub struct CompareOp(pub i32);
+impl CompareOp {
+    pub const NEVER: Self = CompareOp(0);
+    pub const LESS: Self = CompareOp(1);
+    pub const EQUAL: Self = CompareOp(2);
+    pub const LESS_OR_EQUAL: Self = CompareOp(3);
+    pub const GREATER: Self = CompareOp(4);
+    pub const NOT_EQUAL: Self = CompareOp(5);
+    pub const GREATER_OR_EQUAL: Self = CompareOp(6);
+    pub const ALWAYS: Self = CompareOp(7);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum PolygonMode {
-    Fill = 0,
-    Line = 1,
-    Point = 2,
+pub struct PolygonMode(pub i32);
+impl PolygonMode {
+    pub const FILL: Self = PolygonMode(0);
+    pub const LINE: Self = PolygonMode(1);
+    pub const POINT: Self = PolygonMode(2);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum FrontFace {
-    CounterClockwise = 0,
-    Clockwise = 1,
+pub struct FrontFace(pub i32);
+impl FrontFace {
+    pub const COUNTER_CLOCKWISE: Self = FrontFace(0);
+    pub const CLOCKWISE: Self = FrontFace(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum BlendFactor {
-    Zero = 0,
-    One = 1,
-    SrcColor = 2,
-    OneMinusSrcColor = 3,
-    DstColor = 4,
-    OneMinusDstColor = 5,
-    SrcAlpha = 6,
-    OneMinusSrcAlpha = 7,
-    DstAlpha = 8,
-    OneMinusDstAlpha = 9,
-    ConstantColor = 10,
-    OneMinusConstantColor = 11,
-    ConstantAlpha = 12,
-    OneMinusConstantAlpha = 13,
-    SrcAlphaSaturate = 14,
-    Src1Color = 15,
-    OneMinusSrc1Color = 16,
-    Src1Alpha = 17,
-    OneMinusSrc1Alpha = 18,
+pub struct BlendFactor(pub i32);
+impl BlendFactor {
+    pub const ZERO: Self = BlendFactor(0);
+    pub const ONE: Self = BlendFactor(1);
+    pub const SRC_COLOR: Self = BlendFactor(2);
+    pub const ONE_MINUS_SRC_COLOR: Self = BlendFactor(3);
+    pub const DST_COLOR: Self = BlendFactor(4);
+    pub const ONE_MINUS_DST_COLOR: Self = BlendFactor(5);
+    pub const SRC_ALPHA: Self = BlendFactor(6);
+    pub const ONE_MINUS_SRC_ALPHA: Self = BlendFactor(7);
+    pub const DST_ALPHA: Self = BlendFactor(8);
+    pub const ONE_MINUS_DST_ALPHA: Self = BlendFactor(9);
+    pub const CONSTANT_COLOR: Self = BlendFactor(10);
+    pub const ONE_MINUS_CONSTANT_COLOR: Self = BlendFactor(11);
+    pub const CONSTANT_ALPHA: Self = BlendFactor(12);
+    pub const ONE_MINUS_CONSTANT_ALPHA: Self = BlendFactor(13);
+    pub const SRC_ALPHA_SATURATE: Self = BlendFactor(14);
+    pub const SRC1_COLOR: Self = BlendFactor(15);
+    pub const ONE_MINUS_SRC1_COLOR: Self = BlendFactor(16);
+    pub const SRC1_ALPHA: Self = BlendFactor(17);
+    pub const ONE_MINUS_SRC1_ALPHA: Self = BlendFactor(18);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum BlendOp {
-    Add = 0,
-    Subtract = 1,
-    ReverseSubtract = 2,
-    Min = 3,
-    Max = 4,
+pub struct BlendOp(pub i32);
+impl BlendOp {
+    pub const ADD: Self = BlendOp(0);
+    pub const SUBTRACT: Self = BlendOp(1);
+    pub const REVERSE_SUBTRACT: Self = BlendOp(2);
+    pub const MIN: Self = BlendOp(3);
+    pub const MAX: Self = BlendOp(4);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum StencilOp {
-    Keep = 0,
-    Zero = 1,
-    Replace = 2,
-    IncrementAndClamp = 3,
-    DecrementAndClamp = 4,
-    Invert = 5,
-    IncrementAndWrap = 6,
-    DecrementAndWrap = 7,
+pub struct StencilOp(pub i32);
+impl StencilOp {
+    pub const KEEP: Self = StencilOp(0);
+    pub const ZERO: Self = StencilOp(1);
+    pub const REPLACE: Self = StencilOp(2);
+    pub const INCREMENT_AND_CLAMP: Self = StencilOp(3);
+    pub const DECREMENT_AND_CLAMP: Self = StencilOp(4);
+    pub const INVERT: Self = StencilOp(5);
+    pub const INCREMENT_AND_WRAP: Self = StencilOp(6);
+    pub const DECREMENT_AND_WRAP: Self = StencilOp(7);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum LogicOp {
-    Clear = 0,
-    And = 1,
-    AndReverse = 2,
-    Copy = 3,
-    AndInverted = 4,
-    NoOp = 5,
-    Xor = 6,
-    Or = 7,
-    Nor = 8,
-    Equivalent = 9,
-    Invert = 10,
-    OrReverse = 11,
-    CopyInverted = 12,
-    OrInverted = 13,
-    Nand = 14,
-    Set = 15,
+pub struct LogicOp(pub i32);
+impl LogicOp {
+    pub const CLEAR: Self = LogicOp(0);
+    pub const AND: Self = LogicOp(1);
+    pub const AND_REVERSE: Self = LogicOp(2);
+    pub const COPY: Self = LogicOp(3);
+    pub const AND_INVERTED: Self = LogicOp(4);
+    pub const NO_OP: Self = LogicOp(5);
+    pub const XOR: Self = LogicOp(6);
+    pub const OR: Self = LogicOp(7);
+    pub const NOR: Self = LogicOp(8);
+    pub const EQUIVALENT: Self = LogicOp(9);
+    pub const INVERT: Self = LogicOp(10);
+    pub const OR_REVERSE: Self = LogicOp(11);
+    pub const COPY_INVERTED: Self = LogicOp(12);
+    pub const OR_INVERTED: Self = LogicOp(13);
+    pub const NAND: Self = LogicOp(14);
+    pub const SET: Self = LogicOp(15);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum InternalAllocationType {
-    Executable = 0,
+pub struct InternalAllocationType(pub i32);
+impl InternalAllocationType {
+    pub const EXECUTABLE: Self = InternalAllocationType(0);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum SystemAllocationScope {
-    Command = 0,
-    Object = 1,
-    Cache = 2,
-    Device = 3,
-    Instance = 4,
+pub struct SystemAllocationScope(pub i32);
+impl SystemAllocationScope {
+    pub const COMMAND: Self = SystemAllocationScope(0);
+    pub const OBJECT: Self = SystemAllocationScope(1);
+    pub const CACHE: Self = SystemAllocationScope(2);
+    pub const DEVICE: Self = SystemAllocationScope(3);
+    pub const INSTANCE: Self = SystemAllocationScope(4);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum PhysicalDeviceType {
-    Other = 0,
-    IntegratedGpu = 1,
-    DiscreteGpu = 2,
-    VirtualGpu = 3,
-    Cpu = 4,
+pub struct PhysicalDeviceType(pub i32);
+impl PhysicalDeviceType {
+    pub const OTHER: Self = PhysicalDeviceType(0);
+    pub const INTEGRATED_GPU: Self = PhysicalDeviceType(1);
+    pub const DISCRETE_GPU: Self = PhysicalDeviceType(2);
+    pub const VIRTUAL_GPU: Self = PhysicalDeviceType(3);
+    pub const CPU: Self = PhysicalDeviceType(4);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum VertexInputRate {
-    Vertex = 0,
-    Instance = 1,
+pub struct VertexInputRate(pub i32);
+impl VertexInputRate {
+    pub const VERTEX: Self = VertexInputRate(0);
+    pub const INSTANCE: Self = VertexInputRate(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum Format {
-    Undefined = 0,
-    R4g4UnormPack8 = 1,
-    R4g4b4a4UnormPack16 = 2,
-    B4g4r4a4UnormPack16 = 3,
-    R5g6b5UnormPack16 = 4,
-    B5g6r5UnormPack16 = 5,
-    R5g5b5a1UnormPack16 = 6,
-    B5g5r5a1UnormPack16 = 7,
-    A1r5g5b5UnormPack16 = 8,
-    R8Unorm = 9,
-    R8Snorm = 10,
-    R8Uscaled = 11,
-    R8Sscaled = 12,
-    R8Uint = 13,
-    R8Sint = 14,
-    R8Srgb = 15,
-    R8g8Unorm = 16,
-    R8g8Snorm = 17,
-    R8g8Uscaled = 18,
-    R8g8Sscaled = 19,
-    R8g8Uint = 20,
-    R8g8Sint = 21,
-    R8g8Srgb = 22,
-    R8g8b8Unorm = 23,
-    R8g8b8Snorm = 24,
-    R8g8b8Uscaled = 25,
-    R8g8b8Sscaled = 26,
-    R8g8b8Uint = 27,
-    R8g8b8Sint = 28,
-    R8g8b8Srgb = 29,
-    B8g8r8Unorm = 30,
-    B8g8r8Snorm = 31,
-    B8g8r8Uscaled = 32,
-    B8g8r8Sscaled = 33,
-    B8g8r8Uint = 34,
-    B8g8r8Sint = 35,
-    B8g8r8Srgb = 36,
-    R8g8b8a8Unorm = 37,
-    R8g8b8a8Snorm = 38,
-    R8g8b8a8Uscaled = 39,
-    R8g8b8a8Sscaled = 40,
-    R8g8b8a8Uint = 41,
-    R8g8b8a8Sint = 42,
-    R8g8b8a8Srgb = 43,
-    B8g8r8a8Unorm = 44,
-    B8g8r8a8Snorm = 45,
-    B8g8r8a8Uscaled = 46,
-    B8g8r8a8Sscaled = 47,
-    B8g8r8a8Uint = 48,
-    B8g8r8a8Sint = 49,
-    B8g8r8a8Srgb = 50,
-    A8b8g8r8UnormPack32 = 51,
-    A8b8g8r8SnormPack32 = 52,
-    A8b8g8r8UscaledPack32 = 53,
-    A8b8g8r8SscaledPack32 = 54,
-    A8b8g8r8UintPack32 = 55,
-    A8b8g8r8SintPack32 = 56,
-    A8b8g8r8SrgbPack32 = 57,
-    A2r10g10b10UnormPack32 = 58,
-    A2r10g10b10SnormPack32 = 59,
-    A2r10g10b10UscaledPack32 = 60,
-    A2r10g10b10SscaledPack32 = 61,
-    A2r10g10b10UintPack32 = 62,
-    A2r10g10b10SintPack32 = 63,
-    A2b10g10r10UnormPack32 = 64,
-    A2b10g10r10SnormPack32 = 65,
-    A2b10g10r10UscaledPack32 = 66,
-    A2b10g10r10SscaledPack32 = 67,
-    A2b10g10r10UintPack32 = 68,
-    A2b10g10r10SintPack32 = 69,
-    R16Unorm = 70,
-    R16Snorm = 71,
-    R16Uscaled = 72,
-    R16Sscaled = 73,
-    R16Uint = 74,
-    R16Sint = 75,
-    R16Sfloat = 76,
-    R16g16Unorm = 77,
-    R16g16Snorm = 78,
-    R16g16Uscaled = 79,
-    R16g16Sscaled = 80,
-    R16g16Uint = 81,
-    R16g16Sint = 82,
-    R16g16Sfloat = 83,
-    R16g16b16Unorm = 84,
-    R16g16b16Snorm = 85,
-    R16g16b16Uscaled = 86,
-    R16g16b16Sscaled = 87,
-    R16g16b16Uint = 88,
-    R16g16b16Sint = 89,
-    R16g16b16Sfloat = 90,
-    R16g16b16a16Unorm = 91,
-    R16g16b16a16Snorm = 92,
-    R16g16b16a16Uscaled = 93,
-    R16g16b16a16Sscaled = 94,
-    R16g16b16a16Uint = 95,
-    R16g16b16a16Sint = 96,
-    R16g16b16a16Sfloat = 97,
-    R32Uint = 98,
-    R32Sint = 99,
-    R32Sfloat = 100,
-    R32g32Uint = 101,
-    R32g32Sint = 102,
-    R32g32Sfloat = 103,
-    R32g32b32Uint = 104,
-    R32g32b32Sint = 105,
-    R32g32b32Sfloat = 106,
-    R32g32b32a32Uint = 107,
-    R32g32b32a32Sint = 108,
-    R32g32b32a32Sfloat = 109,
-    R64Uint = 110,
-    R64Sint = 111,
-    R64Sfloat = 112,
-    R64g64Uint = 113,
-    R64g64Sint = 114,
-    R64g64Sfloat = 115,
-    R64g64b64Uint = 116,
-    R64g64b64Sint = 117,
-    R64g64b64Sfloat = 118,
-    R64g64b64a64Uint = 119,
-    R64g64b64a64Sint = 120,
-    R64g64b64a64Sfloat = 121,
-    B10g11r11UfloatPack32 = 122,
-    E5b9g9r9UfloatPack32 = 123,
-    D16Unorm = 124,
-    X8D24UnormPack32 = 125,
-    D32Sfloat = 126,
-    S8Uint = 127,
-    D16UnormS8Uint = 128,
-    D24UnormS8Uint = 129,
-    D32SfloatS8Uint = 130,
-    Bc1RgbUnormBlock = 131,
-    Bc1RgbSrgbBlock = 132,
-    Bc1RgbaUnormBlock = 133,
-    Bc1RgbaSrgbBlock = 134,
-    Bc2UnormBlock = 135,
-    Bc2SrgbBlock = 136,
-    Bc3UnormBlock = 137,
-    Bc3SrgbBlock = 138,
-    Bc4UnormBlock = 139,
-    Bc4SnormBlock = 140,
-    Bc5UnormBlock = 141,
-    Bc5SnormBlock = 142,
-    Bc6hUfloatBlock = 143,
-    Bc6hSfloatBlock = 144,
-    Bc7UnormBlock = 145,
-    Bc7SrgbBlock = 146,
-    Etc2R8g8b8UnormBlock = 147,
-    Etc2R8g8b8SrgbBlock = 148,
-    Etc2R8g8b8a1UnormBlock = 149,
-    Etc2R8g8b8a1SrgbBlock = 150,
-    Etc2R8g8b8a8UnormBlock = 151,
-    Etc2R8g8b8a8SrgbBlock = 152,
-    EacR11UnormBlock = 153,
-    EacR11SnormBlock = 154,
-    EacR11g11UnormBlock = 155,
-    EacR11g11SnormBlock = 156,
-    Astc4x4UnormBlock = 157,
-    Astc4x4SrgbBlock = 158,
-    Astc5x4UnormBlock = 159,
-    Astc5x4SrgbBlock = 160,
-    Astc5x5UnormBlock = 161,
-    Astc5x5SrgbBlock = 162,
-    Astc6x5UnormBlock = 163,
-    Astc6x5SrgbBlock = 164,
-    Astc6x6UnormBlock = 165,
-    Astc6x6SrgbBlock = 166,
-    Astc8x5UnormBlock = 167,
-    Astc8x5SrgbBlock = 168,
-    Astc8x6UnormBlock = 169,
-    Astc8x6SrgbBlock = 170,
-    Astc8x8UnormBlock = 171,
-    Astc8x8SrgbBlock = 172,
-    Astc10x5UnormBlock = 173,
-    Astc10x5SrgbBlock = 174,
-    Astc10x6UnormBlock = 175,
-    Astc10x6SrgbBlock = 176,
-    Astc10x8UnormBlock = 177,
-    Astc10x8SrgbBlock = 178,
-    Astc10x10UnormBlock = 179,
-    Astc10x10SrgbBlock = 180,
-    Astc12x10UnormBlock = 181,
-    Astc12x10SrgbBlock = 182,
-    Astc12x12UnormBlock = 183,
-    Astc12x12SrgbBlock = 184,
+pub struct Format(pub i32);
+impl Format {
+    pub const UNDEFINED: Self = Format(0);
+    pub const R4G4_UNORM_PACK8: Self = Format(1);
+    pub const R4G4B4A4_UNORM_PACK16: Self = Format(2);
+    pub const B4G4R4A4_UNORM_PACK16: Self = Format(3);
+    pub const R5G6B5_UNORM_PACK16: Self = Format(4);
+    pub const B5G6R5_UNORM_PACK16: Self = Format(5);
+    pub const R5G5B5A1_UNORM_PACK16: Self = Format(6);
+    pub const B5G5R5A1_UNORM_PACK16: Self = Format(7);
+    pub const A1R5G5B5_UNORM_PACK16: Self = Format(8);
+    pub const R8_UNORM: Self = Format(9);
+    pub const R8_SNORM: Self = Format(10);
+    pub const R8_USCALED: Self = Format(11);
+    pub const R8_SSCALED: Self = Format(12);
+    pub const R8_UINT: Self = Format(13);
+    pub const R8_SINT: Self = Format(14);
+    pub const R8_SRGB: Self = Format(15);
+    pub const R8G8_UNORM: Self = Format(16);
+    pub const R8G8_SNORM: Self = Format(17);
+    pub const R8G8_USCALED: Self = Format(18);
+    pub const R8G8_SSCALED: Self = Format(19);
+    pub const R8G8_UINT: Self = Format(20);
+    pub const R8G8_SINT: Self = Format(21);
+    pub const R8G8_SRGB: Self = Format(22);
+    pub const R8G8B8_UNORM: Self = Format(23);
+    pub const R8G8B8_SNORM: Self = Format(24);
+    pub const R8G8B8_USCALED: Self = Format(25);
+    pub const R8G8B8_SSCALED: Self = Format(26);
+    pub const R8G8B8_UINT: Self = Format(27);
+    pub const R8G8B8_SINT: Self = Format(28);
+    pub const R8G8B8_SRGB: Self = Format(29);
+    pub const B8G8R8_UNORM: Self = Format(30);
+    pub const B8G8R8_SNORM: Self = Format(31);
+    pub const B8G8R8_USCALED: Self = Format(32);
+    pub const B8G8R8_SSCALED: Self = Format(33);
+    pub const B8G8R8_UINT: Self = Format(34);
+    pub const B8G8R8_SINT: Self = Format(35);
+    pub const B8G8R8_SRGB: Self = Format(36);
+    pub const R8G8B8A8_UNORM: Self = Format(37);
+    pub const R8G8B8A8_SNORM: Self = Format(38);
+    pub const R8G8B8A8_USCALED: Self = Format(39);
+    pub const R8G8B8A8_SSCALED: Self = Format(40);
+    pub const R8G8B8A8_UINT: Self = Format(41);
+    pub const R8G8B8A8_SINT: Self = Format(42);
+    pub const R8G8B8A8_SRGB: Self = Format(43);
+    pub const B8G8R8A8_UNORM: Self = Format(44);
+    pub const B8G8R8A8_SNORM: Self = Format(45);
+    pub const B8G8R8A8_USCALED: Self = Format(46);
+    pub const B8G8R8A8_SSCALED: Self = Format(47);
+    pub const B8G8R8A8_UINT: Self = Format(48);
+    pub const B8G8R8A8_SINT: Self = Format(49);
+    pub const B8G8R8A8_SRGB: Self = Format(50);
+    pub const A8B8G8R8_UNORM_PACK32: Self = Format(51);
+    pub const A8B8G8R8_SNORM_PACK32: Self = Format(52);
+    pub const A8B8G8R8_USCALED_PACK32: Self = Format(53);
+    pub const A8B8G8R8_SSCALED_PACK32: Self = Format(54);
+    pub const A8B8G8R8_UINT_PACK32: Self = Format(55);
+    pub const A8B8G8R8_SINT_PACK32: Self = Format(56);
+    pub const A8B8G8R8_SRGB_PACK32: Self = Format(57);
+    pub const A2R10G10B10_UNORM_PACK32: Self = Format(58);
+    pub const A2R10G10B10_SNORM_PACK32: Self = Format(59);
+    pub const A2R10G10B10_USCALED_PACK32: Self = Format(60);
+    pub const A2R10G10B10_SSCALED_PACK32: Self = Format(61);
+    pub const A2R10G10B10_UINT_PACK32: Self = Format(62);
+    pub const A2R10G10B10_SINT_PACK32: Self = Format(63);
+    pub const A2B10G10R10_UNORM_PACK32: Self = Format(64);
+    pub const A2B10G10R10_SNORM_PACK32: Self = Format(65);
+    pub const A2B10G10R10_USCALED_PACK32: Self = Format(66);
+    pub const A2B10G10R10_SSCALED_PACK32: Self = Format(67);
+    pub const A2B10G10R10_UINT_PACK32: Self = Format(68);
+    pub const A2B10G10R10_SINT_PACK32: Self = Format(69);
+    pub const R16_UNORM: Self = Format(70);
+    pub const R16_SNORM: Self = Format(71);
+    pub const R16_USCALED: Self = Format(72);
+    pub const R16_SSCALED: Self = Format(73);
+    pub const R16_UINT: Self = Format(74);
+    pub const R16_SINT: Self = Format(75);
+    pub const R16_SFLOAT: Self = Format(76);
+    pub const R16G16_UNORM: Self = Format(77);
+    pub const R16G16_SNORM: Self = Format(78);
+    pub const R16G16_USCALED: Self = Format(79);
+    pub const R16G16_SSCALED: Self = Format(80);
+    pub const R16G16_UINT: Self = Format(81);
+    pub const R16G16_SINT: Self = Format(82);
+    pub const R16G16_SFLOAT: Self = Format(83);
+    pub const R16G16B16_UNORM: Self = Format(84);
+    pub const R16G16B16_SNORM: Self = Format(85);
+    pub const R16G16B16_USCALED: Self = Format(86);
+    pub const R16G16B16_SSCALED: Self = Format(87);
+    pub const R16G16B16_UINT: Self = Format(88);
+    pub const R16G16B16_SINT: Self = Format(89);
+    pub const R16G16B16_SFLOAT: Self = Format(90);
+    pub const R16G16B16A16_UNORM: Self = Format(91);
+    pub const R16G16B16A16_SNORM: Self = Format(92);
+    pub const R16G16B16A16_USCALED: Self = Format(93);
+    pub const R16G16B16A16_SSCALED: Self = Format(94);
+    pub const R16G16B16A16_UINT: Self = Format(95);
+    pub const R16G16B16A16_SINT: Self = Format(96);
+    pub const R16G16B16A16_SFLOAT: Self = Format(97);
+    pub const R32_UINT: Self = Format(98);
+    pub const R32_SINT: Self = Format(99);
+    pub const R32_SFLOAT: Self = Format(100);
+    pub const R32G32_UINT: Self = Format(101);
+    pub const R32G32_SINT: Self = Format(102);
+    pub const R32G32_SFLOAT: Self = Format(103);
+    pub const R32G32B32_UINT: Self = Format(104);
+    pub const R32G32B32_SINT: Self = Format(105);
+    pub const R32G32B32_SFLOAT: Self = Format(106);
+    pub const R32G32B32A32_UINT: Self = Format(107);
+    pub const R32G32B32A32_SINT: Self = Format(108);
+    pub const R32G32B32A32_SFLOAT: Self = Format(109);
+    pub const R64_UINT: Self = Format(110);
+    pub const R64_SINT: Self = Format(111);
+    pub const R64_SFLOAT: Self = Format(112);
+    pub const R64G64_UINT: Self = Format(113);
+    pub const R64G64_SINT: Self = Format(114);
+    pub const R64G64_SFLOAT: Self = Format(115);
+    pub const R64G64B64_UINT: Self = Format(116);
+    pub const R64G64B64_SINT: Self = Format(117);
+    pub const R64G64B64_SFLOAT: Self = Format(118);
+    pub const R64G64B64A64_UINT: Self = Format(119);
+    pub const R64G64B64A64_SINT: Self = Format(120);
+    pub const R64G64B64A64_SFLOAT: Self = Format(121);
+    pub const B10G11R11_UFLOAT_PACK32: Self = Format(122);
+    pub const E5B9G9R9_UFLOAT_PACK32: Self = Format(123);
+    pub const D16_UNORM: Self = Format(124);
+    pub const X8_D24_UNORM_PACK32: Self = Format(125);
+    pub const D32_SFLOAT: Self = Format(126);
+    pub const S8_UINT: Self = Format(127);
+    pub const D16_UNORM_S8_UINT: Self = Format(128);
+    pub const D24_UNORM_S8_UINT: Self = Format(129);
+    pub const D32_SFLOAT_S8_UINT: Self = Format(130);
+    pub const BC1_RGB_UNORM_BLOCK: Self = Format(131);
+    pub const BC1_RGB_SRGB_BLOCK: Self = Format(132);
+    pub const BC1_RGBA_UNORM_BLOCK: Self = Format(133);
+    pub const BC1_RGBA_SRGB_BLOCK: Self = Format(134);
+    pub const BC2_UNORM_BLOCK: Self = Format(135);
+    pub const BC2_SRGB_BLOCK: Self = Format(136);
+    pub const BC3_UNORM_BLOCK: Self = Format(137);
+    pub const BC3_SRGB_BLOCK: Self = Format(138);
+    pub const BC4_UNORM_BLOCK: Self = Format(139);
+    pub const BC4_SNORM_BLOCK: Self = Format(140);
+    pub const BC5_UNORM_BLOCK: Self = Format(141);
+    pub const BC5_SNORM_BLOCK: Self = Format(142);
+    pub const BC6H_UFLOAT_BLOCK: Self = Format(143);
+    pub const BC6H_SFLOAT_BLOCK: Self = Format(144);
+    pub const BC7_UNORM_BLOCK: Self = Format(145);
+    pub const BC7_SRGB_BLOCK: Self = Format(146);
+    pub const ETC2_R8G8B8_UNORM_BLOCK: Self = Format(147);
+    pub const ETC2_R8G8B8_SRGB_BLOCK: Self = Format(148);
+    pub const ETC2_R8G8B8A1_UNORM_BLOCK: Self = Format(149);
+    pub const ETC2_R8G8B8A1_SRGB_BLOCK: Self = Format(150);
+    pub const ETC2_R8G8B8A8_UNORM_BLOCK: Self = Format(151);
+    pub const ETC2_R8G8B8A8_SRGB_BLOCK: Self = Format(152);
+    pub const EAC_R11_UNORM_BLOCK: Self = Format(153);
+    pub const EAC_R11_SNORM_BLOCK: Self = Format(154);
+    pub const EAC_R11G11_UNORM_BLOCK: Self = Format(155);
+    pub const EAC_R11G11_SNORM_BLOCK: Self = Format(156);
+    pub const ASTC_4X4_UNORM_BLOCK: Self = Format(157);
+    pub const ASTC_4X4_SRGB_BLOCK: Self = Format(158);
+    pub const ASTC_5X4_UNORM_BLOCK: Self = Format(159);
+    pub const ASTC_5X4_SRGB_BLOCK: Self = Format(160);
+    pub const ASTC_5X5_UNORM_BLOCK: Self = Format(161);
+    pub const ASTC_5X5_SRGB_BLOCK: Self = Format(162);
+    pub const ASTC_6X5_UNORM_BLOCK: Self = Format(163);
+    pub const ASTC_6X5_SRGB_BLOCK: Self = Format(164);
+    pub const ASTC_6X6_UNORM_BLOCK: Self = Format(165);
+    pub const ASTC_6X6_SRGB_BLOCK: Self = Format(166);
+    pub const ASTC_8X5_UNORM_BLOCK: Self = Format(167);
+    pub const ASTC_8X5_SRGB_BLOCK: Self = Format(168);
+    pub const ASTC_8X6_UNORM_BLOCK: Self = Format(169);
+    pub const ASTC_8X6_SRGB_BLOCK: Self = Format(170);
+    pub const ASTC_8X8_UNORM_BLOCK: Self = Format(171);
+    pub const ASTC_8X8_SRGB_BLOCK: Self = Format(172);
+    pub const ASTC_10X5_UNORM_BLOCK: Self = Format(173);
+    pub const ASTC_10X5_SRGB_BLOCK: Self = Format(174);
+    pub const ASTC_10X6_UNORM_BLOCK: Self = Format(175);
+    pub const ASTC_10X6_SRGB_BLOCK: Self = Format(176);
+    pub const ASTC_10X8_UNORM_BLOCK: Self = Format(177);
+    pub const ASTC_10X8_SRGB_BLOCK: Self = Format(178);
+    pub const ASTC_10X10_UNORM_BLOCK: Self = Format(179);
+    pub const ASTC_10X10_SRGB_BLOCK: Self = Format(180);
+    pub const ASTC_12X10_UNORM_BLOCK: Self = Format(181);
+    pub const ASTC_12X10_SRGB_BLOCK: Self = Format(182);
+    pub const ASTC_12X12_UNORM_BLOCK: Self = Format(183);
+    pub const ASTC_12X12_SRGB_BLOCK: Self = Format(184);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum StructureType {
-    ApplicationInfo = 0,
-    InstanceCreateInfo = 1,
-    DeviceQueueCreateInfo = 2,
-    DeviceCreateInfo = 3,
-    SubmitInfo = 4,
-    MemoryAllocateInfo = 5,
-    MappedMemoryRange = 6,
-    BindSparseInfo = 7,
-    FenceCreateInfo = 8,
-    SemaphoreCreateInfo = 9,
-    EventCreateInfo = 10,
-    QueryPoolCreateInfo = 11,
-    BufferCreateInfo = 12,
-    BufferViewCreateInfo = 13,
-    ImageCreateInfo = 14,
-    ImageViewCreateInfo = 15,
-    ShaderModuleCreateInfo = 16,
-    PipelineCacheCreateInfo = 17,
-    PipelineShaderStageCreateInfo = 18,
-    PipelineVertexInputStateCreateInfo = 19,
-    PipelineInputAssemblyStateCreateInfo = 20,
-    PipelineTessellationStateCreateInfo = 21,
-    PipelineViewportStateCreateInfo = 22,
-    PipelineRasterizationStateCreateInfo = 23,
-    PipelineMultisampleStateCreateInfo = 24,
-    PipelineDepthStencilStateCreateInfo = 25,
-    PipelineColorBlendStateCreateInfo = 26,
-    PipelineDynamicStateCreateInfo = 27,
-    GraphicsPipelineCreateInfo = 28,
-    ComputePipelineCreateInfo = 29,
-    PipelineLayoutCreateInfo = 30,
-    SamplerCreateInfo = 31,
-    DescriptorSetLayoutCreateInfo = 32,
-    DescriptorPoolCreateInfo = 33,
-    DescriptorSetAllocateInfo = 34,
-    WriteDescriptorSet = 35,
-    CopyDescriptorSet = 36,
-    FramebufferCreateInfo = 37,
-    RenderPassCreateInfo = 38,
-    CommandPoolCreateInfo = 39,
-    CommandBufferAllocateInfo = 40,
-    CommandBufferInheritanceInfo = 41,
-    CommandBufferBeginInfo = 42,
-    RenderPassBeginInfo = 43,
-    BufferMemoryBarrier = 44,
-    ImageMemoryBarrier = 45,
-    MemoryBarrier = 46,
-    LoaderInstanceCreateInfo = 47,
-    LoaderDeviceCreateInfo = 48,
+pub struct StructureType(pub i32);
+impl StructureType {
+    pub const APPLICATION_INFO: Self = StructureType(0);
+    pub const INSTANCE_CREATE_INFO: Self = StructureType(1);
+    pub const DEVICE_QUEUE_CREATE_INFO: Self = StructureType(2);
+    pub const DEVICE_CREATE_INFO: Self = StructureType(3);
+    pub const SUBMIT_INFO: Self = StructureType(4);
+    pub const MEMORY_ALLOCATE_INFO: Self = StructureType(5);
+    pub const MAPPED_MEMORY_RANGE: Self = StructureType(6);
+    pub const BIND_SPARSE_INFO: Self = StructureType(7);
+    pub const FENCE_CREATE_INFO: Self = StructureType(8);
+    pub const SEMAPHORE_CREATE_INFO: Self = StructureType(9);
+    pub const EVENT_CREATE_INFO: Self = StructureType(10);
+    pub const QUERY_POOL_CREATE_INFO: Self = StructureType(11);
+    pub const BUFFER_CREATE_INFO: Self = StructureType(12);
+    pub const BUFFER_VIEW_CREATE_INFO: Self = StructureType(13);
+    pub const IMAGE_CREATE_INFO: Self = StructureType(14);
+    pub const IMAGE_VIEW_CREATE_INFO: Self = StructureType(15);
+    pub const SHADER_MODULE_CREATE_INFO: Self = StructureType(16);
+    pub const PIPELINE_CACHE_CREATE_INFO: Self = StructureType(17);
+    pub const PIPELINE_SHADER_STAGE_CREATE_INFO: Self = StructureType(18);
+    pub const PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO: Self = StructureType(19);
+    pub const PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO: Self = StructureType(20);
+    pub const PIPELINE_TESSELLATION_STATE_CREATE_INFO: Self = StructureType(21);
+    pub const PIPELINE_VIEWPORT_STATE_CREATE_INFO: Self = StructureType(22);
+    pub const PIPELINE_RASTERIZATION_STATE_CREATE_INFO: Self = StructureType(23);
+    pub const PIPELINE_MULTISAMPLE_STATE_CREATE_INFO: Self = StructureType(24);
+    pub const PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO: Self = StructureType(25);
+    pub const PIPELINE_COLOR_BLEND_STATE_CREATE_INFO: Self = StructureType(26);
+    pub const PIPELINE_DYNAMIC_STATE_CREATE_INFO: Self = StructureType(27);
+    pub const GRAPHICS_PIPELINE_CREATE_INFO: Self = StructureType(28);
+    pub const COMPUTE_PIPELINE_CREATE_INFO: Self = StructureType(29);
+    pub const PIPELINE_LAYOUT_CREATE_INFO: Self = StructureType(30);
+    pub const SAMPLER_CREATE_INFO: Self = StructureType(31);
+    pub const DESCRIPTOR_SET_LAYOUT_CREATE_INFO: Self = StructureType(32);
+    pub const DESCRIPTOR_POOL_CREATE_INFO: Self = StructureType(33);
+    pub const DESCRIPTOR_SET_ALLOCATE_INFO: Self = StructureType(34);
+    pub const WRITE_DESCRIPTOR_SET: Self = StructureType(35);
+    pub const COPY_DESCRIPTOR_SET: Self = StructureType(36);
+    pub const FRAMEBUFFER_CREATE_INFO: Self = StructureType(37);
+    pub const RENDER_PASS_CREATE_INFO: Self = StructureType(38);
+    pub const COMMAND_POOL_CREATE_INFO: Self = StructureType(39);
+    pub const COMMAND_BUFFER_ALLOCATE_INFO: Self = StructureType(40);
+    pub const COMMAND_BUFFER_INHERITANCE_INFO: Self = StructureType(41);
+    pub const COMMAND_BUFFER_BEGIN_INFO: Self = StructureType(42);
+    pub const RENDER_PASS_BEGIN_INFO: Self = StructureType(43);
+    pub const BUFFER_MEMORY_BARRIER: Self = StructureType(44);
+    pub const IMAGE_MEMORY_BARRIER: Self = StructureType(45);
+    pub const MEMORY_BARRIER: Self = StructureType(46);
+    pub const LOADER_INSTANCE_CREATE_INFO: Self = StructureType(47);
+    pub const LOADER_DEVICE_CREATE_INFO: Self = StructureType(48);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum SubpassContents {
-    Inline = 0,
-    SecondaryCommandBuffers = 1,
+pub struct SubpassContents(pub i32);
+impl SubpassContents {
+    pub const INLINE: Self = SubpassContents(0);
+    pub const SECONDARY_COMMAND_BUFFERS: Self = SubpassContents(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum Result {
-    Success = 0,
-    NotReady = 1,
-    Timeout = 2,
-    EventSet = 3,
-    EventReset = 4,
-    Incomplete = 5,
-    ErrorOutOfHostMemory = -1,
-    ErrorOutOfDeviceMemory = -2,
-    ErrorInitializationFailed = -3,
-    ErrorDeviceLost = -4,
-    ErrorMemoryMapFailed = -5,
-    ErrorLayerNotPresent = -6,
-    ErrorExtensionNotPresent = -7,
-    ErrorFeatureNotPresent = -8,
-    ErrorIncompatibleDriver = -9,
-    ErrorTooManyObjects = -10,
-    ErrorFormatNotSupported = -11,
-    ErrorFragmentedPool = -12,
+pub struct Result(pub i32);
+impl Result {
+    pub const SUCCESS: Self = Result(0);
+    pub const NOT_READY: Self = Result(1);
+    pub const TIMEOUT: Self = Result(2);
+    pub const EVENT_SET: Self = Result(3);
+    pub const EVENT_RESET: Self = Result(4);
+    pub const INCOMPLETE: Self = Result(5);
+    pub const ERROR_OUT_OF_HOST_MEMORY: Self = Result(-1);
+    pub const ERROR_OUT_OF_DEVICE_MEMORY: Self = Result(-2);
+    pub const ERROR_INITIALIZATION_FAILED: Self = Result(-3);
+    pub const ERROR_DEVICE_LOST: Self = Result(-4);
+    pub const ERROR_MEMORY_MAP_FAILED: Self = Result(-5);
+    pub const ERROR_LAYER_NOT_PRESENT: Self = Result(-6);
+    pub const ERROR_EXTENSION_NOT_PRESENT: Self = Result(-7);
+    pub const ERROR_FEATURE_NOT_PRESENT: Self = Result(-8);
+    pub const ERROR_INCOMPATIBLE_DRIVER: Self = Result(-9);
+    pub const ERROR_TOO_MANY_OBJECTS: Self = Result(-10);
+    pub const ERROR_FORMAT_NOT_SUPPORTED: Self = Result(-11);
+    pub const ERROR_FRAGMENTED_POOL: Self = Result(-12);
 }
 impl ::std::error::Error for Result {
     fn description(&self) -> &str {
@@ -8543,767 +8802,1085 @@ impl ::std::error::Error for Result {
 impl ::std::fmt::Display for Result {
     fn fmt(&self, fmt: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
         writeln!(fmt, "vk::Result::{:?}", self)?;
-        match self {
-            Result::Success => write!(fmt, "Command completed successfully"),
-            Result::NotReady => write!(fmt, "A fence or query has not yet completed"),
-            Result::Timeout => write!(
+        match *self {
+            Result::SUCCESS => write!(fmt, "Command completed successfully"),
+            Result::NOT_READY => write!(fmt, "A fence or query has not yet completed"),
+            Result::TIMEOUT => write!(
                 fmt,
                 "A wait operation has not completed in the specified time"
             ),
-            Result::EventSet => write!(fmt, "An event is signaled"),
-            Result::EventReset => write!(fmt, "An event is unsignaled"),
-            Result::Incomplete => write!(fmt, "A return array was too small for the result"),
-            Result::ErrorOutOfHostMemory => write!(fmt, "A host memory allocation has failed"),
-            Result::ErrorOutOfDeviceMemory => write!(fmt, "A device memory allocation has failed"),
-            Result::ErrorInitializationFailed => {
+            Result::EVENT_SET => write!(fmt, "An event is signaled"),
+            Result::EVENT_RESET => write!(fmt, "An event is unsignaled"),
+            Result::INCOMPLETE => write!(fmt, "A return array was too small for the result"),
+            Result::ERROR_OUT_OF_HOST_MEMORY => write!(fmt, "A host memory allocation has failed"),
+            Result::ERROR_OUT_OF_DEVICE_MEMORY => {
+                write!(fmt, "A device memory allocation has failed")
+            }
+            Result::ERROR_INITIALIZATION_FAILED => {
                 write!(fmt, "Initialization of a object has failed")
             }
-            Result::ErrorDeviceLost => write!(
+            Result::ERROR_DEVICE_LOST => write!(
                 fmt,
                 "The logical device has been lost. See <<devsandqueues-lost-device>>"
             ),
-            Result::ErrorMemoryMapFailed => write!(fmt, "Mapping of a memory object has failed"),
-            Result::ErrorLayerNotPresent => write!(fmt, "Layer specified does not exist"),
-            Result::ErrorExtensionNotPresent => write!(fmt, "Extension specified does not exist"),
-            Result::ErrorFeatureNotPresent => {
+            Result::ERROR_MEMORY_MAP_FAILED => write!(fmt, "Mapping of a memory object has failed"),
+            Result::ERROR_LAYER_NOT_PRESENT => write!(fmt, "Layer specified does not exist"),
+            Result::ERROR_EXTENSION_NOT_PRESENT => {
+                write!(fmt, "Extension specified does not exist")
+            }
+            Result::ERROR_FEATURE_NOT_PRESENT => {
                 write!(fmt, "Requested feature is not available on this device")
             }
-            Result::ErrorIncompatibleDriver => write!(fmt, "Unable to find a Vulkan driver"),
-            Result::ErrorTooManyObjects => write!(
+            Result::ERROR_INCOMPATIBLE_DRIVER => write!(fmt, "Unable to find a Vulkan driver"),
+            Result::ERROR_TOO_MANY_OBJECTS => write!(
                 fmt,
                 "Too many objects of the type have already been created"
             ),
-            Result::ErrorFormatNotSupported => {
+            Result::ERROR_FORMAT_NOT_SUPPORTED => {
                 write!(fmt, "Requested format is not supported on this device")
             }
-            Result::ErrorFragmentedPool => write!(
+            Result::ERROR_FRAGMENTED_POOL => write!(
                 fmt,
                 "A requested pool allocation has failed due to fragmentation of the pool\'s memory"
             ),
+            _ => write!(fmt, "Unknown variant"),
         }
     }
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum DynamicState {
-    Viewport = 0,
-    Scissor = 1,
-    LineWidth = 2,
-    DepthBias = 3,
-    BlendConstants = 4,
-    DepthBounds = 5,
-    StencilCompareMask = 6,
-    StencilWriteMask = 7,
-    StencilReference = 8,
+pub struct DynamicState(pub i32);
+impl DynamicState {
+    pub const VIEWPORT: Self = DynamicState(0);
+    pub const SCISSOR: Self = DynamicState(1);
+    pub const LINE_WIDTH: Self = DynamicState(2);
+    pub const DEPTH_BIAS: Self = DynamicState(3);
+    pub const BLEND_CONSTANTS: Self = DynamicState(4);
+    pub const DEPTH_BOUNDS: Self = DynamicState(5);
+    pub const STENCIL_COMPARE_MASK: Self = DynamicState(6);
+    pub const STENCIL_WRITE_MASK: Self = DynamicState(7);
+    pub const STENCIL_REFERENCE: Self = DynamicState(8);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum DescriptorUpdateTemplateType {
-    DescriptorSet = 0,
+pub struct DescriptorUpdateTemplateType(pub i32);
+impl DescriptorUpdateTemplateType {
+    pub const DESCRIPTOR_SET: Self = DescriptorUpdateTemplateType(0);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum ObjectType {
-    Unknown = 0,
-    Instance = 1,
-    PhysicalDevice = 2,
-    Device = 3,
-    Queue = 4,
-    Semaphore = 5,
-    CommandBuffer = 6,
-    Fence = 7,
-    DeviceMemory = 8,
-    Buffer = 9,
-    Image = 10,
-    Event = 11,
-    QueryPool = 12,
-    BufferView = 13,
-    ImageView = 14,
-    ShaderModule = 15,
-    PipelineCache = 16,
-    PipelineLayout = 17,
-    RenderPass = 18,
-    Pipeline = 19,
-    DescriptorSetLayout = 20,
-    Sampler = 21,
-    DescriptorPool = 22,
-    DescriptorSet = 23,
-    Framebuffer = 24,
-    CommandPool = 25,
+pub struct ObjectType(pub i32);
+impl ObjectType {
+    pub const UNKNOWN: Self = ObjectType(0);
+    pub const INSTANCE: Self = ObjectType(1);
+    pub const PHYSICAL_DEVICE: Self = ObjectType(2);
+    pub const DEVICE: Self = ObjectType(3);
+    pub const QUEUE: Self = ObjectType(4);
+    pub const SEMAPHORE: Self = ObjectType(5);
+    pub const COMMAND_BUFFER: Self = ObjectType(6);
+    pub const FENCE: Self = ObjectType(7);
+    pub const DEVICE_MEMORY: Self = ObjectType(8);
+    pub const BUFFER: Self = ObjectType(9);
+    pub const IMAGE: Self = ObjectType(10);
+    pub const EVENT: Self = ObjectType(11);
+    pub const QUERY_POOL: Self = ObjectType(12);
+    pub const BUFFER_VIEW: Self = ObjectType(13);
+    pub const IMAGE_VIEW: Self = ObjectType(14);
+    pub const SHADER_MODULE: Self = ObjectType(15);
+    pub const PIPELINE_CACHE: Self = ObjectType(16);
+    pub const PIPELINE_LAYOUT: Self = ObjectType(17);
+    pub const RENDER_PASS: Self = ObjectType(18);
+    pub const PIPELINE: Self = ObjectType(19);
+    pub const DESCRIPTOR_SET_LAYOUT: Self = ObjectType(20);
+    pub const SAMPLER: Self = ObjectType(21);
+    pub const DESCRIPTOR_POOL: Self = ObjectType(22);
+    pub const DESCRIPTOR_SET: Self = ObjectType(23);
+    pub const FRAMEBUFFER: Self = ObjectType(24);
+    pub const COMMAND_POOL: Self = ObjectType(25);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum PresentModeKHR {
-    Immediate = 0,
-    Mailbox = 1,
-    Fifo = 2,
-    FifoRelaxed = 3,
+pub struct PresentModeKHR(pub i32);
+impl PresentModeKHR {
+    pub const PRESENT_MODE_IMMEDIATE_KHR: Self = PresentModeKHR(0);
+    pub const PRESENT_MODE_MAILBOX_KHR: Self = PresentModeKHR(1);
+    pub const PRESENT_MODE_FIFO_KHR: Self = PresentModeKHR(2);
+    pub const PRESENT_MODE_FIFO_RELAXED_KHR: Self = PresentModeKHR(3);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum ColorSpaceKHR {
-    SrgbNonlinear = 0,
+pub struct ColorSpaceKHR(pub i32);
+impl ColorSpaceKHR {
+    pub const COLOR_SPACE_SRGB_NONLINEAR_KHR: Self = ColorSpaceKHR(0);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum DebugReportObjectTypeEXT {
-    Unknown = 0,
-    Instance = 1,
-    PhysicalDevice = 2,
-    Device = 3,
-    Queue = 4,
-    Semaphore = 5,
-    CommandBuffer = 6,
-    Fence = 7,
-    DeviceMemory = 8,
-    Buffer = 9,
-    Image = 10,
-    Event = 11,
-    QueryPool = 12,
-    BufferView = 13,
-    ImageView = 14,
-    ShaderModule = 15,
-    PipelineCache = 16,
-    PipelineLayout = 17,
-    RenderPass = 18,
-    Pipeline = 19,
-    DescriptorSetLayout = 20,
-    Sampler = 21,
-    DescriptorPool = 22,
-    DescriptorSet = 23,
-    Framebuffer = 24,
-    CommandPool = 25,
-    SurfaceKhr = 26,
-    SwapchainKhr = 27,
-    DebugReportCallback = 28,
-    DisplayKhr = 29,
-    DisplayModeKhr = 30,
-    ObjectTableNvx = 31,
-    IndirectCommandsLayoutNvx = 32,
-    ValidationCache = 33,
+pub struct DebugReportObjectTypeEXT(pub i32);
+impl DebugReportObjectTypeEXT {
+    pub const DEBUG_REPORT_OBJECT_TYPE_UNKNOWN_EXT: Self = DebugReportObjectTypeEXT(0);
+    pub const DEBUG_REPORT_OBJECT_TYPE_INSTANCE_EXT: Self = DebugReportObjectTypeEXT(1);
+    pub const DEBUG_REPORT_OBJECT_TYPE_PHYSICAL_DEVICE_EXT: Self = DebugReportObjectTypeEXT(2);
+    pub const DEBUG_REPORT_OBJECT_TYPE_DEVICE_EXT: Self = DebugReportObjectTypeEXT(3);
+    pub const DEBUG_REPORT_OBJECT_TYPE_QUEUE_EXT: Self = DebugReportObjectTypeEXT(4);
+    pub const DEBUG_REPORT_OBJECT_TYPE_SEMAPHORE_EXT: Self = DebugReportObjectTypeEXT(5);
+    pub const DEBUG_REPORT_OBJECT_TYPE_COMMAND_BUFFER_EXT: Self = DebugReportObjectTypeEXT(6);
+    pub const DEBUG_REPORT_OBJECT_TYPE_FENCE_EXT: Self = DebugReportObjectTypeEXT(7);
+    pub const DEBUG_REPORT_OBJECT_TYPE_DEVICE_MEMORY_EXT: Self = DebugReportObjectTypeEXT(8);
+    pub const DEBUG_REPORT_OBJECT_TYPE_BUFFER_EXT: Self = DebugReportObjectTypeEXT(9);
+    pub const DEBUG_REPORT_OBJECT_TYPE_IMAGE_EXT: Self = DebugReportObjectTypeEXT(10);
+    pub const DEBUG_REPORT_OBJECT_TYPE_EVENT_EXT: Self = DebugReportObjectTypeEXT(11);
+    pub const DEBUG_REPORT_OBJECT_TYPE_QUERY_POOL_EXT: Self = DebugReportObjectTypeEXT(12);
+    pub const DEBUG_REPORT_OBJECT_TYPE_BUFFER_VIEW_EXT: Self = DebugReportObjectTypeEXT(13);
+    pub const DEBUG_REPORT_OBJECT_TYPE_IMAGE_VIEW_EXT: Self = DebugReportObjectTypeEXT(14);
+    pub const DEBUG_REPORT_OBJECT_TYPE_SHADER_MODULE_EXT: Self = DebugReportObjectTypeEXT(15);
+    pub const DEBUG_REPORT_OBJECT_TYPE_PIPELINE_CACHE_EXT: Self = DebugReportObjectTypeEXT(16);
+    pub const DEBUG_REPORT_OBJECT_TYPE_PIPELINE_LAYOUT_EXT: Self = DebugReportObjectTypeEXT(17);
+    pub const DEBUG_REPORT_OBJECT_TYPE_RENDER_PASS_EXT: Self = DebugReportObjectTypeEXT(18);
+    pub const DEBUG_REPORT_OBJECT_TYPE_PIPELINE_EXT: Self = DebugReportObjectTypeEXT(19);
+    pub const DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_LAYOUT_EXT: Self =
+        DebugReportObjectTypeEXT(20);
+    pub const DEBUG_REPORT_OBJECT_TYPE_SAMPLER_EXT: Self = DebugReportObjectTypeEXT(21);
+    pub const DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_POOL_EXT: Self = DebugReportObjectTypeEXT(22);
+    pub const DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_EXT: Self = DebugReportObjectTypeEXT(23);
+    pub const DEBUG_REPORT_OBJECT_TYPE_FRAMEBUFFER_EXT: Self = DebugReportObjectTypeEXT(24);
+    pub const DEBUG_REPORT_OBJECT_TYPE_COMMAND_POOL_EXT: Self = DebugReportObjectTypeEXT(25);
+    pub const DEBUG_REPORT_OBJECT_TYPE_SURFACE_KHR_EXT: Self = DebugReportObjectTypeEXT(26);
+    pub const DEBUG_REPORT_OBJECT_TYPE_SWAPCHAIN_KHR_EXT: Self = DebugReportObjectTypeEXT(27);
+    pub const DEBUG_REPORT_OBJECT_TYPE_DEBUG_REPORT_CALLBACK_EXT_EXT: Self =
+        DebugReportObjectTypeEXT(28);
+    pub const DEBUG_REPORT_OBJECT_TYPE_DISPLAY_KHR_EXT: Self = DebugReportObjectTypeEXT(29);
+    pub const DEBUG_REPORT_OBJECT_TYPE_DISPLAY_MODE_KHR_EXT: Self = DebugReportObjectTypeEXT(30);
+    pub const DEBUG_REPORT_OBJECT_TYPE_OBJECT_TABLE_NVX_EXT: Self = DebugReportObjectTypeEXT(31);
+    pub const DEBUG_REPORT_OBJECT_TYPE_INDIRECT_COMMANDS_LAYOUT_NVX_EXT: Self =
+        DebugReportObjectTypeEXT(32);
+    pub const DEBUG_REPORT_OBJECT_TYPE_VALIDATION_CACHE_EXT_EXT: Self =
+        DebugReportObjectTypeEXT(33);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum RasterizationOrderAMD {
-    Strict = 0,
-    Relaxed = 1,
+pub struct RasterizationOrderAMD(pub i32);
+impl RasterizationOrderAMD {
+    pub const RASTERIZATION_ORDER_STRICT_AMD: Self = RasterizationOrderAMD(0);
+    pub const RASTERIZATION_ORDER_RELAXED_AMD: Self = RasterizationOrderAMD(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum ValidationCheckEXT {
-    All = 0,
-    Shaders = 1,
+pub struct ValidationCheckEXT(pub i32);
+impl ValidationCheckEXT {
+    pub const VALIDATION_CHECK_ALL_EXT: Self = ValidationCheckEXT(0);
+    pub const VALIDATION_CHECK_SHADERS_EXT: Self = ValidationCheckEXT(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum IndirectCommandsTokenTypeNVX {
-    Pipeline = 0,
-    DescriptorSet = 1,
-    IndexBuffer = 2,
-    VertexBuffer = 3,
-    PushConstant = 4,
-    DrawIndexed = 5,
-    Draw = 6,
-    Dispatch = 7,
+pub struct IndirectCommandsTokenTypeNVX(pub i32);
+impl IndirectCommandsTokenTypeNVX {
+    pub const INDIRECT_COMMANDS_TOKEN_TYPE_PIPELINE_NVX: Self = IndirectCommandsTokenTypeNVX(0);
+    pub const INDIRECT_COMMANDS_TOKEN_TYPE_DESCRIPTOR_SET_NVX: Self =
+        IndirectCommandsTokenTypeNVX(1);
+    pub const INDIRECT_COMMANDS_TOKEN_TYPE_INDEX_BUFFER_NVX: Self = IndirectCommandsTokenTypeNVX(2);
+    pub const INDIRECT_COMMANDS_TOKEN_TYPE_VERTEX_BUFFER_NVX: Self =
+        IndirectCommandsTokenTypeNVX(3);
+    pub const INDIRECT_COMMANDS_TOKEN_TYPE_PUSH_CONSTANT_NVX: Self =
+        IndirectCommandsTokenTypeNVX(4);
+    pub const INDIRECT_COMMANDS_TOKEN_TYPE_DRAW_INDEXED_NVX: Self = IndirectCommandsTokenTypeNVX(5);
+    pub const INDIRECT_COMMANDS_TOKEN_TYPE_DRAW_NVX: Self = IndirectCommandsTokenTypeNVX(6);
+    pub const INDIRECT_COMMANDS_TOKEN_TYPE_DISPATCH_NVX: Self = IndirectCommandsTokenTypeNVX(7);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum ObjectEntryTypeNVX {
-    DescriptorSet = 0,
-    Pipeline = 1,
-    IndexBuffer = 2,
-    VertexBuffer = 3,
-    PushConstant = 4,
+pub struct ObjectEntryTypeNVX(pub i32);
+impl ObjectEntryTypeNVX {
+    pub const OBJECT_ENTRY_TYPE_DESCRIPTOR_SET_NVX: Self = ObjectEntryTypeNVX(0);
+    pub const OBJECT_ENTRY_TYPE_PIPELINE_NVX: Self = ObjectEntryTypeNVX(1);
+    pub const OBJECT_ENTRY_TYPE_INDEX_BUFFER_NVX: Self = ObjectEntryTypeNVX(2);
+    pub const OBJECT_ENTRY_TYPE_VERTEX_BUFFER_NVX: Self = ObjectEntryTypeNVX(3);
+    pub const OBJECT_ENTRY_TYPE_PUSH_CONSTANT_NVX: Self = ObjectEntryTypeNVX(4);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum DisplayPowerStateEXT {
-    Off = 0,
-    Suspend = 1,
-    On = 2,
+pub struct DisplayPowerStateEXT(pub i32);
+impl DisplayPowerStateEXT {
+    pub const DISPLAY_POWER_STATE_OFF_EXT: Self = DisplayPowerStateEXT(0);
+    pub const DISPLAY_POWER_STATE_SUSPEND_EXT: Self = DisplayPowerStateEXT(1);
+    pub const DISPLAY_POWER_STATE_ON_EXT: Self = DisplayPowerStateEXT(2);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum DeviceEventTypeEXT {
-    DisplayHotplug = 0,
+pub struct DeviceEventTypeEXT(pub i32);
+impl DeviceEventTypeEXT {
+    pub const DEVICE_EVENT_TYPE_DISPLAY_HOTPLUG_EXT: Self = DeviceEventTypeEXT(0);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum DisplayEventTypeEXT {
-    FirstPixelOut = 0,
+pub struct DisplayEventTypeEXT(pub i32);
+impl DisplayEventTypeEXT {
+    pub const DISPLAY_EVENT_TYPE_FIRST_PIXEL_OUT_EXT: Self = DisplayEventTypeEXT(0);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum ViewportCoordinateSwizzleNV {
-    PositiveX = 0,
-    NegativeX = 1,
-    PositiveY = 2,
-    NegativeY = 3,
-    PositiveZ = 4,
-    NegativeZ = 5,
-    PositiveW = 6,
-    NegativeW = 7,
+pub struct ViewportCoordinateSwizzleNV(pub i32);
+impl ViewportCoordinateSwizzleNV {
+    pub const VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_X_NV: Self = ViewportCoordinateSwizzleNV(0);
+    pub const VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_X_NV: Self = ViewportCoordinateSwizzleNV(1);
+    pub const VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_Y_NV: Self = ViewportCoordinateSwizzleNV(2);
+    pub const VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_Y_NV: Self = ViewportCoordinateSwizzleNV(3);
+    pub const VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_Z_NV: Self = ViewportCoordinateSwizzleNV(4);
+    pub const VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_Z_NV: Self = ViewportCoordinateSwizzleNV(5);
+    pub const VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_W_NV: Self = ViewportCoordinateSwizzleNV(6);
+    pub const VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_W_NV: Self = ViewportCoordinateSwizzleNV(7);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum DiscardRectangleModeEXT {
-    Inclusive = 0,
-    Exclusive = 1,
+pub struct DiscardRectangleModeEXT(pub i32);
+impl DiscardRectangleModeEXT {
+    pub const DISCARD_RECTANGLE_MODE_INCLUSIVE_EXT: Self = DiscardRectangleModeEXT(0);
+    pub const DISCARD_RECTANGLE_MODE_EXCLUSIVE_EXT: Self = DiscardRectangleModeEXT(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum PointClippingBehavior {
-    AllClipPlanes = 0,
-    UserClipPlanesOnly = 1,
+pub struct PointClippingBehavior(pub i32);
+impl PointClippingBehavior {
+    pub const ALL_CLIP_PLANES: Self = PointClippingBehavior(0);
+    pub const USER_CLIP_PLANES_ONLY: Self = PointClippingBehavior(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum SamplerReductionModeEXT {
-    WeightedAverage = 0,
-    Min = 1,
-    Max = 2,
+pub struct SamplerReductionModeEXT(pub i32);
+impl SamplerReductionModeEXT {
+    pub const SAMPLER_REDUCTION_MODE_WEIGHTED_AVERAGE_EXT: Self = SamplerReductionModeEXT(0);
+    pub const SAMPLER_REDUCTION_MODE_MIN_EXT: Self = SamplerReductionModeEXT(1);
+    pub const SAMPLER_REDUCTION_MODE_MAX_EXT: Self = SamplerReductionModeEXT(2);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum TessellationDomainOrigin {
-    UpperLeft = 0,
-    LowerLeft = 1,
+pub struct TessellationDomainOrigin(pub i32);
+impl TessellationDomainOrigin {
+    pub const UPPER_LEFT: Self = TessellationDomainOrigin(0);
+    pub const LOWER_LEFT: Self = TessellationDomainOrigin(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum SamplerYcbcrModelConversion {
-    RgbIdentity = 0,
-    YcbcrIdentity = 1,
-    Ycbcr709 = 2,
-    Ycbcr601 = 3,
-    Ycbcr2020 = 4,
+pub struct SamplerYcbcrModelConversion(pub i32);
+impl SamplerYcbcrModelConversion {
+    pub const RGB_IDENTITY: Self = SamplerYcbcrModelConversion(0);
+    pub const YCBCR_IDENTITY: Self = SamplerYcbcrModelConversion(1);
+    pub const YCBCR_709: Self = SamplerYcbcrModelConversion(2);
+    pub const YCBCR_601: Self = SamplerYcbcrModelConversion(3);
+    pub const YCBCR_2020: Self = SamplerYcbcrModelConversion(4);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum SamplerYcbcrRange {
-    ItuFull = 0,
-    ItuNarrow = 1,
+pub struct SamplerYcbcrRange(pub i32);
+impl SamplerYcbcrRange {
+    pub const ITU_FULL: Self = SamplerYcbcrRange(0);
+    pub const ITU_NARROW: Self = SamplerYcbcrRange(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum ChromaLocation {
-    CositedEven = 0,
-    Midpoint = 1,
+pub struct ChromaLocation(pub i32);
+impl ChromaLocation {
+    pub const COSITED_EVEN: Self = ChromaLocation(0);
+    pub const MIDPOINT: Self = ChromaLocation(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum BlendOverlapEXT {
-    Uncorrelated = 0,
-    Disjoint = 1,
-    Conjoint = 2,
+pub struct BlendOverlapEXT(pub i32);
+impl BlendOverlapEXT {
+    pub const BLEND_OVERLAP_UNCORRELATED_EXT: Self = BlendOverlapEXT(0);
+    pub const BLEND_OVERLAP_DISJOINT_EXT: Self = BlendOverlapEXT(1);
+    pub const BLEND_OVERLAP_CONJOINT_EXT: Self = BlendOverlapEXT(2);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum CoverageModulationModeNV {
-    None = 0,
-    Rgb = 1,
-    Alpha = 2,
-    Rgba = 3,
+pub struct CoverageModulationModeNV(pub i32);
+impl CoverageModulationModeNV {
+    pub const COVERAGE_MODULATION_MODE_NONE_NV: Self = CoverageModulationModeNV(0);
+    pub const COVERAGE_MODULATION_MODE_RGB_NV: Self = CoverageModulationModeNV(1);
+    pub const COVERAGE_MODULATION_MODE_ALPHA_NV: Self = CoverageModulationModeNV(2);
+    pub const COVERAGE_MODULATION_MODE_RGBA_NV: Self = CoverageModulationModeNV(3);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum ValidationCacheHeaderVersionEXT {
-    One = 1,
+pub struct ValidationCacheHeaderVersionEXT(pub i32);
+impl ValidationCacheHeaderVersionEXT {
+    pub const VALIDATION_CACHE_HEADER_VERSION_ONE_EXT: Self = ValidationCacheHeaderVersionEXT(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum ShaderInfoTypeAMD {
-    Statistics = 0,
-    Binary = 1,
-    Disassembly = 2,
+pub struct ShaderInfoTypeAMD(pub i32);
+impl ShaderInfoTypeAMD {
+    pub const SHADER_INFO_TYPE_STATISTICS_AMD: Self = ShaderInfoTypeAMD(0);
+    pub const SHADER_INFO_TYPE_BINARY_AMD: Self = ShaderInfoTypeAMD(1);
+    pub const SHADER_INFO_TYPE_DISASSEMBLY_AMD: Self = ShaderInfoTypeAMD(2);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum QueueGlobalPriorityEXT {
-    Low = 128,
-    Medium = 256,
-    High = 512,
-    Realtime = 1024,
+pub struct QueueGlobalPriorityEXT(pub i32);
+impl QueueGlobalPriorityEXT {
+    pub const QUEUE_GLOBAL_PRIORITY_LOW_EXT: Self = QueueGlobalPriorityEXT(128);
+    pub const QUEUE_GLOBAL_PRIORITY_MEDIUM_EXT: Self = QueueGlobalPriorityEXT(256);
+    pub const QUEUE_GLOBAL_PRIORITY_HIGH_EXT: Self = QueueGlobalPriorityEXT(512);
+    pub const QUEUE_GLOBAL_PRIORITY_REALTIME_EXT: Self = QueueGlobalPriorityEXT(1024);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-pub enum ConservativeRasterizationModeEXT {
-    Disabled = 0,
-    Overestimate = 1,
-    Underestimate = 2,
+pub struct ConservativeRasterizationModeEXT(pub i32);
+impl ConservativeRasterizationModeEXT {
+    pub const CONSERVATIVE_RASTERIZATION_MODE_DISABLED_EXT: Self =
+        ConservativeRasterizationModeEXT(0);
+    pub const CONSERVATIVE_RASTERIZATION_MODE_OVERESTIMATE_EXT: Self =
+        ConservativeRasterizationModeEXT(1);
+    pub const CONSERVATIVE_RASTERIZATION_MODE_UNDERESTIMATE_EXT: Self =
+        ConservativeRasterizationModeEXT(2);
 }
-pub const CULL_MODE_FRONT_BIT: CullModeFlags = CullModeFlags { flags: 0b1 };
-pub const CULL_MODE_BACK_BIT: CullModeFlags = CullModeFlags { flags: 0b10 };
-pub const CULL_MODE_FRONT_AND_BACK: CullModeFlags = CullModeFlags { flags: 0x00000003 };
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct CullModeFlags {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(CullModeFlags, 0b11, Flags);
-pub const QUEUE_GRAPHICS_BIT: QueueFlags = QueueFlags { flags: 0b1 };
-pub const QUEUE_COMPUTE_BIT: QueueFlags = QueueFlags { flags: 0b10 };
-pub const QUEUE_TRANSFER_BIT: QueueFlags = QueueFlags { flags: 0b100 };
-pub const QUEUE_SPARSE_BINDING_BIT: QueueFlags = QueueFlags { flags: 0b1000 };
+impl CullModeFlags {
+    pub const NONE: Self = CullModeFlags { flags: 0 };
+    pub const FRONT_BIT: Self = CullModeFlags { flags: 0b1 };
+    pub const BACK_BIT: Self = CullModeFlags { flags: 0b10 };
+    pub const FRONT_AND_BACK: Self = CullModeFlags { flags: 0x00000003 };
+}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct QueueFlags {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(QueueFlags, 0b1111, Flags);
+impl QueueFlags {
+    pub const GRAPHICS_BIT: Self = QueueFlags { flags: 0b1 };
+    pub const COMPUTE_BIT: Self = QueueFlags { flags: 0b10 };
+    pub const TRANSFER_BIT: Self = QueueFlags { flags: 0b100 };
+    pub const SPARSE_BINDING_BIT: Self = QueueFlags { flags: 0b1000 };
+}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct DeviceQueueCreateFlags {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(DeviceQueueCreateFlags, 0b0, Flags);
-pub const MEMORY_PROPERTY_DEVICE_LOCAL_BIT: MemoryPropertyFlags =
-    MemoryPropertyFlags { flags: 0b1 };
-pub const MEMORY_PROPERTY_HOST_VISIBLE_BIT: MemoryPropertyFlags =
-    MemoryPropertyFlags { flags: 0b10 };
-pub const MEMORY_PROPERTY_HOST_COHERENT_BIT: MemoryPropertyFlags =
-    MemoryPropertyFlags { flags: 0b100 };
-pub const MEMORY_PROPERTY_HOST_CACHED_BIT: MemoryPropertyFlags =
-    MemoryPropertyFlags { flags: 0b1000 };
-pub const MEMORY_PROPERTY_LAZILY_ALLOCATED_BIT: MemoryPropertyFlags =
-    MemoryPropertyFlags { flags: 0b10000 };
+impl DeviceQueueCreateFlags {}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct MemoryPropertyFlags {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(MemoryPropertyFlags, 0b11111, Flags);
-pub const MEMORY_HEAP_DEVICE_LOCAL_BIT: MemoryHeapFlags = MemoryHeapFlags { flags: 0b1 };
+impl MemoryPropertyFlags {
+    pub const DEVICE_LOCAL_BIT: Self = MemoryPropertyFlags { flags: 0b1 };
+    pub const HOST_VISIBLE_BIT: Self = MemoryPropertyFlags { flags: 0b10 };
+    pub const HOST_COHERENT_BIT: Self = MemoryPropertyFlags { flags: 0b100 };
+    pub const HOST_CACHED_BIT: Self = MemoryPropertyFlags { flags: 0b1000 };
+    pub const LAZILY_ALLOCATED_BIT: Self = MemoryPropertyFlags { flags: 0b10000 };
+}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct MemoryHeapFlags {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(MemoryHeapFlags, 0b1, Flags);
-pub const ACCESS_INDIRECT_COMMAND_READ_BIT: AccessFlags = AccessFlags { flags: 0b1 };
-pub const ACCESS_INDEX_READ_BIT: AccessFlags = AccessFlags { flags: 0b10 };
-pub const ACCESS_VERTEX_ATTRIBUTE_READ_BIT: AccessFlags = AccessFlags { flags: 0b100 };
-pub const ACCESS_UNIFORM_READ_BIT: AccessFlags = AccessFlags { flags: 0b1000 };
-pub const ACCESS_INPUT_ATTACHMENT_READ_BIT: AccessFlags = AccessFlags { flags: 0b10000 };
-pub const ACCESS_SHADER_READ_BIT: AccessFlags = AccessFlags { flags: 0b100000 };
-pub const ACCESS_SHADER_WRITE_BIT: AccessFlags = AccessFlags { flags: 0b1000000 };
-pub const ACCESS_COLOR_ATTACHMENT_READ_BIT: AccessFlags = AccessFlags { flags: 0b10000000 };
-pub const ACCESS_COLOR_ATTACHMENT_WRITE_BIT: AccessFlags = AccessFlags { flags: 0b100000000 };
-pub const ACCESS_DEPTH_STENCIL_ATTACHMENT_READ_BIT: AccessFlags = AccessFlags {
-    flags: 0b1000000000,
-};
-pub const ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT: AccessFlags = AccessFlags {
-    flags: 0b10000000000,
-};
-pub const ACCESS_TRANSFER_READ_BIT: AccessFlags = AccessFlags {
-    flags: 0b100000000000,
-};
-pub const ACCESS_TRANSFER_WRITE_BIT: AccessFlags = AccessFlags {
-    flags: 0b1000000000000,
-};
-pub const ACCESS_HOST_READ_BIT: AccessFlags = AccessFlags {
-    flags: 0b10000000000000,
-};
-pub const ACCESS_HOST_WRITE_BIT: AccessFlags = AccessFlags {
-    flags: 0b100000000000000,
-};
-pub const ACCESS_MEMORY_READ_BIT: AccessFlags = AccessFlags {
-    flags: 0b1000000000000000,
-};
-pub const ACCESS_MEMORY_WRITE_BIT: AccessFlags = AccessFlags {
-    flags: 0b10000000000000000,
-};
+impl MemoryHeapFlags {
+    pub const DEVICE_LOCAL_BIT: Self = MemoryHeapFlags { flags: 0b1 };
+}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct AccessFlags {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(AccessFlags, 0b11111111111111111, Flags);
-pub const BUFFER_USAGE_TRANSFER_SRC_BIT: BufferUsageFlags = BufferUsageFlags { flags: 0b1 };
-pub const BUFFER_USAGE_TRANSFER_DST_BIT: BufferUsageFlags = BufferUsageFlags { flags: 0b10 };
-pub const BUFFER_USAGE_UNIFORM_TEXEL_BUFFER_BIT: BufferUsageFlags =
-    BufferUsageFlags { flags: 0b100 };
-pub const BUFFER_USAGE_STORAGE_TEXEL_BUFFER_BIT: BufferUsageFlags =
-    BufferUsageFlags { flags: 0b1000 };
-pub const BUFFER_USAGE_UNIFORM_BUFFER_BIT: BufferUsageFlags = BufferUsageFlags { flags: 0b10000 };
-pub const BUFFER_USAGE_STORAGE_BUFFER_BIT: BufferUsageFlags = BufferUsageFlags { flags: 0b100000 };
-pub const BUFFER_USAGE_INDEX_BUFFER_BIT: BufferUsageFlags = BufferUsageFlags { flags: 0b1000000 };
-pub const BUFFER_USAGE_VERTEX_BUFFER_BIT: BufferUsageFlags = BufferUsageFlags { flags: 0b10000000 };
-pub const BUFFER_USAGE_INDIRECT_BUFFER_BIT: BufferUsageFlags =
-    BufferUsageFlags { flags: 0b100000000 };
-vk_bitflags_wrapped!(BufferUsageFlags, 0b111111111, Flags);
-pub const BUFFER_CREATE_SPARSE_BINDING_BIT: BufferCreateFlags = BufferCreateFlags { flags: 0b1 };
-pub const BUFFER_CREATE_SPARSE_RESIDENCY_BIT: BufferCreateFlags = BufferCreateFlags { flags: 0b10 };
-pub const BUFFER_CREATE_SPARSE_ALIASED_BIT: BufferCreateFlags = BufferCreateFlags { flags: 0b100 };
-vk_bitflags_wrapped!(BufferCreateFlags, 0b111, Flags);
-pub const SHADER_STAGE_VERTEX_BIT: ShaderStageFlags = ShaderStageFlags { flags: 0b1 };
-pub const SHADER_STAGE_TESSELLATION_CONTROL_BIT: ShaderStageFlags =
-    ShaderStageFlags { flags: 0b10 };
-pub const SHADER_STAGE_TESSELLATION_EVALUATION_BIT: ShaderStageFlags =
-    ShaderStageFlags { flags: 0b100 };
-pub const SHADER_STAGE_GEOMETRY_BIT: ShaderStageFlags = ShaderStageFlags { flags: 0b1000 };
-pub const SHADER_STAGE_FRAGMENT_BIT: ShaderStageFlags = ShaderStageFlags { flags: 0b10000 };
-pub const SHADER_STAGE_COMPUTE_BIT: ShaderStageFlags = ShaderStageFlags { flags: 0b100000 };
-pub const SHADER_STAGE_ALL_GRAPHICS: ShaderStageFlags = ShaderStageFlags { flags: 0x0000001F };
-pub const SHADER_STAGE_ALL: ShaderStageFlags = ShaderStageFlags { flags: 0x7FFFFFFF };
-vk_bitflags_wrapped!(ShaderStageFlags, 0b1111111111111111111111111111111, Flags);
-pub const IMAGE_USAGE_TRANSFER_SRC_BIT: ImageUsageFlags = ImageUsageFlags { flags: 0b1 };
-pub const IMAGE_USAGE_TRANSFER_DST_BIT: ImageUsageFlags = ImageUsageFlags { flags: 0b10 };
-pub const IMAGE_USAGE_SAMPLED_BIT: ImageUsageFlags = ImageUsageFlags { flags: 0b100 };
-pub const IMAGE_USAGE_STORAGE_BIT: ImageUsageFlags = ImageUsageFlags { flags: 0b1000 };
-pub const IMAGE_USAGE_COLOR_ATTACHMENT_BIT: ImageUsageFlags = ImageUsageFlags { flags: 0b10000 };
-pub const IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT: ImageUsageFlags =
-    ImageUsageFlags { flags: 0b100000 };
-pub const IMAGE_USAGE_TRANSIENT_ATTACHMENT_BIT: ImageUsageFlags =
-    ImageUsageFlags { flags: 0b1000000 };
-pub const IMAGE_USAGE_INPUT_ATTACHMENT_BIT: ImageUsageFlags = ImageUsageFlags { flags: 0b10000000 };
-vk_bitflags_wrapped!(ImageUsageFlags, 0b11111111, Flags);
-pub const IMAGE_CREATE_SPARSE_BINDING_BIT: ImageCreateFlags = ImageCreateFlags { flags: 0b1 };
-pub const IMAGE_CREATE_SPARSE_RESIDENCY_BIT: ImageCreateFlags = ImageCreateFlags { flags: 0b10 };
-pub const IMAGE_CREATE_SPARSE_ALIASED_BIT: ImageCreateFlags = ImageCreateFlags { flags: 0b100 };
-pub const IMAGE_CREATE_MUTABLE_FORMAT_BIT: ImageCreateFlags = ImageCreateFlags { flags: 0b1000 };
-pub const IMAGE_CREATE_CUBE_COMPATIBLE_BIT: ImageCreateFlags = ImageCreateFlags { flags: 0b10000 };
-vk_bitflags_wrapped!(ImageCreateFlags, 0b11111, Flags);
-pub const PIPELINE_CREATE_DISABLE_OPTIMIZATION_BIT: PipelineCreateFlags =
-    PipelineCreateFlags { flags: 0b1 };
-pub const PIPELINE_CREATE_ALLOW_DERIVATIVES_BIT: PipelineCreateFlags =
-    PipelineCreateFlags { flags: 0b10 };
-pub const PIPELINE_CREATE_DERIVATIVE_BIT: PipelineCreateFlags =
-    PipelineCreateFlags { flags: 0b100 };
-vk_bitflags_wrapped!(PipelineCreateFlags, 0b111, Flags);
-pub const COLOR_COMPONENT_R_BIT: ColorComponentFlags = ColorComponentFlags { flags: 0b1 };
-pub const COLOR_COMPONENT_G_BIT: ColorComponentFlags = ColorComponentFlags { flags: 0b10 };
-pub const COLOR_COMPONENT_B_BIT: ColorComponentFlags = ColorComponentFlags { flags: 0b100 };
-pub const COLOR_COMPONENT_A_BIT: ColorComponentFlags = ColorComponentFlags { flags: 0b1000 };
-vk_bitflags_wrapped!(ColorComponentFlags, 0b1111, Flags);
-pub const FENCE_CREATE_SIGNALED_BIT: FenceCreateFlags = FenceCreateFlags { flags: 0b1 };
-vk_bitflags_wrapped!(FenceCreateFlags, 0b1, Flags);
-pub const FORMAT_FEATURE_SAMPLED_IMAGE_BIT: FormatFeatureFlags = FormatFeatureFlags { flags: 0b1 };
-pub const FORMAT_FEATURE_STORAGE_IMAGE_BIT: FormatFeatureFlags = FormatFeatureFlags { flags: 0b10 };
-pub const FORMAT_FEATURE_STORAGE_IMAGE_ATOMIC_BIT: FormatFeatureFlags =
-    FormatFeatureFlags { flags: 0b100 };
-pub const FORMAT_FEATURE_UNIFORM_TEXEL_BUFFER_BIT: FormatFeatureFlags =
-    FormatFeatureFlags { flags: 0b1000 };
-pub const FORMAT_FEATURE_STORAGE_TEXEL_BUFFER_BIT: FormatFeatureFlags =
-    FormatFeatureFlags { flags: 0b10000 };
-pub const FORMAT_FEATURE_STORAGE_TEXEL_BUFFER_ATOMIC_BIT: FormatFeatureFlags =
-    FormatFeatureFlags { flags: 0b100000 };
-pub const FORMAT_FEATURE_VERTEX_BUFFER_BIT: FormatFeatureFlags =
-    FormatFeatureFlags { flags: 0b1000000 };
-pub const FORMAT_FEATURE_COLOR_ATTACHMENT_BIT: FormatFeatureFlags =
-    FormatFeatureFlags { flags: 0b10000000 };
-pub const FORMAT_FEATURE_COLOR_ATTACHMENT_BLEND_BIT: FormatFeatureFlags =
-    FormatFeatureFlags { flags: 0b100000000 };
-pub const FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT: FormatFeatureFlags = FormatFeatureFlags {
-    flags: 0b1000000000,
-};
-pub const FORMAT_FEATURE_BLIT_SRC_BIT: FormatFeatureFlags = FormatFeatureFlags {
-    flags: 0b10000000000,
-};
-pub const FORMAT_FEATURE_BLIT_DST_BIT: FormatFeatureFlags = FormatFeatureFlags {
-    flags: 0b100000000000,
-};
-pub const FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_LINEAR_BIT: FormatFeatureFlags = FormatFeatureFlags {
-    flags: 0b1000000000000,
-};
-vk_bitflags_wrapped!(FormatFeatureFlags, 0b1111111111111, Flags);
-pub const QUERY_CONTROL_PRECISE_BIT: QueryControlFlags = QueryControlFlags { flags: 0b1 };
-vk_bitflags_wrapped!(QueryControlFlags, 0b1, Flags);
-pub const QUERY_RESULT_64_BIT: QueryResultFlags = QueryResultFlags { flags: 0b1 };
-pub const QUERY_RESULT_WAIT_BIT: QueryResultFlags = QueryResultFlags { flags: 0b10 };
-pub const QUERY_RESULT_WITH_AVAILABILITY_BIT: QueryResultFlags = QueryResultFlags { flags: 0b100 };
-pub const QUERY_RESULT_PARTIAL_BIT: QueryResultFlags = QueryResultFlags { flags: 0b1000 };
-vk_bitflags_wrapped!(QueryResultFlags, 0b1111, Flags);
-pub const COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT: CommandBufferUsageFlags =
-    CommandBufferUsageFlags { flags: 0b1 };
-pub const COMMAND_BUFFER_USAGE_RENDER_PASS_CONTINUE_BIT: CommandBufferUsageFlags =
-    CommandBufferUsageFlags { flags: 0b10 };
-pub const COMMAND_BUFFER_USAGE_SIMULTANEOUS_USE_BIT: CommandBufferUsageFlags =
-    CommandBufferUsageFlags { flags: 0b100 };
-vk_bitflags_wrapped!(CommandBufferUsageFlags, 0b111, Flags);
-pub const QUERY_PIPELINE_STATISTIC_INPUT_ASSEMBLY_VERTICES_BIT: QueryPipelineStatisticFlags =
-    QueryPipelineStatisticFlags { flags: 0b1 };
-pub const QUERY_PIPELINE_STATISTIC_INPUT_ASSEMBLY_PRIMITIVES_BIT: QueryPipelineStatisticFlags =
-    QueryPipelineStatisticFlags { flags: 0b10 };
-pub const QUERY_PIPELINE_STATISTIC_VERTEX_SHADER_INVOCATIONS_BIT: QueryPipelineStatisticFlags =
-    QueryPipelineStatisticFlags { flags: 0b100 };
-pub const QUERY_PIPELINE_STATISTIC_GEOMETRY_SHADER_INVOCATIONS_BIT: QueryPipelineStatisticFlags =
-    QueryPipelineStatisticFlags { flags: 0b1000 };
-pub const QUERY_PIPELINE_STATISTIC_GEOMETRY_SHADER_PRIMITIVES_BIT: QueryPipelineStatisticFlags =
-    QueryPipelineStatisticFlags { flags: 0b10000 };
-pub const QUERY_PIPELINE_STATISTIC_CLIPPING_INVOCATIONS_BIT: QueryPipelineStatisticFlags =
-    QueryPipelineStatisticFlags { flags: 0b100000 };
-pub const QUERY_PIPELINE_STATISTIC_CLIPPING_PRIMITIVES_BIT: QueryPipelineStatisticFlags =
-    QueryPipelineStatisticFlags { flags: 0b1000000 };
-pub const QUERY_PIPELINE_STATISTIC_FRAGMENT_SHADER_INVOCATIONS_BIT: QueryPipelineStatisticFlags =
-    QueryPipelineStatisticFlags { flags: 0b10000000 };
-pub const QUERY_PIPELINE_STATISTIC_TESSELLATION_CONTROL_SHADER_PATCHES_BIT:
-    QueryPipelineStatisticFlags = QueryPipelineStatisticFlags { flags: 0b100000000 };
-pub const QUERY_PIPELINE_STATISTIC_TESSELLATION_EVALUATION_SHADER_INVOCATIONS_BIT:
-    QueryPipelineStatisticFlags = QueryPipelineStatisticFlags {
-    flags: 0b1000000000,
-};
-pub const QUERY_PIPELINE_STATISTIC_COMPUTE_SHADER_INVOCATIONS_BIT: QueryPipelineStatisticFlags =
-    QueryPipelineStatisticFlags {
+impl AccessFlags {
+    pub const INDIRECT_COMMAND_READ_BIT: Self = AccessFlags { flags: 0b1 };
+    pub const INDEX_READ_BIT: Self = AccessFlags { flags: 0b10 };
+    pub const VERTEX_ATTRIBUTE_READ_BIT: Self = AccessFlags { flags: 0b100 };
+    pub const UNIFORM_READ_BIT: Self = AccessFlags { flags: 0b1000 };
+    pub const INPUT_ATTACHMENT_READ_BIT: Self = AccessFlags { flags: 0b10000 };
+    pub const SHADER_READ_BIT: Self = AccessFlags { flags: 0b100000 };
+    pub const SHADER_WRITE_BIT: Self = AccessFlags { flags: 0b1000000 };
+    pub const COLOR_ATTACHMENT_READ_BIT: Self = AccessFlags { flags: 0b10000000 };
+    pub const COLOR_ATTACHMENT_WRITE_BIT: Self = AccessFlags { flags: 0b100000000 };
+    pub const DEPTH_STENCIL_ATTACHMENT_READ_BIT: Self = AccessFlags {
+        flags: 0b1000000000,
+    };
+    pub const DEPTH_STENCIL_ATTACHMENT_WRITE_BIT: Self = AccessFlags {
         flags: 0b10000000000,
     };
-vk_bitflags_wrapped!(QueryPipelineStatisticFlags, 0b11111111111, Flags);
-pub const IMAGE_ASPECT_COLOR_BIT: ImageAspectFlags = ImageAspectFlags { flags: 0b1 };
-pub const IMAGE_ASPECT_DEPTH_BIT: ImageAspectFlags = ImageAspectFlags { flags: 0b10 };
-pub const IMAGE_ASPECT_STENCIL_BIT: ImageAspectFlags = ImageAspectFlags { flags: 0b100 };
-pub const IMAGE_ASPECT_METADATA_BIT: ImageAspectFlags = ImageAspectFlags { flags: 0b1000 };
-vk_bitflags_wrapped!(ImageAspectFlags, 0b1111, Flags);
-pub const SPARSE_IMAGE_FORMAT_SINGLE_MIPTAIL_BIT: SparseImageFormatFlags =
-    SparseImageFormatFlags { flags: 0b1 };
-pub const SPARSE_IMAGE_FORMAT_ALIGNED_MIP_SIZE_BIT: SparseImageFormatFlags =
-    SparseImageFormatFlags { flags: 0b10 };
-pub const SPARSE_IMAGE_FORMAT_NONSTANDARD_BLOCK_SIZE_BIT: SparseImageFormatFlags =
-    SparseImageFormatFlags { flags: 0b100 };
-vk_bitflags_wrapped!(SparseImageFormatFlags, 0b111, Flags);
-pub const SPARSE_MEMORY_BIND_METADATA_BIT: SparseMemoryBindFlags =
-    SparseMemoryBindFlags { flags: 0b1 };
-vk_bitflags_wrapped!(SparseMemoryBindFlags, 0b1, Flags);
-pub const PIPELINE_STAGE_TOP_OF_PIPE_BIT: PipelineStageFlags = PipelineStageFlags { flags: 0b1 };
-pub const PIPELINE_STAGE_DRAW_INDIRECT_BIT: PipelineStageFlags = PipelineStageFlags { flags: 0b10 };
-pub const PIPELINE_STAGE_VERTEX_INPUT_BIT: PipelineStageFlags = PipelineStageFlags { flags: 0b100 };
-pub const PIPELINE_STAGE_VERTEX_SHADER_BIT: PipelineStageFlags =
-    PipelineStageFlags { flags: 0b1000 };
-pub const PIPELINE_STAGE_TESSELLATION_CONTROL_SHADER_BIT: PipelineStageFlags =
-    PipelineStageFlags { flags: 0b10000 };
-pub const PIPELINE_STAGE_TESSELLATION_EVALUATION_SHADER_BIT: PipelineStageFlags =
-    PipelineStageFlags { flags: 0b100000 };
-pub const PIPELINE_STAGE_GEOMETRY_SHADER_BIT: PipelineStageFlags =
-    PipelineStageFlags { flags: 0b1000000 };
-pub const PIPELINE_STAGE_FRAGMENT_SHADER_BIT: PipelineStageFlags =
-    PipelineStageFlags { flags: 0b10000000 };
-pub const PIPELINE_STAGE_EARLY_FRAGMENT_TESTS_BIT: PipelineStageFlags =
-    PipelineStageFlags { flags: 0b100000000 };
-pub const PIPELINE_STAGE_LATE_FRAGMENT_TESTS_BIT: PipelineStageFlags = PipelineStageFlags {
-    flags: 0b1000000000,
-};
-pub const PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT: PipelineStageFlags = PipelineStageFlags {
-    flags: 0b10000000000,
-};
-pub const PIPELINE_STAGE_COMPUTE_SHADER_BIT: PipelineStageFlags = PipelineStageFlags {
-    flags: 0b100000000000,
-};
-pub const PIPELINE_STAGE_TRANSFER_BIT: PipelineStageFlags = PipelineStageFlags {
-    flags: 0b1000000000000,
-};
-pub const PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT: PipelineStageFlags = PipelineStageFlags {
-    flags: 0b10000000000000,
-};
-pub const PIPELINE_STAGE_HOST_BIT: PipelineStageFlags = PipelineStageFlags {
-    flags: 0b100000000000000,
-};
-pub const PIPELINE_STAGE_ALL_GRAPHICS_BIT: PipelineStageFlags = PipelineStageFlags {
-    flags: 0b1000000000000000,
-};
-pub const PIPELINE_STAGE_ALL_COMMANDS_BIT: PipelineStageFlags = PipelineStageFlags {
-    flags: 0b10000000000000000,
-};
-vk_bitflags_wrapped!(PipelineStageFlags, 0b11111111111111111, Flags);
-pub const COMMAND_POOL_CREATE_TRANSIENT_BIT: CommandPoolCreateFlags =
-    CommandPoolCreateFlags { flags: 0b1 };
-pub const COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT: CommandPoolCreateFlags =
-    CommandPoolCreateFlags { flags: 0b10 };
-vk_bitflags_wrapped!(CommandPoolCreateFlags, 0b11, Flags);
-pub const COMMAND_POOL_RESET_RELEASE_RESOURCES_BIT: CommandPoolResetFlags =
-    CommandPoolResetFlags { flags: 0b1 };
-vk_bitflags_wrapped!(CommandPoolResetFlags, 0b1, Flags);
-pub const COMMAND_BUFFER_RESET_RELEASE_RESOURCES_BIT: CommandBufferResetFlags =
-    CommandBufferResetFlags { flags: 0b1 };
-vk_bitflags_wrapped!(CommandBufferResetFlags, 0b1, Flags);
-pub const SAMPLE_COUNT_1_BIT: SampleCountFlags = SampleCountFlags { flags: 0b1 };
-pub const SAMPLE_COUNT_2_BIT: SampleCountFlags = SampleCountFlags { flags: 0b10 };
-pub const SAMPLE_COUNT_4_BIT: SampleCountFlags = SampleCountFlags { flags: 0b100 };
-pub const SAMPLE_COUNT_8_BIT: SampleCountFlags = SampleCountFlags { flags: 0b1000 };
-pub const SAMPLE_COUNT_16_BIT: SampleCountFlags = SampleCountFlags { flags: 0b10000 };
-pub const SAMPLE_COUNT_32_BIT: SampleCountFlags = SampleCountFlags { flags: 0b100000 };
-pub const SAMPLE_COUNT_64_BIT: SampleCountFlags = SampleCountFlags { flags: 0b1000000 };
-vk_bitflags_wrapped!(SampleCountFlags, 0b1111111, Flags);
-pub const ATTACHMENT_DESCRIPTION_MAY_ALIAS_BIT: AttachmentDescriptionFlags =
-    AttachmentDescriptionFlags { flags: 0b1 };
-vk_bitflags_wrapped!(AttachmentDescriptionFlags, 0b1, Flags);
-pub const STENCIL_FACE_FRONT_BIT: StencilFaceFlags = StencilFaceFlags { flags: 0b1 };
-pub const STENCIL_FACE_BACK_BIT: StencilFaceFlags = StencilFaceFlags { flags: 0b10 };
-pub const STENCIL_FRONT_AND_BACK: StencilFaceFlags = StencilFaceFlags { flags: 0x00000003 };
-vk_bitflags_wrapped!(StencilFaceFlags, 0b11, Flags);
-pub const DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT: DescriptorPoolCreateFlags =
-    DescriptorPoolCreateFlags { flags: 0b1 };
-vk_bitflags_wrapped!(DescriptorPoolCreateFlags, 0b1, Flags);
-pub const DEPENDENCY_BY_REGION_BIT: DependencyFlags = DependencyFlags { flags: 0b1 };
-vk_bitflags_wrapped!(DependencyFlags, 0b1, Flags);
-pub const DISPLAY_PLANE_ALPHA_OPAQUE_BIT_KHR: DisplayPlaneAlphaFlagsKHR =
-    DisplayPlaneAlphaFlagsKHR { flags: 0b1 };
-pub const DISPLAY_PLANE_ALPHA_GLOBAL_BIT_KHR: DisplayPlaneAlphaFlagsKHR =
-    DisplayPlaneAlphaFlagsKHR { flags: 0b10 };
-pub const DISPLAY_PLANE_ALPHA_PER_PIXEL_BIT_KHR: DisplayPlaneAlphaFlagsKHR =
-    DisplayPlaneAlphaFlagsKHR { flags: 0b100 };
-pub const DISPLAY_PLANE_ALPHA_PER_PIXEL_PREMULTIPLIED_BIT_KHR: DisplayPlaneAlphaFlagsKHR =
-    DisplayPlaneAlphaFlagsKHR { flags: 0b1000 };
-vk_bitflags_wrapped!(DisplayPlaneAlphaFlagsKHR, 0b1111, Flags);
-pub const COMPOSITE_ALPHA_OPAQUE_BIT_KHR: CompositeAlphaFlagsKHR =
-    CompositeAlphaFlagsKHR { flags: 0b1 };
-pub const COMPOSITE_ALPHA_PRE_MULTIPLIED_BIT_KHR: CompositeAlphaFlagsKHR =
-    CompositeAlphaFlagsKHR { flags: 0b10 };
-pub const COMPOSITE_ALPHA_POST_MULTIPLIED_BIT_KHR: CompositeAlphaFlagsKHR =
-    CompositeAlphaFlagsKHR { flags: 0b100 };
-pub const COMPOSITE_ALPHA_INHERIT_BIT_KHR: CompositeAlphaFlagsKHR =
-    CompositeAlphaFlagsKHR { flags: 0b1000 };
-vk_bitflags_wrapped!(CompositeAlphaFlagsKHR, 0b1111, Flags);
-pub const SURFACE_TRANSFORM_IDENTITY_BIT_KHR: SurfaceTransformFlagsKHR =
-    SurfaceTransformFlagsKHR { flags: 0b1 };
-pub const SURFACE_TRANSFORM_ROTATE_90_BIT_KHR: SurfaceTransformFlagsKHR =
-    SurfaceTransformFlagsKHR { flags: 0b10 };
-pub const SURFACE_TRANSFORM_ROTATE_180_BIT_KHR: SurfaceTransformFlagsKHR =
-    SurfaceTransformFlagsKHR { flags: 0b100 };
-pub const SURFACE_TRANSFORM_ROTATE_270_BIT_KHR: SurfaceTransformFlagsKHR =
-    SurfaceTransformFlagsKHR { flags: 0b1000 };
-pub const SURFACE_TRANSFORM_HORIZONTAL_MIRROR_BIT_KHR: SurfaceTransformFlagsKHR =
-    SurfaceTransformFlagsKHR { flags: 0b10000 };
-pub const SURFACE_TRANSFORM_HORIZONTAL_MIRROR_ROTATE_90_BIT_KHR: SurfaceTransformFlagsKHR =
-    SurfaceTransformFlagsKHR { flags: 0b100000 };
-pub const SURFACE_TRANSFORM_HORIZONTAL_MIRROR_ROTATE_180_BIT_KHR: SurfaceTransformFlagsKHR =
-    SurfaceTransformFlagsKHR { flags: 0b1000000 };
-pub const SURFACE_TRANSFORM_HORIZONTAL_MIRROR_ROTATE_270_BIT_KHR: SurfaceTransformFlagsKHR =
-    SurfaceTransformFlagsKHR { flags: 0b10000000 };
-pub const SURFACE_TRANSFORM_INHERIT_BIT_KHR: SurfaceTransformFlagsKHR =
-    SurfaceTransformFlagsKHR { flags: 0b100000000 };
-vk_bitflags_wrapped!(SurfaceTransformFlagsKHR, 0b111111111, Flags);
-pub const DEBUG_REPORT_INFORMATION_BIT_EXT: DebugReportFlagsEXT =
-    DebugReportFlagsEXT { flags: 0b1 };
-pub const DEBUG_REPORT_WARNING_BIT_EXT: DebugReportFlagsEXT = DebugReportFlagsEXT { flags: 0b10 };
-pub const DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT: DebugReportFlagsEXT =
-    DebugReportFlagsEXT { flags: 0b100 };
-pub const DEBUG_REPORT_ERROR_BIT_EXT: DebugReportFlagsEXT = DebugReportFlagsEXT { flags: 0b1000 };
-pub const DEBUG_REPORT_DEBUG_BIT_EXT: DebugReportFlagsEXT = DebugReportFlagsEXT { flags: 0b10000 };
-vk_bitflags_wrapped!(DebugReportFlagsEXT, 0b11111, Flags);
-pub const EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT_NV: ExternalMemoryHandleTypeFlagsNV =
-    ExternalMemoryHandleTypeFlagsNV { flags: 0b1 };
-pub const EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT_NV: ExternalMemoryHandleTypeFlagsNV =
-    ExternalMemoryHandleTypeFlagsNV { flags: 0b10 };
-pub const EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_BIT_NV: ExternalMemoryHandleTypeFlagsNV =
-    ExternalMemoryHandleTypeFlagsNV { flags: 0b100 };
-pub const EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_BIT_NV: ExternalMemoryHandleTypeFlagsNV =
-    ExternalMemoryHandleTypeFlagsNV { flags: 0b1000 };
-vk_bitflags_wrapped!(ExternalMemoryHandleTypeFlagsNV, 0b1111, Flags);
-pub const EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT_NV: ExternalMemoryFeatureFlagsNV =
-    ExternalMemoryFeatureFlagsNV { flags: 0b1 };
-pub const EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT_NV: ExternalMemoryFeatureFlagsNV =
-    ExternalMemoryFeatureFlagsNV { flags: 0b10 };
-pub const EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT_NV: ExternalMemoryFeatureFlagsNV =
-    ExternalMemoryFeatureFlagsNV { flags: 0b100 };
-vk_bitflags_wrapped!(ExternalMemoryFeatureFlagsNV, 0b111, Flags);
-pub const SUBGROUP_FEATURE_BASIC_BIT: SubgroupFeatureFlags = SubgroupFeatureFlags { flags: 0b1 };
-pub const SUBGROUP_FEATURE_VOTE_BIT: SubgroupFeatureFlags = SubgroupFeatureFlags { flags: 0b10 };
-pub const SUBGROUP_FEATURE_ARITHMETIC_BIT: SubgroupFeatureFlags =
-    SubgroupFeatureFlags { flags: 0b100 };
-pub const SUBGROUP_FEATURE_BALLOT_BIT: SubgroupFeatureFlags =
-    SubgroupFeatureFlags { flags: 0b1000 };
-pub const SUBGROUP_FEATURE_SHUFFLE_BIT: SubgroupFeatureFlags =
-    SubgroupFeatureFlags { flags: 0b10000 };
-pub const SUBGROUP_FEATURE_SHUFFLE_RELATIVE_BIT: SubgroupFeatureFlags =
-    SubgroupFeatureFlags { flags: 0b100000 };
-pub const SUBGROUP_FEATURE_CLUSTERED_BIT: SubgroupFeatureFlags =
-    SubgroupFeatureFlags { flags: 0b1000000 };
-pub const SUBGROUP_FEATURE_QUAD_BIT: SubgroupFeatureFlags =
-    SubgroupFeatureFlags { flags: 0b10000000 };
-vk_bitflags_wrapped!(SubgroupFeatureFlags, 0b11111111, Flags);
-pub const INDIRECT_COMMANDS_LAYOUT_USAGE_UNORDERED_SEQUENCES_BIT_NVX:
-    IndirectCommandsLayoutUsageFlagsNVX = IndirectCommandsLayoutUsageFlagsNVX { flags: 0b1 };
-pub const INDIRECT_COMMANDS_LAYOUT_USAGE_SPARSE_SEQUENCES_BIT_NVX:
-    IndirectCommandsLayoutUsageFlagsNVX = IndirectCommandsLayoutUsageFlagsNVX { flags: 0b10 };
-pub const INDIRECT_COMMANDS_LAYOUT_USAGE_EMPTY_EXECUTIONS_BIT_NVX:
-    IndirectCommandsLayoutUsageFlagsNVX = IndirectCommandsLayoutUsageFlagsNVX { flags: 0b100 };
-pub const INDIRECT_COMMANDS_LAYOUT_USAGE_INDEXED_SEQUENCES_BIT_NVX:
-    IndirectCommandsLayoutUsageFlagsNVX = IndirectCommandsLayoutUsageFlagsNVX { flags: 0b1000 };
-vk_bitflags_wrapped!(IndirectCommandsLayoutUsageFlagsNVX, 0b1111, Flags);
-pub const OBJECT_ENTRY_USAGE_GRAPHICS_BIT_NVX: ObjectEntryUsageFlagsNVX =
-    ObjectEntryUsageFlagsNVX { flags: 0b1 };
-pub const OBJECT_ENTRY_USAGE_COMPUTE_BIT_NVX: ObjectEntryUsageFlagsNVX =
-    ObjectEntryUsageFlagsNVX { flags: 0b10 };
-vk_bitflags_wrapped!(ObjectEntryUsageFlagsNVX, 0b11, Flags);
-vk_bitflags_wrapped!(DescriptorSetLayoutCreateFlags, 0b0, Flags);
-pub const EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD_BIT: ExternalMemoryHandleTypeFlags =
-    ExternalMemoryHandleTypeFlags { flags: 0b1 };
-pub const EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT: ExternalMemoryHandleTypeFlags =
-    ExternalMemoryHandleTypeFlags { flags: 0b10 };
-pub const EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT: ExternalMemoryHandleTypeFlags =
-    ExternalMemoryHandleTypeFlags { flags: 0b100 };
-pub const EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_BIT: ExternalMemoryHandleTypeFlags =
-    ExternalMemoryHandleTypeFlags { flags: 0b1000 };
-pub const EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT_BIT: ExternalMemoryHandleTypeFlags =
-    ExternalMemoryHandleTypeFlags { flags: 0b10000 };
-pub const EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP_BIT: ExternalMemoryHandleTypeFlags =
-    ExternalMemoryHandleTypeFlags { flags: 0b100000 };
-pub const EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE_BIT: ExternalMemoryHandleTypeFlags =
-    ExternalMemoryHandleTypeFlags { flags: 0b1000000 };
-vk_bitflags_wrapped!(ExternalMemoryHandleTypeFlags, 0b1111111, Flags);
-pub const EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT: ExternalMemoryFeatureFlags =
-    ExternalMemoryFeatureFlags { flags: 0b1 };
-pub const EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT: ExternalMemoryFeatureFlags =
-    ExternalMemoryFeatureFlags { flags: 0b10 };
-pub const EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT: ExternalMemoryFeatureFlags =
-    ExternalMemoryFeatureFlags { flags: 0b100 };
-vk_bitflags_wrapped!(ExternalMemoryFeatureFlags, 0b111, Flags);
-pub const EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD_BIT: ExternalSemaphoreHandleTypeFlags =
-    ExternalSemaphoreHandleTypeFlags { flags: 0b1 };
-pub const EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_BIT: ExternalSemaphoreHandleTypeFlags =
-    ExternalSemaphoreHandleTypeFlags { flags: 0b10 };
-pub const EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT: ExternalSemaphoreHandleTypeFlags =
-    ExternalSemaphoreHandleTypeFlags { flags: 0b100 };
-pub const EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE_BIT: ExternalSemaphoreHandleTypeFlags =
-    ExternalSemaphoreHandleTypeFlags { flags: 0b1000 };
-pub const EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD_BIT: ExternalSemaphoreHandleTypeFlags =
-    ExternalSemaphoreHandleTypeFlags { flags: 0b10000 };
-vk_bitflags_wrapped!(ExternalSemaphoreHandleTypeFlags, 0b11111, Flags);
-pub const EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE_BIT: ExternalSemaphoreFeatureFlags =
-    ExternalSemaphoreFeatureFlags { flags: 0b1 };
-pub const EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE_BIT: ExternalSemaphoreFeatureFlags =
-    ExternalSemaphoreFeatureFlags { flags: 0b10 };
-vk_bitflags_wrapped!(ExternalSemaphoreFeatureFlags, 0b11, Flags);
-pub const SEMAPHORE_IMPORT_TEMPORARY_BIT: SemaphoreImportFlags =
-    SemaphoreImportFlags { flags: 0b1 };
-vk_bitflags_wrapped!(SemaphoreImportFlags, 0b1, Flags);
-pub const EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD_BIT: ExternalFenceHandleTypeFlags =
-    ExternalFenceHandleTypeFlags { flags: 0b1 };
-pub const EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_BIT: ExternalFenceHandleTypeFlags =
-    ExternalFenceHandleTypeFlags { flags: 0b10 };
-pub const EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT: ExternalFenceHandleTypeFlags =
-    ExternalFenceHandleTypeFlags { flags: 0b100 };
-pub const EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD_BIT: ExternalFenceHandleTypeFlags =
-    ExternalFenceHandleTypeFlags { flags: 0b1000 };
-vk_bitflags_wrapped!(ExternalFenceHandleTypeFlags, 0b1111, Flags);
-pub const EXTERNAL_FENCE_FEATURE_EXPORTABLE_BIT: ExternalFenceFeatureFlags =
-    ExternalFenceFeatureFlags { flags: 0b1 };
-pub const EXTERNAL_FENCE_FEATURE_IMPORTABLE_BIT: ExternalFenceFeatureFlags =
-    ExternalFenceFeatureFlags { flags: 0b10 };
-vk_bitflags_wrapped!(ExternalFenceFeatureFlags, 0b11, Flags);
-pub const FENCE_IMPORT_TEMPORARY_BIT: FenceImportFlags = FenceImportFlags { flags: 0b1 };
-vk_bitflags_wrapped!(FenceImportFlags, 0b1, Flags);
-pub const SURFACE_COUNTER_VBLANK_EXT: SurfaceCounterFlagsEXT =
-    SurfaceCounterFlagsEXT { flags: 0b1 };
-vk_bitflags_wrapped!(SurfaceCounterFlagsEXT, 0b1, Flags);
-pub const PEER_MEMORY_FEATURE_COPY_SRC_BIT: PeerMemoryFeatureFlags =
-    PeerMemoryFeatureFlags { flags: 0b1 };
-pub const PEER_MEMORY_FEATURE_COPY_DST_BIT: PeerMemoryFeatureFlags =
-    PeerMemoryFeatureFlags { flags: 0b10 };
-pub const PEER_MEMORY_FEATURE_GENERIC_SRC_BIT: PeerMemoryFeatureFlags =
-    PeerMemoryFeatureFlags { flags: 0b100 };
-pub const PEER_MEMORY_FEATURE_GENERIC_DST_BIT: PeerMemoryFeatureFlags =
-    PeerMemoryFeatureFlags { flags: 0b1000 };
-vk_bitflags_wrapped!(PeerMemoryFeatureFlags, 0b1111, Flags);
-pub const MEMORY_ALLOCATE_DEVICE_MASK_BIT: MemoryAllocateFlags = MemoryAllocateFlags { flags: 0b1 };
-vk_bitflags_wrapped!(MemoryAllocateFlags, 0b1, Flags);
-pub const DEVICE_GROUP_PRESENT_MODE_LOCAL_BIT_KHR: DeviceGroupPresentModeFlagsKHR =
-    DeviceGroupPresentModeFlagsKHR { flags: 0b1 };
-pub const DEVICE_GROUP_PRESENT_MODE_REMOTE_BIT_KHR: DeviceGroupPresentModeFlagsKHR =
-    DeviceGroupPresentModeFlagsKHR { flags: 0b10 };
-pub const DEVICE_GROUP_PRESENT_MODE_SUM_BIT_KHR: DeviceGroupPresentModeFlagsKHR =
-    DeviceGroupPresentModeFlagsKHR { flags: 0b100 };
-pub const DEVICE_GROUP_PRESENT_MODE_LOCAL_MULTI_DEVICE_BIT_KHR: DeviceGroupPresentModeFlagsKHR =
-    DeviceGroupPresentModeFlagsKHR { flags: 0b1000 };
-vk_bitflags_wrapped!(DeviceGroupPresentModeFlagsKHR, 0b1111, Flags);
-vk_bitflags_wrapped!(SwapchainCreateFlagsKHR, 0b0, Flags);
-vk_bitflags_wrapped!(SubpassDescriptionFlags, 0b0, Flags);
-pub const DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT: DebugUtilsMessageSeverityFlagsEXT =
-    DebugUtilsMessageSeverityFlagsEXT { flags: 0b1 };
-pub const DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT: DebugUtilsMessageSeverityFlagsEXT =
-    DebugUtilsMessageSeverityFlagsEXT { flags: 0b10000 };
-pub const DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT: DebugUtilsMessageSeverityFlagsEXT =
-    DebugUtilsMessageSeverityFlagsEXT { flags: 0b100000000 };
-pub const DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT: DebugUtilsMessageSeverityFlagsEXT =
-    DebugUtilsMessageSeverityFlagsEXT {
+    pub const TRANSFER_READ_BIT: Self = AccessFlags {
+        flags: 0b100000000000,
+    };
+    pub const TRANSFER_WRITE_BIT: Self = AccessFlags {
         flags: 0b1000000000000,
     };
+    pub const HOST_READ_BIT: Self = AccessFlags {
+        flags: 0b10000000000000,
+    };
+    pub const HOST_WRITE_BIT: Self = AccessFlags {
+        flags: 0b100000000000000,
+    };
+    pub const MEMORY_READ_BIT: Self = AccessFlags {
+        flags: 0b1000000000000000,
+    };
+    pub const MEMORY_WRITE_BIT: Self = AccessFlags {
+        flags: 0b10000000000000000,
+    };
+}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct BufferUsageFlags {
+    flags: Flags,
+}
+vk_bitflags_wrapped!(BufferUsageFlags, 0b111111111, Flags);
+impl BufferUsageFlags {
+    pub const TRANSFER_SRC_BIT: Self = BufferUsageFlags { flags: 0b1 };
+    pub const TRANSFER_DST_BIT: Self = BufferUsageFlags { flags: 0b10 };
+    pub const UNIFORM_TEXEL_BUFFER_BIT: Self = BufferUsageFlags { flags: 0b100 };
+    pub const STORAGE_TEXEL_BUFFER_BIT: Self = BufferUsageFlags { flags: 0b1000 };
+    pub const UNIFORM_BUFFER_BIT: Self = BufferUsageFlags { flags: 0b10000 };
+    pub const STORAGE_BUFFER_BIT: Self = BufferUsageFlags { flags: 0b100000 };
+    pub const INDEX_BUFFER_BIT: Self = BufferUsageFlags { flags: 0b1000000 };
+    pub const VERTEX_BUFFER_BIT: Self = BufferUsageFlags { flags: 0b10000000 };
+    pub const INDIRECT_BUFFER_BIT: Self = BufferUsageFlags { flags: 0b100000000 };
+}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct BufferCreateFlags {
+    flags: Flags,
+}
+vk_bitflags_wrapped!(BufferCreateFlags, 0b111, Flags);
+impl BufferCreateFlags {
+    pub const SPARSE_BINDING_BIT: Self = BufferCreateFlags { flags: 0b1 };
+    pub const SPARSE_RESIDENCY_BIT: Self = BufferCreateFlags { flags: 0b10 };
+    pub const SPARSE_ALIASED_BIT: Self = BufferCreateFlags { flags: 0b100 };
+}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct ShaderStageFlags {
+    flags: Flags,
+}
+vk_bitflags_wrapped!(ShaderStageFlags, 0b1111111111111111111111111111111, Flags);
+impl ShaderStageFlags {
+    pub const VERTEX_BIT: Self = ShaderStageFlags { flags: 0b1 };
+    pub const TESSELLATION_CONTROL_BIT: Self = ShaderStageFlags { flags: 0b10 };
+    pub const TESSELLATION_EVALUATION_BIT: Self = ShaderStageFlags { flags: 0b100 };
+    pub const GEOMETRY_BIT: Self = ShaderStageFlags { flags: 0b1000 };
+    pub const FRAGMENT_BIT: Self = ShaderStageFlags { flags: 0b10000 };
+    pub const COMPUTE_BIT: Self = ShaderStageFlags { flags: 0b100000 };
+    pub const ALL_GRAPHICS: Self = ShaderStageFlags { flags: 0x0000001F };
+    pub const ALL: Self = ShaderStageFlags { flags: 0x7FFFFFFF };
+}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct ImageUsageFlags {
+    flags: Flags,
+}
+vk_bitflags_wrapped!(ImageUsageFlags, 0b11111111, Flags);
+impl ImageUsageFlags {
+    pub const TRANSFER_SRC_BIT: Self = ImageUsageFlags { flags: 0b1 };
+    pub const TRANSFER_DST_BIT: Self = ImageUsageFlags { flags: 0b10 };
+    pub const SAMPLED_BIT: Self = ImageUsageFlags { flags: 0b100 };
+    pub const STORAGE_BIT: Self = ImageUsageFlags { flags: 0b1000 };
+    pub const COLOR_ATTACHMENT_BIT: Self = ImageUsageFlags { flags: 0b10000 };
+    pub const DEPTH_STENCIL_ATTACHMENT_BIT: Self = ImageUsageFlags { flags: 0b100000 };
+    pub const TRANSIENT_ATTACHMENT_BIT: Self = ImageUsageFlags { flags: 0b1000000 };
+    pub const INPUT_ATTACHMENT_BIT: Self = ImageUsageFlags { flags: 0b10000000 };
+}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct ImageCreateFlags {
+    flags: Flags,
+}
+vk_bitflags_wrapped!(ImageCreateFlags, 0b11111, Flags);
+impl ImageCreateFlags {
+    pub const SPARSE_BINDING_BIT: Self = ImageCreateFlags { flags: 0b1 };
+    pub const SPARSE_RESIDENCY_BIT: Self = ImageCreateFlags { flags: 0b10 };
+    pub const SPARSE_ALIASED_BIT: Self = ImageCreateFlags { flags: 0b100 };
+    pub const MUTABLE_FORMAT_BIT: Self = ImageCreateFlags { flags: 0b1000 };
+    pub const CUBE_COMPATIBLE_BIT: Self = ImageCreateFlags { flags: 0b10000 };
+}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct PipelineCreateFlags {
+    flags: Flags,
+}
+vk_bitflags_wrapped!(PipelineCreateFlags, 0b111, Flags);
+impl PipelineCreateFlags {
+    pub const DISABLE_OPTIMIZATION_BIT: Self = PipelineCreateFlags { flags: 0b1 };
+    pub const ALLOW_DERIVATIVES_BIT: Self = PipelineCreateFlags { flags: 0b10 };
+    pub const DERIVATIVE_BIT: Self = PipelineCreateFlags { flags: 0b100 };
+}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct ColorComponentFlags {
+    flags: Flags,
+}
+vk_bitflags_wrapped!(ColorComponentFlags, 0b1111, Flags);
+impl ColorComponentFlags {
+    pub const R_BIT: Self = ColorComponentFlags { flags: 0b1 };
+    pub const G_BIT: Self = ColorComponentFlags { flags: 0b10 };
+    pub const B_BIT: Self = ColorComponentFlags { flags: 0b100 };
+    pub const A_BIT: Self = ColorComponentFlags { flags: 0b1000 };
+}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct FenceCreateFlags {
+    flags: Flags,
+}
+vk_bitflags_wrapped!(FenceCreateFlags, 0b1, Flags);
+impl FenceCreateFlags {
+    pub const SIGNALED_BIT: Self = FenceCreateFlags { flags: 0b1 };
+}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct FormatFeatureFlags {
+    flags: Flags,
+}
+vk_bitflags_wrapped!(FormatFeatureFlags, 0b1111111111111, Flags);
+impl FormatFeatureFlags {
+    pub const SAMPLED_IMAGE_BIT: Self = FormatFeatureFlags { flags: 0b1 };
+    pub const STORAGE_IMAGE_BIT: Self = FormatFeatureFlags { flags: 0b10 };
+    pub const STORAGE_IMAGE_ATOMIC_BIT: Self = FormatFeatureFlags { flags: 0b100 };
+    pub const UNIFORM_TEXEL_BUFFER_BIT: Self = FormatFeatureFlags { flags: 0b1000 };
+    pub const STORAGE_TEXEL_BUFFER_BIT: Self = FormatFeatureFlags { flags: 0b10000 };
+    pub const STORAGE_TEXEL_BUFFER_ATOMIC_BIT: Self = FormatFeatureFlags { flags: 0b100000 };
+    pub const VERTEX_BUFFER_BIT: Self = FormatFeatureFlags { flags: 0b1000000 };
+    pub const COLOR_ATTACHMENT_BIT: Self = FormatFeatureFlags { flags: 0b10000000 };
+    pub const COLOR_ATTACHMENT_BLEND_BIT: Self = FormatFeatureFlags { flags: 0b100000000 };
+    pub const DEPTH_STENCIL_ATTACHMENT_BIT: Self = FormatFeatureFlags {
+        flags: 0b1000000000,
+    };
+    pub const BLIT_SRC_BIT: Self = FormatFeatureFlags {
+        flags: 0b10000000000,
+    };
+    pub const BLIT_DST_BIT: Self = FormatFeatureFlags {
+        flags: 0b100000000000,
+    };
+    pub const SAMPLED_IMAGE_FILTER_LINEAR_BIT: Self = FormatFeatureFlags {
+        flags: 0b1000000000000,
+    };
+}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct QueryControlFlags {
+    flags: Flags,
+}
+vk_bitflags_wrapped!(QueryControlFlags, 0b1, Flags);
+impl QueryControlFlags {
+    pub const PRECISE_BIT: Self = QueryControlFlags { flags: 0b1 };
+}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct QueryResultFlags {
+    flags: Flags,
+}
+vk_bitflags_wrapped!(QueryResultFlags, 0b1111, Flags);
+impl QueryResultFlags {
+    pub const TYPE_64_BIT: Self = QueryResultFlags { flags: 0b1 };
+    pub const WAIT_BIT: Self = QueryResultFlags { flags: 0b10 };
+    pub const WITH_AVAILABILITY_BIT: Self = QueryResultFlags { flags: 0b100 };
+    pub const PARTIAL_BIT: Self = QueryResultFlags { flags: 0b1000 };
+}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct CommandBufferUsageFlags {
+    flags: Flags,
+}
+vk_bitflags_wrapped!(CommandBufferUsageFlags, 0b111, Flags);
+impl CommandBufferUsageFlags {
+    pub const ONE_TIME_SUBMIT_BIT: Self = CommandBufferUsageFlags { flags: 0b1 };
+    pub const RENDER_PASS_CONTINUE_BIT: Self = CommandBufferUsageFlags { flags: 0b10 };
+    pub const SIMULTANEOUS_USE_BIT: Self = CommandBufferUsageFlags { flags: 0b100 };
+}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct QueryPipelineStatisticFlags {
+    flags: Flags,
+}
+vk_bitflags_wrapped!(QueryPipelineStatisticFlags, 0b11111111111, Flags);
+impl QueryPipelineStatisticFlags {
+    pub const INPUT_ASSEMBLY_VERTICES_BIT: Self = QueryPipelineStatisticFlags { flags: 0b1 };
+    pub const INPUT_ASSEMBLY_PRIMITIVES_BIT: Self = QueryPipelineStatisticFlags { flags: 0b10 };
+    pub const VERTEX_SHADER_INVOCATIONS_BIT: Self = QueryPipelineStatisticFlags { flags: 0b100 };
+    pub const GEOMETRY_SHADER_INVOCATIONS_BIT: Self = QueryPipelineStatisticFlags { flags: 0b1000 };
+    pub const GEOMETRY_SHADER_PRIMITIVES_BIT: Self = QueryPipelineStatisticFlags { flags: 0b10000 };
+    pub const CLIPPING_INVOCATIONS_BIT: Self = QueryPipelineStatisticFlags { flags: 0b100000 };
+    pub const CLIPPING_PRIMITIVES_BIT: Self = QueryPipelineStatisticFlags { flags: 0b1000000 };
+    pub const FRAGMENT_SHADER_INVOCATIONS_BIT: Self =
+        QueryPipelineStatisticFlags { flags: 0b10000000 };
+    pub const TESSELLATION_CONTROL_SHADER_PATCHES_BIT: Self =
+        QueryPipelineStatisticFlags { flags: 0b100000000 };
+    pub const TESSELLATION_EVALUATION_SHADER_INVOCATIONS_BIT: Self = QueryPipelineStatisticFlags {
+        flags: 0b1000000000,
+    };
+    pub const COMPUTE_SHADER_INVOCATIONS_BIT: Self = QueryPipelineStatisticFlags {
+        flags: 0b10000000000,
+    };
+}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct ImageAspectFlags {
+    flags: Flags,
+}
+vk_bitflags_wrapped!(ImageAspectFlags, 0b1111, Flags);
+impl ImageAspectFlags {
+    pub const COLOR_BIT: Self = ImageAspectFlags { flags: 0b1 };
+    pub const DEPTH_BIT: Self = ImageAspectFlags { flags: 0b10 };
+    pub const STENCIL_BIT: Self = ImageAspectFlags { flags: 0b100 };
+    pub const METADATA_BIT: Self = ImageAspectFlags { flags: 0b1000 };
+}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct SparseImageFormatFlags {
+    flags: Flags,
+}
+vk_bitflags_wrapped!(SparseImageFormatFlags, 0b111, Flags);
+impl SparseImageFormatFlags {
+    pub const SINGLE_MIPTAIL_BIT: Self = SparseImageFormatFlags { flags: 0b1 };
+    pub const ALIGNED_MIP_SIZE_BIT: Self = SparseImageFormatFlags { flags: 0b10 };
+    pub const NONSTANDARD_BLOCK_SIZE_BIT: Self = SparseImageFormatFlags { flags: 0b100 };
+}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct SparseMemoryBindFlags {
+    flags: Flags,
+}
+vk_bitflags_wrapped!(SparseMemoryBindFlags, 0b1, Flags);
+impl SparseMemoryBindFlags {
+    pub const METADATA_BIT: Self = SparseMemoryBindFlags { flags: 0b1 };
+}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct PipelineStageFlags {
+    flags: Flags,
+}
+vk_bitflags_wrapped!(PipelineStageFlags, 0b11111111111111111, Flags);
+impl PipelineStageFlags {
+    pub const TOP_OF_PIPE_BIT: Self = PipelineStageFlags { flags: 0b1 };
+    pub const DRAW_INDIRECT_BIT: Self = PipelineStageFlags { flags: 0b10 };
+    pub const VERTEX_INPUT_BIT: Self = PipelineStageFlags { flags: 0b100 };
+    pub const VERTEX_SHADER_BIT: Self = PipelineStageFlags { flags: 0b1000 };
+    pub const TESSELLATION_CONTROL_SHADER_BIT: Self = PipelineStageFlags { flags: 0b10000 };
+    pub const TESSELLATION_EVALUATION_SHADER_BIT: Self = PipelineStageFlags { flags: 0b100000 };
+    pub const GEOMETRY_SHADER_BIT: Self = PipelineStageFlags { flags: 0b1000000 };
+    pub const FRAGMENT_SHADER_BIT: Self = PipelineStageFlags { flags: 0b10000000 };
+    pub const EARLY_FRAGMENT_TESTS_BIT: Self = PipelineStageFlags { flags: 0b100000000 };
+    pub const LATE_FRAGMENT_TESTS_BIT: Self = PipelineStageFlags {
+        flags: 0b1000000000,
+    };
+    pub const COLOR_ATTACHMENT_OUTPUT_BIT: Self = PipelineStageFlags {
+        flags: 0b10000000000,
+    };
+    pub const COMPUTE_SHADER_BIT: Self = PipelineStageFlags {
+        flags: 0b100000000000,
+    };
+    pub const TRANSFER_BIT: Self = PipelineStageFlags {
+        flags: 0b1000000000000,
+    };
+    pub const BOTTOM_OF_PIPE_BIT: Self = PipelineStageFlags {
+        flags: 0b10000000000000,
+    };
+    pub const HOST_BIT: Self = PipelineStageFlags {
+        flags: 0b100000000000000,
+    };
+    pub const ALL_GRAPHICS_BIT: Self = PipelineStageFlags {
+        flags: 0b1000000000000000,
+    };
+    pub const ALL_COMMANDS_BIT: Self = PipelineStageFlags {
+        flags: 0b10000000000000000,
+    };
+}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct CommandPoolCreateFlags {
+    flags: Flags,
+}
+vk_bitflags_wrapped!(CommandPoolCreateFlags, 0b11, Flags);
+impl CommandPoolCreateFlags {
+    pub const TRANSIENT_BIT: Self = CommandPoolCreateFlags { flags: 0b1 };
+    pub const RESET_COMMAND_BUFFER_BIT: Self = CommandPoolCreateFlags { flags: 0b10 };
+}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct CommandPoolResetFlags {
+    flags: Flags,
+}
+vk_bitflags_wrapped!(CommandPoolResetFlags, 0b1, Flags);
+impl CommandPoolResetFlags {
+    pub const RELEASE_RESOURCES_BIT: Self = CommandPoolResetFlags { flags: 0b1 };
+}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct CommandBufferResetFlags {
+    flags: Flags,
+}
+vk_bitflags_wrapped!(CommandBufferResetFlags, 0b1, Flags);
+impl CommandBufferResetFlags {
+    pub const RELEASE_RESOURCES_BIT: Self = CommandBufferResetFlags { flags: 0b1 };
+}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct SampleCountFlags {
+    flags: Flags,
+}
+vk_bitflags_wrapped!(SampleCountFlags, 0b1111111, Flags);
+impl SampleCountFlags {
+    pub const TYPE_1_BIT: Self = SampleCountFlags { flags: 0b1 };
+    pub const TYPE_2_BIT: Self = SampleCountFlags { flags: 0b10 };
+    pub const TYPE_4_BIT: Self = SampleCountFlags { flags: 0b100 };
+    pub const TYPE_8_BIT: Self = SampleCountFlags { flags: 0b1000 };
+    pub const TYPE_16_BIT: Self = SampleCountFlags { flags: 0b10000 };
+    pub const TYPE_32_BIT: Self = SampleCountFlags { flags: 0b100000 };
+    pub const TYPE_64_BIT: Self = SampleCountFlags { flags: 0b1000000 };
+}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct AttachmentDescriptionFlags {
+    flags: Flags,
+}
+vk_bitflags_wrapped!(AttachmentDescriptionFlags, 0b1, Flags);
+impl AttachmentDescriptionFlags {
+    pub const MAY_ALIAS_BIT: Self = AttachmentDescriptionFlags { flags: 0b1 };
+}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct StencilFaceFlags {
+    flags: Flags,
+}
+vk_bitflags_wrapped!(StencilFaceFlags, 0b11, Flags);
+impl StencilFaceFlags {
+    pub const FRONT_BIT: Self = StencilFaceFlags { flags: 0b1 };
+    pub const BACK_BIT: Self = StencilFaceFlags { flags: 0b10 };
+    pub const STENCIL_FRONT_AND_BACK: Self = StencilFaceFlags { flags: 0x00000003 };
+}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct DescriptorPoolCreateFlags {
+    flags: Flags,
+}
+vk_bitflags_wrapped!(DescriptorPoolCreateFlags, 0b1, Flags);
+impl DescriptorPoolCreateFlags {
+    pub const FREE_DESCRIPTOR_SET_BIT: Self = DescriptorPoolCreateFlags { flags: 0b1 };
+}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct DependencyFlags {
+    flags: Flags,
+}
+vk_bitflags_wrapped!(DependencyFlags, 0b1, Flags);
+impl DependencyFlags {
+    pub const BY_REGION_BIT: Self = DependencyFlags { flags: 0b1 };
+}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct DisplayPlaneAlphaFlagsKHR {
+    flags: Flags,
+}
+vk_bitflags_wrapped!(DisplayPlaneAlphaFlagsKHR, 0b1111, Flags);
+impl DisplayPlaneAlphaFlagsKHR {
+    pub const OPAQUE_BIT_KHR: Self = DisplayPlaneAlphaFlagsKHR { flags: 0b1 };
+    pub const GLOBAL_BIT_KHR: Self = DisplayPlaneAlphaFlagsKHR { flags: 0b10 };
+    pub const PER_PIXEL_BIT_KHR: Self = DisplayPlaneAlphaFlagsKHR { flags: 0b100 };
+    pub const PER_PIXEL_PREMULTIPLIED_BIT_KHR: Self = DisplayPlaneAlphaFlagsKHR { flags: 0b1000 };
+}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct CompositeAlphaFlagsKHR {
+    flags: Flags,
+}
+vk_bitflags_wrapped!(CompositeAlphaFlagsKHR, 0b1111, Flags);
+impl CompositeAlphaFlagsKHR {
+    pub const OPAQUE_BIT_KHR: Self = CompositeAlphaFlagsKHR { flags: 0b1 };
+    pub const PRE_MULTIPLIED_BIT_KHR: Self = CompositeAlphaFlagsKHR { flags: 0b10 };
+    pub const POST_MULTIPLIED_BIT_KHR: Self = CompositeAlphaFlagsKHR { flags: 0b100 };
+    pub const INHERIT_BIT_KHR: Self = CompositeAlphaFlagsKHR { flags: 0b1000 };
+}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct SurfaceTransformFlagsKHR {
+    flags: Flags,
+}
+vk_bitflags_wrapped!(SurfaceTransformFlagsKHR, 0b111111111, Flags);
+impl SurfaceTransformFlagsKHR {
+    pub const IDENTITY_BIT_KHR: Self = SurfaceTransformFlagsKHR { flags: 0b1 };
+    pub const ROTATE_90_BIT_KHR: Self = SurfaceTransformFlagsKHR { flags: 0b10 };
+    pub const ROTATE_180_BIT_KHR: Self = SurfaceTransformFlagsKHR { flags: 0b100 };
+    pub const ROTATE_270_BIT_KHR: Self = SurfaceTransformFlagsKHR { flags: 0b1000 };
+    pub const HORIZONTAL_MIRROR_BIT_KHR: Self = SurfaceTransformFlagsKHR { flags: 0b10000 };
+    pub const HORIZONTAL_MIRROR_ROTATE_90_BIT_KHR: Self =
+        SurfaceTransformFlagsKHR { flags: 0b100000 };
+    pub const HORIZONTAL_MIRROR_ROTATE_180_BIT_KHR: Self =
+        SurfaceTransformFlagsKHR { flags: 0b1000000 };
+    pub const HORIZONTAL_MIRROR_ROTATE_270_BIT_KHR: Self =
+        SurfaceTransformFlagsKHR { flags: 0b10000000 };
+    pub const INHERIT_BIT_KHR: Self = SurfaceTransformFlagsKHR { flags: 0b100000000 };
+}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct DebugReportFlagsEXT {
+    flags: Flags,
+}
+vk_bitflags_wrapped!(DebugReportFlagsEXT, 0b11111, Flags);
+impl DebugReportFlagsEXT {
+    pub const INFORMATION_BIT_EXT: Self = DebugReportFlagsEXT { flags: 0b1 };
+    pub const WARNING_BIT_EXT: Self = DebugReportFlagsEXT { flags: 0b10 };
+    pub const PERFORMANCE_WARNING_BIT_EXT: Self = DebugReportFlagsEXT { flags: 0b100 };
+    pub const ERROR_BIT_EXT: Self = DebugReportFlagsEXT { flags: 0b1000 };
+    pub const DEBUG_BIT_EXT: Self = DebugReportFlagsEXT { flags: 0b10000 };
+}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct ExternalMemoryHandleTypeFlagsNV {
+    flags: Flags,
+}
+vk_bitflags_wrapped!(ExternalMemoryHandleTypeFlagsNV, 0b1111, Flags);
+impl ExternalMemoryHandleTypeFlagsNV {
+    pub const OPAQUE_WIN32_BIT_NV: Self = ExternalMemoryHandleTypeFlagsNV { flags: 0b1 };
+    pub const OPAQUE_WIN32_KMT_BIT_NV: Self = ExternalMemoryHandleTypeFlagsNV { flags: 0b10 };
+    pub const D3D11_IMAGE_BIT_NV: Self = ExternalMemoryHandleTypeFlagsNV { flags: 0b100 };
+    pub const D3D11_IMAGE_KMT_BIT_NV: Self = ExternalMemoryHandleTypeFlagsNV { flags: 0b1000 };
+}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct ExternalMemoryFeatureFlagsNV {
+    flags: Flags,
+}
+vk_bitflags_wrapped!(ExternalMemoryFeatureFlagsNV, 0b111, Flags);
+impl ExternalMemoryFeatureFlagsNV {
+    pub const DEDICATED_ONLY_BIT_NV: Self = ExternalMemoryFeatureFlagsNV { flags: 0b1 };
+    pub const EXPORTABLE_BIT_NV: Self = ExternalMemoryFeatureFlagsNV { flags: 0b10 };
+    pub const IMPORTABLE_BIT_NV: Self = ExternalMemoryFeatureFlagsNV { flags: 0b100 };
+}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct SubgroupFeatureFlags {
+    flags: Flags,
+}
+vk_bitflags_wrapped!(SubgroupFeatureFlags, 0b11111111, Flags);
+impl SubgroupFeatureFlags {
+    pub const BASIC_BIT: Self = SubgroupFeatureFlags { flags: 0b1 };
+    pub const VOTE_BIT: Self = SubgroupFeatureFlags { flags: 0b10 };
+    pub const ARITHMETIC_BIT: Self = SubgroupFeatureFlags { flags: 0b100 };
+    pub const BALLOT_BIT: Self = SubgroupFeatureFlags { flags: 0b1000 };
+    pub const SHUFFLE_BIT: Self = SubgroupFeatureFlags { flags: 0b10000 };
+    pub const SHUFFLE_RELATIVE_BIT: Self = SubgroupFeatureFlags { flags: 0b100000 };
+    pub const CLUSTERED_BIT: Self = SubgroupFeatureFlags { flags: 0b1000000 };
+    pub const QUAD_BIT: Self = SubgroupFeatureFlags { flags: 0b10000000 };
+}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct IndirectCommandsLayoutUsageFlagsNVX {
+    flags: Flags,
+}
+vk_bitflags_wrapped!(IndirectCommandsLayoutUsageFlagsNVX, 0b1111, Flags);
+impl IndirectCommandsLayoutUsageFlagsNVX {
+    pub const UNORDERED_SEQUENCES_BIT_NVX: Self =
+        IndirectCommandsLayoutUsageFlagsNVX { flags: 0b1 };
+    pub const SPARSE_SEQUENCES_BIT_NVX: Self = IndirectCommandsLayoutUsageFlagsNVX { flags: 0b10 };
+    pub const EMPTY_EXECUTIONS_BIT_NVX: Self = IndirectCommandsLayoutUsageFlagsNVX { flags: 0b100 };
+    pub const INDEXED_SEQUENCES_BIT_NVX: Self =
+        IndirectCommandsLayoutUsageFlagsNVX { flags: 0b1000 };
+}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct ObjectEntryUsageFlagsNVX {
+    flags: Flags,
+}
+vk_bitflags_wrapped!(ObjectEntryUsageFlagsNVX, 0b11, Flags);
+impl ObjectEntryUsageFlagsNVX {
+    pub const GRAPHICS_BIT_NVX: Self = ObjectEntryUsageFlagsNVX { flags: 0b1 };
+    pub const COMPUTE_BIT_NVX: Self = ObjectEntryUsageFlagsNVX { flags: 0b10 };
+}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct DescriptorSetLayoutCreateFlags {
+    flags: Flags,
+}
+vk_bitflags_wrapped!(DescriptorSetLayoutCreateFlags, 0b0, Flags);
+impl DescriptorSetLayoutCreateFlags {}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct ExternalMemoryHandleTypeFlags {
+    flags: Flags,
+}
+vk_bitflags_wrapped!(ExternalMemoryHandleTypeFlags, 0b1111111, Flags);
+impl ExternalMemoryHandleTypeFlags {
+    pub const OPAQUE_FD_BIT: Self = ExternalMemoryHandleTypeFlags { flags: 0b1 };
+    pub const OPAQUE_WIN32_BIT: Self = ExternalMemoryHandleTypeFlags { flags: 0b10 };
+    pub const OPAQUE_WIN32_KMT_BIT: Self = ExternalMemoryHandleTypeFlags { flags: 0b100 };
+    pub const D3D11_TEXTURE_BIT: Self = ExternalMemoryHandleTypeFlags { flags: 0b1000 };
+    pub const D3D11_TEXTURE_KMT_BIT: Self = ExternalMemoryHandleTypeFlags { flags: 0b10000 };
+    pub const D3D12_HEAP_BIT: Self = ExternalMemoryHandleTypeFlags { flags: 0b100000 };
+    pub const D3D12_RESOURCE_BIT: Self = ExternalMemoryHandleTypeFlags { flags: 0b1000000 };
+}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct ExternalMemoryFeatureFlags {
+    flags: Flags,
+}
+vk_bitflags_wrapped!(ExternalMemoryFeatureFlags, 0b111, Flags);
+impl ExternalMemoryFeatureFlags {
+    pub const DEDICATED_ONLY_BIT: Self = ExternalMemoryFeatureFlags { flags: 0b1 };
+    pub const EXPORTABLE_BIT: Self = ExternalMemoryFeatureFlags { flags: 0b10 };
+    pub const IMPORTABLE_BIT: Self = ExternalMemoryFeatureFlags { flags: 0b100 };
+}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct ExternalSemaphoreHandleTypeFlags {
+    flags: Flags,
+}
+vk_bitflags_wrapped!(ExternalSemaphoreHandleTypeFlags, 0b11111, Flags);
+impl ExternalSemaphoreHandleTypeFlags {
+    pub const OPAQUE_FD_BIT: Self = ExternalSemaphoreHandleTypeFlags { flags: 0b1 };
+    pub const OPAQUE_WIN32_BIT: Self = ExternalSemaphoreHandleTypeFlags { flags: 0b10 };
+    pub const OPAQUE_WIN32_KMT_BIT: Self = ExternalSemaphoreHandleTypeFlags { flags: 0b100 };
+    pub const D3D12_FENCE_BIT: Self = ExternalSemaphoreHandleTypeFlags { flags: 0b1000 };
+    pub const SYNC_FD_BIT: Self = ExternalSemaphoreHandleTypeFlags { flags: 0b10000 };
+}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct ExternalSemaphoreFeatureFlags {
+    flags: Flags,
+}
+vk_bitflags_wrapped!(ExternalSemaphoreFeatureFlags, 0b11, Flags);
+impl ExternalSemaphoreFeatureFlags {
+    pub const EXPORTABLE_BIT: Self = ExternalSemaphoreFeatureFlags { flags: 0b1 };
+    pub const IMPORTABLE_BIT: Self = ExternalSemaphoreFeatureFlags { flags: 0b10 };
+}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct SemaphoreImportFlags {
+    flags: Flags,
+}
+vk_bitflags_wrapped!(SemaphoreImportFlags, 0b1, Flags);
+impl SemaphoreImportFlags {
+    pub const TEMPORARY_BIT: Self = SemaphoreImportFlags { flags: 0b1 };
+}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct ExternalFenceHandleTypeFlags {
+    flags: Flags,
+}
+vk_bitflags_wrapped!(ExternalFenceHandleTypeFlags, 0b1111, Flags);
+impl ExternalFenceHandleTypeFlags {
+    pub const OPAQUE_FD_BIT: Self = ExternalFenceHandleTypeFlags { flags: 0b1 };
+    pub const OPAQUE_WIN32_BIT: Self = ExternalFenceHandleTypeFlags { flags: 0b10 };
+    pub const OPAQUE_WIN32_KMT_BIT: Self = ExternalFenceHandleTypeFlags { flags: 0b100 };
+    pub const SYNC_FD_BIT: Self = ExternalFenceHandleTypeFlags { flags: 0b1000 };
+}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct ExternalFenceFeatureFlags {
+    flags: Flags,
+}
+vk_bitflags_wrapped!(ExternalFenceFeatureFlags, 0b11, Flags);
+impl ExternalFenceFeatureFlags {
+    pub const EXPORTABLE_BIT: Self = ExternalFenceFeatureFlags { flags: 0b1 };
+    pub const IMPORTABLE_BIT: Self = ExternalFenceFeatureFlags { flags: 0b10 };
+}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct FenceImportFlags {
+    flags: Flags,
+}
+vk_bitflags_wrapped!(FenceImportFlags, 0b1, Flags);
+impl FenceImportFlags {
+    pub const TEMPORARY_BIT: Self = FenceImportFlags { flags: 0b1 };
+}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct SurfaceCounterFlagsEXT {
+    flags: Flags,
+}
+vk_bitflags_wrapped!(SurfaceCounterFlagsEXT, 0b1, Flags);
+impl SurfaceCounterFlagsEXT {
+    pub const VBLANK_EXT: Self = SurfaceCounterFlagsEXT { flags: 0b1 };
+}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct PeerMemoryFeatureFlags {
+    flags: Flags,
+}
+vk_bitflags_wrapped!(PeerMemoryFeatureFlags, 0b1111, Flags);
+impl PeerMemoryFeatureFlags {
+    pub const COPY_SRC_BIT: Self = PeerMemoryFeatureFlags { flags: 0b1 };
+    pub const COPY_DST_BIT: Self = PeerMemoryFeatureFlags { flags: 0b10 };
+    pub const GENERIC_SRC_BIT: Self = PeerMemoryFeatureFlags { flags: 0b100 };
+    pub const GENERIC_DST_BIT: Self = PeerMemoryFeatureFlags { flags: 0b1000 };
+}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct MemoryAllocateFlags {
+    flags: Flags,
+}
+vk_bitflags_wrapped!(MemoryAllocateFlags, 0b1, Flags);
+impl MemoryAllocateFlags {
+    pub const DEVICE_MASK_BIT: Self = MemoryAllocateFlags { flags: 0b1 };
+}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct DeviceGroupPresentModeFlagsKHR {
+    flags: Flags,
+}
+vk_bitflags_wrapped!(DeviceGroupPresentModeFlagsKHR, 0b1111, Flags);
+impl DeviceGroupPresentModeFlagsKHR {
+    pub const LOCAL_BIT_KHR: Self = DeviceGroupPresentModeFlagsKHR { flags: 0b1 };
+    pub const REMOTE_BIT_KHR: Self = DeviceGroupPresentModeFlagsKHR { flags: 0b10 };
+    pub const SUM_BIT_KHR: Self = DeviceGroupPresentModeFlagsKHR { flags: 0b100 };
+    pub const LOCAL_MULTI_DEVICE_BIT_KHR: Self = DeviceGroupPresentModeFlagsKHR { flags: 0b1000 };
+}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct SwapchainCreateFlagsKHR {
+    flags: Flags,
+}
+vk_bitflags_wrapped!(SwapchainCreateFlagsKHR, 0b0, Flags);
+impl SwapchainCreateFlagsKHR {}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct SubpassDescriptionFlags {
+    flags: Flags,
+}
+vk_bitflags_wrapped!(SubpassDescriptionFlags, 0b0, Flags);
+impl SubpassDescriptionFlags {}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct DebugUtilsMessageSeverityFlagsEXT {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(DebugUtilsMessageSeverityFlagsEXT, 0b1000100010001, Flags);
-pub const DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT: DebugUtilsMessageTypeFlagsEXT =
-    DebugUtilsMessageTypeFlagsEXT { flags: 0b1 };
-pub const DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT: DebugUtilsMessageTypeFlagsEXT =
-    DebugUtilsMessageTypeFlagsEXT { flags: 0b10 };
-pub const DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT: DebugUtilsMessageTypeFlagsEXT =
-    DebugUtilsMessageTypeFlagsEXT { flags: 0b100 };
+impl DebugUtilsMessageSeverityFlagsEXT {
+    pub const VERBOSE_BIT_EXT: Self = DebugUtilsMessageSeverityFlagsEXT { flags: 0b1 };
+    pub const INFO_BIT_EXT: Self = DebugUtilsMessageSeverityFlagsEXT { flags: 0b10000 };
+    pub const WARNING_BIT_EXT: Self = DebugUtilsMessageSeverityFlagsEXT { flags: 0b100000000 };
+    pub const ERROR_BIT_EXT: Self = DebugUtilsMessageSeverityFlagsEXT {
+        flags: 0b1000000000000,
+    };
+}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct DebugUtilsMessageTypeFlagsEXT {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(DebugUtilsMessageTypeFlagsEXT, 0b111, Flags);
-pub const DESCRIPTOR_BINDING_UPDATE_AFTER_BIND_BIT_EXT: DescriptorBindingFlagsEXT =
-    DescriptorBindingFlagsEXT { flags: 0b1 };
-pub const DESCRIPTOR_BINDING_UPDATE_UNUSED_WHILE_PENDING_BIT_EXT: DescriptorBindingFlagsEXT =
-    DescriptorBindingFlagsEXT { flags: 0b10 };
-pub const DESCRIPTOR_BINDING_PARTIALLY_BOUND_BIT_EXT: DescriptorBindingFlagsEXT =
-    DescriptorBindingFlagsEXT { flags: 0b100 };
-pub const DESCRIPTOR_BINDING_VARIABLE_DESCRIPTOR_COUNT_BIT_EXT: DescriptorBindingFlagsEXT =
-    DescriptorBindingFlagsEXT { flags: 0b1000 };
+impl DebugUtilsMessageTypeFlagsEXT {
+    pub const GENERAL_BIT_EXT: Self = DebugUtilsMessageTypeFlagsEXT { flags: 0b1 };
+    pub const VALIDATION_BIT_EXT: Self = DebugUtilsMessageTypeFlagsEXT { flags: 0b10 };
+    pub const PERFORMANCE_BIT_EXT: Self = DebugUtilsMessageTypeFlagsEXT { flags: 0b100 };
+}
+#[repr(C)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct DescriptorBindingFlagsEXT {
+    flags: Flags,
+}
 vk_bitflags_wrapped!(DescriptorBindingFlagsEXT, 0b1111, Flags);
+impl DescriptorBindingFlagsEXT {
+    pub const UPDATE_AFTER_BIND_BIT_EXT: Self = DescriptorBindingFlagsEXT { flags: 0b1 };
+    pub const UPDATE_UNUSED_WHILE_PENDING_BIT_EXT: Self = DescriptorBindingFlagsEXT { flags: 0b10 };
+    pub const PARTIALLY_BOUND_BIT_EXT: Self = DescriptorBindingFlagsEXT { flags: 0b100 };
+    pub const VARIABLE_DESCRIPTOR_COUNT_BIT_EXT: Self = DescriptorBindingFlagsEXT { flags: 0b1000 };
+}
 pub const VK_MAX_PHYSICAL_DEVICE_NAME_SIZE: usize = 256;
 pub const VK_UUID_SIZE: usize = 16;
 pub const VK_LUID_SIZE: usize = 8;

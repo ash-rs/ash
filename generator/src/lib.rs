@@ -176,9 +176,6 @@ pub fn vk_bitflags_wrapped_macro() -> Tokens {
     quote!{
         macro_rules! vk_bitflags_wrapped {
             ($name: ident, $all: expr, $flag_type: ty) => {
-                #[repr(C)]
-                #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-                pub struct $name {flags: $flag_type}
 
                 impl Default for $name{
                     fn default() -> $name {
@@ -783,6 +780,9 @@ pub fn generate_bitmask(bitmask: &vkxml::Bitmask) -> Option<Tokens> {
     let name = &bitmask.name[2..];
     let ident = Ident::from(name);
     Some(quote!{
+        #[repr(C)]
+        #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+        pub struct #ident {flags: Flags}
         vk_bitflags_wrapped!(#ident, 0b0, Flags);
     })
 }
@@ -820,6 +820,24 @@ pub enum EnumType {
     Enum(Tokens),
 }
 
+pub fn variant_ident(_enum: &vkxml::Enumeration, variant_name: &str) -> Ident {
+    let _name = _enum.name.split("FlagBits").nth(0).expect("split");
+    let struct_name = _name.to_shouty_snake_case();
+    let new_variant_name = variant_name.replace(&struct_name, "").replace("VK", "");
+    // Not every variant in the vk.xml has a correct shouty snake case name
+    let new_variant_name = new_variant_name.trim_matches('_').to_shouty_snake_case();
+    let is_digit = new_variant_name
+        .chars()
+        .nth(0)
+        .map(|c| c.is_digit(10))
+        .unwrap_or(false);
+    if is_digit {
+        Ident::from(format!("TYPE_{}", new_variant_name).as_str())
+    } else {
+        Ident::from(new_variant_name)
+    }
+}
+
 pub fn generate_enum(
     _enum: &vkxml::Enumeration,
     create_info_constants: &[&vkxml::Constant],
@@ -827,34 +845,23 @@ pub fn generate_enum(
     let name = &_enum.name[2..];
     let _name = name.replace("FlagBits", "Flags");
     let ident = Ident::from(_name.as_str());
-    let variants = _enum.elements.iter().filter_map(|elem| {
-        let (variant_name, value) = match *elem {
-            vkxml::EnumerationElement::Enum(ref constant) => {
-                let c = Constant::from_constant(constant);
-                (constant.name.as_str(), c.to_tokens())
-            }
-            _ => {
-                return None;
-            }
-        };
-
-        let _name = _name.split("Flags").nth(0).expect("split");
-        let struct_name = _name.to_shouty_snake_case();
-        println!("{}", struct_name);
-        let new_variant_name = variant_name.replace(&struct_name, "").replace("VK", "");
-        let new_variant_name = new_variant_name.trim_matches('_');
-        let is_digit = new_variant_name
-            .chars()
-            .nth(0)
-            .map(|c| c.is_digit(10))
-            .unwrap_or(false);
-        let variant_ident = if is_digit {
-            Ident::from(format!("TYPE_{}", new_variant_name).as_str())
-        } else {
-            Ident::from(new_variant_name)
-        };
-        Some((variant_ident, value))
-    }).collect_vec();
+    let variants = _enum
+        .elements
+        .iter()
+        .filter_map(|elem| {
+            let (variant_name, value) = match *elem {
+                vkxml::EnumerationElement::Enum(ref constant) => {
+                    let c = Constant::from_constant(constant);
+                    (constant.name.as_str(), c.to_tokens())
+                }
+                _ => {
+                    return None;
+                }
+            };
+            let variant_ident = variant_ident(_enum, variant_name);
+            Some((variant_ident, value))
+        })
+        .collect_vec();
     if name.contains("Bit") {
         let ident = Ident::from(_name.as_str());
         let all_bits = _enum
@@ -870,12 +877,15 @@ pub fn generate_enum(
             .fold(0, |acc, next| acc | next.bits());
         let all_bits_term = Term::intern(&format!("0b{:b}", all_bits));
 
-        let variants = variants.iter().map(|(variant_ident, value)|{
+        let variants = variants.iter().map(|(variant_ident, value)| {
             quote!{
                 pub const #variant_ident: Self = #ident { flags: #value }
             }
         });
         let q = quote!{
+            #[repr(C)]
+            #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+            pub struct #ident {flags: Flags}
             vk_bitflags_wrapped!(#ident, #all_bits_term, Flags);
             impl #ident {
                 #(#variants;)*
@@ -883,81 +893,38 @@ pub fn generate_enum(
         };
         EnumType::Bitflags(q)
     } else {
-        let variants = variants.iter().map(|(variant_ident, value)|{
+        let variants = variants.iter().map(|(variant_ident, value)| {
             quote!{
                 pub const #variant_ident: Self = #ident(#value)
             }
         });
-        let q = match _name.as_str() {
-            //"StructureType" => generate_structure_type(&_name, _enum, create_info_constants),
-            //"Result" => generate_result(&_name, _enum),
-            _ => {
-                quote!{
-                    #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-                    #[repr(C)]
-                    pub struct #ident(pub i32);
-                    impl #ident {
-                        #(
-                            #variants;
-                        )*
-                    }
-                }
+        let enum_quote = quote!{
+            #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+            #[repr(C)]
+            pub struct #ident(pub i32);
+            impl #ident {
+                #(
+                    #variants;
+                )*
             }
+        };
+        let special_quote = match _name.as_str() {
+            //"StructureType" => generate_structure_type(&_name, _enum, create_info_constants),
+            "Result" => generate_result(&ident, _enum),
+            _ => {
+                quote!{}
+            }
+        };
+        let q = quote!{
+            #enum_quote
+            #special_quote
+
         };
         EnumType::Enum(q)
     }
 }
 
-pub fn generate_structure_type(
-    name: &str,
-    _enum: &vkxml::Enumeration,
-    create_info_constants: &[&vkxml::Constant],
-) -> Tokens {
-    let ident = Ident::from(name);
-    let constants: Vec<_> = _enum
-        .elements
-        .iter()
-        .filter_map(|elem| match elem {
-            vkxml::EnumerationElement::Enum(constant) => Some(constant),
-            _ => None,
-        })
-        .collect();
-    let variants = constants
-        .iter()
-        .chain(create_info_constants.into_iter())
-        .map(|constant| {
-            let value_tokens = Constant::from_constant(constant).to_tokens();
-            let variant_ident = to_variant_ident(&name, &constant.name);
-            quote!{
-                #variant_ident = #value_tokens
-            }
-        });
-    quote!{
-        #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-        #[repr(C)]
-        pub enum #ident {
-            #(#variants,)*
-        }
-    }
-}
-pub fn generate_result(name: &str, _enum: &vkxml::Enumeration) -> Tokens {
-    let ident = Ident::from(name);
-    let variants = _enum.elements.iter().filter_map(|elem| {
-        let (variant_name, value) = match *elem {
-            vkxml::EnumerationElement::Enum(ref constant) => {
-                let c = Constant::from_constant(constant);
-                //println!("value {:?}", c.value());
-                (constant.name.as_str(), c.to_tokens())
-            }
-            _ => {
-                return None;
-            }
-        };
-        let variant_ident = to_variant_ident(&name, variant_name);
-        Some(quote!{
-            #variant_ident = #value
-        })
-    });
+pub fn generate_result(ident: &Ident, _enum: &vkxml::Enumeration) -> Tokens {
     let notation = _enum.elements.iter().filter_map(|elem| {
         let (variant_name, notation) = match *elem {
             vkxml::EnumerationElement::Enum(ref constant) => (
@@ -969,18 +936,13 @@ pub fn generate_result(name: &str, _enum: &vkxml::Enumeration) -> Tokens {
             }
         };
 
-        let variant_ident = to_variant_ident(&name, variant_name);
+        let variant_ident = variant_ident(_enum, variant_name);
         Some(quote!{
             #ident::#variant_ident => write!(fmt, #notation)
         })
     });
 
     quote!{
-        #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-        #[repr(C)]
-        pub enum #ident {
-            #(#variants,)*
-        }
         impl ::std::error::Error for #ident {
             fn description(&self) -> &str {
                 "vk::Result"
@@ -989,8 +951,9 @@ pub fn generate_result(name: &str, _enum: &vkxml::Enumeration) -> Tokens {
         impl ::std::fmt::Display for #ident {
             fn fmt(&self, fmt: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
                 writeln!(fmt, "vk::Result::{:?}", self)?;
-                match self {
-                    #(#notation),*
+                match *self {
+                    #(#notation),*,
+                    _ => write!(fmt, "Unknown variant")
                 }
             }
         }
@@ -1280,17 +1243,17 @@ pub fn write_source_code(spec: &vkxml::Registry) {
     let platform_specific_types = platform_specific_types();
     let source_code = quote!{
         pub use libc::*;
-        // #version_macros
-        // #platform_specific_types
+        #version_macros
+        #platform_specific_types
         #bitflags_macro
-        // #handle_nondispatchable_macro
-        // #define_handle_macro
-        // #(#feature_code)*
-        // #(#definition_code)*
+        #handle_nondispatchable_macro
+        #define_handle_macro
+        #(#feature_code)*
+        #(#definition_code)*
         #(#enum_code)*
         #(#bitflags_code)*
-        // #(#constants_code)*
-        // #(#extension_code)*
+        #(#constants_code)*
+        #(#extension_code)*
     };
     write!(&mut file, "{}", source_code);
 }
