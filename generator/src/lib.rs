@@ -1140,7 +1140,6 @@ pub fn generate_constant(constant: &vkxml::Constant) -> Tokens {
 pub fn write_source_code(spec: &vkxml::Registry) {
     use std::fs::File;
     use std::io::Write;
-    println!("{:#?}", spec);
     let commands: HashMap<vkxml::Identifier, &vkxml::Command> = spec
         .elements
         .iter()
