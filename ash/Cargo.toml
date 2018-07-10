@@ -1,6 +1,6 @@
 [package]
 name = "ash"
-version = "0.24.3"
+version = "0.24.4"
 authors = ["maik klein <maikklein@googlemail.com>"]
 description = "Vulkan bindings for Rust"
 license = "MIT"
@@ -10,7 +10,8 @@ keywords = ["vulkan", "graphic"]
 documentation = "https://docs.rs/ash"
 
 [dependencies]
-shared_library = "0.1.5"
+#shared_library = "0.1.9"
+shared_library = { path = "../../shared_library" }
 lazy_static = "0.2.1"
 libc = "0.2.26"
 
