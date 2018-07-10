@@ -9,6 +9,8 @@ use std::fmt;
 use std::path::Path;
 use RawPtr;
 use version::{EntryLoader, FunctionPointers, InstanceLoader, V1_0};
+use std::sync::Arc;
+use libc;
 
 #[cfg(windows)]
 const LIB_PATH: &'static str = "vulkan-1.dll";
@@ -25,15 +27,13 @@ const LIB_PATH: &'static str = "libvulkan.1.dylib";
 #[cfg(target_os = "ios")]
 const LIB_PATH: &'static str = "libMoltenVK.dylib";
 
-lazy_static!{
-    static ref VK_LIB: Result<DynamicLibrary, String> = DynamicLibrary::open(Some(&Path::new(LIB_PATH)));
-}
-
 #[derive(Clone)]
-pub struct Entry<V: FunctionPointers> {
+pub struct EntryCustom<V: FunctionPointers, L> {
     static_fn: vk::StaticFn,
     entry_fn: V::EntryFp,
+    vk_lib: L,
 }
+pub type Entry<V> = EntryCustom<V, Arc<DynamicLibrary>>;
 
 #[derive(Debug)]
 pub enum LoadingError {
@@ -143,7 +143,7 @@ pub trait EntryV1_0 {
     }
 }
 
-impl EntryV1_0 for Entry<V1_0> {
+impl<L> EntryV1_0 for EntryCustom<V1_0, L> {
     type Fp = V1_0;
     fn fp_v1_0(&self) -> &vk::EntryFnV1_0 {
         self.entry_fn.fp_v1_0()
@@ -153,24 +153,40 @@ impl EntryV1_0 for Entry<V1_0> {
     }
 }
 
-impl<V: FunctionPointers> Entry<V> {
-    pub fn new() -> Result<Self, LoadingError> {
-        let lib = VK_LIB
-            .as_ref()
-            .map_err(|err| LoadingError::LibraryLoadError(err.clone()))?;
+impl<V: FunctionPointers, L> EntryCustom<V, L> {
+    pub fn new_custom<OpenFunc, LoadFunc>(o: OpenFunc, mut l: LoadFunc) -> Result<Self, LoadingError>
+    where
+        OpenFunc: FnOnce() -> Result<L, LoadingError>,
+        LoadFunc: FnMut(&mut L, &::std::ffi::CStr) -> *const libc::c_void,
+    {
+        let mut vk_lib = o()?;
+        let static_fn =
+            vk::StaticFn::load(|name| l(&mut vk_lib, name)).map_err(LoadingError::StaticLoadError)?;
 
-        let static_fn = vk::StaticFn::load(|name| unsafe {
-            lib.symbol(&*name.to_string_lossy())
-                .unwrap_or(ptr::null_mut())
-        }).map_err(LoadingError::StaticLoadError)?;
+        let entry_fn =
+            unsafe { V::EntryFp::load(&static_fn) }.map_err(LoadingError::EntryLoadError)?;
 
-        let entry_fn = unsafe {
-            V::EntryFp::load(&static_fn)
-        }.map_err(LoadingError::EntryLoadError)?;
-
-        Ok(Entry {
+        Ok(EntryCustom {
             static_fn,
             entry_fn,
+            vk_lib,
         })
+    }
+}
+
+impl<V: FunctionPointers> Entry<V> {
+    pub fn new() -> Result<Self, LoadingError> {
+        Self::new_custom(
+            || {
+                DynamicLibrary::open(Some(&Path::new(LIB_PATH)))
+                    .map_err(|err| LoadingError::LibraryLoadError(err.clone()))
+                    .map(|dl| Arc::new(dl))
+            },
+            |vk_lib, name| unsafe {
+                vk_lib
+                    .symbol(&*name.to_string_lossy())
+                    .unwrap_or(ptr::null_mut())
+            },
+        )
     }
 }
