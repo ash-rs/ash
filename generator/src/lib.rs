@@ -179,35 +179,35 @@ pub fn vk_bitflags_wrapped_macro() -> Tokens {
 
                 impl Default for $name{
                     fn default() -> $name {
-                        $name {flags: 0}
+                        $name(0)
                     }
                 }
                 impl ::std::fmt::Debug for $name {
                     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::result::Result<(), ::std::fmt::Error> {
-                        write!(f, "{}({:b})", stringify!($name), self.flags)
+                        write!(f, "{}({:b})", stringify!($name), self.0)
                     }
                 }
 
                 impl $name {
                     #[inline]
                     pub fn empty() -> $name {
-                        $name {flags: 0}
+                        $name(0)
                     }
 
                     #[inline]
                     pub fn all() -> $name {
-                        $name {flags: $all}
+                        $name($all)
                     }
 
                     #[inline]
                     pub fn flags(self) -> $flag_type {
-                        self.flags
+                        self.0
                     }
 
                     #[inline]
                     pub fn from_flags(flags: $flag_type) -> Option<$name> {
                         if flags & !$all == 0 {
-                            Some($name {flags: flags})
+                            Some($name(flags))
                         } else {
                             None
                         }
@@ -215,7 +215,7 @@ pub fn vk_bitflags_wrapped_macro() -> Tokens {
 
                     #[inline]
                     pub fn from_flags_truncate(flags: $flag_type) -> $name {
-                        $name {flags: flags & $all}
+                        $name (flags & $all)
                     }
 
                     #[inline]
@@ -245,7 +245,7 @@ pub fn vk_bitflags_wrapped_macro() -> Tokens {
 
                     #[inline]
                     fn bitor(self, rhs: $name) -> $name {
-                        $name {flags: self.flags | rhs.flags }
+                        $name (self.0 | rhs.0 )
                     }
                 }
 
@@ -261,7 +261,7 @@ pub fn vk_bitflags_wrapped_macro() -> Tokens {
 
                     #[inline]
                     fn bitand(self, rhs: $name) -> $name {
-                        $name {flags: self.flags & rhs.flags}
+                        $name (self.0 & rhs.0)
                     }
                 }
 
@@ -277,7 +277,7 @@ pub fn vk_bitflags_wrapped_macro() -> Tokens {
 
                     #[inline]
                     fn bitxor(self, rhs: $name) -> $name {
-                        $name {flags: self.flags ^ rhs.flags}
+                        $name (self.0 ^ rhs.0 )
                     }
                 }
 
@@ -365,6 +365,23 @@ impl ConstVal {
         }
     }
 }
+pub trait ConstantExt {
+    fn variant_ident(&self, enum_name: &str) -> Ident;
+    fn to_tokens(&self) -> Tokens;
+    fn notation(&self) -> Option<&str>;
+}
+
+impl ConstantExt for vkxml::Constant {
+    fn variant_ident(&self, enum_name: &str) -> Ident {
+        variant_ident(enum_name, &self.name)
+    }
+    fn to_tokens(&self) -> Tokens {
+        Constant::from_constant(self).to_tokens()
+    }
+    fn notation(&self) -> Option<&str> {
+        self.notation.as_ref().map(|s| s.as_str())
+    }
+}
 pub enum Constant {
     Number(i32),
     Hex(String),
@@ -431,6 +448,27 @@ impl Constant {
         }
     }
 
+    pub fn from_extension_enum(constant: &vkxml::ExtensionEnum) -> Self {
+        let number = constant.number.map(|n| Constant::Number(n));
+        let hex = constant.hex.as_ref().map(|hex| Constant::Hex(hex.clone()));
+        let bitpos = constant.bitpos.map(|bit| Constant::BitPos(bit));
+        let expr = constant
+            .c_expression
+            .as_ref()
+            .map(|e| Constant::CExpr(e.clone()));
+        number.or(hex).or(bitpos).or(expr).expect("")
+    }
+    pub fn from_extension_constant(constant: &vkxml::ExtensionConstant) -> Self {
+        let number = constant.number.map(|n| Constant::Number(n));
+        let hex = constant.hex.as_ref().map(|hex| Constant::Hex(hex.clone()));
+        let bitpos = constant.bitpos.map(|bit| Constant::BitPos(bit));
+        let text = constant.text.as_ref().map(|bit| Constant::Text(bit.clone()));
+        let expr = constant
+            .c_expression
+            .as_ref()
+            .map(|e| Constant::CExpr(e.clone()));
+        number.or(hex).or(bitpos).or(expr).or(text).expect("")
+    }
     pub fn from_constant(constant: &vkxml::Constant) -> Self {
         let number = constant.number.map(|n| Constant::Number(n));
         let hex = constant.hex.as_ref().map(|hex| Constant::Hex(hex.clone()));
@@ -454,8 +492,6 @@ impl Constant {
     }
 }
 
-pub trait ConstantExt {}
-impl ConstantExt for vkxml::Constant {}
 pub trait FeatureExt {
     fn version_string(&self) -> String;
 }
@@ -723,25 +759,21 @@ fn generate_function_pointers(ident: Ident, commands: &[&vkxml::Command]) -> quo
         }
     }
 }
-pub fn generate_extension(extension: &vkxml::Extension, commands: &CommandMap) -> quote::Tokens {
-    let extension_commands: Vec<&vkxml::Command> = extension
+pub fn generate_extension(extension: &vkxml::Extension, cmd_map: &CommandMap) -> quote::Tokens {
+    // Don't generate disabled or reserved extensions
+    if extension.disabled {
+        return quote!{};
+    }
+    let cmd_refs = extension
         .elements
         .iter()
-        .flat_map(|extension| {
-            if let &vkxml::ExtensionElement::Require(ref spec) = extension {
+        .flat_map(|ext| {
+            if let &vkxml::ExtensionElement::Require(ref spec) = ext {
                 spec.elements
                     .iter()
                     .filter_map(|extension_spec| match extension_spec {
                         vkxml::ExtensionSpecificationElement::CommandReference(ref cmd_ref) => {
                             Some(cmd_ref)
-                        }
-                        vkxml::ExtensionSpecificationElement::Constant(ref field) => {
-                            //println!("EXT {:?}", field);
-                            None
-                        }
-                        vkxml::ExtensionSpecificationElement::Enum(ref field) => {
-                            //println!("Enum {:?}", field);
-                            None
                         }
                         _ => None,
                     })
@@ -750,15 +782,44 @@ pub fn generate_extension(extension: &vkxml::Extension, commands: &CommandMap) -
                 vec![]
             }
         })
-        .filter_map(|cmd_ref| commands.get(&cmd_ref.name))
-        .map(|&cmd| cmd)
-        .collect();
-    if extension_commands.is_empty() {
-        return quote!{};
-    }
+        .collect_vec();
+    let commands = cmd_refs
+        .iter()
+        .filter_map(|cmd_ref| cmd_map.get(&cmd_ref.name).map(|c| *c))
+        .collect_vec();
     let name = format!("{}Fn", extension.name.to_camel_case());
     let ident = Ident::from(&name[2..]);
-    generate_function_pointers(ident, &extension_commands)
+    let fp = generate_function_pointers(ident, &commands);
+    let extension_enums = extension
+        .elements
+        .iter()
+        .flat_map(|ext| {
+            if let &vkxml::ExtensionElement::Require(ref spec) = ext {
+                spec.elements
+                    .iter()
+                    .filter_map(|extension_spec| match extension_spec {
+                        vkxml::ExtensionSpecificationElement::Enum(ref _enum) => {
+                            Some(_enum)
+                        }
+                        _ => None,
+                    })
+                    .collect()
+            } else {
+                vec![]
+            }
+        })
+        .collect_vec();
+        let variants = extension_enums.iter().map(|&constant|{
+            let c = Constant::from_extension_enum(constant);
+            let variant_ident = variant_ident(&constant.name, &constant.name);
+            (variant_ident, c.to_tokens())
+        });
+        println!("{:?}", extension_enums);
+        //let enum_tokens = im
+        quote!{
+            #fp
+            //#(#enum_tokens)*
+        }
 }
 pub fn generate_typedef(typedef: &vkxml::Typedef) -> Tokens {
     let typedef_name = to_type_tokens(&typedef.name, None);
@@ -782,7 +843,7 @@ pub fn generate_bitmask(bitmask: &vkxml::Bitmask) -> Option<Tokens> {
     Some(quote!{
         #[repr(C)]
         #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-        pub struct #ident {flags: Flags}
+        pub struct #ident(Flags);
         vk_bitflags_wrapped!(#ident, 0b0, Flags);
     })
 }
@@ -820,12 +881,15 @@ pub enum EnumType {
     Enum(Tokens),
 }
 
-pub fn variant_ident(_enum: &vkxml::Enumeration, variant_name: &str) -> Ident {
-    let _name = _enum.name.split("FlagBits").nth(0).expect("split");
+pub fn variant_ident(enum_name: &str, variant_name: &str) -> Ident {
+    let _name = enum_name.split("FlagBits").nth(0).expect("split");
     let struct_name = _name.to_shouty_snake_case();
     let new_variant_name = variant_name.replace(&struct_name, "").replace("VK", "");
     // Not every variant in the vk.xml has a correct shouty snake case name
-    let new_variant_name = new_variant_name.trim_matches('_').to_shouty_snake_case();
+    let new_variant_name = new_variant_name
+        .trim_matches('_')
+        .to_shouty_snake_case()
+        .replace("_BIT", "");
     let is_digit = new_variant_name
         .chars()
         .nth(0)
@@ -838,6 +902,43 @@ pub fn variant_ident(_enum: &vkxml::Enumeration, variant_name: &str) -> Ident {
     }
 }
 
+pub fn bitflags_impl_block(
+    ident: &Ident,
+    _enum: &vkxml::Enumeration,
+    constants: &[& impl ConstantExt],
+) -> Tokens {
+    let variants = constants
+        .iter()
+        .map(|constant| {
+            let variant_ident = constant.variant_ident(&_enum.name);
+            let tokens = constant.to_tokens();
+            (variant_ident, tokens)
+        })
+        .collect_vec();
+
+    let notations = constants.iter().map(|constant| {
+        constant.notation().map(|n| {
+            quote!{
+                #[doc = #n]
+            }
+        })
+    });
+
+    let variants = variants.iter().zip(notations.clone()).map(
+        |((variant_ident, value), ref notation)| {
+            quote!{
+                #notation
+                pub const #variant_ident: Self = #ident(#value);
+            }
+        },
+    );
+    quote!{
+        impl #ident {
+            #(#variants)*
+        }
+    }
+}
+
 pub fn generate_enum(
     _enum: &vkxml::Enumeration,
     create_info_constants: &[&vkxml::Constant],
@@ -845,68 +946,39 @@ pub fn generate_enum(
     let name = &_enum.name[2..];
     let _name = name.replace("FlagBits", "Flags");
     let ident = Ident::from(_name.as_str());
-    let variants = _enum
+    let constants: Vec<_> = _enum
         .elements
         .iter()
-        .filter_map(|elem| {
-            let (variant_name, value) = match *elem {
-                vkxml::EnumerationElement::Enum(ref constant) => {
-                    let c = Constant::from_constant(constant);
-                    (constant.name.as_str(), c.to_tokens())
-                }
-                _ => {
-                    return None;
-                }
-            };
-            let variant_ident = variant_ident(_enum, variant_name);
-            Some((variant_ident, value))
+        .filter_map(|elem| match *elem {
+            vkxml::EnumerationElement::Enum(ref constant) => Some(constant),
+            _ => None,
         })
         .collect_vec();
+
     if name.contains("Bit") {
         let ident = Ident::from(_name.as_str());
-        let all_bits = _enum
-            .elements
+        let all_bits = constants
             .iter()
-            .filter_map(|elem| match elem {
-                vkxml::EnumerationElement::Enum(ref constant) => {
-                    let c = Constant::from_constant(constant);
-                    c.value()
-                }
-                _ => None,
-            })
+            .filter_map(|constant| Constant::from_constant(constant).value())
             .fold(0, |acc, next| acc | next.bits());
         let all_bits_term = Term::intern(&format!("0b{:b}", all_bits));
 
-        let variants = variants.iter().map(|(variant_ident, value)| {
-            quote!{
-                pub const #variant_ident: Self = #ident { flags: #value }
-            }
-        });
+        let impl_bitflags = bitflags_impl_block(&ident, _enum, &constants);
         let q = quote!{
             #[repr(C)]
             #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-            pub struct #ident {flags: Flags}
+            pub struct #ident(Flags);
             vk_bitflags_wrapped!(#ident, #all_bits_term, Flags);
-            impl #ident {
-                #(#variants;)*
-            }
+            #impl_bitflags
         };
         EnumType::Bitflags(q)
     } else {
-        let variants = variants.iter().map(|(variant_ident, value)| {
-            quote!{
-                pub const #variant_ident: Self = #ident(#value)
-            }
-        });
+        let impl_block = bitflags_impl_block(&ident, _enum, &constants);
         let enum_quote = quote!{
             #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
             #[repr(C)]
             pub struct #ident(pub i32);
-            impl #ident {
-                #(
-                    #variants;
-                )*
-            }
+            #impl_block
         };
         let special_quote = match _name.as_str() {
             //"StructureType" => generate_structure_type(&_name, _enum, create_info_constants),
@@ -936,7 +1008,7 @@ pub fn generate_result(ident: &Ident, _enum: &vkxml::Enumeration) -> Tokens {
             }
         };
 
-        let variant_ident = variant_ident(_enum, variant_name);
+        let variant_ident = variant_ident(&_enum.name, variant_name);
         Some(quote!{
             #ident::#variant_ident => write!(fmt, #notation)
         })
@@ -1025,9 +1097,16 @@ pub fn generate_handle(handle: &vkxml::Handle) -> Option<Tokens> {
 fn generate_funcptr(fnptr: &vkxml::FunctionPointer) -> Tokens {
     let name = Ident::from(fnptr.name.as_str());
     let ret_ty_tokens = fnptr.return_type.type_tokens();
+    let params = fnptr.param.iter().map(|field| {
+        let ident = field.param_ident();
+        let type_tokens = field.type_tokens();
+        quote!{
+            #ident: #type_tokens
+        }
+    });
     quote!{
         #[allow(non_camel_case_types)]
-        pub type #name = unsafe extern "system" fn() -> #ret_ty_tokens;
+        pub type #name = unsafe extern "system" fn(#(#params),*) -> #ret_ty_tokens;
     }
 }
 
@@ -1133,6 +1212,10 @@ pub fn generate_constant(constant: &vkxml::Constant) -> Tokens {
     let value = c.to_tokens();
     let ty = c.ty().to_tokens();
     quote!{
+        // pub mod constants {
+        //     pub const #ident: #ty = #value;
+        // }
+        //pub use constants::*;
         pub const #ident: #ty = #value;
     }
 }
