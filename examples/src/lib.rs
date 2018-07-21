@@ -382,7 +382,7 @@ impl ExampleBase {
             let surface_format = surface_formats
                 .iter()
                 .map(|sfmt| match sfmt.format {
-                    vk::Format::Undefined => vk::SurfaceFormatKHR {
+                    vk::Format:: => vk::SurfaceFormatKHR {
                         format: vk::Format::B8g8r8Unorm,
                         color_space: sfmt.color_space,
                     },
@@ -450,7 +450,7 @@ impl ExampleBase {
             let pool_create_info = vk::CommandPoolCreateInfo {
                 s_type: vk::StructureType::CommandPoolCreateInfo,
                 p_next: ptr::null(),
-                flags: vk::COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT,
+                flags: vk::CommandPoolCreateFlags::RESET_COMMAND_BUFFER_BIT,
                 queue_family_index: queue_family_index,
             };
             let pool = device.create_command_pool(&pool_create_info, None).unwrap();
