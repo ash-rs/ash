@@ -4906,17 +4906,38 @@ pub struct BaseOutStructure {
     pub s_type: StructureType,
     pub p_next: *const BaseOutStructure,
 }
+impl Default for BaseOutStructure {
+    fn default() -> BaseOutStructure {
+        BaseOutStructure {
+            s_type: StructureType(0),
+            p_next: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct BaseInStructure {
     pub s_type: StructureType,
     pub p_next: *const BaseInStructure,
 }
+impl Default for BaseInStructure {
+    fn default() -> BaseInStructure {
+        BaseInStructure {
+            s_type: StructureType(0),
+            p_next: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct Offset2D {
     pub x: int32_t,
     pub y: int32_t,
+}
+impl Default for Offset2D {
+    fn default() -> Offset2D {
+        Offset2D { x: 0, y: 0 }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -4925,11 +4946,24 @@ pub struct Offset3D {
     pub y: int32_t,
     pub z: int32_t,
 }
+impl Default for Offset3D {
+    fn default() -> Offset3D {
+        Offset3D { x: 0, y: 0, z: 0 }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct Extent2D {
     pub width: uint32_t,
     pub height: uint32_t,
+}
+impl Default for Extent2D {
+    fn default() -> Extent2D {
+        Extent2D {
+            width: 0,
+            height: 0,
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -4937,6 +4971,15 @@ pub struct Extent3D {
     pub width: uint32_t,
     pub height: uint32_t,
     pub depth: uint32_t,
+}
+impl Default for Extent3D {
+    fn default() -> Extent3D {
+        Extent3D {
+            width: 0,
+            height: 0,
+            depth: 0,
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -4948,11 +4991,31 @@ pub struct Viewport {
     pub min_depth: c_float,
     pub max_depth: c_float,
 }
+impl Default for Viewport {
+    fn default() -> Viewport {
+        Viewport {
+            x: 0.0,
+            y: 0.0,
+            width: 0.0,
+            height: 0.0,
+            min_depth: 0.0,
+            max_depth: 0.0,
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct Rect2D {
     pub offset: Offset2D,
     pub extent: Extent2D,
+}
+impl Default for Rect2D {
+    fn default() -> Rect2D {
+        Rect2D {
+            offset: Offset2D::default(),
+            extent: Extent2D::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -4961,6 +5024,15 @@ pub struct ClearRect {
     pub base_array_layer: uint32_t,
     pub layer_count: uint32_t,
 }
+impl Default for ClearRect {
+    fn default() -> ClearRect {
+        ClearRect {
+            rect: Rect2D::default(),
+            base_array_layer: 0,
+            layer_count: 0,
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ComponentMapping {
@@ -4968,6 +5040,16 @@ pub struct ComponentMapping {
     pub g: ComponentSwizzle,
     pub b: ComponentSwizzle,
     pub a: ComponentSwizzle,
+}
+impl Default for ComponentMapping {
+    fn default() -> ComponentMapping {
+        ComponentMapping {
+            r: ComponentSwizzle::default(),
+            g: ComponentSwizzle::default(),
+            b: ComponentSwizzle::default(),
+            a: ComponentSwizzle::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -4982,11 +5064,34 @@ pub struct PhysicalDeviceProperties {
     pub limits: PhysicalDeviceLimits,
     pub sparse_properties: PhysicalDeviceSparseProperties,
 }
+impl Default for PhysicalDeviceProperties {
+    fn default() -> PhysicalDeviceProperties {
+        PhysicalDeviceProperties {
+            api_version: 0,
+            driver_version: 0,
+            vendor_id: 0,
+            device_id: 0,
+            device_type: PhysicalDeviceType::default(),
+            device_name: [c_char::default(); VK_MAX_PHYSICAL_DEVICE_NAME_SIZE],
+            pipeline_cache_uuid: [0; VK_UUID_SIZE],
+            limits: PhysicalDeviceLimits::default(),
+            sparse_properties: PhysicalDeviceSparseProperties::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ExtensionProperties {
     pub extension_name: [c_char; VK_MAX_EXTENSION_NAME_SIZE],
     pub spec_version: uint32_t,
+}
+impl Default for ExtensionProperties {
+    fn default() -> ExtensionProperties {
+        ExtensionProperties {
+            extension_name: [c_char::default(); VK_MAX_EXTENSION_NAME_SIZE],
+            spec_version: 0,
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -4995,6 +5100,16 @@ pub struct LayerProperties {
     pub spec_version: uint32_t,
     pub implementation_version: uint32_t,
     pub description: [c_char; VK_MAX_DESCRIPTION_SIZE],
+}
+impl Default for LayerProperties {
+    fn default() -> LayerProperties {
+        LayerProperties {
+            layer_name: [c_char::default(); VK_MAX_EXTENSION_NAME_SIZE],
+            spec_version: 0,
+            implementation_version: 0,
+            description: [c_char::default(); VK_MAX_DESCRIPTION_SIZE],
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -5006,6 +5121,19 @@ pub struct ApplicationInfo {
     pub p_engine_name: *const c_char,
     pub engine_version: uint32_t,
     pub api_version: uint32_t,
+}
+impl Default for ApplicationInfo {
+    fn default() -> ApplicationInfo {
+        ApplicationInfo {
+            s_type: StructureType::APPLICATION_INFO,
+            p_next: ::std::ptr::null(),
+            p_application_name: ::std::ptr::null(),
+            application_version: 0,
+            p_engine_name: ::std::ptr::null(),
+            engine_version: 0,
+            api_version: 0,
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -5027,6 +5155,18 @@ pub struct DeviceQueueCreateInfo {
     pub queue_count: uint32_t,
     pub p_queue_priorities: *const c_float,
 }
+impl Default for DeviceQueueCreateInfo {
+    fn default() -> DeviceQueueCreateInfo {
+        DeviceQueueCreateInfo {
+            s_type: StructureType::DEVICE_QUEUE_CREATE_INFO,
+            p_next: ::std::ptr::null(),
+            flags: DeviceQueueCreateFlags::default(),
+            queue_family_index: 0,
+            queue_count: 0,
+            p_queue_priorities: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct DeviceCreateInfo {
@@ -5041,6 +5181,22 @@ pub struct DeviceCreateInfo {
     pub pp_enabled_extension_names: *const c_char,
     pub p_enabled_features: *const PhysicalDeviceFeatures,
 }
+impl Default for DeviceCreateInfo {
+    fn default() -> DeviceCreateInfo {
+        DeviceCreateInfo {
+            s_type: StructureType::DEVICE_CREATE_INFO,
+            p_next: ::std::ptr::null(),
+            flags: DeviceCreateFlags::default(),
+            queue_create_info_count: 0,
+            p_queue_create_infos: ::std::ptr::null(),
+            enabled_layer_count: 0,
+            pp_enabled_layer_names: ::std::ptr::null(),
+            enabled_extension_count: 0,
+            pp_enabled_extension_names: ::std::ptr::null(),
+            p_enabled_features: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct InstanceCreateInfo {
@@ -5053,6 +5209,20 @@ pub struct InstanceCreateInfo {
     pub enabled_extension_count: uint32_t,
     pub pp_enabled_extension_names: *const c_char,
 }
+impl Default for InstanceCreateInfo {
+    fn default() -> InstanceCreateInfo {
+        InstanceCreateInfo {
+            s_type: StructureType::INSTANCE_CREATE_INFO,
+            p_next: ::std::ptr::null(),
+            flags: InstanceCreateFlags::default(),
+            p_application_info: ::std::ptr::null(),
+            enabled_layer_count: 0,
+            pp_enabled_layer_names: ::std::ptr::null(),
+            enabled_extension_count: 0,
+            pp_enabled_extension_names: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct QueueFamilyProperties {
@@ -5060,6 +5230,16 @@ pub struct QueueFamilyProperties {
     pub queue_count: uint32_t,
     pub timestamp_valid_bits: uint32_t,
     pub min_image_transfer_granularity: Extent3D,
+}
+impl Default for QueueFamilyProperties {
+    fn default() -> QueueFamilyProperties {
+        QueueFamilyProperties {
+            queue_flags: QueueFlags::default(),
+            queue_count: 0,
+            timestamp_valid_bits: 0,
+            min_image_transfer_granularity: Extent3D::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -5069,6 +5249,16 @@ pub struct PhysicalDeviceMemoryProperties {
     pub memory_heap_count: uint32_t,
     pub memory_heaps: [MemoryHeap; VK_MAX_MEMORY_HEAPS],
 }
+impl Default for PhysicalDeviceMemoryProperties {
+    fn default() -> PhysicalDeviceMemoryProperties {
+        PhysicalDeviceMemoryProperties {
+            memory_type_count: 0,
+            memory_types: [MemoryType::default(); VK_MAX_MEMORY_TYPES],
+            memory_heap_count: 0,
+            memory_heaps: [MemoryHeap::default(); VK_MAX_MEMORY_HEAPS],
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct MemoryAllocateInfo {
@@ -5077,6 +5267,16 @@ pub struct MemoryAllocateInfo {
     pub allocation_size: DeviceSize,
     pub memory_type_index: uint32_t,
 }
+impl Default for MemoryAllocateInfo {
+    fn default() -> MemoryAllocateInfo {
+        MemoryAllocateInfo {
+            s_type: StructureType::MEMORY_ALLOCATE_INFO,
+            p_next: ::std::ptr::null(),
+            allocation_size: DeviceSize::default(),
+            memory_type_index: 0,
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct MemoryRequirements {
@@ -5084,12 +5284,30 @@ pub struct MemoryRequirements {
     pub alignment: DeviceSize,
     pub memory_type_bits: uint32_t,
 }
+impl Default for MemoryRequirements {
+    fn default() -> MemoryRequirements {
+        MemoryRequirements {
+            size: DeviceSize::default(),
+            alignment: DeviceSize::default(),
+            memory_type_bits: 0,
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct SparseImageFormatProperties {
     pub aspect_mask: ImageAspectFlags,
     pub image_granularity: Extent3D,
     pub flags: SparseImageFormatFlags,
+}
+impl Default for SparseImageFormatProperties {
+    fn default() -> SparseImageFormatProperties {
+        SparseImageFormatProperties {
+            aspect_mask: ImageAspectFlags::default(),
+            image_granularity: Extent3D::default(),
+            flags: SparseImageFormatFlags::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -5100,17 +5318,44 @@ pub struct SparseImageMemoryRequirements {
     pub image_mip_tail_offset: DeviceSize,
     pub image_mip_tail_stride: DeviceSize,
 }
+impl Default for SparseImageMemoryRequirements {
+    fn default() -> SparseImageMemoryRequirements {
+        SparseImageMemoryRequirements {
+            format_properties: SparseImageFormatProperties::default(),
+            image_mip_tail_first_lod: 0,
+            image_mip_tail_size: DeviceSize::default(),
+            image_mip_tail_offset: DeviceSize::default(),
+            image_mip_tail_stride: DeviceSize::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct MemoryType {
     pub property_flags: MemoryPropertyFlags,
     pub heap_index: uint32_t,
 }
+impl Default for MemoryType {
+    fn default() -> MemoryType {
+        MemoryType {
+            property_flags: MemoryPropertyFlags::default(),
+            heap_index: 0,
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct MemoryHeap {
     pub size: DeviceSize,
     pub flags: MemoryHeapFlags,
+}
+impl Default for MemoryHeap {
+    fn default() -> MemoryHeap {
+        MemoryHeap {
+            size: DeviceSize::default(),
+            flags: MemoryHeapFlags::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -5121,12 +5366,32 @@ pub struct MappedMemoryRange {
     pub offset: DeviceSize,
     pub size: DeviceSize,
 }
+impl Default for MappedMemoryRange {
+    fn default() -> MappedMemoryRange {
+        MappedMemoryRange {
+            s_type: StructureType::MAPPED_MEMORY_RANGE,
+            p_next: ::std::ptr::null(),
+            memory: DeviceMemory::null(),
+            offset: DeviceSize::default(),
+            size: DeviceSize::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct FormatProperties {
     pub linear_tiling_features: FormatFeatureFlags,
     pub optimal_tiling_features: FormatFeatureFlags,
     pub buffer_features: FormatFeatureFlags,
+}
+impl Default for FormatProperties {
+    fn default() -> FormatProperties {
+        FormatProperties {
+            linear_tiling_features: FormatFeatureFlags::default(),
+            optimal_tiling_features: FormatFeatureFlags::default(),
+            buffer_features: FormatFeatureFlags::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -5137,6 +5402,17 @@ pub struct ImageFormatProperties {
     pub sample_counts: SampleCountFlags,
     pub max_resource_size: DeviceSize,
 }
+impl Default for ImageFormatProperties {
+    fn default() -> ImageFormatProperties {
+        ImageFormatProperties {
+            max_extent: Extent3D::default(),
+            max_mip_levels: 0,
+            max_array_layers: 0,
+            sample_counts: SampleCountFlags::default(),
+            max_resource_size: DeviceSize::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct DescriptorBufferInfo {
@@ -5144,12 +5420,30 @@ pub struct DescriptorBufferInfo {
     pub offset: DeviceSize,
     pub range: DeviceSize,
 }
+impl Default for DescriptorBufferInfo {
+    fn default() -> DescriptorBufferInfo {
+        DescriptorBufferInfo {
+            buffer: Buffer::null(),
+            offset: DeviceSize::default(),
+            range: DeviceSize::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct DescriptorImageInfo {
     pub sampler: Sampler,
     pub image_view: ImageView,
     pub image_layout: ImageLayout,
+}
+impl Default for DescriptorImageInfo {
+    fn default() -> DescriptorImageInfo {
+        DescriptorImageInfo {
+            sampler: Sampler::null(),
+            image_view: ImageView::null(),
+            image_layout: ImageLayout::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -5165,6 +5459,22 @@ pub struct WriteDescriptorSet {
     pub p_buffer_info: *const DescriptorBufferInfo,
     pub p_texel_buffer_view: *const BufferView,
 }
+impl Default for WriteDescriptorSet {
+    fn default() -> WriteDescriptorSet {
+        WriteDescriptorSet {
+            s_type: StructureType::WRITE_DESCRIPTOR_SET,
+            p_next: ::std::ptr::null(),
+            dst_set: DescriptorSet::null(),
+            dst_binding: 0,
+            dst_array_element: 0,
+            descriptor_count: 0,
+            descriptor_type: DescriptorType::default(),
+            p_image_info: ::std::ptr::null(),
+            p_buffer_info: ::std::ptr::null(),
+            p_texel_buffer_view: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct CopyDescriptorSet {
@@ -5178,6 +5488,21 @@ pub struct CopyDescriptorSet {
     pub dst_array_element: uint32_t,
     pub descriptor_count: uint32_t,
 }
+impl Default for CopyDescriptorSet {
+    fn default() -> CopyDescriptorSet {
+        CopyDescriptorSet {
+            s_type: StructureType::COPY_DESCRIPTOR_SET,
+            p_next: ::std::ptr::null(),
+            src_set: DescriptorSet::null(),
+            src_binding: 0,
+            src_array_element: 0,
+            dst_set: DescriptorSet::null(),
+            dst_binding: 0,
+            dst_array_element: 0,
+            descriptor_count: 0,
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct BufferCreateInfo {
@@ -5190,6 +5515,20 @@ pub struct BufferCreateInfo {
     pub queue_family_index_count: uint32_t,
     pub p_queue_family_indices: *const uint32_t,
 }
+impl Default for BufferCreateInfo {
+    fn default() -> BufferCreateInfo {
+        BufferCreateInfo {
+            s_type: StructureType::BUFFER_CREATE_INFO,
+            p_next: ::std::ptr::null(),
+            flags: BufferCreateFlags::default(),
+            size: DeviceSize::default(),
+            usage: BufferUsageFlags::default(),
+            sharing_mode: SharingMode::default(),
+            queue_family_index_count: 0,
+            p_queue_family_indices: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct BufferViewCreateInfo {
@@ -5201,12 +5540,34 @@ pub struct BufferViewCreateInfo {
     pub offset: DeviceSize,
     pub range: DeviceSize,
 }
+impl Default for BufferViewCreateInfo {
+    fn default() -> BufferViewCreateInfo {
+        BufferViewCreateInfo {
+            s_type: StructureType::BUFFER_VIEW_CREATE_INFO,
+            p_next: ::std::ptr::null(),
+            flags: BufferViewCreateFlags::default(),
+            buffer: Buffer::null(),
+            format: Format::default(),
+            offset: DeviceSize::default(),
+            range: DeviceSize::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ImageSubresource {
     pub aspect_mask: ImageAspectFlags,
     pub mip_level: uint32_t,
     pub array_layer: uint32_t,
+}
+impl Default for ImageSubresource {
+    fn default() -> ImageSubresource {
+        ImageSubresource {
+            aspect_mask: ImageAspectFlags::default(),
+            mip_level: 0,
+            array_layer: 0,
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -5215,6 +5576,16 @@ pub struct ImageSubresourceLayers {
     pub mip_level: uint32_t,
     pub base_array_layer: uint32_t,
     pub layer_count: uint32_t,
+}
+impl Default for ImageSubresourceLayers {
+    fn default() -> ImageSubresourceLayers {
+        ImageSubresourceLayers {
+            aspect_mask: ImageAspectFlags::default(),
+            mip_level: 0,
+            base_array_layer: 0,
+            layer_count: 0,
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -5225,6 +5596,17 @@ pub struct ImageSubresourceRange {
     pub base_array_layer: uint32_t,
     pub layer_count: uint32_t,
 }
+impl Default for ImageSubresourceRange {
+    fn default() -> ImageSubresourceRange {
+        ImageSubresourceRange {
+            aspect_mask: ImageAspectFlags::default(),
+            base_mip_level: 0,
+            level_count: 0,
+            base_array_layer: 0,
+            layer_count: 0,
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct MemoryBarrier {
@@ -5232,6 +5614,16 @@ pub struct MemoryBarrier {
     pub p_next: *const c_void,
     pub src_access_mask: AccessFlags,
     pub dst_access_mask: AccessFlags,
+}
+impl Default for MemoryBarrier {
+    fn default() -> MemoryBarrier {
+        MemoryBarrier {
+            s_type: StructureType::MEMORY_BARRIER,
+            p_next: ::std::ptr::null(),
+            src_access_mask: AccessFlags::default(),
+            dst_access_mask: AccessFlags::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -5246,6 +5638,21 @@ pub struct BufferMemoryBarrier {
     pub offset: DeviceSize,
     pub size: DeviceSize,
 }
+impl Default for BufferMemoryBarrier {
+    fn default() -> BufferMemoryBarrier {
+        BufferMemoryBarrier {
+            s_type: StructureType::BUFFER_MEMORY_BARRIER,
+            p_next: ::std::ptr::null(),
+            src_access_mask: AccessFlags::default(),
+            dst_access_mask: AccessFlags::default(),
+            src_queue_family_index: 0,
+            dst_queue_family_index: 0,
+            buffer: Buffer::null(),
+            offset: DeviceSize::default(),
+            size: DeviceSize::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ImageMemoryBarrier {
@@ -5259,6 +5666,22 @@ pub struct ImageMemoryBarrier {
     pub dst_queue_family_index: uint32_t,
     pub image: Image,
     pub subresource_range: ImageSubresourceRange,
+}
+impl Default for ImageMemoryBarrier {
+    fn default() -> ImageMemoryBarrier {
+        ImageMemoryBarrier {
+            s_type: StructureType::IMAGE_MEMORY_BARRIER,
+            p_next: ::std::ptr::null(),
+            src_access_mask: AccessFlags::default(),
+            dst_access_mask: AccessFlags::default(),
+            old_layout: ImageLayout::default(),
+            new_layout: ImageLayout::default(),
+            src_queue_family_index: 0,
+            dst_queue_family_index: 0,
+            image: Image::null(),
+            subresource_range: ImageSubresourceRange::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -5279,6 +5702,27 @@ pub struct ImageCreateInfo {
     pub p_queue_family_indices: *const uint32_t,
     pub initial_layout: ImageLayout,
 }
+impl Default for ImageCreateInfo {
+    fn default() -> ImageCreateInfo {
+        ImageCreateInfo {
+            s_type: StructureType::IMAGE_CREATE_INFO,
+            p_next: ::std::ptr::null(),
+            flags: ImageCreateFlags::default(),
+            image_type: ImageType::default(),
+            format: Format::default(),
+            extent: Extent3D::default(),
+            mip_levels: 0,
+            array_layers: 0,
+            samples: SampleCountFlags::default(),
+            tiling: ImageTiling::default(),
+            usage: ImageUsageFlags::default(),
+            sharing_mode: SharingMode::default(),
+            queue_family_index_count: 0,
+            p_queue_family_indices: ::std::ptr::null(),
+            initial_layout: ImageLayout::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct SubresourceLayout {
@@ -5287,6 +5731,17 @@ pub struct SubresourceLayout {
     pub row_pitch: DeviceSize,
     pub array_pitch: DeviceSize,
     pub depth_pitch: DeviceSize,
+}
+impl Default for SubresourceLayout {
+    fn default() -> SubresourceLayout {
+        SubresourceLayout {
+            offset: DeviceSize::default(),
+            size: DeviceSize::default(),
+            row_pitch: DeviceSize::default(),
+            array_pitch: DeviceSize::default(),
+            depth_pitch: DeviceSize::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -5300,12 +5755,35 @@ pub struct ImageViewCreateInfo {
     pub components: ComponentMapping,
     pub subresource_range: ImageSubresourceRange,
 }
+impl Default for ImageViewCreateInfo {
+    fn default() -> ImageViewCreateInfo {
+        ImageViewCreateInfo {
+            s_type: StructureType::IMAGE_VIEW_CREATE_INFO,
+            p_next: ::std::ptr::null(),
+            flags: ImageViewCreateFlags::default(),
+            image: Image::null(),
+            view_type: ImageViewType::default(),
+            format: Format::default(),
+            components: ComponentMapping::default(),
+            subresource_range: ImageSubresourceRange::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct BufferCopy {
     pub src_offset: DeviceSize,
     pub dst_offset: DeviceSize,
     pub size: DeviceSize,
+}
+impl Default for BufferCopy {
+    fn default() -> BufferCopy {
+        BufferCopy {
+            src_offset: DeviceSize::default(),
+            dst_offset: DeviceSize::default(),
+            size: DeviceSize::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -5315,6 +5793,17 @@ pub struct SparseMemoryBind {
     pub memory: DeviceMemory,
     pub memory_offset: DeviceSize,
     pub flags: SparseMemoryBindFlags,
+}
+impl Default for SparseMemoryBind {
+    fn default() -> SparseMemoryBind {
+        SparseMemoryBind {
+            resource_offset: DeviceSize::default(),
+            size: DeviceSize::default(),
+            memory: DeviceMemory::null(),
+            memory_offset: DeviceSize::default(),
+            flags: SparseMemoryBindFlags::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -5326,12 +5815,33 @@ pub struct SparseImageMemoryBind {
     pub memory_offset: DeviceSize,
     pub flags: SparseMemoryBindFlags,
 }
+impl Default for SparseImageMemoryBind {
+    fn default() -> SparseImageMemoryBind {
+        SparseImageMemoryBind {
+            subresource: ImageSubresource::default(),
+            offset: Offset3D::default(),
+            extent: Extent3D::default(),
+            memory: DeviceMemory::null(),
+            memory_offset: DeviceSize::default(),
+            flags: SparseMemoryBindFlags::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct SparseBufferMemoryBindInfo {
     pub buffer: Buffer,
     pub bind_count: uint32_t,
     pub p_binds: *const SparseMemoryBind,
+}
+impl Default for SparseBufferMemoryBindInfo {
+    fn default() -> SparseBufferMemoryBindInfo {
+        SparseBufferMemoryBindInfo {
+            buffer: Buffer::null(),
+            bind_count: 0,
+            p_binds: ::std::ptr::null(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -5340,12 +5850,30 @@ pub struct SparseImageOpaqueMemoryBindInfo {
     pub bind_count: uint32_t,
     pub p_binds: *const SparseMemoryBind,
 }
+impl Default for SparseImageOpaqueMemoryBindInfo {
+    fn default() -> SparseImageOpaqueMemoryBindInfo {
+        SparseImageOpaqueMemoryBindInfo {
+            image: Image::null(),
+            bind_count: 0,
+            p_binds: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct SparseImageMemoryBindInfo {
     pub image: Image,
     pub bind_count: uint32_t,
     pub p_binds: *const SparseImageMemoryBind,
+}
+impl Default for SparseImageMemoryBindInfo {
+    fn default() -> SparseImageMemoryBindInfo {
+        SparseImageMemoryBindInfo {
+            image: Image::null(),
+            bind_count: 0,
+            p_binds: ::std::ptr::null(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -5363,6 +5891,24 @@ pub struct BindSparseInfo {
     pub signal_semaphore_count: uint32_t,
     pub p_signal_semaphores: *const Semaphore,
 }
+impl Default for BindSparseInfo {
+    fn default() -> BindSparseInfo {
+        BindSparseInfo {
+            s_type: StructureType::BIND_SPARSE_INFO,
+            p_next: ::std::ptr::null(),
+            wait_semaphore_count: 0,
+            p_wait_semaphores: ::std::ptr::null(),
+            buffer_bind_count: 0,
+            p_buffer_binds: ::std::ptr::null(),
+            image_opaque_bind_count: 0,
+            p_image_opaque_binds: ::std::ptr::null(),
+            image_bind_count: 0,
+            p_image_binds: ::std::ptr::null(),
+            signal_semaphore_count: 0,
+            p_signal_semaphores: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ImageCopy {
@@ -5372,6 +5918,17 @@ pub struct ImageCopy {
     pub dst_offset: Offset3D,
     pub extent: Extent3D,
 }
+impl Default for ImageCopy {
+    fn default() -> ImageCopy {
+        ImageCopy {
+            src_subresource: ImageSubresourceLayers::default(),
+            src_offset: Offset3D::default(),
+            dst_subresource: ImageSubresourceLayers::default(),
+            dst_offset: Offset3D::default(),
+            extent: Extent3D::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ImageBlit {
@@ -5379,6 +5936,16 @@ pub struct ImageBlit {
     pub src_offsets: [Offset3D; 2],
     pub dst_subresource: ImageSubresourceLayers,
     pub dst_offsets: [Offset3D; 2],
+}
+impl Default for ImageBlit {
+    fn default() -> ImageBlit {
+        ImageBlit {
+            src_subresource: ImageSubresourceLayers::default(),
+            src_offsets: [Offset3D::default(); 2],
+            dst_subresource: ImageSubresourceLayers::default(),
+            dst_offsets: [Offset3D::default(); 2],
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -5390,6 +5957,18 @@ pub struct BufferImageCopy {
     pub image_offset: Offset3D,
     pub image_extent: Extent3D,
 }
+impl Default for BufferImageCopy {
+    fn default() -> BufferImageCopy {
+        BufferImageCopy {
+            buffer_offset: DeviceSize::default(),
+            buffer_row_length: 0,
+            buffer_image_height: 0,
+            image_subresource: ImageSubresourceLayers::default(),
+            image_offset: Offset3D::default(),
+            image_extent: Extent3D::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ImageResolve {
@@ -5398,6 +5977,17 @@ pub struct ImageResolve {
     pub dst_subresource: ImageSubresourceLayers,
     pub dst_offset: Offset3D,
     pub extent: Extent3D,
+}
+impl Default for ImageResolve {
+    fn default() -> ImageResolve {
+        ImageResolve {
+            src_subresource: ImageSubresourceLayers::default(),
+            src_offset: Offset3D::default(),
+            dst_subresource: ImageSubresourceLayers::default(),
+            dst_offset: Offset3D::default(),
+            extent: Extent3D::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -5408,6 +5998,17 @@ pub struct ShaderModuleCreateInfo {
     pub code_size: size_t,
     pub p_code: *const uint32_t,
 }
+impl Default for ShaderModuleCreateInfo {
+    fn default() -> ShaderModuleCreateInfo {
+        ShaderModuleCreateInfo {
+            s_type: StructureType::SHADER_MODULE_CREATE_INFO,
+            p_next: ::std::ptr::null(),
+            flags: ShaderModuleCreateFlags::default(),
+            code_size: 0,
+            p_code: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct DescriptorSetLayoutBinding {
@@ -5416,6 +6017,17 @@ pub struct DescriptorSetLayoutBinding {
     pub descriptor_count: uint32_t,
     pub stage_flags: ShaderStageFlags,
     pub p_immutable_samplers: *const Sampler,
+}
+impl Default for DescriptorSetLayoutBinding {
+    fn default() -> DescriptorSetLayoutBinding {
+        DescriptorSetLayoutBinding {
+            binding: 0,
+            descriptor_type: DescriptorType::default(),
+            descriptor_count: 0,
+            stage_flags: ShaderStageFlags::default(),
+            p_immutable_samplers: ::std::ptr::null(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -5426,11 +6038,30 @@ pub struct DescriptorSetLayoutCreateInfo {
     pub binding_count: uint32_t,
     pub p_bindings: *const DescriptorSetLayoutBinding,
 }
+impl Default for DescriptorSetLayoutCreateInfo {
+    fn default() -> DescriptorSetLayoutCreateInfo {
+        DescriptorSetLayoutCreateInfo {
+            s_type: StructureType::DESCRIPTOR_SET_LAYOUT_CREATE_INFO,
+            p_next: ::std::ptr::null(),
+            flags: DescriptorSetLayoutCreateFlags::default(),
+            binding_count: 0,
+            p_bindings: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct DescriptorPoolSize {
     pub ty: DescriptorType,
     pub descriptor_count: uint32_t,
+}
+impl Default for DescriptorPoolSize {
+    fn default() -> DescriptorPoolSize {
+        DescriptorPoolSize {
+            ty: DescriptorType::default(),
+            descriptor_count: 0,
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -5442,6 +6073,18 @@ pub struct DescriptorPoolCreateInfo {
     pub pool_size_count: uint32_t,
     pub p_pool_sizes: *const DescriptorPoolSize,
 }
+impl Default for DescriptorPoolCreateInfo {
+    fn default() -> DescriptorPoolCreateInfo {
+        DescriptorPoolCreateInfo {
+            s_type: StructureType::DESCRIPTOR_POOL_CREATE_INFO,
+            p_next: ::std::ptr::null(),
+            flags: DescriptorPoolCreateFlags::default(),
+            max_sets: 0,
+            pool_size_count: 0,
+            p_pool_sizes: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct DescriptorSetAllocateInfo {
@@ -5451,12 +6094,32 @@ pub struct DescriptorSetAllocateInfo {
     pub descriptor_set_count: uint32_t,
     pub p_set_layouts: *const DescriptorSetLayout,
 }
+impl Default for DescriptorSetAllocateInfo {
+    fn default() -> DescriptorSetAllocateInfo {
+        DescriptorSetAllocateInfo {
+            s_type: StructureType::DESCRIPTOR_SET_ALLOCATE_INFO,
+            p_next: ::std::ptr::null(),
+            descriptor_pool: DescriptorPool::null(),
+            descriptor_set_count: 0,
+            p_set_layouts: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct SpecializationMapEntry {
     pub constant_id: uint32_t,
     pub offset: uint32_t,
     pub size: size_t,
+}
+impl Default for SpecializationMapEntry {
+    fn default() -> SpecializationMapEntry {
+        SpecializationMapEntry {
+            constant_id: 0,
+            offset: 0,
+            size: 0,
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -5465,6 +6128,16 @@ pub struct SpecializationInfo {
     pub p_map_entries: *const SpecializationMapEntry,
     pub data_size: size_t,
     pub p_data: *const c_void,
+}
+impl Default for SpecializationInfo {
+    fn default() -> SpecializationInfo {
+        SpecializationInfo {
+            map_entry_count: 0,
+            p_map_entries: ::std::ptr::null(),
+            data_size: 0,
+            p_data: ::std::ptr::null(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -5477,6 +6150,19 @@ pub struct PipelineShaderStageCreateInfo {
     pub p_name: *const c_char,
     pub p_specialization_info: *const SpecializationInfo,
 }
+impl Default for PipelineShaderStageCreateInfo {
+    fn default() -> PipelineShaderStageCreateInfo {
+        PipelineShaderStageCreateInfo {
+            s_type: StructureType::PIPELINE_SHADER_STAGE_CREATE_INFO,
+            p_next: ::std::ptr::null(),
+            flags: PipelineShaderStageCreateFlags::default(),
+            stage: ShaderStageFlags::default(),
+            module: ShaderModule::null(),
+            p_name: ::std::ptr::null(),
+            p_specialization_info: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ComputePipelineCreateInfo {
@@ -5488,12 +6174,34 @@ pub struct ComputePipelineCreateInfo {
     pub base_pipeline_handle: Pipeline,
     pub base_pipeline_index: int32_t,
 }
+impl Default for ComputePipelineCreateInfo {
+    fn default() -> ComputePipelineCreateInfo {
+        ComputePipelineCreateInfo {
+            s_type: StructureType::COMPUTE_PIPELINE_CREATE_INFO,
+            p_next: ::std::ptr::null(),
+            flags: PipelineCreateFlags::default(),
+            stage: PipelineShaderStageCreateInfo::default(),
+            layout: PipelineLayout::null(),
+            base_pipeline_handle: Pipeline::null(),
+            base_pipeline_index: 0,
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VertexInputBindingDescription {
     pub binding: uint32_t,
     pub stride: uint32_t,
     pub input_rate: VertexInputRate,
+}
+impl Default for VertexInputBindingDescription {
+    fn default() -> VertexInputBindingDescription {
+        VertexInputBindingDescription {
+            binding: 0,
+            stride: 0,
+            input_rate: VertexInputRate::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -5502,6 +6210,16 @@ pub struct VertexInputAttributeDescription {
     pub binding: uint32_t,
     pub format: Format,
     pub offset: uint32_t,
+}
+impl Default for VertexInputAttributeDescription {
+    fn default() -> VertexInputAttributeDescription {
+        VertexInputAttributeDescription {
+            location: 0,
+            binding: 0,
+            format: Format::default(),
+            offset: 0,
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -5514,6 +6232,19 @@ pub struct PipelineVertexInputStateCreateInfo {
     pub vertex_attribute_description_count: uint32_t,
     pub p_vertex_attribute_descriptions: *const VertexInputAttributeDescription,
 }
+impl Default for PipelineVertexInputStateCreateInfo {
+    fn default() -> PipelineVertexInputStateCreateInfo {
+        PipelineVertexInputStateCreateInfo {
+            s_type: StructureType::PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO,
+            p_next: ::std::ptr::null(),
+            flags: PipelineVertexInputStateCreateFlags::default(),
+            vertex_binding_description_count: 0,
+            p_vertex_binding_descriptions: ::std::ptr::null(),
+            vertex_attribute_description_count: 0,
+            p_vertex_attribute_descriptions: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PipelineInputAssemblyStateCreateInfo {
@@ -5523,6 +6254,17 @@ pub struct PipelineInputAssemblyStateCreateInfo {
     pub topology: PrimitiveTopology,
     pub primitive_restart_enable: Bool32,
 }
+impl Default for PipelineInputAssemblyStateCreateInfo {
+    fn default() -> PipelineInputAssemblyStateCreateInfo {
+        PipelineInputAssemblyStateCreateInfo {
+            s_type: StructureType::PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO,
+            p_next: ::std::ptr::null(),
+            flags: PipelineInputAssemblyStateCreateFlags::default(),
+            topology: PrimitiveTopology::default(),
+            primitive_restart_enable: Bool32::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PipelineTessellationStateCreateInfo {
@@ -5530,6 +6272,16 @@ pub struct PipelineTessellationStateCreateInfo {
     pub p_next: *const c_void,
     pub flags: PipelineTessellationStateCreateFlags,
     pub patch_control_points: uint32_t,
+}
+impl Default for PipelineTessellationStateCreateInfo {
+    fn default() -> PipelineTessellationStateCreateInfo {
+        PipelineTessellationStateCreateInfo {
+            s_type: StructureType::PIPELINE_TESSELLATION_STATE_CREATE_INFO,
+            p_next: ::std::ptr::null(),
+            flags: PipelineTessellationStateCreateFlags::default(),
+            patch_control_points: 0,
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -5541,6 +6293,19 @@ pub struct PipelineViewportStateCreateInfo {
     pub p_viewports: *const Viewport,
     pub scissor_count: uint32_t,
     pub p_scissors: *const Rect2D,
+}
+impl Default for PipelineViewportStateCreateInfo {
+    fn default() -> PipelineViewportStateCreateInfo {
+        PipelineViewportStateCreateInfo {
+            s_type: StructureType::PIPELINE_VIEWPORT_STATE_CREATE_INFO,
+            p_next: ::std::ptr::null(),
+            flags: PipelineViewportStateCreateFlags::default(),
+            viewport_count: 0,
+            p_viewports: ::std::ptr::null(),
+            scissor_count: 0,
+            p_scissors: ::std::ptr::null(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -5559,6 +6324,25 @@ pub struct PipelineRasterizationStateCreateInfo {
     pub depth_bias_slope_factor: c_float,
     pub line_width: c_float,
 }
+impl Default for PipelineRasterizationStateCreateInfo {
+    fn default() -> PipelineRasterizationStateCreateInfo {
+        PipelineRasterizationStateCreateInfo {
+            s_type: StructureType::PIPELINE_RASTERIZATION_STATE_CREATE_INFO,
+            p_next: ::std::ptr::null(),
+            flags: PipelineRasterizationStateCreateFlags::default(),
+            depth_clamp_enable: Bool32::default(),
+            rasterizer_discard_enable: Bool32::default(),
+            polygon_mode: PolygonMode::default(),
+            cull_mode: CullModeFlags::default(),
+            front_face: FrontFace::default(),
+            depth_bias_enable: Bool32::default(),
+            depth_bias_constant_factor: 0.0,
+            depth_bias_clamp: 0.0,
+            depth_bias_slope_factor: 0.0,
+            line_width: 0.0,
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PipelineMultisampleStateCreateInfo {
@@ -5572,6 +6356,21 @@ pub struct PipelineMultisampleStateCreateInfo {
     pub alpha_to_coverage_enable: Bool32,
     pub alpha_to_one_enable: Bool32,
 }
+impl Default for PipelineMultisampleStateCreateInfo {
+    fn default() -> PipelineMultisampleStateCreateInfo {
+        PipelineMultisampleStateCreateInfo {
+            s_type: StructureType::PIPELINE_MULTISAMPLE_STATE_CREATE_INFO,
+            p_next: ::std::ptr::null(),
+            flags: PipelineMultisampleStateCreateFlags::default(),
+            rasterization_samples: SampleCountFlags::default(),
+            sample_shading_enable: Bool32::default(),
+            min_sample_shading: 0.0,
+            p_sample_mask: ::std::ptr::null(),
+            alpha_to_coverage_enable: Bool32::default(),
+            alpha_to_one_enable: Bool32::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PipelineColorBlendAttachmentState {
@@ -5583,6 +6382,20 @@ pub struct PipelineColorBlendAttachmentState {
     pub dst_alpha_blend_factor: BlendFactor,
     pub alpha_blend_op: BlendOp,
     pub color_write_mask: ColorComponentFlags,
+}
+impl Default for PipelineColorBlendAttachmentState {
+    fn default() -> PipelineColorBlendAttachmentState {
+        PipelineColorBlendAttachmentState {
+            blend_enable: Bool32::default(),
+            src_color_blend_factor: BlendFactor::default(),
+            dst_color_blend_factor: BlendFactor::default(),
+            color_blend_op: BlendOp::default(),
+            src_alpha_blend_factor: BlendFactor::default(),
+            dst_alpha_blend_factor: BlendFactor::default(),
+            alpha_blend_op: BlendOp::default(),
+            color_write_mask: ColorComponentFlags::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -5596,6 +6409,20 @@ pub struct PipelineColorBlendStateCreateInfo {
     pub p_attachments: *const PipelineColorBlendAttachmentState,
     pub blend_constants: [c_float; 4],
 }
+impl Default for PipelineColorBlendStateCreateInfo {
+    fn default() -> PipelineColorBlendStateCreateInfo {
+        PipelineColorBlendStateCreateInfo {
+            s_type: StructureType::PIPELINE_COLOR_BLEND_STATE_CREATE_INFO,
+            p_next: ::std::ptr::null(),
+            flags: PipelineColorBlendStateCreateFlags::default(),
+            logic_op_enable: Bool32::default(),
+            logic_op: LogicOp::default(),
+            attachment_count: 0,
+            p_attachments: ::std::ptr::null(),
+            blend_constants: [0.0; 4],
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PipelineDynamicStateCreateInfo {
@@ -5604,6 +6431,17 @@ pub struct PipelineDynamicStateCreateInfo {
     pub flags: PipelineDynamicStateCreateFlags,
     pub dynamic_state_count: uint32_t,
     pub p_dynamic_states: *const DynamicState,
+}
+impl Default for PipelineDynamicStateCreateInfo {
+    fn default() -> PipelineDynamicStateCreateInfo {
+        PipelineDynamicStateCreateInfo {
+            s_type: StructureType::PIPELINE_DYNAMIC_STATE_CREATE_INFO,
+            p_next: ::std::ptr::null(),
+            flags: PipelineDynamicStateCreateFlags::default(),
+            dynamic_state_count: 0,
+            p_dynamic_states: ::std::ptr::null(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -5615,6 +6453,19 @@ pub struct StencilOpState {
     pub compare_mask: uint32_t,
     pub write_mask: uint32_t,
     pub reference: uint32_t,
+}
+impl Default for StencilOpState {
+    fn default() -> StencilOpState {
+        StencilOpState {
+            fail_op: StencilOp::default(),
+            pass_op: StencilOp::default(),
+            depth_fail_op: StencilOp::default(),
+            compare_op: CompareOp::default(),
+            compare_mask: 0,
+            write_mask: 0,
+            reference: 0,
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -5631,6 +6482,24 @@ pub struct PipelineDepthStencilStateCreateInfo {
     pub back: StencilOpState,
     pub min_depth_bounds: c_float,
     pub max_depth_bounds: c_float,
+}
+impl Default for PipelineDepthStencilStateCreateInfo {
+    fn default() -> PipelineDepthStencilStateCreateInfo {
+        PipelineDepthStencilStateCreateInfo {
+            s_type: StructureType::PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO,
+            p_next: ::std::ptr::null(),
+            flags: PipelineDepthStencilStateCreateFlags::default(),
+            depth_test_enable: Bool32::default(),
+            depth_write_enable: Bool32::default(),
+            depth_compare_op: CompareOp::default(),
+            depth_bounds_test_enable: Bool32::default(),
+            stencil_test_enable: Bool32::default(),
+            front: StencilOpState::default(),
+            back: StencilOpState::default(),
+            min_depth_bounds: 0.0,
+            max_depth_bounds: 0.0,
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -5655,6 +6524,31 @@ pub struct GraphicsPipelineCreateInfo {
     pub base_pipeline_handle: Pipeline,
     pub base_pipeline_index: int32_t,
 }
+impl Default for GraphicsPipelineCreateInfo {
+    fn default() -> GraphicsPipelineCreateInfo {
+        GraphicsPipelineCreateInfo {
+            s_type: StructureType::GRAPHICS_PIPELINE_CREATE_INFO,
+            p_next: ::std::ptr::null(),
+            flags: PipelineCreateFlags::default(),
+            stage_count: 0,
+            p_stages: ::std::ptr::null(),
+            p_vertex_input_state: ::std::ptr::null(),
+            p_input_assembly_state: ::std::ptr::null(),
+            p_tessellation_state: ::std::ptr::null(),
+            p_viewport_state: ::std::ptr::null(),
+            p_rasterization_state: ::std::ptr::null(),
+            p_multisample_state: ::std::ptr::null(),
+            p_depth_stencil_state: ::std::ptr::null(),
+            p_color_blend_state: ::std::ptr::null(),
+            p_dynamic_state: ::std::ptr::null(),
+            layout: PipelineLayout::null(),
+            render_pass: RenderPass::null(),
+            subpass: 0,
+            base_pipeline_handle: Pipeline::null(),
+            base_pipeline_index: 0,
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PipelineCacheCreateInfo {
@@ -5664,12 +6558,32 @@ pub struct PipelineCacheCreateInfo {
     pub initial_data_size: size_t,
     pub p_initial_data: *const c_void,
 }
+impl Default for PipelineCacheCreateInfo {
+    fn default() -> PipelineCacheCreateInfo {
+        PipelineCacheCreateInfo {
+            s_type: StructureType::PIPELINE_CACHE_CREATE_INFO,
+            p_next: ::std::ptr::null(),
+            flags: PipelineCacheCreateFlags::default(),
+            initial_data_size: 0,
+            p_initial_data: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PushConstantRange {
     pub stage_flags: ShaderStageFlags,
     pub offset: uint32_t,
     pub size: uint32_t,
+}
+impl Default for PushConstantRange {
+    fn default() -> PushConstantRange {
+        PushConstantRange {
+            stage_flags: ShaderStageFlags::default(),
+            offset: 0,
+            size: 0,
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -5681,6 +6595,19 @@ pub struct PipelineLayoutCreateInfo {
     pub p_set_layouts: *const DescriptorSetLayout,
     pub push_constant_range_count: uint32_t,
     pub p_push_constant_ranges: *const PushConstantRange,
+}
+impl Default for PipelineLayoutCreateInfo {
+    fn default() -> PipelineLayoutCreateInfo {
+        PipelineLayoutCreateInfo {
+            s_type: StructureType::PIPELINE_LAYOUT_CREATE_INFO,
+            p_next: ::std::ptr::null(),
+            flags: PipelineLayoutCreateFlags::default(),
+            set_layout_count: 0,
+            p_set_layouts: ::std::ptr::null(),
+            push_constant_range_count: 0,
+            p_push_constant_ranges: ::std::ptr::null(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -5704,6 +6631,30 @@ pub struct SamplerCreateInfo {
     pub border_color: BorderColor,
     pub unnormalized_coordinates: Bool32,
 }
+impl Default for SamplerCreateInfo {
+    fn default() -> SamplerCreateInfo {
+        SamplerCreateInfo {
+            s_type: StructureType::SAMPLER_CREATE_INFO,
+            p_next: ::std::ptr::null(),
+            flags: SamplerCreateFlags::default(),
+            mag_filter: Filter::default(),
+            min_filter: Filter::default(),
+            mipmap_mode: SamplerMipmapMode::default(),
+            address_mode_u: SamplerAddressMode::default(),
+            address_mode_v: SamplerAddressMode::default(),
+            address_mode_w: SamplerAddressMode::default(),
+            mip_lod_bias: 0.0,
+            anisotropy_enable: Bool32::default(),
+            max_anisotropy: 0.0,
+            compare_enable: Bool32::default(),
+            compare_op: CompareOp::default(),
+            min_lod: 0.0,
+            max_lod: 0.0,
+            border_color: BorderColor::default(),
+            unnormalized_coordinates: Bool32::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct CommandPoolCreateInfo {
@@ -5711,6 +6662,16 @@ pub struct CommandPoolCreateInfo {
     pub p_next: *const c_void,
     pub flags: CommandPoolCreateFlags,
     pub queue_family_index: uint32_t,
+}
+impl Default for CommandPoolCreateInfo {
+    fn default() -> CommandPoolCreateInfo {
+        CommandPoolCreateInfo {
+            s_type: StructureType::COMMAND_POOL_CREATE_INFO,
+            p_next: ::std::ptr::null(),
+            flags: CommandPoolCreateFlags::default(),
+            queue_family_index: 0,
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -5720,6 +6681,17 @@ pub struct CommandBufferAllocateInfo {
     pub command_pool: CommandPool,
     pub level: CommandBufferLevel,
     pub command_buffer_count: uint32_t,
+}
+impl Default for CommandBufferAllocateInfo {
+    fn default() -> CommandBufferAllocateInfo {
+        CommandBufferAllocateInfo {
+            s_type: StructureType::COMMAND_BUFFER_ALLOCATE_INFO,
+            p_next: ::std::ptr::null(),
+            command_pool: CommandPool::null(),
+            level: CommandBufferLevel::default(),
+            command_buffer_count: 0,
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -5733,6 +6705,20 @@ pub struct CommandBufferInheritanceInfo {
     pub query_flags: QueryControlFlags,
     pub pipeline_statistics: QueryPipelineStatisticFlags,
 }
+impl Default for CommandBufferInheritanceInfo {
+    fn default() -> CommandBufferInheritanceInfo {
+        CommandBufferInheritanceInfo {
+            s_type: StructureType::COMMAND_BUFFER_INHERITANCE_INFO,
+            p_next: ::std::ptr::null(),
+            render_pass: RenderPass::null(),
+            subpass: 0,
+            framebuffer: Framebuffer::null(),
+            occlusion_query_enable: Bool32::default(),
+            query_flags: QueryControlFlags::default(),
+            pipeline_statistics: QueryPipelineStatisticFlags::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct CommandBufferBeginInfo {
@@ -5740,6 +6726,16 @@ pub struct CommandBufferBeginInfo {
     pub p_next: *const c_void,
     pub flags: CommandBufferUsageFlags,
     pub p_inheritance_info: *const CommandBufferInheritanceInfo,
+}
+impl Default for CommandBufferBeginInfo {
+    fn default() -> CommandBufferBeginInfo {
+        CommandBufferBeginInfo {
+            s_type: StructureType::COMMAND_BUFFER_BEGIN_INFO,
+            p_next: ::std::ptr::null(),
+            flags: CommandBufferUsageFlags::default(),
+            p_inheritance_info: ::std::ptr::null(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -5752,6 +6748,19 @@ pub struct RenderPassBeginInfo {
     pub clear_value_count: uint32_t,
     pub p_clear_values: *const ClearValue,
 }
+impl Default for RenderPassBeginInfo {
+    fn default() -> RenderPassBeginInfo {
+        RenderPassBeginInfo {
+            s_type: StructureType::RENDER_PASS_BEGIN_INFO,
+            p_next: ::std::ptr::null(),
+            render_pass: RenderPass::null(),
+            framebuffer: Framebuffer::null(),
+            render_area: Rect2D::default(),
+            clear_value_count: 0,
+            p_clear_values: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub union ClearColorValue {
@@ -5759,11 +6768,24 @@ pub union ClearColorValue {
     pub int32: [int32_t; 4],
     pub uint32: [uint32_t; 4],
 }
+impl Default for ClearColorValue {
+    fn default() -> ClearColorValue {
+        ClearColorValue { float32: [0.0; 4] }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ClearDepthStencilValue {
     pub depth: c_float,
     pub stencil: uint32_t,
+}
+impl Default for ClearDepthStencilValue {
+    fn default() -> ClearDepthStencilValue {
+        ClearDepthStencilValue {
+            depth: 0.0,
+            stencil: 0,
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -5771,12 +6793,28 @@ pub union ClearValue {
     pub color: ClearColorValue,
     pub depth_stencil: ClearDepthStencilValue,
 }
+impl Default for ClearValue {
+    fn default() -> ClearValue {
+        ClearValue {
+            color: ClearColorValue::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ClearAttachment {
     pub aspect_mask: ImageAspectFlags,
     pub color_attachment: uint32_t,
     pub clear_value: ClearValue,
+}
+impl Default for ClearAttachment {
+    fn default() -> ClearAttachment {
+        ClearAttachment {
+            aspect_mask: ImageAspectFlags::default(),
+            color_attachment: 0,
+            clear_value: ClearValue::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -5791,11 +6829,34 @@ pub struct AttachmentDescription {
     pub initial_layout: ImageLayout,
     pub final_layout: ImageLayout,
 }
+impl Default for AttachmentDescription {
+    fn default() -> AttachmentDescription {
+        AttachmentDescription {
+            flags: AttachmentDescriptionFlags::default(),
+            format: Format::default(),
+            samples: SampleCountFlags::default(),
+            load_op: AttachmentLoadOp::default(),
+            store_op: AttachmentStoreOp::default(),
+            stencil_load_op: AttachmentLoadOp::default(),
+            stencil_store_op: AttachmentStoreOp::default(),
+            initial_layout: ImageLayout::default(),
+            final_layout: ImageLayout::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct AttachmentReference {
     pub attachment: uint32_t,
     pub layout: ImageLayout,
+}
+impl Default for AttachmentReference {
+    fn default() -> AttachmentReference {
+        AttachmentReference {
+            attachment: 0,
+            layout: ImageLayout::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -5811,6 +6872,22 @@ pub struct SubpassDescription {
     pub preserve_attachment_count: uint32_t,
     pub p_preserve_attachments: *const uint32_t,
 }
+impl Default for SubpassDescription {
+    fn default() -> SubpassDescription {
+        SubpassDescription {
+            flags: SubpassDescriptionFlags::default(),
+            pipeline_bind_point: PipelineBindPoint::default(),
+            input_attachment_count: 0,
+            p_input_attachments: ::std::ptr::null(),
+            color_attachment_count: 0,
+            p_color_attachments: ::std::ptr::null(),
+            p_resolve_attachments: ::std::ptr::null(),
+            p_depth_stencil_attachment: ::std::ptr::null(),
+            preserve_attachment_count: 0,
+            p_preserve_attachments: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct SubpassDependency {
@@ -5821,6 +6898,19 @@ pub struct SubpassDependency {
     pub src_access_mask: AccessFlags,
     pub dst_access_mask: AccessFlags,
     pub dependency_flags: DependencyFlags,
+}
+impl Default for SubpassDependency {
+    fn default() -> SubpassDependency {
+        SubpassDependency {
+            src_subpass: 0,
+            dst_subpass: 0,
+            src_stage_mask: PipelineStageFlags::default(),
+            dst_stage_mask: PipelineStageFlags::default(),
+            src_access_mask: AccessFlags::default(),
+            dst_access_mask: AccessFlags::default(),
+            dependency_flags: DependencyFlags::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -5835,6 +6925,21 @@ pub struct RenderPassCreateInfo {
     pub dependency_count: uint32_t,
     pub p_dependencies: *const SubpassDependency,
 }
+impl Default for RenderPassCreateInfo {
+    fn default() -> RenderPassCreateInfo {
+        RenderPassCreateInfo {
+            s_type: StructureType::RENDER_PASS_CREATE_INFO,
+            p_next: ::std::ptr::null(),
+            flags: RenderPassCreateFlags::default(),
+            attachment_count: 0,
+            p_attachments: ::std::ptr::null(),
+            subpass_count: 0,
+            p_subpasses: ::std::ptr::null(),
+            dependency_count: 0,
+            p_dependencies: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct EventCreateInfo {
@@ -5842,12 +6947,30 @@ pub struct EventCreateInfo {
     pub p_next: *const c_void,
     pub flags: EventCreateFlags,
 }
+impl Default for EventCreateInfo {
+    fn default() -> EventCreateInfo {
+        EventCreateInfo {
+            s_type: StructureType::EVENT_CREATE_INFO,
+            p_next: ::std::ptr::null(),
+            flags: EventCreateFlags::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct FenceCreateInfo {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub flags: FenceCreateFlags,
+}
+impl Default for FenceCreateInfo {
+    fn default() -> FenceCreateInfo {
+        FenceCreateInfo {
+            s_type: StructureType::FENCE_CREATE_INFO,
+            p_next: ::std::ptr::null(),
+            flags: FenceCreateFlags::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -5908,6 +7031,67 @@ pub struct PhysicalDeviceFeatures {
     pub variable_multisample_rate: Bool32,
     pub inherited_queries: Bool32,
 }
+impl Default for PhysicalDeviceFeatures {
+    fn default() -> PhysicalDeviceFeatures {
+        PhysicalDeviceFeatures {
+            robust_buffer_access: Bool32::default(),
+            full_draw_index_uint32: Bool32::default(),
+            image_cube_array: Bool32::default(),
+            independent_blend: Bool32::default(),
+            geometry_shader: Bool32::default(),
+            tessellation_shader: Bool32::default(),
+            sample_rate_shading: Bool32::default(),
+            dual_src_blend: Bool32::default(),
+            logic_op: Bool32::default(),
+            multi_draw_indirect: Bool32::default(),
+            draw_indirect_first_instance: Bool32::default(),
+            depth_clamp: Bool32::default(),
+            depth_bias_clamp: Bool32::default(),
+            fill_mode_non_solid: Bool32::default(),
+            depth_bounds: Bool32::default(),
+            wide_lines: Bool32::default(),
+            large_points: Bool32::default(),
+            alpha_to_one: Bool32::default(),
+            multi_viewport: Bool32::default(),
+            sampler_anisotropy: Bool32::default(),
+            texture_compression_etc2: Bool32::default(),
+            texture_compression_astc_ldr: Bool32::default(),
+            texture_compression_bc: Bool32::default(),
+            occlusion_query_precise: Bool32::default(),
+            pipeline_statistics_query: Bool32::default(),
+            vertex_pipeline_stores_and_atomics: Bool32::default(),
+            fragment_stores_and_atomics: Bool32::default(),
+            shader_tessellation_and_geometry_point_size: Bool32::default(),
+            shader_image_gather_extended: Bool32::default(),
+            shader_storage_image_extended_formats: Bool32::default(),
+            shader_storage_image_multisample: Bool32::default(),
+            shader_storage_image_read_without_format: Bool32::default(),
+            shader_storage_image_write_without_format: Bool32::default(),
+            shader_uniform_buffer_array_dynamic_indexing: Bool32::default(),
+            shader_sampled_image_array_dynamic_indexing: Bool32::default(),
+            shader_storage_buffer_array_dynamic_indexing: Bool32::default(),
+            shader_storage_image_array_dynamic_indexing: Bool32::default(),
+            shader_clip_distance: Bool32::default(),
+            shader_cull_distance: Bool32::default(),
+            shader_float64: Bool32::default(),
+            shader_int64: Bool32::default(),
+            shader_int16: Bool32::default(),
+            shader_resource_residency: Bool32::default(),
+            shader_resource_min_lod: Bool32::default(),
+            sparse_binding: Bool32::default(),
+            sparse_residency_buffer: Bool32::default(),
+            sparse_residency_image2_d: Bool32::default(),
+            sparse_residency_image3_d: Bool32::default(),
+            sparse_residency2_samples: Bool32::default(),
+            sparse_residency4_samples: Bool32::default(),
+            sparse_residency8_samples: Bool32::default(),
+            sparse_residency16_samples: Bool32::default(),
+            sparse_residency_aliased: Bool32::default(),
+            variable_multisample_rate: Bool32::default(),
+            inherited_queries: Bool32::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceSparseProperties {
@@ -5916,6 +7100,17 @@ pub struct PhysicalDeviceSparseProperties {
     pub residency_standard3_d_block_shape: Bool32,
     pub residency_aligned_mip_size: Bool32,
     pub residency_non_resident_strict: Bool32,
+}
+impl Default for PhysicalDeviceSparseProperties {
+    fn default() -> PhysicalDeviceSparseProperties {
+        PhysicalDeviceSparseProperties {
+            residency_standard2_d_block_shape: Bool32::default(),
+            residency_standard2_d_multisample_block_shape: Bool32::default(),
+            residency_standard3_d_block_shape: Bool32::default(),
+            residency_aligned_mip_size: Bool32::default(),
+            residency_non_resident_strict: Bool32::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -6027,12 +7222,133 @@ pub struct PhysicalDeviceLimits {
     pub optimal_buffer_copy_row_pitch_alignment: DeviceSize,
     pub non_coherent_atom_size: DeviceSize,
 }
+impl Default for PhysicalDeviceLimits {
+    fn default() -> PhysicalDeviceLimits {
+        PhysicalDeviceLimits {
+            max_image_dimension1_d: 0,
+            max_image_dimension2_d: 0,
+            max_image_dimension3_d: 0,
+            max_image_dimension_cube: 0,
+            max_image_array_layers: 0,
+            max_texel_buffer_elements: 0,
+            max_uniform_buffer_range: 0,
+            max_storage_buffer_range: 0,
+            max_push_constants_size: 0,
+            max_memory_allocation_count: 0,
+            max_sampler_allocation_count: 0,
+            buffer_image_granularity: DeviceSize::default(),
+            sparse_address_space_size: DeviceSize::default(),
+            max_bound_descriptor_sets: 0,
+            max_per_stage_descriptor_samplers: 0,
+            max_per_stage_descriptor_uniform_buffers: 0,
+            max_per_stage_descriptor_storage_buffers: 0,
+            max_per_stage_descriptor_sampled_images: 0,
+            max_per_stage_descriptor_storage_images: 0,
+            max_per_stage_descriptor_input_attachments: 0,
+            max_per_stage_resources: 0,
+            max_descriptor_set_samplers: 0,
+            max_descriptor_set_uniform_buffers: 0,
+            max_descriptor_set_uniform_buffers_dynamic: 0,
+            max_descriptor_set_storage_buffers: 0,
+            max_descriptor_set_storage_buffers_dynamic: 0,
+            max_descriptor_set_sampled_images: 0,
+            max_descriptor_set_storage_images: 0,
+            max_descriptor_set_input_attachments: 0,
+            max_vertex_input_attributes: 0,
+            max_vertex_input_bindings: 0,
+            max_vertex_input_attribute_offset: 0,
+            max_vertex_input_binding_stride: 0,
+            max_vertex_output_components: 0,
+            max_tessellation_generation_level: 0,
+            max_tessellation_patch_size: 0,
+            max_tessellation_control_per_vertex_input_components: 0,
+            max_tessellation_control_per_vertex_output_components: 0,
+            max_tessellation_control_per_patch_output_components: 0,
+            max_tessellation_control_total_output_components: 0,
+            max_tessellation_evaluation_input_components: 0,
+            max_tessellation_evaluation_output_components: 0,
+            max_geometry_shader_invocations: 0,
+            max_geometry_input_components: 0,
+            max_geometry_output_components: 0,
+            max_geometry_output_vertices: 0,
+            max_geometry_total_output_components: 0,
+            max_fragment_input_components: 0,
+            max_fragment_output_attachments: 0,
+            max_fragment_dual_src_attachments: 0,
+            max_fragment_combined_output_resources: 0,
+            max_compute_shared_memory_size: 0,
+            max_compute_work_group_count: [0; 3],
+            max_compute_work_group_invocations: 0,
+            max_compute_work_group_size: [0; 3],
+            sub_pixel_precision_bits: 0,
+            sub_texel_precision_bits: 0,
+            mipmap_precision_bits: 0,
+            max_draw_indexed_index_value: 0,
+            max_draw_indirect_count: 0,
+            max_sampler_lod_bias: 0.0,
+            max_sampler_anisotropy: 0.0,
+            max_viewports: 0,
+            max_viewport_dimensions: [0; 2],
+            viewport_bounds_range: [0.0; 2],
+            viewport_sub_pixel_bits: 0,
+            min_memory_map_alignment: 0,
+            min_texel_buffer_offset_alignment: DeviceSize::default(),
+            min_uniform_buffer_offset_alignment: DeviceSize::default(),
+            min_storage_buffer_offset_alignment: DeviceSize::default(),
+            min_texel_offset: 0,
+            max_texel_offset: 0,
+            min_texel_gather_offset: 0,
+            max_texel_gather_offset: 0,
+            min_interpolation_offset: 0.0,
+            max_interpolation_offset: 0.0,
+            sub_pixel_interpolation_offset_bits: 0,
+            max_framebuffer_width: 0,
+            max_framebuffer_height: 0,
+            max_framebuffer_layers: 0,
+            framebuffer_color_sample_counts: SampleCountFlags::default(),
+            framebuffer_depth_sample_counts: SampleCountFlags::default(),
+            framebuffer_stencil_sample_counts: SampleCountFlags::default(),
+            framebuffer_no_attachments_sample_counts: SampleCountFlags::default(),
+            max_color_attachments: 0,
+            sampled_image_color_sample_counts: SampleCountFlags::default(),
+            sampled_image_integer_sample_counts: SampleCountFlags::default(),
+            sampled_image_depth_sample_counts: SampleCountFlags::default(),
+            sampled_image_stencil_sample_counts: SampleCountFlags::default(),
+            storage_image_sample_counts: SampleCountFlags::default(),
+            max_sample_mask_words: 0,
+            timestamp_compute_and_graphics: Bool32::default(),
+            timestamp_period: 0.0,
+            max_clip_distances: 0,
+            max_cull_distances: 0,
+            max_combined_clip_and_cull_distances: 0,
+            discrete_queue_priorities: 0,
+            point_size_range: [0.0; 2],
+            line_width_range: [0.0; 2],
+            point_size_granularity: 0.0,
+            line_width_granularity: 0.0,
+            strict_lines: Bool32::default(),
+            standard_sample_locations: Bool32::default(),
+            optimal_buffer_copy_offset_alignment: DeviceSize::default(),
+            optimal_buffer_copy_row_pitch_alignment: DeviceSize::default(),
+            non_coherent_atom_size: DeviceSize::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct SemaphoreCreateInfo {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub flags: SemaphoreCreateFlags,
+}
+impl Default for SemaphoreCreateInfo {
+    fn default() -> SemaphoreCreateInfo {
+        SemaphoreCreateInfo {
+            s_type: StructureType::SEMAPHORE_CREATE_INFO,
+            p_next: ::std::ptr::null(),
+            flags: SemaphoreCreateFlags::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -6043,6 +7359,18 @@ pub struct QueryPoolCreateInfo {
     pub query_type: QueryType,
     pub query_count: uint32_t,
     pub pipeline_statistics: QueryPipelineStatisticFlags,
+}
+impl Default for QueryPoolCreateInfo {
+    fn default() -> QueryPoolCreateInfo {
+        QueryPoolCreateInfo {
+            s_type: StructureType::QUERY_POOL_CREATE_INFO,
+            p_next: ::std::ptr::null(),
+            flags: QueryPoolCreateFlags::default(),
+            query_type: QueryType::default(),
+            query_count: 0,
+            pipeline_statistics: QueryPipelineStatisticFlags::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -6057,6 +7385,21 @@ pub struct FramebufferCreateInfo {
     pub height: uint32_t,
     pub layers: uint32_t,
 }
+impl Default for FramebufferCreateInfo {
+    fn default() -> FramebufferCreateInfo {
+        FramebufferCreateInfo {
+            s_type: StructureType::FRAMEBUFFER_CREATE_INFO,
+            p_next: ::std::ptr::null(),
+            flags: FramebufferCreateFlags::default(),
+            render_pass: RenderPass::null(),
+            attachment_count: 0,
+            p_attachments: ::std::ptr::null(),
+            width: 0,
+            height: 0,
+            layers: 0,
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct DrawIndirectCommand {
@@ -6064,6 +7407,16 @@ pub struct DrawIndirectCommand {
     pub instance_count: uint32_t,
     pub first_vertex: uint32_t,
     pub first_instance: uint32_t,
+}
+impl Default for DrawIndirectCommand {
+    fn default() -> DrawIndirectCommand {
+        DrawIndirectCommand {
+            vertex_count: 0,
+            instance_count: 0,
+            first_vertex: 0,
+            first_instance: 0,
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -6074,12 +7427,28 @@ pub struct DrawIndexedIndirectCommand {
     pub vertex_offset: int32_t,
     pub first_instance: uint32_t,
 }
+impl Default for DrawIndexedIndirectCommand {
+    fn default() -> DrawIndexedIndirectCommand {
+        DrawIndexedIndirectCommand {
+            index_count: 0,
+            instance_count: 0,
+            first_index: 0,
+            vertex_offset: 0,
+            first_instance: 0,
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct DispatchIndirectCommand {
     pub x: uint32_t,
     pub y: uint32_t,
     pub z: uint32_t,
+}
+impl Default for DispatchIndirectCommand {
+    fn default() -> DispatchIndirectCommand {
+        DispatchIndirectCommand { x: 0, y: 0, z: 0 }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -6094,6 +7463,21 @@ pub struct SubmitInfo {
     pub signal_semaphore_count: uint32_t,
     pub p_signal_semaphores: *const Semaphore,
 }
+impl Default for SubmitInfo {
+    fn default() -> SubmitInfo {
+        SubmitInfo {
+            s_type: StructureType::SUBMIT_INFO,
+            p_next: ::std::ptr::null(),
+            wait_semaphore_count: 0,
+            p_wait_semaphores: ::std::ptr::null(),
+            p_wait_dst_stage_mask: ::std::ptr::null(),
+            command_buffer_count: 0,
+            p_command_buffers: ::std::ptr::null(),
+            signal_semaphore_count: 0,
+            p_signal_semaphores: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct DisplayPropertiesKHR {
@@ -6105,11 +7489,32 @@ pub struct DisplayPropertiesKHR {
     pub plane_reorder_possible: Bool32,
     pub persistent_content: Bool32,
 }
+impl Default for DisplayPropertiesKHR {
+    fn default() -> DisplayPropertiesKHR {
+        DisplayPropertiesKHR {
+            display: DisplayKHR::null(),
+            display_name: ::std::ptr::null(),
+            physical_dimensions: Extent2D::default(),
+            physical_resolution: Extent2D::default(),
+            supported_transforms: SurfaceTransformFlagsKHR::default(),
+            plane_reorder_possible: Bool32::default(),
+            persistent_content: Bool32::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct DisplayPlanePropertiesKHR {
     pub current_display: DisplayKHR,
     pub current_stack_index: uint32_t,
+}
+impl Default for DisplayPlanePropertiesKHR {
+    fn default() -> DisplayPlanePropertiesKHR {
+        DisplayPlanePropertiesKHR {
+            current_display: DisplayKHR::null(),
+            current_stack_index: 0,
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -6117,11 +7522,27 @@ pub struct DisplayModeParametersKHR {
     pub visible_region: Extent2D,
     pub refresh_rate: uint32_t,
 }
+impl Default for DisplayModeParametersKHR {
+    fn default() -> DisplayModeParametersKHR {
+        DisplayModeParametersKHR {
+            visible_region: Extent2D::default(),
+            refresh_rate: 0,
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct DisplayModePropertiesKHR {
     pub display_mode: DisplayModeKHR,
     pub parameters: DisplayModeParametersKHR,
+}
+impl Default for DisplayModePropertiesKHR {
+    fn default() -> DisplayModePropertiesKHR {
+        DisplayModePropertiesKHR {
+            display_mode: DisplayModeKHR::null(),
+            parameters: DisplayModeParametersKHR::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -6130,6 +7551,16 @@ pub struct DisplayModeCreateInfoKHR {
     pub p_next: *const c_void,
     pub flags: DisplayModeCreateFlagsKHR,
     pub parameters: DisplayModeParametersKHR,
+}
+impl Default for DisplayModeCreateInfoKHR {
+    fn default() -> DisplayModeCreateInfoKHR {
+        DisplayModeCreateInfoKHR {
+            s_type: StructureType::DISPLAY_MODE_CREATE_INFO_KHR,
+            p_next: ::std::ptr::null(),
+            flags: DisplayModeCreateFlagsKHR::default(),
+            parameters: DisplayModeParametersKHR::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -6143,6 +7574,21 @@ pub struct DisplayPlaneCapabilitiesKHR {
     pub max_dst_position: Offset2D,
     pub min_dst_extent: Extent2D,
     pub max_dst_extent: Extent2D,
+}
+impl Default for DisplayPlaneCapabilitiesKHR {
+    fn default() -> DisplayPlaneCapabilitiesKHR {
+        DisplayPlaneCapabilitiesKHR {
+            supported_alpha: DisplayPlaneAlphaFlagsKHR::default(),
+            min_src_position: Offset2D::default(),
+            max_src_position: Offset2D::default(),
+            min_src_extent: Extent2D::default(),
+            max_src_extent: Extent2D::default(),
+            min_dst_position: Offset2D::default(),
+            max_dst_position: Offset2D::default(),
+            min_dst_extent: Extent2D::default(),
+            max_dst_extent: Extent2D::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -6158,6 +7604,22 @@ pub struct DisplaySurfaceCreateInfoKHR {
     pub alpha_mode: DisplayPlaneAlphaFlagsKHR,
     pub image_extent: Extent2D,
 }
+impl Default for DisplaySurfaceCreateInfoKHR {
+    fn default() -> DisplaySurfaceCreateInfoKHR {
+        DisplaySurfaceCreateInfoKHR {
+            s_type: StructureType::DISPLAY_SURFACE_CREATE_INFO_KHR,
+            p_next: ::std::ptr::null(),
+            flags: DisplaySurfaceCreateFlagsKHR::default(),
+            display_mode: DisplayModeKHR::null(),
+            plane_index: 0,
+            plane_stack_index: 0,
+            transform: SurfaceTransformFlagsKHR::default(),
+            global_alpha: 0.0,
+            alpha_mode: DisplayPlaneAlphaFlagsKHR::default(),
+            image_extent: Extent2D::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct DisplayPresentInfoKHR {
@@ -6166,6 +7628,17 @@ pub struct DisplayPresentInfoKHR {
     pub src_rect: Rect2D,
     pub dst_rect: Rect2D,
     pub persistent: Bool32,
+}
+impl Default for DisplayPresentInfoKHR {
+    fn default() -> DisplayPresentInfoKHR {
+        DisplayPresentInfoKHR {
+            s_type: StructureType::DISPLAY_PRESENT_INFO_KHR,
+            p_next: ::std::ptr::null(),
+            src_rect: Rect2D::default(),
+            dst_rect: Rect2D::default(),
+            persistent: Bool32::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -6181,6 +7654,22 @@ pub struct SurfaceCapabilitiesKHR {
     pub supported_composite_alpha: CompositeAlphaFlagsKHR,
     pub supported_usage_flags: ImageUsageFlags,
 }
+impl Default for SurfaceCapabilitiesKHR {
+    fn default() -> SurfaceCapabilitiesKHR {
+        SurfaceCapabilitiesKHR {
+            min_image_count: 0,
+            max_image_count: 0,
+            current_extent: Extent2D::default(),
+            min_image_extent: Extent2D::default(),
+            max_image_extent: Extent2D::default(),
+            max_image_array_layers: 0,
+            supported_transforms: SurfaceTransformFlagsKHR::default(),
+            current_transform: SurfaceTransformFlagsKHR::default(),
+            supported_composite_alpha: CompositeAlphaFlagsKHR::default(),
+            supported_usage_flags: ImageUsageFlags::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct AndroidSurfaceCreateInfoKHR {
@@ -6188,6 +7677,16 @@ pub struct AndroidSurfaceCreateInfoKHR {
     pub p_next: *const c_void,
     pub flags: AndroidSurfaceCreateFlagsKHR,
     pub window: *const ANativeWindow,
+}
+impl Default for AndroidSurfaceCreateInfoKHR {
+    fn default() -> AndroidSurfaceCreateInfoKHR {
+        AndroidSurfaceCreateInfoKHR {
+            s_type: StructureType::ANDROID_SURFACE_CREATE_INFO_KHR,
+            p_next: ::std::ptr::null(),
+            flags: AndroidSurfaceCreateFlagsKHR::default(),
+            window: ::std::ptr::null(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -6198,6 +7697,17 @@ pub struct MirSurfaceCreateInfoKHR {
     pub connection: *const MirConnection,
     pub mir_surface: *const MirSurface,
 }
+impl Default for MirSurfaceCreateInfoKHR {
+    fn default() -> MirSurfaceCreateInfoKHR {
+        MirSurfaceCreateInfoKHR {
+            s_type: StructureType::MIR_SURFACE_CREATE_INFO_KHR,
+            p_next: ::std::ptr::null(),
+            flags: MirSurfaceCreateFlagsKHR::default(),
+            connection: ::std::ptr::null(),
+            mir_surface: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ViSurfaceCreateInfoNN {
@@ -6205,6 +7715,16 @@ pub struct ViSurfaceCreateInfoNN {
     pub p_next: *const c_void,
     pub flags: ViSurfaceCreateFlagsNN,
     pub window: *const c_void,
+}
+impl Default for ViSurfaceCreateInfoNN {
+    fn default() -> ViSurfaceCreateInfoNN {
+        ViSurfaceCreateInfoNN {
+            s_type: StructureType::VI_SURFACE_CREATE_INFO_NN,
+            p_next: ::std::ptr::null(),
+            flags: ViSurfaceCreateFlagsNN::default(),
+            window: ::std::ptr::null(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -6215,6 +7735,17 @@ pub struct WaylandSurfaceCreateInfoKHR {
     pub display: *const wl_display,
     pub surface: *const wl_surface,
 }
+impl Default for WaylandSurfaceCreateInfoKHR {
+    fn default() -> WaylandSurfaceCreateInfoKHR {
+        WaylandSurfaceCreateInfoKHR {
+            s_type: StructureType::WAYLAND_SURFACE_CREATE_INFO_KHR,
+            p_next: ::std::ptr::null(),
+            flags: WaylandSurfaceCreateFlagsKHR::default(),
+            display: ::std::ptr::null(),
+            surface: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct Win32SurfaceCreateInfoKHR {
@@ -6223,6 +7754,17 @@ pub struct Win32SurfaceCreateInfoKHR {
     pub flags: Win32SurfaceCreateFlagsKHR,
     pub hinstance: HINSTANCE,
     pub hwnd: HWND,
+}
+impl Default for Win32SurfaceCreateInfoKHR {
+    fn default() -> Win32SurfaceCreateInfoKHR {
+        Win32SurfaceCreateInfoKHR {
+            s_type: StructureType::WIN32_SURFACE_CREATE_INFO_KHR,
+            p_next: ::std::ptr::null(),
+            flags: Win32SurfaceCreateFlagsKHR::default(),
+            hinstance: ::std::ptr::null(),
+            hwnd: ::std::ptr::null(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -6233,6 +7775,17 @@ pub struct XlibSurfaceCreateInfoKHR {
     pub dpy: *const Display,
     pub window: Window,
 }
+impl Default for XlibSurfaceCreateInfoKHR {
+    fn default() -> XlibSurfaceCreateInfoKHR {
+        XlibSurfaceCreateInfoKHR {
+            s_type: StructureType::XLIB_SURFACE_CREATE_INFO_KHR,
+            p_next: ::std::ptr::null(),
+            flags: XlibSurfaceCreateFlagsKHR::default(),
+            dpy: ::std::ptr::null(),
+            window: 0,
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct XcbSurfaceCreateInfoKHR {
@@ -6242,11 +7795,30 @@ pub struct XcbSurfaceCreateInfoKHR {
     pub connection: *const xcb_connection_t,
     pub window: xcb_window_t,
 }
+impl Default for XcbSurfaceCreateInfoKHR {
+    fn default() -> XcbSurfaceCreateInfoKHR {
+        XcbSurfaceCreateInfoKHR {
+            s_type: StructureType::XCB_SURFACE_CREATE_INFO_KHR,
+            p_next: ::std::ptr::null(),
+            flags: XcbSurfaceCreateFlagsKHR::default(),
+            connection: ::std::ptr::null(),
+            window: 0,
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct SurfaceFormatKHR {
     pub format: Format,
     pub color_space: ColorSpaceKHR,
+}
+impl Default for SurfaceFormatKHR {
+    fn default() -> SurfaceFormatKHR {
+        SurfaceFormatKHR {
+            format: Format::default(),
+            color_space: ColorSpaceKHR::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -6270,6 +7842,30 @@ pub struct SwapchainCreateInfoKHR {
     pub clipped: Bool32,
     pub old_swapchain: SwapchainKHR,
 }
+impl Default for SwapchainCreateInfoKHR {
+    fn default() -> SwapchainCreateInfoKHR {
+        SwapchainCreateInfoKHR {
+            s_type: StructureType::SWAPCHAIN_CREATE_INFO_KHR,
+            p_next: ::std::ptr::null(),
+            flags: SwapchainCreateFlagsKHR::default(),
+            surface: SurfaceKHR::null(),
+            min_image_count: 0,
+            image_format: Format::default(),
+            image_color_space: ColorSpaceKHR::default(),
+            image_extent: Extent2D::default(),
+            image_array_layers: 0,
+            image_usage: ImageUsageFlags::default(),
+            image_sharing_mode: SharingMode::default(),
+            queue_family_index_count: 0,
+            p_queue_family_indices: ::std::ptr::null(),
+            pre_transform: SurfaceTransformFlagsKHR::default(),
+            composite_alpha: CompositeAlphaFlagsKHR::default(),
+            present_mode: PresentModeKHR::default(),
+            clipped: Bool32::default(),
+            old_swapchain: SwapchainKHR::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PresentInfoKHR {
@@ -6281,6 +7877,20 @@ pub struct PresentInfoKHR {
     pub p_swapchains: *const SwapchainKHR,
     pub p_image_indices: *const uint32_t,
     pub p_results: *const Result,
+}
+impl Default for PresentInfoKHR {
+    fn default() -> PresentInfoKHR {
+        PresentInfoKHR {
+            s_type: StructureType::PRESENT_INFO_KHR,
+            p_next: ::std::ptr::null(),
+            wait_semaphore_count: 0,
+            p_wait_semaphores: ::std::ptr::null(),
+            swapchain_count: 0,
+            p_swapchains: ::std::ptr::null(),
+            p_image_indices: ::std::ptr::null(),
+            p_results: ::std::ptr::null(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -6299,12 +7909,31 @@ pub struct ValidationFlagsEXT {
     pub disabled_validation_check_count: uint32_t,
     pub p_disabled_validation_checks: *const ValidationCheckEXT,
 }
+impl Default for ValidationFlagsEXT {
+    fn default() -> ValidationFlagsEXT {
+        ValidationFlagsEXT {
+            s_type: StructureType::VALIDATION_FLAGS_EXT,
+            p_next: ::std::ptr::null(),
+            disabled_validation_check_count: 0,
+            p_disabled_validation_checks: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PipelineRasterizationStateRasterizationOrderAMD {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub rasterization_order: RasterizationOrderAMD,
+}
+impl Default for PipelineRasterizationStateRasterizationOrderAMD {
+    fn default() -> PipelineRasterizationStateRasterizationOrderAMD {
+        PipelineRasterizationStateRasterizationOrderAMD {
+            s_type: StructureType::PIPELINE_RASTERIZATION_STATE_RASTERIZATION_ORDER_AMD,
+            p_next: ::std::ptr::null(),
+            rasterization_order: RasterizationOrderAMD::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -6314,6 +7943,17 @@ pub struct DebugMarkerObjectNameInfoEXT {
     pub object_type: DebugReportObjectTypeEXT,
     pub object: uint64_t,
     pub p_object_name: *const c_char,
+}
+impl Default for DebugMarkerObjectNameInfoEXT {
+    fn default() -> DebugMarkerObjectNameInfoEXT {
+        DebugMarkerObjectNameInfoEXT {
+            s_type: StructureType::DEBUG_MARKER_OBJECT_NAME_INFO_EXT,
+            p_next: ::std::ptr::null(),
+            object_type: DebugReportObjectTypeEXT::default(),
+            object: 0,
+            p_object_name: ::std::ptr::null(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -6326,6 +7966,19 @@ pub struct DebugMarkerObjectTagInfoEXT {
     pub tag_size: size_t,
     pub p_tag: *const c_void,
 }
+impl Default for DebugMarkerObjectTagInfoEXT {
+    fn default() -> DebugMarkerObjectTagInfoEXT {
+        DebugMarkerObjectTagInfoEXT {
+            s_type: StructureType::DEBUG_MARKER_OBJECT_TAG_INFO_EXT,
+            p_next: ::std::ptr::null(),
+            object_type: DebugReportObjectTypeEXT::default(),
+            object: 0,
+            tag_name: 0,
+            tag_size: 0,
+            p_tag: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct DebugMarkerMarkerInfoEXT {
@@ -6334,6 +7987,16 @@ pub struct DebugMarkerMarkerInfoEXT {
     pub p_marker_name: *const c_char,
     pub color: [c_float; 4],
 }
+impl Default for DebugMarkerMarkerInfoEXT {
+    fn default() -> DebugMarkerMarkerInfoEXT {
+        DebugMarkerMarkerInfoEXT {
+            s_type: StructureType::DEBUG_MARKER_MARKER_INFO_EXT,
+            p_next: ::std::ptr::null(),
+            p_marker_name: ::std::ptr::null(),
+            color: [0.0; 4],
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct DedicatedAllocationImageCreateInfoNV {
@@ -6341,12 +8004,30 @@ pub struct DedicatedAllocationImageCreateInfoNV {
     pub p_next: *const c_void,
     pub dedicated_allocation: Bool32,
 }
+impl Default for DedicatedAllocationImageCreateInfoNV {
+    fn default() -> DedicatedAllocationImageCreateInfoNV {
+        DedicatedAllocationImageCreateInfoNV {
+            s_type: StructureType::DEDICATED_ALLOCATION_IMAGE_CREATE_INFO_NV,
+            p_next: ::std::ptr::null(),
+            dedicated_allocation: Bool32::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct DedicatedAllocationBufferCreateInfoNV {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub dedicated_allocation: Bool32,
+}
+impl Default for DedicatedAllocationBufferCreateInfoNV {
+    fn default() -> DedicatedAllocationBufferCreateInfoNV {
+        DedicatedAllocationBufferCreateInfoNV {
+            s_type: StructureType::DEDICATED_ALLOCATION_BUFFER_CREATE_INFO_NV,
+            p_next: ::std::ptr::null(),
+            dedicated_allocation: Bool32::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -6356,6 +8037,16 @@ pub struct DedicatedAllocationMemoryAllocateInfoNV {
     pub image: Image,
     pub buffer: Buffer,
 }
+impl Default for DedicatedAllocationMemoryAllocateInfoNV {
+    fn default() -> DedicatedAllocationMemoryAllocateInfoNV {
+        DedicatedAllocationMemoryAllocateInfoNV {
+            s_type: StructureType::DEDICATED_ALLOCATION_MEMORY_ALLOCATE_INFO_NV,
+            p_next: ::std::ptr::null(),
+            image: Image::null(),
+            buffer: Buffer::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ExternalImageFormatPropertiesNV {
@@ -6364,6 +8055,16 @@ pub struct ExternalImageFormatPropertiesNV {
     pub export_from_imported_handle_types: ExternalMemoryHandleTypeFlagsNV,
     pub compatible_handle_types: ExternalMemoryHandleTypeFlagsNV,
 }
+impl Default for ExternalImageFormatPropertiesNV {
+    fn default() -> ExternalImageFormatPropertiesNV {
+        ExternalImageFormatPropertiesNV {
+            image_format_properties: ImageFormatProperties::default(),
+            external_memory_features: ExternalMemoryFeatureFlagsNV::default(),
+            export_from_imported_handle_types: ExternalMemoryHandleTypeFlagsNV::default(),
+            compatible_handle_types: ExternalMemoryHandleTypeFlagsNV::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ExternalMemoryImageCreateInfoNV {
@@ -6371,12 +8072,30 @@ pub struct ExternalMemoryImageCreateInfoNV {
     pub p_next: *const c_void,
     pub handle_types: ExternalMemoryHandleTypeFlagsNV,
 }
+impl Default for ExternalMemoryImageCreateInfoNV {
+    fn default() -> ExternalMemoryImageCreateInfoNV {
+        ExternalMemoryImageCreateInfoNV {
+            s_type: StructureType::EXTERNAL_MEMORY_IMAGE_CREATE_INFO_NV,
+            p_next: ::std::ptr::null(),
+            handle_types: ExternalMemoryHandleTypeFlagsNV::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ExportMemoryAllocateInfoNV {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub handle_types: ExternalMemoryHandleTypeFlagsNV,
+}
+impl Default for ExportMemoryAllocateInfoNV {
+    fn default() -> ExportMemoryAllocateInfoNV {
+        ExportMemoryAllocateInfoNV {
+            s_type: StructureType::EXPORT_MEMORY_ALLOCATE_INFO_NV,
+            p_next: ::std::ptr::null(),
+            handle_types: ExternalMemoryHandleTypeFlagsNV::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -6386,6 +8105,16 @@ pub struct ImportMemoryWin32HandleInfoNV {
     pub handle_type: ExternalMemoryHandleTypeFlagsNV,
     pub handle: HANDLE,
 }
+impl Default for ImportMemoryWin32HandleInfoNV {
+    fn default() -> ImportMemoryWin32HandleInfoNV {
+        ImportMemoryWin32HandleInfoNV {
+            s_type: StructureType::IMPORT_MEMORY_WIN32_HANDLE_INFO_NV,
+            p_next: ::std::ptr::null(),
+            handle_type: ExternalMemoryHandleTypeFlagsNV::default(),
+            handle: ::std::ptr::null_mut(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ExportMemoryWin32HandleInfoNV {
@@ -6393,6 +8122,16 @@ pub struct ExportMemoryWin32HandleInfoNV {
     pub p_next: *const c_void,
     pub p_attributes: *const SECURITY_ATTRIBUTES,
     pub dw_access: DWORD,
+}
+impl Default for ExportMemoryWin32HandleInfoNV {
+    fn default() -> ExportMemoryWin32HandleInfoNV {
+        ExportMemoryWin32HandleInfoNV {
+            s_type: StructureType::EXPORT_MEMORY_WIN32_HANDLE_INFO_NV,
+            p_next: ::std::ptr::null(),
+            p_attributes: ::std::ptr::null(),
+            dw_access: 0,
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -6407,12 +8146,36 @@ pub struct Win32KeyedMutexAcquireReleaseInfoNV {
     pub p_release_syncs: *const DeviceMemory,
     pub p_release_keys: *const uint64_t,
 }
+impl Default for Win32KeyedMutexAcquireReleaseInfoNV {
+    fn default() -> Win32KeyedMutexAcquireReleaseInfoNV {
+        Win32KeyedMutexAcquireReleaseInfoNV {
+            s_type: StructureType::WIN32_KEYED_MUTEX_ACQUIRE_RELEASE_INFO_NV,
+            p_next: ::std::ptr::null(),
+            acquire_count: 0,
+            p_acquire_syncs: ::std::ptr::null(),
+            p_acquire_keys: ::std::ptr::null(),
+            p_acquire_timeout_milliseconds: ::std::ptr::null(),
+            release_count: 0,
+            p_release_syncs: ::std::ptr::null(),
+            p_release_keys: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct DeviceGeneratedCommandsFeaturesNVX {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub compute_binding_point_support: Bool32,
+}
+impl Default for DeviceGeneratedCommandsFeaturesNVX {
+    fn default() -> DeviceGeneratedCommandsFeaturesNVX {
+        DeviceGeneratedCommandsFeaturesNVX {
+            s_type: StructureType::DEVICE_GENERATED_COMMANDS_FEATURES_NVX,
+            p_next: ::std::ptr::null(),
+            compute_binding_point_support: Bool32::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -6425,12 +8188,34 @@ pub struct DeviceGeneratedCommandsLimitsNVX {
     pub min_sequence_index_buffer_offset_alignment: uint32_t,
     pub min_commands_token_buffer_offset_alignment: uint32_t,
 }
+impl Default for DeviceGeneratedCommandsLimitsNVX {
+    fn default() -> DeviceGeneratedCommandsLimitsNVX {
+        DeviceGeneratedCommandsLimitsNVX {
+            s_type: StructureType::DEVICE_GENERATED_COMMANDS_LIMITS_NVX,
+            p_next: ::std::ptr::null(),
+            max_indirect_commands_layout_token_count: 0,
+            max_object_entry_counts: 0,
+            min_sequence_count_buffer_offset_alignment: 0,
+            min_sequence_index_buffer_offset_alignment: 0,
+            min_commands_token_buffer_offset_alignment: 0,
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct IndirectCommandsTokenNVX {
     pub token_type: IndirectCommandsTokenTypeNVX,
     pub buffer: Buffer,
     pub offset: DeviceSize,
+}
+impl Default for IndirectCommandsTokenNVX {
+    fn default() -> IndirectCommandsTokenNVX {
+        IndirectCommandsTokenNVX {
+            token_type: IndirectCommandsTokenTypeNVX::default(),
+            buffer: Buffer::null(),
+            offset: DeviceSize::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -6439,6 +8224,16 @@ pub struct IndirectCommandsLayoutTokenNVX {
     pub binding_unit: uint32_t,
     pub dynamic_count: uint32_t,
     pub divisor: uint32_t,
+}
+impl Default for IndirectCommandsLayoutTokenNVX {
+    fn default() -> IndirectCommandsLayoutTokenNVX {
+        IndirectCommandsLayoutTokenNVX {
+            token_type: IndirectCommandsTokenTypeNVX::default(),
+            binding_unit: 0,
+            dynamic_count: 0,
+            divisor: 0,
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -6449,6 +8244,18 @@ pub struct IndirectCommandsLayoutCreateInfoNVX {
     pub flags: IndirectCommandsLayoutUsageFlagsNVX,
     pub token_count: uint32_t,
     pub p_tokens: *const IndirectCommandsLayoutTokenNVX,
+}
+impl Default for IndirectCommandsLayoutCreateInfoNVX {
+    fn default() -> IndirectCommandsLayoutCreateInfoNVX {
+        IndirectCommandsLayoutCreateInfoNVX {
+            s_type: StructureType::INDIRECT_COMMANDS_LAYOUT_CREATE_INFO_NVX,
+            p_next: ::std::ptr::null(),
+            pipeline_bind_point: PipelineBindPoint::default(),
+            flags: IndirectCommandsLayoutUsageFlagsNVX::default(),
+            token_count: 0,
+            p_tokens: ::std::ptr::null(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -6466,6 +8273,24 @@ pub struct CmdProcessCommandsInfoNVX {
     pub sequences_index_buffer: Buffer,
     pub sequences_index_offset: DeviceSize,
 }
+impl Default for CmdProcessCommandsInfoNVX {
+    fn default() -> CmdProcessCommandsInfoNVX {
+        CmdProcessCommandsInfoNVX {
+            s_type: StructureType::CMD_PROCESS_COMMANDS_INFO_NVX,
+            p_next: ::std::ptr::null(),
+            object_table: ObjectTableNVX::null(),
+            indirect_commands_layout: IndirectCommandsLayoutNVX::null(),
+            indirect_commands_token_count: 0,
+            p_indirect_commands_tokens: ::std::ptr::null(),
+            max_sequences_count: 0,
+            target_command_buffer: CommandBuffer::null(),
+            sequences_count_buffer: Buffer::null(),
+            sequences_count_offset: DeviceSize::default(),
+            sequences_index_buffer: Buffer::null(),
+            sequences_index_offset: DeviceSize::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct CmdReserveSpaceForCommandsInfoNVX {
@@ -6474,6 +8299,17 @@ pub struct CmdReserveSpaceForCommandsInfoNVX {
     pub object_table: ObjectTableNVX,
     pub indirect_commands_layout: IndirectCommandsLayoutNVX,
     pub max_sequences_count: uint32_t,
+}
+impl Default for CmdReserveSpaceForCommandsInfoNVX {
+    fn default() -> CmdReserveSpaceForCommandsInfoNVX {
+        CmdReserveSpaceForCommandsInfoNVX {
+            s_type: StructureType::CMD_RESERVE_SPACE_FOR_COMMANDS_INFO_NVX,
+            p_next: ::std::ptr::null(),
+            object_table: ObjectTableNVX::null(),
+            indirect_commands_layout: IndirectCommandsLayoutNVX::null(),
+            max_sequences_count: 0,
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -6490,11 +8326,36 @@ pub struct ObjectTableCreateInfoNVX {
     pub max_sampled_images_per_descriptor: uint32_t,
     pub max_pipeline_layouts: uint32_t,
 }
+impl Default for ObjectTableCreateInfoNVX {
+    fn default() -> ObjectTableCreateInfoNVX {
+        ObjectTableCreateInfoNVX {
+            s_type: StructureType::OBJECT_TABLE_CREATE_INFO_NVX,
+            p_next: ::std::ptr::null(),
+            object_count: 0,
+            p_object_entry_types: ::std::ptr::null(),
+            p_object_entry_counts: ::std::ptr::null(),
+            p_object_entry_usage_flags: ::std::ptr::null(),
+            max_uniform_buffers_per_descriptor: 0,
+            max_storage_buffers_per_descriptor: 0,
+            max_storage_images_per_descriptor: 0,
+            max_sampled_images_per_descriptor: 0,
+            max_pipeline_layouts: 0,
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ObjectTableEntryNVX {
     pub ty: ObjectEntryTypeNVX,
     pub flags: ObjectEntryUsageFlagsNVX,
+}
+impl Default for ObjectTableEntryNVX {
+    fn default() -> ObjectTableEntryNVX {
+        ObjectTableEntryNVX {
+            ty: ObjectEntryTypeNVX::default(),
+            flags: ObjectEntryUsageFlagsNVX::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -6502,6 +8363,15 @@ pub struct ObjectTablePipelineEntryNVX {
     pub ty: ObjectEntryTypeNVX,
     pub flags: ObjectEntryUsageFlagsNVX,
     pub pipeline: Pipeline,
+}
+impl Default for ObjectTablePipelineEntryNVX {
+    fn default() -> ObjectTablePipelineEntryNVX {
+        ObjectTablePipelineEntryNVX {
+            ty: ObjectEntryTypeNVX::default(),
+            flags: ObjectEntryUsageFlagsNVX::default(),
+            pipeline: Pipeline::null(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -6511,12 +8381,31 @@ pub struct ObjectTableDescriptorSetEntryNVX {
     pub pipeline_layout: PipelineLayout,
     pub descriptor_set: DescriptorSet,
 }
+impl Default for ObjectTableDescriptorSetEntryNVX {
+    fn default() -> ObjectTableDescriptorSetEntryNVX {
+        ObjectTableDescriptorSetEntryNVX {
+            ty: ObjectEntryTypeNVX::default(),
+            flags: ObjectEntryUsageFlagsNVX::default(),
+            pipeline_layout: PipelineLayout::null(),
+            descriptor_set: DescriptorSet::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ObjectTableVertexBufferEntryNVX {
     pub ty: ObjectEntryTypeNVX,
     pub flags: ObjectEntryUsageFlagsNVX,
     pub buffer: Buffer,
+}
+impl Default for ObjectTableVertexBufferEntryNVX {
+    fn default() -> ObjectTableVertexBufferEntryNVX {
+        ObjectTableVertexBufferEntryNVX {
+            ty: ObjectEntryTypeNVX::default(),
+            flags: ObjectEntryUsageFlagsNVX::default(),
+            buffer: Buffer::null(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -6526,6 +8415,16 @@ pub struct ObjectTableIndexBufferEntryNVX {
     pub buffer: Buffer,
     pub index_type: IndexType,
 }
+impl Default for ObjectTableIndexBufferEntryNVX {
+    fn default() -> ObjectTableIndexBufferEntryNVX {
+        ObjectTableIndexBufferEntryNVX {
+            ty: ObjectEntryTypeNVX::default(),
+            flags: ObjectEntryUsageFlagsNVX::default(),
+            buffer: Buffer::null(),
+            index_type: IndexType::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ObjectTablePushConstantEntryNVX {
@@ -6534,6 +8433,16 @@ pub struct ObjectTablePushConstantEntryNVX {
     pub pipeline_layout: PipelineLayout,
     pub stage_flags: ShaderStageFlags,
 }
+impl Default for ObjectTablePushConstantEntryNVX {
+    fn default() -> ObjectTablePushConstantEntryNVX {
+        ObjectTablePushConstantEntryNVX {
+            ty: ObjectEntryTypeNVX::default(),
+            flags: ObjectEntryUsageFlagsNVX::default(),
+            pipeline_layout: PipelineLayout::null(),
+            stage_flags: ShaderStageFlags::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceFeatures2 {
@@ -6541,9 +8450,23 @@ pub struct PhysicalDeviceFeatures2 {
     pub p_next: *const c_void,
     pub features: PhysicalDeviceFeatures,
 }
+impl Default for PhysicalDeviceFeatures2 {
+    fn default() -> PhysicalDeviceFeatures2 {
+        PhysicalDeviceFeatures2 {
+            s_type: StructureType::PHYSICAL_DEVICE_FEATURES_2,
+            p_next: ::std::ptr::null(),
+            features: PhysicalDeviceFeatures::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceFeatures2KHR {}
+impl Default for PhysicalDeviceFeatures2KHR {
+    fn default() -> PhysicalDeviceFeatures2KHR {
+        PhysicalDeviceFeatures2KHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceProperties2 {
@@ -6551,9 +8474,23 @@ pub struct PhysicalDeviceProperties2 {
     pub p_next: *const c_void,
     pub properties: PhysicalDeviceProperties,
 }
+impl Default for PhysicalDeviceProperties2 {
+    fn default() -> PhysicalDeviceProperties2 {
+        PhysicalDeviceProperties2 {
+            s_type: StructureType::PHYSICAL_DEVICE_PROPERTIES_2,
+            p_next: ::std::ptr::null(),
+            properties: PhysicalDeviceProperties::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceProperties2KHR {}
+impl Default for PhysicalDeviceProperties2KHR {
+    fn default() -> PhysicalDeviceProperties2KHR {
+        PhysicalDeviceProperties2KHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct FormatProperties2 {
@@ -6561,9 +8498,23 @@ pub struct FormatProperties2 {
     pub p_next: *const c_void,
     pub format_properties: FormatProperties,
 }
+impl Default for FormatProperties2 {
+    fn default() -> FormatProperties2 {
+        FormatProperties2 {
+            s_type: StructureType::FORMAT_PROPERTIES_2,
+            p_next: ::std::ptr::null(),
+            format_properties: FormatProperties::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct FormatProperties2KHR {}
+impl Default for FormatProperties2KHR {
+    fn default() -> FormatProperties2KHR {
+        FormatProperties2KHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ImageFormatProperties2 {
@@ -6571,9 +8522,23 @@ pub struct ImageFormatProperties2 {
     pub p_next: *const c_void,
     pub image_format_properties: ImageFormatProperties,
 }
+impl Default for ImageFormatProperties2 {
+    fn default() -> ImageFormatProperties2 {
+        ImageFormatProperties2 {
+            s_type: StructureType::IMAGE_FORMAT_PROPERTIES_2,
+            p_next: ::std::ptr::null(),
+            image_format_properties: ImageFormatProperties::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ImageFormatProperties2KHR {}
+impl Default for ImageFormatProperties2KHR {
+    fn default() -> ImageFormatProperties2KHR {
+        ImageFormatProperties2KHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceImageFormatInfo2 {
@@ -6585,9 +8550,27 @@ pub struct PhysicalDeviceImageFormatInfo2 {
     pub usage: ImageUsageFlags,
     pub flags: ImageCreateFlags,
 }
+impl Default for PhysicalDeviceImageFormatInfo2 {
+    fn default() -> PhysicalDeviceImageFormatInfo2 {
+        PhysicalDeviceImageFormatInfo2 {
+            s_type: StructureType::PHYSICAL_DEVICE_IMAGE_FORMAT_INFO_2,
+            p_next: ::std::ptr::null(),
+            format: Format::default(),
+            ty: ImageType::default(),
+            tiling: ImageTiling::default(),
+            usage: ImageUsageFlags::default(),
+            flags: ImageCreateFlags::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceImageFormatInfo2KHR {}
+impl Default for PhysicalDeviceImageFormatInfo2KHR {
+    fn default() -> PhysicalDeviceImageFormatInfo2KHR {
+        PhysicalDeviceImageFormatInfo2KHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct QueueFamilyProperties2 {
@@ -6595,9 +8578,23 @@ pub struct QueueFamilyProperties2 {
     pub p_next: *const c_void,
     pub queue_family_properties: QueueFamilyProperties,
 }
+impl Default for QueueFamilyProperties2 {
+    fn default() -> QueueFamilyProperties2 {
+        QueueFamilyProperties2 {
+            s_type: StructureType::QUEUE_FAMILY_PROPERTIES_2,
+            p_next: ::std::ptr::null(),
+            queue_family_properties: QueueFamilyProperties::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct QueueFamilyProperties2KHR {}
+impl Default for QueueFamilyProperties2KHR {
+    fn default() -> QueueFamilyProperties2KHR {
+        QueueFamilyProperties2KHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceMemoryProperties2 {
@@ -6605,9 +8602,23 @@ pub struct PhysicalDeviceMemoryProperties2 {
     pub p_next: *const c_void,
     pub memory_properties: PhysicalDeviceMemoryProperties,
 }
+impl Default for PhysicalDeviceMemoryProperties2 {
+    fn default() -> PhysicalDeviceMemoryProperties2 {
+        PhysicalDeviceMemoryProperties2 {
+            s_type: StructureType::PHYSICAL_DEVICE_MEMORY_PROPERTIES_2,
+            p_next: ::std::ptr::null(),
+            memory_properties: PhysicalDeviceMemoryProperties::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceMemoryProperties2KHR {}
+impl Default for PhysicalDeviceMemoryProperties2KHR {
+    fn default() -> PhysicalDeviceMemoryProperties2KHR {
+        PhysicalDeviceMemoryProperties2KHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct SparseImageFormatProperties2 {
@@ -6615,9 +8626,23 @@ pub struct SparseImageFormatProperties2 {
     pub p_next: *const c_void,
     pub properties: SparseImageFormatProperties,
 }
+impl Default for SparseImageFormatProperties2 {
+    fn default() -> SparseImageFormatProperties2 {
+        SparseImageFormatProperties2 {
+            s_type: StructureType::SPARSE_IMAGE_FORMAT_PROPERTIES_2,
+            p_next: ::std::ptr::null(),
+            properties: SparseImageFormatProperties::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct SparseImageFormatProperties2KHR {}
+impl Default for SparseImageFormatProperties2KHR {
+    fn default() -> SparseImageFormatProperties2KHR {
+        SparseImageFormatProperties2KHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceSparseImageFormatInfo2 {
@@ -6629,15 +8654,42 @@ pub struct PhysicalDeviceSparseImageFormatInfo2 {
     pub usage: ImageUsageFlags,
     pub tiling: ImageTiling,
 }
+impl Default for PhysicalDeviceSparseImageFormatInfo2 {
+    fn default() -> PhysicalDeviceSparseImageFormatInfo2 {
+        PhysicalDeviceSparseImageFormatInfo2 {
+            s_type: StructureType::PHYSICAL_DEVICE_SPARSE_IMAGE_FORMAT_INFO_2,
+            p_next: ::std::ptr::null(),
+            format: Format::default(),
+            ty: ImageType::default(),
+            samples: SampleCountFlags::default(),
+            usage: ImageUsageFlags::default(),
+            tiling: ImageTiling::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceSparseImageFormatInfo2KHR {}
+impl Default for PhysicalDeviceSparseImageFormatInfo2KHR {
+    fn default() -> PhysicalDeviceSparseImageFormatInfo2KHR {
+        PhysicalDeviceSparseImageFormatInfo2KHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDevicePushDescriptorPropertiesKHR {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub max_push_descriptors: uint32_t,
+}
+impl Default for PhysicalDevicePushDescriptorPropertiesKHR {
+    fn default() -> PhysicalDevicePushDescriptorPropertiesKHR {
+        PhysicalDevicePushDescriptorPropertiesKHR {
+            s_type: StructureType::PHYSICAL_DEVICE_PUSH_DESCRIPTOR_PROPERTIES_KHR,
+            p_next: ::std::ptr::null(),
+            max_push_descriptors: 0,
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -6647,11 +8699,29 @@ pub struct PresentRegionsKHR {
     pub swapchain_count: uint32_t,
     pub p_regions: *const PresentRegionKHR,
 }
+impl Default for PresentRegionsKHR {
+    fn default() -> PresentRegionsKHR {
+        PresentRegionsKHR {
+            s_type: StructureType::PRESENT_REGIONS_KHR,
+            p_next: ::std::ptr::null(),
+            swapchain_count: 0,
+            p_regions: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PresentRegionKHR {
     pub rectangle_count: uint32_t,
     pub p_rectangles: *const RectLayerKHR,
+}
+impl Default for PresentRegionKHR {
+    fn default() -> PresentRegionKHR {
+        PresentRegionKHR {
+            rectangle_count: 0,
+            p_rectangles: ::std::ptr::null(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -6659,6 +8729,15 @@ pub struct RectLayerKHR {
     pub offset: Offset2D,
     pub extent: Extent2D,
     pub layer: uint32_t,
+}
+impl Default for RectLayerKHR {
+    fn default() -> RectLayerKHR {
+        RectLayerKHR {
+            offset: Offset2D::default(),
+            extent: Extent2D::default(),
+            layer: 0,
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -6668,9 +8747,24 @@ pub struct PhysicalDeviceVariablePointerFeatures {
     pub variable_pointers_storage_buffer: Bool32,
     pub variable_pointers: Bool32,
 }
+impl Default for PhysicalDeviceVariablePointerFeatures {
+    fn default() -> PhysicalDeviceVariablePointerFeatures {
+        PhysicalDeviceVariablePointerFeatures {
+            s_type: StructureType::PHYSICAL_DEVICE_VARIABLE_POINTER_FEATURES,
+            p_next: ::std::ptr::null(),
+            variable_pointers_storage_buffer: Bool32::default(),
+            variable_pointers: Bool32::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceVariablePointerFeaturesKHR {}
+impl Default for PhysicalDeviceVariablePointerFeaturesKHR {
+    fn default() -> PhysicalDeviceVariablePointerFeaturesKHR {
+        PhysicalDeviceVariablePointerFeaturesKHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ExternalMemoryProperties {
@@ -6678,9 +8772,23 @@ pub struct ExternalMemoryProperties {
     pub export_from_imported_handle_types: ExternalMemoryHandleTypeFlags,
     pub compatible_handle_types: ExternalMemoryHandleTypeFlags,
 }
+impl Default for ExternalMemoryProperties {
+    fn default() -> ExternalMemoryProperties {
+        ExternalMemoryProperties {
+            external_memory_features: ExternalMemoryFeatureFlags::default(),
+            export_from_imported_handle_types: ExternalMemoryHandleTypeFlags::default(),
+            compatible_handle_types: ExternalMemoryHandleTypeFlags::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ExternalMemoryPropertiesKHR {}
+impl Default for ExternalMemoryPropertiesKHR {
+    fn default() -> ExternalMemoryPropertiesKHR {
+        ExternalMemoryPropertiesKHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceExternalImageFormatInfo {
@@ -6688,9 +8796,23 @@ pub struct PhysicalDeviceExternalImageFormatInfo {
     pub p_next: *const c_void,
     pub handle_type: ExternalMemoryHandleTypeFlags,
 }
+impl Default for PhysicalDeviceExternalImageFormatInfo {
+    fn default() -> PhysicalDeviceExternalImageFormatInfo {
+        PhysicalDeviceExternalImageFormatInfo {
+            s_type: StructureType::PHYSICAL_DEVICE_EXTERNAL_IMAGE_FORMAT_INFO,
+            p_next: ::std::ptr::null(),
+            handle_type: ExternalMemoryHandleTypeFlags::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceExternalImageFormatInfoKHR {}
+impl Default for PhysicalDeviceExternalImageFormatInfoKHR {
+    fn default() -> PhysicalDeviceExternalImageFormatInfoKHR {
+        PhysicalDeviceExternalImageFormatInfoKHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ExternalImageFormatProperties {
@@ -6698,9 +8820,23 @@ pub struct ExternalImageFormatProperties {
     pub p_next: *const c_void,
     pub external_memory_properties: ExternalMemoryProperties,
 }
+impl Default for ExternalImageFormatProperties {
+    fn default() -> ExternalImageFormatProperties {
+        ExternalImageFormatProperties {
+            s_type: StructureType::EXTERNAL_IMAGE_FORMAT_PROPERTIES,
+            p_next: ::std::ptr::null(),
+            external_memory_properties: ExternalMemoryProperties::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ExternalImageFormatPropertiesKHR {}
+impl Default for ExternalImageFormatPropertiesKHR {
+    fn default() -> ExternalImageFormatPropertiesKHR {
+        ExternalImageFormatPropertiesKHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceExternalBufferInfo {
@@ -6710,9 +8846,25 @@ pub struct PhysicalDeviceExternalBufferInfo {
     pub usage: BufferUsageFlags,
     pub handle_type: ExternalMemoryHandleTypeFlags,
 }
+impl Default for PhysicalDeviceExternalBufferInfo {
+    fn default() -> PhysicalDeviceExternalBufferInfo {
+        PhysicalDeviceExternalBufferInfo {
+            s_type: StructureType::PHYSICAL_DEVICE_EXTERNAL_BUFFER_INFO,
+            p_next: ::std::ptr::null(),
+            flags: BufferCreateFlags::default(),
+            usage: BufferUsageFlags::default(),
+            handle_type: ExternalMemoryHandleTypeFlags::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceExternalBufferInfoKHR {}
+impl Default for PhysicalDeviceExternalBufferInfoKHR {
+    fn default() -> PhysicalDeviceExternalBufferInfoKHR {
+        PhysicalDeviceExternalBufferInfoKHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ExternalBufferProperties {
@@ -6720,9 +8872,23 @@ pub struct ExternalBufferProperties {
     pub p_next: *const c_void,
     pub external_memory_properties: ExternalMemoryProperties,
 }
+impl Default for ExternalBufferProperties {
+    fn default() -> ExternalBufferProperties {
+        ExternalBufferProperties {
+            s_type: StructureType::EXTERNAL_BUFFER_PROPERTIES,
+            p_next: ::std::ptr::null(),
+            external_memory_properties: ExternalMemoryProperties::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ExternalBufferPropertiesKHR {}
+impl Default for ExternalBufferPropertiesKHR {
+    fn default() -> ExternalBufferPropertiesKHR {
+        ExternalBufferPropertiesKHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceIDProperties {
@@ -6734,9 +8900,27 @@ pub struct PhysicalDeviceIDProperties {
     pub device_node_mask: uint32_t,
     pub device_luid_valid: Bool32,
 }
+impl Default for PhysicalDeviceIDProperties {
+    fn default() -> PhysicalDeviceIDProperties {
+        PhysicalDeviceIDProperties {
+            s_type: StructureType::PHYSICAL_DEVICE_ID_PROPERTIES,
+            p_next: ::std::ptr::null(),
+            device_uuid: [0; VK_UUID_SIZE],
+            driver_uuid: [0; VK_UUID_SIZE],
+            device_luid: [0; VK_LUID_SIZE],
+            device_node_mask: 0,
+            device_luid_valid: Bool32::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceIDPropertiesKHR {}
+impl Default for PhysicalDeviceIDPropertiesKHR {
+    fn default() -> PhysicalDeviceIDPropertiesKHR {
+        PhysicalDeviceIDPropertiesKHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ExternalMemoryImageCreateInfo {
@@ -6744,9 +8928,23 @@ pub struct ExternalMemoryImageCreateInfo {
     pub p_next: *const c_void,
     pub handle_types: ExternalMemoryHandleTypeFlags,
 }
+impl Default for ExternalMemoryImageCreateInfo {
+    fn default() -> ExternalMemoryImageCreateInfo {
+        ExternalMemoryImageCreateInfo {
+            s_type: StructureType::EXTERNAL_MEMORY_IMAGE_CREATE_INFO,
+            p_next: ::std::ptr::null(),
+            handle_types: ExternalMemoryHandleTypeFlags::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ExternalMemoryImageCreateInfoKHR {}
+impl Default for ExternalMemoryImageCreateInfoKHR {
+    fn default() -> ExternalMemoryImageCreateInfoKHR {
+        ExternalMemoryImageCreateInfoKHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ExternalMemoryBufferCreateInfo {
@@ -6754,9 +8952,23 @@ pub struct ExternalMemoryBufferCreateInfo {
     pub p_next: *const c_void,
     pub handle_types: ExternalMemoryHandleTypeFlags,
 }
+impl Default for ExternalMemoryBufferCreateInfo {
+    fn default() -> ExternalMemoryBufferCreateInfo {
+        ExternalMemoryBufferCreateInfo {
+            s_type: StructureType::EXTERNAL_MEMORY_BUFFER_CREATE_INFO,
+            p_next: ::std::ptr::null(),
+            handle_types: ExternalMemoryHandleTypeFlags::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ExternalMemoryBufferCreateInfoKHR {}
+impl Default for ExternalMemoryBufferCreateInfoKHR {
+    fn default() -> ExternalMemoryBufferCreateInfoKHR {
+        ExternalMemoryBufferCreateInfoKHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ExportMemoryAllocateInfo {
@@ -6764,9 +8976,23 @@ pub struct ExportMemoryAllocateInfo {
     pub p_next: *const c_void,
     pub handle_types: ExternalMemoryHandleTypeFlags,
 }
+impl Default for ExportMemoryAllocateInfo {
+    fn default() -> ExportMemoryAllocateInfo {
+        ExportMemoryAllocateInfo {
+            s_type: StructureType::EXPORT_MEMORY_ALLOCATE_INFO,
+            p_next: ::std::ptr::null(),
+            handle_types: ExternalMemoryHandleTypeFlags::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ExportMemoryAllocateInfoKHR {}
+impl Default for ExportMemoryAllocateInfoKHR {
+    fn default() -> ExportMemoryAllocateInfoKHR {
+        ExportMemoryAllocateInfoKHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ImportMemoryWin32HandleInfoKHR {
@@ -6775,6 +9001,17 @@ pub struct ImportMemoryWin32HandleInfoKHR {
     pub handle_type: ExternalMemoryHandleTypeFlags,
     pub handle: HANDLE,
     pub name: LPCWSTR,
+}
+impl Default for ImportMemoryWin32HandleInfoKHR {
+    fn default() -> ImportMemoryWin32HandleInfoKHR {
+        ImportMemoryWin32HandleInfoKHR {
+            s_type: StructureType::IMPORT_MEMORY_WIN32_HANDLE_INFO_KHR,
+            p_next: ::std::ptr::null(),
+            handle_type: ExternalMemoryHandleTypeFlags::default(),
+            handle: ::std::ptr::null_mut(),
+            name: ::std::ptr::null(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -6785,12 +9022,32 @@ pub struct ExportMemoryWin32HandleInfoKHR {
     pub dw_access: DWORD,
     pub name: LPCWSTR,
 }
+impl Default for ExportMemoryWin32HandleInfoKHR {
+    fn default() -> ExportMemoryWin32HandleInfoKHR {
+        ExportMemoryWin32HandleInfoKHR {
+            s_type: StructureType::EXPORT_MEMORY_WIN32_HANDLE_INFO_KHR,
+            p_next: ::std::ptr::null(),
+            p_attributes: ::std::ptr::null(),
+            dw_access: 0,
+            name: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct MemoryWin32HandlePropertiesKHR {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub memory_type_bits: uint32_t,
+}
+impl Default for MemoryWin32HandlePropertiesKHR {
+    fn default() -> MemoryWin32HandlePropertiesKHR {
+        MemoryWin32HandlePropertiesKHR {
+            s_type: StructureType::MEMORY_WIN32_HANDLE_PROPERTIES_KHR,
+            p_next: ::std::ptr::null(),
+            memory_type_bits: 0,
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -6800,6 +9057,16 @@ pub struct MemoryGetWin32HandleInfoKHR {
     pub memory: DeviceMemory,
     pub handle_type: ExternalMemoryHandleTypeFlags,
 }
+impl Default for MemoryGetWin32HandleInfoKHR {
+    fn default() -> MemoryGetWin32HandleInfoKHR {
+        MemoryGetWin32HandleInfoKHR {
+            s_type: StructureType::MEMORY_GET_WIN32_HANDLE_INFO_KHR,
+            p_next: ::std::ptr::null(),
+            memory: DeviceMemory::null(),
+            handle_type: ExternalMemoryHandleTypeFlags::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ImportMemoryFdInfoKHR {
@@ -6808,12 +9075,31 @@ pub struct ImportMemoryFdInfoKHR {
     pub handle_type: ExternalMemoryHandleTypeFlags,
     pub fd: c_int,
 }
+impl Default for ImportMemoryFdInfoKHR {
+    fn default() -> ImportMemoryFdInfoKHR {
+        ImportMemoryFdInfoKHR {
+            s_type: StructureType::IMPORT_MEMORY_FD_INFO_KHR,
+            p_next: ::std::ptr::null(),
+            handle_type: ExternalMemoryHandleTypeFlags::default(),
+            fd: c_int::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct MemoryFdPropertiesKHR {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub memory_type_bits: uint32_t,
+}
+impl Default for MemoryFdPropertiesKHR {
+    fn default() -> MemoryFdPropertiesKHR {
+        MemoryFdPropertiesKHR {
+            s_type: StructureType::MEMORY_FD_PROPERTIES_KHR,
+            p_next: ::std::ptr::null(),
+            memory_type_bits: 0,
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -6822,6 +9108,16 @@ pub struct MemoryGetFdInfoKHR {
     pub p_next: *const c_void,
     pub memory: DeviceMemory,
     pub handle_type: ExternalMemoryHandleTypeFlags,
+}
+impl Default for MemoryGetFdInfoKHR {
+    fn default() -> MemoryGetFdInfoKHR {
+        MemoryGetFdInfoKHR {
+            s_type: StructureType::MEMORY_GET_FD_INFO_KHR,
+            p_next: ::std::ptr::null(),
+            memory: DeviceMemory::null(),
+            handle_type: ExternalMemoryHandleTypeFlags::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -6836,6 +9132,21 @@ pub struct Win32KeyedMutexAcquireReleaseInfoKHR {
     pub p_release_syncs: *const DeviceMemory,
     pub p_release_keys: *const uint64_t,
 }
+impl Default for Win32KeyedMutexAcquireReleaseInfoKHR {
+    fn default() -> Win32KeyedMutexAcquireReleaseInfoKHR {
+        Win32KeyedMutexAcquireReleaseInfoKHR {
+            s_type: StructureType::WIN32_KEYED_MUTEX_ACQUIRE_RELEASE_INFO_KHR,
+            p_next: ::std::ptr::null(),
+            acquire_count: 0,
+            p_acquire_syncs: ::std::ptr::null(),
+            p_acquire_keys: ::std::ptr::null(),
+            p_acquire_timeouts: ::std::ptr::null(),
+            release_count: 0,
+            p_release_syncs: ::std::ptr::null(),
+            p_release_keys: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceExternalSemaphoreInfo {
@@ -6843,9 +9154,23 @@ pub struct PhysicalDeviceExternalSemaphoreInfo {
     pub p_next: *const c_void,
     pub handle_type: ExternalSemaphoreHandleTypeFlags,
 }
+impl Default for PhysicalDeviceExternalSemaphoreInfo {
+    fn default() -> PhysicalDeviceExternalSemaphoreInfo {
+        PhysicalDeviceExternalSemaphoreInfo {
+            s_type: StructureType::PHYSICAL_DEVICE_EXTERNAL_SEMAPHORE_INFO,
+            p_next: ::std::ptr::null(),
+            handle_type: ExternalSemaphoreHandleTypeFlags::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceExternalSemaphoreInfoKHR {}
+impl Default for PhysicalDeviceExternalSemaphoreInfoKHR {
+    fn default() -> PhysicalDeviceExternalSemaphoreInfoKHR {
+        PhysicalDeviceExternalSemaphoreInfoKHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ExternalSemaphoreProperties {
@@ -6855,9 +9180,25 @@ pub struct ExternalSemaphoreProperties {
     pub compatible_handle_types: ExternalSemaphoreHandleTypeFlags,
     pub external_semaphore_features: ExternalSemaphoreFeatureFlags,
 }
+impl Default for ExternalSemaphoreProperties {
+    fn default() -> ExternalSemaphoreProperties {
+        ExternalSemaphoreProperties {
+            s_type: StructureType::EXTERNAL_SEMAPHORE_PROPERTIES,
+            p_next: ::std::ptr::null(),
+            export_from_imported_handle_types: ExternalSemaphoreHandleTypeFlags::default(),
+            compatible_handle_types: ExternalSemaphoreHandleTypeFlags::default(),
+            external_semaphore_features: ExternalSemaphoreFeatureFlags::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ExternalSemaphorePropertiesKHR {}
+impl Default for ExternalSemaphorePropertiesKHR {
+    fn default() -> ExternalSemaphorePropertiesKHR {
+        ExternalSemaphorePropertiesKHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ExportSemaphoreCreateInfo {
@@ -6865,9 +9206,23 @@ pub struct ExportSemaphoreCreateInfo {
     pub p_next: *const c_void,
     pub handle_types: ExternalSemaphoreHandleTypeFlags,
 }
+impl Default for ExportSemaphoreCreateInfo {
+    fn default() -> ExportSemaphoreCreateInfo {
+        ExportSemaphoreCreateInfo {
+            s_type: StructureType::EXPORT_SEMAPHORE_CREATE_INFO,
+            p_next: ::std::ptr::null(),
+            handle_types: ExternalSemaphoreHandleTypeFlags::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ExportSemaphoreCreateInfoKHR {}
+impl Default for ExportSemaphoreCreateInfoKHR {
+    fn default() -> ExportSemaphoreCreateInfoKHR {
+        ExportSemaphoreCreateInfoKHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ImportSemaphoreWin32HandleInfoKHR {
@@ -6879,6 +9234,19 @@ pub struct ImportSemaphoreWin32HandleInfoKHR {
     pub handle: HANDLE,
     pub name: LPCWSTR,
 }
+impl Default for ImportSemaphoreWin32HandleInfoKHR {
+    fn default() -> ImportSemaphoreWin32HandleInfoKHR {
+        ImportSemaphoreWin32HandleInfoKHR {
+            s_type: StructureType::IMPORT_SEMAPHORE_WIN32_HANDLE_INFO_KHR,
+            p_next: ::std::ptr::null(),
+            semaphore: Semaphore::null(),
+            flags: SemaphoreImportFlags::default(),
+            handle_type: ExternalSemaphoreHandleTypeFlags::default(),
+            handle: ::std::ptr::null_mut(),
+            name: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ExportSemaphoreWin32HandleInfoKHR {
@@ -6887,6 +9255,17 @@ pub struct ExportSemaphoreWin32HandleInfoKHR {
     pub p_attributes: *const SECURITY_ATTRIBUTES,
     pub dw_access: DWORD,
     pub name: LPCWSTR,
+}
+impl Default for ExportSemaphoreWin32HandleInfoKHR {
+    fn default() -> ExportSemaphoreWin32HandleInfoKHR {
+        ExportSemaphoreWin32HandleInfoKHR {
+            s_type: StructureType::EXPORT_SEMAPHORE_WIN32_HANDLE_INFO_KHR,
+            p_next: ::std::ptr::null(),
+            p_attributes: ::std::ptr::null(),
+            dw_access: 0,
+            name: ::std::ptr::null(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -6898,6 +9277,18 @@ pub struct D3D12FenceSubmitInfoKHR {
     pub signal_semaphore_values_count: uint32_t,
     pub p_signal_semaphore_values: *const uint64_t,
 }
+impl Default for D3D12FenceSubmitInfoKHR {
+    fn default() -> D3D12FenceSubmitInfoKHR {
+        D3D12FenceSubmitInfoKHR {
+            s_type: StructureType::D3D12_FENCE_SUBMIT_INFO_KHR,
+            p_next: ::std::ptr::null(),
+            wait_semaphore_values_count: 0,
+            p_wait_semaphore_values: ::std::ptr::null(),
+            signal_semaphore_values_count: 0,
+            p_signal_semaphore_values: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct SemaphoreGetWin32HandleInfoKHR {
@@ -6905,6 +9296,16 @@ pub struct SemaphoreGetWin32HandleInfoKHR {
     pub p_next: *const c_void,
     pub semaphore: Semaphore,
     pub handle_type: ExternalSemaphoreHandleTypeFlags,
+}
+impl Default for SemaphoreGetWin32HandleInfoKHR {
+    fn default() -> SemaphoreGetWin32HandleInfoKHR {
+        SemaphoreGetWin32HandleInfoKHR {
+            s_type: StructureType::SEMAPHORE_GET_WIN32_HANDLE_INFO_KHR,
+            p_next: ::std::ptr::null(),
+            semaphore: Semaphore::null(),
+            handle_type: ExternalSemaphoreHandleTypeFlags::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -6916,6 +9317,18 @@ pub struct ImportSemaphoreFdInfoKHR {
     pub handle_type: ExternalSemaphoreHandleTypeFlags,
     pub fd: c_int,
 }
+impl Default for ImportSemaphoreFdInfoKHR {
+    fn default() -> ImportSemaphoreFdInfoKHR {
+        ImportSemaphoreFdInfoKHR {
+            s_type: StructureType::IMPORT_SEMAPHORE_FD_INFO_KHR,
+            p_next: ::std::ptr::null(),
+            semaphore: Semaphore::null(),
+            flags: SemaphoreImportFlags::default(),
+            handle_type: ExternalSemaphoreHandleTypeFlags::default(),
+            fd: c_int::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct SemaphoreGetFdInfoKHR {
@@ -6924,6 +9337,16 @@ pub struct SemaphoreGetFdInfoKHR {
     pub semaphore: Semaphore,
     pub handle_type: ExternalSemaphoreHandleTypeFlags,
 }
+impl Default for SemaphoreGetFdInfoKHR {
+    fn default() -> SemaphoreGetFdInfoKHR {
+        SemaphoreGetFdInfoKHR {
+            s_type: StructureType::SEMAPHORE_GET_FD_INFO_KHR,
+            p_next: ::std::ptr::null(),
+            semaphore: Semaphore::null(),
+            handle_type: ExternalSemaphoreHandleTypeFlags::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceExternalFenceInfo {
@@ -6931,9 +9354,23 @@ pub struct PhysicalDeviceExternalFenceInfo {
     pub p_next: *const c_void,
     pub handle_type: ExternalFenceHandleTypeFlags,
 }
+impl Default for PhysicalDeviceExternalFenceInfo {
+    fn default() -> PhysicalDeviceExternalFenceInfo {
+        PhysicalDeviceExternalFenceInfo {
+            s_type: StructureType::PHYSICAL_DEVICE_EXTERNAL_FENCE_INFO,
+            p_next: ::std::ptr::null(),
+            handle_type: ExternalFenceHandleTypeFlags::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceExternalFenceInfoKHR {}
+impl Default for PhysicalDeviceExternalFenceInfoKHR {
+    fn default() -> PhysicalDeviceExternalFenceInfoKHR {
+        PhysicalDeviceExternalFenceInfoKHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ExternalFenceProperties {
@@ -6943,9 +9380,25 @@ pub struct ExternalFenceProperties {
     pub compatible_handle_types: ExternalFenceHandleTypeFlags,
     pub external_fence_features: ExternalFenceFeatureFlags,
 }
+impl Default for ExternalFenceProperties {
+    fn default() -> ExternalFenceProperties {
+        ExternalFenceProperties {
+            s_type: StructureType::EXTERNAL_FENCE_PROPERTIES,
+            p_next: ::std::ptr::null(),
+            export_from_imported_handle_types: ExternalFenceHandleTypeFlags::default(),
+            compatible_handle_types: ExternalFenceHandleTypeFlags::default(),
+            external_fence_features: ExternalFenceFeatureFlags::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ExternalFencePropertiesKHR {}
+impl Default for ExternalFencePropertiesKHR {
+    fn default() -> ExternalFencePropertiesKHR {
+        ExternalFencePropertiesKHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ExportFenceCreateInfo {
@@ -6953,9 +9406,23 @@ pub struct ExportFenceCreateInfo {
     pub p_next: *const c_void,
     pub handle_types: ExternalFenceHandleTypeFlags,
 }
+impl Default for ExportFenceCreateInfo {
+    fn default() -> ExportFenceCreateInfo {
+        ExportFenceCreateInfo {
+            s_type: StructureType::EXPORT_FENCE_CREATE_INFO,
+            p_next: ::std::ptr::null(),
+            handle_types: ExternalFenceHandleTypeFlags::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ExportFenceCreateInfoKHR {}
+impl Default for ExportFenceCreateInfoKHR {
+    fn default() -> ExportFenceCreateInfoKHR {
+        ExportFenceCreateInfoKHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ImportFenceWin32HandleInfoKHR {
@@ -6967,6 +9434,19 @@ pub struct ImportFenceWin32HandleInfoKHR {
     pub handle: HANDLE,
     pub name: LPCWSTR,
 }
+impl Default for ImportFenceWin32HandleInfoKHR {
+    fn default() -> ImportFenceWin32HandleInfoKHR {
+        ImportFenceWin32HandleInfoKHR {
+            s_type: StructureType::IMPORT_FENCE_WIN32_HANDLE_INFO_KHR,
+            p_next: ::std::ptr::null(),
+            fence: Fence::null(),
+            flags: FenceImportFlags::default(),
+            handle_type: ExternalFenceHandleTypeFlags::default(),
+            handle: ::std::ptr::null_mut(),
+            name: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ExportFenceWin32HandleInfoKHR {
@@ -6976,6 +9456,17 @@ pub struct ExportFenceWin32HandleInfoKHR {
     pub dw_access: DWORD,
     pub name: LPCWSTR,
 }
+impl Default for ExportFenceWin32HandleInfoKHR {
+    fn default() -> ExportFenceWin32HandleInfoKHR {
+        ExportFenceWin32HandleInfoKHR {
+            s_type: StructureType::EXPORT_FENCE_WIN32_HANDLE_INFO_KHR,
+            p_next: ::std::ptr::null(),
+            p_attributes: ::std::ptr::null(),
+            dw_access: 0,
+            name: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct FenceGetWin32HandleInfoKHR {
@@ -6983,6 +9474,16 @@ pub struct FenceGetWin32HandleInfoKHR {
     pub p_next: *const c_void,
     pub fence: Fence,
     pub handle_type: ExternalFenceHandleTypeFlags,
+}
+impl Default for FenceGetWin32HandleInfoKHR {
+    fn default() -> FenceGetWin32HandleInfoKHR {
+        FenceGetWin32HandleInfoKHR {
+            s_type: StructureType::FENCE_GET_WIN32_HANDLE_INFO_KHR,
+            p_next: ::std::ptr::null(),
+            fence: Fence::null(),
+            handle_type: ExternalFenceHandleTypeFlags::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -6994,6 +9495,18 @@ pub struct ImportFenceFdInfoKHR {
     pub handle_type: ExternalFenceHandleTypeFlags,
     pub fd: c_int,
 }
+impl Default for ImportFenceFdInfoKHR {
+    fn default() -> ImportFenceFdInfoKHR {
+        ImportFenceFdInfoKHR {
+            s_type: StructureType::IMPORT_FENCE_FD_INFO_KHR,
+            p_next: ::std::ptr::null(),
+            fence: Fence::null(),
+            flags: FenceImportFlags::default(),
+            handle_type: ExternalFenceHandleTypeFlags::default(),
+            fd: c_int::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct FenceGetFdInfoKHR {
@@ -7001,6 +9514,16 @@ pub struct FenceGetFdInfoKHR {
     pub p_next: *const c_void,
     pub fence: Fence,
     pub handle_type: ExternalFenceHandleTypeFlags,
+}
+impl Default for FenceGetFdInfoKHR {
+    fn default() -> FenceGetFdInfoKHR {
+        FenceGetFdInfoKHR {
+            s_type: StructureType::FENCE_GET_FD_INFO_KHR,
+            p_next: ::std::ptr::null(),
+            fence: Fence::null(),
+            handle_type: ExternalFenceHandleTypeFlags::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -7011,9 +9534,25 @@ pub struct PhysicalDeviceMultiviewFeatures {
     pub multiview_geometry_shader: Bool32,
     pub multiview_tessellation_shader: Bool32,
 }
+impl Default for PhysicalDeviceMultiviewFeatures {
+    fn default() -> PhysicalDeviceMultiviewFeatures {
+        PhysicalDeviceMultiviewFeatures {
+            s_type: StructureType::PHYSICAL_DEVICE_MULTIVIEW_FEATURES,
+            p_next: ::std::ptr::null(),
+            multiview: Bool32::default(),
+            multiview_geometry_shader: Bool32::default(),
+            multiview_tessellation_shader: Bool32::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceMultiviewFeaturesKHR {}
+impl Default for PhysicalDeviceMultiviewFeaturesKHR {
+    fn default() -> PhysicalDeviceMultiviewFeaturesKHR {
+        PhysicalDeviceMultiviewFeaturesKHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceMultiviewProperties {
@@ -7022,9 +9561,24 @@ pub struct PhysicalDeviceMultiviewProperties {
     pub max_multiview_view_count: uint32_t,
     pub max_multiview_instance_index: uint32_t,
 }
+impl Default for PhysicalDeviceMultiviewProperties {
+    fn default() -> PhysicalDeviceMultiviewProperties {
+        PhysicalDeviceMultiviewProperties {
+            s_type: StructureType::PHYSICAL_DEVICE_MULTIVIEW_PROPERTIES,
+            p_next: ::std::ptr::null(),
+            max_multiview_view_count: 0,
+            max_multiview_instance_index: 0,
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceMultiviewPropertiesKHR {}
+impl Default for PhysicalDeviceMultiviewPropertiesKHR {
+    fn default() -> PhysicalDeviceMultiviewPropertiesKHR {
+        PhysicalDeviceMultiviewPropertiesKHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct RenderPassMultiviewCreateInfo {
@@ -7037,9 +9591,28 @@ pub struct RenderPassMultiviewCreateInfo {
     pub correlation_mask_count: uint32_t,
     pub p_correlation_masks: *const uint32_t,
 }
+impl Default for RenderPassMultiviewCreateInfo {
+    fn default() -> RenderPassMultiviewCreateInfo {
+        RenderPassMultiviewCreateInfo {
+            s_type: StructureType::RENDER_PASS_MULTIVIEW_CREATE_INFO,
+            p_next: ::std::ptr::null(),
+            subpass_count: 0,
+            p_view_masks: ::std::ptr::null(),
+            dependency_count: 0,
+            p_view_offsets: ::std::ptr::null(),
+            correlation_mask_count: 0,
+            p_correlation_masks: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct RenderPassMultiviewCreateInfoKHR {}
+impl Default for RenderPassMultiviewCreateInfoKHR {
+    fn default() -> RenderPassMultiviewCreateInfoKHR {
+        RenderPassMultiviewCreateInfoKHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct SurfaceCapabilities2EXT {
@@ -7057,12 +9630,40 @@ pub struct SurfaceCapabilities2EXT {
     pub supported_usage_flags: ImageUsageFlags,
     pub supported_surface_counters: SurfaceCounterFlagsEXT,
 }
+impl Default for SurfaceCapabilities2EXT {
+    fn default() -> SurfaceCapabilities2EXT {
+        SurfaceCapabilities2EXT {
+            s_type: StructureType::SURFACE_CAPABILITIES_2_EXT,
+            p_next: ::std::ptr::null(),
+            min_image_count: 0,
+            max_image_count: 0,
+            current_extent: Extent2D::default(),
+            min_image_extent: Extent2D::default(),
+            max_image_extent: Extent2D::default(),
+            max_image_array_layers: 0,
+            supported_transforms: SurfaceTransformFlagsKHR::default(),
+            current_transform: SurfaceTransformFlagsKHR::default(),
+            supported_composite_alpha: CompositeAlphaFlagsKHR::default(),
+            supported_usage_flags: ImageUsageFlags::default(),
+            supported_surface_counters: SurfaceCounterFlagsEXT::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct DisplayPowerInfoEXT {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub power_state: DisplayPowerStateEXT,
+}
+impl Default for DisplayPowerInfoEXT {
+    fn default() -> DisplayPowerInfoEXT {
+        DisplayPowerInfoEXT {
+            s_type: StructureType::DISPLAY_POWER_INFO_EXT,
+            p_next: ::std::ptr::null(),
+            power_state: DisplayPowerStateEXT::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -7071,6 +9672,15 @@ pub struct DeviceEventInfoEXT {
     pub p_next: *const c_void,
     pub device_event: DeviceEventTypeEXT,
 }
+impl Default for DeviceEventInfoEXT {
+    fn default() -> DeviceEventInfoEXT {
+        DeviceEventInfoEXT {
+            s_type: StructureType::DEVICE_EVENT_INFO_EXT,
+            p_next: ::std::ptr::null(),
+            device_event: DeviceEventTypeEXT::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct DisplayEventInfoEXT {
@@ -7078,12 +9688,30 @@ pub struct DisplayEventInfoEXT {
     pub p_next: *const c_void,
     pub display_event: DisplayEventTypeEXT,
 }
+impl Default for DisplayEventInfoEXT {
+    fn default() -> DisplayEventInfoEXT {
+        DisplayEventInfoEXT {
+            s_type: StructureType::DISPLAY_EVENT_INFO_EXT,
+            p_next: ::std::ptr::null(),
+            display_event: DisplayEventTypeEXT::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct SwapchainCounterCreateInfoEXT {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub surface_counters: SurfaceCounterFlagsEXT,
+}
+impl Default for SwapchainCounterCreateInfoEXT {
+    fn default() -> SwapchainCounterCreateInfoEXT {
+        SwapchainCounterCreateInfoEXT {
+            s_type: StructureType::SWAPCHAIN_COUNTER_CREATE_INFO_EXT,
+            p_next: ::std::ptr::null(),
+            surface_counters: SurfaceCounterFlagsEXT::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -7094,9 +9722,25 @@ pub struct PhysicalDeviceGroupProperties {
     pub physical_devices: [PhysicalDevice; VK_MAX_DEVICE_GROUP_SIZE],
     pub subset_allocation: Bool32,
 }
+impl Default for PhysicalDeviceGroupProperties {
+    fn default() -> PhysicalDeviceGroupProperties {
+        PhysicalDeviceGroupProperties {
+            s_type: StructureType::PHYSICAL_DEVICE_GROUP_PROPERTIES,
+            p_next: ::std::ptr::null(),
+            physical_device_count: 0,
+            physical_devices: [PhysicalDevice::null(); VK_MAX_DEVICE_GROUP_SIZE],
+            subset_allocation: Bool32::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceGroupPropertiesKHR {}
+impl Default for PhysicalDeviceGroupPropertiesKHR {
+    fn default() -> PhysicalDeviceGroupPropertiesKHR {
+        PhysicalDeviceGroupPropertiesKHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct MemoryAllocateFlagsInfo {
@@ -7105,9 +9749,24 @@ pub struct MemoryAllocateFlagsInfo {
     pub flags: MemoryAllocateFlags,
     pub device_mask: uint32_t,
 }
+impl Default for MemoryAllocateFlagsInfo {
+    fn default() -> MemoryAllocateFlagsInfo {
+        MemoryAllocateFlagsInfo {
+            s_type: StructureType::MEMORY_ALLOCATE_FLAGS_INFO,
+            p_next: ::std::ptr::null(),
+            flags: MemoryAllocateFlags::default(),
+            device_mask: 0,
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct MemoryAllocateFlagsInfoKHR {}
+impl Default for MemoryAllocateFlagsInfoKHR {
+    fn default() -> MemoryAllocateFlagsInfoKHR {
+        MemoryAllocateFlagsInfoKHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct BindBufferMemoryInfo {
@@ -7117,9 +9776,25 @@ pub struct BindBufferMemoryInfo {
     pub memory: DeviceMemory,
     pub memory_offset: DeviceSize,
 }
+impl Default for BindBufferMemoryInfo {
+    fn default() -> BindBufferMemoryInfo {
+        BindBufferMemoryInfo {
+            s_type: StructureType::BIND_BUFFER_MEMORY_INFO,
+            p_next: ::std::ptr::null(),
+            buffer: Buffer::null(),
+            memory: DeviceMemory::null(),
+            memory_offset: DeviceSize::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct BindBufferMemoryInfoKHR {}
+impl Default for BindBufferMemoryInfoKHR {
+    fn default() -> BindBufferMemoryInfoKHR {
+        BindBufferMemoryInfoKHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct BindBufferMemoryDeviceGroupInfo {
@@ -7128,9 +9803,24 @@ pub struct BindBufferMemoryDeviceGroupInfo {
     pub device_index_count: uint32_t,
     pub p_device_indices: *const uint32_t,
 }
+impl Default for BindBufferMemoryDeviceGroupInfo {
+    fn default() -> BindBufferMemoryDeviceGroupInfo {
+        BindBufferMemoryDeviceGroupInfo {
+            s_type: StructureType::BIND_BUFFER_MEMORY_DEVICE_GROUP_INFO,
+            p_next: ::std::ptr::null(),
+            device_index_count: 0,
+            p_device_indices: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct BindBufferMemoryDeviceGroupInfoKHR {}
+impl Default for BindBufferMemoryDeviceGroupInfoKHR {
+    fn default() -> BindBufferMemoryDeviceGroupInfoKHR {
+        BindBufferMemoryDeviceGroupInfoKHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct BindImageMemoryInfo {
@@ -7140,9 +9830,25 @@ pub struct BindImageMemoryInfo {
     pub memory: DeviceMemory,
     pub memory_offset: DeviceSize,
 }
+impl Default for BindImageMemoryInfo {
+    fn default() -> BindImageMemoryInfo {
+        BindImageMemoryInfo {
+            s_type: StructureType::BIND_IMAGE_MEMORY_INFO,
+            p_next: ::std::ptr::null(),
+            image: Image::null(),
+            memory: DeviceMemory::null(),
+            memory_offset: DeviceSize::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct BindImageMemoryInfoKHR {}
+impl Default for BindImageMemoryInfoKHR {
+    fn default() -> BindImageMemoryInfoKHR {
+        BindImageMemoryInfoKHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct BindImageMemoryDeviceGroupInfo {
@@ -7153,9 +9859,26 @@ pub struct BindImageMemoryDeviceGroupInfo {
     pub split_instance_bind_region_count: uint32_t,
     pub p_split_instance_bind_regions: *const Rect2D,
 }
+impl Default for BindImageMemoryDeviceGroupInfo {
+    fn default() -> BindImageMemoryDeviceGroupInfo {
+        BindImageMemoryDeviceGroupInfo {
+            s_type: StructureType::BIND_IMAGE_MEMORY_DEVICE_GROUP_INFO,
+            p_next: ::std::ptr::null(),
+            device_index_count: 0,
+            p_device_indices: ::std::ptr::null(),
+            split_instance_bind_region_count: 0,
+            p_split_instance_bind_regions: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct BindImageMemoryDeviceGroupInfoKHR {}
+impl Default for BindImageMemoryDeviceGroupInfoKHR {
+    fn default() -> BindImageMemoryDeviceGroupInfoKHR {
+        BindImageMemoryDeviceGroupInfoKHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct DeviceGroupRenderPassBeginInfo {
@@ -7165,9 +9888,25 @@ pub struct DeviceGroupRenderPassBeginInfo {
     pub device_render_area_count: uint32_t,
     pub p_device_render_areas: *const Rect2D,
 }
+impl Default for DeviceGroupRenderPassBeginInfo {
+    fn default() -> DeviceGroupRenderPassBeginInfo {
+        DeviceGroupRenderPassBeginInfo {
+            s_type: StructureType::DEVICE_GROUP_RENDER_PASS_BEGIN_INFO,
+            p_next: ::std::ptr::null(),
+            device_mask: 0,
+            device_render_area_count: 0,
+            p_device_render_areas: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct DeviceGroupRenderPassBeginInfoKHR {}
+impl Default for DeviceGroupRenderPassBeginInfoKHR {
+    fn default() -> DeviceGroupRenderPassBeginInfoKHR {
+        DeviceGroupRenderPassBeginInfoKHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct DeviceGroupCommandBufferBeginInfo {
@@ -7175,9 +9914,23 @@ pub struct DeviceGroupCommandBufferBeginInfo {
     pub p_next: *const c_void,
     pub device_mask: uint32_t,
 }
+impl Default for DeviceGroupCommandBufferBeginInfo {
+    fn default() -> DeviceGroupCommandBufferBeginInfo {
+        DeviceGroupCommandBufferBeginInfo {
+            s_type: StructureType::DEVICE_GROUP_COMMAND_BUFFER_BEGIN_INFO,
+            p_next: ::std::ptr::null(),
+            device_mask: 0,
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct DeviceGroupCommandBufferBeginInfoKHR {}
+impl Default for DeviceGroupCommandBufferBeginInfoKHR {
+    fn default() -> DeviceGroupCommandBufferBeginInfoKHR {
+        DeviceGroupCommandBufferBeginInfoKHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct DeviceGroupSubmitInfo {
@@ -7190,9 +9943,28 @@ pub struct DeviceGroupSubmitInfo {
     pub signal_semaphore_count: uint32_t,
     pub p_signal_semaphore_device_indices: *const uint32_t,
 }
+impl Default for DeviceGroupSubmitInfo {
+    fn default() -> DeviceGroupSubmitInfo {
+        DeviceGroupSubmitInfo {
+            s_type: StructureType::DEVICE_GROUP_SUBMIT_INFO,
+            p_next: ::std::ptr::null(),
+            wait_semaphore_count: 0,
+            p_wait_semaphore_device_indices: ::std::ptr::null(),
+            command_buffer_count: 0,
+            p_command_buffer_device_masks: ::std::ptr::null(),
+            signal_semaphore_count: 0,
+            p_signal_semaphore_device_indices: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct DeviceGroupSubmitInfoKHR {}
+impl Default for DeviceGroupSubmitInfoKHR {
+    fn default() -> DeviceGroupSubmitInfoKHR {
+        DeviceGroupSubmitInfoKHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct DeviceGroupBindSparseInfo {
@@ -7201,9 +9973,24 @@ pub struct DeviceGroupBindSparseInfo {
     pub resource_device_index: uint32_t,
     pub memory_device_index: uint32_t,
 }
+impl Default for DeviceGroupBindSparseInfo {
+    fn default() -> DeviceGroupBindSparseInfo {
+        DeviceGroupBindSparseInfo {
+            s_type: StructureType::DEVICE_GROUP_BIND_SPARSE_INFO,
+            p_next: ::std::ptr::null(),
+            resource_device_index: 0,
+            memory_device_index: 0,
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct DeviceGroupBindSparseInfoKHR {}
+impl Default for DeviceGroupBindSparseInfoKHR {
+    fn default() -> DeviceGroupBindSparseInfoKHR {
+        DeviceGroupBindSparseInfoKHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct DeviceGroupPresentCapabilitiesKHR {
@@ -7212,12 +9999,31 @@ pub struct DeviceGroupPresentCapabilitiesKHR {
     pub present_mask: [uint32_t; VK_MAX_DEVICE_GROUP_SIZE],
     pub modes: DeviceGroupPresentModeFlagsKHR,
 }
+impl Default for DeviceGroupPresentCapabilitiesKHR {
+    fn default() -> DeviceGroupPresentCapabilitiesKHR {
+        DeviceGroupPresentCapabilitiesKHR {
+            s_type: StructureType::DEVICE_GROUP_PRESENT_CAPABILITIES_KHR,
+            p_next: ::std::ptr::null(),
+            present_mask: [0; VK_MAX_DEVICE_GROUP_SIZE],
+            modes: DeviceGroupPresentModeFlagsKHR::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ImageSwapchainCreateInfoKHR {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub swapchain: SwapchainKHR,
+}
+impl Default for ImageSwapchainCreateInfoKHR {
+    fn default() -> ImageSwapchainCreateInfoKHR {
+        ImageSwapchainCreateInfoKHR {
+            s_type: StructureType::IMAGE_SWAPCHAIN_CREATE_INFO_KHR,
+            p_next: ::std::ptr::null(),
+            swapchain: SwapchainKHR::null(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -7226,6 +10032,16 @@ pub struct BindImageMemorySwapchainInfoKHR {
     pub p_next: *const c_void,
     pub swapchain: SwapchainKHR,
     pub image_index: uint32_t,
+}
+impl Default for BindImageMemorySwapchainInfoKHR {
+    fn default() -> BindImageMemorySwapchainInfoKHR {
+        BindImageMemorySwapchainInfoKHR {
+            s_type: StructureType::BIND_IMAGE_MEMORY_SWAPCHAIN_INFO_KHR,
+            p_next: ::std::ptr::null(),
+            swapchain: SwapchainKHR::null(),
+            image_index: 0,
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -7238,6 +10054,19 @@ pub struct AcquireNextImageInfoKHR {
     pub fence: Fence,
     pub device_mask: uint32_t,
 }
+impl Default for AcquireNextImageInfoKHR {
+    fn default() -> AcquireNextImageInfoKHR {
+        AcquireNextImageInfoKHR {
+            s_type: StructureType::ACQUIRE_NEXT_IMAGE_INFO_KHR,
+            p_next: ::std::ptr::null(),
+            swapchain: SwapchainKHR::null(),
+            timeout: 0,
+            semaphore: Semaphore::null(),
+            fence: Fence::null(),
+            device_mask: 0,
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct DeviceGroupPresentInfoKHR {
@@ -7247,6 +10076,17 @@ pub struct DeviceGroupPresentInfoKHR {
     pub p_device_masks: *const uint32_t,
     pub mode: DeviceGroupPresentModeFlagsKHR,
 }
+impl Default for DeviceGroupPresentInfoKHR {
+    fn default() -> DeviceGroupPresentInfoKHR {
+        DeviceGroupPresentInfoKHR {
+            s_type: StructureType::DEVICE_GROUP_PRESENT_INFO_KHR,
+            p_next: ::std::ptr::null(),
+            swapchain_count: 0,
+            p_device_masks: ::std::ptr::null(),
+            mode: DeviceGroupPresentModeFlagsKHR::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct DeviceGroupDeviceCreateInfo {
@@ -7255,15 +10095,39 @@ pub struct DeviceGroupDeviceCreateInfo {
     pub physical_device_count: uint32_t,
     pub p_physical_devices: *const PhysicalDevice,
 }
+impl Default for DeviceGroupDeviceCreateInfo {
+    fn default() -> DeviceGroupDeviceCreateInfo {
+        DeviceGroupDeviceCreateInfo {
+            s_type: StructureType::DEVICE_GROUP_DEVICE_CREATE_INFO,
+            p_next: ::std::ptr::null(),
+            physical_device_count: 0,
+            p_physical_devices: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct DeviceGroupDeviceCreateInfoKHR {}
+impl Default for DeviceGroupDeviceCreateInfoKHR {
+    fn default() -> DeviceGroupDeviceCreateInfoKHR {
+        DeviceGroupDeviceCreateInfoKHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct DeviceGroupSwapchainCreateInfoKHR {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub modes: DeviceGroupPresentModeFlagsKHR,
+}
+impl Default for DeviceGroupSwapchainCreateInfoKHR {
+    fn default() -> DeviceGroupSwapchainCreateInfoKHR {
+        DeviceGroupSwapchainCreateInfoKHR {
+            s_type: StructureType::DEVICE_GROUP_SWAPCHAIN_CREATE_INFO_KHR,
+            p_next: ::std::ptr::null(),
+            modes: DeviceGroupPresentModeFlagsKHR::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -7275,9 +10139,26 @@ pub struct DescriptorUpdateTemplateEntry {
     pub offset: size_t,
     pub stride: size_t,
 }
+impl Default for DescriptorUpdateTemplateEntry {
+    fn default() -> DescriptorUpdateTemplateEntry {
+        DescriptorUpdateTemplateEntry {
+            dst_binding: 0,
+            dst_array_element: 0,
+            descriptor_count: 0,
+            descriptor_type: DescriptorType::default(),
+            offset: 0,
+            stride: 0,
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct DescriptorUpdateTemplateEntryKHR {}
+impl Default for DescriptorUpdateTemplateEntryKHR {
+    fn default() -> DescriptorUpdateTemplateEntryKHR {
+        DescriptorUpdateTemplateEntryKHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct DescriptorUpdateTemplateCreateInfo {
@@ -7292,14 +10173,40 @@ pub struct DescriptorUpdateTemplateCreateInfo {
     pub pipeline_layout: PipelineLayout,
     pub set: uint32_t,
 }
+impl Default for DescriptorUpdateTemplateCreateInfo {
+    fn default() -> DescriptorUpdateTemplateCreateInfo {
+        DescriptorUpdateTemplateCreateInfo {
+            s_type: StructureType::DESCRIPTOR_UPDATE_TEMPLATE_CREATE_INFO,
+            p_next: ::std::ptr::null(),
+            flags: DescriptorUpdateTemplateCreateFlags::default(),
+            descriptor_update_entry_count: 0,
+            p_descriptor_update_entries: ::std::ptr::null(),
+            template_type: DescriptorUpdateTemplateType::default(),
+            descriptor_set_layout: DescriptorSetLayout::null(),
+            pipeline_bind_point: PipelineBindPoint::default(),
+            pipeline_layout: PipelineLayout::null(),
+            set: 0,
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct DescriptorUpdateTemplateCreateInfoKHR {}
+impl Default for DescriptorUpdateTemplateCreateInfoKHR {
+    fn default() -> DescriptorUpdateTemplateCreateInfoKHR {
+        DescriptorUpdateTemplateCreateInfoKHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct XYColorEXT {
     pub x: c_float,
     pub y: c_float,
+}
+impl Default for XYColorEXT {
+    fn default() -> XYColorEXT {
+        XYColorEXT { x: 0.0, y: 0.0 }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -7315,10 +10222,33 @@ pub struct HdrMetadataEXT {
     pub max_content_light_level: c_float,
     pub max_frame_average_light_level: c_float,
 }
+impl Default for HdrMetadataEXT {
+    fn default() -> HdrMetadataEXT {
+        HdrMetadataEXT {
+            s_type: StructureType::HDR_METADATA_EXT,
+            p_next: ::std::ptr::null(),
+            display_primary_red: XYColorEXT::default(),
+            display_primary_green: XYColorEXT::default(),
+            display_primary_blue: XYColorEXT::default(),
+            white_point: XYColorEXT::default(),
+            max_luminance: 0.0,
+            min_luminance: 0.0,
+            max_content_light_level: 0.0,
+            max_frame_average_light_level: 0.0,
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct RefreshCycleDurationGOOGLE {
     pub refresh_duration: uint64_t,
+}
+impl Default for RefreshCycleDurationGOOGLE {
+    fn default() -> RefreshCycleDurationGOOGLE {
+        RefreshCycleDurationGOOGLE {
+            refresh_duration: 0,
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -7329,6 +10259,17 @@ pub struct PastPresentationTimingGOOGLE {
     pub earliest_present_time: uint64_t,
     pub present_margin: uint64_t,
 }
+impl Default for PastPresentationTimingGOOGLE {
+    fn default() -> PastPresentationTimingGOOGLE {
+        PastPresentationTimingGOOGLE {
+            present_id: 0,
+            desired_present_time: 0,
+            actual_present_time: 0,
+            earliest_present_time: 0,
+            present_margin: 0,
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PresentTimesInfoGOOGLE {
@@ -7337,11 +10278,29 @@ pub struct PresentTimesInfoGOOGLE {
     pub swapchain_count: uint32_t,
     pub p_times: *const PresentTimeGOOGLE,
 }
+impl Default for PresentTimesInfoGOOGLE {
+    fn default() -> PresentTimesInfoGOOGLE {
+        PresentTimesInfoGOOGLE {
+            s_type: StructureType::PRESENT_TIMES_INFO_GOOGLE,
+            p_next: ::std::ptr::null(),
+            swapchain_count: 0,
+            p_times: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PresentTimeGOOGLE {
     pub present_id: uint32_t,
     pub desired_present_time: uint64_t,
+}
+impl Default for PresentTimeGOOGLE {
+    fn default() -> PresentTimeGOOGLE {
+        PresentTimeGOOGLE {
+            present_id: 0,
+            desired_present_time: 0,
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -7351,6 +10310,16 @@ pub struct IOSSurfaceCreateInfoMVK {
     pub flags: IOSSurfaceCreateFlagsMVK,
     pub p_view: *const c_void,
 }
+impl Default for IOSSurfaceCreateInfoMVK {
+    fn default() -> IOSSurfaceCreateInfoMVK {
+        IOSSurfaceCreateInfoMVK {
+            s_type: StructureType::IOS_SURFACE_CREATE_INFO_MVK,
+            p_next: ::std::ptr::null(),
+            flags: IOSSurfaceCreateFlagsMVK::default(),
+            p_view: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct MacOSSurfaceCreateInfoMVK {
@@ -7359,11 +10328,29 @@ pub struct MacOSSurfaceCreateInfoMVK {
     pub flags: MacOSSurfaceCreateFlagsMVK,
     pub p_view: *const c_void,
 }
+impl Default for MacOSSurfaceCreateInfoMVK {
+    fn default() -> MacOSSurfaceCreateInfoMVK {
+        MacOSSurfaceCreateInfoMVK {
+            s_type: StructureType::MACOS_SURFACE_CREATE_INFO_MVK,
+            p_next: ::std::ptr::null(),
+            flags: MacOSSurfaceCreateFlagsMVK::default(),
+            p_view: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ViewportWScalingNV {
     pub xcoeff: c_float,
     pub ycoeff: c_float,
+}
+impl Default for ViewportWScalingNV {
+    fn default() -> ViewportWScalingNV {
+        ViewportWScalingNV {
+            xcoeff: 0.0,
+            ycoeff: 0.0,
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -7374,6 +10361,17 @@ pub struct PipelineViewportWScalingStateCreateInfoNV {
     pub viewport_count: uint32_t,
     pub p_viewport_w_scalings: *const ViewportWScalingNV,
 }
+impl Default for PipelineViewportWScalingStateCreateInfoNV {
+    fn default() -> PipelineViewportWScalingStateCreateInfoNV {
+        PipelineViewportWScalingStateCreateInfoNV {
+            s_type: StructureType::PIPELINE_VIEWPORT_W_SCALING_STATE_CREATE_INFO_NV,
+            p_next: ::std::ptr::null(),
+            viewport_w_scaling_enable: Bool32::default(),
+            viewport_count: 0,
+            p_viewport_w_scalings: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ViewportSwizzleNV {
@@ -7381,6 +10379,16 @@ pub struct ViewportSwizzleNV {
     pub y: ViewportCoordinateSwizzleNV,
     pub z: ViewportCoordinateSwizzleNV,
     pub w: ViewportCoordinateSwizzleNV,
+}
+impl Default for ViewportSwizzleNV {
+    fn default() -> ViewportSwizzleNV {
+        ViewportSwizzleNV {
+            x: ViewportCoordinateSwizzleNV::default(),
+            y: ViewportCoordinateSwizzleNV::default(),
+            z: ViewportCoordinateSwizzleNV::default(),
+            w: ViewportCoordinateSwizzleNV::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -7391,12 +10399,32 @@ pub struct PipelineViewportSwizzleStateCreateInfoNV {
     pub viewport_count: uint32_t,
     pub p_viewport_swizzles: *const ViewportSwizzleNV,
 }
+impl Default for PipelineViewportSwizzleStateCreateInfoNV {
+    fn default() -> PipelineViewportSwizzleStateCreateInfoNV {
+        PipelineViewportSwizzleStateCreateInfoNV {
+            s_type: StructureType::PIPELINE_VIEWPORT_SWIZZLE_STATE_CREATE_INFO_NV,
+            p_next: ::std::ptr::null(),
+            flags: PipelineViewportSwizzleStateCreateFlagsNV::default(),
+            viewport_count: 0,
+            p_viewport_swizzles: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceDiscardRectanglePropertiesEXT {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub max_discard_rectangles: uint32_t,
+}
+impl Default for PhysicalDeviceDiscardRectanglePropertiesEXT {
+    fn default() -> PhysicalDeviceDiscardRectanglePropertiesEXT {
+        PhysicalDeviceDiscardRectanglePropertiesEXT {
+            s_type: StructureType::PHYSICAL_DEVICE_DISCARD_RECTANGLE_PROPERTIES_EXT,
+            p_next: ::std::ptr::null(),
+            max_discard_rectangles: 0,
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -7408,12 +10436,33 @@ pub struct PipelineDiscardRectangleStateCreateInfoEXT {
     pub discard_rectangle_count: uint32_t,
     pub p_discard_rectangles: *const Rect2D,
 }
+impl Default for PipelineDiscardRectangleStateCreateInfoEXT {
+    fn default() -> PipelineDiscardRectangleStateCreateInfoEXT {
+        PipelineDiscardRectangleStateCreateInfoEXT {
+            s_type: StructureType::PIPELINE_DISCARD_RECTANGLE_STATE_CREATE_INFO_EXT,
+            p_next: ::std::ptr::null(),
+            flags: PipelineDiscardRectangleStateCreateFlagsEXT::default(),
+            discard_rectangle_mode: DiscardRectangleModeEXT::default(),
+            discard_rectangle_count: 0,
+            p_discard_rectangles: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub per_view_position_all_components: Bool32,
+}
+impl Default for PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX {
+    fn default() -> PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX {
+        PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX {
+            s_type: StructureType::PHYSICAL_DEVICE_MULTIVIEW_PER_VIEW_ATTRIBUTES_PROPERTIES_NVX,
+            p_next: ::std::ptr::null(),
+            per_view_position_all_components: Bool32::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -7422,9 +10471,23 @@ pub struct InputAttachmentAspectReference {
     pub input_attachment_index: uint32_t,
     pub aspect_mask: ImageAspectFlags,
 }
+impl Default for InputAttachmentAspectReference {
+    fn default() -> InputAttachmentAspectReference {
+        InputAttachmentAspectReference {
+            subpass: 0,
+            input_attachment_index: 0,
+            aspect_mask: ImageAspectFlags::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct InputAttachmentAspectReferenceKHR {}
+impl Default for InputAttachmentAspectReferenceKHR {
+    fn default() -> InputAttachmentAspectReferenceKHR {
+        InputAttachmentAspectReferenceKHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct RenderPassInputAttachmentAspectCreateInfo {
@@ -7433,15 +10496,39 @@ pub struct RenderPassInputAttachmentAspectCreateInfo {
     pub aspect_reference_count: uint32_t,
     pub p_aspect_references: *const InputAttachmentAspectReference,
 }
+impl Default for RenderPassInputAttachmentAspectCreateInfo {
+    fn default() -> RenderPassInputAttachmentAspectCreateInfo {
+        RenderPassInputAttachmentAspectCreateInfo {
+            s_type: StructureType::RENDER_PASS_INPUT_ATTACHMENT_ASPECT_CREATE_INFO,
+            p_next: ::std::ptr::null(),
+            aspect_reference_count: 0,
+            p_aspect_references: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct RenderPassInputAttachmentAspectCreateInfoKHR {}
+impl Default for RenderPassInputAttachmentAspectCreateInfoKHR {
+    fn default() -> RenderPassInputAttachmentAspectCreateInfoKHR {
+        RenderPassInputAttachmentAspectCreateInfoKHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceSurfaceInfo2KHR {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub surface: SurfaceKHR,
+}
+impl Default for PhysicalDeviceSurfaceInfo2KHR {
+    fn default() -> PhysicalDeviceSurfaceInfo2KHR {
+        PhysicalDeviceSurfaceInfo2KHR {
+            s_type: StructureType::PHYSICAL_DEVICE_SURFACE_INFO_2_KHR,
+            p_next: ::std::ptr::null(),
+            surface: SurfaceKHR::null(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -7450,12 +10537,30 @@ pub struct SurfaceCapabilities2KHR {
     pub p_next: *const c_void,
     pub surface_capabilities: SurfaceCapabilitiesKHR,
 }
+impl Default for SurfaceCapabilities2KHR {
+    fn default() -> SurfaceCapabilities2KHR {
+        SurfaceCapabilities2KHR {
+            s_type: StructureType::SURFACE_CAPABILITIES_2_KHR,
+            p_next: ::std::ptr::null(),
+            surface_capabilities: SurfaceCapabilitiesKHR::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct SurfaceFormat2KHR {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub surface_format: SurfaceFormatKHR,
+}
+impl Default for SurfaceFormat2KHR {
+    fn default() -> SurfaceFormat2KHR {
+        SurfaceFormat2KHR {
+            s_type: StructureType::SURFACE_FORMAT_2_KHR,
+            p_next: ::std::ptr::null(),
+            surface_format: SurfaceFormatKHR::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -7464,6 +10569,15 @@ pub struct DisplayProperties2KHR {
     pub p_next: *const c_void,
     pub display_properties: DisplayPropertiesKHR,
 }
+impl Default for DisplayProperties2KHR {
+    fn default() -> DisplayProperties2KHR {
+        DisplayProperties2KHR {
+            s_type: StructureType::DISPLAY_PROPERTIES_2_KHR,
+            p_next: ::std::ptr::null(),
+            display_properties: DisplayPropertiesKHR::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct DisplayPlaneProperties2KHR {
@@ -7471,12 +10585,30 @@ pub struct DisplayPlaneProperties2KHR {
     pub p_next: *const c_void,
     pub display_plane_properties: DisplayPlanePropertiesKHR,
 }
+impl Default for DisplayPlaneProperties2KHR {
+    fn default() -> DisplayPlaneProperties2KHR {
+        DisplayPlaneProperties2KHR {
+            s_type: StructureType::DISPLAY_PLANE_PROPERTIES_2_KHR,
+            p_next: ::std::ptr::null(),
+            display_plane_properties: DisplayPlanePropertiesKHR::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct DisplayModeProperties2KHR {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub display_mode_properties: DisplayModePropertiesKHR,
+}
+impl Default for DisplayModeProperties2KHR {
+    fn default() -> DisplayModeProperties2KHR {
+        DisplayModeProperties2KHR {
+            s_type: StructureType::DISPLAY_MODE_PROPERTIES_2_KHR,
+            p_next: ::std::ptr::null(),
+            display_mode_properties: DisplayModePropertiesKHR::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -7486,6 +10618,16 @@ pub struct DisplayPlaneInfo2KHR {
     pub mode: DisplayModeKHR,
     pub plane_index: uint32_t,
 }
+impl Default for DisplayPlaneInfo2KHR {
+    fn default() -> DisplayPlaneInfo2KHR {
+        DisplayPlaneInfo2KHR {
+            s_type: StructureType::DISPLAY_PLANE_INFO_2_KHR,
+            p_next: ::std::ptr::null(),
+            mode: DisplayModeKHR::null(),
+            plane_index: 0,
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct DisplayPlaneCapabilities2KHR {
@@ -7493,12 +10635,30 @@ pub struct DisplayPlaneCapabilities2KHR {
     pub p_next: *const c_void,
     pub capabilities: DisplayPlaneCapabilitiesKHR,
 }
+impl Default for DisplayPlaneCapabilities2KHR {
+    fn default() -> DisplayPlaneCapabilities2KHR {
+        DisplayPlaneCapabilities2KHR {
+            s_type: StructureType::DISPLAY_PLANE_CAPABILITIES_2_KHR,
+            p_next: ::std::ptr::null(),
+            capabilities: DisplayPlaneCapabilitiesKHR::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct SharedPresentSurfaceCapabilitiesKHR {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub shared_present_supported_usage_flags: ImageUsageFlags,
+}
+impl Default for SharedPresentSurfaceCapabilitiesKHR {
+    fn default() -> SharedPresentSurfaceCapabilitiesKHR {
+        SharedPresentSurfaceCapabilitiesKHR {
+            s_type: StructureType::SHARED_PRESENT_SURFACE_CAPABILITIES_KHR,
+            p_next: ::std::ptr::null(),
+            shared_present_supported_usage_flags: ImageUsageFlags::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -7510,9 +10670,26 @@ pub struct PhysicalDevice16BitStorageFeatures {
     pub storage_push_constant16: Bool32,
     pub storage_input_output16: Bool32,
 }
+impl Default for PhysicalDevice16BitStorageFeatures {
+    fn default() -> PhysicalDevice16BitStorageFeatures {
+        PhysicalDevice16BitStorageFeatures {
+            s_type: StructureType::PHYSICAL_DEVICE_16BIT_STORAGE_FEATURES,
+            p_next: ::std::ptr::null(),
+            storage_buffer16_bit_access: Bool32::default(),
+            uniform_and_storage_buffer16_bit_access: Bool32::default(),
+            storage_push_constant16: Bool32::default(),
+            storage_input_output16: Bool32::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDevice16BitStorageFeaturesKHR {}
+impl Default for PhysicalDevice16BitStorageFeaturesKHR {
+    fn default() -> PhysicalDevice16BitStorageFeaturesKHR {
+        PhysicalDevice16BitStorageFeaturesKHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceSubgroupProperties {
@@ -7523,6 +10700,18 @@ pub struct PhysicalDeviceSubgroupProperties {
     pub supported_operations: SubgroupFeatureFlags,
     pub quad_operations_in_all_stages: Bool32,
 }
+impl Default for PhysicalDeviceSubgroupProperties {
+    fn default() -> PhysicalDeviceSubgroupProperties {
+        PhysicalDeviceSubgroupProperties {
+            s_type: StructureType::PHYSICAL_DEVICE_SUBGROUP_PROPERTIES,
+            p_next: ::std::ptr::null(),
+            subgroup_size: 0,
+            supported_stages: ShaderStageFlags::default(),
+            supported_operations: SubgroupFeatureFlags::default(),
+            quad_operations_in_all_stages: Bool32::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct BufferMemoryRequirementsInfo2 {
@@ -7530,9 +10719,23 @@ pub struct BufferMemoryRequirementsInfo2 {
     pub p_next: *const c_void,
     pub buffer: Buffer,
 }
+impl Default for BufferMemoryRequirementsInfo2 {
+    fn default() -> BufferMemoryRequirementsInfo2 {
+        BufferMemoryRequirementsInfo2 {
+            s_type: StructureType::BUFFER_MEMORY_REQUIREMENTS_INFO_2,
+            p_next: ::std::ptr::null(),
+            buffer: Buffer::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct BufferMemoryRequirementsInfo2KHR {}
+impl Default for BufferMemoryRequirementsInfo2KHR {
+    fn default() -> BufferMemoryRequirementsInfo2KHR {
+        BufferMemoryRequirementsInfo2KHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ImageMemoryRequirementsInfo2 {
@@ -7540,9 +10743,23 @@ pub struct ImageMemoryRequirementsInfo2 {
     pub p_next: *const c_void,
     pub image: Image,
 }
+impl Default for ImageMemoryRequirementsInfo2 {
+    fn default() -> ImageMemoryRequirementsInfo2 {
+        ImageMemoryRequirementsInfo2 {
+            s_type: StructureType::IMAGE_MEMORY_REQUIREMENTS_INFO_2,
+            p_next: ::std::ptr::null(),
+            image: Image::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ImageMemoryRequirementsInfo2KHR {}
+impl Default for ImageMemoryRequirementsInfo2KHR {
+    fn default() -> ImageMemoryRequirementsInfo2KHR {
+        ImageMemoryRequirementsInfo2KHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ImageSparseMemoryRequirementsInfo2 {
@@ -7550,9 +10767,23 @@ pub struct ImageSparseMemoryRequirementsInfo2 {
     pub p_next: *const c_void,
     pub image: Image,
 }
+impl Default for ImageSparseMemoryRequirementsInfo2 {
+    fn default() -> ImageSparseMemoryRequirementsInfo2 {
+        ImageSparseMemoryRequirementsInfo2 {
+            s_type: StructureType::IMAGE_SPARSE_MEMORY_REQUIREMENTS_INFO_2,
+            p_next: ::std::ptr::null(),
+            image: Image::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ImageSparseMemoryRequirementsInfo2KHR {}
+impl Default for ImageSparseMemoryRequirementsInfo2KHR {
+    fn default() -> ImageSparseMemoryRequirementsInfo2KHR {
+        ImageSparseMemoryRequirementsInfo2KHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct MemoryRequirements2 {
@@ -7560,9 +10791,23 @@ pub struct MemoryRequirements2 {
     pub p_next: *const c_void,
     pub memory_requirements: MemoryRequirements,
 }
+impl Default for MemoryRequirements2 {
+    fn default() -> MemoryRequirements2 {
+        MemoryRequirements2 {
+            s_type: StructureType::MEMORY_REQUIREMENTS_2,
+            p_next: ::std::ptr::null(),
+            memory_requirements: MemoryRequirements::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct MemoryRequirements2KHR {}
+impl Default for MemoryRequirements2KHR {
+    fn default() -> MemoryRequirements2KHR {
+        MemoryRequirements2KHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct SparseImageMemoryRequirements2 {
@@ -7570,9 +10815,23 @@ pub struct SparseImageMemoryRequirements2 {
     pub p_next: *const c_void,
     pub memory_requirements: SparseImageMemoryRequirements,
 }
+impl Default for SparseImageMemoryRequirements2 {
+    fn default() -> SparseImageMemoryRequirements2 {
+        SparseImageMemoryRequirements2 {
+            s_type: StructureType::SPARSE_IMAGE_MEMORY_REQUIREMENTS_2,
+            p_next: ::std::ptr::null(),
+            memory_requirements: SparseImageMemoryRequirements::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct SparseImageMemoryRequirements2KHR {}
+impl Default for SparseImageMemoryRequirements2KHR {
+    fn default() -> SparseImageMemoryRequirements2KHR {
+        SparseImageMemoryRequirements2KHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDevicePointClippingProperties {
@@ -7580,9 +10839,23 @@ pub struct PhysicalDevicePointClippingProperties {
     pub p_next: *const c_void,
     pub point_clipping_behavior: PointClippingBehavior,
 }
+impl Default for PhysicalDevicePointClippingProperties {
+    fn default() -> PhysicalDevicePointClippingProperties {
+        PhysicalDevicePointClippingProperties {
+            s_type: StructureType::PHYSICAL_DEVICE_POINT_CLIPPING_PROPERTIES,
+            p_next: ::std::ptr::null(),
+            point_clipping_behavior: PointClippingBehavior::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDevicePointClippingPropertiesKHR {}
+impl Default for PhysicalDevicePointClippingPropertiesKHR {
+    fn default() -> PhysicalDevicePointClippingPropertiesKHR {
+        PhysicalDevicePointClippingPropertiesKHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct MemoryDedicatedRequirements {
@@ -7591,9 +10864,24 @@ pub struct MemoryDedicatedRequirements {
     pub prefers_dedicated_allocation: Bool32,
     pub requires_dedicated_allocation: Bool32,
 }
+impl Default for MemoryDedicatedRequirements {
+    fn default() -> MemoryDedicatedRequirements {
+        MemoryDedicatedRequirements {
+            s_type: StructureType::MEMORY_DEDICATED_REQUIREMENTS,
+            p_next: ::std::ptr::null(),
+            prefers_dedicated_allocation: Bool32::default(),
+            requires_dedicated_allocation: Bool32::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct MemoryDedicatedRequirementsKHR {}
+impl Default for MemoryDedicatedRequirementsKHR {
+    fn default() -> MemoryDedicatedRequirementsKHR {
+        MemoryDedicatedRequirementsKHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct MemoryDedicatedAllocateInfo {
@@ -7602,9 +10890,24 @@ pub struct MemoryDedicatedAllocateInfo {
     pub image: Image,
     pub buffer: Buffer,
 }
+impl Default for MemoryDedicatedAllocateInfo {
+    fn default() -> MemoryDedicatedAllocateInfo {
+        MemoryDedicatedAllocateInfo {
+            s_type: StructureType::MEMORY_DEDICATED_ALLOCATE_INFO,
+            p_next: ::std::ptr::null(),
+            image: Image::null(),
+            buffer: Buffer::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct MemoryDedicatedAllocateInfoKHR {}
+impl Default for MemoryDedicatedAllocateInfoKHR {
+    fn default() -> MemoryDedicatedAllocateInfoKHR {
+        MemoryDedicatedAllocateInfoKHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ImageViewUsageCreateInfo {
@@ -7612,9 +10915,23 @@ pub struct ImageViewUsageCreateInfo {
     pub p_next: *const c_void,
     pub usage: ImageUsageFlags,
 }
+impl Default for ImageViewUsageCreateInfo {
+    fn default() -> ImageViewUsageCreateInfo {
+        ImageViewUsageCreateInfo {
+            s_type: StructureType::IMAGE_VIEW_USAGE_CREATE_INFO,
+            p_next: ::std::ptr::null(),
+            usage: ImageUsageFlags::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ImageViewUsageCreateInfoKHR {}
+impl Default for ImageViewUsageCreateInfoKHR {
+    fn default() -> ImageViewUsageCreateInfoKHR {
+        ImageViewUsageCreateInfoKHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PipelineTessellationDomainOriginStateCreateInfo {
@@ -7622,9 +10939,23 @@ pub struct PipelineTessellationDomainOriginStateCreateInfo {
     pub p_next: *const c_void,
     pub domain_origin: TessellationDomainOrigin,
 }
+impl Default for PipelineTessellationDomainOriginStateCreateInfo {
+    fn default() -> PipelineTessellationDomainOriginStateCreateInfo {
+        PipelineTessellationDomainOriginStateCreateInfo {
+            s_type: StructureType::PIPELINE_TESSELLATION_DOMAIN_ORIGIN_STATE_CREATE_INFO,
+            p_next: ::std::ptr::null(),
+            domain_origin: TessellationDomainOrigin::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PipelineTessellationDomainOriginStateCreateInfoKHR {}
+impl Default for PipelineTessellationDomainOriginStateCreateInfoKHR {
+    fn default() -> PipelineTessellationDomainOriginStateCreateInfoKHR {
+        PipelineTessellationDomainOriginStateCreateInfoKHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct SamplerYcbcrConversionInfo {
@@ -7632,9 +10963,23 @@ pub struct SamplerYcbcrConversionInfo {
     pub p_next: *const c_void,
     pub conversion: SamplerYcbcrConversion,
 }
+impl Default for SamplerYcbcrConversionInfo {
+    fn default() -> SamplerYcbcrConversionInfo {
+        SamplerYcbcrConversionInfo {
+            s_type: StructureType::SAMPLER_YCBCR_CONVERSION_INFO,
+            p_next: ::std::ptr::null(),
+            conversion: SamplerYcbcrConversion::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct SamplerYcbcrConversionInfoKHR {}
+impl Default for SamplerYcbcrConversionInfoKHR {
+    fn default() -> SamplerYcbcrConversionInfoKHR {
+        SamplerYcbcrConversionInfoKHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct SamplerYcbcrConversionCreateInfo {
@@ -7649,9 +10994,30 @@ pub struct SamplerYcbcrConversionCreateInfo {
     pub chroma_filter: Filter,
     pub force_explicit_reconstruction: Bool32,
 }
+impl Default for SamplerYcbcrConversionCreateInfo {
+    fn default() -> SamplerYcbcrConversionCreateInfo {
+        SamplerYcbcrConversionCreateInfo {
+            s_type: StructureType::SAMPLER_YCBCR_CONVERSION_CREATE_INFO,
+            p_next: ::std::ptr::null(),
+            format: Format::default(),
+            ycbcr_model: SamplerYcbcrModelConversion::default(),
+            ycbcr_range: SamplerYcbcrRange::default(),
+            components: ComponentMapping::default(),
+            x_chroma_offset: ChromaLocation::default(),
+            y_chroma_offset: ChromaLocation::default(),
+            chroma_filter: Filter::default(),
+            force_explicit_reconstruction: Bool32::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct SamplerYcbcrConversionCreateInfoKHR {}
+impl Default for SamplerYcbcrConversionCreateInfoKHR {
+    fn default() -> SamplerYcbcrConversionCreateInfoKHR {
+        SamplerYcbcrConversionCreateInfoKHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct BindImagePlaneMemoryInfo {
@@ -7659,9 +11025,23 @@ pub struct BindImagePlaneMemoryInfo {
     pub p_next: *const c_void,
     pub plane_aspect: ImageAspectFlags,
 }
+impl Default for BindImagePlaneMemoryInfo {
+    fn default() -> BindImagePlaneMemoryInfo {
+        BindImagePlaneMemoryInfo {
+            s_type: StructureType::BIND_IMAGE_PLANE_MEMORY_INFO,
+            p_next: ::std::ptr::null(),
+            plane_aspect: ImageAspectFlags::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct BindImagePlaneMemoryInfoKHR {}
+impl Default for BindImagePlaneMemoryInfoKHR {
+    fn default() -> BindImagePlaneMemoryInfoKHR {
+        BindImagePlaneMemoryInfoKHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ImagePlaneMemoryRequirementsInfo {
@@ -7669,9 +11049,23 @@ pub struct ImagePlaneMemoryRequirementsInfo {
     pub p_next: *const c_void,
     pub plane_aspect: ImageAspectFlags,
 }
+impl Default for ImagePlaneMemoryRequirementsInfo {
+    fn default() -> ImagePlaneMemoryRequirementsInfo {
+        ImagePlaneMemoryRequirementsInfo {
+            s_type: StructureType::IMAGE_PLANE_MEMORY_REQUIREMENTS_INFO,
+            p_next: ::std::ptr::null(),
+            plane_aspect: ImageAspectFlags::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ImagePlaneMemoryRequirementsInfoKHR {}
+impl Default for ImagePlaneMemoryRequirementsInfoKHR {
+    fn default() -> ImagePlaneMemoryRequirementsInfoKHR {
+        ImagePlaneMemoryRequirementsInfoKHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceSamplerYcbcrConversionFeatures {
@@ -7679,9 +11073,23 @@ pub struct PhysicalDeviceSamplerYcbcrConversionFeatures {
     pub p_next: *const c_void,
     pub sampler_ycbcr_conversion: Bool32,
 }
+impl Default for PhysicalDeviceSamplerYcbcrConversionFeatures {
+    fn default() -> PhysicalDeviceSamplerYcbcrConversionFeatures {
+        PhysicalDeviceSamplerYcbcrConversionFeatures {
+            s_type: StructureType::PHYSICAL_DEVICE_SAMPLER_YCBCR_CONVERSION_FEATURES,
+            p_next: ::std::ptr::null(),
+            sampler_ycbcr_conversion: Bool32::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceSamplerYcbcrConversionFeaturesKHR {}
+impl Default for PhysicalDeviceSamplerYcbcrConversionFeaturesKHR {
+    fn default() -> PhysicalDeviceSamplerYcbcrConversionFeaturesKHR {
+        PhysicalDeviceSamplerYcbcrConversionFeaturesKHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct SamplerYcbcrConversionImageFormatProperties {
@@ -7689,15 +11097,38 @@ pub struct SamplerYcbcrConversionImageFormatProperties {
     pub p_next: *const c_void,
     pub combined_image_sampler_descriptor_count: uint32_t,
 }
+impl Default for SamplerYcbcrConversionImageFormatProperties {
+    fn default() -> SamplerYcbcrConversionImageFormatProperties {
+        SamplerYcbcrConversionImageFormatProperties {
+            s_type: StructureType::SAMPLER_YCBCR_CONVERSION_IMAGE_FORMAT_PROPERTIES,
+            p_next: ::std::ptr::null(),
+            combined_image_sampler_descriptor_count: 0,
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct SamplerYcbcrConversionImageFormatPropertiesKHR {}
+impl Default for SamplerYcbcrConversionImageFormatPropertiesKHR {
+    fn default() -> SamplerYcbcrConversionImageFormatPropertiesKHR {
+        SamplerYcbcrConversionImageFormatPropertiesKHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct TextureLODGatherFormatPropertiesAMD {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub supports_texture_gather_lod_bias_amd: Bool32,
+}
+impl Default for TextureLODGatherFormatPropertiesAMD {
+    fn default() -> TextureLODGatherFormatPropertiesAMD {
+        TextureLODGatherFormatPropertiesAMD {
+            s_type: StructureType::TEXTURE_LOD_GATHER_FORMAT_PROPERTIES_AMD,
+            p_next: ::std::ptr::null(),
+            supports_texture_gather_lod_bias_amd: Bool32::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -7706,6 +11137,15 @@ pub struct ProtectedSubmitInfo {
     pub p_next: *const c_void,
     pub protected_submit: Bool32,
 }
+impl Default for ProtectedSubmitInfo {
+    fn default() -> ProtectedSubmitInfo {
+        ProtectedSubmitInfo {
+            s_type: StructureType::PROTECTED_SUBMIT_INFO,
+            p_next: ::std::ptr::null(),
+            protected_submit: Bool32::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceProtectedMemoryFeatures {
@@ -7713,12 +11153,30 @@ pub struct PhysicalDeviceProtectedMemoryFeatures {
     pub p_next: *const c_void,
     pub protected_memory: Bool32,
 }
+impl Default for PhysicalDeviceProtectedMemoryFeatures {
+    fn default() -> PhysicalDeviceProtectedMemoryFeatures {
+        PhysicalDeviceProtectedMemoryFeatures {
+            s_type: StructureType::PHYSICAL_DEVICE_PROTECTED_MEMORY_FEATURES,
+            p_next: ::std::ptr::null(),
+            protected_memory: Bool32::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceProtectedMemoryProperties {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub protected_no_fault: Bool32,
+}
+impl Default for PhysicalDeviceProtectedMemoryProperties {
+    fn default() -> PhysicalDeviceProtectedMemoryProperties {
+        PhysicalDeviceProtectedMemoryProperties {
+            s_type: StructureType::PHYSICAL_DEVICE_PROTECTED_MEMORY_PROPERTIES,
+            p_next: ::std::ptr::null(),
+            protected_no_fault: Bool32::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -7729,6 +11187,17 @@ pub struct DeviceQueueInfo2 {
     pub queue_family_index: uint32_t,
     pub queue_index: uint32_t,
 }
+impl Default for DeviceQueueInfo2 {
+    fn default() -> DeviceQueueInfo2 {
+        DeviceQueueInfo2 {
+            s_type: StructureType::DEVICE_QUEUE_INFO_2,
+            p_next: ::std::ptr::null(),
+            flags: DeviceQueueCreateFlags::default(),
+            queue_family_index: 0,
+            queue_index: 0,
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PipelineCoverageToColorStateCreateInfoNV {
@@ -7738,6 +11207,17 @@ pub struct PipelineCoverageToColorStateCreateInfoNV {
     pub coverage_to_color_enable: Bool32,
     pub coverage_to_color_location: uint32_t,
 }
+impl Default for PipelineCoverageToColorStateCreateInfoNV {
+    fn default() -> PipelineCoverageToColorStateCreateInfoNV {
+        PipelineCoverageToColorStateCreateInfoNV {
+            s_type: StructureType::PIPELINE_COVERAGE_TO_COLOR_STATE_CREATE_INFO_NV,
+            p_next: ::std::ptr::null(),
+            flags: PipelineCoverageToColorStateCreateFlagsNV::default(),
+            coverage_to_color_enable: Bool32::default(),
+            coverage_to_color_location: 0,
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceSamplerFilterMinmaxPropertiesEXT {
@@ -7746,11 +11226,26 @@ pub struct PhysicalDeviceSamplerFilterMinmaxPropertiesEXT {
     pub filter_minmax_single_component_formats: Bool32,
     pub filter_minmax_image_component_mapping: Bool32,
 }
+impl Default for PhysicalDeviceSamplerFilterMinmaxPropertiesEXT {
+    fn default() -> PhysicalDeviceSamplerFilterMinmaxPropertiesEXT {
+        PhysicalDeviceSamplerFilterMinmaxPropertiesEXT {
+            s_type: StructureType::PHYSICAL_DEVICE_SAMPLER_FILTER_MINMAX_PROPERTIES_EXT,
+            p_next: ::std::ptr::null(),
+            filter_minmax_single_component_formats: Bool32::default(),
+            filter_minmax_image_component_mapping: Bool32::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct SampleLocationEXT {
     pub x: c_float,
     pub y: c_float,
+}
+impl Default for SampleLocationEXT {
+    fn default() -> SampleLocationEXT {
+        SampleLocationEXT { x: 0.0, y: 0.0 }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -7762,17 +11257,45 @@ pub struct SampleLocationsInfoEXT {
     pub sample_locations_count: uint32_t,
     pub p_sample_locations: *const SampleLocationEXT,
 }
+impl Default for SampleLocationsInfoEXT {
+    fn default() -> SampleLocationsInfoEXT {
+        SampleLocationsInfoEXT {
+            s_type: StructureType::SAMPLE_LOCATIONS_INFO_EXT,
+            p_next: ::std::ptr::null(),
+            sample_locations_per_pixel: SampleCountFlags::default(),
+            sample_location_grid_size: Extent2D::default(),
+            sample_locations_count: 0,
+            p_sample_locations: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct AttachmentSampleLocationsEXT {
     pub attachment_index: uint32_t,
     pub sample_locations_info: SampleLocationsInfoEXT,
 }
+impl Default for AttachmentSampleLocationsEXT {
+    fn default() -> AttachmentSampleLocationsEXT {
+        AttachmentSampleLocationsEXT {
+            attachment_index: 0,
+            sample_locations_info: SampleLocationsInfoEXT::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct SubpassSampleLocationsEXT {
     pub subpass_index: uint32_t,
     pub sample_locations_info: SampleLocationsInfoEXT,
+}
+impl Default for SubpassSampleLocationsEXT {
+    fn default() -> SubpassSampleLocationsEXT {
+        SubpassSampleLocationsEXT {
+            subpass_index: 0,
+            sample_locations_info: SampleLocationsInfoEXT::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -7784,6 +11307,18 @@ pub struct RenderPassSampleLocationsBeginInfoEXT {
     pub post_subpass_sample_locations_count: uint32_t,
     pub p_post_subpass_sample_locations: *const SubpassSampleLocationsEXT,
 }
+impl Default for RenderPassSampleLocationsBeginInfoEXT {
+    fn default() -> RenderPassSampleLocationsBeginInfoEXT {
+        RenderPassSampleLocationsBeginInfoEXT {
+            s_type: StructureType::RENDER_PASS_SAMPLE_LOCATIONS_BEGIN_INFO_EXT,
+            p_next: ::std::ptr::null(),
+            attachment_initial_sample_locations_count: 0,
+            p_attachment_initial_sample_locations: ::std::ptr::null(),
+            post_subpass_sample_locations_count: 0,
+            p_post_subpass_sample_locations: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PipelineSampleLocationsStateCreateInfoEXT {
@@ -7791,6 +11326,16 @@ pub struct PipelineSampleLocationsStateCreateInfoEXT {
     pub p_next: *const c_void,
     pub sample_locations_enable: Bool32,
     pub sample_locations_info: SampleLocationsInfoEXT,
+}
+impl Default for PipelineSampleLocationsStateCreateInfoEXT {
+    fn default() -> PipelineSampleLocationsStateCreateInfoEXT {
+        PipelineSampleLocationsStateCreateInfoEXT {
+            s_type: StructureType::PIPELINE_SAMPLE_LOCATIONS_STATE_CREATE_INFO_EXT,
+            p_next: ::std::ptr::null(),
+            sample_locations_enable: Bool32::default(),
+            sample_locations_info: SampleLocationsInfoEXT::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -7803,12 +11348,34 @@ pub struct PhysicalDeviceSampleLocationsPropertiesEXT {
     pub sample_location_sub_pixel_bits: uint32_t,
     pub variable_sample_locations: Bool32,
 }
+impl Default for PhysicalDeviceSampleLocationsPropertiesEXT {
+    fn default() -> PhysicalDeviceSampleLocationsPropertiesEXT {
+        PhysicalDeviceSampleLocationsPropertiesEXT {
+            s_type: StructureType::PHYSICAL_DEVICE_SAMPLE_LOCATIONS_PROPERTIES_EXT,
+            p_next: ::std::ptr::null(),
+            sample_location_sample_counts: SampleCountFlags::default(),
+            max_sample_location_grid_size: Extent2D::default(),
+            sample_location_coordinate_range: [0.0; 2],
+            sample_location_sub_pixel_bits: 0,
+            variable_sample_locations: Bool32::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct MultisamplePropertiesEXT {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub max_sample_location_grid_size: Extent2D,
+}
+impl Default for MultisamplePropertiesEXT {
+    fn default() -> MultisamplePropertiesEXT {
+        MultisamplePropertiesEXT {
+            s_type: StructureType::MULTISAMPLE_PROPERTIES_EXT,
+            p_next: ::std::ptr::null(),
+            max_sample_location_grid_size: Extent2D::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -7817,12 +11384,30 @@ pub struct SamplerReductionModeCreateInfoEXT {
     pub p_next: *const c_void,
     pub reduction_mode: SamplerReductionModeEXT,
 }
+impl Default for SamplerReductionModeCreateInfoEXT {
+    fn default() -> SamplerReductionModeCreateInfoEXT {
+        SamplerReductionModeCreateInfoEXT {
+            s_type: StructureType::SAMPLER_REDUCTION_MODE_CREATE_INFO_EXT,
+            p_next: ::std::ptr::null(),
+            reduction_mode: SamplerReductionModeEXT::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceBlendOperationAdvancedFeaturesEXT {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub advanced_blend_coherent_operations: Bool32,
+}
+impl Default for PhysicalDeviceBlendOperationAdvancedFeaturesEXT {
+    fn default() -> PhysicalDeviceBlendOperationAdvancedFeaturesEXT {
+        PhysicalDeviceBlendOperationAdvancedFeaturesEXT {
+            s_type: StructureType::PHYSICAL_DEVICE_BLEND_OPERATION_ADVANCED_FEATURES_EXT,
+            p_next: ::std::ptr::null(),
+            advanced_blend_coherent_operations: Bool32::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -7836,6 +11421,20 @@ pub struct PhysicalDeviceBlendOperationAdvancedPropertiesEXT {
     pub advanced_blend_correlated_overlap: Bool32,
     pub advanced_blend_all_operations: Bool32,
 }
+impl Default for PhysicalDeviceBlendOperationAdvancedPropertiesEXT {
+    fn default() -> PhysicalDeviceBlendOperationAdvancedPropertiesEXT {
+        PhysicalDeviceBlendOperationAdvancedPropertiesEXT {
+            s_type: StructureType::PHYSICAL_DEVICE_BLEND_OPERATION_ADVANCED_PROPERTIES_EXT,
+            p_next: ::std::ptr::null(),
+            advanced_blend_max_color_attachments: 0,
+            advanced_blend_independent_blend: Bool32::default(),
+            advanced_blend_non_premultiplied_src_color: Bool32::default(),
+            advanced_blend_non_premultiplied_dst_color: Bool32::default(),
+            advanced_blend_correlated_overlap: Bool32::default(),
+            advanced_blend_all_operations: Bool32::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PipelineColorBlendAdvancedStateCreateInfoEXT {
@@ -7844,6 +11443,17 @@ pub struct PipelineColorBlendAdvancedStateCreateInfoEXT {
     pub src_premultiplied: Bool32,
     pub dst_premultiplied: Bool32,
     pub blend_overlap: BlendOverlapEXT,
+}
+impl Default for PipelineColorBlendAdvancedStateCreateInfoEXT {
+    fn default() -> PipelineColorBlendAdvancedStateCreateInfoEXT {
+        PipelineColorBlendAdvancedStateCreateInfoEXT {
+            s_type: StructureType::PIPELINE_COLOR_BLEND_ADVANCED_STATE_CREATE_INFO_EXT,
+            p_next: ::std::ptr::null(),
+            src_premultiplied: Bool32::default(),
+            dst_premultiplied: Bool32::default(),
+            blend_overlap: BlendOverlapEXT::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -7856,6 +11466,19 @@ pub struct PipelineCoverageModulationStateCreateInfoNV {
     pub coverage_modulation_table_count: uint32_t,
     pub p_coverage_modulation_table: *const c_float,
 }
+impl Default for PipelineCoverageModulationStateCreateInfoNV {
+    fn default() -> PipelineCoverageModulationStateCreateInfoNV {
+        PipelineCoverageModulationStateCreateInfoNV {
+            s_type: StructureType::PIPELINE_COVERAGE_MODULATION_STATE_CREATE_INFO_NV,
+            p_next: ::std::ptr::null(),
+            flags: PipelineCoverageModulationStateCreateFlagsNV::default(),
+            coverage_modulation_mode: CoverageModulationModeNV::default(),
+            coverage_modulation_table_enable: Bool32::default(),
+            coverage_modulation_table_count: 0,
+            p_coverage_modulation_table: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ImageFormatListCreateInfoKHR {
@@ -7863,6 +11486,16 @@ pub struct ImageFormatListCreateInfoKHR {
     pub p_next: *const c_void,
     pub view_format_count: uint32_t,
     pub p_view_formats: *const Format,
+}
+impl Default for ImageFormatListCreateInfoKHR {
+    fn default() -> ImageFormatListCreateInfoKHR {
+        ImageFormatListCreateInfoKHR {
+            s_type: StructureType::IMAGE_FORMAT_LIST_CREATE_INFO_KHR,
+            p_next: ::std::ptr::null(),
+            view_format_count: 0,
+            p_view_formats: ::std::ptr::null(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -7873,12 +11506,32 @@ pub struct ValidationCacheCreateInfoEXT {
     pub initial_data_size: size_t,
     pub p_initial_data: *const c_void,
 }
+impl Default for ValidationCacheCreateInfoEXT {
+    fn default() -> ValidationCacheCreateInfoEXT {
+        ValidationCacheCreateInfoEXT {
+            s_type: StructureType::VALIDATION_CACHE_CREATE_INFO_EXT,
+            p_next: ::std::ptr::null(),
+            flags: ValidationCacheCreateFlagsEXT::default(),
+            initial_data_size: 0,
+            p_initial_data: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ShaderModuleValidationCacheCreateInfoEXT {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub validation_cache: ValidationCacheEXT,
+}
+impl Default for ShaderModuleValidationCacheCreateInfoEXT {
+    fn default() -> ShaderModuleValidationCacheCreateInfoEXT {
+        ShaderModuleValidationCacheCreateInfoEXT {
+            s_type: StructureType::SHADER_MODULE_VALIDATION_CACHE_CREATE_INFO_EXT,
+            p_next: ::std::ptr::null(),
+            validation_cache: ValidationCacheEXT::null(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -7888,9 +11541,24 @@ pub struct PhysicalDeviceMaintenance3Properties {
     pub max_per_set_descriptors: uint32_t,
     pub max_memory_allocation_size: DeviceSize,
 }
+impl Default for PhysicalDeviceMaintenance3Properties {
+    fn default() -> PhysicalDeviceMaintenance3Properties {
+        PhysicalDeviceMaintenance3Properties {
+            s_type: StructureType::PHYSICAL_DEVICE_MAINTENANCE_3_PROPERTIES,
+            p_next: ::std::ptr::null(),
+            max_per_set_descriptors: 0,
+            max_memory_allocation_size: DeviceSize::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceMaintenance3PropertiesKHR {}
+impl Default for PhysicalDeviceMaintenance3PropertiesKHR {
+    fn default() -> PhysicalDeviceMaintenance3PropertiesKHR {
+        PhysicalDeviceMaintenance3PropertiesKHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct DescriptorSetLayoutSupport {
@@ -7898,15 +11566,38 @@ pub struct DescriptorSetLayoutSupport {
     pub p_next: *const c_void,
     pub supported: Bool32,
 }
+impl Default for DescriptorSetLayoutSupport {
+    fn default() -> DescriptorSetLayoutSupport {
+        DescriptorSetLayoutSupport {
+            s_type: StructureType::DESCRIPTOR_SET_LAYOUT_SUPPORT,
+            p_next: ::std::ptr::null(),
+            supported: Bool32::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct DescriptorSetLayoutSupportKHR {}
+impl Default for DescriptorSetLayoutSupportKHR {
+    fn default() -> DescriptorSetLayoutSupportKHR {
+        DescriptorSetLayoutSupportKHR {}
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceShaderDrawParameterFeatures {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub shader_draw_parameters: Bool32,
+}
+impl Default for PhysicalDeviceShaderDrawParameterFeatures {
+    fn default() -> PhysicalDeviceShaderDrawParameterFeatures {
+        PhysicalDeviceShaderDrawParameterFeatures {
+            s_type: StructureType::PHYSICAL_DEVICE_SHADER_DRAW_PARAMETER_FEATURES,
+            p_next: ::std::ptr::null(),
+            shader_draw_parameters: Bool32::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -7918,6 +11609,18 @@ pub struct NativeBufferANDROID {
     pub format: c_int,
     pub usage: c_int,
 }
+impl Default for NativeBufferANDROID {
+    fn default() -> NativeBufferANDROID {
+        NativeBufferANDROID {
+            s_type: StructureType::NATIVE_BUFFER_ANDROID,
+            p_next: ::std::ptr::null(),
+            handle: ::std::ptr::null(),
+            stride: c_int::default(),
+            format: c_int::default(),
+            usage: c_int::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ShaderResourceUsageAMD {
@@ -7926,6 +11629,17 @@ pub struct ShaderResourceUsageAMD {
     pub lds_size_per_local_work_group: uint32_t,
     pub lds_usage_size_in_bytes: size_t,
     pub scratch_mem_usage_in_bytes: size_t,
+}
+impl Default for ShaderResourceUsageAMD {
+    fn default() -> ShaderResourceUsageAMD {
+        ShaderResourceUsageAMD {
+            num_used_vgprs: 0,
+            num_used_sgprs: 0,
+            lds_size_per_local_work_group: 0,
+            lds_usage_size_in_bytes: 0,
+            scratch_mem_usage_in_bytes: 0,
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -7938,12 +11652,34 @@ pub struct ShaderStatisticsInfoAMD {
     pub num_available_sgprs: uint32_t,
     pub compute_work_group_size: [uint32_t; 3],
 }
+impl Default for ShaderStatisticsInfoAMD {
+    fn default() -> ShaderStatisticsInfoAMD {
+        ShaderStatisticsInfoAMD {
+            shader_stage_mask: ShaderStageFlags::default(),
+            resource_usage: ShaderResourceUsageAMD::default(),
+            num_physical_vgprs: 0,
+            num_physical_sgprs: 0,
+            num_available_vgprs: 0,
+            num_available_sgprs: 0,
+            compute_work_group_size: [0; 3],
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct DeviceQueueGlobalPriorityCreateInfoEXT {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub global_priority: QueueGlobalPriorityEXT,
+}
+impl Default for DeviceQueueGlobalPriorityCreateInfoEXT {
+    fn default() -> DeviceQueueGlobalPriorityCreateInfoEXT {
+        DeviceQueueGlobalPriorityCreateInfoEXT {
+            s_type: StructureType::DEVICE_QUEUE_GLOBAL_PRIORITY_CREATE_INFO_EXT,
+            p_next: ::std::ptr::null(),
+            global_priority: QueueGlobalPriorityEXT::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -7953,6 +11689,17 @@ pub struct DebugUtilsObjectNameInfoEXT {
     pub object_type: ObjectType,
     pub object_handle: uint64_t,
     pub p_object_name: *const c_char,
+}
+impl Default for DebugUtilsObjectNameInfoEXT {
+    fn default() -> DebugUtilsObjectNameInfoEXT {
+        DebugUtilsObjectNameInfoEXT {
+            s_type: StructureType::DEBUG_UTILS_OBJECT_NAME_INFO_EXT,
+            p_next: ::std::ptr::null(),
+            object_type: ObjectType::default(),
+            object_handle: 0,
+            p_object_name: ::std::ptr::null(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -7965,6 +11712,19 @@ pub struct DebugUtilsObjectTagInfoEXT {
     pub tag_size: size_t,
     pub p_tag: *const c_void,
 }
+impl Default for DebugUtilsObjectTagInfoEXT {
+    fn default() -> DebugUtilsObjectTagInfoEXT {
+        DebugUtilsObjectTagInfoEXT {
+            s_type: StructureType::DEBUG_UTILS_OBJECT_TAG_INFO_EXT,
+            p_next: ::std::ptr::null(),
+            object_type: ObjectType::default(),
+            object_handle: 0,
+            tag_name: 0,
+            tag_size: 0,
+            p_tag: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct DebugUtilsLabelEXT {
@@ -7972,6 +11732,16 @@ pub struct DebugUtilsLabelEXT {
     pub p_next: *const c_void,
     pub p_label_name: *const c_char,
     pub color: [c_float; 4],
+}
+impl Default for DebugUtilsLabelEXT {
+    fn default() -> DebugUtilsLabelEXT {
+        DebugUtilsLabelEXT {
+            s_type: StructureType::DEBUG_UTILS_LABEL_EXT,
+            p_next: ::std::ptr::null(),
+            p_label_name: ::std::ptr::null(),
+            color: [0.0; 4],
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -8000,6 +11770,24 @@ pub struct DebugUtilsMessengerCallbackDataEXT {
     pub object_count: uint32_t,
     pub p_objects: *const DebugUtilsObjectNameInfoEXT,
 }
+impl Default for DebugUtilsMessengerCallbackDataEXT {
+    fn default() -> DebugUtilsMessengerCallbackDataEXT {
+        DebugUtilsMessengerCallbackDataEXT {
+            s_type: StructureType::DEBUG_UTILS_MESSENGER_CALLBACK_DATA_EXT,
+            p_next: ::std::ptr::null(),
+            flags: DebugUtilsMessengerCallbackDataFlagsEXT::default(),
+            p_message_id_name: ::std::ptr::null(),
+            message_id_number: 0,
+            p_message: ::std::ptr::null(),
+            queue_label_count: 0,
+            p_queue_labels: ::std::ptr::null(),
+            cmd_buf_label_count: 0,
+            p_cmd_buf_labels: ::std::ptr::null(),
+            object_count: 0,
+            p_objects: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ImportMemoryHostPointerInfoEXT {
@@ -8008,6 +11796,16 @@ pub struct ImportMemoryHostPointerInfoEXT {
     pub handle_type: ExternalMemoryHandleTypeFlags,
     pub p_host_pointer: *const c_void,
 }
+impl Default for ImportMemoryHostPointerInfoEXT {
+    fn default() -> ImportMemoryHostPointerInfoEXT {
+        ImportMemoryHostPointerInfoEXT {
+            s_type: StructureType::IMPORT_MEMORY_HOST_POINTER_INFO_EXT,
+            p_next: ::std::ptr::null(),
+            handle_type: ExternalMemoryHandleTypeFlags::default(),
+            p_host_pointer: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct MemoryHostPointerPropertiesEXT {
@@ -8015,12 +11813,30 @@ pub struct MemoryHostPointerPropertiesEXT {
     pub p_next: *const c_void,
     pub memory_type_bits: uint32_t,
 }
+impl Default for MemoryHostPointerPropertiesEXT {
+    fn default() -> MemoryHostPointerPropertiesEXT {
+        MemoryHostPointerPropertiesEXT {
+            s_type: StructureType::MEMORY_HOST_POINTER_PROPERTIES_EXT,
+            p_next: ::std::ptr::null(),
+            memory_type_bits: 0,
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceExternalMemoryHostPropertiesEXT {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub min_imported_host_pointer_alignment: DeviceSize,
+}
+impl Default for PhysicalDeviceExternalMemoryHostPropertiesEXT {
+    fn default() -> PhysicalDeviceExternalMemoryHostPropertiesEXT {
+        PhysicalDeviceExternalMemoryHostPropertiesEXT {
+            s_type: StructureType::PHYSICAL_DEVICE_EXTERNAL_MEMORY_HOST_PROPERTIES_EXT,
+            p_next: ::std::ptr::null(),
+            min_imported_host_pointer_alignment: DeviceSize::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -8036,6 +11852,23 @@ pub struct PhysicalDeviceConservativeRasterizationPropertiesEXT {
     pub degenerate_lines_rasterized: Bool32,
     pub fully_covered_fragment_shader_input_variable: Bool32,
     pub conservative_rasterization_post_depth_coverage: Bool32,
+}
+impl Default for PhysicalDeviceConservativeRasterizationPropertiesEXT {
+    fn default() -> PhysicalDeviceConservativeRasterizationPropertiesEXT {
+        PhysicalDeviceConservativeRasterizationPropertiesEXT {
+            s_type: StructureType::PHYSICAL_DEVICE_CONSERVATIVE_RASTERIZATION_PROPERTIES_EXT,
+            p_next: ::std::ptr::null(),
+            primitive_overestimation_size: 0.0,
+            max_extra_primitive_overestimation_size: 0.0,
+            extra_primitive_overestimation_size_granularity: 0.0,
+            primitive_underestimation: Bool32::default(),
+            conservative_point_and_line_rasterization: Bool32::default(),
+            degenerate_triangles_rasterized: Bool32::default(),
+            degenerate_lines_rasterized: Bool32::default(),
+            fully_covered_fragment_shader_input_variable: Bool32::default(),
+            conservative_rasterization_post_depth_coverage: Bool32::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -8057,6 +11890,28 @@ pub struct PhysicalDeviceShaderCorePropertiesAMD {
     pub max_vgpr_allocation: uint32_t,
     pub vgpr_allocation_granularity: uint32_t,
 }
+impl Default for PhysicalDeviceShaderCorePropertiesAMD {
+    fn default() -> PhysicalDeviceShaderCorePropertiesAMD {
+        PhysicalDeviceShaderCorePropertiesAMD {
+            s_type: StructureType::PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_AMD,
+            p_next: ::std::ptr::null(),
+            shader_engine_count: 0,
+            shader_arrays_per_engine_count: 0,
+            compute_units_per_shader_array: 0,
+            simd_per_compute_unit: 0,
+            wavefronts_per_simd: 0,
+            wavefront_size: 0,
+            sgprs_per_simd: 0,
+            min_sgpr_allocation: 0,
+            max_sgpr_allocation: 0,
+            sgpr_allocation_granularity: 0,
+            vgprs_per_simd: 0,
+            min_vgpr_allocation: 0,
+            max_vgpr_allocation: 0,
+            vgpr_allocation_granularity: 0,
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PipelineRasterizationConservativeStateCreateInfoEXT {
@@ -8065,6 +11920,17 @@ pub struct PipelineRasterizationConservativeStateCreateInfoEXT {
     pub flags: PipelineRasterizationConservativeStateCreateFlagsEXT,
     pub conservative_rasterization_mode: ConservativeRasterizationModeEXT,
     pub extra_primitive_overestimation_size: c_float,
+}
+impl Default for PipelineRasterizationConservativeStateCreateInfoEXT {
+    fn default() -> PipelineRasterizationConservativeStateCreateInfoEXT {
+        PipelineRasterizationConservativeStateCreateInfoEXT {
+            s_type: StructureType::PIPELINE_RASTERIZATION_CONSERVATIVE_STATE_CREATE_INFO_EXT,
+            p_next: ::std::ptr::null(),
+            flags: PipelineRasterizationConservativeStateCreateFlagsEXT::default(),
+            conservative_rasterization_mode: ConservativeRasterizationModeEXT::default(),
+            extra_primitive_overestimation_size: 0.0,
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -8091,6 +11957,34 @@ pub struct PhysicalDeviceDescriptorIndexingFeaturesEXT {
     pub descriptor_binding_partially_bound: Bool32,
     pub descriptor_binding_variable_descriptor_count: Bool32,
     pub runtime_descriptor_array: Bool32,
+}
+impl Default for PhysicalDeviceDescriptorIndexingFeaturesEXT {
+    fn default() -> PhysicalDeviceDescriptorIndexingFeaturesEXT {
+        PhysicalDeviceDescriptorIndexingFeaturesEXT {
+            s_type: StructureType::PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_FEATURES_EXT,
+            p_next: ::std::ptr::null(),
+            shader_input_attachment_array_dynamic_indexing: Bool32::default(),
+            shader_uniform_texel_buffer_array_dynamic_indexing: Bool32::default(),
+            shader_storage_texel_buffer_array_dynamic_indexing: Bool32::default(),
+            shader_uniform_buffer_array_non_uniform_indexing: Bool32::default(),
+            shader_sampled_image_array_non_uniform_indexing: Bool32::default(),
+            shader_storage_buffer_array_non_uniform_indexing: Bool32::default(),
+            shader_storage_image_array_non_uniform_indexing: Bool32::default(),
+            shader_input_attachment_array_non_uniform_indexing: Bool32::default(),
+            shader_uniform_texel_buffer_array_non_uniform_indexing: Bool32::default(),
+            shader_storage_texel_buffer_array_non_uniform_indexing: Bool32::default(),
+            descriptor_binding_uniform_buffer_update_after_bind: Bool32::default(),
+            descriptor_binding_sampled_image_update_after_bind: Bool32::default(),
+            descriptor_binding_storage_image_update_after_bind: Bool32::default(),
+            descriptor_binding_storage_buffer_update_after_bind: Bool32::default(),
+            descriptor_binding_uniform_texel_buffer_update_after_bind: Bool32::default(),
+            descriptor_binding_storage_texel_buffer_update_after_bind: Bool32::default(),
+            descriptor_binding_update_unused_while_pending: Bool32::default(),
+            descriptor_binding_partially_bound: Bool32::default(),
+            descriptor_binding_variable_descriptor_count: Bool32::default(),
+            runtime_descriptor_array: Bool32::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -8121,6 +12015,37 @@ pub struct PhysicalDeviceDescriptorIndexingPropertiesEXT {
     pub max_descriptor_set_update_after_bind_storage_images: uint32_t,
     pub max_descriptor_set_update_after_bind_input_attachments: uint32_t,
 }
+impl Default for PhysicalDeviceDescriptorIndexingPropertiesEXT {
+    fn default() -> PhysicalDeviceDescriptorIndexingPropertiesEXT {
+        PhysicalDeviceDescriptorIndexingPropertiesEXT {
+            s_type: StructureType::PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_PROPERTIES_EXT,
+            p_next: ::std::ptr::null(),
+            max_update_after_bind_descriptors_in_all_pools: 0,
+            shader_uniform_buffer_array_non_uniform_indexing_native: Bool32::default(),
+            shader_sampled_image_array_non_uniform_indexing_native: Bool32::default(),
+            shader_storage_buffer_array_non_uniform_indexing_native: Bool32::default(),
+            shader_storage_image_array_non_uniform_indexing_native: Bool32::default(),
+            shader_input_attachment_array_non_uniform_indexing_native: Bool32::default(),
+            robust_buffer_access_update_after_bind: Bool32::default(),
+            quad_divergent_implicit_lod: Bool32::default(),
+            max_per_stage_descriptor_update_after_bind_samplers: 0,
+            max_per_stage_descriptor_update_after_bind_uniform_buffers: 0,
+            max_per_stage_descriptor_update_after_bind_storage_buffers: 0,
+            max_per_stage_descriptor_update_after_bind_sampled_images: 0,
+            max_per_stage_descriptor_update_after_bind_storage_images: 0,
+            max_per_stage_descriptor_update_after_bind_input_attachments: 0,
+            max_per_stage_update_after_bind_resources: 0,
+            max_descriptor_set_update_after_bind_samplers: 0,
+            max_descriptor_set_update_after_bind_uniform_buffers: 0,
+            max_descriptor_set_update_after_bind_uniform_buffers_dynamic: 0,
+            max_descriptor_set_update_after_bind_storage_buffers: 0,
+            max_descriptor_set_update_after_bind_storage_buffers_dynamic: 0,
+            max_descriptor_set_update_after_bind_sampled_images: 0,
+            max_descriptor_set_update_after_bind_storage_images: 0,
+            max_descriptor_set_update_after_bind_input_attachments: 0,
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct DescriptorSetLayoutBindingFlagsCreateInfoEXT {
@@ -8128,6 +12053,16 @@ pub struct DescriptorSetLayoutBindingFlagsCreateInfoEXT {
     pub p_next: *const c_void,
     pub binding_count: uint32_t,
     pub p_binding_flags: *const DescriptorBindingFlagsEXT,
+}
+impl Default for DescriptorSetLayoutBindingFlagsCreateInfoEXT {
+    fn default() -> DescriptorSetLayoutBindingFlagsCreateInfoEXT {
+        DescriptorSetLayoutBindingFlagsCreateInfoEXT {
+            s_type: StructureType::DESCRIPTOR_SET_LAYOUT_BINDING_FLAGS_CREATE_INFO_EXT,
+            p_next: ::std::ptr::null(),
+            binding_count: 0,
+            p_binding_flags: ::std::ptr::null(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -8137,6 +12072,16 @@ pub struct DescriptorSetVariableDescriptorCountAllocateInfoEXT {
     pub descriptor_set_count: uint32_t,
     pub p_descriptor_counts: *const uint32_t,
 }
+impl Default for DescriptorSetVariableDescriptorCountAllocateInfoEXT {
+    fn default() -> DescriptorSetVariableDescriptorCountAllocateInfoEXT {
+        DescriptorSetVariableDescriptorCountAllocateInfoEXT {
+            s_type: StructureType::DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_ALLOCATE_INFO_EXT,
+            p_next: ::std::ptr::null(),
+            descriptor_set_count: 0,
+            p_descriptor_counts: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct DescriptorSetVariableDescriptorCountLayoutSupportEXT {
@@ -8144,11 +12089,28 @@ pub struct DescriptorSetVariableDescriptorCountLayoutSupportEXT {
     pub p_next: *const c_void,
     pub max_variable_descriptor_count: uint32_t,
 }
+impl Default for DescriptorSetVariableDescriptorCountLayoutSupportEXT {
+    fn default() -> DescriptorSetVariableDescriptorCountLayoutSupportEXT {
+        DescriptorSetVariableDescriptorCountLayoutSupportEXT {
+            s_type: StructureType::DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_LAYOUT_SUPPORT_EXT,
+            p_next: ::std::ptr::null(),
+            max_variable_descriptor_count: 0,
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct VertexInputBindingDivisorDescriptionEXT {
     pub binding: uint32_t,
     pub divisor: uint32_t,
+}
+impl Default for VertexInputBindingDivisorDescriptionEXT {
+    fn default() -> VertexInputBindingDivisorDescriptionEXT {
+        VertexInputBindingDivisorDescriptionEXT {
+            binding: 0,
+            divisor: 0,
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -8158,12 +12120,31 @@ pub struct PipelineVertexInputDivisorStateCreateInfoEXT {
     pub vertex_binding_divisor_count: uint32_t,
     pub p_vertex_binding_divisors: *const VertexInputBindingDivisorDescriptionEXT,
 }
+impl Default for PipelineVertexInputDivisorStateCreateInfoEXT {
+    fn default() -> PipelineVertexInputDivisorStateCreateInfoEXT {
+        PipelineVertexInputDivisorStateCreateInfoEXT {
+            s_type: StructureType::PIPELINE_VERTEX_INPUT_DIVISOR_STATE_CREATE_INFO_EXT,
+            p_next: ::std::ptr::null(),
+            vertex_binding_divisor_count: 0,
+            p_vertex_binding_divisors: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceVertexAttributeDivisorPropertiesEXT {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub max_vertex_attrib_divisor: uint32_t,
+}
+impl Default for PhysicalDeviceVertexAttributeDivisorPropertiesEXT {
+    fn default() -> PhysicalDeviceVertexAttributeDivisorPropertiesEXT {
+        PhysicalDeviceVertexAttributeDivisorPropertiesEXT {
+            s_type: StructureType::PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_PROPERTIES_EXT,
+            p_next: ::std::ptr::null(),
+            max_vertex_attrib_divisor: 0,
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -8172,12 +12153,30 @@ pub struct ImportAndroidHardwareBufferInfoANDROID {
     pub p_next: *const c_void,
     pub buffer: *const AHardwareBuffer,
 }
+impl Default for ImportAndroidHardwareBufferInfoANDROID {
+    fn default() -> ImportAndroidHardwareBufferInfoANDROID {
+        ImportAndroidHardwareBufferInfoANDROID {
+            s_type: StructureType::IMPORT_ANDROID_HARDWARE_BUFFER_INFO_ANDROID,
+            p_next: ::std::ptr::null(),
+            buffer: ::std::ptr::null(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct AndroidHardwareBufferUsageANDROID {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub android_hardware_buffer_usage: uint64_t,
+}
+impl Default for AndroidHardwareBufferUsageANDROID {
+    fn default() -> AndroidHardwareBufferUsageANDROID {
+        AndroidHardwareBufferUsageANDROID {
+            s_type: StructureType::ANDROID_HARDWARE_BUFFER_USAGE_ANDROID,
+            p_next: ::std::ptr::null(),
+            android_hardware_buffer_usage: 0,
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -8187,12 +12186,31 @@ pub struct AndroidHardwareBufferPropertiesANDROID {
     pub allocation_size: DeviceSize,
     pub memory_type_bits: uint32_t,
 }
+impl Default for AndroidHardwareBufferPropertiesANDROID {
+    fn default() -> AndroidHardwareBufferPropertiesANDROID {
+        AndroidHardwareBufferPropertiesANDROID {
+            s_type: StructureType::ANDROID_HARDWARE_BUFFER_PROPERTIES_ANDROID,
+            p_next: ::std::ptr::null(),
+            allocation_size: DeviceSize::default(),
+            memory_type_bits: 0,
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct MemoryGetAndroidHardwareBufferInfoANDROID {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub memory: DeviceMemory,
+}
+impl Default for MemoryGetAndroidHardwareBufferInfoANDROID {
+    fn default() -> MemoryGetAndroidHardwareBufferInfoANDROID {
+        MemoryGetAndroidHardwareBufferInfoANDROID {
+            s_type: StructureType::MEMORY_GET_ANDROID_HARDWARE_BUFFER_INFO_ANDROID,
+            p_next: ::std::ptr::null(),
+            memory: DeviceMemory::null(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -8208,6 +12226,22 @@ pub struct AndroidHardwareBufferFormatPropertiesANDROID {
     pub suggested_x_chroma_offset: ChromaLocation,
     pub suggested_y_chroma_offset: ChromaLocation,
 }
+impl Default for AndroidHardwareBufferFormatPropertiesANDROID {
+    fn default() -> AndroidHardwareBufferFormatPropertiesANDROID {
+        AndroidHardwareBufferFormatPropertiesANDROID {
+            s_type: StructureType::ANDROID_HARDWARE_BUFFER_FORMAT_PROPERTIES_ANDROID,
+            p_next: ::std::ptr::null(),
+            format: Format::default(),
+            external_format: 0,
+            format_features: FormatFeatureFlags::default(),
+            sampler_ycbcr_conversion_components: ComponentMapping::default(),
+            suggested_ycbcr_model: SamplerYcbcrModelConversion::default(),
+            suggested_ycbcr_range: SamplerYcbcrRange::default(),
+            suggested_x_chroma_offset: ChromaLocation::default(),
+            suggested_y_chroma_offset: ChromaLocation::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ExternalFormatANDROID {
@@ -8215,7 +12249,16 @@ pub struct ExternalFormatANDROID {
     pub p_next: *const c_void,
     pub external_format: uint64_t,
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+impl Default for ExternalFormatANDROID {
+    fn default() -> ExternalFormatANDROID {
+        ExternalFormatANDROID {
+            s_type: StructureType::EXTERNAL_FORMAT_ANDROID,
+            p_next: ::std::ptr::null(),
+            external_format: 0,
+        }
+    }
+}
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct ImageLayout(pub i32);
 impl ImageLayout {
@@ -8229,7 +12272,7 @@ impl ImageLayout {
     pub const TRANSFER_DST_OPTIMAL: Self = ImageLayout(7);
     pub const PREINITIALIZED: Self = ImageLayout(8);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct AttachmentLoadOp(pub i32);
 impl AttachmentLoadOp {
@@ -8237,14 +12280,14 @@ impl AttachmentLoadOp {
     pub const CLEAR: Self = AttachmentLoadOp(1);
     pub const DONT_CARE: Self = AttachmentLoadOp(2);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct AttachmentStoreOp(pub i32);
 impl AttachmentStoreOp {
     pub const STORE: Self = AttachmentStoreOp(0);
     pub const DONT_CARE: Self = AttachmentStoreOp(1);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct ImageType(pub i32);
 impl ImageType {
@@ -8252,14 +12295,14 @@ impl ImageType {
     pub const TYPE_2D: Self = ImageType(1);
     pub const TYPE_3D: Self = ImageType(2);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct ImageTiling(pub i32);
 impl ImageTiling {
     pub const OPTIMAL: Self = ImageTiling(0);
     pub const LINEAR: Self = ImageTiling(1);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct ImageViewType(pub i32);
 impl ImageViewType {
@@ -8271,14 +12314,14 @@ impl ImageViewType {
     pub const TYPE_2D_ARRAY: Self = ImageViewType(5);
     pub const CUBE_ARRAY: Self = ImageViewType(6);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct CommandBufferLevel(pub i32);
 impl CommandBufferLevel {
     pub const PRIMARY: Self = CommandBufferLevel(0);
     pub const SECONDARY: Self = CommandBufferLevel(1);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct ComponentSwizzle(pub i32);
 impl ComponentSwizzle {
@@ -8290,7 +12333,7 @@ impl ComponentSwizzle {
     pub const B: Self = ComponentSwizzle(5);
     pub const A: Self = ComponentSwizzle(6);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct DescriptorType(pub i32);
 impl DescriptorType {
@@ -8306,7 +12349,7 @@ impl DescriptorType {
     pub const STORAGE_BUFFER_DYNAMIC: Self = DescriptorType(9);
     pub const INPUT_ATTACHMENT: Self = DescriptorType(10);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct QueryType(pub i32);
 impl QueryType {
@@ -8314,7 +12357,7 @@ impl QueryType {
     pub const PIPELINE_STATISTICS: Self = QueryType(1);
     pub const TIMESTAMP: Self = QueryType(2);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct BorderColor(pub i32);
 impl BorderColor {
@@ -8325,20 +12368,20 @@ impl BorderColor {
     pub const FLOAT_OPAQUE_WHITE: Self = BorderColor(4);
     pub const INT_OPAQUE_WHITE: Self = BorderColor(5);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct PipelineBindPoint(pub i32);
 impl PipelineBindPoint {
     pub const GRAPHICS: Self = PipelineBindPoint(0);
     pub const COMPUTE: Self = PipelineBindPoint(1);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct PipelineCacheHeaderVersion(pub i32);
 impl PipelineCacheHeaderVersion {
     pub const ONE: Self = PipelineCacheHeaderVersion(1);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct PrimitiveTopology(pub i32);
 impl PrimitiveTopology {
@@ -8354,35 +12397,35 @@ impl PrimitiveTopology {
     pub const TRIANGLE_STRIP_WITH_ADJACENCY: Self = PrimitiveTopology(9);
     pub const PATCH_LIST: Self = PrimitiveTopology(10);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct SharingMode(pub i32);
 impl SharingMode {
     pub const EXCLUSIVE: Self = SharingMode(0);
     pub const CONCURRENT: Self = SharingMode(1);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct IndexType(pub i32);
 impl IndexType {
     pub const UINT16: Self = IndexType(0);
     pub const UINT32: Self = IndexType(1);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct Filter(pub i32);
 impl Filter {
     pub const NEAREST: Self = Filter(0);
     pub const LINEAR: Self = Filter(1);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct SamplerMipmapMode(pub i32);
 impl SamplerMipmapMode {
     pub const NEAREST: Self = SamplerMipmapMode(0);
     pub const LINEAR: Self = SamplerMipmapMode(1);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct SamplerAddressMode(pub i32);
 impl SamplerAddressMode {
@@ -8391,7 +12434,7 @@ impl SamplerAddressMode {
     pub const CLAMP_TO_EDGE: Self = SamplerAddressMode(2);
     pub const CLAMP_TO_BORDER: Self = SamplerAddressMode(3);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct CompareOp(pub i32);
 impl CompareOp {
@@ -8404,7 +12447,7 @@ impl CompareOp {
     pub const GREATER_OR_EQUAL: Self = CompareOp(6);
     pub const ALWAYS: Self = CompareOp(7);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct PolygonMode(pub i32);
 impl PolygonMode {
@@ -8412,14 +12455,14 @@ impl PolygonMode {
     pub const LINE: Self = PolygonMode(1);
     pub const POINT: Self = PolygonMode(2);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct FrontFace(pub i32);
 impl FrontFace {
     pub const COUNTER_CLOCKWISE: Self = FrontFace(0);
     pub const CLOCKWISE: Self = FrontFace(1);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct BlendFactor(pub i32);
 impl BlendFactor {
@@ -8443,7 +12486,7 @@ impl BlendFactor {
     pub const SRC1_ALPHA: Self = BlendFactor(17);
     pub const ONE_MINUS_SRC1_ALPHA: Self = BlendFactor(18);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct BlendOp(pub i32);
 impl BlendOp {
@@ -8453,7 +12496,7 @@ impl BlendOp {
     pub const MIN: Self = BlendOp(3);
     pub const MAX: Self = BlendOp(4);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct StencilOp(pub i32);
 impl StencilOp {
@@ -8466,7 +12509,7 @@ impl StencilOp {
     pub const INCREMENT_AND_WRAP: Self = StencilOp(6);
     pub const DECREMENT_AND_WRAP: Self = StencilOp(7);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct LogicOp(pub i32);
 impl LogicOp {
@@ -8487,13 +12530,13 @@ impl LogicOp {
     pub const NAND: Self = LogicOp(14);
     pub const SET: Self = LogicOp(15);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct InternalAllocationType(pub i32);
 impl InternalAllocationType {
     pub const EXECUTABLE: Self = InternalAllocationType(0);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct SystemAllocationScope(pub i32);
 impl SystemAllocationScope {
@@ -8503,7 +12546,7 @@ impl SystemAllocationScope {
     pub const DEVICE: Self = SystemAllocationScope(3);
     pub const INSTANCE: Self = SystemAllocationScope(4);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct PhysicalDeviceType(pub i32);
 impl PhysicalDeviceType {
@@ -8513,14 +12556,14 @@ impl PhysicalDeviceType {
     pub const VIRTUAL_GPU: Self = PhysicalDeviceType(3);
     pub const CPU: Self = PhysicalDeviceType(4);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct VertexInputRate(pub i32);
 impl VertexInputRate {
     pub const VERTEX: Self = VertexInputRate(0);
     pub const INSTANCE: Self = VertexInputRate(1);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct Format(pub i32);
 impl Format {
@@ -8710,7 +12753,7 @@ impl Format {
     pub const ASTC_12X12_UNORM_BLOCK: Self = Format(183);
     pub const ASTC_12X12_SRGB_BLOCK: Self = Format(184);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct StructureType(pub i32);
 impl StructureType {
@@ -8764,14 +12807,14 @@ impl StructureType {
     pub const LOADER_INSTANCE_CREATE_INFO: Self = StructureType(47);
     pub const LOADER_DEVICE_CREATE_INFO: Self = StructureType(48);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct SubpassContents(pub i32);
 impl SubpassContents {
     pub const INLINE: Self = SubpassContents(0);
     pub const SECONDARY_COMMAND_BUFFERS: Self = SubpassContents(1);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct Result(pub i32);
 impl Result {
@@ -8847,7 +12890,7 @@ impl ::std::fmt::Display for Result {
         }
     }
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct DynamicState(pub i32);
 impl DynamicState {
@@ -8861,13 +12904,13 @@ impl DynamicState {
     pub const STENCIL_WRITE_MASK: Self = DynamicState(7);
     pub const STENCIL_REFERENCE: Self = DynamicState(8);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct DescriptorUpdateTemplateType(pub i32);
 impl DescriptorUpdateTemplateType {
     pub const DESCRIPTOR_SET: Self = DescriptorUpdateTemplateType(0);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct ObjectType(pub i32);
 impl ObjectType {
@@ -8898,7 +12941,7 @@ impl ObjectType {
     pub const FRAMEBUFFER: Self = ObjectType(24);
     pub const COMMAND_POOL: Self = ObjectType(25);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct PresentModeKHR(pub i32);
 impl PresentModeKHR {
@@ -8907,13 +12950,13 @@ impl PresentModeKHR {
     pub const PRESENT_MODE_FIFO_KHR: Self = PresentModeKHR(2);
     pub const PRESENT_MODE_FIFO_RELAXED_KHR: Self = PresentModeKHR(3);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct ColorSpaceKHR(pub i32);
 impl ColorSpaceKHR {
     pub const COLOR_SPACE_SRGB_NONLINEAR_KHR: Self = ColorSpaceKHR(0);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct DebugReportObjectTypeEXT(pub i32);
 impl DebugReportObjectTypeEXT {
@@ -8956,21 +12999,21 @@ impl DebugReportObjectTypeEXT {
     pub const DEBUG_REPORT_OBJECT_TYPE_VALIDATION_CACHE_EXT_EXT: Self =
         DebugReportObjectTypeEXT(33);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct RasterizationOrderAMD(pub i32);
 impl RasterizationOrderAMD {
     pub const RASTERIZATION_ORDER_STRICT_AMD: Self = RasterizationOrderAMD(0);
     pub const RASTERIZATION_ORDER_RELAXED_AMD: Self = RasterizationOrderAMD(1);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct ValidationCheckEXT(pub i32);
 impl ValidationCheckEXT {
     pub const VALIDATION_CHECK_ALL_EXT: Self = ValidationCheckEXT(0);
     pub const VALIDATION_CHECK_SHADERS_EXT: Self = ValidationCheckEXT(1);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct IndirectCommandsTokenTypeNVX(pub i32);
 impl IndirectCommandsTokenTypeNVX {
@@ -8986,7 +13029,7 @@ impl IndirectCommandsTokenTypeNVX {
     pub const INDIRECT_COMMANDS_TOKEN_TYPE_DRAW_NVX: Self = IndirectCommandsTokenTypeNVX(6);
     pub const INDIRECT_COMMANDS_TOKEN_TYPE_DISPATCH_NVX: Self = IndirectCommandsTokenTypeNVX(7);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct ObjectEntryTypeNVX(pub i32);
 impl ObjectEntryTypeNVX {
@@ -8996,7 +13039,7 @@ impl ObjectEntryTypeNVX {
     pub const OBJECT_ENTRY_TYPE_VERTEX_BUFFER_NVX: Self = ObjectEntryTypeNVX(3);
     pub const OBJECT_ENTRY_TYPE_PUSH_CONSTANT_NVX: Self = ObjectEntryTypeNVX(4);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct DisplayPowerStateEXT(pub i32);
 impl DisplayPowerStateEXT {
@@ -9004,19 +13047,19 @@ impl DisplayPowerStateEXT {
     pub const DISPLAY_POWER_STATE_SUSPEND_EXT: Self = DisplayPowerStateEXT(1);
     pub const DISPLAY_POWER_STATE_ON_EXT: Self = DisplayPowerStateEXT(2);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct DeviceEventTypeEXT(pub i32);
 impl DeviceEventTypeEXT {
     pub const DEVICE_EVENT_TYPE_DISPLAY_HOTPLUG_EXT: Self = DeviceEventTypeEXT(0);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct DisplayEventTypeEXT(pub i32);
 impl DisplayEventTypeEXT {
     pub const DISPLAY_EVENT_TYPE_FIRST_PIXEL_OUT_EXT: Self = DisplayEventTypeEXT(0);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct ViewportCoordinateSwizzleNV(pub i32);
 impl ViewportCoordinateSwizzleNV {
@@ -9029,21 +13072,21 @@ impl ViewportCoordinateSwizzleNV {
     pub const VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_W_NV: Self = ViewportCoordinateSwizzleNV(6);
     pub const VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_W_NV: Self = ViewportCoordinateSwizzleNV(7);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct DiscardRectangleModeEXT(pub i32);
 impl DiscardRectangleModeEXT {
     pub const DISCARD_RECTANGLE_MODE_INCLUSIVE_EXT: Self = DiscardRectangleModeEXT(0);
     pub const DISCARD_RECTANGLE_MODE_EXCLUSIVE_EXT: Self = DiscardRectangleModeEXT(1);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct PointClippingBehavior(pub i32);
 impl PointClippingBehavior {
     pub const ALL_CLIP_PLANES: Self = PointClippingBehavior(0);
     pub const USER_CLIP_PLANES_ONLY: Self = PointClippingBehavior(1);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct SamplerReductionModeEXT(pub i32);
 impl SamplerReductionModeEXT {
@@ -9051,14 +13094,14 @@ impl SamplerReductionModeEXT {
     pub const SAMPLER_REDUCTION_MODE_MIN_EXT: Self = SamplerReductionModeEXT(1);
     pub const SAMPLER_REDUCTION_MODE_MAX_EXT: Self = SamplerReductionModeEXT(2);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct TessellationDomainOrigin(pub i32);
 impl TessellationDomainOrigin {
     pub const UPPER_LEFT: Self = TessellationDomainOrigin(0);
     pub const LOWER_LEFT: Self = TessellationDomainOrigin(1);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct SamplerYcbcrModelConversion(pub i32);
 impl SamplerYcbcrModelConversion {
@@ -9068,21 +13111,21 @@ impl SamplerYcbcrModelConversion {
     pub const YCBCR_601: Self = SamplerYcbcrModelConversion(3);
     pub const YCBCR_2020: Self = SamplerYcbcrModelConversion(4);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct SamplerYcbcrRange(pub i32);
 impl SamplerYcbcrRange {
     pub const ITU_FULL: Self = SamplerYcbcrRange(0);
     pub const ITU_NARROW: Self = SamplerYcbcrRange(1);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct ChromaLocation(pub i32);
 impl ChromaLocation {
     pub const COSITED_EVEN: Self = ChromaLocation(0);
     pub const MIDPOINT: Self = ChromaLocation(1);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct BlendOverlapEXT(pub i32);
 impl BlendOverlapEXT {
@@ -9090,7 +13133,7 @@ impl BlendOverlapEXT {
     pub const BLEND_OVERLAP_DISJOINT_EXT: Self = BlendOverlapEXT(1);
     pub const BLEND_OVERLAP_CONJOINT_EXT: Self = BlendOverlapEXT(2);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct CoverageModulationModeNV(pub i32);
 impl CoverageModulationModeNV {
@@ -9099,13 +13142,13 @@ impl CoverageModulationModeNV {
     pub const COVERAGE_MODULATION_MODE_ALPHA_NV: Self = CoverageModulationModeNV(2);
     pub const COVERAGE_MODULATION_MODE_RGBA_NV: Self = CoverageModulationModeNV(3);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct ValidationCacheHeaderVersionEXT(pub i32);
 impl ValidationCacheHeaderVersionEXT {
     pub const VALIDATION_CACHE_HEADER_VERSION_ONE_EXT: Self = ValidationCacheHeaderVersionEXT(1);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct ShaderInfoTypeAMD(pub i32);
 impl ShaderInfoTypeAMD {
@@ -9113,7 +13156,7 @@ impl ShaderInfoTypeAMD {
     pub const SHADER_INFO_TYPE_BINARY_AMD: Self = ShaderInfoTypeAMD(1);
     pub const SHADER_INFO_TYPE_DISASSEMBLY_AMD: Self = ShaderInfoTypeAMD(2);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct QueueGlobalPriorityEXT(pub i32);
 impl QueueGlobalPriorityEXT {
@@ -9122,7 +13165,7 @@ impl QueueGlobalPriorityEXT {
     pub const QUEUE_GLOBAL_PRIORITY_HIGH_EXT: Self = QueueGlobalPriorityEXT(512);
     pub const QUEUE_GLOBAL_PRIORITY_REALTIME_EXT: Self = QueueGlobalPriorityEXT(1024);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct ConservativeRasterizationModeEXT(pub i32);
 impl ConservativeRasterizationModeEXT {

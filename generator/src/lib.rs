@@ -10,6 +10,8 @@ extern crate proc_macro2;
 extern crate quote;
 extern crate itertools;
 extern crate syn;
+#[macro_use]
+extern crate lazy_static;
 pub extern crate vk_parse;
 pub extern crate vkxml;
 
@@ -1032,7 +1034,7 @@ pub fn generate_enum(
     } else {
         let impl_block = bitflags_impl_block(&ident, _enum, &constants);
         let enum_quote = quote!{
-            #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+            #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
             #[repr(C)]
             pub struct #ident(pub i32);
             #impl_block
@@ -1110,6 +1112,22 @@ pub fn generate_struct(_struct: &vkxml::Struct) -> Tokens {
             .unwrap_or(false)
     });
 
+    let members_default = members.clone().map(|field| field.to_default());
+
+    let impl_default = if !contains_pfn {
+        quote!{
+            impl Default for #name {
+                fn default() -> #name {
+                    #name {
+                        #(#members_default,)*
+                    }
+                }
+            }
+        }
+    } else {
+        quote!()
+    };
+
     let derive = if contains_pfn {
         quote!{
             #[derive(Copy, Clone)]
@@ -1126,6 +1144,8 @@ pub fn generate_struct(_struct: &vkxml::Struct) -> Tokens {
         pub struct #name {
             #(#params,)*
         }
+
+        #impl_default
     }
 }
 
@@ -1176,11 +1196,22 @@ fn generate_union(union: &vkxml::Union) -> Tokens {
             pub #name: #ty
         }
     });
+
+    let first_field_default = &union.elements[0].to_default();
+
     quote!{
         #[repr(C)]
         #[derive(Copy, Clone)]
         pub union #name {
             #(#fields),*
+        }
+
+        impl Default for #name {
+            fn default() -> #name {
+                #name {
+                    #first_field_default
+                }
+            }
         }
     }
 }
@@ -1358,6 +1389,20 @@ pub fn write_source_code(path: &Path) {
         })
         .flat_map(|definitions| definitions.elements.iter().map(|definition| definition))
         .collect();
+
+    for definition in &definitions {
+        match definition {
+            vkxml::DefinitionsElement::Handle(ref handle) => {
+                if handle.name != "" {
+                    NON_DISPATCHABLE
+                        .lock()
+                        .unwrap()
+                        .push(handle.name.split_at(2).1.to_string());
+                }
+            }
+            _ => {}
+        };
+    }
 
     let enums: Vec<&vkxml::Enumeration> = spec
         .elements

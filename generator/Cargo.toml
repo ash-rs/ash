@@ -11,6 +11,7 @@ nom = "4.0"
 heck = "0.3"
 proc-macro2 = "0.2"
 itertools = "0.7"
+lazy_static = "1.0"
 
 [dependencies.quote]
 version = "0.4.2"
