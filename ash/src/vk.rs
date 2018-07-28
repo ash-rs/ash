@@ -4929,60 +4929,33 @@ impl Default for BaseInStructure {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct Offset2D {
     pub x: int32_t,
     pub y: int32_t,
 }
-impl Default for Offset2D {
-    fn default() -> Offset2D {
-        Offset2D { x: 0, y: 0 }
-    }
-}
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct Offset3D {
     pub x: int32_t,
     pub y: int32_t,
     pub z: int32_t,
 }
-impl Default for Offset3D {
-    fn default() -> Offset3D {
-        Offset3D { x: 0, y: 0, z: 0 }
-    }
-}
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct Extent2D {
     pub width: uint32_t,
     pub height: uint32_t,
 }
-impl Default for Extent2D {
-    fn default() -> Extent2D {
-        Extent2D {
-            width: 0,
-            height: 0,
-        }
-    }
-}
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct Extent3D {
     pub width: uint32_t,
     pub height: uint32_t,
     pub depth: uint32_t,
 }
-impl Default for Extent3D {
-    fn default() -> Extent3D {
-        Extent3D {
-            width: 0,
-            height: 0,
-            depth: 0,
-        }
-    }
-}
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct Viewport {
     pub x: c_float,
     pub y: c_float,
@@ -4991,65 +4964,26 @@ pub struct Viewport {
     pub min_depth: c_float,
     pub max_depth: c_float,
 }
-impl Default for Viewport {
-    fn default() -> Viewport {
-        Viewport {
-            x: 0.0,
-            y: 0.0,
-            width: 0.0,
-            height: 0.0,
-            min_depth: 0.0,
-            max_depth: 0.0,
-        }
-    }
-}
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct Rect2D {
     pub offset: Offset2D,
     pub extent: Extent2D,
 }
-impl Default for Rect2D {
-    fn default() -> Rect2D {
-        Rect2D {
-            offset: Offset2D::default(),
-            extent: Extent2D::default(),
-        }
-    }
-}
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct ClearRect {
     pub rect: Rect2D,
     pub base_array_layer: uint32_t,
     pub layer_count: uint32_t,
 }
-impl Default for ClearRect {
-    fn default() -> ClearRect {
-        ClearRect {
-            rect: Rect2D::default(),
-            base_array_layer: 0,
-            layer_count: 0,
-        }
-    }
-}
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct ComponentMapping {
     pub r: ComponentSwizzle,
     pub g: ComponentSwizzle,
     pub b: ComponentSwizzle,
     pub a: ComponentSwizzle,
-}
-impl Default for ComponentMapping {
-    fn default() -> ComponentMapping {
-        ComponentMapping {
-            r: ComponentSwizzle::default(),
-            g: ComponentSwizzle::default(),
-            b: ComponentSwizzle::default(),
-            a: ComponentSwizzle::default(),
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -5224,22 +5158,12 @@ impl Default for InstanceCreateInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct QueueFamilyProperties {
     pub queue_flags: QueueFlags,
     pub queue_count: uint32_t,
     pub timestamp_valid_bits: uint32_t,
     pub min_image_transfer_granularity: Extent3D,
-}
-impl Default for QueueFamilyProperties {
-    fn default() -> QueueFamilyProperties {
-        QueueFamilyProperties {
-            queue_flags: QueueFlags::default(),
-            queue_count: 0,
-            timestamp_valid_bits: 0,
-            min_image_transfer_granularity: Extent3D::default(),
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -5278,39 +5202,21 @@ impl Default for MemoryAllocateInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct MemoryRequirements {
     pub size: DeviceSize,
     pub alignment: DeviceSize,
     pub memory_type_bits: uint32_t,
 }
-impl Default for MemoryRequirements {
-    fn default() -> MemoryRequirements {
-        MemoryRequirements {
-            size: DeviceSize::default(),
-            alignment: DeviceSize::default(),
-            memory_type_bits: 0,
-        }
-    }
-}
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct SparseImageFormatProperties {
     pub aspect_mask: ImageAspectFlags,
     pub image_granularity: Extent3D,
     pub flags: SparseImageFormatFlags,
 }
-impl Default for SparseImageFormatProperties {
-    fn default() -> SparseImageFormatProperties {
-        SparseImageFormatProperties {
-            aspect_mask: ImageAspectFlags::default(),
-            image_granularity: Extent3D::default(),
-            flags: SparseImageFormatFlags::default(),
-        }
-    }
-}
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct SparseImageMemoryRequirements {
     pub format_properties: SparseImageFormatProperties,
     pub image_mip_tail_first_lod: uint32_t,
@@ -5318,44 +5224,17 @@ pub struct SparseImageMemoryRequirements {
     pub image_mip_tail_offset: DeviceSize,
     pub image_mip_tail_stride: DeviceSize,
 }
-impl Default for SparseImageMemoryRequirements {
-    fn default() -> SparseImageMemoryRequirements {
-        SparseImageMemoryRequirements {
-            format_properties: SparseImageFormatProperties::default(),
-            image_mip_tail_first_lod: 0,
-            image_mip_tail_size: DeviceSize::default(),
-            image_mip_tail_offset: DeviceSize::default(),
-            image_mip_tail_stride: DeviceSize::default(),
-        }
-    }
-}
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct MemoryType {
     pub property_flags: MemoryPropertyFlags,
     pub heap_index: uint32_t,
 }
-impl Default for MemoryType {
-    fn default() -> MemoryType {
-        MemoryType {
-            property_flags: MemoryPropertyFlags::default(),
-            heap_index: 0,
-        }
-    }
-}
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct MemoryHeap {
     pub size: DeviceSize,
     pub flags: MemoryHeapFlags,
-}
-impl Default for MemoryHeap {
-    fn default() -> MemoryHeap {
-        MemoryHeap {
-            size: DeviceSize::default(),
-            flags: MemoryHeapFlags::default(),
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -5378,40 +5257,20 @@ impl Default for MappedMemoryRange {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct FormatProperties {
     pub linear_tiling_features: FormatFeatureFlags,
     pub optimal_tiling_features: FormatFeatureFlags,
     pub buffer_features: FormatFeatureFlags,
 }
-impl Default for FormatProperties {
-    fn default() -> FormatProperties {
-        FormatProperties {
-            linear_tiling_features: FormatFeatureFlags::default(),
-            optimal_tiling_features: FormatFeatureFlags::default(),
-            buffer_features: FormatFeatureFlags::default(),
-        }
-    }
-}
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct ImageFormatProperties {
     pub max_extent: Extent3D,
     pub max_mip_levels: uint32_t,
     pub max_array_layers: uint32_t,
     pub sample_counts: SampleCountFlags,
     pub max_resource_size: DeviceSize,
-}
-impl Default for ImageFormatProperties {
-    fn default() -> ImageFormatProperties {
-        ImageFormatProperties {
-            max_extent: Extent3D::default(),
-            max_mip_levels: 0,
-            max_array_layers: 0,
-            sample_counts: SampleCountFlags::default(),
-            max_resource_size: DeviceSize::default(),
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -5554,58 +5413,28 @@ impl Default for BufferViewCreateInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct ImageSubresource {
     pub aspect_mask: ImageAspectFlags,
     pub mip_level: uint32_t,
     pub array_layer: uint32_t,
 }
-impl Default for ImageSubresource {
-    fn default() -> ImageSubresource {
-        ImageSubresource {
-            aspect_mask: ImageAspectFlags::default(),
-            mip_level: 0,
-            array_layer: 0,
-        }
-    }
-}
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct ImageSubresourceLayers {
     pub aspect_mask: ImageAspectFlags,
     pub mip_level: uint32_t,
     pub base_array_layer: uint32_t,
     pub layer_count: uint32_t,
 }
-impl Default for ImageSubresourceLayers {
-    fn default() -> ImageSubresourceLayers {
-        ImageSubresourceLayers {
-            aspect_mask: ImageAspectFlags::default(),
-            mip_level: 0,
-            base_array_layer: 0,
-            layer_count: 0,
-        }
-    }
-}
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct ImageSubresourceRange {
     pub aspect_mask: ImageAspectFlags,
     pub base_mip_level: uint32_t,
     pub level_count: uint32_t,
     pub base_array_layer: uint32_t,
     pub layer_count: uint32_t,
-}
-impl Default for ImageSubresourceRange {
-    fn default() -> ImageSubresourceRange {
-        ImageSubresourceRange {
-            aspect_mask: ImageAspectFlags::default(),
-            base_mip_level: 0,
-            level_count: 0,
-            base_array_layer: 0,
-            layer_count: 0,
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -5724,24 +5553,13 @@ impl Default for ImageCreateInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct SubresourceLayout {
     pub offset: DeviceSize,
     pub size: DeviceSize,
     pub row_pitch: DeviceSize,
     pub array_pitch: DeviceSize,
     pub depth_pitch: DeviceSize,
-}
-impl Default for SubresourceLayout {
-    fn default() -> SubresourceLayout {
-        SubresourceLayout {
-            offset: DeviceSize::default(),
-            size: DeviceSize::default(),
-            row_pitch: DeviceSize::default(),
-            array_pitch: DeviceSize::default(),
-            depth_pitch: DeviceSize::default(),
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -5770,20 +5588,11 @@ impl Default for ImageViewCreateInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct BufferCopy {
     pub src_offset: DeviceSize,
     pub dst_offset: DeviceSize,
     pub size: DeviceSize,
-}
-impl Default for BufferCopy {
-    fn default() -> BufferCopy {
-        BufferCopy {
-            src_offset: DeviceSize::default(),
-            dst_offset: DeviceSize::default(),
-            size: DeviceSize::default(),
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -5910,24 +5719,13 @@ impl Default for BindSparseInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct ImageCopy {
     pub src_subresource: ImageSubresourceLayers,
     pub src_offset: Offset3D,
     pub dst_subresource: ImageSubresourceLayers,
     pub dst_offset: Offset3D,
     pub extent: Extent3D,
-}
-impl Default for ImageCopy {
-    fn default() -> ImageCopy {
-        ImageCopy {
-            src_subresource: ImageSubresourceLayers::default(),
-            src_offset: Offset3D::default(),
-            dst_subresource: ImageSubresourceLayers::default(),
-            dst_offset: Offset3D::default(),
-            extent: Extent3D::default(),
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -5948,7 +5746,7 @@ impl Default for ImageBlit {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct BufferImageCopy {
     pub buffer_offset: DeviceSize,
     pub buffer_row_length: uint32_t,
@@ -5957,37 +5755,14 @@ pub struct BufferImageCopy {
     pub image_offset: Offset3D,
     pub image_extent: Extent3D,
 }
-impl Default for BufferImageCopy {
-    fn default() -> BufferImageCopy {
-        BufferImageCopy {
-            buffer_offset: DeviceSize::default(),
-            buffer_row_length: 0,
-            buffer_image_height: 0,
-            image_subresource: ImageSubresourceLayers::default(),
-            image_offset: Offset3D::default(),
-            image_extent: Extent3D::default(),
-        }
-    }
-}
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct ImageResolve {
     pub src_subresource: ImageSubresourceLayers,
     pub src_offset: Offset3D,
     pub dst_subresource: ImageSubresourceLayers,
     pub dst_offset: Offset3D,
     pub extent: Extent3D,
-}
-impl Default for ImageResolve {
-    fn default() -> ImageResolve {
-        ImageResolve {
-            src_subresource: ImageSubresourceLayers::default(),
-            src_offset: Offset3D::default(),
-            dst_subresource: ImageSubresourceLayers::default(),
-            dst_offset: Offset3D::default(),
-            extent: Extent3D::default(),
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -6050,18 +5825,10 @@ impl Default for DescriptorSetLayoutCreateInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct DescriptorPoolSize {
     pub ty: DescriptorType,
     pub descriptor_count: uint32_t,
-}
-impl Default for DescriptorPoolSize {
-    fn default() -> DescriptorPoolSize {
-        DescriptorPoolSize {
-            ty: DescriptorType::default(),
-            descriptor_count: 0,
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -6106,20 +5873,11 @@ impl Default for DescriptorSetAllocateInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct SpecializationMapEntry {
     pub constant_id: uint32_t,
     pub offset: uint32_t,
     pub size: size_t,
-}
-impl Default for SpecializationMapEntry {
-    fn default() -> SpecializationMapEntry {
-        SpecializationMapEntry {
-            constant_id: 0,
-            offset: 0,
-            size: 0,
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -6188,38 +5946,19 @@ impl Default for ComputePipelineCreateInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct VertexInputBindingDescription {
     pub binding: uint32_t,
     pub stride: uint32_t,
     pub input_rate: VertexInputRate,
 }
-impl Default for VertexInputBindingDescription {
-    fn default() -> VertexInputBindingDescription {
-        VertexInputBindingDescription {
-            binding: 0,
-            stride: 0,
-            input_rate: VertexInputRate::default(),
-        }
-    }
-}
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct VertexInputAttributeDescription {
     pub location: uint32_t,
     pub binding: uint32_t,
     pub format: Format,
     pub offset: uint32_t,
-}
-impl Default for VertexInputAttributeDescription {
-    fn default() -> VertexInputAttributeDescription {
-        VertexInputAttributeDescription {
-            location: 0,
-            binding: 0,
-            format: Format::default(),
-            offset: 0,
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -6372,7 +6111,7 @@ impl Default for PipelineMultisampleStateCreateInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct PipelineColorBlendAttachmentState {
     pub blend_enable: Bool32,
     pub src_color_blend_factor: BlendFactor,
@@ -6382,20 +6121,6 @@ pub struct PipelineColorBlendAttachmentState {
     pub dst_alpha_blend_factor: BlendFactor,
     pub alpha_blend_op: BlendOp,
     pub color_write_mask: ColorComponentFlags,
-}
-impl Default for PipelineColorBlendAttachmentState {
-    fn default() -> PipelineColorBlendAttachmentState {
-        PipelineColorBlendAttachmentState {
-            blend_enable: Bool32::default(),
-            src_color_blend_factor: BlendFactor::default(),
-            dst_color_blend_factor: BlendFactor::default(),
-            color_blend_op: BlendOp::default(),
-            src_alpha_blend_factor: BlendFactor::default(),
-            dst_alpha_blend_factor: BlendFactor::default(),
-            alpha_blend_op: BlendOp::default(),
-            color_write_mask: ColorComponentFlags::default(),
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -6444,7 +6169,7 @@ impl Default for PipelineDynamicStateCreateInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct StencilOpState {
     pub fail_op: StencilOp,
     pub pass_op: StencilOp,
@@ -6453,19 +6178,6 @@ pub struct StencilOpState {
     pub compare_mask: uint32_t,
     pub write_mask: uint32_t,
     pub reference: uint32_t,
-}
-impl Default for StencilOpState {
-    fn default() -> StencilOpState {
-        StencilOpState {
-            fail_op: StencilOp::default(),
-            pass_op: StencilOp::default(),
-            depth_fail_op: StencilOp::default(),
-            compare_op: CompareOp::default(),
-            compare_mask: 0,
-            write_mask: 0,
-            reference: 0,
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -6570,20 +6282,11 @@ impl Default for PipelineCacheCreateInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct PushConstantRange {
     pub stage_flags: ShaderStageFlags,
     pub offset: uint32_t,
     pub size: uint32_t,
-}
-impl Default for PushConstantRange {
-    fn default() -> PushConstantRange {
-        PushConstantRange {
-            stage_flags: ShaderStageFlags::default(),
-            offset: 0,
-            size: 0,
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -6774,18 +6477,10 @@ impl Default for ClearColorValue {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct ClearDepthStencilValue {
     pub depth: c_float,
     pub stencil: uint32_t,
-}
-impl Default for ClearDepthStencilValue {
-    fn default() -> ClearDepthStencilValue {
-        ClearDepthStencilValue {
-            depth: 0.0,
-            stencil: 0,
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -6801,23 +6496,14 @@ impl Default for ClearValue {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct ClearAttachment {
     pub aspect_mask: ImageAspectFlags,
     pub color_attachment: uint32_t,
     pub clear_value: ClearValue,
 }
-impl Default for ClearAttachment {
-    fn default() -> ClearAttachment {
-        ClearAttachment {
-            aspect_mask: ImageAspectFlags::default(),
-            color_attachment: 0,
-            clear_value: ClearValue::default(),
-        }
-    }
-}
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct AttachmentDescription {
     pub flags: AttachmentDescriptionFlags,
     pub format: Format,
@@ -6829,34 +6515,11 @@ pub struct AttachmentDescription {
     pub initial_layout: ImageLayout,
     pub final_layout: ImageLayout,
 }
-impl Default for AttachmentDescription {
-    fn default() -> AttachmentDescription {
-        AttachmentDescription {
-            flags: AttachmentDescriptionFlags::default(),
-            format: Format::default(),
-            samples: SampleCountFlags::default(),
-            load_op: AttachmentLoadOp::default(),
-            store_op: AttachmentStoreOp::default(),
-            stencil_load_op: AttachmentLoadOp::default(),
-            stencil_store_op: AttachmentStoreOp::default(),
-            initial_layout: ImageLayout::default(),
-            final_layout: ImageLayout::default(),
-        }
-    }
-}
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct AttachmentReference {
     pub attachment: uint32_t,
     pub layout: ImageLayout,
-}
-impl Default for AttachmentReference {
-    fn default() -> AttachmentReference {
-        AttachmentReference {
-            attachment: 0,
-            layout: ImageLayout::default(),
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -6889,7 +6552,7 @@ impl Default for SubpassDescription {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct SubpassDependency {
     pub src_subpass: uint32_t,
     pub dst_subpass: uint32_t,
@@ -6898,19 +6561,6 @@ pub struct SubpassDependency {
     pub src_access_mask: AccessFlags,
     pub dst_access_mask: AccessFlags,
     pub dependency_flags: DependencyFlags,
-}
-impl Default for SubpassDependency {
-    fn default() -> SubpassDependency {
-        SubpassDependency {
-            src_subpass: 0,
-            dst_subpass: 0,
-            src_stage_mask: PipelineStageFlags::default(),
-            dst_stage_mask: PipelineStageFlags::default(),
-            src_access_mask: AccessFlags::default(),
-            dst_access_mask: AccessFlags::default(),
-            dependency_flags: DependencyFlags::default(),
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -6973,7 +6623,7 @@ impl Default for FenceCreateInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct PhysicalDeviceFeatures {
     pub robust_buffer_access: Bool32,
     pub full_draw_index_uint32: Bool32,
@@ -7031,86 +6681,14 @@ pub struct PhysicalDeviceFeatures {
     pub variable_multisample_rate: Bool32,
     pub inherited_queries: Bool32,
 }
-impl Default for PhysicalDeviceFeatures {
-    fn default() -> PhysicalDeviceFeatures {
-        PhysicalDeviceFeatures {
-            robust_buffer_access: Bool32::default(),
-            full_draw_index_uint32: Bool32::default(),
-            image_cube_array: Bool32::default(),
-            independent_blend: Bool32::default(),
-            geometry_shader: Bool32::default(),
-            tessellation_shader: Bool32::default(),
-            sample_rate_shading: Bool32::default(),
-            dual_src_blend: Bool32::default(),
-            logic_op: Bool32::default(),
-            multi_draw_indirect: Bool32::default(),
-            draw_indirect_first_instance: Bool32::default(),
-            depth_clamp: Bool32::default(),
-            depth_bias_clamp: Bool32::default(),
-            fill_mode_non_solid: Bool32::default(),
-            depth_bounds: Bool32::default(),
-            wide_lines: Bool32::default(),
-            large_points: Bool32::default(),
-            alpha_to_one: Bool32::default(),
-            multi_viewport: Bool32::default(),
-            sampler_anisotropy: Bool32::default(),
-            texture_compression_etc2: Bool32::default(),
-            texture_compression_astc_ldr: Bool32::default(),
-            texture_compression_bc: Bool32::default(),
-            occlusion_query_precise: Bool32::default(),
-            pipeline_statistics_query: Bool32::default(),
-            vertex_pipeline_stores_and_atomics: Bool32::default(),
-            fragment_stores_and_atomics: Bool32::default(),
-            shader_tessellation_and_geometry_point_size: Bool32::default(),
-            shader_image_gather_extended: Bool32::default(),
-            shader_storage_image_extended_formats: Bool32::default(),
-            shader_storage_image_multisample: Bool32::default(),
-            shader_storage_image_read_without_format: Bool32::default(),
-            shader_storage_image_write_without_format: Bool32::default(),
-            shader_uniform_buffer_array_dynamic_indexing: Bool32::default(),
-            shader_sampled_image_array_dynamic_indexing: Bool32::default(),
-            shader_storage_buffer_array_dynamic_indexing: Bool32::default(),
-            shader_storage_image_array_dynamic_indexing: Bool32::default(),
-            shader_clip_distance: Bool32::default(),
-            shader_cull_distance: Bool32::default(),
-            shader_float64: Bool32::default(),
-            shader_int64: Bool32::default(),
-            shader_int16: Bool32::default(),
-            shader_resource_residency: Bool32::default(),
-            shader_resource_min_lod: Bool32::default(),
-            sparse_binding: Bool32::default(),
-            sparse_residency_buffer: Bool32::default(),
-            sparse_residency_image2_d: Bool32::default(),
-            sparse_residency_image3_d: Bool32::default(),
-            sparse_residency2_samples: Bool32::default(),
-            sparse_residency4_samples: Bool32::default(),
-            sparse_residency8_samples: Bool32::default(),
-            sparse_residency16_samples: Bool32::default(),
-            sparse_residency_aliased: Bool32::default(),
-            variable_multisample_rate: Bool32::default(),
-            inherited_queries: Bool32::default(),
-        }
-    }
-}
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct PhysicalDeviceSparseProperties {
     pub residency_standard2_d_block_shape: Bool32,
     pub residency_standard2_d_multisample_block_shape: Bool32,
     pub residency_standard3_d_block_shape: Bool32,
     pub residency_aligned_mip_size: Bool32,
     pub residency_non_resident_strict: Bool32,
-}
-impl Default for PhysicalDeviceSparseProperties {
-    fn default() -> PhysicalDeviceSparseProperties {
-        PhysicalDeviceSparseProperties {
-            residency_standard2_d_block_shape: Bool32::default(),
-            residency_standard2_d_multisample_block_shape: Bool32::default(),
-            residency_standard3_d_block_shape: Bool32::default(),
-            residency_aligned_mip_size: Bool32::default(),
-            residency_non_resident_strict: Bool32::default(),
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -7401,25 +6979,15 @@ impl Default for FramebufferCreateInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct DrawIndirectCommand {
     pub vertex_count: uint32_t,
     pub instance_count: uint32_t,
     pub first_vertex: uint32_t,
     pub first_instance: uint32_t,
 }
-impl Default for DrawIndirectCommand {
-    fn default() -> DrawIndirectCommand {
-        DrawIndirectCommand {
-            vertex_count: 0,
-            instance_count: 0,
-            first_vertex: 0,
-            first_instance: 0,
-        }
-    }
-}
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct DrawIndexedIndirectCommand {
     pub index_count: uint32_t,
     pub instance_count: uint32_t,
@@ -7427,28 +6995,12 @@ pub struct DrawIndexedIndirectCommand {
     pub vertex_offset: int32_t,
     pub first_instance: uint32_t,
 }
-impl Default for DrawIndexedIndirectCommand {
-    fn default() -> DrawIndexedIndirectCommand {
-        DrawIndexedIndirectCommand {
-            index_count: 0,
-            instance_count: 0,
-            first_index: 0,
-            vertex_offset: 0,
-            first_instance: 0,
-        }
-    }
-}
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct DispatchIndirectCommand {
     pub x: uint32_t,
     pub y: uint32_t,
     pub z: uint32_t,
-}
-impl Default for DispatchIndirectCommand {
-    fn default() -> DispatchIndirectCommand {
-        DispatchIndirectCommand { x: 0, y: 0, z: 0 }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -7517,18 +7069,10 @@ impl Default for DisplayPlanePropertiesKHR {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct DisplayModeParametersKHR {
     pub visible_region: Extent2D,
     pub refresh_rate: uint32_t,
-}
-impl Default for DisplayModeParametersKHR {
-    fn default() -> DisplayModeParametersKHR {
-        DisplayModeParametersKHR {
-            visible_region: Extent2D::default(),
-            refresh_rate: 0,
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -7563,7 +7107,7 @@ impl Default for DisplayModeCreateInfoKHR {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct DisplayPlaneCapabilitiesKHR {
     pub supported_alpha: DisplayPlaneAlphaFlagsKHR,
     pub min_src_position: Offset2D,
@@ -7574,21 +7118,6 @@ pub struct DisplayPlaneCapabilitiesKHR {
     pub max_dst_position: Offset2D,
     pub min_dst_extent: Extent2D,
     pub max_dst_extent: Extent2D,
-}
-impl Default for DisplayPlaneCapabilitiesKHR {
-    fn default() -> DisplayPlaneCapabilitiesKHR {
-        DisplayPlaneCapabilitiesKHR {
-            supported_alpha: DisplayPlaneAlphaFlagsKHR::default(),
-            min_src_position: Offset2D::default(),
-            max_src_position: Offset2D::default(),
-            min_src_extent: Extent2D::default(),
-            max_src_extent: Extent2D::default(),
-            min_dst_position: Offset2D::default(),
-            max_dst_position: Offset2D::default(),
-            min_dst_extent: Extent2D::default(),
-            max_dst_extent: Extent2D::default(),
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -7641,7 +7170,7 @@ impl Default for DisplayPresentInfoKHR {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct SurfaceCapabilitiesKHR {
     pub min_image_count: uint32_t,
     pub max_image_count: uint32_t,
@@ -7653,22 +7182,6 @@ pub struct SurfaceCapabilitiesKHR {
     pub current_transform: SurfaceTransformFlagsKHR,
     pub supported_composite_alpha: CompositeAlphaFlagsKHR,
     pub supported_usage_flags: ImageUsageFlags,
-}
-impl Default for SurfaceCapabilitiesKHR {
-    fn default() -> SurfaceCapabilitiesKHR {
-        SurfaceCapabilitiesKHR {
-            min_image_count: 0,
-            max_image_count: 0,
-            current_extent: Extent2D::default(),
-            min_image_extent: Extent2D::default(),
-            max_image_extent: Extent2D::default(),
-            max_image_array_layers: 0,
-            supported_transforms: SurfaceTransformFlagsKHR::default(),
-            current_transform: SurfaceTransformFlagsKHR::default(),
-            supported_composite_alpha: CompositeAlphaFlagsKHR::default(),
-            supported_usage_flags: ImageUsageFlags::default(),
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -7807,18 +7320,10 @@ impl Default for XcbSurfaceCreateInfoKHR {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct SurfaceFormatKHR {
     pub format: Format,
     pub color_space: ColorSpaceKHR,
-}
-impl Default for SurfaceFormatKHR {
-    fn default() -> SurfaceFormatKHR {
-        SurfaceFormatKHR {
-            format: Format::default(),
-            color_space: ColorSpaceKHR::default(),
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -8048,22 +7553,12 @@ impl Default for DedicatedAllocationMemoryAllocateInfoNV {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct ExternalImageFormatPropertiesNV {
     pub image_format_properties: ImageFormatProperties,
     pub external_memory_features: ExternalMemoryFeatureFlagsNV,
     pub export_from_imported_handle_types: ExternalMemoryHandleTypeFlagsNV,
     pub compatible_handle_types: ExternalMemoryHandleTypeFlagsNV,
-}
-impl Default for ExternalImageFormatPropertiesNV {
-    fn default() -> ExternalImageFormatPropertiesNV {
-        ExternalImageFormatPropertiesNV {
-            image_format_properties: ImageFormatProperties::default(),
-            external_memory_features: ExternalMemoryFeatureFlagsNV::default(),
-            export_from_imported_handle_types: ExternalMemoryHandleTypeFlagsNV::default(),
-            compatible_handle_types: ExternalMemoryHandleTypeFlagsNV::default(),
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -8218,22 +7713,12 @@ impl Default for IndirectCommandsTokenNVX {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct IndirectCommandsLayoutTokenNVX {
     pub token_type: IndirectCommandsTokenTypeNVX,
     pub binding_unit: uint32_t,
     pub dynamic_count: uint32_t,
     pub divisor: uint32_t,
-}
-impl Default for IndirectCommandsLayoutTokenNVX {
-    fn default() -> IndirectCommandsLayoutTokenNVX {
-        IndirectCommandsLayoutTokenNVX {
-            token_type: IndirectCommandsTokenTypeNVX::default(),
-            binding_unit: 0,
-            dynamic_count: 0,
-            divisor: 0,
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -8344,18 +7829,10 @@ impl Default for ObjectTableCreateInfoNVX {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct ObjectTableEntryNVX {
     pub ty: ObjectEntryTypeNVX,
     pub flags: ObjectEntryUsageFlagsNVX,
-}
-impl Default for ObjectTableEntryNVX {
-    fn default() -> ObjectTableEntryNVX {
-        ObjectTableEntryNVX {
-            ty: ObjectEntryTypeNVX::default(),
-            flags: ObjectEntryUsageFlagsNVX::default(),
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -8460,13 +7937,8 @@ impl Default for PhysicalDeviceFeatures2 {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct PhysicalDeviceFeatures2KHR {}
-impl Default for PhysicalDeviceFeatures2KHR {
-    fn default() -> PhysicalDeviceFeatures2KHR {
-        PhysicalDeviceFeatures2KHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceProperties2 {
@@ -8484,13 +7956,8 @@ impl Default for PhysicalDeviceProperties2 {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct PhysicalDeviceProperties2KHR {}
-impl Default for PhysicalDeviceProperties2KHR {
-    fn default() -> PhysicalDeviceProperties2KHR {
-        PhysicalDeviceProperties2KHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct FormatProperties2 {
@@ -8508,13 +7975,8 @@ impl Default for FormatProperties2 {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct FormatProperties2KHR {}
-impl Default for FormatProperties2KHR {
-    fn default() -> FormatProperties2KHR {
-        FormatProperties2KHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ImageFormatProperties2 {
@@ -8532,13 +7994,8 @@ impl Default for ImageFormatProperties2 {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct ImageFormatProperties2KHR {}
-impl Default for ImageFormatProperties2KHR {
-    fn default() -> ImageFormatProperties2KHR {
-        ImageFormatProperties2KHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceImageFormatInfo2 {
@@ -8564,13 +8021,8 @@ impl Default for PhysicalDeviceImageFormatInfo2 {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct PhysicalDeviceImageFormatInfo2KHR {}
-impl Default for PhysicalDeviceImageFormatInfo2KHR {
-    fn default() -> PhysicalDeviceImageFormatInfo2KHR {
-        PhysicalDeviceImageFormatInfo2KHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct QueueFamilyProperties2 {
@@ -8588,13 +8040,8 @@ impl Default for QueueFamilyProperties2 {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct QueueFamilyProperties2KHR {}
-impl Default for QueueFamilyProperties2KHR {
-    fn default() -> QueueFamilyProperties2KHR {
-        QueueFamilyProperties2KHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceMemoryProperties2 {
@@ -8612,13 +8059,8 @@ impl Default for PhysicalDeviceMemoryProperties2 {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct PhysicalDeviceMemoryProperties2KHR {}
-impl Default for PhysicalDeviceMemoryProperties2KHR {
-    fn default() -> PhysicalDeviceMemoryProperties2KHR {
-        PhysicalDeviceMemoryProperties2KHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct SparseImageFormatProperties2 {
@@ -8636,13 +8078,8 @@ impl Default for SparseImageFormatProperties2 {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct SparseImageFormatProperties2KHR {}
-impl Default for SparseImageFormatProperties2KHR {
-    fn default() -> SparseImageFormatProperties2KHR {
-        SparseImageFormatProperties2KHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceSparseImageFormatInfo2 {
@@ -8668,13 +8105,8 @@ impl Default for PhysicalDeviceSparseImageFormatInfo2 {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct PhysicalDeviceSparseImageFormatInfo2KHR {}
-impl Default for PhysicalDeviceSparseImageFormatInfo2KHR {
-    fn default() -> PhysicalDeviceSparseImageFormatInfo2KHR {
-        PhysicalDeviceSparseImageFormatInfo2KHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDevicePushDescriptorPropertiesKHR {
@@ -8724,20 +8156,11 @@ impl Default for PresentRegionKHR {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct RectLayerKHR {
     pub offset: Offset2D,
     pub extent: Extent2D,
     pub layer: uint32_t,
-}
-impl Default for RectLayerKHR {
-    fn default() -> RectLayerKHR {
-        RectLayerKHR {
-            offset: Offset2D::default(),
-            extent: Extent2D::default(),
-            layer: 0,
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -8758,37 +8181,18 @@ impl Default for PhysicalDeviceVariablePointerFeatures {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct PhysicalDeviceVariablePointerFeaturesKHR {}
-impl Default for PhysicalDeviceVariablePointerFeaturesKHR {
-    fn default() -> PhysicalDeviceVariablePointerFeaturesKHR {
-        PhysicalDeviceVariablePointerFeaturesKHR {}
-    }
-}
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct ExternalMemoryProperties {
     pub external_memory_features: ExternalMemoryFeatureFlags,
     pub export_from_imported_handle_types: ExternalMemoryHandleTypeFlags,
     pub compatible_handle_types: ExternalMemoryHandleTypeFlags,
 }
-impl Default for ExternalMemoryProperties {
-    fn default() -> ExternalMemoryProperties {
-        ExternalMemoryProperties {
-            external_memory_features: ExternalMemoryFeatureFlags::default(),
-            export_from_imported_handle_types: ExternalMemoryHandleTypeFlags::default(),
-            compatible_handle_types: ExternalMemoryHandleTypeFlags::default(),
-        }
-    }
-}
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct ExternalMemoryPropertiesKHR {}
-impl Default for ExternalMemoryPropertiesKHR {
-    fn default() -> ExternalMemoryPropertiesKHR {
-        ExternalMemoryPropertiesKHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceExternalImageFormatInfo {
@@ -8806,13 +8210,8 @@ impl Default for PhysicalDeviceExternalImageFormatInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct PhysicalDeviceExternalImageFormatInfoKHR {}
-impl Default for PhysicalDeviceExternalImageFormatInfoKHR {
-    fn default() -> PhysicalDeviceExternalImageFormatInfoKHR {
-        PhysicalDeviceExternalImageFormatInfoKHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ExternalImageFormatProperties {
@@ -8830,13 +8229,8 @@ impl Default for ExternalImageFormatProperties {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct ExternalImageFormatPropertiesKHR {}
-impl Default for ExternalImageFormatPropertiesKHR {
-    fn default() -> ExternalImageFormatPropertiesKHR {
-        ExternalImageFormatPropertiesKHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceExternalBufferInfo {
@@ -8858,13 +8252,8 @@ impl Default for PhysicalDeviceExternalBufferInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct PhysicalDeviceExternalBufferInfoKHR {}
-impl Default for PhysicalDeviceExternalBufferInfoKHR {
-    fn default() -> PhysicalDeviceExternalBufferInfoKHR {
-        PhysicalDeviceExternalBufferInfoKHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ExternalBufferProperties {
@@ -8882,13 +8271,8 @@ impl Default for ExternalBufferProperties {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct ExternalBufferPropertiesKHR {}
-impl Default for ExternalBufferPropertiesKHR {
-    fn default() -> ExternalBufferPropertiesKHR {
-        ExternalBufferPropertiesKHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceIDProperties {
@@ -8914,13 +8298,8 @@ impl Default for PhysicalDeviceIDProperties {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct PhysicalDeviceIDPropertiesKHR {}
-impl Default for PhysicalDeviceIDPropertiesKHR {
-    fn default() -> PhysicalDeviceIDPropertiesKHR {
-        PhysicalDeviceIDPropertiesKHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ExternalMemoryImageCreateInfo {
@@ -8938,13 +8317,8 @@ impl Default for ExternalMemoryImageCreateInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct ExternalMemoryImageCreateInfoKHR {}
-impl Default for ExternalMemoryImageCreateInfoKHR {
-    fn default() -> ExternalMemoryImageCreateInfoKHR {
-        ExternalMemoryImageCreateInfoKHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ExternalMemoryBufferCreateInfo {
@@ -8962,13 +8336,8 @@ impl Default for ExternalMemoryBufferCreateInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct ExternalMemoryBufferCreateInfoKHR {}
-impl Default for ExternalMemoryBufferCreateInfoKHR {
-    fn default() -> ExternalMemoryBufferCreateInfoKHR {
-        ExternalMemoryBufferCreateInfoKHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ExportMemoryAllocateInfo {
@@ -8986,13 +8355,8 @@ impl Default for ExportMemoryAllocateInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct ExportMemoryAllocateInfoKHR {}
-impl Default for ExportMemoryAllocateInfoKHR {
-    fn default() -> ExportMemoryAllocateInfoKHR {
-        ExportMemoryAllocateInfoKHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ImportMemoryWin32HandleInfoKHR {
@@ -9164,13 +8528,8 @@ impl Default for PhysicalDeviceExternalSemaphoreInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct PhysicalDeviceExternalSemaphoreInfoKHR {}
-impl Default for PhysicalDeviceExternalSemaphoreInfoKHR {
-    fn default() -> PhysicalDeviceExternalSemaphoreInfoKHR {
-        PhysicalDeviceExternalSemaphoreInfoKHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ExternalSemaphoreProperties {
@@ -9192,13 +8551,8 @@ impl Default for ExternalSemaphoreProperties {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct ExternalSemaphorePropertiesKHR {}
-impl Default for ExternalSemaphorePropertiesKHR {
-    fn default() -> ExternalSemaphorePropertiesKHR {
-        ExternalSemaphorePropertiesKHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ExportSemaphoreCreateInfo {
@@ -9216,13 +8570,8 @@ impl Default for ExportSemaphoreCreateInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct ExportSemaphoreCreateInfoKHR {}
-impl Default for ExportSemaphoreCreateInfoKHR {
-    fn default() -> ExportSemaphoreCreateInfoKHR {
-        ExportSemaphoreCreateInfoKHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ImportSemaphoreWin32HandleInfoKHR {
@@ -9364,13 +8713,8 @@ impl Default for PhysicalDeviceExternalFenceInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct PhysicalDeviceExternalFenceInfoKHR {}
-impl Default for PhysicalDeviceExternalFenceInfoKHR {
-    fn default() -> PhysicalDeviceExternalFenceInfoKHR {
-        PhysicalDeviceExternalFenceInfoKHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ExternalFenceProperties {
@@ -9392,13 +8736,8 @@ impl Default for ExternalFenceProperties {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct ExternalFencePropertiesKHR {}
-impl Default for ExternalFencePropertiesKHR {
-    fn default() -> ExternalFencePropertiesKHR {
-        ExternalFencePropertiesKHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ExportFenceCreateInfo {
@@ -9416,13 +8755,8 @@ impl Default for ExportFenceCreateInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct ExportFenceCreateInfoKHR {}
-impl Default for ExportFenceCreateInfoKHR {
-    fn default() -> ExportFenceCreateInfoKHR {
-        ExportFenceCreateInfoKHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ImportFenceWin32HandleInfoKHR {
@@ -9546,13 +8880,8 @@ impl Default for PhysicalDeviceMultiviewFeatures {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct PhysicalDeviceMultiviewFeaturesKHR {}
-impl Default for PhysicalDeviceMultiviewFeaturesKHR {
-    fn default() -> PhysicalDeviceMultiviewFeaturesKHR {
-        PhysicalDeviceMultiviewFeaturesKHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceMultiviewProperties {
@@ -9572,13 +8901,8 @@ impl Default for PhysicalDeviceMultiviewProperties {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct PhysicalDeviceMultiviewPropertiesKHR {}
-impl Default for PhysicalDeviceMultiviewPropertiesKHR {
-    fn default() -> PhysicalDeviceMultiviewPropertiesKHR {
-        PhysicalDeviceMultiviewPropertiesKHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct RenderPassMultiviewCreateInfo {
@@ -9606,13 +8930,8 @@ impl Default for RenderPassMultiviewCreateInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct RenderPassMultiviewCreateInfoKHR {}
-impl Default for RenderPassMultiviewCreateInfoKHR {
-    fn default() -> RenderPassMultiviewCreateInfoKHR {
-        RenderPassMultiviewCreateInfoKHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct SurfaceCapabilities2EXT {
@@ -9734,13 +9053,8 @@ impl Default for PhysicalDeviceGroupProperties {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct PhysicalDeviceGroupPropertiesKHR {}
-impl Default for PhysicalDeviceGroupPropertiesKHR {
-    fn default() -> PhysicalDeviceGroupPropertiesKHR {
-        PhysicalDeviceGroupPropertiesKHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct MemoryAllocateFlagsInfo {
@@ -9760,13 +9074,8 @@ impl Default for MemoryAllocateFlagsInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct MemoryAllocateFlagsInfoKHR {}
-impl Default for MemoryAllocateFlagsInfoKHR {
-    fn default() -> MemoryAllocateFlagsInfoKHR {
-        MemoryAllocateFlagsInfoKHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct BindBufferMemoryInfo {
@@ -9788,13 +9097,8 @@ impl Default for BindBufferMemoryInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct BindBufferMemoryInfoKHR {}
-impl Default for BindBufferMemoryInfoKHR {
-    fn default() -> BindBufferMemoryInfoKHR {
-        BindBufferMemoryInfoKHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct BindBufferMemoryDeviceGroupInfo {
@@ -9814,13 +9118,8 @@ impl Default for BindBufferMemoryDeviceGroupInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct BindBufferMemoryDeviceGroupInfoKHR {}
-impl Default for BindBufferMemoryDeviceGroupInfoKHR {
-    fn default() -> BindBufferMemoryDeviceGroupInfoKHR {
-        BindBufferMemoryDeviceGroupInfoKHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct BindImageMemoryInfo {
@@ -9842,13 +9141,8 @@ impl Default for BindImageMemoryInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct BindImageMemoryInfoKHR {}
-impl Default for BindImageMemoryInfoKHR {
-    fn default() -> BindImageMemoryInfoKHR {
-        BindImageMemoryInfoKHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct BindImageMemoryDeviceGroupInfo {
@@ -9872,13 +9166,8 @@ impl Default for BindImageMemoryDeviceGroupInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct BindImageMemoryDeviceGroupInfoKHR {}
-impl Default for BindImageMemoryDeviceGroupInfoKHR {
-    fn default() -> BindImageMemoryDeviceGroupInfoKHR {
-        BindImageMemoryDeviceGroupInfoKHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct DeviceGroupRenderPassBeginInfo {
@@ -9900,13 +9189,8 @@ impl Default for DeviceGroupRenderPassBeginInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct DeviceGroupRenderPassBeginInfoKHR {}
-impl Default for DeviceGroupRenderPassBeginInfoKHR {
-    fn default() -> DeviceGroupRenderPassBeginInfoKHR {
-        DeviceGroupRenderPassBeginInfoKHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct DeviceGroupCommandBufferBeginInfo {
@@ -9924,13 +9208,8 @@ impl Default for DeviceGroupCommandBufferBeginInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct DeviceGroupCommandBufferBeginInfoKHR {}
-impl Default for DeviceGroupCommandBufferBeginInfoKHR {
-    fn default() -> DeviceGroupCommandBufferBeginInfoKHR {
-        DeviceGroupCommandBufferBeginInfoKHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct DeviceGroupSubmitInfo {
@@ -9958,13 +9237,8 @@ impl Default for DeviceGroupSubmitInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct DeviceGroupSubmitInfoKHR {}
-impl Default for DeviceGroupSubmitInfoKHR {
-    fn default() -> DeviceGroupSubmitInfoKHR {
-        DeviceGroupSubmitInfoKHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct DeviceGroupBindSparseInfo {
@@ -9984,13 +9258,8 @@ impl Default for DeviceGroupBindSparseInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct DeviceGroupBindSparseInfoKHR {}
-impl Default for DeviceGroupBindSparseInfoKHR {
-    fn default() -> DeviceGroupBindSparseInfoKHR {
-        DeviceGroupBindSparseInfoKHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct DeviceGroupPresentCapabilitiesKHR {
@@ -10106,13 +9375,8 @@ impl Default for DeviceGroupDeviceCreateInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct DeviceGroupDeviceCreateInfoKHR {}
-impl Default for DeviceGroupDeviceCreateInfoKHR {
-    fn default() -> DeviceGroupDeviceCreateInfoKHR {
-        DeviceGroupDeviceCreateInfoKHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct DeviceGroupSwapchainCreateInfoKHR {
@@ -10130,7 +9394,7 @@ impl Default for DeviceGroupSwapchainCreateInfoKHR {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct DescriptorUpdateTemplateEntry {
     pub dst_binding: uint32_t,
     pub dst_array_element: uint32_t,
@@ -10139,26 +9403,9 @@ pub struct DescriptorUpdateTemplateEntry {
     pub offset: size_t,
     pub stride: size_t,
 }
-impl Default for DescriptorUpdateTemplateEntry {
-    fn default() -> DescriptorUpdateTemplateEntry {
-        DescriptorUpdateTemplateEntry {
-            dst_binding: 0,
-            dst_array_element: 0,
-            descriptor_count: 0,
-            descriptor_type: DescriptorType::default(),
-            offset: 0,
-            stride: 0,
-        }
-    }
-}
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct DescriptorUpdateTemplateEntryKHR {}
-impl Default for DescriptorUpdateTemplateEntryKHR {
-    fn default() -> DescriptorUpdateTemplateEntryKHR {
-        DescriptorUpdateTemplateEntryKHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct DescriptorUpdateTemplateCreateInfo {
@@ -10190,23 +9437,13 @@ impl Default for DescriptorUpdateTemplateCreateInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct DescriptorUpdateTemplateCreateInfoKHR {}
-impl Default for DescriptorUpdateTemplateCreateInfoKHR {
-    fn default() -> DescriptorUpdateTemplateCreateInfoKHR {
-        DescriptorUpdateTemplateCreateInfoKHR {}
-    }
-}
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct XYColorEXT {
     pub x: c_float,
     pub y: c_float,
-}
-impl Default for XYColorEXT {
-    fn default() -> XYColorEXT {
-        XYColorEXT { x: 0.0, y: 0.0 }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -10239,36 +9476,18 @@ impl Default for HdrMetadataEXT {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct RefreshCycleDurationGOOGLE {
     pub refresh_duration: uint64_t,
 }
-impl Default for RefreshCycleDurationGOOGLE {
-    fn default() -> RefreshCycleDurationGOOGLE {
-        RefreshCycleDurationGOOGLE {
-            refresh_duration: 0,
-        }
-    }
-}
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct PastPresentationTimingGOOGLE {
     pub present_id: uint32_t,
     pub desired_present_time: uint64_t,
     pub actual_present_time: uint64_t,
     pub earliest_present_time: uint64_t,
     pub present_margin: uint64_t,
-}
-impl Default for PastPresentationTimingGOOGLE {
-    fn default() -> PastPresentationTimingGOOGLE {
-        PastPresentationTimingGOOGLE {
-            present_id: 0,
-            desired_present_time: 0,
-            actual_present_time: 0,
-            earliest_present_time: 0,
-            present_margin: 0,
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -10289,18 +9508,10 @@ impl Default for PresentTimesInfoGOOGLE {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct PresentTimeGOOGLE {
     pub present_id: uint32_t,
     pub desired_present_time: uint64_t,
-}
-impl Default for PresentTimeGOOGLE {
-    fn default() -> PresentTimeGOOGLE {
-        PresentTimeGOOGLE {
-            present_id: 0,
-            desired_present_time: 0,
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -10339,18 +9550,10 @@ impl Default for MacOSSurfaceCreateInfoMVK {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct ViewportWScalingNV {
     pub xcoeff: c_float,
     pub ycoeff: c_float,
-}
-impl Default for ViewportWScalingNV {
-    fn default() -> ViewportWScalingNV {
-        ViewportWScalingNV {
-            xcoeff: 0.0,
-            ycoeff: 0.0,
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -10373,22 +9576,12 @@ impl Default for PipelineViewportWScalingStateCreateInfoNV {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct ViewportSwizzleNV {
     pub x: ViewportCoordinateSwizzleNV,
     pub y: ViewportCoordinateSwizzleNV,
     pub z: ViewportCoordinateSwizzleNV,
     pub w: ViewportCoordinateSwizzleNV,
-}
-impl Default for ViewportSwizzleNV {
-    fn default() -> ViewportSwizzleNV {
-        ViewportSwizzleNV {
-            x: ViewportCoordinateSwizzleNV::default(),
-            y: ViewportCoordinateSwizzleNV::default(),
-            z: ViewportCoordinateSwizzleNV::default(),
-            w: ViewportCoordinateSwizzleNV::default(),
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -10465,29 +9658,15 @@ impl Default for PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct InputAttachmentAspectReference {
     pub subpass: uint32_t,
     pub input_attachment_index: uint32_t,
     pub aspect_mask: ImageAspectFlags,
 }
-impl Default for InputAttachmentAspectReference {
-    fn default() -> InputAttachmentAspectReference {
-        InputAttachmentAspectReference {
-            subpass: 0,
-            input_attachment_index: 0,
-            aspect_mask: ImageAspectFlags::default(),
-        }
-    }
-}
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct InputAttachmentAspectReferenceKHR {}
-impl Default for InputAttachmentAspectReferenceKHR {
-    fn default() -> InputAttachmentAspectReferenceKHR {
-        InputAttachmentAspectReferenceKHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct RenderPassInputAttachmentAspectCreateInfo {
@@ -10507,13 +9686,8 @@ impl Default for RenderPassInputAttachmentAspectCreateInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct RenderPassInputAttachmentAspectCreateInfoKHR {}
-impl Default for RenderPassInputAttachmentAspectCreateInfoKHR {
-    fn default() -> RenderPassInputAttachmentAspectCreateInfoKHR {
-        RenderPassInputAttachmentAspectCreateInfoKHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceSurfaceInfo2KHR {
@@ -10683,13 +9857,8 @@ impl Default for PhysicalDevice16BitStorageFeatures {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct PhysicalDevice16BitStorageFeaturesKHR {}
-impl Default for PhysicalDevice16BitStorageFeaturesKHR {
-    fn default() -> PhysicalDevice16BitStorageFeaturesKHR {
-        PhysicalDevice16BitStorageFeaturesKHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceSubgroupProperties {
@@ -10729,13 +9898,8 @@ impl Default for BufferMemoryRequirementsInfo2 {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct BufferMemoryRequirementsInfo2KHR {}
-impl Default for BufferMemoryRequirementsInfo2KHR {
-    fn default() -> BufferMemoryRequirementsInfo2KHR {
-        BufferMemoryRequirementsInfo2KHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ImageMemoryRequirementsInfo2 {
@@ -10753,13 +9917,8 @@ impl Default for ImageMemoryRequirementsInfo2 {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct ImageMemoryRequirementsInfo2KHR {}
-impl Default for ImageMemoryRequirementsInfo2KHR {
-    fn default() -> ImageMemoryRequirementsInfo2KHR {
-        ImageMemoryRequirementsInfo2KHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ImageSparseMemoryRequirementsInfo2 {
@@ -10777,13 +9936,8 @@ impl Default for ImageSparseMemoryRequirementsInfo2 {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct ImageSparseMemoryRequirementsInfo2KHR {}
-impl Default for ImageSparseMemoryRequirementsInfo2KHR {
-    fn default() -> ImageSparseMemoryRequirementsInfo2KHR {
-        ImageSparseMemoryRequirementsInfo2KHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct MemoryRequirements2 {
@@ -10801,13 +9955,8 @@ impl Default for MemoryRequirements2 {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct MemoryRequirements2KHR {}
-impl Default for MemoryRequirements2KHR {
-    fn default() -> MemoryRequirements2KHR {
-        MemoryRequirements2KHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct SparseImageMemoryRequirements2 {
@@ -10825,13 +9974,8 @@ impl Default for SparseImageMemoryRequirements2 {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct SparseImageMemoryRequirements2KHR {}
-impl Default for SparseImageMemoryRequirements2KHR {
-    fn default() -> SparseImageMemoryRequirements2KHR {
-        SparseImageMemoryRequirements2KHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDevicePointClippingProperties {
@@ -10849,13 +9993,8 @@ impl Default for PhysicalDevicePointClippingProperties {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct PhysicalDevicePointClippingPropertiesKHR {}
-impl Default for PhysicalDevicePointClippingPropertiesKHR {
-    fn default() -> PhysicalDevicePointClippingPropertiesKHR {
-        PhysicalDevicePointClippingPropertiesKHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct MemoryDedicatedRequirements {
@@ -10875,13 +10014,8 @@ impl Default for MemoryDedicatedRequirements {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct MemoryDedicatedRequirementsKHR {}
-impl Default for MemoryDedicatedRequirementsKHR {
-    fn default() -> MemoryDedicatedRequirementsKHR {
-        MemoryDedicatedRequirementsKHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct MemoryDedicatedAllocateInfo {
@@ -10901,13 +10035,8 @@ impl Default for MemoryDedicatedAllocateInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct MemoryDedicatedAllocateInfoKHR {}
-impl Default for MemoryDedicatedAllocateInfoKHR {
-    fn default() -> MemoryDedicatedAllocateInfoKHR {
-        MemoryDedicatedAllocateInfoKHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ImageViewUsageCreateInfo {
@@ -10925,13 +10054,8 @@ impl Default for ImageViewUsageCreateInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct ImageViewUsageCreateInfoKHR {}
-impl Default for ImageViewUsageCreateInfoKHR {
-    fn default() -> ImageViewUsageCreateInfoKHR {
-        ImageViewUsageCreateInfoKHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PipelineTessellationDomainOriginStateCreateInfo {
@@ -10949,13 +10073,8 @@ impl Default for PipelineTessellationDomainOriginStateCreateInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct PipelineTessellationDomainOriginStateCreateInfoKHR {}
-impl Default for PipelineTessellationDomainOriginStateCreateInfoKHR {
-    fn default() -> PipelineTessellationDomainOriginStateCreateInfoKHR {
-        PipelineTessellationDomainOriginStateCreateInfoKHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct SamplerYcbcrConversionInfo {
@@ -10973,13 +10092,8 @@ impl Default for SamplerYcbcrConversionInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct SamplerYcbcrConversionInfoKHR {}
-impl Default for SamplerYcbcrConversionInfoKHR {
-    fn default() -> SamplerYcbcrConversionInfoKHR {
-        SamplerYcbcrConversionInfoKHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct SamplerYcbcrConversionCreateInfo {
@@ -11011,13 +10125,8 @@ impl Default for SamplerYcbcrConversionCreateInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct SamplerYcbcrConversionCreateInfoKHR {}
-impl Default for SamplerYcbcrConversionCreateInfoKHR {
-    fn default() -> SamplerYcbcrConversionCreateInfoKHR {
-        SamplerYcbcrConversionCreateInfoKHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct BindImagePlaneMemoryInfo {
@@ -11035,13 +10144,8 @@ impl Default for BindImagePlaneMemoryInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct BindImagePlaneMemoryInfoKHR {}
-impl Default for BindImagePlaneMemoryInfoKHR {
-    fn default() -> BindImagePlaneMemoryInfoKHR {
-        BindImagePlaneMemoryInfoKHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ImagePlaneMemoryRequirementsInfo {
@@ -11059,13 +10163,8 @@ impl Default for ImagePlaneMemoryRequirementsInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct ImagePlaneMemoryRequirementsInfoKHR {}
-impl Default for ImagePlaneMemoryRequirementsInfoKHR {
-    fn default() -> ImagePlaneMemoryRequirementsInfoKHR {
-        ImagePlaneMemoryRequirementsInfoKHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceSamplerYcbcrConversionFeatures {
@@ -11083,13 +10182,8 @@ impl Default for PhysicalDeviceSamplerYcbcrConversionFeatures {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct PhysicalDeviceSamplerYcbcrConversionFeaturesKHR {}
-impl Default for PhysicalDeviceSamplerYcbcrConversionFeaturesKHR {
-    fn default() -> PhysicalDeviceSamplerYcbcrConversionFeaturesKHR {
-        PhysicalDeviceSamplerYcbcrConversionFeaturesKHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct SamplerYcbcrConversionImageFormatProperties {
@@ -11107,13 +10201,8 @@ impl Default for SamplerYcbcrConversionImageFormatProperties {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct SamplerYcbcrConversionImageFormatPropertiesKHR {}
-impl Default for SamplerYcbcrConversionImageFormatPropertiesKHR {
-    fn default() -> SamplerYcbcrConversionImageFormatPropertiesKHR {
-        SamplerYcbcrConversionImageFormatPropertiesKHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct TextureLODGatherFormatPropertiesAMD {
@@ -11237,15 +10326,10 @@ impl Default for PhysicalDeviceSamplerFilterMinmaxPropertiesEXT {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct SampleLocationEXT {
     pub x: c_float,
     pub y: c_float,
-}
-impl Default for SampleLocationEXT {
-    fn default() -> SampleLocationEXT {
-        SampleLocationEXT { x: 0.0, y: 0.0 }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -11270,32 +10354,16 @@ impl Default for SampleLocationsInfoEXT {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct AttachmentSampleLocationsEXT {
     pub attachment_index: uint32_t,
     pub sample_locations_info: SampleLocationsInfoEXT,
 }
-impl Default for AttachmentSampleLocationsEXT {
-    fn default() -> AttachmentSampleLocationsEXT {
-        AttachmentSampleLocationsEXT {
-            attachment_index: 0,
-            sample_locations_info: SampleLocationsInfoEXT::default(),
-        }
-    }
-}
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct SubpassSampleLocationsEXT {
     pub subpass_index: uint32_t,
     pub sample_locations_info: SampleLocationsInfoEXT,
-}
-impl Default for SubpassSampleLocationsEXT {
-    fn default() -> SubpassSampleLocationsEXT {
-        SubpassSampleLocationsEXT {
-            subpass_index: 0,
-            sample_locations_info: SampleLocationsInfoEXT::default(),
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -11552,13 +10620,8 @@ impl Default for PhysicalDeviceMaintenance3Properties {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct PhysicalDeviceMaintenance3PropertiesKHR {}
-impl Default for PhysicalDeviceMaintenance3PropertiesKHR {
-    fn default() -> PhysicalDeviceMaintenance3PropertiesKHR {
-        PhysicalDeviceMaintenance3PropertiesKHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct DescriptorSetLayoutSupport {
@@ -11576,13 +10639,8 @@ impl Default for DescriptorSetLayoutSupport {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct DescriptorSetLayoutSupportKHR {}
-impl Default for DescriptorSetLayoutSupportKHR {
-    fn default() -> DescriptorSetLayoutSupportKHR {
-        DescriptorSetLayoutSupportKHR {}
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceShaderDrawParameterFeatures {
@@ -11622,24 +10680,13 @@ impl Default for NativeBufferANDROID {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct ShaderResourceUsageAMD {
     pub num_used_vgprs: uint32_t,
     pub num_used_sgprs: uint32_t,
     pub lds_size_per_local_work_group: uint32_t,
     pub lds_usage_size_in_bytes: size_t,
     pub scratch_mem_usage_in_bytes: size_t,
-}
-impl Default for ShaderResourceUsageAMD {
-    fn default() -> ShaderResourceUsageAMD {
-        ShaderResourceUsageAMD {
-            num_used_vgprs: 0,
-            num_used_sgprs: 0,
-            lds_size_per_local_work_group: 0,
-            lds_usage_size_in_bytes: 0,
-            scratch_mem_usage_in_bytes: 0,
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -12099,18 +11146,10 @@ impl Default for DescriptorSetVariableDescriptorCountLayoutSupportEXT {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Default)]
 pub struct VertexInputBindingDivisorDescriptionEXT {
     pub binding: uint32_t,
     pub divisor: uint32_t,
-}
-impl Default for VertexInputBindingDivisorDescriptionEXT {
-    fn default() -> VertexInputBindingDivisorDescriptionEXT {
-        VertexInputBindingDivisorDescriptionEXT {
-            binding: 0,
-            divisor: 0,
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]

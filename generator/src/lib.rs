@@ -10,8 +10,6 @@ extern crate proc_macro2;
 extern crate quote;
 extern crate itertools;
 extern crate syn;
-#[macro_use]
-extern crate lazy_static;
 pub extern crate vk_parse;
 pub extern crate vkxml;
 
@@ -1091,7 +1089,7 @@ pub fn generate_result(ident: &Ident, _enum: &vkxml::Enumeration) -> Tokens {
     }
 }
 pub trait StructExt {}
-pub fn generate_struct(_struct: &vkxml::Struct) -> Tokens {
+pub fn generate_struct(_struct: &vkxml::Struct, nullable_types: &HashSet<&str>) -> Tokens {
     let name = to_type_tokens(&_struct.name, None);
     let members = _struct.elements.iter().filter_map(|elem| match *elem {
         vkxml::StructElement::Member(ref field) => Some(field),
@@ -1111,11 +1109,34 @@ pub fn generate_struct(_struct: &vkxml::Struct) -> Tokens {
             .map(|n| n.contains("pfn"))
             .unwrap_or(false)
     });
+    let contains_stype = members.clone().any(|f| f.name.as_ref().unwrap() == "sType");
+    let contains_nullable = members
+        .clone()
+        .any(|f| nullable_types.contains(&f.basetype.as_ref()));
+    let contains_ptrs = members.clone().any(|f| {
+        f.reference.is_some()
+            || POINTER_TYPES.contains(&f.basetype.as_ref())
+            || MUT_POINTER_TYPES.contains(&f.basetype.as_ref())
+    });
+    let contains_arrays = members.clone().any(|f| f.array.is_some());
 
-    let members_default = members.clone().map(|field| field.to_default());
+    let mut implicit_impls: Vec<Tokens> = Vec::new();
+    implicit_impls.push(quote!(Copy));
+    implicit_impls.push(quote!(Clone));
 
-    let impl_default = if !contains_pfn {
-        quote!{
+    if !contains_pfn && !contains_stype && !contains_nullable && !contains_ptrs && !contains_arrays
+    {
+        implicit_impls.push(quote!(Default))
+    }
+
+    let mut explicit_impls: Vec<Tokens> = Vec::new();
+
+    if !contains_pfn && !implicit_impls.contains(&quote!(Default)) {
+        let members_default = members
+            .clone()
+            .map(|field| field.to_default(nullable_types));
+
+        explicit_impls.push(quote!{
             impl Default for #name {
                 fn default() -> #name {
                     #name {
@@ -1123,29 +1144,17 @@ pub fn generate_struct(_struct: &vkxml::Struct) -> Tokens {
                     }
                 }
             }
-        }
-    } else {
-        quote!()
-    };
+        });
+    }
 
-    let derive = if contains_pfn {
-        quote!{
-            #[derive(Copy, Clone)]
-        }
-    } else {
-        // FIXME: Properly derive Debug
-        quote!{
-            #[derive(Copy, Clone)]
-        }
-    };
     quote!{
         #[repr(C)]
-        #derive
+        #[derive(#(#implicit_impls),*)]
         pub struct #name {
             #(#params,)*
         }
 
-        #impl_default
+        #(#explicit_impls)*
     }
 }
 
@@ -1187,7 +1196,7 @@ fn generate_funcptr(fnptr: &vkxml::FunctionPointer) -> Tokens {
     }
 }
 
-fn generate_union(union: &vkxml::Union) -> Tokens {
+fn generate_union(union: &vkxml::Union, nullable_types: &HashSet<&str>) -> Tokens {
     let name = to_type_tokens(&union.name, None);
     let fields = union.elements.iter().map(|field| {
         let name = field.param_ident();
@@ -1197,7 +1206,7 @@ fn generate_union(union: &vkxml::Union) -> Tokens {
         }
     });
 
-    let first_field_default = &union.elements[0].to_default();
+    let first_field_default = &union.elements[0].to_default(nullable_types);
 
     quote!{
         #[repr(C)]
@@ -1215,14 +1224,19 @@ fn generate_union(union: &vkxml::Union) -> Tokens {
         }
     }
 }
-pub fn generate_definition(definition: &vkxml::DefinitionsElement) -> Option<Tokens> {
+pub fn generate_definition(
+    definition: &vkxml::DefinitionsElement,
+    nullable_types: &HashSet<&str>,
+) -> Option<Tokens> {
     match *definition {
         vkxml::DefinitionsElement::Typedef(ref typedef) => Some(generate_typedef(typedef)),
-        vkxml::DefinitionsElement::Struct(ref _struct) => Some(generate_struct(_struct)),
+        vkxml::DefinitionsElement::Struct(ref _struct) => {
+            Some(generate_struct(_struct, nullable_types))
+        }
         vkxml::DefinitionsElement::Bitmask(ref mask) => generate_bitmask(mask),
         vkxml::DefinitionsElement::Handle(ref handle) => generate_handle(handle),
         vkxml::DefinitionsElement::FuncPtr(ref fp) => Some(generate_funcptr(fp)),
-        vkxml::DefinitionsElement::Union(ref union) => Some(generate_union(union)),
+        vkxml::DefinitionsElement::Union(ref union) => Some(generate_union(union, nullable_types)),
         _ => None,
     }
 }
@@ -1390,19 +1404,19 @@ pub fn write_source_code(path: &Path) {
         .flat_map(|definitions| definitions.elements.iter().map(|definition| definition))
         .collect();
 
-    for definition in &definitions {
-        match definition {
+    let nullable_types: HashSet<&str> = definitions
+        .iter()
+        .filter_map(|definition| match definition {
             vkxml::DefinitionsElement::Handle(ref handle) => {
                 if handle.name != "" {
-                    NON_DISPATCHABLE
-                        .lock()
-                        .unwrap()
-                        .push(handle.name.split_at(2).1.to_string());
+                    Some(handle.name.as_ref())
+                } else {
+                    None
                 }
             }
-            _ => {}
-        };
-    }
+            _ => None,
+        })
+        .collect();
 
     let enums: Vec<&vkxml::Enumeration> = spec
         .elements
@@ -1446,7 +1460,7 @@ pub fn write_source_code(path: &Path) {
 
     let definition_code: Vec<_> = definitions
         .into_iter()
-        .filter_map(generate_definition)
+        .filter_map(|definition| generate_definition(definition, &nullable_types))
         .collect();
 
     let feature_code: Vec<_> = features
