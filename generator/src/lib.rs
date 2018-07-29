@@ -1,7 +1,4 @@
 #![recursion_limit = "256"]
-// extern crate serde;
-// #[macro_use]
-// extern crate serde_derive;
 #[macro_use]
 extern crate nom;
 extern crate heck;
@@ -15,9 +12,9 @@ pub extern crate vkxml;
 
 use heck::{CamelCase, ShoutySnakeCase, SnakeCase};
 use itertools::Itertools;
-use proc_macro2::{Term, TokenTree};
+use proc_macro2::Term;
 use quote::Tokens;
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 use std::path::Path;
 use syn::Ident;
 pub trait ExtensionExt {}
@@ -380,6 +377,7 @@ impl ConstantExt for vkxml::ExtensionEnum {
         self.notation.as_ref().map(|s| s.as_str())
     }
 }
+
 impl ConstantExt for vkxml::Constant {
     fn variant_ident(&self, enum_name: &str) -> Ident {
         variant_ident(enum_name, &self.name)
@@ -392,6 +390,7 @@ impl ConstantExt for vkxml::Constant {
     }
 }
 
+#[derive(Debug)]
 pub enum Constant {
     Number(i32),
     Hex(String),
@@ -459,7 +458,6 @@ impl Constant {
     }
 
     pub fn from_extension_enum(constant: &vkxml::ExtensionEnum) -> Option<Self> {
-        println!("{:#?}", constant);
         let number = constant.number.map(|n| Constant::Number(n));
         let hex = constant.hex.as_ref().map(|hex| Constant::Hex(hex.clone()));
         let bitpos = constant.bitpos.map(|bit| Constant::BitPos(bit));
@@ -593,7 +591,7 @@ impl ToTokens for vkxml::ReferenceType {
         }
     }
 }
-fn name_to_tokens(type_name: &str) -> Tokens {
+fn name_to_tokens(type_name: &str) -> Ident {
     let new_name = match type_name {
         "int" => "c_int",
         "void" => "c_void",
@@ -609,10 +607,7 @@ fn name_to_tokens(type_name: &str) -> Tokens {
         }
     };
     let new_name = new_name.replace("FlagBits", "Flags");
-    let name = Term::intern(new_name.as_str());
-    quote! {
-        #name
-    }
+    Ident::from(new_name.as_str())
 }
 fn to_type_tokens(type_name: &str, reference: Option<&vkxml::ReferenceType>) -> Tokens {
     let new_name = name_to_tokens(type_name);
@@ -677,8 +672,6 @@ fn generate_function_pointers(ident: Ident, commands: &[&vkxml::Command]) -> quo
     let params: Vec<Vec<(Ident, Tokens)>> = commands
         .iter()
         .map(|cmd| {
-            let fn_name_raw = cmd.name.as_str();
-            let fn_name_snake = cmd.command_ident();
             let params: Vec<_> = cmd
                 .param
                 .iter()
@@ -715,7 +708,6 @@ fn generate_function_pointers(ident: Ident, commands: &[&vkxml::Command]) -> quo
         .collect();
     let expanded_params_ref = &expanded_params;
 
-    let params_ref = &params;
     let return_types: Vec<_> = commands
         .iter()
         .map(|cmd| cmd.return_type.type_tokens())
@@ -773,110 +765,122 @@ fn generate_function_pointers(ident: Ident, commands: &[&vkxml::Command]) -> quo
         }
     }
 }
-pub fn generate_interface_item(items: &[vk_parse::InterfaceItem]) -> quote::Tokens {
-    use vk_parse::InterfaceItem::*;
-    for item in items {
-        match item {
-            Type { name,.. } => println!("type {}", name),
-            Enum(e) => println!("type {}", name),
-            _ => ()
-        };
-    }
-    quote!{}
+pub struct ExtensionConstant<'a> {
+    pub name: &'a str,
+    pub constant: Constant,
 }
-pub fn generate_extension2(
+impl<'a> ConstantExt for ExtensionConstant<'a> {
+    fn variant_ident(&self, enum_name: &str) -> Ident {
+        variant_ident(enum_name, self.name)
+    }
+    fn to_tokens(&self) -> Tokens {
+        self.constant.to_tokens()
+    }
+    fn notation(&self) -> Option<&str> {
+        None
+    }
+}
+
+pub fn generate_extension_constants<'a>(
+    extension: &'a vk_parse::Extension,
+    const_cache: &mut HashSet<&'a str>,
+) -> quote::Tokens {
+    let items = extension
+        .items
+        .iter()
+        .filter_map(|item| match item {
+            vk_parse::ExtensionItem::Require { items, .. } => Some(items.iter()),
+            _ => None,
+        })
+        .flat_map(|iter| iter);
+    let enum_tokens = items.filter_map(|item| match item {
+        vk_parse::InterfaceItem::Enum(_enum) => {
+            use vk_parse::EnumSpec;
+            if const_cache.contains(_enum.name.as_str()) {
+                return None;
+            }
+            let (constant, extends) = match &_enum.spec {
+                EnumSpec::Alias { .. } => None,
+                EnumSpec::Value { .. } => None,
+                EnumSpec::Bitpos { bitpos, extends } => {
+                    Some((Constant::BitPos(*bitpos as u32), extends.clone()))
+                }
+                EnumSpec::Offset {
+                    offset,
+                    extends,
+                    extnumber,
+                    ..
+                } => {
+                    let ext_base = 1000000000;
+                    let ext_block_size = 1000;
+                    let extnumber = extnumber.unwrap_or_else(|| extension.number.expect("number"));
+                    let value = ext_base + (extnumber - 1) * ext_block_size + offset;
+                    Some((Constant::Number(value as i32), Some(extends.clone())))
+                }
+                _ => None,
+            }?;
+            let extends = extends?;
+            let ext_constant = ExtensionConstant {
+                name: &_enum.name,
+                constant,
+            };
+            let ident = name_to_tokens(&extends);
+            let impl_block = bitflags_impl_block(&ident, &extends, &[&ext_constant]);
+            let doc_string = format!("Generated from '{}'", extension.name);
+            let q = quote!{
+                #[doc = #doc_string]
+                #impl_block
+            };
+
+            const_cache.insert(_enum.name.as_str());
+            Some(q)
+        }
+        _ => None,
+    });
+    quote!{
+        #(#enum_tokens)*
+    }
+}
+pub fn generate_extension_commands(
     extension: &vk_parse::Extension,
     cmd_map: &CommandMap,
+) -> Tokens {
+    let commands = extension
+        .items
+        .iter()
+        .filter_map(|ext_item| match ext_item {
+            vk_parse::ExtensionItem::Require { items, .. } => {
+                Some(items.iter().filter_map(|item| match item {
+                    vk_parse::InterfaceItem::Command { name, .. } => {
+                        cmd_map.get(name).map(|c| *c)
+                    }
+                    _ => None,
+                }))
+            }
+            _ => None,
+        })
+        .flat_map(|iter| iter)
+        .collect_vec();
+    let name = format!("{}Fn", extension.name.to_camel_case());
+    let ident = Ident::from(&name[2..]);
+    generate_function_pointers(ident, &commands)
+}
+pub fn generate_extension<'a>(
+    extension: &'a vk_parse::Extension,
+    cmd_map: &CommandMap,
+    const_cache: &mut HashSet<&'a str>,
 ) -> Option<quote::Tokens> {
     let _ = extension
         .supported
         .as_ref()
         .filter(|s| s.as_str() == "vulkan")?;
-    extension
-        .items
-        .iter()
-        .filter_map(|item| match item {
-            vk_parse::ExtensionItem::Require {
-                extension: ext,
-                feature,
-                items,
-                ..
-            } => {
-                //println!("feature {:?} - {:?}", feature, ext);
-                let t = generate_interface_item(items);
-                Some(t)
-            }
-            _ => None,
-        })
-        .collect_vec();
-
-    None
-}
-pub fn generate_extension(extension: &vkxml::Extension, cmd_map: &CommandMap) -> quote::Tokens {
-    // Don't generate disabled or reserved extensions
-    if extension.disabled {
-        return quote!{};
-    }
-    let cmd_refs = extension
-        .elements
-        .iter()
-        .flat_map(|ext| {
-            if let &vkxml::ExtensionElement::Require(ref spec) = ext {
-                spec.elements
-                    .iter()
-                    .filter_map(|extension_spec| match extension_spec {
-                        vkxml::ExtensionSpecificationElement::CommandReference(ref cmd_ref) => {
-                            Some(cmd_ref)
-                        }
-                        _ => None,
-                    })
-                    .collect()
-            } else {
-                vec![]
-            }
-        })
-        .collect_vec();
-    let commands = cmd_refs
-        .iter()
-        .filter_map(|cmd_ref| cmd_map.get(&cmd_ref.name).map(|c| *c))
-        .collect_vec();
-    let name = format!("{}Fn", extension.name.to_camel_case());
-    let ident = Ident::from(&name[2..]);
-    let fp = generate_function_pointers(ident, &commands);
-    let extension_enums = extension
-        .elements
-        .iter()
-        .flat_map(|ext| {
-            println!("{:?}", ext);
-            if let &vkxml::ExtensionElement::Require(ref spec) = ext {
-                spec.elements
-                    .iter()
-                    .filter_map(|extension_spec| match extension_spec {
-                        vkxml::ExtensionSpecificationElement::Enum(ref _enum) => Some(_enum),
-                        _ => None,
-                    })
-                    .collect()
-            } else {
-                vec![]
-            }
-        })
-        .collect_vec();
-    let extend_enums = extension_enums.iter().filter_map(|&constant| {
-        let c = Constant::from_extension_enum(constant)?;
-        let variant_ident = variant_ident(&constant.extends, &constant.name);
-        let tokens = c.to_tokens();
-        let enum_name = name_to_tokens(&constant.extends);
-        Some(quote! {
-            impl #enum_name {
-                pub const #variant_ident: Self = #enum_name(#tokens);
-            }
-        })
-    });
-    //println!("{:#?}", extension_enums);
-    quote!{
+    let extension_tokens = generate_extension_constants(extension, const_cache);
+    let fp = generate_extension_commands(extension, cmd_map);
+    let q = quote!{
         #fp
-        #(#extend_enums)*
-    }
+        #extension_tokens
+    };
+    Some(q)
 }
 pub fn generate_typedef(typedef: &vkxml::Typedef) -> Tokens {
     let typedef_name = to_type_tokens(&typedef.name, None);
@@ -905,34 +909,6 @@ pub fn generate_bitmask(bitmask: &vkxml::Bitmask) -> Option<Tokens> {
     })
 }
 
-pub fn to_variant_ident(enum_name: &str, variant_name: &str) -> Ident {
-    let tag = ["AMD", "NN", "KHR", "NV", "EXT", "NVX", "KHX"]
-        .iter()
-        .filter_map(|tag| {
-            if enum_name.ends_with(tag) {
-                Some(tag)
-            } else {
-                None
-            }
-        })
-        .nth(0);
-
-    let name_without_tag = tag
-        .map(|t| enum_name.replace(t, ""))
-        .unwrap_or(enum_name.into());
-    let variant_without_tag = tag
-        .map(|t| variant_name.replace(&format!("_{}", t), ""))
-        .unwrap_or(variant_name.into());
-    let camel_case_name_enum = &name_without_tag.to_camel_case();
-    let name = variant_without_tag.to_camel_case()[2..].replace(camel_case_name_enum, "");
-    let is_digit = name.chars().nth(0).map(|c| c.is_digit(10)).unwrap_or(false);
-    if is_digit {
-        Ident::from(format!("Type{}", name).as_str())
-    } else {
-        Ident::from(name)
-    }
-}
-
 pub enum EnumType {
     Bitflags(Tokens),
     Enum(Tokens),
@@ -942,7 +918,6 @@ pub fn variant_ident(enum_name: &str, variant_name: &str) -> Ident {
     let _name = enum_name.split("FlagBits").nth(0).expect("split");
     let struct_name = _name.to_shouty_snake_case();
     let new_variant_name = variant_name.replace(&struct_name, "").replace("VK", "");
-    // Not every variant in the vk.xml has a correct shouty snake case name
     let new_variant_name = new_variant_name
         .trim_matches('_')
         .to_shouty_snake_case()
@@ -961,13 +936,13 @@ pub fn variant_ident(enum_name: &str, variant_name: &str) -> Ident {
 
 pub fn bitflags_impl_block(
     ident: &Ident,
-    _enum: &vkxml::Enumeration,
+    enum_name: &str,
     constants: &[&impl ConstantExt],
 ) -> Tokens {
     let variants = constants
         .iter()
         .map(|constant| {
-            let variant_ident = constant.variant_ident(&_enum.name);
+            let variant_ident = constant.variant_ident(enum_name);
             let tokens = constant.to_tokens();
             (variant_ident, tokens)
         })
@@ -996,9 +971,9 @@ pub fn bitflags_impl_block(
     }
 }
 
-pub fn generate_enum(
-    _enum: &vkxml::Enumeration,
-    create_info_constants: &[&vkxml::Constant],
+pub fn generate_enum<'a>(
+    _enum: &'a vkxml::Enumeration,
+    const_cache: &mut HashSet<&'a str>,
 ) -> EnumType {
     let name = &_enum.name[2..];
     let _name = name.replace("FlagBits", "Flags");
@@ -1011,6 +986,9 @@ pub fn generate_enum(
             _ => None,
         })
         .collect_vec();
+    for constant in &constants {
+        const_cache.insert(constant.name.as_str());
+    }
 
     if name.contains("Bit") {
         let ident = Ident::from(_name.as_str());
@@ -1020,21 +998,21 @@ pub fn generate_enum(
             .fold(0, |acc, next| acc | next.bits());
         let all_bits_term = Term::intern(&format!("0b{:b}", all_bits));
 
-        let impl_bitflags = bitflags_impl_block(&ident, _enum, &constants);
+        let impl_bitflags = bitflags_impl_block(&ident, &_enum.name, &constants);
         let q = quote!{
             #[repr(C)]
             #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-            pub struct #ident(Flags);
+            pub struct #ident(pub(crate) Flags);
             vk_bitflags_wrapped!(#ident, #all_bits_term, Flags);
             #impl_bitflags
         };
         EnumType::Bitflags(q)
     } else {
-        let impl_block = bitflags_impl_block(&ident, _enum, &constants);
+        let impl_block = bitflags_impl_block(&ident, &_enum.name, &constants);
         let enum_quote = quote!{
             #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
             #[repr(C)]
-            pub struct #ident(pub i32);
+            pub struct #ident(pub(crate) i32);
             #impl_block
         };
         let special_quote = match _name.as_str() {
@@ -1308,16 +1286,16 @@ pub fn generate_feature(feature: &vkxml::Feature, commands: &CommandMap) -> quot
         #device
     }
 }
-pub fn generate_constant(constant: &vkxml::Constant) -> Tokens {
+pub fn generate_constant<'a>(
+    constant: &'a vkxml::Constant,
+    cache: &mut HashSet<&'a str>,
+) -> Tokens {
+    cache.insert(constant.name.as_str());
     let c = Constant::from_constant(constant);
     let ident = Ident::from(constant.name.as_str());
     let value = c.to_tokens();
     let ty = c.ty().to_tokens();
     quote!{
-        // pub mod constants {
-        //     pub const #ident: #ty = #value;
-        // }
-        //pub use constants::*;
         pub const #ident: #ty = #value;
     }
 }
@@ -1335,29 +1313,6 @@ pub fn write_source_code(path: &Path) {
         })
         .nth(0)
         .expect("extension");
-    // for ext in extensions {
-    //     println!("{}", ext.name);
-    //     for item in &ext.items {
-    //         match item {
-    //             vk_parse::ExtensionItem::Require { items, .. } => {
-    //                 for interface in items {
-    //                     match interface {
-    //                         vk_parse::InterfaceItem::Enum(ref e) => match &e.spec {
-    //                             vk_parse::EnumSpec::Value { value, extends } => {
-    //                                 print!("{} - ", e.name,);
-    //                                 println!("{} {:?}", value, extends);
-    //                             }
-    //                             _ => (),
-    //                         },
-    //                         _ => (),
-    //                     }
-    //                 }
-    //             }
-    //             _ => (),
-    //         }
-    //     }
-    //     println!("ext {} {:?}", ext.name, ext.supported);
-    // }
 
     let spec = vk_parse::parse_file_as_vkxml(path);
     let commands: HashMap<vkxml::Identifier, &vkxml::Command> = spec
@@ -1370,10 +1325,6 @@ pub fn write_source_code(path: &Path) {
         .flat_map(|cmds| cmds.elements.iter().map(|cmd| (cmd.name.clone(), cmd)))
         .collect();
 
-    let _ = extensions
-        .iter()
-        .filter_map(|ext| generate_extension2(ext, &commands))
-        .collect_vec();
     let features: Vec<&vkxml::Feature> = spec
         .elements
         .iter()
@@ -1383,16 +1334,6 @@ pub fn write_source_code(path: &Path) {
         })
         .flat_map(|features| features.elements.iter().map(|feature| feature))
         .collect();
-
-    // let extensions: Vec<&vkxml::Extension> = spec
-    //     .elements
-    //     .iter()
-    //     .filter_map(|elem| match elem {
-    //         &vkxml::RegistryElement::Extensions(ref extensions) => Some(extensions),
-    //         _ => None,
-    //     })
-    //     .flat_map(|extensions| extensions.elements.iter().map(|extension| extension))
-    //     .collect();
 
     let definitions: Vec<&vkxml::DefinitionsElement> = spec
         .elements
@@ -1443,20 +1384,25 @@ pub fn write_source_code(path: &Path) {
         .flat_map(|constants| constants.elements.iter())
         .collect();
 
-    let (enum_code, bitflags_code) = enums.into_iter().map(|e| generate_enum(e, &[])).fold(
-        (Vec::new(), Vec::new()),
-        |mut acc, elem| {
+    let mut const_cache = HashSet::new();
+    let (enum_code, bitflags_code) = enums
+        .into_iter()
+        .map(|e| generate_enum(e, &mut const_cache))
+        .fold((Vec::new(), Vec::new()), |mut acc, elem| {
             match elem {
                 EnumType::Enum(token) => acc.0.push(token),
                 EnumType::Bitflags(token) => acc.1.push(token),
             };
             acc
-        },
-    );
+        });
     let constants_code: Vec<_> = constants
         .iter()
-        .map(|constant| generate_constant(constant))
+        .map(|constant| generate_constant(constant, &mut const_cache))
         .collect();
+    let extension_code = extensions
+        .iter()
+        .filter_map(|ext| generate_extension(ext, &commands, &mut const_cache))
+        .collect_vec();
 
     let definition_code: Vec<_> = definitions
         .into_iter()
@@ -1468,10 +1414,6 @@ pub fn write_source_code(path: &Path) {
         .map(|feature| generate_feature(feature, &commands))
         .collect();
 
-    // let extension_code: Vec<_> = extensions
-    //     .iter()
-    //     .map(|ext| generate_extension(ext, &commands))
-    //     .collect();
     let mut file = File::create("../ash/src/vk.rs").expect("vk");
     let bitflags_macro = vk_bitflags_wrapped_macro();
     let handle_nondispatchable_macro = handle_nondispatchable_macro();
@@ -1479,7 +1421,12 @@ pub fn write_source_code(path: &Path) {
     let version_macros = vk_version_macros();
     let platform_specific_types = platform_specific_types();
     let source_code = quote!{
+        #[doc(hidden)]
         pub use libc::*;
+        #[doc(hidden)]
+        pub use self::extensions::*;
+        #[doc(hidden)]
+        pub use self::bitflags::*;
         #version_macros
         #platform_specific_types
         #bitflags_macro
@@ -1488,9 +1435,15 @@ pub fn write_source_code(path: &Path) {
         #(#feature_code)*
         #(#definition_code)*
         #(#enum_code)*
-        #(#bitflags_code)*
+        pub mod bitflags {
+            use super::*;
+            #(#bitflags_code)*
+        }
         #(#constants_code)*
-        //#(#extension_code)*
+        pub mod extensions {
+            use super::*;
+            #(#extension_code)*
+        }
     };
-    write!(&mut file, "{}", source_code);
+    write!(&mut file, "{}", source_code).expect("Unable to write to file");
 }

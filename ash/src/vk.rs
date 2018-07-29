@@ -1,3 +1,8 @@
+#[doc(hidden)]
+pub use self::bitflags::*;
+#[doc(hidden)]
+pub use self::extensions::*;
+#[doc(hidden)]
 pub use libc::*;
 #[macro_export]
 macro_rules! vk_make_version {
@@ -53,7 +58,7 @@ macro_rules! vk_bitflags_wrapped {
     ($name:ident, $all:expr, $flag_type:ty) => {
         impl Default for $name {
             fn default() -> $name {
-                $name { flags: 0 }
+                $name(0)
             }
         }
         impl ::std::fmt::Debug for $name {
@@ -61,35 +66,33 @@ macro_rules! vk_bitflags_wrapped {
                 &self,
                 f: &mut ::std::fmt::Formatter,
             ) -> ::std::result::Result<(), ::std::fmt::Error> {
-                write!(f, "{}({:b})", stringify!($name), self.flags)
+                write!(f, "{}({:b})", stringify!($name), self.0)
             }
         }
         impl $name {
             #[inline]
             pub fn empty() -> $name {
-                $name { flags: 0 }
+                $name(0)
             }
             #[inline]
             pub fn all() -> $name {
-                $name { flags: $all }
+                $name($all)
             }
             #[inline]
             pub fn flags(self) -> $flag_type {
-                self.flags
+                self.0
             }
             #[inline]
             pub fn from_flags(flags: $flag_type) -> Option<$name> {
                 if flags & !$all == 0 {
-                    Some($name { flags: flags })
+                    Some($name(flags))
                 } else {
                     None
                 }
             }
             #[inline]
             pub fn from_flags_truncate(flags: $flag_type) -> $name {
-                $name {
-                    flags: flags & $all,
-                }
+                $name(flags & $all)
             }
             #[inline]
             pub fn is_empty(self) -> bool {
@@ -113,9 +116,7 @@ macro_rules! vk_bitflags_wrapped {
             type Output = $name;
             #[inline]
             fn bitor(self, rhs: $name) -> $name {
-                $name {
-                    flags: self.flags | rhs.flags,
-                }
+                $name(self.0 | rhs.0)
             }
         }
         impl ::std::ops::BitOrAssign for $name {
@@ -128,9 +129,7 @@ macro_rules! vk_bitflags_wrapped {
             type Output = $name;
             #[inline]
             fn bitand(self, rhs: $name) -> $name {
-                $name {
-                    flags: self.flags & rhs.flags,
-                }
+                $name(self.0 & rhs.0)
             }
         }
         impl ::std::ops::BitAndAssign for $name {
@@ -143,9 +142,7 @@ macro_rules! vk_bitflags_wrapped {
             type Output = $name;
             #[inline]
             fn bitxor(self, rhs: $name) -> $name {
-                $name {
-                    flags: self.flags ^ rhs.flags,
-                }
+                $name(self.0 ^ rhs.0)
             }
         }
         impl ::std::ops::BitXorAssign for $name {
@@ -4570,279 +4567,187 @@ pub type Flags = uint32_t;
 pub type DeviceSize = uint64_t;
 #[repr(C)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct FramebufferCreateFlags {
-    flags: Flags,
-}
+pub struct FramebufferCreateFlags(Flags);
 vk_bitflags_wrapped!(FramebufferCreateFlags, 0b0, Flags);
 #[repr(C)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct QueryPoolCreateFlags {
-    flags: Flags,
-}
+pub struct QueryPoolCreateFlags(Flags);
 vk_bitflags_wrapped!(QueryPoolCreateFlags, 0b0, Flags);
 #[repr(C)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct RenderPassCreateFlags {
-    flags: Flags,
-}
+pub struct RenderPassCreateFlags(Flags);
 vk_bitflags_wrapped!(RenderPassCreateFlags, 0b0, Flags);
 #[repr(C)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct SamplerCreateFlags {
-    flags: Flags,
-}
+pub struct SamplerCreateFlags(Flags);
 vk_bitflags_wrapped!(SamplerCreateFlags, 0b0, Flags);
 #[repr(C)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct PipelineLayoutCreateFlags {
-    flags: Flags,
-}
+pub struct PipelineLayoutCreateFlags(Flags);
 vk_bitflags_wrapped!(PipelineLayoutCreateFlags, 0b0, Flags);
 #[repr(C)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct PipelineCacheCreateFlags {
-    flags: Flags,
-}
+pub struct PipelineCacheCreateFlags(Flags);
 vk_bitflags_wrapped!(PipelineCacheCreateFlags, 0b0, Flags);
 #[repr(C)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct PipelineDepthStencilStateCreateFlags {
-    flags: Flags,
-}
+pub struct PipelineDepthStencilStateCreateFlags(Flags);
 vk_bitflags_wrapped!(PipelineDepthStencilStateCreateFlags, 0b0, Flags);
 #[repr(C)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct PipelineDynamicStateCreateFlags {
-    flags: Flags,
-}
+pub struct PipelineDynamicStateCreateFlags(Flags);
 vk_bitflags_wrapped!(PipelineDynamicStateCreateFlags, 0b0, Flags);
 #[repr(C)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct PipelineColorBlendStateCreateFlags {
-    flags: Flags,
-}
+pub struct PipelineColorBlendStateCreateFlags(Flags);
 vk_bitflags_wrapped!(PipelineColorBlendStateCreateFlags, 0b0, Flags);
 #[repr(C)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct PipelineMultisampleStateCreateFlags {
-    flags: Flags,
-}
+pub struct PipelineMultisampleStateCreateFlags(Flags);
 vk_bitflags_wrapped!(PipelineMultisampleStateCreateFlags, 0b0, Flags);
 #[repr(C)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct PipelineRasterizationStateCreateFlags {
-    flags: Flags,
-}
+pub struct PipelineRasterizationStateCreateFlags(Flags);
 vk_bitflags_wrapped!(PipelineRasterizationStateCreateFlags, 0b0, Flags);
 #[repr(C)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct PipelineViewportStateCreateFlags {
-    flags: Flags,
-}
+pub struct PipelineViewportStateCreateFlags(Flags);
 vk_bitflags_wrapped!(PipelineViewportStateCreateFlags, 0b0, Flags);
 #[repr(C)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct PipelineTessellationStateCreateFlags {
-    flags: Flags,
-}
+pub struct PipelineTessellationStateCreateFlags(Flags);
 vk_bitflags_wrapped!(PipelineTessellationStateCreateFlags, 0b0, Flags);
 #[repr(C)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct PipelineInputAssemblyStateCreateFlags {
-    flags: Flags,
-}
+pub struct PipelineInputAssemblyStateCreateFlags(Flags);
 vk_bitflags_wrapped!(PipelineInputAssemblyStateCreateFlags, 0b0, Flags);
 #[repr(C)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct PipelineVertexInputStateCreateFlags {
-    flags: Flags,
-}
+pub struct PipelineVertexInputStateCreateFlags(Flags);
 vk_bitflags_wrapped!(PipelineVertexInputStateCreateFlags, 0b0, Flags);
 #[repr(C)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct PipelineShaderStageCreateFlags {
-    flags: Flags,
-}
+pub struct PipelineShaderStageCreateFlags(Flags);
 vk_bitflags_wrapped!(PipelineShaderStageCreateFlags, 0b0, Flags);
 #[repr(C)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct BufferViewCreateFlags {
-    flags: Flags,
-}
+pub struct BufferViewCreateFlags(Flags);
 vk_bitflags_wrapped!(BufferViewCreateFlags, 0b0, Flags);
 #[repr(C)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct InstanceCreateFlags {
-    flags: Flags,
-}
+pub struct InstanceCreateFlags(Flags);
 vk_bitflags_wrapped!(InstanceCreateFlags, 0b0, Flags);
 #[repr(C)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct DeviceCreateFlags {
-    flags: Flags,
-}
+pub struct DeviceCreateFlags(Flags);
 vk_bitflags_wrapped!(DeviceCreateFlags, 0b0, Flags);
 #[repr(C)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct ImageViewCreateFlags {
-    flags: Flags,
-}
+pub struct ImageViewCreateFlags(Flags);
 vk_bitflags_wrapped!(ImageViewCreateFlags, 0b0, Flags);
 #[repr(C)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct SemaphoreCreateFlags {
-    flags: Flags,
-}
+pub struct SemaphoreCreateFlags(Flags);
 vk_bitflags_wrapped!(SemaphoreCreateFlags, 0b0, Flags);
 #[repr(C)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct ShaderModuleCreateFlags {
-    flags: Flags,
-}
+pub struct ShaderModuleCreateFlags(Flags);
 vk_bitflags_wrapped!(ShaderModuleCreateFlags, 0b0, Flags);
 #[repr(C)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct EventCreateFlags {
-    flags: Flags,
-}
+pub struct EventCreateFlags(Flags);
 vk_bitflags_wrapped!(EventCreateFlags, 0b0, Flags);
 #[repr(C)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct MemoryMapFlags {
-    flags: Flags,
-}
+pub struct MemoryMapFlags(Flags);
 vk_bitflags_wrapped!(MemoryMapFlags, 0b0, Flags);
 #[repr(C)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct DescriptorPoolResetFlags {
-    flags: Flags,
-}
+pub struct DescriptorPoolResetFlags(Flags);
 vk_bitflags_wrapped!(DescriptorPoolResetFlags, 0b0, Flags);
 #[repr(C)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct DescriptorUpdateTemplateCreateFlags {
-    flags: Flags,
-}
+pub struct DescriptorUpdateTemplateCreateFlags(Flags);
 vk_bitflags_wrapped!(DescriptorUpdateTemplateCreateFlags, 0b0, Flags);
 #[repr(C)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct DisplayModeCreateFlagsKHR {
-    flags: Flags,
-}
+pub struct DisplayModeCreateFlagsKHR(Flags);
 vk_bitflags_wrapped!(DisplayModeCreateFlagsKHR, 0b0, Flags);
 #[repr(C)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct DisplaySurfaceCreateFlagsKHR {
-    flags: Flags,
-}
+pub struct DisplaySurfaceCreateFlagsKHR(Flags);
 vk_bitflags_wrapped!(DisplaySurfaceCreateFlagsKHR, 0b0, Flags);
 #[repr(C)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct AndroidSurfaceCreateFlagsKHR {
-    flags: Flags,
-}
+pub struct AndroidSurfaceCreateFlagsKHR(Flags);
 vk_bitflags_wrapped!(AndroidSurfaceCreateFlagsKHR, 0b0, Flags);
 #[repr(C)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct MirSurfaceCreateFlagsKHR {
-    flags: Flags,
-}
+pub struct MirSurfaceCreateFlagsKHR(Flags);
 vk_bitflags_wrapped!(MirSurfaceCreateFlagsKHR, 0b0, Flags);
 #[repr(C)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct ViSurfaceCreateFlagsNN {
-    flags: Flags,
-}
+pub struct ViSurfaceCreateFlagsNN(Flags);
 vk_bitflags_wrapped!(ViSurfaceCreateFlagsNN, 0b0, Flags);
 #[repr(C)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct WaylandSurfaceCreateFlagsKHR {
-    flags: Flags,
-}
+pub struct WaylandSurfaceCreateFlagsKHR(Flags);
 vk_bitflags_wrapped!(WaylandSurfaceCreateFlagsKHR, 0b0, Flags);
 #[repr(C)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct Win32SurfaceCreateFlagsKHR {
-    flags: Flags,
-}
+pub struct Win32SurfaceCreateFlagsKHR(Flags);
 vk_bitflags_wrapped!(Win32SurfaceCreateFlagsKHR, 0b0, Flags);
 #[repr(C)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct XlibSurfaceCreateFlagsKHR {
-    flags: Flags,
-}
+pub struct XlibSurfaceCreateFlagsKHR(Flags);
 vk_bitflags_wrapped!(XlibSurfaceCreateFlagsKHR, 0b0, Flags);
 #[repr(C)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct XcbSurfaceCreateFlagsKHR {
-    flags: Flags,
-}
+pub struct XcbSurfaceCreateFlagsKHR(Flags);
 vk_bitflags_wrapped!(XcbSurfaceCreateFlagsKHR, 0b0, Flags);
 #[repr(C)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct IOSSurfaceCreateFlagsMVK {
-    flags: Flags,
-}
+pub struct IOSSurfaceCreateFlagsMVK(Flags);
 vk_bitflags_wrapped!(IOSSurfaceCreateFlagsMVK, 0b0, Flags);
 #[repr(C)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct MacOSSurfaceCreateFlagsMVK {
-    flags: Flags,
-}
+pub struct MacOSSurfaceCreateFlagsMVK(Flags);
 vk_bitflags_wrapped!(MacOSSurfaceCreateFlagsMVK, 0b0, Flags);
 #[repr(C)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct CommandPoolTrimFlags {
-    flags: Flags,
-}
+pub struct CommandPoolTrimFlags(Flags);
 vk_bitflags_wrapped!(CommandPoolTrimFlags, 0b0, Flags);
 #[repr(C)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct PipelineViewportSwizzleStateCreateFlagsNV {
-    flags: Flags,
-}
+pub struct PipelineViewportSwizzleStateCreateFlagsNV(Flags);
 vk_bitflags_wrapped!(PipelineViewportSwizzleStateCreateFlagsNV, 0b0, Flags);
 #[repr(C)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct PipelineDiscardRectangleStateCreateFlagsEXT {
-    flags: Flags,
-}
+pub struct PipelineDiscardRectangleStateCreateFlagsEXT(Flags);
 vk_bitflags_wrapped!(PipelineDiscardRectangleStateCreateFlagsEXT, 0b0, Flags);
 #[repr(C)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct PipelineCoverageToColorStateCreateFlagsNV {
-    flags: Flags,
-}
+pub struct PipelineCoverageToColorStateCreateFlagsNV(Flags);
 vk_bitflags_wrapped!(PipelineCoverageToColorStateCreateFlagsNV, 0b0, Flags);
 #[repr(C)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct PipelineCoverageModulationStateCreateFlagsNV {
-    flags: Flags,
-}
+pub struct PipelineCoverageModulationStateCreateFlagsNV(Flags);
 vk_bitflags_wrapped!(PipelineCoverageModulationStateCreateFlagsNV, 0b0, Flags);
 #[repr(C)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct ValidationCacheCreateFlagsEXT {
-    flags: Flags,
-}
+pub struct ValidationCacheCreateFlagsEXT(Flags);
 vk_bitflags_wrapped!(ValidationCacheCreateFlagsEXT, 0b0, Flags);
 #[repr(C)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct DebugUtilsMessengerCreateFlagsEXT {
-    flags: Flags,
-}
+pub struct DebugUtilsMessengerCreateFlagsEXT(Flags);
 vk_bitflags_wrapped!(DebugUtilsMessengerCreateFlagsEXT, 0b0, Flags);
 #[repr(C)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct DebugUtilsMessengerCallbackDataFlagsEXT {
-    flags: Flags,
-}
+pub struct DebugUtilsMessengerCallbackDataFlagsEXT(Flags);
 vk_bitflags_wrapped!(DebugUtilsMessengerCallbackDataFlagsEXT, 0b0, Flags);
 #[repr(C)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct PipelineRasterizationConservativeStateCreateFlagsEXT {
-    flags: Flags,
-}
+pub struct PipelineRasterizationConservativeStateCreateFlagsEXT(Flags);
 vk_bitflags_wrapped!(
     PipelineRasterizationConservativeStateCreateFlagsEXT,
     0b0,
@@ -4885,21 +4790,63 @@ handle_nondispatchable!(SwapchainKHR);
 handle_nondispatchable!(DebugReportCallbackEXT);
 handle_nondispatchable!(DebugUtilsMessengerEXT);
 #[allow(non_camel_case_types)]
-pub type PFN_vkInternalAllocationNotification = unsafe extern "system" fn() -> c_void;
+pub type PFN_vkInternalAllocationNotification =
+    unsafe extern "system" fn(
+        p_user_data: *const c_void,
+        size: size_t,
+        allocation_type: InternalAllocationType,
+        allocation_scope: SystemAllocationScope,
+    ) -> c_void;
 #[allow(non_camel_case_types)]
-pub type PFN_vkInternalFreeNotification = unsafe extern "system" fn() -> c_void;
+pub type PFN_vkInternalFreeNotification =
+    unsafe extern "system" fn(
+        p_user_data: *const c_void,
+        size: size_t,
+        allocation_type: InternalAllocationType,
+        allocation_scope: SystemAllocationScope,
+    ) -> c_void;
 #[allow(non_camel_case_types)]
-pub type PFN_vkReallocationFunction = unsafe extern "system" fn() -> *const c_void;
+pub type PFN_vkReallocationFunction =
+    unsafe extern "system" fn(
+        p_user_data: *const c_void,
+        p_original: *const c_void,
+        size: size_t,
+        alignment: size_t,
+        allocation_scope: SystemAllocationScope,
+    ) -> *const c_void;
 #[allow(non_camel_case_types)]
-pub type PFN_vkAllocationFunction = unsafe extern "system" fn() -> *const c_void;
+pub type PFN_vkAllocationFunction =
+    unsafe extern "system" fn(
+        p_user_data: *const c_void,
+        size: size_t,
+        alignment: size_t,
+        allocation_scope: SystemAllocationScope,
+    ) -> *const c_void;
 #[allow(non_camel_case_types)]
-pub type PFN_vkFreeFunction = unsafe extern "system" fn() -> c_void;
+pub type PFN_vkFreeFunction =
+    unsafe extern "system" fn(p_user_data: *const c_void, p_memory: *const c_void) -> c_void;
 #[allow(non_camel_case_types)]
 pub type PFN_vkVoidFunction = unsafe extern "system" fn() -> c_void;
 #[allow(non_camel_case_types)]
-pub type PFN_vkDebugReportCallbackEXT = unsafe extern "system" fn() -> Bool32;
+pub type PFN_vkDebugReportCallbackEXT =
+    unsafe extern "system" fn(
+        flags: DebugReportFlagsEXT,
+        object_type: DebugReportObjectTypeEXT,
+        object: uint64_t,
+        location: size_t,
+        message_code: int32_t,
+        p_layer_prefix: *const c_char,
+        p_message: *const c_char,
+        p_user_data: *const c_void,
+    ) -> Bool32;
 #[allow(non_camel_case_types)]
-pub type PFN_vkDebugUtilsMessengerCallbackEXT = unsafe extern "system" fn() -> Bool32;
+pub type PFN_vkDebugUtilsMessengerCallbackEXT =
+    unsafe extern "system" fn(
+        message_severity: DebugUtilsMessageSeverityFlagsEXT,
+        message_type: DebugUtilsMessageTypeFlagsEXT,
+        p_callback_data: *const DebugUtilsMessengerCallbackDataEXT,
+        p_user_data: *const c_void,
+    ) -> Bool32;
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct BaseOutStructure {
@@ -11299,21 +11246,30 @@ impl Default for ExternalFormatANDROID {
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct ImageLayout(pub i32);
+pub struct ImageLayout(pub(crate) i32);
 impl ImageLayout {
+    #[doc = "Implicit layout an image is when its contents are undefined due to various reasons (e.g. right after creation)"]
     pub const UNDEFINED: Self = ImageLayout(0);
+    #[doc = "General layout when image can be used for any kind of access"]
     pub const GENERAL: Self = ImageLayout(1);
+    #[doc = "Optimal layout when image is only used for color attachment read/write"]
     pub const COLOR_ATTACHMENT_OPTIMAL: Self = ImageLayout(2);
+    #[doc = "Optimal layout when image is only used for depth/stencil attachment read/write"]
     pub const DEPTH_STENCIL_ATTACHMENT_OPTIMAL: Self = ImageLayout(3);
+    #[doc = "Optimal layout when image is used for read only depth/stencil attachment and shader access"]
     pub const DEPTH_STENCIL_READ_ONLY_OPTIMAL: Self = ImageLayout(4);
+    #[doc = "Optimal layout when image is used for read only shader access"]
     pub const SHADER_READ_ONLY_OPTIMAL: Self = ImageLayout(5);
+    #[doc = "Optimal layout when image is used only as source of transfer operations"]
     pub const TRANSFER_SRC_OPTIMAL: Self = ImageLayout(6);
+    #[doc = "Optimal layout when image is used only as destination of transfer operations"]
     pub const TRANSFER_DST_OPTIMAL: Self = ImageLayout(7);
+    #[doc = "Initial layout used when the data is populated by the CPU"]
     pub const PREINITIALIZED: Self = ImageLayout(8);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct AttachmentLoadOp(pub i32);
+pub struct AttachmentLoadOp(pub(crate) i32);
 impl AttachmentLoadOp {
     pub const LOAD: Self = AttachmentLoadOp(0);
     pub const CLEAR: Self = AttachmentLoadOp(1);
@@ -11321,14 +11277,14 @@ impl AttachmentLoadOp {
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct AttachmentStoreOp(pub i32);
+pub struct AttachmentStoreOp(pub(crate) i32);
 impl AttachmentStoreOp {
     pub const STORE: Self = AttachmentStoreOp(0);
     pub const DONT_CARE: Self = AttachmentStoreOp(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct ImageType(pub i32);
+pub struct ImageType(pub(crate) i32);
 impl ImageType {
     pub const TYPE_1D: Self = ImageType(0);
     pub const TYPE_2D: Self = ImageType(1);
@@ -11336,14 +11292,14 @@ impl ImageType {
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct ImageTiling(pub i32);
+pub struct ImageTiling(pub(crate) i32);
 impl ImageTiling {
     pub const OPTIMAL: Self = ImageTiling(0);
     pub const LINEAR: Self = ImageTiling(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct ImageViewType(pub i32);
+pub struct ImageViewType(pub(crate) i32);
 impl ImageViewType {
     pub const TYPE_1D: Self = ImageViewType(0);
     pub const TYPE_2D: Self = ImageViewType(1);
@@ -11355,14 +11311,14 @@ impl ImageViewType {
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct CommandBufferLevel(pub i32);
+pub struct CommandBufferLevel(pub(crate) i32);
 impl CommandBufferLevel {
     pub const PRIMARY: Self = CommandBufferLevel(0);
     pub const SECONDARY: Self = CommandBufferLevel(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct ComponentSwizzle(pub i32);
+pub struct ComponentSwizzle(pub(crate) i32);
 impl ComponentSwizzle {
     pub const IDENTITY: Self = ComponentSwizzle(0);
     pub const ZERO: Self = ComponentSwizzle(1);
@@ -11374,7 +11330,7 @@ impl ComponentSwizzle {
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct DescriptorType(pub i32);
+pub struct DescriptorType(pub(crate) i32);
 impl DescriptorType {
     pub const SAMPLER: Self = DescriptorType(0);
     pub const COMBINED_IMAGE_SAMPLER: Self = DescriptorType(1);
@@ -11390,15 +11346,16 @@ impl DescriptorType {
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct QueryType(pub i32);
+pub struct QueryType(pub(crate) i32);
 impl QueryType {
     pub const OCCLUSION: Self = QueryType(0);
+    #[doc = "Optional"]
     pub const PIPELINE_STATISTICS: Self = QueryType(1);
     pub const TIMESTAMP: Self = QueryType(2);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct BorderColor(pub i32);
+pub struct BorderColor(pub(crate) i32);
 impl BorderColor {
     pub const FLOAT_TRANSPARENT_BLACK: Self = BorderColor(0);
     pub const INT_TRANSPARENT_BLACK: Self = BorderColor(1);
@@ -11409,20 +11366,20 @@ impl BorderColor {
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct PipelineBindPoint(pub i32);
+pub struct PipelineBindPoint(pub(crate) i32);
 impl PipelineBindPoint {
     pub const GRAPHICS: Self = PipelineBindPoint(0);
     pub const COMPUTE: Self = PipelineBindPoint(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct PipelineCacheHeaderVersion(pub i32);
+pub struct PipelineCacheHeaderVersion(pub(crate) i32);
 impl PipelineCacheHeaderVersion {
     pub const ONE: Self = PipelineCacheHeaderVersion(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct PrimitiveTopology(pub i32);
+pub struct PrimitiveTopology(pub(crate) i32);
 impl PrimitiveTopology {
     pub const POINT_LIST: Self = PrimitiveTopology(0);
     pub const LINE_LIST: Self = PrimitiveTopology(1);
@@ -11438,35 +11395,37 @@ impl PrimitiveTopology {
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct SharingMode(pub i32);
+pub struct SharingMode(pub(crate) i32);
 impl SharingMode {
     pub const EXCLUSIVE: Self = SharingMode(0);
     pub const CONCURRENT: Self = SharingMode(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct IndexType(pub i32);
+pub struct IndexType(pub(crate) i32);
 impl IndexType {
     pub const UINT16: Self = IndexType(0);
     pub const UINT32: Self = IndexType(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct Filter(pub i32);
+pub struct Filter(pub(crate) i32);
 impl Filter {
     pub const NEAREST: Self = Filter(0);
     pub const LINEAR: Self = Filter(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct SamplerMipmapMode(pub i32);
+pub struct SamplerMipmapMode(pub(crate) i32);
 impl SamplerMipmapMode {
+    #[doc = "Choose nearest mip level"]
     pub const NEAREST: Self = SamplerMipmapMode(0);
+    #[doc = "Linear filter between mip levels"]
     pub const LINEAR: Self = SamplerMipmapMode(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct SamplerAddressMode(pub i32);
+pub struct SamplerAddressMode(pub(crate) i32);
 impl SamplerAddressMode {
     pub const REPEAT: Self = SamplerAddressMode(0);
     pub const MIRRORED_REPEAT: Self = SamplerAddressMode(1);
@@ -11475,7 +11434,7 @@ impl SamplerAddressMode {
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct CompareOp(pub i32);
+pub struct CompareOp(pub(crate) i32);
 impl CompareOp {
     pub const NEVER: Self = CompareOp(0);
     pub const LESS: Self = CompareOp(1);
@@ -11488,7 +11447,7 @@ impl CompareOp {
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct PolygonMode(pub i32);
+pub struct PolygonMode(pub(crate) i32);
 impl PolygonMode {
     pub const FILL: Self = PolygonMode(0);
     pub const LINE: Self = PolygonMode(1);
@@ -11496,14 +11455,14 @@ impl PolygonMode {
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct FrontFace(pub i32);
+pub struct FrontFace(pub(crate) i32);
 impl FrontFace {
     pub const COUNTER_CLOCKWISE: Self = FrontFace(0);
     pub const CLOCKWISE: Self = FrontFace(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct BlendFactor(pub i32);
+pub struct BlendFactor(pub(crate) i32);
 impl BlendFactor {
     pub const ZERO: Self = BlendFactor(0);
     pub const ONE: Self = BlendFactor(1);
@@ -11527,7 +11486,7 @@ impl BlendFactor {
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct BlendOp(pub i32);
+pub struct BlendOp(pub(crate) i32);
 impl BlendOp {
     pub const ADD: Self = BlendOp(0);
     pub const SUBTRACT: Self = BlendOp(1);
@@ -11537,7 +11496,7 @@ impl BlendOp {
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct StencilOp(pub i32);
+pub struct StencilOp(pub(crate) i32);
 impl StencilOp {
     pub const KEEP: Self = StencilOp(0);
     pub const ZERO: Self = StencilOp(1);
@@ -11550,7 +11509,7 @@ impl StencilOp {
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct LogicOp(pub i32);
+pub struct LogicOp(pub(crate) i32);
 impl LogicOp {
     pub const CLEAR: Self = LogicOp(0);
     pub const AND: Self = LogicOp(1);
@@ -11571,13 +11530,13 @@ impl LogicOp {
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct InternalAllocationType(pub i32);
+pub struct InternalAllocationType(pub(crate) i32);
 impl InternalAllocationType {
     pub const EXECUTABLE: Self = InternalAllocationType(0);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct SystemAllocationScope(pub i32);
+pub struct SystemAllocationScope(pub(crate) i32);
 impl SystemAllocationScope {
     pub const COMMAND: Self = SystemAllocationScope(0);
     pub const OBJECT: Self = SystemAllocationScope(1);
@@ -11587,7 +11546,7 @@ impl SystemAllocationScope {
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct PhysicalDeviceType(pub i32);
+pub struct PhysicalDeviceType(pub(crate) i32);
 impl PhysicalDeviceType {
     pub const OTHER: Self = PhysicalDeviceType(0);
     pub const INTEGRATED_GPU: Self = PhysicalDeviceType(1);
@@ -11597,14 +11556,14 @@ impl PhysicalDeviceType {
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct VertexInputRate(pub i32);
+pub struct VertexInputRate(pub(crate) i32);
 impl VertexInputRate {
     pub const VERTEX: Self = VertexInputRate(0);
     pub const INSTANCE: Self = VertexInputRate(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct Format(pub i32);
+pub struct Format(pub(crate) i32);
 impl Format {
     pub const UNDEFINED: Self = Format(0);
     pub const R4G4_UNORM_PACK8: Self = Format(1);
@@ -11794,7 +11753,7 @@ impl Format {
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct StructureType(pub i32);
+pub struct StructureType(pub(crate) i32);
 impl StructureType {
     pub const APPLICATION_INFO: Self = StructureType(0);
     pub const INSTANCE_CREATE_INFO: Self = StructureType(1);
@@ -11843,37 +11802,57 @@ impl StructureType {
     pub const BUFFER_MEMORY_BARRIER: Self = StructureType(44);
     pub const IMAGE_MEMORY_BARRIER: Self = StructureType(45);
     pub const MEMORY_BARRIER: Self = StructureType(46);
+    #[doc = "Reserved for internal use by the loader, layers, and ICDs"]
     pub const LOADER_INSTANCE_CREATE_INFO: Self = StructureType(47);
+    #[doc = "Reserved for internal use by the loader, layers, and ICDs"]
     pub const LOADER_DEVICE_CREATE_INFO: Self = StructureType(48);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct SubpassContents(pub i32);
+pub struct SubpassContents(pub(crate) i32);
 impl SubpassContents {
     pub const INLINE: Self = SubpassContents(0);
     pub const SECONDARY_COMMAND_BUFFERS: Self = SubpassContents(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct Result(pub i32);
+pub struct Result(pub(crate) i32);
 impl Result {
+    #[doc = "Command completed successfully"]
     pub const SUCCESS: Self = Result(0);
+    #[doc = "A fence or query has not yet completed"]
     pub const NOT_READY: Self = Result(1);
+    #[doc = "A wait operation has not completed in the specified time"]
     pub const TIMEOUT: Self = Result(2);
+    #[doc = "An event is signaled"]
     pub const EVENT_SET: Self = Result(3);
+    #[doc = "An event is unsignaled"]
     pub const EVENT_RESET: Self = Result(4);
+    #[doc = "A return array was too small for the result"]
     pub const INCOMPLETE: Self = Result(5);
+    #[doc = "A host memory allocation has failed"]
     pub const ERROR_OUT_OF_HOST_MEMORY: Self = Result(-1);
+    #[doc = "A device memory allocation has failed"]
     pub const ERROR_OUT_OF_DEVICE_MEMORY: Self = Result(-2);
+    #[doc = "Initialization of a object has failed"]
     pub const ERROR_INITIALIZATION_FAILED: Self = Result(-3);
+    #[doc = "The logical device has been lost. See <<devsandqueues-lost-device>>"]
     pub const ERROR_DEVICE_LOST: Self = Result(-4);
+    #[doc = "Mapping of a memory object has failed"]
     pub const ERROR_MEMORY_MAP_FAILED: Self = Result(-5);
+    #[doc = "Layer specified does not exist"]
     pub const ERROR_LAYER_NOT_PRESENT: Self = Result(-6);
+    #[doc = "Extension specified does not exist"]
     pub const ERROR_EXTENSION_NOT_PRESENT: Self = Result(-7);
+    #[doc = "Requested feature is not available on this device"]
     pub const ERROR_FEATURE_NOT_PRESENT: Self = Result(-8);
+    #[doc = "Unable to find a Vulkan driver"]
     pub const ERROR_INCOMPATIBLE_DRIVER: Self = Result(-9);
+    #[doc = "Too many objects of the type have already been created"]
     pub const ERROR_TOO_MANY_OBJECTS: Self = Result(-10);
+    #[doc = "Requested format is not supported on this device"]
     pub const ERROR_FORMAT_NOT_SUPPORTED: Self = Result(-11);
+    #[doc = "A requested pool allocation has failed due to fragmentation of the pool\'s memory"]
     pub const ERROR_FRAGMENTED_POOL: Self = Result(-12);
 }
 impl ::std::error::Error for Result {
@@ -11931,7 +11910,7 @@ impl ::std::fmt::Display for Result {
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct DynamicState(pub i32);
+pub struct DynamicState(pub(crate) i32);
 impl DynamicState {
     pub const VIEWPORT: Self = DynamicState(0);
     pub const SCISSOR: Self = DynamicState(1);
@@ -11945,44 +11924,70 @@ impl DynamicState {
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct DescriptorUpdateTemplateType(pub i32);
+pub struct DescriptorUpdateTemplateType(pub(crate) i32);
 impl DescriptorUpdateTemplateType {
+    #[doc = "Create descriptor update template for descriptor set updates"]
     pub const DESCRIPTOR_SET: Self = DescriptorUpdateTemplateType(0);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct ObjectType(pub i32);
+pub struct ObjectType(pub(crate) i32);
 impl ObjectType {
     pub const UNKNOWN: Self = ObjectType(0);
+    #[doc = "VkInstance"]
     pub const INSTANCE: Self = ObjectType(1);
+    #[doc = "VkPhysicalDevice"]
     pub const PHYSICAL_DEVICE: Self = ObjectType(2);
+    #[doc = "VkDevice"]
     pub const DEVICE: Self = ObjectType(3);
+    #[doc = "VkQueue"]
     pub const QUEUE: Self = ObjectType(4);
+    #[doc = "VkSemaphore"]
     pub const SEMAPHORE: Self = ObjectType(5);
+    #[doc = "VkCommandBuffer"]
     pub const COMMAND_BUFFER: Self = ObjectType(6);
+    #[doc = "VkFence"]
     pub const FENCE: Self = ObjectType(7);
+    #[doc = "VkDeviceMemory"]
     pub const DEVICE_MEMORY: Self = ObjectType(8);
+    #[doc = "VkBuffer"]
     pub const BUFFER: Self = ObjectType(9);
+    #[doc = "VkImage"]
     pub const IMAGE: Self = ObjectType(10);
+    #[doc = "VkEvent"]
     pub const EVENT: Self = ObjectType(11);
+    #[doc = "VkQueryPool"]
     pub const QUERY_POOL: Self = ObjectType(12);
+    #[doc = "VkBufferView"]
     pub const BUFFER_VIEW: Self = ObjectType(13);
+    #[doc = "VkImageView"]
     pub const IMAGE_VIEW: Self = ObjectType(14);
+    #[doc = "VkShaderModule"]
     pub const SHADER_MODULE: Self = ObjectType(15);
+    #[doc = "VkPipelineCache"]
     pub const PIPELINE_CACHE: Self = ObjectType(16);
+    #[doc = "VkPipelineLayout"]
     pub const PIPELINE_LAYOUT: Self = ObjectType(17);
+    #[doc = "VkRenderPass"]
     pub const RENDER_PASS: Self = ObjectType(18);
+    #[doc = "VkPipeline"]
     pub const PIPELINE: Self = ObjectType(19);
+    #[doc = "VkDescriptorSetLayout"]
     pub const DESCRIPTOR_SET_LAYOUT: Self = ObjectType(20);
+    #[doc = "VkSampler"]
     pub const SAMPLER: Self = ObjectType(21);
+    #[doc = "VkDescriptorPool"]
     pub const DESCRIPTOR_POOL: Self = ObjectType(22);
+    #[doc = "VkDescriptorSet"]
     pub const DESCRIPTOR_SET: Self = ObjectType(23);
+    #[doc = "VkFramebuffer"]
     pub const FRAMEBUFFER: Self = ObjectType(24);
+    #[doc = "VkCommandPool"]
     pub const COMMAND_POOL: Self = ObjectType(25);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct PresentModeKHR(pub i32);
+pub struct PresentModeKHR(pub(crate) i32);
 impl PresentModeKHR {
     pub const PRESENT_MODE_IMMEDIATE_KHR: Self = PresentModeKHR(0);
     pub const PRESENT_MODE_MAILBOX_KHR: Self = PresentModeKHR(1);
@@ -11991,13 +11996,13 @@ impl PresentModeKHR {
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct ColorSpaceKHR(pub i32);
+pub struct ColorSpaceKHR(pub(crate) i32);
 impl ColorSpaceKHR {
     pub const COLOR_SPACE_SRGB_NONLINEAR_KHR: Self = ColorSpaceKHR(0);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct DebugReportObjectTypeEXT(pub i32);
+pub struct DebugReportObjectTypeEXT(pub(crate) i32);
 impl DebugReportObjectTypeEXT {
     pub const DEBUG_REPORT_OBJECT_TYPE_UNKNOWN_EXT: Self = DebugReportObjectTypeEXT(0);
     pub const DEBUG_REPORT_OBJECT_TYPE_INSTANCE_EXT: Self = DebugReportObjectTypeEXT(1);
@@ -12040,21 +12045,21 @@ impl DebugReportObjectTypeEXT {
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct RasterizationOrderAMD(pub i32);
+pub struct RasterizationOrderAMD(pub(crate) i32);
 impl RasterizationOrderAMD {
     pub const RASTERIZATION_ORDER_STRICT_AMD: Self = RasterizationOrderAMD(0);
     pub const RASTERIZATION_ORDER_RELAXED_AMD: Self = RasterizationOrderAMD(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct ValidationCheckEXT(pub i32);
+pub struct ValidationCheckEXT(pub(crate) i32);
 impl ValidationCheckEXT {
     pub const VALIDATION_CHECK_ALL_EXT: Self = ValidationCheckEXT(0);
     pub const VALIDATION_CHECK_SHADERS_EXT: Self = ValidationCheckEXT(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct IndirectCommandsTokenTypeNVX(pub i32);
+pub struct IndirectCommandsTokenTypeNVX(pub(crate) i32);
 impl IndirectCommandsTokenTypeNVX {
     pub const INDIRECT_COMMANDS_TOKEN_TYPE_PIPELINE_NVX: Self = IndirectCommandsTokenTypeNVX(0);
     pub const INDIRECT_COMMANDS_TOKEN_TYPE_DESCRIPTOR_SET_NVX: Self =
@@ -12070,7 +12075,7 @@ impl IndirectCommandsTokenTypeNVX {
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct ObjectEntryTypeNVX(pub i32);
+pub struct ObjectEntryTypeNVX(pub(crate) i32);
 impl ObjectEntryTypeNVX {
     pub const OBJECT_ENTRY_TYPE_DESCRIPTOR_SET_NVX: Self = ObjectEntryTypeNVX(0);
     pub const OBJECT_ENTRY_TYPE_PIPELINE_NVX: Self = ObjectEntryTypeNVX(1);
@@ -12080,7 +12085,7 @@ impl ObjectEntryTypeNVX {
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct DisplayPowerStateEXT(pub i32);
+pub struct DisplayPowerStateEXT(pub(crate) i32);
 impl DisplayPowerStateEXT {
     pub const DISPLAY_POWER_STATE_OFF_EXT: Self = DisplayPowerStateEXT(0);
     pub const DISPLAY_POWER_STATE_SUSPEND_EXT: Self = DisplayPowerStateEXT(1);
@@ -12088,19 +12093,19 @@ impl DisplayPowerStateEXT {
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct DeviceEventTypeEXT(pub i32);
+pub struct DeviceEventTypeEXT(pub(crate) i32);
 impl DeviceEventTypeEXT {
     pub const DEVICE_EVENT_TYPE_DISPLAY_HOTPLUG_EXT: Self = DeviceEventTypeEXT(0);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct DisplayEventTypeEXT(pub i32);
+pub struct DisplayEventTypeEXT(pub(crate) i32);
 impl DisplayEventTypeEXT {
     pub const DISPLAY_EVENT_TYPE_FIRST_PIXEL_OUT_EXT: Self = DisplayEventTypeEXT(0);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct ViewportCoordinateSwizzleNV(pub i32);
+pub struct ViewportCoordinateSwizzleNV(pub(crate) i32);
 impl ViewportCoordinateSwizzleNV {
     pub const VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_X_NV: Self = ViewportCoordinateSwizzleNV(0);
     pub const VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_X_NV: Self = ViewportCoordinateSwizzleNV(1);
@@ -12113,21 +12118,21 @@ impl ViewportCoordinateSwizzleNV {
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct DiscardRectangleModeEXT(pub i32);
+pub struct DiscardRectangleModeEXT(pub(crate) i32);
 impl DiscardRectangleModeEXT {
     pub const DISCARD_RECTANGLE_MODE_INCLUSIVE_EXT: Self = DiscardRectangleModeEXT(0);
     pub const DISCARD_RECTANGLE_MODE_EXCLUSIVE_EXT: Self = DiscardRectangleModeEXT(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct PointClippingBehavior(pub i32);
+pub struct PointClippingBehavior(pub(crate) i32);
 impl PointClippingBehavior {
     pub const ALL_CLIP_PLANES: Self = PointClippingBehavior(0);
     pub const USER_CLIP_PLANES_ONLY: Self = PointClippingBehavior(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct SamplerReductionModeEXT(pub i32);
+pub struct SamplerReductionModeEXT(pub(crate) i32);
 impl SamplerReductionModeEXT {
     pub const SAMPLER_REDUCTION_MODE_WEIGHTED_AVERAGE_EXT: Self = SamplerReductionModeEXT(0);
     pub const SAMPLER_REDUCTION_MODE_MIN_EXT: Self = SamplerReductionModeEXT(1);
@@ -12135,38 +12140,44 @@ impl SamplerReductionModeEXT {
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct TessellationDomainOrigin(pub i32);
+pub struct TessellationDomainOrigin(pub(crate) i32);
 impl TessellationDomainOrigin {
     pub const UPPER_LEFT: Self = TessellationDomainOrigin(0);
     pub const LOWER_LEFT: Self = TessellationDomainOrigin(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct SamplerYcbcrModelConversion(pub i32);
+pub struct SamplerYcbcrModelConversion(pub(crate) i32);
 impl SamplerYcbcrModelConversion {
     pub const RGB_IDENTITY: Self = SamplerYcbcrModelConversion(0);
+    #[doc = "just range expansion"]
     pub const YCBCR_IDENTITY: Self = SamplerYcbcrModelConversion(1);
+    #[doc = "aka HD YUV"]
     pub const YCBCR_709: Self = SamplerYcbcrModelConversion(2);
+    #[doc = "aka SD YUV"]
     pub const YCBCR_601: Self = SamplerYcbcrModelConversion(3);
+    #[doc = "aka UHD YUV"]
     pub const YCBCR_2020: Self = SamplerYcbcrModelConversion(4);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct SamplerYcbcrRange(pub i32);
+pub struct SamplerYcbcrRange(pub(crate) i32);
 impl SamplerYcbcrRange {
+    #[doc = "Luma 0..1 maps to 0..255, chroma -0.5..0.5 to 1..255 (clamped)"]
     pub const ITU_FULL: Self = SamplerYcbcrRange(0);
+    #[doc = "Luma 0..1 maps to 16..235, chroma -0.5..0.5 to 16..240"]
     pub const ITU_NARROW: Self = SamplerYcbcrRange(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct ChromaLocation(pub i32);
+pub struct ChromaLocation(pub(crate) i32);
 impl ChromaLocation {
     pub const COSITED_EVEN: Self = ChromaLocation(0);
     pub const MIDPOINT: Self = ChromaLocation(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct BlendOverlapEXT(pub i32);
+pub struct BlendOverlapEXT(pub(crate) i32);
 impl BlendOverlapEXT {
     pub const BLEND_OVERLAP_UNCORRELATED_EXT: Self = BlendOverlapEXT(0);
     pub const BLEND_OVERLAP_DISJOINT_EXT: Self = BlendOverlapEXT(1);
@@ -12174,7 +12185,7 @@ impl BlendOverlapEXT {
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct CoverageModulationModeNV(pub i32);
+pub struct CoverageModulationModeNV(pub(crate) i32);
 impl CoverageModulationModeNV {
     pub const COVERAGE_MODULATION_MODE_NONE_NV: Self = CoverageModulationModeNV(0);
     pub const COVERAGE_MODULATION_MODE_RGB_NV: Self = CoverageModulationModeNV(1);
@@ -12183,13 +12194,13 @@ impl CoverageModulationModeNV {
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct ValidationCacheHeaderVersionEXT(pub i32);
+pub struct ValidationCacheHeaderVersionEXT(pub(crate) i32);
 impl ValidationCacheHeaderVersionEXT {
     pub const VALIDATION_CACHE_HEADER_VERSION_ONE_EXT: Self = ValidationCacheHeaderVersionEXT(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct ShaderInfoTypeAMD(pub i32);
+pub struct ShaderInfoTypeAMD(pub(crate) i32);
 impl ShaderInfoTypeAMD {
     pub const SHADER_INFO_TYPE_STATISTICS_AMD: Self = ShaderInfoTypeAMD(0);
     pub const SHADER_INFO_TYPE_BINARY_AMD: Self = ShaderInfoTypeAMD(1);
@@ -12197,7 +12208,7 @@ impl ShaderInfoTypeAMD {
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct QueueGlobalPriorityEXT(pub i32);
+pub struct QueueGlobalPriorityEXT(pub(crate) i32);
 impl QueueGlobalPriorityEXT {
     pub const QUEUE_GLOBAL_PRIORITY_LOW_EXT: Self = QueueGlobalPriorityEXT(128);
     pub const QUEUE_GLOBAL_PRIORITY_MEDIUM_EXT: Self = QueueGlobalPriorityEXT(256);
@@ -12206,7 +12217,7 @@ impl QueueGlobalPriorityEXT {
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
-pub struct ConservativeRasterizationModeEXT(pub i32);
+pub struct ConservativeRasterizationModeEXT(pub(crate) i32);
 impl ConservativeRasterizationModeEXT {
     pub const CONSERVATIVE_RASTERIZATION_MODE_DISABLED_EXT: Self =
         ConservativeRasterizationModeEXT(0);
@@ -12215,753 +12226,737 @@ impl ConservativeRasterizationModeEXT {
     pub const CONSERVATIVE_RASTERIZATION_MODE_UNDERESTIMATE_EXT: Self =
         ConservativeRasterizationModeEXT(2);
 }
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct CullModeFlags {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(CullModeFlags, 0b11, Flags);
-impl CullModeFlags {
-    pub const NONE: Self = CullModeFlags { flags: 0 };
-    pub const FRONT_BIT: Self = CullModeFlags { flags: 0b1 };
-    pub const BACK_BIT: Self = CullModeFlags { flags: 0b10 };
-    pub const FRONT_AND_BACK: Self = CullModeFlags { flags: 0x00000003 };
-}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct QueueFlags {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(QueueFlags, 0b1111, Flags);
-impl QueueFlags {
-    pub const GRAPHICS_BIT: Self = QueueFlags { flags: 0b1 };
-    pub const COMPUTE_BIT: Self = QueueFlags { flags: 0b10 };
-    pub const TRANSFER_BIT: Self = QueueFlags { flags: 0b100 };
-    pub const SPARSE_BINDING_BIT: Self = QueueFlags { flags: 0b1000 };
-}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct DeviceQueueCreateFlags {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(DeviceQueueCreateFlags, 0b0, Flags);
-impl DeviceQueueCreateFlags {}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct MemoryPropertyFlags {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(MemoryPropertyFlags, 0b11111, Flags);
-impl MemoryPropertyFlags {
-    pub const DEVICE_LOCAL_BIT: Self = MemoryPropertyFlags { flags: 0b1 };
-    pub const HOST_VISIBLE_BIT: Self = MemoryPropertyFlags { flags: 0b10 };
-    pub const HOST_COHERENT_BIT: Self = MemoryPropertyFlags { flags: 0b100 };
-    pub const HOST_CACHED_BIT: Self = MemoryPropertyFlags { flags: 0b1000 };
-    pub const LAZILY_ALLOCATED_BIT: Self = MemoryPropertyFlags { flags: 0b10000 };
-}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct MemoryHeapFlags {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(MemoryHeapFlags, 0b1, Flags);
-impl MemoryHeapFlags {
-    pub const DEVICE_LOCAL_BIT: Self = MemoryHeapFlags { flags: 0b1 };
-}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct AccessFlags {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(AccessFlags, 0b11111111111111111, Flags);
-impl AccessFlags {
-    pub const INDIRECT_COMMAND_READ_BIT: Self = AccessFlags { flags: 0b1 };
-    pub const INDEX_READ_BIT: Self = AccessFlags { flags: 0b10 };
-    pub const VERTEX_ATTRIBUTE_READ_BIT: Self = AccessFlags { flags: 0b100 };
-    pub const UNIFORM_READ_BIT: Self = AccessFlags { flags: 0b1000 };
-    pub const INPUT_ATTACHMENT_READ_BIT: Self = AccessFlags { flags: 0b10000 };
-    pub const SHADER_READ_BIT: Self = AccessFlags { flags: 0b100000 };
-    pub const SHADER_WRITE_BIT: Self = AccessFlags { flags: 0b1000000 };
-    pub const COLOR_ATTACHMENT_READ_BIT: Self = AccessFlags { flags: 0b10000000 };
-    pub const COLOR_ATTACHMENT_WRITE_BIT: Self = AccessFlags { flags: 0b100000000 };
-    pub const DEPTH_STENCIL_ATTACHMENT_READ_BIT: Self = AccessFlags {
-        flags: 0b1000000000,
-    };
-    pub const DEPTH_STENCIL_ATTACHMENT_WRITE_BIT: Self = AccessFlags {
-        flags: 0b10000000000,
-    };
-    pub const TRANSFER_READ_BIT: Self = AccessFlags {
-        flags: 0b100000000000,
-    };
-    pub const TRANSFER_WRITE_BIT: Self = AccessFlags {
-        flags: 0b1000000000000,
-    };
-    pub const HOST_READ_BIT: Self = AccessFlags {
-        flags: 0b10000000000000,
-    };
-    pub const HOST_WRITE_BIT: Self = AccessFlags {
-        flags: 0b100000000000000,
-    };
-    pub const MEMORY_READ_BIT: Self = AccessFlags {
-        flags: 0b1000000000000000,
-    };
-    pub const MEMORY_WRITE_BIT: Self = AccessFlags {
-        flags: 0b10000000000000000,
-    };
-}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct BufferUsageFlags {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(BufferUsageFlags, 0b111111111, Flags);
-impl BufferUsageFlags {
-    pub const TRANSFER_SRC_BIT: Self = BufferUsageFlags { flags: 0b1 };
-    pub const TRANSFER_DST_BIT: Self = BufferUsageFlags { flags: 0b10 };
-    pub const UNIFORM_TEXEL_BUFFER_BIT: Self = BufferUsageFlags { flags: 0b100 };
-    pub const STORAGE_TEXEL_BUFFER_BIT: Self = BufferUsageFlags { flags: 0b1000 };
-    pub const UNIFORM_BUFFER_BIT: Self = BufferUsageFlags { flags: 0b10000 };
-    pub const STORAGE_BUFFER_BIT: Self = BufferUsageFlags { flags: 0b100000 };
-    pub const INDEX_BUFFER_BIT: Self = BufferUsageFlags { flags: 0b1000000 };
-    pub const VERTEX_BUFFER_BIT: Self = BufferUsageFlags { flags: 0b10000000 };
-    pub const INDIRECT_BUFFER_BIT: Self = BufferUsageFlags { flags: 0b100000000 };
-}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct BufferCreateFlags {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(BufferCreateFlags, 0b111, Flags);
-impl BufferCreateFlags {
-    pub const SPARSE_BINDING_BIT: Self = BufferCreateFlags { flags: 0b1 };
-    pub const SPARSE_RESIDENCY_BIT: Self = BufferCreateFlags { flags: 0b10 };
-    pub const SPARSE_ALIASED_BIT: Self = BufferCreateFlags { flags: 0b100 };
-}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct ShaderStageFlags {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(ShaderStageFlags, 0b1111111111111111111111111111111, Flags);
-impl ShaderStageFlags {
-    pub const VERTEX_BIT: Self = ShaderStageFlags { flags: 0b1 };
-    pub const TESSELLATION_CONTROL_BIT: Self = ShaderStageFlags { flags: 0b10 };
-    pub const TESSELLATION_EVALUATION_BIT: Self = ShaderStageFlags { flags: 0b100 };
-    pub const GEOMETRY_BIT: Self = ShaderStageFlags { flags: 0b1000 };
-    pub const FRAGMENT_BIT: Self = ShaderStageFlags { flags: 0b10000 };
-    pub const COMPUTE_BIT: Self = ShaderStageFlags { flags: 0b100000 };
-    pub const ALL_GRAPHICS: Self = ShaderStageFlags { flags: 0x0000001F };
-    pub const ALL: Self = ShaderStageFlags { flags: 0x7FFFFFFF };
-}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct ImageUsageFlags {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(ImageUsageFlags, 0b11111111, Flags);
-impl ImageUsageFlags {
-    pub const TRANSFER_SRC_BIT: Self = ImageUsageFlags { flags: 0b1 };
-    pub const TRANSFER_DST_BIT: Self = ImageUsageFlags { flags: 0b10 };
-    pub const SAMPLED_BIT: Self = ImageUsageFlags { flags: 0b100 };
-    pub const STORAGE_BIT: Self = ImageUsageFlags { flags: 0b1000 };
-    pub const COLOR_ATTACHMENT_BIT: Self = ImageUsageFlags { flags: 0b10000 };
-    pub const DEPTH_STENCIL_ATTACHMENT_BIT: Self = ImageUsageFlags { flags: 0b100000 };
-    pub const TRANSIENT_ATTACHMENT_BIT: Self = ImageUsageFlags { flags: 0b1000000 };
-    pub const INPUT_ATTACHMENT_BIT: Self = ImageUsageFlags { flags: 0b10000000 };
-}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct ImageCreateFlags {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(ImageCreateFlags, 0b11111, Flags);
-impl ImageCreateFlags {
-    pub const SPARSE_BINDING_BIT: Self = ImageCreateFlags { flags: 0b1 };
-    pub const SPARSE_RESIDENCY_BIT: Self = ImageCreateFlags { flags: 0b10 };
-    pub const SPARSE_ALIASED_BIT: Self = ImageCreateFlags { flags: 0b100 };
-    pub const MUTABLE_FORMAT_BIT: Self = ImageCreateFlags { flags: 0b1000 };
-    pub const CUBE_COMPATIBLE_BIT: Self = ImageCreateFlags { flags: 0b10000 };
-}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct PipelineCreateFlags {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(PipelineCreateFlags, 0b111, Flags);
-impl PipelineCreateFlags {
-    pub const DISABLE_OPTIMIZATION_BIT: Self = PipelineCreateFlags { flags: 0b1 };
-    pub const ALLOW_DERIVATIVES_BIT: Self = PipelineCreateFlags { flags: 0b10 };
-    pub const DERIVATIVE_BIT: Self = PipelineCreateFlags { flags: 0b100 };
-}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct ColorComponentFlags {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(ColorComponentFlags, 0b1111, Flags);
-impl ColorComponentFlags {
-    pub const R_BIT: Self = ColorComponentFlags { flags: 0b1 };
-    pub const G_BIT: Self = ColorComponentFlags { flags: 0b10 };
-    pub const B_BIT: Self = ColorComponentFlags { flags: 0b100 };
-    pub const A_BIT: Self = ColorComponentFlags { flags: 0b1000 };
-}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct FenceCreateFlags {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(FenceCreateFlags, 0b1, Flags);
-impl FenceCreateFlags {
-    pub const SIGNALED_BIT: Self = FenceCreateFlags { flags: 0b1 };
-}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct FormatFeatureFlags {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(FormatFeatureFlags, 0b1111111111111, Flags);
-impl FormatFeatureFlags {
-    pub const SAMPLED_IMAGE_BIT: Self = FormatFeatureFlags { flags: 0b1 };
-    pub const STORAGE_IMAGE_BIT: Self = FormatFeatureFlags { flags: 0b10 };
-    pub const STORAGE_IMAGE_ATOMIC_BIT: Self = FormatFeatureFlags { flags: 0b100 };
-    pub const UNIFORM_TEXEL_BUFFER_BIT: Self = FormatFeatureFlags { flags: 0b1000 };
-    pub const STORAGE_TEXEL_BUFFER_BIT: Self = FormatFeatureFlags { flags: 0b10000 };
-    pub const STORAGE_TEXEL_BUFFER_ATOMIC_BIT: Self = FormatFeatureFlags { flags: 0b100000 };
-    pub const VERTEX_BUFFER_BIT: Self = FormatFeatureFlags { flags: 0b1000000 };
-    pub const COLOR_ATTACHMENT_BIT: Self = FormatFeatureFlags { flags: 0b10000000 };
-    pub const COLOR_ATTACHMENT_BLEND_BIT: Self = FormatFeatureFlags { flags: 0b100000000 };
-    pub const DEPTH_STENCIL_ATTACHMENT_BIT: Self = FormatFeatureFlags {
-        flags: 0b1000000000,
-    };
-    pub const BLIT_SRC_BIT: Self = FormatFeatureFlags {
-        flags: 0b10000000000,
-    };
-    pub const BLIT_DST_BIT: Self = FormatFeatureFlags {
-        flags: 0b100000000000,
-    };
-    pub const SAMPLED_IMAGE_FILTER_LINEAR_BIT: Self = FormatFeatureFlags {
-        flags: 0b1000000000000,
-    };
-}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct QueryControlFlags {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(QueryControlFlags, 0b1, Flags);
-impl QueryControlFlags {
-    pub const PRECISE_BIT: Self = QueryControlFlags { flags: 0b1 };
-}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct QueryResultFlags {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(QueryResultFlags, 0b1111, Flags);
-impl QueryResultFlags {
-    pub const TYPE_64_BIT: Self = QueryResultFlags { flags: 0b1 };
-    pub const WAIT_BIT: Self = QueryResultFlags { flags: 0b10 };
-    pub const WITH_AVAILABILITY_BIT: Self = QueryResultFlags { flags: 0b100 };
-    pub const PARTIAL_BIT: Self = QueryResultFlags { flags: 0b1000 };
-}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct CommandBufferUsageFlags {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(CommandBufferUsageFlags, 0b111, Flags);
-impl CommandBufferUsageFlags {
-    pub const ONE_TIME_SUBMIT_BIT: Self = CommandBufferUsageFlags { flags: 0b1 };
-    pub const RENDER_PASS_CONTINUE_BIT: Self = CommandBufferUsageFlags { flags: 0b10 };
-    pub const SIMULTANEOUS_USE_BIT: Self = CommandBufferUsageFlags { flags: 0b100 };
-}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct QueryPipelineStatisticFlags {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(QueryPipelineStatisticFlags, 0b11111111111, Flags);
-impl QueryPipelineStatisticFlags {
-    pub const INPUT_ASSEMBLY_VERTICES_BIT: Self = QueryPipelineStatisticFlags { flags: 0b1 };
-    pub const INPUT_ASSEMBLY_PRIMITIVES_BIT: Self = QueryPipelineStatisticFlags { flags: 0b10 };
-    pub const VERTEX_SHADER_INVOCATIONS_BIT: Self = QueryPipelineStatisticFlags { flags: 0b100 };
-    pub const GEOMETRY_SHADER_INVOCATIONS_BIT: Self = QueryPipelineStatisticFlags { flags: 0b1000 };
-    pub const GEOMETRY_SHADER_PRIMITIVES_BIT: Self = QueryPipelineStatisticFlags { flags: 0b10000 };
-    pub const CLIPPING_INVOCATIONS_BIT: Self = QueryPipelineStatisticFlags { flags: 0b100000 };
-    pub const CLIPPING_PRIMITIVES_BIT: Self = QueryPipelineStatisticFlags { flags: 0b1000000 };
-    pub const FRAGMENT_SHADER_INVOCATIONS_BIT: Self =
-        QueryPipelineStatisticFlags { flags: 0b10000000 };
-    pub const TESSELLATION_CONTROL_SHADER_PATCHES_BIT: Self =
-        QueryPipelineStatisticFlags { flags: 0b100000000 };
-    pub const TESSELLATION_EVALUATION_SHADER_INVOCATIONS_BIT: Self = QueryPipelineStatisticFlags {
-        flags: 0b1000000000,
-    };
-    pub const COMPUTE_SHADER_INVOCATIONS_BIT: Self = QueryPipelineStatisticFlags {
-        flags: 0b10000000000,
-    };
-}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct ImageAspectFlags {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(ImageAspectFlags, 0b1111, Flags);
-impl ImageAspectFlags {
-    pub const COLOR_BIT: Self = ImageAspectFlags { flags: 0b1 };
-    pub const DEPTH_BIT: Self = ImageAspectFlags { flags: 0b10 };
-    pub const STENCIL_BIT: Self = ImageAspectFlags { flags: 0b100 };
-    pub const METADATA_BIT: Self = ImageAspectFlags { flags: 0b1000 };
-}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct SparseImageFormatFlags {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(SparseImageFormatFlags, 0b111, Flags);
-impl SparseImageFormatFlags {
-    pub const SINGLE_MIPTAIL_BIT: Self = SparseImageFormatFlags { flags: 0b1 };
-    pub const ALIGNED_MIP_SIZE_BIT: Self = SparseImageFormatFlags { flags: 0b10 };
-    pub const NONSTANDARD_BLOCK_SIZE_BIT: Self = SparseImageFormatFlags { flags: 0b100 };
-}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct SparseMemoryBindFlags {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(SparseMemoryBindFlags, 0b1, Flags);
-impl SparseMemoryBindFlags {
-    pub const METADATA_BIT: Self = SparseMemoryBindFlags { flags: 0b1 };
-}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct PipelineStageFlags {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(PipelineStageFlags, 0b11111111111111111, Flags);
-impl PipelineStageFlags {
-    pub const TOP_OF_PIPE_BIT: Self = PipelineStageFlags { flags: 0b1 };
-    pub const DRAW_INDIRECT_BIT: Self = PipelineStageFlags { flags: 0b10 };
-    pub const VERTEX_INPUT_BIT: Self = PipelineStageFlags { flags: 0b100 };
-    pub const VERTEX_SHADER_BIT: Self = PipelineStageFlags { flags: 0b1000 };
-    pub const TESSELLATION_CONTROL_SHADER_BIT: Self = PipelineStageFlags { flags: 0b10000 };
-    pub const TESSELLATION_EVALUATION_SHADER_BIT: Self = PipelineStageFlags { flags: 0b100000 };
-    pub const GEOMETRY_SHADER_BIT: Self = PipelineStageFlags { flags: 0b1000000 };
-    pub const FRAGMENT_SHADER_BIT: Self = PipelineStageFlags { flags: 0b10000000 };
-    pub const EARLY_FRAGMENT_TESTS_BIT: Self = PipelineStageFlags { flags: 0b100000000 };
-    pub const LATE_FRAGMENT_TESTS_BIT: Self = PipelineStageFlags {
-        flags: 0b1000000000,
-    };
-    pub const COLOR_ATTACHMENT_OUTPUT_BIT: Self = PipelineStageFlags {
-        flags: 0b10000000000,
-    };
-    pub const COMPUTE_SHADER_BIT: Self = PipelineStageFlags {
-        flags: 0b100000000000,
-    };
-    pub const TRANSFER_BIT: Self = PipelineStageFlags {
-        flags: 0b1000000000000,
-    };
-    pub const BOTTOM_OF_PIPE_BIT: Self = PipelineStageFlags {
-        flags: 0b10000000000000,
-    };
-    pub const HOST_BIT: Self = PipelineStageFlags {
-        flags: 0b100000000000000,
-    };
-    pub const ALL_GRAPHICS_BIT: Self = PipelineStageFlags {
-        flags: 0b1000000000000000,
-    };
-    pub const ALL_COMMANDS_BIT: Self = PipelineStageFlags {
-        flags: 0b10000000000000000,
-    };
-}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct CommandPoolCreateFlags {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(CommandPoolCreateFlags, 0b11, Flags);
-impl CommandPoolCreateFlags {
-    pub const TRANSIENT_BIT: Self = CommandPoolCreateFlags { flags: 0b1 };
-    pub const RESET_COMMAND_BUFFER_BIT: Self = CommandPoolCreateFlags { flags: 0b10 };
-}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct CommandPoolResetFlags {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(CommandPoolResetFlags, 0b1, Flags);
-impl CommandPoolResetFlags {
-    pub const RELEASE_RESOURCES_BIT: Self = CommandPoolResetFlags { flags: 0b1 };
-}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct CommandBufferResetFlags {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(CommandBufferResetFlags, 0b1, Flags);
-impl CommandBufferResetFlags {
-    pub const RELEASE_RESOURCES_BIT: Self = CommandBufferResetFlags { flags: 0b1 };
-}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct SampleCountFlags {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(SampleCountFlags, 0b1111111, Flags);
-impl SampleCountFlags {
-    pub const TYPE_1_BIT: Self = SampleCountFlags { flags: 0b1 };
-    pub const TYPE_2_BIT: Self = SampleCountFlags { flags: 0b10 };
-    pub const TYPE_4_BIT: Self = SampleCountFlags { flags: 0b100 };
-    pub const TYPE_8_BIT: Self = SampleCountFlags { flags: 0b1000 };
-    pub const TYPE_16_BIT: Self = SampleCountFlags { flags: 0b10000 };
-    pub const TYPE_32_BIT: Self = SampleCountFlags { flags: 0b100000 };
-    pub const TYPE_64_BIT: Self = SampleCountFlags { flags: 0b1000000 };
-}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct AttachmentDescriptionFlags {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(AttachmentDescriptionFlags, 0b1, Flags);
-impl AttachmentDescriptionFlags {
-    pub const MAY_ALIAS_BIT: Self = AttachmentDescriptionFlags { flags: 0b1 };
-}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct StencilFaceFlags {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(StencilFaceFlags, 0b11, Flags);
-impl StencilFaceFlags {
-    pub const FRONT_BIT: Self = StencilFaceFlags { flags: 0b1 };
-    pub const BACK_BIT: Self = StencilFaceFlags { flags: 0b10 };
-    pub const STENCIL_FRONT_AND_BACK: Self = StencilFaceFlags { flags: 0x00000003 };
-}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct DescriptorPoolCreateFlags {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(DescriptorPoolCreateFlags, 0b1, Flags);
-impl DescriptorPoolCreateFlags {
-    pub const FREE_DESCRIPTOR_SET_BIT: Self = DescriptorPoolCreateFlags { flags: 0b1 };
-}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct DependencyFlags {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(DependencyFlags, 0b1, Flags);
-impl DependencyFlags {
-    pub const BY_REGION_BIT: Self = DependencyFlags { flags: 0b1 };
-}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct DisplayPlaneAlphaFlagsKHR {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(DisplayPlaneAlphaFlagsKHR, 0b1111, Flags);
-impl DisplayPlaneAlphaFlagsKHR {
-    pub const OPAQUE_BIT_KHR: Self = DisplayPlaneAlphaFlagsKHR { flags: 0b1 };
-    pub const GLOBAL_BIT_KHR: Self = DisplayPlaneAlphaFlagsKHR { flags: 0b10 };
-    pub const PER_PIXEL_BIT_KHR: Self = DisplayPlaneAlphaFlagsKHR { flags: 0b100 };
-    pub const PER_PIXEL_PREMULTIPLIED_BIT_KHR: Self = DisplayPlaneAlphaFlagsKHR { flags: 0b1000 };
-}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct CompositeAlphaFlagsKHR {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(CompositeAlphaFlagsKHR, 0b1111, Flags);
-impl CompositeAlphaFlagsKHR {
-    pub const OPAQUE_BIT_KHR: Self = CompositeAlphaFlagsKHR { flags: 0b1 };
-    pub const PRE_MULTIPLIED_BIT_KHR: Self = CompositeAlphaFlagsKHR { flags: 0b10 };
-    pub const POST_MULTIPLIED_BIT_KHR: Self = CompositeAlphaFlagsKHR { flags: 0b100 };
-    pub const INHERIT_BIT_KHR: Self = CompositeAlphaFlagsKHR { flags: 0b1000 };
-}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct SurfaceTransformFlagsKHR {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(SurfaceTransformFlagsKHR, 0b111111111, Flags);
-impl SurfaceTransformFlagsKHR {
-    pub const IDENTITY_BIT_KHR: Self = SurfaceTransformFlagsKHR { flags: 0b1 };
-    pub const ROTATE_90_BIT_KHR: Self = SurfaceTransformFlagsKHR { flags: 0b10 };
-    pub const ROTATE_180_BIT_KHR: Self = SurfaceTransformFlagsKHR { flags: 0b100 };
-    pub const ROTATE_270_BIT_KHR: Self = SurfaceTransformFlagsKHR { flags: 0b1000 };
-    pub const HORIZONTAL_MIRROR_BIT_KHR: Self = SurfaceTransformFlagsKHR { flags: 0b10000 };
-    pub const HORIZONTAL_MIRROR_ROTATE_90_BIT_KHR: Self =
-        SurfaceTransformFlagsKHR { flags: 0b100000 };
-    pub const HORIZONTAL_MIRROR_ROTATE_180_BIT_KHR: Self =
-        SurfaceTransformFlagsKHR { flags: 0b1000000 };
-    pub const HORIZONTAL_MIRROR_ROTATE_270_BIT_KHR: Self =
-        SurfaceTransformFlagsKHR { flags: 0b10000000 };
-    pub const INHERIT_BIT_KHR: Self = SurfaceTransformFlagsKHR { flags: 0b100000000 };
-}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct DebugReportFlagsEXT {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(DebugReportFlagsEXT, 0b11111, Flags);
-impl DebugReportFlagsEXT {
-    pub const INFORMATION_BIT_EXT: Self = DebugReportFlagsEXT { flags: 0b1 };
-    pub const WARNING_BIT_EXT: Self = DebugReportFlagsEXT { flags: 0b10 };
-    pub const PERFORMANCE_WARNING_BIT_EXT: Self = DebugReportFlagsEXT { flags: 0b100 };
-    pub const ERROR_BIT_EXT: Self = DebugReportFlagsEXT { flags: 0b1000 };
-    pub const DEBUG_BIT_EXT: Self = DebugReportFlagsEXT { flags: 0b10000 };
-}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct ExternalMemoryHandleTypeFlagsNV {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(ExternalMemoryHandleTypeFlagsNV, 0b1111, Flags);
-impl ExternalMemoryHandleTypeFlagsNV {
-    pub const OPAQUE_WIN32_BIT_NV: Self = ExternalMemoryHandleTypeFlagsNV { flags: 0b1 };
-    pub const OPAQUE_WIN32_KMT_BIT_NV: Self = ExternalMemoryHandleTypeFlagsNV { flags: 0b10 };
-    pub const D3D11_IMAGE_BIT_NV: Self = ExternalMemoryHandleTypeFlagsNV { flags: 0b100 };
-    pub const D3D11_IMAGE_KMT_BIT_NV: Self = ExternalMemoryHandleTypeFlagsNV { flags: 0b1000 };
-}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct ExternalMemoryFeatureFlagsNV {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(ExternalMemoryFeatureFlagsNV, 0b111, Flags);
-impl ExternalMemoryFeatureFlagsNV {
-    pub const DEDICATED_ONLY_BIT_NV: Self = ExternalMemoryFeatureFlagsNV { flags: 0b1 };
-    pub const EXPORTABLE_BIT_NV: Self = ExternalMemoryFeatureFlagsNV { flags: 0b10 };
-    pub const IMPORTABLE_BIT_NV: Self = ExternalMemoryFeatureFlagsNV { flags: 0b100 };
-}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct SubgroupFeatureFlags {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(SubgroupFeatureFlags, 0b11111111, Flags);
-impl SubgroupFeatureFlags {
-    pub const BASIC_BIT: Self = SubgroupFeatureFlags { flags: 0b1 };
-    pub const VOTE_BIT: Self = SubgroupFeatureFlags { flags: 0b10 };
-    pub const ARITHMETIC_BIT: Self = SubgroupFeatureFlags { flags: 0b100 };
-    pub const BALLOT_BIT: Self = SubgroupFeatureFlags { flags: 0b1000 };
-    pub const SHUFFLE_BIT: Self = SubgroupFeatureFlags { flags: 0b10000 };
-    pub const SHUFFLE_RELATIVE_BIT: Self = SubgroupFeatureFlags { flags: 0b100000 };
-    pub const CLUSTERED_BIT: Self = SubgroupFeatureFlags { flags: 0b1000000 };
-    pub const QUAD_BIT: Self = SubgroupFeatureFlags { flags: 0b10000000 };
-}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct IndirectCommandsLayoutUsageFlagsNVX {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(IndirectCommandsLayoutUsageFlagsNVX, 0b1111, Flags);
-impl IndirectCommandsLayoutUsageFlagsNVX {
-    pub const UNORDERED_SEQUENCES_BIT_NVX: Self =
-        IndirectCommandsLayoutUsageFlagsNVX { flags: 0b1 };
-    pub const SPARSE_SEQUENCES_BIT_NVX: Self = IndirectCommandsLayoutUsageFlagsNVX { flags: 0b10 };
-    pub const EMPTY_EXECUTIONS_BIT_NVX: Self = IndirectCommandsLayoutUsageFlagsNVX { flags: 0b100 };
-    pub const INDEXED_SEQUENCES_BIT_NVX: Self =
-        IndirectCommandsLayoutUsageFlagsNVX { flags: 0b1000 };
-}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct ObjectEntryUsageFlagsNVX {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(ObjectEntryUsageFlagsNVX, 0b11, Flags);
-impl ObjectEntryUsageFlagsNVX {
-    pub const GRAPHICS_BIT_NVX: Self = ObjectEntryUsageFlagsNVX { flags: 0b1 };
-    pub const COMPUTE_BIT_NVX: Self = ObjectEntryUsageFlagsNVX { flags: 0b10 };
-}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct DescriptorSetLayoutCreateFlags {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(DescriptorSetLayoutCreateFlags, 0b0, Flags);
-impl DescriptorSetLayoutCreateFlags {}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct ExternalMemoryHandleTypeFlags {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(ExternalMemoryHandleTypeFlags, 0b1111111, Flags);
-impl ExternalMemoryHandleTypeFlags {
-    pub const OPAQUE_FD_BIT: Self = ExternalMemoryHandleTypeFlags { flags: 0b1 };
-    pub const OPAQUE_WIN32_BIT: Self = ExternalMemoryHandleTypeFlags { flags: 0b10 };
-    pub const OPAQUE_WIN32_KMT_BIT: Self = ExternalMemoryHandleTypeFlags { flags: 0b100 };
-    pub const D3D11_TEXTURE_BIT: Self = ExternalMemoryHandleTypeFlags { flags: 0b1000 };
-    pub const D3D11_TEXTURE_KMT_BIT: Self = ExternalMemoryHandleTypeFlags { flags: 0b10000 };
-    pub const D3D12_HEAP_BIT: Self = ExternalMemoryHandleTypeFlags { flags: 0b100000 };
-    pub const D3D12_RESOURCE_BIT: Self = ExternalMemoryHandleTypeFlags { flags: 0b1000000 };
-}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct ExternalMemoryFeatureFlags {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(ExternalMemoryFeatureFlags, 0b111, Flags);
-impl ExternalMemoryFeatureFlags {
-    pub const DEDICATED_ONLY_BIT: Self = ExternalMemoryFeatureFlags { flags: 0b1 };
-    pub const EXPORTABLE_BIT: Self = ExternalMemoryFeatureFlags { flags: 0b10 };
-    pub const IMPORTABLE_BIT: Self = ExternalMemoryFeatureFlags { flags: 0b100 };
-}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct ExternalSemaphoreHandleTypeFlags {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(ExternalSemaphoreHandleTypeFlags, 0b11111, Flags);
-impl ExternalSemaphoreHandleTypeFlags {
-    pub const OPAQUE_FD_BIT: Self = ExternalSemaphoreHandleTypeFlags { flags: 0b1 };
-    pub const OPAQUE_WIN32_BIT: Self = ExternalSemaphoreHandleTypeFlags { flags: 0b10 };
-    pub const OPAQUE_WIN32_KMT_BIT: Self = ExternalSemaphoreHandleTypeFlags { flags: 0b100 };
-    pub const D3D12_FENCE_BIT: Self = ExternalSemaphoreHandleTypeFlags { flags: 0b1000 };
-    pub const SYNC_FD_BIT: Self = ExternalSemaphoreHandleTypeFlags { flags: 0b10000 };
-}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct ExternalSemaphoreFeatureFlags {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(ExternalSemaphoreFeatureFlags, 0b11, Flags);
-impl ExternalSemaphoreFeatureFlags {
-    pub const EXPORTABLE_BIT: Self = ExternalSemaphoreFeatureFlags { flags: 0b1 };
-    pub const IMPORTABLE_BIT: Self = ExternalSemaphoreFeatureFlags { flags: 0b10 };
-}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct SemaphoreImportFlags {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(SemaphoreImportFlags, 0b1, Flags);
-impl SemaphoreImportFlags {
-    pub const TEMPORARY_BIT: Self = SemaphoreImportFlags { flags: 0b1 };
-}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct ExternalFenceHandleTypeFlags {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(ExternalFenceHandleTypeFlags, 0b1111, Flags);
-impl ExternalFenceHandleTypeFlags {
-    pub const OPAQUE_FD_BIT: Self = ExternalFenceHandleTypeFlags { flags: 0b1 };
-    pub const OPAQUE_WIN32_BIT: Self = ExternalFenceHandleTypeFlags { flags: 0b10 };
-    pub const OPAQUE_WIN32_KMT_BIT: Self = ExternalFenceHandleTypeFlags { flags: 0b100 };
-    pub const SYNC_FD_BIT: Self = ExternalFenceHandleTypeFlags { flags: 0b1000 };
-}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct ExternalFenceFeatureFlags {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(ExternalFenceFeatureFlags, 0b11, Flags);
-impl ExternalFenceFeatureFlags {
-    pub const EXPORTABLE_BIT: Self = ExternalFenceFeatureFlags { flags: 0b1 };
-    pub const IMPORTABLE_BIT: Self = ExternalFenceFeatureFlags { flags: 0b10 };
-}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct FenceImportFlags {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(FenceImportFlags, 0b1, Flags);
-impl FenceImportFlags {
-    pub const TEMPORARY_BIT: Self = FenceImportFlags { flags: 0b1 };
-}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct SurfaceCounterFlagsEXT {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(SurfaceCounterFlagsEXT, 0b1, Flags);
-impl SurfaceCounterFlagsEXT {
-    pub const VBLANK_EXT: Self = SurfaceCounterFlagsEXT { flags: 0b1 };
-}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct PeerMemoryFeatureFlags {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(PeerMemoryFeatureFlags, 0b1111, Flags);
-impl PeerMemoryFeatureFlags {
-    pub const COPY_SRC_BIT: Self = PeerMemoryFeatureFlags { flags: 0b1 };
-    pub const COPY_DST_BIT: Self = PeerMemoryFeatureFlags { flags: 0b10 };
-    pub const GENERIC_SRC_BIT: Self = PeerMemoryFeatureFlags { flags: 0b100 };
-    pub const GENERIC_DST_BIT: Self = PeerMemoryFeatureFlags { flags: 0b1000 };
-}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct MemoryAllocateFlags {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(MemoryAllocateFlags, 0b1, Flags);
-impl MemoryAllocateFlags {
-    pub const DEVICE_MASK_BIT: Self = MemoryAllocateFlags { flags: 0b1 };
-}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct DeviceGroupPresentModeFlagsKHR {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(DeviceGroupPresentModeFlagsKHR, 0b1111, Flags);
-impl DeviceGroupPresentModeFlagsKHR {
-    pub const LOCAL_BIT_KHR: Self = DeviceGroupPresentModeFlagsKHR { flags: 0b1 };
-    pub const REMOTE_BIT_KHR: Self = DeviceGroupPresentModeFlagsKHR { flags: 0b10 };
-    pub const SUM_BIT_KHR: Self = DeviceGroupPresentModeFlagsKHR { flags: 0b100 };
-    pub const LOCAL_MULTI_DEVICE_BIT_KHR: Self = DeviceGroupPresentModeFlagsKHR { flags: 0b1000 };
-}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct SwapchainCreateFlagsKHR {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(SwapchainCreateFlagsKHR, 0b0, Flags);
-impl SwapchainCreateFlagsKHR {}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct SubpassDescriptionFlags {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(SubpassDescriptionFlags, 0b0, Flags);
-impl SubpassDescriptionFlags {}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct DebugUtilsMessageSeverityFlagsEXT {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(DebugUtilsMessageSeverityFlagsEXT, 0b1000100010001, Flags);
-impl DebugUtilsMessageSeverityFlagsEXT {
-    pub const VERBOSE_BIT_EXT: Self = DebugUtilsMessageSeverityFlagsEXT { flags: 0b1 };
-    pub const INFO_BIT_EXT: Self = DebugUtilsMessageSeverityFlagsEXT { flags: 0b10000 };
-    pub const WARNING_BIT_EXT: Self = DebugUtilsMessageSeverityFlagsEXT { flags: 0b100000000 };
-    pub const ERROR_BIT_EXT: Self = DebugUtilsMessageSeverityFlagsEXT {
-        flags: 0b1000000000000,
-    };
-}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct DebugUtilsMessageTypeFlagsEXT {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(DebugUtilsMessageTypeFlagsEXT, 0b111, Flags);
-impl DebugUtilsMessageTypeFlagsEXT {
-    pub const GENERAL_BIT_EXT: Self = DebugUtilsMessageTypeFlagsEXT { flags: 0b1 };
-    pub const VALIDATION_BIT_EXT: Self = DebugUtilsMessageTypeFlagsEXT { flags: 0b10 };
-    pub const PERFORMANCE_BIT_EXT: Self = DebugUtilsMessageTypeFlagsEXT { flags: 0b100 };
-}
-#[repr(C)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct DescriptorBindingFlagsEXT {
-    flags: Flags,
-}
-vk_bitflags_wrapped!(DescriptorBindingFlagsEXT, 0b1111, Flags);
-impl DescriptorBindingFlagsEXT {
-    pub const UPDATE_AFTER_BIND_BIT_EXT: Self = DescriptorBindingFlagsEXT { flags: 0b1 };
-    pub const UPDATE_UNUSED_WHILE_PENDING_BIT_EXT: Self = DescriptorBindingFlagsEXT { flags: 0b10 };
-    pub const PARTIALLY_BOUND_BIT_EXT: Self = DescriptorBindingFlagsEXT { flags: 0b100 };
-    pub const VARIABLE_DESCRIPTOR_COUNT_BIT_EXT: Self = DescriptorBindingFlagsEXT { flags: 0b1000 };
+pub struct VendorId(pub(crate) i32);
+impl VendorId {
+    #[doc = "Vivante vendor ID"]
+    pub const VIV: Self = VendorId(0x10001);
+    #[doc = "VeriSilicon vendor ID"]
+    pub const VSI: Self = VendorId(0x10002);
+    #[doc = "Kazan Software Renderer"]
+    pub const KAZAN: Self = VendorId(0x10003);
+}
+pub mod bitflags {
+    use super::*;
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct CullModeFlags(pub(crate) Flags);
+    vk_bitflags_wrapped!(CullModeFlags, 0b11, Flags);
+    impl CullModeFlags {
+        pub const NONE: Self = CullModeFlags(0);
+        pub const FRONT: Self = CullModeFlags(0b1);
+        pub const BACK: Self = CullModeFlags(0b10);
+        pub const FRONT_AND_BACK: Self = CullModeFlags(0x00000003);
+    }
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct QueueFlags(pub(crate) Flags);
+    vk_bitflags_wrapped!(QueueFlags, 0b1111, Flags);
+    impl QueueFlags {
+        #[doc = "Queue supports graphics operations"]
+        pub const GRAPHICS: Self = QueueFlags(0b1);
+        #[doc = "Queue supports compute operations"]
+        pub const COMPUTE: Self = QueueFlags(0b10);
+        #[doc = "Queue supports transfer operations"]
+        pub const TRANSFER: Self = QueueFlags(0b100);
+        #[doc = "Queue supports sparse resource memory management operations"]
+        pub const SPARSE_BINDING: Self = QueueFlags(0b1000);
+    }
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct DeviceQueueCreateFlags(pub(crate) Flags);
+    vk_bitflags_wrapped!(DeviceQueueCreateFlags, 0b0, Flags);
+    impl DeviceQueueCreateFlags {}
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct MemoryPropertyFlags(pub(crate) Flags);
+    vk_bitflags_wrapped!(MemoryPropertyFlags, 0b11111, Flags);
+    impl MemoryPropertyFlags {
+        #[doc = "If otherwise stated, then allocate memory on device"]
+        pub const DEVICE_LOCAL: Self = MemoryPropertyFlags(0b1);
+        #[doc = "Memory is mappable by host"]
+        pub const HOST_VISIBLE: Self = MemoryPropertyFlags(0b10);
+        #[doc = "Memory will have i/o coherency. If not set, application may need to use vkFlushMappedMemoryRanges and vkInvalidateMappedMemoryRanges to flush/invalidate host cache"]
+        pub const HOST_COHERENT: Self = MemoryPropertyFlags(0b100);
+        #[doc = "Memory will be cached by the host"]
+        pub const HOST_CACHED: Self = MemoryPropertyFlags(0b1000);
+        #[doc = "Memory may be allocated by the driver when it is required"]
+        pub const LAZILY_ALLOCATED: Self = MemoryPropertyFlags(0b10000);
+    }
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct MemoryHeapFlags(pub(crate) Flags);
+    vk_bitflags_wrapped!(MemoryHeapFlags, 0b1, Flags);
+    impl MemoryHeapFlags {
+        #[doc = "If set, heap represents device memory"]
+        pub const DEVICE_LOCAL: Self = MemoryHeapFlags(0b1);
+    }
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct AccessFlags(pub(crate) Flags);
+    vk_bitflags_wrapped!(AccessFlags, 0b11111111111111111, Flags);
+    impl AccessFlags {
+        #[doc = "Controls coherency of indirect command reads"]
+        pub const INDIRECT_COMMAND_READ: Self = AccessFlags(0b1);
+        #[doc = "Controls coherency of index reads"]
+        pub const INDEX_READ: Self = AccessFlags(0b10);
+        #[doc = "Controls coherency of vertex attribute reads"]
+        pub const VERTEX_ATTRIBUTE_READ: Self = AccessFlags(0b100);
+        #[doc = "Controls coherency of uniform buffer reads"]
+        pub const UNIFORM_READ: Self = AccessFlags(0b1000);
+        #[doc = "Controls coherency of input attachment reads"]
+        pub const INPUT_ATTACHMENT_READ: Self = AccessFlags(0b10000);
+        #[doc = "Controls coherency of shader reads"]
+        pub const SHADER_READ: Self = AccessFlags(0b100000);
+        #[doc = "Controls coherency of shader writes"]
+        pub const SHADER_WRITE: Self = AccessFlags(0b1000000);
+        #[doc = "Controls coherency of color attachment reads"]
+        pub const COLOR_ATTACHMENT_READ: Self = AccessFlags(0b10000000);
+        #[doc = "Controls coherency of color attachment writes"]
+        pub const COLOR_ATTACHMENT_WRITE: Self = AccessFlags(0b100000000);
+        #[doc = "Controls coherency of depth/stencil attachment reads"]
+        pub const DEPTH_STENCIL_ATTACHMENT_READ: Self = AccessFlags(0b1000000000);
+        #[doc = "Controls coherency of depth/stencil attachment writes"]
+        pub const DEPTH_STENCIL_ATTACHMENT_WRITE: Self = AccessFlags(0b10000000000);
+        #[doc = "Controls coherency of transfer reads"]
+        pub const TRANSFER_READ: Self = AccessFlags(0b100000000000);
+        #[doc = "Controls coherency of transfer writes"]
+        pub const TRANSFER_WRITE: Self = AccessFlags(0b1000000000000);
+        #[doc = "Controls coherency of host reads"]
+        pub const HOST_READ: Self = AccessFlags(0b10000000000000);
+        #[doc = "Controls coherency of host writes"]
+        pub const HOST_WRITE: Self = AccessFlags(0b100000000000000);
+        #[doc = "Controls coherency of memory reads"]
+        pub const MEMORY_READ: Self = AccessFlags(0b1000000000000000);
+        #[doc = "Controls coherency of memory writes"]
+        pub const MEMORY_WRITE: Self = AccessFlags(0b10000000000000000);
+    }
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct BufferUsageFlags(pub(crate) Flags);
+    vk_bitflags_wrapped!(BufferUsageFlags, 0b111111111, Flags);
+    impl BufferUsageFlags {
+        #[doc = "Can be used as a source of transfer operations"]
+        pub const TRANSFER_SRC: Self = BufferUsageFlags(0b1);
+        #[doc = "Can be used as a destination of transfer operations"]
+        pub const TRANSFER_DST: Self = BufferUsageFlags(0b10);
+        #[doc = "Can be used as TBO"]
+        pub const UNIFORM_TEXEL_BUFFER: Self = BufferUsageFlags(0b100);
+        #[doc = "Can be used as IBO"]
+        pub const STORAGE_TEXEL_BUFFER: Self = BufferUsageFlags(0b1000);
+        #[doc = "Can be used as UBO"]
+        pub const UNIFORM_BUFFER: Self = BufferUsageFlags(0b10000);
+        #[doc = "Can be used as SSBO"]
+        pub const STORAGE_BUFFER: Self = BufferUsageFlags(0b100000);
+        #[doc = "Can be used as source of fixed-function index fetch (index buffer)"]
+        pub const INDEX_BUFFER: Self = BufferUsageFlags(0b1000000);
+        #[doc = "Can be used as source of fixed-function vertex fetch (VBO)"]
+        pub const VERTEX_BUFFER: Self = BufferUsageFlags(0b10000000);
+        #[doc = "Can be the source of indirect parameters (e.g. indirect buffer, parameter buffer)"]
+        pub const INDIRECT_BUFFER: Self = BufferUsageFlags(0b100000000);
+    }
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct BufferCreateFlags(pub(crate) Flags);
+    vk_bitflags_wrapped!(BufferCreateFlags, 0b111, Flags);
+    impl BufferCreateFlags {
+        #[doc = "Buffer should support sparse backing"]
+        pub const SPARSE_BINDING: Self = BufferCreateFlags(0b1);
+        #[doc = "Buffer should support sparse backing with partial residency"]
+        pub const SPARSE_RESIDENCY: Self = BufferCreateFlags(0b10);
+        #[doc = "Buffer should support constent data access to physical memory ranges mapped into multiple locations of sparse buffers"]
+        pub const SPARSE_ALIASED: Self = BufferCreateFlags(0b100);
+    }
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct ShaderStageFlags(pub(crate) Flags);
+    vk_bitflags_wrapped!(ShaderStageFlags, 0b1111111111111111111111111111111, Flags);
+    impl ShaderStageFlags {
+        pub const VERTEX: Self = ShaderStageFlags(0b1);
+        pub const TESSELLATION_CONTROL: Self = ShaderStageFlags(0b10);
+        pub const TESSELLATION_EVALUATION: Self = ShaderStageFlags(0b100);
+        pub const GEOMETRY: Self = ShaderStageFlags(0b1000);
+        pub const FRAGMENT: Self = ShaderStageFlags(0b10000);
+        pub const COMPUTE: Self = ShaderStageFlags(0b100000);
+        pub const ALL_GRAPHICS: Self = ShaderStageFlags(0x0000001F);
+        pub const ALL: Self = ShaderStageFlags(0x7FFFFFFF);
+    }
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct ImageUsageFlags(pub(crate) Flags);
+    vk_bitflags_wrapped!(ImageUsageFlags, 0b11111111, Flags);
+    impl ImageUsageFlags {
+        #[doc = "Can be used as a source of transfer operations"]
+        pub const TRANSFER_SRC: Self = ImageUsageFlags(0b1);
+        #[doc = "Can be used as a destination of transfer operations"]
+        pub const TRANSFER_DST: Self = ImageUsageFlags(0b10);
+        #[doc = "Can be sampled from (SAMPLED_IMAGE and COMBINED_IMAGE_SAMPLER descriptor types)"]
+        pub const SAMPLED: Self = ImageUsageFlags(0b100);
+        #[doc = "Can be used as storage image (STORAGE_IMAGE descriptor type)"]
+        pub const STORAGE: Self = ImageUsageFlags(0b1000);
+        #[doc = "Can be used as framebuffer color attachment"]
+        pub const COLOR_ATTACHMENT: Self = ImageUsageFlags(0b10000);
+        #[doc = "Can be used as framebuffer depth/stencil attachment"]
+        pub const DEPTH_STENCIL_ATTACHMENT: Self = ImageUsageFlags(0b100000);
+        #[doc = "Image data not needed outside of rendering"]
+        pub const TRANSIENT_ATTACHMENT: Self = ImageUsageFlags(0b1000000);
+        #[doc = "Can be used as framebuffer input attachment"]
+        pub const INPUT_ATTACHMENT: Self = ImageUsageFlags(0b10000000);
+    }
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct ImageCreateFlags(pub(crate) Flags);
+    vk_bitflags_wrapped!(ImageCreateFlags, 0b11111, Flags);
+    impl ImageCreateFlags {
+        #[doc = "Image should support sparse backing"]
+        pub const SPARSE_BINDING: Self = ImageCreateFlags(0b1);
+        #[doc = "Image should support sparse backing with partial residency"]
+        pub const SPARSE_RESIDENCY: Self = ImageCreateFlags(0b10);
+        #[doc = "Image should support constent data access to physical memory ranges mapped into multiple locations of sparse images"]
+        pub const SPARSE_ALIASED: Self = ImageCreateFlags(0b100);
+        #[doc = "Allows image views to have different format than the base image"]
+        pub const MUTABLE_FORMAT: Self = ImageCreateFlags(0b1000);
+        #[doc = "Allows creating image views with cube type from the created image"]
+        pub const CUBE_COMPATIBLE: Self = ImageCreateFlags(0b10000);
+    }
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct PipelineCreateFlags(pub(crate) Flags);
+    vk_bitflags_wrapped!(PipelineCreateFlags, 0b111, Flags);
+    impl PipelineCreateFlags {
+        pub const DISABLE_OPTIMIZATION: Self = PipelineCreateFlags(0b1);
+        pub const ALLOW_DERIVATIVES: Self = PipelineCreateFlags(0b10);
+        pub const DERIVATIVE: Self = PipelineCreateFlags(0b100);
+    }
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct ColorComponentFlags(pub(crate) Flags);
+    vk_bitflags_wrapped!(ColorComponentFlags, 0b1111, Flags);
+    impl ColorComponentFlags {
+        pub const R: Self = ColorComponentFlags(0b1);
+        pub const G: Self = ColorComponentFlags(0b10);
+        pub const B: Self = ColorComponentFlags(0b100);
+        pub const A: Self = ColorComponentFlags(0b1000);
+    }
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct FenceCreateFlags(pub(crate) Flags);
+    vk_bitflags_wrapped!(FenceCreateFlags, 0b1, Flags);
+    impl FenceCreateFlags {
+        pub const SIGNALED: Self = FenceCreateFlags(0b1);
+    }
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct FormatFeatureFlags(pub(crate) Flags);
+    vk_bitflags_wrapped!(FormatFeatureFlags, 0b1111111111111, Flags);
+    impl FormatFeatureFlags {
+        #[doc = "Format can be used for sampled images (SAMPLED_IMAGE and COMBINED_IMAGE_SAMPLER descriptor types)"]
+        pub const SAMPLED_IMAGE: Self = FormatFeatureFlags(0b1);
+        #[doc = "Format can be used for storage images (STORAGE_IMAGE descriptor type)"]
+        pub const STORAGE_IMAGE: Self = FormatFeatureFlags(0b10);
+        #[doc = "Format supports atomic operations in case it is used for storage images"]
+        pub const STORAGE_IMAGE_ATOMIC: Self = FormatFeatureFlags(0b100);
+        #[doc = "Format can be used for uniform texel buffers (TBOs)"]
+        pub const UNIFORM_TEXEL_BUFFER: Self = FormatFeatureFlags(0b1000);
+        #[doc = "Format can be used for storage texel buffers (IBOs)"]
+        pub const STORAGE_TEXEL_BUFFER: Self = FormatFeatureFlags(0b10000);
+        #[doc = "Format supports atomic operations in case it is used for storage texel buffers"]
+        pub const STORAGE_TEXEL_BUFFER_ATOMIC: Self = FormatFeatureFlags(0b100000);
+        #[doc = "Format can be used for vertex buffers (VBOs)"]
+        pub const VERTEX_BUFFER: Self = FormatFeatureFlags(0b1000000);
+        #[doc = "Format can be used for color attachment images"]
+        pub const COLOR_ATTACHMENT: Self = FormatFeatureFlags(0b10000000);
+        #[doc = "Format supports blending in case it is used for color attachment images"]
+        pub const COLOR_ATTACHMENT_BLEND: Self = FormatFeatureFlags(0b100000000);
+        #[doc = "Format can be used for depth/stencil attachment images"]
+        pub const DEPTH_STENCIL_ATTACHMENT: Self = FormatFeatureFlags(0b1000000000);
+        #[doc = "Format can be used as the source image of blits with vkCmdBlitImage"]
+        pub const BLIT_SRC: Self = FormatFeatureFlags(0b10000000000);
+        #[doc = "Format can be used as the destination image of blits with vkCmdBlitImage"]
+        pub const BLIT_DST: Self = FormatFeatureFlags(0b100000000000);
+        #[doc = "Format can be filtered with VK_FILTER_LINEAR when being sampled"]
+        pub const SAMPLED_IMAGE_FILTER_LINEAR: Self = FormatFeatureFlags(0b1000000000000);
+    }
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct QueryControlFlags(pub(crate) Flags);
+    vk_bitflags_wrapped!(QueryControlFlags, 0b1, Flags);
+    impl QueryControlFlags {
+        #[doc = "Require precise results to be collected by the query"]
+        pub const PRECISE: Self = QueryControlFlags(0b1);
+    }
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct QueryResultFlags(pub(crate) Flags);
+    vk_bitflags_wrapped!(QueryResultFlags, 0b1111, Flags);
+    impl QueryResultFlags {
+        #[doc = "Results of the queries are written to the destination buffer as 64-bit values"]
+        pub const TYPE_64: Self = QueryResultFlags(0b1);
+        #[doc = "Results of the queries are waited on before proceeding with the result copy"]
+        pub const WAIT: Self = QueryResultFlags(0b10);
+        #[doc = "Besides the results of the query, the availability of the results is also written"]
+        pub const WITH_AVAILABILITY: Self = QueryResultFlags(0b100);
+        #[doc = "Copy the partial results of the query even if the final results are not available"]
+        pub const PARTIAL: Self = QueryResultFlags(0b1000);
+    }
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct CommandBufferUsageFlags(pub(crate) Flags);
+    vk_bitflags_wrapped!(CommandBufferUsageFlags, 0b111, Flags);
+    impl CommandBufferUsageFlags {
+        pub const ONE_TIME_SUBMIT: Self = CommandBufferUsageFlags(0b1);
+        pub const RENDER_PASS_CONTINUE: Self = CommandBufferUsageFlags(0b10);
+        #[doc = "Command buffer may be submitted/executed more than once simultaneously"]
+        pub const SIMULTANEOUS_USE: Self = CommandBufferUsageFlags(0b100);
+    }
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct QueryPipelineStatisticFlags(pub(crate) Flags);
+    vk_bitflags_wrapped!(QueryPipelineStatisticFlags, 0b11111111111, Flags);
+    impl QueryPipelineStatisticFlags {
+        #[doc = "Optional"]
+        pub const INPUT_ASSEMBLY_VERTICES: Self = QueryPipelineStatisticFlags(0b1);
+        #[doc = "Optional"]
+        pub const INPUT_ASSEMBLY_PRIMITIVES: Self = QueryPipelineStatisticFlags(0b10);
+        #[doc = "Optional"]
+        pub const VERTEX_SHADER_INVOCATIONS: Self = QueryPipelineStatisticFlags(0b100);
+        #[doc = "Optional"]
+        pub const GEOMETRY_SHADER_INVOCATIONS: Self = QueryPipelineStatisticFlags(0b1000);
+        #[doc = "Optional"]
+        pub const GEOMETRY_SHADER_PRIMITIVES: Self = QueryPipelineStatisticFlags(0b10000);
+        #[doc = "Optional"]
+        pub const CLIPPING_INVOCATIONS: Self = QueryPipelineStatisticFlags(0b100000);
+        #[doc = "Optional"]
+        pub const CLIPPING_PRIMITIVES: Self = QueryPipelineStatisticFlags(0b1000000);
+        #[doc = "Optional"]
+        pub const FRAGMENT_SHADER_INVOCATIONS: Self = QueryPipelineStatisticFlags(0b10000000);
+        #[doc = "Optional"]
+        pub const TESSELLATION_CONTROL_SHADER_PATCHES: Self =
+            QueryPipelineStatisticFlags(0b100000000);
+        #[doc = "Optional"]
+        pub const TESSELLATION_EVALUATION_SHADER_INVOCATIONS: Self =
+            QueryPipelineStatisticFlags(0b1000000000);
+        #[doc = "Optional"]
+        pub const COMPUTE_SHADER_INVOCATIONS: Self = QueryPipelineStatisticFlags(0b10000000000);
+    }
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct ImageAspectFlags(pub(crate) Flags);
+    vk_bitflags_wrapped!(ImageAspectFlags, 0b1111, Flags);
+    impl ImageAspectFlags {
+        pub const COLOR: Self = ImageAspectFlags(0b1);
+        pub const DEPTH: Self = ImageAspectFlags(0b10);
+        pub const STENCIL: Self = ImageAspectFlags(0b100);
+        pub const METADATA: Self = ImageAspectFlags(0b1000);
+    }
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct SparseImageFormatFlags(pub(crate) Flags);
+    vk_bitflags_wrapped!(SparseImageFormatFlags, 0b111, Flags);
+    impl SparseImageFormatFlags {
+        #[doc = "Image uses a single mip tail region for all array layers"]
+        pub const SINGLE_MIPTAIL: Self = SparseImageFormatFlags(0b1);
+        #[doc = "Image requires mip level dimensions to be an integer multiple of the sparse image block dimensions for non-tail mip levels."]
+        pub const ALIGNED_MIP_SIZE: Self = SparseImageFormatFlags(0b10);
+        #[doc = "Image uses a non-standard sparse image block dimensions"]
+        pub const NONSTANDARD_BLOCK_SIZE: Self = SparseImageFormatFlags(0b100);
+    }
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct SparseMemoryBindFlags(pub(crate) Flags);
+    vk_bitflags_wrapped!(SparseMemoryBindFlags, 0b1, Flags);
+    impl SparseMemoryBindFlags {
+        #[doc = "Operation binds resource metadata to memory"]
+        pub const METADATA: Self = SparseMemoryBindFlags(0b1);
+    }
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct PipelineStageFlags(pub(crate) Flags);
+    vk_bitflags_wrapped!(PipelineStageFlags, 0b11111111111111111, Flags);
+    impl PipelineStageFlags {
+        #[doc = "Before subsequent commands are processed"]
+        pub const TOP_OF_PIPE: Self = PipelineStageFlags(0b1);
+        #[doc = "Draw/DispatchIndirect command fetch"]
+        pub const DRAW_INDIRECT: Self = PipelineStageFlags(0b10);
+        #[doc = "Vertex/index fetch"]
+        pub const VERTEX_INPUT: Self = PipelineStageFlags(0b100);
+        #[doc = "Vertex shading"]
+        pub const VERTEX_SHADER: Self = PipelineStageFlags(0b1000);
+        #[doc = "Tessellation control shading"]
+        pub const TESSELLATION_CONTROL_SHADER: Self = PipelineStageFlags(0b10000);
+        #[doc = "Tessellation evaluation shading"]
+        pub const TESSELLATION_EVALUATION_SHADER: Self = PipelineStageFlags(0b100000);
+        #[doc = "Geometry shading"]
+        pub const GEOMETRY_SHADER: Self = PipelineStageFlags(0b1000000);
+        #[doc = "Fragment shading"]
+        pub const FRAGMENT_SHADER: Self = PipelineStageFlags(0b10000000);
+        #[doc = "Early fragment (depth and stencil) tests"]
+        pub const EARLY_FRAGMENT_TESTS: Self = PipelineStageFlags(0b100000000);
+        #[doc = "Late fragment (depth and stencil) tests"]
+        pub const LATE_FRAGMENT_TESTS: Self = PipelineStageFlags(0b1000000000);
+        #[doc = "Color attachment writes"]
+        pub const COLOR_ATTACHMENT_OUTPUT: Self = PipelineStageFlags(0b10000000000);
+        #[doc = "Compute shading"]
+        pub const COMPUTE_SHADER: Self = PipelineStageFlags(0b100000000000);
+        #[doc = "Transfer/copy operations"]
+        pub const TRANSFER: Self = PipelineStageFlags(0b1000000000000);
+        #[doc = "After previous commands have completed"]
+        pub const BOTTOM_OF_PIPE: Self = PipelineStageFlags(0b10000000000000);
+        #[doc = "Indicates host (CPU) is a source/sink of the dependency"]
+        pub const HOST: Self = PipelineStageFlags(0b100000000000000);
+        #[doc = "All stages of the graphics pipeline"]
+        pub const ALL_GRAPHICS: Self = PipelineStageFlags(0b1000000000000000);
+        #[doc = "All stages supported on the queue"]
+        pub const ALL_COMMANDS: Self = PipelineStageFlags(0b10000000000000000);
+    }
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct CommandPoolCreateFlags(pub(crate) Flags);
+    vk_bitflags_wrapped!(CommandPoolCreateFlags, 0b11, Flags);
+    impl CommandPoolCreateFlags {
+        #[doc = "Command buffers have a short lifetime"]
+        pub const TRANSIENT: Self = CommandPoolCreateFlags(0b1);
+        #[doc = "Command buffers may release their memory individually"]
+        pub const RESET_COMMAND_BUFFER: Self = CommandPoolCreateFlags(0b10);
+    }
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct CommandPoolResetFlags(pub(crate) Flags);
+    vk_bitflags_wrapped!(CommandPoolResetFlags, 0b1, Flags);
+    impl CommandPoolResetFlags {
+        #[doc = "Release resources owned by the pool"]
+        pub const RELEASE_RESOURCES: Self = CommandPoolResetFlags(0b1);
+    }
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct CommandBufferResetFlags(pub(crate) Flags);
+    vk_bitflags_wrapped!(CommandBufferResetFlags, 0b1, Flags);
+    impl CommandBufferResetFlags {
+        #[doc = "Release resources owned by the buffer"]
+        pub const RELEASE_RESOURCES: Self = CommandBufferResetFlags(0b1);
+    }
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct SampleCountFlags(pub(crate) Flags);
+    vk_bitflags_wrapped!(SampleCountFlags, 0b1111111, Flags);
+    impl SampleCountFlags {
+        #[doc = "Sample count 1 supported"]
+        pub const TYPE_1: Self = SampleCountFlags(0b1);
+        #[doc = "Sample count 2 supported"]
+        pub const TYPE_2: Self = SampleCountFlags(0b10);
+        #[doc = "Sample count 4 supported"]
+        pub const TYPE_4: Self = SampleCountFlags(0b100);
+        #[doc = "Sample count 8 supported"]
+        pub const TYPE_8: Self = SampleCountFlags(0b1000);
+        #[doc = "Sample count 16 supported"]
+        pub const TYPE_16: Self = SampleCountFlags(0b10000);
+        #[doc = "Sample count 32 supported"]
+        pub const TYPE_32: Self = SampleCountFlags(0b100000);
+        #[doc = "Sample count 64 supported"]
+        pub const TYPE_64: Self = SampleCountFlags(0b1000000);
+    }
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct AttachmentDescriptionFlags(pub(crate) Flags);
+    vk_bitflags_wrapped!(AttachmentDescriptionFlags, 0b1, Flags);
+    impl AttachmentDescriptionFlags {
+        #[doc = "The attachment may alias physical memory of another attachment in the same render pass"]
+        pub const MAY_ALIAS: Self = AttachmentDescriptionFlags(0b1);
+    }
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct StencilFaceFlags(pub(crate) Flags);
+    vk_bitflags_wrapped!(StencilFaceFlags, 0b11, Flags);
+    impl StencilFaceFlags {
+        #[doc = "Front face"]
+        pub const FRONT: Self = StencilFaceFlags(0b1);
+        #[doc = "Back face"]
+        pub const BACK: Self = StencilFaceFlags(0b10);
+        #[doc = "Front and back faces"]
+        pub const STENCIL_FRONT_AND_BACK: Self = StencilFaceFlags(0x00000003);
+    }
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct DescriptorPoolCreateFlags(pub(crate) Flags);
+    vk_bitflags_wrapped!(DescriptorPoolCreateFlags, 0b1, Flags);
+    impl DescriptorPoolCreateFlags {
+        #[doc = "Descriptor sets may be freed individually"]
+        pub const FREE_DESCRIPTOR_SET: Self = DescriptorPoolCreateFlags(0b1);
+    }
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct DependencyFlags(pub(crate) Flags);
+    vk_bitflags_wrapped!(DependencyFlags, 0b1, Flags);
+    impl DependencyFlags {
+        #[doc = "Dependency is per pixel region "]
+        pub const BY_REGION: Self = DependencyFlags(0b1);
+    }
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct DisplayPlaneAlphaFlagsKHR(pub(crate) Flags);
+    vk_bitflags_wrapped!(DisplayPlaneAlphaFlagsKHR, 0b1111, Flags);
+    impl DisplayPlaneAlphaFlagsKHR {
+        pub const OPAQUE_KHR: Self = DisplayPlaneAlphaFlagsKHR(0b1);
+        pub const GLOBAL_KHR: Self = DisplayPlaneAlphaFlagsKHR(0b10);
+        pub const PER_PIXEL_KHR: Self = DisplayPlaneAlphaFlagsKHR(0b100);
+        pub const PER_PIXEL_PREMULTIPLIED_KHR: Self = DisplayPlaneAlphaFlagsKHR(0b1000);
+    }
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct CompositeAlphaFlagsKHR(pub(crate) Flags);
+    vk_bitflags_wrapped!(CompositeAlphaFlagsKHR, 0b1111, Flags);
+    impl CompositeAlphaFlagsKHR {
+        pub const OPAQUE_KHR: Self = CompositeAlphaFlagsKHR(0b1);
+        pub const PRE_MULTIPLIED_KHR: Self = CompositeAlphaFlagsKHR(0b10);
+        pub const POST_MULTIPLIED_KHR: Self = CompositeAlphaFlagsKHR(0b100);
+        pub const INHERIT_KHR: Self = CompositeAlphaFlagsKHR(0b1000);
+    }
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct SurfaceTransformFlagsKHR(pub(crate) Flags);
+    vk_bitflags_wrapped!(SurfaceTransformFlagsKHR, 0b111111111, Flags);
+    impl SurfaceTransformFlagsKHR {
+        pub const IDENTITY_KHR: Self = SurfaceTransformFlagsKHR(0b1);
+        pub const ROTATE_90_KHR: Self = SurfaceTransformFlagsKHR(0b10);
+        pub const ROTATE_180_KHR: Self = SurfaceTransformFlagsKHR(0b100);
+        pub const ROTATE_270_KHR: Self = SurfaceTransformFlagsKHR(0b1000);
+        pub const HORIZONTAL_MIRROR_KHR: Self = SurfaceTransformFlagsKHR(0b10000);
+        pub const HORIZONTAL_MIRROR_ROTATE_90_KHR: Self = SurfaceTransformFlagsKHR(0b100000);
+        pub const HORIZONTAL_MIRROR_ROTATE_180_KHR: Self = SurfaceTransformFlagsKHR(0b1000000);
+        pub const HORIZONTAL_MIRROR_ROTATE_270_KHR: Self = SurfaceTransformFlagsKHR(0b10000000);
+        pub const INHERIT_KHR: Self = SurfaceTransformFlagsKHR(0b100000000);
+    }
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct DebugReportFlagsEXT(pub(crate) Flags);
+    vk_bitflags_wrapped!(DebugReportFlagsEXT, 0b11111, Flags);
+    impl DebugReportFlagsEXT {
+        pub const INFORMATION_EXT: Self = DebugReportFlagsEXT(0b1);
+        pub const WARNING_EXT: Self = DebugReportFlagsEXT(0b10);
+        pub const PERFORMANCE_WARNING_EXT: Self = DebugReportFlagsEXT(0b100);
+        pub const ERROR_EXT: Self = DebugReportFlagsEXT(0b1000);
+        pub const DEBUG_EXT: Self = DebugReportFlagsEXT(0b10000);
+    }
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct ExternalMemoryHandleTypeFlagsNV(pub(crate) Flags);
+    vk_bitflags_wrapped!(ExternalMemoryHandleTypeFlagsNV, 0b1111, Flags);
+    impl ExternalMemoryHandleTypeFlagsNV {
+        pub const OPAQUE_WIN32_NV: Self = ExternalMemoryHandleTypeFlagsNV(0b1);
+        pub const OPAQUE_WIN32_KMT_NV: Self = ExternalMemoryHandleTypeFlagsNV(0b10);
+        pub const D3D11_IMAGE_NV: Self = ExternalMemoryHandleTypeFlagsNV(0b100);
+        pub const D3D11_IMAGE_KMT_NV: Self = ExternalMemoryHandleTypeFlagsNV(0b1000);
+    }
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct ExternalMemoryFeatureFlagsNV(pub(crate) Flags);
+    vk_bitflags_wrapped!(ExternalMemoryFeatureFlagsNV, 0b111, Flags);
+    impl ExternalMemoryFeatureFlagsNV {
+        pub const DEDICATED_ONLY_NV: Self = ExternalMemoryFeatureFlagsNV(0b1);
+        pub const EXPORTABLE_NV: Self = ExternalMemoryFeatureFlagsNV(0b10);
+        pub const IMPORTABLE_NV: Self = ExternalMemoryFeatureFlagsNV(0b100);
+    }
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct SubgroupFeatureFlags(pub(crate) Flags);
+    vk_bitflags_wrapped!(SubgroupFeatureFlags, 0b11111111, Flags);
+    impl SubgroupFeatureFlags {
+        #[doc = "Basic subgroup operations"]
+        pub const BASIC: Self = SubgroupFeatureFlags(0b1);
+        #[doc = "Vote subgroup operations"]
+        pub const VOTE: Self = SubgroupFeatureFlags(0b10);
+        #[doc = "Arithmetic subgroup operations"]
+        pub const ARITHMETIC: Self = SubgroupFeatureFlags(0b100);
+        #[doc = "Ballot subgroup operations"]
+        pub const BALLOT: Self = SubgroupFeatureFlags(0b1000);
+        #[doc = "Shuffle subgroup operations"]
+        pub const SHUFFLE: Self = SubgroupFeatureFlags(0b10000);
+        #[doc = "Shuffle relative subgroup operations"]
+        pub const SHUFFLE_RELATIVE: Self = SubgroupFeatureFlags(0b100000);
+        #[doc = "Clustered subgroup operations"]
+        pub const CLUSTERED: Self = SubgroupFeatureFlags(0b1000000);
+        #[doc = "Quad subgroup operations"]
+        pub const QUAD: Self = SubgroupFeatureFlags(0b10000000);
+    }
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct IndirectCommandsLayoutUsageFlagsNVX(pub(crate) Flags);
+    vk_bitflags_wrapped!(IndirectCommandsLayoutUsageFlagsNVX, 0b1111, Flags);
+    impl IndirectCommandsLayoutUsageFlagsNVX {
+        pub const UNORDERED_SEQUENCES_NVX: Self = IndirectCommandsLayoutUsageFlagsNVX(0b1);
+        pub const SPARSE_SEQUENCES_NVX: Self = IndirectCommandsLayoutUsageFlagsNVX(0b10);
+        pub const EMPTY_EXECUTIONS_NVX: Self = IndirectCommandsLayoutUsageFlagsNVX(0b100);
+        pub const INDEXED_SEQUENCES_NVX: Self = IndirectCommandsLayoutUsageFlagsNVX(0b1000);
+    }
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct ObjectEntryUsageFlagsNVX(pub(crate) Flags);
+    vk_bitflags_wrapped!(ObjectEntryUsageFlagsNVX, 0b11, Flags);
+    impl ObjectEntryUsageFlagsNVX {
+        pub const GRAPHICS_NVX: Self = ObjectEntryUsageFlagsNVX(0b1);
+        pub const COMPUTE_NVX: Self = ObjectEntryUsageFlagsNVX(0b10);
+    }
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct DescriptorSetLayoutCreateFlags(pub(crate) Flags);
+    vk_bitflags_wrapped!(DescriptorSetLayoutCreateFlags, 0b0, Flags);
+    impl DescriptorSetLayoutCreateFlags {}
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct ExternalMemoryHandleTypeFlags(pub(crate) Flags);
+    vk_bitflags_wrapped!(ExternalMemoryHandleTypeFlags, 0b1111111, Flags);
+    impl ExternalMemoryHandleTypeFlags {
+        pub const OPAQUE_FD: Self = ExternalMemoryHandleTypeFlags(0b1);
+        pub const OPAQUE_WIN32: Self = ExternalMemoryHandleTypeFlags(0b10);
+        pub const OPAQUE_WIN32_KMT: Self = ExternalMemoryHandleTypeFlags(0b100);
+        pub const D3D11_TEXTURE: Self = ExternalMemoryHandleTypeFlags(0b1000);
+        pub const D3D11_TEXTURE_KMT: Self = ExternalMemoryHandleTypeFlags(0b10000);
+        pub const D3D12_HEAP: Self = ExternalMemoryHandleTypeFlags(0b100000);
+        pub const D3D12_RESOURCE: Self = ExternalMemoryHandleTypeFlags(0b1000000);
+    }
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct ExternalMemoryFeatureFlags(pub(crate) Flags);
+    vk_bitflags_wrapped!(ExternalMemoryFeatureFlags, 0b111, Flags);
+    impl ExternalMemoryFeatureFlags {
+        pub const DEDICATED_ONLY: Self = ExternalMemoryFeatureFlags(0b1);
+        pub const EXPORTABLE: Self = ExternalMemoryFeatureFlags(0b10);
+        pub const IMPORTABLE: Self = ExternalMemoryFeatureFlags(0b100);
+    }
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct ExternalSemaphoreHandleTypeFlags(pub(crate) Flags);
+    vk_bitflags_wrapped!(ExternalSemaphoreHandleTypeFlags, 0b11111, Flags);
+    impl ExternalSemaphoreHandleTypeFlags {
+        pub const OPAQUE_FD: Self = ExternalSemaphoreHandleTypeFlags(0b1);
+        pub const OPAQUE_WIN32: Self = ExternalSemaphoreHandleTypeFlags(0b10);
+        pub const OPAQUE_WIN32_KMT: Self = ExternalSemaphoreHandleTypeFlags(0b100);
+        pub const D3D12_FENCE: Self = ExternalSemaphoreHandleTypeFlags(0b1000);
+        pub const SYNC_FD: Self = ExternalSemaphoreHandleTypeFlags(0b10000);
+    }
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct ExternalSemaphoreFeatureFlags(pub(crate) Flags);
+    vk_bitflags_wrapped!(ExternalSemaphoreFeatureFlags, 0b11, Flags);
+    impl ExternalSemaphoreFeatureFlags {
+        pub const EXPORTABLE: Self = ExternalSemaphoreFeatureFlags(0b1);
+        pub const IMPORTABLE: Self = ExternalSemaphoreFeatureFlags(0b10);
+    }
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct SemaphoreImportFlags(pub(crate) Flags);
+    vk_bitflags_wrapped!(SemaphoreImportFlags, 0b1, Flags);
+    impl SemaphoreImportFlags {
+        pub const TEMPORARY: Self = SemaphoreImportFlags(0b1);
+    }
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct ExternalFenceHandleTypeFlags(pub(crate) Flags);
+    vk_bitflags_wrapped!(ExternalFenceHandleTypeFlags, 0b1111, Flags);
+    impl ExternalFenceHandleTypeFlags {
+        pub const OPAQUE_FD: Self = ExternalFenceHandleTypeFlags(0b1);
+        pub const OPAQUE_WIN32: Self = ExternalFenceHandleTypeFlags(0b10);
+        pub const OPAQUE_WIN32_KMT: Self = ExternalFenceHandleTypeFlags(0b100);
+        pub const SYNC_FD: Self = ExternalFenceHandleTypeFlags(0b1000);
+    }
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct ExternalFenceFeatureFlags(pub(crate) Flags);
+    vk_bitflags_wrapped!(ExternalFenceFeatureFlags, 0b11, Flags);
+    impl ExternalFenceFeatureFlags {
+        pub const EXPORTABLE: Self = ExternalFenceFeatureFlags(0b1);
+        pub const IMPORTABLE: Self = ExternalFenceFeatureFlags(0b10);
+    }
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct FenceImportFlags(pub(crate) Flags);
+    vk_bitflags_wrapped!(FenceImportFlags, 0b1, Flags);
+    impl FenceImportFlags {
+        pub const TEMPORARY: Self = FenceImportFlags(0b1);
+    }
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct SurfaceCounterFlagsEXT(pub(crate) Flags);
+    vk_bitflags_wrapped!(SurfaceCounterFlagsEXT, 0b1, Flags);
+    impl SurfaceCounterFlagsEXT {
+        pub const VBLANK_EXT: Self = SurfaceCounterFlagsEXT(0b1);
+    }
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct PeerMemoryFeatureFlags(pub(crate) Flags);
+    vk_bitflags_wrapped!(PeerMemoryFeatureFlags, 0b1111, Flags);
+    impl PeerMemoryFeatureFlags {
+        #[doc = "Can read with vkCmdCopy commands"]
+        pub const COPY_SRC: Self = PeerMemoryFeatureFlags(0b1);
+        #[doc = "Can write with vkCmdCopy commands"]
+        pub const COPY_DST: Self = PeerMemoryFeatureFlags(0b10);
+        #[doc = "Can read with any access type/command"]
+        pub const GENERIC_SRC: Self = PeerMemoryFeatureFlags(0b100);
+        #[doc = "Can write with and access type/command"]
+        pub const GENERIC_DST: Self = PeerMemoryFeatureFlags(0b1000);
+    }
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct MemoryAllocateFlags(pub(crate) Flags);
+    vk_bitflags_wrapped!(MemoryAllocateFlags, 0b1, Flags);
+    impl MemoryAllocateFlags {
+        #[doc = "Force allocation on specific devices"]
+        pub const DEVICE_MASK: Self = MemoryAllocateFlags(0b1);
+    }
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct DeviceGroupPresentModeFlagsKHR(pub(crate) Flags);
+    vk_bitflags_wrapped!(DeviceGroupPresentModeFlagsKHR, 0b1111, Flags);
+    impl DeviceGroupPresentModeFlagsKHR {
+        #[doc = "Present from local memory"]
+        pub const LOCAL_KHR: Self = DeviceGroupPresentModeFlagsKHR(0b1);
+        #[doc = "Present from remote memory"]
+        pub const REMOTE_KHR: Self = DeviceGroupPresentModeFlagsKHR(0b10);
+        #[doc = "Present sum of local and/or remote memory"]
+        pub const SUM_KHR: Self = DeviceGroupPresentModeFlagsKHR(0b100);
+        #[doc = "Each physical device presents from local memory"]
+        pub const LOCAL_MULTI_DEVICE_KHR: Self = DeviceGroupPresentModeFlagsKHR(0b1000);
+    }
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct SwapchainCreateFlagsKHR(pub(crate) Flags);
+    vk_bitflags_wrapped!(SwapchainCreateFlagsKHR, 0b0, Flags);
+    impl SwapchainCreateFlagsKHR {}
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct SubpassDescriptionFlags(pub(crate) Flags);
+    vk_bitflags_wrapped!(SubpassDescriptionFlags, 0b0, Flags);
+    impl SubpassDescriptionFlags {}
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct DebugUtilsMessageSeverityFlagsEXT(pub(crate) Flags);
+    vk_bitflags_wrapped!(DebugUtilsMessageSeverityFlagsEXT, 0b1000100010001, Flags);
+    impl DebugUtilsMessageSeverityFlagsEXT {
+        pub const VERBOSE_EXT: Self = DebugUtilsMessageSeverityFlagsEXT(0b1);
+        pub const INFO_EXT: Self = DebugUtilsMessageSeverityFlagsEXT(0b10000);
+        pub const WARNING_EXT: Self = DebugUtilsMessageSeverityFlagsEXT(0b100000000);
+        pub const ERROR_EXT: Self = DebugUtilsMessageSeverityFlagsEXT(0b1000000000000);
+    }
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct DebugUtilsMessageTypeFlagsEXT(pub(crate) Flags);
+    vk_bitflags_wrapped!(DebugUtilsMessageTypeFlagsEXT, 0b111, Flags);
+    impl DebugUtilsMessageTypeFlagsEXT {
+        pub const GENERAL_EXT: Self = DebugUtilsMessageTypeFlagsEXT(0b1);
+        pub const VALIDATION_EXT: Self = DebugUtilsMessageTypeFlagsEXT(0b10);
+        pub const PERFORMANCE_EXT: Self = DebugUtilsMessageTypeFlagsEXT(0b100);
+    }
+    #[repr(C)]
+    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+    pub struct DescriptorBindingFlagsEXT(pub(crate) Flags);
+    vk_bitflags_wrapped!(DescriptorBindingFlagsEXT, 0b1111, Flags);
+    impl DescriptorBindingFlagsEXT {
+        pub const UPDATE_AFTER_BIND_EXT: Self = DescriptorBindingFlagsEXT(0b1);
+        pub const UPDATE_UNUSED_WHILE_PENDING_EXT: Self = DescriptorBindingFlagsEXT(0b10);
+        pub const PARTIALLY_BOUND_EXT: Self = DescriptorBindingFlagsEXT(0b100);
+        pub const VARIABLE_DESCRIPTOR_COUNT_EXT: Self = DescriptorBindingFlagsEXT(0b1000);
+    }
 }
 pub const VK_MAX_PHYSICAL_DEVICE_NAME_SIZE: usize = 256;
 pub const VK_UUID_SIZE: usize = 16;
@@ -12982,4388 +12977,6805 @@ pub const VK_QUEUE_FAMILY_EXTERNAL: u32 = !0 - 1;
 pub const VK_QUEUE_FAMILY_FOREIGN_EXT: u32 = !0 - 2;
 pub const VK_SUBPASS_EXTERNAL: u32 = !0;
 pub const VK_MAX_DEVICE_GROUP_SIZE: usize = 32;
-pub struct KhrSurfaceFn {
-    destroy_surface_khr: extern "system" fn(
-        instance: Instance,
-        surface: SurfaceKHR,
-        p_allocator: *const AllocationCallbacks,
-    ) -> c_void,
-    get_physical_device_surface_support_khr: extern "system" fn(
-        physical_device: PhysicalDevice,
-        queue_family_index: uint32_t,
-        surface: SurfaceKHR,
-        p_supported: *const Bool32,
-    ) -> Result,
-    get_physical_device_surface_capabilities_khr:
-        extern "system" fn(
+pub mod extensions {
+    use super::*;
+    pub struct KhrSurfaceFn {
+        destroy_surface_khr: extern "system" fn(
+            instance: Instance,
+            surface: SurfaceKHR,
+            p_allocator: *const AllocationCallbacks,
+        ) -> c_void,
+        get_physical_device_surface_support_khr:
+            extern "system" fn(
+                physical_device: PhysicalDevice,
+                queue_family_index: uint32_t,
+                surface: SurfaceKHR,
+                p_supported: *const Bool32,
+            ) -> Result,
+        get_physical_device_surface_capabilities_khr:
+            extern "system" fn(
+                physical_device: PhysicalDevice,
+                surface: SurfaceKHR,
+                p_surface_capabilities: *const SurfaceCapabilitiesKHR,
+            ) -> Result,
+        get_physical_device_surface_formats_khr:
+            extern "system" fn(
+                physical_device: PhysicalDevice,
+                surface: SurfaceKHR,
+                p_surface_format_count: *const uint32_t,
+                p_surface_formats: *const SurfaceFormatKHR,
+            ) -> Result,
+        get_physical_device_surface_present_modes_khr:
+            extern "system" fn(
+                physical_device: PhysicalDevice,
+                surface: SurfaceKHR,
+                p_present_mode_count: *const uint32_t,
+                p_present_modes: *const PresentModeKHR,
+            ) -> Result,
+    }
+    unsafe impl Send for KhrSurfaceFn {}
+    unsafe impl Sync for KhrSurfaceFn {}
+    impl ::std::clone::Clone for KhrSurfaceFn {
+        fn clone(&self) -> Self {
+            KhrSurfaceFn {
+                destroy_surface_khr: self.destroy_surface_khr,
+                get_physical_device_surface_support_khr: self
+                    .get_physical_device_surface_support_khr,
+                get_physical_device_surface_capabilities_khr: self
+                    .get_physical_device_surface_capabilities_khr,
+                get_physical_device_surface_formats_khr: self
+                    .get_physical_device_surface_formats_khr,
+                get_physical_device_surface_present_modes_khr: self
+                    .get_physical_device_surface_present_modes_khr,
+            }
+        }
+    }
+    impl KhrSurfaceFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrSurfaceFn {
+                destroy_surface_khr: unsafe {
+                    let raw_name = stringify!(vkDestroySurfaceKHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                get_physical_device_surface_support_khr: unsafe {
+                    let raw_name = stringify!(vkGetPhysicalDeviceSurfaceSupportKHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                get_physical_device_surface_capabilities_khr: unsafe {
+                    let raw_name = stringify!(vkGetPhysicalDeviceSurfaceCapabilitiesKHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                get_physical_device_surface_formats_khr: unsafe {
+                    let raw_name = stringify!(vkGetPhysicalDeviceSurfaceFormatsKHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                get_physical_device_surface_present_modes_khr: unsafe {
+                    let raw_name = stringify!(vkGetPhysicalDeviceSurfacePresentModesKHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+            };
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+        pub unsafe fn destroy_surface_khr(
+            &self,
+            instance: Instance,
+            surface: SurfaceKHR,
+            p_allocator: *const AllocationCallbacks,
+        ) -> c_void {
+            (self.destroy_surface_khr)(instance, surface, p_allocator)
+        }
+        pub unsafe fn get_physical_device_surface_support_khr(
+            &self,
+            physical_device: PhysicalDevice,
+            queue_family_index: uint32_t,
+            surface: SurfaceKHR,
+            p_supported: *const Bool32,
+        ) -> Result {
+            (self.get_physical_device_surface_support_khr)(
+                physical_device,
+                queue_family_index,
+                surface,
+                p_supported,
+            )
+        }
+        pub unsafe fn get_physical_device_surface_capabilities_khr(
+            &self,
             physical_device: PhysicalDevice,
             surface: SurfaceKHR,
             p_surface_capabilities: *const SurfaceCapabilitiesKHR,
-        ) -> Result,
-    get_physical_device_surface_formats_khr:
-        extern "system" fn(
+        ) -> Result {
+            (self.get_physical_device_surface_capabilities_khr)(
+                physical_device,
+                surface,
+                p_surface_capabilities,
+            )
+        }
+        pub unsafe fn get_physical_device_surface_formats_khr(
+            &self,
             physical_device: PhysicalDevice,
             surface: SurfaceKHR,
             p_surface_format_count: *const uint32_t,
             p_surface_formats: *const SurfaceFormatKHR,
-        ) -> Result,
-    get_physical_device_surface_present_modes_khr:
-        extern "system" fn(
+        ) -> Result {
+            (self.get_physical_device_surface_formats_khr)(
+                physical_device,
+                surface,
+                p_surface_format_count,
+                p_surface_formats,
+            )
+        }
+        pub unsafe fn get_physical_device_surface_present_modes_khr(
+            &self,
             physical_device: PhysicalDevice,
             surface: SurfaceKHR,
             p_present_mode_count: *const uint32_t,
             p_present_modes: *const PresentModeKHR,
+        ) -> Result {
+            (self.get_physical_device_surface_present_modes_khr)(
+                physical_device,
+                surface,
+                p_present_mode_count,
+                p_present_modes,
+            )
+        }
+    }
+    #[doc = "Generated from \'VK_KHR_surface\'"]
+    impl Result {
+        pub const ERROR_SURFACE_LOST_KHR: Self = Result(1000000000);
+    }
+    #[doc = "Generated from \'VK_KHR_surface\'"]
+    impl Result {
+        pub const ERROR_NATIVE_WINDOW_IN_USE_KHR: Self = Result(1000000001);
+    }
+    #[doc = "Generated from \'VK_KHR_surface\'"]
+    impl ObjectType {
+        pub const SURFACE_KHR: Self = ObjectType(1000000000);
+    }
+    pub struct KhrSwapchainFn { create_swapchain_khr : extern "system" fn ( device : Device , p_create_info : *const SwapchainCreateInfoKHR , p_allocator : *const AllocationCallbacks , p_swapchain : *const SwapchainKHR , ) -> Result , destroy_swapchain_khr : extern "system" fn ( device : Device , swapchain : SwapchainKHR , p_allocator : *const AllocationCallbacks , ) -> c_void , get_swapchain_images_khr : extern "system" fn ( device : Device , swapchain : SwapchainKHR , p_swapchain_image_count : *const uint32_t , p_swapchain_images : *const Image , ) -> Result , acquire_next_image_khr : extern "system" fn ( device : Device , swapchain : SwapchainKHR , timeout : uint64_t , semaphore : Semaphore , fence : Fence , p_image_index : *const uint32_t , ) -> Result , queue_present_khr : extern "system" fn ( queue : Queue , p_present_info : *const PresentInfoKHR , ) -> Result , get_device_group_present_capabilities_khr : extern "system" fn ( device : Device , p_device_group_present_capabilities : *const DeviceGroupPresentCapabilitiesKHR , ) -> Result , get_device_group_surface_present_modes_khr : extern "system" fn ( device : Device , surface : SurfaceKHR , p_modes : *const DeviceGroupPresentModeFlagsKHR , ) -> Result , get_physical_device_present_rectangles_khr : extern "system" fn ( physical_device : PhysicalDevice , surface : SurfaceKHR , p_rect_count : *const uint32_t , p_rects : *const Rect2D , ) -> Result , acquire_next_image2_khr : extern "system" fn ( device : Device , p_acquire_info : *const AcquireNextImageInfoKHR , p_image_index : *const uint32_t , ) -> Result , }
+    unsafe impl Send for KhrSwapchainFn {}
+    unsafe impl Sync for KhrSwapchainFn {}
+    impl ::std::clone::Clone for KhrSwapchainFn {
+        fn clone(&self) -> Self {
+            KhrSwapchainFn {
+                create_swapchain_khr: self.create_swapchain_khr,
+                destroy_swapchain_khr: self.destroy_swapchain_khr,
+                get_swapchain_images_khr: self.get_swapchain_images_khr,
+                acquire_next_image_khr: self.acquire_next_image_khr,
+                queue_present_khr: self.queue_present_khr,
+                get_device_group_present_capabilities_khr: self
+                    .get_device_group_present_capabilities_khr,
+                get_device_group_surface_present_modes_khr: self
+                    .get_device_group_surface_present_modes_khr,
+                get_physical_device_present_rectangles_khr: self
+                    .get_physical_device_present_rectangles_khr,
+                acquire_next_image2_khr: self.acquire_next_image2_khr,
+            }
+        }
+    }
+    impl KhrSwapchainFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrSwapchainFn {
+                create_swapchain_khr: unsafe {
+                    let raw_name = stringify!(vkCreateSwapchainKHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                destroy_swapchain_khr: unsafe {
+                    let raw_name = stringify!(vkDestroySwapchainKHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                get_swapchain_images_khr: unsafe {
+                    let raw_name = stringify!(vkGetSwapchainImagesKHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                acquire_next_image_khr: unsafe {
+                    let raw_name = stringify!(vkAcquireNextImageKHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                queue_present_khr: unsafe {
+                    let raw_name = stringify!(vkQueuePresentKHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                get_device_group_present_capabilities_khr: unsafe {
+                    let raw_name = stringify!(vkGetDeviceGroupPresentCapabilitiesKHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                get_device_group_surface_present_modes_khr: unsafe {
+                    let raw_name = stringify!(vkGetDeviceGroupSurfacePresentModesKHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                get_physical_device_present_rectangles_khr: unsafe {
+                    let raw_name = stringify!(vkGetPhysicalDevicePresentRectanglesKHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                acquire_next_image2_khr: unsafe {
+                    let raw_name = stringify!(vkAcquireNextImage2KHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+            };
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+        pub unsafe fn create_swapchain_khr(
+            &self,
+            device: Device,
+            p_create_info: *const SwapchainCreateInfoKHR,
+            p_allocator: *const AllocationCallbacks,
+            p_swapchain: *const SwapchainKHR,
+        ) -> Result {
+            (self.create_swapchain_khr)(device, p_create_info, p_allocator, p_swapchain)
+        }
+        pub unsafe fn destroy_swapchain_khr(
+            &self,
+            device: Device,
+            swapchain: SwapchainKHR,
+            p_allocator: *const AllocationCallbacks,
+        ) -> c_void {
+            (self.destroy_swapchain_khr)(device, swapchain, p_allocator)
+        }
+        pub unsafe fn get_swapchain_images_khr(
+            &self,
+            device: Device,
+            swapchain: SwapchainKHR,
+            p_swapchain_image_count: *const uint32_t,
+            p_swapchain_images: *const Image,
+        ) -> Result {
+            (self.get_swapchain_images_khr)(
+                device,
+                swapchain,
+                p_swapchain_image_count,
+                p_swapchain_images,
+            )
+        }
+        pub unsafe fn acquire_next_image_khr(
+            &self,
+            device: Device,
+            swapchain: SwapchainKHR,
+            timeout: uint64_t,
+            semaphore: Semaphore,
+            fence: Fence,
+            p_image_index: *const uint32_t,
+        ) -> Result {
+            (self.acquire_next_image_khr)(
+                device,
+                swapchain,
+                timeout,
+                semaphore,
+                fence,
+                p_image_index,
+            )
+        }
+        pub unsafe fn queue_present_khr(
+            &self,
+            queue: Queue,
+            p_present_info: *const PresentInfoKHR,
+        ) -> Result {
+            (self.queue_present_khr)(queue, p_present_info)
+        }
+        pub unsafe fn get_device_group_present_capabilities_khr(
+            &self,
+            device: Device,
+            p_device_group_present_capabilities: *const DeviceGroupPresentCapabilitiesKHR,
+        ) -> Result {
+            (self.get_device_group_present_capabilities_khr)(
+                device,
+                p_device_group_present_capabilities,
+            )
+        }
+        pub unsafe fn get_device_group_surface_present_modes_khr(
+            &self,
+            device: Device,
+            surface: SurfaceKHR,
+            p_modes: *const DeviceGroupPresentModeFlagsKHR,
+        ) -> Result {
+            (self.get_device_group_surface_present_modes_khr)(device, surface, p_modes)
+        }
+        pub unsafe fn get_physical_device_present_rectangles_khr(
+            &self,
+            physical_device: PhysicalDevice,
+            surface: SurfaceKHR,
+            p_rect_count: *const uint32_t,
+            p_rects: *const Rect2D,
+        ) -> Result {
+            (self.get_physical_device_present_rectangles_khr)(
+                physical_device,
+                surface,
+                p_rect_count,
+                p_rects,
+            )
+        }
+        pub unsafe fn acquire_next_image2_khr(
+            &self,
+            device: Device,
+            p_acquire_info: *const AcquireNextImageInfoKHR,
+            p_image_index: *const uint32_t,
+        ) -> Result {
+            (self.acquire_next_image2_khr)(device, p_acquire_info, p_image_index)
+        }
+    }
+    #[doc = "Generated from \'VK_KHR_swapchain\'"]
+    impl StructureType {
+        pub const SWAPCHAIN_CREATE_INFO_KHR: Self = StructureType(1000001000);
+    }
+    #[doc = "Generated from \'VK_KHR_swapchain\'"]
+    impl StructureType {
+        pub const PRESENT_INFO_KHR: Self = StructureType(1000001001);
+    }
+    #[doc = "Generated from \'VK_KHR_swapchain\'"]
+    impl ImageLayout {
+        pub const PRESENT_SRC_KHR: Self = ImageLayout(1000001002);
+    }
+    #[doc = "Generated from \'VK_KHR_swapchain\'"]
+    impl Result {
+        pub const SUBOPTIMAL_KHR: Self = Result(1000001003);
+    }
+    #[doc = "Generated from \'VK_KHR_swapchain\'"]
+    impl Result {
+        pub const ERROR_OUT_OF_DATE_KHR: Self = Result(1000001004);
+    }
+    #[doc = "Generated from \'VK_KHR_swapchain\'"]
+    impl ObjectType {
+        pub const SWAPCHAIN_KHR: Self = ObjectType(1000001000);
+    }
+    #[doc = "Generated from \'VK_KHR_swapchain\'"]
+    impl StructureType {
+        pub const DEVICE_GROUP_PRESENT_CAPABILITIES_KHR: Self = StructureType(1000060007);
+    }
+    #[doc = "Generated from \'VK_KHR_swapchain\'"]
+    impl StructureType {
+        pub const IMAGE_SWAPCHAIN_CREATE_INFO_KHR: Self = StructureType(1000060008);
+    }
+    #[doc = "Generated from \'VK_KHR_swapchain\'"]
+    impl StructureType {
+        pub const BIND_IMAGE_MEMORY_SWAPCHAIN_INFO_KHR: Self = StructureType(1000060009);
+    }
+    #[doc = "Generated from \'VK_KHR_swapchain\'"]
+    impl StructureType {
+        pub const ACQUIRE_NEXT_IMAGE_INFO_KHR: Self = StructureType(1000060010);
+    }
+    #[doc = "Generated from \'VK_KHR_swapchain\'"]
+    impl StructureType {
+        pub const DEVICE_GROUP_PRESENT_INFO_KHR: Self = StructureType(1000060011);
+    }
+    #[doc = "Generated from \'VK_KHR_swapchain\'"]
+    impl StructureType {
+        pub const DEVICE_GROUP_SWAPCHAIN_CREATE_INFO_KHR: Self = StructureType(1000060012);
+    }
+    #[doc = "Generated from \'VK_KHR_swapchain\'"]
+    impl SwapchainCreateFlagsKHR {
+        pub const SPLIT_INSTANCE_BIND_REGIONS_KHR: Self = SwapchainCreateFlagsKHR(0b1);
+    }
+    #[doc = "Generated from \'VK_KHR_swapchain\'"]
+    impl SwapchainCreateFlagsKHR {
+        pub const PROTECTED_KHR: Self = SwapchainCreateFlagsKHR(0b10);
+    }
+    pub struct KhrDisplayFn {
+        get_physical_device_display_properties_khr:
+            extern "system" fn(
+                physical_device: PhysicalDevice,
+                p_property_count: *const uint32_t,
+                p_properties: *const DisplayPropertiesKHR,
+            ) -> Result,
+        get_physical_device_display_plane_properties_khr:
+            extern "system" fn(
+                physical_device: PhysicalDevice,
+                p_property_count: *const uint32_t,
+                p_properties: *const DisplayPlanePropertiesKHR,
+            ) -> Result,
+        get_display_plane_supported_displays_khr:
+            extern "system" fn(
+                physical_device: PhysicalDevice,
+                plane_index: uint32_t,
+                p_display_count: *const uint32_t,
+                p_displays: *const DisplayKHR,
+            ) -> Result,
+        get_display_mode_properties_khr:
+            extern "system" fn(
+                physical_device: PhysicalDevice,
+                display: DisplayKHR,
+                p_property_count: *const uint32_t,
+                p_properties: *const DisplayModePropertiesKHR,
+            ) -> Result,
+        create_display_mode_khr: extern "system" fn(
+            physical_device: PhysicalDevice,
+            display: DisplayKHR,
+            p_create_info: *const DisplayModeCreateInfoKHR,
+            p_allocator: *const AllocationCallbacks,
+            p_mode: *const DisplayModeKHR,
         ) -> Result,
-}
-unsafe impl Send for KhrSurfaceFn {}
-unsafe impl Sync for KhrSurfaceFn {}
-impl ::std::clone::Clone for KhrSurfaceFn {
-    fn clone(&self) -> Self {
-        KhrSurfaceFn {
-            destroy_surface_khr: self.destroy_surface_khr,
-            get_physical_device_surface_support_khr: self.get_physical_device_surface_support_khr,
-            get_physical_device_surface_capabilities_khr: self
-                .get_physical_device_surface_capabilities_khr,
-            get_physical_device_surface_formats_khr: self.get_physical_device_surface_formats_khr,
-            get_physical_device_surface_present_modes_khr: self
-                .get_physical_device_surface_present_modes_khr,
+        get_display_plane_capabilities_khr:
+            extern "system" fn(
+                physical_device: PhysicalDevice,
+                mode: DisplayModeKHR,
+                plane_index: uint32_t,
+                p_capabilities: *const DisplayPlaneCapabilitiesKHR,
+            ) -> Result,
+        create_display_plane_surface_khr:
+            extern "system" fn(
+                instance: Instance,
+                p_create_info: *const DisplaySurfaceCreateInfoKHR,
+                p_allocator: *const AllocationCallbacks,
+                p_surface: *const SurfaceKHR,
+            ) -> Result,
+    }
+    unsafe impl Send for KhrDisplayFn {}
+    unsafe impl Sync for KhrDisplayFn {}
+    impl ::std::clone::Clone for KhrDisplayFn {
+        fn clone(&self) -> Self {
+            KhrDisplayFn {
+                get_physical_device_display_properties_khr: self
+                    .get_physical_device_display_properties_khr,
+                get_physical_device_display_plane_properties_khr: self
+                    .get_physical_device_display_plane_properties_khr,
+                get_display_plane_supported_displays_khr: self
+                    .get_display_plane_supported_displays_khr,
+                get_display_mode_properties_khr: self.get_display_mode_properties_khr,
+                create_display_mode_khr: self.create_display_mode_khr,
+                get_display_plane_capabilities_khr: self.get_display_plane_capabilities_khr,
+                create_display_plane_surface_khr: self.create_display_plane_surface_khr,
+            }
         }
     }
-}
-impl KhrSurfaceFn {
-    pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        let mut _err_str = Vec::new();
-        let s = KhrSurfaceFn {
-            destroy_surface_khr: unsafe {
-                let raw_name = stringify!(vkDestroySurfaceKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            get_physical_device_surface_support_khr: unsafe {
-                let raw_name = stringify!(vkGetPhysicalDeviceSurfaceSupportKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            get_physical_device_surface_capabilities_khr: unsafe {
-                let raw_name = stringify!(vkGetPhysicalDeviceSurfaceCapabilitiesKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            get_physical_device_surface_formats_khr: unsafe {
-                let raw_name = stringify!(vkGetPhysicalDeviceSurfaceFormatsKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            get_physical_device_surface_present_modes_khr: unsafe {
-                let raw_name = stringify!(vkGetPhysicalDeviceSurfacePresentModesKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-        };
-        if _err_str.is_empty() {
-            Ok(s)
-        } else {
-            Err(_err_str)
+    impl KhrDisplayFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrDisplayFn {
+                get_physical_device_display_properties_khr: unsafe {
+                    let raw_name = stringify!(vkGetPhysicalDeviceDisplayPropertiesKHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                get_physical_device_display_plane_properties_khr: unsafe {
+                    let raw_name = stringify!(vkGetPhysicalDeviceDisplayPlanePropertiesKHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                get_display_plane_supported_displays_khr: unsafe {
+                    let raw_name = stringify!(vkGetDisplayPlaneSupportedDisplaysKHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                get_display_mode_properties_khr: unsafe {
+                    let raw_name = stringify!(vkGetDisplayModePropertiesKHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                create_display_mode_khr: unsafe {
+                    let raw_name = stringify!(vkCreateDisplayModeKHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                get_display_plane_capabilities_khr: unsafe {
+                    let raw_name = stringify!(vkGetDisplayPlaneCapabilitiesKHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                create_display_plane_surface_khr: unsafe {
+                    let raw_name = stringify!(vkCreateDisplayPlaneSurfaceKHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+            };
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
         }
-    }
-    pub unsafe fn destroy_surface_khr(
-        &self,
-        instance: Instance,
-        surface: SurfaceKHR,
-        p_allocator: *const AllocationCallbacks,
-    ) -> c_void {
-        (self.destroy_surface_khr)(instance, surface, p_allocator)
-    }
-    pub unsafe fn get_physical_device_surface_support_khr(
-        &self,
-        physical_device: PhysicalDevice,
-        queue_family_index: uint32_t,
-        surface: SurfaceKHR,
-        p_supported: *const Bool32,
-    ) -> Result {
-        (self.get_physical_device_surface_support_khr)(
-            physical_device,
-            queue_family_index,
-            surface,
-            p_supported,
-        )
-    }
-    pub unsafe fn get_physical_device_surface_capabilities_khr(
-        &self,
-        physical_device: PhysicalDevice,
-        surface: SurfaceKHR,
-        p_surface_capabilities: *const SurfaceCapabilitiesKHR,
-    ) -> Result {
-        (self.get_physical_device_surface_capabilities_khr)(
-            physical_device,
-            surface,
-            p_surface_capabilities,
-        )
-    }
-    pub unsafe fn get_physical_device_surface_formats_khr(
-        &self,
-        physical_device: PhysicalDevice,
-        surface: SurfaceKHR,
-        p_surface_format_count: *const uint32_t,
-        p_surface_formats: *const SurfaceFormatKHR,
-    ) -> Result {
-        (self.get_physical_device_surface_formats_khr)(
-            physical_device,
-            surface,
-            p_surface_format_count,
-            p_surface_formats,
-        )
-    }
-    pub unsafe fn get_physical_device_surface_present_modes_khr(
-        &self,
-        physical_device: PhysicalDevice,
-        surface: SurfaceKHR,
-        p_present_mode_count: *const uint32_t,
-        p_present_modes: *const PresentModeKHR,
-    ) -> Result {
-        (self.get_physical_device_surface_present_modes_khr)(
-            physical_device,
-            surface,
-            p_present_mode_count,
-            p_present_modes,
-        )
-    }
-}
-pub struct KhrSwapchainFn { create_swapchain_khr : extern "system" fn ( device : Device , p_create_info : *const SwapchainCreateInfoKHR , p_allocator : *const AllocationCallbacks , p_swapchain : *const SwapchainKHR , ) -> Result , destroy_swapchain_khr : extern "system" fn ( device : Device , swapchain : SwapchainKHR , p_allocator : *const AllocationCallbacks , ) -> c_void , get_swapchain_images_khr : extern "system" fn ( device : Device , swapchain : SwapchainKHR , p_swapchain_image_count : *const uint32_t , p_swapchain_images : *const Image , ) -> Result , acquire_next_image_khr : extern "system" fn ( device : Device , swapchain : SwapchainKHR , timeout : uint64_t , semaphore : Semaphore , fence : Fence , p_image_index : *const uint32_t , ) -> Result , queue_present_khr : extern "system" fn ( queue : Queue , p_present_info : *const PresentInfoKHR , ) -> Result , get_device_group_present_capabilities_khr : extern "system" fn ( device : Device , p_device_group_present_capabilities : *const DeviceGroupPresentCapabilitiesKHR , ) -> Result , get_device_group_surface_present_modes_khr : extern "system" fn ( device : Device , surface : SurfaceKHR , p_modes : *const DeviceGroupPresentModeFlagsKHR , ) -> Result , get_physical_device_present_rectangles_khr : extern "system" fn ( physical_device : PhysicalDevice , surface : SurfaceKHR , p_rect_count : *const uint32_t , p_rects : *const Rect2D , ) -> Result , acquire_next_image2_khr : extern "system" fn ( device : Device , p_acquire_info : *const AcquireNextImageInfoKHR , p_image_index : *const uint32_t , ) -> Result , }
-unsafe impl Send for KhrSwapchainFn {}
-unsafe impl Sync for KhrSwapchainFn {}
-impl ::std::clone::Clone for KhrSwapchainFn {
-    fn clone(&self) -> Self {
-        KhrSwapchainFn {
-            create_swapchain_khr: self.create_swapchain_khr,
-            destroy_swapchain_khr: self.destroy_swapchain_khr,
-            get_swapchain_images_khr: self.get_swapchain_images_khr,
-            acquire_next_image_khr: self.acquire_next_image_khr,
-            queue_present_khr: self.queue_present_khr,
-            get_device_group_present_capabilities_khr: self
-                .get_device_group_present_capabilities_khr,
-            get_device_group_surface_present_modes_khr: self
-                .get_device_group_surface_present_modes_khr,
-            get_physical_device_present_rectangles_khr: self
-                .get_physical_device_present_rectangles_khr,
-            acquire_next_image2_khr: self.acquire_next_image2_khr,
-        }
-    }
-}
-impl KhrSwapchainFn {
-    pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        let mut _err_str = Vec::new();
-        let s = KhrSwapchainFn {
-            create_swapchain_khr: unsafe {
-                let raw_name = stringify!(vkCreateSwapchainKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            destroy_swapchain_khr: unsafe {
-                let raw_name = stringify!(vkDestroySwapchainKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            get_swapchain_images_khr: unsafe {
-                let raw_name = stringify!(vkGetSwapchainImagesKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            acquire_next_image_khr: unsafe {
-                let raw_name = stringify!(vkAcquireNextImageKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            queue_present_khr: unsafe {
-                let raw_name = stringify!(vkQueuePresentKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            get_device_group_present_capabilities_khr: unsafe {
-                let raw_name = stringify!(vkGetDeviceGroupPresentCapabilitiesKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            get_device_group_surface_present_modes_khr: unsafe {
-                let raw_name = stringify!(vkGetDeviceGroupSurfacePresentModesKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            get_physical_device_present_rectangles_khr: unsafe {
-                let raw_name = stringify!(vkGetPhysicalDevicePresentRectanglesKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            acquire_next_image2_khr: unsafe {
-                let raw_name = stringify!(vkAcquireNextImage2KHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-        };
-        if _err_str.is_empty() {
-            Ok(s)
-        } else {
-            Err(_err_str)
-        }
-    }
-    pub unsafe fn create_swapchain_khr(
-        &self,
-        device: Device,
-        p_create_info: *const SwapchainCreateInfoKHR,
-        p_allocator: *const AllocationCallbacks,
-        p_swapchain: *const SwapchainKHR,
-    ) -> Result {
-        (self.create_swapchain_khr)(device, p_create_info, p_allocator, p_swapchain)
-    }
-    pub unsafe fn destroy_swapchain_khr(
-        &self,
-        device: Device,
-        swapchain: SwapchainKHR,
-        p_allocator: *const AllocationCallbacks,
-    ) -> c_void {
-        (self.destroy_swapchain_khr)(device, swapchain, p_allocator)
-    }
-    pub unsafe fn get_swapchain_images_khr(
-        &self,
-        device: Device,
-        swapchain: SwapchainKHR,
-        p_swapchain_image_count: *const uint32_t,
-        p_swapchain_images: *const Image,
-    ) -> Result {
-        (self.get_swapchain_images_khr)(
-            device,
-            swapchain,
-            p_swapchain_image_count,
-            p_swapchain_images,
-        )
-    }
-    pub unsafe fn acquire_next_image_khr(
-        &self,
-        device: Device,
-        swapchain: SwapchainKHR,
-        timeout: uint64_t,
-        semaphore: Semaphore,
-        fence: Fence,
-        p_image_index: *const uint32_t,
-    ) -> Result {
-        (self.acquire_next_image_khr)(device, swapchain, timeout, semaphore, fence, p_image_index)
-    }
-    pub unsafe fn queue_present_khr(
-        &self,
-        queue: Queue,
-        p_present_info: *const PresentInfoKHR,
-    ) -> Result {
-        (self.queue_present_khr)(queue, p_present_info)
-    }
-    pub unsafe fn get_device_group_present_capabilities_khr(
-        &self,
-        device: Device,
-        p_device_group_present_capabilities: *const DeviceGroupPresentCapabilitiesKHR,
-    ) -> Result {
-        (self.get_device_group_present_capabilities_khr)(
-            device,
-            p_device_group_present_capabilities,
-        )
-    }
-    pub unsafe fn get_device_group_surface_present_modes_khr(
-        &self,
-        device: Device,
-        surface: SurfaceKHR,
-        p_modes: *const DeviceGroupPresentModeFlagsKHR,
-    ) -> Result {
-        (self.get_device_group_surface_present_modes_khr)(device, surface, p_modes)
-    }
-    pub unsafe fn get_physical_device_present_rectangles_khr(
-        &self,
-        physical_device: PhysicalDevice,
-        surface: SurfaceKHR,
-        p_rect_count: *const uint32_t,
-        p_rects: *const Rect2D,
-    ) -> Result {
-        (self.get_physical_device_present_rectangles_khr)(
-            physical_device,
-            surface,
-            p_rect_count,
-            p_rects,
-        )
-    }
-    pub unsafe fn acquire_next_image2_khr(
-        &self,
-        device: Device,
-        p_acquire_info: *const AcquireNextImageInfoKHR,
-        p_image_index: *const uint32_t,
-    ) -> Result {
-        (self.acquire_next_image2_khr)(device, p_acquire_info, p_image_index)
-    }
-}
-pub struct KhrDisplayFn {
-    get_physical_device_display_properties_khr:
-        extern "system" fn(
+        pub unsafe fn get_physical_device_display_properties_khr(
+            &self,
             physical_device: PhysicalDevice,
             p_property_count: *const uint32_t,
             p_properties: *const DisplayPropertiesKHR,
-        ) -> Result,
-    get_physical_device_display_plane_properties_khr:
-        extern "system" fn(
+        ) -> Result {
+            (self.get_physical_device_display_properties_khr)(
+                physical_device,
+                p_property_count,
+                p_properties,
+            )
+        }
+        pub unsafe fn get_physical_device_display_plane_properties_khr(
+            &self,
             physical_device: PhysicalDevice,
             p_property_count: *const uint32_t,
             p_properties: *const DisplayPlanePropertiesKHR,
-        ) -> Result,
-    get_display_plane_supported_displays_khr: extern "system" fn(
-        physical_device: PhysicalDevice,
-        plane_index: uint32_t,
-        p_display_count: *const uint32_t,
-        p_displays: *const DisplayKHR,
-    ) -> Result,
-    get_display_mode_properties_khr:
-        extern "system" fn(
+        ) -> Result {
+            (self.get_physical_device_display_plane_properties_khr)(
+                physical_device,
+                p_property_count,
+                p_properties,
+            )
+        }
+        pub unsafe fn get_display_plane_supported_displays_khr(
+            &self,
+            physical_device: PhysicalDevice,
+            plane_index: uint32_t,
+            p_display_count: *const uint32_t,
+            p_displays: *const DisplayKHR,
+        ) -> Result {
+            (self.get_display_plane_supported_displays_khr)(
+                physical_device,
+                plane_index,
+                p_display_count,
+                p_displays,
+            )
+        }
+        pub unsafe fn get_display_mode_properties_khr(
+            &self,
             physical_device: PhysicalDevice,
             display: DisplayKHR,
             p_property_count: *const uint32_t,
             p_properties: *const DisplayModePropertiesKHR,
-        ) -> Result,
-    create_display_mode_khr: extern "system" fn(
-        physical_device: PhysicalDevice,
-        display: DisplayKHR,
-        p_create_info: *const DisplayModeCreateInfoKHR,
-        p_allocator: *const AllocationCallbacks,
-        p_mode: *const DisplayModeKHR,
-    ) -> Result,
-    get_display_plane_capabilities_khr:
-        extern "system" fn(
+        ) -> Result {
+            (self.get_display_mode_properties_khr)(
+                physical_device,
+                display,
+                p_property_count,
+                p_properties,
+            )
+        }
+        pub unsafe fn create_display_mode_khr(
+            &self,
+            physical_device: PhysicalDevice,
+            display: DisplayKHR,
+            p_create_info: *const DisplayModeCreateInfoKHR,
+            p_allocator: *const AllocationCallbacks,
+            p_mode: *const DisplayModeKHR,
+        ) -> Result {
+            (self.create_display_mode_khr)(
+                physical_device,
+                display,
+                p_create_info,
+                p_allocator,
+                p_mode,
+            )
+        }
+        pub unsafe fn get_display_plane_capabilities_khr(
+            &self,
             physical_device: PhysicalDevice,
             mode: DisplayModeKHR,
             plane_index: uint32_t,
             p_capabilities: *const DisplayPlaneCapabilitiesKHR,
-        ) -> Result,
-    create_display_plane_surface_khr:
-        extern "system" fn(
+        ) -> Result {
+            (self.get_display_plane_capabilities_khr)(
+                physical_device,
+                mode,
+                plane_index,
+                p_capabilities,
+            )
+        }
+        pub unsafe fn create_display_plane_surface_khr(
+            &self,
             instance: Instance,
             p_create_info: *const DisplaySurfaceCreateInfoKHR,
             p_allocator: *const AllocationCallbacks,
             p_surface: *const SurfaceKHR,
+        ) -> Result {
+            (self.create_display_plane_surface_khr)(instance, p_create_info, p_allocator, p_surface)
+        }
+    }
+    #[doc = "Generated from \'VK_KHR_display\'"]
+    impl StructureType {
+        pub const DISPLAY_MODE_CREATE_INFO_KHR: Self = StructureType(1000002000);
+    }
+    #[doc = "Generated from \'VK_KHR_display\'"]
+    impl StructureType {
+        pub const DISPLAY_SURFACE_CREATE_INFO_KHR: Self = StructureType(1000002001);
+    }
+    #[doc = "Generated from \'VK_KHR_display\'"]
+    impl ObjectType {
+        pub const DISPLAY_KHR: Self = ObjectType(1000002000);
+    }
+    #[doc = "Generated from \'VK_KHR_display\'"]
+    impl ObjectType {
+        pub const DISPLAY_MODE_KHR: Self = ObjectType(1000002001);
+    }
+    pub struct KhrDisplaySwapchainFn {
+        create_shared_swapchains_khr:
+            extern "system" fn(
+                device: Device,
+                swapchain_count: uint32_t,
+                p_create_infos: *const SwapchainCreateInfoKHR,
+                p_allocator: *const AllocationCallbacks,
+                p_swapchains: *const SwapchainKHR,
+            ) -> Result,
+    }
+    unsafe impl Send for KhrDisplaySwapchainFn {}
+    unsafe impl Sync for KhrDisplaySwapchainFn {}
+    impl ::std::clone::Clone for KhrDisplaySwapchainFn {
+        fn clone(&self) -> Self {
+            KhrDisplaySwapchainFn {
+                create_shared_swapchains_khr: self.create_shared_swapchains_khr,
+            }
+        }
+    }
+    impl KhrDisplaySwapchainFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrDisplaySwapchainFn {
+                create_shared_swapchains_khr: unsafe {
+                    let raw_name = stringify!(vkCreateSharedSwapchainsKHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+            };
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+        pub unsafe fn create_shared_swapchains_khr(
+            &self,
+            device: Device,
+            swapchain_count: uint32_t,
+            p_create_infos: *const SwapchainCreateInfoKHR,
+            p_allocator: *const AllocationCallbacks,
+            p_swapchains: *const SwapchainKHR,
+        ) -> Result {
+            (self.create_shared_swapchains_khr)(
+                device,
+                swapchain_count,
+                p_create_infos,
+                p_allocator,
+                p_swapchains,
+            )
+        }
+    }
+    #[doc = "Generated from \'VK_KHR_display_swapchain\'"]
+    impl StructureType {
+        pub const DISPLAY_PRESENT_INFO_KHR: Self = StructureType(1000003000);
+    }
+    #[doc = "Generated from \'VK_KHR_display_swapchain\'"]
+    impl Result {
+        pub const ERROR_INCOMPATIBLE_DISPLAY_KHR: Self = Result(1000003001);
+    }
+    pub struct KhrXlibSurfaceFn {
+        create_xlib_surface_khr: extern "system" fn(
+            instance: Instance,
+            p_create_info: *const XlibSurfaceCreateInfoKHR,
+            p_allocator: *const AllocationCallbacks,
+            p_surface: *const SurfaceKHR,
         ) -> Result,
-}
-unsafe impl Send for KhrDisplayFn {}
-unsafe impl Sync for KhrDisplayFn {}
-impl ::std::clone::Clone for KhrDisplayFn {
-    fn clone(&self) -> Self {
-        KhrDisplayFn {
-            get_physical_device_display_properties_khr: self
-                .get_physical_device_display_properties_khr,
-            get_physical_device_display_plane_properties_khr: self
-                .get_physical_device_display_plane_properties_khr,
-            get_display_plane_supported_displays_khr: self.get_display_plane_supported_displays_khr,
-            get_display_mode_properties_khr: self.get_display_mode_properties_khr,
-            create_display_mode_khr: self.create_display_mode_khr,
-            get_display_plane_capabilities_khr: self.get_display_plane_capabilities_khr,
-            create_display_plane_surface_khr: self.create_display_plane_surface_khr,
+        get_physical_device_xlib_presentation_support_khr:
+            extern "system" fn(
+                physical_device: PhysicalDevice,
+                queue_family_index: uint32_t,
+                dpy: *const Display,
+                visual_id: VisualID,
+            ) -> Bool32,
+    }
+    unsafe impl Send for KhrXlibSurfaceFn {}
+    unsafe impl Sync for KhrXlibSurfaceFn {}
+    impl ::std::clone::Clone for KhrXlibSurfaceFn {
+        fn clone(&self) -> Self {
+            KhrXlibSurfaceFn {
+                create_xlib_surface_khr: self.create_xlib_surface_khr,
+                get_physical_device_xlib_presentation_support_khr: self
+                    .get_physical_device_xlib_presentation_support_khr,
+            }
         }
     }
-}
-impl KhrDisplayFn {
-    pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        let mut _err_str = Vec::new();
-        let s = KhrDisplayFn {
-            get_physical_device_display_properties_khr: unsafe {
-                let raw_name = stringify!(vkGetPhysicalDeviceDisplayPropertiesKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            get_physical_device_display_plane_properties_khr: unsafe {
-                let raw_name = stringify!(vkGetPhysicalDeviceDisplayPlanePropertiesKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            get_display_plane_supported_displays_khr: unsafe {
-                let raw_name = stringify!(vkGetDisplayPlaneSupportedDisplaysKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            get_display_mode_properties_khr: unsafe {
-                let raw_name = stringify!(vkGetDisplayModePropertiesKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            create_display_mode_khr: unsafe {
-                let raw_name = stringify!(vkCreateDisplayModeKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            get_display_plane_capabilities_khr: unsafe {
-                let raw_name = stringify!(vkGetDisplayPlaneCapabilitiesKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            create_display_plane_surface_khr: unsafe {
-                let raw_name = stringify!(vkCreateDisplayPlaneSurfaceKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-        };
-        if _err_str.is_empty() {
-            Ok(s)
-        } else {
-            Err(_err_str)
+    impl KhrXlibSurfaceFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrXlibSurfaceFn {
+                create_xlib_surface_khr: unsafe {
+                    let raw_name = stringify!(vkCreateXlibSurfaceKHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                get_physical_device_xlib_presentation_support_khr: unsafe {
+                    let raw_name = stringify!(vkGetPhysicalDeviceXlibPresentationSupportKHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+            };
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
         }
-    }
-    pub unsafe fn get_physical_device_display_properties_khr(
-        &self,
-        physical_device: PhysicalDevice,
-        p_property_count: *const uint32_t,
-        p_properties: *const DisplayPropertiesKHR,
-    ) -> Result {
-        (self.get_physical_device_display_properties_khr)(
-            physical_device,
-            p_property_count,
-            p_properties,
-        )
-    }
-    pub unsafe fn get_physical_device_display_plane_properties_khr(
-        &self,
-        physical_device: PhysicalDevice,
-        p_property_count: *const uint32_t,
-        p_properties: *const DisplayPlanePropertiesKHR,
-    ) -> Result {
-        (self.get_physical_device_display_plane_properties_khr)(
-            physical_device,
-            p_property_count,
-            p_properties,
-        )
-    }
-    pub unsafe fn get_display_plane_supported_displays_khr(
-        &self,
-        physical_device: PhysicalDevice,
-        plane_index: uint32_t,
-        p_display_count: *const uint32_t,
-        p_displays: *const DisplayKHR,
-    ) -> Result {
-        (self.get_display_plane_supported_displays_khr)(
-            physical_device,
-            plane_index,
-            p_display_count,
-            p_displays,
-        )
-    }
-    pub unsafe fn get_display_mode_properties_khr(
-        &self,
-        physical_device: PhysicalDevice,
-        display: DisplayKHR,
-        p_property_count: *const uint32_t,
-        p_properties: *const DisplayModePropertiesKHR,
-    ) -> Result {
-        (self.get_display_mode_properties_khr)(
-            physical_device,
-            display,
-            p_property_count,
-            p_properties,
-        )
-    }
-    pub unsafe fn create_display_mode_khr(
-        &self,
-        physical_device: PhysicalDevice,
-        display: DisplayKHR,
-        p_create_info: *const DisplayModeCreateInfoKHR,
-        p_allocator: *const AllocationCallbacks,
-        p_mode: *const DisplayModeKHR,
-    ) -> Result {
-        (self.create_display_mode_khr)(physical_device, display, p_create_info, p_allocator, p_mode)
-    }
-    pub unsafe fn get_display_plane_capabilities_khr(
-        &self,
-        physical_device: PhysicalDevice,
-        mode: DisplayModeKHR,
-        plane_index: uint32_t,
-        p_capabilities: *const DisplayPlaneCapabilitiesKHR,
-    ) -> Result {
-        (self.get_display_plane_capabilities_khr)(
-            physical_device,
-            mode,
-            plane_index,
-            p_capabilities,
-        )
-    }
-    pub unsafe fn create_display_plane_surface_khr(
-        &self,
-        instance: Instance,
-        p_create_info: *const DisplaySurfaceCreateInfoKHR,
-        p_allocator: *const AllocationCallbacks,
-        p_surface: *const SurfaceKHR,
-    ) -> Result {
-        (self.create_display_plane_surface_khr)(instance, p_create_info, p_allocator, p_surface)
-    }
-}
-pub struct KhrDisplaySwapchainFn {
-    create_shared_swapchains_khr: extern "system" fn(
-        device: Device,
-        swapchain_count: uint32_t,
-        p_create_infos: *const SwapchainCreateInfoKHR,
-        p_allocator: *const AllocationCallbacks,
-        p_swapchains: *const SwapchainKHR,
-    ) -> Result,
-}
-unsafe impl Send for KhrDisplaySwapchainFn {}
-unsafe impl Sync for KhrDisplaySwapchainFn {}
-impl ::std::clone::Clone for KhrDisplaySwapchainFn {
-    fn clone(&self) -> Self {
-        KhrDisplaySwapchainFn {
-            create_shared_swapchains_khr: self.create_shared_swapchains_khr,
+        pub unsafe fn create_xlib_surface_khr(
+            &self,
+            instance: Instance,
+            p_create_info: *const XlibSurfaceCreateInfoKHR,
+            p_allocator: *const AllocationCallbacks,
+            p_surface: *const SurfaceKHR,
+        ) -> Result {
+            (self.create_xlib_surface_khr)(instance, p_create_info, p_allocator, p_surface)
         }
-    }
-}
-impl KhrDisplaySwapchainFn {
-    pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        let mut _err_str = Vec::new();
-        let s = KhrDisplaySwapchainFn {
-            create_shared_swapchains_khr: unsafe {
-                let raw_name = stringify!(vkCreateSharedSwapchainsKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-        };
-        if _err_str.is_empty() {
-            Ok(s)
-        } else {
-            Err(_err_str)
-        }
-    }
-    pub unsafe fn create_shared_swapchains_khr(
-        &self,
-        device: Device,
-        swapchain_count: uint32_t,
-        p_create_infos: *const SwapchainCreateInfoKHR,
-        p_allocator: *const AllocationCallbacks,
-        p_swapchains: *const SwapchainKHR,
-    ) -> Result {
-        (self.create_shared_swapchains_khr)(
-            device,
-            swapchain_count,
-            p_create_infos,
-            p_allocator,
-            p_swapchains,
-        )
-    }
-}
-pub struct KhrXlibSurfaceFn {
-    create_xlib_surface_khr: extern "system" fn(
-        instance: Instance,
-        p_create_info: *const XlibSurfaceCreateInfoKHR,
-        p_allocator: *const AllocationCallbacks,
-        p_surface: *const SurfaceKHR,
-    ) -> Result,
-    get_physical_device_xlib_presentation_support_khr:
-        extern "system" fn(
+        pub unsafe fn get_physical_device_xlib_presentation_support_khr(
+            &self,
             physical_device: PhysicalDevice,
             queue_family_index: uint32_t,
             dpy: *const Display,
             visual_id: VisualID,
-        ) -> Bool32,
-}
-unsafe impl Send for KhrXlibSurfaceFn {}
-unsafe impl Sync for KhrXlibSurfaceFn {}
-impl ::std::clone::Clone for KhrXlibSurfaceFn {
-    fn clone(&self) -> Self {
-        KhrXlibSurfaceFn {
-            create_xlib_surface_khr: self.create_xlib_surface_khr,
-            get_physical_device_xlib_presentation_support_khr: self
-                .get_physical_device_xlib_presentation_support_khr,
+        ) -> Bool32 {
+            (self.get_physical_device_xlib_presentation_support_khr)(
+                physical_device,
+                queue_family_index,
+                dpy,
+                visual_id,
+            )
         }
     }
-}
-impl KhrXlibSurfaceFn {
-    pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        let mut _err_str = Vec::new();
-        let s = KhrXlibSurfaceFn {
-            create_xlib_surface_khr: unsafe {
-                let raw_name = stringify!(vkCreateXlibSurfaceKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            get_physical_device_xlib_presentation_support_khr: unsafe {
-                let raw_name = stringify!(vkGetPhysicalDeviceXlibPresentationSupportKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-        };
-        if _err_str.is_empty() {
-            Ok(s)
-        } else {
-            Err(_err_str)
+    #[doc = "Generated from \'VK_KHR_xlib_surface\'"]
+    impl StructureType {
+        pub const XLIB_SURFACE_CREATE_INFO_KHR: Self = StructureType(1000004000);
+    }
+    pub struct KhrXcbSurfaceFn {
+        create_xcb_surface_khr: extern "system" fn(
+            instance: Instance,
+            p_create_info: *const XcbSurfaceCreateInfoKHR,
+            p_allocator: *const AllocationCallbacks,
+            p_surface: *const SurfaceKHR,
+        ) -> Result,
+        get_physical_device_xcb_presentation_support_khr:
+            extern "system" fn(
+                physical_device: PhysicalDevice,
+                queue_family_index: uint32_t,
+                connection: *const xcb_connection_t,
+                visual_id: xcb_visualid_t,
+            ) -> Bool32,
+    }
+    unsafe impl Send for KhrXcbSurfaceFn {}
+    unsafe impl Sync for KhrXcbSurfaceFn {}
+    impl ::std::clone::Clone for KhrXcbSurfaceFn {
+        fn clone(&self) -> Self {
+            KhrXcbSurfaceFn {
+                create_xcb_surface_khr: self.create_xcb_surface_khr,
+                get_physical_device_xcb_presentation_support_khr: self
+                    .get_physical_device_xcb_presentation_support_khr,
+            }
         }
     }
-    pub unsafe fn create_xlib_surface_khr(
-        &self,
-        instance: Instance,
-        p_create_info: *const XlibSurfaceCreateInfoKHR,
-        p_allocator: *const AllocationCallbacks,
-        p_surface: *const SurfaceKHR,
-    ) -> Result {
-        (self.create_xlib_surface_khr)(instance, p_create_info, p_allocator, p_surface)
-    }
-    pub unsafe fn get_physical_device_xlib_presentation_support_khr(
-        &self,
-        physical_device: PhysicalDevice,
-        queue_family_index: uint32_t,
-        dpy: *const Display,
-        visual_id: VisualID,
-    ) -> Bool32 {
-        (self.get_physical_device_xlib_presentation_support_khr)(
-            physical_device,
-            queue_family_index,
-            dpy,
-            visual_id,
-        )
-    }
-}
-pub struct KhrXcbSurfaceFn {
-    create_xcb_surface_khr: extern "system" fn(
-        instance: Instance,
-        p_create_info: *const XcbSurfaceCreateInfoKHR,
-        p_allocator: *const AllocationCallbacks,
-        p_surface: *const SurfaceKHR,
-    ) -> Result,
-    get_physical_device_xcb_presentation_support_khr:
-        extern "system" fn(
+    impl KhrXcbSurfaceFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrXcbSurfaceFn {
+                create_xcb_surface_khr: unsafe {
+                    let raw_name = stringify!(vkCreateXcbSurfaceKHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                get_physical_device_xcb_presentation_support_khr: unsafe {
+                    let raw_name = stringify!(vkGetPhysicalDeviceXcbPresentationSupportKHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+            };
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+        pub unsafe fn create_xcb_surface_khr(
+            &self,
+            instance: Instance,
+            p_create_info: *const XcbSurfaceCreateInfoKHR,
+            p_allocator: *const AllocationCallbacks,
+            p_surface: *const SurfaceKHR,
+        ) -> Result {
+            (self.create_xcb_surface_khr)(instance, p_create_info, p_allocator, p_surface)
+        }
+        pub unsafe fn get_physical_device_xcb_presentation_support_khr(
+            &self,
             physical_device: PhysicalDevice,
             queue_family_index: uint32_t,
             connection: *const xcb_connection_t,
             visual_id: xcb_visualid_t,
-        ) -> Bool32,
-}
-unsafe impl Send for KhrXcbSurfaceFn {}
-unsafe impl Sync for KhrXcbSurfaceFn {}
-impl ::std::clone::Clone for KhrXcbSurfaceFn {
-    fn clone(&self) -> Self {
-        KhrXcbSurfaceFn {
-            create_xcb_surface_khr: self.create_xcb_surface_khr,
-            get_physical_device_xcb_presentation_support_khr: self
-                .get_physical_device_xcb_presentation_support_khr,
+        ) -> Bool32 {
+            (self.get_physical_device_xcb_presentation_support_khr)(
+                physical_device,
+                queue_family_index,
+                connection,
+                visual_id,
+            )
         }
     }
-}
-impl KhrXcbSurfaceFn {
-    pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        let mut _err_str = Vec::new();
-        let s = KhrXcbSurfaceFn {
-            create_xcb_surface_khr: unsafe {
-                let raw_name = stringify!(vkCreateXcbSurfaceKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            get_physical_device_xcb_presentation_support_khr: unsafe {
-                let raw_name = stringify!(vkGetPhysicalDeviceXcbPresentationSupportKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-        };
-        if _err_str.is_empty() {
-            Ok(s)
-        } else {
-            Err(_err_str)
+    #[doc = "Generated from \'VK_KHR_xcb_surface\'"]
+    impl StructureType {
+        pub const XCB_SURFACE_CREATE_INFO_KHR: Self = StructureType(1000005000);
+    }
+    pub struct KhrWaylandSurfaceFn {
+        create_wayland_surface_khr:
+            extern "system" fn(
+                instance: Instance,
+                p_create_info: *const WaylandSurfaceCreateInfoKHR,
+                p_allocator: *const AllocationCallbacks,
+                p_surface: *const SurfaceKHR,
+            ) -> Result,
+        get_physical_device_wayland_presentation_support_khr:
+            extern "system" fn(
+                physical_device: PhysicalDevice,
+                queue_family_index: uint32_t,
+                display: *const wl_display,
+            ) -> Bool32,
+    }
+    unsafe impl Send for KhrWaylandSurfaceFn {}
+    unsafe impl Sync for KhrWaylandSurfaceFn {}
+    impl ::std::clone::Clone for KhrWaylandSurfaceFn {
+        fn clone(&self) -> Self {
+            KhrWaylandSurfaceFn {
+                create_wayland_surface_khr: self.create_wayland_surface_khr,
+                get_physical_device_wayland_presentation_support_khr: self
+                    .get_physical_device_wayland_presentation_support_khr,
+            }
         }
     }
-    pub unsafe fn create_xcb_surface_khr(
-        &self,
-        instance: Instance,
-        p_create_info: *const XcbSurfaceCreateInfoKHR,
-        p_allocator: *const AllocationCallbacks,
-        p_surface: *const SurfaceKHR,
-    ) -> Result {
-        (self.create_xcb_surface_khr)(instance, p_create_info, p_allocator, p_surface)
-    }
-    pub unsafe fn get_physical_device_xcb_presentation_support_khr(
-        &self,
-        physical_device: PhysicalDevice,
-        queue_family_index: uint32_t,
-        connection: *const xcb_connection_t,
-        visual_id: xcb_visualid_t,
-    ) -> Bool32 {
-        (self.get_physical_device_xcb_presentation_support_khr)(
-            physical_device,
-            queue_family_index,
-            connection,
-            visual_id,
-        )
-    }
-}
-pub struct KhrWaylandSurfaceFn {
-    create_wayland_surface_khr:
-        extern "system" fn(
+    impl KhrWaylandSurfaceFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrWaylandSurfaceFn {
+                create_wayland_surface_khr: unsafe {
+                    let raw_name = stringify!(vkCreateWaylandSurfaceKHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                get_physical_device_wayland_presentation_support_khr: unsafe {
+                    let raw_name = stringify!(vkGetPhysicalDeviceWaylandPresentationSupportKHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+            };
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+        pub unsafe fn create_wayland_surface_khr(
+            &self,
             instance: Instance,
             p_create_info: *const WaylandSurfaceCreateInfoKHR,
             p_allocator: *const AllocationCallbacks,
             p_surface: *const SurfaceKHR,
-        ) -> Result,
-    get_physical_device_wayland_presentation_support_khr:
-        extern "system" fn(
+        ) -> Result {
+            (self.create_wayland_surface_khr)(instance, p_create_info, p_allocator, p_surface)
+        }
+        pub unsafe fn get_physical_device_wayland_presentation_support_khr(
+            &self,
             physical_device: PhysicalDevice,
             queue_family_index: uint32_t,
             display: *const wl_display,
-        ) -> Bool32,
-}
-unsafe impl Send for KhrWaylandSurfaceFn {}
-unsafe impl Sync for KhrWaylandSurfaceFn {}
-impl ::std::clone::Clone for KhrWaylandSurfaceFn {
-    fn clone(&self) -> Self {
-        KhrWaylandSurfaceFn {
-            create_wayland_surface_khr: self.create_wayland_surface_khr,
-            get_physical_device_wayland_presentation_support_khr: self
-                .get_physical_device_wayland_presentation_support_khr,
+        ) -> Bool32 {
+            (self.get_physical_device_wayland_presentation_support_khr)(
+                physical_device,
+                queue_family_index,
+                display,
+            )
         }
     }
-}
-impl KhrWaylandSurfaceFn {
-    pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        let mut _err_str = Vec::new();
-        let s = KhrWaylandSurfaceFn {
-            create_wayland_surface_khr: unsafe {
-                let raw_name = stringify!(vkCreateWaylandSurfaceKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            get_physical_device_wayland_presentation_support_khr: unsafe {
-                let raw_name = stringify!(vkGetPhysicalDeviceWaylandPresentationSupportKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-        };
-        if _err_str.is_empty() {
-            Ok(s)
-        } else {
-            Err(_err_str)
+    #[doc = "Generated from \'VK_KHR_wayland_surface\'"]
+    impl StructureType {
+        pub const WAYLAND_SURFACE_CREATE_INFO_KHR: Self = StructureType(1000006000);
+    }
+    pub struct KhrMirSurfaceFn {
+        create_mir_surface_khr: extern "system" fn(
+            instance: Instance,
+            p_create_info: *const MirSurfaceCreateInfoKHR,
+            p_allocator: *const AllocationCallbacks,
+            p_surface: *const SurfaceKHR,
+        ) -> Result,
+        get_physical_device_mir_presentation_support_khr:
+            extern "system" fn(
+                physical_device: PhysicalDevice,
+                queue_family_index: uint32_t,
+                connection: *const MirConnection,
+            ) -> Bool32,
+    }
+    unsafe impl Send for KhrMirSurfaceFn {}
+    unsafe impl Sync for KhrMirSurfaceFn {}
+    impl ::std::clone::Clone for KhrMirSurfaceFn {
+        fn clone(&self) -> Self {
+            KhrMirSurfaceFn {
+                create_mir_surface_khr: self.create_mir_surface_khr,
+                get_physical_device_mir_presentation_support_khr: self
+                    .get_physical_device_mir_presentation_support_khr,
+            }
         }
     }
-    pub unsafe fn create_wayland_surface_khr(
-        &self,
-        instance: Instance,
-        p_create_info: *const WaylandSurfaceCreateInfoKHR,
-        p_allocator: *const AllocationCallbacks,
-        p_surface: *const SurfaceKHR,
-    ) -> Result {
-        (self.create_wayland_surface_khr)(instance, p_create_info, p_allocator, p_surface)
-    }
-    pub unsafe fn get_physical_device_wayland_presentation_support_khr(
-        &self,
-        physical_device: PhysicalDevice,
-        queue_family_index: uint32_t,
-        display: *const wl_display,
-    ) -> Bool32 {
-        (self.get_physical_device_wayland_presentation_support_khr)(
-            physical_device,
-            queue_family_index,
-            display,
-        )
-    }
-}
-pub struct KhrMirSurfaceFn {
-    create_mir_surface_khr: extern "system" fn(
-        instance: Instance,
-        p_create_info: *const MirSurfaceCreateInfoKHR,
-        p_allocator: *const AllocationCallbacks,
-        p_surface: *const SurfaceKHR,
-    ) -> Result,
-    get_physical_device_mir_presentation_support_khr:
-        extern "system" fn(
+    impl KhrMirSurfaceFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrMirSurfaceFn {
+                create_mir_surface_khr: unsafe {
+                    let raw_name = stringify!(vkCreateMirSurfaceKHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                get_physical_device_mir_presentation_support_khr: unsafe {
+                    let raw_name = stringify!(vkGetPhysicalDeviceMirPresentationSupportKHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+            };
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+        pub unsafe fn create_mir_surface_khr(
+            &self,
+            instance: Instance,
+            p_create_info: *const MirSurfaceCreateInfoKHR,
+            p_allocator: *const AllocationCallbacks,
+            p_surface: *const SurfaceKHR,
+        ) -> Result {
+            (self.create_mir_surface_khr)(instance, p_create_info, p_allocator, p_surface)
+        }
+        pub unsafe fn get_physical_device_mir_presentation_support_khr(
+            &self,
             physical_device: PhysicalDevice,
             queue_family_index: uint32_t,
             connection: *const MirConnection,
-        ) -> Bool32,
-}
-unsafe impl Send for KhrMirSurfaceFn {}
-unsafe impl Sync for KhrMirSurfaceFn {}
-impl ::std::clone::Clone for KhrMirSurfaceFn {
-    fn clone(&self) -> Self {
-        KhrMirSurfaceFn {
-            create_mir_surface_khr: self.create_mir_surface_khr,
-            get_physical_device_mir_presentation_support_khr: self
-                .get_physical_device_mir_presentation_support_khr,
+        ) -> Bool32 {
+            (self.get_physical_device_mir_presentation_support_khr)(
+                physical_device,
+                queue_family_index,
+                connection,
+            )
         }
     }
-}
-impl KhrMirSurfaceFn {
-    pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        let mut _err_str = Vec::new();
-        let s = KhrMirSurfaceFn {
-            create_mir_surface_khr: unsafe {
-                let raw_name = stringify!(vkCreateMirSurfaceKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            get_physical_device_mir_presentation_support_khr: unsafe {
-                let raw_name = stringify!(vkGetPhysicalDeviceMirPresentationSupportKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-        };
-        if _err_str.is_empty() {
-            Ok(s)
-        } else {
-            Err(_err_str)
+    #[doc = "Generated from \'VK_KHR_mir_surface\'"]
+    impl StructureType {
+        pub const MIR_SURFACE_CREATE_INFO_KHR: Self = StructureType(1000007000);
+    }
+    pub struct KhrAndroidSurfaceFn {
+        create_android_surface_khr:
+            extern "system" fn(
+                instance: Instance,
+                p_create_info: *const AndroidSurfaceCreateInfoKHR,
+                p_allocator: *const AllocationCallbacks,
+                p_surface: *const SurfaceKHR,
+            ) -> Result,
+    }
+    unsafe impl Send for KhrAndroidSurfaceFn {}
+    unsafe impl Sync for KhrAndroidSurfaceFn {}
+    impl ::std::clone::Clone for KhrAndroidSurfaceFn {
+        fn clone(&self) -> Self {
+            KhrAndroidSurfaceFn {
+                create_android_surface_khr: self.create_android_surface_khr,
+            }
         }
     }
-    pub unsafe fn create_mir_surface_khr(
-        &self,
-        instance: Instance,
-        p_create_info: *const MirSurfaceCreateInfoKHR,
-        p_allocator: *const AllocationCallbacks,
-        p_surface: *const SurfaceKHR,
-    ) -> Result {
-        (self.create_mir_surface_khr)(instance, p_create_info, p_allocator, p_surface)
-    }
-    pub unsafe fn get_physical_device_mir_presentation_support_khr(
-        &self,
-        physical_device: PhysicalDevice,
-        queue_family_index: uint32_t,
-        connection: *const MirConnection,
-    ) -> Bool32 {
-        (self.get_physical_device_mir_presentation_support_khr)(
-            physical_device,
-            queue_family_index,
-            connection,
-        )
-    }
-}
-pub struct KhrAndroidSurfaceFn {
-    create_android_surface_khr:
-        extern "system" fn(
+    impl KhrAndroidSurfaceFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrAndroidSurfaceFn {
+                create_android_surface_khr: unsafe {
+                    let raw_name = stringify!(vkCreateAndroidSurfaceKHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+            };
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+        pub unsafe fn create_android_surface_khr(
+            &self,
             instance: Instance,
             p_create_info: *const AndroidSurfaceCreateInfoKHR,
             p_allocator: *const AllocationCallbacks,
             p_surface: *const SurfaceKHR,
-        ) -> Result,
-}
-unsafe impl Send for KhrAndroidSurfaceFn {}
-unsafe impl Sync for KhrAndroidSurfaceFn {}
-impl ::std::clone::Clone for KhrAndroidSurfaceFn {
-    fn clone(&self) -> Self {
-        KhrAndroidSurfaceFn {
-            create_android_surface_khr: self.create_android_surface_khr,
+        ) -> Result {
+            (self.create_android_surface_khr)(instance, p_create_info, p_allocator, p_surface)
         }
     }
-}
-impl KhrAndroidSurfaceFn {
-    pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        let mut _err_str = Vec::new();
-        let s = KhrAndroidSurfaceFn {
-            create_android_surface_khr: unsafe {
-                let raw_name = stringify!(vkCreateAndroidSurfaceKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-        };
-        if _err_str.is_empty() {
-            Ok(s)
-        } else {
-            Err(_err_str)
+    #[doc = "Generated from \'VK_KHR_android_surface\'"]
+    impl StructureType {
+        pub const ANDROID_SURFACE_CREATE_INFO_KHR: Self = StructureType(1000008000);
+    }
+    pub struct KhrWin32SurfaceFn {
+        create_win32_surface_khr:
+            extern "system" fn(
+                instance: Instance,
+                p_create_info: *const Win32SurfaceCreateInfoKHR,
+                p_allocator: *const AllocationCallbacks,
+                p_surface: *const SurfaceKHR,
+            ) -> Result,
+        get_physical_device_win32_presentation_support_khr:
+            extern "system" fn(physical_device: PhysicalDevice, queue_family_index: uint32_t)
+                -> Bool32,
+    }
+    unsafe impl Send for KhrWin32SurfaceFn {}
+    unsafe impl Sync for KhrWin32SurfaceFn {}
+    impl ::std::clone::Clone for KhrWin32SurfaceFn {
+        fn clone(&self) -> Self {
+            KhrWin32SurfaceFn {
+                create_win32_surface_khr: self.create_win32_surface_khr,
+                get_physical_device_win32_presentation_support_khr: self
+                    .get_physical_device_win32_presentation_support_khr,
+            }
         }
     }
-    pub unsafe fn create_android_surface_khr(
-        &self,
-        instance: Instance,
-        p_create_info: *const AndroidSurfaceCreateInfoKHR,
-        p_allocator: *const AllocationCallbacks,
-        p_surface: *const SurfaceKHR,
-    ) -> Result {
-        (self.create_android_surface_khr)(instance, p_create_info, p_allocator, p_surface)
-    }
-}
-pub struct KhrWin32SurfaceFn {
-    create_win32_surface_khr: extern "system" fn(
-        instance: Instance,
-        p_create_info: *const Win32SurfaceCreateInfoKHR,
-        p_allocator: *const AllocationCallbacks,
-        p_surface: *const SurfaceKHR,
-    ) -> Result,
-    get_physical_device_win32_presentation_support_khr:
-        extern "system" fn(physical_device: PhysicalDevice, queue_family_index: uint32_t) -> Bool32,
-}
-unsafe impl Send for KhrWin32SurfaceFn {}
-unsafe impl Sync for KhrWin32SurfaceFn {}
-impl ::std::clone::Clone for KhrWin32SurfaceFn {
-    fn clone(&self) -> Self {
-        KhrWin32SurfaceFn {
-            create_win32_surface_khr: self.create_win32_surface_khr,
-            get_physical_device_win32_presentation_support_khr: self
-                .get_physical_device_win32_presentation_support_khr,
+    impl KhrWin32SurfaceFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrWin32SurfaceFn {
+                create_win32_surface_khr: unsafe {
+                    let raw_name = stringify!(vkCreateWin32SurfaceKHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                get_physical_device_win32_presentation_support_khr: unsafe {
+                    let raw_name = stringify!(vkGetPhysicalDeviceWin32PresentationSupportKHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+            };
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+        pub unsafe fn create_win32_surface_khr(
+            &self,
+            instance: Instance,
+            p_create_info: *const Win32SurfaceCreateInfoKHR,
+            p_allocator: *const AllocationCallbacks,
+            p_surface: *const SurfaceKHR,
+        ) -> Result {
+            (self.create_win32_surface_khr)(instance, p_create_info, p_allocator, p_surface)
+        }
+        pub unsafe fn get_physical_device_win32_presentation_support_khr(
+            &self,
+            physical_device: PhysicalDevice,
+            queue_family_index: uint32_t,
+        ) -> Bool32 {
+            (self.get_physical_device_win32_presentation_support_khr)(
+                physical_device,
+                queue_family_index,
+            )
         }
     }
-}
-impl KhrWin32SurfaceFn {
-    pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        let mut _err_str = Vec::new();
-        let s = KhrWin32SurfaceFn {
-            create_win32_surface_khr: unsafe {
-                let raw_name = stringify!(vkCreateWin32SurfaceKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            get_physical_device_win32_presentation_support_khr: unsafe {
-                let raw_name = stringify!(vkGetPhysicalDeviceWin32PresentationSupportKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-        };
-        if _err_str.is_empty() {
-            Ok(s)
-        } else {
-            Err(_err_str)
+    #[doc = "Generated from \'VK_KHR_win32_surface\'"]
+    impl StructureType {
+        pub const WIN32_SURFACE_CREATE_INFO_KHR: Self = StructureType(1000009000);
+    }
+    pub struct ExtDebugReportFn {
+        create_debug_report_callback_ext:
+            extern "system" fn(
+                instance: Instance,
+                p_create_info: *const DebugReportCallbackCreateInfoEXT,
+                p_allocator: *const AllocationCallbacks,
+                p_callback: *const DebugReportCallbackEXT,
+            ) -> Result,
+        destroy_debug_report_callback_ext:
+            extern "system" fn(
+                instance: Instance,
+                callback: DebugReportCallbackEXT,
+                p_allocator: *const AllocationCallbacks,
+            ) -> c_void,
+        debug_report_message_ext: extern "system" fn(
+            instance: Instance,
+            flags: DebugReportFlagsEXT,
+            object_type: DebugReportObjectTypeEXT,
+            object: uint64_t,
+            location: size_t,
+            message_code: int32_t,
+            p_layer_prefix: *const c_char,
+            p_message: *const c_char,
+        ) -> c_void,
+    }
+    unsafe impl Send for ExtDebugReportFn {}
+    unsafe impl Sync for ExtDebugReportFn {}
+    impl ::std::clone::Clone for ExtDebugReportFn {
+        fn clone(&self) -> Self {
+            ExtDebugReportFn {
+                create_debug_report_callback_ext: self.create_debug_report_callback_ext,
+                destroy_debug_report_callback_ext: self.destroy_debug_report_callback_ext,
+                debug_report_message_ext: self.debug_report_message_ext,
+            }
         }
     }
-    pub unsafe fn create_win32_surface_khr(
-        &self,
-        instance: Instance,
-        p_create_info: *const Win32SurfaceCreateInfoKHR,
-        p_allocator: *const AllocationCallbacks,
-        p_surface: *const SurfaceKHR,
-    ) -> Result {
-        (self.create_win32_surface_khr)(instance, p_create_info, p_allocator, p_surface)
-    }
-    pub unsafe fn get_physical_device_win32_presentation_support_khr(
-        &self,
-        physical_device: PhysicalDevice,
-        queue_family_index: uint32_t,
-    ) -> Bool32 {
-        (self.get_physical_device_win32_presentation_support_khr)(
-            physical_device,
-            queue_family_index,
-        )
-    }
-}
-pub struct AndroidNativeBufferFn {
-    get_swapchain_gralloc_usage_android: extern "system" fn(
-        device: Device,
-        format: Format,
-        image_usage: ImageUsageFlags,
-        gralloc_usage: *const c_int,
-    ) -> Result,
-    acquire_image_android: extern "system" fn(
-        device: Device,
-        image: Image,
-        native_fence_fd: c_int,
-        semaphore: Semaphore,
-        fence: Fence,
-    ) -> Result,
-    queue_signal_release_image_android: extern "system" fn(
-        queue: Queue,
-        wait_semaphore_count: uint32_t,
-        p_wait_semaphores: *const Semaphore,
-        image: Image,
-        p_native_fence_fd: *const c_int,
-    ) -> Result,
-}
-unsafe impl Send for AndroidNativeBufferFn {}
-unsafe impl Sync for AndroidNativeBufferFn {}
-impl ::std::clone::Clone for AndroidNativeBufferFn {
-    fn clone(&self) -> Self {
-        AndroidNativeBufferFn {
-            get_swapchain_gralloc_usage_android: self.get_swapchain_gralloc_usage_android,
-            acquire_image_android: self.acquire_image_android,
-            queue_signal_release_image_android: self.queue_signal_release_image_android,
+    impl ExtDebugReportFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = ExtDebugReportFn {
+                create_debug_report_callback_ext: unsafe {
+                    let raw_name = stringify!(vkCreateDebugReportCallbackEXT);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                destroy_debug_report_callback_ext: unsafe {
+                    let raw_name = stringify!(vkDestroyDebugReportCallbackEXT);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                debug_report_message_ext: unsafe {
+                    let raw_name = stringify!(vkDebugReportMessageEXT);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+            };
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
         }
-    }
-}
-impl AndroidNativeBufferFn {
-    pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        let mut _err_str = Vec::new();
-        let s = AndroidNativeBufferFn {
-            get_swapchain_gralloc_usage_android: unsafe {
-                let raw_name = stringify!(vkGetSwapchainGrallocUsageANDROID);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            acquire_image_android: unsafe {
-                let raw_name = stringify!(vkAcquireImageANDROID);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            queue_signal_release_image_android: unsafe {
-                let raw_name = stringify!(vkQueueSignalReleaseImageANDROID);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-        };
-        if _err_str.is_empty() {
-            Ok(s)
-        } else {
-            Err(_err_str)
-        }
-    }
-    pub unsafe fn get_swapchain_gralloc_usage_android(
-        &self,
-        device: Device,
-        format: Format,
-        image_usage: ImageUsageFlags,
-        gralloc_usage: *const c_int,
-    ) -> Result {
-        (self.get_swapchain_gralloc_usage_android)(device, format, image_usage, gralloc_usage)
-    }
-    pub unsafe fn acquire_image_android(
-        &self,
-        device: Device,
-        image: Image,
-        native_fence_fd: c_int,
-        semaphore: Semaphore,
-        fence: Fence,
-    ) -> Result {
-        (self.acquire_image_android)(device, image, native_fence_fd, semaphore, fence)
-    }
-    pub unsafe fn queue_signal_release_image_android(
-        &self,
-        queue: Queue,
-        wait_semaphore_count: uint32_t,
-        p_wait_semaphores: *const Semaphore,
-        image: Image,
-        p_native_fence_fd: *const c_int,
-    ) -> Result {
-        (self.queue_signal_release_image_android)(
-            queue,
-            wait_semaphore_count,
-            p_wait_semaphores,
-            image,
-            p_native_fence_fd,
-        )
-    }
-}
-pub struct ExtDebugReportFn {
-    create_debug_report_callback_ext:
-        extern "system" fn(
+        pub unsafe fn create_debug_report_callback_ext(
+            &self,
             instance: Instance,
             p_create_info: *const DebugReportCallbackCreateInfoEXT,
             p_allocator: *const AllocationCallbacks,
             p_callback: *const DebugReportCallbackEXT,
+        ) -> Result {
+            (self.create_debug_report_callback_ext)(
+                instance,
+                p_create_info,
+                p_allocator,
+                p_callback,
+            )
+        }
+        pub unsafe fn destroy_debug_report_callback_ext(
+            &self,
+            instance: Instance,
+            callback: DebugReportCallbackEXT,
+            p_allocator: *const AllocationCallbacks,
+        ) -> c_void {
+            (self.destroy_debug_report_callback_ext)(instance, callback, p_allocator)
+        }
+        pub unsafe fn debug_report_message_ext(
+            &self,
+            instance: Instance,
+            flags: DebugReportFlagsEXT,
+            object_type: DebugReportObjectTypeEXT,
+            object: uint64_t,
+            location: size_t,
+            message_code: int32_t,
+            p_layer_prefix: *const c_char,
+            p_message: *const c_char,
+        ) -> c_void {
+            (self.debug_report_message_ext)(
+                instance,
+                flags,
+                object_type,
+                object,
+                location,
+                message_code,
+                p_layer_prefix,
+                p_message,
+            )
+        }
+    }
+    #[doc = "Generated from \'VK_EXT_debug_report\'"]
+    impl StructureType {
+        pub const DEBUG_REPORT_CALLBACK_CREATE_INFO_EXT: Self = StructureType(1000011000);
+    }
+    #[doc = "Generated from \'VK_EXT_debug_report\'"]
+    impl Result {
+        pub const ERROR_VALIDATION_FAILED_EXT: Self = Result(1000011001);
+    }
+    #[doc = "Generated from \'VK_EXT_debug_report\'"]
+    impl ObjectType {
+        pub const DEBUG_REPORT_CALLBACK_EXT: Self = ObjectType(1000011000);
+    }
+    #[doc = "Generated from \'VK_EXT_debug_report\'"]
+    impl DebugReportObjectTypeEXT {
+        pub const DEBUG_REPORT_OBJECT_TYPE_SAMPLER_YCBCR_CONVERSION_EXT: Self =
+            DebugReportObjectTypeEXT(1000156000);
+    }
+    #[doc = "Generated from \'VK_EXT_debug_report\'"]
+    impl DebugReportObjectTypeEXT {
+        pub const DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_UPDATE_TEMPLATE_EXT: Self =
+            DebugReportObjectTypeEXT(1000085000);
+    }
+    pub struct NvGlslShaderFn {}
+    unsafe impl Send for NvGlslShaderFn {}
+    unsafe impl Sync for NvGlslShaderFn {}
+    impl ::std::clone::Clone for NvGlslShaderFn {
+        fn clone(&self) -> Self {
+            NvGlslShaderFn {}
+        }
+    }
+    impl NvGlslShaderFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = NvGlslShaderFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    #[doc = "Generated from \'VK_NV_glsl_shader\'"]
+    impl Result {
+        pub const ERROR_INVALID_SHADER_NV: Self = Result(1000012000);
+    }
+    pub struct ExtDepthRangeUnrestrictedFn {}
+    unsafe impl Send for ExtDepthRangeUnrestrictedFn {}
+    unsafe impl Sync for ExtDepthRangeUnrestrictedFn {}
+    impl ::std::clone::Clone for ExtDepthRangeUnrestrictedFn {
+        fn clone(&self) -> Self {
+            ExtDepthRangeUnrestrictedFn {}
+        }
+    }
+    impl ExtDepthRangeUnrestrictedFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = ExtDepthRangeUnrestrictedFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct KhrSamplerMirrorClampToEdgeFn {}
+    unsafe impl Send for KhrSamplerMirrorClampToEdgeFn {}
+    unsafe impl Sync for KhrSamplerMirrorClampToEdgeFn {}
+    impl ::std::clone::Clone for KhrSamplerMirrorClampToEdgeFn {
+        fn clone(&self) -> Self {
+            KhrSamplerMirrorClampToEdgeFn {}
+        }
+    }
+    impl KhrSamplerMirrorClampToEdgeFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrSamplerMirrorClampToEdgeFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct ImgFilterCubicFn {}
+    unsafe impl Send for ImgFilterCubicFn {}
+    unsafe impl Sync for ImgFilterCubicFn {}
+    impl ::std::clone::Clone for ImgFilterCubicFn {
+        fn clone(&self) -> Self {
+            ImgFilterCubicFn {}
+        }
+    }
+    impl ImgFilterCubicFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = ImgFilterCubicFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    #[doc = "Generated from \'VK_IMG_filter_cubic\'"]
+    impl Filter {
+        pub const CUBIC_IMG: Self = Filter(1000015000);
+    }
+    #[doc = "Generated from \'VK_IMG_filter_cubic\'"]
+    impl FormatFeatureFlags {
+        pub const SAMPLED_IMAGE_FILTER_CUBIC_IMG: Self = FormatFeatureFlags(0b10000000000000);
+    }
+    pub struct AmdRasterizationOrderFn {}
+    unsafe impl Send for AmdRasterizationOrderFn {}
+    unsafe impl Sync for AmdRasterizationOrderFn {}
+    impl ::std::clone::Clone for AmdRasterizationOrderFn {
+        fn clone(&self) -> Self {
+            AmdRasterizationOrderFn {}
+        }
+    }
+    impl AmdRasterizationOrderFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = AmdRasterizationOrderFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    #[doc = "Generated from \'VK_AMD_rasterization_order\'"]
+    impl StructureType {
+        pub const PIPELINE_RASTERIZATION_STATE_RASTERIZATION_ORDER_AMD: Self =
+            StructureType(1000018000);
+    }
+    pub struct AmdShaderTrinaryMinmaxFn {}
+    unsafe impl Send for AmdShaderTrinaryMinmaxFn {}
+    unsafe impl Sync for AmdShaderTrinaryMinmaxFn {}
+    impl ::std::clone::Clone for AmdShaderTrinaryMinmaxFn {
+        fn clone(&self) -> Self {
+            AmdShaderTrinaryMinmaxFn {}
+        }
+    }
+    impl AmdShaderTrinaryMinmaxFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = AmdShaderTrinaryMinmaxFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct AmdShaderExplicitVertexParameterFn {}
+    unsafe impl Send for AmdShaderExplicitVertexParameterFn {}
+    unsafe impl Sync for AmdShaderExplicitVertexParameterFn {}
+    impl ::std::clone::Clone for AmdShaderExplicitVertexParameterFn {
+        fn clone(&self) -> Self {
+            AmdShaderExplicitVertexParameterFn {}
+        }
+    }
+    impl AmdShaderExplicitVertexParameterFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = AmdShaderExplicitVertexParameterFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct ExtDebugMarkerFn {
+        debug_marker_set_object_tag_ext:
+            extern "system" fn(device: Device, p_tag_info: *const DebugMarkerObjectTagInfoEXT)
+                -> Result,
+        debug_marker_set_object_name_ext:
+            extern "system" fn(device: Device, p_name_info: *const DebugMarkerObjectNameInfoEXT)
+                -> Result,
+        cmd_debug_marker_begin_ext:
+            extern "system" fn(
+                command_buffer: CommandBuffer,
+                p_marker_info: *const DebugMarkerMarkerInfoEXT,
+            ) -> c_void,
+        cmd_debug_marker_end_ext: extern "system" fn(command_buffer: CommandBuffer) -> c_void,
+        cmd_debug_marker_insert_ext:
+            extern "system" fn(
+                command_buffer: CommandBuffer,
+                p_marker_info: *const DebugMarkerMarkerInfoEXT,
+            ) -> c_void,
+    }
+    unsafe impl Send for ExtDebugMarkerFn {}
+    unsafe impl Sync for ExtDebugMarkerFn {}
+    impl ::std::clone::Clone for ExtDebugMarkerFn {
+        fn clone(&self) -> Self {
+            ExtDebugMarkerFn {
+                debug_marker_set_object_tag_ext: self.debug_marker_set_object_tag_ext,
+                debug_marker_set_object_name_ext: self.debug_marker_set_object_name_ext,
+                cmd_debug_marker_begin_ext: self.cmd_debug_marker_begin_ext,
+                cmd_debug_marker_end_ext: self.cmd_debug_marker_end_ext,
+                cmd_debug_marker_insert_ext: self.cmd_debug_marker_insert_ext,
+            }
+        }
+    }
+    impl ExtDebugMarkerFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = ExtDebugMarkerFn {
+                debug_marker_set_object_tag_ext: unsafe {
+                    let raw_name = stringify!(vkDebugMarkerSetObjectTagEXT);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                debug_marker_set_object_name_ext: unsafe {
+                    let raw_name = stringify!(vkDebugMarkerSetObjectNameEXT);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                cmd_debug_marker_begin_ext: unsafe {
+                    let raw_name = stringify!(vkCmdDebugMarkerBeginEXT);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                cmd_debug_marker_end_ext: unsafe {
+                    let raw_name = stringify!(vkCmdDebugMarkerEndEXT);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                cmd_debug_marker_insert_ext: unsafe {
+                    let raw_name = stringify!(vkCmdDebugMarkerInsertEXT);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+            };
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+        pub unsafe fn debug_marker_set_object_tag_ext(
+            &self,
+            device: Device,
+            p_tag_info: *const DebugMarkerObjectTagInfoEXT,
+        ) -> Result {
+            (self.debug_marker_set_object_tag_ext)(device, p_tag_info)
+        }
+        pub unsafe fn debug_marker_set_object_name_ext(
+            &self,
+            device: Device,
+            p_name_info: *const DebugMarkerObjectNameInfoEXT,
+        ) -> Result {
+            (self.debug_marker_set_object_name_ext)(device, p_name_info)
+        }
+        pub unsafe fn cmd_debug_marker_begin_ext(
+            &self,
+            command_buffer: CommandBuffer,
+            p_marker_info: *const DebugMarkerMarkerInfoEXT,
+        ) -> c_void {
+            (self.cmd_debug_marker_begin_ext)(command_buffer, p_marker_info)
+        }
+        pub unsafe fn cmd_debug_marker_end_ext(&self, command_buffer: CommandBuffer) -> c_void {
+            (self.cmd_debug_marker_end_ext)(command_buffer)
+        }
+        pub unsafe fn cmd_debug_marker_insert_ext(
+            &self,
+            command_buffer: CommandBuffer,
+            p_marker_info: *const DebugMarkerMarkerInfoEXT,
+        ) -> c_void {
+            (self.cmd_debug_marker_insert_ext)(command_buffer, p_marker_info)
+        }
+    }
+    #[doc = "Generated from \'VK_EXT_debug_marker\'"]
+    impl StructureType {
+        pub const DEBUG_MARKER_OBJECT_NAME_INFO_EXT: Self = StructureType(1000022000);
+    }
+    #[doc = "Generated from \'VK_EXT_debug_marker\'"]
+    impl StructureType {
+        pub const DEBUG_MARKER_OBJECT_TAG_INFO_EXT: Self = StructureType(1000022001);
+    }
+    #[doc = "Generated from \'VK_EXT_debug_marker\'"]
+    impl StructureType {
+        pub const DEBUG_MARKER_MARKER_INFO_EXT: Self = StructureType(1000022002);
+    }
+    pub struct AmdGcnShaderFn {}
+    unsafe impl Send for AmdGcnShaderFn {}
+    unsafe impl Sync for AmdGcnShaderFn {}
+    impl ::std::clone::Clone for AmdGcnShaderFn {
+        fn clone(&self) -> Self {
+            AmdGcnShaderFn {}
+        }
+    }
+    impl AmdGcnShaderFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = AmdGcnShaderFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct NvDedicatedAllocationFn {}
+    unsafe impl Send for NvDedicatedAllocationFn {}
+    unsafe impl Sync for NvDedicatedAllocationFn {}
+    impl ::std::clone::Clone for NvDedicatedAllocationFn {
+        fn clone(&self) -> Self {
+            NvDedicatedAllocationFn {}
+        }
+    }
+    impl NvDedicatedAllocationFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = NvDedicatedAllocationFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    #[doc = "Generated from \'VK_NV_dedicated_allocation\'"]
+    impl StructureType {
+        pub const DEDICATED_ALLOCATION_IMAGE_CREATE_INFO_NV: Self = StructureType(1000026000);
+    }
+    #[doc = "Generated from \'VK_NV_dedicated_allocation\'"]
+    impl StructureType {
+        pub const DEDICATED_ALLOCATION_BUFFER_CREATE_INFO_NV: Self = StructureType(1000026001);
+    }
+    #[doc = "Generated from \'VK_NV_dedicated_allocation\'"]
+    impl StructureType {
+        pub const DEDICATED_ALLOCATION_MEMORY_ALLOCATE_INFO_NV: Self = StructureType(1000026002);
+    }
+    pub struct AmdDrawIndirectCountFn {
+        cmd_draw_indirect_count_amd: extern "system" fn(
+            command_buffer: CommandBuffer,
+            buffer: Buffer,
+            offset: DeviceSize,
+            count_buffer: Buffer,
+            count_buffer_offset: DeviceSize,
+            max_draw_count: uint32_t,
+            stride: uint32_t,
+        ) -> c_void,
+        cmd_draw_indexed_indirect_count_amd: extern "system" fn(
+            command_buffer: CommandBuffer,
+            buffer: Buffer,
+            offset: DeviceSize,
+            count_buffer: Buffer,
+            count_buffer_offset: DeviceSize,
+            max_draw_count: uint32_t,
+            stride: uint32_t,
+        ) -> c_void,
+    }
+    unsafe impl Send for AmdDrawIndirectCountFn {}
+    unsafe impl Sync for AmdDrawIndirectCountFn {}
+    impl ::std::clone::Clone for AmdDrawIndirectCountFn {
+        fn clone(&self) -> Self {
+            AmdDrawIndirectCountFn {
+                cmd_draw_indirect_count_amd: self.cmd_draw_indirect_count_amd,
+                cmd_draw_indexed_indirect_count_amd: self.cmd_draw_indexed_indirect_count_amd,
+            }
+        }
+    }
+    impl AmdDrawIndirectCountFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = AmdDrawIndirectCountFn {
+                cmd_draw_indirect_count_amd: unsafe {
+                    let raw_name = stringify!(vkCmdDrawIndirectCountAMD);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                cmd_draw_indexed_indirect_count_amd: unsafe {
+                    let raw_name = stringify!(vkCmdDrawIndexedIndirectCountAMD);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+            };
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+        pub unsafe fn cmd_draw_indirect_count_amd(
+            &self,
+            command_buffer: CommandBuffer,
+            buffer: Buffer,
+            offset: DeviceSize,
+            count_buffer: Buffer,
+            count_buffer_offset: DeviceSize,
+            max_draw_count: uint32_t,
+            stride: uint32_t,
+        ) -> c_void {
+            (self.cmd_draw_indirect_count_amd)(
+                command_buffer,
+                buffer,
+                offset,
+                count_buffer,
+                count_buffer_offset,
+                max_draw_count,
+                stride,
+            )
+        }
+        pub unsafe fn cmd_draw_indexed_indirect_count_amd(
+            &self,
+            command_buffer: CommandBuffer,
+            buffer: Buffer,
+            offset: DeviceSize,
+            count_buffer: Buffer,
+            count_buffer_offset: DeviceSize,
+            max_draw_count: uint32_t,
+            stride: uint32_t,
+        ) -> c_void {
+            (self.cmd_draw_indexed_indirect_count_amd)(
+                command_buffer,
+                buffer,
+                offset,
+                count_buffer,
+                count_buffer_offset,
+                max_draw_count,
+                stride,
+            )
+        }
+    }
+    pub struct AmdNegativeViewportHeightFn {}
+    unsafe impl Send for AmdNegativeViewportHeightFn {}
+    unsafe impl Sync for AmdNegativeViewportHeightFn {}
+    impl ::std::clone::Clone for AmdNegativeViewportHeightFn {
+        fn clone(&self) -> Self {
+            AmdNegativeViewportHeightFn {}
+        }
+    }
+    impl AmdNegativeViewportHeightFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = AmdNegativeViewportHeightFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct AmdGpuShaderHalfFloatFn {}
+    unsafe impl Send for AmdGpuShaderHalfFloatFn {}
+    unsafe impl Sync for AmdGpuShaderHalfFloatFn {}
+    impl ::std::clone::Clone for AmdGpuShaderHalfFloatFn {
+        fn clone(&self) -> Self {
+            AmdGpuShaderHalfFloatFn {}
+        }
+    }
+    impl AmdGpuShaderHalfFloatFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = AmdGpuShaderHalfFloatFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct AmdShaderBallotFn {}
+    unsafe impl Send for AmdShaderBallotFn {}
+    unsafe impl Sync for AmdShaderBallotFn {}
+    impl ::std::clone::Clone for AmdShaderBallotFn {
+        fn clone(&self) -> Self {
+            AmdShaderBallotFn {}
+        }
+    }
+    impl AmdShaderBallotFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = AmdShaderBallotFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct AmdTextureGatherBiasLodFn {}
+    unsafe impl Send for AmdTextureGatherBiasLodFn {}
+    unsafe impl Sync for AmdTextureGatherBiasLodFn {}
+    impl ::std::clone::Clone for AmdTextureGatherBiasLodFn {
+        fn clone(&self) -> Self {
+            AmdTextureGatherBiasLodFn {}
+        }
+    }
+    impl AmdTextureGatherBiasLodFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = AmdTextureGatherBiasLodFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    #[doc = "Generated from \'VK_AMD_texture_gather_bias_lod\'"]
+    impl StructureType {
+        pub const TEXTURE_LOD_GATHER_FORMAT_PROPERTIES_AMD: Self = StructureType(1000041000);
+    }
+    pub struct AmdShaderInfoFn {
+        get_shader_info_amd: extern "system" fn(
+            device: Device,
+            pipeline: Pipeline,
+            shader_stage: ShaderStageFlags,
+            info_type: ShaderInfoTypeAMD,
+            p_info_size: *const size_t,
+            p_info: *const c_void,
         ) -> Result,
-    destroy_debug_report_callback_ext: extern "system" fn(
-        instance: Instance,
-        callback: DebugReportCallbackEXT,
-        p_allocator: *const AllocationCallbacks,
-    ) -> c_void,
-    debug_report_message_ext: extern "system" fn(
-        instance: Instance,
-        flags: DebugReportFlagsEXT,
-        object_type: DebugReportObjectTypeEXT,
-        object: uint64_t,
-        location: size_t,
-        message_code: int32_t,
-        p_layer_prefix: *const c_char,
-        p_message: *const c_char,
-    ) -> c_void,
-}
-unsafe impl Send for ExtDebugReportFn {}
-unsafe impl Sync for ExtDebugReportFn {}
-impl ::std::clone::Clone for ExtDebugReportFn {
-    fn clone(&self) -> Self {
-        ExtDebugReportFn {
-            create_debug_report_callback_ext: self.create_debug_report_callback_ext,
-            destroy_debug_report_callback_ext: self.destroy_debug_report_callback_ext,
-            debug_report_message_ext: self.debug_report_message_ext,
+    }
+    unsafe impl Send for AmdShaderInfoFn {}
+    unsafe impl Sync for AmdShaderInfoFn {}
+    impl ::std::clone::Clone for AmdShaderInfoFn {
+        fn clone(&self) -> Self {
+            AmdShaderInfoFn {
+                get_shader_info_amd: self.get_shader_info_amd,
+            }
         }
     }
-}
-impl ExtDebugReportFn {
-    pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        let mut _err_str = Vec::new();
-        let s = ExtDebugReportFn {
-            create_debug_report_callback_ext: unsafe {
-                let raw_name = stringify!(vkCreateDebugReportCallbackEXT);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            destroy_debug_report_callback_ext: unsafe {
-                let raw_name = stringify!(vkDestroyDebugReportCallbackEXT);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            debug_report_message_ext: unsafe {
-                let raw_name = stringify!(vkDebugReportMessageEXT);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-        };
-        if _err_str.is_empty() {
-            Ok(s)
-        } else {
-            Err(_err_str)
+    impl AmdShaderInfoFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = AmdShaderInfoFn {
+                get_shader_info_amd: unsafe {
+                    let raw_name = stringify!(vkGetShaderInfoAMD);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+            };
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+        pub unsafe fn get_shader_info_amd(
+            &self,
+            device: Device,
+            pipeline: Pipeline,
+            shader_stage: ShaderStageFlags,
+            info_type: ShaderInfoTypeAMD,
+            p_info_size: *const size_t,
+            p_info: *const c_void,
+        ) -> Result {
+            (self.get_shader_info_amd)(
+                device,
+                pipeline,
+                shader_stage,
+                info_type,
+                p_info_size,
+                p_info,
+            )
         }
     }
-    pub unsafe fn create_debug_report_callback_ext(
-        &self,
-        instance: Instance,
-        p_create_info: *const DebugReportCallbackCreateInfoEXT,
-        p_allocator: *const AllocationCallbacks,
-        p_callback: *const DebugReportCallbackEXT,
-    ) -> Result {
-        (self.create_debug_report_callback_ext)(instance, p_create_info, p_allocator, p_callback)
-    }
-    pub unsafe fn destroy_debug_report_callback_ext(
-        &self,
-        instance: Instance,
-        callback: DebugReportCallbackEXT,
-        p_allocator: *const AllocationCallbacks,
-    ) -> c_void {
-        (self.destroy_debug_report_callback_ext)(instance, callback, p_allocator)
-    }
-    pub unsafe fn debug_report_message_ext(
-        &self,
-        instance: Instance,
-        flags: DebugReportFlagsEXT,
-        object_type: DebugReportObjectTypeEXT,
-        object: uint64_t,
-        location: size_t,
-        message_code: int32_t,
-        p_layer_prefix: *const c_char,
-        p_message: *const c_char,
-    ) -> c_void {
-        (self.debug_report_message_ext)(
-            instance,
-            flags,
-            object_type,
-            object,
-            location,
-            message_code,
-            p_layer_prefix,
-            p_message,
-        )
-    }
-}
-pub struct ExtDebugMarkerFn {
-    debug_marker_set_object_tag_ext:
-        extern "system" fn(device: Device, p_tag_info: *const DebugMarkerObjectTagInfoEXT)
-            -> Result,
-    debug_marker_set_object_name_ext:
-        extern "system" fn(device: Device, p_name_info: *const DebugMarkerObjectNameInfoEXT)
-            -> Result,
-    cmd_debug_marker_begin_ext: extern "system" fn(
-        command_buffer: CommandBuffer,
-        p_marker_info: *const DebugMarkerMarkerInfoEXT,
-    ) -> c_void,
-    cmd_debug_marker_end_ext: extern "system" fn(command_buffer: CommandBuffer) -> c_void,
-    cmd_debug_marker_insert_ext: extern "system" fn(
-        command_buffer: CommandBuffer,
-        p_marker_info: *const DebugMarkerMarkerInfoEXT,
-    ) -> c_void,
-}
-unsafe impl Send for ExtDebugMarkerFn {}
-unsafe impl Sync for ExtDebugMarkerFn {}
-impl ::std::clone::Clone for ExtDebugMarkerFn {
-    fn clone(&self) -> Self {
-        ExtDebugMarkerFn {
-            debug_marker_set_object_tag_ext: self.debug_marker_set_object_tag_ext,
-            debug_marker_set_object_name_ext: self.debug_marker_set_object_name_ext,
-            cmd_debug_marker_begin_ext: self.cmd_debug_marker_begin_ext,
-            cmd_debug_marker_end_ext: self.cmd_debug_marker_end_ext,
-            cmd_debug_marker_insert_ext: self.cmd_debug_marker_insert_ext,
+    pub struct AmdShaderImageLoadStoreLodFn {}
+    unsafe impl Send for AmdShaderImageLoadStoreLodFn {}
+    unsafe impl Sync for AmdShaderImageLoadStoreLodFn {}
+    impl ::std::clone::Clone for AmdShaderImageLoadStoreLodFn {
+        fn clone(&self) -> Self {
+            AmdShaderImageLoadStoreLodFn {}
         }
     }
-}
-impl ExtDebugMarkerFn {
-    pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        let mut _err_str = Vec::new();
-        let s = ExtDebugMarkerFn {
-            debug_marker_set_object_tag_ext: unsafe {
-                let raw_name = stringify!(vkDebugMarkerSetObjectTagEXT);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            debug_marker_set_object_name_ext: unsafe {
-                let raw_name = stringify!(vkDebugMarkerSetObjectNameEXT);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            cmd_debug_marker_begin_ext: unsafe {
-                let raw_name = stringify!(vkCmdDebugMarkerBeginEXT);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            cmd_debug_marker_end_ext: unsafe {
-                let raw_name = stringify!(vkCmdDebugMarkerEndEXT);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            cmd_debug_marker_insert_ext: unsafe {
-                let raw_name = stringify!(vkCmdDebugMarkerInsertEXT);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-        };
-        if _err_str.is_empty() {
-            Ok(s)
-        } else {
-            Err(_err_str)
+    impl AmdShaderImageLoadStoreLodFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = AmdShaderImageLoadStoreLodFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
         }
     }
-    pub unsafe fn debug_marker_set_object_tag_ext(
-        &self,
-        device: Device,
-        p_tag_info: *const DebugMarkerObjectTagInfoEXT,
-    ) -> Result {
-        (self.debug_marker_set_object_tag_ext)(device, p_tag_info)
-    }
-    pub unsafe fn debug_marker_set_object_name_ext(
-        &self,
-        device: Device,
-        p_name_info: *const DebugMarkerObjectNameInfoEXT,
-    ) -> Result {
-        (self.debug_marker_set_object_name_ext)(device, p_name_info)
-    }
-    pub unsafe fn cmd_debug_marker_begin_ext(
-        &self,
-        command_buffer: CommandBuffer,
-        p_marker_info: *const DebugMarkerMarkerInfoEXT,
-    ) -> c_void {
-        (self.cmd_debug_marker_begin_ext)(command_buffer, p_marker_info)
-    }
-    pub unsafe fn cmd_debug_marker_end_ext(&self, command_buffer: CommandBuffer) -> c_void {
-        (self.cmd_debug_marker_end_ext)(command_buffer)
-    }
-    pub unsafe fn cmd_debug_marker_insert_ext(
-        &self,
-        command_buffer: CommandBuffer,
-        p_marker_info: *const DebugMarkerMarkerInfoEXT,
-    ) -> c_void {
-        (self.cmd_debug_marker_insert_ext)(command_buffer, p_marker_info)
-    }
-}
-pub struct AmdDrawIndirectCountFn {
-    cmd_draw_indirect_count_amd: extern "system" fn(
-        command_buffer: CommandBuffer,
-        buffer: Buffer,
-        offset: DeviceSize,
-        count_buffer: Buffer,
-        count_buffer_offset: DeviceSize,
-        max_draw_count: uint32_t,
-        stride: uint32_t,
-    ) -> c_void,
-    cmd_draw_indexed_indirect_count_amd: extern "system" fn(
-        command_buffer: CommandBuffer,
-        buffer: Buffer,
-        offset: DeviceSize,
-        count_buffer: Buffer,
-        count_buffer_offset: DeviceSize,
-        max_draw_count: uint32_t,
-        stride: uint32_t,
-    ) -> c_void,
-}
-unsafe impl Send for AmdDrawIndirectCountFn {}
-unsafe impl Sync for AmdDrawIndirectCountFn {}
-impl ::std::clone::Clone for AmdDrawIndirectCountFn {
-    fn clone(&self) -> Self {
-        AmdDrawIndirectCountFn {
-            cmd_draw_indirect_count_amd: self.cmd_draw_indirect_count_amd,
-            cmd_draw_indexed_indirect_count_amd: self.cmd_draw_indexed_indirect_count_amd,
+    pub struct KhrMultiviewFn {}
+    unsafe impl Send for KhrMultiviewFn {}
+    unsafe impl Sync for KhrMultiviewFn {}
+    impl ::std::clone::Clone for KhrMultiviewFn {
+        fn clone(&self) -> Self {
+            KhrMultiviewFn {}
         }
     }
-}
-impl AmdDrawIndirectCountFn {
-    pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        let mut _err_str = Vec::new();
-        let s = AmdDrawIndirectCountFn {
-            cmd_draw_indirect_count_amd: unsafe {
-                let raw_name = stringify!(vkCmdDrawIndirectCountAMD);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            cmd_draw_indexed_indirect_count_amd: unsafe {
-                let raw_name = stringify!(vkCmdDrawIndexedIndirectCountAMD);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-        };
-        if _err_str.is_empty() {
-            Ok(s)
-        } else {
-            Err(_err_str)
+    impl KhrMultiviewFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrMultiviewFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
         }
     }
-    pub unsafe fn cmd_draw_indirect_count_amd(
-        &self,
-        command_buffer: CommandBuffer,
-        buffer: Buffer,
-        offset: DeviceSize,
-        count_buffer: Buffer,
-        count_buffer_offset: DeviceSize,
-        max_draw_count: uint32_t,
-        stride: uint32_t,
-    ) -> c_void {
-        (self.cmd_draw_indirect_count_amd)(
-            command_buffer,
-            buffer,
-            offset,
-            count_buffer,
-            count_buffer_offset,
-            max_draw_count,
-            stride,
-        )
-    }
-    pub unsafe fn cmd_draw_indexed_indirect_count_amd(
-        &self,
-        command_buffer: CommandBuffer,
-        buffer: Buffer,
-        offset: DeviceSize,
-        count_buffer: Buffer,
-        count_buffer_offset: DeviceSize,
-        max_draw_count: uint32_t,
-        stride: uint32_t,
-    ) -> c_void {
-        (self.cmd_draw_indexed_indirect_count_amd)(
-            command_buffer,
-            buffer,
-            offset,
-            count_buffer,
-            count_buffer_offset,
-            max_draw_count,
-            stride,
-        )
-    }
-}
-pub struct AmdShaderInfoFn {
-    get_shader_info_amd: extern "system" fn(
-        device: Device,
-        pipeline: Pipeline,
-        shader_stage: ShaderStageFlags,
-        info_type: ShaderInfoTypeAMD,
-        p_info_size: *const size_t,
-        p_info: *const c_void,
-    ) -> Result,
-}
-unsafe impl Send for AmdShaderInfoFn {}
-unsafe impl Sync for AmdShaderInfoFn {}
-impl ::std::clone::Clone for AmdShaderInfoFn {
-    fn clone(&self) -> Self {
-        AmdShaderInfoFn {
-            get_shader_info_amd: self.get_shader_info_amd,
+    pub struct ImgFormatPvrtcFn {}
+    unsafe impl Send for ImgFormatPvrtcFn {}
+    unsafe impl Sync for ImgFormatPvrtcFn {}
+    impl ::std::clone::Clone for ImgFormatPvrtcFn {
+        fn clone(&self) -> Self {
+            ImgFormatPvrtcFn {}
         }
     }
-}
-impl AmdShaderInfoFn {
-    pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        let mut _err_str = Vec::new();
-        let s = AmdShaderInfoFn {
-            get_shader_info_amd: unsafe {
-                let raw_name = stringify!(vkGetShaderInfoAMD);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-        };
-        if _err_str.is_empty() {
-            Ok(s)
-        } else {
-            Err(_err_str)
+    impl ImgFormatPvrtcFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = ImgFormatPvrtcFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
         }
     }
-    pub unsafe fn get_shader_info_amd(
-        &self,
-        device: Device,
-        pipeline: Pipeline,
-        shader_stage: ShaderStageFlags,
-        info_type: ShaderInfoTypeAMD,
-        p_info_size: *const size_t,
-        p_info: *const c_void,
-    ) -> Result {
-        (self.get_shader_info_amd)(
-            device,
-            pipeline,
-            shader_stage,
-            info_type,
-            p_info_size,
-            p_info,
-        )
+    #[doc = "Generated from \'VK_IMG_format_pvrtc\'"]
+    impl Format {
+        pub const PVRTC1_2BPP_UNORM_BLOCK_IMG: Self = Format(1000054000);
     }
-}
-pub struct NvExternalMemoryCapabilitiesFn { get_physical_device_external_image_format_properties_nv : extern "system" fn ( physical_device : PhysicalDevice , format : Format , ty : ImageType , tiling : ImageTiling , usage : ImageUsageFlags , flags : ImageCreateFlags , external_handle_type : ExternalMemoryHandleTypeFlagsNV , p_external_image_format_properties : *const ExternalImageFormatPropertiesNV , ) -> Result , }
-unsafe impl Send for NvExternalMemoryCapabilitiesFn {}
-unsafe impl Sync for NvExternalMemoryCapabilitiesFn {}
-impl ::std::clone::Clone for NvExternalMemoryCapabilitiesFn {
-    fn clone(&self) -> Self {
-        NvExternalMemoryCapabilitiesFn {
-            get_physical_device_external_image_format_properties_nv: self
-                .get_physical_device_external_image_format_properties_nv,
+    #[doc = "Generated from \'VK_IMG_format_pvrtc\'"]
+    impl Format {
+        pub const PVRTC1_4BPP_UNORM_BLOCK_IMG: Self = Format(1000054001);
+    }
+    #[doc = "Generated from \'VK_IMG_format_pvrtc\'"]
+    impl Format {
+        pub const PVRTC2_2BPP_UNORM_BLOCK_IMG: Self = Format(1000054002);
+    }
+    #[doc = "Generated from \'VK_IMG_format_pvrtc\'"]
+    impl Format {
+        pub const PVRTC2_4BPP_UNORM_BLOCK_IMG: Self = Format(1000054003);
+    }
+    #[doc = "Generated from \'VK_IMG_format_pvrtc\'"]
+    impl Format {
+        pub const PVRTC1_2BPP_SRGB_BLOCK_IMG: Self = Format(1000054004);
+    }
+    #[doc = "Generated from \'VK_IMG_format_pvrtc\'"]
+    impl Format {
+        pub const PVRTC1_4BPP_SRGB_BLOCK_IMG: Self = Format(1000054005);
+    }
+    #[doc = "Generated from \'VK_IMG_format_pvrtc\'"]
+    impl Format {
+        pub const PVRTC2_2BPP_SRGB_BLOCK_IMG: Self = Format(1000054006);
+    }
+    #[doc = "Generated from \'VK_IMG_format_pvrtc\'"]
+    impl Format {
+        pub const PVRTC2_4BPP_SRGB_BLOCK_IMG: Self = Format(1000054007);
+    }
+    pub struct NvExternalMemoryCapabilitiesFn { get_physical_device_external_image_format_properties_nv : extern "system" fn ( physical_device : PhysicalDevice , format : Format , ty : ImageType , tiling : ImageTiling , usage : ImageUsageFlags , flags : ImageCreateFlags , external_handle_type : ExternalMemoryHandleTypeFlagsNV , p_external_image_format_properties : *const ExternalImageFormatPropertiesNV , ) -> Result , }
+    unsafe impl Send for NvExternalMemoryCapabilitiesFn {}
+    unsafe impl Sync for NvExternalMemoryCapabilitiesFn {}
+    impl ::std::clone::Clone for NvExternalMemoryCapabilitiesFn {
+        fn clone(&self) -> Self {
+            NvExternalMemoryCapabilitiesFn {
+                get_physical_device_external_image_format_properties_nv: self
+                    .get_physical_device_external_image_format_properties_nv,
+            }
         }
     }
-}
-impl NvExternalMemoryCapabilitiesFn {
-    pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        let mut _err_str = Vec::new();
-        let s = NvExternalMemoryCapabilitiesFn {
-            get_physical_device_external_image_format_properties_nv: unsafe {
-                let raw_name = stringify!(vkGetPhysicalDeviceExternalImageFormatPropertiesNV);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-        };
-        if _err_str.is_empty() {
-            Ok(s)
-        } else {
-            Err(_err_str)
+    impl NvExternalMemoryCapabilitiesFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = NvExternalMemoryCapabilitiesFn {
+                get_physical_device_external_image_format_properties_nv: unsafe {
+                    let raw_name = stringify!(vkGetPhysicalDeviceExternalImageFormatPropertiesNV);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+            };
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+        pub unsafe fn get_physical_device_external_image_format_properties_nv(
+            &self,
+            physical_device: PhysicalDevice,
+            format: Format,
+            ty: ImageType,
+            tiling: ImageTiling,
+            usage: ImageUsageFlags,
+            flags: ImageCreateFlags,
+            external_handle_type: ExternalMemoryHandleTypeFlagsNV,
+            p_external_image_format_properties: *const ExternalImageFormatPropertiesNV,
+        ) -> Result {
+            (self.get_physical_device_external_image_format_properties_nv)(
+                physical_device,
+                format,
+                ty,
+                tiling,
+                usage,
+                flags,
+                external_handle_type,
+                p_external_image_format_properties,
+            )
         }
     }
-    pub unsafe fn get_physical_device_external_image_format_properties_nv(
-        &self,
-        physical_device: PhysicalDevice,
-        format: Format,
-        ty: ImageType,
-        tiling: ImageTiling,
-        usage: ImageUsageFlags,
-        flags: ImageCreateFlags,
-        external_handle_type: ExternalMemoryHandleTypeFlagsNV,
-        p_external_image_format_properties: *const ExternalImageFormatPropertiesNV,
-    ) -> Result {
-        (self.get_physical_device_external_image_format_properties_nv)(
-            physical_device,
-            format,
-            ty,
-            tiling,
-            usage,
-            flags,
-            external_handle_type,
-            p_external_image_format_properties,
-        )
-    }
-}
-pub struct NvExternalMemoryWin32Fn {
-    get_memory_win32_handle_nv: extern "system" fn(
-        device: Device,
-        memory: DeviceMemory,
-        handle_type: ExternalMemoryHandleTypeFlagsNV,
-        p_handle: *const HANDLE,
-    ) -> Result,
-}
-unsafe impl Send for NvExternalMemoryWin32Fn {}
-unsafe impl Sync for NvExternalMemoryWin32Fn {}
-impl ::std::clone::Clone for NvExternalMemoryWin32Fn {
-    fn clone(&self) -> Self {
-        NvExternalMemoryWin32Fn {
-            get_memory_win32_handle_nv: self.get_memory_win32_handle_nv,
+    pub struct NvExternalMemoryFn {}
+    unsafe impl Send for NvExternalMemoryFn {}
+    unsafe impl Sync for NvExternalMemoryFn {}
+    impl ::std::clone::Clone for NvExternalMemoryFn {
+        fn clone(&self) -> Self {
+            NvExternalMemoryFn {}
         }
     }
-}
-impl NvExternalMemoryWin32Fn {
-    pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        let mut _err_str = Vec::new();
-        let s = NvExternalMemoryWin32Fn {
-            get_memory_win32_handle_nv: unsafe {
-                let raw_name = stringify!(vkGetMemoryWin32HandleNV);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-        };
-        if _err_str.is_empty() {
-            Ok(s)
-        } else {
-            Err(_err_str)
+    impl NvExternalMemoryFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = NvExternalMemoryFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
         }
     }
-    pub unsafe fn get_memory_win32_handle_nv(
-        &self,
-        device: Device,
-        memory: DeviceMemory,
-        handle_type: ExternalMemoryHandleTypeFlagsNV,
-        p_handle: *const HANDLE,
-    ) -> Result {
-        (self.get_memory_win32_handle_nv)(device, memory, handle_type, p_handle)
+    #[doc = "Generated from \'VK_NV_external_memory\'"]
+    impl StructureType {
+        pub const EXTERNAL_MEMORY_IMAGE_CREATE_INFO_NV: Self = StructureType(1000056000);
     }
-}
-pub struct KhrDeviceGroupFn { get_device_group_present_capabilities_khr : extern "system" fn ( device : Device , p_device_group_present_capabilities : *const DeviceGroupPresentCapabilitiesKHR , ) -> Result , get_device_group_surface_present_modes_khr : extern "system" fn ( device : Device , surface : SurfaceKHR , p_modes : *const DeviceGroupPresentModeFlagsKHR , ) -> Result , get_physical_device_present_rectangles_khr : extern "system" fn ( physical_device : PhysicalDevice , surface : SurfaceKHR , p_rect_count : *const uint32_t , p_rects : *const Rect2D , ) -> Result , acquire_next_image2_khr : extern "system" fn ( device : Device , p_acquire_info : *const AcquireNextImageInfoKHR , p_image_index : *const uint32_t , ) -> Result , }
-unsafe impl Send for KhrDeviceGroupFn {}
-unsafe impl Sync for KhrDeviceGroupFn {}
-impl ::std::clone::Clone for KhrDeviceGroupFn {
-    fn clone(&self) -> Self {
-        KhrDeviceGroupFn {
-            get_device_group_present_capabilities_khr: self
-                .get_device_group_present_capabilities_khr,
-            get_device_group_surface_present_modes_khr: self
-                .get_device_group_surface_present_modes_khr,
-            get_physical_device_present_rectangles_khr: self
-                .get_physical_device_present_rectangles_khr,
-            acquire_next_image2_khr: self.acquire_next_image2_khr,
+    #[doc = "Generated from \'VK_NV_external_memory\'"]
+    impl StructureType {
+        pub const EXPORT_MEMORY_ALLOCATE_INFO_NV: Self = StructureType(1000056001);
+    }
+    pub struct NvExternalMemoryWin32Fn {
+        get_memory_win32_handle_nv:
+            extern "system" fn(
+                device: Device,
+                memory: DeviceMemory,
+                handle_type: ExternalMemoryHandleTypeFlagsNV,
+                p_handle: *const HANDLE,
+            ) -> Result,
+    }
+    unsafe impl Send for NvExternalMemoryWin32Fn {}
+    unsafe impl Sync for NvExternalMemoryWin32Fn {}
+    impl ::std::clone::Clone for NvExternalMemoryWin32Fn {
+        fn clone(&self) -> Self {
+            NvExternalMemoryWin32Fn {
+                get_memory_win32_handle_nv: self.get_memory_win32_handle_nv,
+            }
         }
     }
-}
-impl KhrDeviceGroupFn {
-    pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        let mut _err_str = Vec::new();
-        let s = KhrDeviceGroupFn {
-            get_device_group_present_capabilities_khr: unsafe {
-                let raw_name = stringify!(vkGetDeviceGroupPresentCapabilitiesKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            get_device_group_surface_present_modes_khr: unsafe {
-                let raw_name = stringify!(vkGetDeviceGroupSurfacePresentModesKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            get_physical_device_present_rectangles_khr: unsafe {
-                let raw_name = stringify!(vkGetPhysicalDevicePresentRectanglesKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            acquire_next_image2_khr: unsafe {
-                let raw_name = stringify!(vkAcquireNextImage2KHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-        };
-        if _err_str.is_empty() {
-            Ok(s)
-        } else {
-            Err(_err_str)
+    impl NvExternalMemoryWin32Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = NvExternalMemoryWin32Fn {
+                get_memory_win32_handle_nv: unsafe {
+                    let raw_name = stringify!(vkGetMemoryWin32HandleNV);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+            };
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+        pub unsafe fn get_memory_win32_handle_nv(
+            &self,
+            device: Device,
+            memory: DeviceMemory,
+            handle_type: ExternalMemoryHandleTypeFlagsNV,
+            p_handle: *const HANDLE,
+        ) -> Result {
+            (self.get_memory_win32_handle_nv)(device, memory, handle_type, p_handle)
         }
     }
-    pub unsafe fn get_device_group_present_capabilities_khr(
-        &self,
-        device: Device,
-        p_device_group_present_capabilities: *const DeviceGroupPresentCapabilitiesKHR,
-    ) -> Result {
-        (self.get_device_group_present_capabilities_khr)(
-            device,
-            p_device_group_present_capabilities,
-        )
+    #[doc = "Generated from \'VK_NV_external_memory_win32\'"]
+    impl StructureType {
+        pub const IMPORT_MEMORY_WIN32_HANDLE_INFO_NV: Self = StructureType(1000057000);
     }
-    pub unsafe fn get_device_group_surface_present_modes_khr(
-        &self,
-        device: Device,
-        surface: SurfaceKHR,
-        p_modes: *const DeviceGroupPresentModeFlagsKHR,
-    ) -> Result {
-        (self.get_device_group_surface_present_modes_khr)(device, surface, p_modes)
+    #[doc = "Generated from \'VK_NV_external_memory_win32\'"]
+    impl StructureType {
+        pub const EXPORT_MEMORY_WIN32_HANDLE_INFO_NV: Self = StructureType(1000057001);
     }
-    pub unsafe fn get_physical_device_present_rectangles_khr(
-        &self,
-        physical_device: PhysicalDevice,
-        surface: SurfaceKHR,
-        p_rect_count: *const uint32_t,
-        p_rects: *const Rect2D,
-    ) -> Result {
-        (self.get_physical_device_present_rectangles_khr)(
-            physical_device,
-            surface,
-            p_rect_count,
-            p_rects,
-        )
-    }
-    pub unsafe fn acquire_next_image2_khr(
-        &self,
-        device: Device,
-        p_acquire_info: *const AcquireNextImageInfoKHR,
-        p_image_index: *const uint32_t,
-    ) -> Result {
-        (self.acquire_next_image2_khr)(device, p_acquire_info, p_image_index)
-    }
-}
-pub struct NnViSurfaceFn {
-    create_vi_surface_nn: extern "system" fn(
-        instance: Instance,
-        p_create_info: *const ViSurfaceCreateInfoNN,
-        p_allocator: *const AllocationCallbacks,
-        p_surface: *const SurfaceKHR,
-    ) -> Result,
-}
-unsafe impl Send for NnViSurfaceFn {}
-unsafe impl Sync for NnViSurfaceFn {}
-impl ::std::clone::Clone for NnViSurfaceFn {
-    fn clone(&self) -> Self {
-        NnViSurfaceFn {
-            create_vi_surface_nn: self.create_vi_surface_nn,
+    pub struct NvWin32KeyedMutexFn {}
+    unsafe impl Send for NvWin32KeyedMutexFn {}
+    unsafe impl Sync for NvWin32KeyedMutexFn {}
+    impl ::std::clone::Clone for NvWin32KeyedMutexFn {
+        fn clone(&self) -> Self {
+            NvWin32KeyedMutexFn {}
         }
     }
-}
-impl NnViSurfaceFn {
-    pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        let mut _err_str = Vec::new();
-        let s = NnViSurfaceFn {
-            create_vi_surface_nn: unsafe {
-                let raw_name = stringify!(vkCreateViSurfaceNN);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-        };
-        if _err_str.is_empty() {
-            Ok(s)
-        } else {
-            Err(_err_str)
+    impl NvWin32KeyedMutexFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = NvWin32KeyedMutexFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
         }
     }
-    pub unsafe fn create_vi_surface_nn(
-        &self,
-        instance: Instance,
-        p_create_info: *const ViSurfaceCreateInfoNN,
-        p_allocator: *const AllocationCallbacks,
-        p_surface: *const SurfaceKHR,
-    ) -> Result {
-        (self.create_vi_surface_nn)(instance, p_create_info, p_allocator, p_surface)
+    #[doc = "Generated from \'VK_NV_win32_keyed_mutex\'"]
+    impl StructureType {
+        pub const WIN32_KEYED_MUTEX_ACQUIRE_RELEASE_INFO_NV: Self = StructureType(1000058000);
     }
-}
-pub struct KhrExternalMemoryWin32Fn {
-    get_memory_win32_handle_khr:
-        extern "system" fn(
+    pub struct KhrGetPhysicalDeviceProperties2Fn {}
+    unsafe impl Send for KhrGetPhysicalDeviceProperties2Fn {}
+    unsafe impl Sync for KhrGetPhysicalDeviceProperties2Fn {}
+    impl ::std::clone::Clone for KhrGetPhysicalDeviceProperties2Fn {
+        fn clone(&self) -> Self {
+            KhrGetPhysicalDeviceProperties2Fn {}
+        }
+    }
+    impl KhrGetPhysicalDeviceProperties2Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrGetPhysicalDeviceProperties2Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct KhrDeviceGroupFn { get_device_group_present_capabilities_khr : extern "system" fn ( device : Device , p_device_group_present_capabilities : *const DeviceGroupPresentCapabilitiesKHR , ) -> Result , get_device_group_surface_present_modes_khr : extern "system" fn ( device : Device , surface : SurfaceKHR , p_modes : *const DeviceGroupPresentModeFlagsKHR , ) -> Result , get_physical_device_present_rectangles_khr : extern "system" fn ( physical_device : PhysicalDevice , surface : SurfaceKHR , p_rect_count : *const uint32_t , p_rects : *const Rect2D , ) -> Result , acquire_next_image2_khr : extern "system" fn ( device : Device , p_acquire_info : *const AcquireNextImageInfoKHR , p_image_index : *const uint32_t , ) -> Result , }
+    unsafe impl Send for KhrDeviceGroupFn {}
+    unsafe impl Sync for KhrDeviceGroupFn {}
+    impl ::std::clone::Clone for KhrDeviceGroupFn {
+        fn clone(&self) -> Self {
+            KhrDeviceGroupFn {
+                get_device_group_present_capabilities_khr: self
+                    .get_device_group_present_capabilities_khr,
+                get_device_group_surface_present_modes_khr: self
+                    .get_device_group_surface_present_modes_khr,
+                get_physical_device_present_rectangles_khr: self
+                    .get_physical_device_present_rectangles_khr,
+                acquire_next_image2_khr: self.acquire_next_image2_khr,
+            }
+        }
+    }
+    impl KhrDeviceGroupFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrDeviceGroupFn {
+                get_device_group_present_capabilities_khr: unsafe {
+                    let raw_name = stringify!(vkGetDeviceGroupPresentCapabilitiesKHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                get_device_group_surface_present_modes_khr: unsafe {
+                    let raw_name = stringify!(vkGetDeviceGroupSurfacePresentModesKHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                get_physical_device_present_rectangles_khr: unsafe {
+                    let raw_name = stringify!(vkGetPhysicalDevicePresentRectanglesKHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                acquire_next_image2_khr: unsafe {
+                    let raw_name = stringify!(vkAcquireNextImage2KHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+            };
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+        pub unsafe fn get_device_group_present_capabilities_khr(
+            &self,
+            device: Device,
+            p_device_group_present_capabilities: *const DeviceGroupPresentCapabilitiesKHR,
+        ) -> Result {
+            (self.get_device_group_present_capabilities_khr)(
+                device,
+                p_device_group_present_capabilities,
+            )
+        }
+        pub unsafe fn get_device_group_surface_present_modes_khr(
+            &self,
+            device: Device,
+            surface: SurfaceKHR,
+            p_modes: *const DeviceGroupPresentModeFlagsKHR,
+        ) -> Result {
+            (self.get_device_group_surface_present_modes_khr)(device, surface, p_modes)
+        }
+        pub unsafe fn get_physical_device_present_rectangles_khr(
+            &self,
+            physical_device: PhysicalDevice,
+            surface: SurfaceKHR,
+            p_rect_count: *const uint32_t,
+            p_rects: *const Rect2D,
+        ) -> Result {
+            (self.get_physical_device_present_rectangles_khr)(
+                physical_device,
+                surface,
+                p_rect_count,
+                p_rects,
+            )
+        }
+        pub unsafe fn acquire_next_image2_khr(
+            &self,
+            device: Device,
+            p_acquire_info: *const AcquireNextImageInfoKHR,
+            p_image_index: *const uint32_t,
+        ) -> Result {
+            (self.acquire_next_image2_khr)(device, p_acquire_info, p_image_index)
+        }
+    }
+    pub struct ExtValidationFlagsFn {}
+    unsafe impl Send for ExtValidationFlagsFn {}
+    unsafe impl Sync for ExtValidationFlagsFn {}
+    impl ::std::clone::Clone for ExtValidationFlagsFn {
+        fn clone(&self) -> Self {
+            ExtValidationFlagsFn {}
+        }
+    }
+    impl ExtValidationFlagsFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = ExtValidationFlagsFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    #[doc = "Generated from \'VK_EXT_validation_flags\'"]
+    impl StructureType {
+        pub const VALIDATION_FLAGS_EXT: Self = StructureType(1000061000);
+    }
+    pub struct NnViSurfaceFn {
+        create_vi_surface_nn: extern "system" fn(
+            instance: Instance,
+            p_create_info: *const ViSurfaceCreateInfoNN,
+            p_allocator: *const AllocationCallbacks,
+            p_surface: *const SurfaceKHR,
+        ) -> Result,
+    }
+    unsafe impl Send for NnViSurfaceFn {}
+    unsafe impl Sync for NnViSurfaceFn {}
+    impl ::std::clone::Clone for NnViSurfaceFn {
+        fn clone(&self) -> Self {
+            NnViSurfaceFn {
+                create_vi_surface_nn: self.create_vi_surface_nn,
+            }
+        }
+    }
+    impl NnViSurfaceFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = NnViSurfaceFn {
+                create_vi_surface_nn: unsafe {
+                    let raw_name = stringify!(vkCreateViSurfaceNN);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+            };
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+        pub unsafe fn create_vi_surface_nn(
+            &self,
+            instance: Instance,
+            p_create_info: *const ViSurfaceCreateInfoNN,
+            p_allocator: *const AllocationCallbacks,
+            p_surface: *const SurfaceKHR,
+        ) -> Result {
+            (self.create_vi_surface_nn)(instance, p_create_info, p_allocator, p_surface)
+        }
+    }
+    #[doc = "Generated from \'VK_NN_vi_surface\'"]
+    impl StructureType {
+        pub const VI_SURFACE_CREATE_INFO_NN: Self = StructureType(1000062000);
+    }
+    pub struct KhrShaderDrawParametersFn {}
+    unsafe impl Send for KhrShaderDrawParametersFn {}
+    unsafe impl Sync for KhrShaderDrawParametersFn {}
+    impl ::std::clone::Clone for KhrShaderDrawParametersFn {
+        fn clone(&self) -> Self {
+            KhrShaderDrawParametersFn {}
+        }
+    }
+    impl KhrShaderDrawParametersFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrShaderDrawParametersFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct ExtShaderSubgroupBallotFn {}
+    unsafe impl Send for ExtShaderSubgroupBallotFn {}
+    unsafe impl Sync for ExtShaderSubgroupBallotFn {}
+    impl ::std::clone::Clone for ExtShaderSubgroupBallotFn {
+        fn clone(&self) -> Self {
+            ExtShaderSubgroupBallotFn {}
+        }
+    }
+    impl ExtShaderSubgroupBallotFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = ExtShaderSubgroupBallotFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct ExtShaderSubgroupVoteFn {}
+    unsafe impl Send for ExtShaderSubgroupVoteFn {}
+    unsafe impl Sync for ExtShaderSubgroupVoteFn {}
+    impl ::std::clone::Clone for ExtShaderSubgroupVoteFn {
+        fn clone(&self) -> Self {
+            ExtShaderSubgroupVoteFn {}
+        }
+    }
+    impl ExtShaderSubgroupVoteFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = ExtShaderSubgroupVoteFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct KhrMaintenance1Fn {}
+    unsafe impl Send for KhrMaintenance1Fn {}
+    unsafe impl Sync for KhrMaintenance1Fn {}
+    impl ::std::clone::Clone for KhrMaintenance1Fn {
+        fn clone(&self) -> Self {
+            KhrMaintenance1Fn {}
+        }
+    }
+    impl KhrMaintenance1Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrMaintenance1Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct KhrDeviceGroupCreationFn {}
+    unsafe impl Send for KhrDeviceGroupCreationFn {}
+    unsafe impl Sync for KhrDeviceGroupCreationFn {}
+    impl ::std::clone::Clone for KhrDeviceGroupCreationFn {
+        fn clone(&self) -> Self {
+            KhrDeviceGroupCreationFn {}
+        }
+    }
+    impl KhrDeviceGroupCreationFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrDeviceGroupCreationFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct KhrExternalMemoryCapabilitiesFn {}
+    unsafe impl Send for KhrExternalMemoryCapabilitiesFn {}
+    unsafe impl Sync for KhrExternalMemoryCapabilitiesFn {}
+    impl ::std::clone::Clone for KhrExternalMemoryCapabilitiesFn {
+        fn clone(&self) -> Self {
+            KhrExternalMemoryCapabilitiesFn {}
+        }
+    }
+    impl KhrExternalMemoryCapabilitiesFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrExternalMemoryCapabilitiesFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct KhrExternalMemoryFn {}
+    unsafe impl Send for KhrExternalMemoryFn {}
+    unsafe impl Sync for KhrExternalMemoryFn {}
+    impl ::std::clone::Clone for KhrExternalMemoryFn {
+        fn clone(&self) -> Self {
+            KhrExternalMemoryFn {}
+        }
+    }
+    impl KhrExternalMemoryFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrExternalMemoryFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct KhrExternalMemoryWin32Fn { get_memory_win32_handle_khr : extern "system" fn ( device : Device , p_get_win32_handle_info : *const MemoryGetWin32HandleInfoKHR , p_handle : *const HANDLE , ) -> Result , get_memory_win32_handle_properties_khr : extern "system" fn ( device : Device , handle_type : ExternalMemoryHandleTypeFlags , handle : HANDLE , p_memory_win32_handle_properties : *const MemoryWin32HandlePropertiesKHR , ) -> Result , }
+    unsafe impl Send for KhrExternalMemoryWin32Fn {}
+    unsafe impl Sync for KhrExternalMemoryWin32Fn {}
+    impl ::std::clone::Clone for KhrExternalMemoryWin32Fn {
+        fn clone(&self) -> Self {
+            KhrExternalMemoryWin32Fn {
+                get_memory_win32_handle_khr: self.get_memory_win32_handle_khr,
+                get_memory_win32_handle_properties_khr: self.get_memory_win32_handle_properties_khr,
+            }
+        }
+    }
+    impl KhrExternalMemoryWin32Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrExternalMemoryWin32Fn {
+                get_memory_win32_handle_khr: unsafe {
+                    let raw_name = stringify!(vkGetMemoryWin32HandleKHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                get_memory_win32_handle_properties_khr: unsafe {
+                    let raw_name = stringify!(vkGetMemoryWin32HandlePropertiesKHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+            };
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+        pub unsafe fn get_memory_win32_handle_khr(
+            &self,
             device: Device,
             p_get_win32_handle_info: *const MemoryGetWin32HandleInfoKHR,
             p_handle: *const HANDLE,
-        ) -> Result,
-    get_memory_win32_handle_properties_khr:
-        extern "system" fn(
+        ) -> Result {
+            (self.get_memory_win32_handle_khr)(device, p_get_win32_handle_info, p_handle)
+        }
+        pub unsafe fn get_memory_win32_handle_properties_khr(
+            &self,
             device: Device,
             handle_type: ExternalMemoryHandleTypeFlags,
             handle: HANDLE,
             p_memory_win32_handle_properties: *const MemoryWin32HandlePropertiesKHR,
+        ) -> Result {
+            (self.get_memory_win32_handle_properties_khr)(
+                device,
+                handle_type,
+                handle,
+                p_memory_win32_handle_properties,
+            )
+        }
+    }
+    #[doc = "Generated from \'VK_KHR_external_memory_win32\'"]
+    impl StructureType {
+        pub const IMPORT_MEMORY_WIN32_HANDLE_INFO_KHR: Self = StructureType(1000073000);
+    }
+    #[doc = "Generated from \'VK_KHR_external_memory_win32\'"]
+    impl StructureType {
+        pub const EXPORT_MEMORY_WIN32_HANDLE_INFO_KHR: Self = StructureType(1000073001);
+    }
+    #[doc = "Generated from \'VK_KHR_external_memory_win32\'"]
+    impl StructureType {
+        pub const MEMORY_WIN32_HANDLE_PROPERTIES_KHR: Self = StructureType(1000073002);
+    }
+    #[doc = "Generated from \'VK_KHR_external_memory_win32\'"]
+    impl StructureType {
+        pub const MEMORY_GET_WIN32_HANDLE_INFO_KHR: Self = StructureType(1000073003);
+    }
+    pub struct KhrExternalMemoryFdFn {
+        get_memory_fd_khr: extern "system" fn(
+            device: Device,
+            p_get_fd_info: *const MemoryGetFdInfoKHR,
+            p_fd: *const c_int,
         ) -> Result,
-}
-unsafe impl Send for KhrExternalMemoryWin32Fn {}
-unsafe impl Sync for KhrExternalMemoryWin32Fn {}
-impl ::std::clone::Clone for KhrExternalMemoryWin32Fn {
-    fn clone(&self) -> Self {
-        KhrExternalMemoryWin32Fn {
-            get_memory_win32_handle_khr: self.get_memory_win32_handle_khr,
-            get_memory_win32_handle_properties_khr: self.get_memory_win32_handle_properties_khr,
+        get_memory_fd_properties_khr:
+            extern "system" fn(
+                device: Device,
+                handle_type: ExternalMemoryHandleTypeFlags,
+                fd: c_int,
+                p_memory_fd_properties: *const MemoryFdPropertiesKHR,
+            ) -> Result,
+    }
+    unsafe impl Send for KhrExternalMemoryFdFn {}
+    unsafe impl Sync for KhrExternalMemoryFdFn {}
+    impl ::std::clone::Clone for KhrExternalMemoryFdFn {
+        fn clone(&self) -> Self {
+            KhrExternalMemoryFdFn {
+                get_memory_fd_khr: self.get_memory_fd_khr,
+                get_memory_fd_properties_khr: self.get_memory_fd_properties_khr,
+            }
         }
     }
-}
-impl KhrExternalMemoryWin32Fn {
-    pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        let mut _err_str = Vec::new();
-        let s = KhrExternalMemoryWin32Fn {
-            get_memory_win32_handle_khr: unsafe {
-                let raw_name = stringify!(vkGetMemoryWin32HandleKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            get_memory_win32_handle_properties_khr: unsafe {
-                let raw_name = stringify!(vkGetMemoryWin32HandlePropertiesKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-        };
-        if _err_str.is_empty() {
-            Ok(s)
-        } else {
-            Err(_err_str)
+    impl KhrExternalMemoryFdFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrExternalMemoryFdFn {
+                get_memory_fd_khr: unsafe {
+                    let raw_name = stringify!(vkGetMemoryFdKHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                get_memory_fd_properties_khr: unsafe {
+                    let raw_name = stringify!(vkGetMemoryFdPropertiesKHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+            };
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
         }
-    }
-    pub unsafe fn get_memory_win32_handle_khr(
-        &self,
-        device: Device,
-        p_get_win32_handle_info: *const MemoryGetWin32HandleInfoKHR,
-        p_handle: *const HANDLE,
-    ) -> Result {
-        (self.get_memory_win32_handle_khr)(device, p_get_win32_handle_info, p_handle)
-    }
-    pub unsafe fn get_memory_win32_handle_properties_khr(
-        &self,
-        device: Device,
-        handle_type: ExternalMemoryHandleTypeFlags,
-        handle: HANDLE,
-        p_memory_win32_handle_properties: *const MemoryWin32HandlePropertiesKHR,
-    ) -> Result {
-        (self.get_memory_win32_handle_properties_khr)(
-            device,
-            handle_type,
-            handle,
-            p_memory_win32_handle_properties,
-        )
-    }
-}
-pub struct KhrExternalMemoryFdFn {
-    get_memory_fd_khr: extern "system" fn(
-        device: Device,
-        p_get_fd_info: *const MemoryGetFdInfoKHR,
-        p_fd: *const c_int,
-    ) -> Result,
-    get_memory_fd_properties_khr:
-        extern "system" fn(
+        pub unsafe fn get_memory_fd_khr(
+            &self,
+            device: Device,
+            p_get_fd_info: *const MemoryGetFdInfoKHR,
+            p_fd: *const c_int,
+        ) -> Result {
+            (self.get_memory_fd_khr)(device, p_get_fd_info, p_fd)
+        }
+        pub unsafe fn get_memory_fd_properties_khr(
+            &self,
             device: Device,
             handle_type: ExternalMemoryHandleTypeFlags,
             fd: c_int,
             p_memory_fd_properties: *const MemoryFdPropertiesKHR,
+        ) -> Result {
+            (self.get_memory_fd_properties_khr)(device, handle_type, fd, p_memory_fd_properties)
+        }
+    }
+    #[doc = "Generated from \'VK_KHR_external_memory_fd\'"]
+    impl StructureType {
+        pub const IMPORT_MEMORY_FD_INFO_KHR: Self = StructureType(1000074000);
+    }
+    #[doc = "Generated from \'VK_KHR_external_memory_fd\'"]
+    impl StructureType {
+        pub const MEMORY_FD_PROPERTIES_KHR: Self = StructureType(1000074001);
+    }
+    #[doc = "Generated from \'VK_KHR_external_memory_fd\'"]
+    impl StructureType {
+        pub const MEMORY_GET_FD_INFO_KHR: Self = StructureType(1000074002);
+    }
+    pub struct KhrWin32KeyedMutexFn {}
+    unsafe impl Send for KhrWin32KeyedMutexFn {}
+    unsafe impl Sync for KhrWin32KeyedMutexFn {}
+    impl ::std::clone::Clone for KhrWin32KeyedMutexFn {
+        fn clone(&self) -> Self {
+            KhrWin32KeyedMutexFn {}
+        }
+    }
+    impl KhrWin32KeyedMutexFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrWin32KeyedMutexFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    #[doc = "Generated from \'VK_KHR_win32_keyed_mutex\'"]
+    impl StructureType {
+        pub const WIN32_KEYED_MUTEX_ACQUIRE_RELEASE_INFO_KHR: Self = StructureType(1000075000);
+    }
+    pub struct KhrExternalSemaphoreCapabilitiesFn {}
+    unsafe impl Send for KhrExternalSemaphoreCapabilitiesFn {}
+    unsafe impl Sync for KhrExternalSemaphoreCapabilitiesFn {}
+    impl ::std::clone::Clone for KhrExternalSemaphoreCapabilitiesFn {
+        fn clone(&self) -> Self {
+            KhrExternalSemaphoreCapabilitiesFn {}
+        }
+    }
+    impl KhrExternalSemaphoreCapabilitiesFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrExternalSemaphoreCapabilitiesFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct KhrExternalSemaphoreFn {}
+    unsafe impl Send for KhrExternalSemaphoreFn {}
+    unsafe impl Sync for KhrExternalSemaphoreFn {}
+    impl ::std::clone::Clone for KhrExternalSemaphoreFn {
+        fn clone(&self) -> Self {
+            KhrExternalSemaphoreFn {}
+        }
+    }
+    impl KhrExternalSemaphoreFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrExternalSemaphoreFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct KhrExternalSemaphoreWin32Fn { import_semaphore_win32_handle_khr : extern "system" fn ( device : Device , p_import_semaphore_win32_handle_info : *const ImportSemaphoreWin32HandleInfoKHR , ) -> Result , get_semaphore_win32_handle_khr : extern "system" fn ( device : Device , p_get_win32_handle_info : *const SemaphoreGetWin32HandleInfoKHR , p_handle : *const HANDLE , ) -> Result , }
+    unsafe impl Send for KhrExternalSemaphoreWin32Fn {}
+    unsafe impl Sync for KhrExternalSemaphoreWin32Fn {}
+    impl ::std::clone::Clone for KhrExternalSemaphoreWin32Fn {
+        fn clone(&self) -> Self {
+            KhrExternalSemaphoreWin32Fn {
+                import_semaphore_win32_handle_khr: self.import_semaphore_win32_handle_khr,
+                get_semaphore_win32_handle_khr: self.get_semaphore_win32_handle_khr,
+            }
+        }
+    }
+    impl KhrExternalSemaphoreWin32Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrExternalSemaphoreWin32Fn {
+                import_semaphore_win32_handle_khr: unsafe {
+                    let raw_name = stringify!(vkImportSemaphoreWin32HandleKHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                get_semaphore_win32_handle_khr: unsafe {
+                    let raw_name = stringify!(vkGetSemaphoreWin32HandleKHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+            };
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+        pub unsafe fn import_semaphore_win32_handle_khr(
+            &self,
+            device: Device,
+            p_import_semaphore_win32_handle_info: *const ImportSemaphoreWin32HandleInfoKHR,
+        ) -> Result {
+            (self.import_semaphore_win32_handle_khr)(device, p_import_semaphore_win32_handle_info)
+        }
+        pub unsafe fn get_semaphore_win32_handle_khr(
+            &self,
+            device: Device,
+            p_get_win32_handle_info: *const SemaphoreGetWin32HandleInfoKHR,
+            p_handle: *const HANDLE,
+        ) -> Result {
+            (self.get_semaphore_win32_handle_khr)(device, p_get_win32_handle_info, p_handle)
+        }
+    }
+    #[doc = "Generated from \'VK_KHR_external_semaphore_win32\'"]
+    impl StructureType {
+        pub const IMPORT_SEMAPHORE_WIN32_HANDLE_INFO_KHR: Self = StructureType(1000078000);
+    }
+    #[doc = "Generated from \'VK_KHR_external_semaphore_win32\'"]
+    impl StructureType {
+        pub const EXPORT_SEMAPHORE_WIN32_HANDLE_INFO_KHR: Self = StructureType(1000078001);
+    }
+    #[doc = "Generated from \'VK_KHR_external_semaphore_win32\'"]
+    impl StructureType {
+        pub const D3D12_FENCE_SUBMIT_INFO_KHR: Self = StructureType(1000078002);
+    }
+    #[doc = "Generated from \'VK_KHR_external_semaphore_win32\'"]
+    impl StructureType {
+        pub const SEMAPHORE_GET_WIN32_HANDLE_INFO_KHR: Self = StructureType(1000078003);
+    }
+    pub struct KhrExternalSemaphoreFdFn {
+        import_semaphore_fd_khr:
+            extern "system" fn(
+                device: Device,
+                p_import_semaphore_fd_info: *const ImportSemaphoreFdInfoKHR,
+            ) -> Result,
+        get_semaphore_fd_khr: extern "system" fn(
+            device: Device,
+            p_get_fd_info: *const SemaphoreGetFdInfoKHR,
+            p_fd: *const c_int,
         ) -> Result,
-}
-unsafe impl Send for KhrExternalMemoryFdFn {}
-unsafe impl Sync for KhrExternalMemoryFdFn {}
-impl ::std::clone::Clone for KhrExternalMemoryFdFn {
-    fn clone(&self) -> Self {
-        KhrExternalMemoryFdFn {
-            get_memory_fd_khr: self.get_memory_fd_khr,
-            get_memory_fd_properties_khr: self.get_memory_fd_properties_khr,
+    }
+    unsafe impl Send for KhrExternalSemaphoreFdFn {}
+    unsafe impl Sync for KhrExternalSemaphoreFdFn {}
+    impl ::std::clone::Clone for KhrExternalSemaphoreFdFn {
+        fn clone(&self) -> Self {
+            KhrExternalSemaphoreFdFn {
+                import_semaphore_fd_khr: self.import_semaphore_fd_khr,
+                get_semaphore_fd_khr: self.get_semaphore_fd_khr,
+            }
         }
     }
-}
-impl KhrExternalMemoryFdFn {
-    pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        let mut _err_str = Vec::new();
-        let s = KhrExternalMemoryFdFn {
-            get_memory_fd_khr: unsafe {
-                let raw_name = stringify!(vkGetMemoryFdKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            get_memory_fd_properties_khr: unsafe {
-                let raw_name = stringify!(vkGetMemoryFdPropertiesKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-        };
-        if _err_str.is_empty() {
-            Ok(s)
-        } else {
-            Err(_err_str)
+    impl KhrExternalSemaphoreFdFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrExternalSemaphoreFdFn {
+                import_semaphore_fd_khr: unsafe {
+                    let raw_name = stringify!(vkImportSemaphoreFdKHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                get_semaphore_fd_khr: unsafe {
+                    let raw_name = stringify!(vkGetSemaphoreFdKHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+            };
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
         }
-    }
-    pub unsafe fn get_memory_fd_khr(
-        &self,
-        device: Device,
-        p_get_fd_info: *const MemoryGetFdInfoKHR,
-        p_fd: *const c_int,
-    ) -> Result {
-        (self.get_memory_fd_khr)(device, p_get_fd_info, p_fd)
-    }
-    pub unsafe fn get_memory_fd_properties_khr(
-        &self,
-        device: Device,
-        handle_type: ExternalMemoryHandleTypeFlags,
-        fd: c_int,
-        p_memory_fd_properties: *const MemoryFdPropertiesKHR,
-    ) -> Result {
-        (self.get_memory_fd_properties_khr)(device, handle_type, fd, p_memory_fd_properties)
-    }
-}
-pub struct KhrExternalSemaphoreWin32Fn { import_semaphore_win32_handle_khr : extern "system" fn ( device : Device , p_import_semaphore_win32_handle_info : *const ImportSemaphoreWin32HandleInfoKHR , ) -> Result , get_semaphore_win32_handle_khr : extern "system" fn ( device : Device , p_get_win32_handle_info : *const SemaphoreGetWin32HandleInfoKHR , p_handle : *const HANDLE , ) -> Result , }
-unsafe impl Send for KhrExternalSemaphoreWin32Fn {}
-unsafe impl Sync for KhrExternalSemaphoreWin32Fn {}
-impl ::std::clone::Clone for KhrExternalSemaphoreWin32Fn {
-    fn clone(&self) -> Self {
-        KhrExternalSemaphoreWin32Fn {
-            import_semaphore_win32_handle_khr: self.import_semaphore_win32_handle_khr,
-            get_semaphore_win32_handle_khr: self.get_semaphore_win32_handle_khr,
-        }
-    }
-}
-impl KhrExternalSemaphoreWin32Fn {
-    pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        let mut _err_str = Vec::new();
-        let s = KhrExternalSemaphoreWin32Fn {
-            import_semaphore_win32_handle_khr: unsafe {
-                let raw_name = stringify!(vkImportSemaphoreWin32HandleKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            get_semaphore_win32_handle_khr: unsafe {
-                let raw_name = stringify!(vkGetSemaphoreWin32HandleKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-        };
-        if _err_str.is_empty() {
-            Ok(s)
-        } else {
-            Err(_err_str)
-        }
-    }
-    pub unsafe fn import_semaphore_win32_handle_khr(
-        &self,
-        device: Device,
-        p_import_semaphore_win32_handle_info: *const ImportSemaphoreWin32HandleInfoKHR,
-    ) -> Result {
-        (self.import_semaphore_win32_handle_khr)(device, p_import_semaphore_win32_handle_info)
-    }
-    pub unsafe fn get_semaphore_win32_handle_khr(
-        &self,
-        device: Device,
-        p_get_win32_handle_info: *const SemaphoreGetWin32HandleInfoKHR,
-        p_handle: *const HANDLE,
-    ) -> Result {
-        (self.get_semaphore_win32_handle_khr)(device, p_get_win32_handle_info, p_handle)
-    }
-}
-pub struct KhrExternalSemaphoreFdFn {
-    import_semaphore_fd_khr:
-        extern "system" fn(
+        pub unsafe fn import_semaphore_fd_khr(
+            &self,
             device: Device,
             p_import_semaphore_fd_info: *const ImportSemaphoreFdInfoKHR,
+        ) -> Result {
+            (self.import_semaphore_fd_khr)(device, p_import_semaphore_fd_info)
+        }
+        pub unsafe fn get_semaphore_fd_khr(
+            &self,
+            device: Device,
+            p_get_fd_info: *const SemaphoreGetFdInfoKHR,
+            p_fd: *const c_int,
+        ) -> Result {
+            (self.get_semaphore_fd_khr)(device, p_get_fd_info, p_fd)
+        }
+    }
+    #[doc = "Generated from \'VK_KHR_external_semaphore_fd\'"]
+    impl StructureType {
+        pub const IMPORT_SEMAPHORE_FD_INFO_KHR: Self = StructureType(1000079000);
+    }
+    #[doc = "Generated from \'VK_KHR_external_semaphore_fd\'"]
+    impl StructureType {
+        pub const SEMAPHORE_GET_FD_INFO_KHR: Self = StructureType(1000079001);
+    }
+    pub struct KhrPushDescriptorFn {
+        cmd_push_descriptor_set_khr:
+            extern "system" fn(
+                command_buffer: CommandBuffer,
+                pipeline_bind_point: PipelineBindPoint,
+                layout: PipelineLayout,
+                set: uint32_t,
+                descriptor_write_count: uint32_t,
+                p_descriptor_writes: *const WriteDescriptorSet,
+            ) -> c_void,
+        cmd_push_descriptor_set_with_template_khr:
+            extern "system" fn(
+                command_buffer: CommandBuffer,
+                descriptor_update_template: DescriptorUpdateTemplate,
+                layout: PipelineLayout,
+                set: uint32_t,
+                p_data: *const c_void,
+            ) -> c_void,
+    }
+    unsafe impl Send for KhrPushDescriptorFn {}
+    unsafe impl Sync for KhrPushDescriptorFn {}
+    impl ::std::clone::Clone for KhrPushDescriptorFn {
+        fn clone(&self) -> Self {
+            KhrPushDescriptorFn {
+                cmd_push_descriptor_set_khr: self.cmd_push_descriptor_set_khr,
+                cmd_push_descriptor_set_with_template_khr: self
+                    .cmd_push_descriptor_set_with_template_khr,
+            }
+        }
+    }
+    impl KhrPushDescriptorFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrPushDescriptorFn {
+                cmd_push_descriptor_set_khr: unsafe {
+                    let raw_name = stringify!(vkCmdPushDescriptorSetKHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                cmd_push_descriptor_set_with_template_khr: unsafe {
+                    let raw_name = stringify!(vkCmdPushDescriptorSetWithTemplateKHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+            };
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+        pub unsafe fn cmd_push_descriptor_set_khr(
+            &self,
+            command_buffer: CommandBuffer,
+            pipeline_bind_point: PipelineBindPoint,
+            layout: PipelineLayout,
+            set: uint32_t,
+            descriptor_write_count: uint32_t,
+            p_descriptor_writes: *const WriteDescriptorSet,
+        ) -> c_void {
+            (self.cmd_push_descriptor_set_khr)(
+                command_buffer,
+                pipeline_bind_point,
+                layout,
+                set,
+                descriptor_write_count,
+                p_descriptor_writes,
+            )
+        }
+        pub unsafe fn cmd_push_descriptor_set_with_template_khr(
+            &self,
+            command_buffer: CommandBuffer,
+            descriptor_update_template: DescriptorUpdateTemplate,
+            layout: PipelineLayout,
+            set: uint32_t,
+            p_data: *const c_void,
+        ) -> c_void {
+            (self.cmd_push_descriptor_set_with_template_khr)(
+                command_buffer,
+                descriptor_update_template,
+                layout,
+                set,
+                p_data,
+            )
+        }
+    }
+    #[doc = "Generated from \'VK_KHR_push_descriptor\'"]
+    impl StructureType {
+        pub const PHYSICAL_DEVICE_PUSH_DESCRIPTOR_PROPERTIES_KHR: Self = StructureType(1000080000);
+    }
+    #[doc = "Generated from \'VK_KHR_push_descriptor\'"]
+    impl DescriptorSetLayoutCreateFlags {
+        pub const PUSH_DESCRIPTOR_KHR: Self = DescriptorSetLayoutCreateFlags(0b1);
+    }
+    pub struct Khr16bitStorageFn {}
+    unsafe impl Send for Khr16bitStorageFn {}
+    unsafe impl Sync for Khr16bitStorageFn {}
+    impl ::std::clone::Clone for Khr16bitStorageFn {
+        fn clone(&self) -> Self {
+            Khr16bitStorageFn {}
+        }
+    }
+    impl Khr16bitStorageFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = Khr16bitStorageFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct KhrIncrementalPresentFn {}
+    unsafe impl Send for KhrIncrementalPresentFn {}
+    unsafe impl Sync for KhrIncrementalPresentFn {}
+    impl ::std::clone::Clone for KhrIncrementalPresentFn {
+        fn clone(&self) -> Self {
+            KhrIncrementalPresentFn {}
+        }
+    }
+    impl KhrIncrementalPresentFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrIncrementalPresentFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    #[doc = "Generated from \'VK_KHR_incremental_present\'"]
+    impl StructureType {
+        pub const PRESENT_REGIONS_KHR: Self = StructureType(1000084000);
+    }
+    pub struct KhrDescriptorUpdateTemplateFn {
+        cmd_push_descriptor_set_with_template_khr:
+            extern "system" fn(
+                command_buffer: CommandBuffer,
+                descriptor_update_template: DescriptorUpdateTemplate,
+                layout: PipelineLayout,
+                set: uint32_t,
+                p_data: *const c_void,
+            ) -> c_void,
+    }
+    unsafe impl Send for KhrDescriptorUpdateTemplateFn {}
+    unsafe impl Sync for KhrDescriptorUpdateTemplateFn {}
+    impl ::std::clone::Clone for KhrDescriptorUpdateTemplateFn {
+        fn clone(&self) -> Self {
+            KhrDescriptorUpdateTemplateFn {
+                cmd_push_descriptor_set_with_template_khr: self
+                    .cmd_push_descriptor_set_with_template_khr,
+            }
+        }
+    }
+    impl KhrDescriptorUpdateTemplateFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrDescriptorUpdateTemplateFn {
+                cmd_push_descriptor_set_with_template_khr: unsafe {
+                    let raw_name = stringify!(vkCmdPushDescriptorSetWithTemplateKHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+            };
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+        pub unsafe fn cmd_push_descriptor_set_with_template_khr(
+            &self,
+            command_buffer: CommandBuffer,
+            descriptor_update_template: DescriptorUpdateTemplate,
+            layout: PipelineLayout,
+            set: uint32_t,
+            p_data: *const c_void,
+        ) -> c_void {
+            (self.cmd_push_descriptor_set_with_template_khr)(
+                command_buffer,
+                descriptor_update_template,
+                layout,
+                set,
+                p_data,
+            )
+        }
+    }
+    pub struct NvxDeviceGeneratedCommandsFn {
+        cmd_process_commands_nvx:
+            extern "system" fn(
+                command_buffer: CommandBuffer,
+                p_process_commands_info: *const CmdProcessCommandsInfoNVX,
+            ) -> c_void,
+        cmd_reserve_space_for_commands_nvx:
+            extern "system" fn(
+                command_buffer: CommandBuffer,
+                p_reserve_space_info: *const CmdReserveSpaceForCommandsInfoNVX,
+            ) -> c_void,
+        create_indirect_commands_layout_nvx:
+            extern "system" fn(
+                device: Device,
+                p_create_info: *const IndirectCommandsLayoutCreateInfoNVX,
+                p_allocator: *const AllocationCallbacks,
+                p_indirect_commands_layout: *const IndirectCommandsLayoutNVX,
+            ) -> Result,
+        destroy_indirect_commands_layout_nvx:
+            extern "system" fn(
+                device: Device,
+                indirect_commands_layout: IndirectCommandsLayoutNVX,
+                p_allocator: *const AllocationCallbacks,
+            ) -> c_void,
+        create_object_table_nvx: extern "system" fn(
+            device: Device,
+            p_create_info: *const ObjectTableCreateInfoNVX,
+            p_allocator: *const AllocationCallbacks,
+            p_object_table: *const ObjectTableNVX,
         ) -> Result,
-    get_semaphore_fd_khr: extern "system" fn(
-        device: Device,
-        p_get_fd_info: *const SemaphoreGetFdInfoKHR,
-        p_fd: *const c_int,
-    ) -> Result,
-}
-unsafe impl Send for KhrExternalSemaphoreFdFn {}
-unsafe impl Sync for KhrExternalSemaphoreFdFn {}
-impl ::std::clone::Clone for KhrExternalSemaphoreFdFn {
-    fn clone(&self) -> Self {
-        KhrExternalSemaphoreFdFn {
-            import_semaphore_fd_khr: self.import_semaphore_fd_khr,
-            get_semaphore_fd_khr: self.get_semaphore_fd_khr,
-        }
-    }
-}
-impl KhrExternalSemaphoreFdFn {
-    pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        let mut _err_str = Vec::new();
-        let s = KhrExternalSemaphoreFdFn {
-            import_semaphore_fd_khr: unsafe {
-                let raw_name = stringify!(vkImportSemaphoreFdKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            get_semaphore_fd_khr: unsafe {
-                let raw_name = stringify!(vkGetSemaphoreFdKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-        };
-        if _err_str.is_empty() {
-            Ok(s)
-        } else {
-            Err(_err_str)
-        }
-    }
-    pub unsafe fn import_semaphore_fd_khr(
-        &self,
-        device: Device,
-        p_import_semaphore_fd_info: *const ImportSemaphoreFdInfoKHR,
-    ) -> Result {
-        (self.import_semaphore_fd_khr)(device, p_import_semaphore_fd_info)
-    }
-    pub unsafe fn get_semaphore_fd_khr(
-        &self,
-        device: Device,
-        p_get_fd_info: *const SemaphoreGetFdInfoKHR,
-        p_fd: *const c_int,
-    ) -> Result {
-        (self.get_semaphore_fd_khr)(device, p_get_fd_info, p_fd)
-    }
-}
-pub struct KhrPushDescriptorFn {
-    cmd_push_descriptor_set_khr: extern "system" fn(
-        command_buffer: CommandBuffer,
-        pipeline_bind_point: PipelineBindPoint,
-        layout: PipelineLayout,
-        set: uint32_t,
-        descriptor_write_count: uint32_t,
-        p_descriptor_writes: *const WriteDescriptorSet,
-    ) -> c_void,
-    cmd_push_descriptor_set_with_template_khr:
-        extern "system" fn(
-            command_buffer: CommandBuffer,
-            descriptor_update_template: DescriptorUpdateTemplate,
-            layout: PipelineLayout,
-            set: uint32_t,
-            p_data: *const c_void,
+        destroy_object_table_nvx: extern "system" fn(
+            device: Device,
+            object_table: ObjectTableNVX,
+            p_allocator: *const AllocationCallbacks,
         ) -> c_void,
-}
-unsafe impl Send for KhrPushDescriptorFn {}
-unsafe impl Sync for KhrPushDescriptorFn {}
-impl ::std::clone::Clone for KhrPushDescriptorFn {
-    fn clone(&self) -> Self {
-        KhrPushDescriptorFn {
-            cmd_push_descriptor_set_khr: self.cmd_push_descriptor_set_khr,
-            cmd_push_descriptor_set_with_template_khr: self
-                .cmd_push_descriptor_set_with_template_khr,
+        register_objects_nvx:
+            extern "system" fn(
+                device: Device,
+                object_table: ObjectTableNVX,
+                object_count: uint32_t,
+                pp_object_table_entries: *const ObjectTableEntryNVX,
+                p_object_indices: *const uint32_t,
+            ) -> Result,
+        unregister_objects_nvx: extern "system" fn(
+            device: Device,
+            object_table: ObjectTableNVX,
+            object_count: uint32_t,
+            p_object_entry_types: *const ObjectEntryTypeNVX,
+            p_object_indices: *const uint32_t,
+        ) -> Result,
+        get_physical_device_generated_commands_properties_nvx:
+            extern "system" fn(
+                physical_device: PhysicalDevice,
+                p_features: *const DeviceGeneratedCommandsFeaturesNVX,
+                p_limits: *const DeviceGeneratedCommandsLimitsNVX,
+            ) -> c_void,
+    }
+    unsafe impl Send for NvxDeviceGeneratedCommandsFn {}
+    unsafe impl Sync for NvxDeviceGeneratedCommandsFn {}
+    impl ::std::clone::Clone for NvxDeviceGeneratedCommandsFn {
+        fn clone(&self) -> Self {
+            NvxDeviceGeneratedCommandsFn {
+                cmd_process_commands_nvx: self.cmd_process_commands_nvx,
+                cmd_reserve_space_for_commands_nvx: self.cmd_reserve_space_for_commands_nvx,
+                create_indirect_commands_layout_nvx: self.create_indirect_commands_layout_nvx,
+                destroy_indirect_commands_layout_nvx: self.destroy_indirect_commands_layout_nvx,
+                create_object_table_nvx: self.create_object_table_nvx,
+                destroy_object_table_nvx: self.destroy_object_table_nvx,
+                register_objects_nvx: self.register_objects_nvx,
+                unregister_objects_nvx: self.unregister_objects_nvx,
+                get_physical_device_generated_commands_properties_nvx: self
+                    .get_physical_device_generated_commands_properties_nvx,
+            }
         }
     }
-}
-impl KhrPushDescriptorFn {
-    pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        let mut _err_str = Vec::new();
-        let s = KhrPushDescriptorFn {
-            cmd_push_descriptor_set_khr: unsafe {
-                let raw_name = stringify!(vkCmdPushDescriptorSetKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            cmd_push_descriptor_set_with_template_khr: unsafe {
-                let raw_name = stringify!(vkCmdPushDescriptorSetWithTemplateKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-        };
-        if _err_str.is_empty() {
-            Ok(s)
-        } else {
-            Err(_err_str)
+    impl NvxDeviceGeneratedCommandsFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = NvxDeviceGeneratedCommandsFn {
+                cmd_process_commands_nvx: unsafe {
+                    let raw_name = stringify!(vkCmdProcessCommandsNVX);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                cmd_reserve_space_for_commands_nvx: unsafe {
+                    let raw_name = stringify!(vkCmdReserveSpaceForCommandsNVX);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                create_indirect_commands_layout_nvx: unsafe {
+                    let raw_name = stringify!(vkCreateIndirectCommandsLayoutNVX);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                destroy_indirect_commands_layout_nvx: unsafe {
+                    let raw_name = stringify!(vkDestroyIndirectCommandsLayoutNVX);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                create_object_table_nvx: unsafe {
+                    let raw_name = stringify!(vkCreateObjectTableNVX);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                destroy_object_table_nvx: unsafe {
+                    let raw_name = stringify!(vkDestroyObjectTableNVX);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                register_objects_nvx: unsafe {
+                    let raw_name = stringify!(vkRegisterObjectsNVX);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                unregister_objects_nvx: unsafe {
+                    let raw_name = stringify!(vkUnregisterObjectsNVX);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                get_physical_device_generated_commands_properties_nvx: unsafe {
+                    let raw_name = stringify!(vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+            };
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
         }
-    }
-    pub unsafe fn cmd_push_descriptor_set_khr(
-        &self,
-        command_buffer: CommandBuffer,
-        pipeline_bind_point: PipelineBindPoint,
-        layout: PipelineLayout,
-        set: uint32_t,
-        descriptor_write_count: uint32_t,
-        p_descriptor_writes: *const WriteDescriptorSet,
-    ) -> c_void {
-        (self.cmd_push_descriptor_set_khr)(
-            command_buffer,
-            pipeline_bind_point,
-            layout,
-            set,
-            descriptor_write_count,
-            p_descriptor_writes,
-        )
-    }
-    pub unsafe fn cmd_push_descriptor_set_with_template_khr(
-        &self,
-        command_buffer: CommandBuffer,
-        descriptor_update_template: DescriptorUpdateTemplate,
-        layout: PipelineLayout,
-        set: uint32_t,
-        p_data: *const c_void,
-    ) -> c_void {
-        (self.cmd_push_descriptor_set_with_template_khr)(
-            command_buffer,
-            descriptor_update_template,
-            layout,
-            set,
-            p_data,
-        )
-    }
-}
-pub struct KhrDescriptorUpdateTemplateFn {
-    cmd_push_descriptor_set_with_template_khr:
-        extern "system" fn(
-            command_buffer: CommandBuffer,
-            descriptor_update_template: DescriptorUpdateTemplate,
-            layout: PipelineLayout,
-            set: uint32_t,
-            p_data: *const c_void,
-        ) -> c_void,
-}
-unsafe impl Send for KhrDescriptorUpdateTemplateFn {}
-unsafe impl Sync for KhrDescriptorUpdateTemplateFn {}
-impl ::std::clone::Clone for KhrDescriptorUpdateTemplateFn {
-    fn clone(&self) -> Self {
-        KhrDescriptorUpdateTemplateFn {
-            cmd_push_descriptor_set_with_template_khr: self
-                .cmd_push_descriptor_set_with_template_khr,
-        }
-    }
-}
-impl KhrDescriptorUpdateTemplateFn {
-    pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        let mut _err_str = Vec::new();
-        let s = KhrDescriptorUpdateTemplateFn {
-            cmd_push_descriptor_set_with_template_khr: unsafe {
-                let raw_name = stringify!(vkCmdPushDescriptorSetWithTemplateKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-        };
-        if _err_str.is_empty() {
-            Ok(s)
-        } else {
-            Err(_err_str)
-        }
-    }
-    pub unsafe fn cmd_push_descriptor_set_with_template_khr(
-        &self,
-        command_buffer: CommandBuffer,
-        descriptor_update_template: DescriptorUpdateTemplate,
-        layout: PipelineLayout,
-        set: uint32_t,
-        p_data: *const c_void,
-    ) -> c_void {
-        (self.cmd_push_descriptor_set_with_template_khr)(
-            command_buffer,
-            descriptor_update_template,
-            layout,
-            set,
-            p_data,
-        )
-    }
-}
-pub struct NvxDeviceGeneratedCommandsFn {
-    cmd_process_commands_nvx:
-        extern "system" fn(
+        pub unsafe fn cmd_process_commands_nvx(
+            &self,
             command_buffer: CommandBuffer,
             p_process_commands_info: *const CmdProcessCommandsInfoNVX,
-        ) -> c_void,
-    cmd_reserve_space_for_commands_nvx:
-        extern "system" fn(
+        ) -> c_void {
+            (self.cmd_process_commands_nvx)(command_buffer, p_process_commands_info)
+        }
+        pub unsafe fn cmd_reserve_space_for_commands_nvx(
+            &self,
             command_buffer: CommandBuffer,
             p_reserve_space_info: *const CmdReserveSpaceForCommandsInfoNVX,
-        ) -> c_void,
-    create_indirect_commands_layout_nvx:
-        extern "system" fn(
+        ) -> c_void {
+            (self.cmd_reserve_space_for_commands_nvx)(command_buffer, p_reserve_space_info)
+        }
+        pub unsafe fn create_indirect_commands_layout_nvx(
+            &self,
             device: Device,
             p_create_info: *const IndirectCommandsLayoutCreateInfoNVX,
             p_allocator: *const AllocationCallbacks,
             p_indirect_commands_layout: *const IndirectCommandsLayoutNVX,
-        ) -> Result,
-    destroy_indirect_commands_layout_nvx:
-        extern "system" fn(
+        ) -> Result {
+            (self.create_indirect_commands_layout_nvx)(
+                device,
+                p_create_info,
+                p_allocator,
+                p_indirect_commands_layout,
+            )
+        }
+        pub unsafe fn destroy_indirect_commands_layout_nvx(
+            &self,
             device: Device,
             indirect_commands_layout: IndirectCommandsLayoutNVX,
             p_allocator: *const AllocationCallbacks,
-        ) -> c_void,
-    create_object_table_nvx: extern "system" fn(
-        device: Device,
-        p_create_info: *const ObjectTableCreateInfoNVX,
-        p_allocator: *const AllocationCallbacks,
-        p_object_table: *const ObjectTableNVX,
-    ) -> Result,
-    destroy_object_table_nvx: extern "system" fn(
-        device: Device,
-        object_table: ObjectTableNVX,
-        p_allocator: *const AllocationCallbacks,
-    ) -> c_void,
-    register_objects_nvx: extern "system" fn(
-        device: Device,
-        object_table: ObjectTableNVX,
-        object_count: uint32_t,
-        pp_object_table_entries: *const ObjectTableEntryNVX,
-        p_object_indices: *const uint32_t,
-    ) -> Result,
-    unregister_objects_nvx: extern "system" fn(
-        device: Device,
-        object_table: ObjectTableNVX,
-        object_count: uint32_t,
-        p_object_entry_types: *const ObjectEntryTypeNVX,
-        p_object_indices: *const uint32_t,
-    ) -> Result,
-    get_physical_device_generated_commands_properties_nvx:
-        extern "system" fn(
+        ) -> c_void {
+            (self.destroy_indirect_commands_layout_nvx)(
+                device,
+                indirect_commands_layout,
+                p_allocator,
+            )
+        }
+        pub unsafe fn create_object_table_nvx(
+            &self,
+            device: Device,
+            p_create_info: *const ObjectTableCreateInfoNVX,
+            p_allocator: *const AllocationCallbacks,
+            p_object_table: *const ObjectTableNVX,
+        ) -> Result {
+            (self.create_object_table_nvx)(device, p_create_info, p_allocator, p_object_table)
+        }
+        pub unsafe fn destroy_object_table_nvx(
+            &self,
+            device: Device,
+            object_table: ObjectTableNVX,
+            p_allocator: *const AllocationCallbacks,
+        ) -> c_void {
+            (self.destroy_object_table_nvx)(device, object_table, p_allocator)
+        }
+        pub unsafe fn register_objects_nvx(
+            &self,
+            device: Device,
+            object_table: ObjectTableNVX,
+            object_count: uint32_t,
+            pp_object_table_entries: *const ObjectTableEntryNVX,
+            p_object_indices: *const uint32_t,
+        ) -> Result {
+            (self.register_objects_nvx)(
+                device,
+                object_table,
+                object_count,
+                pp_object_table_entries,
+                p_object_indices,
+            )
+        }
+        pub unsafe fn unregister_objects_nvx(
+            &self,
+            device: Device,
+            object_table: ObjectTableNVX,
+            object_count: uint32_t,
+            p_object_entry_types: *const ObjectEntryTypeNVX,
+            p_object_indices: *const uint32_t,
+        ) -> Result {
+            (self.unregister_objects_nvx)(
+                device,
+                object_table,
+                object_count,
+                p_object_entry_types,
+                p_object_indices,
+            )
+        }
+        pub unsafe fn get_physical_device_generated_commands_properties_nvx(
+            &self,
             physical_device: PhysicalDevice,
             p_features: *const DeviceGeneratedCommandsFeaturesNVX,
             p_limits: *const DeviceGeneratedCommandsLimitsNVX,
-        ) -> c_void,
-}
-unsafe impl Send for NvxDeviceGeneratedCommandsFn {}
-unsafe impl Sync for NvxDeviceGeneratedCommandsFn {}
-impl ::std::clone::Clone for NvxDeviceGeneratedCommandsFn {
-    fn clone(&self) -> Self {
-        NvxDeviceGeneratedCommandsFn {
-            cmd_process_commands_nvx: self.cmd_process_commands_nvx,
-            cmd_reserve_space_for_commands_nvx: self.cmd_reserve_space_for_commands_nvx,
-            create_indirect_commands_layout_nvx: self.create_indirect_commands_layout_nvx,
-            destroy_indirect_commands_layout_nvx: self.destroy_indirect_commands_layout_nvx,
-            create_object_table_nvx: self.create_object_table_nvx,
-            destroy_object_table_nvx: self.destroy_object_table_nvx,
-            register_objects_nvx: self.register_objects_nvx,
-            unregister_objects_nvx: self.unregister_objects_nvx,
-            get_physical_device_generated_commands_properties_nvx: self
-                .get_physical_device_generated_commands_properties_nvx,
+        ) -> c_void {
+            (self.get_physical_device_generated_commands_properties_nvx)(
+                physical_device,
+                p_features,
+                p_limits,
+            )
         }
     }
-}
-impl NvxDeviceGeneratedCommandsFn {
-    pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        let mut _err_str = Vec::new();
-        let s = NvxDeviceGeneratedCommandsFn {
-            cmd_process_commands_nvx: unsafe {
-                let raw_name = stringify!(vkCmdProcessCommandsNVX);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            cmd_reserve_space_for_commands_nvx: unsafe {
-                let raw_name = stringify!(vkCmdReserveSpaceForCommandsNVX);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            create_indirect_commands_layout_nvx: unsafe {
-                let raw_name = stringify!(vkCreateIndirectCommandsLayoutNVX);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            destroy_indirect_commands_layout_nvx: unsafe {
-                let raw_name = stringify!(vkDestroyIndirectCommandsLayoutNVX);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            create_object_table_nvx: unsafe {
-                let raw_name = stringify!(vkCreateObjectTableNVX);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            destroy_object_table_nvx: unsafe {
-                let raw_name = stringify!(vkDestroyObjectTableNVX);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            register_objects_nvx: unsafe {
-                let raw_name = stringify!(vkRegisterObjectsNVX);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            unregister_objects_nvx: unsafe {
-                let raw_name = stringify!(vkUnregisterObjectsNVX);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            get_physical_device_generated_commands_properties_nvx: unsafe {
-                let raw_name = stringify!(vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-        };
-        if _err_str.is_empty() {
-            Ok(s)
-        } else {
-            Err(_err_str)
+    #[doc = "Generated from \'VK_NVX_device_generated_commands\'"]
+    impl StructureType {
+        pub const OBJECT_TABLE_CREATE_INFO_NVX: Self = StructureType(1000086000);
+    }
+    #[doc = "Generated from \'VK_NVX_device_generated_commands\'"]
+    impl StructureType {
+        pub const INDIRECT_COMMANDS_LAYOUT_CREATE_INFO_NVX: Self = StructureType(1000086001);
+    }
+    #[doc = "Generated from \'VK_NVX_device_generated_commands\'"]
+    impl StructureType {
+        pub const CMD_PROCESS_COMMANDS_INFO_NVX: Self = StructureType(1000086002);
+    }
+    #[doc = "Generated from \'VK_NVX_device_generated_commands\'"]
+    impl StructureType {
+        pub const CMD_RESERVE_SPACE_FOR_COMMANDS_INFO_NVX: Self = StructureType(1000086003);
+    }
+    #[doc = "Generated from \'VK_NVX_device_generated_commands\'"]
+    impl StructureType {
+        pub const DEVICE_GENERATED_COMMANDS_LIMITS_NVX: Self = StructureType(1000086004);
+    }
+    #[doc = "Generated from \'VK_NVX_device_generated_commands\'"]
+    impl StructureType {
+        pub const DEVICE_GENERATED_COMMANDS_FEATURES_NVX: Self = StructureType(1000086005);
+    }
+    #[doc = "Generated from \'VK_NVX_device_generated_commands\'"]
+    impl PipelineStageFlags {
+        pub const COMMAND_PROCESS_NVX: Self = PipelineStageFlags(0b100000000000000000);
+    }
+    #[doc = "Generated from \'VK_NVX_device_generated_commands\'"]
+    impl AccessFlags {
+        pub const COMMAND_PROCESS_READ_NVX: Self = AccessFlags(0b100000000000000000);
+    }
+    #[doc = "Generated from \'VK_NVX_device_generated_commands\'"]
+    impl AccessFlags {
+        pub const COMMAND_PROCESS_WRITE_NVX: Self = AccessFlags(0b1000000000000000000);
+    }
+    #[doc = "Generated from \'VK_NVX_device_generated_commands\'"]
+    impl ObjectType {
+        pub const OBJECT_TABLE_NVX: Self = ObjectType(1000086000);
+    }
+    #[doc = "Generated from \'VK_NVX_device_generated_commands\'"]
+    impl ObjectType {
+        pub const INDIRECT_COMMANDS_LAYOUT_NVX: Self = ObjectType(1000086001);
+    }
+    pub struct NvClipSpaceWScalingFn {
+        cmd_set_viewport_w_scaling_nv:
+            extern "system" fn(
+                command_buffer: CommandBuffer,
+                first_viewport: uint32_t,
+                viewport_count: uint32_t,
+                p_viewport_w_scalings: *const ViewportWScalingNV,
+            ) -> c_void,
+    }
+    unsafe impl Send for NvClipSpaceWScalingFn {}
+    unsafe impl Sync for NvClipSpaceWScalingFn {}
+    impl ::std::clone::Clone for NvClipSpaceWScalingFn {
+        fn clone(&self) -> Self {
+            NvClipSpaceWScalingFn {
+                cmd_set_viewport_w_scaling_nv: self.cmd_set_viewport_w_scaling_nv,
+            }
         }
     }
-    pub unsafe fn cmd_process_commands_nvx(
-        &self,
-        command_buffer: CommandBuffer,
-        p_process_commands_info: *const CmdProcessCommandsInfoNVX,
-    ) -> c_void {
-        (self.cmd_process_commands_nvx)(command_buffer, p_process_commands_info)
-    }
-    pub unsafe fn cmd_reserve_space_for_commands_nvx(
-        &self,
-        command_buffer: CommandBuffer,
-        p_reserve_space_info: *const CmdReserveSpaceForCommandsInfoNVX,
-    ) -> c_void {
-        (self.cmd_reserve_space_for_commands_nvx)(command_buffer, p_reserve_space_info)
-    }
-    pub unsafe fn create_indirect_commands_layout_nvx(
-        &self,
-        device: Device,
-        p_create_info: *const IndirectCommandsLayoutCreateInfoNVX,
-        p_allocator: *const AllocationCallbacks,
-        p_indirect_commands_layout: *const IndirectCommandsLayoutNVX,
-    ) -> Result {
-        (self.create_indirect_commands_layout_nvx)(
-            device,
-            p_create_info,
-            p_allocator,
-            p_indirect_commands_layout,
-        )
-    }
-    pub unsafe fn destroy_indirect_commands_layout_nvx(
-        &self,
-        device: Device,
-        indirect_commands_layout: IndirectCommandsLayoutNVX,
-        p_allocator: *const AllocationCallbacks,
-    ) -> c_void {
-        (self.destroy_indirect_commands_layout_nvx)(device, indirect_commands_layout, p_allocator)
-    }
-    pub unsafe fn create_object_table_nvx(
-        &self,
-        device: Device,
-        p_create_info: *const ObjectTableCreateInfoNVX,
-        p_allocator: *const AllocationCallbacks,
-        p_object_table: *const ObjectTableNVX,
-    ) -> Result {
-        (self.create_object_table_nvx)(device, p_create_info, p_allocator, p_object_table)
-    }
-    pub unsafe fn destroy_object_table_nvx(
-        &self,
-        device: Device,
-        object_table: ObjectTableNVX,
-        p_allocator: *const AllocationCallbacks,
-    ) -> c_void {
-        (self.destroy_object_table_nvx)(device, object_table, p_allocator)
-    }
-    pub unsafe fn register_objects_nvx(
-        &self,
-        device: Device,
-        object_table: ObjectTableNVX,
-        object_count: uint32_t,
-        pp_object_table_entries: *const ObjectTableEntryNVX,
-        p_object_indices: *const uint32_t,
-    ) -> Result {
-        (self.register_objects_nvx)(
-            device,
-            object_table,
-            object_count,
-            pp_object_table_entries,
-            p_object_indices,
-        )
-    }
-    pub unsafe fn unregister_objects_nvx(
-        &self,
-        device: Device,
-        object_table: ObjectTableNVX,
-        object_count: uint32_t,
-        p_object_entry_types: *const ObjectEntryTypeNVX,
-        p_object_indices: *const uint32_t,
-    ) -> Result {
-        (self.unregister_objects_nvx)(
-            device,
-            object_table,
-            object_count,
-            p_object_entry_types,
-            p_object_indices,
-        )
-    }
-    pub unsafe fn get_physical_device_generated_commands_properties_nvx(
-        &self,
-        physical_device: PhysicalDevice,
-        p_features: *const DeviceGeneratedCommandsFeaturesNVX,
-        p_limits: *const DeviceGeneratedCommandsLimitsNVX,
-    ) -> c_void {
-        (self.get_physical_device_generated_commands_properties_nvx)(
-            physical_device,
-            p_features,
-            p_limits,
-        )
-    }
-}
-pub struct NvClipSpaceWScalingFn {
-    cmd_set_viewport_w_scaling_nv:
-        extern "system" fn(
+    impl NvClipSpaceWScalingFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = NvClipSpaceWScalingFn {
+                cmd_set_viewport_w_scaling_nv: unsafe {
+                    let raw_name = stringify!(vkCmdSetViewportWScalingNV);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+            };
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+        pub unsafe fn cmd_set_viewport_w_scaling_nv(
+            &self,
             command_buffer: CommandBuffer,
             first_viewport: uint32_t,
             viewport_count: uint32_t,
             p_viewport_w_scalings: *const ViewportWScalingNV,
-        ) -> c_void,
-}
-unsafe impl Send for NvClipSpaceWScalingFn {}
-unsafe impl Sync for NvClipSpaceWScalingFn {}
-impl ::std::clone::Clone for NvClipSpaceWScalingFn {
-    fn clone(&self) -> Self {
-        NvClipSpaceWScalingFn {
-            cmd_set_viewport_w_scaling_nv: self.cmd_set_viewport_w_scaling_nv,
+        ) -> c_void {
+            (self.cmd_set_viewport_w_scaling_nv)(
+                command_buffer,
+                first_viewport,
+                viewport_count,
+                p_viewport_w_scalings,
+            )
         }
     }
-}
-impl NvClipSpaceWScalingFn {
-    pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        let mut _err_str = Vec::new();
-        let s = NvClipSpaceWScalingFn {
-            cmd_set_viewport_w_scaling_nv: unsafe {
-                let raw_name = stringify!(vkCmdSetViewportWScalingNV);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-        };
-        if _err_str.is_empty() {
-            Ok(s)
-        } else {
-            Err(_err_str)
+    #[doc = "Generated from \'VK_NV_clip_space_w_scaling\'"]
+    impl StructureType {
+        pub const PIPELINE_VIEWPORT_W_SCALING_STATE_CREATE_INFO_NV: Self =
+            StructureType(1000087000);
+    }
+    #[doc = "Generated from \'VK_NV_clip_space_w_scaling\'"]
+    impl DynamicState {
+        pub const VIEWPORT_W_SCALING_NV: Self = DynamicState(1000087000);
+    }
+    pub struct ExtDirectModeDisplayFn {
+        release_display_ext:
+            extern "system" fn(physical_device: PhysicalDevice, display: DisplayKHR) -> Result,
+    }
+    unsafe impl Send for ExtDirectModeDisplayFn {}
+    unsafe impl Sync for ExtDirectModeDisplayFn {}
+    impl ::std::clone::Clone for ExtDirectModeDisplayFn {
+        fn clone(&self) -> Self {
+            ExtDirectModeDisplayFn {
+                release_display_ext: self.release_display_ext,
+            }
         }
     }
-    pub unsafe fn cmd_set_viewport_w_scaling_nv(
-        &self,
-        command_buffer: CommandBuffer,
-        first_viewport: uint32_t,
-        viewport_count: uint32_t,
-        p_viewport_w_scalings: *const ViewportWScalingNV,
-    ) -> c_void {
-        (self.cmd_set_viewport_w_scaling_nv)(
-            command_buffer,
-            first_viewport,
-            viewport_count,
-            p_viewport_w_scalings,
-        )
-    }
-}
-pub struct ExtDirectModeDisplayFn {
-    release_display_ext:
-        extern "system" fn(physical_device: PhysicalDevice, display: DisplayKHR) -> Result,
-}
-unsafe impl Send for ExtDirectModeDisplayFn {}
-unsafe impl Sync for ExtDirectModeDisplayFn {}
-impl ::std::clone::Clone for ExtDirectModeDisplayFn {
-    fn clone(&self) -> Self {
-        ExtDirectModeDisplayFn {
-            release_display_ext: self.release_display_ext,
+    impl ExtDirectModeDisplayFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = ExtDirectModeDisplayFn {
+                release_display_ext: unsafe {
+                    let raw_name = stringify!(vkReleaseDisplayEXT);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+            };
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+        pub unsafe fn release_display_ext(
+            &self,
+            physical_device: PhysicalDevice,
+            display: DisplayKHR,
+        ) -> Result {
+            (self.release_display_ext)(physical_device, display)
         }
     }
-}
-impl ExtDirectModeDisplayFn {
-    pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        let mut _err_str = Vec::new();
-        let s = ExtDirectModeDisplayFn {
-            release_display_ext: unsafe {
-                let raw_name = stringify!(vkReleaseDisplayEXT);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-        };
-        if _err_str.is_empty() {
-            Ok(s)
-        } else {
-            Err(_err_str)
+    pub struct ExtAcquireXlibDisplayFn {
+        acquire_xlib_display_ext: extern "system" fn(
+            physical_device: PhysicalDevice,
+            dpy: *const Display,
+            display: DisplayKHR,
+        ) -> Result,
+        get_rand_r_output_display_ext: extern "system" fn(
+            physical_device: PhysicalDevice,
+            dpy: *const Display,
+            rr_output: RROutput,
+            p_display: *const DisplayKHR,
+        ) -> Result,
+    }
+    unsafe impl Send for ExtAcquireXlibDisplayFn {}
+    unsafe impl Sync for ExtAcquireXlibDisplayFn {}
+    impl ::std::clone::Clone for ExtAcquireXlibDisplayFn {
+        fn clone(&self) -> Self {
+            ExtAcquireXlibDisplayFn {
+                acquire_xlib_display_ext: self.acquire_xlib_display_ext,
+                get_rand_r_output_display_ext: self.get_rand_r_output_display_ext,
+            }
         }
     }
-    pub unsafe fn release_display_ext(
-        &self,
-        physical_device: PhysicalDevice,
-        display: DisplayKHR,
-    ) -> Result {
-        (self.release_display_ext)(physical_device, display)
-    }
-}
-pub struct ExtAcquireXlibDisplayFn {
-    acquire_xlib_display_ext: extern "system" fn(
-        physical_device: PhysicalDevice,
-        dpy: *const Display,
-        display: DisplayKHR,
-    ) -> Result,
-    get_rand_r_output_display_ext: extern "system" fn(
-        physical_device: PhysicalDevice,
-        dpy: *const Display,
-        rr_output: RROutput,
-        p_display: *const DisplayKHR,
-    ) -> Result,
-}
-unsafe impl Send for ExtAcquireXlibDisplayFn {}
-unsafe impl Sync for ExtAcquireXlibDisplayFn {}
-impl ::std::clone::Clone for ExtAcquireXlibDisplayFn {
-    fn clone(&self) -> Self {
-        ExtAcquireXlibDisplayFn {
-            acquire_xlib_display_ext: self.acquire_xlib_display_ext,
-            get_rand_r_output_display_ext: self.get_rand_r_output_display_ext,
+    impl ExtAcquireXlibDisplayFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = ExtAcquireXlibDisplayFn {
+                acquire_xlib_display_ext: unsafe {
+                    let raw_name = stringify!(vkAcquireXlibDisplayEXT);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                get_rand_r_output_display_ext: unsafe {
+                    let raw_name = stringify!(vkGetRandROutputDisplayEXT);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+            };
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+        pub unsafe fn acquire_xlib_display_ext(
+            &self,
+            physical_device: PhysicalDevice,
+            dpy: *const Display,
+            display: DisplayKHR,
+        ) -> Result {
+            (self.acquire_xlib_display_ext)(physical_device, dpy, display)
+        }
+        pub unsafe fn get_rand_r_output_display_ext(
+            &self,
+            physical_device: PhysicalDevice,
+            dpy: *const Display,
+            rr_output: RROutput,
+            p_display: *const DisplayKHR,
+        ) -> Result {
+            (self.get_rand_r_output_display_ext)(physical_device, dpy, rr_output, p_display)
         }
     }
-}
-impl ExtAcquireXlibDisplayFn {
-    pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        let mut _err_str = Vec::new();
-        let s = ExtAcquireXlibDisplayFn {
-            acquire_xlib_display_ext: unsafe {
-                let raw_name = stringify!(vkAcquireXlibDisplayEXT);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            get_rand_r_output_display_ext: unsafe {
-                let raw_name = stringify!(vkGetRandROutputDisplayEXT);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-        };
-        if _err_str.is_empty() {
-            Ok(s)
-        } else {
-            Err(_err_str)
+    pub struct ExtDisplaySurfaceCounterFn {
+        get_physical_device_surface_capabilities2_ext:
+            extern "system" fn(
+                physical_device: PhysicalDevice,
+                surface: SurfaceKHR,
+                p_surface_capabilities: *const SurfaceCapabilities2EXT,
+            ) -> Result,
+    }
+    unsafe impl Send for ExtDisplaySurfaceCounterFn {}
+    unsafe impl Sync for ExtDisplaySurfaceCounterFn {}
+    impl ::std::clone::Clone for ExtDisplaySurfaceCounterFn {
+        fn clone(&self) -> Self {
+            ExtDisplaySurfaceCounterFn {
+                get_physical_device_surface_capabilities2_ext: self
+                    .get_physical_device_surface_capabilities2_ext,
+            }
         }
     }
-    pub unsafe fn acquire_xlib_display_ext(
-        &self,
-        physical_device: PhysicalDevice,
-        dpy: *const Display,
-        display: DisplayKHR,
-    ) -> Result {
-        (self.acquire_xlib_display_ext)(physical_device, dpy, display)
-    }
-    pub unsafe fn get_rand_r_output_display_ext(
-        &self,
-        physical_device: PhysicalDevice,
-        dpy: *const Display,
-        rr_output: RROutput,
-        p_display: *const DisplayKHR,
-    ) -> Result {
-        (self.get_rand_r_output_display_ext)(physical_device, dpy, rr_output, p_display)
-    }
-}
-pub struct ExtDisplaySurfaceCounterFn {
-    get_physical_device_surface_capabilities2_ext:
-        extern "system" fn(
+    impl ExtDisplaySurfaceCounterFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = ExtDisplaySurfaceCounterFn {
+                get_physical_device_surface_capabilities2_ext: unsafe {
+                    let raw_name = stringify!(vkGetPhysicalDeviceSurfaceCapabilities2EXT);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+            };
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+        pub unsafe fn get_physical_device_surface_capabilities2_ext(
+            &self,
             physical_device: PhysicalDevice,
             surface: SurfaceKHR,
             p_surface_capabilities: *const SurfaceCapabilities2EXT,
+        ) -> Result {
+            (self.get_physical_device_surface_capabilities2_ext)(
+                physical_device,
+                surface,
+                p_surface_capabilities,
+            )
+        }
+    }
+    #[doc = "Generated from \'VK_EXT_display_surface_counter\'"]
+    impl StructureType {
+        pub const SURFACE_CAPABILITIES_2_EXT: Self = StructureType(1000090000);
+    }
+    pub struct ExtDisplayControlFn {
+        display_power_control_ext:
+            extern "system" fn(
+                device: Device,
+                display: DisplayKHR,
+                p_display_power_info: *const DisplayPowerInfoEXT,
+            ) -> Result,
+        register_device_event_ext:
+            extern "system" fn(
+                device: Device,
+                p_device_event_info: *const DeviceEventInfoEXT,
+                p_allocator: *const AllocationCallbacks,
+                p_fence: *const Fence,
+            ) -> Result,
+        register_display_event_ext:
+            extern "system" fn(
+                device: Device,
+                display: DisplayKHR,
+                p_display_event_info: *const DisplayEventInfoEXT,
+                p_allocator: *const AllocationCallbacks,
+                p_fence: *const Fence,
+            ) -> Result,
+        get_swapchain_counter_ext: extern "system" fn(
+            device: Device,
+            swapchain: SwapchainKHR,
+            counter: SurfaceCounterFlagsEXT,
+            p_counter_value: *const uint64_t,
         ) -> Result,
-}
-unsafe impl Send for ExtDisplaySurfaceCounterFn {}
-unsafe impl Sync for ExtDisplaySurfaceCounterFn {}
-impl ::std::clone::Clone for ExtDisplaySurfaceCounterFn {
-    fn clone(&self) -> Self {
-        ExtDisplaySurfaceCounterFn {
-            get_physical_device_surface_capabilities2_ext: self
-                .get_physical_device_surface_capabilities2_ext,
+    }
+    unsafe impl Send for ExtDisplayControlFn {}
+    unsafe impl Sync for ExtDisplayControlFn {}
+    impl ::std::clone::Clone for ExtDisplayControlFn {
+        fn clone(&self) -> Self {
+            ExtDisplayControlFn {
+                display_power_control_ext: self.display_power_control_ext,
+                register_device_event_ext: self.register_device_event_ext,
+                register_display_event_ext: self.register_display_event_ext,
+                get_swapchain_counter_ext: self.get_swapchain_counter_ext,
+            }
         }
     }
-}
-impl ExtDisplaySurfaceCounterFn {
-    pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        let mut _err_str = Vec::new();
-        let s = ExtDisplaySurfaceCounterFn {
-            get_physical_device_surface_capabilities2_ext: unsafe {
-                let raw_name = stringify!(vkGetPhysicalDeviceSurfaceCapabilities2EXT);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-        };
-        if _err_str.is_empty() {
-            Ok(s)
-        } else {
-            Err(_err_str)
+    impl ExtDisplayControlFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = ExtDisplayControlFn {
+                display_power_control_ext: unsafe {
+                    let raw_name = stringify!(vkDisplayPowerControlEXT);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                register_device_event_ext: unsafe {
+                    let raw_name = stringify!(vkRegisterDeviceEventEXT);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                register_display_event_ext: unsafe {
+                    let raw_name = stringify!(vkRegisterDisplayEventEXT);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                get_swapchain_counter_ext: unsafe {
+                    let raw_name = stringify!(vkGetSwapchainCounterEXT);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+            };
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
         }
-    }
-    pub unsafe fn get_physical_device_surface_capabilities2_ext(
-        &self,
-        physical_device: PhysicalDevice,
-        surface: SurfaceKHR,
-        p_surface_capabilities: *const SurfaceCapabilities2EXT,
-    ) -> Result {
-        (self.get_physical_device_surface_capabilities2_ext)(
-            physical_device,
-            surface,
-            p_surface_capabilities,
-        )
-    }
-}
-pub struct ExtDisplayControlFn {
-    display_power_control_ext: extern "system" fn(
-        device: Device,
-        display: DisplayKHR,
-        p_display_power_info: *const DisplayPowerInfoEXT,
-    ) -> Result,
-    register_device_event_ext: extern "system" fn(
-        device: Device,
-        p_device_event_info: *const DeviceEventInfoEXT,
-        p_allocator: *const AllocationCallbacks,
-        p_fence: *const Fence,
-    ) -> Result,
-    register_display_event_ext:
-        extern "system" fn(
+        pub unsafe fn display_power_control_ext(
+            &self,
+            device: Device,
+            display: DisplayKHR,
+            p_display_power_info: *const DisplayPowerInfoEXT,
+        ) -> Result {
+            (self.display_power_control_ext)(device, display, p_display_power_info)
+        }
+        pub unsafe fn register_device_event_ext(
+            &self,
+            device: Device,
+            p_device_event_info: *const DeviceEventInfoEXT,
+            p_allocator: *const AllocationCallbacks,
+            p_fence: *const Fence,
+        ) -> Result {
+            (self.register_device_event_ext)(device, p_device_event_info, p_allocator, p_fence)
+        }
+        pub unsafe fn register_display_event_ext(
+            &self,
             device: Device,
             display: DisplayKHR,
             p_display_event_info: *const DisplayEventInfoEXT,
             p_allocator: *const AllocationCallbacks,
             p_fence: *const Fence,
-        ) -> Result,
-    get_swapchain_counter_ext: extern "system" fn(
-        device: Device,
-        swapchain: SwapchainKHR,
-        counter: SurfaceCounterFlagsEXT,
-        p_counter_value: *const uint64_t,
-    ) -> Result,
-}
-unsafe impl Send for ExtDisplayControlFn {}
-unsafe impl Sync for ExtDisplayControlFn {}
-impl ::std::clone::Clone for ExtDisplayControlFn {
-    fn clone(&self) -> Self {
-        ExtDisplayControlFn {
-            display_power_control_ext: self.display_power_control_ext,
-            register_device_event_ext: self.register_device_event_ext,
-            register_display_event_ext: self.register_display_event_ext,
-            get_swapchain_counter_ext: self.get_swapchain_counter_ext,
+        ) -> Result {
+            (self.register_display_event_ext)(
+                device,
+                display,
+                p_display_event_info,
+                p_allocator,
+                p_fence,
+            )
+        }
+        pub unsafe fn get_swapchain_counter_ext(
+            &self,
+            device: Device,
+            swapchain: SwapchainKHR,
+            counter: SurfaceCounterFlagsEXT,
+            p_counter_value: *const uint64_t,
+        ) -> Result {
+            (self.get_swapchain_counter_ext)(device, swapchain, counter, p_counter_value)
         }
     }
-}
-impl ExtDisplayControlFn {
-    pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        let mut _err_str = Vec::new();
-        let s = ExtDisplayControlFn {
-            display_power_control_ext: unsafe {
-                let raw_name = stringify!(vkDisplayPowerControlEXT);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            register_device_event_ext: unsafe {
-                let raw_name = stringify!(vkRegisterDeviceEventEXT);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            register_display_event_ext: unsafe {
-                let raw_name = stringify!(vkRegisterDisplayEventEXT);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            get_swapchain_counter_ext: unsafe {
-                let raw_name = stringify!(vkGetSwapchainCounterEXT);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-        };
-        if _err_str.is_empty() {
-            Ok(s)
-        } else {
-            Err(_err_str)
+    #[doc = "Generated from \'VK_EXT_display_control\'"]
+    impl StructureType {
+        pub const DISPLAY_POWER_INFO_EXT: Self = StructureType(1000091000);
+    }
+    #[doc = "Generated from \'VK_EXT_display_control\'"]
+    impl StructureType {
+        pub const DEVICE_EVENT_INFO_EXT: Self = StructureType(1000091001);
+    }
+    #[doc = "Generated from \'VK_EXT_display_control\'"]
+    impl StructureType {
+        pub const DISPLAY_EVENT_INFO_EXT: Self = StructureType(1000091002);
+    }
+    #[doc = "Generated from \'VK_EXT_display_control\'"]
+    impl StructureType {
+        pub const SWAPCHAIN_COUNTER_CREATE_INFO_EXT: Self = StructureType(1000091003);
+    }
+    pub struct GoogleDisplayTimingFn {
+        get_refresh_cycle_duration_google:
+            extern "system" fn(
+                device: Device,
+                swapchain: SwapchainKHR,
+                p_display_timing_properties: *const RefreshCycleDurationGOOGLE,
+            ) -> Result,
+        get_past_presentation_timing_google:
+            extern "system" fn(
+                device: Device,
+                swapchain: SwapchainKHR,
+                p_presentation_timing_count: *const uint32_t,
+                p_presentation_timings: *const PastPresentationTimingGOOGLE,
+            ) -> Result,
+    }
+    unsafe impl Send for GoogleDisplayTimingFn {}
+    unsafe impl Sync for GoogleDisplayTimingFn {}
+    impl ::std::clone::Clone for GoogleDisplayTimingFn {
+        fn clone(&self) -> Self {
+            GoogleDisplayTimingFn {
+                get_refresh_cycle_duration_google: self.get_refresh_cycle_duration_google,
+                get_past_presentation_timing_google: self.get_past_presentation_timing_google,
+            }
         }
     }
-    pub unsafe fn display_power_control_ext(
-        &self,
-        device: Device,
-        display: DisplayKHR,
-        p_display_power_info: *const DisplayPowerInfoEXT,
-    ) -> Result {
-        (self.display_power_control_ext)(device, display, p_display_power_info)
-    }
-    pub unsafe fn register_device_event_ext(
-        &self,
-        device: Device,
-        p_device_event_info: *const DeviceEventInfoEXT,
-        p_allocator: *const AllocationCallbacks,
-        p_fence: *const Fence,
-    ) -> Result {
-        (self.register_device_event_ext)(device, p_device_event_info, p_allocator, p_fence)
-    }
-    pub unsafe fn register_display_event_ext(
-        &self,
-        device: Device,
-        display: DisplayKHR,
-        p_display_event_info: *const DisplayEventInfoEXT,
-        p_allocator: *const AllocationCallbacks,
-        p_fence: *const Fence,
-    ) -> Result {
-        (self.register_display_event_ext)(
-            device,
-            display,
-            p_display_event_info,
-            p_allocator,
-            p_fence,
-        )
-    }
-    pub unsafe fn get_swapchain_counter_ext(
-        &self,
-        device: Device,
-        swapchain: SwapchainKHR,
-        counter: SurfaceCounterFlagsEXT,
-        p_counter_value: *const uint64_t,
-    ) -> Result {
-        (self.get_swapchain_counter_ext)(device, swapchain, counter, p_counter_value)
-    }
-}
-pub struct GoogleDisplayTimingFn {
-    get_refresh_cycle_duration_google:
-        extern "system" fn(
+    impl GoogleDisplayTimingFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = GoogleDisplayTimingFn {
+                get_refresh_cycle_duration_google: unsafe {
+                    let raw_name = stringify!(vkGetRefreshCycleDurationGOOGLE);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                get_past_presentation_timing_google: unsafe {
+                    let raw_name = stringify!(vkGetPastPresentationTimingGOOGLE);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+            };
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+        pub unsafe fn get_refresh_cycle_duration_google(
+            &self,
             device: Device,
             swapchain: SwapchainKHR,
             p_display_timing_properties: *const RefreshCycleDurationGOOGLE,
-        ) -> Result,
-    get_past_presentation_timing_google:
-        extern "system" fn(
+        ) -> Result {
+            (self.get_refresh_cycle_duration_google)(device, swapchain, p_display_timing_properties)
+        }
+        pub unsafe fn get_past_presentation_timing_google(
+            &self,
             device: Device,
             swapchain: SwapchainKHR,
             p_presentation_timing_count: *const uint32_t,
             p_presentation_timings: *const PastPresentationTimingGOOGLE,
-        ) -> Result,
-}
-unsafe impl Send for GoogleDisplayTimingFn {}
-unsafe impl Sync for GoogleDisplayTimingFn {}
-impl ::std::clone::Clone for GoogleDisplayTimingFn {
-    fn clone(&self) -> Self {
-        GoogleDisplayTimingFn {
-            get_refresh_cycle_duration_google: self.get_refresh_cycle_duration_google,
-            get_past_presentation_timing_google: self.get_past_presentation_timing_google,
+        ) -> Result {
+            (self.get_past_presentation_timing_google)(
+                device,
+                swapchain,
+                p_presentation_timing_count,
+                p_presentation_timings,
+            )
         }
     }
-}
-impl GoogleDisplayTimingFn {
-    pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        let mut _err_str = Vec::new();
-        let s = GoogleDisplayTimingFn {
-            get_refresh_cycle_duration_google: unsafe {
-                let raw_name = stringify!(vkGetRefreshCycleDurationGOOGLE);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            get_past_presentation_timing_google: unsafe {
-                let raw_name = stringify!(vkGetPastPresentationTimingGOOGLE);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-        };
-        if _err_str.is_empty() {
-            Ok(s)
-        } else {
-            Err(_err_str)
+    #[doc = "Generated from \'VK_GOOGLE_display_timing\'"]
+    impl StructureType {
+        pub const PRESENT_TIMES_INFO_GOOGLE: Self = StructureType(1000092000);
+    }
+    pub struct NvSampleMaskOverrideCoverageFn {}
+    unsafe impl Send for NvSampleMaskOverrideCoverageFn {}
+    unsafe impl Sync for NvSampleMaskOverrideCoverageFn {}
+    impl ::std::clone::Clone for NvSampleMaskOverrideCoverageFn {
+        fn clone(&self) -> Self {
+            NvSampleMaskOverrideCoverageFn {}
         }
     }
-    pub unsafe fn get_refresh_cycle_duration_google(
-        &self,
-        device: Device,
-        swapchain: SwapchainKHR,
-        p_display_timing_properties: *const RefreshCycleDurationGOOGLE,
-    ) -> Result {
-        (self.get_refresh_cycle_duration_google)(device, swapchain, p_display_timing_properties)
-    }
-    pub unsafe fn get_past_presentation_timing_google(
-        &self,
-        device: Device,
-        swapchain: SwapchainKHR,
-        p_presentation_timing_count: *const uint32_t,
-        p_presentation_timings: *const PastPresentationTimingGOOGLE,
-    ) -> Result {
-        (self.get_past_presentation_timing_google)(
-            device,
-            swapchain,
-            p_presentation_timing_count,
-            p_presentation_timings,
-        )
-    }
-}
-pub struct ExtDiscardRectanglesFn {
-    cmd_set_discard_rectangle_ext: extern "system" fn(
-        command_buffer: CommandBuffer,
-        first_discard_rectangle: uint32_t,
-        discard_rectangle_count: uint32_t,
-        p_discard_rectangles: *const Rect2D,
-    ) -> c_void,
-}
-unsafe impl Send for ExtDiscardRectanglesFn {}
-unsafe impl Sync for ExtDiscardRectanglesFn {}
-impl ::std::clone::Clone for ExtDiscardRectanglesFn {
-    fn clone(&self) -> Self {
-        ExtDiscardRectanglesFn {
-            cmd_set_discard_rectangle_ext: self.cmd_set_discard_rectangle_ext,
+    impl NvSampleMaskOverrideCoverageFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = NvSampleMaskOverrideCoverageFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
         }
     }
-}
-impl ExtDiscardRectanglesFn {
-    pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        let mut _err_str = Vec::new();
-        let s = ExtDiscardRectanglesFn {
-            cmd_set_discard_rectangle_ext: unsafe {
-                let raw_name = stringify!(vkCmdSetDiscardRectangleEXT);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-        };
-        if _err_str.is_empty() {
-            Ok(s)
-        } else {
-            Err(_err_str)
+    pub struct NvGeometryShaderPassthroughFn {}
+    unsafe impl Send for NvGeometryShaderPassthroughFn {}
+    unsafe impl Sync for NvGeometryShaderPassthroughFn {}
+    impl ::std::clone::Clone for NvGeometryShaderPassthroughFn {
+        fn clone(&self) -> Self {
+            NvGeometryShaderPassthroughFn {}
         }
     }
-    pub unsafe fn cmd_set_discard_rectangle_ext(
-        &self,
-        command_buffer: CommandBuffer,
-        first_discard_rectangle: uint32_t,
-        discard_rectangle_count: uint32_t,
-        p_discard_rectangles: *const Rect2D,
-    ) -> c_void {
-        (self.cmd_set_discard_rectangle_ext)(
-            command_buffer,
-            first_discard_rectangle,
-            discard_rectangle_count,
-            p_discard_rectangles,
-        )
-    }
-}
-pub struct ExtHdrMetadataFn {
-    set_hdr_metadata_ext: extern "system" fn(
-        device: Device,
-        swapchain_count: uint32_t,
-        p_swapchains: *const SwapchainKHR,
-        p_metadata: *const HdrMetadataEXT,
-    ) -> c_void,
-}
-unsafe impl Send for ExtHdrMetadataFn {}
-unsafe impl Sync for ExtHdrMetadataFn {}
-impl ::std::clone::Clone for ExtHdrMetadataFn {
-    fn clone(&self) -> Self {
-        ExtHdrMetadataFn {
-            set_hdr_metadata_ext: self.set_hdr_metadata_ext,
+    impl NvGeometryShaderPassthroughFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = NvGeometryShaderPassthroughFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
         }
     }
-}
-impl ExtHdrMetadataFn {
-    pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        let mut _err_str = Vec::new();
-        let s = ExtHdrMetadataFn {
-            set_hdr_metadata_ext: unsafe {
-                let raw_name = stringify!(vkSetHdrMetadataEXT);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-        };
-        if _err_str.is_empty() {
-            Ok(s)
-        } else {
-            Err(_err_str)
+    pub struct NvViewportArray2Fn {}
+    unsafe impl Send for NvViewportArray2Fn {}
+    unsafe impl Sync for NvViewportArray2Fn {}
+    impl ::std::clone::Clone for NvViewportArray2Fn {
+        fn clone(&self) -> Self {
+            NvViewportArray2Fn {}
         }
     }
-    pub unsafe fn set_hdr_metadata_ext(
-        &self,
-        device: Device,
-        swapchain_count: uint32_t,
-        p_swapchains: *const SwapchainKHR,
-        p_metadata: *const HdrMetadataEXT,
-    ) -> c_void {
-        (self.set_hdr_metadata_ext)(device, swapchain_count, p_swapchains, p_metadata)
-    }
-}
-pub struct KhrSharedPresentableImageFn {
-    get_swapchain_status_khr: extern "system" fn(device: Device, swapchain: SwapchainKHR) -> Result,
-}
-unsafe impl Send for KhrSharedPresentableImageFn {}
-unsafe impl Sync for KhrSharedPresentableImageFn {}
-impl ::std::clone::Clone for KhrSharedPresentableImageFn {
-    fn clone(&self) -> Self {
-        KhrSharedPresentableImageFn {
-            get_swapchain_status_khr: self.get_swapchain_status_khr,
+    impl NvViewportArray2Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = NvViewportArray2Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
         }
     }
-}
-impl KhrSharedPresentableImageFn {
-    pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        let mut _err_str = Vec::new();
-        let s = KhrSharedPresentableImageFn {
-            get_swapchain_status_khr: unsafe {
-                let raw_name = stringify!(vkGetSwapchainStatusKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-        };
-        if _err_str.is_empty() {
-            Ok(s)
-        } else {
-            Err(_err_str)
+    pub struct NvxMultiviewPerViewAttributesFn {}
+    unsafe impl Send for NvxMultiviewPerViewAttributesFn {}
+    unsafe impl Sync for NvxMultiviewPerViewAttributesFn {}
+    impl ::std::clone::Clone for NvxMultiviewPerViewAttributesFn {
+        fn clone(&self) -> Self {
+            NvxMultiviewPerViewAttributesFn {}
         }
     }
-    pub unsafe fn get_swapchain_status_khr(
-        &self,
-        device: Device,
-        swapchain: SwapchainKHR,
-    ) -> Result {
-        (self.get_swapchain_status_khr)(device, swapchain)
+    impl NvxMultiviewPerViewAttributesFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = NvxMultiviewPerViewAttributesFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
     }
-}
-pub struct KhrExternalFenceWin32Fn {
-    import_fence_win32_handle_khr:
-        extern "system" fn(
+    #[doc = "Generated from \'VK_NVX_multiview_per_view_attributes\'"]
+    impl StructureType {
+        pub const PHYSICAL_DEVICE_MULTIVIEW_PER_VIEW_ATTRIBUTES_PROPERTIES_NVX: Self =
+            StructureType(1000097000);
+    }
+    #[doc = "Generated from \'VK_NVX_multiview_per_view_attributes\'"]
+    impl SubpassDescriptionFlags {
+        pub const PER_VIEW_ATTRIBUTES_NVX: Self = SubpassDescriptionFlags(0b1);
+    }
+    #[doc = "Generated from \'VK_NVX_multiview_per_view_attributes\'"]
+    impl SubpassDescriptionFlags {
+        pub const PER_VIEW_POSITION_X_ONLY_NVX: Self = SubpassDescriptionFlags(0b10);
+    }
+    pub struct NvViewportSwizzleFn {}
+    unsafe impl Send for NvViewportSwizzleFn {}
+    unsafe impl Sync for NvViewportSwizzleFn {}
+    impl ::std::clone::Clone for NvViewportSwizzleFn {
+        fn clone(&self) -> Self {
+            NvViewportSwizzleFn {}
+        }
+    }
+    impl NvViewportSwizzleFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = NvViewportSwizzleFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    #[doc = "Generated from \'VK_NV_viewport_swizzle\'"]
+    impl StructureType {
+        pub const PIPELINE_VIEWPORT_SWIZZLE_STATE_CREATE_INFO_NV: Self = StructureType(1000098000);
+    }
+    pub struct ExtDiscardRectanglesFn {
+        cmd_set_discard_rectangle_ext: extern "system" fn(
+            command_buffer: CommandBuffer,
+            first_discard_rectangle: uint32_t,
+            discard_rectangle_count: uint32_t,
+            p_discard_rectangles: *const Rect2D,
+        ) -> c_void,
+    }
+    unsafe impl Send for ExtDiscardRectanglesFn {}
+    unsafe impl Sync for ExtDiscardRectanglesFn {}
+    impl ::std::clone::Clone for ExtDiscardRectanglesFn {
+        fn clone(&self) -> Self {
+            ExtDiscardRectanglesFn {
+                cmd_set_discard_rectangle_ext: self.cmd_set_discard_rectangle_ext,
+            }
+        }
+    }
+    impl ExtDiscardRectanglesFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = ExtDiscardRectanglesFn {
+                cmd_set_discard_rectangle_ext: unsafe {
+                    let raw_name = stringify!(vkCmdSetDiscardRectangleEXT);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+            };
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+        pub unsafe fn cmd_set_discard_rectangle_ext(
+            &self,
+            command_buffer: CommandBuffer,
+            first_discard_rectangle: uint32_t,
+            discard_rectangle_count: uint32_t,
+            p_discard_rectangles: *const Rect2D,
+        ) -> c_void {
+            (self.cmd_set_discard_rectangle_ext)(
+                command_buffer,
+                first_discard_rectangle,
+                discard_rectangle_count,
+                p_discard_rectangles,
+            )
+        }
+    }
+    #[doc = "Generated from \'VK_EXT_discard_rectangles\'"]
+    impl StructureType {
+        pub const PHYSICAL_DEVICE_DISCARD_RECTANGLE_PROPERTIES_EXT: Self =
+            StructureType(1000099000);
+    }
+    #[doc = "Generated from \'VK_EXT_discard_rectangles\'"]
+    impl StructureType {
+        pub const PIPELINE_DISCARD_RECTANGLE_STATE_CREATE_INFO_EXT: Self =
+            StructureType(1000099001);
+    }
+    #[doc = "Generated from \'VK_EXT_discard_rectangles\'"]
+    impl DynamicState {
+        pub const DISCARD_RECTANGLE_EXT: Self = DynamicState(1000099000);
+    }
+    pub struct ExtConservativeRasterizationFn {}
+    unsafe impl Send for ExtConservativeRasterizationFn {}
+    unsafe impl Sync for ExtConservativeRasterizationFn {}
+    impl ::std::clone::Clone for ExtConservativeRasterizationFn {
+        fn clone(&self) -> Self {
+            ExtConservativeRasterizationFn {}
+        }
+    }
+    impl ExtConservativeRasterizationFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = ExtConservativeRasterizationFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    #[doc = "Generated from \'VK_EXT_conservative_rasterization\'"]
+    impl StructureType {
+        pub const PHYSICAL_DEVICE_CONSERVATIVE_RASTERIZATION_PROPERTIES_EXT: Self =
+            StructureType(1000101000);
+    }
+    #[doc = "Generated from \'VK_EXT_conservative_rasterization\'"]
+    impl StructureType {
+        pub const PIPELINE_RASTERIZATION_CONSERVATIVE_STATE_CREATE_INFO_EXT: Self =
+            StructureType(1000101001);
+    }
+    pub struct ExtSwapchainColorspaceFn {}
+    unsafe impl Send for ExtSwapchainColorspaceFn {}
+    unsafe impl Sync for ExtSwapchainColorspaceFn {}
+    impl ::std::clone::Clone for ExtSwapchainColorspaceFn {
+        fn clone(&self) -> Self {
+            ExtSwapchainColorspaceFn {}
+        }
+    }
+    impl ExtSwapchainColorspaceFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = ExtSwapchainColorspaceFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
+    impl ColorSpaceKHR {
+        pub const COLOR_SPACE_DISPLAY_P3_NONLINEAR_EXT: Self = ColorSpaceKHR(1000104001);
+    }
+    #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
+    impl ColorSpaceKHR {
+        pub const COLOR_SPACE_EXTENDED_SRGB_LINEAR_EXT: Self = ColorSpaceKHR(1000104002);
+    }
+    #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
+    impl ColorSpaceKHR {
+        pub const COLOR_SPACE_DCI_P3_LINEAR_EXT: Self = ColorSpaceKHR(1000104003);
+    }
+    #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
+    impl ColorSpaceKHR {
+        pub const COLOR_SPACE_DCI_P3_NONLINEAR_EXT: Self = ColorSpaceKHR(1000104004);
+    }
+    #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
+    impl ColorSpaceKHR {
+        pub const COLOR_SPACE_BT709_LINEAR_EXT: Self = ColorSpaceKHR(1000104005);
+    }
+    #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
+    impl ColorSpaceKHR {
+        pub const COLOR_SPACE_BT709_NONLINEAR_EXT: Self = ColorSpaceKHR(1000104006);
+    }
+    #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
+    impl ColorSpaceKHR {
+        pub const COLOR_SPACE_BT2020_LINEAR_EXT: Self = ColorSpaceKHR(1000104007);
+    }
+    #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
+    impl ColorSpaceKHR {
+        pub const COLOR_SPACE_HDR10_ST2084_EXT: Self = ColorSpaceKHR(1000104008);
+    }
+    #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
+    impl ColorSpaceKHR {
+        pub const COLOR_SPACE_DOLBYVISION_EXT: Self = ColorSpaceKHR(1000104009);
+    }
+    #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
+    impl ColorSpaceKHR {
+        pub const COLOR_SPACE_HDR10_HLG_EXT: Self = ColorSpaceKHR(1000104010);
+    }
+    #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
+    impl ColorSpaceKHR {
+        pub const COLOR_SPACE_ADOBERGB_LINEAR_EXT: Self = ColorSpaceKHR(1000104011);
+    }
+    #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
+    impl ColorSpaceKHR {
+        pub const COLOR_SPACE_ADOBERGB_NONLINEAR_EXT: Self = ColorSpaceKHR(1000104012);
+    }
+    #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
+    impl ColorSpaceKHR {
+        pub const COLOR_SPACE_PASS_THROUGH_EXT: Self = ColorSpaceKHR(1000104013);
+    }
+    #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
+    impl ColorSpaceKHR {
+        pub const COLOR_SPACE_EXTENDED_SRGB_NONLINEAR_EXT: Self = ColorSpaceKHR(1000104014);
+    }
+    pub struct ExtHdrMetadataFn {
+        set_hdr_metadata_ext: extern "system" fn(
+            device: Device,
+            swapchain_count: uint32_t,
+            p_swapchains: *const SwapchainKHR,
+            p_metadata: *const HdrMetadataEXT,
+        ) -> c_void,
+    }
+    unsafe impl Send for ExtHdrMetadataFn {}
+    unsafe impl Sync for ExtHdrMetadataFn {}
+    impl ::std::clone::Clone for ExtHdrMetadataFn {
+        fn clone(&self) -> Self {
+            ExtHdrMetadataFn {
+                set_hdr_metadata_ext: self.set_hdr_metadata_ext,
+            }
+        }
+    }
+    impl ExtHdrMetadataFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = ExtHdrMetadataFn {
+                set_hdr_metadata_ext: unsafe {
+                    let raw_name = stringify!(vkSetHdrMetadataEXT);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+            };
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+        pub unsafe fn set_hdr_metadata_ext(
+            &self,
+            device: Device,
+            swapchain_count: uint32_t,
+            p_swapchains: *const SwapchainKHR,
+            p_metadata: *const HdrMetadataEXT,
+        ) -> c_void {
+            (self.set_hdr_metadata_ext)(device, swapchain_count, p_swapchains, p_metadata)
+        }
+    }
+    #[doc = "Generated from \'VK_EXT_hdr_metadata\'"]
+    impl StructureType {
+        pub const HDR_METADATA_EXT: Self = StructureType(1000105000);
+    }
+    pub struct KhrSharedPresentableImageFn {
+        get_swapchain_status_khr:
+            extern "system" fn(device: Device, swapchain: SwapchainKHR) -> Result,
+    }
+    unsafe impl Send for KhrSharedPresentableImageFn {}
+    unsafe impl Sync for KhrSharedPresentableImageFn {}
+    impl ::std::clone::Clone for KhrSharedPresentableImageFn {
+        fn clone(&self) -> Self {
+            KhrSharedPresentableImageFn {
+                get_swapchain_status_khr: self.get_swapchain_status_khr,
+            }
+        }
+    }
+    impl KhrSharedPresentableImageFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrSharedPresentableImageFn {
+                get_swapchain_status_khr: unsafe {
+                    let raw_name = stringify!(vkGetSwapchainStatusKHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+            };
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+        pub unsafe fn get_swapchain_status_khr(
+            &self,
+            device: Device,
+            swapchain: SwapchainKHR,
+        ) -> Result {
+            (self.get_swapchain_status_khr)(device, swapchain)
+        }
+    }
+    #[doc = "Generated from \'VK_KHR_shared_presentable_image\'"]
+    impl StructureType {
+        pub const SHARED_PRESENT_SURFACE_CAPABILITIES_KHR: Self = StructureType(1000111000);
+    }
+    #[doc = "Generated from \'VK_KHR_shared_presentable_image\'"]
+    impl PresentModeKHR {
+        pub const PRESENT_MODE_SHARED_DEMAND_REFRESH_KHR: Self = PresentModeKHR(1000111000);
+    }
+    #[doc = "Generated from \'VK_KHR_shared_presentable_image\'"]
+    impl PresentModeKHR {
+        pub const PRESENT_MODE_SHARED_CONTINUOUS_REFRESH_KHR: Self = PresentModeKHR(1000111001);
+    }
+    #[doc = "Generated from \'VK_KHR_shared_presentable_image\'"]
+    impl ImageLayout {
+        pub const SHARED_PRESENT_KHR: Self = ImageLayout(1000111000);
+    }
+    pub struct KhrExternalFenceCapabilitiesFn {}
+    unsafe impl Send for KhrExternalFenceCapabilitiesFn {}
+    unsafe impl Sync for KhrExternalFenceCapabilitiesFn {}
+    impl ::std::clone::Clone for KhrExternalFenceCapabilitiesFn {
+        fn clone(&self) -> Self {
+            KhrExternalFenceCapabilitiesFn {}
+        }
+    }
+    impl KhrExternalFenceCapabilitiesFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrExternalFenceCapabilitiesFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct KhrExternalFenceFn {}
+    unsafe impl Send for KhrExternalFenceFn {}
+    unsafe impl Sync for KhrExternalFenceFn {}
+    impl ::std::clone::Clone for KhrExternalFenceFn {
+        fn clone(&self) -> Self {
+            KhrExternalFenceFn {}
+        }
+    }
+    impl KhrExternalFenceFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrExternalFenceFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct KhrExternalFenceWin32Fn { import_fence_win32_handle_khr : extern "system" fn ( device : Device , p_import_fence_win32_handle_info : *const ImportFenceWin32HandleInfoKHR , ) -> Result , get_fence_win32_handle_khr : extern "system" fn ( device : Device , p_get_win32_handle_info : *const FenceGetWin32HandleInfoKHR , p_handle : *const HANDLE , ) -> Result , }
+    unsafe impl Send for KhrExternalFenceWin32Fn {}
+    unsafe impl Sync for KhrExternalFenceWin32Fn {}
+    impl ::std::clone::Clone for KhrExternalFenceWin32Fn {
+        fn clone(&self) -> Self {
+            KhrExternalFenceWin32Fn {
+                import_fence_win32_handle_khr: self.import_fence_win32_handle_khr,
+                get_fence_win32_handle_khr: self.get_fence_win32_handle_khr,
+            }
+        }
+    }
+    impl KhrExternalFenceWin32Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrExternalFenceWin32Fn {
+                import_fence_win32_handle_khr: unsafe {
+                    let raw_name = stringify!(vkImportFenceWin32HandleKHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                get_fence_win32_handle_khr: unsafe {
+                    let raw_name = stringify!(vkGetFenceWin32HandleKHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+            };
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+        pub unsafe fn import_fence_win32_handle_khr(
+            &self,
             device: Device,
             p_import_fence_win32_handle_info: *const ImportFenceWin32HandleInfoKHR,
-        ) -> Result,
-    get_fence_win32_handle_khr:
-        extern "system" fn(
+        ) -> Result {
+            (self.import_fence_win32_handle_khr)(device, p_import_fence_win32_handle_info)
+        }
+        pub unsafe fn get_fence_win32_handle_khr(
+            &self,
             device: Device,
             p_get_win32_handle_info: *const FenceGetWin32HandleInfoKHR,
             p_handle: *const HANDLE,
+        ) -> Result {
+            (self.get_fence_win32_handle_khr)(device, p_get_win32_handle_info, p_handle)
+        }
+    }
+    #[doc = "Generated from \'VK_KHR_external_fence_win32\'"]
+    impl StructureType {
+        pub const IMPORT_FENCE_WIN32_HANDLE_INFO_KHR: Self = StructureType(1000114000);
+    }
+    #[doc = "Generated from \'VK_KHR_external_fence_win32\'"]
+    impl StructureType {
+        pub const EXPORT_FENCE_WIN32_HANDLE_INFO_KHR: Self = StructureType(1000114001);
+    }
+    #[doc = "Generated from \'VK_KHR_external_fence_win32\'"]
+    impl StructureType {
+        pub const FENCE_GET_WIN32_HANDLE_INFO_KHR: Self = StructureType(1000114002);
+    }
+    pub struct KhrExternalFenceFdFn {
+        import_fence_fd_khr:
+            extern "system" fn(device: Device, p_import_fence_fd_info: *const ImportFenceFdInfoKHR)
+                -> Result,
+        get_fence_fd_khr: extern "system" fn(
+            device: Device,
+            p_get_fd_info: *const FenceGetFdInfoKHR,
+            p_fd: *const c_int,
         ) -> Result,
-}
-unsafe impl Send for KhrExternalFenceWin32Fn {}
-unsafe impl Sync for KhrExternalFenceWin32Fn {}
-impl ::std::clone::Clone for KhrExternalFenceWin32Fn {
-    fn clone(&self) -> Self {
-        KhrExternalFenceWin32Fn {
-            import_fence_win32_handle_khr: self.import_fence_win32_handle_khr,
-            get_fence_win32_handle_khr: self.get_fence_win32_handle_khr,
+    }
+    unsafe impl Send for KhrExternalFenceFdFn {}
+    unsafe impl Sync for KhrExternalFenceFdFn {}
+    impl ::std::clone::Clone for KhrExternalFenceFdFn {
+        fn clone(&self) -> Self {
+            KhrExternalFenceFdFn {
+                import_fence_fd_khr: self.import_fence_fd_khr,
+                get_fence_fd_khr: self.get_fence_fd_khr,
+            }
         }
     }
-}
-impl KhrExternalFenceWin32Fn {
-    pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        let mut _err_str = Vec::new();
-        let s = KhrExternalFenceWin32Fn {
-            import_fence_win32_handle_khr: unsafe {
-                let raw_name = stringify!(vkImportFenceWin32HandleKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            get_fence_win32_handle_khr: unsafe {
-                let raw_name = stringify!(vkGetFenceWin32HandleKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-        };
-        if _err_str.is_empty() {
-            Ok(s)
-        } else {
-            Err(_err_str)
+    impl KhrExternalFenceFdFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrExternalFenceFdFn {
+                import_fence_fd_khr: unsafe {
+                    let raw_name = stringify!(vkImportFenceFdKHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                get_fence_fd_khr: unsafe {
+                    let raw_name = stringify!(vkGetFenceFdKHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+            };
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+        pub unsafe fn import_fence_fd_khr(
+            &self,
+            device: Device,
+            p_import_fence_fd_info: *const ImportFenceFdInfoKHR,
+        ) -> Result {
+            (self.import_fence_fd_khr)(device, p_import_fence_fd_info)
+        }
+        pub unsafe fn get_fence_fd_khr(
+            &self,
+            device: Device,
+            p_get_fd_info: *const FenceGetFdInfoKHR,
+            p_fd: *const c_int,
+        ) -> Result {
+            (self.get_fence_fd_khr)(device, p_get_fd_info, p_fd)
         }
     }
-    pub unsafe fn import_fence_win32_handle_khr(
-        &self,
-        device: Device,
-        p_import_fence_win32_handle_info: *const ImportFenceWin32HandleInfoKHR,
-    ) -> Result {
-        (self.import_fence_win32_handle_khr)(device, p_import_fence_win32_handle_info)
+    #[doc = "Generated from \'VK_KHR_external_fence_fd\'"]
+    impl StructureType {
+        pub const IMPORT_FENCE_FD_INFO_KHR: Self = StructureType(1000115000);
     }
-    pub unsafe fn get_fence_win32_handle_khr(
-        &self,
-        device: Device,
-        p_get_win32_handle_info: *const FenceGetWin32HandleInfoKHR,
-        p_handle: *const HANDLE,
-    ) -> Result {
-        (self.get_fence_win32_handle_khr)(device, p_get_win32_handle_info, p_handle)
+    #[doc = "Generated from \'VK_KHR_external_fence_fd\'"]
+    impl StructureType {
+        pub const FENCE_GET_FD_INFO_KHR: Self = StructureType(1000115001);
     }
-}
-pub struct KhrExternalFenceFdFn {
-    import_fence_fd_khr:
-        extern "system" fn(device: Device, p_import_fence_fd_info: *const ImportFenceFdInfoKHR)
-            -> Result,
-    get_fence_fd_khr: extern "system" fn(
-        device: Device,
-        p_get_fd_info: *const FenceGetFdInfoKHR,
-        p_fd: *const c_int,
-    ) -> Result,
-}
-unsafe impl Send for KhrExternalFenceFdFn {}
-unsafe impl Sync for KhrExternalFenceFdFn {}
-impl ::std::clone::Clone for KhrExternalFenceFdFn {
-    fn clone(&self) -> Self {
-        KhrExternalFenceFdFn {
-            import_fence_fd_khr: self.import_fence_fd_khr,
-            get_fence_fd_khr: self.get_fence_fd_khr,
+    pub struct KhrMaintenance2Fn {}
+    unsafe impl Send for KhrMaintenance2Fn {}
+    unsafe impl Sync for KhrMaintenance2Fn {}
+    impl ::std::clone::Clone for KhrMaintenance2Fn {
+        fn clone(&self) -> Self {
+            KhrMaintenance2Fn {}
         }
     }
-}
-impl KhrExternalFenceFdFn {
-    pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        let mut _err_str = Vec::new();
-        let s = KhrExternalFenceFdFn {
-            import_fence_fd_khr: unsafe {
-                let raw_name = stringify!(vkImportFenceFdKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            get_fence_fd_khr: unsafe {
-                let raw_name = stringify!(vkGetFenceFdKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-        };
-        if _err_str.is_empty() {
-            Ok(s)
-        } else {
-            Err(_err_str)
+    impl KhrMaintenance2Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrMaintenance2Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
         }
     }
-    pub unsafe fn import_fence_fd_khr(
-        &self,
-        device: Device,
-        p_import_fence_fd_info: *const ImportFenceFdInfoKHR,
-    ) -> Result {
-        (self.import_fence_fd_khr)(device, p_import_fence_fd_info)
+    pub struct KhrGetSurfaceCapabilities2Fn {
+        get_physical_device_surface_capabilities2_khr:
+            extern "system" fn(
+                physical_device: PhysicalDevice,
+                p_surface_info: *const PhysicalDeviceSurfaceInfo2KHR,
+                p_surface_capabilities: *const SurfaceCapabilities2KHR,
+            ) -> Result,
+        get_physical_device_surface_formats2_khr:
+            extern "system" fn(
+                physical_device: PhysicalDevice,
+                p_surface_info: *const PhysicalDeviceSurfaceInfo2KHR,
+                p_surface_format_count: *const uint32_t,
+                p_surface_formats: *const SurfaceFormat2KHR,
+            ) -> Result,
     }
-    pub unsafe fn get_fence_fd_khr(
-        &self,
-        device: Device,
-        p_get_fd_info: *const FenceGetFdInfoKHR,
-        p_fd: *const c_int,
-    ) -> Result {
-        (self.get_fence_fd_khr)(device, p_get_fd_info, p_fd)
+    unsafe impl Send for KhrGetSurfaceCapabilities2Fn {}
+    unsafe impl Sync for KhrGetSurfaceCapabilities2Fn {}
+    impl ::std::clone::Clone for KhrGetSurfaceCapabilities2Fn {
+        fn clone(&self) -> Self {
+            KhrGetSurfaceCapabilities2Fn {
+                get_physical_device_surface_capabilities2_khr: self
+                    .get_physical_device_surface_capabilities2_khr,
+                get_physical_device_surface_formats2_khr: self
+                    .get_physical_device_surface_formats2_khr,
+            }
+        }
     }
-}
-pub struct KhrGetSurfaceCapabilities2Fn {
-    get_physical_device_surface_capabilities2_khr:
-        extern "system" fn(
+    impl KhrGetSurfaceCapabilities2Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrGetSurfaceCapabilities2Fn {
+                get_physical_device_surface_capabilities2_khr: unsafe {
+                    let raw_name = stringify!(vkGetPhysicalDeviceSurfaceCapabilities2KHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                get_physical_device_surface_formats2_khr: unsafe {
+                    let raw_name = stringify!(vkGetPhysicalDeviceSurfaceFormats2KHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+            };
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+        pub unsafe fn get_physical_device_surface_capabilities2_khr(
+            &self,
             physical_device: PhysicalDevice,
             p_surface_info: *const PhysicalDeviceSurfaceInfo2KHR,
             p_surface_capabilities: *const SurfaceCapabilities2KHR,
-        ) -> Result,
-    get_physical_device_surface_formats2_khr:
-        extern "system" fn(
+        ) -> Result {
+            (self.get_physical_device_surface_capabilities2_khr)(
+                physical_device,
+                p_surface_info,
+                p_surface_capabilities,
+            )
+        }
+        pub unsafe fn get_physical_device_surface_formats2_khr(
+            &self,
             physical_device: PhysicalDevice,
             p_surface_info: *const PhysicalDeviceSurfaceInfo2KHR,
             p_surface_format_count: *const uint32_t,
             p_surface_formats: *const SurfaceFormat2KHR,
-        ) -> Result,
-}
-unsafe impl Send for KhrGetSurfaceCapabilities2Fn {}
-unsafe impl Sync for KhrGetSurfaceCapabilities2Fn {}
-impl ::std::clone::Clone for KhrGetSurfaceCapabilities2Fn {
-    fn clone(&self) -> Self {
-        KhrGetSurfaceCapabilities2Fn {
-            get_physical_device_surface_capabilities2_khr: self
-                .get_physical_device_surface_capabilities2_khr,
-            get_physical_device_surface_formats2_khr: self.get_physical_device_surface_formats2_khr,
+        ) -> Result {
+            (self.get_physical_device_surface_formats2_khr)(
+                physical_device,
+                p_surface_info,
+                p_surface_format_count,
+                p_surface_formats,
+            )
         }
     }
-}
-impl KhrGetSurfaceCapabilities2Fn {
-    pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        let mut _err_str = Vec::new();
-        let s = KhrGetSurfaceCapabilities2Fn {
-            get_physical_device_surface_capabilities2_khr: unsafe {
-                let raw_name = stringify!(vkGetPhysicalDeviceSurfaceCapabilities2KHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            get_physical_device_surface_formats2_khr: unsafe {
-                let raw_name = stringify!(vkGetPhysicalDeviceSurfaceFormats2KHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-        };
-        if _err_str.is_empty() {
-            Ok(s)
-        } else {
-            Err(_err_str)
+    #[doc = "Generated from \'VK_KHR_get_surface_capabilities2\'"]
+    impl StructureType {
+        pub const PHYSICAL_DEVICE_SURFACE_INFO_2_KHR: Self = StructureType(1000119000);
+    }
+    #[doc = "Generated from \'VK_KHR_get_surface_capabilities2\'"]
+    impl StructureType {
+        pub const SURFACE_CAPABILITIES_2_KHR: Self = StructureType(1000119001);
+    }
+    #[doc = "Generated from \'VK_KHR_get_surface_capabilities2\'"]
+    impl StructureType {
+        pub const SURFACE_FORMAT_2_KHR: Self = StructureType(1000119002);
+    }
+    pub struct KhrVariablePointersFn {}
+    unsafe impl Send for KhrVariablePointersFn {}
+    unsafe impl Sync for KhrVariablePointersFn {}
+    impl ::std::clone::Clone for KhrVariablePointersFn {
+        fn clone(&self) -> Self {
+            KhrVariablePointersFn {}
         }
     }
-    pub unsafe fn get_physical_device_surface_capabilities2_khr(
-        &self,
-        physical_device: PhysicalDevice,
-        p_surface_info: *const PhysicalDeviceSurfaceInfo2KHR,
-        p_surface_capabilities: *const SurfaceCapabilities2KHR,
-    ) -> Result {
-        (self.get_physical_device_surface_capabilities2_khr)(
-            physical_device,
-            p_surface_info,
-            p_surface_capabilities,
-        )
+    impl KhrVariablePointersFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrVariablePointersFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
     }
-    pub unsafe fn get_physical_device_surface_formats2_khr(
-        &self,
-        physical_device: PhysicalDevice,
-        p_surface_info: *const PhysicalDeviceSurfaceInfo2KHR,
-        p_surface_format_count: *const uint32_t,
-        p_surface_formats: *const SurfaceFormat2KHR,
-    ) -> Result {
-        (self.get_physical_device_surface_formats2_khr)(
-            physical_device,
-            p_surface_info,
-            p_surface_format_count,
-            p_surface_formats,
-        )
+    pub struct KhrGetDisplayProperties2Fn {
+        get_physical_device_display_properties2_khr:
+            extern "system" fn(
+                physical_device: PhysicalDevice,
+                p_property_count: *const uint32_t,
+                p_properties: *const DisplayProperties2KHR,
+            ) -> Result,
+        get_physical_device_display_plane_properties2_khr:
+            extern "system" fn(
+                physical_device: PhysicalDevice,
+                p_property_count: *const uint32_t,
+                p_properties: *const DisplayPlaneProperties2KHR,
+            ) -> Result,
+        get_display_mode_properties2_khr:
+            extern "system" fn(
+                physical_device: PhysicalDevice,
+                display: DisplayKHR,
+                p_property_count: *const uint32_t,
+                p_properties: *const DisplayModeProperties2KHR,
+            ) -> Result,
+        get_display_plane_capabilities2_khr:
+            extern "system" fn(
+                physical_device: PhysicalDevice,
+                p_display_plane_info: *const DisplayPlaneInfo2KHR,
+                p_capabilities: *const DisplayPlaneCapabilities2KHR,
+            ) -> Result,
     }
-}
-pub struct KhrGetDisplayProperties2Fn {
-    get_physical_device_display_properties2_khr:
-        extern "system" fn(
+    unsafe impl Send for KhrGetDisplayProperties2Fn {}
+    unsafe impl Sync for KhrGetDisplayProperties2Fn {}
+    impl ::std::clone::Clone for KhrGetDisplayProperties2Fn {
+        fn clone(&self) -> Self {
+            KhrGetDisplayProperties2Fn {
+                get_physical_device_display_properties2_khr: self
+                    .get_physical_device_display_properties2_khr,
+                get_physical_device_display_plane_properties2_khr: self
+                    .get_physical_device_display_plane_properties2_khr,
+                get_display_mode_properties2_khr: self.get_display_mode_properties2_khr,
+                get_display_plane_capabilities2_khr: self.get_display_plane_capabilities2_khr,
+            }
+        }
+    }
+    impl KhrGetDisplayProperties2Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrGetDisplayProperties2Fn {
+                get_physical_device_display_properties2_khr: unsafe {
+                    let raw_name = stringify!(vkGetPhysicalDeviceDisplayProperties2KHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                get_physical_device_display_plane_properties2_khr: unsafe {
+                    let raw_name = stringify!(vkGetPhysicalDeviceDisplayPlaneProperties2KHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                get_display_mode_properties2_khr: unsafe {
+                    let raw_name = stringify!(vkGetDisplayModeProperties2KHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                get_display_plane_capabilities2_khr: unsafe {
+                    let raw_name = stringify!(vkGetDisplayPlaneCapabilities2KHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+            };
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+        pub unsafe fn get_physical_device_display_properties2_khr(
+            &self,
             physical_device: PhysicalDevice,
             p_property_count: *const uint32_t,
             p_properties: *const DisplayProperties2KHR,
-        ) -> Result,
-    get_physical_device_display_plane_properties2_khr:
-        extern "system" fn(
+        ) -> Result {
+            (self.get_physical_device_display_properties2_khr)(
+                physical_device,
+                p_property_count,
+                p_properties,
+            )
+        }
+        pub unsafe fn get_physical_device_display_plane_properties2_khr(
+            &self,
             physical_device: PhysicalDevice,
             p_property_count: *const uint32_t,
             p_properties: *const DisplayPlaneProperties2KHR,
-        ) -> Result,
-    get_display_mode_properties2_khr:
-        extern "system" fn(
+        ) -> Result {
+            (self.get_physical_device_display_plane_properties2_khr)(
+                physical_device,
+                p_property_count,
+                p_properties,
+            )
+        }
+        pub unsafe fn get_display_mode_properties2_khr(
+            &self,
             physical_device: PhysicalDevice,
             display: DisplayKHR,
             p_property_count: *const uint32_t,
             p_properties: *const DisplayModeProperties2KHR,
-        ) -> Result,
-    get_display_plane_capabilities2_khr:
-        extern "system" fn(
+        ) -> Result {
+            (self.get_display_mode_properties2_khr)(
+                physical_device,
+                display,
+                p_property_count,
+                p_properties,
+            )
+        }
+        pub unsafe fn get_display_plane_capabilities2_khr(
+            &self,
             physical_device: PhysicalDevice,
             p_display_plane_info: *const DisplayPlaneInfo2KHR,
             p_capabilities: *const DisplayPlaneCapabilities2KHR,
+        ) -> Result {
+            (self.get_display_plane_capabilities2_khr)(
+                physical_device,
+                p_display_plane_info,
+                p_capabilities,
+            )
+        }
+    }
+    #[doc = "Generated from \'VK_KHR_get_display_properties2\'"]
+    impl StructureType {
+        pub const DISPLAY_PROPERTIES_2_KHR: Self = StructureType(1000121000);
+    }
+    #[doc = "Generated from \'VK_KHR_get_display_properties2\'"]
+    impl StructureType {
+        pub const DISPLAY_PLANE_PROPERTIES_2_KHR: Self = StructureType(1000121001);
+    }
+    #[doc = "Generated from \'VK_KHR_get_display_properties2\'"]
+    impl StructureType {
+        pub const DISPLAY_MODE_PROPERTIES_2_KHR: Self = StructureType(1000121002);
+    }
+    #[doc = "Generated from \'VK_KHR_get_display_properties2\'"]
+    impl StructureType {
+        pub const DISPLAY_PLANE_INFO_2_KHR: Self = StructureType(1000121003);
+    }
+    #[doc = "Generated from \'VK_KHR_get_display_properties2\'"]
+    impl StructureType {
+        pub const DISPLAY_PLANE_CAPABILITIES_2_KHR: Self = StructureType(1000121004);
+    }
+    pub struct MvkIosSurfaceFn {
+        create_ios_surface_mvk: extern "system" fn(
+            instance: Instance,
+            p_create_info: *const IOSSurfaceCreateInfoMVK,
+            p_allocator: *const AllocationCallbacks,
+            p_surface: *const SurfaceKHR,
         ) -> Result,
-}
-unsafe impl Send for KhrGetDisplayProperties2Fn {}
-unsafe impl Sync for KhrGetDisplayProperties2Fn {}
-impl ::std::clone::Clone for KhrGetDisplayProperties2Fn {
-    fn clone(&self) -> Self {
-        KhrGetDisplayProperties2Fn {
-            get_physical_device_display_properties2_khr: self
-                .get_physical_device_display_properties2_khr,
-            get_physical_device_display_plane_properties2_khr: self
-                .get_physical_device_display_plane_properties2_khr,
-            get_display_mode_properties2_khr: self.get_display_mode_properties2_khr,
-            get_display_plane_capabilities2_khr: self.get_display_plane_capabilities2_khr,
+    }
+    unsafe impl Send for MvkIosSurfaceFn {}
+    unsafe impl Sync for MvkIosSurfaceFn {}
+    impl ::std::clone::Clone for MvkIosSurfaceFn {
+        fn clone(&self) -> Self {
+            MvkIosSurfaceFn {
+                create_ios_surface_mvk: self.create_ios_surface_mvk,
+            }
         }
     }
-}
-impl KhrGetDisplayProperties2Fn {
-    pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        let mut _err_str = Vec::new();
-        let s = KhrGetDisplayProperties2Fn {
-            get_physical_device_display_properties2_khr: unsafe {
-                let raw_name = stringify!(vkGetPhysicalDeviceDisplayProperties2KHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            get_physical_device_display_plane_properties2_khr: unsafe {
-                let raw_name = stringify!(vkGetPhysicalDeviceDisplayPlaneProperties2KHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            get_display_mode_properties2_khr: unsafe {
-                let raw_name = stringify!(vkGetDisplayModeProperties2KHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            get_display_plane_capabilities2_khr: unsafe {
-                let raw_name = stringify!(vkGetDisplayPlaneCapabilities2KHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-        };
-        if _err_str.is_empty() {
-            Ok(s)
-        } else {
-            Err(_err_str)
+    impl MvkIosSurfaceFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = MvkIosSurfaceFn {
+                create_ios_surface_mvk: unsafe {
+                    let raw_name = stringify!(vkCreateIOSSurfaceMVK);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+            };
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+        pub unsafe fn create_ios_surface_mvk(
+            &self,
+            instance: Instance,
+            p_create_info: *const IOSSurfaceCreateInfoMVK,
+            p_allocator: *const AllocationCallbacks,
+            p_surface: *const SurfaceKHR,
+        ) -> Result {
+            (self.create_ios_surface_mvk)(instance, p_create_info, p_allocator, p_surface)
         }
     }
-    pub unsafe fn get_physical_device_display_properties2_khr(
-        &self,
-        physical_device: PhysicalDevice,
-        p_property_count: *const uint32_t,
-        p_properties: *const DisplayProperties2KHR,
-    ) -> Result {
-        (self.get_physical_device_display_properties2_khr)(
-            physical_device,
-            p_property_count,
-            p_properties,
-        )
+    #[doc = "Generated from \'VK_MVK_ios_surface\'"]
+    impl StructureType {
+        pub const IOS_SURFACE_CREATE_INFO_M: Self = StructureType(1000122000);
     }
-    pub unsafe fn get_physical_device_display_plane_properties2_khr(
-        &self,
-        physical_device: PhysicalDevice,
-        p_property_count: *const uint32_t,
-        p_properties: *const DisplayPlaneProperties2KHR,
-    ) -> Result {
-        (self.get_physical_device_display_plane_properties2_khr)(
-            physical_device,
-            p_property_count,
-            p_properties,
-        )
+    pub struct MvkMacosSurfaceFn {
+        create_mac_os_surface_mvk:
+            extern "system" fn(
+                instance: Instance,
+                p_create_info: *const MacOSSurfaceCreateInfoMVK,
+                p_allocator: *const AllocationCallbacks,
+                p_surface: *const SurfaceKHR,
+            ) -> Result,
     }
-    pub unsafe fn get_display_mode_properties2_khr(
-        &self,
-        physical_device: PhysicalDevice,
-        display: DisplayKHR,
-        p_property_count: *const uint32_t,
-        p_properties: *const DisplayModeProperties2KHR,
-    ) -> Result {
-        (self.get_display_mode_properties2_khr)(
-            physical_device,
-            display,
-            p_property_count,
-            p_properties,
-        )
-    }
-    pub unsafe fn get_display_plane_capabilities2_khr(
-        &self,
-        physical_device: PhysicalDevice,
-        p_display_plane_info: *const DisplayPlaneInfo2KHR,
-        p_capabilities: *const DisplayPlaneCapabilities2KHR,
-    ) -> Result {
-        (self.get_display_plane_capabilities2_khr)(
-            physical_device,
-            p_display_plane_info,
-            p_capabilities,
-        )
-    }
-}
-pub struct MvkIosSurfaceFn {
-    create_ios_surface_mvk: extern "system" fn(
-        instance: Instance,
-        p_create_info: *const IOSSurfaceCreateInfoMVK,
-        p_allocator: *const AllocationCallbacks,
-        p_surface: *const SurfaceKHR,
-    ) -> Result,
-}
-unsafe impl Send for MvkIosSurfaceFn {}
-unsafe impl Sync for MvkIosSurfaceFn {}
-impl ::std::clone::Clone for MvkIosSurfaceFn {
-    fn clone(&self) -> Self {
-        MvkIosSurfaceFn {
-            create_ios_surface_mvk: self.create_ios_surface_mvk,
+    unsafe impl Send for MvkMacosSurfaceFn {}
+    unsafe impl Sync for MvkMacosSurfaceFn {}
+    impl ::std::clone::Clone for MvkMacosSurfaceFn {
+        fn clone(&self) -> Self {
+            MvkMacosSurfaceFn {
+                create_mac_os_surface_mvk: self.create_mac_os_surface_mvk,
+            }
         }
     }
-}
-impl MvkIosSurfaceFn {
-    pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        let mut _err_str = Vec::new();
-        let s = MvkIosSurfaceFn {
-            create_ios_surface_mvk: unsafe {
-                let raw_name = stringify!(vkCreateIOSSurfaceMVK);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-        };
-        if _err_str.is_empty() {
-            Ok(s)
-        } else {
-            Err(_err_str)
+    impl MvkMacosSurfaceFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = MvkMacosSurfaceFn {
+                create_mac_os_surface_mvk: unsafe {
+                    let raw_name = stringify!(vkCreateMacOSSurfaceMVK);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+            };
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+        pub unsafe fn create_mac_os_surface_mvk(
+            &self,
+            instance: Instance,
+            p_create_info: *const MacOSSurfaceCreateInfoMVK,
+            p_allocator: *const AllocationCallbacks,
+            p_surface: *const SurfaceKHR,
+        ) -> Result {
+            (self.create_mac_os_surface_mvk)(instance, p_create_info, p_allocator, p_surface)
         }
     }
-    pub unsafe fn create_ios_surface_mvk(
-        &self,
-        instance: Instance,
-        p_create_info: *const IOSSurfaceCreateInfoMVK,
-        p_allocator: *const AllocationCallbacks,
-        p_surface: *const SurfaceKHR,
-    ) -> Result {
-        (self.create_ios_surface_mvk)(instance, p_create_info, p_allocator, p_surface)
+    #[doc = "Generated from \'VK_MVK_macos_surface\'"]
+    impl StructureType {
+        pub const MACOS_SURFACE_CREATE_INFO_M: Self = StructureType(1000123000);
     }
-}
-pub struct MvkMacosSurfaceFn {
-    create_mac_os_surface_mvk: extern "system" fn(
-        instance: Instance,
-        p_create_info: *const MacOSSurfaceCreateInfoMVK,
-        p_allocator: *const AllocationCallbacks,
-        p_surface: *const SurfaceKHR,
-    ) -> Result,
-}
-unsafe impl Send for MvkMacosSurfaceFn {}
-unsafe impl Sync for MvkMacosSurfaceFn {}
-impl ::std::clone::Clone for MvkMacosSurfaceFn {
-    fn clone(&self) -> Self {
-        MvkMacosSurfaceFn {
-            create_mac_os_surface_mvk: self.create_mac_os_surface_mvk,
+    pub struct ExtExternalMemoryDmaBufFn {}
+    unsafe impl Send for ExtExternalMemoryDmaBufFn {}
+    unsafe impl Sync for ExtExternalMemoryDmaBufFn {}
+    impl ::std::clone::Clone for ExtExternalMemoryDmaBufFn {
+        fn clone(&self) -> Self {
+            ExtExternalMemoryDmaBufFn {}
         }
     }
-}
-impl MvkMacosSurfaceFn {
-    pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        let mut _err_str = Vec::new();
-        let s = MvkMacosSurfaceFn {
-            create_mac_os_surface_mvk: unsafe {
-                let raw_name = stringify!(vkCreateMacOSSurfaceMVK);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-        };
-        if _err_str.is_empty() {
-            Ok(s)
-        } else {
-            Err(_err_str)
+    impl ExtExternalMemoryDmaBufFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = ExtExternalMemoryDmaBufFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
         }
     }
-    pub unsafe fn create_mac_os_surface_mvk(
-        &self,
-        instance: Instance,
-        p_create_info: *const MacOSSurfaceCreateInfoMVK,
-        p_allocator: *const AllocationCallbacks,
-        p_surface: *const SurfaceKHR,
-    ) -> Result {
-        (self.create_mac_os_surface_mvk)(instance, p_create_info, p_allocator, p_surface)
+    #[doc = "Generated from \'VK_EXT_external_memory_dma_buf\'"]
+    impl ExternalMemoryHandleTypeFlags {
+        pub const DMA_BUF_EXT: Self = ExternalMemoryHandleTypeFlags(0b1000000000);
     }
-}
-pub struct ExtDebugUtilsFn {
-    set_debug_utils_object_name_ext:
-        extern "system" fn(device: Device, p_name_info: *const DebugUtilsObjectNameInfoEXT)
-            -> Result,
-    set_debug_utils_object_tag_ext:
-        extern "system" fn(device: Device, p_tag_info: *const DebugUtilsObjectTagInfoEXT) -> Result,
-    queue_begin_debug_utils_label_ext:
-        extern "system" fn(queue: Queue, p_label_info: *const DebugUtilsLabelEXT) -> c_void,
-    queue_end_debug_utils_label_ext: extern "system" fn(queue: Queue) -> c_void,
-    queue_insert_debug_utils_label_ext:
-        extern "system" fn(queue: Queue, p_label_info: *const DebugUtilsLabelEXT) -> c_void,
-    cmd_begin_debug_utils_label_ext:
-        extern "system" fn(command_buffer: CommandBuffer, p_label_info: *const DebugUtilsLabelEXT)
-            -> c_void,
-    cmd_end_debug_utils_label_ext: extern "system" fn(command_buffer: CommandBuffer) -> c_void,
-    cmd_insert_debug_utils_label_ext:
-        extern "system" fn(command_buffer: CommandBuffer, p_label_info: *const DebugUtilsLabelEXT)
-            -> c_void,
-    create_debug_utils_messenger_ext:
-        extern "system" fn(
+    pub struct ExtQueueFamilyForeignFn {}
+    unsafe impl Send for ExtQueueFamilyForeignFn {}
+    unsafe impl Sync for ExtQueueFamilyForeignFn {}
+    impl ::std::clone::Clone for ExtQueueFamilyForeignFn {
+        fn clone(&self) -> Self {
+            ExtQueueFamilyForeignFn {}
+        }
+    }
+    impl ExtQueueFamilyForeignFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = ExtQueueFamilyForeignFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct KhrDedicatedAllocationFn {}
+    unsafe impl Send for KhrDedicatedAllocationFn {}
+    unsafe impl Sync for KhrDedicatedAllocationFn {}
+    impl ::std::clone::Clone for KhrDedicatedAllocationFn {
+        fn clone(&self) -> Self {
+            KhrDedicatedAllocationFn {}
+        }
+    }
+    impl KhrDedicatedAllocationFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrDedicatedAllocationFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct ExtDebugUtilsFn {
+        set_debug_utils_object_name_ext:
+            extern "system" fn(device: Device, p_name_info: *const DebugUtilsObjectNameInfoEXT)
+                -> Result,
+        set_debug_utils_object_tag_ext:
+            extern "system" fn(device: Device, p_tag_info: *const DebugUtilsObjectTagInfoEXT)
+                -> Result,
+        queue_begin_debug_utils_label_ext:
+            extern "system" fn(queue: Queue, p_label_info: *const DebugUtilsLabelEXT) -> c_void,
+        queue_end_debug_utils_label_ext: extern "system" fn(queue: Queue) -> c_void,
+        queue_insert_debug_utils_label_ext:
+            extern "system" fn(queue: Queue, p_label_info: *const DebugUtilsLabelEXT) -> c_void,
+        cmd_begin_debug_utils_label_ext:
+            extern "system" fn(
+                command_buffer: CommandBuffer,
+                p_label_info: *const DebugUtilsLabelEXT,
+            ) -> c_void,
+        cmd_end_debug_utils_label_ext: extern "system" fn(command_buffer: CommandBuffer) -> c_void,
+        cmd_insert_debug_utils_label_ext:
+            extern "system" fn(
+                command_buffer: CommandBuffer,
+                p_label_info: *const DebugUtilsLabelEXT,
+            ) -> c_void,
+        create_debug_utils_messenger_ext:
+            extern "system" fn(
+                instance: Instance,
+                p_create_info: *const DebugUtilsMessengerCreateInfoEXT,
+                p_allocator: *const AllocationCallbacks,
+                p_messenger: *const DebugUtilsMessengerEXT,
+            ) -> Result,
+        destroy_debug_utils_messenger_ext:
+            extern "system" fn(
+                instance: Instance,
+                messenger: DebugUtilsMessengerEXT,
+                p_allocator: *const AllocationCallbacks,
+            ) -> c_void,
+        submit_debug_utils_message_ext:
+            extern "system" fn(
+                instance: Instance,
+                message_severity: DebugUtilsMessageSeverityFlagsEXT,
+                message_types: DebugUtilsMessageTypeFlagsEXT,
+                p_callback_data: *const DebugUtilsMessengerCallbackDataEXT,
+            ) -> c_void,
+    }
+    unsafe impl Send for ExtDebugUtilsFn {}
+    unsafe impl Sync for ExtDebugUtilsFn {}
+    impl ::std::clone::Clone for ExtDebugUtilsFn {
+        fn clone(&self) -> Self {
+            ExtDebugUtilsFn {
+                set_debug_utils_object_name_ext: self.set_debug_utils_object_name_ext,
+                set_debug_utils_object_tag_ext: self.set_debug_utils_object_tag_ext,
+                queue_begin_debug_utils_label_ext: self.queue_begin_debug_utils_label_ext,
+                queue_end_debug_utils_label_ext: self.queue_end_debug_utils_label_ext,
+                queue_insert_debug_utils_label_ext: self.queue_insert_debug_utils_label_ext,
+                cmd_begin_debug_utils_label_ext: self.cmd_begin_debug_utils_label_ext,
+                cmd_end_debug_utils_label_ext: self.cmd_end_debug_utils_label_ext,
+                cmd_insert_debug_utils_label_ext: self.cmd_insert_debug_utils_label_ext,
+                create_debug_utils_messenger_ext: self.create_debug_utils_messenger_ext,
+                destroy_debug_utils_messenger_ext: self.destroy_debug_utils_messenger_ext,
+                submit_debug_utils_message_ext: self.submit_debug_utils_message_ext,
+            }
+        }
+    }
+    impl ExtDebugUtilsFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = ExtDebugUtilsFn {
+                set_debug_utils_object_name_ext: unsafe {
+                    let raw_name = stringify!(vkSetDebugUtilsObjectNameEXT);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                set_debug_utils_object_tag_ext: unsafe {
+                    let raw_name = stringify!(vkSetDebugUtilsObjectTagEXT);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                queue_begin_debug_utils_label_ext: unsafe {
+                    let raw_name = stringify!(vkQueueBeginDebugUtilsLabelEXT);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                queue_end_debug_utils_label_ext: unsafe {
+                    let raw_name = stringify!(vkQueueEndDebugUtilsLabelEXT);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                queue_insert_debug_utils_label_ext: unsafe {
+                    let raw_name = stringify!(vkQueueInsertDebugUtilsLabelEXT);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                cmd_begin_debug_utils_label_ext: unsafe {
+                    let raw_name = stringify!(vkCmdBeginDebugUtilsLabelEXT);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                cmd_end_debug_utils_label_ext: unsafe {
+                    let raw_name = stringify!(vkCmdEndDebugUtilsLabelEXT);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                cmd_insert_debug_utils_label_ext: unsafe {
+                    let raw_name = stringify!(vkCmdInsertDebugUtilsLabelEXT);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                create_debug_utils_messenger_ext: unsafe {
+                    let raw_name = stringify!(vkCreateDebugUtilsMessengerEXT);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                destroy_debug_utils_messenger_ext: unsafe {
+                    let raw_name = stringify!(vkDestroyDebugUtilsMessengerEXT);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                submit_debug_utils_message_ext: unsafe {
+                    let raw_name = stringify!(vkSubmitDebugUtilsMessageEXT);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+            };
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+        pub unsafe fn set_debug_utils_object_name_ext(
+            &self,
+            device: Device,
+            p_name_info: *const DebugUtilsObjectNameInfoEXT,
+        ) -> Result {
+            (self.set_debug_utils_object_name_ext)(device, p_name_info)
+        }
+        pub unsafe fn set_debug_utils_object_tag_ext(
+            &self,
+            device: Device,
+            p_tag_info: *const DebugUtilsObjectTagInfoEXT,
+        ) -> Result {
+            (self.set_debug_utils_object_tag_ext)(device, p_tag_info)
+        }
+        pub unsafe fn queue_begin_debug_utils_label_ext(
+            &self,
+            queue: Queue,
+            p_label_info: *const DebugUtilsLabelEXT,
+        ) -> c_void {
+            (self.queue_begin_debug_utils_label_ext)(queue, p_label_info)
+        }
+        pub unsafe fn queue_end_debug_utils_label_ext(&self, queue: Queue) -> c_void {
+            (self.queue_end_debug_utils_label_ext)(queue)
+        }
+        pub unsafe fn queue_insert_debug_utils_label_ext(
+            &self,
+            queue: Queue,
+            p_label_info: *const DebugUtilsLabelEXT,
+        ) -> c_void {
+            (self.queue_insert_debug_utils_label_ext)(queue, p_label_info)
+        }
+        pub unsafe fn cmd_begin_debug_utils_label_ext(
+            &self,
+            command_buffer: CommandBuffer,
+            p_label_info: *const DebugUtilsLabelEXT,
+        ) -> c_void {
+            (self.cmd_begin_debug_utils_label_ext)(command_buffer, p_label_info)
+        }
+        pub unsafe fn cmd_end_debug_utils_label_ext(
+            &self,
+            command_buffer: CommandBuffer,
+        ) -> c_void {
+            (self.cmd_end_debug_utils_label_ext)(command_buffer)
+        }
+        pub unsafe fn cmd_insert_debug_utils_label_ext(
+            &self,
+            command_buffer: CommandBuffer,
+            p_label_info: *const DebugUtilsLabelEXT,
+        ) -> c_void {
+            (self.cmd_insert_debug_utils_label_ext)(command_buffer, p_label_info)
+        }
+        pub unsafe fn create_debug_utils_messenger_ext(
+            &self,
             instance: Instance,
             p_create_info: *const DebugUtilsMessengerCreateInfoEXT,
             p_allocator: *const AllocationCallbacks,
             p_messenger: *const DebugUtilsMessengerEXT,
-        ) -> Result,
-    destroy_debug_utils_messenger_ext: extern "system" fn(
-        instance: Instance,
-        messenger: DebugUtilsMessengerEXT,
-        p_allocator: *const AllocationCallbacks,
-    ) -> c_void,
-    submit_debug_utils_message_ext:
-        extern "system" fn(
+        ) -> Result {
+            (self.create_debug_utils_messenger_ext)(
+                instance,
+                p_create_info,
+                p_allocator,
+                p_messenger,
+            )
+        }
+        pub unsafe fn destroy_debug_utils_messenger_ext(
+            &self,
+            instance: Instance,
+            messenger: DebugUtilsMessengerEXT,
+            p_allocator: *const AllocationCallbacks,
+        ) -> c_void {
+            (self.destroy_debug_utils_messenger_ext)(instance, messenger, p_allocator)
+        }
+        pub unsafe fn submit_debug_utils_message_ext(
+            &self,
             instance: Instance,
             message_severity: DebugUtilsMessageSeverityFlagsEXT,
             message_types: DebugUtilsMessageTypeFlagsEXT,
             p_callback_data: *const DebugUtilsMessengerCallbackDataEXT,
-        ) -> c_void,
-}
-unsafe impl Send for ExtDebugUtilsFn {}
-unsafe impl Sync for ExtDebugUtilsFn {}
-impl ::std::clone::Clone for ExtDebugUtilsFn {
-    fn clone(&self) -> Self {
-        ExtDebugUtilsFn {
-            set_debug_utils_object_name_ext: self.set_debug_utils_object_name_ext,
-            set_debug_utils_object_tag_ext: self.set_debug_utils_object_tag_ext,
-            queue_begin_debug_utils_label_ext: self.queue_begin_debug_utils_label_ext,
-            queue_end_debug_utils_label_ext: self.queue_end_debug_utils_label_ext,
-            queue_insert_debug_utils_label_ext: self.queue_insert_debug_utils_label_ext,
-            cmd_begin_debug_utils_label_ext: self.cmd_begin_debug_utils_label_ext,
-            cmd_end_debug_utils_label_ext: self.cmd_end_debug_utils_label_ext,
-            cmd_insert_debug_utils_label_ext: self.cmd_insert_debug_utils_label_ext,
-            create_debug_utils_messenger_ext: self.create_debug_utils_messenger_ext,
-            destroy_debug_utils_messenger_ext: self.destroy_debug_utils_messenger_ext,
-            submit_debug_utils_message_ext: self.submit_debug_utils_message_ext,
+        ) -> c_void {
+            (self.submit_debug_utils_message_ext)(
+                instance,
+                message_severity,
+                message_types,
+                p_callback_data,
+            )
         }
     }
-}
-impl ExtDebugUtilsFn {
-    pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        let mut _err_str = Vec::new();
-        let s = ExtDebugUtilsFn {
-            set_debug_utils_object_name_ext: unsafe {
-                let raw_name = stringify!(vkSetDebugUtilsObjectNameEXT);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            set_debug_utils_object_tag_ext: unsafe {
-                let raw_name = stringify!(vkSetDebugUtilsObjectTagEXT);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            queue_begin_debug_utils_label_ext: unsafe {
-                let raw_name = stringify!(vkQueueBeginDebugUtilsLabelEXT);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            queue_end_debug_utils_label_ext: unsafe {
-                let raw_name = stringify!(vkQueueEndDebugUtilsLabelEXT);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            queue_insert_debug_utils_label_ext: unsafe {
-                let raw_name = stringify!(vkQueueInsertDebugUtilsLabelEXT);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            cmd_begin_debug_utils_label_ext: unsafe {
-                let raw_name = stringify!(vkCmdBeginDebugUtilsLabelEXT);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            cmd_end_debug_utils_label_ext: unsafe {
-                let raw_name = stringify!(vkCmdEndDebugUtilsLabelEXT);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            cmd_insert_debug_utils_label_ext: unsafe {
-                let raw_name = stringify!(vkCmdInsertDebugUtilsLabelEXT);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            create_debug_utils_messenger_ext: unsafe {
-                let raw_name = stringify!(vkCreateDebugUtilsMessengerEXT);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            destroy_debug_utils_messenger_ext: unsafe {
-                let raw_name = stringify!(vkDestroyDebugUtilsMessengerEXT);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            submit_debug_utils_message_ext: unsafe {
-                let raw_name = stringify!(vkSubmitDebugUtilsMessageEXT);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-        };
-        if _err_str.is_empty() {
-            Ok(s)
-        } else {
-            Err(_err_str)
+    #[doc = "Generated from \'VK_EXT_debug_utils\'"]
+    impl StructureType {
+        pub const DEBUG_UTILS_OBJECT_NAME_INFO_EXT: Self = StructureType(1000128000);
+    }
+    #[doc = "Generated from \'VK_EXT_debug_utils\'"]
+    impl StructureType {
+        pub const DEBUG_UTILS_OBJECT_TAG_INFO_EXT: Self = StructureType(1000128001);
+    }
+    #[doc = "Generated from \'VK_EXT_debug_utils\'"]
+    impl StructureType {
+        pub const DEBUG_UTILS_LABEL_EXT: Self = StructureType(1000128002);
+    }
+    #[doc = "Generated from \'VK_EXT_debug_utils\'"]
+    impl StructureType {
+        pub const DEBUG_UTILS_MESSENGER_CALLBACK_DATA_EXT: Self = StructureType(1000128003);
+    }
+    #[doc = "Generated from \'VK_EXT_debug_utils\'"]
+    impl StructureType {
+        pub const DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT: Self = StructureType(1000128004);
+    }
+    #[doc = "Generated from \'VK_EXT_debug_utils\'"]
+    impl ObjectType {
+        pub const DEBUG_UTILS_MESSENGER_EXT: Self = ObjectType(1000128000);
+    }
+    pub struct AndroidExternalMemoryAndroidHardwareBufferFn {
+        get_android_hardware_buffer_properties_android:
+            extern "system" fn(
+                device: Device,
+                buffer: *const AHardwareBuffer,
+                p_properties: *const AndroidHardwareBufferPropertiesANDROID,
+            ) -> Result,
+        get_memory_android_hardware_buffer_android:
+            extern "system" fn(
+                device: Device,
+                p_info: *const MemoryGetAndroidHardwareBufferInfoANDROID,
+                p_buffer: *mut *mut AHardwareBuffer,
+            ) -> Result,
+    }
+    unsafe impl Send for AndroidExternalMemoryAndroidHardwareBufferFn {}
+    unsafe impl Sync for AndroidExternalMemoryAndroidHardwareBufferFn {}
+    impl ::std::clone::Clone for AndroidExternalMemoryAndroidHardwareBufferFn {
+        fn clone(&self) -> Self {
+            AndroidExternalMemoryAndroidHardwareBufferFn {
+                get_android_hardware_buffer_properties_android: self
+                    .get_android_hardware_buffer_properties_android,
+                get_memory_android_hardware_buffer_android: self
+                    .get_memory_android_hardware_buffer_android,
+            }
         }
     }
-    pub unsafe fn set_debug_utils_object_name_ext(
-        &self,
-        device: Device,
-        p_name_info: *const DebugUtilsObjectNameInfoEXT,
-    ) -> Result {
-        (self.set_debug_utils_object_name_ext)(device, p_name_info)
-    }
-    pub unsafe fn set_debug_utils_object_tag_ext(
-        &self,
-        device: Device,
-        p_tag_info: *const DebugUtilsObjectTagInfoEXT,
-    ) -> Result {
-        (self.set_debug_utils_object_tag_ext)(device, p_tag_info)
-    }
-    pub unsafe fn queue_begin_debug_utils_label_ext(
-        &self,
-        queue: Queue,
-        p_label_info: *const DebugUtilsLabelEXT,
-    ) -> c_void {
-        (self.queue_begin_debug_utils_label_ext)(queue, p_label_info)
-    }
-    pub unsafe fn queue_end_debug_utils_label_ext(&self, queue: Queue) -> c_void {
-        (self.queue_end_debug_utils_label_ext)(queue)
-    }
-    pub unsafe fn queue_insert_debug_utils_label_ext(
-        &self,
-        queue: Queue,
-        p_label_info: *const DebugUtilsLabelEXT,
-    ) -> c_void {
-        (self.queue_insert_debug_utils_label_ext)(queue, p_label_info)
-    }
-    pub unsafe fn cmd_begin_debug_utils_label_ext(
-        &self,
-        command_buffer: CommandBuffer,
-        p_label_info: *const DebugUtilsLabelEXT,
-    ) -> c_void {
-        (self.cmd_begin_debug_utils_label_ext)(command_buffer, p_label_info)
-    }
-    pub unsafe fn cmd_end_debug_utils_label_ext(&self, command_buffer: CommandBuffer) -> c_void {
-        (self.cmd_end_debug_utils_label_ext)(command_buffer)
-    }
-    pub unsafe fn cmd_insert_debug_utils_label_ext(
-        &self,
-        command_buffer: CommandBuffer,
-        p_label_info: *const DebugUtilsLabelEXT,
-    ) -> c_void {
-        (self.cmd_insert_debug_utils_label_ext)(command_buffer, p_label_info)
-    }
-    pub unsafe fn create_debug_utils_messenger_ext(
-        &self,
-        instance: Instance,
-        p_create_info: *const DebugUtilsMessengerCreateInfoEXT,
-        p_allocator: *const AllocationCallbacks,
-        p_messenger: *const DebugUtilsMessengerEXT,
-    ) -> Result {
-        (self.create_debug_utils_messenger_ext)(instance, p_create_info, p_allocator, p_messenger)
-    }
-    pub unsafe fn destroy_debug_utils_messenger_ext(
-        &self,
-        instance: Instance,
-        messenger: DebugUtilsMessengerEXT,
-        p_allocator: *const AllocationCallbacks,
-    ) -> c_void {
-        (self.destroy_debug_utils_messenger_ext)(instance, messenger, p_allocator)
-    }
-    pub unsafe fn submit_debug_utils_message_ext(
-        &self,
-        instance: Instance,
-        message_severity: DebugUtilsMessageSeverityFlagsEXT,
-        message_types: DebugUtilsMessageTypeFlagsEXT,
-        p_callback_data: *const DebugUtilsMessengerCallbackDataEXT,
-    ) -> c_void {
-        (self.submit_debug_utils_message_ext)(
-            instance,
-            message_severity,
-            message_types,
-            p_callback_data,
-        )
-    }
-}
-pub struct AndroidExternalMemoryAndroidHardwareBufferFn {
-    get_android_hardware_buffer_properties_android:
-        extern "system" fn(
+    impl AndroidExternalMemoryAndroidHardwareBufferFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = AndroidExternalMemoryAndroidHardwareBufferFn {
+                get_android_hardware_buffer_properties_android: unsafe {
+                    let raw_name = stringify!(vkGetAndroidHardwareBufferPropertiesANDROID);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                get_memory_android_hardware_buffer_android: unsafe {
+                    let raw_name = stringify!(vkGetMemoryAndroidHardwareBufferANDROID);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+            };
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+        pub unsafe fn get_android_hardware_buffer_properties_android(
+            &self,
             device: Device,
             buffer: *const AHardwareBuffer,
             p_properties: *const AndroidHardwareBufferPropertiesANDROID,
-        ) -> Result,
-    get_memory_android_hardware_buffer_android:
-        extern "system" fn(
+        ) -> Result {
+            (self.get_android_hardware_buffer_properties_android)(device, buffer, p_properties)
+        }
+        pub unsafe fn get_memory_android_hardware_buffer_android(
+            &self,
             device: Device,
             p_info: *const MemoryGetAndroidHardwareBufferInfoANDROID,
             p_buffer: *mut *mut AHardwareBuffer,
-        ) -> Result,
-}
-unsafe impl Send for AndroidExternalMemoryAndroidHardwareBufferFn {}
-unsafe impl Sync for AndroidExternalMemoryAndroidHardwareBufferFn {}
-impl ::std::clone::Clone for AndroidExternalMemoryAndroidHardwareBufferFn {
-    fn clone(&self) -> Self {
-        AndroidExternalMemoryAndroidHardwareBufferFn {
-            get_android_hardware_buffer_properties_android: self
-                .get_android_hardware_buffer_properties_android,
-            get_memory_android_hardware_buffer_android: self
-                .get_memory_android_hardware_buffer_android,
+        ) -> Result {
+            (self.get_memory_android_hardware_buffer_android)(device, p_info, p_buffer)
         }
     }
-}
-impl AndroidExternalMemoryAndroidHardwareBufferFn {
-    pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        let mut _err_str = Vec::new();
-        let s = AndroidExternalMemoryAndroidHardwareBufferFn {
-            get_android_hardware_buffer_properties_android: unsafe {
-                let raw_name = stringify!(vkGetAndroidHardwareBufferPropertiesANDROID);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            get_memory_android_hardware_buffer_android: unsafe {
-                let raw_name = stringify!(vkGetMemoryAndroidHardwareBufferANDROID);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-        };
-        if _err_str.is_empty() {
-            Ok(s)
-        } else {
-            Err(_err_str)
+    #[doc = "Generated from \'VK_ANDROID_external_memory_android_hardware_buffer\'"]
+    impl ExternalMemoryHandleTypeFlags {
+        pub const ANDROID_HARDWARE_BUFFER_ANDROID: Self =
+            ExternalMemoryHandleTypeFlags(0b10000000000);
+    }
+    #[doc = "Generated from \'VK_ANDROID_external_memory_android_hardware_buffer\'"]
+    impl StructureType {
+        pub const ANDROID_HARDWARE_BUFFER_USAGE_ANDROID: Self = StructureType(1000129000);
+    }
+    #[doc = "Generated from \'VK_ANDROID_external_memory_android_hardware_buffer\'"]
+    impl StructureType {
+        pub const ANDROID_HARDWARE_BUFFER_PROPERTIES_ANDROID: Self = StructureType(1000129001);
+    }
+    #[doc = "Generated from \'VK_ANDROID_external_memory_android_hardware_buffer\'"]
+    impl StructureType {
+        pub const ANDROID_HARDWARE_BUFFER_FORMAT_PROPERTIES_ANDROID: Self =
+            StructureType(1000129002);
+    }
+    #[doc = "Generated from \'VK_ANDROID_external_memory_android_hardware_buffer\'"]
+    impl StructureType {
+        pub const IMPORT_ANDROID_HARDWARE_BUFFER_INFO_ANDROID: Self = StructureType(1000129003);
+    }
+    #[doc = "Generated from \'VK_ANDROID_external_memory_android_hardware_buffer\'"]
+    impl StructureType {
+        pub const MEMORY_GET_ANDROID_HARDWARE_BUFFER_INFO_ANDROID: Self = StructureType(1000129004);
+    }
+    #[doc = "Generated from \'VK_ANDROID_external_memory_android_hardware_buffer\'"]
+    impl StructureType {
+        pub const EXTERNAL_FORMAT_ANDROID: Self = StructureType(1000129005);
+    }
+    pub struct ExtSamplerFilterMinmaxFn {}
+    unsafe impl Send for ExtSamplerFilterMinmaxFn {}
+    unsafe impl Sync for ExtSamplerFilterMinmaxFn {}
+    impl ::std::clone::Clone for ExtSamplerFilterMinmaxFn {
+        fn clone(&self) -> Self {
+            ExtSamplerFilterMinmaxFn {}
         }
     }
-    pub unsafe fn get_android_hardware_buffer_properties_android(
-        &self,
-        device: Device,
-        buffer: *const AHardwareBuffer,
-        p_properties: *const AndroidHardwareBufferPropertiesANDROID,
-    ) -> Result {
-        (self.get_android_hardware_buffer_properties_android)(device, buffer, p_properties)
+    impl ExtSamplerFilterMinmaxFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = ExtSamplerFilterMinmaxFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
     }
-    pub unsafe fn get_memory_android_hardware_buffer_android(
-        &self,
-        device: Device,
-        p_info: *const MemoryGetAndroidHardwareBufferInfoANDROID,
-        p_buffer: *mut *mut AHardwareBuffer,
-    ) -> Result {
-        (self.get_memory_android_hardware_buffer_android)(device, p_info, p_buffer)
+    #[doc = "Generated from \'VK_EXT_sampler_filter_minmax\'"]
+    impl StructureType {
+        pub const PHYSICAL_DEVICE_SAMPLER_FILTER_MINMAX_PROPERTIES_EXT: Self =
+            StructureType(1000130000);
     }
-}
-pub struct ExtSampleLocationsFn {
-    cmd_set_sample_locations_ext:
-        extern "system" fn(
+    #[doc = "Generated from \'VK_EXT_sampler_filter_minmax\'"]
+    impl StructureType {
+        pub const SAMPLER_REDUCTION_MODE_CREATE_INFO_EXT: Self = StructureType(1000130001);
+    }
+    #[doc = "Generated from \'VK_EXT_sampler_filter_minmax\'"]
+    impl FormatFeatureFlags {
+        pub const SAMPLED_IMAGE_FILTER_MINMAX_EXT: Self = FormatFeatureFlags(0b10000000000000000);
+    }
+    pub struct KhrStorageBufferStorageClassFn {}
+    unsafe impl Send for KhrStorageBufferStorageClassFn {}
+    unsafe impl Sync for KhrStorageBufferStorageClassFn {}
+    impl ::std::clone::Clone for KhrStorageBufferStorageClassFn {
+        fn clone(&self) -> Self {
+            KhrStorageBufferStorageClassFn {}
+        }
+    }
+    impl KhrStorageBufferStorageClassFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrStorageBufferStorageClassFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct AmdGpuShaderInt16Fn {}
+    unsafe impl Send for AmdGpuShaderInt16Fn {}
+    unsafe impl Sync for AmdGpuShaderInt16Fn {}
+    impl ::std::clone::Clone for AmdGpuShaderInt16Fn {
+        fn clone(&self) -> Self {
+            AmdGpuShaderInt16Fn {}
+        }
+    }
+    impl AmdGpuShaderInt16Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = AmdGpuShaderInt16Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct AmdMixedAttachmentSamplesFn {}
+    unsafe impl Send for AmdMixedAttachmentSamplesFn {}
+    unsafe impl Sync for AmdMixedAttachmentSamplesFn {}
+    impl ::std::clone::Clone for AmdMixedAttachmentSamplesFn {
+        fn clone(&self) -> Self {
+            AmdMixedAttachmentSamplesFn {}
+        }
+    }
+    impl AmdMixedAttachmentSamplesFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = AmdMixedAttachmentSamplesFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct AmdShaderFragmentMaskFn {}
+    unsafe impl Send for AmdShaderFragmentMaskFn {}
+    unsafe impl Sync for AmdShaderFragmentMaskFn {}
+    impl ::std::clone::Clone for AmdShaderFragmentMaskFn {
+        fn clone(&self) -> Self {
+            AmdShaderFragmentMaskFn {}
+        }
+    }
+    impl AmdShaderFragmentMaskFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = AmdShaderFragmentMaskFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct ExtShaderStencilExportFn {}
+    unsafe impl Send for ExtShaderStencilExportFn {}
+    unsafe impl Sync for ExtShaderStencilExportFn {}
+    impl ::std::clone::Clone for ExtShaderStencilExportFn {
+        fn clone(&self) -> Self {
+            ExtShaderStencilExportFn {}
+        }
+    }
+    impl ExtShaderStencilExportFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = ExtShaderStencilExportFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct ExtSampleLocationsFn {
+        cmd_set_sample_locations_ext:
+            extern "system" fn(
+                command_buffer: CommandBuffer,
+                p_sample_locations_info: *const SampleLocationsInfoEXT,
+            ) -> c_void,
+        get_physical_device_multisample_properties_ext:
+            extern "system" fn(
+                physical_device: PhysicalDevice,
+                samples: SampleCountFlags,
+                p_multisample_properties: *const MultisamplePropertiesEXT,
+            ) -> c_void,
+    }
+    unsafe impl Send for ExtSampleLocationsFn {}
+    unsafe impl Sync for ExtSampleLocationsFn {}
+    impl ::std::clone::Clone for ExtSampleLocationsFn {
+        fn clone(&self) -> Self {
+            ExtSampleLocationsFn {
+                cmd_set_sample_locations_ext: self.cmd_set_sample_locations_ext,
+                get_physical_device_multisample_properties_ext: self
+                    .get_physical_device_multisample_properties_ext,
+            }
+        }
+    }
+    impl ExtSampleLocationsFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = ExtSampleLocationsFn {
+                cmd_set_sample_locations_ext: unsafe {
+                    let raw_name = stringify!(vkCmdSetSampleLocationsEXT);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                get_physical_device_multisample_properties_ext: unsafe {
+                    let raw_name = stringify!(vkGetPhysicalDeviceMultisamplePropertiesEXT);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+            };
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+        pub unsafe fn cmd_set_sample_locations_ext(
+            &self,
             command_buffer: CommandBuffer,
             p_sample_locations_info: *const SampleLocationsInfoEXT,
-        ) -> c_void,
-    get_physical_device_multisample_properties_ext:
-        extern "system" fn(
+        ) -> c_void {
+            (self.cmd_set_sample_locations_ext)(command_buffer, p_sample_locations_info)
+        }
+        pub unsafe fn get_physical_device_multisample_properties_ext(
+            &self,
             physical_device: PhysicalDevice,
             samples: SampleCountFlags,
             p_multisample_properties: *const MultisamplePropertiesEXT,
+        ) -> c_void {
+            (self.get_physical_device_multisample_properties_ext)(
+                physical_device,
+                samples,
+                p_multisample_properties,
+            )
+        }
+    }
+    #[doc = "Generated from \'VK_EXT_sample_locations\'"]
+    impl ImageCreateFlags {
+        pub const SAMPLE_LOCATIONS_COMPATIBLE_DEPTH_EXT: Self = ImageCreateFlags(0b1000000000000);
+    }
+    #[doc = "Generated from \'VK_EXT_sample_locations\'"]
+    impl StructureType {
+        pub const SAMPLE_LOCATIONS_INFO_EXT: Self = StructureType(1000143000);
+    }
+    #[doc = "Generated from \'VK_EXT_sample_locations\'"]
+    impl StructureType {
+        pub const RENDER_PASS_SAMPLE_LOCATIONS_BEGIN_INFO_EXT: Self = StructureType(1000143001);
+    }
+    #[doc = "Generated from \'VK_EXT_sample_locations\'"]
+    impl StructureType {
+        pub const PIPELINE_SAMPLE_LOCATIONS_STATE_CREATE_INFO_EXT: Self = StructureType(1000143002);
+    }
+    #[doc = "Generated from \'VK_EXT_sample_locations\'"]
+    impl StructureType {
+        pub const PHYSICAL_DEVICE_SAMPLE_LOCATIONS_PROPERTIES_EXT: Self = StructureType(1000143003);
+    }
+    #[doc = "Generated from \'VK_EXT_sample_locations\'"]
+    impl StructureType {
+        pub const MULTISAMPLE_PROPERTIES_EXT: Self = StructureType(1000143004);
+    }
+    #[doc = "Generated from \'VK_EXT_sample_locations\'"]
+    impl DynamicState {
+        pub const SAMPLE_LOCATIONS_EXT: Self = DynamicState(1000143000);
+    }
+    pub struct KhrRelaxedBlockLayoutFn {}
+    unsafe impl Send for KhrRelaxedBlockLayoutFn {}
+    unsafe impl Sync for KhrRelaxedBlockLayoutFn {}
+    impl ::std::clone::Clone for KhrRelaxedBlockLayoutFn {
+        fn clone(&self) -> Self {
+            KhrRelaxedBlockLayoutFn {}
+        }
+    }
+    impl KhrRelaxedBlockLayoutFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrRelaxedBlockLayoutFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct KhrGetMemoryRequirements2Fn {}
+    unsafe impl Send for KhrGetMemoryRequirements2Fn {}
+    unsafe impl Sync for KhrGetMemoryRequirements2Fn {}
+    impl ::std::clone::Clone for KhrGetMemoryRequirements2Fn {
+        fn clone(&self) -> Self {
+            KhrGetMemoryRequirements2Fn {}
+        }
+    }
+    impl KhrGetMemoryRequirements2Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrGetMemoryRequirements2Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct KhrImageFormatListFn {}
+    unsafe impl Send for KhrImageFormatListFn {}
+    unsafe impl Sync for KhrImageFormatListFn {}
+    impl ::std::clone::Clone for KhrImageFormatListFn {
+        fn clone(&self) -> Self {
+            KhrImageFormatListFn {}
+        }
+    }
+    impl KhrImageFormatListFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrImageFormatListFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    #[doc = "Generated from \'VK_KHR_image_format_list\'"]
+    impl StructureType {
+        pub const IMAGE_FORMAT_LIST_CREATE_INFO_KHR: Self = StructureType(1000147000);
+    }
+    pub struct ExtBlendOperationAdvancedFn {}
+    unsafe impl Send for ExtBlendOperationAdvancedFn {}
+    unsafe impl Sync for ExtBlendOperationAdvancedFn {}
+    impl ::std::clone::Clone for ExtBlendOperationAdvancedFn {
+        fn clone(&self) -> Self {
+            ExtBlendOperationAdvancedFn {}
+        }
+    }
+    impl ExtBlendOperationAdvancedFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = ExtBlendOperationAdvancedFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+    impl StructureType {
+        pub const PHYSICAL_DEVICE_BLEND_OPERATION_ADVANCED_FEATURES_EXT: Self =
+            StructureType(1000148000);
+    }
+    #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+    impl StructureType {
+        pub const PHYSICAL_DEVICE_BLEND_OPERATION_ADVANCED_PROPERTIES_EXT: Self =
+            StructureType(1000148001);
+    }
+    #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+    impl StructureType {
+        pub const PIPELINE_COLOR_BLEND_ADVANCED_STATE_CREATE_INFO_EXT: Self =
+            StructureType(1000148002);
+    }
+    #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+    impl BlendOp {
+        pub const ZERO_EXT: Self = BlendOp(1000148000);
+    }
+    #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+    impl BlendOp {
+        pub const SRC_EXT: Self = BlendOp(1000148001);
+    }
+    #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+    impl BlendOp {
+        pub const DST_EXT: Self = BlendOp(1000148002);
+    }
+    #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+    impl BlendOp {
+        pub const SRC_OVER_EXT: Self = BlendOp(1000148003);
+    }
+    #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+    impl BlendOp {
+        pub const DST_OVER_EXT: Self = BlendOp(1000148004);
+    }
+    #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+    impl BlendOp {
+        pub const SRC_IN_EXT: Self = BlendOp(1000148005);
+    }
+    #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+    impl BlendOp {
+        pub const DST_IN_EXT: Self = BlendOp(1000148006);
+    }
+    #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+    impl BlendOp {
+        pub const SRC_OUT_EXT: Self = BlendOp(1000148007);
+    }
+    #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+    impl BlendOp {
+        pub const DST_OUT_EXT: Self = BlendOp(1000148008);
+    }
+    #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+    impl BlendOp {
+        pub const SRC_ATOP_EXT: Self = BlendOp(1000148009);
+    }
+    #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+    impl BlendOp {
+        pub const DST_ATOP_EXT: Self = BlendOp(1000148010);
+    }
+    #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+    impl BlendOp {
+        pub const XOR_EXT: Self = BlendOp(1000148011);
+    }
+    #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+    impl BlendOp {
+        pub const MULTIPLY_EXT: Self = BlendOp(1000148012);
+    }
+    #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+    impl BlendOp {
+        pub const SCREEN_EXT: Self = BlendOp(1000148013);
+    }
+    #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+    impl BlendOp {
+        pub const OVERLAY_EXT: Self = BlendOp(1000148014);
+    }
+    #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+    impl BlendOp {
+        pub const DARKEN_EXT: Self = BlendOp(1000148015);
+    }
+    #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+    impl BlendOp {
+        pub const LIGHTEN_EXT: Self = BlendOp(1000148016);
+    }
+    #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+    impl BlendOp {
+        pub const COLORDODGE_EXT: Self = BlendOp(1000148017);
+    }
+    #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+    impl BlendOp {
+        pub const COLORBURN_EXT: Self = BlendOp(1000148018);
+    }
+    #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+    impl BlendOp {
+        pub const HARDLIGHT_EXT: Self = BlendOp(1000148019);
+    }
+    #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+    impl BlendOp {
+        pub const SOFTLIGHT_EXT: Self = BlendOp(1000148020);
+    }
+    #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+    impl BlendOp {
+        pub const DIFFERENCE_EXT: Self = BlendOp(1000148021);
+    }
+    #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+    impl BlendOp {
+        pub const EXCLUSION_EXT: Self = BlendOp(1000148022);
+    }
+    #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+    impl BlendOp {
+        pub const INVERT_EXT: Self = BlendOp(1000148023);
+    }
+    #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+    impl BlendOp {
+        pub const INVERT_RGB_EXT: Self = BlendOp(1000148024);
+    }
+    #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+    impl BlendOp {
+        pub const LINEARDODGE_EXT: Self = BlendOp(1000148025);
+    }
+    #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+    impl BlendOp {
+        pub const LINEARBURN_EXT: Self = BlendOp(1000148026);
+    }
+    #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+    impl BlendOp {
+        pub const VIVIDLIGHT_EXT: Self = BlendOp(1000148027);
+    }
+    #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+    impl BlendOp {
+        pub const LINEARLIGHT_EXT: Self = BlendOp(1000148028);
+    }
+    #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+    impl BlendOp {
+        pub const PINLIGHT_EXT: Self = BlendOp(1000148029);
+    }
+    #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+    impl BlendOp {
+        pub const HARDMIX_EXT: Self = BlendOp(1000148030);
+    }
+    #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+    impl BlendOp {
+        pub const HSL_HUE_EXT: Self = BlendOp(1000148031);
+    }
+    #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+    impl BlendOp {
+        pub const HSL_SATURATION_EXT: Self = BlendOp(1000148032);
+    }
+    #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+    impl BlendOp {
+        pub const HSL_COLOR_EXT: Self = BlendOp(1000148033);
+    }
+    #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+    impl BlendOp {
+        pub const HSL_LUMINOSITY_EXT: Self = BlendOp(1000148034);
+    }
+    #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+    impl BlendOp {
+        pub const PLUS_EXT: Self = BlendOp(1000148035);
+    }
+    #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+    impl BlendOp {
+        pub const PLUS_CLAMPED_EXT: Self = BlendOp(1000148036);
+    }
+    #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+    impl BlendOp {
+        pub const PLUS_CLAMPED_ALPHA_EXT: Self = BlendOp(1000148037);
+    }
+    #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+    impl BlendOp {
+        pub const PLUS_DARKER_EXT: Self = BlendOp(1000148038);
+    }
+    #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+    impl BlendOp {
+        pub const MINUS_EXT: Self = BlendOp(1000148039);
+    }
+    #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+    impl BlendOp {
+        pub const MINUS_CLAMPED_EXT: Self = BlendOp(1000148040);
+    }
+    #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+    impl BlendOp {
+        pub const CONTRAST_EXT: Self = BlendOp(1000148041);
+    }
+    #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+    impl BlendOp {
+        pub const INVERT_OVG_EXT: Self = BlendOp(1000148042);
+    }
+    #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+    impl BlendOp {
+        pub const RED_EXT: Self = BlendOp(1000148043);
+    }
+    #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+    impl BlendOp {
+        pub const GREEN_EXT: Self = BlendOp(1000148044);
+    }
+    #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+    impl BlendOp {
+        pub const BLUE_EXT: Self = BlendOp(1000148045);
+    }
+    #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+    impl AccessFlags {
+        pub const COLOR_ATTACHMENT_READ_NONCOHERENT_EXT: Self = AccessFlags(0b10000000000000000000);
+    }
+    pub struct NvFragmentCoverageToColorFn {}
+    unsafe impl Send for NvFragmentCoverageToColorFn {}
+    unsafe impl Sync for NvFragmentCoverageToColorFn {}
+    impl ::std::clone::Clone for NvFragmentCoverageToColorFn {
+        fn clone(&self) -> Self {
+            NvFragmentCoverageToColorFn {}
+        }
+    }
+    impl NvFragmentCoverageToColorFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = NvFragmentCoverageToColorFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    #[doc = "Generated from \'VK_NV_fragment_coverage_to_color\'"]
+    impl StructureType {
+        pub const PIPELINE_COVERAGE_TO_COLOR_STATE_CREATE_INFO_NV: Self = StructureType(1000149000);
+    }
+    pub struct NvFramebufferMixedSamplesFn {}
+    unsafe impl Send for NvFramebufferMixedSamplesFn {}
+    unsafe impl Sync for NvFramebufferMixedSamplesFn {}
+    impl ::std::clone::Clone for NvFramebufferMixedSamplesFn {
+        fn clone(&self) -> Self {
+            NvFramebufferMixedSamplesFn {}
+        }
+    }
+    impl NvFramebufferMixedSamplesFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = NvFramebufferMixedSamplesFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    #[doc = "Generated from \'VK_NV_framebuffer_mixed_samples\'"]
+    impl StructureType {
+        pub const PIPELINE_COVERAGE_MODULATION_STATE_CREATE_INFO_NV: Self =
+            StructureType(1000152000);
+    }
+    pub struct NvFillRectangleFn {}
+    unsafe impl Send for NvFillRectangleFn {}
+    unsafe impl Sync for NvFillRectangleFn {}
+    impl ::std::clone::Clone for NvFillRectangleFn {
+        fn clone(&self) -> Self {
+            NvFillRectangleFn {}
+        }
+    }
+    impl NvFillRectangleFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = NvFillRectangleFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    #[doc = "Generated from \'VK_NV_fill_rectangle\'"]
+    impl PolygonMode {
+        pub const FILL_RECTANGLE_NV: Self = PolygonMode(1000153000);
+    }
+    pub struct ExtPostDepthCoverageFn {}
+    unsafe impl Send for ExtPostDepthCoverageFn {}
+    unsafe impl Sync for ExtPostDepthCoverageFn {}
+    impl ::std::clone::Clone for ExtPostDepthCoverageFn {
+        fn clone(&self) -> Self {
+            ExtPostDepthCoverageFn {}
+        }
+    }
+    impl ExtPostDepthCoverageFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = ExtPostDepthCoverageFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct KhrSamplerYcbcrConversionFn {}
+    unsafe impl Send for KhrSamplerYcbcrConversionFn {}
+    unsafe impl Sync for KhrSamplerYcbcrConversionFn {}
+    impl ::std::clone::Clone for KhrSamplerYcbcrConversionFn {
+        fn clone(&self) -> Self {
+            KhrSamplerYcbcrConversionFn {}
+        }
+    }
+    impl KhrSamplerYcbcrConversionFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrSamplerYcbcrConversionFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct KhrBindMemory2Fn {}
+    unsafe impl Send for KhrBindMemory2Fn {}
+    unsafe impl Sync for KhrBindMemory2Fn {}
+    impl ::std::clone::Clone for KhrBindMemory2Fn {
+        fn clone(&self) -> Self {
+            KhrBindMemory2Fn {}
+        }
+    }
+    impl KhrBindMemory2Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrBindMemory2Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct ExtValidationCacheFn {
+        create_validation_cache_ext:
+            extern "system" fn(
+                device: Device,
+                p_create_info: *const ValidationCacheCreateInfoEXT,
+                p_allocator: *const AllocationCallbacks,
+                p_validation_cache: *const ValidationCacheEXT,
+            ) -> Result,
+        destroy_validation_cache_ext: extern "system" fn(
+            device: Device,
+            validation_cache: ValidationCacheEXT,
+            p_allocator: *const AllocationCallbacks,
         ) -> c_void,
-}
-unsafe impl Send for ExtSampleLocationsFn {}
-unsafe impl Sync for ExtSampleLocationsFn {}
-impl ::std::clone::Clone for ExtSampleLocationsFn {
-    fn clone(&self) -> Self {
-        ExtSampleLocationsFn {
-            cmd_set_sample_locations_ext: self.cmd_set_sample_locations_ext,
-            get_physical_device_multisample_properties_ext: self
-                .get_physical_device_multisample_properties_ext,
+        merge_validation_caches_ext: extern "system" fn(
+            device: Device,
+            dst_cache: ValidationCacheEXT,
+            src_cache_count: uint32_t,
+            p_src_caches: *const ValidationCacheEXT,
+        ) -> Result,
+        get_validation_cache_data_ext: extern "system" fn(
+            device: Device,
+            validation_cache: ValidationCacheEXT,
+            p_data_size: *const size_t,
+            p_data: *const c_void,
+        ) -> Result,
+    }
+    unsafe impl Send for ExtValidationCacheFn {}
+    unsafe impl Sync for ExtValidationCacheFn {}
+    impl ::std::clone::Clone for ExtValidationCacheFn {
+        fn clone(&self) -> Self {
+            ExtValidationCacheFn {
+                create_validation_cache_ext: self.create_validation_cache_ext,
+                destroy_validation_cache_ext: self.destroy_validation_cache_ext,
+                merge_validation_caches_ext: self.merge_validation_caches_ext,
+                get_validation_cache_data_ext: self.get_validation_cache_data_ext,
+            }
         }
     }
-}
-impl ExtSampleLocationsFn {
-    pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        let mut _err_str = Vec::new();
-        let s = ExtSampleLocationsFn {
-            cmd_set_sample_locations_ext: unsafe {
-                let raw_name = stringify!(vkCmdSetSampleLocationsEXT);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            get_physical_device_multisample_properties_ext: unsafe {
-                let raw_name = stringify!(vkGetPhysicalDeviceMultisamplePropertiesEXT);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-        };
-        if _err_str.is_empty() {
-            Ok(s)
-        } else {
-            Err(_err_str)
+    impl ExtValidationCacheFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = ExtValidationCacheFn {
+                create_validation_cache_ext: unsafe {
+                    let raw_name = stringify!(vkCreateValidationCacheEXT);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                destroy_validation_cache_ext: unsafe {
+                    let raw_name = stringify!(vkDestroyValidationCacheEXT);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                merge_validation_caches_ext: unsafe {
+                    let raw_name = stringify!(vkMergeValidationCachesEXT);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                get_validation_cache_data_ext: unsafe {
+                    let raw_name = stringify!(vkGetValidationCacheDataEXT);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+            };
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
         }
-    }
-    pub unsafe fn cmd_set_sample_locations_ext(
-        &self,
-        command_buffer: CommandBuffer,
-        p_sample_locations_info: *const SampleLocationsInfoEXT,
-    ) -> c_void {
-        (self.cmd_set_sample_locations_ext)(command_buffer, p_sample_locations_info)
-    }
-    pub unsafe fn get_physical_device_multisample_properties_ext(
-        &self,
-        physical_device: PhysicalDevice,
-        samples: SampleCountFlags,
-        p_multisample_properties: *const MultisamplePropertiesEXT,
-    ) -> c_void {
-        (self.get_physical_device_multisample_properties_ext)(
-            physical_device,
-            samples,
-            p_multisample_properties,
-        )
-    }
-}
-pub struct ExtValidationCacheFn {
-    create_validation_cache_ext:
-        extern "system" fn(
+        pub unsafe fn create_validation_cache_ext(
+            &self,
             device: Device,
             p_create_info: *const ValidationCacheCreateInfoEXT,
             p_allocator: *const AllocationCallbacks,
             p_validation_cache: *const ValidationCacheEXT,
-        ) -> Result,
-    destroy_validation_cache_ext: extern "system" fn(
-        device: Device,
-        validation_cache: ValidationCacheEXT,
-        p_allocator: *const AllocationCallbacks,
-    ) -> c_void,
-    merge_validation_caches_ext: extern "system" fn(
-        device: Device,
-        dst_cache: ValidationCacheEXT,
-        src_cache_count: uint32_t,
-        p_src_caches: *const ValidationCacheEXT,
-    ) -> Result,
-    get_validation_cache_data_ext: extern "system" fn(
-        device: Device,
-        validation_cache: ValidationCacheEXT,
-        p_data_size: *const size_t,
-        p_data: *const c_void,
-    ) -> Result,
-}
-unsafe impl Send for ExtValidationCacheFn {}
-unsafe impl Sync for ExtValidationCacheFn {}
-impl ::std::clone::Clone for ExtValidationCacheFn {
-    fn clone(&self) -> Self {
-        ExtValidationCacheFn {
-            create_validation_cache_ext: self.create_validation_cache_ext,
-            destroy_validation_cache_ext: self.destroy_validation_cache_ext,
-            merge_validation_caches_ext: self.merge_validation_caches_ext,
-            get_validation_cache_data_ext: self.get_validation_cache_data_ext,
+        ) -> Result {
+            (self.create_validation_cache_ext)(
+                device,
+                p_create_info,
+                p_allocator,
+                p_validation_cache,
+            )
+        }
+        pub unsafe fn destroy_validation_cache_ext(
+            &self,
+            device: Device,
+            validation_cache: ValidationCacheEXT,
+            p_allocator: *const AllocationCallbacks,
+        ) -> c_void {
+            (self.destroy_validation_cache_ext)(device, validation_cache, p_allocator)
+        }
+        pub unsafe fn merge_validation_caches_ext(
+            &self,
+            device: Device,
+            dst_cache: ValidationCacheEXT,
+            src_cache_count: uint32_t,
+            p_src_caches: *const ValidationCacheEXT,
+        ) -> Result {
+            (self.merge_validation_caches_ext)(device, dst_cache, src_cache_count, p_src_caches)
+        }
+        pub unsafe fn get_validation_cache_data_ext(
+            &self,
+            device: Device,
+            validation_cache: ValidationCacheEXT,
+            p_data_size: *const size_t,
+            p_data: *const c_void,
+        ) -> Result {
+            (self.get_validation_cache_data_ext)(device, validation_cache, p_data_size, p_data)
         }
     }
-}
-impl ExtValidationCacheFn {
-    pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        let mut _err_str = Vec::new();
-        let s = ExtValidationCacheFn {
-            create_validation_cache_ext: unsafe {
-                let raw_name = stringify!(vkCreateValidationCacheEXT);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            destroy_validation_cache_ext: unsafe {
-                let raw_name = stringify!(vkDestroyValidationCacheEXT);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            merge_validation_caches_ext: unsafe {
-                let raw_name = stringify!(vkMergeValidationCachesEXT);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            get_validation_cache_data_ext: unsafe {
-                let raw_name = stringify!(vkGetValidationCacheDataEXT);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-        };
-        if _err_str.is_empty() {
-            Ok(s)
-        } else {
-            Err(_err_str)
+    #[doc = "Generated from \'VK_EXT_validation_cache\'"]
+    impl StructureType {
+        pub const VALIDATION_CACHE_CREATE_INFO_EXT: Self = StructureType(1000160000);
+    }
+    #[doc = "Generated from \'VK_EXT_validation_cache\'"]
+    impl StructureType {
+        pub const SHADER_MODULE_VALIDATION_CACHE_CREATE_INFO_EXT: Self = StructureType(1000160001);
+    }
+    #[doc = "Generated from \'VK_EXT_validation_cache\'"]
+    impl ObjectType {
+        pub const VALIDATION_CACHE_EXT: Self = ObjectType(1000160000);
+    }
+    pub struct ExtDescriptorIndexingFn {}
+    unsafe impl Send for ExtDescriptorIndexingFn {}
+    unsafe impl Sync for ExtDescriptorIndexingFn {}
+    impl ::std::clone::Clone for ExtDescriptorIndexingFn {
+        fn clone(&self) -> Self {
+            ExtDescriptorIndexingFn {}
         }
     }
-    pub unsafe fn create_validation_cache_ext(
-        &self,
-        device: Device,
-        p_create_info: *const ValidationCacheCreateInfoEXT,
-        p_allocator: *const AllocationCallbacks,
-        p_validation_cache: *const ValidationCacheEXT,
-    ) -> Result {
-        (self.create_validation_cache_ext)(device, p_create_info, p_allocator, p_validation_cache)
-    }
-    pub unsafe fn destroy_validation_cache_ext(
-        &self,
-        device: Device,
-        validation_cache: ValidationCacheEXT,
-        p_allocator: *const AllocationCallbacks,
-    ) -> c_void {
-        (self.destroy_validation_cache_ext)(device, validation_cache, p_allocator)
-    }
-    pub unsafe fn merge_validation_caches_ext(
-        &self,
-        device: Device,
-        dst_cache: ValidationCacheEXT,
-        src_cache_count: uint32_t,
-        p_src_caches: *const ValidationCacheEXT,
-    ) -> Result {
-        (self.merge_validation_caches_ext)(device, dst_cache, src_cache_count, p_src_caches)
-    }
-    pub unsafe fn get_validation_cache_data_ext(
-        &self,
-        device: Device,
-        validation_cache: ValidationCacheEXT,
-        p_data_size: *const size_t,
-        p_data: *const c_void,
-    ) -> Result {
-        (self.get_validation_cache_data_ext)(device, validation_cache, p_data_size, p_data)
-    }
-}
-pub struct KhrDrawIndirectCountFn {
-    cmd_draw_indirect_count_khr: extern "system" fn(
-        command_buffer: CommandBuffer,
-        buffer: Buffer,
-        offset: DeviceSize,
-        count_buffer: Buffer,
-        count_buffer_offset: DeviceSize,
-        max_draw_count: uint32_t,
-        stride: uint32_t,
-    ) -> c_void,
-    cmd_draw_indexed_indirect_count_khr: extern "system" fn(
-        command_buffer: CommandBuffer,
-        buffer: Buffer,
-        offset: DeviceSize,
-        count_buffer: Buffer,
-        count_buffer_offset: DeviceSize,
-        max_draw_count: uint32_t,
-        stride: uint32_t,
-    ) -> c_void,
-}
-unsafe impl Send for KhrDrawIndirectCountFn {}
-unsafe impl Sync for KhrDrawIndirectCountFn {}
-impl ::std::clone::Clone for KhrDrawIndirectCountFn {
-    fn clone(&self) -> Self {
-        KhrDrawIndirectCountFn {
-            cmd_draw_indirect_count_khr: self.cmd_draw_indirect_count_khr,
-            cmd_draw_indexed_indirect_count_khr: self.cmd_draw_indexed_indirect_count_khr,
+    impl ExtDescriptorIndexingFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = ExtDescriptorIndexingFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
         }
     }
-}
-impl KhrDrawIndirectCountFn {
-    pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        let mut _err_str = Vec::new();
-        let s = KhrDrawIndirectCountFn {
-            cmd_draw_indirect_count_khr: unsafe {
-                let raw_name = stringify!(vkCmdDrawIndirectCountKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-            cmd_draw_indexed_indirect_count_khr: unsafe {
-                let raw_name = stringify!(vkCmdDrawIndexedIndirectCountKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-        };
-        if _err_str.is_empty() {
-            Ok(s)
-        } else {
-            Err(_err_str)
+    #[doc = "Generated from \'VK_EXT_descriptor_indexing\'"]
+    impl StructureType {
+        pub const DESCRIPTOR_SET_LAYOUT_BINDING_FLAGS_CREATE_INFO_EXT: Self =
+            StructureType(1000161000);
+    }
+    #[doc = "Generated from \'VK_EXT_descriptor_indexing\'"]
+    impl StructureType {
+        pub const PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_FEATURES_EXT: Self =
+            StructureType(1000161001);
+    }
+    #[doc = "Generated from \'VK_EXT_descriptor_indexing\'"]
+    impl StructureType {
+        pub const PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_PROPERTIES_EXT: Self =
+            StructureType(1000161002);
+    }
+    #[doc = "Generated from \'VK_EXT_descriptor_indexing\'"]
+    impl StructureType {
+        pub const DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_ALLOCATE_INFO_EXT: Self =
+            StructureType(1000161003);
+    }
+    #[doc = "Generated from \'VK_EXT_descriptor_indexing\'"]
+    impl StructureType {
+        pub const DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_LAYOUT_SUPPORT_EXT: Self =
+            StructureType(1000161004);
+    }
+    #[doc = "Generated from \'VK_EXT_descriptor_indexing\'"]
+    impl DescriptorPoolCreateFlags {
+        pub const UPDATE_AFTER_BIND_EXT: Self = DescriptorPoolCreateFlags(0b10);
+    }
+    #[doc = "Generated from \'VK_EXT_descriptor_indexing\'"]
+    impl DescriptorSetLayoutCreateFlags {
+        pub const UPDATE_AFTER_BIND_POOL_EXT: Self = DescriptorSetLayoutCreateFlags(0b10);
+    }
+    #[doc = "Generated from \'VK_EXT_descriptor_indexing\'"]
+    impl Result {
+        pub const ERROR_FRAGMENTATION_EXT: Self = Result(1000161000);
+    }
+    pub struct ExtShaderViewportIndexLayerFn {}
+    unsafe impl Send for ExtShaderViewportIndexLayerFn {}
+    unsafe impl Sync for ExtShaderViewportIndexLayerFn {}
+    impl ::std::clone::Clone for ExtShaderViewportIndexLayerFn {
+        fn clone(&self) -> Self {
+            ExtShaderViewportIndexLayerFn {}
         }
     }
-    pub unsafe fn cmd_draw_indirect_count_khr(
-        &self,
-        command_buffer: CommandBuffer,
-        buffer: Buffer,
-        offset: DeviceSize,
-        count_buffer: Buffer,
-        count_buffer_offset: DeviceSize,
-        max_draw_count: uint32_t,
-        stride: uint32_t,
-    ) -> c_void {
-        (self.cmd_draw_indirect_count_khr)(
-            command_buffer,
-            buffer,
-            offset,
-            count_buffer,
-            count_buffer_offset,
-            max_draw_count,
-            stride,
-        )
+    impl ExtShaderViewportIndexLayerFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = ExtShaderViewportIndexLayerFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
     }
-    pub unsafe fn cmd_draw_indexed_indirect_count_khr(
-        &self,
-        command_buffer: CommandBuffer,
-        buffer: Buffer,
-        offset: DeviceSize,
-        count_buffer: Buffer,
-        count_buffer_offset: DeviceSize,
-        max_draw_count: uint32_t,
-        stride: uint32_t,
-    ) -> c_void {
-        (self.cmd_draw_indexed_indirect_count_khr)(
-            command_buffer,
-            buffer,
-            offset,
-            count_buffer,
-            count_buffer_offset,
-            max_draw_count,
-            stride,
-        )
+    pub struct KhrMaintenance3Fn {}
+    unsafe impl Send for KhrMaintenance3Fn {}
+    unsafe impl Sync for KhrMaintenance3Fn {}
+    impl ::std::clone::Clone for KhrMaintenance3Fn {
+        fn clone(&self) -> Self {
+            KhrMaintenance3Fn {}
+        }
     }
-}
-pub struct ExtExternalMemoryHostFn {
-    get_memory_host_pointer_properties_ext:
-        extern "system" fn(
+    impl KhrMaintenance3Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrMaintenance3Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct KhrDrawIndirectCountFn {
+        cmd_draw_indirect_count_khr: extern "system" fn(
+            command_buffer: CommandBuffer,
+            buffer: Buffer,
+            offset: DeviceSize,
+            count_buffer: Buffer,
+            count_buffer_offset: DeviceSize,
+            max_draw_count: uint32_t,
+            stride: uint32_t,
+        ) -> c_void,
+        cmd_draw_indexed_indirect_count_khr: extern "system" fn(
+            command_buffer: CommandBuffer,
+            buffer: Buffer,
+            offset: DeviceSize,
+            count_buffer: Buffer,
+            count_buffer_offset: DeviceSize,
+            max_draw_count: uint32_t,
+            stride: uint32_t,
+        ) -> c_void,
+    }
+    unsafe impl Send for KhrDrawIndirectCountFn {}
+    unsafe impl Sync for KhrDrawIndirectCountFn {}
+    impl ::std::clone::Clone for KhrDrawIndirectCountFn {
+        fn clone(&self) -> Self {
+            KhrDrawIndirectCountFn {
+                cmd_draw_indirect_count_khr: self.cmd_draw_indirect_count_khr,
+                cmd_draw_indexed_indirect_count_khr: self.cmd_draw_indexed_indirect_count_khr,
+            }
+        }
+    }
+    impl KhrDrawIndirectCountFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrDrawIndirectCountFn {
+                cmd_draw_indirect_count_khr: unsafe {
+                    let raw_name = stringify!(vkCmdDrawIndirectCountKHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                cmd_draw_indexed_indirect_count_khr: unsafe {
+                    let raw_name = stringify!(vkCmdDrawIndexedIndirectCountKHR);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+            };
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+        pub unsafe fn cmd_draw_indirect_count_khr(
+            &self,
+            command_buffer: CommandBuffer,
+            buffer: Buffer,
+            offset: DeviceSize,
+            count_buffer: Buffer,
+            count_buffer_offset: DeviceSize,
+            max_draw_count: uint32_t,
+            stride: uint32_t,
+        ) -> c_void {
+            (self.cmd_draw_indirect_count_khr)(
+                command_buffer,
+                buffer,
+                offset,
+                count_buffer,
+                count_buffer_offset,
+                max_draw_count,
+                stride,
+            )
+        }
+        pub unsafe fn cmd_draw_indexed_indirect_count_khr(
+            &self,
+            command_buffer: CommandBuffer,
+            buffer: Buffer,
+            offset: DeviceSize,
+            count_buffer: Buffer,
+            count_buffer_offset: DeviceSize,
+            max_draw_count: uint32_t,
+            stride: uint32_t,
+        ) -> c_void {
+            (self.cmd_draw_indexed_indirect_count_khr)(
+                command_buffer,
+                buffer,
+                offset,
+                count_buffer,
+                count_buffer_offset,
+                max_draw_count,
+                stride,
+            )
+        }
+    }
+    pub struct ExtGlobalPriorityFn {}
+    unsafe impl Send for ExtGlobalPriorityFn {}
+    unsafe impl Sync for ExtGlobalPriorityFn {}
+    impl ::std::clone::Clone for ExtGlobalPriorityFn {
+        fn clone(&self) -> Self {
+            ExtGlobalPriorityFn {}
+        }
+    }
+    impl ExtGlobalPriorityFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = ExtGlobalPriorityFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    #[doc = "Generated from \'VK_EXT_global_priority\'"]
+    impl StructureType {
+        pub const DEVICE_QUEUE_GLOBAL_PRIORITY_CREATE_INFO_EXT: Self = StructureType(1000174000);
+    }
+    #[doc = "Generated from \'VK_EXT_global_priority\'"]
+    impl Result {
+        pub const ERROR_NOT_PERMITTED_EXT: Self = Result(1000174001);
+    }
+    pub struct ExtExternalMemoryHostFn { get_memory_host_pointer_properties_ext : extern "system" fn ( device : Device , handle_type : ExternalMemoryHandleTypeFlags , p_host_pointer : *const c_void , p_memory_host_pointer_properties : *const MemoryHostPointerPropertiesEXT , ) -> Result , }
+    unsafe impl Send for ExtExternalMemoryHostFn {}
+    unsafe impl Sync for ExtExternalMemoryHostFn {}
+    impl ::std::clone::Clone for ExtExternalMemoryHostFn {
+        fn clone(&self) -> Self {
+            ExtExternalMemoryHostFn {
+                get_memory_host_pointer_properties_ext: self.get_memory_host_pointer_properties_ext,
+            }
+        }
+    }
+    impl ExtExternalMemoryHostFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = ExtExternalMemoryHostFn {
+                get_memory_host_pointer_properties_ext: unsafe {
+                    let raw_name = stringify!(vkGetMemoryHostPointerPropertiesEXT);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+            };
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+        pub unsafe fn get_memory_host_pointer_properties_ext(
+            &self,
             device: Device,
             handle_type: ExternalMemoryHandleTypeFlags,
             p_host_pointer: *const c_void,
             p_memory_host_pointer_properties: *const MemoryHostPointerPropertiesEXT,
-        ) -> Result,
-}
-unsafe impl Send for ExtExternalMemoryHostFn {}
-unsafe impl Sync for ExtExternalMemoryHostFn {}
-impl ::std::clone::Clone for ExtExternalMemoryHostFn {
-    fn clone(&self) -> Self {
-        ExtExternalMemoryHostFn {
-            get_memory_host_pointer_properties_ext: self.get_memory_host_pointer_properties_ext,
+        ) -> Result {
+            (self.get_memory_host_pointer_properties_ext)(
+                device,
+                handle_type,
+                p_host_pointer,
+                p_memory_host_pointer_properties,
+            )
         }
     }
-}
-impl ExtExternalMemoryHostFn {
-    pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        let mut _err_str = Vec::new();
-        let s = ExtExternalMemoryHostFn {
-            get_memory_host_pointer_properties_ext: unsafe {
-                let raw_name = stringify!(vkGetMemoryHostPointerPropertiesEXT);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-        };
-        if _err_str.is_empty() {
-            Ok(s)
-        } else {
-            Err(_err_str)
+    #[doc = "Generated from \'VK_EXT_external_memory_host\'"]
+    impl StructureType {
+        pub const IMPORT_MEMORY_HOST_POINTER_INFO_EXT: Self = StructureType(1000178000);
+    }
+    #[doc = "Generated from \'VK_EXT_external_memory_host\'"]
+    impl StructureType {
+        pub const MEMORY_HOST_POINTER_PROPERTIES_EXT: Self = StructureType(1000178001);
+    }
+    #[doc = "Generated from \'VK_EXT_external_memory_host\'"]
+    impl StructureType {
+        pub const PHYSICAL_DEVICE_EXTERNAL_MEMORY_HOST_PROPERTIES_EXT: Self =
+            StructureType(1000178002);
+    }
+    #[doc = "Generated from \'VK_EXT_external_memory_host\'"]
+    impl ExternalMemoryHandleTypeFlags {
+        pub const HOST_ALLOCATION_EXT: Self = ExternalMemoryHandleTypeFlags(0b10000000);
+    }
+    #[doc = "Generated from \'VK_EXT_external_memory_host\'"]
+    impl ExternalMemoryHandleTypeFlags {
+        pub const HOST_MAPPED_FOREIGN_MEMORY_EXT: Self = ExternalMemoryHandleTypeFlags(0b100000000);
+    }
+    pub struct AmdBufferMarkerFn {
+        cmd_write_buffer_marker_amd: extern "system" fn(
+            command_buffer: CommandBuffer,
+            pipeline_stage: PipelineStageFlags,
+            dst_buffer: Buffer,
+            dst_offset: DeviceSize,
+            marker: uint32_t,
+        ) -> c_void,
+    }
+    unsafe impl Send for AmdBufferMarkerFn {}
+    unsafe impl Sync for AmdBufferMarkerFn {}
+    impl ::std::clone::Clone for AmdBufferMarkerFn {
+        fn clone(&self) -> Self {
+            AmdBufferMarkerFn {
+                cmd_write_buffer_marker_amd: self.cmd_write_buffer_marker_amd,
+            }
         }
     }
-    pub unsafe fn get_memory_host_pointer_properties_ext(
-        &self,
-        device: Device,
-        handle_type: ExternalMemoryHandleTypeFlags,
-        p_host_pointer: *const c_void,
-        p_memory_host_pointer_properties: *const MemoryHostPointerPropertiesEXT,
-    ) -> Result {
-        (self.get_memory_host_pointer_properties_ext)(
-            device,
-            handle_type,
-            p_host_pointer,
-            p_memory_host_pointer_properties,
-        )
-    }
-}
-pub struct AmdBufferMarkerFn {
-    cmd_write_buffer_marker_amd: extern "system" fn(
-        command_buffer: CommandBuffer,
-        pipeline_stage: PipelineStageFlags,
-        dst_buffer: Buffer,
-        dst_offset: DeviceSize,
-        marker: uint32_t,
-    ) -> c_void,
-}
-unsafe impl Send for AmdBufferMarkerFn {}
-unsafe impl Sync for AmdBufferMarkerFn {}
-impl ::std::clone::Clone for AmdBufferMarkerFn {
-    fn clone(&self) -> Self {
-        AmdBufferMarkerFn {
-            cmd_write_buffer_marker_amd: self.cmd_write_buffer_marker_amd,
+    impl AmdBufferMarkerFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = AmdBufferMarkerFn {
+                cmd_write_buffer_marker_amd: unsafe {
+                    let raw_name = stringify!(vkCmdWriteBufferMarkerAMD);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+            };
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+        pub unsafe fn cmd_write_buffer_marker_amd(
+            &self,
+            command_buffer: CommandBuffer,
+            pipeline_stage: PipelineStageFlags,
+            dst_buffer: Buffer,
+            dst_offset: DeviceSize,
+            marker: uint32_t,
+        ) -> c_void {
+            (self.cmd_write_buffer_marker_amd)(
+                command_buffer,
+                pipeline_stage,
+                dst_buffer,
+                dst_offset,
+                marker,
+            )
         }
     }
-}
-impl AmdBufferMarkerFn {
-    pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        let mut _err_str = Vec::new();
-        let s = AmdBufferMarkerFn {
-            cmd_write_buffer_marker_amd: unsafe {
-                let raw_name = stringify!(vkCmdWriteBufferMarkerAMD);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
-        };
-        if _err_str.is_empty() {
-            Ok(s)
-        } else {
-            Err(_err_str)
+    pub struct AmdShaderCorePropertiesFn {}
+    unsafe impl Send for AmdShaderCorePropertiesFn {}
+    unsafe impl Sync for AmdShaderCorePropertiesFn {}
+    impl ::std::clone::Clone for AmdShaderCorePropertiesFn {
+        fn clone(&self) -> Self {
+            AmdShaderCorePropertiesFn {}
         }
     }
-    pub unsafe fn cmd_write_buffer_marker_amd(
-        &self,
-        command_buffer: CommandBuffer,
-        pipeline_stage: PipelineStageFlags,
-        dst_buffer: Buffer,
-        dst_offset: DeviceSize,
-        marker: uint32_t,
-    ) -> c_void {
-        (self.cmd_write_buffer_marker_amd)(
-            command_buffer,
-            pipeline_stage,
-            dst_buffer,
-            dst_offset,
-            marker,
-        )
+    impl AmdShaderCorePropertiesFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = AmdShaderCorePropertiesFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    #[doc = "Generated from \'VK_AMD_shader_core_properties\'"]
+    impl StructureType {
+        pub const PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_AMD: Self = StructureType(1000185000);
+    }
+    pub struct ExtVertexAttributeDivisorFn {}
+    unsafe impl Send for ExtVertexAttributeDivisorFn {}
+    unsafe impl Sync for ExtVertexAttributeDivisorFn {}
+    impl ::std::clone::Clone for ExtVertexAttributeDivisorFn {
+        fn clone(&self) -> Self {
+            ExtVertexAttributeDivisorFn {}
+        }
+    }
+    impl ExtVertexAttributeDivisorFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = ExtVertexAttributeDivisorFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    #[doc = "Generated from \'VK_EXT_vertex_attribute_divisor\'"]
+    impl StructureType {
+        pub const PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_PROPERTIES_EXT: Self =
+            StructureType(1000190000);
+    }
+    #[doc = "Generated from \'VK_EXT_vertex_attribute_divisor\'"]
+    impl StructureType {
+        pub const PIPELINE_VERTEX_INPUT_DIVISOR_STATE_CREATE_INFO_EXT: Self =
+            StructureType(1000190001);
+    }
+    pub struct NvShaderSubgroupPartitionedFn {}
+    unsafe impl Send for NvShaderSubgroupPartitionedFn {}
+    unsafe impl Sync for NvShaderSubgroupPartitionedFn {}
+    impl ::std::clone::Clone for NvShaderSubgroupPartitionedFn {
+        fn clone(&self) -> Self {
+            NvShaderSubgroupPartitionedFn {}
+        }
+    }
+    impl NvShaderSubgroupPartitionedFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = NvShaderSubgroupPartitionedFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    #[doc = "Generated from \'VK_NV_shader_subgroup_partitioned\'"]
+    impl SubgroupFeatureFlags {
+        pub const PARTITIONED_NV: Self = SubgroupFeatureFlags(0b100000000);
     }
 }
