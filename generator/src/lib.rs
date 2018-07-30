@@ -826,9 +826,7 @@ pub fn generate_extension_commands(
         .filter_map(|ext_item| match ext_item {
             vk_parse::ExtensionItem::Require { items, .. } => {
                 Some(items.iter().filter_map(|item| match item {
-                    vk_parse::InterfaceItem::Command { name, .. } => {
-                        cmd_map.get(name).map(|c| *c)
-                    }
+                    vk_parse::InterfaceItem::Command { name, .. } => cmd_map.get(name).map(|c| *c),
                     _ => None,
                 }))
             }
@@ -1041,9 +1039,75 @@ pub fn generate_result(ident: Ident, _enum: &vkxml::Enumeration) -> Tokens {
         }
     }
 }
-pub trait StructExt {}
-pub fn generate_struct(_struct: &vkxml::Struct, nullable_types: &HashSet<&str>) -> Tokens {
-    let name = to_type_tokens(&_struct.name, None);
+
+fn is_static_array(field: &vkxml::Field) -> bool {
+    field
+        .array
+        .as_ref()
+        .map(|ty| match ty {
+            vkxml::ArrayType::Static => true,
+            _ => false,
+        })
+        .unwrap_or(false)
+}
+pub fn derive_debug(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> Option<Tokens> {
+    let name = name_to_tokens(&_struct.name);
+    let members = _struct.elements.iter().filter_map(|elem| match *elem {
+        vkxml::StructElement::Member(ref field) => Some(field),
+        _ => None,
+    });
+    let contains_pfn = members.clone().any(|field| {
+        field
+            .name
+            .as_ref()
+            .map(|n| n.contains("pfn"))
+            .unwrap_or(false)
+    });
+    let contains_static_array = members.clone().any(is_static_array);
+    let contains_union = members
+        .clone()
+        .any(|field| union_types.contains(field.basetype.as_str()));
+    if !(contains_union || contains_static_array || contains_pfn) {
+        return None;
+    }
+    let debug_fields = members.clone().map(|field| {
+        let param_ident = field.param_ident();
+        let param_str = param_ident.as_ref();
+        let debug_value = if is_static_array(field) {
+            quote!{
+                &unsafe {
+                    ::std::ffi::CStr::from_ptr(self.#param_ident.as_ptr() as *const i8)
+                }
+            }
+        } else if param_ident.as_ref().contains("pfn") {
+            quote!{
+                &(self.#param_ident as *const())
+            }
+        } else if union_types.contains(field.basetype.as_str()) {
+            quote!(&"union")
+        } else {
+            quote!{
+                &self.#param_ident
+            }
+        };
+        quote!{
+            .field(#param_str, #debug_value)
+        }
+    });
+    let name_str = name.as_ref();
+    let q = quote!{
+        impl ::std::fmt::Debug for #name {
+            fn fmt(&self, fmt: &mut ::std::fmt::Formatter) -> ::std::result::Result<(), ::std::fmt::Error> {
+                fmt.debug_struct(#name_str)
+                #(#debug_fields)*
+                .finish()
+            }
+        }
+    };
+    Some(q)
+}
+pub fn generate_struct(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> Tokens {
+    let name = name_to_tokens(&_struct.name);
     let members = _struct.elements.iter().filter_map(|elem| match *elem {
         vkxml::StructElement::Member(ref field) => Some(field),
         _ => None,
@@ -1055,59 +1119,15 @@ pub fn generate_struct(_struct: &vkxml::Struct, nullable_types: &HashSet<&str>) 
         quote!{pub #param_ident: #param_ty_tokens}
     });
 
-    let contains_pfn = members.clone().any(|field| {
-        field
-            .name
-            .as_ref()
-            .map(|n| n.contains("pfn"))
-            .unwrap_or(false)
-    });
-    let contains_stype = members.clone().any(|f| f.name.as_ref().unwrap() == "sType");
-    let contains_nullable = members
-        .clone()
-        .any(|f| nullable_types.contains(&f.basetype.as_ref()));
-    let contains_ptrs = members.clone().any(|f| {
-        f.reference.is_some()
-            || POINTER_TYPES.contains(&f.basetype.as_ref())
-            || MUT_POINTER_TYPES.contains(&f.basetype.as_ref())
-    });
-    let contains_arrays = members.clone().any(|f| f.array.is_some());
-
-    let mut implicit_impls: Vec<Tokens> = Vec::new();
-    implicit_impls.push(quote!(Copy));
-    implicit_impls.push(quote!(Clone));
-
-    if !contains_pfn && !contains_stype && !contains_nullable && !contains_ptrs && !contains_arrays
-    {
-        implicit_impls.push(quote!(Default))
-    }
-
-    let mut explicit_impls: Vec<Tokens> = Vec::new();
-
-    if !contains_pfn && !implicit_impls.contains(&quote!(Default)) {
-        let members_default = members
-            .clone()
-            .map(|field| field.to_default(nullable_types));
-
-        explicit_impls.push(quote!{
-            impl Default for #name {
-                fn default() -> #name {
-                    #name {
-                        #(#members_default,)*
-                    }
-                }
-            }
-        });
-    }
-
+    let debug_tokens = derive_debug(_struct, union_types);
+    let dbg_str = if debug_tokens.is_none() { quote!(Debug,) } else {quote!()};
     quote!{
         #[repr(C)]
-        #[derive(#(#implicit_impls),*)]
+        #[derive(Copy, Clone, #dbg_str)]
         pub struct #name {
             #(#params,)*
         }
-
-        #(#explicit_impls)*
+        #debug_tokens
     }
 }
 
@@ -1179,12 +1199,12 @@ fn generate_union(union: &vkxml::Union, nullable_types: &HashSet<&str>) -> Token
 }
 pub fn generate_definition(
     definition: &vkxml::DefinitionsElement,
-    nullable_types: &HashSet<&str>,
+    union_types: &HashSet<&str>,
 ) -> Option<Tokens> {
     match *definition {
         vkxml::DefinitionsElement::Typedef(ref typedef) => Some(generate_typedef(typedef)),
         vkxml::DefinitionsElement::Struct(ref _struct) => {
-            Some(generate_struct(_struct, nullable_types))
+            Some(generate_struct(_struct, union_types))
         }
         vkxml::DefinitionsElement::Bitmask(ref mask) => generate_bitmask(mask),
         vkxml::DefinitionsElement::Handle(ref handle) => generate_handle(handle),
@@ -1202,8 +1222,7 @@ pub fn generate_feature(feature: &vkxml::Feature, commands: &CommandMap) -> quot
                 spec.elements
                     .iter()
                     .filter_map(|feature_spec| {
-                        if let vkxml::FeatureReference::CommandReference(ref cmd_ref) =
-                            feature_spec
+                        if let vkxml::FeatureReference::CommandReference(ref cmd_ref) = feature_spec
                         {
                             Some(cmd_ref)
                         } else {
@@ -1379,9 +1398,17 @@ pub fn write_source_code(path: &Path) {
         .filter_map(|ext| generate_extension(ext, &commands, &mut const_cache))
         .collect_vec();
 
+    let union_types = definitions
+        .iter()
+        .filter_map(|def| match def {
+            vkxml::DefinitionsElement::Union(ref union) => Some(union.name.as_str()),
+            _ => None,
+        })
+        .collect::<HashSet<&str>>();
+
     let definition_code: Vec<_> = definitions
         .into_iter()
-        .filter_map(|definition| generate_definition(definition, &nullable_types))
+        .filter_map(|def| generate_definition(def, &union_types))
         .collect();
 
     let feature_code: Vec<_> = features
