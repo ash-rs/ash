@@ -1375,6 +1375,21 @@ pub fn generate_constant<'a>(
     }
 }
 
+pub fn generate_feature_extension<'a>(
+    registry: &'a vk_parse::Registry,
+    const_cache: &mut HashSet<&'a str>,
+) -> Tokens {
+    let constants = registry.0.iter().filter_map(|item| match item {
+        vk_parse::RegistryItem::Feature { name, items, .. } => {
+            Some(generate_extension_constants(name, 0, items, const_cache))
+        }
+        _ => None,
+    });
+    quote!{
+        #(#constants)*
+    }
+}
+
 pub fn write_source_code(path: &Path) {
     use std::fs::File;
     use std::io::Write;
@@ -1487,6 +1502,7 @@ pub fn write_source_code(path: &Path) {
         .iter()
         .map(|feature| generate_feature(feature, &commands))
         .collect();
+    let feature_extensions_code = generate_feature_extension(&spec2, &mut const_cache);
 
     let mut file = File::create("../ash/src/vk.rs").expect("vk");
     let bitflags_macro = vk_bitflags_wrapped_macro();
@@ -1517,6 +1533,7 @@ pub fn write_source_code(path: &Path) {
         pub mod extensions {
             use super::*;
             #(#extension_code)*
+            #feature_extensions_code
         }
     };
     write!(&mut file, "{}", source_code).expect("Unable to write to file");
