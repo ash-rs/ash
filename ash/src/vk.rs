@@ -176,7 +176,7 @@ macro_rules! vk_bitflags_wrapped {
 macro_rules! handle_nondispatchable {
     ($name:ident) => {
         #[repr(C)]
-        #[derive(Eq, PartialEq, Ord, PartialOrd, Clone, Copy, Hash)]
+        #[derive(Eq, PartialEq, Ord, PartialOrd, Clone, Copy, Hash, Default)]
         pub struct $name(uint64_t);
         impl $name {
             pub fn null() -> $name {
@@ -208,10 +208,15 @@ macro_rules! define_handle {
         pub struct $name {
             ptr: *mut u8,
         }
+        impl Default for $name {
+            fn default() -> $name {
+                $name::null()
+            }
+        }
         unsafe impl Send for $name {}
         unsafe impl Sync for $name {}
         impl $name {
-            pub unsafe fn null() -> Self {
+            pub fn null() -> Self {
                 $name {
                     ptr: ::std::ptr::null_mut(),
                 }
@@ -4853,11 +4858,11 @@ pub struct BaseOutStructure {
     pub s_type: StructureType,
     pub p_next: *const BaseOutStructure,
 }
-impl Default for BaseOutStructure {
+impl ::std::default::Default for BaseOutStructure {
     fn default() -> BaseOutStructure {
         BaseOutStructure {
-            s_type: StructureType(0),
-            p_next: ::std::ptr::null(),
+            s_type: unsafe { ::std::mem::zeroed() },
+            p_next: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -4867,42 +4872,42 @@ pub struct BaseInStructure {
     pub s_type: StructureType,
     pub p_next: *const BaseInStructure,
 }
-impl Default for BaseInStructure {
+impl ::std::default::Default for BaseInStructure {
     fn default() -> BaseInStructure {
         BaseInStructure {
-            s_type: StructureType(0),
-            p_next: ::std::ptr::null(),
+            s_type: unsafe { ::std::mem::zeroed() },
+            p_next: unsafe { ::std::mem::zeroed() },
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct Offset2D {
     pub x: int32_t,
     pub y: int32_t,
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct Offset3D {
     pub x: int32_t,
     pub y: int32_t,
     pub z: int32_t,
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct Extent2D {
     pub width: uint32_t,
     pub height: uint32_t,
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct Extent3D {
     pub width: uint32_t,
     pub height: uint32_t,
     pub depth: uint32_t,
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct Viewport {
     pub x: c_float,
     pub y: c_float,
@@ -4912,20 +4917,20 @@ pub struct Viewport {
     pub max_depth: c_float,
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct Rect2D {
     pub offset: Offset2D,
     pub extent: Extent2D,
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct ClearRect {
     pub rect: Rect2D,
     pub base_array_layer: uint32_t,
     pub layer_count: uint32_t,
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct ComponentMapping {
     pub r: ComponentSwizzle,
     pub g: ComponentSwizzle,
@@ -4964,6 +4969,21 @@ impl ::std::fmt::Debug for PhysicalDeviceProperties {
             .finish()
     }
 }
+impl ::std::default::Default for PhysicalDeviceProperties {
+    fn default() -> PhysicalDeviceProperties {
+        PhysicalDeviceProperties {
+            api_version: uint32_t::default(),
+            driver_version: uint32_t::default(),
+            vendor_id: uint32_t::default(),
+            device_id: uint32_t::default(),
+            device_type: PhysicalDeviceType::default(),
+            device_name: unsafe { ::std::mem::zeroed() },
+            pipeline_cache_uuid: unsafe { ::std::mem::zeroed() },
+            limits: PhysicalDeviceLimits::default(),
+            sparse_properties: PhysicalDeviceSparseProperties::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ExtensionProperties {
@@ -4978,6 +4998,14 @@ impl ::std::fmt::Debug for ExtensionProperties {
             })
             .field("spec_version", &self.spec_version)
             .finish()
+    }
+}
+impl ::std::default::Default for ExtensionProperties {
+    fn default() -> ExtensionProperties {
+        ExtensionProperties {
+            extension_name: unsafe { ::std::mem::zeroed() },
+            spec_version: uint32_t::default(),
+        }
     }
 }
 #[repr(C)]
@@ -5002,6 +5030,16 @@ impl ::std::fmt::Debug for LayerProperties {
             .finish()
     }
 }
+impl ::std::default::Default for LayerProperties {
+    fn default() -> LayerProperties {
+        LayerProperties {
+            layer_name: unsafe { ::std::mem::zeroed() },
+            spec_version: uint32_t::default(),
+            implementation_version: uint32_t::default(),
+            description: unsafe { ::std::mem::zeroed() },
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct ApplicationInfo {
@@ -5013,16 +5051,16 @@ pub struct ApplicationInfo {
     pub engine_version: uint32_t,
     pub api_version: uint32_t,
 }
-impl Default for ApplicationInfo {
+impl ::std::default::Default for ApplicationInfo {
     fn default() -> ApplicationInfo {
         ApplicationInfo {
             s_type: StructureType::APPLICATION_INFO,
-            p_next: ::std::ptr::null(),
-            p_application_name: ::std::ptr::null(),
-            application_version: 0,
-            p_engine_name: ::std::ptr::null(),
-            engine_version: 0,
-            api_version: 0,
+            p_next: unsafe { ::std::mem::zeroed() },
+            p_application_name: unsafe { ::std::mem::zeroed() },
+            application_version: uint32_t::default(),
+            p_engine_name: unsafe { ::std::mem::zeroed() },
+            engine_version: uint32_t::default(),
+            api_version: uint32_t::default(),
         }
     }
 }
@@ -5051,6 +5089,18 @@ impl ::std::fmt::Debug for AllocationCallbacks {
             .finish()
     }
 }
+impl ::std::default::Default for AllocationCallbacks {
+    fn default() -> AllocationCallbacks {
+        AllocationCallbacks {
+            p_user_data: unsafe { ::std::mem::zeroed() },
+            pfn_allocation: unsafe { ::std::mem::zeroed() },
+            pfn_reallocation: unsafe { ::std::mem::zeroed() },
+            pfn_free: unsafe { ::std::mem::zeroed() },
+            pfn_internal_allocation: unsafe { ::std::mem::zeroed() },
+            pfn_internal_free: unsafe { ::std::mem::zeroed() },
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct DeviceQueueCreateInfo {
@@ -5061,15 +5111,15 @@ pub struct DeviceQueueCreateInfo {
     pub queue_count: uint32_t,
     pub p_queue_priorities: *const c_float,
 }
-impl Default for DeviceQueueCreateInfo {
+impl ::std::default::Default for DeviceQueueCreateInfo {
     fn default() -> DeviceQueueCreateInfo {
         DeviceQueueCreateInfo {
             s_type: StructureType::DEVICE_QUEUE_CREATE_INFO,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             flags: DeviceQueueCreateFlags::default(),
-            queue_family_index: 0,
-            queue_count: 0,
-            p_queue_priorities: ::std::ptr::null(),
+            queue_family_index: uint32_t::default(),
+            queue_count: uint32_t::default(),
+            p_queue_priorities: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -5087,19 +5137,19 @@ pub struct DeviceCreateInfo {
     pub pp_enabled_extension_names: *const c_char,
     pub p_enabled_features: *const PhysicalDeviceFeatures,
 }
-impl Default for DeviceCreateInfo {
+impl ::std::default::Default for DeviceCreateInfo {
     fn default() -> DeviceCreateInfo {
         DeviceCreateInfo {
             s_type: StructureType::DEVICE_CREATE_INFO,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             flags: DeviceCreateFlags::default(),
-            queue_create_info_count: 0,
-            p_queue_create_infos: ::std::ptr::null(),
-            enabled_layer_count: 0,
-            pp_enabled_layer_names: ::std::ptr::null(),
-            enabled_extension_count: 0,
-            pp_enabled_extension_names: ::std::ptr::null(),
-            p_enabled_features: ::std::ptr::null(),
+            queue_create_info_count: uint32_t::default(),
+            p_queue_create_infos: unsafe { ::std::mem::zeroed() },
+            enabled_layer_count: uint32_t::default(),
+            pp_enabled_layer_names: unsafe { ::std::mem::zeroed() },
+            enabled_extension_count: uint32_t::default(),
+            pp_enabled_extension_names: unsafe { ::std::mem::zeroed() },
+            p_enabled_features: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -5115,22 +5165,22 @@ pub struct InstanceCreateInfo {
     pub enabled_extension_count: uint32_t,
     pub pp_enabled_extension_names: *const c_char,
 }
-impl Default for InstanceCreateInfo {
+impl ::std::default::Default for InstanceCreateInfo {
     fn default() -> InstanceCreateInfo {
         InstanceCreateInfo {
             s_type: StructureType::INSTANCE_CREATE_INFO,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             flags: InstanceCreateFlags::default(),
-            p_application_info: ::std::ptr::null(),
-            enabled_layer_count: 0,
-            pp_enabled_layer_names: ::std::ptr::null(),
-            enabled_extension_count: 0,
-            pp_enabled_extension_names: ::std::ptr::null(),
+            p_application_info: unsafe { ::std::mem::zeroed() },
+            enabled_layer_count: uint32_t::default(),
+            pp_enabled_layer_names: unsafe { ::std::mem::zeroed() },
+            enabled_extension_count: uint32_t::default(),
+            pp_enabled_extension_names: unsafe { ::std::mem::zeroed() },
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct QueueFamilyProperties {
     pub queue_flags: QueueFlags,
     pub queue_count: uint32_t,
@@ -5159,6 +5209,16 @@ impl ::std::fmt::Debug for PhysicalDeviceMemoryProperties {
             .finish()
     }
 }
+impl ::std::default::Default for PhysicalDeviceMemoryProperties {
+    fn default() -> PhysicalDeviceMemoryProperties {
+        PhysicalDeviceMemoryProperties {
+            memory_type_count: uint32_t::default(),
+            memory_types: unsafe { ::std::mem::zeroed() },
+            memory_heap_count: uint32_t::default(),
+            memory_heaps: unsafe { ::std::mem::zeroed() },
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct MemoryAllocateInfo {
@@ -5167,32 +5227,32 @@ pub struct MemoryAllocateInfo {
     pub allocation_size: DeviceSize,
     pub memory_type_index: uint32_t,
 }
-impl Default for MemoryAllocateInfo {
+impl ::std::default::Default for MemoryAllocateInfo {
     fn default() -> MemoryAllocateInfo {
         MemoryAllocateInfo {
             s_type: StructureType::MEMORY_ALLOCATE_INFO,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             allocation_size: DeviceSize::default(),
-            memory_type_index: 0,
+            memory_type_index: uint32_t::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct MemoryRequirements {
     pub size: DeviceSize,
     pub alignment: DeviceSize,
     pub memory_type_bits: uint32_t,
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct SparseImageFormatProperties {
     pub aspect_mask: ImageAspectFlags,
     pub image_granularity: Extent3D,
     pub flags: SparseImageFormatFlags,
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct SparseImageMemoryRequirements {
     pub format_properties: SparseImageFormatProperties,
     pub image_mip_tail_first_lod: uint32_t,
@@ -5201,13 +5261,13 @@ pub struct SparseImageMemoryRequirements {
     pub image_mip_tail_stride: DeviceSize,
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct MemoryType {
     pub property_flags: MemoryPropertyFlags,
     pub heap_index: uint32_t,
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct MemoryHeap {
     pub size: DeviceSize,
     pub flags: MemoryHeapFlags,
@@ -5221,26 +5281,26 @@ pub struct MappedMemoryRange {
     pub offset: DeviceSize,
     pub size: DeviceSize,
 }
-impl Default for MappedMemoryRange {
+impl ::std::default::Default for MappedMemoryRange {
     fn default() -> MappedMemoryRange {
         MappedMemoryRange {
             s_type: StructureType::MAPPED_MEMORY_RANGE,
-            p_next: ::std::ptr::null(),
-            memory: DeviceMemory::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
+            memory: DeviceMemory::default(),
             offset: DeviceSize::default(),
             size: DeviceSize::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct FormatProperties {
     pub linear_tiling_features: FormatFeatureFlags,
     pub optimal_tiling_features: FormatFeatureFlags,
     pub buffer_features: FormatFeatureFlags,
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct ImageFormatProperties {
     pub max_extent: Extent3D,
     pub max_mip_levels: uint32_t,
@@ -5249,7 +5309,7 @@ pub struct ImageFormatProperties {
     pub max_resource_size: DeviceSize,
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct DescriptorBufferInfo {
     pub buffer: Buffer,
     pub offset: DeviceSize,
@@ -5265,7 +5325,7 @@ impl Default for DescriptorBufferInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct DescriptorImageInfo {
     pub sampler: Sampler,
     pub image_view: ImageView,
@@ -5294,19 +5354,19 @@ pub struct WriteDescriptorSet {
     pub p_buffer_info: *const DescriptorBufferInfo,
     pub p_texel_buffer_view: *const BufferView,
 }
-impl Default for WriteDescriptorSet {
+impl ::std::default::Default for WriteDescriptorSet {
     fn default() -> WriteDescriptorSet {
         WriteDescriptorSet {
             s_type: StructureType::WRITE_DESCRIPTOR_SET,
-            p_next: ::std::ptr::null(),
-            dst_set: DescriptorSet::null(),
-            dst_binding: 0,
-            dst_array_element: 0,
-            descriptor_count: 0,
+            p_next: unsafe { ::std::mem::zeroed() },
+            dst_set: DescriptorSet::default(),
+            dst_binding: uint32_t::default(),
+            dst_array_element: uint32_t::default(),
+            descriptor_count: uint32_t::default(),
             descriptor_type: DescriptorType::default(),
-            p_image_info: ::std::ptr::null(),
-            p_buffer_info: ::std::ptr::null(),
-            p_texel_buffer_view: ::std::ptr::null(),
+            p_image_info: unsafe { ::std::mem::zeroed() },
+            p_buffer_info: unsafe { ::std::mem::zeroed() },
+            p_texel_buffer_view: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -5323,18 +5383,18 @@ pub struct CopyDescriptorSet {
     pub dst_array_element: uint32_t,
     pub descriptor_count: uint32_t,
 }
-impl Default for CopyDescriptorSet {
+impl ::std::default::Default for CopyDescriptorSet {
     fn default() -> CopyDescriptorSet {
         CopyDescriptorSet {
             s_type: StructureType::COPY_DESCRIPTOR_SET,
-            p_next: ::std::ptr::null(),
-            src_set: DescriptorSet::null(),
-            src_binding: 0,
-            src_array_element: 0,
-            dst_set: DescriptorSet::null(),
-            dst_binding: 0,
-            dst_array_element: 0,
-            descriptor_count: 0,
+            p_next: unsafe { ::std::mem::zeroed() },
+            src_set: DescriptorSet::default(),
+            src_binding: uint32_t::default(),
+            src_array_element: uint32_t::default(),
+            dst_set: DescriptorSet::default(),
+            dst_binding: uint32_t::default(),
+            dst_array_element: uint32_t::default(),
+            descriptor_count: uint32_t::default(),
         }
     }
 }
@@ -5350,17 +5410,17 @@ pub struct BufferCreateInfo {
     pub queue_family_index_count: uint32_t,
     pub p_queue_family_indices: *const uint32_t,
 }
-impl Default for BufferCreateInfo {
+impl ::std::default::Default for BufferCreateInfo {
     fn default() -> BufferCreateInfo {
         BufferCreateInfo {
             s_type: StructureType::BUFFER_CREATE_INFO,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             flags: BufferCreateFlags::default(),
             size: DeviceSize::default(),
             usage: BufferUsageFlags::default(),
             sharing_mode: SharingMode::default(),
-            queue_family_index_count: 0,
-            p_queue_family_indices: ::std::ptr::null(),
+            queue_family_index_count: uint32_t::default(),
+            p_queue_family_indices: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -5375,13 +5435,13 @@ pub struct BufferViewCreateInfo {
     pub offset: DeviceSize,
     pub range: DeviceSize,
 }
-impl Default for BufferViewCreateInfo {
+impl ::std::default::Default for BufferViewCreateInfo {
     fn default() -> BufferViewCreateInfo {
         BufferViewCreateInfo {
             s_type: StructureType::BUFFER_VIEW_CREATE_INFO,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             flags: BufferViewCreateFlags::default(),
-            buffer: Buffer::null(),
+            buffer: Buffer::default(),
             format: Format::default(),
             offset: DeviceSize::default(),
             range: DeviceSize::default(),
@@ -5389,14 +5449,14 @@ impl Default for BufferViewCreateInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct ImageSubresource {
     pub aspect_mask: ImageAspectFlags,
     pub mip_level: uint32_t,
     pub array_layer: uint32_t,
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct ImageSubresourceLayers {
     pub aspect_mask: ImageAspectFlags,
     pub mip_level: uint32_t,
@@ -5404,7 +5464,7 @@ pub struct ImageSubresourceLayers {
     pub layer_count: uint32_t,
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct ImageSubresourceRange {
     pub aspect_mask: ImageAspectFlags,
     pub base_mip_level: uint32_t,
@@ -5420,11 +5480,11 @@ pub struct MemoryBarrier {
     pub src_access_mask: AccessFlags,
     pub dst_access_mask: AccessFlags,
 }
-impl Default for MemoryBarrier {
+impl ::std::default::Default for MemoryBarrier {
     fn default() -> MemoryBarrier {
         MemoryBarrier {
             s_type: StructureType::MEMORY_BARRIER,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             src_access_mask: AccessFlags::default(),
             dst_access_mask: AccessFlags::default(),
         }
@@ -5443,16 +5503,16 @@ pub struct BufferMemoryBarrier {
     pub offset: DeviceSize,
     pub size: DeviceSize,
 }
-impl Default for BufferMemoryBarrier {
+impl ::std::default::Default for BufferMemoryBarrier {
     fn default() -> BufferMemoryBarrier {
         BufferMemoryBarrier {
             s_type: StructureType::BUFFER_MEMORY_BARRIER,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             src_access_mask: AccessFlags::default(),
             dst_access_mask: AccessFlags::default(),
-            src_queue_family_index: 0,
-            dst_queue_family_index: 0,
-            buffer: Buffer::null(),
+            src_queue_family_index: uint32_t::default(),
+            dst_queue_family_index: uint32_t::default(),
+            buffer: Buffer::default(),
             offset: DeviceSize::default(),
             size: DeviceSize::default(),
         }
@@ -5472,18 +5532,18 @@ pub struct ImageMemoryBarrier {
     pub image: Image,
     pub subresource_range: ImageSubresourceRange,
 }
-impl Default for ImageMemoryBarrier {
+impl ::std::default::Default for ImageMemoryBarrier {
     fn default() -> ImageMemoryBarrier {
         ImageMemoryBarrier {
             s_type: StructureType::IMAGE_MEMORY_BARRIER,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             src_access_mask: AccessFlags::default(),
             dst_access_mask: AccessFlags::default(),
             old_layout: ImageLayout::default(),
             new_layout: ImageLayout::default(),
-            src_queue_family_index: 0,
-            dst_queue_family_index: 0,
-            image: Image::null(),
+            src_queue_family_index: uint32_t::default(),
+            dst_queue_family_index: uint32_t::default(),
+            image: Image::default(),
             subresource_range: ImageSubresourceRange::default(),
         }
     }
@@ -5507,8 +5567,29 @@ pub struct ImageCreateInfo {
     pub p_queue_family_indices: *const uint32_t,
     pub initial_layout: ImageLayout,
 }
+impl ::std::default::Default for ImageCreateInfo {
+    fn default() -> ImageCreateInfo {
+        ImageCreateInfo {
+            s_type: StructureType::IMAGE_CREATE_INFO,
+            p_next: unsafe { ::std::mem::zeroed() },
+            flags: ImageCreateFlags::default(),
+            image_type: ImageType::default(),
+            format: Format::default(),
+            extent: Extent3D::default(),
+            mip_levels: uint32_t::default(),
+            array_layers: uint32_t::default(),
+            samples: SampleCountFlags::default(),
+            tiling: ImageTiling::default(),
+            usage: ImageUsageFlags::default(),
+            sharing_mode: SharingMode::default(),
+            queue_family_index_count: uint32_t::default(),
+            p_queue_family_indices: unsafe { ::std::mem::zeroed() },
+            initial_layout: ImageLayout::default(),
+        }
+    }
+}
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct SubresourceLayout {
     pub offset: DeviceSize,
     pub size: DeviceSize,
@@ -5528,13 +5609,13 @@ pub struct ImageViewCreateInfo {
     pub components: ComponentMapping,
     pub subresource_range: ImageSubresourceRange,
 }
-impl Default for ImageViewCreateInfo {
+impl ::std::default::Default for ImageViewCreateInfo {
     fn default() -> ImageViewCreateInfo {
         ImageViewCreateInfo {
             s_type: StructureType::IMAGE_VIEW_CREATE_INFO,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             flags: ImageViewCreateFlags::default(),
-            image: Image::null(),
+            image: Image::default(),
             view_type: ImageViewType::default(),
             format: Format::default(),
             components: ComponentMapping::default(),
@@ -5543,14 +5624,14 @@ impl Default for ImageViewCreateInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct BufferCopy {
     pub src_offset: DeviceSize,
     pub dst_offset: DeviceSize,
     pub size: DeviceSize,
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct SparseMemoryBind {
     pub resource_offset: DeviceSize,
     pub size: DeviceSize,
@@ -5570,7 +5651,7 @@ impl Default for SparseMemoryBind {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct SparseImageMemoryBind {
     pub subresource: ImageSubresource,
     pub offset: Offset3D,
@@ -5598,12 +5679,12 @@ pub struct SparseBufferMemoryBindInfo {
     pub bind_count: uint32_t,
     pub p_binds: *const SparseMemoryBind,
 }
-impl Default for SparseBufferMemoryBindInfo {
+impl ::std::default::Default for SparseBufferMemoryBindInfo {
     fn default() -> SparseBufferMemoryBindInfo {
         SparseBufferMemoryBindInfo {
-            buffer: Buffer::null(),
-            bind_count: 0,
-            p_binds: ::std::ptr::null(),
+            buffer: Buffer::default(),
+            bind_count: uint32_t::default(),
+            p_binds: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -5614,12 +5695,12 @@ pub struct SparseImageOpaqueMemoryBindInfo {
     pub bind_count: uint32_t,
     pub p_binds: *const SparseMemoryBind,
 }
-impl Default for SparseImageOpaqueMemoryBindInfo {
+impl ::std::default::Default for SparseImageOpaqueMemoryBindInfo {
     fn default() -> SparseImageOpaqueMemoryBindInfo {
         SparseImageOpaqueMemoryBindInfo {
-            image: Image::null(),
-            bind_count: 0,
-            p_binds: ::std::ptr::null(),
+            image: Image::default(),
+            bind_count: uint32_t::default(),
+            p_binds: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -5630,12 +5711,12 @@ pub struct SparseImageMemoryBindInfo {
     pub bind_count: uint32_t,
     pub p_binds: *const SparseImageMemoryBind,
 }
-impl Default for SparseImageMemoryBindInfo {
+impl ::std::default::Default for SparseImageMemoryBindInfo {
     fn default() -> SparseImageMemoryBindInfo {
         SparseImageMemoryBindInfo {
-            image: Image::null(),
-            bind_count: 0,
-            p_binds: ::std::ptr::null(),
+            image: Image::default(),
+            bind_count: uint32_t::default(),
+            p_binds: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -5655,26 +5736,26 @@ pub struct BindSparseInfo {
     pub signal_semaphore_count: uint32_t,
     pub p_signal_semaphores: *const Semaphore,
 }
-impl Default for BindSparseInfo {
+impl ::std::default::Default for BindSparseInfo {
     fn default() -> BindSparseInfo {
         BindSparseInfo {
             s_type: StructureType::BIND_SPARSE_INFO,
-            p_next: ::std::ptr::null(),
-            wait_semaphore_count: 0,
-            p_wait_semaphores: ::std::ptr::null(),
-            buffer_bind_count: 0,
-            p_buffer_binds: ::std::ptr::null(),
-            image_opaque_bind_count: 0,
-            p_image_opaque_binds: ::std::ptr::null(),
-            image_bind_count: 0,
-            p_image_binds: ::std::ptr::null(),
-            signal_semaphore_count: 0,
-            p_signal_semaphores: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
+            wait_semaphore_count: uint32_t::default(),
+            p_wait_semaphores: unsafe { ::std::mem::zeroed() },
+            buffer_bind_count: uint32_t::default(),
+            p_buffer_binds: unsafe { ::std::mem::zeroed() },
+            image_opaque_bind_count: uint32_t::default(),
+            p_image_opaque_binds: unsafe { ::std::mem::zeroed() },
+            image_bind_count: uint32_t::default(),
+            p_image_binds: unsafe { ::std::mem::zeroed() },
+            signal_semaphore_count: uint32_t::default(),
+            p_signal_semaphores: unsafe { ::std::mem::zeroed() },
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct ImageCopy {
     pub src_subresource: ImageSubresourceLayers,
     pub src_offset: Offset3D,
@@ -5704,8 +5785,18 @@ impl ::std::fmt::Debug for ImageBlit {
             .finish()
     }
 }
+impl ::std::default::Default for ImageBlit {
+    fn default() -> ImageBlit {
+        ImageBlit {
+            src_subresource: ImageSubresourceLayers::default(),
+            src_offsets: unsafe { ::std::mem::zeroed() },
+            dst_subresource: ImageSubresourceLayers::default(),
+            dst_offsets: unsafe { ::std::mem::zeroed() },
+        }
+    }
+}
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct BufferImageCopy {
     pub buffer_offset: DeviceSize,
     pub buffer_row_length: uint32_t,
@@ -5715,7 +5806,7 @@ pub struct BufferImageCopy {
     pub image_extent: Extent3D,
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct ImageResolve {
     pub src_subresource: ImageSubresourceLayers,
     pub src_offset: Offset3D,
@@ -5732,14 +5823,14 @@ pub struct ShaderModuleCreateInfo {
     pub code_size: size_t,
     pub p_code: *const uint32_t,
 }
-impl Default for ShaderModuleCreateInfo {
+impl ::std::default::Default for ShaderModuleCreateInfo {
     fn default() -> ShaderModuleCreateInfo {
         ShaderModuleCreateInfo {
             s_type: StructureType::SHADER_MODULE_CREATE_INFO,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             flags: ShaderModuleCreateFlags::default(),
-            code_size: 0,
-            p_code: ::std::ptr::null(),
+            code_size: size_t::default(),
+            p_code: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -5752,14 +5843,14 @@ pub struct DescriptorSetLayoutBinding {
     pub stage_flags: ShaderStageFlags,
     pub p_immutable_samplers: *const Sampler,
 }
-impl Default for DescriptorSetLayoutBinding {
+impl ::std::default::Default for DescriptorSetLayoutBinding {
     fn default() -> DescriptorSetLayoutBinding {
         DescriptorSetLayoutBinding {
-            binding: 0,
+            binding: uint32_t::default(),
             descriptor_type: DescriptorType::default(),
-            descriptor_count: 0,
+            descriptor_count: uint32_t::default(),
             stage_flags: ShaderStageFlags::default(),
-            p_immutable_samplers: ::std::ptr::null(),
+            p_immutable_samplers: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -5772,19 +5863,19 @@ pub struct DescriptorSetLayoutCreateInfo {
     pub binding_count: uint32_t,
     pub p_bindings: *const DescriptorSetLayoutBinding,
 }
-impl Default for DescriptorSetLayoutCreateInfo {
+impl ::std::default::Default for DescriptorSetLayoutCreateInfo {
     fn default() -> DescriptorSetLayoutCreateInfo {
         DescriptorSetLayoutCreateInfo {
             s_type: StructureType::DESCRIPTOR_SET_LAYOUT_CREATE_INFO,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             flags: DescriptorSetLayoutCreateFlags::default(),
-            binding_count: 0,
-            p_bindings: ::std::ptr::null(),
+            binding_count: uint32_t::default(),
+            p_bindings: unsafe { ::std::mem::zeroed() },
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct DescriptorPoolSize {
     pub ty: DescriptorType,
     pub descriptor_count: uint32_t,
@@ -5799,15 +5890,15 @@ pub struct DescriptorPoolCreateInfo {
     pub pool_size_count: uint32_t,
     pub p_pool_sizes: *const DescriptorPoolSize,
 }
-impl Default for DescriptorPoolCreateInfo {
+impl ::std::default::Default for DescriptorPoolCreateInfo {
     fn default() -> DescriptorPoolCreateInfo {
         DescriptorPoolCreateInfo {
             s_type: StructureType::DESCRIPTOR_POOL_CREATE_INFO,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             flags: DescriptorPoolCreateFlags::default(),
-            max_sets: 0,
-            pool_size_count: 0,
-            p_pool_sizes: ::std::ptr::null(),
+            max_sets: uint32_t::default(),
+            pool_size_count: uint32_t::default(),
+            p_pool_sizes: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -5820,19 +5911,19 @@ pub struct DescriptorSetAllocateInfo {
     pub descriptor_set_count: uint32_t,
     pub p_set_layouts: *const DescriptorSetLayout,
 }
-impl Default for DescriptorSetAllocateInfo {
+impl ::std::default::Default for DescriptorSetAllocateInfo {
     fn default() -> DescriptorSetAllocateInfo {
         DescriptorSetAllocateInfo {
             s_type: StructureType::DESCRIPTOR_SET_ALLOCATE_INFO,
-            p_next: ::std::ptr::null(),
-            descriptor_pool: DescriptorPool::null(),
-            descriptor_set_count: 0,
-            p_set_layouts: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
+            descriptor_pool: DescriptorPool::default(),
+            descriptor_set_count: uint32_t::default(),
+            p_set_layouts: unsafe { ::std::mem::zeroed() },
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct SpecializationMapEntry {
     pub constant_id: uint32_t,
     pub offset: uint32_t,
@@ -5846,13 +5937,13 @@ pub struct SpecializationInfo {
     pub data_size: size_t,
     pub p_data: *const c_void,
 }
-impl Default for SpecializationInfo {
+impl ::std::default::Default for SpecializationInfo {
     fn default() -> SpecializationInfo {
         SpecializationInfo {
-            map_entry_count: 0,
-            p_map_entries: ::std::ptr::null(),
-            data_size: 0,
-            p_data: ::std::ptr::null(),
+            map_entry_count: uint32_t::default(),
+            p_map_entries: unsafe { ::std::mem::zeroed() },
+            data_size: size_t::default(),
+            p_data: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -5867,16 +5958,16 @@ pub struct PipelineShaderStageCreateInfo {
     pub p_name: *const c_char,
     pub p_specialization_info: *const SpecializationInfo,
 }
-impl Default for PipelineShaderStageCreateInfo {
+impl ::std::default::Default for PipelineShaderStageCreateInfo {
     fn default() -> PipelineShaderStageCreateInfo {
         PipelineShaderStageCreateInfo {
             s_type: StructureType::PIPELINE_SHADER_STAGE_CREATE_INFO,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             flags: PipelineShaderStageCreateFlags::default(),
             stage: ShaderStageFlags::default(),
-            module: ShaderModule::null(),
-            p_name: ::std::ptr::null(),
-            p_specialization_info: ::std::ptr::null(),
+            module: ShaderModule::default(),
+            p_name: unsafe { ::std::mem::zeroed() },
+            p_specialization_info: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -5891,28 +5982,28 @@ pub struct ComputePipelineCreateInfo {
     pub base_pipeline_handle: Pipeline,
     pub base_pipeline_index: int32_t,
 }
-impl Default for ComputePipelineCreateInfo {
+impl ::std::default::Default for ComputePipelineCreateInfo {
     fn default() -> ComputePipelineCreateInfo {
         ComputePipelineCreateInfo {
             s_type: StructureType::COMPUTE_PIPELINE_CREATE_INFO,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             flags: PipelineCreateFlags::default(),
             stage: PipelineShaderStageCreateInfo::default(),
-            layout: PipelineLayout::null(),
-            base_pipeline_handle: Pipeline::null(),
-            base_pipeline_index: 0,
+            layout: PipelineLayout::default(),
+            base_pipeline_handle: Pipeline::default(),
+            base_pipeline_index: int32_t::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct VertexInputBindingDescription {
     pub binding: uint32_t,
     pub stride: uint32_t,
     pub input_rate: VertexInputRate,
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct VertexInputAttributeDescription {
     pub location: uint32_t,
     pub binding: uint32_t,
@@ -5930,16 +6021,16 @@ pub struct PipelineVertexInputStateCreateInfo {
     pub vertex_attribute_description_count: uint32_t,
     pub p_vertex_attribute_descriptions: *const VertexInputAttributeDescription,
 }
-impl Default for PipelineVertexInputStateCreateInfo {
+impl ::std::default::Default for PipelineVertexInputStateCreateInfo {
     fn default() -> PipelineVertexInputStateCreateInfo {
         PipelineVertexInputStateCreateInfo {
             s_type: StructureType::PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             flags: PipelineVertexInputStateCreateFlags::default(),
-            vertex_binding_description_count: 0,
-            p_vertex_binding_descriptions: ::std::ptr::null(),
-            vertex_attribute_description_count: 0,
-            p_vertex_attribute_descriptions: ::std::ptr::null(),
+            vertex_binding_description_count: uint32_t::default(),
+            p_vertex_binding_descriptions: unsafe { ::std::mem::zeroed() },
+            vertex_attribute_description_count: uint32_t::default(),
+            p_vertex_attribute_descriptions: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -5952,11 +6043,11 @@ pub struct PipelineInputAssemblyStateCreateInfo {
     pub topology: PrimitiveTopology,
     pub primitive_restart_enable: Bool32,
 }
-impl Default for PipelineInputAssemblyStateCreateInfo {
+impl ::std::default::Default for PipelineInputAssemblyStateCreateInfo {
     fn default() -> PipelineInputAssemblyStateCreateInfo {
         PipelineInputAssemblyStateCreateInfo {
             s_type: StructureType::PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             flags: PipelineInputAssemblyStateCreateFlags::default(),
             topology: PrimitiveTopology::default(),
             primitive_restart_enable: Bool32::default(),
@@ -5971,13 +6062,13 @@ pub struct PipelineTessellationStateCreateInfo {
     pub flags: PipelineTessellationStateCreateFlags,
     pub patch_control_points: uint32_t,
 }
-impl Default for PipelineTessellationStateCreateInfo {
+impl ::std::default::Default for PipelineTessellationStateCreateInfo {
     fn default() -> PipelineTessellationStateCreateInfo {
         PipelineTessellationStateCreateInfo {
             s_type: StructureType::PIPELINE_TESSELLATION_STATE_CREATE_INFO,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             flags: PipelineTessellationStateCreateFlags::default(),
-            patch_control_points: 0,
+            patch_control_points: uint32_t::default(),
         }
     }
 }
@@ -5992,16 +6083,16 @@ pub struct PipelineViewportStateCreateInfo {
     pub scissor_count: uint32_t,
     pub p_scissors: *const Rect2D,
 }
-impl Default for PipelineViewportStateCreateInfo {
+impl ::std::default::Default for PipelineViewportStateCreateInfo {
     fn default() -> PipelineViewportStateCreateInfo {
         PipelineViewportStateCreateInfo {
             s_type: StructureType::PIPELINE_VIEWPORT_STATE_CREATE_INFO,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             flags: PipelineViewportStateCreateFlags::default(),
-            viewport_count: 0,
-            p_viewports: ::std::ptr::null(),
-            scissor_count: 0,
-            p_scissors: ::std::ptr::null(),
+            viewport_count: uint32_t::default(),
+            p_viewports: unsafe { ::std::mem::zeroed() },
+            scissor_count: uint32_t::default(),
+            p_scissors: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -6022,11 +6113,11 @@ pub struct PipelineRasterizationStateCreateInfo {
     pub depth_bias_slope_factor: c_float,
     pub line_width: c_float,
 }
-impl Default for PipelineRasterizationStateCreateInfo {
+impl ::std::default::Default for PipelineRasterizationStateCreateInfo {
     fn default() -> PipelineRasterizationStateCreateInfo {
         PipelineRasterizationStateCreateInfo {
             s_type: StructureType::PIPELINE_RASTERIZATION_STATE_CREATE_INFO,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             flags: PipelineRasterizationStateCreateFlags::default(),
             depth_clamp_enable: Bool32::default(),
             rasterizer_discard_enable: Bool32::default(),
@@ -6034,10 +6125,10 @@ impl Default for PipelineRasterizationStateCreateInfo {
             cull_mode: CullModeFlags::default(),
             front_face: FrontFace::default(),
             depth_bias_enable: Bool32::default(),
-            depth_bias_constant_factor: 0.0,
-            depth_bias_clamp: 0.0,
-            depth_bias_slope_factor: 0.0,
-            line_width: 0.0,
+            depth_bias_constant_factor: c_float::default(),
+            depth_bias_clamp: c_float::default(),
+            depth_bias_slope_factor: c_float::default(),
+            line_width: c_float::default(),
         }
     }
 }
@@ -6054,23 +6145,23 @@ pub struct PipelineMultisampleStateCreateInfo {
     pub alpha_to_coverage_enable: Bool32,
     pub alpha_to_one_enable: Bool32,
 }
-impl Default for PipelineMultisampleStateCreateInfo {
+impl ::std::default::Default for PipelineMultisampleStateCreateInfo {
     fn default() -> PipelineMultisampleStateCreateInfo {
         PipelineMultisampleStateCreateInfo {
             s_type: StructureType::PIPELINE_MULTISAMPLE_STATE_CREATE_INFO,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             flags: PipelineMultisampleStateCreateFlags::default(),
             rasterization_samples: SampleCountFlags::default(),
             sample_shading_enable: Bool32::default(),
-            min_sample_shading: 0.0,
-            p_sample_mask: ::std::ptr::null(),
+            min_sample_shading: c_float::default(),
+            p_sample_mask: unsafe { ::std::mem::zeroed() },
             alpha_to_coverage_enable: Bool32::default(),
             alpha_to_one_enable: Bool32::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct PipelineColorBlendAttachmentState {
     pub blend_enable: Bool32,
     pub src_color_blend_factor: BlendFactor,
@@ -6109,6 +6200,20 @@ impl ::std::fmt::Debug for PipelineColorBlendStateCreateInfo {
             .finish()
     }
 }
+impl ::std::default::Default for PipelineColorBlendStateCreateInfo {
+    fn default() -> PipelineColorBlendStateCreateInfo {
+        PipelineColorBlendStateCreateInfo {
+            s_type: StructureType::PIPELINE_COLOR_BLEND_STATE_CREATE_INFO,
+            p_next: unsafe { ::std::mem::zeroed() },
+            flags: PipelineColorBlendStateCreateFlags::default(),
+            logic_op_enable: Bool32::default(),
+            logic_op: LogicOp::default(),
+            attachment_count: uint32_t::default(),
+            p_attachments: unsafe { ::std::mem::zeroed() },
+            blend_constants: unsafe { ::std::mem::zeroed() },
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct PipelineDynamicStateCreateInfo {
@@ -6118,19 +6223,19 @@ pub struct PipelineDynamicStateCreateInfo {
     pub dynamic_state_count: uint32_t,
     pub p_dynamic_states: *const DynamicState,
 }
-impl Default for PipelineDynamicStateCreateInfo {
+impl ::std::default::Default for PipelineDynamicStateCreateInfo {
     fn default() -> PipelineDynamicStateCreateInfo {
         PipelineDynamicStateCreateInfo {
             s_type: StructureType::PIPELINE_DYNAMIC_STATE_CREATE_INFO,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             flags: PipelineDynamicStateCreateFlags::default(),
-            dynamic_state_count: 0,
-            p_dynamic_states: ::std::ptr::null(),
+            dynamic_state_count: uint32_t::default(),
+            p_dynamic_states: unsafe { ::std::mem::zeroed() },
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct StencilOpState {
     pub fail_op: StencilOp,
     pub pass_op: StencilOp,
@@ -6156,11 +6261,11 @@ pub struct PipelineDepthStencilStateCreateInfo {
     pub min_depth_bounds: c_float,
     pub max_depth_bounds: c_float,
 }
-impl Default for PipelineDepthStencilStateCreateInfo {
+impl ::std::default::Default for PipelineDepthStencilStateCreateInfo {
     fn default() -> PipelineDepthStencilStateCreateInfo {
         PipelineDepthStencilStateCreateInfo {
             s_type: StructureType::PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             flags: PipelineDepthStencilStateCreateFlags::default(),
             depth_test_enable: Bool32::default(),
             depth_write_enable: Bool32::default(),
@@ -6169,8 +6274,8 @@ impl Default for PipelineDepthStencilStateCreateInfo {
             stencil_test_enable: Bool32::default(),
             front: StencilOpState::default(),
             back: StencilOpState::default(),
-            min_depth_bounds: 0.0,
-            max_depth_bounds: 0.0,
+            min_depth_bounds: c_float::default(),
+            max_depth_bounds: c_float::default(),
         }
     }
 }
@@ -6197,28 +6302,28 @@ pub struct GraphicsPipelineCreateInfo {
     pub base_pipeline_handle: Pipeline,
     pub base_pipeline_index: int32_t,
 }
-impl Default for GraphicsPipelineCreateInfo {
+impl ::std::default::Default for GraphicsPipelineCreateInfo {
     fn default() -> GraphicsPipelineCreateInfo {
         GraphicsPipelineCreateInfo {
             s_type: StructureType::GRAPHICS_PIPELINE_CREATE_INFO,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             flags: PipelineCreateFlags::default(),
-            stage_count: 0,
-            p_stages: ::std::ptr::null(),
-            p_vertex_input_state: ::std::ptr::null(),
-            p_input_assembly_state: ::std::ptr::null(),
-            p_tessellation_state: ::std::ptr::null(),
-            p_viewport_state: ::std::ptr::null(),
-            p_rasterization_state: ::std::ptr::null(),
-            p_multisample_state: ::std::ptr::null(),
-            p_depth_stencil_state: ::std::ptr::null(),
-            p_color_blend_state: ::std::ptr::null(),
-            p_dynamic_state: ::std::ptr::null(),
-            layout: PipelineLayout::null(),
-            render_pass: RenderPass::null(),
-            subpass: 0,
-            base_pipeline_handle: Pipeline::null(),
-            base_pipeline_index: 0,
+            stage_count: uint32_t::default(),
+            p_stages: unsafe { ::std::mem::zeroed() },
+            p_vertex_input_state: unsafe { ::std::mem::zeroed() },
+            p_input_assembly_state: unsafe { ::std::mem::zeroed() },
+            p_tessellation_state: unsafe { ::std::mem::zeroed() },
+            p_viewport_state: unsafe { ::std::mem::zeroed() },
+            p_rasterization_state: unsafe { ::std::mem::zeroed() },
+            p_multisample_state: unsafe { ::std::mem::zeroed() },
+            p_depth_stencil_state: unsafe { ::std::mem::zeroed() },
+            p_color_blend_state: unsafe { ::std::mem::zeroed() },
+            p_dynamic_state: unsafe { ::std::mem::zeroed() },
+            layout: PipelineLayout::default(),
+            render_pass: RenderPass::default(),
+            subpass: uint32_t::default(),
+            base_pipeline_handle: Pipeline::default(),
+            base_pipeline_index: int32_t::default(),
         }
     }
 }
@@ -6231,19 +6336,19 @@ pub struct PipelineCacheCreateInfo {
     pub initial_data_size: size_t,
     pub p_initial_data: *const c_void,
 }
-impl Default for PipelineCacheCreateInfo {
+impl ::std::default::Default for PipelineCacheCreateInfo {
     fn default() -> PipelineCacheCreateInfo {
         PipelineCacheCreateInfo {
             s_type: StructureType::PIPELINE_CACHE_CREATE_INFO,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             flags: PipelineCacheCreateFlags::default(),
-            initial_data_size: 0,
-            p_initial_data: ::std::ptr::null(),
+            initial_data_size: size_t::default(),
+            p_initial_data: unsafe { ::std::mem::zeroed() },
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct PushConstantRange {
     pub stage_flags: ShaderStageFlags,
     pub offset: uint32_t,
@@ -6260,16 +6365,16 @@ pub struct PipelineLayoutCreateInfo {
     pub push_constant_range_count: uint32_t,
     pub p_push_constant_ranges: *const PushConstantRange,
 }
-impl Default for PipelineLayoutCreateInfo {
+impl ::std::default::Default for PipelineLayoutCreateInfo {
     fn default() -> PipelineLayoutCreateInfo {
         PipelineLayoutCreateInfo {
             s_type: StructureType::PIPELINE_LAYOUT_CREATE_INFO,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             flags: PipelineLayoutCreateFlags::default(),
-            set_layout_count: 0,
-            p_set_layouts: ::std::ptr::null(),
-            push_constant_range_count: 0,
-            p_push_constant_ranges: ::std::ptr::null(),
+            set_layout_count: uint32_t::default(),
+            p_set_layouts: unsafe { ::std::mem::zeroed() },
+            push_constant_range_count: uint32_t::default(),
+            p_push_constant_ranges: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -6295,11 +6400,11 @@ pub struct SamplerCreateInfo {
     pub border_color: BorderColor,
     pub unnormalized_coordinates: Bool32,
 }
-impl Default for SamplerCreateInfo {
+impl ::std::default::Default for SamplerCreateInfo {
     fn default() -> SamplerCreateInfo {
         SamplerCreateInfo {
             s_type: StructureType::SAMPLER_CREATE_INFO,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             flags: SamplerCreateFlags::default(),
             mag_filter: Filter::default(),
             min_filter: Filter::default(),
@@ -6307,13 +6412,13 @@ impl Default for SamplerCreateInfo {
             address_mode_u: SamplerAddressMode::default(),
             address_mode_v: SamplerAddressMode::default(),
             address_mode_w: SamplerAddressMode::default(),
-            mip_lod_bias: 0.0,
+            mip_lod_bias: c_float::default(),
             anisotropy_enable: Bool32::default(),
-            max_anisotropy: 0.0,
+            max_anisotropy: c_float::default(),
             compare_enable: Bool32::default(),
             compare_op: CompareOp::default(),
-            min_lod: 0.0,
-            max_lod: 0.0,
+            min_lod: c_float::default(),
+            max_lod: c_float::default(),
             border_color: BorderColor::default(),
             unnormalized_coordinates: Bool32::default(),
         }
@@ -6327,13 +6432,13 @@ pub struct CommandPoolCreateInfo {
     pub flags: CommandPoolCreateFlags,
     pub queue_family_index: uint32_t,
 }
-impl Default for CommandPoolCreateInfo {
+impl ::std::default::Default for CommandPoolCreateInfo {
     fn default() -> CommandPoolCreateInfo {
         CommandPoolCreateInfo {
             s_type: StructureType::COMMAND_POOL_CREATE_INFO,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             flags: CommandPoolCreateFlags::default(),
-            queue_family_index: 0,
+            queue_family_index: uint32_t::default(),
         }
     }
 }
@@ -6346,14 +6451,14 @@ pub struct CommandBufferAllocateInfo {
     pub level: CommandBufferLevel,
     pub command_buffer_count: uint32_t,
 }
-impl Default for CommandBufferAllocateInfo {
+impl ::std::default::Default for CommandBufferAllocateInfo {
     fn default() -> CommandBufferAllocateInfo {
         CommandBufferAllocateInfo {
             s_type: StructureType::COMMAND_BUFFER_ALLOCATE_INFO,
-            p_next: ::std::ptr::null(),
-            command_pool: CommandPool::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
+            command_pool: CommandPool::default(),
             level: CommandBufferLevel::default(),
-            command_buffer_count: 0,
+            command_buffer_count: uint32_t::default(),
         }
     }
 }
@@ -6369,14 +6474,14 @@ pub struct CommandBufferInheritanceInfo {
     pub query_flags: QueryControlFlags,
     pub pipeline_statistics: QueryPipelineStatisticFlags,
 }
-impl Default for CommandBufferInheritanceInfo {
+impl ::std::default::Default for CommandBufferInheritanceInfo {
     fn default() -> CommandBufferInheritanceInfo {
         CommandBufferInheritanceInfo {
             s_type: StructureType::COMMAND_BUFFER_INHERITANCE_INFO,
-            p_next: ::std::ptr::null(),
-            render_pass: RenderPass::null(),
-            subpass: 0,
-            framebuffer: Framebuffer::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
+            render_pass: RenderPass::default(),
+            subpass: uint32_t::default(),
+            framebuffer: Framebuffer::default(),
             occlusion_query_enable: Bool32::default(),
             query_flags: QueryControlFlags::default(),
             pipeline_statistics: QueryPipelineStatisticFlags::default(),
@@ -6391,13 +6496,13 @@ pub struct CommandBufferBeginInfo {
     pub flags: CommandBufferUsageFlags,
     pub p_inheritance_info: *const CommandBufferInheritanceInfo,
 }
-impl Default for CommandBufferBeginInfo {
+impl ::std::default::Default for CommandBufferBeginInfo {
     fn default() -> CommandBufferBeginInfo {
         CommandBufferBeginInfo {
             s_type: StructureType::COMMAND_BUFFER_BEGIN_INFO,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             flags: CommandBufferUsageFlags::default(),
-            p_inheritance_info: ::std::ptr::null(),
+            p_inheritance_info: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -6425,6 +6530,19 @@ impl ::std::fmt::Debug for RenderPassBeginInfo {
             .finish()
     }
 }
+impl ::std::default::Default for RenderPassBeginInfo {
+    fn default() -> RenderPassBeginInfo {
+        RenderPassBeginInfo {
+            s_type: StructureType::RENDER_PASS_BEGIN_INFO,
+            p_next: unsafe { ::std::mem::zeroed() },
+            render_pass: RenderPass::default(),
+            framebuffer: Framebuffer::default(),
+            render_area: Rect2D::default(),
+            clear_value_count: uint32_t::default(),
+            p_clear_values: unsafe { ::std::mem::zeroed() },
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub union ClearColorValue {
@@ -6432,13 +6550,13 @@ pub union ClearColorValue {
     pub int32: [int32_t; 4],
     pub uint32: [uint32_t; 4],
 }
-impl Default for ClearColorValue {
+impl ::std::default::Default for ClearColorValue {
     fn default() -> ClearColorValue {
-        ClearColorValue { float32: [0.0; 4] }
+        unsafe { ::std::mem::zeroed() }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct ClearDepthStencilValue {
     pub depth: c_float,
     pub stencil: uint32_t,
@@ -6449,11 +6567,9 @@ pub union ClearValue {
     pub color: ClearColorValue,
     pub depth_stencil: ClearDepthStencilValue,
 }
-impl Default for ClearValue {
+impl ::std::default::Default for ClearValue {
     fn default() -> ClearValue {
-        ClearValue {
-            color: ClearColorValue::default(),
-        }
+        unsafe { ::std::mem::zeroed() }
     }
 }
 #[repr(C)]
@@ -6473,7 +6589,7 @@ impl ::std::fmt::Debug for ClearAttachment {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct AttachmentDescription {
     pub flags: AttachmentDescriptionFlags,
     pub format: Format,
@@ -6486,7 +6602,7 @@ pub struct AttachmentDescription {
     pub final_layout: ImageLayout,
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct AttachmentReference {
     pub attachment: uint32_t,
     pub layout: ImageLayout,
@@ -6505,24 +6621,24 @@ pub struct SubpassDescription {
     pub preserve_attachment_count: uint32_t,
     pub p_preserve_attachments: *const uint32_t,
 }
-impl Default for SubpassDescription {
+impl ::std::default::Default for SubpassDescription {
     fn default() -> SubpassDescription {
         SubpassDescription {
             flags: SubpassDescriptionFlags::default(),
             pipeline_bind_point: PipelineBindPoint::default(),
-            input_attachment_count: 0,
-            p_input_attachments: ::std::ptr::null(),
-            color_attachment_count: 0,
-            p_color_attachments: ::std::ptr::null(),
-            p_resolve_attachments: ::std::ptr::null(),
-            p_depth_stencil_attachment: ::std::ptr::null(),
-            preserve_attachment_count: 0,
-            p_preserve_attachments: ::std::ptr::null(),
+            input_attachment_count: uint32_t::default(),
+            p_input_attachments: unsafe { ::std::mem::zeroed() },
+            color_attachment_count: uint32_t::default(),
+            p_color_attachments: unsafe { ::std::mem::zeroed() },
+            p_resolve_attachments: unsafe { ::std::mem::zeroed() },
+            p_depth_stencil_attachment: unsafe { ::std::mem::zeroed() },
+            preserve_attachment_count: uint32_t::default(),
+            p_preserve_attachments: unsafe { ::std::mem::zeroed() },
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct SubpassDependency {
     pub src_subpass: uint32_t,
     pub dst_subpass: uint32_t,
@@ -6545,18 +6661,18 @@ pub struct RenderPassCreateInfo {
     pub dependency_count: uint32_t,
     pub p_dependencies: *const SubpassDependency,
 }
-impl Default for RenderPassCreateInfo {
+impl ::std::default::Default for RenderPassCreateInfo {
     fn default() -> RenderPassCreateInfo {
         RenderPassCreateInfo {
             s_type: StructureType::RENDER_PASS_CREATE_INFO,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             flags: RenderPassCreateFlags::default(),
-            attachment_count: 0,
-            p_attachments: ::std::ptr::null(),
-            subpass_count: 0,
-            p_subpasses: ::std::ptr::null(),
-            dependency_count: 0,
-            p_dependencies: ::std::ptr::null(),
+            attachment_count: uint32_t::default(),
+            p_attachments: unsafe { ::std::mem::zeroed() },
+            subpass_count: uint32_t::default(),
+            p_subpasses: unsafe { ::std::mem::zeroed() },
+            dependency_count: uint32_t::default(),
+            p_dependencies: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -6567,11 +6683,11 @@ pub struct EventCreateInfo {
     pub p_next: *const c_void,
     pub flags: EventCreateFlags,
 }
-impl Default for EventCreateInfo {
+impl ::std::default::Default for EventCreateInfo {
     fn default() -> EventCreateInfo {
         EventCreateInfo {
             s_type: StructureType::EVENT_CREATE_INFO,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             flags: EventCreateFlags::default(),
         }
     }
@@ -6583,17 +6699,17 @@ pub struct FenceCreateInfo {
     pub p_next: *const c_void,
     pub flags: FenceCreateFlags,
 }
-impl Default for FenceCreateInfo {
+impl ::std::default::Default for FenceCreateInfo {
     fn default() -> FenceCreateInfo {
         FenceCreateInfo {
             s_type: StructureType::FENCE_CREATE_INFO,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             flags: FenceCreateFlags::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct PhysicalDeviceFeatures {
     pub robust_buffer_access: Bool32,
     pub full_draw_index_uint32: Bool32,
@@ -6652,7 +6768,7 @@ pub struct PhysicalDeviceFeatures {
     pub inherited_queries: Bool32,
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct PhysicalDeviceSparseProperties {
     pub residency_standard2_d_block_shape: Bool32,
     pub residency_standard2_d_multisample_block_shape: Bool32,
@@ -7065,6 +7181,118 @@ impl ::std::fmt::Debug for PhysicalDeviceLimits {
             .finish()
     }
 }
+impl ::std::default::Default for PhysicalDeviceLimits {
+    fn default() -> PhysicalDeviceLimits {
+        PhysicalDeviceLimits {
+            max_image_dimension1_d: uint32_t::default(),
+            max_image_dimension2_d: uint32_t::default(),
+            max_image_dimension3_d: uint32_t::default(),
+            max_image_dimension_cube: uint32_t::default(),
+            max_image_array_layers: uint32_t::default(),
+            max_texel_buffer_elements: uint32_t::default(),
+            max_uniform_buffer_range: uint32_t::default(),
+            max_storage_buffer_range: uint32_t::default(),
+            max_push_constants_size: uint32_t::default(),
+            max_memory_allocation_count: uint32_t::default(),
+            max_sampler_allocation_count: uint32_t::default(),
+            buffer_image_granularity: DeviceSize::default(),
+            sparse_address_space_size: DeviceSize::default(),
+            max_bound_descriptor_sets: uint32_t::default(),
+            max_per_stage_descriptor_samplers: uint32_t::default(),
+            max_per_stage_descriptor_uniform_buffers: uint32_t::default(),
+            max_per_stage_descriptor_storage_buffers: uint32_t::default(),
+            max_per_stage_descriptor_sampled_images: uint32_t::default(),
+            max_per_stage_descriptor_storage_images: uint32_t::default(),
+            max_per_stage_descriptor_input_attachments: uint32_t::default(),
+            max_per_stage_resources: uint32_t::default(),
+            max_descriptor_set_samplers: uint32_t::default(),
+            max_descriptor_set_uniform_buffers: uint32_t::default(),
+            max_descriptor_set_uniform_buffers_dynamic: uint32_t::default(),
+            max_descriptor_set_storage_buffers: uint32_t::default(),
+            max_descriptor_set_storage_buffers_dynamic: uint32_t::default(),
+            max_descriptor_set_sampled_images: uint32_t::default(),
+            max_descriptor_set_storage_images: uint32_t::default(),
+            max_descriptor_set_input_attachments: uint32_t::default(),
+            max_vertex_input_attributes: uint32_t::default(),
+            max_vertex_input_bindings: uint32_t::default(),
+            max_vertex_input_attribute_offset: uint32_t::default(),
+            max_vertex_input_binding_stride: uint32_t::default(),
+            max_vertex_output_components: uint32_t::default(),
+            max_tessellation_generation_level: uint32_t::default(),
+            max_tessellation_patch_size: uint32_t::default(),
+            max_tessellation_control_per_vertex_input_components: uint32_t::default(),
+            max_tessellation_control_per_vertex_output_components: uint32_t::default(),
+            max_tessellation_control_per_patch_output_components: uint32_t::default(),
+            max_tessellation_control_total_output_components: uint32_t::default(),
+            max_tessellation_evaluation_input_components: uint32_t::default(),
+            max_tessellation_evaluation_output_components: uint32_t::default(),
+            max_geometry_shader_invocations: uint32_t::default(),
+            max_geometry_input_components: uint32_t::default(),
+            max_geometry_output_components: uint32_t::default(),
+            max_geometry_output_vertices: uint32_t::default(),
+            max_geometry_total_output_components: uint32_t::default(),
+            max_fragment_input_components: uint32_t::default(),
+            max_fragment_output_attachments: uint32_t::default(),
+            max_fragment_dual_src_attachments: uint32_t::default(),
+            max_fragment_combined_output_resources: uint32_t::default(),
+            max_compute_shared_memory_size: uint32_t::default(),
+            max_compute_work_group_count: unsafe { ::std::mem::zeroed() },
+            max_compute_work_group_invocations: uint32_t::default(),
+            max_compute_work_group_size: unsafe { ::std::mem::zeroed() },
+            sub_pixel_precision_bits: uint32_t::default(),
+            sub_texel_precision_bits: uint32_t::default(),
+            mipmap_precision_bits: uint32_t::default(),
+            max_draw_indexed_index_value: uint32_t::default(),
+            max_draw_indirect_count: uint32_t::default(),
+            max_sampler_lod_bias: c_float::default(),
+            max_sampler_anisotropy: c_float::default(),
+            max_viewports: uint32_t::default(),
+            max_viewport_dimensions: unsafe { ::std::mem::zeroed() },
+            viewport_bounds_range: unsafe { ::std::mem::zeroed() },
+            viewport_sub_pixel_bits: uint32_t::default(),
+            min_memory_map_alignment: size_t::default(),
+            min_texel_buffer_offset_alignment: DeviceSize::default(),
+            min_uniform_buffer_offset_alignment: DeviceSize::default(),
+            min_storage_buffer_offset_alignment: DeviceSize::default(),
+            min_texel_offset: int32_t::default(),
+            max_texel_offset: uint32_t::default(),
+            min_texel_gather_offset: int32_t::default(),
+            max_texel_gather_offset: uint32_t::default(),
+            min_interpolation_offset: c_float::default(),
+            max_interpolation_offset: c_float::default(),
+            sub_pixel_interpolation_offset_bits: uint32_t::default(),
+            max_framebuffer_width: uint32_t::default(),
+            max_framebuffer_height: uint32_t::default(),
+            max_framebuffer_layers: uint32_t::default(),
+            framebuffer_color_sample_counts: SampleCountFlags::default(),
+            framebuffer_depth_sample_counts: SampleCountFlags::default(),
+            framebuffer_stencil_sample_counts: SampleCountFlags::default(),
+            framebuffer_no_attachments_sample_counts: SampleCountFlags::default(),
+            max_color_attachments: uint32_t::default(),
+            sampled_image_color_sample_counts: SampleCountFlags::default(),
+            sampled_image_integer_sample_counts: SampleCountFlags::default(),
+            sampled_image_depth_sample_counts: SampleCountFlags::default(),
+            sampled_image_stencil_sample_counts: SampleCountFlags::default(),
+            storage_image_sample_counts: SampleCountFlags::default(),
+            max_sample_mask_words: uint32_t::default(),
+            timestamp_compute_and_graphics: Bool32::default(),
+            timestamp_period: c_float::default(),
+            max_clip_distances: uint32_t::default(),
+            max_cull_distances: uint32_t::default(),
+            max_combined_clip_and_cull_distances: uint32_t::default(),
+            discrete_queue_priorities: uint32_t::default(),
+            point_size_range: unsafe { ::std::mem::zeroed() },
+            line_width_range: unsafe { ::std::mem::zeroed() },
+            point_size_granularity: c_float::default(),
+            line_width_granularity: c_float::default(),
+            strict_lines: Bool32::default(),
+            standard_sample_locations: Bool32::default(),
+            optimal_buffer_copy_offset_alignment: DeviceSize::default(),
+            optimal_buffer_copy_row_pitch_alignment: DeviceSize::default(),
+            non_coherent_atom_size: DeviceSize::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct SemaphoreCreateInfo {
@@ -7072,11 +7300,11 @@ pub struct SemaphoreCreateInfo {
     pub p_next: *const c_void,
     pub flags: SemaphoreCreateFlags,
 }
-impl Default for SemaphoreCreateInfo {
+impl ::std::default::Default for SemaphoreCreateInfo {
     fn default() -> SemaphoreCreateInfo {
         SemaphoreCreateInfo {
             s_type: StructureType::SEMAPHORE_CREATE_INFO,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             flags: SemaphoreCreateFlags::default(),
         }
     }
@@ -7091,14 +7319,14 @@ pub struct QueryPoolCreateInfo {
     pub query_count: uint32_t,
     pub pipeline_statistics: QueryPipelineStatisticFlags,
 }
-impl Default for QueryPoolCreateInfo {
+impl ::std::default::Default for QueryPoolCreateInfo {
     fn default() -> QueryPoolCreateInfo {
         QueryPoolCreateInfo {
             s_type: StructureType::QUERY_POOL_CREATE_INFO,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             flags: QueryPoolCreateFlags::default(),
             query_type: QueryType::default(),
-            query_count: 0,
+            query_count: uint32_t::default(),
             pipeline_statistics: QueryPipelineStatisticFlags::default(),
         }
     }
@@ -7116,23 +7344,23 @@ pub struct FramebufferCreateInfo {
     pub height: uint32_t,
     pub layers: uint32_t,
 }
-impl Default for FramebufferCreateInfo {
+impl ::std::default::Default for FramebufferCreateInfo {
     fn default() -> FramebufferCreateInfo {
         FramebufferCreateInfo {
             s_type: StructureType::FRAMEBUFFER_CREATE_INFO,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             flags: FramebufferCreateFlags::default(),
-            render_pass: RenderPass::null(),
-            attachment_count: 0,
-            p_attachments: ::std::ptr::null(),
-            width: 0,
-            height: 0,
-            layers: 0,
+            render_pass: RenderPass::default(),
+            attachment_count: uint32_t::default(),
+            p_attachments: unsafe { ::std::mem::zeroed() },
+            width: uint32_t::default(),
+            height: uint32_t::default(),
+            layers: uint32_t::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct DrawIndirectCommand {
     pub vertex_count: uint32_t,
     pub instance_count: uint32_t,
@@ -7140,7 +7368,7 @@ pub struct DrawIndirectCommand {
     pub first_instance: uint32_t,
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct DrawIndexedIndirectCommand {
     pub index_count: uint32_t,
     pub instance_count: uint32_t,
@@ -7149,7 +7377,7 @@ pub struct DrawIndexedIndirectCommand {
     pub first_instance: uint32_t,
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct DispatchIndirectCommand {
     pub x: uint32_t,
     pub y: uint32_t,
@@ -7168,18 +7396,18 @@ pub struct SubmitInfo {
     pub signal_semaphore_count: uint32_t,
     pub p_signal_semaphores: *const Semaphore,
 }
-impl Default for SubmitInfo {
+impl ::std::default::Default for SubmitInfo {
     fn default() -> SubmitInfo {
         SubmitInfo {
             s_type: StructureType::SUBMIT_INFO,
-            p_next: ::std::ptr::null(),
-            wait_semaphore_count: 0,
-            p_wait_semaphores: ::std::ptr::null(),
-            p_wait_dst_stage_mask: ::std::ptr::null(),
-            command_buffer_count: 0,
-            p_command_buffers: ::std::ptr::null(),
-            signal_semaphore_count: 0,
-            p_signal_semaphores: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
+            wait_semaphore_count: uint32_t::default(),
+            p_wait_semaphores: unsafe { ::std::mem::zeroed() },
+            p_wait_dst_stage_mask: unsafe { ::std::mem::zeroed() },
+            command_buffer_count: uint32_t::default(),
+            p_command_buffers: unsafe { ::std::mem::zeroed() },
+            signal_semaphore_count: uint32_t::default(),
+            p_signal_semaphores: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -7194,11 +7422,11 @@ pub struct DisplayPropertiesKHR {
     pub plane_reorder_possible: Bool32,
     pub persistent_content: Bool32,
 }
-impl Default for DisplayPropertiesKHR {
+impl ::std::default::Default for DisplayPropertiesKHR {
     fn default() -> DisplayPropertiesKHR {
         DisplayPropertiesKHR {
-            display: DisplayKHR::null(),
-            display_name: ::std::ptr::null(),
+            display: DisplayKHR::default(),
+            display_name: unsafe { ::std::mem::zeroed() },
             physical_dimensions: Extent2D::default(),
             physical_resolution: Extent2D::default(),
             supported_transforms: SurfaceTransformFlagsKHR::default(),
@@ -7208,7 +7436,7 @@ impl Default for DisplayPropertiesKHR {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct DisplayPlanePropertiesKHR {
     pub current_display: DisplayKHR,
     pub current_stack_index: uint32_t,
@@ -7222,13 +7450,13 @@ impl Default for DisplayPlanePropertiesKHR {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct DisplayModeParametersKHR {
     pub visible_region: Extent2D,
     pub refresh_rate: uint32_t,
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct DisplayModePropertiesKHR {
     pub display_mode: DisplayModeKHR,
     pub parameters: DisplayModeParametersKHR,
@@ -7249,18 +7477,18 @@ pub struct DisplayModeCreateInfoKHR {
     pub flags: DisplayModeCreateFlagsKHR,
     pub parameters: DisplayModeParametersKHR,
 }
-impl Default for DisplayModeCreateInfoKHR {
+impl ::std::default::Default for DisplayModeCreateInfoKHR {
     fn default() -> DisplayModeCreateInfoKHR {
         DisplayModeCreateInfoKHR {
             s_type: StructureType::DISPLAY_MODE_CREATE_INFO_KHR,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             flags: DisplayModeCreateFlagsKHR::default(),
             parameters: DisplayModeParametersKHR::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct DisplayPlaneCapabilitiesKHR {
     pub supported_alpha: DisplayPlaneAlphaFlagsKHR,
     pub min_src_position: Offset2D,
@@ -7286,17 +7514,17 @@ pub struct DisplaySurfaceCreateInfoKHR {
     pub alpha_mode: DisplayPlaneAlphaFlagsKHR,
     pub image_extent: Extent2D,
 }
-impl Default for DisplaySurfaceCreateInfoKHR {
+impl ::std::default::Default for DisplaySurfaceCreateInfoKHR {
     fn default() -> DisplaySurfaceCreateInfoKHR {
         DisplaySurfaceCreateInfoKHR {
             s_type: StructureType::DISPLAY_SURFACE_CREATE_INFO_KHR,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             flags: DisplaySurfaceCreateFlagsKHR::default(),
-            display_mode: DisplayModeKHR::null(),
-            plane_index: 0,
-            plane_stack_index: 0,
+            display_mode: DisplayModeKHR::default(),
+            plane_index: uint32_t::default(),
+            plane_stack_index: uint32_t::default(),
             transform: SurfaceTransformFlagsKHR::default(),
-            global_alpha: 0.0,
+            global_alpha: c_float::default(),
             alpha_mode: DisplayPlaneAlphaFlagsKHR::default(),
             image_extent: Extent2D::default(),
         }
@@ -7311,11 +7539,11 @@ pub struct DisplayPresentInfoKHR {
     pub dst_rect: Rect2D,
     pub persistent: Bool32,
 }
-impl Default for DisplayPresentInfoKHR {
+impl ::std::default::Default for DisplayPresentInfoKHR {
     fn default() -> DisplayPresentInfoKHR {
         DisplayPresentInfoKHR {
             s_type: StructureType::DISPLAY_PRESENT_INFO_KHR,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             src_rect: Rect2D::default(),
             dst_rect: Rect2D::default(),
             persistent: Bool32::default(),
@@ -7323,7 +7551,7 @@ impl Default for DisplayPresentInfoKHR {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct SurfaceCapabilitiesKHR {
     pub min_image_count: uint32_t,
     pub max_image_count: uint32_t,
@@ -7344,13 +7572,13 @@ pub struct AndroidSurfaceCreateInfoKHR {
     pub flags: AndroidSurfaceCreateFlagsKHR,
     pub window: *const ANativeWindow,
 }
-impl Default for AndroidSurfaceCreateInfoKHR {
+impl ::std::default::Default for AndroidSurfaceCreateInfoKHR {
     fn default() -> AndroidSurfaceCreateInfoKHR {
         AndroidSurfaceCreateInfoKHR {
             s_type: StructureType::ANDROID_SURFACE_CREATE_INFO_KHR,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             flags: AndroidSurfaceCreateFlagsKHR::default(),
-            window: ::std::ptr::null(),
+            window: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -7363,14 +7591,14 @@ pub struct MirSurfaceCreateInfoKHR {
     pub connection: *const MirConnection,
     pub mir_surface: *const MirSurface,
 }
-impl Default for MirSurfaceCreateInfoKHR {
+impl ::std::default::Default for MirSurfaceCreateInfoKHR {
     fn default() -> MirSurfaceCreateInfoKHR {
         MirSurfaceCreateInfoKHR {
             s_type: StructureType::MIR_SURFACE_CREATE_INFO_KHR,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             flags: MirSurfaceCreateFlagsKHR::default(),
-            connection: ::std::ptr::null(),
-            mir_surface: ::std::ptr::null(),
+            connection: unsafe { ::std::mem::zeroed() },
+            mir_surface: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -7382,13 +7610,13 @@ pub struct ViSurfaceCreateInfoNN {
     pub flags: ViSurfaceCreateFlagsNN,
     pub window: *const c_void,
 }
-impl Default for ViSurfaceCreateInfoNN {
+impl ::std::default::Default for ViSurfaceCreateInfoNN {
     fn default() -> ViSurfaceCreateInfoNN {
         ViSurfaceCreateInfoNN {
             s_type: StructureType::VI_SURFACE_CREATE_INFO_NN,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             flags: ViSurfaceCreateFlagsNN::default(),
-            window: ::std::ptr::null(),
+            window: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -7401,14 +7629,14 @@ pub struct WaylandSurfaceCreateInfoKHR {
     pub display: *const wl_display,
     pub surface: *const wl_surface,
 }
-impl Default for WaylandSurfaceCreateInfoKHR {
+impl ::std::default::Default for WaylandSurfaceCreateInfoKHR {
     fn default() -> WaylandSurfaceCreateInfoKHR {
         WaylandSurfaceCreateInfoKHR {
             s_type: StructureType::WAYLAND_SURFACE_CREATE_INFO_KHR,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             flags: WaylandSurfaceCreateFlagsKHR::default(),
-            display: ::std::ptr::null(),
-            surface: ::std::ptr::null(),
+            display: unsafe { ::std::mem::zeroed() },
+            surface: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -7421,14 +7649,14 @@ pub struct Win32SurfaceCreateInfoKHR {
     pub hinstance: HINSTANCE,
     pub hwnd: HWND,
 }
-impl Default for Win32SurfaceCreateInfoKHR {
+impl ::std::default::Default for Win32SurfaceCreateInfoKHR {
     fn default() -> Win32SurfaceCreateInfoKHR {
         Win32SurfaceCreateInfoKHR {
             s_type: StructureType::WIN32_SURFACE_CREATE_INFO_KHR,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             flags: Win32SurfaceCreateFlagsKHR::default(),
-            hinstance: ::std::ptr::null(),
-            hwnd: ::std::ptr::null(),
+            hinstance: unsafe { ::std::mem::zeroed() },
+            hwnd: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -7441,14 +7669,14 @@ pub struct XlibSurfaceCreateInfoKHR {
     pub dpy: *const Display,
     pub window: Window,
 }
-impl Default for XlibSurfaceCreateInfoKHR {
+impl ::std::default::Default for XlibSurfaceCreateInfoKHR {
     fn default() -> XlibSurfaceCreateInfoKHR {
         XlibSurfaceCreateInfoKHR {
             s_type: StructureType::XLIB_SURFACE_CREATE_INFO_KHR,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             flags: XlibSurfaceCreateFlagsKHR::default(),
-            dpy: ::std::ptr::null(),
-            window: 0,
+            dpy: unsafe { ::std::mem::zeroed() },
+            window: Window::default(),
         }
     }
 }
@@ -7461,19 +7689,19 @@ pub struct XcbSurfaceCreateInfoKHR {
     pub connection: *const xcb_connection_t,
     pub window: xcb_window_t,
 }
-impl Default for XcbSurfaceCreateInfoKHR {
+impl ::std::default::Default for XcbSurfaceCreateInfoKHR {
     fn default() -> XcbSurfaceCreateInfoKHR {
         XcbSurfaceCreateInfoKHR {
             s_type: StructureType::XCB_SURFACE_CREATE_INFO_KHR,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             flags: XcbSurfaceCreateFlagsKHR::default(),
-            connection: ::std::ptr::null(),
-            window: 0,
+            connection: unsafe { ::std::mem::zeroed() },
+            window: xcb_window_t::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct SurfaceFormatKHR {
     pub format: Format,
     pub color_space: ColorSpaceKHR,
@@ -7500,27 +7728,27 @@ pub struct SwapchainCreateInfoKHR {
     pub clipped: Bool32,
     pub old_swapchain: SwapchainKHR,
 }
-impl Default for SwapchainCreateInfoKHR {
+impl ::std::default::Default for SwapchainCreateInfoKHR {
     fn default() -> SwapchainCreateInfoKHR {
         SwapchainCreateInfoKHR {
             s_type: StructureType::SWAPCHAIN_CREATE_INFO_KHR,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             flags: SwapchainCreateFlagsKHR::default(),
-            surface: SurfaceKHR::null(),
-            min_image_count: 0,
+            surface: SurfaceKHR::default(),
+            min_image_count: uint32_t::default(),
             image_format: Format::default(),
             image_color_space: ColorSpaceKHR::default(),
             image_extent: Extent2D::default(),
-            image_array_layers: 0,
+            image_array_layers: uint32_t::default(),
             image_usage: ImageUsageFlags::default(),
             image_sharing_mode: SharingMode::default(),
-            queue_family_index_count: 0,
-            p_queue_family_indices: ::std::ptr::null(),
+            queue_family_index_count: uint32_t::default(),
+            p_queue_family_indices: unsafe { ::std::mem::zeroed() },
             pre_transform: SurfaceTransformFlagsKHR::default(),
             composite_alpha: CompositeAlphaFlagsKHR::default(),
             present_mode: PresentModeKHR::default(),
             clipped: Bool32::default(),
-            old_swapchain: SwapchainKHR::null(),
+            old_swapchain: SwapchainKHR::default(),
         }
     }
 }
@@ -7536,17 +7764,17 @@ pub struct PresentInfoKHR {
     pub p_image_indices: *const uint32_t,
     pub p_results: *const Result,
 }
-impl Default for PresentInfoKHR {
+impl ::std::default::Default for PresentInfoKHR {
     fn default() -> PresentInfoKHR {
         PresentInfoKHR {
             s_type: StructureType::PRESENT_INFO_KHR,
-            p_next: ::std::ptr::null(),
-            wait_semaphore_count: 0,
-            p_wait_semaphores: ::std::ptr::null(),
-            swapchain_count: 0,
-            p_swapchains: ::std::ptr::null(),
-            p_image_indices: ::std::ptr::null(),
-            p_results: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
+            wait_semaphore_count: uint32_t::default(),
+            p_wait_semaphores: unsafe { ::std::mem::zeroed() },
+            swapchain_count: uint32_t::default(),
+            p_swapchains: unsafe { ::std::mem::zeroed() },
+            p_image_indices: unsafe { ::std::mem::zeroed() },
+            p_results: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -7570,6 +7798,17 @@ impl ::std::fmt::Debug for DebugReportCallbackCreateInfoEXT {
             .finish()
     }
 }
+impl ::std::default::Default for DebugReportCallbackCreateInfoEXT {
+    fn default() -> DebugReportCallbackCreateInfoEXT {
+        DebugReportCallbackCreateInfoEXT {
+            s_type: StructureType::DEBUG_REPORT_CALLBACK_CREATE_INFO_EXT,
+            p_next: unsafe { ::std::mem::zeroed() },
+            flags: DebugReportFlagsEXT::default(),
+            pfn_callback: unsafe { ::std::mem::zeroed() },
+            p_user_data: unsafe { ::std::mem::zeroed() },
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct ValidationFlagsEXT {
@@ -7578,13 +7817,13 @@ pub struct ValidationFlagsEXT {
     pub disabled_validation_check_count: uint32_t,
     pub p_disabled_validation_checks: *const ValidationCheckEXT,
 }
-impl Default for ValidationFlagsEXT {
+impl ::std::default::Default for ValidationFlagsEXT {
     fn default() -> ValidationFlagsEXT {
         ValidationFlagsEXT {
             s_type: StructureType::VALIDATION_FLAGS_EXT,
-            p_next: ::std::ptr::null(),
-            disabled_validation_check_count: 0,
-            p_disabled_validation_checks: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
+            disabled_validation_check_count: uint32_t::default(),
+            p_disabled_validation_checks: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -7595,11 +7834,11 @@ pub struct PipelineRasterizationStateRasterizationOrderAMD {
     pub p_next: *const c_void,
     pub rasterization_order: RasterizationOrderAMD,
 }
-impl Default for PipelineRasterizationStateRasterizationOrderAMD {
+impl ::std::default::Default for PipelineRasterizationStateRasterizationOrderAMD {
     fn default() -> PipelineRasterizationStateRasterizationOrderAMD {
         PipelineRasterizationStateRasterizationOrderAMD {
             s_type: StructureType::PIPELINE_RASTERIZATION_STATE_RASTERIZATION_ORDER_AMD,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             rasterization_order: RasterizationOrderAMD::default(),
         }
     }
@@ -7613,14 +7852,14 @@ pub struct DebugMarkerObjectNameInfoEXT {
     pub object: uint64_t,
     pub p_object_name: *const c_char,
 }
-impl Default for DebugMarkerObjectNameInfoEXT {
+impl ::std::default::Default for DebugMarkerObjectNameInfoEXT {
     fn default() -> DebugMarkerObjectNameInfoEXT {
         DebugMarkerObjectNameInfoEXT {
             s_type: StructureType::DEBUG_MARKER_OBJECT_NAME_INFO_EXT,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             object_type: DebugReportObjectTypeEXT::default(),
-            object: 0,
-            p_object_name: ::std::ptr::null(),
+            object: uint64_t::default(),
+            p_object_name: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -7635,16 +7874,16 @@ pub struct DebugMarkerObjectTagInfoEXT {
     pub tag_size: size_t,
     pub p_tag: *const c_void,
 }
-impl Default for DebugMarkerObjectTagInfoEXT {
+impl ::std::default::Default for DebugMarkerObjectTagInfoEXT {
     fn default() -> DebugMarkerObjectTagInfoEXT {
         DebugMarkerObjectTagInfoEXT {
             s_type: StructureType::DEBUG_MARKER_OBJECT_TAG_INFO_EXT,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             object_type: DebugReportObjectTypeEXT::default(),
-            object: 0,
-            tag_name: 0,
-            tag_size: 0,
-            p_tag: ::std::ptr::null(),
+            object: uint64_t::default(),
+            tag_name: uint64_t::default(),
+            tag_size: size_t::default(),
+            p_tag: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -7668,6 +7907,16 @@ impl ::std::fmt::Debug for DebugMarkerMarkerInfoEXT {
             .finish()
     }
 }
+impl ::std::default::Default for DebugMarkerMarkerInfoEXT {
+    fn default() -> DebugMarkerMarkerInfoEXT {
+        DebugMarkerMarkerInfoEXT {
+            s_type: StructureType::DEBUG_MARKER_MARKER_INFO_EXT,
+            p_next: unsafe { ::std::mem::zeroed() },
+            p_marker_name: unsafe { ::std::mem::zeroed() },
+            color: unsafe { ::std::mem::zeroed() },
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct DedicatedAllocationImageCreateInfoNV {
@@ -7675,11 +7924,11 @@ pub struct DedicatedAllocationImageCreateInfoNV {
     pub p_next: *const c_void,
     pub dedicated_allocation: Bool32,
 }
-impl Default for DedicatedAllocationImageCreateInfoNV {
+impl ::std::default::Default for DedicatedAllocationImageCreateInfoNV {
     fn default() -> DedicatedAllocationImageCreateInfoNV {
         DedicatedAllocationImageCreateInfoNV {
             s_type: StructureType::DEDICATED_ALLOCATION_IMAGE_CREATE_INFO_NV,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             dedicated_allocation: Bool32::default(),
         }
     }
@@ -7691,11 +7940,11 @@ pub struct DedicatedAllocationBufferCreateInfoNV {
     pub p_next: *const c_void,
     pub dedicated_allocation: Bool32,
 }
-impl Default for DedicatedAllocationBufferCreateInfoNV {
+impl ::std::default::Default for DedicatedAllocationBufferCreateInfoNV {
     fn default() -> DedicatedAllocationBufferCreateInfoNV {
         DedicatedAllocationBufferCreateInfoNV {
             s_type: StructureType::DEDICATED_ALLOCATION_BUFFER_CREATE_INFO_NV,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             dedicated_allocation: Bool32::default(),
         }
     }
@@ -7708,18 +7957,18 @@ pub struct DedicatedAllocationMemoryAllocateInfoNV {
     pub image: Image,
     pub buffer: Buffer,
 }
-impl Default for DedicatedAllocationMemoryAllocateInfoNV {
+impl ::std::default::Default for DedicatedAllocationMemoryAllocateInfoNV {
     fn default() -> DedicatedAllocationMemoryAllocateInfoNV {
         DedicatedAllocationMemoryAllocateInfoNV {
             s_type: StructureType::DEDICATED_ALLOCATION_MEMORY_ALLOCATE_INFO_NV,
-            p_next: ::std::ptr::null(),
-            image: Image::null(),
-            buffer: Buffer::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
+            image: Image::default(),
+            buffer: Buffer::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct ExternalImageFormatPropertiesNV {
     pub image_format_properties: ImageFormatProperties,
     pub external_memory_features: ExternalMemoryFeatureFlagsNV,
@@ -7733,11 +7982,11 @@ pub struct ExternalMemoryImageCreateInfoNV {
     pub p_next: *const c_void,
     pub handle_types: ExternalMemoryHandleTypeFlagsNV,
 }
-impl Default for ExternalMemoryImageCreateInfoNV {
+impl ::std::default::Default for ExternalMemoryImageCreateInfoNV {
     fn default() -> ExternalMemoryImageCreateInfoNV {
         ExternalMemoryImageCreateInfoNV {
             s_type: StructureType::EXTERNAL_MEMORY_IMAGE_CREATE_INFO_NV,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             handle_types: ExternalMemoryHandleTypeFlagsNV::default(),
         }
     }
@@ -7749,11 +7998,11 @@ pub struct ExportMemoryAllocateInfoNV {
     pub p_next: *const c_void,
     pub handle_types: ExternalMemoryHandleTypeFlagsNV,
 }
-impl Default for ExportMemoryAllocateInfoNV {
+impl ::std::default::Default for ExportMemoryAllocateInfoNV {
     fn default() -> ExportMemoryAllocateInfoNV {
         ExportMemoryAllocateInfoNV {
             s_type: StructureType::EXPORT_MEMORY_ALLOCATE_INFO_NV,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             handle_types: ExternalMemoryHandleTypeFlagsNV::default(),
         }
     }
@@ -7766,13 +8015,13 @@ pub struct ImportMemoryWin32HandleInfoNV {
     pub handle_type: ExternalMemoryHandleTypeFlagsNV,
     pub handle: HANDLE,
 }
-impl Default for ImportMemoryWin32HandleInfoNV {
+impl ::std::default::Default for ImportMemoryWin32HandleInfoNV {
     fn default() -> ImportMemoryWin32HandleInfoNV {
         ImportMemoryWin32HandleInfoNV {
             s_type: StructureType::IMPORT_MEMORY_WIN32_HANDLE_INFO_NV,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             handle_type: ExternalMemoryHandleTypeFlagsNV::default(),
-            handle: ::std::ptr::null_mut(),
+            handle: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -7784,13 +8033,13 @@ pub struct ExportMemoryWin32HandleInfoNV {
     pub p_attributes: *const SECURITY_ATTRIBUTES,
     pub dw_access: DWORD,
 }
-impl Default for ExportMemoryWin32HandleInfoNV {
+impl ::std::default::Default for ExportMemoryWin32HandleInfoNV {
     fn default() -> ExportMemoryWin32HandleInfoNV {
         ExportMemoryWin32HandleInfoNV {
             s_type: StructureType::EXPORT_MEMORY_WIN32_HANDLE_INFO_NV,
-            p_next: ::std::ptr::null(),
-            p_attributes: ::std::ptr::null(),
-            dw_access: 0,
+            p_next: unsafe { ::std::mem::zeroed() },
+            p_attributes: unsafe { ::std::mem::zeroed() },
+            dw_access: DWORD::default(),
         }
     }
 }
@@ -7807,18 +8056,18 @@ pub struct Win32KeyedMutexAcquireReleaseInfoNV {
     pub p_release_syncs: *const DeviceMemory,
     pub p_release_keys: *const uint64_t,
 }
-impl Default for Win32KeyedMutexAcquireReleaseInfoNV {
+impl ::std::default::Default for Win32KeyedMutexAcquireReleaseInfoNV {
     fn default() -> Win32KeyedMutexAcquireReleaseInfoNV {
         Win32KeyedMutexAcquireReleaseInfoNV {
             s_type: StructureType::WIN32_KEYED_MUTEX_ACQUIRE_RELEASE_INFO_NV,
-            p_next: ::std::ptr::null(),
-            acquire_count: 0,
-            p_acquire_syncs: ::std::ptr::null(),
-            p_acquire_keys: ::std::ptr::null(),
-            p_acquire_timeout_milliseconds: ::std::ptr::null(),
-            release_count: 0,
-            p_release_syncs: ::std::ptr::null(),
-            p_release_keys: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
+            acquire_count: uint32_t::default(),
+            p_acquire_syncs: unsafe { ::std::mem::zeroed() },
+            p_acquire_keys: unsafe { ::std::mem::zeroed() },
+            p_acquire_timeout_milliseconds: unsafe { ::std::mem::zeroed() },
+            release_count: uint32_t::default(),
+            p_release_syncs: unsafe { ::std::mem::zeroed() },
+            p_release_keys: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -7829,11 +8078,11 @@ pub struct DeviceGeneratedCommandsFeaturesNVX {
     pub p_next: *const c_void,
     pub compute_binding_point_support: Bool32,
 }
-impl Default for DeviceGeneratedCommandsFeaturesNVX {
+impl ::std::default::Default for DeviceGeneratedCommandsFeaturesNVX {
     fn default() -> DeviceGeneratedCommandsFeaturesNVX {
         DeviceGeneratedCommandsFeaturesNVX {
             s_type: StructureType::DEVICE_GENERATED_COMMANDS_FEATURES_NVX,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             compute_binding_point_support: Bool32::default(),
         }
     }
@@ -7849,21 +8098,21 @@ pub struct DeviceGeneratedCommandsLimitsNVX {
     pub min_sequence_index_buffer_offset_alignment: uint32_t,
     pub min_commands_token_buffer_offset_alignment: uint32_t,
 }
-impl Default for DeviceGeneratedCommandsLimitsNVX {
+impl ::std::default::Default for DeviceGeneratedCommandsLimitsNVX {
     fn default() -> DeviceGeneratedCommandsLimitsNVX {
         DeviceGeneratedCommandsLimitsNVX {
             s_type: StructureType::DEVICE_GENERATED_COMMANDS_LIMITS_NVX,
-            p_next: ::std::ptr::null(),
-            max_indirect_commands_layout_token_count: 0,
-            max_object_entry_counts: 0,
-            min_sequence_count_buffer_offset_alignment: 0,
-            min_sequence_index_buffer_offset_alignment: 0,
-            min_commands_token_buffer_offset_alignment: 0,
+            p_next: unsafe { ::std::mem::zeroed() },
+            max_indirect_commands_layout_token_count: uint32_t::default(),
+            max_object_entry_counts: uint32_t::default(),
+            min_sequence_count_buffer_offset_alignment: uint32_t::default(),
+            min_sequence_index_buffer_offset_alignment: uint32_t::default(),
+            min_commands_token_buffer_offset_alignment: uint32_t::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct IndirectCommandsTokenNVX {
     pub token_type: IndirectCommandsTokenTypeNVX,
     pub buffer: Buffer,
@@ -7879,7 +8128,7 @@ impl Default for IndirectCommandsTokenNVX {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct IndirectCommandsLayoutTokenNVX {
     pub token_type: IndirectCommandsTokenTypeNVX,
     pub binding_unit: uint32_t,
@@ -7896,15 +8145,15 @@ pub struct IndirectCommandsLayoutCreateInfoNVX {
     pub token_count: uint32_t,
     pub p_tokens: *const IndirectCommandsLayoutTokenNVX,
 }
-impl Default for IndirectCommandsLayoutCreateInfoNVX {
+impl ::std::default::Default for IndirectCommandsLayoutCreateInfoNVX {
     fn default() -> IndirectCommandsLayoutCreateInfoNVX {
         IndirectCommandsLayoutCreateInfoNVX {
             s_type: StructureType::INDIRECT_COMMANDS_LAYOUT_CREATE_INFO_NVX,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             pipeline_bind_point: PipelineBindPoint::default(),
             flags: IndirectCommandsLayoutUsageFlagsNVX::default(),
-            token_count: 0,
-            p_tokens: ::std::ptr::null(),
+            token_count: uint32_t::default(),
+            p_tokens: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -7924,20 +8173,20 @@ pub struct CmdProcessCommandsInfoNVX {
     pub sequences_index_buffer: Buffer,
     pub sequences_index_offset: DeviceSize,
 }
-impl Default for CmdProcessCommandsInfoNVX {
+impl ::std::default::Default for CmdProcessCommandsInfoNVX {
     fn default() -> CmdProcessCommandsInfoNVX {
         CmdProcessCommandsInfoNVX {
             s_type: StructureType::CMD_PROCESS_COMMANDS_INFO_NVX,
-            p_next: ::std::ptr::null(),
-            object_table: ObjectTableNVX::null(),
-            indirect_commands_layout: IndirectCommandsLayoutNVX::null(),
-            indirect_commands_token_count: 0,
-            p_indirect_commands_tokens: ::std::ptr::null(),
-            max_sequences_count: 0,
-            target_command_buffer: CommandBuffer::null(),
-            sequences_count_buffer: Buffer::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
+            object_table: ObjectTableNVX::default(),
+            indirect_commands_layout: IndirectCommandsLayoutNVX::default(),
+            indirect_commands_token_count: uint32_t::default(),
+            p_indirect_commands_tokens: unsafe { ::std::mem::zeroed() },
+            max_sequences_count: uint32_t::default(),
+            target_command_buffer: CommandBuffer::default(),
+            sequences_count_buffer: Buffer::default(),
             sequences_count_offset: DeviceSize::default(),
-            sequences_index_buffer: Buffer::null(),
+            sequences_index_buffer: Buffer::default(),
             sequences_index_offset: DeviceSize::default(),
         }
     }
@@ -7951,14 +8200,14 @@ pub struct CmdReserveSpaceForCommandsInfoNVX {
     pub indirect_commands_layout: IndirectCommandsLayoutNVX,
     pub max_sequences_count: uint32_t,
 }
-impl Default for CmdReserveSpaceForCommandsInfoNVX {
+impl ::std::default::Default for CmdReserveSpaceForCommandsInfoNVX {
     fn default() -> CmdReserveSpaceForCommandsInfoNVX {
         CmdReserveSpaceForCommandsInfoNVX {
             s_type: StructureType::CMD_RESERVE_SPACE_FOR_COMMANDS_INFO_NVX,
-            p_next: ::std::ptr::null(),
-            object_table: ObjectTableNVX::null(),
-            indirect_commands_layout: IndirectCommandsLayoutNVX::null(),
-            max_sequences_count: 0,
+            p_next: unsafe { ::std::mem::zeroed() },
+            object_table: ObjectTableNVX::default(),
+            indirect_commands_layout: IndirectCommandsLayoutNVX::default(),
+            max_sequences_count: uint32_t::default(),
         }
     }
 }
@@ -7977,31 +8226,31 @@ pub struct ObjectTableCreateInfoNVX {
     pub max_sampled_images_per_descriptor: uint32_t,
     pub max_pipeline_layouts: uint32_t,
 }
-impl Default for ObjectTableCreateInfoNVX {
+impl ::std::default::Default for ObjectTableCreateInfoNVX {
     fn default() -> ObjectTableCreateInfoNVX {
         ObjectTableCreateInfoNVX {
             s_type: StructureType::OBJECT_TABLE_CREATE_INFO_NVX,
-            p_next: ::std::ptr::null(),
-            object_count: 0,
-            p_object_entry_types: ::std::ptr::null(),
-            p_object_entry_counts: ::std::ptr::null(),
-            p_object_entry_usage_flags: ::std::ptr::null(),
-            max_uniform_buffers_per_descriptor: 0,
-            max_storage_buffers_per_descriptor: 0,
-            max_storage_images_per_descriptor: 0,
-            max_sampled_images_per_descriptor: 0,
-            max_pipeline_layouts: 0,
+            p_next: unsafe { ::std::mem::zeroed() },
+            object_count: uint32_t::default(),
+            p_object_entry_types: unsafe { ::std::mem::zeroed() },
+            p_object_entry_counts: unsafe { ::std::mem::zeroed() },
+            p_object_entry_usage_flags: unsafe { ::std::mem::zeroed() },
+            max_uniform_buffers_per_descriptor: uint32_t::default(),
+            max_storage_buffers_per_descriptor: uint32_t::default(),
+            max_storage_images_per_descriptor: uint32_t::default(),
+            max_sampled_images_per_descriptor: uint32_t::default(),
+            max_pipeline_layouts: uint32_t::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct ObjectTableEntryNVX {
     pub ty: ObjectEntryTypeNVX,
     pub flags: ObjectEntryUsageFlagsNVX,
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct ObjectTablePipelineEntryNVX {
     pub ty: ObjectEntryTypeNVX,
     pub flags: ObjectEntryUsageFlagsNVX,
@@ -8017,7 +8266,7 @@ impl Default for ObjectTablePipelineEntryNVX {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct ObjectTableDescriptorSetEntryNVX {
     pub ty: ObjectEntryTypeNVX,
     pub flags: ObjectEntryUsageFlagsNVX,
@@ -8035,7 +8284,7 @@ impl Default for ObjectTableDescriptorSetEntryNVX {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct ObjectTableVertexBufferEntryNVX {
     pub ty: ObjectEntryTypeNVX,
     pub flags: ObjectEntryUsageFlagsNVX,
@@ -8051,7 +8300,7 @@ impl Default for ObjectTableVertexBufferEntryNVX {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct ObjectTableIndexBufferEntryNVX {
     pub ty: ObjectEntryTypeNVX,
     pub flags: ObjectEntryUsageFlagsNVX,
@@ -8069,7 +8318,7 @@ impl Default for ObjectTableIndexBufferEntryNVX {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct ObjectTablePushConstantEntryNVX {
     pub ty: ObjectEntryTypeNVX,
     pub flags: ObjectEntryUsageFlagsNVX,
@@ -8093,17 +8342,17 @@ pub struct PhysicalDeviceFeatures2 {
     pub p_next: *const c_void,
     pub features: PhysicalDeviceFeatures,
 }
-impl Default for PhysicalDeviceFeatures2 {
+impl ::std::default::Default for PhysicalDeviceFeatures2 {
     fn default() -> PhysicalDeviceFeatures2 {
         PhysicalDeviceFeatures2 {
             s_type: StructureType::PHYSICAL_DEVICE_FEATURES_2,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             features: PhysicalDeviceFeatures::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct PhysicalDeviceFeatures2KHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -8112,17 +8361,17 @@ pub struct PhysicalDeviceProperties2 {
     pub p_next: *const c_void,
     pub properties: PhysicalDeviceProperties,
 }
-impl Default for PhysicalDeviceProperties2 {
+impl ::std::default::Default for PhysicalDeviceProperties2 {
     fn default() -> PhysicalDeviceProperties2 {
         PhysicalDeviceProperties2 {
             s_type: StructureType::PHYSICAL_DEVICE_PROPERTIES_2,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             properties: PhysicalDeviceProperties::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct PhysicalDeviceProperties2KHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -8131,17 +8380,17 @@ pub struct FormatProperties2 {
     pub p_next: *const c_void,
     pub format_properties: FormatProperties,
 }
-impl Default for FormatProperties2 {
+impl ::std::default::Default for FormatProperties2 {
     fn default() -> FormatProperties2 {
         FormatProperties2 {
             s_type: StructureType::FORMAT_PROPERTIES_2,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             format_properties: FormatProperties::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct FormatProperties2KHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -8150,17 +8399,17 @@ pub struct ImageFormatProperties2 {
     pub p_next: *const c_void,
     pub image_format_properties: ImageFormatProperties,
 }
-impl Default for ImageFormatProperties2 {
+impl ::std::default::Default for ImageFormatProperties2 {
     fn default() -> ImageFormatProperties2 {
         ImageFormatProperties2 {
             s_type: StructureType::IMAGE_FORMAT_PROPERTIES_2,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             image_format_properties: ImageFormatProperties::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct ImageFormatProperties2KHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -8173,11 +8422,11 @@ pub struct PhysicalDeviceImageFormatInfo2 {
     pub usage: ImageUsageFlags,
     pub flags: ImageCreateFlags,
 }
-impl Default for PhysicalDeviceImageFormatInfo2 {
+impl ::std::default::Default for PhysicalDeviceImageFormatInfo2 {
     fn default() -> PhysicalDeviceImageFormatInfo2 {
         PhysicalDeviceImageFormatInfo2 {
             s_type: StructureType::PHYSICAL_DEVICE_IMAGE_FORMAT_INFO_2,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             format: Format::default(),
             ty: ImageType::default(),
             tiling: ImageTiling::default(),
@@ -8187,7 +8436,7 @@ impl Default for PhysicalDeviceImageFormatInfo2 {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct PhysicalDeviceImageFormatInfo2KHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -8196,17 +8445,17 @@ pub struct QueueFamilyProperties2 {
     pub p_next: *const c_void,
     pub queue_family_properties: QueueFamilyProperties,
 }
-impl Default for QueueFamilyProperties2 {
+impl ::std::default::Default for QueueFamilyProperties2 {
     fn default() -> QueueFamilyProperties2 {
         QueueFamilyProperties2 {
             s_type: StructureType::QUEUE_FAMILY_PROPERTIES_2,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             queue_family_properties: QueueFamilyProperties::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct QueueFamilyProperties2KHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -8215,17 +8464,17 @@ pub struct PhysicalDeviceMemoryProperties2 {
     pub p_next: *const c_void,
     pub memory_properties: PhysicalDeviceMemoryProperties,
 }
-impl Default for PhysicalDeviceMemoryProperties2 {
+impl ::std::default::Default for PhysicalDeviceMemoryProperties2 {
     fn default() -> PhysicalDeviceMemoryProperties2 {
         PhysicalDeviceMemoryProperties2 {
             s_type: StructureType::PHYSICAL_DEVICE_MEMORY_PROPERTIES_2,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             memory_properties: PhysicalDeviceMemoryProperties::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct PhysicalDeviceMemoryProperties2KHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -8234,17 +8483,17 @@ pub struct SparseImageFormatProperties2 {
     pub p_next: *const c_void,
     pub properties: SparseImageFormatProperties,
 }
-impl Default for SparseImageFormatProperties2 {
+impl ::std::default::Default for SparseImageFormatProperties2 {
     fn default() -> SparseImageFormatProperties2 {
         SparseImageFormatProperties2 {
             s_type: StructureType::SPARSE_IMAGE_FORMAT_PROPERTIES_2,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             properties: SparseImageFormatProperties::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct SparseImageFormatProperties2KHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -8257,11 +8506,11 @@ pub struct PhysicalDeviceSparseImageFormatInfo2 {
     pub usage: ImageUsageFlags,
     pub tiling: ImageTiling,
 }
-impl Default for PhysicalDeviceSparseImageFormatInfo2 {
+impl ::std::default::Default for PhysicalDeviceSparseImageFormatInfo2 {
     fn default() -> PhysicalDeviceSparseImageFormatInfo2 {
         PhysicalDeviceSparseImageFormatInfo2 {
             s_type: StructureType::PHYSICAL_DEVICE_SPARSE_IMAGE_FORMAT_INFO_2,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             format: Format::default(),
             ty: ImageType::default(),
             samples: SampleCountFlags::default(),
@@ -8271,7 +8520,7 @@ impl Default for PhysicalDeviceSparseImageFormatInfo2 {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct PhysicalDeviceSparseImageFormatInfo2KHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -8280,12 +8529,12 @@ pub struct PhysicalDevicePushDescriptorPropertiesKHR {
     pub p_next: *const c_void,
     pub max_push_descriptors: uint32_t,
 }
-impl Default for PhysicalDevicePushDescriptorPropertiesKHR {
+impl ::std::default::Default for PhysicalDevicePushDescriptorPropertiesKHR {
     fn default() -> PhysicalDevicePushDescriptorPropertiesKHR {
         PhysicalDevicePushDescriptorPropertiesKHR {
             s_type: StructureType::PHYSICAL_DEVICE_PUSH_DESCRIPTOR_PROPERTIES_KHR,
-            p_next: ::std::ptr::null(),
-            max_push_descriptors: 0,
+            p_next: unsafe { ::std::mem::zeroed() },
+            max_push_descriptors: uint32_t::default(),
         }
     }
 }
@@ -8297,13 +8546,13 @@ pub struct PresentRegionsKHR {
     pub swapchain_count: uint32_t,
     pub p_regions: *const PresentRegionKHR,
 }
-impl Default for PresentRegionsKHR {
+impl ::std::default::Default for PresentRegionsKHR {
     fn default() -> PresentRegionsKHR {
         PresentRegionsKHR {
             s_type: StructureType::PRESENT_REGIONS_KHR,
-            p_next: ::std::ptr::null(),
-            swapchain_count: 0,
-            p_regions: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
+            swapchain_count: uint32_t::default(),
+            p_regions: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -8313,16 +8562,16 @@ pub struct PresentRegionKHR {
     pub rectangle_count: uint32_t,
     pub p_rectangles: *const RectLayerKHR,
 }
-impl Default for PresentRegionKHR {
+impl ::std::default::Default for PresentRegionKHR {
     fn default() -> PresentRegionKHR {
         PresentRegionKHR {
-            rectangle_count: 0,
-            p_rectangles: ::std::ptr::null(),
+            rectangle_count: uint32_t::default(),
+            p_rectangles: unsafe { ::std::mem::zeroed() },
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct RectLayerKHR {
     pub offset: Offset2D,
     pub extent: Extent2D,
@@ -8336,28 +8585,28 @@ pub struct PhysicalDeviceVariablePointerFeatures {
     pub variable_pointers_storage_buffer: Bool32,
     pub variable_pointers: Bool32,
 }
-impl Default for PhysicalDeviceVariablePointerFeatures {
+impl ::std::default::Default for PhysicalDeviceVariablePointerFeatures {
     fn default() -> PhysicalDeviceVariablePointerFeatures {
         PhysicalDeviceVariablePointerFeatures {
             s_type: StructureType::PHYSICAL_DEVICE_VARIABLE_POINTER_FEATURES,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             variable_pointers_storage_buffer: Bool32::default(),
             variable_pointers: Bool32::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct PhysicalDeviceVariablePointerFeaturesKHR {}
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct ExternalMemoryProperties {
     pub external_memory_features: ExternalMemoryFeatureFlags,
     pub export_from_imported_handle_types: ExternalMemoryHandleTypeFlags,
     pub compatible_handle_types: ExternalMemoryHandleTypeFlags,
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct ExternalMemoryPropertiesKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -8366,17 +8615,17 @@ pub struct PhysicalDeviceExternalImageFormatInfo {
     pub p_next: *const c_void,
     pub handle_type: ExternalMemoryHandleTypeFlags,
 }
-impl Default for PhysicalDeviceExternalImageFormatInfo {
+impl ::std::default::Default for PhysicalDeviceExternalImageFormatInfo {
     fn default() -> PhysicalDeviceExternalImageFormatInfo {
         PhysicalDeviceExternalImageFormatInfo {
             s_type: StructureType::PHYSICAL_DEVICE_EXTERNAL_IMAGE_FORMAT_INFO,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             handle_type: ExternalMemoryHandleTypeFlags::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct PhysicalDeviceExternalImageFormatInfoKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -8385,17 +8634,17 @@ pub struct ExternalImageFormatProperties {
     pub p_next: *const c_void,
     pub external_memory_properties: ExternalMemoryProperties,
 }
-impl Default for ExternalImageFormatProperties {
+impl ::std::default::Default for ExternalImageFormatProperties {
     fn default() -> ExternalImageFormatProperties {
         ExternalImageFormatProperties {
             s_type: StructureType::EXTERNAL_IMAGE_FORMAT_PROPERTIES,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             external_memory_properties: ExternalMemoryProperties::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct ExternalImageFormatPropertiesKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -8406,11 +8655,11 @@ pub struct PhysicalDeviceExternalBufferInfo {
     pub usage: BufferUsageFlags,
     pub handle_type: ExternalMemoryHandleTypeFlags,
 }
-impl Default for PhysicalDeviceExternalBufferInfo {
+impl ::std::default::Default for PhysicalDeviceExternalBufferInfo {
     fn default() -> PhysicalDeviceExternalBufferInfo {
         PhysicalDeviceExternalBufferInfo {
             s_type: StructureType::PHYSICAL_DEVICE_EXTERNAL_BUFFER_INFO,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             flags: BufferCreateFlags::default(),
             usage: BufferUsageFlags::default(),
             handle_type: ExternalMemoryHandleTypeFlags::default(),
@@ -8418,7 +8667,7 @@ impl Default for PhysicalDeviceExternalBufferInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct PhysicalDeviceExternalBufferInfoKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -8427,17 +8676,17 @@ pub struct ExternalBufferProperties {
     pub p_next: *const c_void,
     pub external_memory_properties: ExternalMemoryProperties,
 }
-impl Default for ExternalBufferProperties {
+impl ::std::default::Default for ExternalBufferProperties {
     fn default() -> ExternalBufferProperties {
         ExternalBufferProperties {
             s_type: StructureType::EXTERNAL_BUFFER_PROPERTIES,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             external_memory_properties: ExternalMemoryProperties::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct ExternalBufferPropertiesKHR {}
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -8469,8 +8718,21 @@ impl ::std::fmt::Debug for PhysicalDeviceIDProperties {
             .finish()
     }
 }
+impl ::std::default::Default for PhysicalDeviceIDProperties {
+    fn default() -> PhysicalDeviceIDProperties {
+        PhysicalDeviceIDProperties {
+            s_type: StructureType::PHYSICAL_DEVICE_ID_PROPERTIES,
+            p_next: unsafe { ::std::mem::zeroed() },
+            device_uuid: unsafe { ::std::mem::zeroed() },
+            driver_uuid: unsafe { ::std::mem::zeroed() },
+            device_luid: unsafe { ::std::mem::zeroed() },
+            device_node_mask: uint32_t::default(),
+            device_luid_valid: Bool32::default(),
+        }
+    }
+}
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct PhysicalDeviceIDPropertiesKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -8479,17 +8741,17 @@ pub struct ExternalMemoryImageCreateInfo {
     pub p_next: *const c_void,
     pub handle_types: ExternalMemoryHandleTypeFlags,
 }
-impl Default for ExternalMemoryImageCreateInfo {
+impl ::std::default::Default for ExternalMemoryImageCreateInfo {
     fn default() -> ExternalMemoryImageCreateInfo {
         ExternalMemoryImageCreateInfo {
             s_type: StructureType::EXTERNAL_MEMORY_IMAGE_CREATE_INFO,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             handle_types: ExternalMemoryHandleTypeFlags::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct ExternalMemoryImageCreateInfoKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -8498,17 +8760,17 @@ pub struct ExternalMemoryBufferCreateInfo {
     pub p_next: *const c_void,
     pub handle_types: ExternalMemoryHandleTypeFlags,
 }
-impl Default for ExternalMemoryBufferCreateInfo {
+impl ::std::default::Default for ExternalMemoryBufferCreateInfo {
     fn default() -> ExternalMemoryBufferCreateInfo {
         ExternalMemoryBufferCreateInfo {
             s_type: StructureType::EXTERNAL_MEMORY_BUFFER_CREATE_INFO,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             handle_types: ExternalMemoryHandleTypeFlags::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct ExternalMemoryBufferCreateInfoKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -8517,17 +8779,17 @@ pub struct ExportMemoryAllocateInfo {
     pub p_next: *const c_void,
     pub handle_types: ExternalMemoryHandleTypeFlags,
 }
-impl Default for ExportMemoryAllocateInfo {
+impl ::std::default::Default for ExportMemoryAllocateInfo {
     fn default() -> ExportMemoryAllocateInfo {
         ExportMemoryAllocateInfo {
             s_type: StructureType::EXPORT_MEMORY_ALLOCATE_INFO,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             handle_types: ExternalMemoryHandleTypeFlags::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct ExportMemoryAllocateInfoKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -8538,14 +8800,14 @@ pub struct ImportMemoryWin32HandleInfoKHR {
     pub handle: HANDLE,
     pub name: LPCWSTR,
 }
-impl Default for ImportMemoryWin32HandleInfoKHR {
+impl ::std::default::Default for ImportMemoryWin32HandleInfoKHR {
     fn default() -> ImportMemoryWin32HandleInfoKHR {
         ImportMemoryWin32HandleInfoKHR {
             s_type: StructureType::IMPORT_MEMORY_WIN32_HANDLE_INFO_KHR,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             handle_type: ExternalMemoryHandleTypeFlags::default(),
-            handle: ::std::ptr::null_mut(),
-            name: ::std::ptr::null(),
+            handle: unsafe { ::std::mem::zeroed() },
+            name: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -8558,14 +8820,14 @@ pub struct ExportMemoryWin32HandleInfoKHR {
     pub dw_access: DWORD,
     pub name: LPCWSTR,
 }
-impl Default for ExportMemoryWin32HandleInfoKHR {
+impl ::std::default::Default for ExportMemoryWin32HandleInfoKHR {
     fn default() -> ExportMemoryWin32HandleInfoKHR {
         ExportMemoryWin32HandleInfoKHR {
             s_type: StructureType::EXPORT_MEMORY_WIN32_HANDLE_INFO_KHR,
-            p_next: ::std::ptr::null(),
-            p_attributes: ::std::ptr::null(),
-            dw_access: 0,
-            name: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
+            p_attributes: unsafe { ::std::mem::zeroed() },
+            dw_access: DWORD::default(),
+            name: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -8576,12 +8838,12 @@ pub struct MemoryWin32HandlePropertiesKHR {
     pub p_next: *const c_void,
     pub memory_type_bits: uint32_t,
 }
-impl Default for MemoryWin32HandlePropertiesKHR {
+impl ::std::default::Default for MemoryWin32HandlePropertiesKHR {
     fn default() -> MemoryWin32HandlePropertiesKHR {
         MemoryWin32HandlePropertiesKHR {
             s_type: StructureType::MEMORY_WIN32_HANDLE_PROPERTIES_KHR,
-            p_next: ::std::ptr::null(),
-            memory_type_bits: 0,
+            p_next: unsafe { ::std::mem::zeroed() },
+            memory_type_bits: uint32_t::default(),
         }
     }
 }
@@ -8593,12 +8855,12 @@ pub struct MemoryGetWin32HandleInfoKHR {
     pub memory: DeviceMemory,
     pub handle_type: ExternalMemoryHandleTypeFlags,
 }
-impl Default for MemoryGetWin32HandleInfoKHR {
+impl ::std::default::Default for MemoryGetWin32HandleInfoKHR {
     fn default() -> MemoryGetWin32HandleInfoKHR {
         MemoryGetWin32HandleInfoKHR {
             s_type: StructureType::MEMORY_GET_WIN32_HANDLE_INFO_KHR,
-            p_next: ::std::ptr::null(),
-            memory: DeviceMemory::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
+            memory: DeviceMemory::default(),
             handle_type: ExternalMemoryHandleTypeFlags::default(),
         }
     }
@@ -8611,11 +8873,11 @@ pub struct ImportMemoryFdInfoKHR {
     pub handle_type: ExternalMemoryHandleTypeFlags,
     pub fd: c_int,
 }
-impl Default for ImportMemoryFdInfoKHR {
+impl ::std::default::Default for ImportMemoryFdInfoKHR {
     fn default() -> ImportMemoryFdInfoKHR {
         ImportMemoryFdInfoKHR {
             s_type: StructureType::IMPORT_MEMORY_FD_INFO_KHR,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             handle_type: ExternalMemoryHandleTypeFlags::default(),
             fd: c_int::default(),
         }
@@ -8628,12 +8890,12 @@ pub struct MemoryFdPropertiesKHR {
     pub p_next: *const c_void,
     pub memory_type_bits: uint32_t,
 }
-impl Default for MemoryFdPropertiesKHR {
+impl ::std::default::Default for MemoryFdPropertiesKHR {
     fn default() -> MemoryFdPropertiesKHR {
         MemoryFdPropertiesKHR {
             s_type: StructureType::MEMORY_FD_PROPERTIES_KHR,
-            p_next: ::std::ptr::null(),
-            memory_type_bits: 0,
+            p_next: unsafe { ::std::mem::zeroed() },
+            memory_type_bits: uint32_t::default(),
         }
     }
 }
@@ -8645,12 +8907,12 @@ pub struct MemoryGetFdInfoKHR {
     pub memory: DeviceMemory,
     pub handle_type: ExternalMemoryHandleTypeFlags,
 }
-impl Default for MemoryGetFdInfoKHR {
+impl ::std::default::Default for MemoryGetFdInfoKHR {
     fn default() -> MemoryGetFdInfoKHR {
         MemoryGetFdInfoKHR {
             s_type: StructureType::MEMORY_GET_FD_INFO_KHR,
-            p_next: ::std::ptr::null(),
-            memory: DeviceMemory::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
+            memory: DeviceMemory::default(),
             handle_type: ExternalMemoryHandleTypeFlags::default(),
         }
     }
@@ -8668,18 +8930,18 @@ pub struct Win32KeyedMutexAcquireReleaseInfoKHR {
     pub p_release_syncs: *const DeviceMemory,
     pub p_release_keys: *const uint64_t,
 }
-impl Default for Win32KeyedMutexAcquireReleaseInfoKHR {
+impl ::std::default::Default for Win32KeyedMutexAcquireReleaseInfoKHR {
     fn default() -> Win32KeyedMutexAcquireReleaseInfoKHR {
         Win32KeyedMutexAcquireReleaseInfoKHR {
             s_type: StructureType::WIN32_KEYED_MUTEX_ACQUIRE_RELEASE_INFO_KHR,
-            p_next: ::std::ptr::null(),
-            acquire_count: 0,
-            p_acquire_syncs: ::std::ptr::null(),
-            p_acquire_keys: ::std::ptr::null(),
-            p_acquire_timeouts: ::std::ptr::null(),
-            release_count: 0,
-            p_release_syncs: ::std::ptr::null(),
-            p_release_keys: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
+            acquire_count: uint32_t::default(),
+            p_acquire_syncs: unsafe { ::std::mem::zeroed() },
+            p_acquire_keys: unsafe { ::std::mem::zeroed() },
+            p_acquire_timeouts: unsafe { ::std::mem::zeroed() },
+            release_count: uint32_t::default(),
+            p_release_syncs: unsafe { ::std::mem::zeroed() },
+            p_release_keys: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -8690,17 +8952,17 @@ pub struct PhysicalDeviceExternalSemaphoreInfo {
     pub p_next: *const c_void,
     pub handle_type: ExternalSemaphoreHandleTypeFlags,
 }
-impl Default for PhysicalDeviceExternalSemaphoreInfo {
+impl ::std::default::Default for PhysicalDeviceExternalSemaphoreInfo {
     fn default() -> PhysicalDeviceExternalSemaphoreInfo {
         PhysicalDeviceExternalSemaphoreInfo {
             s_type: StructureType::PHYSICAL_DEVICE_EXTERNAL_SEMAPHORE_INFO,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             handle_type: ExternalSemaphoreHandleTypeFlags::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct PhysicalDeviceExternalSemaphoreInfoKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -8711,11 +8973,11 @@ pub struct ExternalSemaphoreProperties {
     pub compatible_handle_types: ExternalSemaphoreHandleTypeFlags,
     pub external_semaphore_features: ExternalSemaphoreFeatureFlags,
 }
-impl Default for ExternalSemaphoreProperties {
+impl ::std::default::Default for ExternalSemaphoreProperties {
     fn default() -> ExternalSemaphoreProperties {
         ExternalSemaphoreProperties {
             s_type: StructureType::EXTERNAL_SEMAPHORE_PROPERTIES,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             export_from_imported_handle_types: ExternalSemaphoreHandleTypeFlags::default(),
             compatible_handle_types: ExternalSemaphoreHandleTypeFlags::default(),
             external_semaphore_features: ExternalSemaphoreFeatureFlags::default(),
@@ -8723,7 +8985,7 @@ impl Default for ExternalSemaphoreProperties {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct ExternalSemaphorePropertiesKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -8732,17 +8994,17 @@ pub struct ExportSemaphoreCreateInfo {
     pub p_next: *const c_void,
     pub handle_types: ExternalSemaphoreHandleTypeFlags,
 }
-impl Default for ExportSemaphoreCreateInfo {
+impl ::std::default::Default for ExportSemaphoreCreateInfo {
     fn default() -> ExportSemaphoreCreateInfo {
         ExportSemaphoreCreateInfo {
             s_type: StructureType::EXPORT_SEMAPHORE_CREATE_INFO,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             handle_types: ExternalSemaphoreHandleTypeFlags::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct ExportSemaphoreCreateInfoKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -8755,16 +9017,16 @@ pub struct ImportSemaphoreWin32HandleInfoKHR {
     pub handle: HANDLE,
     pub name: LPCWSTR,
 }
-impl Default for ImportSemaphoreWin32HandleInfoKHR {
+impl ::std::default::Default for ImportSemaphoreWin32HandleInfoKHR {
     fn default() -> ImportSemaphoreWin32HandleInfoKHR {
         ImportSemaphoreWin32HandleInfoKHR {
             s_type: StructureType::IMPORT_SEMAPHORE_WIN32_HANDLE_INFO_KHR,
-            p_next: ::std::ptr::null(),
-            semaphore: Semaphore::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
+            semaphore: Semaphore::default(),
             flags: SemaphoreImportFlags::default(),
             handle_type: ExternalSemaphoreHandleTypeFlags::default(),
-            handle: ::std::ptr::null_mut(),
-            name: ::std::ptr::null(),
+            handle: unsafe { ::std::mem::zeroed() },
+            name: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -8777,14 +9039,14 @@ pub struct ExportSemaphoreWin32HandleInfoKHR {
     pub dw_access: DWORD,
     pub name: LPCWSTR,
 }
-impl Default for ExportSemaphoreWin32HandleInfoKHR {
+impl ::std::default::Default for ExportSemaphoreWin32HandleInfoKHR {
     fn default() -> ExportSemaphoreWin32HandleInfoKHR {
         ExportSemaphoreWin32HandleInfoKHR {
             s_type: StructureType::EXPORT_SEMAPHORE_WIN32_HANDLE_INFO_KHR,
-            p_next: ::std::ptr::null(),
-            p_attributes: ::std::ptr::null(),
-            dw_access: 0,
-            name: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
+            p_attributes: unsafe { ::std::mem::zeroed() },
+            dw_access: DWORD::default(),
+            name: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -8798,15 +9060,15 @@ pub struct D3D12FenceSubmitInfoKHR {
     pub signal_semaphore_values_count: uint32_t,
     pub p_signal_semaphore_values: *const uint64_t,
 }
-impl Default for D3D12FenceSubmitInfoKHR {
+impl ::std::default::Default for D3D12FenceSubmitInfoKHR {
     fn default() -> D3D12FenceSubmitInfoKHR {
         D3D12FenceSubmitInfoKHR {
             s_type: StructureType::D3D12_FENCE_SUBMIT_INFO_KHR,
-            p_next: ::std::ptr::null(),
-            wait_semaphore_values_count: 0,
-            p_wait_semaphore_values: ::std::ptr::null(),
-            signal_semaphore_values_count: 0,
-            p_signal_semaphore_values: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
+            wait_semaphore_values_count: uint32_t::default(),
+            p_wait_semaphore_values: unsafe { ::std::mem::zeroed() },
+            signal_semaphore_values_count: uint32_t::default(),
+            p_signal_semaphore_values: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -8818,12 +9080,12 @@ pub struct SemaphoreGetWin32HandleInfoKHR {
     pub semaphore: Semaphore,
     pub handle_type: ExternalSemaphoreHandleTypeFlags,
 }
-impl Default for SemaphoreGetWin32HandleInfoKHR {
+impl ::std::default::Default for SemaphoreGetWin32HandleInfoKHR {
     fn default() -> SemaphoreGetWin32HandleInfoKHR {
         SemaphoreGetWin32HandleInfoKHR {
             s_type: StructureType::SEMAPHORE_GET_WIN32_HANDLE_INFO_KHR,
-            p_next: ::std::ptr::null(),
-            semaphore: Semaphore::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
+            semaphore: Semaphore::default(),
             handle_type: ExternalSemaphoreHandleTypeFlags::default(),
         }
     }
@@ -8838,12 +9100,12 @@ pub struct ImportSemaphoreFdInfoKHR {
     pub handle_type: ExternalSemaphoreHandleTypeFlags,
     pub fd: c_int,
 }
-impl Default for ImportSemaphoreFdInfoKHR {
+impl ::std::default::Default for ImportSemaphoreFdInfoKHR {
     fn default() -> ImportSemaphoreFdInfoKHR {
         ImportSemaphoreFdInfoKHR {
             s_type: StructureType::IMPORT_SEMAPHORE_FD_INFO_KHR,
-            p_next: ::std::ptr::null(),
-            semaphore: Semaphore::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
+            semaphore: Semaphore::default(),
             flags: SemaphoreImportFlags::default(),
             handle_type: ExternalSemaphoreHandleTypeFlags::default(),
             fd: c_int::default(),
@@ -8858,12 +9120,12 @@ pub struct SemaphoreGetFdInfoKHR {
     pub semaphore: Semaphore,
     pub handle_type: ExternalSemaphoreHandleTypeFlags,
 }
-impl Default for SemaphoreGetFdInfoKHR {
+impl ::std::default::Default for SemaphoreGetFdInfoKHR {
     fn default() -> SemaphoreGetFdInfoKHR {
         SemaphoreGetFdInfoKHR {
             s_type: StructureType::SEMAPHORE_GET_FD_INFO_KHR,
-            p_next: ::std::ptr::null(),
-            semaphore: Semaphore::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
+            semaphore: Semaphore::default(),
             handle_type: ExternalSemaphoreHandleTypeFlags::default(),
         }
     }
@@ -8875,17 +9137,17 @@ pub struct PhysicalDeviceExternalFenceInfo {
     pub p_next: *const c_void,
     pub handle_type: ExternalFenceHandleTypeFlags,
 }
-impl Default for PhysicalDeviceExternalFenceInfo {
+impl ::std::default::Default for PhysicalDeviceExternalFenceInfo {
     fn default() -> PhysicalDeviceExternalFenceInfo {
         PhysicalDeviceExternalFenceInfo {
             s_type: StructureType::PHYSICAL_DEVICE_EXTERNAL_FENCE_INFO,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             handle_type: ExternalFenceHandleTypeFlags::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct PhysicalDeviceExternalFenceInfoKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -8896,11 +9158,11 @@ pub struct ExternalFenceProperties {
     pub compatible_handle_types: ExternalFenceHandleTypeFlags,
     pub external_fence_features: ExternalFenceFeatureFlags,
 }
-impl Default for ExternalFenceProperties {
+impl ::std::default::Default for ExternalFenceProperties {
     fn default() -> ExternalFenceProperties {
         ExternalFenceProperties {
             s_type: StructureType::EXTERNAL_FENCE_PROPERTIES,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             export_from_imported_handle_types: ExternalFenceHandleTypeFlags::default(),
             compatible_handle_types: ExternalFenceHandleTypeFlags::default(),
             external_fence_features: ExternalFenceFeatureFlags::default(),
@@ -8908,7 +9170,7 @@ impl Default for ExternalFenceProperties {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct ExternalFencePropertiesKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -8917,17 +9179,17 @@ pub struct ExportFenceCreateInfo {
     pub p_next: *const c_void,
     pub handle_types: ExternalFenceHandleTypeFlags,
 }
-impl Default for ExportFenceCreateInfo {
+impl ::std::default::Default for ExportFenceCreateInfo {
     fn default() -> ExportFenceCreateInfo {
         ExportFenceCreateInfo {
             s_type: StructureType::EXPORT_FENCE_CREATE_INFO,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             handle_types: ExternalFenceHandleTypeFlags::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct ExportFenceCreateInfoKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -8940,16 +9202,16 @@ pub struct ImportFenceWin32HandleInfoKHR {
     pub handle: HANDLE,
     pub name: LPCWSTR,
 }
-impl Default for ImportFenceWin32HandleInfoKHR {
+impl ::std::default::Default for ImportFenceWin32HandleInfoKHR {
     fn default() -> ImportFenceWin32HandleInfoKHR {
         ImportFenceWin32HandleInfoKHR {
             s_type: StructureType::IMPORT_FENCE_WIN32_HANDLE_INFO_KHR,
-            p_next: ::std::ptr::null(),
-            fence: Fence::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
+            fence: Fence::default(),
             flags: FenceImportFlags::default(),
             handle_type: ExternalFenceHandleTypeFlags::default(),
-            handle: ::std::ptr::null_mut(),
-            name: ::std::ptr::null(),
+            handle: unsafe { ::std::mem::zeroed() },
+            name: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -8962,14 +9224,14 @@ pub struct ExportFenceWin32HandleInfoKHR {
     pub dw_access: DWORD,
     pub name: LPCWSTR,
 }
-impl Default for ExportFenceWin32HandleInfoKHR {
+impl ::std::default::Default for ExportFenceWin32HandleInfoKHR {
     fn default() -> ExportFenceWin32HandleInfoKHR {
         ExportFenceWin32HandleInfoKHR {
             s_type: StructureType::EXPORT_FENCE_WIN32_HANDLE_INFO_KHR,
-            p_next: ::std::ptr::null(),
-            p_attributes: ::std::ptr::null(),
-            dw_access: 0,
-            name: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
+            p_attributes: unsafe { ::std::mem::zeroed() },
+            dw_access: DWORD::default(),
+            name: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -8981,12 +9243,12 @@ pub struct FenceGetWin32HandleInfoKHR {
     pub fence: Fence,
     pub handle_type: ExternalFenceHandleTypeFlags,
 }
-impl Default for FenceGetWin32HandleInfoKHR {
+impl ::std::default::Default for FenceGetWin32HandleInfoKHR {
     fn default() -> FenceGetWin32HandleInfoKHR {
         FenceGetWin32HandleInfoKHR {
             s_type: StructureType::FENCE_GET_WIN32_HANDLE_INFO_KHR,
-            p_next: ::std::ptr::null(),
-            fence: Fence::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
+            fence: Fence::default(),
             handle_type: ExternalFenceHandleTypeFlags::default(),
         }
     }
@@ -9001,12 +9263,12 @@ pub struct ImportFenceFdInfoKHR {
     pub handle_type: ExternalFenceHandleTypeFlags,
     pub fd: c_int,
 }
-impl Default for ImportFenceFdInfoKHR {
+impl ::std::default::Default for ImportFenceFdInfoKHR {
     fn default() -> ImportFenceFdInfoKHR {
         ImportFenceFdInfoKHR {
             s_type: StructureType::IMPORT_FENCE_FD_INFO_KHR,
-            p_next: ::std::ptr::null(),
-            fence: Fence::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
+            fence: Fence::default(),
             flags: FenceImportFlags::default(),
             handle_type: ExternalFenceHandleTypeFlags::default(),
             fd: c_int::default(),
@@ -9021,12 +9283,12 @@ pub struct FenceGetFdInfoKHR {
     pub fence: Fence,
     pub handle_type: ExternalFenceHandleTypeFlags,
 }
-impl Default for FenceGetFdInfoKHR {
+impl ::std::default::Default for FenceGetFdInfoKHR {
     fn default() -> FenceGetFdInfoKHR {
         FenceGetFdInfoKHR {
             s_type: StructureType::FENCE_GET_FD_INFO_KHR,
-            p_next: ::std::ptr::null(),
-            fence: Fence::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
+            fence: Fence::default(),
             handle_type: ExternalFenceHandleTypeFlags::default(),
         }
     }
@@ -9040,11 +9302,11 @@ pub struct PhysicalDeviceMultiviewFeatures {
     pub multiview_geometry_shader: Bool32,
     pub multiview_tessellation_shader: Bool32,
 }
-impl Default for PhysicalDeviceMultiviewFeatures {
+impl ::std::default::Default for PhysicalDeviceMultiviewFeatures {
     fn default() -> PhysicalDeviceMultiviewFeatures {
         PhysicalDeviceMultiviewFeatures {
             s_type: StructureType::PHYSICAL_DEVICE_MULTIVIEW_FEATURES,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             multiview: Bool32::default(),
             multiview_geometry_shader: Bool32::default(),
             multiview_tessellation_shader: Bool32::default(),
@@ -9052,7 +9314,7 @@ impl Default for PhysicalDeviceMultiviewFeatures {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct PhysicalDeviceMultiviewFeaturesKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -9062,18 +9324,18 @@ pub struct PhysicalDeviceMultiviewProperties {
     pub max_multiview_view_count: uint32_t,
     pub max_multiview_instance_index: uint32_t,
 }
-impl Default for PhysicalDeviceMultiviewProperties {
+impl ::std::default::Default for PhysicalDeviceMultiviewProperties {
     fn default() -> PhysicalDeviceMultiviewProperties {
         PhysicalDeviceMultiviewProperties {
             s_type: StructureType::PHYSICAL_DEVICE_MULTIVIEW_PROPERTIES,
-            p_next: ::std::ptr::null(),
-            max_multiview_view_count: 0,
-            max_multiview_instance_index: 0,
+            p_next: unsafe { ::std::mem::zeroed() },
+            max_multiview_view_count: uint32_t::default(),
+            max_multiview_instance_index: uint32_t::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct PhysicalDeviceMultiviewPropertiesKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -9087,22 +9349,22 @@ pub struct RenderPassMultiviewCreateInfo {
     pub correlation_mask_count: uint32_t,
     pub p_correlation_masks: *const uint32_t,
 }
-impl Default for RenderPassMultiviewCreateInfo {
+impl ::std::default::Default for RenderPassMultiviewCreateInfo {
     fn default() -> RenderPassMultiviewCreateInfo {
         RenderPassMultiviewCreateInfo {
             s_type: StructureType::RENDER_PASS_MULTIVIEW_CREATE_INFO,
-            p_next: ::std::ptr::null(),
-            subpass_count: 0,
-            p_view_masks: ::std::ptr::null(),
-            dependency_count: 0,
-            p_view_offsets: ::std::ptr::null(),
-            correlation_mask_count: 0,
-            p_correlation_masks: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
+            subpass_count: uint32_t::default(),
+            p_view_masks: unsafe { ::std::mem::zeroed() },
+            dependency_count: uint32_t::default(),
+            p_view_offsets: unsafe { ::std::mem::zeroed() },
+            correlation_mask_count: uint32_t::default(),
+            p_correlation_masks: unsafe { ::std::mem::zeroed() },
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct RenderPassMultiviewCreateInfoKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -9121,17 +9383,17 @@ pub struct SurfaceCapabilities2EXT {
     pub supported_usage_flags: ImageUsageFlags,
     pub supported_surface_counters: SurfaceCounterFlagsEXT,
 }
-impl Default for SurfaceCapabilities2EXT {
+impl ::std::default::Default for SurfaceCapabilities2EXT {
     fn default() -> SurfaceCapabilities2EXT {
         SurfaceCapabilities2EXT {
             s_type: StructureType::SURFACE_CAPABILITIES_2_EXT,
-            p_next: ::std::ptr::null(),
-            min_image_count: 0,
-            max_image_count: 0,
+            p_next: unsafe { ::std::mem::zeroed() },
+            min_image_count: uint32_t::default(),
+            max_image_count: uint32_t::default(),
             current_extent: Extent2D::default(),
             min_image_extent: Extent2D::default(),
             max_image_extent: Extent2D::default(),
-            max_image_array_layers: 0,
+            max_image_array_layers: uint32_t::default(),
             supported_transforms: SurfaceTransformFlagsKHR::default(),
             current_transform: SurfaceTransformFlagsKHR::default(),
             supported_composite_alpha: CompositeAlphaFlagsKHR::default(),
@@ -9147,11 +9409,11 @@ pub struct DisplayPowerInfoEXT {
     pub p_next: *const c_void,
     pub power_state: DisplayPowerStateEXT,
 }
-impl Default for DisplayPowerInfoEXT {
+impl ::std::default::Default for DisplayPowerInfoEXT {
     fn default() -> DisplayPowerInfoEXT {
         DisplayPowerInfoEXT {
             s_type: StructureType::DISPLAY_POWER_INFO_EXT,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             power_state: DisplayPowerStateEXT::default(),
         }
     }
@@ -9163,11 +9425,11 @@ pub struct DeviceEventInfoEXT {
     pub p_next: *const c_void,
     pub device_event: DeviceEventTypeEXT,
 }
-impl Default for DeviceEventInfoEXT {
+impl ::std::default::Default for DeviceEventInfoEXT {
     fn default() -> DeviceEventInfoEXT {
         DeviceEventInfoEXT {
             s_type: StructureType::DEVICE_EVENT_INFO_EXT,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             device_event: DeviceEventTypeEXT::default(),
         }
     }
@@ -9179,11 +9441,11 @@ pub struct DisplayEventInfoEXT {
     pub p_next: *const c_void,
     pub display_event: DisplayEventTypeEXT,
 }
-impl Default for DisplayEventInfoEXT {
+impl ::std::default::Default for DisplayEventInfoEXT {
     fn default() -> DisplayEventInfoEXT {
         DisplayEventInfoEXT {
             s_type: StructureType::DISPLAY_EVENT_INFO_EXT,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             display_event: DisplayEventTypeEXT::default(),
         }
     }
@@ -9195,11 +9457,11 @@ pub struct SwapchainCounterCreateInfoEXT {
     pub p_next: *const c_void,
     pub surface_counters: SurfaceCounterFlagsEXT,
 }
-impl Default for SwapchainCounterCreateInfoEXT {
+impl ::std::default::Default for SwapchainCounterCreateInfoEXT {
     fn default() -> SwapchainCounterCreateInfoEXT {
         SwapchainCounterCreateInfoEXT {
             s_type: StructureType::SWAPCHAIN_COUNTER_CREATE_INFO_EXT,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             surface_counters: SurfaceCounterFlagsEXT::default(),
         }
     }
@@ -9226,8 +9488,19 @@ impl ::std::fmt::Debug for PhysicalDeviceGroupProperties {
             .finish()
     }
 }
+impl ::std::default::Default for PhysicalDeviceGroupProperties {
+    fn default() -> PhysicalDeviceGroupProperties {
+        PhysicalDeviceGroupProperties {
+            s_type: StructureType::PHYSICAL_DEVICE_GROUP_PROPERTIES,
+            p_next: unsafe { ::std::mem::zeroed() },
+            physical_device_count: uint32_t::default(),
+            physical_devices: unsafe { ::std::mem::zeroed() },
+            subset_allocation: Bool32::default(),
+        }
+    }
+}
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct PhysicalDeviceGroupPropertiesKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -9237,18 +9510,18 @@ pub struct MemoryAllocateFlagsInfo {
     pub flags: MemoryAllocateFlags,
     pub device_mask: uint32_t,
 }
-impl Default for MemoryAllocateFlagsInfo {
+impl ::std::default::Default for MemoryAllocateFlagsInfo {
     fn default() -> MemoryAllocateFlagsInfo {
         MemoryAllocateFlagsInfo {
             s_type: StructureType::MEMORY_ALLOCATE_FLAGS_INFO,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             flags: MemoryAllocateFlags::default(),
-            device_mask: 0,
+            device_mask: uint32_t::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct MemoryAllocateFlagsInfoKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -9259,19 +9532,19 @@ pub struct BindBufferMemoryInfo {
     pub memory: DeviceMemory,
     pub memory_offset: DeviceSize,
 }
-impl Default for BindBufferMemoryInfo {
+impl ::std::default::Default for BindBufferMemoryInfo {
     fn default() -> BindBufferMemoryInfo {
         BindBufferMemoryInfo {
             s_type: StructureType::BIND_BUFFER_MEMORY_INFO,
-            p_next: ::std::ptr::null(),
-            buffer: Buffer::null(),
-            memory: DeviceMemory::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
+            buffer: Buffer::default(),
+            memory: DeviceMemory::default(),
             memory_offset: DeviceSize::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct BindBufferMemoryInfoKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -9281,18 +9554,18 @@ pub struct BindBufferMemoryDeviceGroupInfo {
     pub device_index_count: uint32_t,
     pub p_device_indices: *const uint32_t,
 }
-impl Default for BindBufferMemoryDeviceGroupInfo {
+impl ::std::default::Default for BindBufferMemoryDeviceGroupInfo {
     fn default() -> BindBufferMemoryDeviceGroupInfo {
         BindBufferMemoryDeviceGroupInfo {
             s_type: StructureType::BIND_BUFFER_MEMORY_DEVICE_GROUP_INFO,
-            p_next: ::std::ptr::null(),
-            device_index_count: 0,
-            p_device_indices: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
+            device_index_count: uint32_t::default(),
+            p_device_indices: unsafe { ::std::mem::zeroed() },
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct BindBufferMemoryDeviceGroupInfoKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -9303,19 +9576,19 @@ pub struct BindImageMemoryInfo {
     pub memory: DeviceMemory,
     pub memory_offset: DeviceSize,
 }
-impl Default for BindImageMemoryInfo {
+impl ::std::default::Default for BindImageMemoryInfo {
     fn default() -> BindImageMemoryInfo {
         BindImageMemoryInfo {
             s_type: StructureType::BIND_IMAGE_MEMORY_INFO,
-            p_next: ::std::ptr::null(),
-            image: Image::null(),
-            memory: DeviceMemory::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
+            image: Image::default(),
+            memory: DeviceMemory::default(),
             memory_offset: DeviceSize::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct BindImageMemoryInfoKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -9327,20 +9600,20 @@ pub struct BindImageMemoryDeviceGroupInfo {
     pub split_instance_bind_region_count: uint32_t,
     pub p_split_instance_bind_regions: *const Rect2D,
 }
-impl Default for BindImageMemoryDeviceGroupInfo {
+impl ::std::default::Default for BindImageMemoryDeviceGroupInfo {
     fn default() -> BindImageMemoryDeviceGroupInfo {
         BindImageMemoryDeviceGroupInfo {
             s_type: StructureType::BIND_IMAGE_MEMORY_DEVICE_GROUP_INFO,
-            p_next: ::std::ptr::null(),
-            device_index_count: 0,
-            p_device_indices: ::std::ptr::null(),
-            split_instance_bind_region_count: 0,
-            p_split_instance_bind_regions: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
+            device_index_count: uint32_t::default(),
+            p_device_indices: unsafe { ::std::mem::zeroed() },
+            split_instance_bind_region_count: uint32_t::default(),
+            p_split_instance_bind_regions: unsafe { ::std::mem::zeroed() },
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct BindImageMemoryDeviceGroupInfoKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -9351,19 +9624,19 @@ pub struct DeviceGroupRenderPassBeginInfo {
     pub device_render_area_count: uint32_t,
     pub p_device_render_areas: *const Rect2D,
 }
-impl Default for DeviceGroupRenderPassBeginInfo {
+impl ::std::default::Default for DeviceGroupRenderPassBeginInfo {
     fn default() -> DeviceGroupRenderPassBeginInfo {
         DeviceGroupRenderPassBeginInfo {
             s_type: StructureType::DEVICE_GROUP_RENDER_PASS_BEGIN_INFO,
-            p_next: ::std::ptr::null(),
-            device_mask: 0,
-            device_render_area_count: 0,
-            p_device_render_areas: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
+            device_mask: uint32_t::default(),
+            device_render_area_count: uint32_t::default(),
+            p_device_render_areas: unsafe { ::std::mem::zeroed() },
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct DeviceGroupRenderPassBeginInfoKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -9372,17 +9645,17 @@ pub struct DeviceGroupCommandBufferBeginInfo {
     pub p_next: *const c_void,
     pub device_mask: uint32_t,
 }
-impl Default for DeviceGroupCommandBufferBeginInfo {
+impl ::std::default::Default for DeviceGroupCommandBufferBeginInfo {
     fn default() -> DeviceGroupCommandBufferBeginInfo {
         DeviceGroupCommandBufferBeginInfo {
             s_type: StructureType::DEVICE_GROUP_COMMAND_BUFFER_BEGIN_INFO,
-            p_next: ::std::ptr::null(),
-            device_mask: 0,
+            p_next: unsafe { ::std::mem::zeroed() },
+            device_mask: uint32_t::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct DeviceGroupCommandBufferBeginInfoKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -9396,22 +9669,22 @@ pub struct DeviceGroupSubmitInfo {
     pub signal_semaphore_count: uint32_t,
     pub p_signal_semaphore_device_indices: *const uint32_t,
 }
-impl Default for DeviceGroupSubmitInfo {
+impl ::std::default::Default for DeviceGroupSubmitInfo {
     fn default() -> DeviceGroupSubmitInfo {
         DeviceGroupSubmitInfo {
             s_type: StructureType::DEVICE_GROUP_SUBMIT_INFO,
-            p_next: ::std::ptr::null(),
-            wait_semaphore_count: 0,
-            p_wait_semaphore_device_indices: ::std::ptr::null(),
-            command_buffer_count: 0,
-            p_command_buffer_device_masks: ::std::ptr::null(),
-            signal_semaphore_count: 0,
-            p_signal_semaphore_device_indices: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
+            wait_semaphore_count: uint32_t::default(),
+            p_wait_semaphore_device_indices: unsafe { ::std::mem::zeroed() },
+            command_buffer_count: uint32_t::default(),
+            p_command_buffer_device_masks: unsafe { ::std::mem::zeroed() },
+            signal_semaphore_count: uint32_t::default(),
+            p_signal_semaphore_device_indices: unsafe { ::std::mem::zeroed() },
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct DeviceGroupSubmitInfoKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -9421,18 +9694,18 @@ pub struct DeviceGroupBindSparseInfo {
     pub resource_device_index: uint32_t,
     pub memory_device_index: uint32_t,
 }
-impl Default for DeviceGroupBindSparseInfo {
+impl ::std::default::Default for DeviceGroupBindSparseInfo {
     fn default() -> DeviceGroupBindSparseInfo {
         DeviceGroupBindSparseInfo {
             s_type: StructureType::DEVICE_GROUP_BIND_SPARSE_INFO,
-            p_next: ::std::ptr::null(),
-            resource_device_index: 0,
-            memory_device_index: 0,
+            p_next: unsafe { ::std::mem::zeroed() },
+            resource_device_index: uint32_t::default(),
+            memory_device_index: uint32_t::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct DeviceGroupBindSparseInfoKHR {}
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -9454,6 +9727,16 @@ impl ::std::fmt::Debug for DeviceGroupPresentCapabilitiesKHR {
             .finish()
     }
 }
+impl ::std::default::Default for DeviceGroupPresentCapabilitiesKHR {
+    fn default() -> DeviceGroupPresentCapabilitiesKHR {
+        DeviceGroupPresentCapabilitiesKHR {
+            s_type: StructureType::DEVICE_GROUP_PRESENT_CAPABILITIES_KHR,
+            p_next: unsafe { ::std::mem::zeroed() },
+            present_mask: unsafe { ::std::mem::zeroed() },
+            modes: DeviceGroupPresentModeFlagsKHR::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct ImageSwapchainCreateInfoKHR {
@@ -9461,12 +9744,12 @@ pub struct ImageSwapchainCreateInfoKHR {
     pub p_next: *const c_void,
     pub swapchain: SwapchainKHR,
 }
-impl Default for ImageSwapchainCreateInfoKHR {
+impl ::std::default::Default for ImageSwapchainCreateInfoKHR {
     fn default() -> ImageSwapchainCreateInfoKHR {
         ImageSwapchainCreateInfoKHR {
             s_type: StructureType::IMAGE_SWAPCHAIN_CREATE_INFO_KHR,
-            p_next: ::std::ptr::null(),
-            swapchain: SwapchainKHR::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
+            swapchain: SwapchainKHR::default(),
         }
     }
 }
@@ -9478,13 +9761,13 @@ pub struct BindImageMemorySwapchainInfoKHR {
     pub swapchain: SwapchainKHR,
     pub image_index: uint32_t,
 }
-impl Default for BindImageMemorySwapchainInfoKHR {
+impl ::std::default::Default for BindImageMemorySwapchainInfoKHR {
     fn default() -> BindImageMemorySwapchainInfoKHR {
         BindImageMemorySwapchainInfoKHR {
             s_type: StructureType::BIND_IMAGE_MEMORY_SWAPCHAIN_INFO_KHR,
-            p_next: ::std::ptr::null(),
-            swapchain: SwapchainKHR::null(),
-            image_index: 0,
+            p_next: unsafe { ::std::mem::zeroed() },
+            swapchain: SwapchainKHR::default(),
+            image_index: uint32_t::default(),
         }
     }
 }
@@ -9499,16 +9782,16 @@ pub struct AcquireNextImageInfoKHR {
     pub fence: Fence,
     pub device_mask: uint32_t,
 }
-impl Default for AcquireNextImageInfoKHR {
+impl ::std::default::Default for AcquireNextImageInfoKHR {
     fn default() -> AcquireNextImageInfoKHR {
         AcquireNextImageInfoKHR {
             s_type: StructureType::ACQUIRE_NEXT_IMAGE_INFO_KHR,
-            p_next: ::std::ptr::null(),
-            swapchain: SwapchainKHR::null(),
-            timeout: 0,
-            semaphore: Semaphore::null(),
-            fence: Fence::null(),
-            device_mask: 0,
+            p_next: unsafe { ::std::mem::zeroed() },
+            swapchain: SwapchainKHR::default(),
+            timeout: uint64_t::default(),
+            semaphore: Semaphore::default(),
+            fence: Fence::default(),
+            device_mask: uint32_t::default(),
         }
     }
 }
@@ -9521,13 +9804,13 @@ pub struct DeviceGroupPresentInfoKHR {
     pub p_device_masks: *const uint32_t,
     pub mode: DeviceGroupPresentModeFlagsKHR,
 }
-impl Default for DeviceGroupPresentInfoKHR {
+impl ::std::default::Default for DeviceGroupPresentInfoKHR {
     fn default() -> DeviceGroupPresentInfoKHR {
         DeviceGroupPresentInfoKHR {
             s_type: StructureType::DEVICE_GROUP_PRESENT_INFO_KHR,
-            p_next: ::std::ptr::null(),
-            swapchain_count: 0,
-            p_device_masks: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
+            swapchain_count: uint32_t::default(),
+            p_device_masks: unsafe { ::std::mem::zeroed() },
             mode: DeviceGroupPresentModeFlagsKHR::default(),
         }
     }
@@ -9540,18 +9823,18 @@ pub struct DeviceGroupDeviceCreateInfo {
     pub physical_device_count: uint32_t,
     pub p_physical_devices: *const PhysicalDevice,
 }
-impl Default for DeviceGroupDeviceCreateInfo {
+impl ::std::default::Default for DeviceGroupDeviceCreateInfo {
     fn default() -> DeviceGroupDeviceCreateInfo {
         DeviceGroupDeviceCreateInfo {
             s_type: StructureType::DEVICE_GROUP_DEVICE_CREATE_INFO,
-            p_next: ::std::ptr::null(),
-            physical_device_count: 0,
-            p_physical_devices: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
+            physical_device_count: uint32_t::default(),
+            p_physical_devices: unsafe { ::std::mem::zeroed() },
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct DeviceGroupDeviceCreateInfoKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -9560,17 +9843,17 @@ pub struct DeviceGroupSwapchainCreateInfoKHR {
     pub p_next: *const c_void,
     pub modes: DeviceGroupPresentModeFlagsKHR,
 }
-impl Default for DeviceGroupSwapchainCreateInfoKHR {
+impl ::std::default::Default for DeviceGroupSwapchainCreateInfoKHR {
     fn default() -> DeviceGroupSwapchainCreateInfoKHR {
         DeviceGroupSwapchainCreateInfoKHR {
             s_type: StructureType::DEVICE_GROUP_SWAPCHAIN_CREATE_INFO_KHR,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             modes: DeviceGroupPresentModeFlagsKHR::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct DescriptorUpdateTemplateEntry {
     pub dst_binding: uint32_t,
     pub dst_array_element: uint32_t,
@@ -9580,7 +9863,7 @@ pub struct DescriptorUpdateTemplateEntry {
     pub stride: size_t,
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct DescriptorUpdateTemplateEntryKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -9596,27 +9879,27 @@ pub struct DescriptorUpdateTemplateCreateInfo {
     pub pipeline_layout: PipelineLayout,
     pub set: uint32_t,
 }
-impl Default for DescriptorUpdateTemplateCreateInfo {
+impl ::std::default::Default for DescriptorUpdateTemplateCreateInfo {
     fn default() -> DescriptorUpdateTemplateCreateInfo {
         DescriptorUpdateTemplateCreateInfo {
             s_type: StructureType::DESCRIPTOR_UPDATE_TEMPLATE_CREATE_INFO,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             flags: DescriptorUpdateTemplateCreateFlags::default(),
-            descriptor_update_entry_count: 0,
-            p_descriptor_update_entries: ::std::ptr::null(),
+            descriptor_update_entry_count: uint32_t::default(),
+            p_descriptor_update_entries: unsafe { ::std::mem::zeroed() },
             template_type: DescriptorUpdateTemplateType::default(),
-            descriptor_set_layout: DescriptorSetLayout::null(),
+            descriptor_set_layout: DescriptorSetLayout::default(),
             pipeline_bind_point: PipelineBindPoint::default(),
-            pipeline_layout: PipelineLayout::null(),
-            set: 0,
+            pipeline_layout: PipelineLayout::default(),
+            set: uint32_t::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct DescriptorUpdateTemplateCreateInfoKHR {}
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct XYColorEXT {
     pub x: c_float,
     pub y: c_float,
@@ -9635,29 +9918,29 @@ pub struct HdrMetadataEXT {
     pub max_content_light_level: c_float,
     pub max_frame_average_light_level: c_float,
 }
-impl Default for HdrMetadataEXT {
+impl ::std::default::Default for HdrMetadataEXT {
     fn default() -> HdrMetadataEXT {
         HdrMetadataEXT {
             s_type: StructureType::HDR_METADATA_EXT,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             display_primary_red: XYColorEXT::default(),
             display_primary_green: XYColorEXT::default(),
             display_primary_blue: XYColorEXT::default(),
             white_point: XYColorEXT::default(),
-            max_luminance: 0.0,
-            min_luminance: 0.0,
-            max_content_light_level: 0.0,
-            max_frame_average_light_level: 0.0,
+            max_luminance: c_float::default(),
+            min_luminance: c_float::default(),
+            max_content_light_level: c_float::default(),
+            max_frame_average_light_level: c_float::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct RefreshCycleDurationGOOGLE {
     pub refresh_duration: uint64_t,
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct PastPresentationTimingGOOGLE {
     pub present_id: uint32_t,
     pub desired_present_time: uint64_t,
@@ -9673,18 +9956,18 @@ pub struct PresentTimesInfoGOOGLE {
     pub swapchain_count: uint32_t,
     pub p_times: *const PresentTimeGOOGLE,
 }
-impl Default for PresentTimesInfoGOOGLE {
+impl ::std::default::Default for PresentTimesInfoGOOGLE {
     fn default() -> PresentTimesInfoGOOGLE {
         PresentTimesInfoGOOGLE {
             s_type: StructureType::PRESENT_TIMES_INFO_GOOGLE,
-            p_next: ::std::ptr::null(),
-            swapchain_count: 0,
-            p_times: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
+            swapchain_count: uint32_t::default(),
+            p_times: unsafe { ::std::mem::zeroed() },
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct PresentTimeGOOGLE {
     pub present_id: uint32_t,
     pub desired_present_time: uint64_t,
@@ -9697,13 +9980,13 @@ pub struct IOSSurfaceCreateInfoMVK {
     pub flags: IOSSurfaceCreateFlagsMVK,
     pub p_view: *const c_void,
 }
-impl Default for IOSSurfaceCreateInfoMVK {
+impl ::std::default::Default for IOSSurfaceCreateInfoMVK {
     fn default() -> IOSSurfaceCreateInfoMVK {
         IOSSurfaceCreateInfoMVK {
-            s_type: StructureType::IOS_SURFACE_CREATE_INFO_MVK,
-            p_next: ::std::ptr::null(),
+            s_type: StructureType::IOS_SURFACE_CREATE_INFO_M,
+            p_next: unsafe { ::std::mem::zeroed() },
             flags: IOSSurfaceCreateFlagsMVK::default(),
-            p_view: ::std::ptr::null(),
+            p_view: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -9715,18 +9998,18 @@ pub struct MacOSSurfaceCreateInfoMVK {
     pub flags: MacOSSurfaceCreateFlagsMVK,
     pub p_view: *const c_void,
 }
-impl Default for MacOSSurfaceCreateInfoMVK {
+impl ::std::default::Default for MacOSSurfaceCreateInfoMVK {
     fn default() -> MacOSSurfaceCreateInfoMVK {
         MacOSSurfaceCreateInfoMVK {
-            s_type: StructureType::MACOS_SURFACE_CREATE_INFO_MVK,
-            p_next: ::std::ptr::null(),
+            s_type: StructureType::MACOS_SURFACE_CREATE_INFO_M,
+            p_next: unsafe { ::std::mem::zeroed() },
             flags: MacOSSurfaceCreateFlagsMVK::default(),
-            p_view: ::std::ptr::null(),
+            p_view: unsafe { ::std::mem::zeroed() },
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct ViewportWScalingNV {
     pub xcoeff: c_float,
     pub ycoeff: c_float,
@@ -9740,19 +10023,19 @@ pub struct PipelineViewportWScalingStateCreateInfoNV {
     pub viewport_count: uint32_t,
     pub p_viewport_w_scalings: *const ViewportWScalingNV,
 }
-impl Default for PipelineViewportWScalingStateCreateInfoNV {
+impl ::std::default::Default for PipelineViewportWScalingStateCreateInfoNV {
     fn default() -> PipelineViewportWScalingStateCreateInfoNV {
         PipelineViewportWScalingStateCreateInfoNV {
             s_type: StructureType::PIPELINE_VIEWPORT_W_SCALING_STATE_CREATE_INFO_NV,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             viewport_w_scaling_enable: Bool32::default(),
-            viewport_count: 0,
-            p_viewport_w_scalings: ::std::ptr::null(),
+            viewport_count: uint32_t::default(),
+            p_viewport_w_scalings: unsafe { ::std::mem::zeroed() },
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct ViewportSwizzleNV {
     pub x: ViewportCoordinateSwizzleNV,
     pub y: ViewportCoordinateSwizzleNV,
@@ -9768,14 +10051,14 @@ pub struct PipelineViewportSwizzleStateCreateInfoNV {
     pub viewport_count: uint32_t,
     pub p_viewport_swizzles: *const ViewportSwizzleNV,
 }
-impl Default for PipelineViewportSwizzleStateCreateInfoNV {
+impl ::std::default::Default for PipelineViewportSwizzleStateCreateInfoNV {
     fn default() -> PipelineViewportSwizzleStateCreateInfoNV {
         PipelineViewportSwizzleStateCreateInfoNV {
             s_type: StructureType::PIPELINE_VIEWPORT_SWIZZLE_STATE_CREATE_INFO_NV,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             flags: PipelineViewportSwizzleStateCreateFlagsNV::default(),
-            viewport_count: 0,
-            p_viewport_swizzles: ::std::ptr::null(),
+            viewport_count: uint32_t::default(),
+            p_viewport_swizzles: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -9786,12 +10069,12 @@ pub struct PhysicalDeviceDiscardRectanglePropertiesEXT {
     pub p_next: *const c_void,
     pub max_discard_rectangles: uint32_t,
 }
-impl Default for PhysicalDeviceDiscardRectanglePropertiesEXT {
+impl ::std::default::Default for PhysicalDeviceDiscardRectanglePropertiesEXT {
     fn default() -> PhysicalDeviceDiscardRectanglePropertiesEXT {
         PhysicalDeviceDiscardRectanglePropertiesEXT {
             s_type: StructureType::PHYSICAL_DEVICE_DISCARD_RECTANGLE_PROPERTIES_EXT,
-            p_next: ::std::ptr::null(),
-            max_discard_rectangles: 0,
+            p_next: unsafe { ::std::mem::zeroed() },
+            max_discard_rectangles: uint32_t::default(),
         }
     }
 }
@@ -9805,15 +10088,15 @@ pub struct PipelineDiscardRectangleStateCreateInfoEXT {
     pub discard_rectangle_count: uint32_t,
     pub p_discard_rectangles: *const Rect2D,
 }
-impl Default for PipelineDiscardRectangleStateCreateInfoEXT {
+impl ::std::default::Default for PipelineDiscardRectangleStateCreateInfoEXT {
     fn default() -> PipelineDiscardRectangleStateCreateInfoEXT {
         PipelineDiscardRectangleStateCreateInfoEXT {
             s_type: StructureType::PIPELINE_DISCARD_RECTANGLE_STATE_CREATE_INFO_EXT,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             flags: PipelineDiscardRectangleStateCreateFlagsEXT::default(),
             discard_rectangle_mode: DiscardRectangleModeEXT::default(),
-            discard_rectangle_count: 0,
-            p_discard_rectangles: ::std::ptr::null(),
+            discard_rectangle_count: uint32_t::default(),
+            p_discard_rectangles: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -9824,24 +10107,24 @@ pub struct PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX {
     pub p_next: *const c_void,
     pub per_view_position_all_components: Bool32,
 }
-impl Default for PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX {
+impl ::std::default::Default for PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX {
     fn default() -> PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX {
         PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX {
             s_type: StructureType::PHYSICAL_DEVICE_MULTIVIEW_PER_VIEW_ATTRIBUTES_PROPERTIES_NVX,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             per_view_position_all_components: Bool32::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct InputAttachmentAspectReference {
     pub subpass: uint32_t,
     pub input_attachment_index: uint32_t,
     pub aspect_mask: ImageAspectFlags,
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct InputAttachmentAspectReferenceKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -9851,18 +10134,18 @@ pub struct RenderPassInputAttachmentAspectCreateInfo {
     pub aspect_reference_count: uint32_t,
     pub p_aspect_references: *const InputAttachmentAspectReference,
 }
-impl Default for RenderPassInputAttachmentAspectCreateInfo {
+impl ::std::default::Default for RenderPassInputAttachmentAspectCreateInfo {
     fn default() -> RenderPassInputAttachmentAspectCreateInfo {
         RenderPassInputAttachmentAspectCreateInfo {
             s_type: StructureType::RENDER_PASS_INPUT_ATTACHMENT_ASPECT_CREATE_INFO,
-            p_next: ::std::ptr::null(),
-            aspect_reference_count: 0,
-            p_aspect_references: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
+            aspect_reference_count: uint32_t::default(),
+            p_aspect_references: unsafe { ::std::mem::zeroed() },
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct RenderPassInputAttachmentAspectCreateInfoKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -9871,12 +10154,12 @@ pub struct PhysicalDeviceSurfaceInfo2KHR {
     pub p_next: *const c_void,
     pub surface: SurfaceKHR,
 }
-impl Default for PhysicalDeviceSurfaceInfo2KHR {
+impl ::std::default::Default for PhysicalDeviceSurfaceInfo2KHR {
     fn default() -> PhysicalDeviceSurfaceInfo2KHR {
         PhysicalDeviceSurfaceInfo2KHR {
             s_type: StructureType::PHYSICAL_DEVICE_SURFACE_INFO_2_KHR,
-            p_next: ::std::ptr::null(),
-            surface: SurfaceKHR::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
+            surface: SurfaceKHR::default(),
         }
     }
 }
@@ -9887,11 +10170,11 @@ pub struct SurfaceCapabilities2KHR {
     pub p_next: *const c_void,
     pub surface_capabilities: SurfaceCapabilitiesKHR,
 }
-impl Default for SurfaceCapabilities2KHR {
+impl ::std::default::Default for SurfaceCapabilities2KHR {
     fn default() -> SurfaceCapabilities2KHR {
         SurfaceCapabilities2KHR {
             s_type: StructureType::SURFACE_CAPABILITIES_2_KHR,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             surface_capabilities: SurfaceCapabilitiesKHR::default(),
         }
     }
@@ -9903,11 +10186,11 @@ pub struct SurfaceFormat2KHR {
     pub p_next: *const c_void,
     pub surface_format: SurfaceFormatKHR,
 }
-impl Default for SurfaceFormat2KHR {
+impl ::std::default::Default for SurfaceFormat2KHR {
     fn default() -> SurfaceFormat2KHR {
         SurfaceFormat2KHR {
             s_type: StructureType::SURFACE_FORMAT_2_KHR,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             surface_format: SurfaceFormatKHR::default(),
         }
     }
@@ -9919,11 +10202,11 @@ pub struct DisplayProperties2KHR {
     pub p_next: *const c_void,
     pub display_properties: DisplayPropertiesKHR,
 }
-impl Default for DisplayProperties2KHR {
+impl ::std::default::Default for DisplayProperties2KHR {
     fn default() -> DisplayProperties2KHR {
         DisplayProperties2KHR {
             s_type: StructureType::DISPLAY_PROPERTIES_2_KHR,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             display_properties: DisplayPropertiesKHR::default(),
         }
     }
@@ -9935,11 +10218,11 @@ pub struct DisplayPlaneProperties2KHR {
     pub p_next: *const c_void,
     pub display_plane_properties: DisplayPlanePropertiesKHR,
 }
-impl Default for DisplayPlaneProperties2KHR {
+impl ::std::default::Default for DisplayPlaneProperties2KHR {
     fn default() -> DisplayPlaneProperties2KHR {
         DisplayPlaneProperties2KHR {
             s_type: StructureType::DISPLAY_PLANE_PROPERTIES_2_KHR,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             display_plane_properties: DisplayPlanePropertiesKHR::default(),
         }
     }
@@ -9951,11 +10234,11 @@ pub struct DisplayModeProperties2KHR {
     pub p_next: *const c_void,
     pub display_mode_properties: DisplayModePropertiesKHR,
 }
-impl Default for DisplayModeProperties2KHR {
+impl ::std::default::Default for DisplayModeProperties2KHR {
     fn default() -> DisplayModeProperties2KHR {
         DisplayModeProperties2KHR {
             s_type: StructureType::DISPLAY_MODE_PROPERTIES_2_KHR,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             display_mode_properties: DisplayModePropertiesKHR::default(),
         }
     }
@@ -9968,13 +10251,13 @@ pub struct DisplayPlaneInfo2KHR {
     pub mode: DisplayModeKHR,
     pub plane_index: uint32_t,
 }
-impl Default for DisplayPlaneInfo2KHR {
+impl ::std::default::Default for DisplayPlaneInfo2KHR {
     fn default() -> DisplayPlaneInfo2KHR {
         DisplayPlaneInfo2KHR {
             s_type: StructureType::DISPLAY_PLANE_INFO_2_KHR,
-            p_next: ::std::ptr::null(),
-            mode: DisplayModeKHR::null(),
-            plane_index: 0,
+            p_next: unsafe { ::std::mem::zeroed() },
+            mode: DisplayModeKHR::default(),
+            plane_index: uint32_t::default(),
         }
     }
 }
@@ -9985,11 +10268,11 @@ pub struct DisplayPlaneCapabilities2KHR {
     pub p_next: *const c_void,
     pub capabilities: DisplayPlaneCapabilitiesKHR,
 }
-impl Default for DisplayPlaneCapabilities2KHR {
+impl ::std::default::Default for DisplayPlaneCapabilities2KHR {
     fn default() -> DisplayPlaneCapabilities2KHR {
         DisplayPlaneCapabilities2KHR {
             s_type: StructureType::DISPLAY_PLANE_CAPABILITIES_2_KHR,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             capabilities: DisplayPlaneCapabilitiesKHR::default(),
         }
     }
@@ -10001,11 +10284,11 @@ pub struct SharedPresentSurfaceCapabilitiesKHR {
     pub p_next: *const c_void,
     pub shared_present_supported_usage_flags: ImageUsageFlags,
 }
-impl Default for SharedPresentSurfaceCapabilitiesKHR {
+impl ::std::default::Default for SharedPresentSurfaceCapabilitiesKHR {
     fn default() -> SharedPresentSurfaceCapabilitiesKHR {
         SharedPresentSurfaceCapabilitiesKHR {
             s_type: StructureType::SHARED_PRESENT_SURFACE_CAPABILITIES_KHR,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             shared_present_supported_usage_flags: ImageUsageFlags::default(),
         }
     }
@@ -10020,11 +10303,11 @@ pub struct PhysicalDevice16BitStorageFeatures {
     pub storage_push_constant16: Bool32,
     pub storage_input_output16: Bool32,
 }
-impl Default for PhysicalDevice16BitStorageFeatures {
+impl ::std::default::Default for PhysicalDevice16BitStorageFeatures {
     fn default() -> PhysicalDevice16BitStorageFeatures {
         PhysicalDevice16BitStorageFeatures {
             s_type: StructureType::PHYSICAL_DEVICE_16BIT_STORAGE_FEATURES,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             storage_buffer16_bit_access: Bool32::default(),
             uniform_and_storage_buffer16_bit_access: Bool32::default(),
             storage_push_constant16: Bool32::default(),
@@ -10033,7 +10316,7 @@ impl Default for PhysicalDevice16BitStorageFeatures {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct PhysicalDevice16BitStorageFeaturesKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -10045,12 +10328,12 @@ pub struct PhysicalDeviceSubgroupProperties {
     pub supported_operations: SubgroupFeatureFlags,
     pub quad_operations_in_all_stages: Bool32,
 }
-impl Default for PhysicalDeviceSubgroupProperties {
+impl ::std::default::Default for PhysicalDeviceSubgroupProperties {
     fn default() -> PhysicalDeviceSubgroupProperties {
         PhysicalDeviceSubgroupProperties {
             s_type: StructureType::PHYSICAL_DEVICE_SUBGROUP_PROPERTIES,
-            p_next: ::std::ptr::null(),
-            subgroup_size: 0,
+            p_next: unsafe { ::std::mem::zeroed() },
+            subgroup_size: uint32_t::default(),
             supported_stages: ShaderStageFlags::default(),
             supported_operations: SubgroupFeatureFlags::default(),
             quad_operations_in_all_stages: Bool32::default(),
@@ -10064,17 +10347,17 @@ pub struct BufferMemoryRequirementsInfo2 {
     pub p_next: *const c_void,
     pub buffer: Buffer,
 }
-impl Default for BufferMemoryRequirementsInfo2 {
+impl ::std::default::Default for BufferMemoryRequirementsInfo2 {
     fn default() -> BufferMemoryRequirementsInfo2 {
         BufferMemoryRequirementsInfo2 {
             s_type: StructureType::BUFFER_MEMORY_REQUIREMENTS_INFO_2,
-            p_next: ::std::ptr::null(),
-            buffer: Buffer::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
+            buffer: Buffer::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct BufferMemoryRequirementsInfo2KHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -10083,17 +10366,17 @@ pub struct ImageMemoryRequirementsInfo2 {
     pub p_next: *const c_void,
     pub image: Image,
 }
-impl Default for ImageMemoryRequirementsInfo2 {
+impl ::std::default::Default for ImageMemoryRequirementsInfo2 {
     fn default() -> ImageMemoryRequirementsInfo2 {
         ImageMemoryRequirementsInfo2 {
             s_type: StructureType::IMAGE_MEMORY_REQUIREMENTS_INFO_2,
-            p_next: ::std::ptr::null(),
-            image: Image::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
+            image: Image::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct ImageMemoryRequirementsInfo2KHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -10102,17 +10385,17 @@ pub struct ImageSparseMemoryRequirementsInfo2 {
     pub p_next: *const c_void,
     pub image: Image,
 }
-impl Default for ImageSparseMemoryRequirementsInfo2 {
+impl ::std::default::Default for ImageSparseMemoryRequirementsInfo2 {
     fn default() -> ImageSparseMemoryRequirementsInfo2 {
         ImageSparseMemoryRequirementsInfo2 {
             s_type: StructureType::IMAGE_SPARSE_MEMORY_REQUIREMENTS_INFO_2,
-            p_next: ::std::ptr::null(),
-            image: Image::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
+            image: Image::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct ImageSparseMemoryRequirementsInfo2KHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -10121,17 +10404,17 @@ pub struct MemoryRequirements2 {
     pub p_next: *const c_void,
     pub memory_requirements: MemoryRequirements,
 }
-impl Default for MemoryRequirements2 {
+impl ::std::default::Default for MemoryRequirements2 {
     fn default() -> MemoryRequirements2 {
         MemoryRequirements2 {
             s_type: StructureType::MEMORY_REQUIREMENTS_2,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             memory_requirements: MemoryRequirements::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct MemoryRequirements2KHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -10140,17 +10423,17 @@ pub struct SparseImageMemoryRequirements2 {
     pub p_next: *const c_void,
     pub memory_requirements: SparseImageMemoryRequirements,
 }
-impl Default for SparseImageMemoryRequirements2 {
+impl ::std::default::Default for SparseImageMemoryRequirements2 {
     fn default() -> SparseImageMemoryRequirements2 {
         SparseImageMemoryRequirements2 {
             s_type: StructureType::SPARSE_IMAGE_MEMORY_REQUIREMENTS_2,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             memory_requirements: SparseImageMemoryRequirements::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct SparseImageMemoryRequirements2KHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -10159,17 +10442,17 @@ pub struct PhysicalDevicePointClippingProperties {
     pub p_next: *const c_void,
     pub point_clipping_behavior: PointClippingBehavior,
 }
-impl Default for PhysicalDevicePointClippingProperties {
+impl ::std::default::Default for PhysicalDevicePointClippingProperties {
     fn default() -> PhysicalDevicePointClippingProperties {
         PhysicalDevicePointClippingProperties {
             s_type: StructureType::PHYSICAL_DEVICE_POINT_CLIPPING_PROPERTIES,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             point_clipping_behavior: PointClippingBehavior::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct PhysicalDevicePointClippingPropertiesKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -10179,18 +10462,18 @@ pub struct MemoryDedicatedRequirements {
     pub prefers_dedicated_allocation: Bool32,
     pub requires_dedicated_allocation: Bool32,
 }
-impl Default for MemoryDedicatedRequirements {
+impl ::std::default::Default for MemoryDedicatedRequirements {
     fn default() -> MemoryDedicatedRequirements {
         MemoryDedicatedRequirements {
             s_type: StructureType::MEMORY_DEDICATED_REQUIREMENTS,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             prefers_dedicated_allocation: Bool32::default(),
             requires_dedicated_allocation: Bool32::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct MemoryDedicatedRequirementsKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -10200,18 +10483,18 @@ pub struct MemoryDedicatedAllocateInfo {
     pub image: Image,
     pub buffer: Buffer,
 }
-impl Default for MemoryDedicatedAllocateInfo {
+impl ::std::default::Default for MemoryDedicatedAllocateInfo {
     fn default() -> MemoryDedicatedAllocateInfo {
         MemoryDedicatedAllocateInfo {
             s_type: StructureType::MEMORY_DEDICATED_ALLOCATE_INFO,
-            p_next: ::std::ptr::null(),
-            image: Image::null(),
-            buffer: Buffer::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
+            image: Image::default(),
+            buffer: Buffer::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct MemoryDedicatedAllocateInfoKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -10220,17 +10503,17 @@ pub struct ImageViewUsageCreateInfo {
     pub p_next: *const c_void,
     pub usage: ImageUsageFlags,
 }
-impl Default for ImageViewUsageCreateInfo {
+impl ::std::default::Default for ImageViewUsageCreateInfo {
     fn default() -> ImageViewUsageCreateInfo {
         ImageViewUsageCreateInfo {
             s_type: StructureType::IMAGE_VIEW_USAGE_CREATE_INFO,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             usage: ImageUsageFlags::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct ImageViewUsageCreateInfoKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -10239,17 +10522,17 @@ pub struct PipelineTessellationDomainOriginStateCreateInfo {
     pub p_next: *const c_void,
     pub domain_origin: TessellationDomainOrigin,
 }
-impl Default for PipelineTessellationDomainOriginStateCreateInfo {
+impl ::std::default::Default for PipelineTessellationDomainOriginStateCreateInfo {
     fn default() -> PipelineTessellationDomainOriginStateCreateInfo {
         PipelineTessellationDomainOriginStateCreateInfo {
             s_type: StructureType::PIPELINE_TESSELLATION_DOMAIN_ORIGIN_STATE_CREATE_INFO,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             domain_origin: TessellationDomainOrigin::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct PipelineTessellationDomainOriginStateCreateInfoKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -10258,17 +10541,17 @@ pub struct SamplerYcbcrConversionInfo {
     pub p_next: *const c_void,
     pub conversion: SamplerYcbcrConversion,
 }
-impl Default for SamplerYcbcrConversionInfo {
+impl ::std::default::Default for SamplerYcbcrConversionInfo {
     fn default() -> SamplerYcbcrConversionInfo {
         SamplerYcbcrConversionInfo {
             s_type: StructureType::SAMPLER_YCBCR_CONVERSION_INFO,
-            p_next: ::std::ptr::null(),
-            conversion: SamplerYcbcrConversion::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
+            conversion: SamplerYcbcrConversion::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct SamplerYcbcrConversionInfoKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -10284,11 +10567,11 @@ pub struct SamplerYcbcrConversionCreateInfo {
     pub chroma_filter: Filter,
     pub force_explicit_reconstruction: Bool32,
 }
-impl Default for SamplerYcbcrConversionCreateInfo {
+impl ::std::default::Default for SamplerYcbcrConversionCreateInfo {
     fn default() -> SamplerYcbcrConversionCreateInfo {
         SamplerYcbcrConversionCreateInfo {
             s_type: StructureType::SAMPLER_YCBCR_CONVERSION_CREATE_INFO,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             format: Format::default(),
             ycbcr_model: SamplerYcbcrModelConversion::default(),
             ycbcr_range: SamplerYcbcrRange::default(),
@@ -10301,7 +10584,7 @@ impl Default for SamplerYcbcrConversionCreateInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct SamplerYcbcrConversionCreateInfoKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -10310,17 +10593,17 @@ pub struct BindImagePlaneMemoryInfo {
     pub p_next: *const c_void,
     pub plane_aspect: ImageAspectFlags,
 }
-impl Default for BindImagePlaneMemoryInfo {
+impl ::std::default::Default for BindImagePlaneMemoryInfo {
     fn default() -> BindImagePlaneMemoryInfo {
         BindImagePlaneMemoryInfo {
             s_type: StructureType::BIND_IMAGE_PLANE_MEMORY_INFO,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             plane_aspect: ImageAspectFlags::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct BindImagePlaneMemoryInfoKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -10329,17 +10612,17 @@ pub struct ImagePlaneMemoryRequirementsInfo {
     pub p_next: *const c_void,
     pub plane_aspect: ImageAspectFlags,
 }
-impl Default for ImagePlaneMemoryRequirementsInfo {
+impl ::std::default::Default for ImagePlaneMemoryRequirementsInfo {
     fn default() -> ImagePlaneMemoryRequirementsInfo {
         ImagePlaneMemoryRequirementsInfo {
             s_type: StructureType::IMAGE_PLANE_MEMORY_REQUIREMENTS_INFO,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             plane_aspect: ImageAspectFlags::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct ImagePlaneMemoryRequirementsInfoKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -10348,17 +10631,17 @@ pub struct PhysicalDeviceSamplerYcbcrConversionFeatures {
     pub p_next: *const c_void,
     pub sampler_ycbcr_conversion: Bool32,
 }
-impl Default for PhysicalDeviceSamplerYcbcrConversionFeatures {
+impl ::std::default::Default for PhysicalDeviceSamplerYcbcrConversionFeatures {
     fn default() -> PhysicalDeviceSamplerYcbcrConversionFeatures {
         PhysicalDeviceSamplerYcbcrConversionFeatures {
             s_type: StructureType::PHYSICAL_DEVICE_SAMPLER_YCBCR_CONVERSION_FEATURES,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             sampler_ycbcr_conversion: Bool32::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct PhysicalDeviceSamplerYcbcrConversionFeaturesKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -10367,17 +10650,17 @@ pub struct SamplerYcbcrConversionImageFormatProperties {
     pub p_next: *const c_void,
     pub combined_image_sampler_descriptor_count: uint32_t,
 }
-impl Default for SamplerYcbcrConversionImageFormatProperties {
+impl ::std::default::Default for SamplerYcbcrConversionImageFormatProperties {
     fn default() -> SamplerYcbcrConversionImageFormatProperties {
         SamplerYcbcrConversionImageFormatProperties {
             s_type: StructureType::SAMPLER_YCBCR_CONVERSION_IMAGE_FORMAT_PROPERTIES,
-            p_next: ::std::ptr::null(),
-            combined_image_sampler_descriptor_count: 0,
+            p_next: unsafe { ::std::mem::zeroed() },
+            combined_image_sampler_descriptor_count: uint32_t::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct SamplerYcbcrConversionImageFormatPropertiesKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -10386,11 +10669,11 @@ pub struct TextureLODGatherFormatPropertiesAMD {
     pub p_next: *const c_void,
     pub supports_texture_gather_lod_bias_amd: Bool32,
 }
-impl Default for TextureLODGatherFormatPropertiesAMD {
+impl ::std::default::Default for TextureLODGatherFormatPropertiesAMD {
     fn default() -> TextureLODGatherFormatPropertiesAMD {
         TextureLODGatherFormatPropertiesAMD {
             s_type: StructureType::TEXTURE_LOD_GATHER_FORMAT_PROPERTIES_AMD,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             supports_texture_gather_lod_bias_amd: Bool32::default(),
         }
     }
@@ -10402,11 +10685,11 @@ pub struct ProtectedSubmitInfo {
     pub p_next: *const c_void,
     pub protected_submit: Bool32,
 }
-impl Default for ProtectedSubmitInfo {
+impl ::std::default::Default for ProtectedSubmitInfo {
     fn default() -> ProtectedSubmitInfo {
         ProtectedSubmitInfo {
             s_type: StructureType::PROTECTED_SUBMIT_INFO,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             protected_submit: Bool32::default(),
         }
     }
@@ -10418,11 +10701,11 @@ pub struct PhysicalDeviceProtectedMemoryFeatures {
     pub p_next: *const c_void,
     pub protected_memory: Bool32,
 }
-impl Default for PhysicalDeviceProtectedMemoryFeatures {
+impl ::std::default::Default for PhysicalDeviceProtectedMemoryFeatures {
     fn default() -> PhysicalDeviceProtectedMemoryFeatures {
         PhysicalDeviceProtectedMemoryFeatures {
             s_type: StructureType::PHYSICAL_DEVICE_PROTECTED_MEMORY_FEATURES,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             protected_memory: Bool32::default(),
         }
     }
@@ -10434,11 +10717,11 @@ pub struct PhysicalDeviceProtectedMemoryProperties {
     pub p_next: *const c_void,
     pub protected_no_fault: Bool32,
 }
-impl Default for PhysicalDeviceProtectedMemoryProperties {
+impl ::std::default::Default for PhysicalDeviceProtectedMemoryProperties {
     fn default() -> PhysicalDeviceProtectedMemoryProperties {
         PhysicalDeviceProtectedMemoryProperties {
             s_type: StructureType::PHYSICAL_DEVICE_PROTECTED_MEMORY_PROPERTIES,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             protected_no_fault: Bool32::default(),
         }
     }
@@ -10452,14 +10735,14 @@ pub struct DeviceQueueInfo2 {
     pub queue_family_index: uint32_t,
     pub queue_index: uint32_t,
 }
-impl Default for DeviceQueueInfo2 {
+impl ::std::default::Default for DeviceQueueInfo2 {
     fn default() -> DeviceQueueInfo2 {
         DeviceQueueInfo2 {
             s_type: StructureType::DEVICE_QUEUE_INFO_2,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             flags: DeviceQueueCreateFlags::default(),
-            queue_family_index: 0,
-            queue_index: 0,
+            queue_family_index: uint32_t::default(),
+            queue_index: uint32_t::default(),
         }
     }
 }
@@ -10472,14 +10755,14 @@ pub struct PipelineCoverageToColorStateCreateInfoNV {
     pub coverage_to_color_enable: Bool32,
     pub coverage_to_color_location: uint32_t,
 }
-impl Default for PipelineCoverageToColorStateCreateInfoNV {
+impl ::std::default::Default for PipelineCoverageToColorStateCreateInfoNV {
     fn default() -> PipelineCoverageToColorStateCreateInfoNV {
         PipelineCoverageToColorStateCreateInfoNV {
             s_type: StructureType::PIPELINE_COVERAGE_TO_COLOR_STATE_CREATE_INFO_NV,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             flags: PipelineCoverageToColorStateCreateFlagsNV::default(),
             coverage_to_color_enable: Bool32::default(),
-            coverage_to_color_location: 0,
+            coverage_to_color_location: uint32_t::default(),
         }
     }
 }
@@ -10491,18 +10774,18 @@ pub struct PhysicalDeviceSamplerFilterMinmaxPropertiesEXT {
     pub filter_minmax_single_component_formats: Bool32,
     pub filter_minmax_image_component_mapping: Bool32,
 }
-impl Default for PhysicalDeviceSamplerFilterMinmaxPropertiesEXT {
+impl ::std::default::Default for PhysicalDeviceSamplerFilterMinmaxPropertiesEXT {
     fn default() -> PhysicalDeviceSamplerFilterMinmaxPropertiesEXT {
         PhysicalDeviceSamplerFilterMinmaxPropertiesEXT {
             s_type: StructureType::PHYSICAL_DEVICE_SAMPLER_FILTER_MINMAX_PROPERTIES_EXT,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             filter_minmax_single_component_formats: Bool32::default(),
             filter_minmax_image_component_mapping: Bool32::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct SampleLocationEXT {
     pub x: c_float,
     pub y: c_float,
@@ -10517,26 +10800,26 @@ pub struct SampleLocationsInfoEXT {
     pub sample_locations_count: uint32_t,
     pub p_sample_locations: *const SampleLocationEXT,
 }
-impl Default for SampleLocationsInfoEXT {
+impl ::std::default::Default for SampleLocationsInfoEXT {
     fn default() -> SampleLocationsInfoEXT {
         SampleLocationsInfoEXT {
             s_type: StructureType::SAMPLE_LOCATIONS_INFO_EXT,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             sample_locations_per_pixel: SampleCountFlags::default(),
             sample_location_grid_size: Extent2D::default(),
-            sample_locations_count: 0,
-            p_sample_locations: ::std::ptr::null(),
+            sample_locations_count: uint32_t::default(),
+            p_sample_locations: unsafe { ::std::mem::zeroed() },
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct AttachmentSampleLocationsEXT {
     pub attachment_index: uint32_t,
     pub sample_locations_info: SampleLocationsInfoEXT,
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct SubpassSampleLocationsEXT {
     pub subpass_index: uint32_t,
     pub sample_locations_info: SampleLocationsInfoEXT,
@@ -10551,15 +10834,15 @@ pub struct RenderPassSampleLocationsBeginInfoEXT {
     pub post_subpass_sample_locations_count: uint32_t,
     pub p_post_subpass_sample_locations: *const SubpassSampleLocationsEXT,
 }
-impl Default for RenderPassSampleLocationsBeginInfoEXT {
+impl ::std::default::Default for RenderPassSampleLocationsBeginInfoEXT {
     fn default() -> RenderPassSampleLocationsBeginInfoEXT {
         RenderPassSampleLocationsBeginInfoEXT {
             s_type: StructureType::RENDER_PASS_SAMPLE_LOCATIONS_BEGIN_INFO_EXT,
-            p_next: ::std::ptr::null(),
-            attachment_initial_sample_locations_count: 0,
-            p_attachment_initial_sample_locations: ::std::ptr::null(),
-            post_subpass_sample_locations_count: 0,
-            p_post_subpass_sample_locations: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
+            attachment_initial_sample_locations_count: uint32_t::default(),
+            p_attachment_initial_sample_locations: unsafe { ::std::mem::zeroed() },
+            post_subpass_sample_locations_count: uint32_t::default(),
+            p_post_subpass_sample_locations: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -10571,11 +10854,11 @@ pub struct PipelineSampleLocationsStateCreateInfoEXT {
     pub sample_locations_enable: Bool32,
     pub sample_locations_info: SampleLocationsInfoEXT,
 }
-impl Default for PipelineSampleLocationsStateCreateInfoEXT {
+impl ::std::default::Default for PipelineSampleLocationsStateCreateInfoEXT {
     fn default() -> PipelineSampleLocationsStateCreateInfoEXT {
         PipelineSampleLocationsStateCreateInfoEXT {
             s_type: StructureType::PIPELINE_SAMPLE_LOCATIONS_STATE_CREATE_INFO_EXT,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             sample_locations_enable: Bool32::default(),
             sample_locations_info: SampleLocationsInfoEXT::default(),
         }
@@ -10618,6 +10901,19 @@ impl ::std::fmt::Debug for PhysicalDeviceSampleLocationsPropertiesEXT {
             .finish()
     }
 }
+impl ::std::default::Default for PhysicalDeviceSampleLocationsPropertiesEXT {
+    fn default() -> PhysicalDeviceSampleLocationsPropertiesEXT {
+        PhysicalDeviceSampleLocationsPropertiesEXT {
+            s_type: StructureType::PHYSICAL_DEVICE_SAMPLE_LOCATIONS_PROPERTIES_EXT,
+            p_next: unsafe { ::std::mem::zeroed() },
+            sample_location_sample_counts: SampleCountFlags::default(),
+            max_sample_location_grid_size: Extent2D::default(),
+            sample_location_coordinate_range: unsafe { ::std::mem::zeroed() },
+            sample_location_sub_pixel_bits: uint32_t::default(),
+            variable_sample_locations: Bool32::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct MultisamplePropertiesEXT {
@@ -10625,11 +10921,11 @@ pub struct MultisamplePropertiesEXT {
     pub p_next: *const c_void,
     pub max_sample_location_grid_size: Extent2D,
 }
-impl Default for MultisamplePropertiesEXT {
+impl ::std::default::Default for MultisamplePropertiesEXT {
     fn default() -> MultisamplePropertiesEXT {
         MultisamplePropertiesEXT {
             s_type: StructureType::MULTISAMPLE_PROPERTIES_EXT,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             max_sample_location_grid_size: Extent2D::default(),
         }
     }
@@ -10641,11 +10937,11 @@ pub struct SamplerReductionModeCreateInfoEXT {
     pub p_next: *const c_void,
     pub reduction_mode: SamplerReductionModeEXT,
 }
-impl Default for SamplerReductionModeCreateInfoEXT {
+impl ::std::default::Default for SamplerReductionModeCreateInfoEXT {
     fn default() -> SamplerReductionModeCreateInfoEXT {
         SamplerReductionModeCreateInfoEXT {
             s_type: StructureType::SAMPLER_REDUCTION_MODE_CREATE_INFO_EXT,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             reduction_mode: SamplerReductionModeEXT::default(),
         }
     }
@@ -10657,11 +10953,11 @@ pub struct PhysicalDeviceBlendOperationAdvancedFeaturesEXT {
     pub p_next: *const c_void,
     pub advanced_blend_coherent_operations: Bool32,
 }
-impl Default for PhysicalDeviceBlendOperationAdvancedFeaturesEXT {
+impl ::std::default::Default for PhysicalDeviceBlendOperationAdvancedFeaturesEXT {
     fn default() -> PhysicalDeviceBlendOperationAdvancedFeaturesEXT {
         PhysicalDeviceBlendOperationAdvancedFeaturesEXT {
             s_type: StructureType::PHYSICAL_DEVICE_BLEND_OPERATION_ADVANCED_FEATURES_EXT,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             advanced_blend_coherent_operations: Bool32::default(),
         }
     }
@@ -10678,12 +10974,12 @@ pub struct PhysicalDeviceBlendOperationAdvancedPropertiesEXT {
     pub advanced_blend_correlated_overlap: Bool32,
     pub advanced_blend_all_operations: Bool32,
 }
-impl Default for PhysicalDeviceBlendOperationAdvancedPropertiesEXT {
+impl ::std::default::Default for PhysicalDeviceBlendOperationAdvancedPropertiesEXT {
     fn default() -> PhysicalDeviceBlendOperationAdvancedPropertiesEXT {
         PhysicalDeviceBlendOperationAdvancedPropertiesEXT {
             s_type: StructureType::PHYSICAL_DEVICE_BLEND_OPERATION_ADVANCED_PROPERTIES_EXT,
-            p_next: ::std::ptr::null(),
-            advanced_blend_max_color_attachments: 0,
+            p_next: unsafe { ::std::mem::zeroed() },
+            advanced_blend_max_color_attachments: uint32_t::default(),
             advanced_blend_independent_blend: Bool32::default(),
             advanced_blend_non_premultiplied_src_color: Bool32::default(),
             advanced_blend_non_premultiplied_dst_color: Bool32::default(),
@@ -10701,11 +10997,11 @@ pub struct PipelineColorBlendAdvancedStateCreateInfoEXT {
     pub dst_premultiplied: Bool32,
     pub blend_overlap: BlendOverlapEXT,
 }
-impl Default for PipelineColorBlendAdvancedStateCreateInfoEXT {
+impl ::std::default::Default for PipelineColorBlendAdvancedStateCreateInfoEXT {
     fn default() -> PipelineColorBlendAdvancedStateCreateInfoEXT {
         PipelineColorBlendAdvancedStateCreateInfoEXT {
             s_type: StructureType::PIPELINE_COLOR_BLEND_ADVANCED_STATE_CREATE_INFO_EXT,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             src_premultiplied: Bool32::default(),
             dst_premultiplied: Bool32::default(),
             blend_overlap: BlendOverlapEXT::default(),
@@ -10723,16 +11019,16 @@ pub struct PipelineCoverageModulationStateCreateInfoNV {
     pub coverage_modulation_table_count: uint32_t,
     pub p_coverage_modulation_table: *const c_float,
 }
-impl Default for PipelineCoverageModulationStateCreateInfoNV {
+impl ::std::default::Default for PipelineCoverageModulationStateCreateInfoNV {
     fn default() -> PipelineCoverageModulationStateCreateInfoNV {
         PipelineCoverageModulationStateCreateInfoNV {
             s_type: StructureType::PIPELINE_COVERAGE_MODULATION_STATE_CREATE_INFO_NV,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             flags: PipelineCoverageModulationStateCreateFlagsNV::default(),
             coverage_modulation_mode: CoverageModulationModeNV::default(),
             coverage_modulation_table_enable: Bool32::default(),
-            coverage_modulation_table_count: 0,
-            p_coverage_modulation_table: ::std::ptr::null(),
+            coverage_modulation_table_count: uint32_t::default(),
+            p_coverage_modulation_table: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -10744,13 +11040,13 @@ pub struct ImageFormatListCreateInfoKHR {
     pub view_format_count: uint32_t,
     pub p_view_formats: *const Format,
 }
-impl Default for ImageFormatListCreateInfoKHR {
+impl ::std::default::Default for ImageFormatListCreateInfoKHR {
     fn default() -> ImageFormatListCreateInfoKHR {
         ImageFormatListCreateInfoKHR {
             s_type: StructureType::IMAGE_FORMAT_LIST_CREATE_INFO_KHR,
-            p_next: ::std::ptr::null(),
-            view_format_count: 0,
-            p_view_formats: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
+            view_format_count: uint32_t::default(),
+            p_view_formats: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -10763,14 +11059,14 @@ pub struct ValidationCacheCreateInfoEXT {
     pub initial_data_size: size_t,
     pub p_initial_data: *const c_void,
 }
-impl Default for ValidationCacheCreateInfoEXT {
+impl ::std::default::Default for ValidationCacheCreateInfoEXT {
     fn default() -> ValidationCacheCreateInfoEXT {
         ValidationCacheCreateInfoEXT {
             s_type: StructureType::VALIDATION_CACHE_CREATE_INFO_EXT,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             flags: ValidationCacheCreateFlagsEXT::default(),
-            initial_data_size: 0,
-            p_initial_data: ::std::ptr::null(),
+            initial_data_size: size_t::default(),
+            p_initial_data: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -10781,12 +11077,12 @@ pub struct ShaderModuleValidationCacheCreateInfoEXT {
     pub p_next: *const c_void,
     pub validation_cache: ValidationCacheEXT,
 }
-impl Default for ShaderModuleValidationCacheCreateInfoEXT {
+impl ::std::default::Default for ShaderModuleValidationCacheCreateInfoEXT {
     fn default() -> ShaderModuleValidationCacheCreateInfoEXT {
         ShaderModuleValidationCacheCreateInfoEXT {
             s_type: StructureType::SHADER_MODULE_VALIDATION_CACHE_CREATE_INFO_EXT,
-            p_next: ::std::ptr::null(),
-            validation_cache: ValidationCacheEXT::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
+            validation_cache: ValidationCacheEXT::default(),
         }
     }
 }
@@ -10798,18 +11094,18 @@ pub struct PhysicalDeviceMaintenance3Properties {
     pub max_per_set_descriptors: uint32_t,
     pub max_memory_allocation_size: DeviceSize,
 }
-impl Default for PhysicalDeviceMaintenance3Properties {
+impl ::std::default::Default for PhysicalDeviceMaintenance3Properties {
     fn default() -> PhysicalDeviceMaintenance3Properties {
         PhysicalDeviceMaintenance3Properties {
             s_type: StructureType::PHYSICAL_DEVICE_MAINTENANCE_3_PROPERTIES,
-            p_next: ::std::ptr::null(),
-            max_per_set_descriptors: 0,
+            p_next: unsafe { ::std::mem::zeroed() },
+            max_per_set_descriptors: uint32_t::default(),
             max_memory_allocation_size: DeviceSize::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct PhysicalDeviceMaintenance3PropertiesKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -10818,17 +11114,17 @@ pub struct DescriptorSetLayoutSupport {
     pub p_next: *const c_void,
     pub supported: Bool32,
 }
-impl Default for DescriptorSetLayoutSupport {
+impl ::std::default::Default for DescriptorSetLayoutSupport {
     fn default() -> DescriptorSetLayoutSupport {
         DescriptorSetLayoutSupport {
             s_type: StructureType::DESCRIPTOR_SET_LAYOUT_SUPPORT,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             supported: Bool32::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct DescriptorSetLayoutSupportKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -10837,11 +11133,11 @@ pub struct PhysicalDeviceShaderDrawParameterFeatures {
     pub p_next: *const c_void,
     pub shader_draw_parameters: Bool32,
 }
-impl Default for PhysicalDeviceShaderDrawParameterFeatures {
+impl ::std::default::Default for PhysicalDeviceShaderDrawParameterFeatures {
     fn default() -> PhysicalDeviceShaderDrawParameterFeatures {
         PhysicalDeviceShaderDrawParameterFeatures {
             s_type: StructureType::PHYSICAL_DEVICE_SHADER_DRAW_PARAMETER_FEATURES,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             shader_draw_parameters: Bool32::default(),
         }
     }
@@ -10856,12 +11152,12 @@ pub struct NativeBufferANDROID {
     pub format: c_int,
     pub usage: c_int,
 }
-impl Default for NativeBufferANDROID {
+impl ::std::default::Default for NativeBufferANDROID {
     fn default() -> NativeBufferANDROID {
         NativeBufferANDROID {
             s_type: StructureType::NATIVE_BUFFER_ANDROID,
-            p_next: ::std::ptr::null(),
-            handle: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
+            handle: unsafe { ::std::mem::zeroed() },
             stride: c_int::default(),
             format: c_int::default(),
             usage: c_int::default(),
@@ -10869,7 +11165,7 @@ impl Default for NativeBufferANDROID {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct ShaderResourceUsageAMD {
     pub num_used_vgprs: uint32_t,
     pub num_used_sgprs: uint32_t,
@@ -10903,6 +11199,19 @@ impl ::std::fmt::Debug for ShaderStatisticsInfoAMD {
             .finish()
     }
 }
+impl ::std::default::Default for ShaderStatisticsInfoAMD {
+    fn default() -> ShaderStatisticsInfoAMD {
+        ShaderStatisticsInfoAMD {
+            shader_stage_mask: ShaderStageFlags::default(),
+            resource_usage: ShaderResourceUsageAMD::default(),
+            num_physical_vgprs: uint32_t::default(),
+            num_physical_sgprs: uint32_t::default(),
+            num_available_vgprs: uint32_t::default(),
+            num_available_sgprs: uint32_t::default(),
+            compute_work_group_size: unsafe { ::std::mem::zeroed() },
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct DeviceQueueGlobalPriorityCreateInfoEXT {
@@ -10910,11 +11219,11 @@ pub struct DeviceQueueGlobalPriorityCreateInfoEXT {
     pub p_next: *const c_void,
     pub global_priority: QueueGlobalPriorityEXT,
 }
-impl Default for DeviceQueueGlobalPriorityCreateInfoEXT {
+impl ::std::default::Default for DeviceQueueGlobalPriorityCreateInfoEXT {
     fn default() -> DeviceQueueGlobalPriorityCreateInfoEXT {
         DeviceQueueGlobalPriorityCreateInfoEXT {
             s_type: StructureType::DEVICE_QUEUE_GLOBAL_PRIORITY_CREATE_INFO_EXT,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             global_priority: QueueGlobalPriorityEXT::default(),
         }
     }
@@ -10928,14 +11237,14 @@ pub struct DebugUtilsObjectNameInfoEXT {
     pub object_handle: uint64_t,
     pub p_object_name: *const c_char,
 }
-impl Default for DebugUtilsObjectNameInfoEXT {
+impl ::std::default::Default for DebugUtilsObjectNameInfoEXT {
     fn default() -> DebugUtilsObjectNameInfoEXT {
         DebugUtilsObjectNameInfoEXT {
             s_type: StructureType::DEBUG_UTILS_OBJECT_NAME_INFO_EXT,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             object_type: ObjectType::default(),
-            object_handle: 0,
-            p_object_name: ::std::ptr::null(),
+            object_handle: uint64_t::default(),
+            p_object_name: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -10950,16 +11259,16 @@ pub struct DebugUtilsObjectTagInfoEXT {
     pub tag_size: size_t,
     pub p_tag: *const c_void,
 }
-impl Default for DebugUtilsObjectTagInfoEXT {
+impl ::std::default::Default for DebugUtilsObjectTagInfoEXT {
     fn default() -> DebugUtilsObjectTagInfoEXT {
         DebugUtilsObjectTagInfoEXT {
             s_type: StructureType::DEBUG_UTILS_OBJECT_TAG_INFO_EXT,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             object_type: ObjectType::default(),
-            object_handle: 0,
-            tag_name: 0,
-            tag_size: 0,
-            p_tag: ::std::ptr::null(),
+            object_handle: uint64_t::default(),
+            tag_name: uint64_t::default(),
+            tag_size: size_t::default(),
+            p_tag: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -10981,6 +11290,16 @@ impl ::std::fmt::Debug for DebugUtilsLabelEXT {
                 ::std::ffi::CStr::from_ptr(self.color.as_ptr() as *const i8)
             })
             .finish()
+    }
+}
+impl ::std::default::Default for DebugUtilsLabelEXT {
+    fn default() -> DebugUtilsLabelEXT {
+        DebugUtilsLabelEXT {
+            s_type: StructureType::DEBUG_UTILS_LABEL_EXT,
+            p_next: unsafe { ::std::mem::zeroed() },
+            p_label_name: unsafe { ::std::mem::zeroed() },
+            color: unsafe { ::std::mem::zeroed() },
+        }
     }
 }
 #[repr(C)]
@@ -11007,6 +11326,19 @@ impl ::std::fmt::Debug for DebugUtilsMessengerCreateInfoEXT {
             .finish()
     }
 }
+impl ::std::default::Default for DebugUtilsMessengerCreateInfoEXT {
+    fn default() -> DebugUtilsMessengerCreateInfoEXT {
+        DebugUtilsMessengerCreateInfoEXT {
+            s_type: StructureType::DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT,
+            p_next: unsafe { ::std::mem::zeroed() },
+            flags: DebugUtilsMessengerCreateFlagsEXT::default(),
+            message_severity: DebugUtilsMessageSeverityFlagsEXT::default(),
+            message_type: DebugUtilsMessageTypeFlagsEXT::default(),
+            pfn_user_callback: unsafe { ::std::mem::zeroed() },
+            p_user_data: unsafe { ::std::mem::zeroed() },
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct DebugUtilsMessengerCallbackDataEXT {
@@ -11023,21 +11355,21 @@ pub struct DebugUtilsMessengerCallbackDataEXT {
     pub object_count: uint32_t,
     pub p_objects: *const DebugUtilsObjectNameInfoEXT,
 }
-impl Default for DebugUtilsMessengerCallbackDataEXT {
+impl ::std::default::Default for DebugUtilsMessengerCallbackDataEXT {
     fn default() -> DebugUtilsMessengerCallbackDataEXT {
         DebugUtilsMessengerCallbackDataEXT {
             s_type: StructureType::DEBUG_UTILS_MESSENGER_CALLBACK_DATA_EXT,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             flags: DebugUtilsMessengerCallbackDataFlagsEXT::default(),
-            p_message_id_name: ::std::ptr::null(),
-            message_id_number: 0,
-            p_message: ::std::ptr::null(),
-            queue_label_count: 0,
-            p_queue_labels: ::std::ptr::null(),
-            cmd_buf_label_count: 0,
-            p_cmd_buf_labels: ::std::ptr::null(),
-            object_count: 0,
-            p_objects: ::std::ptr::null(),
+            p_message_id_name: unsafe { ::std::mem::zeroed() },
+            message_id_number: int32_t::default(),
+            p_message: unsafe { ::std::mem::zeroed() },
+            queue_label_count: uint32_t::default(),
+            p_queue_labels: unsafe { ::std::mem::zeroed() },
+            cmd_buf_label_count: uint32_t::default(),
+            p_cmd_buf_labels: unsafe { ::std::mem::zeroed() },
+            object_count: uint32_t::default(),
+            p_objects: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -11049,13 +11381,13 @@ pub struct ImportMemoryHostPointerInfoEXT {
     pub handle_type: ExternalMemoryHandleTypeFlags,
     pub p_host_pointer: *const c_void,
 }
-impl Default for ImportMemoryHostPointerInfoEXT {
+impl ::std::default::Default for ImportMemoryHostPointerInfoEXT {
     fn default() -> ImportMemoryHostPointerInfoEXT {
         ImportMemoryHostPointerInfoEXT {
             s_type: StructureType::IMPORT_MEMORY_HOST_POINTER_INFO_EXT,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             handle_type: ExternalMemoryHandleTypeFlags::default(),
-            p_host_pointer: ::std::ptr::null(),
+            p_host_pointer: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -11066,12 +11398,12 @@ pub struct MemoryHostPointerPropertiesEXT {
     pub p_next: *const c_void,
     pub memory_type_bits: uint32_t,
 }
-impl Default for MemoryHostPointerPropertiesEXT {
+impl ::std::default::Default for MemoryHostPointerPropertiesEXT {
     fn default() -> MemoryHostPointerPropertiesEXT {
         MemoryHostPointerPropertiesEXT {
             s_type: StructureType::MEMORY_HOST_POINTER_PROPERTIES_EXT,
-            p_next: ::std::ptr::null(),
-            memory_type_bits: 0,
+            p_next: unsafe { ::std::mem::zeroed() },
+            memory_type_bits: uint32_t::default(),
         }
     }
 }
@@ -11082,11 +11414,11 @@ pub struct PhysicalDeviceExternalMemoryHostPropertiesEXT {
     pub p_next: *const c_void,
     pub min_imported_host_pointer_alignment: DeviceSize,
 }
-impl Default for PhysicalDeviceExternalMemoryHostPropertiesEXT {
+impl ::std::default::Default for PhysicalDeviceExternalMemoryHostPropertiesEXT {
     fn default() -> PhysicalDeviceExternalMemoryHostPropertiesEXT {
         PhysicalDeviceExternalMemoryHostPropertiesEXT {
             s_type: StructureType::PHYSICAL_DEVICE_EXTERNAL_MEMORY_HOST_PROPERTIES_EXT,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             min_imported_host_pointer_alignment: DeviceSize::default(),
         }
     }
@@ -11106,14 +11438,14 @@ pub struct PhysicalDeviceConservativeRasterizationPropertiesEXT {
     pub fully_covered_fragment_shader_input_variable: Bool32,
     pub conservative_rasterization_post_depth_coverage: Bool32,
 }
-impl Default for PhysicalDeviceConservativeRasterizationPropertiesEXT {
+impl ::std::default::Default for PhysicalDeviceConservativeRasterizationPropertiesEXT {
     fn default() -> PhysicalDeviceConservativeRasterizationPropertiesEXT {
         PhysicalDeviceConservativeRasterizationPropertiesEXT {
             s_type: StructureType::PHYSICAL_DEVICE_CONSERVATIVE_RASTERIZATION_PROPERTIES_EXT,
-            p_next: ::std::ptr::null(),
-            primitive_overestimation_size: 0.0,
-            max_extra_primitive_overestimation_size: 0.0,
-            extra_primitive_overestimation_size_granularity: 0.0,
+            p_next: unsafe { ::std::mem::zeroed() },
+            primitive_overestimation_size: c_float::default(),
+            max_extra_primitive_overestimation_size: c_float::default(),
+            extra_primitive_overestimation_size_granularity: c_float::default(),
             primitive_underestimation: Bool32::default(),
             conservative_point_and_line_rasterization: Bool32::default(),
             degenerate_triangles_rasterized: Bool32::default(),
@@ -11143,25 +11475,25 @@ pub struct PhysicalDeviceShaderCorePropertiesAMD {
     pub max_vgpr_allocation: uint32_t,
     pub vgpr_allocation_granularity: uint32_t,
 }
-impl Default for PhysicalDeviceShaderCorePropertiesAMD {
+impl ::std::default::Default for PhysicalDeviceShaderCorePropertiesAMD {
     fn default() -> PhysicalDeviceShaderCorePropertiesAMD {
         PhysicalDeviceShaderCorePropertiesAMD {
             s_type: StructureType::PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_AMD,
-            p_next: ::std::ptr::null(),
-            shader_engine_count: 0,
-            shader_arrays_per_engine_count: 0,
-            compute_units_per_shader_array: 0,
-            simd_per_compute_unit: 0,
-            wavefronts_per_simd: 0,
-            wavefront_size: 0,
-            sgprs_per_simd: 0,
-            min_sgpr_allocation: 0,
-            max_sgpr_allocation: 0,
-            sgpr_allocation_granularity: 0,
-            vgprs_per_simd: 0,
-            min_vgpr_allocation: 0,
-            max_vgpr_allocation: 0,
-            vgpr_allocation_granularity: 0,
+            p_next: unsafe { ::std::mem::zeroed() },
+            shader_engine_count: uint32_t::default(),
+            shader_arrays_per_engine_count: uint32_t::default(),
+            compute_units_per_shader_array: uint32_t::default(),
+            simd_per_compute_unit: uint32_t::default(),
+            wavefronts_per_simd: uint32_t::default(),
+            wavefront_size: uint32_t::default(),
+            sgprs_per_simd: uint32_t::default(),
+            min_sgpr_allocation: uint32_t::default(),
+            max_sgpr_allocation: uint32_t::default(),
+            sgpr_allocation_granularity: uint32_t::default(),
+            vgprs_per_simd: uint32_t::default(),
+            min_vgpr_allocation: uint32_t::default(),
+            max_vgpr_allocation: uint32_t::default(),
+            vgpr_allocation_granularity: uint32_t::default(),
         }
     }
 }
@@ -11174,14 +11506,14 @@ pub struct PipelineRasterizationConservativeStateCreateInfoEXT {
     pub conservative_rasterization_mode: ConservativeRasterizationModeEXT,
     pub extra_primitive_overestimation_size: c_float,
 }
-impl Default for PipelineRasterizationConservativeStateCreateInfoEXT {
+impl ::std::default::Default for PipelineRasterizationConservativeStateCreateInfoEXT {
     fn default() -> PipelineRasterizationConservativeStateCreateInfoEXT {
         PipelineRasterizationConservativeStateCreateInfoEXT {
             s_type: StructureType::PIPELINE_RASTERIZATION_CONSERVATIVE_STATE_CREATE_INFO_EXT,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             flags: PipelineRasterizationConservativeStateCreateFlagsEXT::default(),
             conservative_rasterization_mode: ConservativeRasterizationModeEXT::default(),
-            extra_primitive_overestimation_size: 0.0,
+            extra_primitive_overestimation_size: c_float::default(),
         }
     }
 }
@@ -11211,11 +11543,11 @@ pub struct PhysicalDeviceDescriptorIndexingFeaturesEXT {
     pub descriptor_binding_variable_descriptor_count: Bool32,
     pub runtime_descriptor_array: Bool32,
 }
-impl Default for PhysicalDeviceDescriptorIndexingFeaturesEXT {
+impl ::std::default::Default for PhysicalDeviceDescriptorIndexingFeaturesEXT {
     fn default() -> PhysicalDeviceDescriptorIndexingFeaturesEXT {
         PhysicalDeviceDescriptorIndexingFeaturesEXT {
             s_type: StructureType::PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_FEATURES_EXT,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             shader_input_attachment_array_dynamic_indexing: Bool32::default(),
             shader_uniform_texel_buffer_array_dynamic_indexing: Bool32::default(),
             shader_storage_texel_buffer_array_dynamic_indexing: Bool32::default(),
@@ -11268,12 +11600,12 @@ pub struct PhysicalDeviceDescriptorIndexingPropertiesEXT {
     pub max_descriptor_set_update_after_bind_storage_images: uint32_t,
     pub max_descriptor_set_update_after_bind_input_attachments: uint32_t,
 }
-impl Default for PhysicalDeviceDescriptorIndexingPropertiesEXT {
+impl ::std::default::Default for PhysicalDeviceDescriptorIndexingPropertiesEXT {
     fn default() -> PhysicalDeviceDescriptorIndexingPropertiesEXT {
         PhysicalDeviceDescriptorIndexingPropertiesEXT {
             s_type: StructureType::PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_PROPERTIES_EXT,
-            p_next: ::std::ptr::null(),
-            max_update_after_bind_descriptors_in_all_pools: 0,
+            p_next: unsafe { ::std::mem::zeroed() },
+            max_update_after_bind_descriptors_in_all_pools: uint32_t::default(),
             shader_uniform_buffer_array_non_uniform_indexing_native: Bool32::default(),
             shader_sampled_image_array_non_uniform_indexing_native: Bool32::default(),
             shader_storage_buffer_array_non_uniform_indexing_native: Bool32::default(),
@@ -11281,21 +11613,21 @@ impl Default for PhysicalDeviceDescriptorIndexingPropertiesEXT {
             shader_input_attachment_array_non_uniform_indexing_native: Bool32::default(),
             robust_buffer_access_update_after_bind: Bool32::default(),
             quad_divergent_implicit_lod: Bool32::default(),
-            max_per_stage_descriptor_update_after_bind_samplers: 0,
-            max_per_stage_descriptor_update_after_bind_uniform_buffers: 0,
-            max_per_stage_descriptor_update_after_bind_storage_buffers: 0,
-            max_per_stage_descriptor_update_after_bind_sampled_images: 0,
-            max_per_stage_descriptor_update_after_bind_storage_images: 0,
-            max_per_stage_descriptor_update_after_bind_input_attachments: 0,
-            max_per_stage_update_after_bind_resources: 0,
-            max_descriptor_set_update_after_bind_samplers: 0,
-            max_descriptor_set_update_after_bind_uniform_buffers: 0,
-            max_descriptor_set_update_after_bind_uniform_buffers_dynamic: 0,
-            max_descriptor_set_update_after_bind_storage_buffers: 0,
-            max_descriptor_set_update_after_bind_storage_buffers_dynamic: 0,
-            max_descriptor_set_update_after_bind_sampled_images: 0,
-            max_descriptor_set_update_after_bind_storage_images: 0,
-            max_descriptor_set_update_after_bind_input_attachments: 0,
+            max_per_stage_descriptor_update_after_bind_samplers: uint32_t::default(),
+            max_per_stage_descriptor_update_after_bind_uniform_buffers: uint32_t::default(),
+            max_per_stage_descriptor_update_after_bind_storage_buffers: uint32_t::default(),
+            max_per_stage_descriptor_update_after_bind_sampled_images: uint32_t::default(),
+            max_per_stage_descriptor_update_after_bind_storage_images: uint32_t::default(),
+            max_per_stage_descriptor_update_after_bind_input_attachments: uint32_t::default(),
+            max_per_stage_update_after_bind_resources: uint32_t::default(),
+            max_descriptor_set_update_after_bind_samplers: uint32_t::default(),
+            max_descriptor_set_update_after_bind_uniform_buffers: uint32_t::default(),
+            max_descriptor_set_update_after_bind_uniform_buffers_dynamic: uint32_t::default(),
+            max_descriptor_set_update_after_bind_storage_buffers: uint32_t::default(),
+            max_descriptor_set_update_after_bind_storage_buffers_dynamic: uint32_t::default(),
+            max_descriptor_set_update_after_bind_sampled_images: uint32_t::default(),
+            max_descriptor_set_update_after_bind_storage_images: uint32_t::default(),
+            max_descriptor_set_update_after_bind_input_attachments: uint32_t::default(),
         }
     }
 }
@@ -11307,13 +11639,13 @@ pub struct DescriptorSetLayoutBindingFlagsCreateInfoEXT {
     pub binding_count: uint32_t,
     pub p_binding_flags: *const DescriptorBindingFlagsEXT,
 }
-impl Default for DescriptorSetLayoutBindingFlagsCreateInfoEXT {
+impl ::std::default::Default for DescriptorSetLayoutBindingFlagsCreateInfoEXT {
     fn default() -> DescriptorSetLayoutBindingFlagsCreateInfoEXT {
         DescriptorSetLayoutBindingFlagsCreateInfoEXT {
             s_type: StructureType::DESCRIPTOR_SET_LAYOUT_BINDING_FLAGS_CREATE_INFO_EXT,
-            p_next: ::std::ptr::null(),
-            binding_count: 0,
-            p_binding_flags: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
+            binding_count: uint32_t::default(),
+            p_binding_flags: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -11325,13 +11657,13 @@ pub struct DescriptorSetVariableDescriptorCountAllocateInfoEXT {
     pub descriptor_set_count: uint32_t,
     pub p_descriptor_counts: *const uint32_t,
 }
-impl Default for DescriptorSetVariableDescriptorCountAllocateInfoEXT {
+impl ::std::default::Default for DescriptorSetVariableDescriptorCountAllocateInfoEXT {
     fn default() -> DescriptorSetVariableDescriptorCountAllocateInfoEXT {
         DescriptorSetVariableDescriptorCountAllocateInfoEXT {
             s_type: StructureType::DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_ALLOCATE_INFO_EXT,
-            p_next: ::std::ptr::null(),
-            descriptor_set_count: 0,
-            p_descriptor_counts: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
+            descriptor_set_count: uint32_t::default(),
+            p_descriptor_counts: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -11342,17 +11674,17 @@ pub struct DescriptorSetVariableDescriptorCountLayoutSupportEXT {
     pub p_next: *const c_void,
     pub max_variable_descriptor_count: uint32_t,
 }
-impl Default for DescriptorSetVariableDescriptorCountLayoutSupportEXT {
+impl ::std::default::Default for DescriptorSetVariableDescriptorCountLayoutSupportEXT {
     fn default() -> DescriptorSetVariableDescriptorCountLayoutSupportEXT {
         DescriptorSetVariableDescriptorCountLayoutSupportEXT {
             s_type: StructureType::DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_LAYOUT_SUPPORT_EXT,
-            p_next: ::std::ptr::null(),
-            max_variable_descriptor_count: 0,
+            p_next: unsafe { ::std::mem::zeroed() },
+            max_variable_descriptor_count: uint32_t::default(),
         }
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct VertexInputBindingDivisorDescriptionEXT {
     pub binding: uint32_t,
     pub divisor: uint32_t,
@@ -11365,13 +11697,13 @@ pub struct PipelineVertexInputDivisorStateCreateInfoEXT {
     pub vertex_binding_divisor_count: uint32_t,
     pub p_vertex_binding_divisors: *const VertexInputBindingDivisorDescriptionEXT,
 }
-impl Default for PipelineVertexInputDivisorStateCreateInfoEXT {
+impl ::std::default::Default for PipelineVertexInputDivisorStateCreateInfoEXT {
     fn default() -> PipelineVertexInputDivisorStateCreateInfoEXT {
         PipelineVertexInputDivisorStateCreateInfoEXT {
             s_type: StructureType::PIPELINE_VERTEX_INPUT_DIVISOR_STATE_CREATE_INFO_EXT,
-            p_next: ::std::ptr::null(),
-            vertex_binding_divisor_count: 0,
-            p_vertex_binding_divisors: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
+            vertex_binding_divisor_count: uint32_t::default(),
+            p_vertex_binding_divisors: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -11382,12 +11714,12 @@ pub struct PhysicalDeviceVertexAttributeDivisorPropertiesEXT {
     pub p_next: *const c_void,
     pub max_vertex_attrib_divisor: uint32_t,
 }
-impl Default for PhysicalDeviceVertexAttributeDivisorPropertiesEXT {
+impl ::std::default::Default for PhysicalDeviceVertexAttributeDivisorPropertiesEXT {
     fn default() -> PhysicalDeviceVertexAttributeDivisorPropertiesEXT {
         PhysicalDeviceVertexAttributeDivisorPropertiesEXT {
             s_type: StructureType::PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_PROPERTIES_EXT,
-            p_next: ::std::ptr::null(),
-            max_vertex_attrib_divisor: 0,
+            p_next: unsafe { ::std::mem::zeroed() },
+            max_vertex_attrib_divisor: uint32_t::default(),
         }
     }
 }
@@ -11398,12 +11730,12 @@ pub struct ImportAndroidHardwareBufferInfoANDROID {
     pub p_next: *const c_void,
     pub buffer: *const AHardwareBuffer,
 }
-impl Default for ImportAndroidHardwareBufferInfoANDROID {
+impl ::std::default::Default for ImportAndroidHardwareBufferInfoANDROID {
     fn default() -> ImportAndroidHardwareBufferInfoANDROID {
         ImportAndroidHardwareBufferInfoANDROID {
             s_type: StructureType::IMPORT_ANDROID_HARDWARE_BUFFER_INFO_ANDROID,
-            p_next: ::std::ptr::null(),
-            buffer: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
+            buffer: unsafe { ::std::mem::zeroed() },
         }
     }
 }
@@ -11414,12 +11746,12 @@ pub struct AndroidHardwareBufferUsageANDROID {
     pub p_next: *const c_void,
     pub android_hardware_buffer_usage: uint64_t,
 }
-impl Default for AndroidHardwareBufferUsageANDROID {
+impl ::std::default::Default for AndroidHardwareBufferUsageANDROID {
     fn default() -> AndroidHardwareBufferUsageANDROID {
         AndroidHardwareBufferUsageANDROID {
             s_type: StructureType::ANDROID_HARDWARE_BUFFER_USAGE_ANDROID,
-            p_next: ::std::ptr::null(),
-            android_hardware_buffer_usage: 0,
+            p_next: unsafe { ::std::mem::zeroed() },
+            android_hardware_buffer_usage: uint64_t::default(),
         }
     }
 }
@@ -11431,13 +11763,13 @@ pub struct AndroidHardwareBufferPropertiesANDROID {
     pub allocation_size: DeviceSize,
     pub memory_type_bits: uint32_t,
 }
-impl Default for AndroidHardwareBufferPropertiesANDROID {
+impl ::std::default::Default for AndroidHardwareBufferPropertiesANDROID {
     fn default() -> AndroidHardwareBufferPropertiesANDROID {
         AndroidHardwareBufferPropertiesANDROID {
             s_type: StructureType::ANDROID_HARDWARE_BUFFER_PROPERTIES_ANDROID,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             allocation_size: DeviceSize::default(),
-            memory_type_bits: 0,
+            memory_type_bits: uint32_t::default(),
         }
     }
 }
@@ -11448,12 +11780,12 @@ pub struct MemoryGetAndroidHardwareBufferInfoANDROID {
     pub p_next: *const c_void,
     pub memory: DeviceMemory,
 }
-impl Default for MemoryGetAndroidHardwareBufferInfoANDROID {
+impl ::std::default::Default for MemoryGetAndroidHardwareBufferInfoANDROID {
     fn default() -> MemoryGetAndroidHardwareBufferInfoANDROID {
         MemoryGetAndroidHardwareBufferInfoANDROID {
             s_type: StructureType::MEMORY_GET_ANDROID_HARDWARE_BUFFER_INFO_ANDROID,
-            p_next: ::std::ptr::null(),
-            memory: DeviceMemory::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
+            memory: DeviceMemory::default(),
         }
     }
 }
@@ -11471,13 +11803,13 @@ pub struct AndroidHardwareBufferFormatPropertiesANDROID {
     pub suggested_x_chroma_offset: ChromaLocation,
     pub suggested_y_chroma_offset: ChromaLocation,
 }
-impl Default for AndroidHardwareBufferFormatPropertiesANDROID {
+impl ::std::default::Default for AndroidHardwareBufferFormatPropertiesANDROID {
     fn default() -> AndroidHardwareBufferFormatPropertiesANDROID {
         AndroidHardwareBufferFormatPropertiesANDROID {
             s_type: StructureType::ANDROID_HARDWARE_BUFFER_FORMAT_PROPERTIES_ANDROID,
-            p_next: ::std::ptr::null(),
+            p_next: unsafe { ::std::mem::zeroed() },
             format: Format::default(),
-            external_format: 0,
+            external_format: uint64_t::default(),
             format_features: FormatFeatureFlags::default(),
             sampler_ycbcr_conversion_components: ComponentMapping::default(),
             suggested_ycbcr_model: SamplerYcbcrModelConversion::default(),
@@ -11494,12 +11826,12 @@ pub struct ExternalFormatANDROID {
     pub p_next: *const c_void,
     pub external_format: uint64_t,
 }
-impl Default for ExternalFormatANDROID {
+impl ::std::default::Default for ExternalFormatANDROID {
     fn default() -> ExternalFormatANDROID {
         ExternalFormatANDROID {
             s_type: StructureType::EXTERNAL_FORMAT_ANDROID,
-            p_next: ::std::ptr::null(),
-            external_format: 0,
+            p_next: unsafe { ::std::mem::zeroed() },
+            external_format: uint64_t::default(),
         }
     }
 }
@@ -12485,7 +12817,7 @@ impl ConservativeRasterizationModeEXT {
     pub const CONSERVATIVE_RASTERIZATION_MODE_UNDERESTIMATE_EXT: Self =
         ConservativeRasterizationModeEXT(2);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct VendorId(pub(crate) i32);
 impl VendorId {
@@ -14484,6 +14816,120 @@ pub mod extensions {
     impl StructureType {
         pub const WIN32_SURFACE_CREATE_INFO_KHR: Self = StructureType(1000009000);
     }
+    pub struct AndroidNativeBufferFn {
+        get_swapchain_gralloc_usage_android: extern "system" fn(
+            device: Device,
+            format: Format,
+            image_usage: ImageUsageFlags,
+            gralloc_usage: *const c_int,
+        ) -> Result,
+        acquire_image_android: extern "system" fn(
+            device: Device,
+            image: Image,
+            native_fence_fd: c_int,
+            semaphore: Semaphore,
+            fence: Fence,
+        ) -> Result,
+        queue_signal_release_image_android: extern "system" fn(
+            queue: Queue,
+            wait_semaphore_count: uint32_t,
+            p_wait_semaphores: *const Semaphore,
+            image: Image,
+            p_native_fence_fd: *const c_int,
+        ) -> Result,
+    }
+    unsafe impl Send for AndroidNativeBufferFn {}
+    unsafe impl Sync for AndroidNativeBufferFn {}
+    impl ::std::clone::Clone for AndroidNativeBufferFn {
+        fn clone(&self) -> Self {
+            AndroidNativeBufferFn {
+                get_swapchain_gralloc_usage_android: self.get_swapchain_gralloc_usage_android,
+                acquire_image_android: self.acquire_image_android,
+                queue_signal_release_image_android: self.queue_signal_release_image_android,
+            }
+        }
+    }
+    impl AndroidNativeBufferFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = AndroidNativeBufferFn {
+                get_swapchain_gralloc_usage_android: unsafe {
+                    let raw_name = stringify!(vkGetSwapchainGrallocUsageANDROID);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                acquire_image_android: unsafe {
+                    let raw_name = stringify!(vkAcquireImageANDROID);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+                queue_signal_release_image_android: unsafe {
+                    let raw_name = stringify!(vkQueueSignalReleaseImageANDROID);
+                    let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                    let val = _f(&cname);
+                    if val.is_null() {
+                        _err_str.push(raw_name);
+                    }
+                    ::std::mem::transmute(val)
+                },
+            };
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+        pub unsafe fn get_swapchain_gralloc_usage_android(
+            &self,
+            device: Device,
+            format: Format,
+            image_usage: ImageUsageFlags,
+            gralloc_usage: *const c_int,
+        ) -> Result {
+            (self.get_swapchain_gralloc_usage_android)(device, format, image_usage, gralloc_usage)
+        }
+        pub unsafe fn acquire_image_android(
+            &self,
+            device: Device,
+            image: Image,
+            native_fence_fd: c_int,
+            semaphore: Semaphore,
+            fence: Fence,
+        ) -> Result {
+            (self.acquire_image_android)(device, image, native_fence_fd, semaphore, fence)
+        }
+        pub unsafe fn queue_signal_release_image_android(
+            &self,
+            queue: Queue,
+            wait_semaphore_count: uint32_t,
+            p_wait_semaphores: *const Semaphore,
+            image: Image,
+            p_native_fence_fd: *const c_int,
+        ) -> Result {
+            (self.queue_signal_release_image_android)(
+                queue,
+                wait_semaphore_count,
+                p_wait_semaphores,
+                image,
+                p_native_fence_fd,
+            )
+        }
+    }
+    #[doc = "Generated from \'VK_ANDROID_native_buffer\'"]
+    impl StructureType {
+        pub const NATIVE_BUFFER_ANDROID: Self = StructureType(1000010000);
+    }
     pub struct ExtDebugReportFn {
         create_debug_report_callback_ext:
             extern "system" fn(
@@ -14728,6 +15174,50 @@ pub mod extensions {
     impl FormatFeatureFlags {
         pub const SAMPLED_IMAGE_FILTER_CUBIC_IMG: Self = FormatFeatureFlags(0b10000000000000);
     }
+    pub struct AmdExtension17Fn {}
+    unsafe impl Send for AmdExtension17Fn {}
+    unsafe impl Sync for AmdExtension17Fn {}
+    impl ::std::clone::Clone for AmdExtension17Fn {
+        fn clone(&self) -> Self {
+            AmdExtension17Fn {}
+        }
+    }
+    impl AmdExtension17Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = AmdExtension17Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct AmdExtension18Fn {}
+    unsafe impl Send for AmdExtension18Fn {}
+    unsafe impl Sync for AmdExtension18Fn {}
+    impl ::std::clone::Clone for AmdExtension18Fn {
+        fn clone(&self) -> Self {
+            AmdExtension18Fn {}
+        }
+    }
+    impl AmdExtension18Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = AmdExtension18Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
     pub struct AmdRasterizationOrderFn {}
     unsafe impl Send for AmdRasterizationOrderFn {}
     unsafe impl Sync for AmdRasterizationOrderFn {}
@@ -14754,6 +15244,28 @@ pub mod extensions {
     impl StructureType {
         pub const PIPELINE_RASTERIZATION_STATE_RASTERIZATION_ORDER_AMD: Self =
             StructureType(1000018000);
+    }
+    pub struct AmdExtension20Fn {}
+    unsafe impl Send for AmdExtension20Fn {}
+    unsafe impl Sync for AmdExtension20Fn {}
+    impl ::std::clone::Clone for AmdExtension20Fn {
+        fn clone(&self) -> Self {
+            AmdExtension20Fn {}
+        }
+    }
+    impl AmdExtension20Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = AmdExtension20Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
     }
     pub struct AmdShaderTrinaryMinmaxFn {}
     unsafe impl Send for AmdShaderTrinaryMinmaxFn {}
@@ -14934,6 +15446,50 @@ pub mod extensions {
     impl StructureType {
         pub const DEBUG_MARKER_MARKER_INFO_EXT: Self = StructureType(1000022002);
     }
+    pub struct AmdExtension24Fn {}
+    unsafe impl Send for AmdExtension24Fn {}
+    unsafe impl Sync for AmdExtension24Fn {}
+    impl ::std::clone::Clone for AmdExtension24Fn {
+        fn clone(&self) -> Self {
+            AmdExtension24Fn {}
+        }
+    }
+    impl AmdExtension24Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = AmdExtension24Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct AmdExtension25Fn {}
+    unsafe impl Send for AmdExtension25Fn {}
+    unsafe impl Sync for AmdExtension25Fn {}
+    impl ::std::clone::Clone for AmdExtension25Fn {
+        fn clone(&self) -> Self {
+            AmdExtension25Fn {}
+        }
+    }
+    impl AmdExtension25Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = AmdExtension25Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
     pub struct AmdGcnShaderFn {}
     unsafe impl Send for AmdGcnShaderFn {}
     unsafe impl Sync for AmdGcnShaderFn {}
@@ -14989,6 +15545,138 @@ pub mod extensions {
     #[doc = "Generated from \'VK_NV_dedicated_allocation\'"]
     impl StructureType {
         pub const DEDICATED_ALLOCATION_MEMORY_ALLOCATE_INFO_NV: Self = StructureType(1000026002);
+    }
+    pub struct ExtExtension28Fn {}
+    unsafe impl Send for ExtExtension28Fn {}
+    unsafe impl Sync for ExtExtension28Fn {}
+    impl ::std::clone::Clone for ExtExtension28Fn {
+        fn clone(&self) -> Self {
+            ExtExtension28Fn {}
+        }
+    }
+    impl ExtExtension28Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = ExtExtension28Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct NvxExtension29Fn {}
+    unsafe impl Send for NvxExtension29Fn {}
+    unsafe impl Sync for NvxExtension29Fn {}
+    impl ::std::clone::Clone for NvxExtension29Fn {
+        fn clone(&self) -> Self {
+            NvxExtension29Fn {}
+        }
+    }
+    impl NvxExtension29Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = NvxExtension29Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct NvxExtension30Fn {}
+    unsafe impl Send for NvxExtension30Fn {}
+    unsafe impl Sync for NvxExtension30Fn {}
+    impl ::std::clone::Clone for NvxExtension30Fn {
+        fn clone(&self) -> Self {
+            NvxExtension30Fn {}
+        }
+    }
+    impl NvxExtension30Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = NvxExtension30Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct NvxExtension31Fn {}
+    unsafe impl Send for NvxExtension31Fn {}
+    unsafe impl Sync for NvxExtension31Fn {}
+    impl ::std::clone::Clone for NvxExtension31Fn {
+        fn clone(&self) -> Self {
+            NvxExtension31Fn {}
+        }
+    }
+    impl NvxExtension31Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = NvxExtension31Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct AmdExtension32Fn {}
+    unsafe impl Send for AmdExtension32Fn {}
+    unsafe impl Sync for AmdExtension32Fn {}
+    impl ::std::clone::Clone for AmdExtension32Fn {
+        fn clone(&self) -> Self {
+            AmdExtension32Fn {}
+        }
+    }
+    impl AmdExtension32Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = AmdExtension32Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct AmdExtension33Fn {}
+    unsafe impl Send for AmdExtension33Fn {}
+    unsafe impl Sync for AmdExtension33Fn {}
+    impl ::std::clone::Clone for AmdExtension33Fn {
+        fn clone(&self) -> Self {
+            AmdExtension33Fn {}
+        }
+    }
+    impl AmdExtension33Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = AmdExtension33Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
     }
     pub struct AmdDrawIndirectCountFn {
         cmd_draw_indirect_count_amd: extern "system" fn(
@@ -15093,6 +15781,28 @@ pub mod extensions {
             )
         }
     }
+    pub struct AmdExtension35Fn {}
+    unsafe impl Send for AmdExtension35Fn {}
+    unsafe impl Sync for AmdExtension35Fn {}
+    impl ::std::clone::Clone for AmdExtension35Fn {
+        fn clone(&self) -> Self {
+            AmdExtension35Fn {}
+        }
+    }
+    impl AmdExtension35Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = AmdExtension35Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
     pub struct AmdNegativeViewportHeightFn {}
     unsafe impl Send for AmdNegativeViewportHeightFn {}
     unsafe impl Sync for AmdNegativeViewportHeightFn {}
@@ -15152,6 +15862,72 @@ pub mod extensions {
         {
             let mut _err_str = Vec::new();
             let s = AmdShaderBallotFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct AmdExtension39Fn {}
+    unsafe impl Send for AmdExtension39Fn {}
+    unsafe impl Sync for AmdExtension39Fn {}
+    impl ::std::clone::Clone for AmdExtension39Fn {
+        fn clone(&self) -> Self {
+            AmdExtension39Fn {}
+        }
+    }
+    impl AmdExtension39Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = AmdExtension39Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct AmdExtension40Fn {}
+    unsafe impl Send for AmdExtension40Fn {}
+    unsafe impl Sync for AmdExtension40Fn {}
+    impl ::std::clone::Clone for AmdExtension40Fn {
+        fn clone(&self) -> Self {
+            AmdExtension40Fn {}
+        }
+    }
+    impl AmdExtension40Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = AmdExtension40Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct AmdExtension41Fn {}
+    unsafe impl Send for AmdExtension41Fn {}
+    unsafe impl Sync for AmdExtension41Fn {}
+    impl ::std::clone::Clone for AmdExtension41Fn {
+        fn clone(&self) -> Self {
+            AmdExtension41Fn {}
+        }
+    }
+    impl AmdExtension41Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = AmdExtension41Fn {};
             if _err_str.is_empty() {
                 Ok(s)
             } else {
@@ -15246,6 +16022,72 @@ pub mod extensions {
             )
         }
     }
+    pub struct AmdExtension44Fn {}
+    unsafe impl Send for AmdExtension44Fn {}
+    unsafe impl Sync for AmdExtension44Fn {}
+    impl ::std::clone::Clone for AmdExtension44Fn {
+        fn clone(&self) -> Self {
+            AmdExtension44Fn {}
+        }
+    }
+    impl AmdExtension44Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = AmdExtension44Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct AmdExtension45Fn {}
+    unsafe impl Send for AmdExtension45Fn {}
+    unsafe impl Sync for AmdExtension45Fn {}
+    impl ::std::clone::Clone for AmdExtension45Fn {
+        fn clone(&self) -> Self {
+            AmdExtension45Fn {}
+        }
+    }
+    impl AmdExtension45Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = AmdExtension45Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct AmdExtension46Fn {}
+    unsafe impl Send for AmdExtension46Fn {}
+    unsafe impl Sync for AmdExtension46Fn {}
+    impl ::std::clone::Clone for AmdExtension46Fn {
+        fn clone(&self) -> Self {
+            AmdExtension46Fn {}
+        }
+    }
+    impl AmdExtension46Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = AmdExtension46Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
     pub struct AmdShaderImageLoadStoreLodFn {}
     unsafe impl Send for AmdShaderImageLoadStoreLodFn {}
     unsafe impl Sync for AmdShaderImageLoadStoreLodFn {}
@@ -15261,6 +16103,138 @@ pub mod extensions {
         {
             let mut _err_str = Vec::new();
             let s = AmdShaderImageLoadStoreLodFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct NvxExtension48Fn {}
+    unsafe impl Send for NvxExtension48Fn {}
+    unsafe impl Sync for NvxExtension48Fn {}
+    impl ::std::clone::Clone for NvxExtension48Fn {
+        fn clone(&self) -> Self {
+            NvxExtension48Fn {}
+        }
+    }
+    impl NvxExtension48Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = NvxExtension48Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct GoogleExtension49Fn {}
+    unsafe impl Send for GoogleExtension49Fn {}
+    unsafe impl Sync for GoogleExtension49Fn {}
+    impl ::std::clone::Clone for GoogleExtension49Fn {
+        fn clone(&self) -> Self {
+            GoogleExtension49Fn {}
+        }
+    }
+    impl GoogleExtension49Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = GoogleExtension49Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct GoogleExtension50Fn {}
+    unsafe impl Send for GoogleExtension50Fn {}
+    unsafe impl Sync for GoogleExtension50Fn {}
+    impl ::std::clone::Clone for GoogleExtension50Fn {
+        fn clone(&self) -> Self {
+            GoogleExtension50Fn {}
+        }
+    }
+    impl GoogleExtension50Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = GoogleExtension50Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct NvxExtension51Fn {}
+    unsafe impl Send for NvxExtension51Fn {}
+    unsafe impl Sync for NvxExtension51Fn {}
+    impl ::std::clone::Clone for NvxExtension51Fn {
+        fn clone(&self) -> Self {
+            NvxExtension51Fn {}
+        }
+    }
+    impl NvxExtension51Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = NvxExtension51Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct NvxExtension52Fn {}
+    unsafe impl Send for NvxExtension52Fn {}
+    unsafe impl Sync for NvxExtension52Fn {}
+    impl ::std::clone::Clone for NvxExtension52Fn {
+        fn clone(&self) -> Self {
+            NvxExtension52Fn {}
+        }
+    }
+    impl NvxExtension52Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = NvxExtension52Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct NvExtension53Fn {}
+    unsafe impl Send for NvExtension53Fn {}
+    unsafe impl Sync for NvExtension53Fn {}
+    impl ::std::clone::Clone for NvExtension53Fn {
+        fn clone(&self) -> Self {
+            NvExtension53Fn {}
+        }
+    }
+    impl NvExtension53Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = NvExtension53Fn {};
             if _err_str.is_empty() {
                 Ok(s)
             } else {
@@ -15784,6 +16758,72 @@ pub mod extensions {
         {
             let mut _err_str = Vec::new();
             let s = ExtShaderSubgroupVoteFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct ArmExtension01Fn {}
+    unsafe impl Send for ArmExtension01Fn {}
+    unsafe impl Sync for ArmExtension01Fn {}
+    impl ::std::clone::Clone for ArmExtension01Fn {
+        fn clone(&self) -> Self {
+            ArmExtension01Fn {}
+        }
+    }
+    impl ArmExtension01Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = ArmExtension01Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct ArmExtension02Fn {}
+    unsafe impl Send for ArmExtension02Fn {}
+    unsafe impl Sync for ArmExtension02Fn {}
+    impl ::std::clone::Clone for ArmExtension02Fn {
+        fn clone(&self) -> Self {
+            ArmExtension02Fn {}
+        }
+    }
+    impl ArmExtension02Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = ArmExtension02Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct ImgExtension69Fn {}
+    unsafe impl Send for ImgExtension69Fn {}
+    unsafe impl Sync for ImgExtension69Fn {}
+    impl ::std::clone::Clone for ImgExtension69Fn {
+        fn clone(&self) -> Self {
+            ImgExtension69Fn {}
+        }
+    }
+    impl ImgExtension69Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = ImgExtension69Fn {};
             if _err_str.is_empty() {
                 Ok(s)
             } else {
@@ -16374,6 +17414,50 @@ pub mod extensions {
     #[doc = "Generated from \'VK_KHR_push_descriptor\'"]
     impl DescriptorSetLayoutCreateFlags {
         pub const PUSH_DESCRIPTOR_KHR: Self = DescriptorSetLayoutCreateFlags(0b1);
+    }
+    pub struct ExtExtension82Fn {}
+    unsafe impl Send for ExtExtension82Fn {}
+    unsafe impl Sync for ExtExtension82Fn {}
+    impl ::std::clone::Clone for ExtExtension82Fn {
+        fn clone(&self) -> Self {
+            ExtExtension82Fn {}
+        }
+    }
+    impl ExtExtension82Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = ExtExtension82Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct KhrExtension83Fn {}
+    unsafe impl Send for KhrExtension83Fn {}
+    unsafe impl Sync for KhrExtension83Fn {}
+    impl ::std::clone::Clone for KhrExtension83Fn {
+        fn clone(&self) -> Self {
+            KhrExtension83Fn {}
+        }
+    }
+    impl KhrExtension83Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrExtension83Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
     }
     pub struct Khr16bitStorageFn {}
     unsafe impl Send for Khr16bitStorageFn {}
@@ -17469,6 +18553,28 @@ pub mod extensions {
     impl DynamicState {
         pub const DISCARD_RECTANGLE_EXT: Self = DynamicState(1000099000);
     }
+    pub struct NvExtension101Fn {}
+    unsafe impl Send for NvExtension101Fn {}
+    unsafe impl Sync for NvExtension101Fn {}
+    impl ::std::clone::Clone for NvExtension101Fn {
+        fn clone(&self) -> Self {
+            NvExtension101Fn {}
+        }
+    }
+    impl NvExtension101Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = NvExtension101Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
     pub struct ExtConservativeRasterizationFn {}
     unsafe impl Send for ExtConservativeRasterizationFn {}
     unsafe impl Sync for ExtConservativeRasterizationFn {}
@@ -17500,6 +18606,50 @@ pub mod extensions {
     impl StructureType {
         pub const PIPELINE_RASTERIZATION_CONSERVATIVE_STATE_CREATE_INFO_EXT: Self =
             StructureType(1000101001);
+    }
+    pub struct NvExtension103Fn {}
+    unsafe impl Send for NvExtension103Fn {}
+    unsafe impl Sync for NvExtension103Fn {}
+    impl ::std::clone::Clone for NvExtension103Fn {
+        fn clone(&self) -> Self {
+            NvExtension103Fn {}
+        }
+    }
+    impl NvExtension103Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = NvExtension103Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct NvExtension104Fn {}
+    unsafe impl Send for NvExtension104Fn {}
+    unsafe impl Sync for NvExtension104Fn {}
+    impl ::std::clone::Clone for NvExtension104Fn {
+        fn clone(&self) -> Self {
+            NvExtension104Fn {}
+        }
+    }
+    impl NvExtension104Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = NvExtension104Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
     }
     pub struct ExtSwapchainColorspaceFn {}
     unsafe impl Send for ExtSwapchainColorspaceFn {}
@@ -17632,6 +18782,116 @@ pub mod extensions {
     #[doc = "Generated from \'VK_EXT_hdr_metadata\'"]
     impl StructureType {
         pub const HDR_METADATA_EXT: Self = StructureType(1000105000);
+    }
+    pub struct ImgExtension107Fn {}
+    unsafe impl Send for ImgExtension107Fn {}
+    unsafe impl Sync for ImgExtension107Fn {}
+    impl ::std::clone::Clone for ImgExtension107Fn {
+        fn clone(&self) -> Self {
+            ImgExtension107Fn {}
+        }
+    }
+    impl ImgExtension107Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = ImgExtension107Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct ImgExtension108Fn {}
+    unsafe impl Send for ImgExtension108Fn {}
+    unsafe impl Sync for ImgExtension108Fn {}
+    impl ::std::clone::Clone for ImgExtension108Fn {
+        fn clone(&self) -> Self {
+            ImgExtension108Fn {}
+        }
+    }
+    impl ImgExtension108Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = ImgExtension108Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct ImgExtension109Fn {}
+    unsafe impl Send for ImgExtension109Fn {}
+    unsafe impl Sync for ImgExtension109Fn {}
+    impl ::std::clone::Clone for ImgExtension109Fn {
+        fn clone(&self) -> Self {
+            ImgExtension109Fn {}
+        }
+    }
+    impl ImgExtension109Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = ImgExtension109Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct ImgExtension110Fn {}
+    unsafe impl Send for ImgExtension110Fn {}
+    unsafe impl Sync for ImgExtension110Fn {}
+    impl ::std::clone::Clone for ImgExtension110Fn {
+        fn clone(&self) -> Self {
+            ImgExtension110Fn {}
+        }
+    }
+    impl ImgExtension110Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = ImgExtension110Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct ImgExtension111Fn {}
+    unsafe impl Send for ImgExtension111Fn {}
+    unsafe impl Sync for ImgExtension111Fn {}
+    impl ::std::clone::Clone for ImgExtension111Fn {
+        fn clone(&self) -> Self {
+            ImgExtension111Fn {}
+        }
+    }
+    impl ImgExtension111Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = ImgExtension111Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
     }
     pub struct KhrSharedPresentableImageFn {
         get_swapchain_status_khr:
@@ -17884,6 +19144,28 @@ pub mod extensions {
     impl StructureType {
         pub const FENCE_GET_FD_INFO_KHR: Self = StructureType(1000115001);
     }
+    pub struct KhrExtension117Fn {}
+    unsafe impl Send for KhrExtension117Fn {}
+    unsafe impl Sync for KhrExtension117Fn {}
+    impl ::std::clone::Clone for KhrExtension117Fn {
+        fn clone(&self) -> Self {
+            KhrExtension117Fn {}
+        }
+    }
+    impl KhrExtension117Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrExtension117Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
     pub struct KhrMaintenance2Fn {}
     unsafe impl Send for KhrMaintenance2Fn {}
     unsafe impl Sync for KhrMaintenance2Fn {}
@@ -17899,6 +19181,28 @@ pub mod extensions {
         {
             let mut _err_str = Vec::new();
             let s = KhrMaintenance2Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct KhrExtension119Fn {}
+    unsafe impl Send for KhrExtension119Fn {}
+    unsafe impl Sync for KhrExtension119Fn {}
+    impl ::std::clone::Clone for KhrExtension119Fn {
+        fn clone(&self) -> Self {
+            KhrExtension119Fn {}
+        }
+    }
+    impl KhrExtension119Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrExtension119Fn {};
             if _err_str.is_empty() {
                 Ok(s)
             } else {
@@ -18296,6 +19600,28 @@ pub mod extensions {
     #[doc = "Generated from \'VK_MVK_macos_surface\'"]
     impl StructureType {
         pub const MACOS_SURFACE_CREATE_INFO_M: Self = StructureType(1000123000);
+    }
+    pub struct MvkMoltenvkFn {}
+    unsafe impl Send for MvkMoltenvkFn {}
+    unsafe impl Sync for MvkMoltenvkFn {}
+    impl ::std::clone::Clone for MvkMoltenvkFn {
+        fn clone(&self) -> Self {
+            MvkMoltenvkFn {}
+        }
+    }
+    impl MvkMoltenvkFn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = MvkMoltenvkFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
     }
     pub struct ExtExternalMemoryDmaBufFn {}
     unsafe impl Send for ExtExternalMemoryDmaBufFn {}
@@ -18839,6 +20165,72 @@ pub mod extensions {
             }
         }
     }
+    pub struct AmdExtension134Fn {}
+    unsafe impl Send for AmdExtension134Fn {}
+    unsafe impl Sync for AmdExtension134Fn {}
+    impl ::std::clone::Clone for AmdExtension134Fn {
+        fn clone(&self) -> Self {
+            AmdExtension134Fn {}
+        }
+    }
+    impl AmdExtension134Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = AmdExtension134Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct AmdExtension135Fn {}
+    unsafe impl Send for AmdExtension135Fn {}
+    unsafe impl Sync for AmdExtension135Fn {}
+    impl ::std::clone::Clone for AmdExtension135Fn {
+        fn clone(&self) -> Self {
+            AmdExtension135Fn {}
+        }
+    }
+    impl AmdExtension135Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = AmdExtension135Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct AmdExtension136Fn {}
+    unsafe impl Send for AmdExtension136Fn {}
+    unsafe impl Sync for AmdExtension136Fn {}
+    impl ::std::clone::Clone for AmdExtension136Fn {
+        fn clone(&self) -> Self {
+            AmdExtension136Fn {}
+        }
+    }
+    impl AmdExtension136Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = AmdExtension136Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
     pub struct AmdMixedAttachmentSamplesFn {}
     unsafe impl Send for AmdMixedAttachmentSamplesFn {}
     unsafe impl Sync for AmdMixedAttachmentSamplesFn {}
@@ -18883,6 +20275,50 @@ pub mod extensions {
             }
         }
     }
+    pub struct AmdExtension139Fn {}
+    unsafe impl Send for AmdExtension139Fn {}
+    unsafe impl Sync for AmdExtension139Fn {}
+    impl ::std::clone::Clone for AmdExtension139Fn {
+        fn clone(&self) -> Self {
+            AmdExtension139Fn {}
+        }
+    }
+    impl AmdExtension139Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = AmdExtension139Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct AmdExtension140Fn {}
+    unsafe impl Send for AmdExtension140Fn {}
+    unsafe impl Sync for AmdExtension140Fn {}
+    impl ::std::clone::Clone for AmdExtension140Fn {
+        fn clone(&self) -> Self {
+            AmdExtension140Fn {}
+        }
+    }
+    impl AmdExtension140Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = AmdExtension140Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
     pub struct ExtShaderStencilExportFn {}
     unsafe impl Send for ExtShaderStencilExportFn {}
     unsafe impl Sync for ExtShaderStencilExportFn {}
@@ -18898,6 +20334,50 @@ pub mod extensions {
         {
             let mut _err_str = Vec::new();
             let s = ExtShaderStencilExportFn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct AmdExtension142Fn {}
+    unsafe impl Send for AmdExtension142Fn {}
+    unsafe impl Sync for AmdExtension142Fn {}
+    impl ::std::clone::Clone for AmdExtension142Fn {
+        fn clone(&self) -> Self {
+            AmdExtension142Fn {}
+        }
+    }
+    impl AmdExtension142Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = AmdExtension142Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct AmdExtension143Fn {}
+    unsafe impl Send for AmdExtension143Fn {}
+    unsafe impl Sync for AmdExtension143Fn {}
+    impl ::std::clone::Clone for AmdExtension143Fn {
+        fn clone(&self) -> Self {
+            AmdExtension143Fn {}
+        }
+    }
+    impl AmdExtension143Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = AmdExtension143Fn {};
             if _err_str.is_empty() {
                 Ok(s)
             } else {
@@ -19330,6 +20810,50 @@ pub mod extensions {
     impl StructureType {
         pub const PIPELINE_COVERAGE_TO_COLOR_STATE_CREATE_INFO_NV: Self = StructureType(1000149000);
     }
+    pub struct NvExtension151Fn {}
+    unsafe impl Send for NvExtension151Fn {}
+    unsafe impl Sync for NvExtension151Fn {}
+    impl ::std::clone::Clone for NvExtension151Fn {
+        fn clone(&self) -> Self {
+            NvExtension151Fn {}
+        }
+    }
+    impl NvExtension151Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = NvExtension151Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct NvExtension152Fn {}
+    unsafe impl Send for NvExtension152Fn {}
+    unsafe impl Sync for NvExtension152Fn {}
+    impl ::std::clone::Clone for NvExtension152Fn {
+        fn clone(&self) -> Self {
+            NvExtension152Fn {}
+        }
+    }
+    impl NvExtension152Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = NvExtension152Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
     pub struct NvFramebufferMixedSamplesFn {}
     unsafe impl Send for NvFramebufferMixedSamplesFn {}
     unsafe impl Sync for NvFramebufferMixedSamplesFn {}
@@ -19382,6 +20906,28 @@ pub mod extensions {
     #[doc = "Generated from \'VK_NV_fill_rectangle\'"]
     impl PolygonMode {
         pub const FILL_RECTANGLE_NV: Self = PolygonMode(1000153000);
+    }
+    pub struct NvExtension155Fn {}
+    unsafe impl Send for NvExtension155Fn {}
+    unsafe impl Sync for NvExtension155Fn {}
+    impl ::std::clone::Clone for NvExtension155Fn {
+        fn clone(&self) -> Self {
+            NvExtension155Fn {}
+        }
+    }
+    impl NvExtension155Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = NvExtension155Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
     }
     pub struct ExtPostDepthCoverageFn {}
     unsafe impl Send for ExtPostDepthCoverageFn {}
@@ -19442,6 +20988,50 @@ pub mod extensions {
         {
             let mut _err_str = Vec::new();
             let s = KhrBindMemory2Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct ExtExtension159Fn {}
+    unsafe impl Send for ExtExtension159Fn {}
+    unsafe impl Sync for ExtExtension159Fn {}
+    impl ::std::clone::Clone for ExtExtension159Fn {
+        fn clone(&self) -> Self {
+            ExtExtension159Fn {}
+        }
+    }
+    impl ExtExtension159Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = ExtExtension159Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct ExtExtension160Fn {}
+    unsafe impl Send for ExtExtension160Fn {}
+    unsafe impl Sync for ExtExtension160Fn {}
+    impl ::std::clone::Clone for ExtExtension160Fn {
+        fn clone(&self) -> Self {
+            ExtExtension160Fn {}
+        }
+    }
+    impl ExtExtension160Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = ExtExtension160Fn {};
             if _err_str.is_empty() {
                 Ok(s)
             } else {
@@ -19671,6 +21261,116 @@ pub mod extensions {
             }
         }
     }
+    pub struct NvExtension164Fn {}
+    unsafe impl Send for NvExtension164Fn {}
+    unsafe impl Sync for NvExtension164Fn {}
+    impl ::std::clone::Clone for NvExtension164Fn {
+        fn clone(&self) -> Self {
+            NvExtension164Fn {}
+        }
+    }
+    impl NvExtension164Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = NvExtension164Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct NvExtension165Fn {}
+    unsafe impl Send for NvExtension165Fn {}
+    unsafe impl Sync for NvExtension165Fn {}
+    impl ::std::clone::Clone for NvExtension165Fn {
+        fn clone(&self) -> Self {
+            NvExtension165Fn {}
+        }
+    }
+    impl NvExtension165Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = NvExtension165Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct NvExtension166Fn {}
+    unsafe impl Send for NvExtension166Fn {}
+    unsafe impl Sync for NvExtension166Fn {}
+    impl ::std::clone::Clone for NvExtension166Fn {
+        fn clone(&self) -> Self {
+            NvExtension166Fn {}
+        }
+    }
+    impl NvExtension166Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = NvExtension166Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct NvExtension167Fn {}
+    unsafe impl Send for NvExtension167Fn {}
+    unsafe impl Sync for NvExtension167Fn {}
+    impl ::std::clone::Clone for NvExtension167Fn {
+        fn clone(&self) -> Self {
+            NvExtension167Fn {}
+        }
+    }
+    impl NvExtension167Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = NvExtension167Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct NvExtension168Fn {}
+    unsafe impl Send for NvExtension168Fn {}
+    unsafe impl Sync for NvExtension168Fn {}
+    impl ::std::clone::Clone for NvExtension168Fn {
+        fn clone(&self) -> Self {
+            NvExtension168Fn {}
+        }
+    }
+    impl NvExtension168Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = NvExtension168Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
     pub struct KhrMaintenance3Fn {}
     unsafe impl Send for KhrMaintenance3Fn {}
     unsafe impl Sync for KhrMaintenance3Fn {}
@@ -19796,6 +21496,94 @@ pub mod extensions {
             )
         }
     }
+    pub struct QcomExtension171Fn {}
+    unsafe impl Send for QcomExtension171Fn {}
+    unsafe impl Sync for QcomExtension171Fn {}
+    impl ::std::clone::Clone for QcomExtension171Fn {
+        fn clone(&self) -> Self {
+            QcomExtension171Fn {}
+        }
+    }
+    impl QcomExtension171Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = QcomExtension171Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct QcomExtension172Fn {}
+    unsafe impl Send for QcomExtension172Fn {}
+    unsafe impl Sync for QcomExtension172Fn {}
+    impl ::std::clone::Clone for QcomExtension172Fn {
+        fn clone(&self) -> Self {
+            QcomExtension172Fn {}
+        }
+    }
+    impl QcomExtension172Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = QcomExtension172Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct QcomExtension173Fn {}
+    unsafe impl Send for QcomExtension173Fn {}
+    unsafe impl Sync for QcomExtension173Fn {}
+    impl ::std::clone::Clone for QcomExtension173Fn {
+        fn clone(&self) -> Self {
+            QcomExtension173Fn {}
+        }
+    }
+    impl QcomExtension173Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = QcomExtension173Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct QcomExtension174Fn {}
+    unsafe impl Send for QcomExtension174Fn {}
+    unsafe impl Sync for QcomExtension174Fn {}
+    impl ::std::clone::Clone for QcomExtension174Fn {
+        fn clone(&self) -> Self {
+            QcomExtension174Fn {}
+        }
+    }
+    impl QcomExtension174Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = QcomExtension174Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
     pub struct ExtGlobalPriorityFn {}
     unsafe impl Send for ExtGlobalPriorityFn {}
     unsafe impl Sync for ExtGlobalPriorityFn {}
@@ -19825,6 +21613,72 @@ pub mod extensions {
     #[doc = "Generated from \'VK_EXT_global_priority\'"]
     impl Result {
         pub const ERROR_NOT_PERMITTED_EXT: Self = Result(1000174001);
+    }
+    pub struct ExtExtension176Fn {}
+    unsafe impl Send for ExtExtension176Fn {}
+    unsafe impl Sync for ExtExtension176Fn {}
+    impl ::std::clone::Clone for ExtExtension176Fn {
+        fn clone(&self) -> Self {
+            ExtExtension176Fn {}
+        }
+    }
+    impl ExtExtension176Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = ExtExtension176Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct ExtExtension177Fn {}
+    unsafe impl Send for ExtExtension177Fn {}
+    unsafe impl Sync for ExtExtension177Fn {}
+    impl ::std::clone::Clone for ExtExtension177Fn {
+        fn clone(&self) -> Self {
+            ExtExtension177Fn {}
+        }
+    }
+    impl ExtExtension177Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = ExtExtension177Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct ExtExtension178Fn {}
+    unsafe impl Send for ExtExtension178Fn {}
+    unsafe impl Sync for ExtExtension178Fn {}
+    impl ::std::clone::Clone for ExtExtension178Fn {
+        fn clone(&self) -> Self {
+            ExtExtension178Fn {}
+        }
+    }
+    impl ExtExtension178Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = ExtExtension178Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
     }
     pub struct ExtExternalMemoryHostFn { get_memory_host_pointer_properties_ext : extern "system" fn ( device : Device , handle_type : ExternalMemoryHandleTypeFlags , p_host_pointer : *const c_void , p_memory_host_pointer_properties : *const MemoryHostPointerPropertiesEXT , ) -> Result , }
     unsafe impl Send for ExtExternalMemoryHostFn {}
@@ -19953,6 +21807,116 @@ pub mod extensions {
             )
         }
     }
+    pub struct AmdExtension181Fn {}
+    unsafe impl Send for AmdExtension181Fn {}
+    unsafe impl Sync for AmdExtension181Fn {}
+    impl ::std::clone::Clone for AmdExtension181Fn {
+        fn clone(&self) -> Self {
+            AmdExtension181Fn {}
+        }
+    }
+    impl AmdExtension181Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = AmdExtension181Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct AmdExtension182Fn {}
+    unsafe impl Send for AmdExtension182Fn {}
+    unsafe impl Sync for AmdExtension182Fn {}
+    impl ::std::clone::Clone for AmdExtension182Fn {
+        fn clone(&self) -> Self {
+            AmdExtension182Fn {}
+        }
+    }
+    impl AmdExtension182Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = AmdExtension182Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct AmdExtension183Fn {}
+    unsafe impl Send for AmdExtension183Fn {}
+    unsafe impl Sync for AmdExtension183Fn {}
+    impl ::std::clone::Clone for AmdExtension183Fn {
+        fn clone(&self) -> Self {
+            AmdExtension183Fn {}
+        }
+    }
+    impl AmdExtension183Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = AmdExtension183Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct AmdExtension184Fn {}
+    unsafe impl Send for AmdExtension184Fn {}
+    unsafe impl Sync for AmdExtension184Fn {}
+    impl ::std::clone::Clone for AmdExtension184Fn {
+        fn clone(&self) -> Self {
+            AmdExtension184Fn {}
+        }
+    }
+    impl AmdExtension184Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = AmdExtension184Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct AmdExtension185Fn {}
+    unsafe impl Send for AmdExtension185Fn {}
+    unsafe impl Sync for AmdExtension185Fn {}
+    impl ::std::clone::Clone for AmdExtension185Fn {
+        fn clone(&self) -> Self {
+            AmdExtension185Fn {}
+        }
+    }
+    impl AmdExtension185Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = AmdExtension185Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
     pub struct AmdShaderCorePropertiesFn {}
     unsafe impl Send for AmdShaderCorePropertiesFn {}
     unsafe impl Sync for AmdShaderCorePropertiesFn {}
@@ -19978,6 +21942,94 @@ pub mod extensions {
     #[doc = "Generated from \'VK_AMD_shader_core_properties\'"]
     impl StructureType {
         pub const PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_AMD: Self = StructureType(1000185000);
+    }
+    pub struct AmdExtension187Fn {}
+    unsafe impl Send for AmdExtension187Fn {}
+    unsafe impl Sync for AmdExtension187Fn {}
+    impl ::std::clone::Clone for AmdExtension187Fn {
+        fn clone(&self) -> Self {
+            AmdExtension187Fn {}
+        }
+    }
+    impl AmdExtension187Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = AmdExtension187Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct AmdExtension188Fn {}
+    unsafe impl Send for AmdExtension188Fn {}
+    unsafe impl Sync for AmdExtension188Fn {}
+    impl ::std::clone::Clone for AmdExtension188Fn {
+        fn clone(&self) -> Self {
+            AmdExtension188Fn {}
+        }
+    }
+    impl AmdExtension188Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = AmdExtension188Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct AmdExtension189Fn {}
+    unsafe impl Send for AmdExtension189Fn {}
+    unsafe impl Sync for AmdExtension189Fn {}
+    impl ::std::clone::Clone for AmdExtension189Fn {
+        fn clone(&self) -> Self {
+            AmdExtension189Fn {}
+        }
+    }
+    impl AmdExtension189Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = AmdExtension189Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct AmdExtension190Fn {}
+    unsafe impl Send for AmdExtension190Fn {}
+    unsafe impl Sync for AmdExtension190Fn {}
+    impl ::std::clone::Clone for AmdExtension190Fn {
+        fn clone(&self) -> Self {
+            AmdExtension190Fn {}
+        }
+    }
+    impl AmdExtension190Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = AmdExtension190Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
     }
     pub struct ExtVertexAttributeDivisorFn {}
     unsafe impl Send for ExtVertexAttributeDivisorFn {}
@@ -20011,6 +22063,160 @@ pub mod extensions {
         pub const PIPELINE_VERTEX_INPUT_DIVISOR_STATE_CREATE_INFO_EXT: Self =
             StructureType(1000190001);
     }
+    pub struct GoogleExtension192Fn {}
+    unsafe impl Send for GoogleExtension192Fn {}
+    unsafe impl Sync for GoogleExtension192Fn {}
+    impl ::std::clone::Clone for GoogleExtension192Fn {
+        fn clone(&self) -> Self {
+            GoogleExtension192Fn {}
+        }
+    }
+    impl GoogleExtension192Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = GoogleExtension192Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct GoogleExtension193Fn {}
+    unsafe impl Send for GoogleExtension193Fn {}
+    unsafe impl Sync for GoogleExtension193Fn {}
+    impl ::std::clone::Clone for GoogleExtension193Fn {
+        fn clone(&self) -> Self {
+            GoogleExtension193Fn {}
+        }
+    }
+    impl GoogleExtension193Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = GoogleExtension193Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct GoogleExtension194Fn {}
+    unsafe impl Send for GoogleExtension194Fn {}
+    unsafe impl Sync for GoogleExtension194Fn {}
+    impl ::std::clone::Clone for GoogleExtension194Fn {
+        fn clone(&self) -> Self {
+            GoogleExtension194Fn {}
+        }
+    }
+    impl GoogleExtension194Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = GoogleExtension194Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct GoogleExtension195Fn {}
+    unsafe impl Send for GoogleExtension195Fn {}
+    unsafe impl Sync for GoogleExtension195Fn {}
+    impl ::std::clone::Clone for GoogleExtension195Fn {
+        fn clone(&self) -> Self {
+            GoogleExtension195Fn {}
+        }
+    }
+    impl GoogleExtension195Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = GoogleExtension195Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct GoogleExtension196Fn {}
+    unsafe impl Send for GoogleExtension196Fn {}
+    unsafe impl Sync for GoogleExtension196Fn {}
+    impl ::std::clone::Clone for GoogleExtension196Fn {
+        fn clone(&self) -> Self {
+            GoogleExtension196Fn {}
+        }
+    }
+    impl GoogleExtension196Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = GoogleExtension196Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct ExtExtension197Fn {}
+    unsafe impl Send for ExtExtension197Fn {}
+    unsafe impl Sync for ExtExtension197Fn {}
+    impl ::std::clone::Clone for ExtExtension197Fn {
+        fn clone(&self) -> Self {
+            ExtExtension197Fn {}
+        }
+    }
+    impl ExtExtension197Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = ExtExtension197Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct ArmExtension198Fn {}
+    unsafe impl Send for ArmExtension198Fn {}
+    unsafe impl Sync for ArmExtension198Fn {}
+    impl ::std::clone::Clone for ArmExtension198Fn {
+        fn clone(&self) -> Self {
+            ArmExtension198Fn {}
+        }
+    }
+    impl ArmExtension198Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = ArmExtension198Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
     pub struct NvShaderSubgroupPartitionedFn {}
     unsafe impl Send for NvShaderSubgroupPartitionedFn {}
     unsafe impl Sync for NvShaderSubgroupPartitionedFn {}
@@ -20036,5 +22242,834 @@ pub mod extensions {
     #[doc = "Generated from \'VK_NV_shader_subgroup_partitioned\'"]
     impl SubgroupFeatureFlags {
         pub const PARTITIONED_NV: Self = SubgroupFeatureFlags(0b100000000);
+    }
+    pub struct KhrExtension200Fn {}
+    unsafe impl Send for KhrExtension200Fn {}
+    unsafe impl Sync for KhrExtension200Fn {}
+    impl ::std::clone::Clone for KhrExtension200Fn {
+        fn clone(&self) -> Self {
+            KhrExtension200Fn {}
+        }
+    }
+    impl KhrExtension200Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrExtension200Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct KhrExtension201Fn {}
+    unsafe impl Send for KhrExtension201Fn {}
+    unsafe impl Sync for KhrExtension201Fn {}
+    impl ::std::clone::Clone for KhrExtension201Fn {
+        fn clone(&self) -> Self {
+            KhrExtension201Fn {}
+        }
+    }
+    impl KhrExtension201Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrExtension201Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct NvExtension202Fn {}
+    unsafe impl Send for NvExtension202Fn {}
+    unsafe impl Sync for NvExtension202Fn {}
+    impl ::std::clone::Clone for NvExtension202Fn {
+        fn clone(&self) -> Self {
+            NvExtension202Fn {}
+        }
+    }
+    impl NvExtension202Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = NvExtension202Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct NvExtension203Fn {}
+    unsafe impl Send for NvExtension203Fn {}
+    unsafe impl Sync for NvExtension203Fn {}
+    impl ::std::clone::Clone for NvExtension203Fn {
+        fn clone(&self) -> Self {
+            NvExtension203Fn {}
+        }
+    }
+    impl NvExtension203Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = NvExtension203Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct NvExtension204Fn {}
+    unsafe impl Send for NvExtension204Fn {}
+    unsafe impl Sync for NvExtension204Fn {}
+    impl ::std::clone::Clone for NvExtension204Fn {
+        fn clone(&self) -> Self {
+            NvExtension204Fn {}
+        }
+    }
+    impl NvExtension204Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = NvExtension204Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct NvExtension205Fn {}
+    unsafe impl Send for NvExtension205Fn {}
+    unsafe impl Sync for NvExtension205Fn {}
+    impl ::std::clone::Clone for NvExtension205Fn {
+        fn clone(&self) -> Self {
+            NvExtension205Fn {}
+        }
+    }
+    impl NvExtension205Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = NvExtension205Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct NvExtension206Fn {}
+    unsafe impl Send for NvExtension206Fn {}
+    unsafe impl Sync for NvExtension206Fn {}
+    impl ::std::clone::Clone for NvExtension206Fn {
+        fn clone(&self) -> Self {
+            NvExtension206Fn {}
+        }
+    }
+    impl NvExtension206Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = NvExtension206Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct NvExtension207Fn {}
+    unsafe impl Send for NvExtension207Fn {}
+    unsafe impl Sync for NvExtension207Fn {}
+    impl ::std::clone::Clone for NvExtension207Fn {
+        fn clone(&self) -> Self {
+            NvExtension207Fn {}
+        }
+    }
+    impl NvExtension207Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = NvExtension207Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct KhrExtension208Fn {}
+    unsafe impl Send for KhrExtension208Fn {}
+    unsafe impl Sync for KhrExtension208Fn {}
+    impl ::std::clone::Clone for KhrExtension208Fn {
+        fn clone(&self) -> Self {
+            KhrExtension208Fn {}
+        }
+    }
+    impl KhrExtension208Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrExtension208Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct KhrExtension209Fn {}
+    unsafe impl Send for KhrExtension209Fn {}
+    unsafe impl Sync for KhrExtension209Fn {}
+    impl ::std::clone::Clone for KhrExtension209Fn {
+        fn clone(&self) -> Self {
+            KhrExtension209Fn {}
+        }
+    }
+    impl KhrExtension209Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrExtension209Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct IntelExtension210Fn {}
+    unsafe impl Send for IntelExtension210Fn {}
+    unsafe impl Sync for IntelExtension210Fn {}
+    impl ::std::clone::Clone for IntelExtension210Fn {
+        fn clone(&self) -> Self {
+            IntelExtension210Fn {}
+        }
+    }
+    impl IntelExtension210Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = IntelExtension210Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct IntelExtension211Fn {}
+    unsafe impl Send for IntelExtension211Fn {}
+    unsafe impl Sync for IntelExtension211Fn {}
+    impl ::std::clone::Clone for IntelExtension211Fn {
+        fn clone(&self) -> Self {
+            IntelExtension211Fn {}
+        }
+    }
+    impl IntelExtension211Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = IntelExtension211Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    pub struct KhrExtension212Fn {}
+    unsafe impl Send for KhrExtension212Fn {}
+    unsafe impl Sync for KhrExtension212Fn {}
+    impl ::std::clone::Clone for KhrExtension212Fn {
+        fn clone(&self) -> Self {
+            KhrExtension212Fn {}
+        }
+    }
+    impl KhrExtension212Fn {
+        pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+        where
+            F: FnMut(&::std::ffi::CStr) -> *const c_void,
+        {
+            let mut _err_str = Vec::new();
+            let s = KhrExtension212Fn {};
+            if _err_str.is_empty() {
+                Ok(s)
+            } else {
+                Err(_err_str)
+            }
+        }
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const PHYSICAL_DEVICE_SUBGROUP_PROPERTIES: Self = StructureType(1000094000);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const BIND_BUFFER_MEMORY_INFO: Self = StructureType(1000157000);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const BIND_IMAGE_MEMORY_INFO: Self = StructureType(1000157001);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl ImageCreateFlags {
+        pub const ALIAS: Self = ImageCreateFlags(0b10000000000);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const PHYSICAL_DEVICE_16BIT_STORAGE_FEATURES: Self = StructureType(1000083000);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const MEMORY_DEDICATED_REQUIREMENTS: Self = StructureType(1000127000);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const MEMORY_DEDICATED_ALLOCATE_INFO: Self = StructureType(1000127001);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const MEMORY_ALLOCATE_FLAGS_INFO: Self = StructureType(1000060000);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const DEVICE_GROUP_RENDER_PASS_BEGIN_INFO: Self = StructureType(1000060003);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const DEVICE_GROUP_COMMAND_BUFFER_BEGIN_INFO: Self = StructureType(1000060004);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const DEVICE_GROUP_SUBMIT_INFO: Self = StructureType(1000060005);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const DEVICE_GROUP_BIND_SPARSE_INFO: Self = StructureType(1000060006);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl PipelineCreateFlags {
+        pub const VIEW_INDEX_FROM_DEVICE_INDEX: Self = PipelineCreateFlags(0b1000);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl PipelineCreateFlags {
+        pub const DISPATCH_BASE: Self = PipelineCreateFlags(0b10000);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl DependencyFlags {
+        pub const DEVICE_GROUP: Self = DependencyFlags(0b100);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const BIND_BUFFER_MEMORY_DEVICE_GROUP_INFO: Self = StructureType(1000060013);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const BIND_IMAGE_MEMORY_DEVICE_GROUP_INFO: Self = StructureType(1000060014);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl ImageCreateFlags {
+        pub const SPLIT_INSTANCE_BIND_REGIONS: Self = ImageCreateFlags(0b1000000);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const PHYSICAL_DEVICE_GROUP_PROPERTIES: Self = StructureType(1000070000);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const DEVICE_GROUP_DEVICE_CREATE_INFO: Self = StructureType(1000070001);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl MemoryHeapFlags {
+        pub const MULTI_INSTANCE: Self = MemoryHeapFlags(0b10);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const BUFFER_MEMORY_REQUIREMENTS_INFO_2: Self = StructureType(1000146000);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const IMAGE_MEMORY_REQUIREMENTS_INFO_2: Self = StructureType(1000146001);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const IMAGE_SPARSE_MEMORY_REQUIREMENTS_INFO_2: Self = StructureType(1000146002);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const MEMORY_REQUIREMENTS_2: Self = StructureType(1000146003);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const SPARSE_IMAGE_MEMORY_REQUIREMENTS_2: Self = StructureType(1000146004);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const PHYSICAL_DEVICE_FEATURES_2: Self = StructureType(1000059000);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const PHYSICAL_DEVICE_PROPERTIES_2: Self = StructureType(1000059001);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const FORMAT_PROPERTIES_2: Self = StructureType(1000059002);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const IMAGE_FORMAT_PROPERTIES_2: Self = StructureType(1000059003);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const PHYSICAL_DEVICE_IMAGE_FORMAT_INFO_2: Self = StructureType(1000059004);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const QUEUE_FAMILY_PROPERTIES_2: Self = StructureType(1000059005);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const PHYSICAL_DEVICE_MEMORY_PROPERTIES_2: Self = StructureType(1000059006);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const SPARSE_IMAGE_FORMAT_PROPERTIES_2: Self = StructureType(1000059007);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const PHYSICAL_DEVICE_SPARSE_IMAGE_FORMAT_INFO_2: Self = StructureType(1000059008);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl Result {
+        pub const ERROR_OUT_OF_POOL_MEMORY: Self = Result(1000069000);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl FormatFeatureFlags {
+        pub const TRANSFER_SRC: Self = FormatFeatureFlags(0b100000000000000);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl FormatFeatureFlags {
+        pub const TRANSFER_DST: Self = FormatFeatureFlags(0b1000000000000000);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl ImageCreateFlags {
+        pub const TYPE_2D_ARRAY_COMPATIBLE: Self = ImageCreateFlags(0b100000);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl ImageCreateFlags {
+        pub const BLOCK_TEXEL_VIEW_COMPATIBLE: Self = ImageCreateFlags(0b10000000);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl ImageCreateFlags {
+        pub const EXTENDED_USAGE: Self = ImageCreateFlags(0b100000000);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const PHYSICAL_DEVICE_POINT_CLIPPING_PROPERTIES: Self = StructureType(1000117000);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const RENDER_PASS_INPUT_ATTACHMENT_ASPECT_CREATE_INFO: Self = StructureType(1000117001);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const IMAGE_VIEW_USAGE_CREATE_INFO: Self = StructureType(1000117002);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const PIPELINE_TESSELLATION_DOMAIN_ORIGIN_STATE_CREATE_INFO: Self =
+            StructureType(1000117003);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl ImageLayout {
+        pub const DEPTH_READ_ONLY_STENCIL_ATTACHMENT_OPTIMAL: Self = ImageLayout(1000117000);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl ImageLayout {
+        pub const DEPTH_ATTACHMENT_STENCIL_READ_ONLY_OPTIMAL: Self = ImageLayout(1000117001);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const RENDER_PASS_MULTIVIEW_CREATE_INFO: Self = StructureType(1000053000);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const PHYSICAL_DEVICE_MULTIVIEW_FEATURES: Self = StructureType(1000053001);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const PHYSICAL_DEVICE_MULTIVIEW_PROPERTIES: Self = StructureType(1000053002);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl DependencyFlags {
+        pub const VIEW_LOCAL: Self = DependencyFlags(0b10);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const PHYSICAL_DEVICE_VARIABLE_POINTER_FEATURES: Self = StructureType(1000120000);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const PROTECTED_SUBMIT_INFO: Self = StructureType(1000145000);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const PHYSICAL_DEVICE_PROTECTED_MEMORY_FEATURES: Self = StructureType(1000145001);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const PHYSICAL_DEVICE_PROTECTED_MEMORY_PROPERTIES: Self = StructureType(1000145002);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const DEVICE_QUEUE_INFO_2: Self = StructureType(1000145003);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl QueueFlags {
+        pub const PROTECTED: Self = QueueFlags(0b10000);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl DeviceQueueCreateFlags {
+        pub const PROTECTED: Self = DeviceQueueCreateFlags(0b1);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl MemoryPropertyFlags {
+        pub const PROTECTED: Self = MemoryPropertyFlags(0b100000);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl BufferCreateFlags {
+        pub const PROTECTED: Self = BufferCreateFlags(0b1000);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl ImageCreateFlags {
+        pub const PROTECTED: Self = ImageCreateFlags(0b100000000000);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl CommandPoolCreateFlags {
+        pub const PROTECTED: Self = CommandPoolCreateFlags(0b100);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const SAMPLER_YCBCR_CONVERSION_CREATE_INFO: Self = StructureType(1000156000);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const SAMPLER_YCBCR_CONVERSION_INFO: Self = StructureType(1000156001);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const BIND_IMAGE_PLANE_MEMORY_INFO: Self = StructureType(1000156002);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const IMAGE_PLANE_MEMORY_REQUIREMENTS_INFO: Self = StructureType(1000156003);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const PHYSICAL_DEVICE_SAMPLER_YCBCR_CONVERSION_FEATURES: Self =
+            StructureType(1000156004);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const SAMPLER_YCBCR_CONVERSION_IMAGE_FORMAT_PROPERTIES: Self =
+            StructureType(1000156005);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl ObjectType {
+        pub const SAMPLER_YCBCR_CONVERSION: Self = ObjectType(1000156000);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl Format {
+        pub const G8B8G8R8_422_UNORM: Self = Format(1000156000);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl Format {
+        pub const B8G8R8G8_422_UNORM: Self = Format(1000156001);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl Format {
+        pub const G8_B8_R8_3PLANE_420_UNORM: Self = Format(1000156002);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl Format {
+        pub const G8_B8R8_2PLANE_420_UNORM: Self = Format(1000156003);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl Format {
+        pub const G8_B8_R8_3PLANE_422_UNORM: Self = Format(1000156004);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl Format {
+        pub const G8_B8R8_2PLANE_422_UNORM: Self = Format(1000156005);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl Format {
+        pub const G8_B8_R8_3PLANE_444_UNORM: Self = Format(1000156006);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl Format {
+        pub const R10X6_UNORM_PACK16: Self = Format(1000156007);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl Format {
+        pub const R10X6G10X6_UNORM_2PACK16: Self = Format(1000156008);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl Format {
+        pub const R10X6G10X6B10X6A10X6_UNORM_4PACK16: Self = Format(1000156009);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl Format {
+        pub const G10X6B10X6G10X6R10X6_422_UNORM_4PACK16: Self = Format(1000156010);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl Format {
+        pub const B10X6G10X6R10X6G10X6_422_UNORM_4PACK16: Self = Format(1000156011);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl Format {
+        pub const G10X6_B10X6_R10X6_3PLANE_420_UNORM_3PACK16: Self = Format(1000156012);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl Format {
+        pub const G10X6_B10X6R10X6_2PLANE_420_UNORM_3PACK16: Self = Format(1000156013);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl Format {
+        pub const G10X6_B10X6_R10X6_3PLANE_422_UNORM_3PACK16: Self = Format(1000156014);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl Format {
+        pub const G10X6_B10X6R10X6_2PLANE_422_UNORM_3PACK16: Self = Format(1000156015);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl Format {
+        pub const G10X6_B10X6_R10X6_3PLANE_444_UNORM_3PACK16: Self = Format(1000156016);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl Format {
+        pub const R12X4_UNORM_PACK16: Self = Format(1000156017);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl Format {
+        pub const R12X4G12X4_UNORM_2PACK16: Self = Format(1000156018);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl Format {
+        pub const R12X4G12X4B12X4A12X4_UNORM_4PACK16: Self = Format(1000156019);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl Format {
+        pub const G12X4B12X4G12X4R12X4_422_UNORM_4PACK16: Self = Format(1000156020);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl Format {
+        pub const B12X4G12X4R12X4G12X4_422_UNORM_4PACK16: Self = Format(1000156021);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl Format {
+        pub const G12X4_B12X4_R12X4_3PLANE_420_UNORM_3PACK16: Self = Format(1000156022);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl Format {
+        pub const G12X4_B12X4R12X4_2PLANE_420_UNORM_3PACK16: Self = Format(1000156023);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl Format {
+        pub const G12X4_B12X4_R12X4_3PLANE_422_UNORM_3PACK16: Self = Format(1000156024);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl Format {
+        pub const G12X4_B12X4R12X4_2PLANE_422_UNORM_3PACK16: Self = Format(1000156025);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl Format {
+        pub const G12X4_B12X4_R12X4_3PLANE_444_UNORM_3PACK16: Self = Format(1000156026);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl Format {
+        pub const G16B16G16R16_422_UNORM: Self = Format(1000156027);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl Format {
+        pub const B16G16R16G16_422_UNORM: Self = Format(1000156028);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl Format {
+        pub const G16_B16_R16_3PLANE_420_UNORM: Self = Format(1000156029);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl Format {
+        pub const G16_B16R16_2PLANE_420_UNORM: Self = Format(1000156030);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl Format {
+        pub const G16_B16_R16_3PLANE_422_UNORM: Self = Format(1000156031);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl Format {
+        pub const G16_B16R16_2PLANE_422_UNORM: Self = Format(1000156032);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl Format {
+        pub const G16_B16_R16_3PLANE_444_UNORM: Self = Format(1000156033);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl ImageAspectFlags {
+        pub const PLANE_0: Self = ImageAspectFlags(0b10000);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl ImageAspectFlags {
+        pub const PLANE_1: Self = ImageAspectFlags(0b100000);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl ImageAspectFlags {
+        pub const PLANE_2: Self = ImageAspectFlags(0b1000000);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl ImageCreateFlags {
+        pub const DISJOINT: Self = ImageCreateFlags(0b1000000000);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl FormatFeatureFlags {
+        pub const MIDPOINT_CHROMA_SAMPLES: Self = FormatFeatureFlags(0b100000000000000000);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl FormatFeatureFlags {
+        pub const SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER: Self =
+            FormatFeatureFlags(0b1000000000000000000);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl FormatFeatureFlags {
+        pub const SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER: Self =
+            FormatFeatureFlags(0b10000000000000000000);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl FormatFeatureFlags {
+        pub const SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT: Self =
+            FormatFeatureFlags(0b100000000000000000000);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl FormatFeatureFlags {
+        pub const SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE: Self =
+            FormatFeatureFlags(0b1000000000000000000000);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl FormatFeatureFlags {
+        pub const DISJOINT: Self = FormatFeatureFlags(0b10000000000000000000000);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl FormatFeatureFlags {
+        pub const COSITED_CHROMA_SAMPLES: Self = FormatFeatureFlags(0b100000000000000000000000);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const DESCRIPTOR_UPDATE_TEMPLATE_CREATE_INFO: Self = StructureType(1000085000);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl ObjectType {
+        pub const DESCRIPTOR_UPDATE_TEMPLATE: Self = ObjectType(1000085000);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const PHYSICAL_DEVICE_EXTERNAL_IMAGE_FORMAT_INFO: Self = StructureType(1000071000);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const EXTERNAL_IMAGE_FORMAT_PROPERTIES: Self = StructureType(1000071001);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const PHYSICAL_DEVICE_EXTERNAL_BUFFER_INFO: Self = StructureType(1000071002);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const EXTERNAL_BUFFER_PROPERTIES: Self = StructureType(1000071003);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const PHYSICAL_DEVICE_ID_PROPERTIES: Self = StructureType(1000071004);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const EXTERNAL_MEMORY_BUFFER_CREATE_INFO: Self = StructureType(1000072000);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const EXTERNAL_MEMORY_IMAGE_CREATE_INFO: Self = StructureType(1000072001);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const EXPORT_MEMORY_ALLOCATE_INFO: Self = StructureType(1000072002);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl Result {
+        pub const ERROR_INVALID_EXTERNAL_HANDLE: Self = Result(1000072003);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const PHYSICAL_DEVICE_EXTERNAL_FENCE_INFO: Self = StructureType(1000112000);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const EXTERNAL_FENCE_PROPERTIES: Self = StructureType(1000112001);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const EXPORT_FENCE_CREATE_INFO: Self = StructureType(1000113000);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const EXPORT_SEMAPHORE_CREATE_INFO: Self = StructureType(1000077000);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const PHYSICAL_DEVICE_EXTERNAL_SEMAPHORE_INFO: Self = StructureType(1000076000);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const EXTERNAL_SEMAPHORE_PROPERTIES: Self = StructureType(1000076001);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const PHYSICAL_DEVICE_MAINTENANCE_3_PROPERTIES: Self = StructureType(1000168000);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const DESCRIPTOR_SET_LAYOUT_SUPPORT: Self = StructureType(1000168001);
+    }
+    #[doc = "Generated from \'VK_VERSION_1_1\'"]
+    impl StructureType {
+        pub const PHYSICAL_DEVICE_SHADER_DRAW_PARAMETER_FEATURES: Self = StructureType(1000063000);
     }
 }
