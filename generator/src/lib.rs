@@ -850,10 +850,12 @@ pub fn generate_extension<'a>(
     cmd_map: &CommandMap,
     const_cache: &mut HashSet<&'a str>,
 ) -> Option<quote::Tokens> {
-    // let _ = extension
-    //     .supported
-    //     .as_ref()
-    //     .filter(|s| s.as_str() == "vulkan")?;
+    // Okay this is a little bit odd. We need to generate all extensions, even disabled ones,
+    // because otherwise some StructureTypes won't get generated. But we don't generate extensions
+    // that are reserved
+    if extension.name.contains("RESERVED") {
+        return None;
+    }
     let extension_tokens = generate_extension_constants(
         &extension.name,
         extension.number.unwrap_or(0),
@@ -1078,6 +1080,9 @@ pub fn derive_default(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> O
     };
     let contains_pfn = members.clone().any(is_pfn);
 
+    // This are also pointers, and therefor also don't implement Default. The spec
+    // also doesn't mark them as pointers
+    let handles = ["LPCWSTR", "HANDLE", "HINSTANCE", "HWND"];
     let contains_ptr = members.clone().any(|field| field.reference.is_some());
     let contains_strucutre_type = members.clone().any(is_structure_type);
     let contains_static_array = members.clone().any(is_static_array);
@@ -1102,7 +1107,11 @@ pub fn derive_default(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> O
                     #param_ident: unsafe { ::std::mem::zeroed() }
                 }
             }
-        } else if field.reference.is_some() || is_static_array(field) || is_pfn(field) {
+        } else if field.reference.is_some()
+            || is_static_array(field)
+            || is_pfn(field)
+            || handles.contains(&field.basetype.as_str())
+        {
             quote!{
                 #param_ident: unsafe { ::std::mem::zeroed() }
             }
@@ -1403,13 +1412,8 @@ pub fn write_source_code(path: &Path) {
         })
         .nth(0)
         .expect("extension");
-    spec2.0.iter().for_each(|item| match item {
-        vk_parse::RegistryItem::Enums { name, .. } => println!("{:?}", name),
-        _ => (),
-    });
 
     let spec = vk_parse::parse_file_as_vkxml(path);
-    //println!("{:#?}", spec);
     let commands: HashMap<vkxml::Identifier, &vkxml::Command> = spec
         .elements
         .iter()
