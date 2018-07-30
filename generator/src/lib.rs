@@ -826,9 +826,7 @@ pub fn generate_extension_commands(
         .filter_map(|ext_item| match ext_item {
             vk_parse::ExtensionItem::Require { items, .. } => {
                 Some(items.iter().filter_map(|item| match item {
-                    vk_parse::InterfaceItem::Command { name, .. } => {
-                        cmd_map.get(name).map(|c| *c)
-                    }
+                    vk_parse::InterfaceItem::Command { name, .. } => cmd_map.get(name).map(|c| *c),
                     _ => None,
                 }))
             }
@@ -1041,9 +1039,75 @@ pub fn generate_result(ident: Ident, _enum: &vkxml::Enumeration) -> Tokens {
         }
     }
 }
-pub trait StructExt {}
-pub fn generate_struct(_struct: &vkxml::Struct) -> Tokens {
-    let name = to_type_tokens(&_struct.name, None);
+
+fn is_static_array(field: &vkxml::Field) -> bool {
+    field
+        .array
+        .as_ref()
+        .map(|ty| match ty {
+            vkxml::ArrayType::Static => true,
+            _ => false,
+        })
+        .unwrap_or(false)
+}
+pub fn derive_debug(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> Option<Tokens> {
+    let name = name_to_tokens(&_struct.name);
+    let members = _struct.elements.iter().filter_map(|elem| match *elem {
+        vkxml::StructElement::Member(ref field) => Some(field),
+        _ => None,
+    });
+    let contains_pfn = members.clone().any(|field| {
+        field
+            .name
+            .as_ref()
+            .map(|n| n.contains("pfn"))
+            .unwrap_or(false)
+    });
+    let contains_static_array = members.clone().any(is_static_array);
+    let contains_union = members
+        .clone()
+        .any(|field| union_types.contains(field.basetype.as_str()));
+    if !(contains_union || contains_static_array || contains_pfn) {
+        return None;
+    }
+    let debug_fields = members.clone().map(|field| {
+        let param_ident = field.param_ident();
+        let param_str = param_ident.as_ref();
+        let debug_value = if is_static_array(field) {
+            quote!{
+                &unsafe {
+                    ::std::ffi::CStr::from_ptr(self.#param_ident.as_ptr() as *const i8)
+                }
+            }
+        } else if param_ident.as_ref().contains("pfn") {
+            quote!{
+                &(self.#param_ident as *const())
+            }
+        } else if union_types.contains(field.basetype.as_str()) {
+            quote!(&"union")
+        } else {
+            quote!{
+                &self.#param_ident
+            }
+        };
+        quote!{
+            .field(#param_str, #debug_value)
+        }
+    });
+    let name_str = name.as_ref();
+    let q = quote!{
+        impl ::std::fmt::Debug for #name {
+            fn fmt(&self, fmt: &mut ::std::fmt::Formatter) -> ::std::result::Result<(), ::std::fmt::Error> {
+                fmt.debug_struct(#name_str)
+                #(#debug_fields)*
+                .finish()
+            }
+        }
+    };
+    Some(q)
+}
+pub fn generate_struct(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> Tokens {
+    let name = name_to_tokens(&_struct.name);
     let members = _struct.elements.iter().filter_map(|elem| match *elem {
         vkxml::StructElement::Member(ref field) => Some(field),
         _ => None,
@@ -1055,30 +1119,15 @@ pub fn generate_struct(_struct: &vkxml::Struct) -> Tokens {
         quote!{pub #param_ident: #param_ty_tokens}
     });
 
-    let contains_pfn = members.clone().any(|field| {
-        field
-            .name
-            .as_ref()
-            .map(|n| n.contains("pfn"))
-            .unwrap_or(false)
-    });
-
-    let derive = if contains_pfn {
-        quote!{
-            #[derive(Copy, Clone)]
-        }
-    } else {
-        // FIXME: Properly derive Debug
-        quote!{
-            #[derive(Copy, Clone)]
-        }
-    };
+    let debug_tokens = derive_debug(_struct, union_types);
+    let dbg_str = if debug_tokens.is_none() { quote!(Debug,) } else {quote!()};
     quote!{
         #[repr(C)]
-        #derive
+        #[derive(Copy, Clone, #dbg_str)]
         pub struct #name {
             #(#params,)*
         }
+        #debug_tokens
     }
 }
 
@@ -1137,10 +1186,15 @@ fn generate_union(union: &vkxml::Union) -> Tokens {
         }
     }
 }
-pub fn generate_definition(definition: &vkxml::DefinitionsElement) -> Option<Tokens> {
+pub fn generate_definition(
+    definition: &vkxml::DefinitionsElement,
+    union_types: &HashSet<&str>,
+) -> Option<Tokens> {
     match *definition {
         vkxml::DefinitionsElement::Typedef(ref typedef) => Some(generate_typedef(typedef)),
-        vkxml::DefinitionsElement::Struct(ref _struct) => Some(generate_struct(_struct)),
+        vkxml::DefinitionsElement::Struct(ref _struct) => {
+            Some(generate_struct(_struct, union_types))
+        }
         vkxml::DefinitionsElement::Bitmask(ref mask) => generate_bitmask(mask),
         vkxml::DefinitionsElement::Handle(ref handle) => generate_handle(handle),
         vkxml::DefinitionsElement::FuncPtr(ref fp) => Some(generate_funcptr(fp)),
@@ -1157,8 +1211,7 @@ pub fn generate_feature(feature: &vkxml::Feature, commands: &CommandMap) -> quot
                 spec.elements
                     .iter()
                     .filter_map(|feature_spec| {
-                        if let vkxml::FeatureReference::CommandReference(ref cmd_ref) =
-                            feature_spec
+                        if let vkxml::FeatureReference::CommandReference(ref cmd_ref) = feature_spec
                         {
                             Some(cmd_ref)
                         } else {
@@ -1320,9 +1373,17 @@ pub fn write_source_code(path: &Path) {
         .filter_map(|ext| generate_extension(ext, &commands, &mut const_cache))
         .collect_vec();
 
+    let union_types = definitions
+        .iter()
+        .filter_map(|def| match def {
+            vkxml::DefinitionsElement::Union(ref union) => Some(union.name.as_str()),
+            _ => None,
+        })
+        .collect::<HashSet<&str>>();
+
     let definition_code: Vec<_> = definitions
         .into_iter()
-        .filter_map(generate_definition)
+        .filter_map(|def| generate_definition(def, &union_types))
         .collect();
 
     let feature_code: Vec<_> = features
