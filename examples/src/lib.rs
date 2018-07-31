@@ -10,7 +10,11 @@ use ash::Entry;
 use ash::Instance;
 use ash::Device;
 pub use ash::version::{DeviceV1_0, EntryV1_0, InstanceV1_0, V1_0};
-use ash::extensions::{DebugReport, Surface, Swapchain, Win32Surface, XlibSurface};
+use ash::extensions::{DebugReport, Surface, Swapchain};
+#[cfg(windows)]
+use ash::extensions::Win32Surface;
+#[cfg(not(windows))]
+use ash::extensions::XlibSurface;
 use std::cell::RefCell;
 use std::ptr;
 use std::ffi::{CStr, CString};
