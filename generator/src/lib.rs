@@ -903,7 +903,14 @@ pub enum EnumType {
 
 pub fn variant_ident(enum_name: &str, variant_name: &str) -> Ident {
     let _name = enum_name.split("FlagBits").nth(0).expect("split");
-    let struct_name = _name.to_shouty_snake_case();
+    // TODO: Should be read from vk.xml
+    // TODO: Also needs to be more robust, vendor names can be substrings from itself,
+    // like NVX and NV
+    let vendors = ["_NVX", "_KHR", "_EXT", "_NV", "_AMD", "_ANDROID", "_GOOGLE"];
+    let mut struct_name = _name.to_shouty_snake_case();
+    for vendor in &vendors {
+        struct_name = struct_name.replace(vendor, "");
+    }
     let new_variant_name = variant_name.replace(&struct_name, "").replace("VK", "");
     let new_variant_name = new_variant_name
         .trim_matches('_')
