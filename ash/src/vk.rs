@@ -5132,9 +5132,9 @@ pub struct DeviceCreateInfo {
     pub queue_create_info_count: uint32_t,
     pub p_queue_create_infos: *const DeviceQueueCreateInfo,
     pub enabled_layer_count: uint32_t,
-    pub pp_enabled_layer_names: *const c_char,
+    pub pp_enabled_layer_names: *const *const c_char,
     pub enabled_extension_count: uint32_t,
-    pub pp_enabled_extension_names: *const c_char,
+    pub pp_enabled_extension_names: *const *const c_char,
     pub p_enabled_features: *const PhysicalDeviceFeatures,
 }
 impl ::std::default::Default for DeviceCreateInfo {
@@ -5161,9 +5161,9 @@ pub struct InstanceCreateInfo {
     pub flags: InstanceCreateFlags,
     pub p_application_info: *const ApplicationInfo,
     pub enabled_layer_count: uint32_t,
-    pub pp_enabled_layer_names: *const c_char,
+    pub pp_enabled_layer_names: *const *const c_char,
     pub enabled_extension_count: uint32_t,
-    pub pp_enabled_extension_names: *const c_char,
+    pub pp_enabled_extension_names: *const *const c_char,
 }
 impl ::std::default::Default for InstanceCreateInfo {
     fn default() -> InstanceCreateInfo {
@@ -17493,7 +17493,7 @@ pub mod extensions {
                 device: Device,
                 object_table: ObjectTableNVX,
                 object_count: uint32_t,
-                pp_object_table_entries: *const ObjectTableEntryNVX,
+                pp_object_table_entries: *const *const ObjectTableEntryNVX,
                 p_object_indices: *const uint32_t,
             ) -> Result,
         unregister_objects_nvx: extern "system" fn(
@@ -17685,7 +17685,7 @@ pub mod extensions {
             device: Device,
             object_table: ObjectTableNVX,
             object_count: uint32_t,
-            pp_object_table_entries: *const ObjectTableEntryNVX,
+            pp_object_table_entries: *const *const ObjectTableEntryNVX,
             p_object_indices: *const uint32_t,
         ) -> Result {
             (self.register_objects_nvx)(

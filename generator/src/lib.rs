@@ -563,7 +563,7 @@ impl ToTokens for vkxml::ReferenceType {
         let ptr_name = match self {
             vkxml::ReferenceType::Pointer => "*const",
             vkxml::ReferenceType::PointerToPointer => "*mut *mut",
-            vkxml::ReferenceType::PointerToConstPointer => "*const",
+            vkxml::ReferenceType::PointerToConstPointer => "*const *const",
         };
         let ident = Term::intern(ptr_name);
         quote!{
