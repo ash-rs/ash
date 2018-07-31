@@ -1,9 +1,21 @@
 #![allow(dead_code)]
 use prelude::*;
 use std::mem;
-use version::{FunctionPointers, V1_0};
+use version::{FunctionPointers, V1_0, V1_1};
 use vk;
 use RawPtr;
+
+#[allow(non_camel_case_types)]
+pub trait DeviceV1_1: DeviceV1_0 {
+    fn fp_v1_1(&self) -> &vk::DeviceFnV1_1;
+    unsafe fn bind_buffer_memory2(&self, bind_infos: &[vk::BindBufferMemoryInfo]) -> vk::Result {
+        self.fp_v1_1().bind_buffer_memory2(
+            self.handle(),
+            bind_infos.len() as _,
+            bind_infos.as_ptr(),
+        )
+    }
+}
 
 #[allow(non_camel_case_types)]
 pub trait DeviceV1_0 {
@@ -1492,6 +1504,22 @@ impl DeviceV1_0 for Device<V1_0> {
 
     fn fp_v1_0(&self) -> &vk::DeviceFnV1_0 {
         &self.device_fn.device_fn
+    }
+}
+
+impl DeviceV1_0 for Device<V1_1> {
+    fn handle(&self) -> vk::Device {
+        self.handle
+    }
+
+    fn fp_v1_0(&self) -> &vk::DeviceFnV1_0 {
+        &self.device_fn.device_fn_1_0
+    }
+}
+
+impl DeviceV1_1 for Device<V1_1> {
+    fn fp_v1_1(&self) -> &vk::DeviceFnV1_1 {
+        &self.device_fn.device_fn_1_1
     }
 }
 

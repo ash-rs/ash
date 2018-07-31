@@ -6,7 +6,7 @@ use std::fmt;
 use std::mem;
 use std::ptr;
 use version::DeviceLoader;
-use version::{FunctionPointers, V1_0};
+use version::{FunctionPointers, V1_0, V1_1};
 use vk;
 use RawPtr;
 
@@ -51,6 +51,24 @@ impl InstanceV1_0 for Instance<V1_0> {
         &self.instance_fp.instance_fn
     }
 }
+
+impl InstanceV1_0 for Instance<V1_1> {
+    type Fp = V1_1;
+    fn handle(&self) -> vk::Instance {
+        self.handle
+    }
+
+    fn fp_v1_0(&self) -> &vk::InstanceFnV1_0 {
+        &self.instance_fp.instance_fn_1_0
+    }
+}
+
+impl InstanceV1_1 for Instance<V1_1> {
+    fn fp_v1_1(&self) -> &vk::InstanceFnV1_1 {
+        &self.instance_fp.instance_fn_1_1
+    }
+}
+
 impl<V: FunctionPointers> Instance<V> {
     pub fn handle(&self) -> vk::Instance {
         self.handle
@@ -61,6 +79,15 @@ impl<V: FunctionPointers> Instance<V> {
             handle: handle,
             instance_fp: version,
         }
+    }
+}
+
+#[allow(non_camel_case_types)]
+pub trait InstanceV1_1: InstanceV1_0 {
+    fn fp_v1_1(&self) -> &vk::InstanceFnV1_1;
+    unsafe fn enumerate_instance_version(&self, api_version: &vk::uint32_t) -> vk::Result {
+        self.fp_v1_1()
+            .enumerate_instance_version(api_version as *const _)
     }
 }
 
@@ -253,6 +280,3 @@ pub trait InstanceV1_0 {
         }
     }
 }
-
-// pub trait InstanceMajor1Minor1: InstanceMajor1Minor0 {}
-// pub trait InstanceMajor1Minor2: InstanceMajor1Minor1 {}
