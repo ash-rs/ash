@@ -272,16 +272,16 @@ pub struct EntryFnV1_0 {
     create_instance: extern "system" fn(
         p_create_info: *const InstanceCreateInfo,
         p_allocator: *const AllocationCallbacks,
-        p_instance: *const Instance,
+        p_instance: *mut Instance,
     ) -> Result,
     enumerate_instance_extension_properties:
         extern "system" fn(
             p_layer_name: *const c_char,
-            p_property_count: *const uint32_t,
-            p_properties: *const ExtensionProperties,
+            p_property_count: *mut uint32_t,
+            p_properties: *mut ExtensionProperties,
         ) -> Result,
     enumerate_instance_layer_properties:
-        extern "system" fn(p_property_count: *const uint32_t, p_properties: *const LayerProperties)
+        extern "system" fn(p_property_count: *mut uint32_t, p_properties: *mut LayerProperties)
             -> Result,
 }
 unsafe impl Send for EntryFnV1_0 {}
@@ -340,22 +340,22 @@ impl EntryFnV1_0 {
         &self,
         p_create_info: *const InstanceCreateInfo,
         p_allocator: *const AllocationCallbacks,
-        p_instance: *const Instance,
+        p_instance: *mut Instance,
     ) -> Result {
         (self.create_instance)(p_create_info, p_allocator, p_instance)
     }
     pub unsafe fn enumerate_instance_extension_properties(
         &self,
         p_layer_name: *const c_char,
-        p_property_count: *const uint32_t,
-        p_properties: *const ExtensionProperties,
+        p_property_count: *mut uint32_t,
+        p_properties: *mut ExtensionProperties,
     ) -> Result {
         (self.enumerate_instance_extension_properties)(p_layer_name, p_property_count, p_properties)
     }
     pub unsafe fn enumerate_instance_layer_properties(
         &self,
-        p_property_count: *const uint32_t,
-        p_properties: *const LayerProperties,
+        p_property_count: *mut uint32_t,
+        p_properties: *mut LayerProperties,
     ) -> Result {
         (self.enumerate_instance_layer_properties)(p_property_count, p_properties)
     }
@@ -365,18 +365,18 @@ pub struct InstanceFnV1_0 {
         extern "system" fn(instance: Instance, p_allocator: *const AllocationCallbacks) -> c_void,
     enumerate_physical_devices: extern "system" fn(
         instance: Instance,
-        p_physical_device_count: *const uint32_t,
-        p_physical_devices: *const PhysicalDevice,
+        p_physical_device_count: *mut uint32_t,
+        p_physical_devices: *mut PhysicalDevice,
     ) -> Result,
     get_physical_device_features: extern "system" fn(
         physical_device: PhysicalDevice,
-        p_features: *const PhysicalDeviceFeatures,
+        p_features: *mut PhysicalDeviceFeatures,
     ) -> c_void,
     get_physical_device_format_properties:
         extern "system" fn(
             physical_device: PhysicalDevice,
             format: Format,
-            p_format_properties: *const FormatProperties,
+            p_format_properties: *mut FormatProperties,
         ) -> c_void,
     get_physical_device_image_format_properties:
         extern "system" fn(
@@ -386,23 +386,22 @@ pub struct InstanceFnV1_0 {
             tiling: ImageTiling,
             usage: ImageUsageFlags,
             flags: ImageCreateFlags,
-            p_image_format_properties: *const ImageFormatProperties,
+            p_image_format_properties: *mut ImageFormatProperties,
         ) -> Result,
-    get_physical_device_properties:
-        extern "system" fn(
-            physical_device: PhysicalDevice,
-            p_properties: *const PhysicalDeviceProperties,
-        ) -> c_void,
+    get_physical_device_properties: extern "system" fn(
+        physical_device: PhysicalDevice,
+        p_properties: *mut PhysicalDeviceProperties,
+    ) -> c_void,
     get_physical_device_queue_family_properties:
         extern "system" fn(
             physical_device: PhysicalDevice,
-            p_queue_family_property_count: *const uint32_t,
-            p_queue_family_properties: *const QueueFamilyProperties,
+            p_queue_family_property_count: *mut uint32_t,
+            p_queue_family_properties: *mut QueueFamilyProperties,
         ) -> c_void,
     get_physical_device_memory_properties:
         extern "system" fn(
             physical_device: PhysicalDevice,
-            p_memory_properties: *const PhysicalDeviceMemoryProperties,
+            p_memory_properties: *mut PhysicalDeviceMemoryProperties,
         ) -> c_void,
     get_device_proc_addr:
         extern "system" fn(device: Device, p_name: *const c_char) -> PFN_vkVoidFunction,
@@ -410,19 +409,19 @@ pub struct InstanceFnV1_0 {
         physical_device: PhysicalDevice,
         p_create_info: *const DeviceCreateInfo,
         p_allocator: *const AllocationCallbacks,
-        p_device: *const Device,
+        p_device: *mut Device,
     ) -> Result,
     enumerate_device_extension_properties:
         extern "system" fn(
             physical_device: PhysicalDevice,
             p_layer_name: *const c_char,
-            p_property_count: *const uint32_t,
-            p_properties: *const ExtensionProperties,
+            p_property_count: *mut uint32_t,
+            p_properties: *mut ExtensionProperties,
         ) -> Result,
     enumerate_device_layer_properties: extern "system" fn(
         physical_device: PhysicalDevice,
-        p_property_count: *const uint32_t,
-        p_properties: *const LayerProperties,
+        p_property_count: *mut uint32_t,
+        p_properties: *mut LayerProperties,
     ) -> Result,
     get_physical_device_sparse_image_format_properties:
         extern "system" fn(
@@ -432,8 +431,8 @@ pub struct InstanceFnV1_0 {
             samples: SampleCountFlags,
             usage: ImageUsageFlags,
             tiling: ImageTiling,
-            p_property_count: *const uint32_t,
-            p_properties: *const SparseImageFormatProperties,
+            p_property_count: *mut uint32_t,
+            p_properties: *mut SparseImageFormatProperties,
         ) -> c_void,
 }
 unsafe impl Send for InstanceFnV1_0 {}
@@ -601,15 +600,15 @@ impl InstanceFnV1_0 {
     pub unsafe fn enumerate_physical_devices(
         &self,
         instance: Instance,
-        p_physical_device_count: *const uint32_t,
-        p_physical_devices: *const PhysicalDevice,
+        p_physical_device_count: *mut uint32_t,
+        p_physical_devices: *mut PhysicalDevice,
     ) -> Result {
         (self.enumerate_physical_devices)(instance, p_physical_device_count, p_physical_devices)
     }
     pub unsafe fn get_physical_device_features(
         &self,
         physical_device: PhysicalDevice,
-        p_features: *const PhysicalDeviceFeatures,
+        p_features: *mut PhysicalDeviceFeatures,
     ) -> c_void {
         (self.get_physical_device_features)(physical_device, p_features)
     }
@@ -617,7 +616,7 @@ impl InstanceFnV1_0 {
         &self,
         physical_device: PhysicalDevice,
         format: Format,
-        p_format_properties: *const FormatProperties,
+        p_format_properties: *mut FormatProperties,
     ) -> c_void {
         (self.get_physical_device_format_properties)(physical_device, format, p_format_properties)
     }
@@ -629,7 +628,7 @@ impl InstanceFnV1_0 {
         tiling: ImageTiling,
         usage: ImageUsageFlags,
         flags: ImageCreateFlags,
-        p_image_format_properties: *const ImageFormatProperties,
+        p_image_format_properties: *mut ImageFormatProperties,
     ) -> Result {
         (self.get_physical_device_image_format_properties)(
             physical_device,
@@ -644,15 +643,15 @@ impl InstanceFnV1_0 {
     pub unsafe fn get_physical_device_properties(
         &self,
         physical_device: PhysicalDevice,
-        p_properties: *const PhysicalDeviceProperties,
+        p_properties: *mut PhysicalDeviceProperties,
     ) -> c_void {
         (self.get_physical_device_properties)(physical_device, p_properties)
     }
     pub unsafe fn get_physical_device_queue_family_properties(
         &self,
         physical_device: PhysicalDevice,
-        p_queue_family_property_count: *const uint32_t,
-        p_queue_family_properties: *const QueueFamilyProperties,
+        p_queue_family_property_count: *mut uint32_t,
+        p_queue_family_properties: *mut QueueFamilyProperties,
     ) -> c_void {
         (self.get_physical_device_queue_family_properties)(
             physical_device,
@@ -663,7 +662,7 @@ impl InstanceFnV1_0 {
     pub unsafe fn get_physical_device_memory_properties(
         &self,
         physical_device: PhysicalDevice,
-        p_memory_properties: *const PhysicalDeviceMemoryProperties,
+        p_memory_properties: *mut PhysicalDeviceMemoryProperties,
     ) -> c_void {
         (self.get_physical_device_memory_properties)(physical_device, p_memory_properties)
     }
@@ -679,7 +678,7 @@ impl InstanceFnV1_0 {
         physical_device: PhysicalDevice,
         p_create_info: *const DeviceCreateInfo,
         p_allocator: *const AllocationCallbacks,
-        p_device: *const Device,
+        p_device: *mut Device,
     ) -> Result {
         (self.create_device)(physical_device, p_create_info, p_allocator, p_device)
     }
@@ -687,8 +686,8 @@ impl InstanceFnV1_0 {
         &self,
         physical_device: PhysicalDevice,
         p_layer_name: *const c_char,
-        p_property_count: *const uint32_t,
-        p_properties: *const ExtensionProperties,
+        p_property_count: *mut uint32_t,
+        p_properties: *mut ExtensionProperties,
     ) -> Result {
         (self.enumerate_device_extension_properties)(
             physical_device,
@@ -700,8 +699,8 @@ impl InstanceFnV1_0 {
     pub unsafe fn enumerate_device_layer_properties(
         &self,
         physical_device: PhysicalDevice,
-        p_property_count: *const uint32_t,
-        p_properties: *const LayerProperties,
+        p_property_count: *mut uint32_t,
+        p_properties: *mut LayerProperties,
     ) -> Result {
         (self.enumerate_device_layer_properties)(physical_device, p_property_count, p_properties)
     }
@@ -713,8 +712,8 @@ impl InstanceFnV1_0 {
         samples: SampleCountFlags,
         usage: ImageUsageFlags,
         tiling: ImageTiling,
-        p_property_count: *const uint32_t,
-        p_properties: *const SparseImageFormatProperties,
+        p_property_count: *mut uint32_t,
+        p_properties: *mut SparseImageFormatProperties,
     ) -> c_void {
         (self.get_physical_device_sparse_image_format_properties)(
             physical_device,
@@ -735,7 +734,7 @@ pub struct DeviceFnV1_0 {
         device: Device,
         queue_family_index: uint32_t,
         queue_index: uint32_t,
-        p_queue: *const Queue,
+        p_queue: *mut Queue,
     ) -> c_void,
     queue_submit: extern "system" fn(
         queue: Queue,
@@ -749,7 +748,7 @@ pub struct DeviceFnV1_0 {
         device: Device,
         p_allocate_info: *const MemoryAllocateInfo,
         p_allocator: *const AllocationCallbacks,
-        p_memory: *const DeviceMemory,
+        p_memory: *mut DeviceMemory,
     ) -> Result,
     free_memory: extern "system" fn(
         device: Device,
@@ -775,12 +774,11 @@ pub struct DeviceFnV1_0 {
         memory_range_count: uint32_t,
         p_memory_ranges: *const MappedMemoryRange,
     ) -> Result,
-    get_device_memory_commitment:
-        extern "system" fn(
-            device: Device,
-            memory: DeviceMemory,
-            p_committed_memory_in_bytes: *const DeviceSize,
-        ) -> c_void,
+    get_device_memory_commitment: extern "system" fn(
+        device: Device,
+        memory: DeviceMemory,
+        p_committed_memory_in_bytes: *mut DeviceSize,
+    ) -> c_void,
     bind_buffer_memory: extern "system" fn(
         device: Device,
         buffer: Buffer,
@@ -797,20 +795,20 @@ pub struct DeviceFnV1_0 {
         extern "system" fn(
             device: Device,
             buffer: Buffer,
-            p_memory_requirements: *const MemoryRequirements,
+            p_memory_requirements: *mut MemoryRequirements,
         ) -> c_void,
     get_image_memory_requirements:
         extern "system" fn(
             device: Device,
             image: Image,
-            p_memory_requirements: *const MemoryRequirements,
+            p_memory_requirements: *mut MemoryRequirements,
         ) -> c_void,
     get_image_sparse_memory_requirements:
         extern "system" fn(
             device: Device,
             image: Image,
-            p_sparse_memory_requirement_count: *const uint32_t,
-            p_sparse_memory_requirements: *const SparseImageMemoryRequirements,
+            p_sparse_memory_requirement_count: *mut uint32_t,
+            p_sparse_memory_requirements: *mut SparseImageMemoryRequirements,
         ) -> c_void,
     queue_bind_sparse: extern "system" fn(
         queue: Queue,
@@ -822,7 +820,7 @@ pub struct DeviceFnV1_0 {
         device: Device,
         p_create_info: *const FenceCreateInfo,
         p_allocator: *const AllocationCallbacks,
-        p_fence: *const Fence,
+        p_fence: *mut Fence,
     ) -> Result,
     destroy_fence:
         extern "system" fn(device: Device, fence: Fence, p_allocator: *const AllocationCallbacks)
@@ -841,7 +839,7 @@ pub struct DeviceFnV1_0 {
         device: Device,
         p_create_info: *const SemaphoreCreateInfo,
         p_allocator: *const AllocationCallbacks,
-        p_semaphore: *const Semaphore,
+        p_semaphore: *mut Semaphore,
     ) -> Result,
     destroy_semaphore: extern "system" fn(
         device: Device,
@@ -852,7 +850,7 @@ pub struct DeviceFnV1_0 {
         device: Device,
         p_create_info: *const EventCreateInfo,
         p_allocator: *const AllocationCallbacks,
-        p_event: *const Event,
+        p_event: *mut Event,
     ) -> Result,
     destroy_event:
         extern "system" fn(device: Device, event: Event, p_allocator: *const AllocationCallbacks)
@@ -864,7 +862,7 @@ pub struct DeviceFnV1_0 {
         device: Device,
         p_create_info: *const QueryPoolCreateInfo,
         p_allocator: *const AllocationCallbacks,
-        p_query_pool: *const QueryPool,
+        p_query_pool: *mut QueryPool,
     ) -> Result,
     destroy_query_pool: extern "system" fn(
         device: Device,
@@ -877,7 +875,7 @@ pub struct DeviceFnV1_0 {
         first_query: uint32_t,
         query_count: uint32_t,
         data_size: size_t,
-        p_data: *const c_void,
+        p_data: *mut c_void,
         stride: DeviceSize,
         flags: QueryResultFlags,
     ) -> Result,
@@ -885,7 +883,7 @@ pub struct DeviceFnV1_0 {
         device: Device,
         p_create_info: *const BufferCreateInfo,
         p_allocator: *const AllocationCallbacks,
-        p_buffer: *const Buffer,
+        p_buffer: *mut Buffer,
     ) -> Result,
     destroy_buffer:
         extern "system" fn(device: Device, buffer: Buffer, p_allocator: *const AllocationCallbacks)
@@ -894,7 +892,7 @@ pub struct DeviceFnV1_0 {
         device: Device,
         p_create_info: *const BufferViewCreateInfo,
         p_allocator: *const AllocationCallbacks,
-        p_view: *const BufferView,
+        p_view: *mut BufferView,
     ) -> Result,
     destroy_buffer_view: extern "system" fn(
         device: Device,
@@ -905,7 +903,7 @@ pub struct DeviceFnV1_0 {
         device: Device,
         p_create_info: *const ImageCreateInfo,
         p_allocator: *const AllocationCallbacks,
-        p_image: *const Image,
+        p_image: *mut Image,
     ) -> Result,
     destroy_image:
         extern "system" fn(device: Device, image: Image, p_allocator: *const AllocationCallbacks)
@@ -914,13 +912,13 @@ pub struct DeviceFnV1_0 {
         device: Device,
         image: Image,
         p_subresource: *const ImageSubresource,
-        p_layout: *const SubresourceLayout,
+        p_layout: *mut SubresourceLayout,
     ) -> c_void,
     create_image_view: extern "system" fn(
         device: Device,
         p_create_info: *const ImageViewCreateInfo,
         p_allocator: *const AllocationCallbacks,
-        p_view: *const ImageView,
+        p_view: *mut ImageView,
     ) -> Result,
     destroy_image_view: extern "system" fn(
         device: Device,
@@ -931,7 +929,7 @@ pub struct DeviceFnV1_0 {
         device: Device,
         p_create_info: *const ShaderModuleCreateInfo,
         p_allocator: *const AllocationCallbacks,
-        p_shader_module: *const ShaderModule,
+        p_shader_module: *mut ShaderModule,
     ) -> Result,
     destroy_shader_module: extern "system" fn(
         device: Device,
@@ -942,7 +940,7 @@ pub struct DeviceFnV1_0 {
         device: Device,
         p_create_info: *const PipelineCacheCreateInfo,
         p_allocator: *const AllocationCallbacks,
-        p_pipeline_cache: *const PipelineCache,
+        p_pipeline_cache: *mut PipelineCache,
     ) -> Result,
     destroy_pipeline_cache: extern "system" fn(
         device: Device,
@@ -952,8 +950,8 @@ pub struct DeviceFnV1_0 {
     get_pipeline_cache_data: extern "system" fn(
         device: Device,
         pipeline_cache: PipelineCache,
-        p_data_size: *const size_t,
-        p_data: *const c_void,
+        p_data_size: *mut size_t,
+        p_data: *mut c_void,
     ) -> Result,
     merge_pipeline_caches: extern "system" fn(
         device: Device,
@@ -968,7 +966,7 @@ pub struct DeviceFnV1_0 {
             create_info_count: uint32_t,
             p_create_infos: *const GraphicsPipelineCreateInfo,
             p_allocator: *const AllocationCallbacks,
-            p_pipelines: *const Pipeline,
+            p_pipelines: *mut Pipeline,
         ) -> Result,
     create_compute_pipelines: extern "system" fn(
         device: Device,
@@ -976,7 +974,7 @@ pub struct DeviceFnV1_0 {
         create_info_count: uint32_t,
         p_create_infos: *const ComputePipelineCreateInfo,
         p_allocator: *const AllocationCallbacks,
-        p_pipelines: *const Pipeline,
+        p_pipelines: *mut Pipeline,
     ) -> Result,
     destroy_pipeline: extern "system" fn(
         device: Device,
@@ -987,7 +985,7 @@ pub struct DeviceFnV1_0 {
         device: Device,
         p_create_info: *const PipelineLayoutCreateInfo,
         p_allocator: *const AllocationCallbacks,
-        p_pipeline_layout: *const PipelineLayout,
+        p_pipeline_layout: *mut PipelineLayout,
     ) -> Result,
     destroy_pipeline_layout: extern "system" fn(
         device: Device,
@@ -998,7 +996,7 @@ pub struct DeviceFnV1_0 {
         device: Device,
         p_create_info: *const SamplerCreateInfo,
         p_allocator: *const AllocationCallbacks,
-        p_sampler: *const Sampler,
+        p_sampler: *mut Sampler,
     ) -> Result,
     destroy_sampler: extern "system" fn(
         device: Device,
@@ -1010,7 +1008,7 @@ pub struct DeviceFnV1_0 {
             device: Device,
             p_create_info: *const DescriptorSetLayoutCreateInfo,
             p_allocator: *const AllocationCallbacks,
-            p_set_layout: *const DescriptorSetLayout,
+            p_set_layout: *mut DescriptorSetLayout,
         ) -> Result,
     destroy_descriptor_set_layout: extern "system" fn(
         device: Device,
@@ -1021,7 +1019,7 @@ pub struct DeviceFnV1_0 {
         device: Device,
         p_create_info: *const DescriptorPoolCreateInfo,
         p_allocator: *const AllocationCallbacks,
-        p_descriptor_pool: *const DescriptorPool,
+        p_descriptor_pool: *mut DescriptorPool,
     ) -> Result,
     destroy_descriptor_pool: extern "system" fn(
         device: Device,
@@ -1036,7 +1034,7 @@ pub struct DeviceFnV1_0 {
     allocate_descriptor_sets: extern "system" fn(
         device: Device,
         p_allocate_info: *const DescriptorSetAllocateInfo,
-        p_descriptor_sets: *const DescriptorSet,
+        p_descriptor_sets: *mut DescriptorSet,
     ) -> Result,
     free_descriptor_sets: extern "system" fn(
         device: Device,
@@ -1055,7 +1053,7 @@ pub struct DeviceFnV1_0 {
         device: Device,
         p_create_info: *const FramebufferCreateInfo,
         p_allocator: *const AllocationCallbacks,
-        p_framebuffer: *const Framebuffer,
+        p_framebuffer: *mut Framebuffer,
     ) -> Result,
     destroy_framebuffer: extern "system" fn(
         device: Device,
@@ -1066,7 +1064,7 @@ pub struct DeviceFnV1_0 {
         device: Device,
         p_create_info: *const RenderPassCreateInfo,
         p_allocator: *const AllocationCallbacks,
-        p_render_pass: *const RenderPass,
+        p_render_pass: *mut RenderPass,
     ) -> Result,
     destroy_render_pass: extern "system" fn(
         device: Device,
@@ -1074,13 +1072,13 @@ pub struct DeviceFnV1_0 {
         p_allocator: *const AllocationCallbacks,
     ) -> c_void,
     get_render_area_granularity:
-        extern "system" fn(device: Device, render_pass: RenderPass, p_granularity: *const Extent2D)
+        extern "system" fn(device: Device, render_pass: RenderPass, p_granularity: *mut Extent2D)
             -> c_void,
     create_command_pool: extern "system" fn(
         device: Device,
         p_create_info: *const CommandPoolCreateInfo,
         p_allocator: *const AllocationCallbacks,
-        p_command_pool: *const CommandPool,
+        p_command_pool: *mut CommandPool,
     ) -> Result,
     destroy_command_pool: extern "system" fn(
         device: Device,
@@ -1093,7 +1091,7 @@ pub struct DeviceFnV1_0 {
     allocate_command_buffers: extern "system" fn(
         device: Device,
         p_allocate_info: *const CommandBufferAllocateInfo,
-        p_command_buffers: *const CommandBuffer,
+        p_command_buffers: *mut CommandBuffer,
     ) -> Result,
     free_command_buffers: extern "system" fn(
         device: Device,
@@ -2627,7 +2625,7 @@ impl DeviceFnV1_0 {
         device: Device,
         queue_family_index: uint32_t,
         queue_index: uint32_t,
-        p_queue: *const Queue,
+        p_queue: *mut Queue,
     ) -> c_void {
         (self.get_device_queue)(device, queue_family_index, queue_index, p_queue)
     }
@@ -2651,7 +2649,7 @@ impl DeviceFnV1_0 {
         device: Device,
         p_allocate_info: *const MemoryAllocateInfo,
         p_allocator: *const AllocationCallbacks,
-        p_memory: *const DeviceMemory,
+        p_memory: *mut DeviceMemory,
     ) -> Result {
         (self.allocate_memory)(device, p_allocate_info, p_allocator, p_memory)
     }
@@ -2697,7 +2695,7 @@ impl DeviceFnV1_0 {
         &self,
         device: Device,
         memory: DeviceMemory,
-        p_committed_memory_in_bytes: *const DeviceSize,
+        p_committed_memory_in_bytes: *mut DeviceSize,
     ) -> c_void {
         (self.get_device_memory_commitment)(device, memory, p_committed_memory_in_bytes)
     }
@@ -2723,7 +2721,7 @@ impl DeviceFnV1_0 {
         &self,
         device: Device,
         buffer: Buffer,
-        p_memory_requirements: *const MemoryRequirements,
+        p_memory_requirements: *mut MemoryRequirements,
     ) -> c_void {
         (self.get_buffer_memory_requirements)(device, buffer, p_memory_requirements)
     }
@@ -2731,7 +2729,7 @@ impl DeviceFnV1_0 {
         &self,
         device: Device,
         image: Image,
-        p_memory_requirements: *const MemoryRequirements,
+        p_memory_requirements: *mut MemoryRequirements,
     ) -> c_void {
         (self.get_image_memory_requirements)(device, image, p_memory_requirements)
     }
@@ -2739,8 +2737,8 @@ impl DeviceFnV1_0 {
         &self,
         device: Device,
         image: Image,
-        p_sparse_memory_requirement_count: *const uint32_t,
-        p_sparse_memory_requirements: *const SparseImageMemoryRequirements,
+        p_sparse_memory_requirement_count: *mut uint32_t,
+        p_sparse_memory_requirements: *mut SparseImageMemoryRequirements,
     ) -> c_void {
         (self.get_image_sparse_memory_requirements)(
             device,
@@ -2763,7 +2761,7 @@ impl DeviceFnV1_0 {
         device: Device,
         p_create_info: *const FenceCreateInfo,
         p_allocator: *const AllocationCallbacks,
-        p_fence: *const Fence,
+        p_fence: *mut Fence,
     ) -> Result {
         (self.create_fence)(device, p_create_info, p_allocator, p_fence)
     }
@@ -2801,7 +2799,7 @@ impl DeviceFnV1_0 {
         device: Device,
         p_create_info: *const SemaphoreCreateInfo,
         p_allocator: *const AllocationCallbacks,
-        p_semaphore: *const Semaphore,
+        p_semaphore: *mut Semaphore,
     ) -> Result {
         (self.create_semaphore)(device, p_create_info, p_allocator, p_semaphore)
     }
@@ -2818,7 +2816,7 @@ impl DeviceFnV1_0 {
         device: Device,
         p_create_info: *const EventCreateInfo,
         p_allocator: *const AllocationCallbacks,
-        p_event: *const Event,
+        p_event: *mut Event,
     ) -> Result {
         (self.create_event)(device, p_create_info, p_allocator, p_event)
     }
@@ -2844,7 +2842,7 @@ impl DeviceFnV1_0 {
         device: Device,
         p_create_info: *const QueryPoolCreateInfo,
         p_allocator: *const AllocationCallbacks,
-        p_query_pool: *const QueryPool,
+        p_query_pool: *mut QueryPool,
     ) -> Result {
         (self.create_query_pool)(device, p_create_info, p_allocator, p_query_pool)
     }
@@ -2863,7 +2861,7 @@ impl DeviceFnV1_0 {
         first_query: uint32_t,
         query_count: uint32_t,
         data_size: size_t,
-        p_data: *const c_void,
+        p_data: *mut c_void,
         stride: DeviceSize,
         flags: QueryResultFlags,
     ) -> Result {
@@ -2883,7 +2881,7 @@ impl DeviceFnV1_0 {
         device: Device,
         p_create_info: *const BufferCreateInfo,
         p_allocator: *const AllocationCallbacks,
-        p_buffer: *const Buffer,
+        p_buffer: *mut Buffer,
     ) -> Result {
         (self.create_buffer)(device, p_create_info, p_allocator, p_buffer)
     }
@@ -2900,7 +2898,7 @@ impl DeviceFnV1_0 {
         device: Device,
         p_create_info: *const BufferViewCreateInfo,
         p_allocator: *const AllocationCallbacks,
-        p_view: *const BufferView,
+        p_view: *mut BufferView,
     ) -> Result {
         (self.create_buffer_view)(device, p_create_info, p_allocator, p_view)
     }
@@ -2917,7 +2915,7 @@ impl DeviceFnV1_0 {
         device: Device,
         p_create_info: *const ImageCreateInfo,
         p_allocator: *const AllocationCallbacks,
-        p_image: *const Image,
+        p_image: *mut Image,
     ) -> Result {
         (self.create_image)(device, p_create_info, p_allocator, p_image)
     }
@@ -2934,7 +2932,7 @@ impl DeviceFnV1_0 {
         device: Device,
         image: Image,
         p_subresource: *const ImageSubresource,
-        p_layout: *const SubresourceLayout,
+        p_layout: *mut SubresourceLayout,
     ) -> c_void {
         (self.get_image_subresource_layout)(device, image, p_subresource, p_layout)
     }
@@ -2943,7 +2941,7 @@ impl DeviceFnV1_0 {
         device: Device,
         p_create_info: *const ImageViewCreateInfo,
         p_allocator: *const AllocationCallbacks,
-        p_view: *const ImageView,
+        p_view: *mut ImageView,
     ) -> Result {
         (self.create_image_view)(device, p_create_info, p_allocator, p_view)
     }
@@ -2960,7 +2958,7 @@ impl DeviceFnV1_0 {
         device: Device,
         p_create_info: *const ShaderModuleCreateInfo,
         p_allocator: *const AllocationCallbacks,
-        p_shader_module: *const ShaderModule,
+        p_shader_module: *mut ShaderModule,
     ) -> Result {
         (self.create_shader_module)(device, p_create_info, p_allocator, p_shader_module)
     }
@@ -2977,7 +2975,7 @@ impl DeviceFnV1_0 {
         device: Device,
         p_create_info: *const PipelineCacheCreateInfo,
         p_allocator: *const AllocationCallbacks,
-        p_pipeline_cache: *const PipelineCache,
+        p_pipeline_cache: *mut PipelineCache,
     ) -> Result {
         (self.create_pipeline_cache)(device, p_create_info, p_allocator, p_pipeline_cache)
     }
@@ -2993,8 +2991,8 @@ impl DeviceFnV1_0 {
         &self,
         device: Device,
         pipeline_cache: PipelineCache,
-        p_data_size: *const size_t,
-        p_data: *const c_void,
+        p_data_size: *mut size_t,
+        p_data: *mut c_void,
     ) -> Result {
         (self.get_pipeline_cache_data)(device, pipeline_cache, p_data_size, p_data)
     }
@@ -3014,7 +3012,7 @@ impl DeviceFnV1_0 {
         create_info_count: uint32_t,
         p_create_infos: *const GraphicsPipelineCreateInfo,
         p_allocator: *const AllocationCallbacks,
-        p_pipelines: *const Pipeline,
+        p_pipelines: *mut Pipeline,
     ) -> Result {
         (self.create_graphics_pipelines)(
             device,
@@ -3032,7 +3030,7 @@ impl DeviceFnV1_0 {
         create_info_count: uint32_t,
         p_create_infos: *const ComputePipelineCreateInfo,
         p_allocator: *const AllocationCallbacks,
-        p_pipelines: *const Pipeline,
+        p_pipelines: *mut Pipeline,
     ) -> Result {
         (self.create_compute_pipelines)(
             device,
@@ -3056,7 +3054,7 @@ impl DeviceFnV1_0 {
         device: Device,
         p_create_info: *const PipelineLayoutCreateInfo,
         p_allocator: *const AllocationCallbacks,
-        p_pipeline_layout: *const PipelineLayout,
+        p_pipeline_layout: *mut PipelineLayout,
     ) -> Result {
         (self.create_pipeline_layout)(device, p_create_info, p_allocator, p_pipeline_layout)
     }
@@ -3073,7 +3071,7 @@ impl DeviceFnV1_0 {
         device: Device,
         p_create_info: *const SamplerCreateInfo,
         p_allocator: *const AllocationCallbacks,
-        p_sampler: *const Sampler,
+        p_sampler: *mut Sampler,
     ) -> Result {
         (self.create_sampler)(device, p_create_info, p_allocator, p_sampler)
     }
@@ -3090,7 +3088,7 @@ impl DeviceFnV1_0 {
         device: Device,
         p_create_info: *const DescriptorSetLayoutCreateInfo,
         p_allocator: *const AllocationCallbacks,
-        p_set_layout: *const DescriptorSetLayout,
+        p_set_layout: *mut DescriptorSetLayout,
     ) -> Result {
         (self.create_descriptor_set_layout)(device, p_create_info, p_allocator, p_set_layout)
     }
@@ -3107,7 +3105,7 @@ impl DeviceFnV1_0 {
         device: Device,
         p_create_info: *const DescriptorPoolCreateInfo,
         p_allocator: *const AllocationCallbacks,
-        p_descriptor_pool: *const DescriptorPool,
+        p_descriptor_pool: *mut DescriptorPool,
     ) -> Result {
         (self.create_descriptor_pool)(device, p_create_info, p_allocator, p_descriptor_pool)
     }
@@ -3131,7 +3129,7 @@ impl DeviceFnV1_0 {
         &self,
         device: Device,
         p_allocate_info: *const DescriptorSetAllocateInfo,
-        p_descriptor_sets: *const DescriptorSet,
+        p_descriptor_sets: *mut DescriptorSet,
     ) -> Result {
         (self.allocate_descriptor_sets)(device, p_allocate_info, p_descriptor_sets)
     }
@@ -3170,7 +3168,7 @@ impl DeviceFnV1_0 {
         device: Device,
         p_create_info: *const FramebufferCreateInfo,
         p_allocator: *const AllocationCallbacks,
-        p_framebuffer: *const Framebuffer,
+        p_framebuffer: *mut Framebuffer,
     ) -> Result {
         (self.create_framebuffer)(device, p_create_info, p_allocator, p_framebuffer)
     }
@@ -3187,7 +3185,7 @@ impl DeviceFnV1_0 {
         device: Device,
         p_create_info: *const RenderPassCreateInfo,
         p_allocator: *const AllocationCallbacks,
-        p_render_pass: *const RenderPass,
+        p_render_pass: *mut RenderPass,
     ) -> Result {
         (self.create_render_pass)(device, p_create_info, p_allocator, p_render_pass)
     }
@@ -3203,7 +3201,7 @@ impl DeviceFnV1_0 {
         &self,
         device: Device,
         render_pass: RenderPass,
-        p_granularity: *const Extent2D,
+        p_granularity: *mut Extent2D,
     ) -> c_void {
         (self.get_render_area_granularity)(device, render_pass, p_granularity)
     }
@@ -3212,7 +3210,7 @@ impl DeviceFnV1_0 {
         device: Device,
         p_create_info: *const CommandPoolCreateInfo,
         p_allocator: *const AllocationCallbacks,
-        p_command_pool: *const CommandPool,
+        p_command_pool: *mut CommandPool,
     ) -> Result {
         (self.create_command_pool)(device, p_create_info, p_allocator, p_command_pool)
     }
@@ -3236,7 +3234,7 @@ impl DeviceFnV1_0 {
         &self,
         device: Device,
         p_allocate_info: *const CommandBufferAllocateInfo,
-        p_command_buffers: *const CommandBuffer,
+        p_command_buffers: *mut CommandBuffer,
     ) -> Result {
         (self.allocate_command_buffers)(device, p_allocate_info, p_command_buffers)
     }
@@ -3848,7 +3846,72 @@ impl EntryFnV1_1 {
         }
     }
 }
-pub struct InstanceFnV1_1 { enumerate_instance_version : extern "system" fn ( p_api_version : *const uint32_t , ) -> Result , enumerate_physical_device_groups : extern "system" fn ( instance : Instance , p_physical_device_group_count : *const uint32_t , p_physical_device_group_properties : *const PhysicalDeviceGroupProperties , ) -> Result , get_physical_device_features2 : extern "system" fn ( physical_device : PhysicalDevice , p_features : *const PhysicalDeviceFeatures2 , ) -> c_void , get_physical_device_properties2 : extern "system" fn ( physical_device : PhysicalDevice , p_properties : *const PhysicalDeviceProperties2 , ) -> c_void , get_physical_device_format_properties2 : extern "system" fn ( physical_device : PhysicalDevice , format : Format , p_format_properties : *const FormatProperties2 , ) -> c_void , get_physical_device_image_format_properties2 : extern "system" fn ( physical_device : PhysicalDevice , p_image_format_info : *const PhysicalDeviceImageFormatInfo2 , p_image_format_properties : *const ImageFormatProperties2 , ) -> Result , get_physical_device_queue_family_properties2 : extern "system" fn ( physical_device : PhysicalDevice , p_queue_family_property_count : *const uint32_t , p_queue_family_properties : *const QueueFamilyProperties2 , ) -> c_void , get_physical_device_memory_properties2 : extern "system" fn ( physical_device : PhysicalDevice , p_memory_properties : *const PhysicalDeviceMemoryProperties2 , ) -> c_void , get_physical_device_sparse_image_format_properties2 : extern "system" fn ( physical_device : PhysicalDevice , p_format_info : *const PhysicalDeviceSparseImageFormatInfo2 , p_property_count : *const uint32_t , p_properties : *const SparseImageFormatProperties2 , ) -> c_void , get_physical_device_external_buffer_properties : extern "system" fn ( physical_device : PhysicalDevice , p_external_buffer_info : *const PhysicalDeviceExternalBufferInfo , p_external_buffer_properties : *const ExternalBufferProperties , ) -> c_void , get_physical_device_external_fence_properties : extern "system" fn ( physical_device : PhysicalDevice , p_external_fence_info : *const PhysicalDeviceExternalFenceInfo , p_external_fence_properties : *const ExternalFenceProperties , ) -> c_void , get_physical_device_external_semaphore_properties : extern "system" fn ( physical_device : PhysicalDevice , p_external_semaphore_info : *const PhysicalDeviceExternalSemaphoreInfo , p_external_semaphore_properties : *const ExternalSemaphoreProperties , ) -> c_void , }
+pub struct InstanceFnV1_1 {
+    enumerate_instance_version: extern "system" fn(p_api_version: *mut uint32_t) -> Result,
+    enumerate_physical_device_groups:
+        extern "system" fn(
+            instance: Instance,
+            p_physical_device_group_count: *mut uint32_t,
+            p_physical_device_group_properties: *mut PhysicalDeviceGroupProperties,
+        ) -> Result,
+    get_physical_device_features2: extern "system" fn(
+        physical_device: PhysicalDevice,
+        p_features: *mut PhysicalDeviceFeatures2,
+    ) -> c_void,
+    get_physical_device_properties2:
+        extern "system" fn(
+            physical_device: PhysicalDevice,
+            p_properties: *mut PhysicalDeviceProperties2,
+        ) -> c_void,
+    get_physical_device_format_properties2:
+        extern "system" fn(
+            physical_device: PhysicalDevice,
+            format: Format,
+            p_format_properties: *mut FormatProperties2,
+        ) -> c_void,
+    get_physical_device_image_format_properties2:
+        extern "system" fn(
+            physical_device: PhysicalDevice,
+            p_image_format_info: *const PhysicalDeviceImageFormatInfo2,
+            p_image_format_properties: *mut ImageFormatProperties2,
+        ) -> Result,
+    get_physical_device_queue_family_properties2:
+        extern "system" fn(
+            physical_device: PhysicalDevice,
+            p_queue_family_property_count: *mut uint32_t,
+            p_queue_family_properties: *mut QueueFamilyProperties2,
+        ) -> c_void,
+    get_physical_device_memory_properties2:
+        extern "system" fn(
+            physical_device: PhysicalDevice,
+            p_memory_properties: *mut PhysicalDeviceMemoryProperties2,
+        ) -> c_void,
+    get_physical_device_sparse_image_format_properties2:
+        extern "system" fn(
+            physical_device: PhysicalDevice,
+            p_format_info: *const PhysicalDeviceSparseImageFormatInfo2,
+            p_property_count: *mut uint32_t,
+            p_properties: *mut SparseImageFormatProperties2,
+        ) -> c_void,
+    get_physical_device_external_buffer_properties:
+        extern "system" fn(
+            physical_device: PhysicalDevice,
+            p_external_buffer_info: *const PhysicalDeviceExternalBufferInfo,
+            p_external_buffer_properties: *mut ExternalBufferProperties,
+        ) -> c_void,
+    get_physical_device_external_fence_properties:
+        extern "system" fn(
+            physical_device: PhysicalDevice,
+            p_external_fence_info: *const PhysicalDeviceExternalFenceInfo,
+            p_external_fence_properties: *mut ExternalFenceProperties,
+        ) -> c_void,
+    get_physical_device_external_semaphore_properties:
+        extern "system" fn(
+            physical_device: PhysicalDevice,
+            p_external_semaphore_info: *const PhysicalDeviceExternalSemaphoreInfo,
+            p_external_semaphore_properties: *mut ExternalSemaphoreProperties,
+        ) -> c_void,
+}
 unsafe impl Send for InstanceFnV1_1 {}
 unsafe impl Sync for InstanceFnV1_1 {}
 impl ::std::clone::Clone for InstanceFnV1_1 {
@@ -3997,14 +4060,14 @@ impl InstanceFnV1_1 {
             Err(_err_str)
         }
     }
-    pub unsafe fn enumerate_instance_version(&self, p_api_version: *const uint32_t) -> Result {
+    pub unsafe fn enumerate_instance_version(&self, p_api_version: *mut uint32_t) -> Result {
         (self.enumerate_instance_version)(p_api_version)
     }
     pub unsafe fn enumerate_physical_device_groups(
         &self,
         instance: Instance,
-        p_physical_device_group_count: *const uint32_t,
-        p_physical_device_group_properties: *const PhysicalDeviceGroupProperties,
+        p_physical_device_group_count: *mut uint32_t,
+        p_physical_device_group_properties: *mut PhysicalDeviceGroupProperties,
     ) -> Result {
         (self.enumerate_physical_device_groups)(
             instance,
@@ -4015,14 +4078,14 @@ impl InstanceFnV1_1 {
     pub unsafe fn get_physical_device_features2(
         &self,
         physical_device: PhysicalDevice,
-        p_features: *const PhysicalDeviceFeatures2,
+        p_features: *mut PhysicalDeviceFeatures2,
     ) -> c_void {
         (self.get_physical_device_features2)(physical_device, p_features)
     }
     pub unsafe fn get_physical_device_properties2(
         &self,
         physical_device: PhysicalDevice,
-        p_properties: *const PhysicalDeviceProperties2,
+        p_properties: *mut PhysicalDeviceProperties2,
     ) -> c_void {
         (self.get_physical_device_properties2)(physical_device, p_properties)
     }
@@ -4030,7 +4093,7 @@ impl InstanceFnV1_1 {
         &self,
         physical_device: PhysicalDevice,
         format: Format,
-        p_format_properties: *const FormatProperties2,
+        p_format_properties: *mut FormatProperties2,
     ) -> c_void {
         (self.get_physical_device_format_properties2)(physical_device, format, p_format_properties)
     }
@@ -4038,7 +4101,7 @@ impl InstanceFnV1_1 {
         &self,
         physical_device: PhysicalDevice,
         p_image_format_info: *const PhysicalDeviceImageFormatInfo2,
-        p_image_format_properties: *const ImageFormatProperties2,
+        p_image_format_properties: *mut ImageFormatProperties2,
     ) -> Result {
         (self.get_physical_device_image_format_properties2)(
             physical_device,
@@ -4049,8 +4112,8 @@ impl InstanceFnV1_1 {
     pub unsafe fn get_physical_device_queue_family_properties2(
         &self,
         physical_device: PhysicalDevice,
-        p_queue_family_property_count: *const uint32_t,
-        p_queue_family_properties: *const QueueFamilyProperties2,
+        p_queue_family_property_count: *mut uint32_t,
+        p_queue_family_properties: *mut QueueFamilyProperties2,
     ) -> c_void {
         (self.get_physical_device_queue_family_properties2)(
             physical_device,
@@ -4061,7 +4124,7 @@ impl InstanceFnV1_1 {
     pub unsafe fn get_physical_device_memory_properties2(
         &self,
         physical_device: PhysicalDevice,
-        p_memory_properties: *const PhysicalDeviceMemoryProperties2,
+        p_memory_properties: *mut PhysicalDeviceMemoryProperties2,
     ) -> c_void {
         (self.get_physical_device_memory_properties2)(physical_device, p_memory_properties)
     }
@@ -4069,8 +4132,8 @@ impl InstanceFnV1_1 {
         &self,
         physical_device: PhysicalDevice,
         p_format_info: *const PhysicalDeviceSparseImageFormatInfo2,
-        p_property_count: *const uint32_t,
-        p_properties: *const SparseImageFormatProperties2,
+        p_property_count: *mut uint32_t,
+        p_properties: *mut SparseImageFormatProperties2,
     ) -> c_void {
         (self.get_physical_device_sparse_image_format_properties2)(
             physical_device,
@@ -4083,7 +4146,7 @@ impl InstanceFnV1_1 {
         &self,
         physical_device: PhysicalDevice,
         p_external_buffer_info: *const PhysicalDeviceExternalBufferInfo,
-        p_external_buffer_properties: *const ExternalBufferProperties,
+        p_external_buffer_properties: *mut ExternalBufferProperties,
     ) -> c_void {
         (self.get_physical_device_external_buffer_properties)(
             physical_device,
@@ -4095,7 +4158,7 @@ impl InstanceFnV1_1 {
         &self,
         physical_device: PhysicalDevice,
         p_external_fence_info: *const PhysicalDeviceExternalFenceInfo,
-        p_external_fence_properties: *const ExternalFenceProperties,
+        p_external_fence_properties: *mut ExternalFenceProperties,
     ) -> c_void {
         (self.get_physical_device_external_fence_properties)(
             physical_device,
@@ -4107,7 +4170,7 @@ impl InstanceFnV1_1 {
         &self,
         physical_device: PhysicalDevice,
         p_external_semaphore_info: *const PhysicalDeviceExternalSemaphoreInfo,
-        p_external_semaphore_properties: *const ExternalSemaphoreProperties,
+        p_external_semaphore_properties: *mut ExternalSemaphoreProperties,
     ) -> c_void {
         (self.get_physical_device_external_semaphore_properties)(
             physical_device,
@@ -4133,7 +4196,7 @@ pub struct DeviceFnV1_1 {
             heap_index: uint32_t,
             local_device_index: uint32_t,
             remote_device_index: uint32_t,
-            p_peer_memory_features: *const PeerMemoryFeatureFlags,
+            p_peer_memory_features: *mut PeerMemoryFeatureFlags,
         ) -> c_void,
     cmd_set_device_mask:
         extern "system" fn(command_buffer: CommandBuffer, device_mask: uint32_t) -> c_void,
@@ -4150,20 +4213,20 @@ pub struct DeviceFnV1_1 {
         extern "system" fn(
             device: Device,
             p_info: *const ImageMemoryRequirementsInfo2,
-            p_memory_requirements: *const MemoryRequirements2,
+            p_memory_requirements: *mut MemoryRequirements2,
         ) -> c_void,
     get_buffer_memory_requirements2:
         extern "system" fn(
             device: Device,
             p_info: *const BufferMemoryRequirementsInfo2,
-            p_memory_requirements: *const MemoryRequirements2,
+            p_memory_requirements: *mut MemoryRequirements2,
         ) -> c_void,
     get_image_sparse_memory_requirements2:
         extern "system" fn(
             device: Device,
             p_info: *const ImageSparseMemoryRequirementsInfo2,
-            p_sparse_memory_requirement_count: *const uint32_t,
-            p_sparse_memory_requirements: *const SparseImageMemoryRequirements2,
+            p_sparse_memory_requirement_count: *mut uint32_t,
+            p_sparse_memory_requirements: *mut SparseImageMemoryRequirements2,
         ) -> c_void,
     trim_command_pool:
         extern "system" fn(device: Device, command_pool: CommandPool, flags: CommandPoolTrimFlags)
@@ -4171,14 +4234,14 @@ pub struct DeviceFnV1_1 {
     get_device_queue2: extern "system" fn(
         device: Device,
         p_queue_info: *const DeviceQueueInfo2,
-        p_queue: *const Queue,
+        p_queue: *mut Queue,
     ) -> c_void,
     create_sampler_ycbcr_conversion:
         extern "system" fn(
             device: Device,
             p_create_info: *const SamplerYcbcrConversionCreateInfo,
             p_allocator: *const AllocationCallbacks,
-            p_ycbcr_conversion: *const SamplerYcbcrConversion,
+            p_ycbcr_conversion: *mut SamplerYcbcrConversion,
         ) -> Result,
     destroy_sampler_ycbcr_conversion: extern "system" fn(
         device: Device,
@@ -4190,7 +4253,7 @@ pub struct DeviceFnV1_1 {
             device: Device,
             p_create_info: *const DescriptorUpdateTemplateCreateInfo,
             p_allocator: *const AllocationCallbacks,
-            p_descriptor_update_template: *const DescriptorUpdateTemplate,
+            p_descriptor_update_template: *mut DescriptorUpdateTemplate,
         ) -> Result,
     destroy_descriptor_update_template:
         extern "system" fn(
@@ -4209,7 +4272,7 @@ pub struct DeviceFnV1_1 {
         extern "system" fn(
             device: Device,
             p_create_info: *const DescriptorSetLayoutCreateInfo,
-            p_support: *const DescriptorSetLayoutSupport,
+            p_support: *mut DescriptorSetLayoutSupport,
         ) -> c_void,
 }
 unsafe impl Send for DeviceFnV1_1 {}
@@ -4416,7 +4479,7 @@ impl DeviceFnV1_1 {
         heap_index: uint32_t,
         local_device_index: uint32_t,
         remote_device_index: uint32_t,
-        p_peer_memory_features: *const PeerMemoryFeatureFlags,
+        p_peer_memory_features: *mut PeerMemoryFeatureFlags,
     ) -> c_void {
         (self.get_device_group_peer_memory_features)(
             device,
@@ -4457,7 +4520,7 @@ impl DeviceFnV1_1 {
         &self,
         device: Device,
         p_info: *const ImageMemoryRequirementsInfo2,
-        p_memory_requirements: *const MemoryRequirements2,
+        p_memory_requirements: *mut MemoryRequirements2,
     ) -> c_void {
         (self.get_image_memory_requirements2)(device, p_info, p_memory_requirements)
     }
@@ -4465,7 +4528,7 @@ impl DeviceFnV1_1 {
         &self,
         device: Device,
         p_info: *const BufferMemoryRequirementsInfo2,
-        p_memory_requirements: *const MemoryRequirements2,
+        p_memory_requirements: *mut MemoryRequirements2,
     ) -> c_void {
         (self.get_buffer_memory_requirements2)(device, p_info, p_memory_requirements)
     }
@@ -4473,8 +4536,8 @@ impl DeviceFnV1_1 {
         &self,
         device: Device,
         p_info: *const ImageSparseMemoryRequirementsInfo2,
-        p_sparse_memory_requirement_count: *const uint32_t,
-        p_sparse_memory_requirements: *const SparseImageMemoryRequirements2,
+        p_sparse_memory_requirement_count: *mut uint32_t,
+        p_sparse_memory_requirements: *mut SparseImageMemoryRequirements2,
     ) -> c_void {
         (self.get_image_sparse_memory_requirements2)(
             device,
@@ -4495,7 +4558,7 @@ impl DeviceFnV1_1 {
         &self,
         device: Device,
         p_queue_info: *const DeviceQueueInfo2,
-        p_queue: *const Queue,
+        p_queue: *mut Queue,
     ) -> c_void {
         (self.get_device_queue2)(device, p_queue_info, p_queue)
     }
@@ -4504,7 +4567,7 @@ impl DeviceFnV1_1 {
         device: Device,
         p_create_info: *const SamplerYcbcrConversionCreateInfo,
         p_allocator: *const AllocationCallbacks,
-        p_ycbcr_conversion: *const SamplerYcbcrConversion,
+        p_ycbcr_conversion: *mut SamplerYcbcrConversion,
     ) -> Result {
         (self.create_sampler_ycbcr_conversion)(
             device,
@@ -4526,7 +4589,7 @@ impl DeviceFnV1_1 {
         device: Device,
         p_create_info: *const DescriptorUpdateTemplateCreateInfo,
         p_allocator: *const AllocationCallbacks,
-        p_descriptor_update_template: *const DescriptorUpdateTemplate,
+        p_descriptor_update_template: *mut DescriptorUpdateTemplate,
     ) -> Result {
         (self.create_descriptor_update_template)(
             device,
@@ -4561,7 +4624,7 @@ impl DeviceFnV1_1 {
         &self,
         device: Device,
         p_create_info: *const DescriptorSetLayoutCreateInfo,
-        p_support: *const DescriptorSetLayoutSupport,
+        p_support: *mut DescriptorSetLayoutSupport,
     ) -> c_void {
         (self.get_descriptor_set_layout_support)(device, p_create_info, p_support)
     }
@@ -4797,7 +4860,7 @@ handle_nondispatchable!(DebugUtilsMessengerEXT);
 #[allow(non_camel_case_types)]
 pub type PFN_vkInternalAllocationNotification =
     unsafe extern "system" fn(
-        p_user_data: *const c_void,
+        p_user_data: *mut c_void,
         size: size_t,
         allocation_type: InternalAllocationType,
         allocation_scope: SystemAllocationScope,
@@ -4805,7 +4868,7 @@ pub type PFN_vkInternalAllocationNotification =
 #[allow(non_camel_case_types)]
 pub type PFN_vkInternalFreeNotification =
     unsafe extern "system" fn(
-        p_user_data: *const c_void,
+        p_user_data: *mut c_void,
         size: size_t,
         allocation_type: InternalAllocationType,
         allocation_scope: SystemAllocationScope,
@@ -4813,23 +4876,23 @@ pub type PFN_vkInternalFreeNotification =
 #[allow(non_camel_case_types)]
 pub type PFN_vkReallocationFunction =
     unsafe extern "system" fn(
-        p_user_data: *const c_void,
-        p_original: *const c_void,
+        p_user_data: *mut c_void,
+        p_original: *mut c_void,
         size: size_t,
         alignment: size_t,
         allocation_scope: SystemAllocationScope,
-    ) -> *const c_void;
+    ) -> *mut c_void;
 #[allow(non_camel_case_types)]
 pub type PFN_vkAllocationFunction =
     unsafe extern "system" fn(
-        p_user_data: *const c_void,
+        p_user_data: *mut c_void,
         size: size_t,
         alignment: size_t,
         allocation_scope: SystemAllocationScope,
-    ) -> *const c_void;
+    ) -> *mut c_void;
 #[allow(non_camel_case_types)]
 pub type PFN_vkFreeFunction =
-    unsafe extern "system" fn(p_user_data: *const c_void, p_memory: *const c_void) -> c_void;
+    unsafe extern "system" fn(p_user_data: *mut c_void, p_memory: *mut c_void) -> c_void;
 #[allow(non_camel_case_types)]
 pub type PFN_vkVoidFunction = unsafe extern "system" fn() -> c_void;
 #[allow(non_camel_case_types)]
@@ -4842,7 +4905,7 @@ pub type PFN_vkDebugReportCallbackEXT =
         message_code: int32_t,
         p_layer_prefix: *const c_char,
         p_message: *const c_char,
-        p_user_data: *const c_void,
+        p_user_data: *mut c_void,
     ) -> Bool32;
 #[allow(non_camel_case_types)]
 pub type PFN_vkDebugUtilsMessengerCallbackEXT =
@@ -4850,13 +4913,13 @@ pub type PFN_vkDebugUtilsMessengerCallbackEXT =
         message_severity: DebugUtilsMessageSeverityFlagsEXT,
         message_type: DebugUtilsMessageTypeFlagsEXT,
         p_callback_data: *const DebugUtilsMessengerCallbackDataEXT,
-        p_user_data: *const c_void,
+        p_user_data: *mut c_void,
     ) -> Bool32;
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct BaseOutStructure {
     pub s_type: StructureType,
-    pub p_next: *const BaseOutStructure,
+    pub p_next: *mut BaseOutStructure,
 }
 impl ::std::default::Default for BaseOutStructure {
     fn default() -> BaseOutStructure {
@@ -5067,7 +5130,7 @@ impl ::std::default::Default for ApplicationInfo {
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct AllocationCallbacks {
-    pub p_user_data: *const c_void,
+    pub p_user_data: *mut c_void,
     pub pfn_allocation: PFN_vkAllocationFunction,
     pub pfn_reallocation: PFN_vkReallocationFunction,
     pub pfn_free: PFN_vkFreeFunction,
@@ -5132,9 +5195,9 @@ pub struct DeviceCreateInfo {
     pub queue_create_info_count: uint32_t,
     pub p_queue_create_infos: *const DeviceQueueCreateInfo,
     pub enabled_layer_count: uint32_t,
-    pub pp_enabled_layer_names: *const c_char,
+    pub pp_enabled_layer_names: *const *const c_char,
     pub enabled_extension_count: uint32_t,
-    pub pp_enabled_extension_names: *const c_char,
+    pub pp_enabled_extension_names: *const *const c_char,
     pub p_enabled_features: *const PhysicalDeviceFeatures,
 }
 impl ::std::default::Default for DeviceCreateInfo {
@@ -5161,9 +5224,9 @@ pub struct InstanceCreateInfo {
     pub flags: InstanceCreateFlags,
     pub p_application_info: *const ApplicationInfo,
     pub enabled_layer_count: uint32_t,
-    pub pp_enabled_layer_names: *const c_char,
+    pub pp_enabled_layer_names: *const *const c_char,
     pub enabled_extension_count: uint32_t,
-    pub pp_enabled_extension_names: *const c_char,
+    pub pp_enabled_extension_names: *const *const c_char,
 }
 impl ::std::default::Default for InstanceCreateInfo {
     fn default() -> InstanceCreateInfo {
@@ -7513,7 +7576,7 @@ pub struct AndroidSurfaceCreateInfoKHR {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub flags: AndroidSurfaceCreateFlagsKHR,
-    pub window: *const ANativeWindow,
+    pub window: *mut ANativeWindow,
 }
 impl ::std::default::Default for AndroidSurfaceCreateInfoKHR {
     fn default() -> AndroidSurfaceCreateInfoKHR {
@@ -7531,8 +7594,8 @@ pub struct MirSurfaceCreateInfoKHR {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub flags: MirSurfaceCreateFlagsKHR,
-    pub connection: *const MirConnection,
-    pub mir_surface: *const MirSurface,
+    pub connection: *mut MirConnection,
+    pub mir_surface: *mut MirSurface,
 }
 impl ::std::default::Default for MirSurfaceCreateInfoKHR {
     fn default() -> MirSurfaceCreateInfoKHR {
@@ -7551,7 +7614,7 @@ pub struct ViSurfaceCreateInfoNN {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub flags: ViSurfaceCreateFlagsNN,
-    pub window: *const c_void,
+    pub window: *mut c_void,
 }
 impl ::std::default::Default for ViSurfaceCreateInfoNN {
     fn default() -> ViSurfaceCreateInfoNN {
@@ -7569,8 +7632,8 @@ pub struct WaylandSurfaceCreateInfoKHR {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub flags: WaylandSurfaceCreateFlagsKHR,
-    pub display: *const wl_display,
-    pub surface: *const wl_surface,
+    pub display: *mut wl_display,
+    pub surface: *mut wl_surface,
 }
 impl ::std::default::Default for WaylandSurfaceCreateInfoKHR {
     fn default() -> WaylandSurfaceCreateInfoKHR {
@@ -7609,7 +7672,7 @@ pub struct XlibSurfaceCreateInfoKHR {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub flags: XlibSurfaceCreateFlagsKHR,
-    pub dpy: *const Display,
+    pub dpy: *mut Display,
     pub window: Window,
 }
 impl ::std::default::Default for XlibSurfaceCreateInfoKHR {
@@ -7629,7 +7692,7 @@ pub struct XcbSurfaceCreateInfoKHR {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub flags: XcbSurfaceCreateFlagsKHR,
-    pub connection: *const xcb_connection_t,
+    pub connection: *mut xcb_connection_t,
     pub window: xcb_window_t,
 }
 impl ::std::default::Default for XcbSurfaceCreateInfoKHR {
@@ -7705,7 +7768,7 @@ pub struct PresentInfoKHR {
     pub swapchain_count: uint32_t,
     pub p_swapchains: *const SwapchainKHR,
     pub p_image_indices: *const uint32_t,
-    pub p_results: *const Result,
+    pub p_results: *mut Result,
 }
 impl ::std::default::Default for PresentInfoKHR {
     fn default() -> PresentInfoKHR {
@@ -7728,7 +7791,7 @@ pub struct DebugReportCallbackCreateInfoEXT {
     pub p_next: *const c_void,
     pub flags: DebugReportFlagsEXT,
     pub pfn_callback: PFN_vkDebugReportCallbackEXT,
-    pub p_user_data: *const c_void,
+    pub p_user_data: *mut c_void,
 }
 impl ::std::fmt::Debug for DebugReportCallbackCreateInfoEXT {
     fn fmt(&self, fmt: &mut ::std::fmt::Formatter) -> ::std::result::Result<(), ::std::fmt::Error> {
@@ -7758,7 +7821,7 @@ pub struct ValidationFlagsEXT {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub disabled_validation_check_count: uint32_t,
-    pub p_disabled_validation_checks: *const ValidationCheckEXT,
+    pub p_disabled_validation_checks: *mut ValidationCheckEXT,
 }
 impl ::std::default::Default for ValidationFlagsEXT {
     fn default() -> ValidationFlagsEXT {
@@ -8225,7 +8288,7 @@ pub struct ObjectTablePushConstantEntryNVX {
 #[derive(Copy, Clone, Debug)]
 pub struct PhysicalDeviceFeatures2 {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub features: PhysicalDeviceFeatures,
 }
 impl ::std::default::Default for PhysicalDeviceFeatures2 {
@@ -8244,7 +8307,7 @@ pub struct PhysicalDeviceFeatures2KHR {}
 #[derive(Copy, Clone, Debug)]
 pub struct PhysicalDeviceProperties2 {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub properties: PhysicalDeviceProperties,
 }
 impl ::std::default::Default for PhysicalDeviceProperties2 {
@@ -8263,7 +8326,7 @@ pub struct PhysicalDeviceProperties2KHR {}
 #[derive(Copy, Clone, Debug)]
 pub struct FormatProperties2 {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub format_properties: FormatProperties,
 }
 impl ::std::default::Default for FormatProperties2 {
@@ -8282,7 +8345,7 @@ pub struct FormatProperties2KHR {}
 #[derive(Copy, Clone, Debug)]
 pub struct ImageFormatProperties2 {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub image_format_properties: ImageFormatProperties,
 }
 impl ::std::default::Default for ImageFormatProperties2 {
@@ -8328,7 +8391,7 @@ pub struct PhysicalDeviceImageFormatInfo2KHR {}
 #[derive(Copy, Clone, Debug)]
 pub struct QueueFamilyProperties2 {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub queue_family_properties: QueueFamilyProperties,
 }
 impl ::std::default::Default for QueueFamilyProperties2 {
@@ -8347,7 +8410,7 @@ pub struct QueueFamilyProperties2KHR {}
 #[derive(Copy, Clone, Debug)]
 pub struct PhysicalDeviceMemoryProperties2 {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub memory_properties: PhysicalDeviceMemoryProperties,
 }
 impl ::std::default::Default for PhysicalDeviceMemoryProperties2 {
@@ -8366,7 +8429,7 @@ pub struct PhysicalDeviceMemoryProperties2KHR {}
 #[derive(Copy, Clone, Debug)]
 pub struct SparseImageFormatProperties2 {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub properties: SparseImageFormatProperties,
 }
 impl ::std::default::Default for SparseImageFormatProperties2 {
@@ -8412,7 +8475,7 @@ pub struct PhysicalDeviceSparseImageFormatInfo2KHR {}
 #[derive(Copy, Clone, Debug)]
 pub struct PhysicalDevicePushDescriptorPropertiesKHR {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub max_push_descriptors: uint32_t,
 }
 impl ::std::default::Default for PhysicalDevicePushDescriptorPropertiesKHR {
@@ -8467,7 +8530,7 @@ pub struct RectLayerKHR {
 #[derive(Copy, Clone, Debug)]
 pub struct PhysicalDeviceVariablePointerFeatures {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub variable_pointers_storage_buffer: Bool32,
     pub variable_pointers: Bool32,
 }
@@ -8517,7 +8580,7 @@ pub struct PhysicalDeviceExternalImageFormatInfoKHR {}
 #[derive(Copy, Clone, Debug)]
 pub struct ExternalImageFormatProperties {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub external_memory_properties: ExternalMemoryProperties,
 }
 impl ::std::default::Default for ExternalImageFormatProperties {
@@ -8559,7 +8622,7 @@ pub struct PhysicalDeviceExternalBufferInfoKHR {}
 #[derive(Copy, Clone, Debug)]
 pub struct ExternalBufferProperties {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub external_memory_properties: ExternalMemoryProperties,
 }
 impl ::std::default::Default for ExternalBufferProperties {
@@ -8578,7 +8641,7 @@ pub struct ExternalBufferPropertiesKHR {}
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceIDProperties {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub device_uuid: [uint8_t; VK_UUID_SIZE],
     pub driver_uuid: [uint8_t; VK_UUID_SIZE],
     pub device_luid: [uint8_t; VK_LUID_SIZE],
@@ -8721,7 +8784,7 @@ impl ::std::default::Default for ExportMemoryWin32HandleInfoKHR {
 #[derive(Copy, Clone, Debug)]
 pub struct MemoryWin32HandlePropertiesKHR {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub memory_type_bits: uint32_t,
 }
 impl ::std::default::Default for MemoryWin32HandlePropertiesKHR {
@@ -8773,7 +8836,7 @@ impl ::std::default::Default for ImportMemoryFdInfoKHR {
 #[derive(Copy, Clone, Debug)]
 pub struct MemoryFdPropertiesKHR {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub memory_type_bits: uint32_t,
 }
 impl ::std::default::Default for MemoryFdPropertiesKHR {
@@ -8854,7 +8917,7 @@ pub struct PhysicalDeviceExternalSemaphoreInfoKHR {}
 #[derive(Copy, Clone, Debug)]
 pub struct ExternalSemaphoreProperties {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub export_from_imported_handle_types: ExternalSemaphoreHandleTypeFlags,
     pub compatible_handle_types: ExternalSemaphoreHandleTypeFlags,
     pub external_semaphore_features: ExternalSemaphoreFeatureFlags,
@@ -9039,7 +9102,7 @@ pub struct PhysicalDeviceExternalFenceInfoKHR {}
 #[derive(Copy, Clone, Debug)]
 pub struct ExternalFenceProperties {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub export_from_imported_handle_types: ExternalFenceHandleTypeFlags,
     pub compatible_handle_types: ExternalFenceHandleTypeFlags,
     pub external_fence_features: ExternalFenceFeatureFlags,
@@ -9183,7 +9246,7 @@ impl ::std::default::Default for FenceGetFdInfoKHR {
 #[derive(Copy, Clone, Debug)]
 pub struct PhysicalDeviceMultiviewFeatures {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub multiview: Bool32,
     pub multiview_geometry_shader: Bool32,
     pub multiview_tessellation_shader: Bool32,
@@ -9206,7 +9269,7 @@ pub struct PhysicalDeviceMultiviewFeaturesKHR {}
 #[derive(Copy, Clone, Debug)]
 pub struct PhysicalDeviceMultiviewProperties {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub max_multiview_view_count: uint32_t,
     pub max_multiview_instance_index: uint32_t,
 }
@@ -9256,7 +9319,7 @@ pub struct RenderPassMultiviewCreateInfoKHR {}
 #[derive(Copy, Clone, Debug)]
 pub struct SurfaceCapabilities2EXT {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub min_image_count: uint32_t,
     pub max_image_count: uint32_t,
     pub current_extent: Extent2D,
@@ -9356,7 +9419,7 @@ impl ::std::default::Default for SwapchainCounterCreateInfoEXT {
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceGroupProperties {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub physical_device_count: uint32_t,
     pub physical_devices: [PhysicalDevice; VK_MAX_DEVICE_GROUP_SIZE],
     pub subset_allocation: Bool32,
@@ -9755,7 +9818,7 @@ pub struct DescriptorUpdateTemplateEntryKHR {}
 #[derive(Copy, Clone, Debug)]
 pub struct DescriptorUpdateTemplateCreateInfo {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub flags: DescriptorUpdateTemplateCreateFlags,
     pub descriptor_update_entry_count: uint32_t,
     pub p_descriptor_update_entries: *const DescriptorUpdateTemplateEntry,
@@ -9952,7 +10015,7 @@ impl ::std::default::Default for PipelineViewportSwizzleStateCreateInfoNV {
 #[derive(Copy, Clone, Debug)]
 pub struct PhysicalDeviceDiscardRectanglePropertiesEXT {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub max_discard_rectangles: uint32_t,
 }
 impl ::std::default::Default for PhysicalDeviceDiscardRectanglePropertiesEXT {
@@ -9990,7 +10053,7 @@ impl ::std::default::Default for PipelineDiscardRectangleStateCreateInfoEXT {
 #[derive(Copy, Clone, Debug)]
 pub struct PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub per_view_position_all_components: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX {
@@ -10053,7 +10116,7 @@ impl ::std::default::Default for PhysicalDeviceSurfaceInfo2KHR {
 #[derive(Copy, Clone, Debug)]
 pub struct SurfaceCapabilities2KHR {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub surface_capabilities: SurfaceCapabilitiesKHR,
 }
 impl ::std::default::Default for SurfaceCapabilities2KHR {
@@ -10069,7 +10132,7 @@ impl ::std::default::Default for SurfaceCapabilities2KHR {
 #[derive(Copy, Clone, Debug)]
 pub struct SurfaceFormat2KHR {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub surface_format: SurfaceFormatKHR,
 }
 impl ::std::default::Default for SurfaceFormat2KHR {
@@ -10085,7 +10148,7 @@ impl ::std::default::Default for SurfaceFormat2KHR {
 #[derive(Copy, Clone, Debug)]
 pub struct DisplayProperties2KHR {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub display_properties: DisplayPropertiesKHR,
 }
 impl ::std::default::Default for DisplayProperties2KHR {
@@ -10101,7 +10164,7 @@ impl ::std::default::Default for DisplayProperties2KHR {
 #[derive(Copy, Clone, Debug)]
 pub struct DisplayPlaneProperties2KHR {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub display_plane_properties: DisplayPlanePropertiesKHR,
 }
 impl ::std::default::Default for DisplayPlaneProperties2KHR {
@@ -10117,7 +10180,7 @@ impl ::std::default::Default for DisplayPlaneProperties2KHR {
 #[derive(Copy, Clone, Debug)]
 pub struct DisplayModeProperties2KHR {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub display_mode_properties: DisplayModePropertiesKHR,
 }
 impl ::std::default::Default for DisplayModeProperties2KHR {
@@ -10151,7 +10214,7 @@ impl ::std::default::Default for DisplayPlaneInfo2KHR {
 #[derive(Copy, Clone, Debug)]
 pub struct DisplayPlaneCapabilities2KHR {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub capabilities: DisplayPlaneCapabilitiesKHR,
 }
 impl ::std::default::Default for DisplayPlaneCapabilities2KHR {
@@ -10167,7 +10230,7 @@ impl ::std::default::Default for DisplayPlaneCapabilities2KHR {
 #[derive(Copy, Clone, Debug)]
 pub struct SharedPresentSurfaceCapabilitiesKHR {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub shared_present_supported_usage_flags: ImageUsageFlags,
 }
 impl ::std::default::Default for SharedPresentSurfaceCapabilitiesKHR {
@@ -10183,7 +10246,7 @@ impl ::std::default::Default for SharedPresentSurfaceCapabilitiesKHR {
 #[derive(Copy, Clone, Debug)]
 pub struct PhysicalDevice16BitStorageFeatures {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub storage_buffer16_bit_access: Bool32,
     pub uniform_and_storage_buffer16_bit_access: Bool32,
     pub storage_push_constant16: Bool32,
@@ -10208,7 +10271,7 @@ pub struct PhysicalDevice16BitStorageFeaturesKHR {}
 #[derive(Copy, Clone, Debug)]
 pub struct PhysicalDeviceSubgroupProperties {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub subgroup_size: uint32_t,
     pub supported_stages: ShaderStageFlags,
     pub supported_operations: SubgroupFeatureFlags,
@@ -10287,7 +10350,7 @@ pub struct ImageSparseMemoryRequirementsInfo2KHR {}
 #[derive(Copy, Clone, Debug)]
 pub struct MemoryRequirements2 {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub memory_requirements: MemoryRequirements,
 }
 impl ::std::default::Default for MemoryRequirements2 {
@@ -10306,7 +10369,7 @@ pub struct MemoryRequirements2KHR {}
 #[derive(Copy, Clone, Debug)]
 pub struct SparseImageMemoryRequirements2 {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub memory_requirements: SparseImageMemoryRequirements,
 }
 impl ::std::default::Default for SparseImageMemoryRequirements2 {
@@ -10325,7 +10388,7 @@ pub struct SparseImageMemoryRequirements2KHR {}
 #[derive(Copy, Clone, Debug)]
 pub struct PhysicalDevicePointClippingProperties {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub point_clipping_behavior: PointClippingBehavior,
 }
 impl ::std::default::Default for PhysicalDevicePointClippingProperties {
@@ -10344,7 +10407,7 @@ pub struct PhysicalDevicePointClippingPropertiesKHR {}
 #[derive(Copy, Clone, Debug)]
 pub struct MemoryDedicatedRequirements {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub prefers_dedicated_allocation: Bool32,
     pub requires_dedicated_allocation: Bool32,
 }
@@ -10514,7 +10577,7 @@ pub struct ImagePlaneMemoryRequirementsInfoKHR {}
 #[derive(Copy, Clone, Debug)]
 pub struct PhysicalDeviceSamplerYcbcrConversionFeatures {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub sampler_ycbcr_conversion: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceSamplerYcbcrConversionFeatures {
@@ -10533,7 +10596,7 @@ pub struct PhysicalDeviceSamplerYcbcrConversionFeaturesKHR {}
 #[derive(Copy, Clone, Debug)]
 pub struct SamplerYcbcrConversionImageFormatProperties {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub combined_image_sampler_descriptor_count: uint32_t,
 }
 impl ::std::default::Default for SamplerYcbcrConversionImageFormatProperties {
@@ -10552,7 +10615,7 @@ pub struct SamplerYcbcrConversionImageFormatPropertiesKHR {}
 #[derive(Copy, Clone, Debug)]
 pub struct TextureLODGatherFormatPropertiesAMD {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub supports_texture_gather_lod_bias_amd: Bool32,
 }
 impl ::std::default::Default for TextureLODGatherFormatPropertiesAMD {
@@ -10584,7 +10647,7 @@ impl ::std::default::Default for ProtectedSubmitInfo {
 #[derive(Copy, Clone, Debug)]
 pub struct PhysicalDeviceProtectedMemoryFeatures {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub protected_memory: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceProtectedMemoryFeatures {
@@ -10600,7 +10663,7 @@ impl ::std::default::Default for PhysicalDeviceProtectedMemoryFeatures {
 #[derive(Copy, Clone, Debug)]
 pub struct PhysicalDeviceProtectedMemoryProperties {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub protected_no_fault: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceProtectedMemoryProperties {
@@ -10656,7 +10719,7 @@ impl ::std::default::Default for PipelineCoverageToColorStateCreateInfoNV {
 #[derive(Copy, Clone, Debug)]
 pub struct PhysicalDeviceSamplerFilterMinmaxPropertiesEXT {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub filter_minmax_single_component_formats: Bool32,
     pub filter_minmax_image_component_mapping: Bool32,
 }
@@ -10754,7 +10817,7 @@ impl ::std::default::Default for PipelineSampleLocationsStateCreateInfoEXT {
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceSampleLocationsPropertiesEXT {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub sample_location_sample_counts: SampleCountFlags,
     pub max_sample_location_grid_size: Extent2D,
     pub sample_location_coordinate_range: [c_float; 2],
@@ -10804,7 +10867,7 @@ impl ::std::default::Default for PhysicalDeviceSampleLocationsPropertiesEXT {
 #[derive(Copy, Clone, Debug)]
 pub struct MultisamplePropertiesEXT {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub max_sample_location_grid_size: Extent2D,
 }
 impl ::std::default::Default for MultisamplePropertiesEXT {
@@ -10836,7 +10899,7 @@ impl ::std::default::Default for SamplerReductionModeCreateInfoEXT {
 #[derive(Copy, Clone, Debug)]
 pub struct PhysicalDeviceBlendOperationAdvancedFeaturesEXT {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub advanced_blend_coherent_operations: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceBlendOperationAdvancedFeaturesEXT {
@@ -10852,7 +10915,7 @@ impl ::std::default::Default for PhysicalDeviceBlendOperationAdvancedFeaturesEXT
 #[derive(Copy, Clone, Debug)]
 pub struct PhysicalDeviceBlendOperationAdvancedPropertiesEXT {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub advanced_blend_max_color_attachments: uint32_t,
     pub advanced_blend_independent_blend: Bool32,
     pub advanced_blend_non_premultiplied_src_color: Bool32,
@@ -10976,7 +11039,7 @@ impl ::std::default::Default for ShaderModuleValidationCacheCreateInfoEXT {
 #[derive(Copy, Clone, Debug)]
 pub struct PhysicalDeviceMaintenance3Properties {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub max_per_set_descriptors: uint32_t,
     pub max_memory_allocation_size: DeviceSize,
 }
@@ -10997,7 +11060,7 @@ pub struct PhysicalDeviceMaintenance3PropertiesKHR {}
 #[derive(Copy, Clone, Debug)]
 pub struct DescriptorSetLayoutSupport {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub supported: Bool32,
 }
 impl ::std::default::Default for DescriptorSetLayoutSupport {
@@ -11016,7 +11079,7 @@ pub struct DescriptorSetLayoutSupportKHR {}
 #[derive(Copy, Clone, Debug)]
 pub struct PhysicalDeviceShaderDrawParameterFeatures {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub shader_draw_parameters: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceShaderDrawParameterFeatures {
@@ -11197,7 +11260,7 @@ pub struct DebugUtilsMessengerCreateInfoEXT {
     pub message_severity: DebugUtilsMessageSeverityFlagsEXT,
     pub message_type: DebugUtilsMessageTypeFlagsEXT,
     pub pfn_user_callback: PFN_vkDebugUtilsMessengerCallbackEXT,
-    pub p_user_data: *const c_void,
+    pub p_user_data: *mut c_void,
 }
 impl ::std::fmt::Debug for DebugUtilsMessengerCreateInfoEXT {
     fn fmt(&self, fmt: &mut ::std::fmt::Formatter) -> ::std::result::Result<(), ::std::fmt::Error> {
@@ -11235,11 +11298,11 @@ pub struct DebugUtilsMessengerCallbackDataEXT {
     pub message_id_number: int32_t,
     pub p_message: *const c_char,
     pub queue_label_count: uint32_t,
-    pub p_queue_labels: *const DebugUtilsLabelEXT,
+    pub p_queue_labels: *mut DebugUtilsLabelEXT,
     pub cmd_buf_label_count: uint32_t,
-    pub p_cmd_buf_labels: *const DebugUtilsLabelEXT,
+    pub p_cmd_buf_labels: *mut DebugUtilsLabelEXT,
     pub object_count: uint32_t,
-    pub p_objects: *const DebugUtilsObjectNameInfoEXT,
+    pub p_objects: *mut DebugUtilsObjectNameInfoEXT,
 }
 impl ::std::default::Default for DebugUtilsMessengerCallbackDataEXT {
     fn default() -> DebugUtilsMessengerCallbackDataEXT {
@@ -11265,7 +11328,7 @@ pub struct ImportMemoryHostPointerInfoEXT {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub handle_type: ExternalMemoryHandleTypeFlags,
-    pub p_host_pointer: *const c_void,
+    pub p_host_pointer: *mut c_void,
 }
 impl ::std::default::Default for ImportMemoryHostPointerInfoEXT {
     fn default() -> ImportMemoryHostPointerInfoEXT {
@@ -11281,7 +11344,7 @@ impl ::std::default::Default for ImportMemoryHostPointerInfoEXT {
 #[derive(Copy, Clone, Debug)]
 pub struct MemoryHostPointerPropertiesEXT {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub memory_type_bits: uint32_t,
 }
 impl ::std::default::Default for MemoryHostPointerPropertiesEXT {
@@ -11297,7 +11360,7 @@ impl ::std::default::Default for MemoryHostPointerPropertiesEXT {
 #[derive(Copy, Clone, Debug)]
 pub struct PhysicalDeviceExternalMemoryHostPropertiesEXT {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub min_imported_host_pointer_alignment: DeviceSize,
 }
 impl ::std::default::Default for PhysicalDeviceExternalMemoryHostPropertiesEXT {
@@ -11313,7 +11376,7 @@ impl ::std::default::Default for PhysicalDeviceExternalMemoryHostPropertiesEXT {
 #[derive(Copy, Clone, Debug)]
 pub struct PhysicalDeviceConservativeRasterizationPropertiesEXT {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub primitive_overestimation_size: c_float,
     pub max_extra_primitive_overestimation_size: c_float,
     pub extra_primitive_overestimation_size_granularity: c_float,
@@ -11345,7 +11408,7 @@ impl ::std::default::Default for PhysicalDeviceConservativeRasterizationProperti
 #[derive(Copy, Clone, Debug)]
 pub struct PhysicalDeviceShaderCorePropertiesAMD {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub shader_engine_count: uint32_t,
     pub shader_arrays_per_engine_count: uint32_t,
     pub compute_units_per_shader_array: uint32_t,
@@ -11407,7 +11470,7 @@ impl ::std::default::Default for PipelineRasterizationConservativeStateCreateInf
 #[derive(Copy, Clone, Debug)]
 pub struct PhysicalDeviceDescriptorIndexingFeaturesEXT {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub shader_input_attachment_array_dynamic_indexing: Bool32,
     pub shader_uniform_texel_buffer_array_dynamic_indexing: Bool32,
     pub shader_storage_texel_buffer_array_dynamic_indexing: Bool32,
@@ -11461,7 +11524,7 @@ impl ::std::default::Default for PhysicalDeviceDescriptorIndexingFeaturesEXT {
 #[derive(Copy, Clone, Debug)]
 pub struct PhysicalDeviceDescriptorIndexingPropertiesEXT {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub max_update_after_bind_descriptors_in_all_pools: uint32_t,
     pub shader_uniform_buffer_array_non_uniform_indexing_native: Bool32,
     pub shader_sampled_image_array_non_uniform_indexing_native: Bool32,
@@ -11557,7 +11620,7 @@ impl ::std::default::Default for DescriptorSetVariableDescriptorCountAllocateInf
 #[derive(Copy, Clone, Debug)]
 pub struct DescriptorSetVariableDescriptorCountLayoutSupportEXT {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub max_variable_descriptor_count: uint32_t,
 }
 impl ::std::default::Default for DescriptorSetVariableDescriptorCountLayoutSupportEXT {
@@ -11597,7 +11660,7 @@ impl ::std::default::Default for PipelineVertexInputDivisorStateCreateInfoEXT {
 #[derive(Copy, Clone, Debug)]
 pub struct PhysicalDeviceVertexAttributeDivisorPropertiesEXT {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub max_vertex_attrib_divisor: uint32_t,
 }
 impl ::std::default::Default for PhysicalDeviceVertexAttributeDivisorPropertiesEXT {
@@ -11614,7 +11677,7 @@ impl ::std::default::Default for PhysicalDeviceVertexAttributeDivisorPropertiesE
 pub struct ImportAndroidHardwareBufferInfoANDROID {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub buffer: *const AHardwareBuffer,
+    pub buffer: *mut AHardwareBuffer,
 }
 impl ::std::default::Default for ImportAndroidHardwareBufferInfoANDROID {
     fn default() -> ImportAndroidHardwareBufferInfoANDROID {
@@ -11629,7 +11692,7 @@ impl ::std::default::Default for ImportAndroidHardwareBufferInfoANDROID {
 #[derive(Copy, Clone, Debug)]
 pub struct AndroidHardwareBufferUsageANDROID {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub android_hardware_buffer_usage: uint64_t,
 }
 impl ::std::default::Default for AndroidHardwareBufferUsageANDROID {
@@ -11645,7 +11708,7 @@ impl ::std::default::Default for AndroidHardwareBufferUsageANDROID {
 #[derive(Copy, Clone, Debug)]
 pub struct AndroidHardwareBufferPropertiesANDROID {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub allocation_size: DeviceSize,
     pub memory_type_bits: uint32_t,
 }
@@ -11679,7 +11742,7 @@ impl ::std::default::Default for MemoryGetAndroidHardwareBufferInfoANDROID {
 #[derive(Copy, Clone, Debug)]
 pub struct AndroidHardwareBufferFormatPropertiesANDROID {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub format: Format,
     pub external_format: uint64_t,
     pub format_features: FormatFeatureFlags,
@@ -11709,7 +11772,7 @@ impl ::std::default::Default for AndroidHardwareBufferFormatPropertiesANDROID {
 #[derive(Copy, Clone, Debug)]
 pub struct ExternalFormatANDROID {
     pub s_type: StructureType,
-    pub p_next: *const c_void,
+    pub p_next: *mut c_void,
     pub external_format: uint64_t,
 }
 impl ::std::default::Default for ExternalFormatANDROID {
@@ -12466,139 +12529,132 @@ impl ObjectType {
 #[repr(C)]
 pub struct PresentModeKHR(pub(crate) i32);
 impl PresentModeKHR {
-    pub const PRESENT_MODE_IMMEDIATE_KHR: Self = PresentModeKHR(0);
-    pub const PRESENT_MODE_MAILBOX_KHR: Self = PresentModeKHR(1);
-    pub const PRESENT_MODE_FIFO_KHR: Self = PresentModeKHR(2);
-    pub const PRESENT_MODE_FIFO_RELAXED_KHR: Self = PresentModeKHR(3);
+    pub const IMMEDIATE_KHR: Self = PresentModeKHR(0);
+    pub const MAILBOX_KHR: Self = PresentModeKHR(1);
+    pub const FIFO_KHR: Self = PresentModeKHR(2);
+    pub const FIFO_RELAXED_KHR: Self = PresentModeKHR(3);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct ColorSpaceKHR(pub(crate) i32);
 impl ColorSpaceKHR {
-    pub const COLOR_SPACE_SRGB_NONLINEAR_KHR: Self = ColorSpaceKHR(0);
+    pub const SRGB_NONLINEAR_KHR: Self = ColorSpaceKHR(0);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct DebugReportObjectTypeEXT(pub(crate) i32);
 impl DebugReportObjectTypeEXT {
-    pub const DEBUG_REPORT_OBJECT_TYPE_UNKNOWN_EXT: Self = DebugReportObjectTypeEXT(0);
-    pub const DEBUG_REPORT_OBJECT_TYPE_INSTANCE_EXT: Self = DebugReportObjectTypeEXT(1);
-    pub const DEBUG_REPORT_OBJECT_TYPE_PHYSICAL_DEVICE_EXT: Self = DebugReportObjectTypeEXT(2);
-    pub const DEBUG_REPORT_OBJECT_TYPE_DEVICE_EXT: Self = DebugReportObjectTypeEXT(3);
-    pub const DEBUG_REPORT_OBJECT_TYPE_QUEUE_EXT: Self = DebugReportObjectTypeEXT(4);
-    pub const DEBUG_REPORT_OBJECT_TYPE_SEMAPHORE_EXT: Self = DebugReportObjectTypeEXT(5);
-    pub const DEBUG_REPORT_OBJECT_TYPE_COMMAND_BUFFER_EXT: Self = DebugReportObjectTypeEXT(6);
-    pub const DEBUG_REPORT_OBJECT_TYPE_FENCE_EXT: Self = DebugReportObjectTypeEXT(7);
-    pub const DEBUG_REPORT_OBJECT_TYPE_DEVICE_MEMORY_EXT: Self = DebugReportObjectTypeEXT(8);
-    pub const DEBUG_REPORT_OBJECT_TYPE_BUFFER_EXT: Self = DebugReportObjectTypeEXT(9);
-    pub const DEBUG_REPORT_OBJECT_TYPE_IMAGE_EXT: Self = DebugReportObjectTypeEXT(10);
-    pub const DEBUG_REPORT_OBJECT_TYPE_EVENT_EXT: Self = DebugReportObjectTypeEXT(11);
-    pub const DEBUG_REPORT_OBJECT_TYPE_QUERY_POOL_EXT: Self = DebugReportObjectTypeEXT(12);
-    pub const DEBUG_REPORT_OBJECT_TYPE_BUFFER_VIEW_EXT: Self = DebugReportObjectTypeEXT(13);
-    pub const DEBUG_REPORT_OBJECT_TYPE_IMAGE_VIEW_EXT: Self = DebugReportObjectTypeEXT(14);
-    pub const DEBUG_REPORT_OBJECT_TYPE_SHADER_MODULE_EXT: Self = DebugReportObjectTypeEXT(15);
-    pub const DEBUG_REPORT_OBJECT_TYPE_PIPELINE_CACHE_EXT: Self = DebugReportObjectTypeEXT(16);
-    pub const DEBUG_REPORT_OBJECT_TYPE_PIPELINE_LAYOUT_EXT: Self = DebugReportObjectTypeEXT(17);
-    pub const DEBUG_REPORT_OBJECT_TYPE_RENDER_PASS_EXT: Self = DebugReportObjectTypeEXT(18);
-    pub const DEBUG_REPORT_OBJECT_TYPE_PIPELINE_EXT: Self = DebugReportObjectTypeEXT(19);
-    pub const DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_LAYOUT_EXT: Self =
-        DebugReportObjectTypeEXT(20);
-    pub const DEBUG_REPORT_OBJECT_TYPE_SAMPLER_EXT: Self = DebugReportObjectTypeEXT(21);
-    pub const DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_POOL_EXT: Self = DebugReportObjectTypeEXT(22);
-    pub const DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_EXT: Self = DebugReportObjectTypeEXT(23);
-    pub const DEBUG_REPORT_OBJECT_TYPE_FRAMEBUFFER_EXT: Self = DebugReportObjectTypeEXT(24);
-    pub const DEBUG_REPORT_OBJECT_TYPE_COMMAND_POOL_EXT: Self = DebugReportObjectTypeEXT(25);
-    pub const DEBUG_REPORT_OBJECT_TYPE_SURFACE_KHR_EXT: Self = DebugReportObjectTypeEXT(26);
-    pub const DEBUG_REPORT_OBJECT_TYPE_SWAPCHAIN_KHR_EXT: Self = DebugReportObjectTypeEXT(27);
-    pub const DEBUG_REPORT_OBJECT_TYPE_DEBUG_REPORT_CALLBACK_EXT_EXT: Self =
-        DebugReportObjectTypeEXT(28);
-    pub const DEBUG_REPORT_OBJECT_TYPE_DISPLAY_KHR_EXT: Self = DebugReportObjectTypeEXT(29);
-    pub const DEBUG_REPORT_OBJECT_TYPE_DISPLAY_MODE_KHR_EXT: Self = DebugReportObjectTypeEXT(30);
-    pub const DEBUG_REPORT_OBJECT_TYPE_OBJECT_TABLE_NVX_EXT: Self = DebugReportObjectTypeEXT(31);
-    pub const DEBUG_REPORT_OBJECT_TYPE_INDIRECT_COMMANDS_LAYOUT_NVX_EXT: Self =
-        DebugReportObjectTypeEXT(32);
-    pub const DEBUG_REPORT_OBJECT_TYPE_VALIDATION_CACHE_EXT_EXT: Self =
-        DebugReportObjectTypeEXT(33);
+    pub const UNKNOWN_EXT: Self = DebugReportObjectTypeEXT(0);
+    pub const INSTANCE_EXT: Self = DebugReportObjectTypeEXT(1);
+    pub const PHYSICAL_DEVICE_EXT: Self = DebugReportObjectTypeEXT(2);
+    pub const DEVICE_EXT: Self = DebugReportObjectTypeEXT(3);
+    pub const QUEUE_EXT: Self = DebugReportObjectTypeEXT(4);
+    pub const SEMAPHORE_EXT: Self = DebugReportObjectTypeEXT(5);
+    pub const COMMAND_BUFFER_EXT: Self = DebugReportObjectTypeEXT(6);
+    pub const FENCE_EXT: Self = DebugReportObjectTypeEXT(7);
+    pub const DEVICE_MEMORY_EXT: Self = DebugReportObjectTypeEXT(8);
+    pub const BUFFER_EXT: Self = DebugReportObjectTypeEXT(9);
+    pub const IMAGE_EXT: Self = DebugReportObjectTypeEXT(10);
+    pub const EVENT_EXT: Self = DebugReportObjectTypeEXT(11);
+    pub const QUERY_POOL_EXT: Self = DebugReportObjectTypeEXT(12);
+    pub const BUFFER_VIEW_EXT: Self = DebugReportObjectTypeEXT(13);
+    pub const IMAGE_VIEW_EXT: Self = DebugReportObjectTypeEXT(14);
+    pub const SHADER_MODULE_EXT: Self = DebugReportObjectTypeEXT(15);
+    pub const PIPELINE_CACHE_EXT: Self = DebugReportObjectTypeEXT(16);
+    pub const PIPELINE_LAYOUT_EXT: Self = DebugReportObjectTypeEXT(17);
+    pub const RENDER_PASS_EXT: Self = DebugReportObjectTypeEXT(18);
+    pub const PIPELINE_EXT: Self = DebugReportObjectTypeEXT(19);
+    pub const DESCRIPTOR_SET_LAYOUT_EXT: Self = DebugReportObjectTypeEXT(20);
+    pub const SAMPLER_EXT: Self = DebugReportObjectTypeEXT(21);
+    pub const DESCRIPTOR_POOL_EXT: Self = DebugReportObjectTypeEXT(22);
+    pub const DESCRIPTOR_SET_EXT: Self = DebugReportObjectTypeEXT(23);
+    pub const FRAMEBUFFER_EXT: Self = DebugReportObjectTypeEXT(24);
+    pub const COMMAND_POOL_EXT: Self = DebugReportObjectTypeEXT(25);
+    pub const SURFACE_KHR_EXT: Self = DebugReportObjectTypeEXT(26);
+    pub const SWAPCHAIN_KHR_EXT: Self = DebugReportObjectTypeEXT(27);
+    pub const DEBUG_REPORT_CALLBACK_EXT_EXT: Self = DebugReportObjectTypeEXT(28);
+    pub const DISPLAY_KHR_EXT: Self = DebugReportObjectTypeEXT(29);
+    pub const DISPLAY_MODE_KHR_EXT: Self = DebugReportObjectTypeEXT(30);
+    pub const OBJECT_TABLE_NVX_EXT: Self = DebugReportObjectTypeEXT(31);
+    pub const INDIRECT_COMMANDS_LAYOUT_NVX_EXT: Self = DebugReportObjectTypeEXT(32);
+    pub const VALIDATION_CACHE_EXT_EXT: Self = DebugReportObjectTypeEXT(33);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct RasterizationOrderAMD(pub(crate) i32);
 impl RasterizationOrderAMD {
-    pub const RASTERIZATION_ORDER_STRICT_AMD: Self = RasterizationOrderAMD(0);
-    pub const RASTERIZATION_ORDER_RELAXED_AMD: Self = RasterizationOrderAMD(1);
+    pub const STRICT_AMD: Self = RasterizationOrderAMD(0);
+    pub const RELAXED_AMD: Self = RasterizationOrderAMD(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct ValidationCheckEXT(pub(crate) i32);
 impl ValidationCheckEXT {
-    pub const VALIDATION_CHECK_ALL_EXT: Self = ValidationCheckEXT(0);
-    pub const VALIDATION_CHECK_SHADERS_EXT: Self = ValidationCheckEXT(1);
+    pub const ALL_EXT: Self = ValidationCheckEXT(0);
+    pub const SHADERS_EXT: Self = ValidationCheckEXT(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct IndirectCommandsTokenTypeNVX(pub(crate) i32);
 impl IndirectCommandsTokenTypeNVX {
-    pub const INDIRECT_COMMANDS_TOKEN_TYPE_PIPELINE_NVX: Self = IndirectCommandsTokenTypeNVX(0);
-    pub const INDIRECT_COMMANDS_TOKEN_TYPE_DESCRIPTOR_SET_NVX: Self =
-        IndirectCommandsTokenTypeNVX(1);
-    pub const INDIRECT_COMMANDS_TOKEN_TYPE_INDEX_BUFFER_NVX: Self = IndirectCommandsTokenTypeNVX(2);
-    pub const INDIRECT_COMMANDS_TOKEN_TYPE_VERTEX_BUFFER_NVX: Self =
-        IndirectCommandsTokenTypeNVX(3);
-    pub const INDIRECT_COMMANDS_TOKEN_TYPE_PUSH_CONSTANT_NVX: Self =
-        IndirectCommandsTokenTypeNVX(4);
-    pub const INDIRECT_COMMANDS_TOKEN_TYPE_DRAW_INDEXED_NVX: Self = IndirectCommandsTokenTypeNVX(5);
-    pub const INDIRECT_COMMANDS_TOKEN_TYPE_DRAW_NVX: Self = IndirectCommandsTokenTypeNVX(6);
-    pub const INDIRECT_COMMANDS_TOKEN_TYPE_DISPATCH_NVX: Self = IndirectCommandsTokenTypeNVX(7);
+    pub const PIPELINE_NVX: Self = IndirectCommandsTokenTypeNVX(0);
+    pub const DESCRIPTOR_SET_NVX: Self = IndirectCommandsTokenTypeNVX(1);
+    pub const INDEX_BUFFER_NVX: Self = IndirectCommandsTokenTypeNVX(2);
+    pub const VERTEX_BUFFER_NVX: Self = IndirectCommandsTokenTypeNVX(3);
+    pub const PUSH_CONSTANT_NVX: Self = IndirectCommandsTokenTypeNVX(4);
+    pub const DRAW_INDEXED_NVX: Self = IndirectCommandsTokenTypeNVX(5);
+    pub const DRAW_NVX: Self = IndirectCommandsTokenTypeNVX(6);
+    pub const DISPATCH_NVX: Self = IndirectCommandsTokenTypeNVX(7);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct ObjectEntryTypeNVX(pub(crate) i32);
 impl ObjectEntryTypeNVX {
-    pub const OBJECT_ENTRY_TYPE_DESCRIPTOR_SET_NVX: Self = ObjectEntryTypeNVX(0);
-    pub const OBJECT_ENTRY_TYPE_PIPELINE_NVX: Self = ObjectEntryTypeNVX(1);
-    pub const OBJECT_ENTRY_TYPE_INDEX_BUFFER_NVX: Self = ObjectEntryTypeNVX(2);
-    pub const OBJECT_ENTRY_TYPE_VERTEX_BUFFER_NVX: Self = ObjectEntryTypeNVX(3);
-    pub const OBJECT_ENTRY_TYPE_PUSH_CONSTANT_NVX: Self = ObjectEntryTypeNVX(4);
+    pub const DESCRIPTOR_SET_NVX: Self = ObjectEntryTypeNVX(0);
+    pub const PIPELINE_NVX: Self = ObjectEntryTypeNVX(1);
+    pub const INDEX_BUFFER_NVX: Self = ObjectEntryTypeNVX(2);
+    pub const VERTEX_BUFFER_NVX: Self = ObjectEntryTypeNVX(3);
+    pub const PUSH_CONSTANT_NVX: Self = ObjectEntryTypeNVX(4);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct DisplayPowerStateEXT(pub(crate) i32);
 impl DisplayPowerStateEXT {
-    pub const DISPLAY_POWER_STATE_OFF_EXT: Self = DisplayPowerStateEXT(0);
-    pub const DISPLAY_POWER_STATE_SUSPEND_EXT: Self = DisplayPowerStateEXT(1);
-    pub const DISPLAY_POWER_STATE_ON_EXT: Self = DisplayPowerStateEXT(2);
+    pub const OFF_EXT: Self = DisplayPowerStateEXT(0);
+    pub const SUSPEND_EXT: Self = DisplayPowerStateEXT(1);
+    pub const ON_EXT: Self = DisplayPowerStateEXT(2);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct DeviceEventTypeEXT(pub(crate) i32);
 impl DeviceEventTypeEXT {
-    pub const DEVICE_EVENT_TYPE_DISPLAY_HOTPLUG_EXT: Self = DeviceEventTypeEXT(0);
+    pub const DISPLAY_HOTPLUG_EXT: Self = DeviceEventTypeEXT(0);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct DisplayEventTypeEXT(pub(crate) i32);
 impl DisplayEventTypeEXT {
-    pub const DISPLAY_EVENT_TYPE_FIRST_PIXEL_OUT_EXT: Self = DisplayEventTypeEXT(0);
+    pub const FIRST_PIXEL_OUT_EXT: Self = DisplayEventTypeEXT(0);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct ViewportCoordinateSwizzleNV(pub(crate) i32);
 impl ViewportCoordinateSwizzleNV {
-    pub const VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_X_NV: Self = ViewportCoordinateSwizzleNV(0);
-    pub const VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_X_NV: Self = ViewportCoordinateSwizzleNV(1);
-    pub const VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_Y_NV: Self = ViewportCoordinateSwizzleNV(2);
-    pub const VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_Y_NV: Self = ViewportCoordinateSwizzleNV(3);
-    pub const VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_Z_NV: Self = ViewportCoordinateSwizzleNV(4);
-    pub const VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_Z_NV: Self = ViewportCoordinateSwizzleNV(5);
-    pub const VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_W_NV: Self = ViewportCoordinateSwizzleNV(6);
-    pub const VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_W_NV: Self = ViewportCoordinateSwizzleNV(7);
+    pub const POSITIVE_X_NV: Self = ViewportCoordinateSwizzleNV(0);
+    pub const NEGATIVE_X_NV: Self = ViewportCoordinateSwizzleNV(1);
+    pub const POSITIVE_Y_NV: Self = ViewportCoordinateSwizzleNV(2);
+    pub const NEGATIVE_Y_NV: Self = ViewportCoordinateSwizzleNV(3);
+    pub const POSITIVE_Z_NV: Self = ViewportCoordinateSwizzleNV(4);
+    pub const NEGATIVE_Z_NV: Self = ViewportCoordinateSwizzleNV(5);
+    pub const POSITIVE_W_NV: Self = ViewportCoordinateSwizzleNV(6);
+    pub const NEGATIVE_W_NV: Self = ViewportCoordinateSwizzleNV(7);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct DiscardRectangleModeEXT(pub(crate) i32);
 impl DiscardRectangleModeEXT {
-    pub const DISCARD_RECTANGLE_MODE_INCLUSIVE_EXT: Self = DiscardRectangleModeEXT(0);
-    pub const DISCARD_RECTANGLE_MODE_EXCLUSIVE_EXT: Self = DiscardRectangleModeEXT(1);
+    pub const INCLUSIVE_EXT: Self = DiscardRectangleModeEXT(0);
+    pub const EXCLUSIVE_EXT: Self = DiscardRectangleModeEXT(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
@@ -12611,9 +12667,9 @@ impl PointClippingBehavior {
 #[repr(C)]
 pub struct SamplerReductionModeEXT(pub(crate) i32);
 impl SamplerReductionModeEXT {
-    pub const SAMPLER_REDUCTION_MODE_WEIGHTED_AVERAGE_EXT: Self = SamplerReductionModeEXT(0);
-    pub const SAMPLER_REDUCTION_MODE_MIN_EXT: Self = SamplerReductionModeEXT(1);
-    pub const SAMPLER_REDUCTION_MODE_MAX_EXT: Self = SamplerReductionModeEXT(2);
+    pub const WEIGHTED_AVERAGE_EXT: Self = SamplerReductionModeEXT(0);
+    pub const MIN_EXT: Self = SamplerReductionModeEXT(1);
+    pub const MAX_EXT: Self = SamplerReductionModeEXT(2);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
@@ -12656,52 +12712,49 @@ impl ChromaLocation {
 #[repr(C)]
 pub struct BlendOverlapEXT(pub(crate) i32);
 impl BlendOverlapEXT {
-    pub const BLEND_OVERLAP_UNCORRELATED_EXT: Self = BlendOverlapEXT(0);
-    pub const BLEND_OVERLAP_DISJOINT_EXT: Self = BlendOverlapEXT(1);
-    pub const BLEND_OVERLAP_CONJOINT_EXT: Self = BlendOverlapEXT(2);
+    pub const UNCORRELATED_EXT: Self = BlendOverlapEXT(0);
+    pub const DISJOINT_EXT: Self = BlendOverlapEXT(1);
+    pub const CONJOINT_EXT: Self = BlendOverlapEXT(2);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct CoverageModulationModeNV(pub(crate) i32);
 impl CoverageModulationModeNV {
-    pub const COVERAGE_MODULATION_MODE_NONE_NV: Self = CoverageModulationModeNV(0);
-    pub const COVERAGE_MODULATION_MODE_RGB_NV: Self = CoverageModulationModeNV(1);
-    pub const COVERAGE_MODULATION_MODE_ALPHA_NV: Self = CoverageModulationModeNV(2);
-    pub const COVERAGE_MODULATION_MODE_RGBA_NV: Self = CoverageModulationModeNV(3);
+    pub const NONE_NV: Self = CoverageModulationModeNV(0);
+    pub const RGB_NV: Self = CoverageModulationModeNV(1);
+    pub const ALPHA_NV: Self = CoverageModulationModeNV(2);
+    pub const RGBA_NV: Self = CoverageModulationModeNV(3);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct ValidationCacheHeaderVersionEXT(pub(crate) i32);
 impl ValidationCacheHeaderVersionEXT {
-    pub const VALIDATION_CACHE_HEADER_VERSION_ONE_EXT: Self = ValidationCacheHeaderVersionEXT(1);
+    pub const ONE_EXT: Self = ValidationCacheHeaderVersionEXT(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct ShaderInfoTypeAMD(pub(crate) i32);
 impl ShaderInfoTypeAMD {
-    pub const SHADER_INFO_TYPE_STATISTICS_AMD: Self = ShaderInfoTypeAMD(0);
-    pub const SHADER_INFO_TYPE_BINARY_AMD: Self = ShaderInfoTypeAMD(1);
-    pub const SHADER_INFO_TYPE_DISASSEMBLY_AMD: Self = ShaderInfoTypeAMD(2);
+    pub const STATISTICS_AMD: Self = ShaderInfoTypeAMD(0);
+    pub const BINARY_AMD: Self = ShaderInfoTypeAMD(1);
+    pub const DISASSEMBLY_AMD: Self = ShaderInfoTypeAMD(2);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct QueueGlobalPriorityEXT(pub(crate) i32);
 impl QueueGlobalPriorityEXT {
-    pub const QUEUE_GLOBAL_PRIORITY_LOW_EXT: Self = QueueGlobalPriorityEXT(128);
-    pub const QUEUE_GLOBAL_PRIORITY_MEDIUM_EXT: Self = QueueGlobalPriorityEXT(256);
-    pub const QUEUE_GLOBAL_PRIORITY_HIGH_EXT: Self = QueueGlobalPriorityEXT(512);
-    pub const QUEUE_GLOBAL_PRIORITY_REALTIME_EXT: Self = QueueGlobalPriorityEXT(1024);
+    pub const LOW_EXT: Self = QueueGlobalPriorityEXT(128);
+    pub const MEDIUM_EXT: Self = QueueGlobalPriorityEXT(256);
+    pub const HIGH_EXT: Self = QueueGlobalPriorityEXT(512);
+    pub const REALTIME_EXT: Self = QueueGlobalPriorityEXT(1024);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct ConservativeRasterizationModeEXT(pub(crate) i32);
 impl ConservativeRasterizationModeEXT {
-    pub const CONSERVATIVE_RASTERIZATION_MODE_DISABLED_EXT: Self =
-        ConservativeRasterizationModeEXT(0);
-    pub const CONSERVATIVE_RASTERIZATION_MODE_OVERESTIMATE_EXT: Self =
-        ConservativeRasterizationModeEXT(1);
-    pub const CONSERVATIVE_RASTERIZATION_MODE_UNDERESTIMATE_EXT: Self =
-        ConservativeRasterizationModeEXT(2);
+    pub const DISABLED_EXT: Self = ConservativeRasterizationModeEXT(0);
+    pub const OVERESTIMATE_EXT: Self = ConservativeRasterizationModeEXT(1);
+    pub const UNDERESTIMATE_EXT: Self = ConservativeRasterizationModeEXT(2);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
@@ -13220,19 +13273,24 @@ pub mod bitflags {
     pub struct ExternalMemoryHandleTypeFlagsNV(pub(crate) Flags);
     vk_bitflags_wrapped!(ExternalMemoryHandleTypeFlagsNV, 0b1111, Flags);
     impl ExternalMemoryHandleTypeFlagsNV {
-        pub const OPAQUE_WIN32_NV: Self = ExternalMemoryHandleTypeFlagsNV(0b1);
-        pub const OPAQUE_WIN32_KMT_NV: Self = ExternalMemoryHandleTypeFlagsNV(0b10);
-        pub const D3D11_IMAGE_NV: Self = ExternalMemoryHandleTypeFlagsNV(0b100);
-        pub const D3D11_IMAGE_KMT_NV: Self = ExternalMemoryHandleTypeFlagsNV(0b1000);
+        pub const EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_NV: Self =
+            ExternalMemoryHandleTypeFlagsNV(0b1);
+        pub const EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_NV: Self =
+            ExternalMemoryHandleTypeFlagsNV(0b10);
+        pub const EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_NV: Self =
+            ExternalMemoryHandleTypeFlagsNV(0b100);
+        pub const EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_NV: Self =
+            ExternalMemoryHandleTypeFlagsNV(0b1000);
     }
     #[repr(C)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct ExternalMemoryFeatureFlagsNV(pub(crate) Flags);
     vk_bitflags_wrapped!(ExternalMemoryFeatureFlagsNV, 0b111, Flags);
     impl ExternalMemoryFeatureFlagsNV {
-        pub const DEDICATED_ONLY_NV: Self = ExternalMemoryFeatureFlagsNV(0b1);
-        pub const EXPORTABLE_NV: Self = ExternalMemoryFeatureFlagsNV(0b10);
-        pub const IMPORTABLE_NV: Self = ExternalMemoryFeatureFlagsNV(0b100);
+        pub const EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_NV: Self =
+            ExternalMemoryFeatureFlagsNV(0b1);
+        pub const EXTERNAL_MEMORY_FEATURE_EXPORTABLE_NV: Self = ExternalMemoryFeatureFlagsNV(0b10);
+        pub const EXTERNAL_MEMORY_FEATURE_IMPORTABLE_NV: Self = ExternalMemoryFeatureFlagsNV(0b100);
     }
     #[repr(C)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -13284,41 +13342,52 @@ pub mod bitflags {
     pub struct ExternalMemoryHandleTypeFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(ExternalMemoryHandleTypeFlags, 0b1111111, Flags);
     impl ExternalMemoryHandleTypeFlags {
-        pub const OPAQUE_FD: Self = ExternalMemoryHandleTypeFlags(0b1);
-        pub const OPAQUE_WIN32: Self = ExternalMemoryHandleTypeFlags(0b10);
-        pub const OPAQUE_WIN32_KMT: Self = ExternalMemoryHandleTypeFlags(0b100);
-        pub const D3D11_TEXTURE: Self = ExternalMemoryHandleTypeFlags(0b1000);
-        pub const D3D11_TEXTURE_KMT: Self = ExternalMemoryHandleTypeFlags(0b10000);
-        pub const D3D12_HEAP: Self = ExternalMemoryHandleTypeFlags(0b100000);
-        pub const D3D12_RESOURCE: Self = ExternalMemoryHandleTypeFlags(0b1000000);
+        pub const EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD: Self = ExternalMemoryHandleTypeFlags(0b1);
+        pub const EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32: Self =
+            ExternalMemoryHandleTypeFlags(0b10);
+        pub const EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT: Self =
+            ExternalMemoryHandleTypeFlags(0b100);
+        pub const EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE: Self =
+            ExternalMemoryHandleTypeFlags(0b1000);
+        pub const EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT: Self =
+            ExternalMemoryHandleTypeFlags(0b10000);
+        pub const EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP: Self =
+            ExternalMemoryHandleTypeFlags(0b100000);
+        pub const EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE: Self =
+            ExternalMemoryHandleTypeFlags(0b1000000);
     }
     #[repr(C)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct ExternalMemoryFeatureFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(ExternalMemoryFeatureFlags, 0b111, Flags);
     impl ExternalMemoryFeatureFlags {
-        pub const DEDICATED_ONLY: Self = ExternalMemoryFeatureFlags(0b1);
-        pub const EXPORTABLE: Self = ExternalMemoryFeatureFlags(0b10);
-        pub const IMPORTABLE: Self = ExternalMemoryFeatureFlags(0b100);
+        pub const EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY: Self = ExternalMemoryFeatureFlags(0b1);
+        pub const EXTERNAL_MEMORY_FEATURE_EXPORTABLE: Self = ExternalMemoryFeatureFlags(0b10);
+        pub const EXTERNAL_MEMORY_FEATURE_IMPORTABLE: Self = ExternalMemoryFeatureFlags(0b100);
     }
     #[repr(C)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct ExternalSemaphoreHandleTypeFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(ExternalSemaphoreHandleTypeFlags, 0b11111, Flags);
     impl ExternalSemaphoreHandleTypeFlags {
-        pub const OPAQUE_FD: Self = ExternalSemaphoreHandleTypeFlags(0b1);
-        pub const OPAQUE_WIN32: Self = ExternalSemaphoreHandleTypeFlags(0b10);
-        pub const OPAQUE_WIN32_KMT: Self = ExternalSemaphoreHandleTypeFlags(0b100);
-        pub const D3D12_FENCE: Self = ExternalSemaphoreHandleTypeFlags(0b1000);
-        pub const SYNC_FD: Self = ExternalSemaphoreHandleTypeFlags(0b10000);
+        pub const EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD: Self =
+            ExternalSemaphoreHandleTypeFlags(0b1);
+        pub const EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32: Self =
+            ExternalSemaphoreHandleTypeFlags(0b10);
+        pub const EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT: Self =
+            ExternalSemaphoreHandleTypeFlags(0b100);
+        pub const EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE: Self =
+            ExternalSemaphoreHandleTypeFlags(0b1000);
+        pub const EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD: Self =
+            ExternalSemaphoreHandleTypeFlags(0b10000);
     }
     #[repr(C)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct ExternalSemaphoreFeatureFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(ExternalSemaphoreFeatureFlags, 0b11, Flags);
     impl ExternalSemaphoreFeatureFlags {
-        pub const EXPORTABLE: Self = ExternalSemaphoreFeatureFlags(0b1);
-        pub const IMPORTABLE: Self = ExternalSemaphoreFeatureFlags(0b10);
+        pub const EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE: Self = ExternalSemaphoreFeatureFlags(0b1);
+        pub const EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE: Self = ExternalSemaphoreFeatureFlags(0b10);
     }
     #[repr(C)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -13332,18 +13401,20 @@ pub mod bitflags {
     pub struct ExternalFenceHandleTypeFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(ExternalFenceHandleTypeFlags, 0b1111, Flags);
     impl ExternalFenceHandleTypeFlags {
-        pub const OPAQUE_FD: Self = ExternalFenceHandleTypeFlags(0b1);
-        pub const OPAQUE_WIN32: Self = ExternalFenceHandleTypeFlags(0b10);
-        pub const OPAQUE_WIN32_KMT: Self = ExternalFenceHandleTypeFlags(0b100);
-        pub const SYNC_FD: Self = ExternalFenceHandleTypeFlags(0b1000);
+        pub const EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD: Self = ExternalFenceHandleTypeFlags(0b1);
+        pub const EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32: Self =
+            ExternalFenceHandleTypeFlags(0b10);
+        pub const EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT: Self =
+            ExternalFenceHandleTypeFlags(0b100);
+        pub const EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD: Self = ExternalFenceHandleTypeFlags(0b1000);
     }
     #[repr(C)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct ExternalFenceFeatureFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(ExternalFenceFeatureFlags, 0b11, Flags);
     impl ExternalFenceFeatureFlags {
-        pub const EXPORTABLE: Self = ExternalFenceFeatureFlags(0b1);
-        pub const IMPORTABLE: Self = ExternalFenceFeatureFlags(0b10);
+        pub const EXTERNAL_FENCE_FEATURE_EXPORTABLE: Self = ExternalFenceFeatureFlags(0b1);
+        pub const EXTERNAL_FENCE_FEATURE_IMPORTABLE: Self = ExternalFenceFeatureFlags(0b10);
     }
     #[repr(C)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -13467,27 +13538,27 @@ pub mod extensions {
                 physical_device: PhysicalDevice,
                 queue_family_index: uint32_t,
                 surface: SurfaceKHR,
-                p_supported: *const Bool32,
+                p_supported: *mut Bool32,
             ) -> Result,
         get_physical_device_surface_capabilities_khr:
             extern "system" fn(
                 physical_device: PhysicalDevice,
                 surface: SurfaceKHR,
-                p_surface_capabilities: *const SurfaceCapabilitiesKHR,
+                p_surface_capabilities: *mut SurfaceCapabilitiesKHR,
             ) -> Result,
         get_physical_device_surface_formats_khr:
             extern "system" fn(
                 physical_device: PhysicalDevice,
                 surface: SurfaceKHR,
-                p_surface_format_count: *const uint32_t,
-                p_surface_formats: *const SurfaceFormatKHR,
+                p_surface_format_count: *mut uint32_t,
+                p_surface_formats: *mut SurfaceFormatKHR,
             ) -> Result,
         get_physical_device_surface_present_modes_khr:
             extern "system" fn(
                 physical_device: PhysicalDevice,
                 surface: SurfaceKHR,
-                p_present_mode_count: *const uint32_t,
-                p_present_modes: *const PresentModeKHR,
+                p_present_mode_count: *mut uint32_t,
+                p_present_modes: *mut PresentModeKHR,
             ) -> Result,
     }
     unsafe impl Send for KhrSurfaceFn {}
@@ -13579,7 +13650,7 @@ pub mod extensions {
             physical_device: PhysicalDevice,
             queue_family_index: uint32_t,
             surface: SurfaceKHR,
-            p_supported: *const Bool32,
+            p_supported: *mut Bool32,
         ) -> Result {
             (self.get_physical_device_surface_support_khr)(
                 physical_device,
@@ -13592,7 +13663,7 @@ pub mod extensions {
             &self,
             physical_device: PhysicalDevice,
             surface: SurfaceKHR,
-            p_surface_capabilities: *const SurfaceCapabilitiesKHR,
+            p_surface_capabilities: *mut SurfaceCapabilitiesKHR,
         ) -> Result {
             (self.get_physical_device_surface_capabilities_khr)(
                 physical_device,
@@ -13604,8 +13675,8 @@ pub mod extensions {
             &self,
             physical_device: PhysicalDevice,
             surface: SurfaceKHR,
-            p_surface_format_count: *const uint32_t,
-            p_surface_formats: *const SurfaceFormatKHR,
+            p_surface_format_count: *mut uint32_t,
+            p_surface_formats: *mut SurfaceFormatKHR,
         ) -> Result {
             (self.get_physical_device_surface_formats_khr)(
                 physical_device,
@@ -13618,8 +13689,8 @@ pub mod extensions {
             &self,
             physical_device: PhysicalDevice,
             surface: SurfaceKHR,
-            p_present_mode_count: *const uint32_t,
-            p_present_modes: *const PresentModeKHR,
+            p_present_mode_count: *mut uint32_t,
+            p_present_modes: *mut PresentModeKHR,
         ) -> Result {
             (self.get_physical_device_surface_present_modes_khr)(
                 physical_device,
@@ -13641,7 +13712,7 @@ pub mod extensions {
     impl ObjectType {
         pub const SURFACE_KHR: Self = ObjectType(1000000000);
     }
-    pub struct KhrSwapchainFn { create_swapchain_khr : extern "system" fn ( device : Device , p_create_info : *const SwapchainCreateInfoKHR , p_allocator : *const AllocationCallbacks , p_swapchain : *const SwapchainKHR , ) -> Result , destroy_swapchain_khr : extern "system" fn ( device : Device , swapchain : SwapchainKHR , p_allocator : *const AllocationCallbacks , ) -> c_void , get_swapchain_images_khr : extern "system" fn ( device : Device , swapchain : SwapchainKHR , p_swapchain_image_count : *const uint32_t , p_swapchain_images : *const Image , ) -> Result , acquire_next_image_khr : extern "system" fn ( device : Device , swapchain : SwapchainKHR , timeout : uint64_t , semaphore : Semaphore , fence : Fence , p_image_index : *const uint32_t , ) -> Result , queue_present_khr : extern "system" fn ( queue : Queue , p_present_info : *const PresentInfoKHR , ) -> Result , get_device_group_present_capabilities_khr : extern "system" fn ( device : Device , p_device_group_present_capabilities : *const DeviceGroupPresentCapabilitiesKHR , ) -> Result , get_device_group_surface_present_modes_khr : extern "system" fn ( device : Device , surface : SurfaceKHR , p_modes : *const DeviceGroupPresentModeFlagsKHR , ) -> Result , get_physical_device_present_rectangles_khr : extern "system" fn ( physical_device : PhysicalDevice , surface : SurfaceKHR , p_rect_count : *const uint32_t , p_rects : *const Rect2D , ) -> Result , acquire_next_image2_khr : extern "system" fn ( device : Device , p_acquire_info : *const AcquireNextImageInfoKHR , p_image_index : *const uint32_t , ) -> Result , }
+    pub struct KhrSwapchainFn { create_swapchain_khr : extern "system" fn ( device : Device , p_create_info : *const SwapchainCreateInfoKHR , p_allocator : *const AllocationCallbacks , p_swapchain : *mut SwapchainKHR , ) -> Result , destroy_swapchain_khr : extern "system" fn ( device : Device , swapchain : SwapchainKHR , p_allocator : *const AllocationCallbacks , ) -> c_void , get_swapchain_images_khr : extern "system" fn ( device : Device , swapchain : SwapchainKHR , p_swapchain_image_count : *mut uint32_t , p_swapchain_images : *mut Image , ) -> Result , acquire_next_image_khr : extern "system" fn ( device : Device , swapchain : SwapchainKHR , timeout : uint64_t , semaphore : Semaphore , fence : Fence , p_image_index : *mut uint32_t , ) -> Result , queue_present_khr : extern "system" fn ( queue : Queue , p_present_info : *const PresentInfoKHR , ) -> Result , get_device_group_present_capabilities_khr : extern "system" fn ( device : Device , p_device_group_present_capabilities : *mut DeviceGroupPresentCapabilitiesKHR , ) -> Result , get_device_group_surface_present_modes_khr : extern "system" fn ( device : Device , surface : SurfaceKHR , p_modes : *mut DeviceGroupPresentModeFlagsKHR , ) -> Result , get_physical_device_present_rectangles_khr : extern "system" fn ( physical_device : PhysicalDevice , surface : SurfaceKHR , p_rect_count : *mut uint32_t , p_rects : *mut Rect2D , ) -> Result , acquire_next_image2_khr : extern "system" fn ( device : Device , p_acquire_info : *const AcquireNextImageInfoKHR , p_image_index : *mut uint32_t , ) -> Result , }
     unsafe impl Send for KhrSwapchainFn {}
     unsafe impl Sync for KhrSwapchainFn {}
     impl ::std::clone::Clone for KhrSwapchainFn {
@@ -13762,7 +13833,7 @@ pub mod extensions {
             device: Device,
             p_create_info: *const SwapchainCreateInfoKHR,
             p_allocator: *const AllocationCallbacks,
-            p_swapchain: *const SwapchainKHR,
+            p_swapchain: *mut SwapchainKHR,
         ) -> Result {
             (self.create_swapchain_khr)(device, p_create_info, p_allocator, p_swapchain)
         }
@@ -13778,8 +13849,8 @@ pub mod extensions {
             &self,
             device: Device,
             swapchain: SwapchainKHR,
-            p_swapchain_image_count: *const uint32_t,
-            p_swapchain_images: *const Image,
+            p_swapchain_image_count: *mut uint32_t,
+            p_swapchain_images: *mut Image,
         ) -> Result {
             (self.get_swapchain_images_khr)(
                 device,
@@ -13795,7 +13866,7 @@ pub mod extensions {
             timeout: uint64_t,
             semaphore: Semaphore,
             fence: Fence,
-            p_image_index: *const uint32_t,
+            p_image_index: *mut uint32_t,
         ) -> Result {
             (self.acquire_next_image_khr)(
                 device,
@@ -13816,7 +13887,7 @@ pub mod extensions {
         pub unsafe fn get_device_group_present_capabilities_khr(
             &self,
             device: Device,
-            p_device_group_present_capabilities: *const DeviceGroupPresentCapabilitiesKHR,
+            p_device_group_present_capabilities: *mut DeviceGroupPresentCapabilitiesKHR,
         ) -> Result {
             (self.get_device_group_present_capabilities_khr)(
                 device,
@@ -13827,7 +13898,7 @@ pub mod extensions {
             &self,
             device: Device,
             surface: SurfaceKHR,
-            p_modes: *const DeviceGroupPresentModeFlagsKHR,
+            p_modes: *mut DeviceGroupPresentModeFlagsKHR,
         ) -> Result {
             (self.get_device_group_surface_present_modes_khr)(device, surface, p_modes)
         }
@@ -13835,8 +13906,8 @@ pub mod extensions {
             &self,
             physical_device: PhysicalDevice,
             surface: SurfaceKHR,
-            p_rect_count: *const uint32_t,
-            p_rects: *const Rect2D,
+            p_rect_count: *mut uint32_t,
+            p_rects: *mut Rect2D,
         ) -> Result {
             (self.get_physical_device_present_rectangles_khr)(
                 physical_device,
@@ -13849,7 +13920,7 @@ pub mod extensions {
             &self,
             device: Device,
             p_acquire_info: *const AcquireNextImageInfoKHR,
-            p_image_index: *const uint32_t,
+            p_image_index: *mut uint32_t,
         ) -> Result {
             (self.acquire_next_image2_khr)(device, p_acquire_info, p_image_index)
         }
@@ -13914,49 +13985,49 @@ pub mod extensions {
         get_physical_device_display_properties_khr:
             extern "system" fn(
                 physical_device: PhysicalDevice,
-                p_property_count: *const uint32_t,
-                p_properties: *const DisplayPropertiesKHR,
+                p_property_count: *mut uint32_t,
+                p_properties: *mut DisplayPropertiesKHR,
             ) -> Result,
         get_physical_device_display_plane_properties_khr:
             extern "system" fn(
                 physical_device: PhysicalDevice,
-                p_property_count: *const uint32_t,
-                p_properties: *const DisplayPlanePropertiesKHR,
+                p_property_count: *mut uint32_t,
+                p_properties: *mut DisplayPlanePropertiesKHR,
             ) -> Result,
         get_display_plane_supported_displays_khr:
             extern "system" fn(
                 physical_device: PhysicalDevice,
                 plane_index: uint32_t,
-                p_display_count: *const uint32_t,
-                p_displays: *const DisplayKHR,
+                p_display_count: *mut uint32_t,
+                p_displays: *mut DisplayKHR,
             ) -> Result,
         get_display_mode_properties_khr:
             extern "system" fn(
                 physical_device: PhysicalDevice,
                 display: DisplayKHR,
-                p_property_count: *const uint32_t,
-                p_properties: *const DisplayModePropertiesKHR,
+                p_property_count: *mut uint32_t,
+                p_properties: *mut DisplayModePropertiesKHR,
             ) -> Result,
         create_display_mode_khr: extern "system" fn(
             physical_device: PhysicalDevice,
             display: DisplayKHR,
             p_create_info: *const DisplayModeCreateInfoKHR,
             p_allocator: *const AllocationCallbacks,
-            p_mode: *const DisplayModeKHR,
+            p_mode: *mut DisplayModeKHR,
         ) -> Result,
         get_display_plane_capabilities_khr:
             extern "system" fn(
                 physical_device: PhysicalDevice,
                 mode: DisplayModeKHR,
                 plane_index: uint32_t,
-                p_capabilities: *const DisplayPlaneCapabilitiesKHR,
+                p_capabilities: *mut DisplayPlaneCapabilitiesKHR,
             ) -> Result,
         create_display_plane_surface_khr:
             extern "system" fn(
                 instance: Instance,
                 p_create_info: *const DisplaySurfaceCreateInfoKHR,
                 p_allocator: *const AllocationCallbacks,
-                p_surface: *const SurfaceKHR,
+                p_surface: *mut SurfaceKHR,
             ) -> Result,
     }
     unsafe impl Send for KhrDisplayFn {}
@@ -14057,8 +14128,8 @@ pub mod extensions {
         pub unsafe fn get_physical_device_display_properties_khr(
             &self,
             physical_device: PhysicalDevice,
-            p_property_count: *const uint32_t,
-            p_properties: *const DisplayPropertiesKHR,
+            p_property_count: *mut uint32_t,
+            p_properties: *mut DisplayPropertiesKHR,
         ) -> Result {
             (self.get_physical_device_display_properties_khr)(
                 physical_device,
@@ -14069,8 +14140,8 @@ pub mod extensions {
         pub unsafe fn get_physical_device_display_plane_properties_khr(
             &self,
             physical_device: PhysicalDevice,
-            p_property_count: *const uint32_t,
-            p_properties: *const DisplayPlanePropertiesKHR,
+            p_property_count: *mut uint32_t,
+            p_properties: *mut DisplayPlanePropertiesKHR,
         ) -> Result {
             (self.get_physical_device_display_plane_properties_khr)(
                 physical_device,
@@ -14082,8 +14153,8 @@ pub mod extensions {
             &self,
             physical_device: PhysicalDevice,
             plane_index: uint32_t,
-            p_display_count: *const uint32_t,
-            p_displays: *const DisplayKHR,
+            p_display_count: *mut uint32_t,
+            p_displays: *mut DisplayKHR,
         ) -> Result {
             (self.get_display_plane_supported_displays_khr)(
                 physical_device,
@@ -14096,8 +14167,8 @@ pub mod extensions {
             &self,
             physical_device: PhysicalDevice,
             display: DisplayKHR,
-            p_property_count: *const uint32_t,
-            p_properties: *const DisplayModePropertiesKHR,
+            p_property_count: *mut uint32_t,
+            p_properties: *mut DisplayModePropertiesKHR,
         ) -> Result {
             (self.get_display_mode_properties_khr)(
                 physical_device,
@@ -14112,7 +14183,7 @@ pub mod extensions {
             display: DisplayKHR,
             p_create_info: *const DisplayModeCreateInfoKHR,
             p_allocator: *const AllocationCallbacks,
-            p_mode: *const DisplayModeKHR,
+            p_mode: *mut DisplayModeKHR,
         ) -> Result {
             (self.create_display_mode_khr)(
                 physical_device,
@@ -14127,7 +14198,7 @@ pub mod extensions {
             physical_device: PhysicalDevice,
             mode: DisplayModeKHR,
             plane_index: uint32_t,
-            p_capabilities: *const DisplayPlaneCapabilitiesKHR,
+            p_capabilities: *mut DisplayPlaneCapabilitiesKHR,
         ) -> Result {
             (self.get_display_plane_capabilities_khr)(
                 physical_device,
@@ -14141,7 +14212,7 @@ pub mod extensions {
             instance: Instance,
             p_create_info: *const DisplaySurfaceCreateInfoKHR,
             p_allocator: *const AllocationCallbacks,
-            p_surface: *const SurfaceKHR,
+            p_surface: *mut SurfaceKHR,
         ) -> Result {
             (self.create_display_plane_surface_khr)(instance, p_create_info, p_allocator, p_surface)
         }
@@ -14169,7 +14240,7 @@ pub mod extensions {
                 swapchain_count: uint32_t,
                 p_create_infos: *const SwapchainCreateInfoKHR,
                 p_allocator: *const AllocationCallbacks,
-                p_swapchains: *const SwapchainKHR,
+                p_swapchains: *mut SwapchainKHR,
             ) -> Result,
     }
     unsafe impl Send for KhrDisplaySwapchainFn {}
@@ -14210,7 +14281,7 @@ pub mod extensions {
             swapchain_count: uint32_t,
             p_create_infos: *const SwapchainCreateInfoKHR,
             p_allocator: *const AllocationCallbacks,
-            p_swapchains: *const SwapchainKHR,
+            p_swapchains: *mut SwapchainKHR,
         ) -> Result {
             (self.create_shared_swapchains_khr)(
                 device,
@@ -14234,13 +14305,13 @@ pub mod extensions {
             instance: Instance,
             p_create_info: *const XlibSurfaceCreateInfoKHR,
             p_allocator: *const AllocationCallbacks,
-            p_surface: *const SurfaceKHR,
+            p_surface: *mut SurfaceKHR,
         ) -> Result,
         get_physical_device_xlib_presentation_support_khr:
             extern "system" fn(
                 physical_device: PhysicalDevice,
                 queue_family_index: uint32_t,
-                dpy: *const Display,
+                dpy: *mut Display,
                 visual_id: VisualID,
             ) -> Bool32,
     }
@@ -14292,7 +14363,7 @@ pub mod extensions {
             instance: Instance,
             p_create_info: *const XlibSurfaceCreateInfoKHR,
             p_allocator: *const AllocationCallbacks,
-            p_surface: *const SurfaceKHR,
+            p_surface: *mut SurfaceKHR,
         ) -> Result {
             (self.create_xlib_surface_khr)(instance, p_create_info, p_allocator, p_surface)
         }
@@ -14300,7 +14371,7 @@ pub mod extensions {
             &self,
             physical_device: PhysicalDevice,
             queue_family_index: uint32_t,
-            dpy: *const Display,
+            dpy: *mut Display,
             visual_id: VisualID,
         ) -> Bool32 {
             (self.get_physical_device_xlib_presentation_support_khr)(
@@ -14320,13 +14391,13 @@ pub mod extensions {
             instance: Instance,
             p_create_info: *const XcbSurfaceCreateInfoKHR,
             p_allocator: *const AllocationCallbacks,
-            p_surface: *const SurfaceKHR,
+            p_surface: *mut SurfaceKHR,
         ) -> Result,
         get_physical_device_xcb_presentation_support_khr:
             extern "system" fn(
                 physical_device: PhysicalDevice,
                 queue_family_index: uint32_t,
-                connection: *const xcb_connection_t,
+                connection: *mut xcb_connection_t,
                 visual_id: xcb_visualid_t,
             ) -> Bool32,
     }
@@ -14378,7 +14449,7 @@ pub mod extensions {
             instance: Instance,
             p_create_info: *const XcbSurfaceCreateInfoKHR,
             p_allocator: *const AllocationCallbacks,
-            p_surface: *const SurfaceKHR,
+            p_surface: *mut SurfaceKHR,
         ) -> Result {
             (self.create_xcb_surface_khr)(instance, p_create_info, p_allocator, p_surface)
         }
@@ -14386,7 +14457,7 @@ pub mod extensions {
             &self,
             physical_device: PhysicalDevice,
             queue_family_index: uint32_t,
-            connection: *const xcb_connection_t,
+            connection: *mut xcb_connection_t,
             visual_id: xcb_visualid_t,
         ) -> Bool32 {
             (self.get_physical_device_xcb_presentation_support_khr)(
@@ -14407,13 +14478,13 @@ pub mod extensions {
                 instance: Instance,
                 p_create_info: *const WaylandSurfaceCreateInfoKHR,
                 p_allocator: *const AllocationCallbacks,
-                p_surface: *const SurfaceKHR,
+                p_surface: *mut SurfaceKHR,
             ) -> Result,
         get_physical_device_wayland_presentation_support_khr:
             extern "system" fn(
                 physical_device: PhysicalDevice,
                 queue_family_index: uint32_t,
-                display: *const wl_display,
+                display: *mut wl_display,
             ) -> Bool32,
     }
     unsafe impl Send for KhrWaylandSurfaceFn {}
@@ -14464,7 +14535,7 @@ pub mod extensions {
             instance: Instance,
             p_create_info: *const WaylandSurfaceCreateInfoKHR,
             p_allocator: *const AllocationCallbacks,
-            p_surface: *const SurfaceKHR,
+            p_surface: *mut SurfaceKHR,
         ) -> Result {
             (self.create_wayland_surface_khr)(instance, p_create_info, p_allocator, p_surface)
         }
@@ -14472,7 +14543,7 @@ pub mod extensions {
             &self,
             physical_device: PhysicalDevice,
             queue_family_index: uint32_t,
-            display: *const wl_display,
+            display: *mut wl_display,
         ) -> Bool32 {
             (self.get_physical_device_wayland_presentation_support_khr)(
                 physical_device,
@@ -14490,13 +14561,13 @@ pub mod extensions {
             instance: Instance,
             p_create_info: *const MirSurfaceCreateInfoKHR,
             p_allocator: *const AllocationCallbacks,
-            p_surface: *const SurfaceKHR,
+            p_surface: *mut SurfaceKHR,
         ) -> Result,
         get_physical_device_mir_presentation_support_khr:
             extern "system" fn(
                 physical_device: PhysicalDevice,
                 queue_family_index: uint32_t,
-                connection: *const MirConnection,
+                connection: *mut MirConnection,
             ) -> Bool32,
     }
     unsafe impl Send for KhrMirSurfaceFn {}
@@ -14547,7 +14618,7 @@ pub mod extensions {
             instance: Instance,
             p_create_info: *const MirSurfaceCreateInfoKHR,
             p_allocator: *const AllocationCallbacks,
-            p_surface: *const SurfaceKHR,
+            p_surface: *mut SurfaceKHR,
         ) -> Result {
             (self.create_mir_surface_khr)(instance, p_create_info, p_allocator, p_surface)
         }
@@ -14555,7 +14626,7 @@ pub mod extensions {
             &self,
             physical_device: PhysicalDevice,
             queue_family_index: uint32_t,
-            connection: *const MirConnection,
+            connection: *mut MirConnection,
         ) -> Bool32 {
             (self.get_physical_device_mir_presentation_support_khr)(
                 physical_device,
@@ -14574,7 +14645,7 @@ pub mod extensions {
                 instance: Instance,
                 p_create_info: *const AndroidSurfaceCreateInfoKHR,
                 p_allocator: *const AllocationCallbacks,
-                p_surface: *const SurfaceKHR,
+                p_surface: *mut SurfaceKHR,
             ) -> Result,
     }
     unsafe impl Send for KhrAndroidSurfaceFn {}
@@ -14614,7 +14685,7 @@ pub mod extensions {
             instance: Instance,
             p_create_info: *const AndroidSurfaceCreateInfoKHR,
             p_allocator: *const AllocationCallbacks,
-            p_surface: *const SurfaceKHR,
+            p_surface: *mut SurfaceKHR,
         ) -> Result {
             (self.create_android_surface_khr)(instance, p_create_info, p_allocator, p_surface)
         }
@@ -14629,7 +14700,7 @@ pub mod extensions {
                 instance: Instance,
                 p_create_info: *const Win32SurfaceCreateInfoKHR,
                 p_allocator: *const AllocationCallbacks,
-                p_surface: *const SurfaceKHR,
+                p_surface: *mut SurfaceKHR,
             ) -> Result,
         get_physical_device_win32_presentation_support_khr:
             extern "system" fn(physical_device: PhysicalDevice, queue_family_index: uint32_t)
@@ -14683,7 +14754,7 @@ pub mod extensions {
             instance: Instance,
             p_create_info: *const Win32SurfaceCreateInfoKHR,
             p_allocator: *const AllocationCallbacks,
-            p_surface: *const SurfaceKHR,
+            p_surface: *mut SurfaceKHR,
         ) -> Result {
             (self.create_win32_surface_khr)(instance, p_create_info, p_allocator, p_surface)
         }
@@ -14707,7 +14778,7 @@ pub mod extensions {
             device: Device,
             format: Format,
             image_usage: ImageUsageFlags,
-            gralloc_usage: *const c_int,
+            gralloc_usage: *mut c_int,
         ) -> Result,
         acquire_image_android: extern "system" fn(
             device: Device,
@@ -14721,7 +14792,7 @@ pub mod extensions {
             wait_semaphore_count: uint32_t,
             p_wait_semaphores: *const Semaphore,
             image: Image,
-            p_native_fence_fd: *const c_int,
+            p_native_fence_fd: *mut c_int,
         ) -> Result,
     }
     unsafe impl Send for AndroidNativeBufferFn {}
@@ -14781,7 +14852,7 @@ pub mod extensions {
             device: Device,
             format: Format,
             image_usage: ImageUsageFlags,
-            gralloc_usage: *const c_int,
+            gralloc_usage: *mut c_int,
         ) -> Result {
             (self.get_swapchain_gralloc_usage_android)(device, format, image_usage, gralloc_usage)
         }
@@ -14801,7 +14872,7 @@ pub mod extensions {
             wait_semaphore_count: uint32_t,
             p_wait_semaphores: *const Semaphore,
             image: Image,
-            p_native_fence_fd: *const c_int,
+            p_native_fence_fd: *mut c_int,
         ) -> Result {
             (self.queue_signal_release_image_android)(
                 queue,
@@ -14822,7 +14893,7 @@ pub mod extensions {
                 instance: Instance,
                 p_create_info: *const DebugReportCallbackCreateInfoEXT,
                 p_allocator: *const AllocationCallbacks,
-                p_callback: *const DebugReportCallbackEXT,
+                p_callback: *mut DebugReportCallbackEXT,
             ) -> Result,
         destroy_debug_report_callback_ext:
             extern "system" fn(
@@ -14898,7 +14969,7 @@ pub mod extensions {
             instance: Instance,
             p_create_info: *const DebugReportCallbackCreateInfoEXT,
             p_allocator: *const AllocationCallbacks,
-            p_callback: *const DebugReportCallbackEXT,
+            p_callback: *mut DebugReportCallbackEXT,
         ) -> Result {
             (self.create_debug_report_callback_ext)(
                 instance,
@@ -14952,13 +15023,11 @@ pub mod extensions {
     }
     #[doc = "Generated from \'VK_EXT_debug_report\'"]
     impl DebugReportObjectTypeEXT {
-        pub const DEBUG_REPORT_OBJECT_TYPE_SAMPLER_YCBCR_CONVERSION_EXT: Self =
-            DebugReportObjectTypeEXT(1000156000);
+        pub const SAMPLER_YCBCR_CONVERSION_EXT: Self = DebugReportObjectTypeEXT(1000156000);
     }
     #[doc = "Generated from \'VK_EXT_debug_report\'"]
     impl DebugReportObjectTypeEXT {
-        pub const DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_UPDATE_TEMPLATE_EXT: Self =
-            DebugReportObjectTypeEXT(1000085000);
+        pub const DESCRIPTOR_UPDATE_TEMPLATE_EXT: Self = DebugReportObjectTypeEXT(1000085000);
     }
     pub struct NvGlslShaderFn {}
     unsafe impl Send for NvGlslShaderFn {}
@@ -15853,8 +15922,8 @@ pub mod extensions {
             pipeline: Pipeline,
             shader_stage: ShaderStageFlags,
             info_type: ShaderInfoTypeAMD,
-            p_info_size: *const size_t,
-            p_info: *const c_void,
+            p_info_size: *mut size_t,
+            p_info: *mut c_void,
         ) -> Result,
     }
     unsafe impl Send for AmdShaderInfoFn {}
@@ -15895,8 +15964,8 @@ pub mod extensions {
             pipeline: Pipeline,
             shader_stage: ShaderStageFlags,
             info_type: ShaderInfoTypeAMD,
-            p_info_size: *const size_t,
-            p_info: *const c_void,
+            p_info_size: *mut size_t,
+            p_info: *mut c_void,
         ) -> Result {
             (self.get_shader_info_amd)(
                 device,
@@ -16204,7 +16273,7 @@ pub mod extensions {
     impl Format {
         pub const PVRTC2_4BPP_SRGB_BLOCK_IMG: Self = Format(1000054007);
     }
-    pub struct NvExternalMemoryCapabilitiesFn { get_physical_device_external_image_format_properties_nv : extern "system" fn ( physical_device : PhysicalDevice , format : Format , ty : ImageType , tiling : ImageTiling , usage : ImageUsageFlags , flags : ImageCreateFlags , external_handle_type : ExternalMemoryHandleTypeFlagsNV , p_external_image_format_properties : *const ExternalImageFormatPropertiesNV , ) -> Result , }
+    pub struct NvExternalMemoryCapabilitiesFn { get_physical_device_external_image_format_properties_nv : extern "system" fn ( physical_device : PhysicalDevice , format : Format , ty : ImageType , tiling : ImageTiling , usage : ImageUsageFlags , flags : ImageCreateFlags , external_handle_type : ExternalMemoryHandleTypeFlagsNV , p_external_image_format_properties : *mut ExternalImageFormatPropertiesNV , ) -> Result , }
     unsafe impl Send for NvExternalMemoryCapabilitiesFn {}
     unsafe impl Sync for NvExternalMemoryCapabilitiesFn {}
     impl ::std::clone::Clone for NvExternalMemoryCapabilitiesFn {
@@ -16247,7 +16316,7 @@ pub mod extensions {
             usage: ImageUsageFlags,
             flags: ImageCreateFlags,
             external_handle_type: ExternalMemoryHandleTypeFlagsNV,
-            p_external_image_format_properties: *const ExternalImageFormatPropertiesNV,
+            p_external_image_format_properties: *mut ExternalImageFormatPropertiesNV,
         ) -> Result {
             (self.get_physical_device_external_image_format_properties_nv)(
                 physical_device,
@@ -16297,7 +16366,7 @@ pub mod extensions {
                 device: Device,
                 memory: DeviceMemory,
                 handle_type: ExternalMemoryHandleTypeFlagsNV,
-                p_handle: *const HANDLE,
+                p_handle: *mut HANDLE,
             ) -> Result,
     }
     unsafe impl Send for NvExternalMemoryWin32Fn {}
@@ -16337,7 +16406,7 @@ pub mod extensions {
             device: Device,
             memory: DeviceMemory,
             handle_type: ExternalMemoryHandleTypeFlagsNV,
-            p_handle: *const HANDLE,
+            p_handle: *mut HANDLE,
         ) -> Result {
             (self.get_memory_win32_handle_nv)(device, memory, handle_type, p_handle)
         }
@@ -16398,7 +16467,7 @@ pub mod extensions {
             }
         }
     }
-    pub struct KhrDeviceGroupFn { get_device_group_present_capabilities_khr : extern "system" fn ( device : Device , p_device_group_present_capabilities : *const DeviceGroupPresentCapabilitiesKHR , ) -> Result , get_device_group_surface_present_modes_khr : extern "system" fn ( device : Device , surface : SurfaceKHR , p_modes : *const DeviceGroupPresentModeFlagsKHR , ) -> Result , get_physical_device_present_rectangles_khr : extern "system" fn ( physical_device : PhysicalDevice , surface : SurfaceKHR , p_rect_count : *const uint32_t , p_rects : *const Rect2D , ) -> Result , acquire_next_image2_khr : extern "system" fn ( device : Device , p_acquire_info : *const AcquireNextImageInfoKHR , p_image_index : *const uint32_t , ) -> Result , }
+    pub struct KhrDeviceGroupFn { get_device_group_present_capabilities_khr : extern "system" fn ( device : Device , p_device_group_present_capabilities : *mut DeviceGroupPresentCapabilitiesKHR , ) -> Result , get_device_group_surface_present_modes_khr : extern "system" fn ( device : Device , surface : SurfaceKHR , p_modes : *mut DeviceGroupPresentModeFlagsKHR , ) -> Result , get_physical_device_present_rectangles_khr : extern "system" fn ( physical_device : PhysicalDevice , surface : SurfaceKHR , p_rect_count : *mut uint32_t , p_rects : *mut Rect2D , ) -> Result , acquire_next_image2_khr : extern "system" fn ( device : Device , p_acquire_info : *const AcquireNextImageInfoKHR , p_image_index : *mut uint32_t , ) -> Result , }
     unsafe impl Send for KhrDeviceGroupFn {}
     unsafe impl Sync for KhrDeviceGroupFn {}
     impl ::std::clone::Clone for KhrDeviceGroupFn {
@@ -16467,7 +16536,7 @@ pub mod extensions {
         pub unsafe fn get_device_group_present_capabilities_khr(
             &self,
             device: Device,
-            p_device_group_present_capabilities: *const DeviceGroupPresentCapabilitiesKHR,
+            p_device_group_present_capabilities: *mut DeviceGroupPresentCapabilitiesKHR,
         ) -> Result {
             (self.get_device_group_present_capabilities_khr)(
                 device,
@@ -16478,7 +16547,7 @@ pub mod extensions {
             &self,
             device: Device,
             surface: SurfaceKHR,
-            p_modes: *const DeviceGroupPresentModeFlagsKHR,
+            p_modes: *mut DeviceGroupPresentModeFlagsKHR,
         ) -> Result {
             (self.get_device_group_surface_present_modes_khr)(device, surface, p_modes)
         }
@@ -16486,8 +16555,8 @@ pub mod extensions {
             &self,
             physical_device: PhysicalDevice,
             surface: SurfaceKHR,
-            p_rect_count: *const uint32_t,
-            p_rects: *const Rect2D,
+            p_rect_count: *mut uint32_t,
+            p_rects: *mut Rect2D,
         ) -> Result {
             (self.get_physical_device_present_rectangles_khr)(
                 physical_device,
@@ -16500,7 +16569,7 @@ pub mod extensions {
             &self,
             device: Device,
             p_acquire_info: *const AcquireNextImageInfoKHR,
-            p_image_index: *const uint32_t,
+            p_image_index: *mut uint32_t,
         ) -> Result {
             (self.acquire_next_image2_khr)(device, p_acquire_info, p_image_index)
         }
@@ -16536,7 +16605,7 @@ pub mod extensions {
             instance: Instance,
             p_create_info: *const ViSurfaceCreateInfoNN,
             p_allocator: *const AllocationCallbacks,
-            p_surface: *const SurfaceKHR,
+            p_surface: *mut SurfaceKHR,
         ) -> Result,
     }
     unsafe impl Send for NnViSurfaceFn {}
@@ -16576,7 +16645,7 @@ pub mod extensions {
             instance: Instance,
             p_create_info: *const ViSurfaceCreateInfoNN,
             p_allocator: *const AllocationCallbacks,
-            p_surface: *const SurfaceKHR,
+            p_surface: *mut SurfaceKHR,
         ) -> Result {
             (self.create_vi_surface_nn)(instance, p_create_info, p_allocator, p_surface)
         }
@@ -16805,7 +16874,7 @@ pub mod extensions {
             }
         }
     }
-    pub struct KhrExternalMemoryWin32Fn { get_memory_win32_handle_khr : extern "system" fn ( device : Device , p_get_win32_handle_info : *const MemoryGetWin32HandleInfoKHR , p_handle : *const HANDLE , ) -> Result , get_memory_win32_handle_properties_khr : extern "system" fn ( device : Device , handle_type : ExternalMemoryHandleTypeFlags , handle : HANDLE , p_memory_win32_handle_properties : *const MemoryWin32HandlePropertiesKHR , ) -> Result , }
+    pub struct KhrExternalMemoryWin32Fn { get_memory_win32_handle_khr : extern "system" fn ( device : Device , p_get_win32_handle_info : *const MemoryGetWin32HandleInfoKHR , p_handle : *mut HANDLE , ) -> Result , get_memory_win32_handle_properties_khr : extern "system" fn ( device : Device , handle_type : ExternalMemoryHandleTypeFlags , handle : HANDLE , p_memory_win32_handle_properties : *mut MemoryWin32HandlePropertiesKHR , ) -> Result , }
     unsafe impl Send for KhrExternalMemoryWin32Fn {}
     unsafe impl Sync for KhrExternalMemoryWin32Fn {}
     impl ::std::clone::Clone for KhrExternalMemoryWin32Fn {
@@ -16852,7 +16921,7 @@ pub mod extensions {
             &self,
             device: Device,
             p_get_win32_handle_info: *const MemoryGetWin32HandleInfoKHR,
-            p_handle: *const HANDLE,
+            p_handle: *mut HANDLE,
         ) -> Result {
             (self.get_memory_win32_handle_khr)(device, p_get_win32_handle_info, p_handle)
         }
@@ -16861,7 +16930,7 @@ pub mod extensions {
             device: Device,
             handle_type: ExternalMemoryHandleTypeFlags,
             handle: HANDLE,
-            p_memory_win32_handle_properties: *const MemoryWin32HandlePropertiesKHR,
+            p_memory_win32_handle_properties: *mut MemoryWin32HandlePropertiesKHR,
         ) -> Result {
             (self.get_memory_win32_handle_properties_khr)(
                 device,
@@ -16891,14 +16960,14 @@ pub mod extensions {
         get_memory_fd_khr: extern "system" fn(
             device: Device,
             p_get_fd_info: *const MemoryGetFdInfoKHR,
-            p_fd: *const c_int,
+            p_fd: *mut c_int,
         ) -> Result,
         get_memory_fd_properties_khr:
             extern "system" fn(
                 device: Device,
                 handle_type: ExternalMemoryHandleTypeFlags,
                 fd: c_int,
-                p_memory_fd_properties: *const MemoryFdPropertiesKHR,
+                p_memory_fd_properties: *mut MemoryFdPropertiesKHR,
             ) -> Result,
     }
     unsafe impl Send for KhrExternalMemoryFdFn {}
@@ -16947,7 +17016,7 @@ pub mod extensions {
             &self,
             device: Device,
             p_get_fd_info: *const MemoryGetFdInfoKHR,
-            p_fd: *const c_int,
+            p_fd: *mut c_int,
         ) -> Result {
             (self.get_memory_fd_khr)(device, p_get_fd_info, p_fd)
         }
@@ -16956,7 +17025,7 @@ pub mod extensions {
             device: Device,
             handle_type: ExternalMemoryHandleTypeFlags,
             fd: c_int,
-            p_memory_fd_properties: *const MemoryFdPropertiesKHR,
+            p_memory_fd_properties: *mut MemoryFdPropertiesKHR,
         ) -> Result {
             (self.get_memory_fd_properties_khr)(device, handle_type, fd, p_memory_fd_properties)
         }
@@ -17043,7 +17112,7 @@ pub mod extensions {
             }
         }
     }
-    pub struct KhrExternalSemaphoreWin32Fn { import_semaphore_win32_handle_khr : extern "system" fn ( device : Device , p_import_semaphore_win32_handle_info : *const ImportSemaphoreWin32HandleInfoKHR , ) -> Result , get_semaphore_win32_handle_khr : extern "system" fn ( device : Device , p_get_win32_handle_info : *const SemaphoreGetWin32HandleInfoKHR , p_handle : *const HANDLE , ) -> Result , }
+    pub struct KhrExternalSemaphoreWin32Fn { import_semaphore_win32_handle_khr : extern "system" fn ( device : Device , p_import_semaphore_win32_handle_info : *const ImportSemaphoreWin32HandleInfoKHR , ) -> Result , get_semaphore_win32_handle_khr : extern "system" fn ( device : Device , p_get_win32_handle_info : *const SemaphoreGetWin32HandleInfoKHR , p_handle : *mut HANDLE , ) -> Result , }
     unsafe impl Send for KhrExternalSemaphoreWin32Fn {}
     unsafe impl Sync for KhrExternalSemaphoreWin32Fn {}
     impl ::std::clone::Clone for KhrExternalSemaphoreWin32Fn {
@@ -17097,7 +17166,7 @@ pub mod extensions {
             &self,
             device: Device,
             p_get_win32_handle_info: *const SemaphoreGetWin32HandleInfoKHR,
-            p_handle: *const HANDLE,
+            p_handle: *mut HANDLE,
         ) -> Result {
             (self.get_semaphore_win32_handle_khr)(device, p_get_win32_handle_info, p_handle)
         }
@@ -17127,7 +17196,7 @@ pub mod extensions {
         get_semaphore_fd_khr: extern "system" fn(
             device: Device,
             p_get_fd_info: *const SemaphoreGetFdInfoKHR,
-            p_fd: *const c_int,
+            p_fd: *mut c_int,
         ) -> Result,
     }
     unsafe impl Send for KhrExternalSemaphoreFdFn {}
@@ -17183,7 +17252,7 @@ pub mod extensions {
             &self,
             device: Device,
             p_get_fd_info: *const SemaphoreGetFdInfoKHR,
-            p_fd: *const c_int,
+            p_fd: *mut c_int,
         ) -> Result {
             (self.get_semaphore_fd_khr)(device, p_get_fd_info, p_fd)
         }
@@ -17469,7 +17538,7 @@ pub mod extensions {
                 device: Device,
                 p_create_info: *const IndirectCommandsLayoutCreateInfoNVX,
                 p_allocator: *const AllocationCallbacks,
-                p_indirect_commands_layout: *const IndirectCommandsLayoutNVX,
+                p_indirect_commands_layout: *mut IndirectCommandsLayoutNVX,
             ) -> Result,
         destroy_indirect_commands_layout_nvx:
             extern "system" fn(
@@ -17481,7 +17550,7 @@ pub mod extensions {
             device: Device,
             p_create_info: *const ObjectTableCreateInfoNVX,
             p_allocator: *const AllocationCallbacks,
-            p_object_table: *const ObjectTableNVX,
+            p_object_table: *mut ObjectTableNVX,
         ) -> Result,
         destroy_object_table_nvx: extern "system" fn(
             device: Device,
@@ -17493,7 +17562,7 @@ pub mod extensions {
                 device: Device,
                 object_table: ObjectTableNVX,
                 object_count: uint32_t,
-                pp_object_table_entries: *const ObjectTableEntryNVX,
+                pp_object_table_entries: *const *const ObjectTableEntryNVX,
                 p_object_indices: *const uint32_t,
             ) -> Result,
         unregister_objects_nvx: extern "system" fn(
@@ -17506,8 +17575,8 @@ pub mod extensions {
         get_physical_device_generated_commands_properties_nvx:
             extern "system" fn(
                 physical_device: PhysicalDevice,
-                p_features: *const DeviceGeneratedCommandsFeaturesNVX,
-                p_limits: *const DeviceGeneratedCommandsLimitsNVX,
+                p_features: *mut DeviceGeneratedCommandsFeaturesNVX,
+                p_limits: *mut DeviceGeneratedCommandsLimitsNVX,
             ) -> c_void,
     }
     unsafe impl Send for NvxDeviceGeneratedCommandsFn {}
@@ -17642,7 +17711,7 @@ pub mod extensions {
             device: Device,
             p_create_info: *const IndirectCommandsLayoutCreateInfoNVX,
             p_allocator: *const AllocationCallbacks,
-            p_indirect_commands_layout: *const IndirectCommandsLayoutNVX,
+            p_indirect_commands_layout: *mut IndirectCommandsLayoutNVX,
         ) -> Result {
             (self.create_indirect_commands_layout_nvx)(
                 device,
@@ -17668,7 +17737,7 @@ pub mod extensions {
             device: Device,
             p_create_info: *const ObjectTableCreateInfoNVX,
             p_allocator: *const AllocationCallbacks,
-            p_object_table: *const ObjectTableNVX,
+            p_object_table: *mut ObjectTableNVX,
         ) -> Result {
             (self.create_object_table_nvx)(device, p_create_info, p_allocator, p_object_table)
         }
@@ -17685,7 +17754,7 @@ pub mod extensions {
             device: Device,
             object_table: ObjectTableNVX,
             object_count: uint32_t,
-            pp_object_table_entries: *const ObjectTableEntryNVX,
+            pp_object_table_entries: *const *const ObjectTableEntryNVX,
             p_object_indices: *const uint32_t,
         ) -> Result {
             (self.register_objects_nvx)(
@@ -17715,8 +17784,8 @@ pub mod extensions {
         pub unsafe fn get_physical_device_generated_commands_properties_nvx(
             &self,
             physical_device: PhysicalDevice,
-            p_features: *const DeviceGeneratedCommandsFeaturesNVX,
-            p_limits: *const DeviceGeneratedCommandsLimitsNVX,
+            p_features: *mut DeviceGeneratedCommandsFeaturesNVX,
+            p_limits: *mut DeviceGeneratedCommandsLimitsNVX,
         ) -> c_void {
             (self.get_physical_device_generated_commands_properties_nvx)(
                 physical_device,
@@ -17881,14 +17950,14 @@ pub mod extensions {
     pub struct ExtAcquireXlibDisplayFn {
         acquire_xlib_display_ext: extern "system" fn(
             physical_device: PhysicalDevice,
-            dpy: *const Display,
+            dpy: *mut Display,
             display: DisplayKHR,
         ) -> Result,
         get_rand_r_output_display_ext: extern "system" fn(
             physical_device: PhysicalDevice,
-            dpy: *const Display,
+            dpy: *mut Display,
             rr_output: RROutput,
-            p_display: *const DisplayKHR,
+            p_display: *mut DisplayKHR,
         ) -> Result,
     }
     unsafe impl Send for ExtAcquireXlibDisplayFn {}
@@ -17936,7 +18005,7 @@ pub mod extensions {
         pub unsafe fn acquire_xlib_display_ext(
             &self,
             physical_device: PhysicalDevice,
-            dpy: *const Display,
+            dpy: *mut Display,
             display: DisplayKHR,
         ) -> Result {
             (self.acquire_xlib_display_ext)(physical_device, dpy, display)
@@ -17944,9 +18013,9 @@ pub mod extensions {
         pub unsafe fn get_rand_r_output_display_ext(
             &self,
             physical_device: PhysicalDevice,
-            dpy: *const Display,
+            dpy: *mut Display,
             rr_output: RROutput,
-            p_display: *const DisplayKHR,
+            p_display: *mut DisplayKHR,
         ) -> Result {
             (self.get_rand_r_output_display_ext)(physical_device, dpy, rr_output, p_display)
         }
@@ -17956,7 +18025,7 @@ pub mod extensions {
             extern "system" fn(
                 physical_device: PhysicalDevice,
                 surface: SurfaceKHR,
-                p_surface_capabilities: *const SurfaceCapabilities2EXT,
+                p_surface_capabilities: *mut SurfaceCapabilities2EXT,
             ) -> Result,
     }
     unsafe impl Send for ExtDisplaySurfaceCounterFn {}
@@ -17996,7 +18065,7 @@ pub mod extensions {
             &self,
             physical_device: PhysicalDevice,
             surface: SurfaceKHR,
-            p_surface_capabilities: *const SurfaceCapabilities2EXT,
+            p_surface_capabilities: *mut SurfaceCapabilities2EXT,
         ) -> Result {
             (self.get_physical_device_surface_capabilities2_ext)(
                 physical_device,
@@ -18021,7 +18090,7 @@ pub mod extensions {
                 device: Device,
                 p_device_event_info: *const DeviceEventInfoEXT,
                 p_allocator: *const AllocationCallbacks,
-                p_fence: *const Fence,
+                p_fence: *mut Fence,
             ) -> Result,
         register_display_event_ext:
             extern "system" fn(
@@ -18029,13 +18098,13 @@ pub mod extensions {
                 display: DisplayKHR,
                 p_display_event_info: *const DisplayEventInfoEXT,
                 p_allocator: *const AllocationCallbacks,
-                p_fence: *const Fence,
+                p_fence: *mut Fence,
             ) -> Result,
         get_swapchain_counter_ext: extern "system" fn(
             device: Device,
             swapchain: SwapchainKHR,
             counter: SurfaceCounterFlagsEXT,
-            p_counter_value: *const uint64_t,
+            p_counter_value: *mut uint64_t,
         ) -> Result,
     }
     unsafe impl Send for ExtDisplayControlFn {}
@@ -18113,7 +18182,7 @@ pub mod extensions {
             device: Device,
             p_device_event_info: *const DeviceEventInfoEXT,
             p_allocator: *const AllocationCallbacks,
-            p_fence: *const Fence,
+            p_fence: *mut Fence,
         ) -> Result {
             (self.register_device_event_ext)(device, p_device_event_info, p_allocator, p_fence)
         }
@@ -18123,7 +18192,7 @@ pub mod extensions {
             display: DisplayKHR,
             p_display_event_info: *const DisplayEventInfoEXT,
             p_allocator: *const AllocationCallbacks,
-            p_fence: *const Fence,
+            p_fence: *mut Fence,
         ) -> Result {
             (self.register_display_event_ext)(
                 device,
@@ -18138,7 +18207,7 @@ pub mod extensions {
             device: Device,
             swapchain: SwapchainKHR,
             counter: SurfaceCounterFlagsEXT,
-            p_counter_value: *const uint64_t,
+            p_counter_value: *mut uint64_t,
         ) -> Result {
             (self.get_swapchain_counter_ext)(device, swapchain, counter, p_counter_value)
         }
@@ -18164,14 +18233,14 @@ pub mod extensions {
             extern "system" fn(
                 device: Device,
                 swapchain: SwapchainKHR,
-                p_display_timing_properties: *const RefreshCycleDurationGOOGLE,
+                p_display_timing_properties: *mut RefreshCycleDurationGOOGLE,
             ) -> Result,
         get_past_presentation_timing_google:
             extern "system" fn(
                 device: Device,
                 swapchain: SwapchainKHR,
-                p_presentation_timing_count: *const uint32_t,
-                p_presentation_timings: *const PastPresentationTimingGOOGLE,
+                p_presentation_timing_count: *mut uint32_t,
+                p_presentation_timings: *mut PastPresentationTimingGOOGLE,
             ) -> Result,
     }
     unsafe impl Send for GoogleDisplayTimingFn {}
@@ -18220,7 +18289,7 @@ pub mod extensions {
             &self,
             device: Device,
             swapchain: SwapchainKHR,
-            p_display_timing_properties: *const RefreshCycleDurationGOOGLE,
+            p_display_timing_properties: *mut RefreshCycleDurationGOOGLE,
         ) -> Result {
             (self.get_refresh_cycle_duration_google)(device, swapchain, p_display_timing_properties)
         }
@@ -18228,8 +18297,8 @@ pub mod extensions {
             &self,
             device: Device,
             swapchain: SwapchainKHR,
-            p_presentation_timing_count: *const uint32_t,
-            p_presentation_timings: *const PastPresentationTimingGOOGLE,
+            p_presentation_timing_count: *mut uint32_t,
+            p_presentation_timings: *mut PastPresentationTimingGOOGLE,
         ) -> Result {
             (self.get_past_presentation_timing_google)(
                 device,
@@ -18561,59 +18630,59 @@ pub mod extensions {
     }
     #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
     impl ColorSpaceKHR {
-        pub const COLOR_SPACE_DISPLAY_P3_NONLINEAR_EXT: Self = ColorSpaceKHR(1000104001);
+        pub const DISPLAY_P3_NONLINEAR_EXT: Self = ColorSpaceKHR(1000104001);
     }
     #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
     impl ColorSpaceKHR {
-        pub const COLOR_SPACE_EXTENDED_SRGB_LINEAR_EXT: Self = ColorSpaceKHR(1000104002);
+        pub const EXTENDED_SRGB_LINEAR_EXT: Self = ColorSpaceKHR(1000104002);
     }
     #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
     impl ColorSpaceKHR {
-        pub const COLOR_SPACE_DCI_P3_LINEAR_EXT: Self = ColorSpaceKHR(1000104003);
+        pub const DCI_P3_LINEAR_EXT: Self = ColorSpaceKHR(1000104003);
     }
     #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
     impl ColorSpaceKHR {
-        pub const COLOR_SPACE_DCI_P3_NONLINEAR_EXT: Self = ColorSpaceKHR(1000104004);
+        pub const DCI_P3_NONLINEAR_EXT: Self = ColorSpaceKHR(1000104004);
     }
     #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
     impl ColorSpaceKHR {
-        pub const COLOR_SPACE_BT709_LINEAR_EXT: Self = ColorSpaceKHR(1000104005);
+        pub const BT709_LINEAR_EXT: Self = ColorSpaceKHR(1000104005);
     }
     #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
     impl ColorSpaceKHR {
-        pub const COLOR_SPACE_BT709_NONLINEAR_EXT: Self = ColorSpaceKHR(1000104006);
+        pub const BT709_NONLINEAR_EXT: Self = ColorSpaceKHR(1000104006);
     }
     #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
     impl ColorSpaceKHR {
-        pub const COLOR_SPACE_BT2020_LINEAR_EXT: Self = ColorSpaceKHR(1000104007);
+        pub const BT2020_LINEAR_EXT: Self = ColorSpaceKHR(1000104007);
     }
     #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
     impl ColorSpaceKHR {
-        pub const COLOR_SPACE_HDR10_ST2084_EXT: Self = ColorSpaceKHR(1000104008);
+        pub const HDR10_ST2084_EXT: Self = ColorSpaceKHR(1000104008);
     }
     #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
     impl ColorSpaceKHR {
-        pub const COLOR_SPACE_DOLBYVISION_EXT: Self = ColorSpaceKHR(1000104009);
+        pub const DOLBYVISION_EXT: Self = ColorSpaceKHR(1000104009);
     }
     #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
     impl ColorSpaceKHR {
-        pub const COLOR_SPACE_HDR10_HLG_EXT: Self = ColorSpaceKHR(1000104010);
+        pub const HDR10_HLG_EXT: Self = ColorSpaceKHR(1000104010);
     }
     #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
     impl ColorSpaceKHR {
-        pub const COLOR_SPACE_ADOBERGB_LINEAR_EXT: Self = ColorSpaceKHR(1000104011);
+        pub const ADOBERGB_LINEAR_EXT: Self = ColorSpaceKHR(1000104011);
     }
     #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
     impl ColorSpaceKHR {
-        pub const COLOR_SPACE_ADOBERGB_NONLINEAR_EXT: Self = ColorSpaceKHR(1000104012);
+        pub const ADOBERGB_NONLINEAR_EXT: Self = ColorSpaceKHR(1000104012);
     }
     #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
     impl ColorSpaceKHR {
-        pub const COLOR_SPACE_PASS_THROUGH_EXT: Self = ColorSpaceKHR(1000104013);
+        pub const PASS_THROUGH_EXT: Self = ColorSpaceKHR(1000104013);
     }
     #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
     impl ColorSpaceKHR {
-        pub const COLOR_SPACE_EXTENDED_SRGB_NONLINEAR_EXT: Self = ColorSpaceKHR(1000104014);
+        pub const EXTENDED_SRGB_NONLINEAR_EXT: Self = ColorSpaceKHR(1000104014);
     }
     pub struct ExtHdrMetadataFn {
         set_hdr_metadata_ext: extern "system" fn(
@@ -18829,11 +18898,11 @@ pub mod extensions {
     }
     #[doc = "Generated from \'VK_KHR_shared_presentable_image\'"]
     impl PresentModeKHR {
-        pub const PRESENT_MODE_SHARED_DEMAND_REFRESH_KHR: Self = PresentModeKHR(1000111000);
+        pub const SHARED_DEMAND_REFRESH_KHR: Self = PresentModeKHR(1000111000);
     }
     #[doc = "Generated from \'VK_KHR_shared_presentable_image\'"]
     impl PresentModeKHR {
-        pub const PRESENT_MODE_SHARED_CONTINUOUS_REFRESH_KHR: Self = PresentModeKHR(1000111001);
+        pub const SHARED_CONTINUOUS_REFRESH_KHR: Self = PresentModeKHR(1000111001);
     }
     #[doc = "Generated from \'VK_KHR_shared_presentable_image\'"]
     impl ImageLayout {
@@ -18883,7 +18952,7 @@ pub mod extensions {
             }
         }
     }
-    pub struct KhrExternalFenceWin32Fn { import_fence_win32_handle_khr : extern "system" fn ( device : Device , p_import_fence_win32_handle_info : *const ImportFenceWin32HandleInfoKHR , ) -> Result , get_fence_win32_handle_khr : extern "system" fn ( device : Device , p_get_win32_handle_info : *const FenceGetWin32HandleInfoKHR , p_handle : *const HANDLE , ) -> Result , }
+    pub struct KhrExternalFenceWin32Fn { import_fence_win32_handle_khr : extern "system" fn ( device : Device , p_import_fence_win32_handle_info : *const ImportFenceWin32HandleInfoKHR , ) -> Result , get_fence_win32_handle_khr : extern "system" fn ( device : Device , p_get_win32_handle_info : *const FenceGetWin32HandleInfoKHR , p_handle : *mut HANDLE , ) -> Result , }
     unsafe impl Send for KhrExternalFenceWin32Fn {}
     unsafe impl Sync for KhrExternalFenceWin32Fn {}
     impl ::std::clone::Clone for KhrExternalFenceWin32Fn {
@@ -18937,7 +19006,7 @@ pub mod extensions {
             &self,
             device: Device,
             p_get_win32_handle_info: *const FenceGetWin32HandleInfoKHR,
-            p_handle: *const HANDLE,
+            p_handle: *mut HANDLE,
         ) -> Result {
             (self.get_fence_win32_handle_khr)(device, p_get_win32_handle_info, p_handle)
         }
@@ -18961,7 +19030,7 @@ pub mod extensions {
         get_fence_fd_khr: extern "system" fn(
             device: Device,
             p_get_fd_info: *const FenceGetFdInfoKHR,
-            p_fd: *const c_int,
+            p_fd: *mut c_int,
         ) -> Result,
     }
     unsafe impl Send for KhrExternalFenceFdFn {}
@@ -19017,7 +19086,7 @@ pub mod extensions {
             &self,
             device: Device,
             p_get_fd_info: *const FenceGetFdInfoKHR,
-            p_fd: *const c_int,
+            p_fd: *mut c_int,
         ) -> Result {
             (self.get_fence_fd_khr)(device, p_get_fd_info, p_fd)
         }
@@ -19101,14 +19170,14 @@ pub mod extensions {
             extern "system" fn(
                 physical_device: PhysicalDevice,
                 p_surface_info: *const PhysicalDeviceSurfaceInfo2KHR,
-                p_surface_capabilities: *const SurfaceCapabilities2KHR,
+                p_surface_capabilities: *mut SurfaceCapabilities2KHR,
             ) -> Result,
         get_physical_device_surface_formats2_khr:
             extern "system" fn(
                 physical_device: PhysicalDevice,
                 p_surface_info: *const PhysicalDeviceSurfaceInfo2KHR,
-                p_surface_format_count: *const uint32_t,
-                p_surface_formats: *const SurfaceFormat2KHR,
+                p_surface_format_count: *mut uint32_t,
+                p_surface_formats: *mut SurfaceFormat2KHR,
             ) -> Result,
     }
     unsafe impl Send for KhrGetSurfaceCapabilities2Fn {}
@@ -19159,7 +19228,7 @@ pub mod extensions {
             &self,
             physical_device: PhysicalDevice,
             p_surface_info: *const PhysicalDeviceSurfaceInfo2KHR,
-            p_surface_capabilities: *const SurfaceCapabilities2KHR,
+            p_surface_capabilities: *mut SurfaceCapabilities2KHR,
         ) -> Result {
             (self.get_physical_device_surface_capabilities2_khr)(
                 physical_device,
@@ -19171,8 +19240,8 @@ pub mod extensions {
             &self,
             physical_device: PhysicalDevice,
             p_surface_info: *const PhysicalDeviceSurfaceInfo2KHR,
-            p_surface_format_count: *const uint32_t,
-            p_surface_formats: *const SurfaceFormat2KHR,
+            p_surface_format_count: *mut uint32_t,
+            p_surface_formats: *mut SurfaceFormat2KHR,
         ) -> Result {
             (self.get_physical_device_surface_formats2_khr)(
                 physical_device,
@@ -19220,27 +19289,27 @@ pub mod extensions {
         get_physical_device_display_properties2_khr:
             extern "system" fn(
                 physical_device: PhysicalDevice,
-                p_property_count: *const uint32_t,
-                p_properties: *const DisplayProperties2KHR,
+                p_property_count: *mut uint32_t,
+                p_properties: *mut DisplayProperties2KHR,
             ) -> Result,
         get_physical_device_display_plane_properties2_khr:
             extern "system" fn(
                 physical_device: PhysicalDevice,
-                p_property_count: *const uint32_t,
-                p_properties: *const DisplayPlaneProperties2KHR,
+                p_property_count: *mut uint32_t,
+                p_properties: *mut DisplayPlaneProperties2KHR,
             ) -> Result,
         get_display_mode_properties2_khr:
             extern "system" fn(
                 physical_device: PhysicalDevice,
                 display: DisplayKHR,
-                p_property_count: *const uint32_t,
-                p_properties: *const DisplayModeProperties2KHR,
+                p_property_count: *mut uint32_t,
+                p_properties: *mut DisplayModeProperties2KHR,
             ) -> Result,
         get_display_plane_capabilities2_khr:
             extern "system" fn(
                 physical_device: PhysicalDevice,
                 p_display_plane_info: *const DisplayPlaneInfo2KHR,
-                p_capabilities: *const DisplayPlaneCapabilities2KHR,
+                p_capabilities: *mut DisplayPlaneCapabilities2KHR,
             ) -> Result,
     }
     unsafe impl Send for KhrGetDisplayProperties2Fn {}
@@ -19310,8 +19379,8 @@ pub mod extensions {
         pub unsafe fn get_physical_device_display_properties2_khr(
             &self,
             physical_device: PhysicalDevice,
-            p_property_count: *const uint32_t,
-            p_properties: *const DisplayProperties2KHR,
+            p_property_count: *mut uint32_t,
+            p_properties: *mut DisplayProperties2KHR,
         ) -> Result {
             (self.get_physical_device_display_properties2_khr)(
                 physical_device,
@@ -19322,8 +19391,8 @@ pub mod extensions {
         pub unsafe fn get_physical_device_display_plane_properties2_khr(
             &self,
             physical_device: PhysicalDevice,
-            p_property_count: *const uint32_t,
-            p_properties: *const DisplayPlaneProperties2KHR,
+            p_property_count: *mut uint32_t,
+            p_properties: *mut DisplayPlaneProperties2KHR,
         ) -> Result {
             (self.get_physical_device_display_plane_properties2_khr)(
                 physical_device,
@@ -19335,8 +19404,8 @@ pub mod extensions {
             &self,
             physical_device: PhysicalDevice,
             display: DisplayKHR,
-            p_property_count: *const uint32_t,
-            p_properties: *const DisplayModeProperties2KHR,
+            p_property_count: *mut uint32_t,
+            p_properties: *mut DisplayModeProperties2KHR,
         ) -> Result {
             (self.get_display_mode_properties2_khr)(
                 physical_device,
@@ -19349,7 +19418,7 @@ pub mod extensions {
             &self,
             physical_device: PhysicalDevice,
             p_display_plane_info: *const DisplayPlaneInfo2KHR,
-            p_capabilities: *const DisplayPlaneCapabilities2KHR,
+            p_capabilities: *mut DisplayPlaneCapabilities2KHR,
         ) -> Result {
             (self.get_display_plane_capabilities2_khr)(
                 physical_device,
@@ -19383,7 +19452,7 @@ pub mod extensions {
             instance: Instance,
             p_create_info: *const IOSSurfaceCreateInfoMVK,
             p_allocator: *const AllocationCallbacks,
-            p_surface: *const SurfaceKHR,
+            p_surface: *mut SurfaceKHR,
         ) -> Result,
     }
     unsafe impl Send for MvkIosSurfaceFn {}
@@ -19423,7 +19492,7 @@ pub mod extensions {
             instance: Instance,
             p_create_info: *const IOSSurfaceCreateInfoMVK,
             p_allocator: *const AllocationCallbacks,
-            p_surface: *const SurfaceKHR,
+            p_surface: *mut SurfaceKHR,
         ) -> Result {
             (self.create_ios_surface_mvk)(instance, p_create_info, p_allocator, p_surface)
         }
@@ -19438,7 +19507,7 @@ pub mod extensions {
                 instance: Instance,
                 p_create_info: *const MacOSSurfaceCreateInfoMVK,
                 p_allocator: *const AllocationCallbacks,
-                p_surface: *const SurfaceKHR,
+                p_surface: *mut SurfaceKHR,
             ) -> Result,
     }
     unsafe impl Send for MvkMacosSurfaceFn {}
@@ -19478,7 +19547,7 @@ pub mod extensions {
             instance: Instance,
             p_create_info: *const MacOSSurfaceCreateInfoMVK,
             p_allocator: *const AllocationCallbacks,
-            p_surface: *const SurfaceKHR,
+            p_surface: *mut SurfaceKHR,
         ) -> Result {
             (self.create_mac_os_surface_mvk)(instance, p_create_info, p_allocator, p_surface)
         }
@@ -19533,7 +19602,8 @@ pub mod extensions {
     }
     #[doc = "Generated from \'VK_EXT_external_memory_dma_buf\'"]
     impl ExternalMemoryHandleTypeFlags {
-        pub const DMA_BUF_EXT: Self = ExternalMemoryHandleTypeFlags(0b1000000000);
+        pub const EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF_EXT: Self =
+            ExternalMemoryHandleTypeFlags(0b1000000000);
     }
     pub struct ExtQueueFamilyForeignFn {}
     unsafe impl Send for ExtQueueFamilyForeignFn {}
@@ -19607,7 +19677,7 @@ pub mod extensions {
                 instance: Instance,
                 p_create_info: *const DebugUtilsMessengerCreateInfoEXT,
                 p_allocator: *const AllocationCallbacks,
-                p_messenger: *const DebugUtilsMessengerEXT,
+                p_messenger: *mut DebugUtilsMessengerEXT,
             ) -> Result,
         destroy_debug_utils_messenger_ext:
             extern "system" fn(
@@ -19811,7 +19881,7 @@ pub mod extensions {
             instance: Instance,
             p_create_info: *const DebugUtilsMessengerCreateInfoEXT,
             p_allocator: *const AllocationCallbacks,
-            p_messenger: *const DebugUtilsMessengerEXT,
+            p_messenger: *mut DebugUtilsMessengerEXT,
         ) -> Result {
             (self.create_debug_utils_messenger_ext)(
                 instance,
@@ -19872,7 +19942,7 @@ pub mod extensions {
             extern "system" fn(
                 device: Device,
                 buffer: *const AHardwareBuffer,
-                p_properties: *const AndroidHardwareBufferPropertiesANDROID,
+                p_properties: *mut AndroidHardwareBufferPropertiesANDROID,
             ) -> Result,
         get_memory_android_hardware_buffer_android:
             extern "system" fn(
@@ -19929,7 +19999,7 @@ pub mod extensions {
             &self,
             device: Device,
             buffer: *const AHardwareBuffer,
-            p_properties: *const AndroidHardwareBufferPropertiesANDROID,
+            p_properties: *mut AndroidHardwareBufferPropertiesANDROID,
         ) -> Result {
             (self.get_android_hardware_buffer_properties_android)(device, buffer, p_properties)
         }
@@ -19944,7 +20014,7 @@ pub mod extensions {
     }
     #[doc = "Generated from \'VK_ANDROID_external_memory_android_hardware_buffer\'"]
     impl ExternalMemoryHandleTypeFlags {
-        pub const ANDROID_HARDWARE_BUFFER_ANDROID: Self =
+        pub const EXTERNAL_MEMORY_HANDLE_TYPE_ANDROID_HARDWARE_BUFFER_ANDROID: Self =
             ExternalMemoryHandleTypeFlags(0b10000000000);
     }
     #[doc = "Generated from \'VK_ANDROID_external_memory_android_hardware_buffer\'"]
@@ -20281,7 +20351,7 @@ pub mod extensions {
             extern "system" fn(
                 physical_device: PhysicalDevice,
                 samples: SampleCountFlags,
-                p_multisample_properties: *const MultisamplePropertiesEXT,
+                p_multisample_properties: *mut MultisamplePropertiesEXT,
             ) -> c_void,
     }
     unsafe impl Send for ExtSampleLocationsFn {}
@@ -20338,7 +20408,7 @@ pub mod extensions {
             &self,
             physical_device: PhysicalDevice,
             samples: SampleCountFlags,
-            p_multisample_properties: *const MultisamplePropertiesEXT,
+            p_multisample_properties: *mut MultisamplePropertiesEXT,
         ) -> c_void {
             (self.get_physical_device_multisample_properties_ext)(
                 physical_device,
@@ -20931,7 +21001,7 @@ pub mod extensions {
                 device: Device,
                 p_create_info: *const ValidationCacheCreateInfoEXT,
                 p_allocator: *const AllocationCallbacks,
-                p_validation_cache: *const ValidationCacheEXT,
+                p_validation_cache: *mut ValidationCacheEXT,
             ) -> Result,
         destroy_validation_cache_ext: extern "system" fn(
             device: Device,
@@ -20947,8 +21017,8 @@ pub mod extensions {
         get_validation_cache_data_ext: extern "system" fn(
             device: Device,
             validation_cache: ValidationCacheEXT,
-            p_data_size: *const size_t,
-            p_data: *const c_void,
+            p_data_size: *mut size_t,
+            p_data: *mut c_void,
         ) -> Result,
     }
     unsafe impl Send for ExtValidationCacheFn {}
@@ -21018,7 +21088,7 @@ pub mod extensions {
             device: Device,
             p_create_info: *const ValidationCacheCreateInfoEXT,
             p_allocator: *const AllocationCallbacks,
-            p_validation_cache: *const ValidationCacheEXT,
+            p_validation_cache: *mut ValidationCacheEXT,
         ) -> Result {
             (self.create_validation_cache_ext)(
                 device,
@@ -21048,8 +21118,8 @@ pub mod extensions {
             &self,
             device: Device,
             validation_cache: ValidationCacheEXT,
-            p_data_size: *const size_t,
-            p_data: *const c_void,
+            p_data_size: *mut size_t,
+            p_data: *mut c_void,
         ) -> Result {
             (self.get_validation_cache_data_ext)(device, validation_cache, p_data_size, p_data)
         }
@@ -21566,7 +21636,7 @@ pub mod extensions {
             }
         }
     }
-    pub struct ExtExternalMemoryHostFn { get_memory_host_pointer_properties_ext : extern "system" fn ( device : Device , handle_type : ExternalMemoryHandleTypeFlags , p_host_pointer : *const c_void , p_memory_host_pointer_properties : *const MemoryHostPointerPropertiesEXT , ) -> Result , }
+    pub struct ExtExternalMemoryHostFn { get_memory_host_pointer_properties_ext : extern "system" fn ( device : Device , handle_type : ExternalMemoryHandleTypeFlags , p_host_pointer : *const c_void , p_memory_host_pointer_properties : *mut MemoryHostPointerPropertiesEXT , ) -> Result , }
     unsafe impl Send for ExtExternalMemoryHostFn {}
     unsafe impl Sync for ExtExternalMemoryHostFn {}
     impl ::std::clone::Clone for ExtExternalMemoryHostFn {
@@ -21604,7 +21674,7 @@ pub mod extensions {
             device: Device,
             handle_type: ExternalMemoryHandleTypeFlags,
             p_host_pointer: *const c_void,
-            p_memory_host_pointer_properties: *const MemoryHostPointerPropertiesEXT,
+            p_memory_host_pointer_properties: *mut MemoryHostPointerPropertiesEXT,
         ) -> Result {
             (self.get_memory_host_pointer_properties_ext)(
                 device,
@@ -21629,11 +21699,13 @@ pub mod extensions {
     }
     #[doc = "Generated from \'VK_EXT_external_memory_host\'"]
     impl ExternalMemoryHandleTypeFlags {
-        pub const HOST_ALLOCATION_EXT: Self = ExternalMemoryHandleTypeFlags(0b10000000);
+        pub const EXTERNAL_MEMORY_HANDLE_TYPE_HOST_ALLOCATION_EXT: Self =
+            ExternalMemoryHandleTypeFlags(0b10000000);
     }
     #[doc = "Generated from \'VK_EXT_external_memory_host\'"]
     impl ExternalMemoryHandleTypeFlags {
-        pub const HOST_MAPPED_FOREIGN_MEMORY_EXT: Self = ExternalMemoryHandleTypeFlags(0b100000000);
+        pub const EXTERNAL_MEMORY_HANDLE_TYPE_HOST_MAPPED_FOREIGN_MEMORY_EXT: Self =
+            ExternalMemoryHandleTypeFlags(0b100000000);
     }
     pub struct AmdBufferMarkerFn {
         cmd_write_buffer_marker_amd: extern "system" fn(
