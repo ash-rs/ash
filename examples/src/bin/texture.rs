@@ -11,7 +11,8 @@ use std::mem::{self, align_of};
 use std::path::Path;
 use std::ptr;
 
-use ash::{util::*, vk};
+use ash::util::*;
+use ash::vk;
 
 use examples::*;
 
