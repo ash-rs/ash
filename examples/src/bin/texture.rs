@@ -3,15 +3,13 @@ extern crate ash;
 extern crate examples;
 extern crate image;
 
-use std::{
-    default::Default,
-    ffi::CString,
-    fs::File,
-    io::Read,
-    mem::{self, align_of},
-    path::Path,
-    ptr,
-};
+use std::default::Default;
+use std::ffi::CString;
+use std::fs::File;
+use std::io::Read;
+use std::mem::{self, align_of};
+use std::path::Path;
+use std::ptr;
 
 use ash::{util::*, vk};
 
