@@ -57,7 +57,7 @@ fn main() {
         };
         let dependency = vk::SubpassDependency {
             dependency_flags: Default::default(),
-            src_subpass: vk::SUBPASS_EXTERNAL,
+            src_subpass: vk::VK_SUBPASS_EXTERNAL,
             dst_subpass: Default::default(),
             src_stage_mask: vk::PipelineStageFlags::COLOR_ATTACHMENT_OUTPUT,
             src_access_mask: Default::default(),

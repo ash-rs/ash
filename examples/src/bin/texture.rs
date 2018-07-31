@@ -66,7 +66,7 @@ fn main() {
         };
         let dependency = vk::SubpassDependency {
             dependency_flags: Default::default(),
-            src_subpass: vk::SUBPASS_EXTERNAL,
+            src_subpass: vk::VK_SUBPASS_EXTERNAL,
             dst_subpass: Default::default(),
             src_stage_mask: vk::PipelineStageFlags::COLOR_ATTACHMENT_OUTPUT,
             src_access_mask: Default::default(),
@@ -401,8 +401,8 @@ fn main() {
                     dst_access_mask: vk::AccessFlags::TRANSFER_WRITE,
                     old_layout: vk::ImageLayout::UNDEFINED,
                     new_layout: vk::ImageLayout::TRANSFER_DST_OPTIMAL,
-                    src_queue_family_index: vk::QUEUE_FAMILY_IGNORED,
-                    dst_queue_family_index: vk::QUEUE_FAMILY_IGNORED,
+                    src_queue_family_index: vk::VK_QUEUE_FAMILY_IGNORED,
+                    dst_queue_family_index: vk::VK_QUEUE_FAMILY_IGNORED,
                     image: texture_image,
                     subresource_range: vk::ImageSubresourceRange {
                         aspect_mask: vk::ImageAspectFlags::COLOR,
@@ -455,8 +455,8 @@ fn main() {
                     dst_access_mask: vk::AccessFlags::SHADER_READ,
                     old_layout: vk::ImageLayout::TRANSFER_DST_OPTIMAL,
                     new_layout: vk::ImageLayout::SHADER_READ_ONLY_OPTIMAL,
-                    src_queue_family_index: vk::QUEUE_FAMILY_IGNORED,
-                    dst_queue_family_index: vk::QUEUE_FAMILY_IGNORED,
+                    src_queue_family_index: vk::VK_QUEUE_FAMILY_IGNORED,
+                    dst_queue_family_index: vk::VK_QUEUE_FAMILY_IGNORED,
                     image: texture_image,
                     subresource_range: vk::ImageSubresourceRange {
                         aspect_mask: vk::ImageAspectFlags::COLOR,
