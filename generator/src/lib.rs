@@ -556,14 +556,26 @@ pub trait FieldExt {
 }
 
 pub trait ToTokens {
-    fn to_tokens(&self) -> Tokens;
+    fn to_tokens(&self, is_const: bool) -> Tokens;
 }
 impl ToTokens for vkxml::ReferenceType {
-    fn to_tokens(&self) -> Tokens {
+    fn to_tokens(&self, is_const: bool) -> Tokens {
         let ptr_name = match self {
-            vkxml::ReferenceType::Pointer => "*const",
+            vkxml::ReferenceType::Pointer => {
+                if is_const {
+                    "*const"
+                } else {
+                    "*mut"
+                }
+            }
             vkxml::ReferenceType::PointerToPointer => "*mut *mut",
-            vkxml::ReferenceType::PointerToConstPointer => "*const *const",
+            vkxml::ReferenceType::PointerToConstPointer => {
+                if is_const {
+                    "*const *const"
+                } else {
+                    "*mut *const"
+                }
+            }
         };
         let ident = Term::intern(ptr_name);
         quote!{
@@ -591,7 +603,7 @@ fn name_to_tokens(type_name: &str) -> Ident {
 }
 fn to_type_tokens(type_name: &str, reference: Option<&vkxml::ReferenceType>) -> Tokens {
     let new_name = name_to_tokens(type_name);
-    let ptr_name = reference.map(|r| r.to_tokens()).unwrap_or(quote!{});
+    let ptr_name = reference.map(|r| r.to_tokens(false)).unwrap_or(quote!{});
     quote!{#ptr_name #new_name}
 }
 
@@ -609,11 +621,12 @@ impl FieldExt for vkxml::Field {
     }
 
     fn type_tokens(&self) -> Tokens {
+        println!("{:#?}", self);
         let ty = name_to_tokens(&self.basetype);
         let pointer = self
             .reference
             .as_ref()
-            .map(|r| r.to_tokens())
+            .map(|r| r.to_tokens(self.is_const))
             .unwrap_or(quote!{});
         let pointer_ty = quote!{
             #pointer #ty
