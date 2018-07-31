@@ -4,34 +4,32 @@ extern crate ash;
 extern crate winapi;
 extern crate winit;
 
-use ash::vk;
-use std::default::Default;
-use ash::Entry;
-use ash::Instance;
-use ash::Device;
-pub use ash::version::{DeviceV1_0, EntryV1_0, InstanceV1_0, V1_0};
-use ash::extensions::{DebugReport, Surface, Swapchain};
 #[cfg(windows)]
 use ash::extensions::Win32Surface;
 #[cfg(not(windows))]
 use ash::extensions::XlibSurface;
+use ash::extensions::{DebugReport, Surface, Swapchain};
+pub use ash::version::{DeviceV1_0, EntryV1_0, InstanceV1_0, V1_0};
+use ash::vk;
+use ash::Device;
+use ash::Entry;
+use ash::Instance;
 use std::cell::RefCell;
-use std::ptr;
+use std::default::Default;
 use std::ffi::{CStr, CString};
 use std::ops::Drop;
+use std::ptr;
 
 // Simple offset_of macro akin to C++ offsetof
 #[macro_export]
-macro_rules! offset_of{
-    ($base: path, $field: ident) => {
-        {
-            #[allow(unused_unsafe)]
-            unsafe{
-                let b: $base = mem::uninitialized();
-                (&b.$field as *const _ as isize) - (&b as *const _ as isize)
-            }
+macro_rules! offset_of {
+    ($base:path, $field:ident) => {{
+        #[allow(unused_unsafe)]
+        unsafe {
+            let b: $base = mem::uninitialized();
+            (&b.$field as *const _ as isize) - (&b as *const _ as isize)
         }
-    }
+    }};
 }
 
 pub fn record_submit_commandbuffer<D: DeviceV1_0, F: FnOnce(&D, vk::CommandBuffer)>(
@@ -307,7 +305,8 @@ impl ExampleBase {
             let debug_info = vk::DebugReportCallbackCreateInfoEXT {
                 s_type: vk::StructureType::DEBUG_REPORT_CALLBACK_CREATE_INFO_EXT,
                 p_next: ptr::null(),
-                flags: vk::DebugReportFlagsEXT::ERROR_EXT | vk::DebugReportFlagsEXT::WARNING_EXT
+                flags: vk::DebugReportFlagsEXT::ERROR_EXT
+                    | vk::DebugReportFlagsEXT::WARNING_EXT
                     | vk::DebugReportFlagsEXT::PERFORMANCE_WARNING_EXT,
                 pfn_callback: vulkan_debug_callback,
                 p_user_data: ptr::null_mut(),
@@ -331,13 +330,13 @@ impl ExampleBase {
                         .iter()
                         .enumerate()
                         .filter_map(|(index, ref info)| {
-                            let supports_graphic_and_surface = info.queue_flags
-                                .subset(vk::QueueFlags::GRAPHICS)
-                                && surface_loader.get_physical_device_surface_support_khr(
-                                    *pdevice,
-                                    index as u32,
-                                    surface,
-                                );
+                            let supports_graphic_and_surface =
+                                info.queue_flags.subset(vk::QueueFlags::GRAPHICS)
+                                    && surface_loader.get_physical_device_surface_support_khr(
+                                        *pdevice,
+                                        index as u32,
+                                        surface,
+                                    );
                             match supports_graphic_and_surface {
                                 true => Some((*pdevice, index)),
                                 _ => None,

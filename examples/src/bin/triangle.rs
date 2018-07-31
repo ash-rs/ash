@@ -2,17 +2,17 @@ extern crate ash;
 #[macro_use]
 extern crate examples;
 
+use ash::util::*;
 use ash::vk;
+use examples::*;
 use std::default::Default;
-use std::ptr;
 use std::ffi::CString;
-use std::mem;
-use std::path::Path;
 use std::fs::File;
 use std::io::Read;
-use examples::*;
-use ash::util::*;
+use std::mem;
 use std::mem::align_of;
+use std::path::Path;
+use std::ptr;
 
 #[derive(Clone, Debug, Copy)]
 struct Vertex {
@@ -88,10 +88,12 @@ fn main() {
             dependency_count: 1,
             p_dependencies: &dependency,
         };
-        let renderpass = base.device
+        let renderpass = base
+            .device
             .create_render_pass(&renderpass_create_info, None)
             .unwrap();
-        let framebuffers: Vec<vk::Framebuffer> = base.present_image_views
+        let framebuffers: Vec<vk::Framebuffer> = base
+            .present_image_views
             .iter()
             .map(|&present_image_view| {
                 let framebuffer_attachments = [present_image_view, base.depth_image_view];
@@ -136,10 +138,12 @@ fn main() {
             allocation_size: index_buffer_memory_req.size,
             memory_type_index: index_buffer_memory_index,
         };
-        let index_buffer_memory = base.device
+        let index_buffer_memory = base
+            .device
             .allocate_memory(&index_allocate_info, None)
             .unwrap();
-        let index_ptr = base.device
+        let index_ptr = base
+            .device
             .map_memory(
                 index_buffer_memory,
                 0,
@@ -168,10 +172,12 @@ fn main() {
             queue_family_index_count: 0,
             p_queue_family_indices: ptr::null(),
         };
-        let vertex_input_buffer = base.device
+        let vertex_input_buffer = base
+            .device
             .create_buffer(&vertex_input_buffer_info, None)
             .unwrap();
-        let vertex_input_buffer_memory_req = base.device
+        let vertex_input_buffer_memory_req = base
+            .device
             .get_buffer_memory_requirements(vertex_input_buffer);
         let vertex_input_buffer_memory_index =
             find_memorytype_index(
@@ -186,7 +192,8 @@ fn main() {
             allocation_size: vertex_input_buffer_memory_req.size,
             memory_type_index: vertex_input_buffer_memory_index,
         };
-        let vertex_input_buffer_memory = base.device
+        let vertex_input_buffer_memory = base
+            .device
             .allocate_memory(&vertex_buffer_allocate_info, None)
             .unwrap();
         let vertices = [
@@ -203,7 +210,8 @@ fn main() {
                 color: [1.0, 0.0, 0.0, 1.0],
             },
         ];
-        let vert_ptr = base.device
+        let vert_ptr = base
+            .device
             .map_memory(
                 vertex_input_buffer_memory,
                 0,
@@ -245,11 +253,13 @@ fn main() {
             code_size: frag_bytes.len(),
             p_code: frag_bytes.as_ptr() as *const u32,
         };
-        let vertex_shader_module = base.device
+        let vertex_shader_module = base
+            .device
             .create_shader_module(&vertex_shader_info, None)
             .expect("Vertex shader module error");
 
-        let fragment_shader_module = base.device
+        let fragment_shader_module = base
+            .device
             .create_shader_module(&frag_shader_info, None)
             .expect("Fragment shader module error");
 
@@ -263,7 +273,8 @@ fn main() {
             p_push_constant_ranges: ptr::null(),
         };
 
-        let pipeline_layout = base.device
+        let pipeline_layout = base
+            .device
             .create_pipeline_layout(&layout_create_info, None)
             .unwrap();
 
@@ -288,13 +299,11 @@ fn main() {
                 stage: vk::ShaderStageFlags::FRAGMENT,
             },
         ];
-        let vertex_input_binding_descriptions = [
-            vk::VertexInputBindingDescription {
-                binding: 0,
-                stride: mem::size_of::<Vertex>() as u32,
-                input_rate: vk::VertexInputRate::VERTEX,
-            },
-        ];
+        let vertex_input_binding_descriptions = [vk::VertexInputBindingDescription {
+            binding: 0,
+            stride: mem::size_of::<Vertex>() as u32,
+            input_rate: vk::VertexInputRate::VERTEX,
+        }];
         let vertex_input_attribute_descriptions = [
             vk::VertexInputAttributeDescription {
                 location: 0,
@@ -325,22 +334,18 @@ fn main() {
             primitive_restart_enable: 0,
             topology: vk::PrimitiveTopology::TRIANGLE_LIST,
         };
-        let viewports = [
-            vk::Viewport {
-                x: 0.0,
-                y: 0.0,
-                width: base.surface_resolution.width as f32,
-                height: base.surface_resolution.height as f32,
-                min_depth: 0.0,
-                max_depth: 1.0,
-            },
-        ];
-        let scissors = [
-            vk::Rect2D {
-                offset: vk::Offset2D { x: 0, y: 0 },
-                extent: base.surface_resolution.clone(),
-            },
-        ];
+        let viewports = [vk::Viewport {
+            x: 0.0,
+            y: 0.0,
+            width: base.surface_resolution.width as f32,
+            height: base.surface_resolution.height as f32,
+            min_depth: 0.0,
+            max_depth: 1.0,
+        }];
+        let scissors = [vk::Rect2D {
+            offset: vk::Offset2D { x: 0, y: 0 },
+            extent: base.surface_resolution.clone(),
+        }];
         let viewport_state_info = vk::PipelineViewportStateCreateInfo {
             s_type: vk::StructureType::PIPELINE_VIEWPORT_STATE_CREATE_INFO,
             p_next: ptr::null(),
@@ -399,18 +404,16 @@ fn main() {
             max_depth_bounds: 1.0,
             min_depth_bounds: 0.0,
         };
-        let color_blend_attachment_states = [
-            vk::PipelineColorBlendAttachmentState {
-                blend_enable: 0,
-                src_color_blend_factor: vk::BlendFactor::SRC_COLOR,
-                dst_color_blend_factor: vk::BlendFactor::ONE_MINUS_DST_COLOR,
-                color_blend_op: vk::BlendOp::ADD,
-                src_alpha_blend_factor: vk::BlendFactor::ZERO,
-                dst_alpha_blend_factor: vk::BlendFactor::ZERO,
-                alpha_blend_op: vk::BlendOp::ADD,
-                color_write_mask: vk::ColorComponentFlags::all(),
-            },
-        ];
+        let color_blend_attachment_states = [vk::PipelineColorBlendAttachmentState {
+            blend_enable: 0,
+            src_color_blend_factor: vk::BlendFactor::SRC_COLOR,
+            dst_color_blend_factor: vk::BlendFactor::ONE_MINUS_DST_COLOR,
+            color_blend_op: vk::BlendOp::ADD,
+            src_alpha_blend_factor: vk::BlendFactor::ZERO,
+            dst_alpha_blend_factor: vk::BlendFactor::ZERO,
+            alpha_blend_op: vk::BlendOp::ADD,
+            color_write_mask: vk::ColorComponentFlags::all(),
+        }];
         let color_blend_state = vk::PipelineColorBlendStateCreateInfo {
             s_type: vk::StructureType::PIPELINE_COLOR_BLEND_STATE_CREATE_INFO,
             p_next: ptr::null(),
@@ -450,14 +453,16 @@ fn main() {
             base_pipeline_handle: vk::Pipeline::null(),
             base_pipeline_index: 0,
         };
-        let graphics_pipelines = base.device
+        let graphics_pipelines = base
+            .device
             .create_graphics_pipelines(vk::PipelineCache::null(), &[graphic_pipeline_info], None)
             .expect("Unable to create graphics pipeline");
 
         let graphic_pipeline = graphics_pipelines[0];
 
         base.render_loop(|| {
-            let present_index = base.swapchain_loader
+            let present_index = base
+                .swapchain_loader
                 .acquire_next_image_khr(
                     base.swapchain,
                     std::u64::MAX,

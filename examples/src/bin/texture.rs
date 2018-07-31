@@ -3,17 +3,19 @@ extern crate ash;
 extern crate examples;
 extern crate image;
 
-use ash::vk;
-use std::default::Default;
-use std::ptr;
-use std::ffi::CString;
-use std::mem;
-use std::path::Path;
-use std::fs::File;
-use std::io::Read;
+use std::{
+    default::Default,
+    ffi::CString,
+    fs::File,
+    io::Read,
+    mem::{self, align_of},
+    path::Path,
+    ptr,
+};
+
+use ash::{util::*, vk};
+
 use examples::*;
-use ash::util::*;
-use std::mem::align_of;
 
 #[derive(Clone, Debug, Copy)]
 struct Vertex {
@@ -97,10 +99,12 @@ fn main() {
             dependency_count: 1,
             p_dependencies: &dependency,
         };
-        let renderpass = base.device
+        let renderpass = base
+            .device
             .create_render_pass(&renderpass_create_info, None)
             .unwrap();
-        let framebuffers: Vec<vk::Framebuffer> = base.present_image_views
+        let framebuffers: Vec<vk::Framebuffer> = base
+            .present_image_views
             .iter()
             .map(|&present_image_view| {
                 let framebuffer_attachments = [present_image_view, base.depth_image_view];
@@ -145,10 +149,12 @@ fn main() {
             allocation_size: index_buffer_memory_req.size,
             memory_type_index: index_buffer_memory_index,
         };
-        let index_buffer_memory = base.device
+        let index_buffer_memory = base
+            .device
             .allocate_memory(&index_allocate_info, None)
             .unwrap();
-        let index_ptr: *mut vk::c_void = base.device
+        let index_ptr: *mut vk::c_void = base
+            .device
             .map_memory(
                 index_buffer_memory,
                 0,
@@ -195,10 +201,12 @@ fn main() {
             queue_family_index_count: 0,
             p_queue_family_indices: ptr::null(),
         };
-        let vertex_input_buffer = base.device
+        let vertex_input_buffer = base
+            .device
             .create_buffer(&vertex_input_buffer_info, None)
             .unwrap();
-        let vertex_input_buffer_memory_req = base.device
+        let vertex_input_buffer_memory_req = base
+            .device
             .get_buffer_memory_requirements(vertex_input_buffer);
         let vertex_input_buffer_memory_index =
             find_memorytype_index(
@@ -213,10 +221,12 @@ fn main() {
             allocation_size: vertex_input_buffer_memory_req.size,
             memory_type_index: vertex_input_buffer_memory_index,
         };
-        let vertex_input_buffer_memory = base.device
+        let vertex_input_buffer_memory = base
+            .device
             .allocate_memory(&vertex_buffer_allocate_info, None)
             .unwrap();
-        let vert_ptr = base.device
+        let vert_ptr = base
+            .device
             .map_memory(
                 vertex_input_buffer_memory,
                 0,
@@ -251,10 +261,12 @@ fn main() {
             queue_family_index_count: 0,
             p_queue_family_indices: ptr::null(),
         };
-        let uniform_color_buffer = base.device
+        let uniform_color_buffer = base
+            .device
             .create_buffer(&uniform_color_buffer_info, None)
             .unwrap();
-        let uniform_color_buffer_memory_req = base.device
+        let uniform_color_buffer_memory_req = base
+            .device
             .get_buffer_memory_requirements(uniform_color_buffer);
         let uniform_color_buffer_memory_index =
             find_memorytype_index(
@@ -269,10 +281,12 @@ fn main() {
             allocation_size: uniform_color_buffer_memory_req.size,
             memory_type_index: uniform_color_buffer_memory_index,
         };
-        let uniform_color_buffer_memory = base.device
+        let uniform_color_buffer_memory = base
+            .device
             .allocate_memory(&uniform_color_buffer_allocate_info, None)
             .unwrap();
-        let uniform_ptr = base.device
+        let uniform_ptr = base
+            .device
             .map_memory(
                 uniform_color_buffer_memory,
                 0,
@@ -319,10 +333,12 @@ fn main() {
             allocation_size: image_buffer_memory_req.size,
             memory_type_index: image_buffer_memory_index,
         };
-        let image_buffer_memory = base.device
+        let image_buffer_memory = base
+            .device
             .allocate_memory(&image_buffer_allocate_info, None)
             .unwrap();
-        let image_ptr = base.device
+        let image_ptr = base
+            .device
             .map_memory(
                 image_buffer_memory,
                 0,
@@ -362,7 +378,8 @@ fn main() {
             p_queue_family_indices: ptr::null(),
             initial_layout: vk::ImageLayout::UNDEFINED,
         };
-        let texture_image = base.device
+        let texture_image = base
+            .device
             .create_image(&texture_create_info, None)
             .unwrap();
         let texture_memory_req = base.device.get_image_memory_requirements(texture_image);
@@ -379,7 +396,8 @@ fn main() {
             allocation_size: texture_memory_req.size,
             memory_type_index: texture_memory_index,
         };
-        let texture_memory = base.device
+        let texture_memory = base
+            .device
             .allocate_memory(&texture_allocate_info, None)
             .unwrap();
         base.device
@@ -421,26 +439,24 @@ fn main() {
                     &[],
                     &[texture_barrier],
                 );
-                let buffer_copy_regions = [
-                    vk::BufferImageCopy {
-                        image_subresource: vk::ImageSubresourceLayers {
-                            aspect_mask: vk::ImageAspectFlags::COLOR,
-                            mip_level: 0,
-                            base_array_layer: 0,
-                            layer_count: 1,
-                        },
-                        image_extent: vk::Extent3D {
-                            width: image_dimensions.0,
-                            height: image_dimensions.1,
-                            depth: 1,
-                        },
-                        buffer_offset: 0,
-                        // FIX ME
-                        buffer_image_height: 0,
-                        buffer_row_length: 0,
-                        image_offset: vk::Offset3D { x: 0, y: 0, z: 0 },
+                let buffer_copy_regions = [vk::BufferImageCopy {
+                    image_subresource: vk::ImageSubresourceLayers {
+                        aspect_mask: vk::ImageAspectFlags::COLOR,
+                        mip_level: 0,
+                        base_array_layer: 0,
+                        layer_count: 1,
                     },
-                ];
+                    image_extent: vk::Extent3D {
+                        width: image_dimensions.0,
+                        height: image_dimensions.1,
+                        depth: 1,
+                    },
+                    buffer_offset: 0,
+                    // FIX ME
+                    buffer_image_height: 0,
+                    buffer_row_length: 0,
+                    image_offset: vk::Offset3D { x: 0, y: 0, z: 0 },
+                }];
                 device.cmd_copy_buffer_to_image(
                     texture_command_buffer,
                     image_buffer,
@@ -522,7 +538,8 @@ fn main() {
             },
             image: texture_image,
         };
-        let tex_image_view = base.device
+        let tex_image_view = base
+            .device
             .create_image_view(&tex_image_view_info, None)
             .unwrap();
         let descriptor_sizes = [
@@ -543,7 +560,8 @@ fn main() {
             p_pool_sizes: descriptor_sizes.as_ptr(),
             max_sets: 1,
         };
-        let descriptor_pool = base.device
+        let descriptor_pool = base
+            .device
             .create_descriptor_pool(&descriptor_pool_info, None)
             .unwrap();
         let desc_layout_bindings = [
@@ -570,11 +588,10 @@ fn main() {
             p_bindings: desc_layout_bindings.as_ptr(),
         };
 
-        let desc_set_layouts = [
-            base.device
-                .create_descriptor_set_layout(&descriptor_info, None)
-                .unwrap(),
-        ];
+        let desc_set_layouts = [base
+            .device
+            .create_descriptor_set_layout(&descriptor_info, None)
+            .unwrap()];
         let desc_alloc_info = vk::DescriptorSetAllocateInfo {
             s_type: vk::StructureType::DESCRIPTOR_SET_ALLOCATE_INFO,
             p_next: ptr::null(),
@@ -582,7 +599,8 @@ fn main() {
             descriptor_set_count: desc_set_layouts.len() as u32,
             p_set_layouts: desc_set_layouts.as_ptr(),
         };
-        let descriptor_sets = base.device
+        let descriptor_sets = base
+            .device
             .allocate_descriptor_sets(&desc_alloc_info)
             .unwrap();
 
@@ -650,11 +668,13 @@ fn main() {
             code_size: frag_bytes.len(),
             p_code: frag_bytes.as_ptr() as *const u32,
         };
-        let vertex_shader_module = base.device
+        let vertex_shader_module = base
+            .device
             .create_shader_module(&vertex_shader_info, None)
             .expect("Vertex shader module error");
 
-        let fragment_shader_module = base.device
+        let fragment_shader_module = base
+            .device
             .create_shader_module(&frag_shader_info, None)
             .expect("Fragment shader module error");
 
@@ -668,7 +688,8 @@ fn main() {
             p_push_constant_ranges: ptr::null(),
         };
 
-        let pipeline_layout = base.device
+        let pipeline_layout = base
+            .device
             .create_pipeline_layout(&layout_create_info, None)
             .unwrap();
 
@@ -693,13 +714,11 @@ fn main() {
                 stage: vk::ShaderStageFlags::FRAGMENT,
             },
         ];
-        let vertex_input_binding_descriptions = [
-            vk::VertexInputBindingDescription {
-                binding: 0,
-                stride: mem::size_of::<Vertex>() as u32,
-                input_rate: vk::VertexInputRate::VERTEX,
-            },
-        ];
+        let vertex_input_binding_descriptions = [vk::VertexInputBindingDescription {
+            binding: 0,
+            stride: mem::size_of::<Vertex>() as u32,
+            input_rate: vk::VertexInputRate::VERTEX,
+        }];
         let vertex_input_attribute_descriptions = [
             vk::VertexInputAttributeDescription {
                 location: 0,
@@ -730,22 +749,18 @@ fn main() {
             primitive_restart_enable: 0,
             topology: vk::PrimitiveTopology::TRIANGLE_LIST,
         };
-        let viewports = [
-            vk::Viewport {
-                x: 0.0,
-                y: 0.0,
-                width: base.surface_resolution.width as f32,
-                height: base.surface_resolution.height as f32,
-                min_depth: 0.0,
-                max_depth: 1.0,
-            },
-        ];
-        let scissors = [
-            vk::Rect2D {
-                offset: vk::Offset2D { x: 0, y: 0 },
-                extent: base.surface_resolution.clone(),
-            },
-        ];
+        let viewports = [vk::Viewport {
+            x: 0.0,
+            y: 0.0,
+            width: base.surface_resolution.width as f32,
+            height: base.surface_resolution.height as f32,
+            min_depth: 0.0,
+            max_depth: 1.0,
+        }];
+        let scissors = [vk::Rect2D {
+            offset: vk::Offset2D { x: 0, y: 0 },
+            extent: base.surface_resolution.clone(),
+        }];
         let viewport_state_info = vk::PipelineViewportStateCreateInfo {
             s_type: vk::StructureType::PIPELINE_VIEWPORT_STATE_CREATE_INFO,
             p_next: ptr::null(),
@@ -804,18 +819,16 @@ fn main() {
             max_depth_bounds: 1.0,
             min_depth_bounds: 0.0,
         };
-        let color_blend_attachment_states = [
-            vk::PipelineColorBlendAttachmentState {
-                blend_enable: 0,
-                src_color_blend_factor: vk::BlendFactor::SRC_COLOR,
-                dst_color_blend_factor: vk::BlendFactor::ONE_MINUS_DST_COLOR,
-                color_blend_op: vk::BlendOp::ADD,
-                src_alpha_blend_factor: vk::BlendFactor::ZERO,
-                dst_alpha_blend_factor: vk::BlendFactor::ZERO,
-                alpha_blend_op: vk::BlendOp::ADD,
-                color_write_mask: vk::ColorComponentFlags::all(),
-            },
-        ];
+        let color_blend_attachment_states = [vk::PipelineColorBlendAttachmentState {
+            blend_enable: 0,
+            src_color_blend_factor: vk::BlendFactor::SRC_COLOR,
+            dst_color_blend_factor: vk::BlendFactor::ONE_MINUS_DST_COLOR,
+            color_blend_op: vk::BlendOp::ADD,
+            src_alpha_blend_factor: vk::BlendFactor::ZERO,
+            dst_alpha_blend_factor: vk::BlendFactor::ZERO,
+            alpha_blend_op: vk::BlendOp::ADD,
+            color_write_mask: vk::ColorComponentFlags::all(),
+        }];
         let color_blend_state = vk::PipelineColorBlendStateCreateInfo {
             s_type: vk::StructureType::PIPELINE_COLOR_BLEND_STATE_CREATE_INFO,
             p_next: ptr::null(),
@@ -855,14 +868,16 @@ fn main() {
             base_pipeline_handle: vk::Pipeline::null(),
             base_pipeline_index: 0,
         };
-        let graphics_pipelines = base.device
+        let graphics_pipelines = base
+            .device
             .create_graphics_pipelines(vk::PipelineCache::null(), &[graphic_pipeline_info], None)
             .unwrap();
 
         let graphic_pipeline = graphics_pipelines[0];
 
         base.render_loop(|| {
-            let present_index = base.swapchain_loader
+            let present_index = base
+                .swapchain_loader
                 .acquire_next_image_khr(
                     base.swapchain,
                     std::u64::MAX,
@@ -896,43 +911,59 @@ fn main() {
                 clear_value_count: clear_values.len() as u32,
                 p_clear_values: clear_values.as_ptr(),
             };
-            record_submit_commandbuffer(&base.device,
-                                        base.draw_command_buffer,
-                                        base.present_queue,
-                                        &[vk::PipelineStageFlags::BOTTOM_OF_PIPE],
-                                        &[base.present_complete_semaphore],
-                                        &[base.rendering_complete_semaphore],
-                                        |device, draw_command_buffer| {
-                device.cmd_begin_render_pass(draw_command_buffer,
-                                             &render_pass_begin_info,
-                                             vk::SubpassContents::INLINE);
-                device.cmd_bind_descriptor_sets(draw_command_buffer,
-                                                vk::PipelineBindPoint::GRAPHICS,
-                                                pipeline_layout,
-                                                0,
-                                                &descriptor_sets[..],
-                                                &[]);
-                device.cmd_bind_pipeline(draw_command_buffer,
-                                         vk::PipelineBindPoint::GRAPHICS,
-                                         graphic_pipeline);
-                device.cmd_set_viewport(draw_command_buffer, 0, &viewports);
-                device.cmd_set_scissor(draw_command_buffer, 0, &scissors);
-                device
-                    .cmd_bind_vertex_buffers(draw_command_buffer, 0, &[vertex_input_buffer], &[0]);
-                device.cmd_bind_index_buffer(draw_command_buffer,
-                                             index_buffer,
-                                             0,
-                                             vk::IndexType::UINT32);
-                device.cmd_draw_indexed(draw_command_buffer,
-                                        index_buffer_data.len() as u32,
-                                        1,
-                                        0,
-                                        0,
-                                        1);
-                // Or draw without the index buffer
-                // device.cmd_draw(draw_command_buffer, 3, 1, 0, 0);
-                device.cmd_end_render_pass(draw_command_buffer);
-            });
+            record_submit_commandbuffer(
+                &base.device,
+                base.draw_command_buffer,
+                base.present_queue,
+                &[vk::PipelineStageFlags::BOTTOM_OF_PIPE],
+                &[base.present_complete_semaphore],
+                &[base.rendering_complete_semaphore],
+                |device, draw_command_buffer| {
+                    device.cmd_begin_render_pass(
+                        draw_command_buffer,
+                        &render_pass_begin_info,
+                        vk::SubpassContents::INLINE,
+                    );
+                    device.cmd_bind_descriptor_sets(
+                        draw_command_buffer,
+                        vk::PipelineBindPoint::GRAPHICS,
+                        pipeline_layout,
+                        0,
+                        &descriptor_sets[..],
+                        &[],
+                    );
+                    device.cmd_bind_pipeline(
+                        draw_command_buffer,
+                        vk::PipelineBindPoint::GRAPHICS,
+                        graphic_pipeline,
+                    );
+                    device.cmd_set_viewport(draw_command_buffer, 0, &viewports);
+                    device.cmd_set_scissor(draw_command_buffer, 0, &scissors);
+                    device.cmd_bind_vertex_buffers(
+                        draw_command_buffer,
+                        0,
+                        &[vertex_input_buffer],
+                        &[0],
+                    );
+                    device.cmd_bind_index_buffer(
+                        draw_command_buffer,
+                        index_buffer,
+                        0,
+                        vk::IndexType::UINT32,
+                    );
+                    device.cmd_draw_indexed(
+                        draw_command_buffer,
+                        index_buffer_data.len() as u32,
+                        1,
+                        0,
+                        0,
+                        1,
+                    );
+                    // Or draw without the index buffer
+                    // device.cmd_draw(draw_command_buffer, 3, 1, 0, 0);
+                    device.cmd_end_render_pass(draw_command_buffer);
+                },
+            );
             //let mut present_info_err = mem::uninitialized();
             let present_info = vk::PresentInfoKHR {
                 s_type: vk::StructureType::PRESENT_INFO_KHR,
