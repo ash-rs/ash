@@ -12466,139 +12466,132 @@ impl ObjectType {
 #[repr(C)]
 pub struct PresentModeKHR(pub(crate) i32);
 impl PresentModeKHR {
-    pub const PRESENT_MODE_IMMEDIATE_KHR: Self = PresentModeKHR(0);
-    pub const PRESENT_MODE_MAILBOX_KHR: Self = PresentModeKHR(1);
-    pub const PRESENT_MODE_FIFO_KHR: Self = PresentModeKHR(2);
-    pub const PRESENT_MODE_FIFO_RELAXED_KHR: Self = PresentModeKHR(3);
+    pub const IMMEDIATE_KHR: Self = PresentModeKHR(0);
+    pub const MAILBOX_KHR: Self = PresentModeKHR(1);
+    pub const FIFO_KHR: Self = PresentModeKHR(2);
+    pub const FIFO_RELAXED_KHR: Self = PresentModeKHR(3);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct ColorSpaceKHR(pub(crate) i32);
 impl ColorSpaceKHR {
-    pub const COLOR_SPACE_SRGB_NONLINEAR_KHR: Self = ColorSpaceKHR(0);
+    pub const SRGB_NONLINEAR_KHR: Self = ColorSpaceKHR(0);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct DebugReportObjectTypeEXT(pub(crate) i32);
 impl DebugReportObjectTypeEXT {
-    pub const DEBUG_REPORT_OBJECT_TYPE_UNKNOWN_EXT: Self = DebugReportObjectTypeEXT(0);
-    pub const DEBUG_REPORT_OBJECT_TYPE_INSTANCE_EXT: Self = DebugReportObjectTypeEXT(1);
-    pub const DEBUG_REPORT_OBJECT_TYPE_PHYSICAL_DEVICE_EXT: Self = DebugReportObjectTypeEXT(2);
-    pub const DEBUG_REPORT_OBJECT_TYPE_DEVICE_EXT: Self = DebugReportObjectTypeEXT(3);
-    pub const DEBUG_REPORT_OBJECT_TYPE_QUEUE_EXT: Self = DebugReportObjectTypeEXT(4);
-    pub const DEBUG_REPORT_OBJECT_TYPE_SEMAPHORE_EXT: Self = DebugReportObjectTypeEXT(5);
-    pub const DEBUG_REPORT_OBJECT_TYPE_COMMAND_BUFFER_EXT: Self = DebugReportObjectTypeEXT(6);
-    pub const DEBUG_REPORT_OBJECT_TYPE_FENCE_EXT: Self = DebugReportObjectTypeEXT(7);
-    pub const DEBUG_REPORT_OBJECT_TYPE_DEVICE_MEMORY_EXT: Self = DebugReportObjectTypeEXT(8);
-    pub const DEBUG_REPORT_OBJECT_TYPE_BUFFER_EXT: Self = DebugReportObjectTypeEXT(9);
-    pub const DEBUG_REPORT_OBJECT_TYPE_IMAGE_EXT: Self = DebugReportObjectTypeEXT(10);
-    pub const DEBUG_REPORT_OBJECT_TYPE_EVENT_EXT: Self = DebugReportObjectTypeEXT(11);
-    pub const DEBUG_REPORT_OBJECT_TYPE_QUERY_POOL_EXT: Self = DebugReportObjectTypeEXT(12);
-    pub const DEBUG_REPORT_OBJECT_TYPE_BUFFER_VIEW_EXT: Self = DebugReportObjectTypeEXT(13);
-    pub const DEBUG_REPORT_OBJECT_TYPE_IMAGE_VIEW_EXT: Self = DebugReportObjectTypeEXT(14);
-    pub const DEBUG_REPORT_OBJECT_TYPE_SHADER_MODULE_EXT: Self = DebugReportObjectTypeEXT(15);
-    pub const DEBUG_REPORT_OBJECT_TYPE_PIPELINE_CACHE_EXT: Self = DebugReportObjectTypeEXT(16);
-    pub const DEBUG_REPORT_OBJECT_TYPE_PIPELINE_LAYOUT_EXT: Self = DebugReportObjectTypeEXT(17);
-    pub const DEBUG_REPORT_OBJECT_TYPE_RENDER_PASS_EXT: Self = DebugReportObjectTypeEXT(18);
-    pub const DEBUG_REPORT_OBJECT_TYPE_PIPELINE_EXT: Self = DebugReportObjectTypeEXT(19);
-    pub const DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_LAYOUT_EXT: Self =
-        DebugReportObjectTypeEXT(20);
-    pub const DEBUG_REPORT_OBJECT_TYPE_SAMPLER_EXT: Self = DebugReportObjectTypeEXT(21);
-    pub const DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_POOL_EXT: Self = DebugReportObjectTypeEXT(22);
-    pub const DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_SET_EXT: Self = DebugReportObjectTypeEXT(23);
-    pub const DEBUG_REPORT_OBJECT_TYPE_FRAMEBUFFER_EXT: Self = DebugReportObjectTypeEXT(24);
-    pub const DEBUG_REPORT_OBJECT_TYPE_COMMAND_POOL_EXT: Self = DebugReportObjectTypeEXT(25);
-    pub const DEBUG_REPORT_OBJECT_TYPE_SURFACE_KHR_EXT: Self = DebugReportObjectTypeEXT(26);
-    pub const DEBUG_REPORT_OBJECT_TYPE_SWAPCHAIN_KHR_EXT: Self = DebugReportObjectTypeEXT(27);
-    pub const DEBUG_REPORT_OBJECT_TYPE_DEBUG_REPORT_CALLBACK_EXT_EXT: Self =
-        DebugReportObjectTypeEXT(28);
-    pub const DEBUG_REPORT_OBJECT_TYPE_DISPLAY_KHR_EXT: Self = DebugReportObjectTypeEXT(29);
-    pub const DEBUG_REPORT_OBJECT_TYPE_DISPLAY_MODE_KHR_EXT: Self = DebugReportObjectTypeEXT(30);
-    pub const DEBUG_REPORT_OBJECT_TYPE_OBJECT_TABLE_NVX_EXT: Self = DebugReportObjectTypeEXT(31);
-    pub const DEBUG_REPORT_OBJECT_TYPE_INDIRECT_COMMANDS_LAYOUT_NVX_EXT: Self =
-        DebugReportObjectTypeEXT(32);
-    pub const DEBUG_REPORT_OBJECT_TYPE_VALIDATION_CACHE_EXT_EXT: Self =
-        DebugReportObjectTypeEXT(33);
+    pub const UNKNOWN_EXT: Self = DebugReportObjectTypeEXT(0);
+    pub const INSTANCE_EXT: Self = DebugReportObjectTypeEXT(1);
+    pub const PHYSICAL_DEVICE_EXT: Self = DebugReportObjectTypeEXT(2);
+    pub const DEVICE_EXT: Self = DebugReportObjectTypeEXT(3);
+    pub const QUEUE_EXT: Self = DebugReportObjectTypeEXT(4);
+    pub const SEMAPHORE_EXT: Self = DebugReportObjectTypeEXT(5);
+    pub const COMMAND_BUFFER_EXT: Self = DebugReportObjectTypeEXT(6);
+    pub const FENCE_EXT: Self = DebugReportObjectTypeEXT(7);
+    pub const DEVICE_MEMORY_EXT: Self = DebugReportObjectTypeEXT(8);
+    pub const BUFFER_EXT: Self = DebugReportObjectTypeEXT(9);
+    pub const IMAGE_EXT: Self = DebugReportObjectTypeEXT(10);
+    pub const EVENT_EXT: Self = DebugReportObjectTypeEXT(11);
+    pub const QUERY_POOL_EXT: Self = DebugReportObjectTypeEXT(12);
+    pub const BUFFER_VIEW_EXT: Self = DebugReportObjectTypeEXT(13);
+    pub const IMAGE_VIEW_EXT: Self = DebugReportObjectTypeEXT(14);
+    pub const SHADER_MODULE_EXT: Self = DebugReportObjectTypeEXT(15);
+    pub const PIPELINE_CACHE_EXT: Self = DebugReportObjectTypeEXT(16);
+    pub const PIPELINE_LAYOUT_EXT: Self = DebugReportObjectTypeEXT(17);
+    pub const RENDER_PASS_EXT: Self = DebugReportObjectTypeEXT(18);
+    pub const PIPELINE_EXT: Self = DebugReportObjectTypeEXT(19);
+    pub const DESCRIPTOR_SET_LAYOUT_EXT: Self = DebugReportObjectTypeEXT(20);
+    pub const SAMPLER_EXT: Self = DebugReportObjectTypeEXT(21);
+    pub const DESCRIPTOR_POOL_EXT: Self = DebugReportObjectTypeEXT(22);
+    pub const DESCRIPTOR_SET_EXT: Self = DebugReportObjectTypeEXT(23);
+    pub const FRAMEBUFFER_EXT: Self = DebugReportObjectTypeEXT(24);
+    pub const COMMAND_POOL_EXT: Self = DebugReportObjectTypeEXT(25);
+    pub const SURFACE_KHR_EXT: Self = DebugReportObjectTypeEXT(26);
+    pub const SWAPCHAIN_KHR_EXT: Self = DebugReportObjectTypeEXT(27);
+    pub const DEBUG_REPORT_CALLBACK_EXT_EXT: Self = DebugReportObjectTypeEXT(28);
+    pub const DISPLAY_KHR_EXT: Self = DebugReportObjectTypeEXT(29);
+    pub const DISPLAY_MODE_KHR_EXT: Self = DebugReportObjectTypeEXT(30);
+    pub const OBJECT_TABLE_NVX_EXT: Self = DebugReportObjectTypeEXT(31);
+    pub const INDIRECT_COMMANDS_LAYOUT_NVX_EXT: Self = DebugReportObjectTypeEXT(32);
+    pub const VALIDATION_CACHE_EXT_EXT: Self = DebugReportObjectTypeEXT(33);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct RasterizationOrderAMD(pub(crate) i32);
 impl RasterizationOrderAMD {
-    pub const RASTERIZATION_ORDER_STRICT_AMD: Self = RasterizationOrderAMD(0);
-    pub const RASTERIZATION_ORDER_RELAXED_AMD: Self = RasterizationOrderAMD(1);
+    pub const STRICT_AMD: Self = RasterizationOrderAMD(0);
+    pub const RELAXED_AMD: Self = RasterizationOrderAMD(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct ValidationCheckEXT(pub(crate) i32);
 impl ValidationCheckEXT {
-    pub const VALIDATION_CHECK_ALL_EXT: Self = ValidationCheckEXT(0);
-    pub const VALIDATION_CHECK_SHADERS_EXT: Self = ValidationCheckEXT(1);
+    pub const ALL_EXT: Self = ValidationCheckEXT(0);
+    pub const SHADERS_EXT: Self = ValidationCheckEXT(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct IndirectCommandsTokenTypeNVX(pub(crate) i32);
 impl IndirectCommandsTokenTypeNVX {
-    pub const INDIRECT_COMMANDS_TOKEN_TYPE_PIPELINE_NVX: Self = IndirectCommandsTokenTypeNVX(0);
-    pub const INDIRECT_COMMANDS_TOKEN_TYPE_DESCRIPTOR_SET_NVX: Self =
-        IndirectCommandsTokenTypeNVX(1);
-    pub const INDIRECT_COMMANDS_TOKEN_TYPE_INDEX_BUFFER_NVX: Self = IndirectCommandsTokenTypeNVX(2);
-    pub const INDIRECT_COMMANDS_TOKEN_TYPE_VERTEX_BUFFER_NVX: Self =
-        IndirectCommandsTokenTypeNVX(3);
-    pub const INDIRECT_COMMANDS_TOKEN_TYPE_PUSH_CONSTANT_NVX: Self =
-        IndirectCommandsTokenTypeNVX(4);
-    pub const INDIRECT_COMMANDS_TOKEN_TYPE_DRAW_INDEXED_NVX: Self = IndirectCommandsTokenTypeNVX(5);
-    pub const INDIRECT_COMMANDS_TOKEN_TYPE_DRAW_NVX: Self = IndirectCommandsTokenTypeNVX(6);
-    pub const INDIRECT_COMMANDS_TOKEN_TYPE_DISPATCH_NVX: Self = IndirectCommandsTokenTypeNVX(7);
+    pub const PIPELINE_NVX: Self = IndirectCommandsTokenTypeNVX(0);
+    pub const DESCRIPTOR_SET_NVX: Self = IndirectCommandsTokenTypeNVX(1);
+    pub const INDEX_BUFFER_NVX: Self = IndirectCommandsTokenTypeNVX(2);
+    pub const VERTEX_BUFFER_NVX: Self = IndirectCommandsTokenTypeNVX(3);
+    pub const PUSH_CONSTANT_NVX: Self = IndirectCommandsTokenTypeNVX(4);
+    pub const DRAW_INDEXED_NVX: Self = IndirectCommandsTokenTypeNVX(5);
+    pub const DRAW_NVX: Self = IndirectCommandsTokenTypeNVX(6);
+    pub const DISPATCH_NVX: Self = IndirectCommandsTokenTypeNVX(7);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct ObjectEntryTypeNVX(pub(crate) i32);
 impl ObjectEntryTypeNVX {
-    pub const OBJECT_ENTRY_TYPE_DESCRIPTOR_SET_NVX: Self = ObjectEntryTypeNVX(0);
-    pub const OBJECT_ENTRY_TYPE_PIPELINE_NVX: Self = ObjectEntryTypeNVX(1);
-    pub const OBJECT_ENTRY_TYPE_INDEX_BUFFER_NVX: Self = ObjectEntryTypeNVX(2);
-    pub const OBJECT_ENTRY_TYPE_VERTEX_BUFFER_NVX: Self = ObjectEntryTypeNVX(3);
-    pub const OBJECT_ENTRY_TYPE_PUSH_CONSTANT_NVX: Self = ObjectEntryTypeNVX(4);
+    pub const DESCRIPTOR_SET_NVX: Self = ObjectEntryTypeNVX(0);
+    pub const PIPELINE_NVX: Self = ObjectEntryTypeNVX(1);
+    pub const INDEX_BUFFER_NVX: Self = ObjectEntryTypeNVX(2);
+    pub const VERTEX_BUFFER_NVX: Self = ObjectEntryTypeNVX(3);
+    pub const PUSH_CONSTANT_NVX: Self = ObjectEntryTypeNVX(4);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct DisplayPowerStateEXT(pub(crate) i32);
 impl DisplayPowerStateEXT {
-    pub const DISPLAY_POWER_STATE_OFF_EXT: Self = DisplayPowerStateEXT(0);
-    pub const DISPLAY_POWER_STATE_SUSPEND_EXT: Self = DisplayPowerStateEXT(1);
-    pub const DISPLAY_POWER_STATE_ON_EXT: Self = DisplayPowerStateEXT(2);
+    pub const OFF_EXT: Self = DisplayPowerStateEXT(0);
+    pub const SUSPEND_EXT: Self = DisplayPowerStateEXT(1);
+    pub const ON_EXT: Self = DisplayPowerStateEXT(2);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct DeviceEventTypeEXT(pub(crate) i32);
 impl DeviceEventTypeEXT {
-    pub const DEVICE_EVENT_TYPE_DISPLAY_HOTPLUG_EXT: Self = DeviceEventTypeEXT(0);
+    pub const DISPLAY_HOTPLUG_EXT: Self = DeviceEventTypeEXT(0);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct DisplayEventTypeEXT(pub(crate) i32);
 impl DisplayEventTypeEXT {
-    pub const DISPLAY_EVENT_TYPE_FIRST_PIXEL_OUT_EXT: Self = DisplayEventTypeEXT(0);
+    pub const FIRST_PIXEL_OUT_EXT: Self = DisplayEventTypeEXT(0);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct ViewportCoordinateSwizzleNV(pub(crate) i32);
 impl ViewportCoordinateSwizzleNV {
-    pub const VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_X_NV: Self = ViewportCoordinateSwizzleNV(0);
-    pub const VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_X_NV: Self = ViewportCoordinateSwizzleNV(1);
-    pub const VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_Y_NV: Self = ViewportCoordinateSwizzleNV(2);
-    pub const VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_Y_NV: Self = ViewportCoordinateSwizzleNV(3);
-    pub const VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_Z_NV: Self = ViewportCoordinateSwizzleNV(4);
-    pub const VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_Z_NV: Self = ViewportCoordinateSwizzleNV(5);
-    pub const VIEWPORT_COORDINATE_SWIZZLE_POSITIVE_W_NV: Self = ViewportCoordinateSwizzleNV(6);
-    pub const VIEWPORT_COORDINATE_SWIZZLE_NEGATIVE_W_NV: Self = ViewportCoordinateSwizzleNV(7);
+    pub const POSITIVE_X_NV: Self = ViewportCoordinateSwizzleNV(0);
+    pub const NEGATIVE_X_NV: Self = ViewportCoordinateSwizzleNV(1);
+    pub const POSITIVE_Y_NV: Self = ViewportCoordinateSwizzleNV(2);
+    pub const NEGATIVE_Y_NV: Self = ViewportCoordinateSwizzleNV(3);
+    pub const POSITIVE_Z_NV: Self = ViewportCoordinateSwizzleNV(4);
+    pub const NEGATIVE_Z_NV: Self = ViewportCoordinateSwizzleNV(5);
+    pub const POSITIVE_W_NV: Self = ViewportCoordinateSwizzleNV(6);
+    pub const NEGATIVE_W_NV: Self = ViewportCoordinateSwizzleNV(7);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct DiscardRectangleModeEXT(pub(crate) i32);
 impl DiscardRectangleModeEXT {
-    pub const DISCARD_RECTANGLE_MODE_INCLUSIVE_EXT: Self = DiscardRectangleModeEXT(0);
-    pub const DISCARD_RECTANGLE_MODE_EXCLUSIVE_EXT: Self = DiscardRectangleModeEXT(1);
+    pub const INCLUSIVE_EXT: Self = DiscardRectangleModeEXT(0);
+    pub const EXCLUSIVE_EXT: Self = DiscardRectangleModeEXT(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
@@ -12611,9 +12604,9 @@ impl PointClippingBehavior {
 #[repr(C)]
 pub struct SamplerReductionModeEXT(pub(crate) i32);
 impl SamplerReductionModeEXT {
-    pub const SAMPLER_REDUCTION_MODE_WEIGHTED_AVERAGE_EXT: Self = SamplerReductionModeEXT(0);
-    pub const SAMPLER_REDUCTION_MODE_MIN_EXT: Self = SamplerReductionModeEXT(1);
-    pub const SAMPLER_REDUCTION_MODE_MAX_EXT: Self = SamplerReductionModeEXT(2);
+    pub const WEIGHTED_AVERAGE_EXT: Self = SamplerReductionModeEXT(0);
+    pub const MIN_EXT: Self = SamplerReductionModeEXT(1);
+    pub const MAX_EXT: Self = SamplerReductionModeEXT(2);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
@@ -12656,52 +12649,49 @@ impl ChromaLocation {
 #[repr(C)]
 pub struct BlendOverlapEXT(pub(crate) i32);
 impl BlendOverlapEXT {
-    pub const BLEND_OVERLAP_UNCORRELATED_EXT: Self = BlendOverlapEXT(0);
-    pub const BLEND_OVERLAP_DISJOINT_EXT: Self = BlendOverlapEXT(1);
-    pub const BLEND_OVERLAP_CONJOINT_EXT: Self = BlendOverlapEXT(2);
+    pub const UNCORRELATED_EXT: Self = BlendOverlapEXT(0);
+    pub const DISJOINT_EXT: Self = BlendOverlapEXT(1);
+    pub const CONJOINT_EXT: Self = BlendOverlapEXT(2);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct CoverageModulationModeNV(pub(crate) i32);
 impl CoverageModulationModeNV {
-    pub const COVERAGE_MODULATION_MODE_NONE_NV: Self = CoverageModulationModeNV(0);
-    pub const COVERAGE_MODULATION_MODE_RGB_NV: Self = CoverageModulationModeNV(1);
-    pub const COVERAGE_MODULATION_MODE_ALPHA_NV: Self = CoverageModulationModeNV(2);
-    pub const COVERAGE_MODULATION_MODE_RGBA_NV: Self = CoverageModulationModeNV(3);
+    pub const NONE_NV: Self = CoverageModulationModeNV(0);
+    pub const RGB_NV: Self = CoverageModulationModeNV(1);
+    pub const ALPHA_NV: Self = CoverageModulationModeNV(2);
+    pub const RGBA_NV: Self = CoverageModulationModeNV(3);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct ValidationCacheHeaderVersionEXT(pub(crate) i32);
 impl ValidationCacheHeaderVersionEXT {
-    pub const VALIDATION_CACHE_HEADER_VERSION_ONE_EXT: Self = ValidationCacheHeaderVersionEXT(1);
+    pub const ONE_EXT: Self = ValidationCacheHeaderVersionEXT(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct ShaderInfoTypeAMD(pub(crate) i32);
 impl ShaderInfoTypeAMD {
-    pub const SHADER_INFO_TYPE_STATISTICS_AMD: Self = ShaderInfoTypeAMD(0);
-    pub const SHADER_INFO_TYPE_BINARY_AMD: Self = ShaderInfoTypeAMD(1);
-    pub const SHADER_INFO_TYPE_DISASSEMBLY_AMD: Self = ShaderInfoTypeAMD(2);
+    pub const STATISTICS_AMD: Self = ShaderInfoTypeAMD(0);
+    pub const BINARY_AMD: Self = ShaderInfoTypeAMD(1);
+    pub const DISASSEMBLY_AMD: Self = ShaderInfoTypeAMD(2);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct QueueGlobalPriorityEXT(pub(crate) i32);
 impl QueueGlobalPriorityEXT {
-    pub const QUEUE_GLOBAL_PRIORITY_LOW_EXT: Self = QueueGlobalPriorityEXT(128);
-    pub const QUEUE_GLOBAL_PRIORITY_MEDIUM_EXT: Self = QueueGlobalPriorityEXT(256);
-    pub const QUEUE_GLOBAL_PRIORITY_HIGH_EXT: Self = QueueGlobalPriorityEXT(512);
-    pub const QUEUE_GLOBAL_PRIORITY_REALTIME_EXT: Self = QueueGlobalPriorityEXT(1024);
+    pub const LOW_EXT: Self = QueueGlobalPriorityEXT(128);
+    pub const MEDIUM_EXT: Self = QueueGlobalPriorityEXT(256);
+    pub const HIGH_EXT: Self = QueueGlobalPriorityEXT(512);
+    pub const REALTIME_EXT: Self = QueueGlobalPriorityEXT(1024);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
 pub struct ConservativeRasterizationModeEXT(pub(crate) i32);
 impl ConservativeRasterizationModeEXT {
-    pub const CONSERVATIVE_RASTERIZATION_MODE_DISABLED_EXT: Self =
-        ConservativeRasterizationModeEXT(0);
-    pub const CONSERVATIVE_RASTERIZATION_MODE_OVERESTIMATE_EXT: Self =
-        ConservativeRasterizationModeEXT(1);
-    pub const CONSERVATIVE_RASTERIZATION_MODE_UNDERESTIMATE_EXT: Self =
-        ConservativeRasterizationModeEXT(2);
+    pub const DISABLED_EXT: Self = ConservativeRasterizationModeEXT(0);
+    pub const OVERESTIMATE_EXT: Self = ConservativeRasterizationModeEXT(1);
+    pub const UNDERESTIMATE_EXT: Self = ConservativeRasterizationModeEXT(2);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(C)]
@@ -13220,19 +13210,24 @@ pub mod bitflags {
     pub struct ExternalMemoryHandleTypeFlagsNV(pub(crate) Flags);
     vk_bitflags_wrapped!(ExternalMemoryHandleTypeFlagsNV, 0b1111, Flags);
     impl ExternalMemoryHandleTypeFlagsNV {
-        pub const OPAQUE_WIN32_NV: Self = ExternalMemoryHandleTypeFlagsNV(0b1);
-        pub const OPAQUE_WIN32_KMT_NV: Self = ExternalMemoryHandleTypeFlagsNV(0b10);
-        pub const D3D11_IMAGE_NV: Self = ExternalMemoryHandleTypeFlagsNV(0b100);
-        pub const D3D11_IMAGE_KMT_NV: Self = ExternalMemoryHandleTypeFlagsNV(0b1000);
+        pub const EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_NV: Self =
+            ExternalMemoryHandleTypeFlagsNV(0b1);
+        pub const EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_NV: Self =
+            ExternalMemoryHandleTypeFlagsNV(0b10);
+        pub const EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_NV: Self =
+            ExternalMemoryHandleTypeFlagsNV(0b100);
+        pub const EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_NV: Self =
+            ExternalMemoryHandleTypeFlagsNV(0b1000);
     }
     #[repr(C)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct ExternalMemoryFeatureFlagsNV(pub(crate) Flags);
     vk_bitflags_wrapped!(ExternalMemoryFeatureFlagsNV, 0b111, Flags);
     impl ExternalMemoryFeatureFlagsNV {
-        pub const DEDICATED_ONLY_NV: Self = ExternalMemoryFeatureFlagsNV(0b1);
-        pub const EXPORTABLE_NV: Self = ExternalMemoryFeatureFlagsNV(0b10);
-        pub const IMPORTABLE_NV: Self = ExternalMemoryFeatureFlagsNV(0b100);
+        pub const EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_NV: Self =
+            ExternalMemoryFeatureFlagsNV(0b1);
+        pub const EXTERNAL_MEMORY_FEATURE_EXPORTABLE_NV: Self = ExternalMemoryFeatureFlagsNV(0b10);
+        pub const EXTERNAL_MEMORY_FEATURE_IMPORTABLE_NV: Self = ExternalMemoryFeatureFlagsNV(0b100);
     }
     #[repr(C)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -13284,41 +13279,52 @@ pub mod bitflags {
     pub struct ExternalMemoryHandleTypeFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(ExternalMemoryHandleTypeFlags, 0b1111111, Flags);
     impl ExternalMemoryHandleTypeFlags {
-        pub const OPAQUE_FD: Self = ExternalMemoryHandleTypeFlags(0b1);
-        pub const OPAQUE_WIN32: Self = ExternalMemoryHandleTypeFlags(0b10);
-        pub const OPAQUE_WIN32_KMT: Self = ExternalMemoryHandleTypeFlags(0b100);
-        pub const D3D11_TEXTURE: Self = ExternalMemoryHandleTypeFlags(0b1000);
-        pub const D3D11_TEXTURE_KMT: Self = ExternalMemoryHandleTypeFlags(0b10000);
-        pub const D3D12_HEAP: Self = ExternalMemoryHandleTypeFlags(0b100000);
-        pub const D3D12_RESOURCE: Self = ExternalMemoryHandleTypeFlags(0b1000000);
+        pub const EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD: Self = ExternalMemoryHandleTypeFlags(0b1);
+        pub const EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32: Self =
+            ExternalMemoryHandleTypeFlags(0b10);
+        pub const EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT: Self =
+            ExternalMemoryHandleTypeFlags(0b100);
+        pub const EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE: Self =
+            ExternalMemoryHandleTypeFlags(0b1000);
+        pub const EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT: Self =
+            ExternalMemoryHandleTypeFlags(0b10000);
+        pub const EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP: Self =
+            ExternalMemoryHandleTypeFlags(0b100000);
+        pub const EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE: Self =
+            ExternalMemoryHandleTypeFlags(0b1000000);
     }
     #[repr(C)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct ExternalMemoryFeatureFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(ExternalMemoryFeatureFlags, 0b111, Flags);
     impl ExternalMemoryFeatureFlags {
-        pub const DEDICATED_ONLY: Self = ExternalMemoryFeatureFlags(0b1);
-        pub const EXPORTABLE: Self = ExternalMemoryFeatureFlags(0b10);
-        pub const IMPORTABLE: Self = ExternalMemoryFeatureFlags(0b100);
+        pub const EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY: Self = ExternalMemoryFeatureFlags(0b1);
+        pub const EXTERNAL_MEMORY_FEATURE_EXPORTABLE: Self = ExternalMemoryFeatureFlags(0b10);
+        pub const EXTERNAL_MEMORY_FEATURE_IMPORTABLE: Self = ExternalMemoryFeatureFlags(0b100);
     }
     #[repr(C)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct ExternalSemaphoreHandleTypeFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(ExternalSemaphoreHandleTypeFlags, 0b11111, Flags);
     impl ExternalSemaphoreHandleTypeFlags {
-        pub const OPAQUE_FD: Self = ExternalSemaphoreHandleTypeFlags(0b1);
-        pub const OPAQUE_WIN32: Self = ExternalSemaphoreHandleTypeFlags(0b10);
-        pub const OPAQUE_WIN32_KMT: Self = ExternalSemaphoreHandleTypeFlags(0b100);
-        pub const D3D12_FENCE: Self = ExternalSemaphoreHandleTypeFlags(0b1000);
-        pub const SYNC_FD: Self = ExternalSemaphoreHandleTypeFlags(0b10000);
+        pub const EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD: Self =
+            ExternalSemaphoreHandleTypeFlags(0b1);
+        pub const EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32: Self =
+            ExternalSemaphoreHandleTypeFlags(0b10);
+        pub const EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT: Self =
+            ExternalSemaphoreHandleTypeFlags(0b100);
+        pub const EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE: Self =
+            ExternalSemaphoreHandleTypeFlags(0b1000);
+        pub const EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD: Self =
+            ExternalSemaphoreHandleTypeFlags(0b10000);
     }
     #[repr(C)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct ExternalSemaphoreFeatureFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(ExternalSemaphoreFeatureFlags, 0b11, Flags);
     impl ExternalSemaphoreFeatureFlags {
-        pub const EXPORTABLE: Self = ExternalSemaphoreFeatureFlags(0b1);
-        pub const IMPORTABLE: Self = ExternalSemaphoreFeatureFlags(0b10);
+        pub const EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE: Self = ExternalSemaphoreFeatureFlags(0b1);
+        pub const EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE: Self = ExternalSemaphoreFeatureFlags(0b10);
     }
     #[repr(C)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -13332,18 +13338,20 @@ pub mod bitflags {
     pub struct ExternalFenceHandleTypeFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(ExternalFenceHandleTypeFlags, 0b1111, Flags);
     impl ExternalFenceHandleTypeFlags {
-        pub const OPAQUE_FD: Self = ExternalFenceHandleTypeFlags(0b1);
-        pub const OPAQUE_WIN32: Self = ExternalFenceHandleTypeFlags(0b10);
-        pub const OPAQUE_WIN32_KMT: Self = ExternalFenceHandleTypeFlags(0b100);
-        pub const SYNC_FD: Self = ExternalFenceHandleTypeFlags(0b1000);
+        pub const EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD: Self = ExternalFenceHandleTypeFlags(0b1);
+        pub const EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32: Self =
+            ExternalFenceHandleTypeFlags(0b10);
+        pub const EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT: Self =
+            ExternalFenceHandleTypeFlags(0b100);
+        pub const EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD: Self = ExternalFenceHandleTypeFlags(0b1000);
     }
     #[repr(C)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct ExternalFenceFeatureFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(ExternalFenceFeatureFlags, 0b11, Flags);
     impl ExternalFenceFeatureFlags {
-        pub const EXPORTABLE: Self = ExternalFenceFeatureFlags(0b1);
-        pub const IMPORTABLE: Self = ExternalFenceFeatureFlags(0b10);
+        pub const EXTERNAL_FENCE_FEATURE_EXPORTABLE: Self = ExternalFenceFeatureFlags(0b1);
+        pub const EXTERNAL_FENCE_FEATURE_IMPORTABLE: Self = ExternalFenceFeatureFlags(0b10);
     }
     #[repr(C)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -14952,13 +14960,11 @@ pub mod extensions {
     }
     #[doc = "Generated from \'VK_EXT_debug_report\'"]
     impl DebugReportObjectTypeEXT {
-        pub const DEBUG_REPORT_OBJECT_TYPE_SAMPLER_YCBCR_CONVERSION_EXT: Self =
-            DebugReportObjectTypeEXT(1000156000);
+        pub const SAMPLER_YCBCR_CONVERSION_EXT: Self = DebugReportObjectTypeEXT(1000156000);
     }
     #[doc = "Generated from \'VK_EXT_debug_report\'"]
     impl DebugReportObjectTypeEXT {
-        pub const DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_UPDATE_TEMPLATE_EXT: Self =
-            DebugReportObjectTypeEXT(1000085000);
+        pub const DESCRIPTOR_UPDATE_TEMPLATE_EXT: Self = DebugReportObjectTypeEXT(1000085000);
     }
     pub struct NvGlslShaderFn {}
     unsafe impl Send for NvGlslShaderFn {}
@@ -18561,59 +18567,59 @@ pub mod extensions {
     }
     #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
     impl ColorSpaceKHR {
-        pub const COLOR_SPACE_DISPLAY_P3_NONLINEAR_EXT: Self = ColorSpaceKHR(1000104001);
+        pub const DISPLAY_P3_NONLINEAR_EXT: Self = ColorSpaceKHR(1000104001);
     }
     #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
     impl ColorSpaceKHR {
-        pub const COLOR_SPACE_EXTENDED_SRGB_LINEAR_EXT: Self = ColorSpaceKHR(1000104002);
+        pub const EXTENDED_SRGB_LINEAR_EXT: Self = ColorSpaceKHR(1000104002);
     }
     #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
     impl ColorSpaceKHR {
-        pub const COLOR_SPACE_DCI_P3_LINEAR_EXT: Self = ColorSpaceKHR(1000104003);
+        pub const DCI_P3_LINEAR_EXT: Self = ColorSpaceKHR(1000104003);
     }
     #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
     impl ColorSpaceKHR {
-        pub const COLOR_SPACE_DCI_P3_NONLINEAR_EXT: Self = ColorSpaceKHR(1000104004);
+        pub const DCI_P3_NONLINEAR_EXT: Self = ColorSpaceKHR(1000104004);
     }
     #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
     impl ColorSpaceKHR {
-        pub const COLOR_SPACE_BT709_LINEAR_EXT: Self = ColorSpaceKHR(1000104005);
+        pub const BT709_LINEAR_EXT: Self = ColorSpaceKHR(1000104005);
     }
     #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
     impl ColorSpaceKHR {
-        pub const COLOR_SPACE_BT709_NONLINEAR_EXT: Self = ColorSpaceKHR(1000104006);
+        pub const BT709_NONLINEAR_EXT: Self = ColorSpaceKHR(1000104006);
     }
     #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
     impl ColorSpaceKHR {
-        pub const COLOR_SPACE_BT2020_LINEAR_EXT: Self = ColorSpaceKHR(1000104007);
+        pub const BT2020_LINEAR_EXT: Self = ColorSpaceKHR(1000104007);
     }
     #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
     impl ColorSpaceKHR {
-        pub const COLOR_SPACE_HDR10_ST2084_EXT: Self = ColorSpaceKHR(1000104008);
+        pub const HDR10_ST2084_EXT: Self = ColorSpaceKHR(1000104008);
     }
     #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
     impl ColorSpaceKHR {
-        pub const COLOR_SPACE_DOLBYVISION_EXT: Self = ColorSpaceKHR(1000104009);
+        pub const DOLBYVISION_EXT: Self = ColorSpaceKHR(1000104009);
     }
     #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
     impl ColorSpaceKHR {
-        pub const COLOR_SPACE_HDR10_HLG_EXT: Self = ColorSpaceKHR(1000104010);
+        pub const HDR10_HLG_EXT: Self = ColorSpaceKHR(1000104010);
     }
     #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
     impl ColorSpaceKHR {
-        pub const COLOR_SPACE_ADOBERGB_LINEAR_EXT: Self = ColorSpaceKHR(1000104011);
+        pub const ADOBERGB_LINEAR_EXT: Self = ColorSpaceKHR(1000104011);
     }
     #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
     impl ColorSpaceKHR {
-        pub const COLOR_SPACE_ADOBERGB_NONLINEAR_EXT: Self = ColorSpaceKHR(1000104012);
+        pub const ADOBERGB_NONLINEAR_EXT: Self = ColorSpaceKHR(1000104012);
     }
     #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
     impl ColorSpaceKHR {
-        pub const COLOR_SPACE_PASS_THROUGH_EXT: Self = ColorSpaceKHR(1000104013);
+        pub const PASS_THROUGH_EXT: Self = ColorSpaceKHR(1000104013);
     }
     #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
     impl ColorSpaceKHR {
-        pub const COLOR_SPACE_EXTENDED_SRGB_NONLINEAR_EXT: Self = ColorSpaceKHR(1000104014);
+        pub const EXTENDED_SRGB_NONLINEAR_EXT: Self = ColorSpaceKHR(1000104014);
     }
     pub struct ExtHdrMetadataFn {
         set_hdr_metadata_ext: extern "system" fn(
@@ -18829,11 +18835,11 @@ pub mod extensions {
     }
     #[doc = "Generated from \'VK_KHR_shared_presentable_image\'"]
     impl PresentModeKHR {
-        pub const PRESENT_MODE_SHARED_DEMAND_REFRESH_KHR: Self = PresentModeKHR(1000111000);
+        pub const SHARED_DEMAND_REFRESH_KHR: Self = PresentModeKHR(1000111000);
     }
     #[doc = "Generated from \'VK_KHR_shared_presentable_image\'"]
     impl PresentModeKHR {
-        pub const PRESENT_MODE_SHARED_CONTINUOUS_REFRESH_KHR: Self = PresentModeKHR(1000111001);
+        pub const SHARED_CONTINUOUS_REFRESH_KHR: Self = PresentModeKHR(1000111001);
     }
     #[doc = "Generated from \'VK_KHR_shared_presentable_image\'"]
     impl ImageLayout {
@@ -19533,7 +19539,8 @@ pub mod extensions {
     }
     #[doc = "Generated from \'VK_EXT_external_memory_dma_buf\'"]
     impl ExternalMemoryHandleTypeFlags {
-        pub const DMA_BUF_EXT: Self = ExternalMemoryHandleTypeFlags(0b1000000000);
+        pub const EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF_EXT: Self =
+            ExternalMemoryHandleTypeFlags(0b1000000000);
     }
     pub struct ExtQueueFamilyForeignFn {}
     unsafe impl Send for ExtQueueFamilyForeignFn {}
@@ -19944,7 +19951,7 @@ pub mod extensions {
     }
     #[doc = "Generated from \'VK_ANDROID_external_memory_android_hardware_buffer\'"]
     impl ExternalMemoryHandleTypeFlags {
-        pub const ANDROID_HARDWARE_BUFFER_ANDROID: Self =
+        pub const EXTERNAL_MEMORY_HANDLE_TYPE_ANDROID_HARDWARE_BUFFER_ANDROID: Self =
             ExternalMemoryHandleTypeFlags(0b10000000000);
     }
     #[doc = "Generated from \'VK_ANDROID_external_memory_android_hardware_buffer\'"]
@@ -21629,11 +21636,13 @@ pub mod extensions {
     }
     #[doc = "Generated from \'VK_EXT_external_memory_host\'"]
     impl ExternalMemoryHandleTypeFlags {
-        pub const HOST_ALLOCATION_EXT: Self = ExternalMemoryHandleTypeFlags(0b10000000);
+        pub const EXTERNAL_MEMORY_HANDLE_TYPE_HOST_ALLOCATION_EXT: Self =
+            ExternalMemoryHandleTypeFlags(0b10000000);
     }
     #[doc = "Generated from \'VK_EXT_external_memory_host\'"]
     impl ExternalMemoryHandleTypeFlags {
-        pub const HOST_MAPPED_FOREIGN_MEMORY_EXT: Self = ExternalMemoryHandleTypeFlags(0b100000000);
+        pub const EXTERNAL_MEMORY_HANDLE_TYPE_HOST_MAPPED_FOREIGN_MEMORY_EXT: Self =
+            ExternalMemoryHandleTypeFlags(0b100000000);
     }
     pub struct AmdBufferMarkerFn {
         cmd_write_buffer_marker_amd: extern "system" fn(
