@@ -637,7 +637,10 @@ impl FieldExt for vkxml::Field {
                     .as_ref()
                     .or_else(|| self.size_enumref.as_ref())
                     .expect("Should have size");
-                let size = Term::intern(size);
+                // Make sure we also rename the constant, that is 
+                // used inside the static array
+                let size = constant_name(size);
+                let size = Term::intern(&size);
                 Some(quote!{
                     [#ty; #size]
                 })
@@ -1393,13 +1396,17 @@ pub fn generate_feature(feature: &vkxml::Feature, commands: &CommandMap) -> quot
         #device
     }
 }
+pub fn constant_name(name: &str) -> String {
+    name.replace("VK_", "")
+}
+
 pub fn generate_constant<'a>(
     constant: &'a vkxml::Constant,
     cache: &mut HashSet<&'a str>,
 ) -> Tokens {
     cache.insert(constant.name.as_str());
     let c = Constant::from_constant(constant);
-    let name =constant.name.replace("VK_", "");
+    let name = constant_name(&constant.name);
     let ident = Ident::from(name.as_str());
     let value = c.to_tokens();
     let ty = c.ty().to_tokens();

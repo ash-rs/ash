@@ -5008,8 +5008,8 @@ pub struct PhysicalDeviceProperties {
     pub vendor_id: uint32_t,
     pub device_id: uint32_t,
     pub device_type: PhysicalDeviceType,
-    pub device_name: [c_char; VK_MAX_PHYSICAL_DEVICE_NAME_SIZE],
-    pub pipeline_cache_uuid: [uint8_t; VK_UUID_SIZE],
+    pub device_name: [c_char; MAX_PHYSICAL_DEVICE_NAME_SIZE],
+    pub pipeline_cache_uuid: [uint8_t; UUID_SIZE],
     pub limits: PhysicalDeviceLimits,
     pub sparse_properties: PhysicalDeviceSparseProperties,
 }
@@ -5050,7 +5050,7 @@ impl ::std::default::Default for PhysicalDeviceProperties {
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ExtensionProperties {
-    pub extension_name: [c_char; VK_MAX_EXTENSION_NAME_SIZE],
+    pub extension_name: [c_char; MAX_EXTENSION_NAME_SIZE],
     pub spec_version: uint32_t,
 }
 impl ::std::fmt::Debug for ExtensionProperties {
@@ -5074,10 +5074,10 @@ impl ::std::default::Default for ExtensionProperties {
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct LayerProperties {
-    pub layer_name: [c_char; VK_MAX_EXTENSION_NAME_SIZE],
+    pub layer_name: [c_char; MAX_EXTENSION_NAME_SIZE],
     pub spec_version: uint32_t,
     pub implementation_version: uint32_t,
-    pub description: [c_char; VK_MAX_DESCRIPTION_SIZE],
+    pub description: [c_char; MAX_DESCRIPTION_SIZE],
 }
 impl ::std::fmt::Debug for LayerProperties {
     fn fmt(&self, fmt: &mut ::std::fmt::Formatter) -> ::std::result::Result<(), ::std::fmt::Error> {
@@ -5254,9 +5254,9 @@ pub struct QueueFamilyProperties {
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceMemoryProperties {
     pub memory_type_count: uint32_t,
-    pub memory_types: [MemoryType; VK_MAX_MEMORY_TYPES],
+    pub memory_types: [MemoryType; MAX_MEMORY_TYPES],
     pub memory_heap_count: uint32_t,
-    pub memory_heaps: [MemoryHeap; VK_MAX_MEMORY_HEAPS],
+    pub memory_heaps: [MemoryHeap; MAX_MEMORY_HEAPS],
 }
 impl ::std::fmt::Debug for PhysicalDeviceMemoryProperties {
     fn fmt(&self, fmt: &mut ::std::fmt::Formatter) -> ::std::result::Result<(), ::std::fmt::Error> {
@@ -8642,9 +8642,9 @@ pub struct ExternalBufferPropertiesKHR {}
 pub struct PhysicalDeviceIDProperties {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
-    pub device_uuid: [uint8_t; VK_UUID_SIZE],
-    pub driver_uuid: [uint8_t; VK_UUID_SIZE],
-    pub device_luid: [uint8_t; VK_LUID_SIZE],
+    pub device_uuid: [uint8_t; UUID_SIZE],
+    pub driver_uuid: [uint8_t; UUID_SIZE],
+    pub device_luid: [uint8_t; LUID_SIZE],
     pub device_node_mask: uint32_t,
     pub device_luid_valid: Bool32,
 }
@@ -9421,7 +9421,7 @@ pub struct PhysicalDeviceGroupProperties {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub physical_device_count: uint32_t,
-    pub physical_devices: [PhysicalDevice; VK_MAX_DEVICE_GROUP_SIZE],
+    pub physical_devices: [PhysicalDevice; MAX_DEVICE_GROUP_SIZE],
     pub subset_allocation: Bool32,
 }
 impl ::std::fmt::Debug for PhysicalDeviceGroupProperties {
@@ -9661,7 +9661,7 @@ pub struct DeviceGroupBindSparseInfoKHR {}
 pub struct DeviceGroupPresentCapabilitiesKHR {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub present_mask: [uint32_t; VK_MAX_DEVICE_GROUP_SIZE],
+    pub present_mask: [uint32_t; MAX_DEVICE_GROUP_SIZE],
     pub modes: DeviceGroupPresentModeFlagsKHR,
 }
 impl ::std::fmt::Debug for DeviceGroupPresentCapabilitiesKHR {

@@ -559,8 +559,8 @@ impl ExampleBase {
                             | vk::AccessFlags::DEPTH_STENCIL_ATTACHMENT_WRITE,
                         old_layout: vk::ImageLayout::UNDEFINED,
                         new_layout: vk::ImageLayout::DEPTH_STENCIL_ATTACHMENT_OPTIMAL,
-                        src_queue_family_index: vk::VK_QUEUE_FAMILY_IGNORED,
-                        dst_queue_family_index: vk::VK_QUEUE_FAMILY_IGNORED,
+                        src_queue_family_index: vk::QUEUE_FAMILY_IGNORED,
+                        dst_queue_family_index: vk::QUEUE_FAMILY_IGNORED,
                         image: depth_image,
                         subresource_range: vk::ImageSubresourceRange {
                             aspect_mask: vk::ImageAspectFlags::DEPTH,
