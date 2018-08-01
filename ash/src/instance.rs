@@ -85,9 +85,15 @@ impl<V: FunctionPointers> Instance<V> {
 #[allow(non_camel_case_types)]
 pub trait InstanceV1_1: InstanceV1_0 {
     fn fp_v1_1(&self) -> &vk::InstanceFnV1_1;
-    unsafe fn enumerate_instance_version(&self, api_version: &mut vk::uint32_t) -> vk::Result {
-        self.fp_v1_1()
-            .enumerate_instance_version(api_version as *mut _)
+
+    unsafe fn enumerate_instance_version(&self) -> VkResult<vk::uint32_t> {
+        let mut api_version = 0;
+        let err_code = self.fp_v1_1()
+            .enumerate_instance_version(&mut api_version as *mut _);
+        match err_code {
+            vk::Result::SUCCESS => Ok(api_version),
+            _ => Err(err_code)
+        }
     }
 }
 
