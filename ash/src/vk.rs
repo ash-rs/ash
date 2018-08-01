@@ -13506,25 +13506,25 @@ pub mod bitflags {
         pub const VARIABLE_DESCRIPTOR_COUNT: Self = DescriptorBindingFlagsEXT(0b1000);
     }
 }
-pub const VK_MAX_PHYSICAL_DEVICE_NAME_SIZE: usize = 256;
-pub const VK_UUID_SIZE: usize = 16;
-pub const VK_LUID_SIZE: usize = 8;
-pub const VK_MAX_EXTENSION_NAME_SIZE: usize = 256;
-pub const VK_MAX_DESCRIPTION_SIZE: usize = 256;
-pub const VK_MAX_MEMORY_TYPES: usize = 32;
-pub const VK_MAX_MEMORY_HEAPS: usize = 16;
-pub const VK_LOD_CLAMP_NONE: f32 = 1000.00;
-pub const VK_REMAINING_MIP_LEVELS: u32 = !0;
-pub const VK_REMAINING_ARRAY_LAYERS: u32 = !0;
-pub const VK_WHOLE_SIZE: u64 = !0;
-pub const VK_ATTACHMENT_UNUSED: u32 = !0;
-pub const VK_TRUE: usize = 1;
-pub const VK_FALSE: usize = 0;
-pub const VK_QUEUE_FAMILY_IGNORED: u32 = !0;
-pub const VK_QUEUE_FAMILY_EXTERNAL: u32 = !0 - 1;
-pub const VK_QUEUE_FAMILY_FOREIGN_EXT: u32 = !0 - 2;
-pub const VK_SUBPASS_EXTERNAL: u32 = !0;
-pub const VK_MAX_DEVICE_GROUP_SIZE: usize = 32;
+pub const MAX_PHYSICAL_DEVICE_NAME_SIZE: usize = 256;
+pub const UUID_SIZE: usize = 16;
+pub const LUID_SIZE: usize = 8;
+pub const MAX_EXTENSION_NAME_SIZE: usize = 256;
+pub const MAX_DESCRIPTION_SIZE: usize = 256;
+pub const MAX_MEMORY_TYPES: usize = 32;
+pub const MAX_MEMORY_HEAPS: usize = 16;
+pub const LOD_CLAMP_NONE: f32 = 1000.00;
+pub const REMAINING_MIP_LEVELS: u32 = !0;
+pub const REMAINING_ARRAY_LAYERS: u32 = !0;
+pub const WHOLE_SIZE: u64 = !0;
+pub const ATTACHMENT_UNUSED: u32 = !0;
+pub const TRUE: usize = 1;
+pub const FALSE: usize = 0;
+pub const QUEUE_FAMILY_IGNORED: u32 = !0;
+pub const QUEUE_FAMILY_EXTERNAL: u32 = !0 - 1;
+pub const QUEUE_FAMILY_FOREIGN_EXT: u32 = !0 - 2;
+pub const SUBPASS_EXTERNAL: u32 = !0;
+pub const MAX_DEVICE_GROUP_SIZE: usize = 32;
 pub mod extensions {
     use super::*;
     pub struct KhrSurfaceFn {

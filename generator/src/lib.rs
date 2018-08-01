@@ -1399,7 +1399,8 @@ pub fn generate_constant<'a>(
 ) -> Tokens {
     cache.insert(constant.name.as_str());
     let c = Constant::from_constant(constant);
-    let ident = Ident::from(constant.name.as_str());
+    let name =constant.name.replace("VK_", "");
+    let ident = Ident::from(name.as_str());
     let value = c.to_tokens();
     let ty = c.ty().to_tokens();
     quote!{
