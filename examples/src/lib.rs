@@ -305,9 +305,9 @@ impl ExampleBase {
             let debug_info = vk::DebugReportCallbackCreateInfoEXT {
                 s_type: vk::StructureType::DEBUG_REPORT_CALLBACK_CREATE_INFO_EXT,
                 p_next: ptr::null(),
-                flags: vk::DebugReportFlagsEXT::ERROR_EXT
-                    | vk::DebugReportFlagsEXT::WARNING_EXT
-                    | vk::DebugReportFlagsEXT::PERFORMANCE_WARNING_EXT,
+                flags: vk::DebugReportFlagsEXT::ERROR
+                    | vk::DebugReportFlagsEXT::WARNING
+                    | vk::DebugReportFlagsEXT::PERFORMANCE_WARNING,
                 pfn_callback: vulkan_debug_callback,
                 p_user_data: ptr::null_mut(),
             };
@@ -411,9 +411,9 @@ impl ExampleBase {
             };
             let pre_transform = if surface_capabilities
                 .supported_transforms
-                .subset(vk::SurfaceTransformFlagsKHR::IDENTITY_KHR)
+                .subset(vk::SurfaceTransformFlagsKHR::IDENTITY)
             {
-                vk::SurfaceTransformFlagsKHR::IDENTITY_KHR
+                vk::SurfaceTransformFlagsKHR::IDENTITY
             } else {
                 surface_capabilities.current_transform
             };
@@ -423,8 +423,8 @@ impl ExampleBase {
             let present_mode = present_modes
                 .iter()
                 .cloned()
-                .find(|&mode| mode == vk::PresentModeKHR::MAILBOX_KHR)
-                .unwrap_or(vk::PresentModeKHR::FIFO_KHR);
+                .find(|&mode| mode == vk::PresentModeKHR::MAILBOX)
+                .unwrap_or(vk::PresentModeKHR::FIFO);
             let swapchain_loader =
                 Swapchain::new(&instance, &device).expect("Unable to load swapchain");
             let swapchain_create_info = vk::SwapchainCreateInfoKHR {
@@ -439,7 +439,7 @@ impl ExampleBase {
                 image_usage: vk::ImageUsageFlags::COLOR_ATTACHMENT,
                 image_sharing_mode: vk::SharingMode::EXCLUSIVE,
                 pre_transform: pre_transform,
-                composite_alpha: vk::CompositeAlphaFlagsKHR::OPAQUE_KHR,
+                composite_alpha: vk::CompositeAlphaFlagsKHR::OPAQUE,
                 present_mode: present_mode,
                 clipped: 1,
                 old_swapchain: vk::SwapchainKHR::null(),
