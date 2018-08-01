@@ -621,7 +621,6 @@ impl FieldExt for vkxml::Field {
     }
 
     fn type_tokens(&self) -> Tokens {
-        println!("{:#?}", self);
         let ty = name_to_tokens(&self.basetype);
         let pointer = self
             .reference
@@ -933,7 +932,6 @@ pub fn variant_ident(enum_name: &str, variant_name: &str) -> Ident {
         .to_shouty_snake_case()
         .replace("_BIT", "")
         .replace(vendor, "");
-    println!("{} {} = {} {}", enum_name, struct_name, vendor, variant_name);
     let is_digit = new_variant_name
         .chars()
         .nth(0)
