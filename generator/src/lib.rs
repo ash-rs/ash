@@ -86,16 +86,20 @@ named!(cfloat<&str, f32>,
 pub fn define_handle_macro() -> Tokens {
     quote! {
         macro_rules! define_handle{
-            ($name: ident) => {
-                #[derive(Clone, Copy, Debug)]
+            ($name: ident, $ty: ident) => {
                 #[repr(C)]
-                pub struct $name{
-                    ptr: *mut u8
-                }
-                impl Default for $name{
+                #[derive(Clone, Copy, Debug)]
+                pub struct $name(*mut u8);
+                impl Default for $name {
                     fn default() -> $name {
                         $name::null()
                     }
+                }
+
+                impl Handle for $name {
+                    const TYPE: ObjectType = ObjectType::$ty;
+                    fn as_raw(self) -> u64 { self.0 as u64 }
+                    fn from_raw(x: u64) -> Self { $name(x as _) }
                 }
 
                 unsafe impl Send for $name {}
@@ -103,9 +107,7 @@ pub fn define_handle_macro() -> Tokens {
 
                 impl $name{
                     pub fn null() -> Self{
-                        $name{
-                            ptr: ::std::ptr::null_mut()
-                        }
+                        $name(::std::ptr::null_mut())
                     }
                 }
             }
@@ -116,10 +118,16 @@ pub fn define_handle_macro() -> Tokens {
 pub fn handle_nondispatchable_macro() -> Tokens {
     quote!{
         macro_rules! handle_nondispatchable {
-            ($name: ident) => {
+            ($name: ident, $ty: ident) => {
                 #[repr(C)]
                 #[derive(Eq, PartialEq, Ord, PartialOrd, Clone, Copy, Hash, Default)]
-                pub struct $name (uint64_t);
+                pub struct $name(uint64_t);
+
+                impl Handle for $name {
+                    const TYPE: ObjectType = ObjectType::$ty;
+                    fn as_raw(self) -> u64 { self.0 as u64 }
+                    fn from_raw(x: u64) -> Self { $name(x as _) }
+                }
 
                 impl $name{
                     pub fn null() -> $name{
@@ -1260,16 +1268,18 @@ pub fn generate_handle(handle: &vkxml::Handle) -> Option<Tokens> {
     let tokens = match handle.ty {
         vkxml::HandleType::Dispatch => {
             let name = &handle.name[2..];
+            let ty = Ident::from(name.to_shouty_snake_case());
             let name = Ident::from(name);
             quote! {
-                define_handle!(#name);
+                define_handle!(#name, #ty);
             }
         }
         vkxml::HandleType::NoDispatch => {
             let name = &handle.name[2..];
+            let ty = Ident::from(name.to_shouty_snake_case());
             let name = Ident::from(name);
             quote! {
-                handle_nondispatchable!(#name);
+                handle_nondispatchable!(#name, #ty);
             }
         }
     };
@@ -1552,6 +1562,13 @@ pub fn write_source_code(path: &Path) {
         pub use self::extensions::*;
         #[doc(hidden)]
         pub use self::bitflags::*;
+
+        pub trait Handle {
+            const TYPE: ObjectType;
+            fn as_raw(self) -> u64;
+            fn from_raw(u64) -> Self;
+        }
+
         #version_macros
         #platform_specific_types
         #bitflags_macro

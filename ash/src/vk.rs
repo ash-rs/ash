@@ -4,6 +4,11 @@ pub use self::bitflags::*;
 pub use self::extensions::*;
 #[doc(hidden)]
 pub use libc::*;
+pub trait Handle {
+    const TYPE: ObjectType;
+    fn as_raw(self) -> u64;
+    fn from_raw(u64) -> Self;
+}
 #[macro_export]
 macro_rules! vk_make_version {
     ($major:expr, $minor:expr, $patch:expr) => {
@@ -174,10 +179,19 @@ macro_rules! vk_bitflags_wrapped {
     };
 }
 macro_rules! handle_nondispatchable {
-    ($name:ident) => {
+    ($name:ident, $ty:ident) => {
         #[repr(C)]
         #[derive(Eq, PartialEq, Ord, PartialOrd, Clone, Copy, Hash, Default)]
         pub struct $name(uint64_t);
+        impl Handle for $name {
+            const TYPE: ObjectType = ObjectType::$ty;
+            fn as_raw(self) -> u64 {
+                self.0 as u64
+            }
+            fn from_raw(x: u64) -> Self {
+                $name(x as _)
+            }
+        }
         impl $name {
             pub fn null() -> $name {
                 $name(0)
@@ -202,24 +216,29 @@ macro_rules! handle_nondispatchable {
     };
 }
 macro_rules! define_handle {
-    ($name:ident) => {
-        #[derive(Clone, Copy, Debug)]
+    ($name:ident, $ty:ident) => {
         #[repr(C)]
-        pub struct $name {
-            ptr: *mut u8,
-        }
+        #[derive(Clone, Copy, Debug)]
+        pub struct $name(*mut u8);
         impl Default for $name {
             fn default() -> $name {
                 $name::null()
+            }
+        }
+        impl Handle for $name {
+            const TYPE: ObjectType = ObjectType::$ty;
+            fn as_raw(self) -> u64 {
+                self.0 as u64
+            }
+            fn from_raw(x: u64) -> Self {
+                $name(x as _)
             }
         }
         unsafe impl Send for $name {}
         unsafe impl Sync for $name {}
         impl $name {
             pub fn null() -> Self {
-                $name {
-                    ptr: ::std::ptr::null_mut(),
-                }
+                $name(::std::ptr::null_mut())
             }
         }
     };
@@ -444,18 +463,18 @@ impl ::std::clone::Clone for InstanceFnV1_0 {
             enumerate_physical_devices: self.enumerate_physical_devices,
             get_physical_device_features: self.get_physical_device_features,
             get_physical_device_format_properties: self.get_physical_device_format_properties,
-            get_physical_device_image_format_properties: self
-                .get_physical_device_image_format_properties,
+            get_physical_device_image_format_properties:
+                self.get_physical_device_image_format_properties,
             get_physical_device_properties: self.get_physical_device_properties,
-            get_physical_device_queue_family_properties: self
-                .get_physical_device_queue_family_properties,
+            get_physical_device_queue_family_properties:
+                self.get_physical_device_queue_family_properties,
             get_physical_device_memory_properties: self.get_physical_device_memory_properties,
             get_device_proc_addr: self.get_device_proc_addr,
             create_device: self.create_device,
             enumerate_device_extension_properties: self.enumerate_device_extension_properties,
             enumerate_device_layer_properties: self.enumerate_device_layer_properties,
-            get_physical_device_sparse_image_format_properties: self
-                .get_physical_device_sparse_image_format_properties,
+            get_physical_device_sparse_image_format_properties:
+                self.get_physical_device_sparse_image_format_properties,
         }
     }
 }
@@ -3922,19 +3941,19 @@ impl ::std::clone::Clone for InstanceFnV1_1 {
             get_physical_device_features2: self.get_physical_device_features2,
             get_physical_device_properties2: self.get_physical_device_properties2,
             get_physical_device_format_properties2: self.get_physical_device_format_properties2,
-            get_physical_device_image_format_properties2: self
-                .get_physical_device_image_format_properties2,
-            get_physical_device_queue_family_properties2: self
-                .get_physical_device_queue_family_properties2,
+            get_physical_device_image_format_properties2:
+                self.get_physical_device_image_format_properties2,
+            get_physical_device_queue_family_properties2:
+                self.get_physical_device_queue_family_properties2,
             get_physical_device_memory_properties2: self.get_physical_device_memory_properties2,
-            get_physical_device_sparse_image_format_properties2: self
-                .get_physical_device_sparse_image_format_properties2,
-            get_physical_device_external_buffer_properties: self
-                .get_physical_device_external_buffer_properties,
-            get_physical_device_external_fence_properties: self
-                .get_physical_device_external_fence_properties,
-            get_physical_device_external_semaphore_properties: self
-                .get_physical_device_external_semaphore_properties,
+            get_physical_device_sparse_image_format_properties2:
+                self.get_physical_device_sparse_image_format_properties2,
+            get_physical_device_external_buffer_properties:
+                self.get_physical_device_external_buffer_properties,
+            get_physical_device_external_fence_properties:
+                self.get_physical_device_external_fence_properties,
+            get_physical_device_external_semaphore_properties:
+                self.get_physical_device_external_semaphore_properties,
         }
     }
 }
@@ -4821,42 +4840,42 @@ vk_bitflags_wrapped!(
     0b0,
     Flags
 );
-define_handle!(Instance);
-define_handle!(PhysicalDevice);
-define_handle!(Device);
-define_handle!(Queue);
-define_handle!(CommandBuffer);
-handle_nondispatchable!(DeviceMemory);
-handle_nondispatchable!(CommandPool);
-handle_nondispatchable!(Buffer);
-handle_nondispatchable!(BufferView);
-handle_nondispatchable!(Image);
-handle_nondispatchable!(ImageView);
-handle_nondispatchable!(ShaderModule);
-handle_nondispatchable!(Pipeline);
-handle_nondispatchable!(PipelineLayout);
-handle_nondispatchable!(Sampler);
-handle_nondispatchable!(DescriptorSet);
-handle_nondispatchable!(DescriptorSetLayout);
-handle_nondispatchable!(DescriptorPool);
-handle_nondispatchable!(Fence);
-handle_nondispatchable!(Semaphore);
-handle_nondispatchable!(Event);
-handle_nondispatchable!(QueryPool);
-handle_nondispatchable!(Framebuffer);
-handle_nondispatchable!(RenderPass);
-handle_nondispatchable!(PipelineCache);
-handle_nondispatchable!(ObjectTableNVX);
-handle_nondispatchable!(IndirectCommandsLayoutNVX);
-handle_nondispatchable!(DescriptorUpdateTemplate);
-handle_nondispatchable!(SamplerYcbcrConversion);
-handle_nondispatchable!(ValidationCacheEXT);
-handle_nondispatchable!(DisplayKHR);
-handle_nondispatchable!(DisplayModeKHR);
-handle_nondispatchable!(SurfaceKHR);
-handle_nondispatchable!(SwapchainKHR);
-handle_nondispatchable!(DebugReportCallbackEXT);
-handle_nondispatchable!(DebugUtilsMessengerEXT);
+define_handle!(Instance, INSTANCE);
+define_handle!(PhysicalDevice, PHYSICAL_DEVICE);
+define_handle!(Device, DEVICE);
+define_handle!(Queue, QUEUE);
+define_handle!(CommandBuffer, COMMAND_BUFFER);
+handle_nondispatchable!(DeviceMemory, DEVICE_MEMORY);
+handle_nondispatchable!(CommandPool, COMMAND_POOL);
+handle_nondispatchable!(Buffer, BUFFER);
+handle_nondispatchable!(BufferView, BUFFER_VIEW);
+handle_nondispatchable!(Image, IMAGE);
+handle_nondispatchable!(ImageView, IMAGE_VIEW);
+handle_nondispatchable!(ShaderModule, SHADER_MODULE);
+handle_nondispatchable!(Pipeline, PIPELINE);
+handle_nondispatchable!(PipelineLayout, PIPELINE_LAYOUT);
+handle_nondispatchable!(Sampler, SAMPLER);
+handle_nondispatchable!(DescriptorSet, DESCRIPTOR_SET);
+handle_nondispatchable!(DescriptorSetLayout, DESCRIPTOR_SET_LAYOUT);
+handle_nondispatchable!(DescriptorPool, DESCRIPTOR_POOL);
+handle_nondispatchable!(Fence, FENCE);
+handle_nondispatchable!(Semaphore, SEMAPHORE);
+handle_nondispatchable!(Event, EVENT);
+handle_nondispatchable!(QueryPool, QUERY_POOL);
+handle_nondispatchable!(Framebuffer, FRAMEBUFFER);
+handle_nondispatchable!(RenderPass, RENDER_PASS);
+handle_nondispatchable!(PipelineCache, PIPELINE_CACHE);
+handle_nondispatchable!(ObjectTableNVX, OBJECT_TABLE_NVX);
+handle_nondispatchable!(IndirectCommandsLayoutNVX, INDIRECT_COMMANDS_LAYOUT_NVX);
+handle_nondispatchable!(DescriptorUpdateTemplate, DESCRIPTOR_UPDATE_TEMPLATE);
+handle_nondispatchable!(SamplerYcbcrConversion, SAMPLER_YCBCR_CONVERSION);
+handle_nondispatchable!(ValidationCacheEXT, VALIDATION_CACHE_EXT);
+handle_nondispatchable!(DisplayKHR, DISPLAY_KHR);
+handle_nondispatchable!(DisplayModeKHR, DISPLAY_MODE_KHR);
+handle_nondispatchable!(SurfaceKHR, SURFACE_KHR);
+handle_nondispatchable!(SwapchainKHR, SWAPCHAIN_KHR);
+handle_nondispatchable!(DebugReportCallbackEXT, DEBUG_REPORT_CALLBACK_EXT);
+handle_nondispatchable!(DebugUtilsMessengerEXT, DEBUG_UTILS_MESSENGER_EXT);
 #[allow(non_camel_case_types)]
 pub type PFN_vkInternalAllocationNotification =
     unsafe extern "system" fn(
@@ -13567,14 +13586,14 @@ pub mod extensions {
         fn clone(&self) -> Self {
             KhrSurfaceFn {
                 destroy_surface_khr: self.destroy_surface_khr,
-                get_physical_device_surface_support_khr: self
-                    .get_physical_device_surface_support_khr,
-                get_physical_device_surface_capabilities_khr: self
-                    .get_physical_device_surface_capabilities_khr,
-                get_physical_device_surface_formats_khr: self
-                    .get_physical_device_surface_formats_khr,
-                get_physical_device_surface_present_modes_khr: self
-                    .get_physical_device_surface_present_modes_khr,
+                get_physical_device_surface_support_khr:
+                    self.get_physical_device_surface_support_khr,
+                get_physical_device_surface_capabilities_khr:
+                    self.get_physical_device_surface_capabilities_khr,
+                get_physical_device_surface_formats_khr:
+                    self.get_physical_device_surface_formats_khr,
+                get_physical_device_surface_present_modes_khr:
+                    self.get_physical_device_surface_present_modes_khr,
             }
         }
     }
@@ -13723,12 +13742,12 @@ pub mod extensions {
                 get_swapchain_images_khr: self.get_swapchain_images_khr,
                 acquire_next_image_khr: self.acquire_next_image_khr,
                 queue_present_khr: self.queue_present_khr,
-                get_device_group_present_capabilities_khr: self
-                    .get_device_group_present_capabilities_khr,
-                get_device_group_surface_present_modes_khr: self
-                    .get_device_group_surface_present_modes_khr,
-                get_physical_device_present_rectangles_khr: self
-                    .get_physical_device_present_rectangles_khr,
+                get_device_group_present_capabilities_khr:
+                    self.get_device_group_present_capabilities_khr,
+                get_device_group_surface_present_modes_khr:
+                    self.get_device_group_surface_present_modes_khr,
+                get_physical_device_present_rectangles_khr:
+                    self.get_physical_device_present_rectangles_khr,
                 acquire_next_image2_khr: self.acquire_next_image2_khr,
             }
         }
@@ -14035,12 +14054,12 @@ pub mod extensions {
     impl ::std::clone::Clone for KhrDisplayFn {
         fn clone(&self) -> Self {
             KhrDisplayFn {
-                get_physical_device_display_properties_khr: self
-                    .get_physical_device_display_properties_khr,
-                get_physical_device_display_plane_properties_khr: self
-                    .get_physical_device_display_plane_properties_khr,
-                get_display_plane_supported_displays_khr: self
-                    .get_display_plane_supported_displays_khr,
+                get_physical_device_display_properties_khr:
+                    self.get_physical_device_display_properties_khr,
+                get_physical_device_display_plane_properties_khr:
+                    self.get_physical_device_display_plane_properties_khr,
+                get_display_plane_supported_displays_khr:
+                    self.get_display_plane_supported_displays_khr,
                 get_display_mode_properties_khr: self.get_display_mode_properties_khr,
                 create_display_mode_khr: self.create_display_mode_khr,
                 get_display_plane_capabilities_khr: self.get_display_plane_capabilities_khr,
@@ -14321,8 +14340,8 @@ pub mod extensions {
         fn clone(&self) -> Self {
             KhrXlibSurfaceFn {
                 create_xlib_surface_khr: self.create_xlib_surface_khr,
-                get_physical_device_xlib_presentation_support_khr: self
-                    .get_physical_device_xlib_presentation_support_khr,
+                get_physical_device_xlib_presentation_support_khr:
+                    self.get_physical_device_xlib_presentation_support_khr,
             }
         }
     }
@@ -14407,8 +14426,8 @@ pub mod extensions {
         fn clone(&self) -> Self {
             KhrXcbSurfaceFn {
                 create_xcb_surface_khr: self.create_xcb_surface_khr,
-                get_physical_device_xcb_presentation_support_khr: self
-                    .get_physical_device_xcb_presentation_support_khr,
+                get_physical_device_xcb_presentation_support_khr:
+                    self.get_physical_device_xcb_presentation_support_khr,
             }
         }
     }
@@ -14493,8 +14512,8 @@ pub mod extensions {
         fn clone(&self) -> Self {
             KhrWaylandSurfaceFn {
                 create_wayland_surface_khr: self.create_wayland_surface_khr,
-                get_physical_device_wayland_presentation_support_khr: self
-                    .get_physical_device_wayland_presentation_support_khr,
+                get_physical_device_wayland_presentation_support_khr:
+                    self.get_physical_device_wayland_presentation_support_khr,
             }
         }
     }
@@ -14576,8 +14595,8 @@ pub mod extensions {
         fn clone(&self) -> Self {
             KhrMirSurfaceFn {
                 create_mir_surface_khr: self.create_mir_surface_khr,
-                get_physical_device_mir_presentation_support_khr: self
-                    .get_physical_device_mir_presentation_support_khr,
+                get_physical_device_mir_presentation_support_khr:
+                    self.get_physical_device_mir_presentation_support_khr,
             }
         }
     }
@@ -14712,8 +14731,8 @@ pub mod extensions {
         fn clone(&self) -> Self {
             KhrWin32SurfaceFn {
                 create_win32_surface_khr: self.create_win32_surface_khr,
-                get_physical_device_win32_presentation_support_khr: self
-                    .get_physical_device_win32_presentation_support_khr,
+                get_physical_device_win32_presentation_support_khr:
+                    self.get_physical_device_win32_presentation_support_khr,
             }
         }
     }
@@ -16279,8 +16298,8 @@ pub mod extensions {
     impl ::std::clone::Clone for NvExternalMemoryCapabilitiesFn {
         fn clone(&self) -> Self {
             NvExternalMemoryCapabilitiesFn {
-                get_physical_device_external_image_format_properties_nv: self
-                    .get_physical_device_external_image_format_properties_nv,
+                get_physical_device_external_image_format_properties_nv:
+                    self.get_physical_device_external_image_format_properties_nv,
             }
         }
     }
@@ -16473,12 +16492,12 @@ pub mod extensions {
     impl ::std::clone::Clone for KhrDeviceGroupFn {
         fn clone(&self) -> Self {
             KhrDeviceGroupFn {
-                get_device_group_present_capabilities_khr: self
-                    .get_device_group_present_capabilities_khr,
-                get_device_group_surface_present_modes_khr: self
-                    .get_device_group_surface_present_modes_khr,
-                get_physical_device_present_rectangles_khr: self
-                    .get_physical_device_present_rectangles_khr,
+                get_device_group_present_capabilities_khr:
+                    self.get_device_group_present_capabilities_khr,
+                get_device_group_surface_present_modes_khr:
+                    self.get_device_group_surface_present_modes_khr,
+                get_physical_device_present_rectangles_khr:
+                    self.get_physical_device_present_rectangles_khr,
                 acquire_next_image2_khr: self.acquire_next_image2_khr,
             }
         }
@@ -17290,8 +17309,8 @@ pub mod extensions {
         fn clone(&self) -> Self {
             KhrPushDescriptorFn {
                 cmd_push_descriptor_set_khr: self.cmd_push_descriptor_set_khr,
-                cmd_push_descriptor_set_with_template_khr: self
-                    .cmd_push_descriptor_set_with_template_khr,
+                cmd_push_descriptor_set_with_template_khr:
+                    self.cmd_push_descriptor_set_with_template_khr,
             }
         }
     }
@@ -17477,8 +17496,8 @@ pub mod extensions {
     impl ::std::clone::Clone for KhrDescriptorUpdateTemplateFn {
         fn clone(&self) -> Self {
             KhrDescriptorUpdateTemplateFn {
-                cmd_push_descriptor_set_with_template_khr: self
-                    .cmd_push_descriptor_set_with_template_khr,
+                cmd_push_descriptor_set_with_template_khr:
+                    self.cmd_push_descriptor_set_with_template_khr,
             }
         }
     }
@@ -17592,8 +17611,8 @@ pub mod extensions {
                 destroy_object_table_nvx: self.destroy_object_table_nvx,
                 register_objects_nvx: self.register_objects_nvx,
                 unregister_objects_nvx: self.unregister_objects_nvx,
-                get_physical_device_generated_commands_properties_nvx: self
-                    .get_physical_device_generated_commands_properties_nvx,
+                get_physical_device_generated_commands_properties_nvx:
+                    self.get_physical_device_generated_commands_properties_nvx,
             }
         }
     }
@@ -18033,8 +18052,8 @@ pub mod extensions {
     impl ::std::clone::Clone for ExtDisplaySurfaceCounterFn {
         fn clone(&self) -> Self {
             ExtDisplaySurfaceCounterFn {
-                get_physical_device_surface_capabilities2_ext: self
-                    .get_physical_device_surface_capabilities2_ext,
+                get_physical_device_surface_capabilities2_ext:
+                    self.get_physical_device_surface_capabilities2_ext,
             }
         }
     }
@@ -19185,10 +19204,10 @@ pub mod extensions {
     impl ::std::clone::Clone for KhrGetSurfaceCapabilities2Fn {
         fn clone(&self) -> Self {
             KhrGetSurfaceCapabilities2Fn {
-                get_physical_device_surface_capabilities2_khr: self
-                    .get_physical_device_surface_capabilities2_khr,
-                get_physical_device_surface_formats2_khr: self
-                    .get_physical_device_surface_formats2_khr,
+                get_physical_device_surface_capabilities2_khr:
+                    self.get_physical_device_surface_capabilities2_khr,
+                get_physical_device_surface_formats2_khr:
+                    self.get_physical_device_surface_formats2_khr,
             }
         }
     }
@@ -19317,10 +19336,10 @@ pub mod extensions {
     impl ::std::clone::Clone for KhrGetDisplayProperties2Fn {
         fn clone(&self) -> Self {
             KhrGetDisplayProperties2Fn {
-                get_physical_device_display_properties2_khr: self
-                    .get_physical_device_display_properties2_khr,
-                get_physical_device_display_plane_properties2_khr: self
-                    .get_physical_device_display_plane_properties2_khr,
+                get_physical_device_display_properties2_khr:
+                    self.get_physical_device_display_properties2_khr,
+                get_physical_device_display_plane_properties2_khr:
+                    self.get_physical_device_display_plane_properties2_khr,
                 get_display_mode_properties2_khr: self.get_display_mode_properties2_khr,
                 get_display_plane_capabilities2_khr: self.get_display_plane_capabilities2_khr,
             }
@@ -19956,10 +19975,10 @@ pub mod extensions {
     impl ::std::clone::Clone for AndroidExternalMemoryAndroidHardwareBufferFn {
         fn clone(&self) -> Self {
             AndroidExternalMemoryAndroidHardwareBufferFn {
-                get_android_hardware_buffer_properties_android: self
-                    .get_android_hardware_buffer_properties_android,
-                get_memory_android_hardware_buffer_android: self
-                    .get_memory_android_hardware_buffer_android,
+                get_android_hardware_buffer_properties_android:
+                    self.get_android_hardware_buffer_properties_android,
+                get_memory_android_hardware_buffer_android:
+                    self.get_memory_android_hardware_buffer_android,
             }
         }
     }
@@ -20360,8 +20379,8 @@ pub mod extensions {
         fn clone(&self) -> Self {
             ExtSampleLocationsFn {
                 cmd_set_sample_locations_ext: self.cmd_set_sample_locations_ext,
-                get_physical_device_multisample_properties_ext: self
-                    .get_physical_device_multisample_properties_ext,
+                get_physical_device_multisample_properties_ext:
+                    self.get_physical_device_multisample_properties_ext,
             }
         }
     }
