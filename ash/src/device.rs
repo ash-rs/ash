@@ -34,23 +34,21 @@ pub trait DeviceV1_1: DeviceV1_0 {
         }
     }
 
-    fn get_device_group_peer_memory_features(
+	unsafe fn get_device_group_peer_memory_features(
         &self,
         heap_index: vk::uint32_t,
         local_device_index: vk::uint32_t,
         remote_device_index: vk::uint32_t,
     ) -> vk::PeerMemoryFeatureFlags {
-        unsafe {
-            let mut peer_memory_features = mem::uninitialized();
-            self.fp_v1_1().get_device_group_peer_memory_features(
-                self.handle(),
-                heap_index,
-                local_device_index,
-                remote_device_index,
-                &mut peer_memory_features,
-            );
-            peer_memory_features
-        }
+        let mut peer_memory_features = mem::uninitialized();
+        self.fp_v1_1().get_device_group_peer_memory_features(
+            self.handle(),
+            heap_index,
+            local_device_index,
+            remote_device_index,
+            &mut peer_memory_features,
+        );
+        peer_memory_features
     }
 
     unsafe fn cmd_set_device_mask(
