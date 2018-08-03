@@ -1,6 +1,6 @@
 environment:
   matrix:
-    - TARGET: 1.21.0-x86_64-pc-windows
+    - TARGET: 1.28.0-x86_64-pc-windows
       COMPILER: msvc
 install:
   - if %COMPILER%==gnu choco install -y mingw
