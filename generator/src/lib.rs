@@ -38,7 +38,7 @@ impl CType {
     }
 }
 
-named!(ctype<&str, CType>, 
+named!(ctype<&str, CType>,
     alt!(
         tag!("ULL") => { |_| CType::U64 } |
         tag!("U") => { |_| CType::U32  }
@@ -55,12 +55,12 @@ named!(inverse_number<&str, (CType, String)>,
     do_parse!(
         tag!("(")>>
         tag!("~") >>
-        s: take_while1!(|c: char| c.is_digit(10)) >> 
+        s: take_while1!(|c: char| c.is_digit(10)) >>
         ctype: ctype >>
         minus_num: opt!(
             do_parse!(
                 tag!("-") >>
-                n: take_while1!(|c: char| c.is_digit(10)) >> 
+                n: take_while1!(|c: char| c.is_digit(10)) >>
                 (n)
             )
         ) >>
@@ -88,7 +88,7 @@ pub fn define_handle_macro() -> Tokens {
         macro_rules! define_handle{
             ($name: ident) => {
                 #[derive(Clone, Copy, Debug)]
-                #[repr(C)]
+                #[repr(transparent)]
                 pub struct $name{
                     ptr: *mut u8
                 }
@@ -117,7 +117,7 @@ pub fn handle_nondispatchable_macro() -> Tokens {
     quote!{
         macro_rules! handle_nondispatchable {
             ($name: ident) => {
-                #[repr(C)]
+                #[repr(transparent)]
                 #[derive(Eq, PartialEq, Ord, PartialOrd, Clone, Copy, Hash, Default)]
                 pub struct $name (uint64_t);
 
@@ -525,8 +525,7 @@ impl CommandExt for vkxml::Command {
             .map(|field| match field.basetype.as_str() {
                 "VkDevice" | "VkCommandBuffer" | "VkQueue" => true,
                 _ => false,
-            })
-            .unwrap_or(false);
+            }).unwrap_or(false);
         match self.name.as_str() {
             "vkGetInstanceProcAddr" => FunctionType::Static,
             "vkCreateInstance"
@@ -637,7 +636,7 @@ impl FieldExt for vkxml::Field {
                     .as_ref()
                     .or_else(|| self.size_enumref.as_ref())
                     .expect("Should have size");
-                // Make sure we also rename the constant, that is 
+                // Make sure we also rename the constant, that is
                 // used inside the static array
                 let size = constant_name(size);
                 let size = Term::intern(&size);
@@ -674,11 +673,9 @@ fn generate_function_pointers(ident: Ident, commands: &[&vkxml::Command]) -> quo
                     let name = field.param_ident();
                     let ty = field.type_tokens();
                     (name, ty)
-                })
-                .collect();
+                }).collect();
             params
-        })
-        .collect();
+        }).collect();
 
     let params_names: Vec<Vec<_>> = params
         .iter()
@@ -687,8 +684,7 @@ fn generate_function_pointers(ident: Ident, commands: &[&vkxml::Command]) -> quo
                 .iter()
                 .map(|&(param_name, _)| param_name)
                 .collect()
-        })
-        .collect();
+        }).collect();
     let param_names_ref = &params_names;
     let expanded_params: Vec<_> = params
         .iter()
@@ -699,8 +695,7 @@ fn generate_function_pointers(ident: Ident, commands: &[&vkxml::Command]) -> quo
             quote!{
                 #(#inner_params_iter,)*
             }
-        })
-        .collect();
+        }).collect();
     let expanded_params_ref = &expanded_params;
 
     let return_types: Vec<_> = commands
@@ -787,8 +782,7 @@ pub fn generate_extension_constants<'a>(
         .filter_map(|item| match item {
             vk_parse::ExtensionItem::Require { items, .. } => Some(items.iter()),
             _ => None,
-        })
-        .flat_map(|iter| iter);
+        }).flat_map(|iter| iter);
     let enum_tokens = items.filter_map(|item| match item {
         vk_parse::InterfaceItem::Enum(_enum) => {
             use vk_parse::EnumSpec;
@@ -853,8 +847,7 @@ pub fn generate_extension_commands(
                 }))
             }
             _ => None,
-        })
-        .flat_map(|iter| iter)
+        }).flat_map(|iter| iter)
         .collect_vec();
     let name = format!("{}Fn", extension_name.to_camel_case());
     let ident = Ident::from(&name[2..]);
@@ -904,7 +897,7 @@ pub fn generate_bitmask(bitmask: &vkxml::Bitmask) -> Option<Tokens> {
     let name = &bitmask.name[2..];
     let ident = Ident::from(name);
     Some(quote!{
-        #[repr(C)]
+        #[repr(transparent)]
         #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
         pub struct #ident(Flags);
         vk_bitflags_wrapped!(#ident, 0b0, Flags);
@@ -958,8 +951,7 @@ pub fn bitflags_impl_block(
             let variant_ident = constant.variant_ident(enum_name);
             let tokens = constant.to_tokens();
             (variant_ident, tokens)
-        })
-        .collect_vec();
+        }).collect_vec();
 
     let notations = constants.iter().map(|constant| {
         constant.notation().map(|n| {
@@ -969,14 +961,16 @@ pub fn bitflags_impl_block(
         })
     });
 
-    let variants = variants.iter().zip(notations.clone()).map(
-        |((variant_ident, value), ref notation)| {
-            quote!{
-                #notation
-                pub const #variant_ident: Self = #ident(#value);
-            }
-        },
-    );
+    let variants =
+        variants
+            .iter()
+            .zip(notations.clone())
+            .map(|((variant_ident, value), ref notation)| {
+                quote!{
+                    #notation
+                    pub const #variant_ident: Self = #ident(#value);
+                }
+            });
     quote!{
         impl #ident {
             #(#variants)*
@@ -997,8 +991,7 @@ pub fn generate_enum<'a>(
         .filter_map(|elem| match *elem {
             vkxml::EnumerationElement::Enum(ref constant) => Some(constant),
             _ => None,
-        })
-        .collect_vec();
+        }).collect_vec();
     for constant in &constants {
         const_cache.insert(constant.name.as_str());
     }
@@ -1013,7 +1006,7 @@ pub fn generate_enum<'a>(
 
         let impl_bitflags = bitflags_impl_block(ident, &_enum.name, &constants);
         let q = quote!{
-            #[repr(C)]
+            #[repr(transparent)]
             #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
             pub struct #ident(pub(crate) Flags);
             vk_bitflags_wrapped!(#ident, #all_bits_term, Flags);
@@ -1024,7 +1017,7 @@ pub fn generate_enum<'a>(
         let impl_block = bitflags_impl_block(ident, &_enum.name, &constants);
         let enum_quote = quote!{
             #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-            #[repr(C)]
+            #[repr(transparent)]
             pub struct #ident(pub(crate) i32);
             #impl_block
         };
@@ -1087,8 +1080,7 @@ fn is_static_array(field: &vkxml::Field) -> bool {
         .map(|ty| match ty {
             vkxml::ArrayType::Static => true,
             _ => false,
-        })
-        .unwrap_or(false)
+        }).unwrap_or(false)
 }
 pub fn derive_default(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> Option<Tokens> {
     let name = name_to_tokens(&_struct.name);
@@ -1344,13 +1336,11 @@ pub fn generate_feature(feature: &vkxml::Feature, commands: &CommandMap) -> quot
                         } else {
                             None
                         }
-                    })
-                    .collect()
+                    }).collect()
             } else {
                 vec![]
             }
-        })
-        .filter_map(|cmd_ref| commands.get(&cmd_ref.name))
+        }).filter_map(|cmd_ref| commands.get(&cmd_ref.name))
         .fold(
             (Vec::new(), Vec::new(), Vec::new(), Vec::new()),
             |mut acc, &cmd_ref| {
@@ -1440,8 +1430,7 @@ pub fn write_source_code(path: &Path) {
         .filter_map(|item| match item {
             vk_parse::RegistryItem::Extensions { items: ext, .. } => Some(ext),
             _ => None,
-        })
-        .nth(0)
+        }).nth(0)
         .expect("extension");
 
     let spec = vk_parse::parse_file_as_vkxml(path);
@@ -1451,8 +1440,7 @@ pub fn write_source_code(path: &Path) {
         .filter_map(|elem| match elem {
             vkxml::RegistryElement::Commands(ref cmds) => Some(cmds),
             _ => None,
-        })
-        .flat_map(|cmds| cmds.elements.iter().map(|cmd| (cmd.name.clone(), cmd)))
+        }).flat_map(|cmds| cmds.elements.iter().map(|cmd| (cmd.name.clone(), cmd)))
         .collect();
 
     let features: Vec<&vkxml::Feature> = spec
@@ -1461,8 +1449,7 @@ pub fn write_source_code(path: &Path) {
         .filter_map(|elem| match elem {
             vkxml::RegistryElement::Features(ref features) => Some(features),
             _ => None,
-        })
-        .flat_map(|features| features.elements.iter())
+        }).flat_map(|features| features.elements.iter())
         .collect();
 
     let definitions: Vec<&vkxml::DefinitionsElement> = spec
@@ -1471,8 +1458,7 @@ pub fn write_source_code(path: &Path) {
         .filter_map(|elem| match elem {
             vkxml::RegistryElement::Definitions(ref definitions) => Some(definitions),
             _ => None,
-        })
-        .flat_map(|definitions| definitions.elements.iter())
+        }).flat_map(|definitions| definitions.elements.iter())
         .collect();
 
     let enums: Vec<&vkxml::Enumeration> = spec
@@ -1481,14 +1467,12 @@ pub fn write_source_code(path: &Path) {
         .filter_map(|elem| match elem {
             vkxml::RegistryElement::Enums(ref enums) => Some(enums),
             _ => None,
-        })
-        .flat_map(|enums| {
+        }).flat_map(|enums| {
             enums.elements.iter().filter_map(|_enum| match *_enum {
                 vkxml::EnumsElement::Enumeration(ref e) => Some(e),
                 _ => None,
             })
-        })
-        .collect();
+        }).collect();
 
     let constants: Vec<&vkxml::Constant> = spec
         .elements
@@ -1496,8 +1480,7 @@ pub fn write_source_code(path: &Path) {
         .filter_map(|elem| match elem {
             vkxml::RegistryElement::Constants(ref constants) => Some(constants),
             _ => None,
-        })
-        .flat_map(|constants| constants.elements.iter())
+        }).flat_map(|constants| constants.elements.iter())
         .collect();
 
     let mut const_cache = HashSet::new();
@@ -1525,8 +1508,7 @@ pub fn write_source_code(path: &Path) {
         .filter_map(|def| match def {
             vkxml::DefinitionsElement::Union(ref union) => Some(union.name.as_str()),
             _ => None,
-        })
-        .collect::<HashSet<&str>>();
+        }).collect::<HashSet<&str>>();
 
     let definition_code: Vec<_> = definitions
         .into_iter()

@@ -6,25 +6,25 @@ pub use self::extensions::*;
 pub use libc::*;
 #[macro_export]
 macro_rules! vk_make_version {
-    ($major:expr, $minor:expr, $patch:expr) => {
+    ( $ major : expr , $ minor : expr , $ patch : expr ) => {
         (($major as u32) << 22) | (($minor as u32) << 12) | $patch as u32
     };
 }
 #[macro_export]
 macro_rules! vk_version_major {
-    ($major:expr) => {
+    ( $ major : expr ) => {
         ($major as uint32_t) >> 22
     };
 }
 #[macro_export]
 macro_rules! vk_version_minor {
-    ($minor:expr) => {
+    ( $ minor : expr ) => {
         (($minor as uint32_t) >> 12) & 0x3ff
     };
 }
 #[macro_export]
 macro_rules! vk_version_patch {
-    ($minor:expr) => {
+    ( $ minor : expr ) => {
         ($minor as uint32_t) & 0xfff
     };
 }
@@ -55,7 +55,7 @@ pub type SECURITY_ATTRIBUTES = ();
 pub type ANativeWindow = c_void;
 pub type AHardwareBuffer = c_void;
 macro_rules! vk_bitflags_wrapped {
-    ($name:ident, $all:expr, $flag_type:ty) => {
+    ( $ name : ident , $ all : expr , $ flag_type : ty ) => {
         impl Default for $name {
             fn default() -> $name {
                 $name(0)
@@ -174,8 +174,8 @@ macro_rules! vk_bitflags_wrapped {
     };
 }
 macro_rules! handle_nondispatchable {
-    ($name:ident) => {
-        #[repr(C)]
+    ( $ name : ident ) => {
+        #[repr(transparent)]
         #[derive(Eq, PartialEq, Ord, PartialOrd, Clone, Copy, Hash, Default)]
         pub struct $name(uint64_t);
         impl $name {
@@ -202,9 +202,9 @@ macro_rules! handle_nondispatchable {
     };
 }
 macro_rules! define_handle {
-    ($name:ident) => {
+    ( $ name : ident ) => {
         #[derive(Clone, Copy, Debug)]
-        #[repr(C)]
+        #[repr(transparent)]
         pub struct $name {
             ptr: *mut u8,
         }
@@ -444,18 +444,18 @@ impl ::std::clone::Clone for InstanceFnV1_0 {
             enumerate_physical_devices: self.enumerate_physical_devices,
             get_physical_device_features: self.get_physical_device_features,
             get_physical_device_format_properties: self.get_physical_device_format_properties,
-            get_physical_device_image_format_properties: self
-                .get_physical_device_image_format_properties,
+            get_physical_device_image_format_properties:
+                self.get_physical_device_image_format_properties,
             get_physical_device_properties: self.get_physical_device_properties,
-            get_physical_device_queue_family_properties: self
-                .get_physical_device_queue_family_properties,
+            get_physical_device_queue_family_properties:
+                self.get_physical_device_queue_family_properties,
             get_physical_device_memory_properties: self.get_physical_device_memory_properties,
             get_device_proc_addr: self.get_device_proc_addr,
             create_device: self.create_device,
             enumerate_device_extension_properties: self.enumerate_device_extension_properties,
             enumerate_device_layer_properties: self.enumerate_device_layer_properties,
-            get_physical_device_sparse_image_format_properties: self
-                .get_physical_device_sparse_image_format_properties,
+            get_physical_device_sparse_image_format_properties:
+                self.get_physical_device_sparse_image_format_properties,
         }
     }
 }
@@ -3922,19 +3922,19 @@ impl ::std::clone::Clone for InstanceFnV1_1 {
             get_physical_device_features2: self.get_physical_device_features2,
             get_physical_device_properties2: self.get_physical_device_properties2,
             get_physical_device_format_properties2: self.get_physical_device_format_properties2,
-            get_physical_device_image_format_properties2: self
-                .get_physical_device_image_format_properties2,
-            get_physical_device_queue_family_properties2: self
-                .get_physical_device_queue_family_properties2,
+            get_physical_device_image_format_properties2:
+                self.get_physical_device_image_format_properties2,
+            get_physical_device_queue_family_properties2:
+                self.get_physical_device_queue_family_properties2,
             get_physical_device_memory_properties2: self.get_physical_device_memory_properties2,
-            get_physical_device_sparse_image_format_properties2: self
-                .get_physical_device_sparse_image_format_properties2,
-            get_physical_device_external_buffer_properties: self
-                .get_physical_device_external_buffer_properties,
-            get_physical_device_external_fence_properties: self
-                .get_physical_device_external_fence_properties,
-            get_physical_device_external_semaphore_properties: self
-                .get_physical_device_external_semaphore_properties,
+            get_physical_device_sparse_image_format_properties2:
+                self.get_physical_device_sparse_image_format_properties2,
+            get_physical_device_external_buffer_properties:
+                self.get_physical_device_external_buffer_properties,
+            get_physical_device_external_fence_properties:
+                self.get_physical_device_external_fence_properties,
+            get_physical_device_external_semaphore_properties:
+                self.get_physical_device_external_semaphore_properties,
         }
     }
 }
@@ -4633,187 +4633,187 @@ pub type SampleMask = uint32_t;
 pub type Bool32 = uint32_t;
 pub type Flags = uint32_t;
 pub type DeviceSize = uint64_t;
-#[repr(C)]
+#[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct FramebufferCreateFlags(Flags);
 vk_bitflags_wrapped!(FramebufferCreateFlags, 0b0, Flags);
-#[repr(C)]
+#[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct QueryPoolCreateFlags(Flags);
 vk_bitflags_wrapped!(QueryPoolCreateFlags, 0b0, Flags);
-#[repr(C)]
+#[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct RenderPassCreateFlags(Flags);
 vk_bitflags_wrapped!(RenderPassCreateFlags, 0b0, Flags);
-#[repr(C)]
+#[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SamplerCreateFlags(Flags);
 vk_bitflags_wrapped!(SamplerCreateFlags, 0b0, Flags);
-#[repr(C)]
+#[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct PipelineLayoutCreateFlags(Flags);
 vk_bitflags_wrapped!(PipelineLayoutCreateFlags, 0b0, Flags);
-#[repr(C)]
+#[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct PipelineCacheCreateFlags(Flags);
 vk_bitflags_wrapped!(PipelineCacheCreateFlags, 0b0, Flags);
-#[repr(C)]
+#[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct PipelineDepthStencilStateCreateFlags(Flags);
 vk_bitflags_wrapped!(PipelineDepthStencilStateCreateFlags, 0b0, Flags);
-#[repr(C)]
+#[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct PipelineDynamicStateCreateFlags(Flags);
 vk_bitflags_wrapped!(PipelineDynamicStateCreateFlags, 0b0, Flags);
-#[repr(C)]
+#[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct PipelineColorBlendStateCreateFlags(Flags);
 vk_bitflags_wrapped!(PipelineColorBlendStateCreateFlags, 0b0, Flags);
-#[repr(C)]
+#[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct PipelineMultisampleStateCreateFlags(Flags);
 vk_bitflags_wrapped!(PipelineMultisampleStateCreateFlags, 0b0, Flags);
-#[repr(C)]
+#[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct PipelineRasterizationStateCreateFlags(Flags);
 vk_bitflags_wrapped!(PipelineRasterizationStateCreateFlags, 0b0, Flags);
-#[repr(C)]
+#[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct PipelineViewportStateCreateFlags(Flags);
 vk_bitflags_wrapped!(PipelineViewportStateCreateFlags, 0b0, Flags);
-#[repr(C)]
+#[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct PipelineTessellationStateCreateFlags(Flags);
 vk_bitflags_wrapped!(PipelineTessellationStateCreateFlags, 0b0, Flags);
-#[repr(C)]
+#[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct PipelineInputAssemblyStateCreateFlags(Flags);
 vk_bitflags_wrapped!(PipelineInputAssemblyStateCreateFlags, 0b0, Flags);
-#[repr(C)]
+#[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct PipelineVertexInputStateCreateFlags(Flags);
 vk_bitflags_wrapped!(PipelineVertexInputStateCreateFlags, 0b0, Flags);
-#[repr(C)]
+#[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct PipelineShaderStageCreateFlags(Flags);
 vk_bitflags_wrapped!(PipelineShaderStageCreateFlags, 0b0, Flags);
-#[repr(C)]
+#[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct BufferViewCreateFlags(Flags);
 vk_bitflags_wrapped!(BufferViewCreateFlags, 0b0, Flags);
-#[repr(C)]
+#[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct InstanceCreateFlags(Flags);
 vk_bitflags_wrapped!(InstanceCreateFlags, 0b0, Flags);
-#[repr(C)]
+#[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct DeviceCreateFlags(Flags);
 vk_bitflags_wrapped!(DeviceCreateFlags, 0b0, Flags);
-#[repr(C)]
+#[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct ImageViewCreateFlags(Flags);
 vk_bitflags_wrapped!(ImageViewCreateFlags, 0b0, Flags);
-#[repr(C)]
+#[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SemaphoreCreateFlags(Flags);
 vk_bitflags_wrapped!(SemaphoreCreateFlags, 0b0, Flags);
-#[repr(C)]
+#[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct ShaderModuleCreateFlags(Flags);
 vk_bitflags_wrapped!(ShaderModuleCreateFlags, 0b0, Flags);
-#[repr(C)]
+#[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct EventCreateFlags(Flags);
 vk_bitflags_wrapped!(EventCreateFlags, 0b0, Flags);
-#[repr(C)]
+#[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct MemoryMapFlags(Flags);
 vk_bitflags_wrapped!(MemoryMapFlags, 0b0, Flags);
-#[repr(C)]
+#[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct DescriptorPoolResetFlags(Flags);
 vk_bitflags_wrapped!(DescriptorPoolResetFlags, 0b0, Flags);
-#[repr(C)]
+#[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct DescriptorUpdateTemplateCreateFlags(Flags);
 vk_bitflags_wrapped!(DescriptorUpdateTemplateCreateFlags, 0b0, Flags);
-#[repr(C)]
+#[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct DisplayModeCreateFlagsKHR(Flags);
 vk_bitflags_wrapped!(DisplayModeCreateFlagsKHR, 0b0, Flags);
-#[repr(C)]
+#[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct DisplaySurfaceCreateFlagsKHR(Flags);
 vk_bitflags_wrapped!(DisplaySurfaceCreateFlagsKHR, 0b0, Flags);
-#[repr(C)]
+#[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct AndroidSurfaceCreateFlagsKHR(Flags);
 vk_bitflags_wrapped!(AndroidSurfaceCreateFlagsKHR, 0b0, Flags);
-#[repr(C)]
+#[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct MirSurfaceCreateFlagsKHR(Flags);
 vk_bitflags_wrapped!(MirSurfaceCreateFlagsKHR, 0b0, Flags);
-#[repr(C)]
+#[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct ViSurfaceCreateFlagsNN(Flags);
 vk_bitflags_wrapped!(ViSurfaceCreateFlagsNN, 0b0, Flags);
-#[repr(C)]
+#[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct WaylandSurfaceCreateFlagsKHR(Flags);
 vk_bitflags_wrapped!(WaylandSurfaceCreateFlagsKHR, 0b0, Flags);
-#[repr(C)]
+#[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct Win32SurfaceCreateFlagsKHR(Flags);
 vk_bitflags_wrapped!(Win32SurfaceCreateFlagsKHR, 0b0, Flags);
-#[repr(C)]
+#[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct XlibSurfaceCreateFlagsKHR(Flags);
 vk_bitflags_wrapped!(XlibSurfaceCreateFlagsKHR, 0b0, Flags);
-#[repr(C)]
+#[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct XcbSurfaceCreateFlagsKHR(Flags);
 vk_bitflags_wrapped!(XcbSurfaceCreateFlagsKHR, 0b0, Flags);
-#[repr(C)]
+#[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct IOSSurfaceCreateFlagsMVK(Flags);
 vk_bitflags_wrapped!(IOSSurfaceCreateFlagsMVK, 0b0, Flags);
-#[repr(C)]
+#[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct MacOSSurfaceCreateFlagsMVK(Flags);
 vk_bitflags_wrapped!(MacOSSurfaceCreateFlagsMVK, 0b0, Flags);
-#[repr(C)]
+#[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct CommandPoolTrimFlags(Flags);
 vk_bitflags_wrapped!(CommandPoolTrimFlags, 0b0, Flags);
-#[repr(C)]
+#[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct PipelineViewportSwizzleStateCreateFlagsNV(Flags);
 vk_bitflags_wrapped!(PipelineViewportSwizzleStateCreateFlagsNV, 0b0, Flags);
-#[repr(C)]
+#[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct PipelineDiscardRectangleStateCreateFlagsEXT(Flags);
 vk_bitflags_wrapped!(PipelineDiscardRectangleStateCreateFlagsEXT, 0b0, Flags);
-#[repr(C)]
+#[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct PipelineCoverageToColorStateCreateFlagsNV(Flags);
 vk_bitflags_wrapped!(PipelineCoverageToColorStateCreateFlagsNV, 0b0, Flags);
-#[repr(C)]
+#[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct PipelineCoverageModulationStateCreateFlagsNV(Flags);
 vk_bitflags_wrapped!(PipelineCoverageModulationStateCreateFlagsNV, 0b0, Flags);
-#[repr(C)]
+#[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct ValidationCacheCreateFlagsEXT(Flags);
 vk_bitflags_wrapped!(ValidationCacheCreateFlagsEXT, 0b0, Flags);
-#[repr(C)]
+#[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct DebugUtilsMessengerCreateFlagsEXT(Flags);
 vk_bitflags_wrapped!(DebugUtilsMessengerCreateFlagsEXT, 0b0, Flags);
-#[repr(C)]
+#[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct DebugUtilsMessengerCallbackDataFlagsEXT(Flags);
 vk_bitflags_wrapped!(DebugUtilsMessengerCallbackDataFlagsEXT, 0b0, Flags);
-#[repr(C)]
+#[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct PipelineRasterizationConservativeStateCreateFlagsEXT(Flags);
 vk_bitflags_wrapped!(
@@ -5023,11 +5023,9 @@ impl ::std::fmt::Debug for PhysicalDeviceProperties {
             .field("device_type", &self.device_type)
             .field("device_name", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.device_name.as_ptr() as *const i8)
-            })
-            .field("pipeline_cache_uuid", &unsafe {
+            }).field("pipeline_cache_uuid", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.pipeline_cache_uuid.as_ptr() as *const i8)
-            })
-            .field("limits", &self.limits)
+            }).field("limits", &self.limits)
             .field("sparse_properties", &self.sparse_properties)
             .finish()
     }
@@ -5058,8 +5056,7 @@ impl ::std::fmt::Debug for ExtensionProperties {
         fmt.debug_struct("ExtensionProperties")
             .field("extension_name", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.extension_name.as_ptr() as *const i8)
-            })
-            .field("spec_version", &self.spec_version)
+            }).field("spec_version", &self.spec_version)
             .finish()
     }
 }
@@ -5084,13 +5081,11 @@ impl ::std::fmt::Debug for LayerProperties {
         fmt.debug_struct("LayerProperties")
             .field("layer_name", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.layer_name.as_ptr() as *const i8)
-            })
-            .field("spec_version", &self.spec_version)
+            }).field("spec_version", &self.spec_version)
             .field("implementation_version", &self.implementation_version)
             .field("description", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.description.as_ptr() as *const i8)
-            })
-            .finish()
+            }).finish()
     }
 }
 impl ::std::default::Default for LayerProperties {
@@ -5147,8 +5142,7 @@ impl ::std::fmt::Debug for AllocationCallbacks {
             .field(
                 "pfn_internal_allocation",
                 &(self.pfn_internal_allocation as *const ()),
-            )
-            .field("pfn_internal_free", &(self.pfn_internal_free as *const ()))
+            ).field("pfn_internal_free", &(self.pfn_internal_free as *const ()))
             .finish()
     }
 }
@@ -5264,12 +5258,10 @@ impl ::std::fmt::Debug for PhysicalDeviceMemoryProperties {
             .field("memory_type_count", &self.memory_type_count)
             .field("memory_types", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.memory_types.as_ptr() as *const i8)
-            })
-            .field("memory_heap_count", &self.memory_heap_count)
+            }).field("memory_heap_count", &self.memory_heap_count)
             .field("memory_heaps", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.memory_heaps.as_ptr() as *const i8)
-            })
-            .finish()
+            }).finish()
     }
 }
 impl ::std::default::Default for PhysicalDeviceMemoryProperties {
@@ -5799,12 +5791,10 @@ impl ::std::fmt::Debug for ImageBlit {
             .field("src_subresource", &self.src_subresource)
             .field("src_offsets", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.src_offsets.as_ptr() as *const i8)
-            })
-            .field("dst_subresource", &self.dst_subresource)
+            }).field("dst_subresource", &self.dst_subresource)
             .field("dst_offsets", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.dst_offsets.as_ptr() as *const i8)
-            })
-            .finish()
+            }).finish()
     }
 }
 impl ::std::default::Default for ImageBlit {
@@ -6218,8 +6208,7 @@ impl ::std::fmt::Debug for PipelineColorBlendStateCreateInfo {
             .field("p_attachments", &self.p_attachments)
             .field("blend_constants", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.blend_constants.as_ptr() as *const i8)
-            })
-            .finish()
+            }).finish()
     }
 }
 impl ::std::default::Default for PipelineColorBlendStateCreateInfo {
@@ -6923,202 +6912,155 @@ impl ::std::fmt::Debug for PhysicalDeviceLimits {
             .field(
                 "max_memory_allocation_count",
                 &self.max_memory_allocation_count,
-            )
-            .field(
+            ).field(
                 "max_sampler_allocation_count",
                 &self.max_sampler_allocation_count,
-            )
-            .field("buffer_image_granularity", &self.buffer_image_granularity)
+            ).field("buffer_image_granularity", &self.buffer_image_granularity)
             .field("sparse_address_space_size", &self.sparse_address_space_size)
             .field("max_bound_descriptor_sets", &self.max_bound_descriptor_sets)
             .field(
                 "max_per_stage_descriptor_samplers",
                 &self.max_per_stage_descriptor_samplers,
-            )
-            .field(
+            ).field(
                 "max_per_stage_descriptor_uniform_buffers",
                 &self.max_per_stage_descriptor_uniform_buffers,
-            )
-            .field(
+            ).field(
                 "max_per_stage_descriptor_storage_buffers",
                 &self.max_per_stage_descriptor_storage_buffers,
-            )
-            .field(
+            ).field(
                 "max_per_stage_descriptor_sampled_images",
                 &self.max_per_stage_descriptor_sampled_images,
-            )
-            .field(
+            ).field(
                 "max_per_stage_descriptor_storage_images",
                 &self.max_per_stage_descriptor_storage_images,
-            )
-            .field(
+            ).field(
                 "max_per_stage_descriptor_input_attachments",
                 &self.max_per_stage_descriptor_input_attachments,
-            )
-            .field("max_per_stage_resources", &self.max_per_stage_resources)
+            ).field("max_per_stage_resources", &self.max_per_stage_resources)
             .field(
                 "max_descriptor_set_samplers",
                 &self.max_descriptor_set_samplers,
-            )
-            .field(
+            ).field(
                 "max_descriptor_set_uniform_buffers",
                 &self.max_descriptor_set_uniform_buffers,
-            )
-            .field(
+            ).field(
                 "max_descriptor_set_uniform_buffers_dynamic",
                 &self.max_descriptor_set_uniform_buffers_dynamic,
-            )
-            .field(
+            ).field(
                 "max_descriptor_set_storage_buffers",
                 &self.max_descriptor_set_storage_buffers,
-            )
-            .field(
+            ).field(
                 "max_descriptor_set_storage_buffers_dynamic",
                 &self.max_descriptor_set_storage_buffers_dynamic,
-            )
-            .field(
+            ).field(
                 "max_descriptor_set_sampled_images",
                 &self.max_descriptor_set_sampled_images,
-            )
-            .field(
+            ).field(
                 "max_descriptor_set_storage_images",
                 &self.max_descriptor_set_storage_images,
-            )
-            .field(
+            ).field(
                 "max_descriptor_set_input_attachments",
                 &self.max_descriptor_set_input_attachments,
-            )
-            .field(
+            ).field(
                 "max_vertex_input_attributes",
                 &self.max_vertex_input_attributes,
-            )
-            .field("max_vertex_input_bindings", &self.max_vertex_input_bindings)
+            ).field("max_vertex_input_bindings", &self.max_vertex_input_bindings)
             .field(
                 "max_vertex_input_attribute_offset",
                 &self.max_vertex_input_attribute_offset,
-            )
-            .field(
+            ).field(
                 "max_vertex_input_binding_stride",
                 &self.max_vertex_input_binding_stride,
-            )
-            .field(
+            ).field(
                 "max_vertex_output_components",
                 &self.max_vertex_output_components,
-            )
-            .field(
+            ).field(
                 "max_tessellation_generation_level",
                 &self.max_tessellation_generation_level,
-            )
-            .field(
+            ).field(
                 "max_tessellation_patch_size",
                 &self.max_tessellation_patch_size,
-            )
-            .field(
+            ).field(
                 "max_tessellation_control_per_vertex_input_components",
                 &self.max_tessellation_control_per_vertex_input_components,
-            )
-            .field(
+            ).field(
                 "max_tessellation_control_per_vertex_output_components",
                 &self.max_tessellation_control_per_vertex_output_components,
-            )
-            .field(
+            ).field(
                 "max_tessellation_control_per_patch_output_components",
                 &self.max_tessellation_control_per_patch_output_components,
-            )
-            .field(
+            ).field(
                 "max_tessellation_control_total_output_components",
                 &self.max_tessellation_control_total_output_components,
-            )
-            .field(
+            ).field(
                 "max_tessellation_evaluation_input_components",
                 &self.max_tessellation_evaluation_input_components,
-            )
-            .field(
+            ).field(
                 "max_tessellation_evaluation_output_components",
                 &self.max_tessellation_evaluation_output_components,
-            )
-            .field(
+            ).field(
                 "max_geometry_shader_invocations",
                 &self.max_geometry_shader_invocations,
-            )
-            .field(
+            ).field(
                 "max_geometry_input_components",
                 &self.max_geometry_input_components,
-            )
-            .field(
+            ).field(
                 "max_geometry_output_components",
                 &self.max_geometry_output_components,
-            )
-            .field(
+            ).field(
                 "max_geometry_output_vertices",
                 &self.max_geometry_output_vertices,
-            )
-            .field(
+            ).field(
                 "max_geometry_total_output_components",
                 &self.max_geometry_total_output_components,
-            )
-            .field(
+            ).field(
                 "max_fragment_input_components",
                 &self.max_fragment_input_components,
-            )
-            .field(
+            ).field(
                 "max_fragment_output_attachments",
                 &self.max_fragment_output_attachments,
-            )
-            .field(
+            ).field(
                 "max_fragment_dual_src_attachments",
                 &self.max_fragment_dual_src_attachments,
-            )
-            .field(
+            ).field(
                 "max_fragment_combined_output_resources",
                 &self.max_fragment_combined_output_resources,
-            )
-            .field(
+            ).field(
                 "max_compute_shared_memory_size",
                 &self.max_compute_shared_memory_size,
-            )
-            .field("max_compute_work_group_count", &unsafe {
+            ).field("max_compute_work_group_count", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.max_compute_work_group_count.as_ptr() as *const i8)
-            })
-            .field(
+            }).field(
                 "max_compute_work_group_invocations",
                 &self.max_compute_work_group_invocations,
-            )
-            .field("max_compute_work_group_size", &unsafe {
+            ).field("max_compute_work_group_size", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.max_compute_work_group_size.as_ptr() as *const i8)
-            })
-            .field("sub_pixel_precision_bits", &self.sub_pixel_precision_bits)
+            }).field("sub_pixel_precision_bits", &self.sub_pixel_precision_bits)
             .field("sub_texel_precision_bits", &self.sub_texel_precision_bits)
             .field("mipmap_precision_bits", &self.mipmap_precision_bits)
             .field(
                 "max_draw_indexed_index_value",
                 &self.max_draw_indexed_index_value,
-            )
-            .field("max_draw_indirect_count", &self.max_draw_indirect_count)
+            ).field("max_draw_indirect_count", &self.max_draw_indirect_count)
             .field("max_sampler_lod_bias", &self.max_sampler_lod_bias)
             .field("max_sampler_anisotropy", &self.max_sampler_anisotropy)
             .field("max_viewports", &self.max_viewports)
             .field("max_viewport_dimensions", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.max_viewport_dimensions.as_ptr() as *const i8)
-            })
-            .field("viewport_bounds_range", &unsafe {
+            }).field("viewport_bounds_range", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.viewport_bounds_range.as_ptr() as *const i8)
-            })
-            .field("viewport_sub_pixel_bits", &self.viewport_sub_pixel_bits)
+            }).field("viewport_sub_pixel_bits", &self.viewport_sub_pixel_bits)
             .field("min_memory_map_alignment", &self.min_memory_map_alignment)
             .field(
                 "min_texel_buffer_offset_alignment",
                 &self.min_texel_buffer_offset_alignment,
-            )
-            .field(
+            ).field(
                 "min_uniform_buffer_offset_alignment",
                 &self.min_uniform_buffer_offset_alignment,
-            )
-            .field(
+            ).field(
                 "min_storage_buffer_offset_alignment",
                 &self.min_storage_buffer_offset_alignment,
-            )
-            .field("min_texel_offset", &self.min_texel_offset)
+            ).field("min_texel_offset", &self.min_texel_offset)
             .field("max_texel_offset", &self.max_texel_offset)
             .field("min_texel_gather_offset", &self.min_texel_gather_offset)
             .field("max_texel_gather_offset", &self.max_texel_gather_offset)
@@ -7127,79 +7069,63 @@ impl ::std::fmt::Debug for PhysicalDeviceLimits {
             .field(
                 "sub_pixel_interpolation_offset_bits",
                 &self.sub_pixel_interpolation_offset_bits,
-            )
-            .field("max_framebuffer_width", &self.max_framebuffer_width)
+            ).field("max_framebuffer_width", &self.max_framebuffer_width)
             .field("max_framebuffer_height", &self.max_framebuffer_height)
             .field("max_framebuffer_layers", &self.max_framebuffer_layers)
             .field(
                 "framebuffer_color_sample_counts",
                 &self.framebuffer_color_sample_counts,
-            )
-            .field(
+            ).field(
                 "framebuffer_depth_sample_counts",
                 &self.framebuffer_depth_sample_counts,
-            )
-            .field(
+            ).field(
                 "framebuffer_stencil_sample_counts",
                 &self.framebuffer_stencil_sample_counts,
-            )
-            .field(
+            ).field(
                 "framebuffer_no_attachments_sample_counts",
                 &self.framebuffer_no_attachments_sample_counts,
-            )
-            .field("max_color_attachments", &self.max_color_attachments)
+            ).field("max_color_attachments", &self.max_color_attachments)
             .field(
                 "sampled_image_color_sample_counts",
                 &self.sampled_image_color_sample_counts,
-            )
-            .field(
+            ).field(
                 "sampled_image_integer_sample_counts",
                 &self.sampled_image_integer_sample_counts,
-            )
-            .field(
+            ).field(
                 "sampled_image_depth_sample_counts",
                 &self.sampled_image_depth_sample_counts,
-            )
-            .field(
+            ).field(
                 "sampled_image_stencil_sample_counts",
                 &self.sampled_image_stencil_sample_counts,
-            )
-            .field(
+            ).field(
                 "storage_image_sample_counts",
                 &self.storage_image_sample_counts,
-            )
-            .field("max_sample_mask_words", &self.max_sample_mask_words)
+            ).field("max_sample_mask_words", &self.max_sample_mask_words)
             .field(
                 "timestamp_compute_and_graphics",
                 &self.timestamp_compute_and_graphics,
-            )
-            .field("timestamp_period", &self.timestamp_period)
+            ).field("timestamp_period", &self.timestamp_period)
             .field("max_clip_distances", &self.max_clip_distances)
             .field("max_cull_distances", &self.max_cull_distances)
             .field(
                 "max_combined_clip_and_cull_distances",
                 &self.max_combined_clip_and_cull_distances,
-            )
-            .field("discrete_queue_priorities", &self.discrete_queue_priorities)
+            ).field("discrete_queue_priorities", &self.discrete_queue_priorities)
             .field("point_size_range", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.point_size_range.as_ptr() as *const i8)
-            })
-            .field("line_width_range", &unsafe {
+            }).field("line_width_range", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.line_width_range.as_ptr() as *const i8)
-            })
-            .field("point_size_granularity", &self.point_size_granularity)
+            }).field("point_size_granularity", &self.point_size_granularity)
             .field("line_width_granularity", &self.line_width_granularity)
             .field("strict_lines", &self.strict_lines)
             .field("standard_sample_locations", &self.standard_sample_locations)
             .field(
                 "optimal_buffer_copy_offset_alignment",
                 &self.optimal_buffer_copy_offset_alignment,
-            )
-            .field(
+            ).field(
                 "optimal_buffer_copy_row_pitch_alignment",
                 &self.optimal_buffer_copy_row_pitch_alignment,
-            )
-            .field("non_coherent_atom_size", &self.non_coherent_atom_size)
+            ).field("non_coherent_atom_size", &self.non_coherent_atom_size)
             .finish()
     }
 }
@@ -7909,8 +7835,7 @@ impl ::std::fmt::Debug for DebugMarkerMarkerInfoEXT {
             .field("p_marker_name", &self.p_marker_name)
             .field("color", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.color.as_ptr() as *const i8)
-            })
-            .finish()
+            }).finish()
     }
 }
 impl ::std::default::Default for DebugMarkerMarkerInfoEXT {
@@ -8655,14 +8580,11 @@ impl ::std::fmt::Debug for PhysicalDeviceIDProperties {
             .field("p_next", &self.p_next)
             .field("device_uuid", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.device_uuid.as_ptr() as *const i8)
-            })
-            .field("driver_uuid", &unsafe {
+            }).field("driver_uuid", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.driver_uuid.as_ptr() as *const i8)
-            })
-            .field("device_luid", &unsafe {
+            }).field("device_luid", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.device_luid.as_ptr() as *const i8)
-            })
-            .field("device_node_mask", &self.device_node_mask)
+            }).field("device_node_mask", &self.device_node_mask)
             .field("device_luid_valid", &self.device_luid_valid)
             .finish()
     }
@@ -9432,8 +9354,7 @@ impl ::std::fmt::Debug for PhysicalDeviceGroupProperties {
             .field("physical_device_count", &self.physical_device_count)
             .field("physical_devices", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.physical_devices.as_ptr() as *const i8)
-            })
-            .field("subset_allocation", &self.subset_allocation)
+            }).field("subset_allocation", &self.subset_allocation)
             .finish()
     }
 }
@@ -9671,8 +9592,7 @@ impl ::std::fmt::Debug for DeviceGroupPresentCapabilitiesKHR {
             .field("p_next", &self.p_next)
             .field("present_mask", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.present_mask.as_ptr() as *const i8)
-            })
-            .field("modes", &self.modes)
+            }).field("modes", &self.modes)
             .finish()
     }
 }
@@ -10832,21 +10752,17 @@ impl ::std::fmt::Debug for PhysicalDeviceSampleLocationsPropertiesEXT {
             .field(
                 "sample_location_sample_counts",
                 &self.sample_location_sample_counts,
-            )
-            .field(
+            ).field(
                 "max_sample_location_grid_size",
                 &self.max_sample_location_grid_size,
-            )
-            .field("sample_location_coordinate_range", &unsafe {
+            ).field("sample_location_coordinate_range", &unsafe {
                 ::std::ffi::CStr::from_ptr(
                     self.sample_location_coordinate_range.as_ptr() as *const i8
                 )
-            })
-            .field(
+            }).field(
                 "sample_location_sub_pixel_bits",
                 &self.sample_location_sub_pixel_bits,
-            )
-            .field("variable_sample_locations", &self.variable_sample_locations)
+            ).field("variable_sample_locations", &self.variable_sample_locations)
             .finish()
     }
 }
@@ -11144,8 +11060,7 @@ impl ::std::fmt::Debug for ShaderStatisticsInfoAMD {
             .field("num_available_sgprs", &self.num_available_sgprs)
             .field("compute_work_group_size", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.compute_work_group_size.as_ptr() as *const i8)
-            })
-            .finish()
+            }).finish()
     }
 }
 impl ::std::default::Default for ShaderStatisticsInfoAMD {
@@ -11237,8 +11152,7 @@ impl ::std::fmt::Debug for DebugUtilsLabelEXT {
             .field("p_label_name", &self.p_label_name)
             .field("color", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.color.as_ptr() as *const i8)
-            })
-            .finish()
+            }).finish()
     }
 }
 impl ::std::default::Default for DebugUtilsLabelEXT {
@@ -11785,7 +11699,7 @@ impl ::std::default::Default for ExternalFormatANDROID {
     }
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct ImageLayout(pub(crate) i32);
 impl ImageLayout {
     #[doc = "Implicit layout an image is when its contents are undefined due to various reasons (e.g. right after creation)"]
@@ -11808,7 +11722,7 @@ impl ImageLayout {
     pub const PREINITIALIZED: Self = ImageLayout(8);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct AttachmentLoadOp(pub(crate) i32);
 impl AttachmentLoadOp {
     pub const LOAD: Self = AttachmentLoadOp(0);
@@ -11816,14 +11730,14 @@ impl AttachmentLoadOp {
     pub const DONT_CARE: Self = AttachmentLoadOp(2);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct AttachmentStoreOp(pub(crate) i32);
 impl AttachmentStoreOp {
     pub const STORE: Self = AttachmentStoreOp(0);
     pub const DONT_CARE: Self = AttachmentStoreOp(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct ImageType(pub(crate) i32);
 impl ImageType {
     pub const TYPE_1D: Self = ImageType(0);
@@ -11831,14 +11745,14 @@ impl ImageType {
     pub const TYPE_3D: Self = ImageType(2);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct ImageTiling(pub(crate) i32);
 impl ImageTiling {
     pub const OPTIMAL: Self = ImageTiling(0);
     pub const LINEAR: Self = ImageTiling(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct ImageViewType(pub(crate) i32);
 impl ImageViewType {
     pub const TYPE_1D: Self = ImageViewType(0);
@@ -11850,14 +11764,14 @@ impl ImageViewType {
     pub const CUBE_ARRAY: Self = ImageViewType(6);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct CommandBufferLevel(pub(crate) i32);
 impl CommandBufferLevel {
     pub const PRIMARY: Self = CommandBufferLevel(0);
     pub const SECONDARY: Self = CommandBufferLevel(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct ComponentSwizzle(pub(crate) i32);
 impl ComponentSwizzle {
     pub const IDENTITY: Self = ComponentSwizzle(0);
@@ -11869,7 +11783,7 @@ impl ComponentSwizzle {
     pub const A: Self = ComponentSwizzle(6);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct DescriptorType(pub(crate) i32);
 impl DescriptorType {
     pub const SAMPLER: Self = DescriptorType(0);
@@ -11885,7 +11799,7 @@ impl DescriptorType {
     pub const INPUT_ATTACHMENT: Self = DescriptorType(10);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct QueryType(pub(crate) i32);
 impl QueryType {
     pub const OCCLUSION: Self = QueryType(0);
@@ -11894,7 +11808,7 @@ impl QueryType {
     pub const TIMESTAMP: Self = QueryType(2);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct BorderColor(pub(crate) i32);
 impl BorderColor {
     pub const FLOAT_TRANSPARENT_BLACK: Self = BorderColor(0);
@@ -11905,20 +11819,20 @@ impl BorderColor {
     pub const INT_OPAQUE_WHITE: Self = BorderColor(5);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct PipelineBindPoint(pub(crate) i32);
 impl PipelineBindPoint {
     pub const GRAPHICS: Self = PipelineBindPoint(0);
     pub const COMPUTE: Self = PipelineBindPoint(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct PipelineCacheHeaderVersion(pub(crate) i32);
 impl PipelineCacheHeaderVersion {
     pub const ONE: Self = PipelineCacheHeaderVersion(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct PrimitiveTopology(pub(crate) i32);
 impl PrimitiveTopology {
     pub const POINT_LIST: Self = PrimitiveTopology(0);
@@ -11934,28 +11848,28 @@ impl PrimitiveTopology {
     pub const PATCH_LIST: Self = PrimitiveTopology(10);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct SharingMode(pub(crate) i32);
 impl SharingMode {
     pub const EXCLUSIVE: Self = SharingMode(0);
     pub const CONCURRENT: Self = SharingMode(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct IndexType(pub(crate) i32);
 impl IndexType {
     pub const UINT16: Self = IndexType(0);
     pub const UINT32: Self = IndexType(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct Filter(pub(crate) i32);
 impl Filter {
     pub const NEAREST: Self = Filter(0);
     pub const LINEAR: Self = Filter(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct SamplerMipmapMode(pub(crate) i32);
 impl SamplerMipmapMode {
     #[doc = "Choose nearest mip level"]
@@ -11964,7 +11878,7 @@ impl SamplerMipmapMode {
     pub const LINEAR: Self = SamplerMipmapMode(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct SamplerAddressMode(pub(crate) i32);
 impl SamplerAddressMode {
     pub const REPEAT: Self = SamplerAddressMode(0);
@@ -11973,7 +11887,7 @@ impl SamplerAddressMode {
     pub const CLAMP_TO_BORDER: Self = SamplerAddressMode(3);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct CompareOp(pub(crate) i32);
 impl CompareOp {
     pub const NEVER: Self = CompareOp(0);
@@ -11986,7 +11900,7 @@ impl CompareOp {
     pub const ALWAYS: Self = CompareOp(7);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct PolygonMode(pub(crate) i32);
 impl PolygonMode {
     pub const FILL: Self = PolygonMode(0);
@@ -11994,14 +11908,14 @@ impl PolygonMode {
     pub const POINT: Self = PolygonMode(2);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct FrontFace(pub(crate) i32);
 impl FrontFace {
     pub const COUNTER_CLOCKWISE: Self = FrontFace(0);
     pub const CLOCKWISE: Self = FrontFace(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct BlendFactor(pub(crate) i32);
 impl BlendFactor {
     pub const ZERO: Self = BlendFactor(0);
@@ -12025,7 +11939,7 @@ impl BlendFactor {
     pub const ONE_MINUS_SRC1_ALPHA: Self = BlendFactor(18);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct BlendOp(pub(crate) i32);
 impl BlendOp {
     pub const ADD: Self = BlendOp(0);
@@ -12035,7 +11949,7 @@ impl BlendOp {
     pub const MAX: Self = BlendOp(4);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct StencilOp(pub(crate) i32);
 impl StencilOp {
     pub const KEEP: Self = StencilOp(0);
@@ -12048,7 +11962,7 @@ impl StencilOp {
     pub const DECREMENT_AND_WRAP: Self = StencilOp(7);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct LogicOp(pub(crate) i32);
 impl LogicOp {
     pub const CLEAR: Self = LogicOp(0);
@@ -12069,13 +11983,13 @@ impl LogicOp {
     pub const SET: Self = LogicOp(15);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct InternalAllocationType(pub(crate) i32);
 impl InternalAllocationType {
     pub const EXECUTABLE: Self = InternalAllocationType(0);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct SystemAllocationScope(pub(crate) i32);
 impl SystemAllocationScope {
     pub const COMMAND: Self = SystemAllocationScope(0);
@@ -12085,7 +11999,7 @@ impl SystemAllocationScope {
     pub const INSTANCE: Self = SystemAllocationScope(4);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct PhysicalDeviceType(pub(crate) i32);
 impl PhysicalDeviceType {
     pub const OTHER: Self = PhysicalDeviceType(0);
@@ -12095,14 +12009,14 @@ impl PhysicalDeviceType {
     pub const CPU: Self = PhysicalDeviceType(4);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct VertexInputRate(pub(crate) i32);
 impl VertexInputRate {
     pub const VERTEX: Self = VertexInputRate(0);
     pub const INSTANCE: Self = VertexInputRate(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct Format(pub(crate) i32);
 impl Format {
     pub const UNDEFINED: Self = Format(0);
@@ -12292,7 +12206,7 @@ impl Format {
     pub const ASTC_12X12_SRGB_BLOCK: Self = Format(184);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct StructureType(pub(crate) i32);
 impl StructureType {
     pub const APPLICATION_INFO: Self = StructureType(0);
@@ -12348,14 +12262,14 @@ impl StructureType {
     pub const LOADER_DEVICE_CREATE_INFO: Self = StructureType(48);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct SubpassContents(pub(crate) i32);
 impl SubpassContents {
     pub const INLINE: Self = SubpassContents(0);
     pub const SECONDARY_COMMAND_BUFFERS: Self = SubpassContents(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct Result(pub(crate) i32);
 impl Result {
     #[doc = "Command completed successfully"]
@@ -12449,7 +12363,7 @@ impl ::std::fmt::Display for Result {
     }
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct DynamicState(pub(crate) i32);
 impl DynamicState {
     pub const VIEWPORT: Self = DynamicState(0);
@@ -12463,14 +12377,14 @@ impl DynamicState {
     pub const STENCIL_REFERENCE: Self = DynamicState(8);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct DescriptorUpdateTemplateType(pub(crate) i32);
 impl DescriptorUpdateTemplateType {
     #[doc = "Create descriptor update template for descriptor set updates"]
     pub const DESCRIPTOR_SET: Self = DescriptorUpdateTemplateType(0);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct ObjectType(pub(crate) i32);
 impl ObjectType {
     pub const UNKNOWN: Self = ObjectType(0);
@@ -12526,7 +12440,7 @@ impl ObjectType {
     pub const COMMAND_POOL: Self = ObjectType(25);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct PresentModeKHR(pub(crate) i32);
 impl PresentModeKHR {
     pub const IMMEDIATE: Self = PresentModeKHR(0);
@@ -12535,13 +12449,13 @@ impl PresentModeKHR {
     pub const FIFO_RELAXED: Self = PresentModeKHR(3);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct ColorSpaceKHR(pub(crate) i32);
 impl ColorSpaceKHR {
     pub const SRGB_NONLINEAR: Self = ColorSpaceKHR(0);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct DebugReportObjectTypeEXT(pub(crate) i32);
 impl DebugReportObjectTypeEXT {
     pub const UNKNOWN: Self = DebugReportObjectTypeEXT(0);
@@ -12580,21 +12494,21 @@ impl DebugReportObjectTypeEXT {
     pub const VALIDATION_CACHE: Self = DebugReportObjectTypeEXT(33);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct RasterizationOrderAMD(pub(crate) i32);
 impl RasterizationOrderAMD {
     pub const STRICT: Self = RasterizationOrderAMD(0);
     pub const RELAXED: Self = RasterizationOrderAMD(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct ValidationCheckEXT(pub(crate) i32);
 impl ValidationCheckEXT {
     pub const ALL: Self = ValidationCheckEXT(0);
     pub const SHADERS: Self = ValidationCheckEXT(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct IndirectCommandsTokenTypeNVX(pub(crate) i32);
 impl IndirectCommandsTokenTypeNVX {
     pub const PIPELINE: Self = IndirectCommandsTokenTypeNVX(0);
@@ -12607,7 +12521,7 @@ impl IndirectCommandsTokenTypeNVX {
     pub const DISPATCH: Self = IndirectCommandsTokenTypeNVX(7);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct ObjectEntryTypeNVX(pub(crate) i32);
 impl ObjectEntryTypeNVX {
     pub const DESCRIPTOR_SET: Self = ObjectEntryTypeNVX(0);
@@ -12617,7 +12531,7 @@ impl ObjectEntryTypeNVX {
     pub const PUSH_CONSTANT: Self = ObjectEntryTypeNVX(4);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct DisplayPowerStateEXT(pub(crate) i32);
 impl DisplayPowerStateEXT {
     pub const OFF: Self = DisplayPowerStateEXT(0);
@@ -12625,19 +12539,19 @@ impl DisplayPowerStateEXT {
     pub const ON: Self = DisplayPowerStateEXT(2);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct DeviceEventTypeEXT(pub(crate) i32);
 impl DeviceEventTypeEXT {
     pub const DISPLAY_HOTPLUG: Self = DeviceEventTypeEXT(0);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct DisplayEventTypeEXT(pub(crate) i32);
 impl DisplayEventTypeEXT {
     pub const FIRST_PIXEL_OUT: Self = DisplayEventTypeEXT(0);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct ViewportCoordinateSwizzleNV(pub(crate) i32);
 impl ViewportCoordinateSwizzleNV {
     pub const POSITIVE_X: Self = ViewportCoordinateSwizzleNV(0);
@@ -12650,21 +12564,21 @@ impl ViewportCoordinateSwizzleNV {
     pub const NEGATIVE_W: Self = ViewportCoordinateSwizzleNV(7);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct DiscardRectangleModeEXT(pub(crate) i32);
 impl DiscardRectangleModeEXT {
     pub const INCLUSIVE: Self = DiscardRectangleModeEXT(0);
     pub const EXCLUSIVE: Self = DiscardRectangleModeEXT(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct PointClippingBehavior(pub(crate) i32);
 impl PointClippingBehavior {
     pub const ALL_CLIP_PLANES: Self = PointClippingBehavior(0);
     pub const USER_CLIP_PLANES_ONLY: Self = PointClippingBehavior(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct SamplerReductionModeEXT(pub(crate) i32);
 impl SamplerReductionModeEXT {
     pub const WEIGHTED_AVERAGE: Self = SamplerReductionModeEXT(0);
@@ -12672,14 +12586,14 @@ impl SamplerReductionModeEXT {
     pub const MAX: Self = SamplerReductionModeEXT(2);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct TessellationDomainOrigin(pub(crate) i32);
 impl TessellationDomainOrigin {
     pub const UPPER_LEFT: Self = TessellationDomainOrigin(0);
     pub const LOWER_LEFT: Self = TessellationDomainOrigin(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct SamplerYcbcrModelConversion(pub(crate) i32);
 impl SamplerYcbcrModelConversion {
     pub const RGB_IDENTITY: Self = SamplerYcbcrModelConversion(0);
@@ -12693,7 +12607,7 @@ impl SamplerYcbcrModelConversion {
     pub const YCBCR_2020: Self = SamplerYcbcrModelConversion(4);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct SamplerYcbcrRange(pub(crate) i32);
 impl SamplerYcbcrRange {
     #[doc = "Luma 0..1 maps to 0..255, chroma -0.5..0.5 to 1..255 (clamped)"]
@@ -12702,14 +12616,14 @@ impl SamplerYcbcrRange {
     pub const ITU_NARROW: Self = SamplerYcbcrRange(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct ChromaLocation(pub(crate) i32);
 impl ChromaLocation {
     pub const COSITED_EVEN: Self = ChromaLocation(0);
     pub const MIDPOINT: Self = ChromaLocation(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct BlendOverlapEXT(pub(crate) i32);
 impl BlendOverlapEXT {
     pub const UNCORRELATED: Self = BlendOverlapEXT(0);
@@ -12717,7 +12631,7 @@ impl BlendOverlapEXT {
     pub const CONJOINT: Self = BlendOverlapEXT(2);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct CoverageModulationModeNV(pub(crate) i32);
 impl CoverageModulationModeNV {
     pub const NONE: Self = CoverageModulationModeNV(0);
@@ -12726,13 +12640,13 @@ impl CoverageModulationModeNV {
     pub const RGBA: Self = CoverageModulationModeNV(3);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct ValidationCacheHeaderVersionEXT(pub(crate) i32);
 impl ValidationCacheHeaderVersionEXT {
     pub const ONE: Self = ValidationCacheHeaderVersionEXT(1);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct ShaderInfoTypeAMD(pub(crate) i32);
 impl ShaderInfoTypeAMD {
     pub const STATISTICS: Self = ShaderInfoTypeAMD(0);
@@ -12740,7 +12654,7 @@ impl ShaderInfoTypeAMD {
     pub const DISASSEMBLY: Self = ShaderInfoTypeAMD(2);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct QueueGlobalPriorityEXT(pub(crate) i32);
 impl QueueGlobalPriorityEXT {
     pub const LOW: Self = QueueGlobalPriorityEXT(128);
@@ -12749,7 +12663,7 @@ impl QueueGlobalPriorityEXT {
     pub const REALTIME: Self = QueueGlobalPriorityEXT(1024);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct ConservativeRasterizationModeEXT(pub(crate) i32);
 impl ConservativeRasterizationModeEXT {
     pub const DISABLED: Self = ConservativeRasterizationModeEXT(0);
@@ -12757,7 +12671,7 @@ impl ConservativeRasterizationModeEXT {
     pub const UNDERESTIMATE: Self = ConservativeRasterizationModeEXT(2);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
-#[repr(C)]
+#[repr(transparent)]
 pub struct VendorId(pub(crate) i32);
 impl VendorId {
     #[doc = "Vivante vendor ID"]
@@ -12769,7 +12683,7 @@ impl VendorId {
 }
 pub mod bitflags {
     use super::*;
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct CullModeFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(CullModeFlags, 0b11, Flags);
@@ -12779,7 +12693,7 @@ pub mod bitflags {
         pub const BACK: Self = CullModeFlags(0b10);
         pub const FRONT_AND_BACK: Self = CullModeFlags(0x00000003);
     }
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct QueueFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(QueueFlags, 0b1111, Flags);
@@ -12793,12 +12707,12 @@ pub mod bitflags {
         #[doc = "Queue supports sparse resource memory management operations"]
         pub const SPARSE_BINDING: Self = QueueFlags(0b1000);
     }
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct DeviceQueueCreateFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(DeviceQueueCreateFlags, 0b0, Flags);
     impl DeviceQueueCreateFlags {}
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct MemoryPropertyFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(MemoryPropertyFlags, 0b11111, Flags);
@@ -12814,7 +12728,7 @@ pub mod bitflags {
         #[doc = "Memory may be allocated by the driver when it is required"]
         pub const LAZILY_ALLOCATED: Self = MemoryPropertyFlags(0b10000);
     }
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct MemoryHeapFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(MemoryHeapFlags, 0b1, Flags);
@@ -12822,7 +12736,7 @@ pub mod bitflags {
         #[doc = "If set, heap represents device memory"]
         pub const DEVICE_LOCAL: Self = MemoryHeapFlags(0b1);
     }
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct AccessFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(AccessFlags, 0b11111111111111111, Flags);
@@ -12862,7 +12776,7 @@ pub mod bitflags {
         #[doc = "Controls coherency of memory writes"]
         pub const MEMORY_WRITE: Self = AccessFlags(0b10000000000000000);
     }
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct BufferUsageFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(BufferUsageFlags, 0b111111111, Flags);
@@ -12886,7 +12800,7 @@ pub mod bitflags {
         #[doc = "Can be the source of indirect parameters (e.g. indirect buffer, parameter buffer)"]
         pub const INDIRECT_BUFFER: Self = BufferUsageFlags(0b100000000);
     }
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct BufferCreateFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(BufferCreateFlags, 0b111, Flags);
@@ -12898,7 +12812,7 @@ pub mod bitflags {
         #[doc = "Buffer should support constent data access to physical memory ranges mapped into multiple locations of sparse buffers"]
         pub const SPARSE_ALIASED: Self = BufferCreateFlags(0b100);
     }
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct ShaderStageFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(ShaderStageFlags, 0b1111111111111111111111111111111, Flags);
@@ -12912,7 +12826,7 @@ pub mod bitflags {
         pub const ALL_GRAPHICS: Self = ShaderStageFlags(0x0000001F);
         pub const ALL: Self = ShaderStageFlags(0x7FFFFFFF);
     }
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct ImageUsageFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(ImageUsageFlags, 0b11111111, Flags);
@@ -12934,7 +12848,7 @@ pub mod bitflags {
         #[doc = "Can be used as framebuffer input attachment"]
         pub const INPUT_ATTACHMENT: Self = ImageUsageFlags(0b10000000);
     }
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct ImageCreateFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(ImageCreateFlags, 0b11111, Flags);
@@ -12950,7 +12864,7 @@ pub mod bitflags {
         #[doc = "Allows creating image views with cube type from the created image"]
         pub const CUBE_COMPATIBLE: Self = ImageCreateFlags(0b10000);
     }
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct PipelineCreateFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(PipelineCreateFlags, 0b111, Flags);
@@ -12959,7 +12873,7 @@ pub mod bitflags {
         pub const ALLOW_DERIVATIVES: Self = PipelineCreateFlags(0b10);
         pub const DERIVATIVE: Self = PipelineCreateFlags(0b100);
     }
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct ColorComponentFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(ColorComponentFlags, 0b1111, Flags);
@@ -12969,14 +12883,14 @@ pub mod bitflags {
         pub const B: Self = ColorComponentFlags(0b100);
         pub const A: Self = ColorComponentFlags(0b1000);
     }
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct FenceCreateFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(FenceCreateFlags, 0b1, Flags);
     impl FenceCreateFlags {
         pub const SIGNALED: Self = FenceCreateFlags(0b1);
     }
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct FormatFeatureFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(FormatFeatureFlags, 0b1111111111111, Flags);
@@ -13008,7 +12922,7 @@ pub mod bitflags {
         #[doc = "Format can be filtered with VK_FILTER_LINEAR when being sampled"]
         pub const SAMPLED_IMAGE_FILTER_LINEAR: Self = FormatFeatureFlags(0b1000000000000);
     }
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct QueryControlFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(QueryControlFlags, 0b1, Flags);
@@ -13016,7 +12930,7 @@ pub mod bitflags {
         #[doc = "Require precise results to be collected by the query"]
         pub const PRECISE: Self = QueryControlFlags(0b1);
     }
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct QueryResultFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(QueryResultFlags, 0b1111, Flags);
@@ -13030,7 +12944,7 @@ pub mod bitflags {
         #[doc = "Copy the partial results of the query even if the final results are not available"]
         pub const PARTIAL: Self = QueryResultFlags(0b1000);
     }
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct CommandBufferUsageFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(CommandBufferUsageFlags, 0b111, Flags);
@@ -13040,7 +12954,7 @@ pub mod bitflags {
         #[doc = "Command buffer may be submitted/executed more than once simultaneously"]
         pub const SIMULTANEOUS_USE: Self = CommandBufferUsageFlags(0b100);
     }
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct QueryPipelineStatisticFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(QueryPipelineStatisticFlags, 0b11111111111, Flags);
@@ -13070,7 +12984,7 @@ pub mod bitflags {
         #[doc = "Optional"]
         pub const COMPUTE_SHADER_INVOCATIONS: Self = QueryPipelineStatisticFlags(0b10000000000);
     }
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct ImageAspectFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(ImageAspectFlags, 0b1111, Flags);
@@ -13080,7 +12994,7 @@ pub mod bitflags {
         pub const STENCIL: Self = ImageAspectFlags(0b100);
         pub const METADATA: Self = ImageAspectFlags(0b1000);
     }
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct SparseImageFormatFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(SparseImageFormatFlags, 0b111, Flags);
@@ -13092,7 +13006,7 @@ pub mod bitflags {
         #[doc = "Image uses a non-standard sparse image block dimensions"]
         pub const NONSTANDARD_BLOCK_SIZE: Self = SparseImageFormatFlags(0b100);
     }
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct SparseMemoryBindFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(SparseMemoryBindFlags, 0b1, Flags);
@@ -13100,7 +13014,7 @@ pub mod bitflags {
         #[doc = "Operation binds resource metadata to memory"]
         pub const METADATA: Self = SparseMemoryBindFlags(0b1);
     }
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct PipelineStageFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(PipelineStageFlags, 0b11111111111111111, Flags);
@@ -13140,7 +13054,7 @@ pub mod bitflags {
         #[doc = "All stages supported on the queue"]
         pub const ALL_COMMANDS: Self = PipelineStageFlags(0b10000000000000000);
     }
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct CommandPoolCreateFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(CommandPoolCreateFlags, 0b11, Flags);
@@ -13150,7 +13064,7 @@ pub mod bitflags {
         #[doc = "Command buffers may release their memory individually"]
         pub const RESET_COMMAND_BUFFER: Self = CommandPoolCreateFlags(0b10);
     }
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct CommandPoolResetFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(CommandPoolResetFlags, 0b1, Flags);
@@ -13158,7 +13072,7 @@ pub mod bitflags {
         #[doc = "Release resources owned by the pool"]
         pub const RELEASE_RESOURCES: Self = CommandPoolResetFlags(0b1);
     }
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct CommandBufferResetFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(CommandBufferResetFlags, 0b1, Flags);
@@ -13166,7 +13080,7 @@ pub mod bitflags {
         #[doc = "Release resources owned by the buffer"]
         pub const RELEASE_RESOURCES: Self = CommandBufferResetFlags(0b1);
     }
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct SampleCountFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(SampleCountFlags, 0b1111111, Flags);
@@ -13186,7 +13100,7 @@ pub mod bitflags {
         #[doc = "Sample count 64 supported"]
         pub const TYPE_64: Self = SampleCountFlags(0b1000000);
     }
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct AttachmentDescriptionFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(AttachmentDescriptionFlags, 0b1, Flags);
@@ -13194,7 +13108,7 @@ pub mod bitflags {
         #[doc = "The attachment may alias physical memory of another attachment in the same render pass"]
         pub const MAY_ALIAS: Self = AttachmentDescriptionFlags(0b1);
     }
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct StencilFaceFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(StencilFaceFlags, 0b11, Flags);
@@ -13206,7 +13120,7 @@ pub mod bitflags {
         #[doc = "Front and back faces"]
         pub const STENCIL_FRONT_AND_BACK: Self = StencilFaceFlags(0x00000003);
     }
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct DescriptorPoolCreateFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(DescriptorPoolCreateFlags, 0b1, Flags);
@@ -13214,7 +13128,7 @@ pub mod bitflags {
         #[doc = "Descriptor sets may be freed individually"]
         pub const FREE_DESCRIPTOR_SET: Self = DescriptorPoolCreateFlags(0b1);
     }
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct DependencyFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(DependencyFlags, 0b1, Flags);
@@ -13222,7 +13136,7 @@ pub mod bitflags {
         #[doc = "Dependency is per pixel region "]
         pub const BY_REGION: Self = DependencyFlags(0b1);
     }
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct DisplayPlaneAlphaFlagsKHR(pub(crate) Flags);
     vk_bitflags_wrapped!(DisplayPlaneAlphaFlagsKHR, 0b1111, Flags);
@@ -13232,7 +13146,7 @@ pub mod bitflags {
         pub const PER_PIXEL: Self = DisplayPlaneAlphaFlagsKHR(0b100);
         pub const PER_PIXEL_PREMULTIPLIED: Self = DisplayPlaneAlphaFlagsKHR(0b1000);
     }
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct CompositeAlphaFlagsKHR(pub(crate) Flags);
     vk_bitflags_wrapped!(CompositeAlphaFlagsKHR, 0b1111, Flags);
@@ -13242,7 +13156,7 @@ pub mod bitflags {
         pub const POST_MULTIPLIED: Self = CompositeAlphaFlagsKHR(0b100);
         pub const INHERIT: Self = CompositeAlphaFlagsKHR(0b1000);
     }
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct SurfaceTransformFlagsKHR(pub(crate) Flags);
     vk_bitflags_wrapped!(SurfaceTransformFlagsKHR, 0b111111111, Flags);
@@ -13257,7 +13171,7 @@ pub mod bitflags {
         pub const HORIZONTAL_MIRROR_ROTATE_270: Self = SurfaceTransformFlagsKHR(0b10000000);
         pub const INHERIT: Self = SurfaceTransformFlagsKHR(0b100000000);
     }
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct DebugReportFlagsEXT(pub(crate) Flags);
     vk_bitflags_wrapped!(DebugReportFlagsEXT, 0b11111, Flags);
@@ -13268,7 +13182,7 @@ pub mod bitflags {
         pub const ERROR: Self = DebugReportFlagsEXT(0b1000);
         pub const DEBUG: Self = DebugReportFlagsEXT(0b10000);
     }
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct ExternalMemoryHandleTypeFlagsNV(pub(crate) Flags);
     vk_bitflags_wrapped!(ExternalMemoryHandleTypeFlagsNV, 0b1111, Flags);
@@ -13282,7 +13196,7 @@ pub mod bitflags {
         pub const EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_NV: Self =
             ExternalMemoryHandleTypeFlagsNV(0b1000);
     }
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct ExternalMemoryFeatureFlagsNV(pub(crate) Flags);
     vk_bitflags_wrapped!(ExternalMemoryFeatureFlagsNV, 0b111, Flags);
@@ -13292,7 +13206,7 @@ pub mod bitflags {
         pub const EXTERNAL_MEMORY_FEATURE_EXPORTABLE_NV: Self = ExternalMemoryFeatureFlagsNV(0b10);
         pub const EXTERNAL_MEMORY_FEATURE_IMPORTABLE_NV: Self = ExternalMemoryFeatureFlagsNV(0b100);
     }
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct SubgroupFeatureFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(SubgroupFeatureFlags, 0b11111111, Flags);
@@ -13314,7 +13228,7 @@ pub mod bitflags {
         #[doc = "Quad subgroup operations"]
         pub const QUAD: Self = SubgroupFeatureFlags(0b10000000);
     }
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct IndirectCommandsLayoutUsageFlagsNVX(pub(crate) Flags);
     vk_bitflags_wrapped!(IndirectCommandsLayoutUsageFlagsNVX, 0b1111, Flags);
@@ -13324,7 +13238,7 @@ pub mod bitflags {
         pub const EMPTY_EXECUTIONS: Self = IndirectCommandsLayoutUsageFlagsNVX(0b100);
         pub const INDEXED_SEQUENCES: Self = IndirectCommandsLayoutUsageFlagsNVX(0b1000);
     }
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct ObjectEntryUsageFlagsNVX(pub(crate) Flags);
     vk_bitflags_wrapped!(ObjectEntryUsageFlagsNVX, 0b11, Flags);
@@ -13332,12 +13246,12 @@ pub mod bitflags {
         pub const GRAPHICS: Self = ObjectEntryUsageFlagsNVX(0b1);
         pub const COMPUTE: Self = ObjectEntryUsageFlagsNVX(0b10);
     }
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct DescriptorSetLayoutCreateFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(DescriptorSetLayoutCreateFlags, 0b0, Flags);
     impl DescriptorSetLayoutCreateFlags {}
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct ExternalMemoryHandleTypeFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(ExternalMemoryHandleTypeFlags, 0b1111111, Flags);
@@ -13356,7 +13270,7 @@ pub mod bitflags {
         pub const EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE: Self =
             ExternalMemoryHandleTypeFlags(0b1000000);
     }
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct ExternalMemoryFeatureFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(ExternalMemoryFeatureFlags, 0b111, Flags);
@@ -13365,7 +13279,7 @@ pub mod bitflags {
         pub const EXTERNAL_MEMORY_FEATURE_EXPORTABLE: Self = ExternalMemoryFeatureFlags(0b10);
         pub const EXTERNAL_MEMORY_FEATURE_IMPORTABLE: Self = ExternalMemoryFeatureFlags(0b100);
     }
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct ExternalSemaphoreHandleTypeFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(ExternalSemaphoreHandleTypeFlags, 0b11111, Flags);
@@ -13381,7 +13295,7 @@ pub mod bitflags {
         pub const EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD: Self =
             ExternalSemaphoreHandleTypeFlags(0b10000);
     }
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct ExternalSemaphoreFeatureFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(ExternalSemaphoreFeatureFlags, 0b11, Flags);
@@ -13389,14 +13303,14 @@ pub mod bitflags {
         pub const EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE: Self = ExternalSemaphoreFeatureFlags(0b1);
         pub const EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE: Self = ExternalSemaphoreFeatureFlags(0b10);
     }
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct SemaphoreImportFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(SemaphoreImportFlags, 0b1, Flags);
     impl SemaphoreImportFlags {
         pub const TEMPORARY: Self = SemaphoreImportFlags(0b1);
     }
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct ExternalFenceHandleTypeFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(ExternalFenceHandleTypeFlags, 0b1111, Flags);
@@ -13408,7 +13322,7 @@ pub mod bitflags {
             ExternalFenceHandleTypeFlags(0b100);
         pub const EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD: Self = ExternalFenceHandleTypeFlags(0b1000);
     }
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct ExternalFenceFeatureFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(ExternalFenceFeatureFlags, 0b11, Flags);
@@ -13416,21 +13330,21 @@ pub mod bitflags {
         pub const EXTERNAL_FENCE_FEATURE_EXPORTABLE: Self = ExternalFenceFeatureFlags(0b1);
         pub const EXTERNAL_FENCE_FEATURE_IMPORTABLE: Self = ExternalFenceFeatureFlags(0b10);
     }
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct FenceImportFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(FenceImportFlags, 0b1, Flags);
     impl FenceImportFlags {
         pub const TEMPORARY: Self = FenceImportFlags(0b1);
     }
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct SurfaceCounterFlagsEXT(pub(crate) Flags);
     vk_bitflags_wrapped!(SurfaceCounterFlagsEXT, 0b1, Flags);
     impl SurfaceCounterFlagsEXT {
         pub const VBLANK: Self = SurfaceCounterFlagsEXT(0b1);
     }
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct PeerMemoryFeatureFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(PeerMemoryFeatureFlags, 0b1111, Flags);
@@ -13444,7 +13358,7 @@ pub mod bitflags {
         #[doc = "Can write with and access type/command"]
         pub const GENERIC_DST: Self = PeerMemoryFeatureFlags(0b1000);
     }
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct MemoryAllocateFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(MemoryAllocateFlags, 0b1, Flags);
@@ -13452,7 +13366,7 @@ pub mod bitflags {
         #[doc = "Force allocation on specific devices"]
         pub const DEVICE_MASK: Self = MemoryAllocateFlags(0b1);
     }
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct DeviceGroupPresentModeFlagsKHR(pub(crate) Flags);
     vk_bitflags_wrapped!(DeviceGroupPresentModeFlagsKHR, 0b1111, Flags);
@@ -13466,17 +13380,17 @@ pub mod bitflags {
         #[doc = "Each physical device presents from local memory"]
         pub const LOCAL_MULTI_DEVICE: Self = DeviceGroupPresentModeFlagsKHR(0b1000);
     }
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct SwapchainCreateFlagsKHR(pub(crate) Flags);
     vk_bitflags_wrapped!(SwapchainCreateFlagsKHR, 0b0, Flags);
     impl SwapchainCreateFlagsKHR {}
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct SubpassDescriptionFlags(pub(crate) Flags);
     vk_bitflags_wrapped!(SubpassDescriptionFlags, 0b0, Flags);
     impl SubpassDescriptionFlags {}
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct DebugUtilsMessageSeverityFlagsEXT(pub(crate) Flags);
     vk_bitflags_wrapped!(DebugUtilsMessageSeverityFlagsEXT, 0b1000100010001, Flags);
@@ -13486,7 +13400,7 @@ pub mod bitflags {
         pub const WARNING: Self = DebugUtilsMessageSeverityFlagsEXT(0b100000000);
         pub const ERROR: Self = DebugUtilsMessageSeverityFlagsEXT(0b1000000000000);
     }
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct DebugUtilsMessageTypeFlagsEXT(pub(crate) Flags);
     vk_bitflags_wrapped!(DebugUtilsMessageTypeFlagsEXT, 0b111, Flags);
@@ -13495,7 +13409,7 @@ pub mod bitflags {
         pub const VALIDATION: Self = DebugUtilsMessageTypeFlagsEXT(0b10);
         pub const PERFORMANCE: Self = DebugUtilsMessageTypeFlagsEXT(0b100);
     }
-    #[repr(C)]
+    #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
     pub struct DescriptorBindingFlagsEXT(pub(crate) Flags);
     vk_bitflags_wrapped!(DescriptorBindingFlagsEXT, 0b1111, Flags);
@@ -13569,12 +13483,12 @@ pub mod extensions {
                 destroy_surface_khr: self.destroy_surface_khr,
                 get_physical_device_surface_support_khr: self
                     .get_physical_device_surface_support_khr,
-                get_physical_device_surface_capabilities_khr: self
-                    .get_physical_device_surface_capabilities_khr,
+                get_physical_device_surface_capabilities_khr:
+                    self.get_physical_device_surface_capabilities_khr,
                 get_physical_device_surface_formats_khr: self
                     .get_physical_device_surface_formats_khr,
-                get_physical_device_surface_present_modes_khr: self
-                    .get_physical_device_surface_present_modes_khr,
+                get_physical_device_surface_present_modes_khr:
+                    self.get_physical_device_surface_present_modes_khr,
             }
         }
     }
@@ -13723,12 +13637,12 @@ pub mod extensions {
                 get_swapchain_images_khr: self.get_swapchain_images_khr,
                 acquire_next_image_khr: self.acquire_next_image_khr,
                 queue_present_khr: self.queue_present_khr,
-                get_device_group_present_capabilities_khr: self
-                    .get_device_group_present_capabilities_khr,
-                get_device_group_surface_present_modes_khr: self
-                    .get_device_group_surface_present_modes_khr,
-                get_physical_device_present_rectangles_khr: self
-                    .get_physical_device_present_rectangles_khr,
+                get_device_group_present_capabilities_khr:
+                    self.get_device_group_present_capabilities_khr,
+                get_device_group_surface_present_modes_khr:
+                    self.get_device_group_surface_present_modes_khr,
+                get_physical_device_present_rectangles_khr:
+                    self.get_physical_device_present_rectangles_khr,
                 acquire_next_image2_khr: self.acquire_next_image2_khr,
             }
         }
@@ -14035,10 +13949,10 @@ pub mod extensions {
     impl ::std::clone::Clone for KhrDisplayFn {
         fn clone(&self) -> Self {
             KhrDisplayFn {
-                get_physical_device_display_properties_khr: self
-                    .get_physical_device_display_properties_khr,
-                get_physical_device_display_plane_properties_khr: self
-                    .get_physical_device_display_plane_properties_khr,
+                get_physical_device_display_properties_khr:
+                    self.get_physical_device_display_properties_khr,
+                get_physical_device_display_plane_properties_khr:
+                    self.get_physical_device_display_plane_properties_khr,
                 get_display_plane_supported_displays_khr: self
                     .get_display_plane_supported_displays_khr,
                 get_display_mode_properties_khr: self.get_display_mode_properties_khr,
@@ -14321,8 +14235,8 @@ pub mod extensions {
         fn clone(&self) -> Self {
             KhrXlibSurfaceFn {
                 create_xlib_surface_khr: self.create_xlib_surface_khr,
-                get_physical_device_xlib_presentation_support_khr: self
-                    .get_physical_device_xlib_presentation_support_khr,
+                get_physical_device_xlib_presentation_support_khr:
+                    self.get_physical_device_xlib_presentation_support_khr,
             }
         }
     }
@@ -14407,8 +14321,8 @@ pub mod extensions {
         fn clone(&self) -> Self {
             KhrXcbSurfaceFn {
                 create_xcb_surface_khr: self.create_xcb_surface_khr,
-                get_physical_device_xcb_presentation_support_khr: self
-                    .get_physical_device_xcb_presentation_support_khr,
+                get_physical_device_xcb_presentation_support_khr:
+                    self.get_physical_device_xcb_presentation_support_khr,
             }
         }
     }
@@ -14493,8 +14407,8 @@ pub mod extensions {
         fn clone(&self) -> Self {
             KhrWaylandSurfaceFn {
                 create_wayland_surface_khr: self.create_wayland_surface_khr,
-                get_physical_device_wayland_presentation_support_khr: self
-                    .get_physical_device_wayland_presentation_support_khr,
+                get_physical_device_wayland_presentation_support_khr:
+                    self.get_physical_device_wayland_presentation_support_khr,
             }
         }
     }
@@ -14576,8 +14490,8 @@ pub mod extensions {
         fn clone(&self) -> Self {
             KhrMirSurfaceFn {
                 create_mir_surface_khr: self.create_mir_surface_khr,
-                get_physical_device_mir_presentation_support_khr: self
-                    .get_physical_device_mir_presentation_support_khr,
+                get_physical_device_mir_presentation_support_khr:
+                    self.get_physical_device_mir_presentation_support_khr,
             }
         }
     }
@@ -14712,8 +14626,8 @@ pub mod extensions {
         fn clone(&self) -> Self {
             KhrWin32SurfaceFn {
                 create_win32_surface_khr: self.create_win32_surface_khr,
-                get_physical_device_win32_presentation_support_khr: self
-                    .get_physical_device_win32_presentation_support_khr,
+                get_physical_device_win32_presentation_support_khr:
+                    self.get_physical_device_win32_presentation_support_khr,
             }
         }
     }
@@ -16279,8 +16193,8 @@ pub mod extensions {
     impl ::std::clone::Clone for NvExternalMemoryCapabilitiesFn {
         fn clone(&self) -> Self {
             NvExternalMemoryCapabilitiesFn {
-                get_physical_device_external_image_format_properties_nv: self
-                    .get_physical_device_external_image_format_properties_nv,
+                get_physical_device_external_image_format_properties_nv:
+                    self.get_physical_device_external_image_format_properties_nv,
             }
         }
     }
@@ -16473,12 +16387,12 @@ pub mod extensions {
     impl ::std::clone::Clone for KhrDeviceGroupFn {
         fn clone(&self) -> Self {
             KhrDeviceGroupFn {
-                get_device_group_present_capabilities_khr: self
-                    .get_device_group_present_capabilities_khr,
-                get_device_group_surface_present_modes_khr: self
-                    .get_device_group_surface_present_modes_khr,
-                get_physical_device_present_rectangles_khr: self
-                    .get_physical_device_present_rectangles_khr,
+                get_device_group_present_capabilities_khr:
+                    self.get_device_group_present_capabilities_khr,
+                get_device_group_surface_present_modes_khr:
+                    self.get_device_group_surface_present_modes_khr,
+                get_physical_device_present_rectangles_khr:
+                    self.get_physical_device_present_rectangles_khr,
                 acquire_next_image2_khr: self.acquire_next_image2_khr,
             }
         }
@@ -17290,8 +17204,8 @@ pub mod extensions {
         fn clone(&self) -> Self {
             KhrPushDescriptorFn {
                 cmd_push_descriptor_set_khr: self.cmd_push_descriptor_set_khr,
-                cmd_push_descriptor_set_with_template_khr: self
-                    .cmd_push_descriptor_set_with_template_khr,
+                cmd_push_descriptor_set_with_template_khr:
+                    self.cmd_push_descriptor_set_with_template_khr,
             }
         }
     }
@@ -17477,8 +17391,8 @@ pub mod extensions {
     impl ::std::clone::Clone for KhrDescriptorUpdateTemplateFn {
         fn clone(&self) -> Self {
             KhrDescriptorUpdateTemplateFn {
-                cmd_push_descriptor_set_with_template_khr: self
-                    .cmd_push_descriptor_set_with_template_khr,
+                cmd_push_descriptor_set_with_template_khr:
+                    self.cmd_push_descriptor_set_with_template_khr,
             }
         }
     }
@@ -17592,8 +17506,8 @@ pub mod extensions {
                 destroy_object_table_nvx: self.destroy_object_table_nvx,
                 register_objects_nvx: self.register_objects_nvx,
                 unregister_objects_nvx: self.unregister_objects_nvx,
-                get_physical_device_generated_commands_properties_nvx: self
-                    .get_physical_device_generated_commands_properties_nvx,
+                get_physical_device_generated_commands_properties_nvx:
+                    self.get_physical_device_generated_commands_properties_nvx,
             }
         }
     }
@@ -18033,8 +17947,8 @@ pub mod extensions {
     impl ::std::clone::Clone for ExtDisplaySurfaceCounterFn {
         fn clone(&self) -> Self {
             ExtDisplaySurfaceCounterFn {
-                get_physical_device_surface_capabilities2_ext: self
-                    .get_physical_device_surface_capabilities2_ext,
+                get_physical_device_surface_capabilities2_ext:
+                    self.get_physical_device_surface_capabilities2_ext,
             }
         }
     }
@@ -19185,8 +19099,8 @@ pub mod extensions {
     impl ::std::clone::Clone for KhrGetSurfaceCapabilities2Fn {
         fn clone(&self) -> Self {
             KhrGetSurfaceCapabilities2Fn {
-                get_physical_device_surface_capabilities2_khr: self
-                    .get_physical_device_surface_capabilities2_khr,
+                get_physical_device_surface_capabilities2_khr:
+                    self.get_physical_device_surface_capabilities2_khr,
                 get_physical_device_surface_formats2_khr: self
                     .get_physical_device_surface_formats2_khr,
             }
@@ -19317,10 +19231,10 @@ pub mod extensions {
     impl ::std::clone::Clone for KhrGetDisplayProperties2Fn {
         fn clone(&self) -> Self {
             KhrGetDisplayProperties2Fn {
-                get_physical_device_display_properties2_khr: self
-                    .get_physical_device_display_properties2_khr,
-                get_physical_device_display_plane_properties2_khr: self
-                    .get_physical_device_display_plane_properties2_khr,
+                get_physical_device_display_properties2_khr:
+                    self.get_physical_device_display_properties2_khr,
+                get_physical_device_display_plane_properties2_khr:
+                    self.get_physical_device_display_plane_properties2_khr,
                 get_display_mode_properties2_khr: self.get_display_mode_properties2_khr,
                 get_display_plane_capabilities2_khr: self.get_display_plane_capabilities2_khr,
             }
@@ -19956,10 +19870,10 @@ pub mod extensions {
     impl ::std::clone::Clone for AndroidExternalMemoryAndroidHardwareBufferFn {
         fn clone(&self) -> Self {
             AndroidExternalMemoryAndroidHardwareBufferFn {
-                get_android_hardware_buffer_properties_android: self
-                    .get_android_hardware_buffer_properties_android,
-                get_memory_android_hardware_buffer_android: self
-                    .get_memory_android_hardware_buffer_android,
+                get_android_hardware_buffer_properties_android:
+                    self.get_android_hardware_buffer_properties_android,
+                get_memory_android_hardware_buffer_android:
+                    self.get_memory_android_hardware_buffer_android,
             }
         }
     }
@@ -20360,8 +20274,8 @@ pub mod extensions {
         fn clone(&self) -> Self {
             ExtSampleLocationsFn {
                 cmd_set_sample_locations_ext: self.cmd_set_sample_locations_ext,
-                get_physical_device_multisample_properties_ext: self
-                    .get_physical_device_multisample_properties_ext,
+                get_physical_device_multisample_properties_ext:
+                    self.get_physical_device_multisample_properties_ext,
             }
         }
     }
