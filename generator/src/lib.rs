@@ -24,6 +24,7 @@ pub enum CType {
     U32,
     U64,
     Float,
+    Bool32,
 }
 
 impl CType {
@@ -33,6 +34,7 @@ impl CType {
             CType::U32 => Term::intern("u32"),
             CType::U64 => Term::intern("u64"),
             CType::Float => Term::intern("f32"),
+            CType::Bool32 => Term::intern("Bool32"),
         };
         quote!{#term}
     }
@@ -1399,7 +1401,12 @@ pub fn generate_constant<'a>(
     let name = constant_name(&constant.name);
     let ident = Ident::from(name.as_str());
     let value = c.to_tokens();
-    let ty = c.ty().to_tokens();
+    let ty = if name == "TRUE" || name == "FALSE" {
+        CType::Bool32
+    } else {
+        c.ty()
+    };
+    let ty = ty.to_tokens();
     quote!{
         pub const #ident: #ty = #value;
     }
