@@ -1,5 +1,5 @@
 [package]
-name = "ash"
+name = "ash-sys"
 version = "0.24.3"
 authors = ["maik klein <maikklein@googlemail.com>"]
 description = "Vulkan bindings for Rust"
@@ -10,12 +10,7 @@ keywords = ["vulkan", "graphic"]
 documentation = "https://docs.rs/ash"
 
 [dependencies]
-shared_library = "0.1.5"
-lazy_static = "0.2.1"
-ash-sys = { path = "../ash-sys" }
-
-[features]
-default = []
+libc = "0.2.26"
 
 [package.metadata.release]
 no-dev-version = true

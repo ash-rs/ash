@@ -155,21 +155,21 @@ pub fn vk_version_macros() -> Tokens {
         #[macro_export]
         macro_rules! vk_version_major {
             ($major:expr) => {
-                ($major as uint32_t) >> 22
+                ($major as u32) >> 22
             };
         }
 
         #[macro_export]
         macro_rules! vk_version_minor {
             ($minor:expr) => {
-                (($minor as uint32_t) >> 12) & 0x3ff
+                (($minor as u32) >> 12) & 0x3ff
             };
         }
 
         #[macro_export]
         macro_rules! vk_version_patch {
             ($minor:expr) => {
-                ($minor as uint32_t) & 0xfff
+                ($minor as u32) & 0xfff
             };
         }
     }
@@ -1528,7 +1528,7 @@ pub fn write_source_code(path: &Path) {
         .collect();
     let feature_extensions_code = generate_feature_extension(&spec2, &mut const_cache);
 
-    let mut file = File::create("../ash/src/vk.rs").expect("vk");
+    let mut file = File::create("../ash-sys/src/vk.rs").expect("vk");
     let bitflags_macro = vk_bitflags_wrapped_macro();
     let handle_nondispatchable_macro = handle_nondispatchable_macro();
     let define_handle_macro = define_handle_macro();
