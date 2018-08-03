@@ -88,19 +88,21 @@ pub trait InstanceV1_1: InstanceV1_0 {
 
     unsafe fn enumerate_instance_version(&self) -> VkResult<vk::uint32_t> {
         let mut api_version = mem::uninitialized();
-        let err_code = self.fp_v1_1()
-            .enumerate_instance_version(&mut api_version);
+        let err_code = self.fp_v1_1().enumerate_instance_version(&mut api_version);
         match err_code {
             vk::Result::SUCCESS => Ok(api_version),
-            _ => Err(err_code)
+            _ => Err(err_code),
         }
     }
 
     fn enumerate_physical_device_groups(&self) -> VkResult<Vec<vk::PhysicalDeviceGroupProperties>> {
         unsafe {
             let mut group_count = mem::uninitialized();
-            self.fp_v1_1()
-                .enumerate_physical_device_groups(self.handle(), &mut group_count, ptr::null_mut());
+            self.fp_v1_1().enumerate_physical_device_groups(
+                self.handle(),
+                &mut group_count,
+                ptr::null_mut(),
+            );
             let mut physical_device_groups = Vec::with_capacity(group_count as usize);
             let err_code = self.fp_v1_1().enumerate_physical_device_groups(
                 self.handle(),
@@ -204,19 +206,21 @@ pub trait InstanceV1_1: InstanceV1_0 {
     ) -> Vec<vk::SparseImageFormatProperties2> {
         unsafe {
             let mut format_count = 0;
-            self.fp_v1_1().get_physical_device_sparse_image_format_properties2(
-                physical_device,
-                format_info,
-                &mut format_count,
-                ptr::null_mut(),
-            );
+            self.fp_v1_1()
+                .get_physical_device_sparse_image_format_properties2(
+                    physical_device,
+                    format_info,
+                    &mut format_count,
+                    ptr::null_mut(),
+                );
             let mut format_prop = Vec::with_capacity(format_count as usize);
-            self.fp_v1_1().get_physical_device_sparse_image_format_properties2(
-                physical_device,
-                format_info,
-                &mut format_count,
-                format_prop.as_mut_ptr(),
-            );
+            self.fp_v1_1()
+                .get_physical_device_sparse_image_format_properties2(
+                    physical_device,
+                    format_info,
+                    &mut format_count,
+                    format_prop.as_mut_ptr(),
+                );
             format_prop.set_len(format_count as usize);
             format_prop
         }
@@ -229,11 +233,12 @@ pub trait InstanceV1_1: InstanceV1_0 {
     ) -> vk::ExternalBufferProperties {
         unsafe {
             let mut image_format_prop = mem::uninitialized();
-            self.fp_v1_1().get_physical_device_external_buffer_properties(
-                physical_device,
-                external_buffer_info,
-                &mut image_format_prop,
-            );
+            self.fp_v1_1()
+                .get_physical_device_external_buffer_properties(
+                    physical_device,
+                    external_buffer_info,
+                    &mut image_format_prop,
+                );
             image_format_prop
         }
     }
@@ -245,11 +250,12 @@ pub trait InstanceV1_1: InstanceV1_0 {
     ) -> vk::ExternalFenceProperties {
         unsafe {
             let mut fence_prop = mem::uninitialized();
-            self.fp_v1_1().get_physical_device_external_fence_properties(
-                physical_device,
-                external_fence_info,
-                &mut fence_prop,
-            );
+            self.fp_v1_1()
+                .get_physical_device_external_fence_properties(
+                    physical_device,
+                    external_fence_info,
+                    &mut fence_prop,
+                );
             fence_prop
         }
     }
@@ -261,11 +267,12 @@ pub trait InstanceV1_1: InstanceV1_0 {
     ) -> vk::ExternalSemaphoreProperties {
         unsafe {
             let mut semaphore_prop = mem::uninitialized();
-            self.fp_v1_1().get_physical_device_external_semaphore_properties(
-                physical_device,
-                external_semaphore_info,
-                &mut semaphore_prop,
-            );
+            self.fp_v1_1()
+                .get_physical_device_external_semaphore_properties(
+                    physical_device,
+                    external_semaphore_info,
+                    &mut semaphore_prop,
+                );
             semaphore_prop
         }
     }

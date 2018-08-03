@@ -18,7 +18,7 @@ pub trait DeviceV1_1: DeviceV1_0 {
         );
         match err_code {
             vk::Result::SUCCESS => Ok(()),
-            _ => Err(err_code)
+            _ => Err(err_code),
         }
     }
 
@@ -30,13 +30,16 @@ pub trait DeviceV1_1: DeviceV1_0 {
         );
         match err_code {
             vk::Result::SUCCESS => Ok(()),
-            _ => Err(err_code)
+            _ => Err(err_code),
         }
     }
 
-    fn get_device_group_peer_memory_features(&self, heap_index: vk::uint32_t,
-                                                    local_device_index: vk::uint32_t,
-                                                    remote_device_index: vk::uint32_t) -> vk::PeerMemoryFeatureFlags {
+    fn get_device_group_peer_memory_features(
+        &self,
+        heap_index: vk::uint32_t,
+        local_device_index: vk::uint32_t,
+        remote_device_index: vk::uint32_t,
+    ) -> vk::PeerMemoryFeatureFlags {
         unsafe {
             let mut peer_memory_features = mem::uninitialized();
             self.fp_v1_1().get_device_group_peer_memory_features(
@@ -50,20 +53,25 @@ pub trait DeviceV1_1: DeviceV1_0 {
         }
     }
 
-    unsafe fn cmd_set_device_mask(&self, command_buffer: vk::CommandBuffer, device_mask: vk::uint32_t) {
-        self.fp_v1_1().cmd_set_device_mask(
-            command_buffer,
-            device_mask
-        );
+    unsafe fn cmd_set_device_mask(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        device_mask: vk::uint32_t,
+    ) {
+        self.fp_v1_1()
+            .cmd_set_device_mask(command_buffer, device_mask);
     }
 
-    unsafe fn cmd_dispatch_base(&self, command_buffer: vk::CommandBuffer,
-                                base_group_x: vk::uint32_t,
-                                base_group_y: vk::uint32_t,
-                                base_group_z: vk::uint32_t,
-                                group_count_x: vk::uint32_t,
-                                group_count_y: vk::uint32_t,
-                                group_count_z: vk::uint32_t,) {
+    unsafe fn cmd_dispatch_base(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        base_group_x: vk::uint32_t,
+        base_group_y: vk::uint32_t,
+        base_group_z: vk::uint32_t,
+        group_count_x: vk::uint32_t,
+        group_count_y: vk::uint32_t,
+        group_count_z: vk::uint32_t,
+    ) {
         self.fp_v1_1().cmd_dispatch_base(
             command_buffer,
             base_group_x,
@@ -75,7 +83,10 @@ pub trait DeviceV1_1: DeviceV1_0 {
         );
     }
 
-    unsafe fn get_image_memory_requirements2(&self, info: &vk::ImageMemoryRequirementsInfo2) -> vk::MemoryRequirements2 {
+    unsafe fn get_image_memory_requirements2(
+        &self,
+        info: &vk::ImageMemoryRequirementsInfo2,
+    ) -> vk::MemoryRequirements2 {
         let mut image_memory_requirements = mem::uninitialized();
         self.fp_v1_1().get_image_memory_requirements2(
             self.handle(),
@@ -85,7 +96,10 @@ pub trait DeviceV1_1: DeviceV1_0 {
         image_memory_requirements
     }
 
-    unsafe fn get_buffer_memory_requirements2(&self, info: &vk::BufferMemoryRequirementsInfo2) -> vk::MemoryRequirements2 {
+    unsafe fn get_buffer_memory_requirements2(
+        &self,
+        info: &vk::BufferMemoryRequirementsInfo2,
+    ) -> vk::MemoryRequirements2 {
         let mut image_memory_requirements = mem::uninitialized();
         self.fp_v1_1().get_buffer_memory_requirements2(
             self.handle(),
@@ -95,10 +109,17 @@ pub trait DeviceV1_1: DeviceV1_0 {
         image_memory_requirements
     }
 
-    unsafe fn get_image_sparse_memory_requirements2(&self, info: &vk::ImageSparseMemoryRequirementsInfo2) -> Vec<vk::SparseImageMemoryRequirements2> {
+    unsafe fn get_image_sparse_memory_requirements2(
+        &self,
+        info: &vk::ImageSparseMemoryRequirementsInfo2,
+    ) -> Vec<vk::SparseImageMemoryRequirements2> {
         let mut count = mem::uninitialized();
-        self.fp_v1_1()
-            .get_image_sparse_memory_requirements2(self.handle(), info, &mut count, ptr::null_mut());
+        self.fp_v1_1().get_image_sparse_memory_requirements2(
+            self.handle(),
+            info,
+            &mut count,
+            ptr::null_mut(),
+        );
         let mut requirements = Vec::with_capacity(count as usize);
         self.fp_v1_1().get_image_sparse_memory_requirements2(
             self.handle(),
@@ -110,68 +131,99 @@ pub trait DeviceV1_1: DeviceV1_0 {
         requirements
     }
 
-    unsafe fn trim_command_pool(&self, command_pool: vk::CommandPool, flags: vk::CommandPoolTrimFlags) {
-        self.fp_v1_1().trim_command_pool(
-            self.handle(),
-            command_pool,
-            flags
-        );
+    unsafe fn trim_command_pool(
+        &self,
+        command_pool: vk::CommandPool,
+        flags: vk::CommandPoolTrimFlags,
+    ) {
+        self.fp_v1_1()
+            .trim_command_pool(self.handle(), command_pool, flags);
     }
 
-    unsafe fn create_sampler_ycbcr_conversion(&self,
-                                              create_info: &vk::SamplerYcbcrConversionCreateInfo,
-                                              allocation_callbacks: Option<&vk::AllocationCallbacks>) -> VkResult<vk::SamplerYcbcrConversion> {
+    unsafe fn create_sampler_ycbcr_conversion(
+        &self,
+        create_info: &vk::SamplerYcbcrConversionCreateInfo,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+    ) -> VkResult<vk::SamplerYcbcrConversion> {
         let mut ycbcr_conversion = mem::uninitialized();
         let err_code = self.fp_v1_1().create_sampler_ycbcr_conversion(
             self.handle(),
             create_info,
             allocation_callbacks.as_raw_ptr(),
-            &mut ycbcr_conversion
+            &mut ycbcr_conversion,
         );
         match err_code {
             vk::Result::SUCCESS => Ok(ycbcr_conversion),
-            _ => Err(err_code)
+            _ => Err(err_code),
         }
     }
 
-    unsafe fn destroy_sampler_ycbcr_conversion(&self,
-                                               ycbcr_conversion: vk::SamplerYcbcrConversion,
-                                               allocation_callbacks: Option<&vk::AllocationCallbacks>) {
-        self.fp_v1_1().destroy_sampler_ycbcr_conversion(self.handle(), ycbcr_conversion, allocation_callbacks.as_raw_ptr());
+    unsafe fn destroy_sampler_ycbcr_conversion(
+        &self,
+        ycbcr_conversion: vk::SamplerYcbcrConversion,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+    ) {
+        self.fp_v1_1().destroy_sampler_ycbcr_conversion(
+            self.handle(),
+            ycbcr_conversion,
+            allocation_callbacks.as_raw_ptr(),
+        );
     }
 
-    unsafe fn create_descriptor_update_template(&self,
-                                              create_info: &vk::DescriptorUpdateTemplateCreateInfo,
-                                              allocation_callbacks: Option<&vk::AllocationCallbacks>) -> VkResult<vk::DescriptorUpdateTemplate> {
+    unsafe fn create_descriptor_update_template(
+        &self,
+        create_info: &vk::DescriptorUpdateTemplateCreateInfo,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+    ) -> VkResult<vk::DescriptorUpdateTemplate> {
         let mut descriptor_update_template = mem::uninitialized();
         let err_code = self.fp_v1_1().create_descriptor_update_template(
             self.handle(),
             create_info,
             allocation_callbacks.as_raw_ptr(),
-            &mut descriptor_update_template
+            &mut descriptor_update_template,
         );
         match err_code {
             vk::Result::SUCCESS => Ok(descriptor_update_template),
-            _ => Err(err_code)
+            _ => Err(err_code),
         }
     }
 
-    unsafe fn destroy_descriptor_update_template(&self,
-                                                 descriptor_update_template: vk::DescriptorUpdateTemplate,
-                                               allocation_callbacks: Option<&vk::AllocationCallbacks>) {
-        self.fp_v1_1().destroy_descriptor_update_template(self.handle(), descriptor_update_template, allocation_callbacks.as_raw_ptr());
+    unsafe fn destroy_descriptor_update_template(
+        &self,
+        descriptor_update_template: vk::DescriptorUpdateTemplate,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+    ) {
+        self.fp_v1_1().destroy_descriptor_update_template(
+            self.handle(),
+            descriptor_update_template,
+            allocation_callbacks.as_raw_ptr(),
+        );
     }
 
-    unsafe fn update_descriptor_set_with_template(&self,
-                                                  descriptor_set: vk::DescriptorSet,
-                                                  descriptor_update_template: vk::DescriptorUpdateTemplate,
-     data: *const vk::c_void) {
-        self.fp_v1_1().update_descriptor_set_with_template(self.handle(), descriptor_set, descriptor_update_template, data);
+    unsafe fn update_descriptor_set_with_template(
+        &self,
+        descriptor_set: vk::DescriptorSet,
+        descriptor_update_template: vk::DescriptorUpdateTemplate,
+        data: *const vk::c_void,
+    ) {
+        self.fp_v1_1().update_descriptor_set_with_template(
+            self.handle(),
+            descriptor_set,
+            descriptor_update_template,
+            data,
+        );
     }
 
-    unsafe fn get_descriptor_set_layout_support(&self, create_info: &vk::DescriptorSetLayoutCreateInfo) -> vk::DescriptorSetLayoutSupport {
+    unsafe fn get_descriptor_set_layout_support(
+        &self,
+        create_info: &vk::DescriptorSetLayoutCreateInfo,
+    ) -> vk::DescriptorSetLayoutSupport {
         let mut descriptor_set_layout_support = mem::uninitialized();
-        self.fp_v1_1().get_descriptor_set_layout_support(self.handle(), create_info, &mut descriptor_set_layout_support);
+        self.fp_v1_1().get_descriptor_set_layout_support(
+            self.handle(),
+            create_info,
+            &mut descriptor_set_layout_support,
+        );
         descriptor_set_layout_support
     }
 }
