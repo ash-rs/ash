@@ -25,3 +25,4 @@ mod wayland_surface;
 mod win32_surface;
 mod xcb_surface;
 mod xlib_surface;
+mod debug_utils;

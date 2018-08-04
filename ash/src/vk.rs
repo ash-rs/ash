@@ -4,27 +4,32 @@ pub use self::bitflags::*;
 pub use self::extensions::*;
 #[doc(hidden)]
 pub use libc::*;
+pub trait Handle {
+    const TYPE: ObjectType;
+    fn as_raw(self) -> u64;
+    fn from_raw(u64) -> Self;
+}
 #[macro_export]
 macro_rules! vk_make_version {
-    ( $ major : expr , $ minor : expr , $ patch : expr ) => {
+    ($major:expr, $minor:expr, $patch:expr) => {
         (($major as u32) << 22) | (($minor as u32) << 12) | $patch as u32
     };
 }
 #[macro_export]
 macro_rules! vk_version_major {
-    ( $ major : expr ) => {
+    ($major:expr) => {
         ($major as uint32_t) >> 22
     };
 }
 #[macro_export]
 macro_rules! vk_version_minor {
-    ( $ minor : expr ) => {
+    ($minor:expr) => {
         (($minor as uint32_t) >> 12) & 0x3ff
     };
 }
 #[macro_export]
 macro_rules! vk_version_patch {
-    ( $ minor : expr ) => {
+    ($minor:expr) => {
         ($minor as uint32_t) & 0xfff
     };
 }
@@ -55,7 +60,7 @@ pub type SECURITY_ATTRIBUTES = ();
 pub type ANativeWindow = c_void;
 pub type AHardwareBuffer = c_void;
 macro_rules! vk_bitflags_wrapped {
-    ( $ name : ident , $ all : expr , $ flag_type : ty ) => {
+    ($name:ident, $all:expr, $flag_type:ty) => {
         impl Default for $name {
             fn default() -> $name {
                 $name(0)
@@ -174,10 +179,19 @@ macro_rules! vk_bitflags_wrapped {
     };
 }
 macro_rules! handle_nondispatchable {
-    ( $ name : ident ) => {
+    ($name:ident, $ty:ident) => {
         #[repr(transparent)]
         #[derive(Eq, PartialEq, Ord, PartialOrd, Clone, Copy, Hash, Default)]
         pub struct $name(uint64_t);
+        impl Handle for $name {
+            const TYPE: ObjectType = ObjectType::$ty;
+            fn as_raw(self) -> u64 {
+                self.0 as u64
+            }
+            fn from_raw(x: u64) -> Self {
+                $name(x as _)
+            }
+        }
         impl $name {
             pub fn null() -> $name {
                 $name(0)
@@ -202,24 +216,29 @@ macro_rules! handle_nondispatchable {
     };
 }
 macro_rules! define_handle {
-    ( $ name : ident ) => {
-        #[derive(Clone, Copy, Debug)]
+    ($name:ident, $ty:ident) => {
         #[repr(transparent)]
-        pub struct $name {
-            ptr: *mut u8,
-        }
+        #[derive(Clone, Copy, Debug)]
+        pub struct $name(*mut u8);
         impl Default for $name {
             fn default() -> $name {
                 $name::null()
+            }
+        }
+        impl Handle for $name {
+            const TYPE: ObjectType = ObjectType::$ty;
+            fn as_raw(self) -> u64 {
+                self.0 as u64
+            }
+            fn from_raw(x: u64) -> Self {
+                $name(x as _)
             }
         }
         unsafe impl Send for $name {}
         unsafe impl Sync for $name {}
         impl $name {
             pub fn null() -> Self {
-                $name {
-                    ptr: ::std::ptr::null_mut(),
-                }
+                $name(::std::ptr::null_mut())
             }
         }
     };
@@ -444,18 +463,18 @@ impl ::std::clone::Clone for InstanceFnV1_0 {
             enumerate_physical_devices: self.enumerate_physical_devices,
             get_physical_device_features: self.get_physical_device_features,
             get_physical_device_format_properties: self.get_physical_device_format_properties,
-            get_physical_device_image_format_properties:
-                self.get_physical_device_image_format_properties,
+            get_physical_device_image_format_properties: self
+                .get_physical_device_image_format_properties,
             get_physical_device_properties: self.get_physical_device_properties,
-            get_physical_device_queue_family_properties:
-                self.get_physical_device_queue_family_properties,
+            get_physical_device_queue_family_properties: self
+                .get_physical_device_queue_family_properties,
             get_physical_device_memory_properties: self.get_physical_device_memory_properties,
             get_device_proc_addr: self.get_device_proc_addr,
             create_device: self.create_device,
             enumerate_device_extension_properties: self.enumerate_device_extension_properties,
             enumerate_device_layer_properties: self.enumerate_device_layer_properties,
-            get_physical_device_sparse_image_format_properties:
-                self.get_physical_device_sparse_image_format_properties,
+            get_physical_device_sparse_image_format_properties: self
+                .get_physical_device_sparse_image_format_properties,
         }
     }
 }
@@ -3922,19 +3941,19 @@ impl ::std::clone::Clone for InstanceFnV1_1 {
             get_physical_device_features2: self.get_physical_device_features2,
             get_physical_device_properties2: self.get_physical_device_properties2,
             get_physical_device_format_properties2: self.get_physical_device_format_properties2,
-            get_physical_device_image_format_properties2:
-                self.get_physical_device_image_format_properties2,
-            get_physical_device_queue_family_properties2:
-                self.get_physical_device_queue_family_properties2,
+            get_physical_device_image_format_properties2: self
+                .get_physical_device_image_format_properties2,
+            get_physical_device_queue_family_properties2: self
+                .get_physical_device_queue_family_properties2,
             get_physical_device_memory_properties2: self.get_physical_device_memory_properties2,
-            get_physical_device_sparse_image_format_properties2:
-                self.get_physical_device_sparse_image_format_properties2,
-            get_physical_device_external_buffer_properties:
-                self.get_physical_device_external_buffer_properties,
-            get_physical_device_external_fence_properties:
-                self.get_physical_device_external_fence_properties,
-            get_physical_device_external_semaphore_properties:
-                self.get_physical_device_external_semaphore_properties,
+            get_physical_device_sparse_image_format_properties2: self
+                .get_physical_device_sparse_image_format_properties2,
+            get_physical_device_external_buffer_properties: self
+                .get_physical_device_external_buffer_properties,
+            get_physical_device_external_fence_properties: self
+                .get_physical_device_external_fence_properties,
+            get_physical_device_external_semaphore_properties: self
+                .get_physical_device_external_semaphore_properties,
         }
     }
 }
@@ -4821,42 +4840,42 @@ vk_bitflags_wrapped!(
     0b0,
     Flags
 );
-define_handle!(Instance);
-define_handle!(PhysicalDevice);
-define_handle!(Device);
-define_handle!(Queue);
-define_handle!(CommandBuffer);
-handle_nondispatchable!(DeviceMemory);
-handle_nondispatchable!(CommandPool);
-handle_nondispatchable!(Buffer);
-handle_nondispatchable!(BufferView);
-handle_nondispatchable!(Image);
-handle_nondispatchable!(ImageView);
-handle_nondispatchable!(ShaderModule);
-handle_nondispatchable!(Pipeline);
-handle_nondispatchable!(PipelineLayout);
-handle_nondispatchable!(Sampler);
-handle_nondispatchable!(DescriptorSet);
-handle_nondispatchable!(DescriptorSetLayout);
-handle_nondispatchable!(DescriptorPool);
-handle_nondispatchable!(Fence);
-handle_nondispatchable!(Semaphore);
-handle_nondispatchable!(Event);
-handle_nondispatchable!(QueryPool);
-handle_nondispatchable!(Framebuffer);
-handle_nondispatchable!(RenderPass);
-handle_nondispatchable!(PipelineCache);
-handle_nondispatchable!(ObjectTableNVX);
-handle_nondispatchable!(IndirectCommandsLayoutNVX);
-handle_nondispatchable!(DescriptorUpdateTemplate);
-handle_nondispatchable!(SamplerYcbcrConversion);
-handle_nondispatchable!(ValidationCacheEXT);
-handle_nondispatchable!(DisplayKHR);
-handle_nondispatchable!(DisplayModeKHR);
-handle_nondispatchable!(SurfaceKHR);
-handle_nondispatchable!(SwapchainKHR);
-handle_nondispatchable!(DebugReportCallbackEXT);
-handle_nondispatchable!(DebugUtilsMessengerEXT);
+define_handle!(Instance, INSTANCE);
+define_handle!(PhysicalDevice, PHYSICAL_DEVICE);
+define_handle!(Device, DEVICE);
+define_handle!(Queue, QUEUE);
+define_handle!(CommandBuffer, COMMAND_BUFFER);
+handle_nondispatchable!(DeviceMemory, DEVICE_MEMORY);
+handle_nondispatchable!(CommandPool, COMMAND_POOL);
+handle_nondispatchable!(Buffer, BUFFER);
+handle_nondispatchable!(BufferView, BUFFER_VIEW);
+handle_nondispatchable!(Image, IMAGE);
+handle_nondispatchable!(ImageView, IMAGE_VIEW);
+handle_nondispatchable!(ShaderModule, SHADER_MODULE);
+handle_nondispatchable!(Pipeline, PIPELINE);
+handle_nondispatchable!(PipelineLayout, PIPELINE_LAYOUT);
+handle_nondispatchable!(Sampler, SAMPLER);
+handle_nondispatchable!(DescriptorSet, DESCRIPTOR_SET);
+handle_nondispatchable!(DescriptorSetLayout, DESCRIPTOR_SET_LAYOUT);
+handle_nondispatchable!(DescriptorPool, DESCRIPTOR_POOL);
+handle_nondispatchable!(Fence, FENCE);
+handle_nondispatchable!(Semaphore, SEMAPHORE);
+handle_nondispatchable!(Event, EVENT);
+handle_nondispatchable!(QueryPool, QUERY_POOL);
+handle_nondispatchable!(Framebuffer, FRAMEBUFFER);
+handle_nondispatchable!(RenderPass, RENDER_PASS);
+handle_nondispatchable!(PipelineCache, PIPELINE_CACHE);
+handle_nondispatchable!(ObjectTableNVX, OBJECT_TABLE_NVX);
+handle_nondispatchable!(IndirectCommandsLayoutNVX, INDIRECT_COMMANDS_LAYOUT_NVX);
+handle_nondispatchable!(DescriptorUpdateTemplate, DESCRIPTOR_UPDATE_TEMPLATE);
+handle_nondispatchable!(SamplerYcbcrConversion, SAMPLER_YCBCR_CONVERSION);
+handle_nondispatchable!(ValidationCacheEXT, VALIDATION_CACHE_EXT);
+handle_nondispatchable!(DisplayKHR, DISPLAY_KHR);
+handle_nondispatchable!(DisplayModeKHR, DISPLAY_MODE_KHR);
+handle_nondispatchable!(SurfaceKHR, SURFACE_KHR);
+handle_nondispatchable!(SwapchainKHR, SWAPCHAIN_KHR);
+handle_nondispatchable!(DebugReportCallbackEXT, DEBUG_REPORT_CALLBACK_EXT);
+handle_nondispatchable!(DebugUtilsMessengerEXT, DEBUG_UTILS_MESSENGER_EXT);
 #[allow(non_camel_case_types)]
 pub type PFN_vkInternalAllocationNotification =
     unsafe extern "system" fn(
@@ -5023,9 +5042,11 @@ impl ::std::fmt::Debug for PhysicalDeviceProperties {
             .field("device_type", &self.device_type)
             .field("device_name", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.device_name.as_ptr() as *const i8)
-            }).field("pipeline_cache_uuid", &unsafe {
+            })
+            .field("pipeline_cache_uuid", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.pipeline_cache_uuid.as_ptr() as *const i8)
-            }).field("limits", &self.limits)
+            })
+            .field("limits", &self.limits)
             .field("sparse_properties", &self.sparse_properties)
             .finish()
     }
@@ -5056,7 +5077,8 @@ impl ::std::fmt::Debug for ExtensionProperties {
         fmt.debug_struct("ExtensionProperties")
             .field("extension_name", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.extension_name.as_ptr() as *const i8)
-            }).field("spec_version", &self.spec_version)
+            })
+            .field("spec_version", &self.spec_version)
             .finish()
     }
 }
@@ -5081,11 +5103,13 @@ impl ::std::fmt::Debug for LayerProperties {
         fmt.debug_struct("LayerProperties")
             .field("layer_name", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.layer_name.as_ptr() as *const i8)
-            }).field("spec_version", &self.spec_version)
+            })
+            .field("spec_version", &self.spec_version)
             .field("implementation_version", &self.implementation_version)
             .field("description", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.description.as_ptr() as *const i8)
-            }).finish()
+            })
+            .finish()
     }
 }
 impl ::std::default::Default for LayerProperties {
@@ -5142,7 +5166,8 @@ impl ::std::fmt::Debug for AllocationCallbacks {
             .field(
                 "pfn_internal_allocation",
                 &(self.pfn_internal_allocation as *const ()),
-            ).field("pfn_internal_free", &(self.pfn_internal_free as *const ()))
+            )
+            .field("pfn_internal_free", &(self.pfn_internal_free as *const ()))
             .finish()
     }
 }
@@ -5258,10 +5283,12 @@ impl ::std::fmt::Debug for PhysicalDeviceMemoryProperties {
             .field("memory_type_count", &self.memory_type_count)
             .field("memory_types", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.memory_types.as_ptr() as *const i8)
-            }).field("memory_heap_count", &self.memory_heap_count)
+            })
+            .field("memory_heap_count", &self.memory_heap_count)
             .field("memory_heaps", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.memory_heaps.as_ptr() as *const i8)
-            }).finish()
+            })
+            .finish()
     }
 }
 impl ::std::default::Default for PhysicalDeviceMemoryProperties {
@@ -5791,10 +5818,12 @@ impl ::std::fmt::Debug for ImageBlit {
             .field("src_subresource", &self.src_subresource)
             .field("src_offsets", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.src_offsets.as_ptr() as *const i8)
-            }).field("dst_subresource", &self.dst_subresource)
+            })
+            .field("dst_subresource", &self.dst_subresource)
             .field("dst_offsets", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.dst_offsets.as_ptr() as *const i8)
-            }).finish()
+            })
+            .finish()
     }
 }
 impl ::std::default::Default for ImageBlit {
@@ -6208,7 +6237,8 @@ impl ::std::fmt::Debug for PipelineColorBlendStateCreateInfo {
             .field("p_attachments", &self.p_attachments)
             .field("blend_constants", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.blend_constants.as_ptr() as *const i8)
-            }).finish()
+            })
+            .finish()
     }
 }
 impl ::std::default::Default for PipelineColorBlendStateCreateInfo {
@@ -6912,155 +6942,202 @@ impl ::std::fmt::Debug for PhysicalDeviceLimits {
             .field(
                 "max_memory_allocation_count",
                 &self.max_memory_allocation_count,
-            ).field(
+            )
+            .field(
                 "max_sampler_allocation_count",
                 &self.max_sampler_allocation_count,
-            ).field("buffer_image_granularity", &self.buffer_image_granularity)
+            )
+            .field("buffer_image_granularity", &self.buffer_image_granularity)
             .field("sparse_address_space_size", &self.sparse_address_space_size)
             .field("max_bound_descriptor_sets", &self.max_bound_descriptor_sets)
             .field(
                 "max_per_stage_descriptor_samplers",
                 &self.max_per_stage_descriptor_samplers,
-            ).field(
+            )
+            .field(
                 "max_per_stage_descriptor_uniform_buffers",
                 &self.max_per_stage_descriptor_uniform_buffers,
-            ).field(
+            )
+            .field(
                 "max_per_stage_descriptor_storage_buffers",
                 &self.max_per_stage_descriptor_storage_buffers,
-            ).field(
+            )
+            .field(
                 "max_per_stage_descriptor_sampled_images",
                 &self.max_per_stage_descriptor_sampled_images,
-            ).field(
+            )
+            .field(
                 "max_per_stage_descriptor_storage_images",
                 &self.max_per_stage_descriptor_storage_images,
-            ).field(
+            )
+            .field(
                 "max_per_stage_descriptor_input_attachments",
                 &self.max_per_stage_descriptor_input_attachments,
-            ).field("max_per_stage_resources", &self.max_per_stage_resources)
+            )
+            .field("max_per_stage_resources", &self.max_per_stage_resources)
             .field(
                 "max_descriptor_set_samplers",
                 &self.max_descriptor_set_samplers,
-            ).field(
+            )
+            .field(
                 "max_descriptor_set_uniform_buffers",
                 &self.max_descriptor_set_uniform_buffers,
-            ).field(
+            )
+            .field(
                 "max_descriptor_set_uniform_buffers_dynamic",
                 &self.max_descriptor_set_uniform_buffers_dynamic,
-            ).field(
+            )
+            .field(
                 "max_descriptor_set_storage_buffers",
                 &self.max_descriptor_set_storage_buffers,
-            ).field(
+            )
+            .field(
                 "max_descriptor_set_storage_buffers_dynamic",
                 &self.max_descriptor_set_storage_buffers_dynamic,
-            ).field(
+            )
+            .field(
                 "max_descriptor_set_sampled_images",
                 &self.max_descriptor_set_sampled_images,
-            ).field(
+            )
+            .field(
                 "max_descriptor_set_storage_images",
                 &self.max_descriptor_set_storage_images,
-            ).field(
+            )
+            .field(
                 "max_descriptor_set_input_attachments",
                 &self.max_descriptor_set_input_attachments,
-            ).field(
+            )
+            .field(
                 "max_vertex_input_attributes",
                 &self.max_vertex_input_attributes,
-            ).field("max_vertex_input_bindings", &self.max_vertex_input_bindings)
+            )
+            .field("max_vertex_input_bindings", &self.max_vertex_input_bindings)
             .field(
                 "max_vertex_input_attribute_offset",
                 &self.max_vertex_input_attribute_offset,
-            ).field(
+            )
+            .field(
                 "max_vertex_input_binding_stride",
                 &self.max_vertex_input_binding_stride,
-            ).field(
+            )
+            .field(
                 "max_vertex_output_components",
                 &self.max_vertex_output_components,
-            ).field(
+            )
+            .field(
                 "max_tessellation_generation_level",
                 &self.max_tessellation_generation_level,
-            ).field(
+            )
+            .field(
                 "max_tessellation_patch_size",
                 &self.max_tessellation_patch_size,
-            ).field(
+            )
+            .field(
                 "max_tessellation_control_per_vertex_input_components",
                 &self.max_tessellation_control_per_vertex_input_components,
-            ).field(
+            )
+            .field(
                 "max_tessellation_control_per_vertex_output_components",
                 &self.max_tessellation_control_per_vertex_output_components,
-            ).field(
+            )
+            .field(
                 "max_tessellation_control_per_patch_output_components",
                 &self.max_tessellation_control_per_patch_output_components,
-            ).field(
+            )
+            .field(
                 "max_tessellation_control_total_output_components",
                 &self.max_tessellation_control_total_output_components,
-            ).field(
+            )
+            .field(
                 "max_tessellation_evaluation_input_components",
                 &self.max_tessellation_evaluation_input_components,
-            ).field(
+            )
+            .field(
                 "max_tessellation_evaluation_output_components",
                 &self.max_tessellation_evaluation_output_components,
-            ).field(
+            )
+            .field(
                 "max_geometry_shader_invocations",
                 &self.max_geometry_shader_invocations,
-            ).field(
+            )
+            .field(
                 "max_geometry_input_components",
                 &self.max_geometry_input_components,
-            ).field(
+            )
+            .field(
                 "max_geometry_output_components",
                 &self.max_geometry_output_components,
-            ).field(
+            )
+            .field(
                 "max_geometry_output_vertices",
                 &self.max_geometry_output_vertices,
-            ).field(
+            )
+            .field(
                 "max_geometry_total_output_components",
                 &self.max_geometry_total_output_components,
-            ).field(
+            )
+            .field(
                 "max_fragment_input_components",
                 &self.max_fragment_input_components,
-            ).field(
+            )
+            .field(
                 "max_fragment_output_attachments",
                 &self.max_fragment_output_attachments,
-            ).field(
+            )
+            .field(
                 "max_fragment_dual_src_attachments",
                 &self.max_fragment_dual_src_attachments,
-            ).field(
+            )
+            .field(
                 "max_fragment_combined_output_resources",
                 &self.max_fragment_combined_output_resources,
-            ).field(
+            )
+            .field(
                 "max_compute_shared_memory_size",
                 &self.max_compute_shared_memory_size,
-            ).field("max_compute_work_group_count", &unsafe {
+            )
+            .field("max_compute_work_group_count", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.max_compute_work_group_count.as_ptr() as *const i8)
-            }).field(
+            })
+            .field(
                 "max_compute_work_group_invocations",
                 &self.max_compute_work_group_invocations,
-            ).field("max_compute_work_group_size", &unsafe {
+            )
+            .field("max_compute_work_group_size", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.max_compute_work_group_size.as_ptr() as *const i8)
-            }).field("sub_pixel_precision_bits", &self.sub_pixel_precision_bits)
+            })
+            .field("sub_pixel_precision_bits", &self.sub_pixel_precision_bits)
             .field("sub_texel_precision_bits", &self.sub_texel_precision_bits)
             .field("mipmap_precision_bits", &self.mipmap_precision_bits)
             .field(
                 "max_draw_indexed_index_value",
                 &self.max_draw_indexed_index_value,
-            ).field("max_draw_indirect_count", &self.max_draw_indirect_count)
+            )
+            .field("max_draw_indirect_count", &self.max_draw_indirect_count)
             .field("max_sampler_lod_bias", &self.max_sampler_lod_bias)
             .field("max_sampler_anisotropy", &self.max_sampler_anisotropy)
             .field("max_viewports", &self.max_viewports)
             .field("max_viewport_dimensions", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.max_viewport_dimensions.as_ptr() as *const i8)
-            }).field("viewport_bounds_range", &unsafe {
+            })
+            .field("viewport_bounds_range", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.viewport_bounds_range.as_ptr() as *const i8)
-            }).field("viewport_sub_pixel_bits", &self.viewport_sub_pixel_bits)
+            })
+            .field("viewport_sub_pixel_bits", &self.viewport_sub_pixel_bits)
             .field("min_memory_map_alignment", &self.min_memory_map_alignment)
             .field(
                 "min_texel_buffer_offset_alignment",
                 &self.min_texel_buffer_offset_alignment,
-            ).field(
+            )
+            .field(
                 "min_uniform_buffer_offset_alignment",
                 &self.min_uniform_buffer_offset_alignment,
-            ).field(
+            )
+            .field(
                 "min_storage_buffer_offset_alignment",
                 &self.min_storage_buffer_offset_alignment,
-            ).field("min_texel_offset", &self.min_texel_offset)
+            )
+            .field("min_texel_offset", &self.min_texel_offset)
             .field("max_texel_offset", &self.max_texel_offset)
             .field("min_texel_gather_offset", &self.min_texel_gather_offset)
             .field("max_texel_gather_offset", &self.max_texel_gather_offset)
@@ -7069,63 +7146,79 @@ impl ::std::fmt::Debug for PhysicalDeviceLimits {
             .field(
                 "sub_pixel_interpolation_offset_bits",
                 &self.sub_pixel_interpolation_offset_bits,
-            ).field("max_framebuffer_width", &self.max_framebuffer_width)
+            )
+            .field("max_framebuffer_width", &self.max_framebuffer_width)
             .field("max_framebuffer_height", &self.max_framebuffer_height)
             .field("max_framebuffer_layers", &self.max_framebuffer_layers)
             .field(
                 "framebuffer_color_sample_counts",
                 &self.framebuffer_color_sample_counts,
-            ).field(
+            )
+            .field(
                 "framebuffer_depth_sample_counts",
                 &self.framebuffer_depth_sample_counts,
-            ).field(
+            )
+            .field(
                 "framebuffer_stencil_sample_counts",
                 &self.framebuffer_stencil_sample_counts,
-            ).field(
+            )
+            .field(
                 "framebuffer_no_attachments_sample_counts",
                 &self.framebuffer_no_attachments_sample_counts,
-            ).field("max_color_attachments", &self.max_color_attachments)
+            )
+            .field("max_color_attachments", &self.max_color_attachments)
             .field(
                 "sampled_image_color_sample_counts",
                 &self.sampled_image_color_sample_counts,
-            ).field(
+            )
+            .field(
                 "sampled_image_integer_sample_counts",
                 &self.sampled_image_integer_sample_counts,
-            ).field(
+            )
+            .field(
                 "sampled_image_depth_sample_counts",
                 &self.sampled_image_depth_sample_counts,
-            ).field(
+            )
+            .field(
                 "sampled_image_stencil_sample_counts",
                 &self.sampled_image_stencil_sample_counts,
-            ).field(
+            )
+            .field(
                 "storage_image_sample_counts",
                 &self.storage_image_sample_counts,
-            ).field("max_sample_mask_words", &self.max_sample_mask_words)
+            )
+            .field("max_sample_mask_words", &self.max_sample_mask_words)
             .field(
                 "timestamp_compute_and_graphics",
                 &self.timestamp_compute_and_graphics,
-            ).field("timestamp_period", &self.timestamp_period)
+            )
+            .field("timestamp_period", &self.timestamp_period)
             .field("max_clip_distances", &self.max_clip_distances)
             .field("max_cull_distances", &self.max_cull_distances)
             .field(
                 "max_combined_clip_and_cull_distances",
                 &self.max_combined_clip_and_cull_distances,
-            ).field("discrete_queue_priorities", &self.discrete_queue_priorities)
+            )
+            .field("discrete_queue_priorities", &self.discrete_queue_priorities)
             .field("point_size_range", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.point_size_range.as_ptr() as *const i8)
-            }).field("line_width_range", &unsafe {
+            })
+            .field("line_width_range", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.line_width_range.as_ptr() as *const i8)
-            }).field("point_size_granularity", &self.point_size_granularity)
+            })
+            .field("point_size_granularity", &self.point_size_granularity)
             .field("line_width_granularity", &self.line_width_granularity)
             .field("strict_lines", &self.strict_lines)
             .field("standard_sample_locations", &self.standard_sample_locations)
             .field(
                 "optimal_buffer_copy_offset_alignment",
                 &self.optimal_buffer_copy_offset_alignment,
-            ).field(
+            )
+            .field(
                 "optimal_buffer_copy_row_pitch_alignment",
                 &self.optimal_buffer_copy_row_pitch_alignment,
-            ).field("non_coherent_atom_size", &self.non_coherent_atom_size)
+            )
+            .field("non_coherent_atom_size", &self.non_coherent_atom_size)
             .finish()
     }
 }
@@ -7835,7 +7928,8 @@ impl ::std::fmt::Debug for DebugMarkerMarkerInfoEXT {
             .field("p_marker_name", &self.p_marker_name)
             .field("color", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.color.as_ptr() as *const i8)
-            }).finish()
+            })
+            .finish()
     }
 }
 impl ::std::default::Default for DebugMarkerMarkerInfoEXT {
@@ -8580,11 +8674,14 @@ impl ::std::fmt::Debug for PhysicalDeviceIDProperties {
             .field("p_next", &self.p_next)
             .field("device_uuid", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.device_uuid.as_ptr() as *const i8)
-            }).field("driver_uuid", &unsafe {
+            })
+            .field("driver_uuid", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.driver_uuid.as_ptr() as *const i8)
-            }).field("device_luid", &unsafe {
+            })
+            .field("device_luid", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.device_luid.as_ptr() as *const i8)
-            }).field("device_node_mask", &self.device_node_mask)
+            })
+            .field("device_node_mask", &self.device_node_mask)
             .field("device_luid_valid", &self.device_luid_valid)
             .finish()
     }
@@ -9354,7 +9451,8 @@ impl ::std::fmt::Debug for PhysicalDeviceGroupProperties {
             .field("physical_device_count", &self.physical_device_count)
             .field("physical_devices", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.physical_devices.as_ptr() as *const i8)
-            }).field("subset_allocation", &self.subset_allocation)
+            })
+            .field("subset_allocation", &self.subset_allocation)
             .finish()
     }
 }
@@ -9592,7 +9690,8 @@ impl ::std::fmt::Debug for DeviceGroupPresentCapabilitiesKHR {
             .field("p_next", &self.p_next)
             .field("present_mask", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.present_mask.as_ptr() as *const i8)
-            }).field("modes", &self.modes)
+            })
+            .field("modes", &self.modes)
             .finish()
     }
 }
@@ -10752,17 +10851,21 @@ impl ::std::fmt::Debug for PhysicalDeviceSampleLocationsPropertiesEXT {
             .field(
                 "sample_location_sample_counts",
                 &self.sample_location_sample_counts,
-            ).field(
+            )
+            .field(
                 "max_sample_location_grid_size",
                 &self.max_sample_location_grid_size,
-            ).field("sample_location_coordinate_range", &unsafe {
+            )
+            .field("sample_location_coordinate_range", &unsafe {
                 ::std::ffi::CStr::from_ptr(
                     self.sample_location_coordinate_range.as_ptr() as *const i8
                 )
-            }).field(
+            })
+            .field(
                 "sample_location_sub_pixel_bits",
                 &self.sample_location_sub_pixel_bits,
-            ).field("variable_sample_locations", &self.variable_sample_locations)
+            )
+            .field("variable_sample_locations", &self.variable_sample_locations)
             .finish()
     }
 }
@@ -11060,7 +11163,8 @@ impl ::std::fmt::Debug for ShaderStatisticsInfoAMD {
             .field("num_available_sgprs", &self.num_available_sgprs)
             .field("compute_work_group_size", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.compute_work_group_size.as_ptr() as *const i8)
-            }).finish()
+            })
+            .finish()
     }
 }
 impl ::std::default::Default for ShaderStatisticsInfoAMD {
@@ -11152,7 +11256,8 @@ impl ::std::fmt::Debug for DebugUtilsLabelEXT {
             .field("p_label_name", &self.p_label_name)
             .field("color", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.color.as_ptr() as *const i8)
-            }).finish()
+            })
+            .finish()
     }
 }
 impl ::std::default::Default for DebugUtilsLabelEXT {
@@ -13483,12 +13588,12 @@ pub mod extensions {
                 destroy_surface_khr: self.destroy_surface_khr,
                 get_physical_device_surface_support_khr: self
                     .get_physical_device_surface_support_khr,
-                get_physical_device_surface_capabilities_khr:
-                    self.get_physical_device_surface_capabilities_khr,
+                get_physical_device_surface_capabilities_khr: self
+                    .get_physical_device_surface_capabilities_khr,
                 get_physical_device_surface_formats_khr: self
                     .get_physical_device_surface_formats_khr,
-                get_physical_device_surface_present_modes_khr:
-                    self.get_physical_device_surface_present_modes_khr,
+                get_physical_device_surface_present_modes_khr: self
+                    .get_physical_device_surface_present_modes_khr,
             }
         }
     }
@@ -13637,12 +13742,12 @@ pub mod extensions {
                 get_swapchain_images_khr: self.get_swapchain_images_khr,
                 acquire_next_image_khr: self.acquire_next_image_khr,
                 queue_present_khr: self.queue_present_khr,
-                get_device_group_present_capabilities_khr:
-                    self.get_device_group_present_capabilities_khr,
-                get_device_group_surface_present_modes_khr:
-                    self.get_device_group_surface_present_modes_khr,
-                get_physical_device_present_rectangles_khr:
-                    self.get_physical_device_present_rectangles_khr,
+                get_device_group_present_capabilities_khr: self
+                    .get_device_group_present_capabilities_khr,
+                get_device_group_surface_present_modes_khr: self
+                    .get_device_group_surface_present_modes_khr,
+                get_physical_device_present_rectangles_khr: self
+                    .get_physical_device_present_rectangles_khr,
                 acquire_next_image2_khr: self.acquire_next_image2_khr,
             }
         }
@@ -13949,10 +14054,10 @@ pub mod extensions {
     impl ::std::clone::Clone for KhrDisplayFn {
         fn clone(&self) -> Self {
             KhrDisplayFn {
-                get_physical_device_display_properties_khr:
-                    self.get_physical_device_display_properties_khr,
-                get_physical_device_display_plane_properties_khr:
-                    self.get_physical_device_display_plane_properties_khr,
+                get_physical_device_display_properties_khr: self
+                    .get_physical_device_display_properties_khr,
+                get_physical_device_display_plane_properties_khr: self
+                    .get_physical_device_display_plane_properties_khr,
                 get_display_plane_supported_displays_khr: self
                     .get_display_plane_supported_displays_khr,
                 get_display_mode_properties_khr: self.get_display_mode_properties_khr,
@@ -14235,8 +14340,8 @@ pub mod extensions {
         fn clone(&self) -> Self {
             KhrXlibSurfaceFn {
                 create_xlib_surface_khr: self.create_xlib_surface_khr,
-                get_physical_device_xlib_presentation_support_khr:
-                    self.get_physical_device_xlib_presentation_support_khr,
+                get_physical_device_xlib_presentation_support_khr: self
+                    .get_physical_device_xlib_presentation_support_khr,
             }
         }
     }
@@ -14321,8 +14426,8 @@ pub mod extensions {
         fn clone(&self) -> Self {
             KhrXcbSurfaceFn {
                 create_xcb_surface_khr: self.create_xcb_surface_khr,
-                get_physical_device_xcb_presentation_support_khr:
-                    self.get_physical_device_xcb_presentation_support_khr,
+                get_physical_device_xcb_presentation_support_khr: self
+                    .get_physical_device_xcb_presentation_support_khr,
             }
         }
     }
@@ -14407,8 +14512,8 @@ pub mod extensions {
         fn clone(&self) -> Self {
             KhrWaylandSurfaceFn {
                 create_wayland_surface_khr: self.create_wayland_surface_khr,
-                get_physical_device_wayland_presentation_support_khr:
-                    self.get_physical_device_wayland_presentation_support_khr,
+                get_physical_device_wayland_presentation_support_khr: self
+                    .get_physical_device_wayland_presentation_support_khr,
             }
         }
     }
@@ -14490,8 +14595,8 @@ pub mod extensions {
         fn clone(&self) -> Self {
             KhrMirSurfaceFn {
                 create_mir_surface_khr: self.create_mir_surface_khr,
-                get_physical_device_mir_presentation_support_khr:
-                    self.get_physical_device_mir_presentation_support_khr,
+                get_physical_device_mir_presentation_support_khr: self
+                    .get_physical_device_mir_presentation_support_khr,
             }
         }
     }
@@ -14626,8 +14731,8 @@ pub mod extensions {
         fn clone(&self) -> Self {
             KhrWin32SurfaceFn {
                 create_win32_surface_khr: self.create_win32_surface_khr,
-                get_physical_device_win32_presentation_support_khr:
-                    self.get_physical_device_win32_presentation_support_khr,
+                get_physical_device_win32_presentation_support_khr: self
+                    .get_physical_device_win32_presentation_support_khr,
             }
         }
     }
@@ -16193,8 +16298,8 @@ pub mod extensions {
     impl ::std::clone::Clone for NvExternalMemoryCapabilitiesFn {
         fn clone(&self) -> Self {
             NvExternalMemoryCapabilitiesFn {
-                get_physical_device_external_image_format_properties_nv:
-                    self.get_physical_device_external_image_format_properties_nv,
+                get_physical_device_external_image_format_properties_nv: self
+                    .get_physical_device_external_image_format_properties_nv,
             }
         }
     }
@@ -16387,12 +16492,12 @@ pub mod extensions {
     impl ::std::clone::Clone for KhrDeviceGroupFn {
         fn clone(&self) -> Self {
             KhrDeviceGroupFn {
-                get_device_group_present_capabilities_khr:
-                    self.get_device_group_present_capabilities_khr,
-                get_device_group_surface_present_modes_khr:
-                    self.get_device_group_surface_present_modes_khr,
-                get_physical_device_present_rectangles_khr:
-                    self.get_physical_device_present_rectangles_khr,
+                get_device_group_present_capabilities_khr: self
+                    .get_device_group_present_capabilities_khr,
+                get_device_group_surface_present_modes_khr: self
+                    .get_device_group_surface_present_modes_khr,
+                get_physical_device_present_rectangles_khr: self
+                    .get_physical_device_present_rectangles_khr,
                 acquire_next_image2_khr: self.acquire_next_image2_khr,
             }
         }
@@ -17204,8 +17309,8 @@ pub mod extensions {
         fn clone(&self) -> Self {
             KhrPushDescriptorFn {
                 cmd_push_descriptor_set_khr: self.cmd_push_descriptor_set_khr,
-                cmd_push_descriptor_set_with_template_khr:
-                    self.cmd_push_descriptor_set_with_template_khr,
+                cmd_push_descriptor_set_with_template_khr: self
+                    .cmd_push_descriptor_set_with_template_khr,
             }
         }
     }
@@ -17391,8 +17496,8 @@ pub mod extensions {
     impl ::std::clone::Clone for KhrDescriptorUpdateTemplateFn {
         fn clone(&self) -> Self {
             KhrDescriptorUpdateTemplateFn {
-                cmd_push_descriptor_set_with_template_khr:
-                    self.cmd_push_descriptor_set_with_template_khr,
+                cmd_push_descriptor_set_with_template_khr: self
+                    .cmd_push_descriptor_set_with_template_khr,
             }
         }
     }
@@ -17506,8 +17611,8 @@ pub mod extensions {
                 destroy_object_table_nvx: self.destroy_object_table_nvx,
                 register_objects_nvx: self.register_objects_nvx,
                 unregister_objects_nvx: self.unregister_objects_nvx,
-                get_physical_device_generated_commands_properties_nvx:
-                    self.get_physical_device_generated_commands_properties_nvx,
+                get_physical_device_generated_commands_properties_nvx: self
+                    .get_physical_device_generated_commands_properties_nvx,
             }
         }
     }
@@ -17947,8 +18052,8 @@ pub mod extensions {
     impl ::std::clone::Clone for ExtDisplaySurfaceCounterFn {
         fn clone(&self) -> Self {
             ExtDisplaySurfaceCounterFn {
-                get_physical_device_surface_capabilities2_ext:
-                    self.get_physical_device_surface_capabilities2_ext,
+                get_physical_device_surface_capabilities2_ext: self
+                    .get_physical_device_surface_capabilities2_ext,
             }
         }
     }
@@ -19099,8 +19204,8 @@ pub mod extensions {
     impl ::std::clone::Clone for KhrGetSurfaceCapabilities2Fn {
         fn clone(&self) -> Self {
             KhrGetSurfaceCapabilities2Fn {
-                get_physical_device_surface_capabilities2_khr:
-                    self.get_physical_device_surface_capabilities2_khr,
+                get_physical_device_surface_capabilities2_khr: self
+                    .get_physical_device_surface_capabilities2_khr,
                 get_physical_device_surface_formats2_khr: self
                     .get_physical_device_surface_formats2_khr,
             }
@@ -19231,10 +19336,10 @@ pub mod extensions {
     impl ::std::clone::Clone for KhrGetDisplayProperties2Fn {
         fn clone(&self) -> Self {
             KhrGetDisplayProperties2Fn {
-                get_physical_device_display_properties2_khr:
-                    self.get_physical_device_display_properties2_khr,
-                get_physical_device_display_plane_properties2_khr:
-                    self.get_physical_device_display_plane_properties2_khr,
+                get_physical_device_display_properties2_khr: self
+                    .get_physical_device_display_properties2_khr,
+                get_physical_device_display_plane_properties2_khr: self
+                    .get_physical_device_display_plane_properties2_khr,
                 get_display_mode_properties2_khr: self.get_display_mode_properties2_khr,
                 get_display_plane_capabilities2_khr: self.get_display_plane_capabilities2_khr,
             }
@@ -19870,10 +19975,10 @@ pub mod extensions {
     impl ::std::clone::Clone for AndroidExternalMemoryAndroidHardwareBufferFn {
         fn clone(&self) -> Self {
             AndroidExternalMemoryAndroidHardwareBufferFn {
-                get_android_hardware_buffer_properties_android:
-                    self.get_android_hardware_buffer_properties_android,
-                get_memory_android_hardware_buffer_android:
-                    self.get_memory_android_hardware_buffer_android,
+                get_android_hardware_buffer_properties_android: self
+                    .get_android_hardware_buffer_properties_android,
+                get_memory_android_hardware_buffer_android: self
+                    .get_memory_android_hardware_buffer_android,
             }
         }
     }
@@ -20274,8 +20379,8 @@ pub mod extensions {
         fn clone(&self) -> Self {
             ExtSampleLocationsFn {
                 cmd_set_sample_locations_ext: self.cmd_set_sample_locations_ext,
-                get_physical_device_multisample_properties_ext:
-                    self.get_physical_device_multisample_properties_ext,
+                get_physical_device_multisample_properties_ext: self
+                    .get_physical_device_multisample_properties_ext,
             }
         }
     }
