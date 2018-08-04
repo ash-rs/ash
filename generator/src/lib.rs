@@ -1528,7 +1528,7 @@ pub fn write_source_code(path: &Path) {
         .collect();
     let feature_extensions_code = generate_feature_extension(&spec2, &mut const_cache);
 
-    let mut file = File::create("../ash-sys/src/vk.rs").expect("vk");
+    let mut file = File::create("../vulkan-sys/src/vk.rs").expect("vk");
     let bitflags_macro = vk_bitflags_wrapped_macro();
     let handle_nondispatchable_macro = handle_nondispatchable_macro();
     let define_handle_macro = define_handle_macro();

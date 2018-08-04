@@ -2,5 +2,6 @@
 members = [
     "examples",
     "ash",
+    "vulkan-sys",
     "generator",
 ]

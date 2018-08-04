@@ -1,7 +1,7 @@
 #[macro_use]
 extern crate lazy_static;
-extern crate ash_sys;
 extern crate shared_library;
+extern crate vulkan_sys;
 
 pub use device::Device;
 pub use entry::{Entry, InstanceError, LoadingError};
@@ -11,12 +11,12 @@ mod device;
 mod entry;
 pub mod extensions;
 mod instance;
+mod macros;
 pub mod prelude;
 pub mod util;
 pub mod version;
-mod macros;
 
-pub use ash_sys::vk;
+pub use vulkan_sys::vk;
 
 pub trait RawPtr<T> {
     fn as_raw_ptr(&self) -> *const T;
