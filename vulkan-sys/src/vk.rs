@@ -4,6 +4,11 @@ pub use self::bitflags::*;
 pub use self::extensions::*;
 #[doc(hidden)]
 pub use libc::*;
+pub trait Handle {
+    const TYPE: ObjectType;
+    fn as_raw(self) -> u64;
+    fn from_raw(u64) -> Self;
+}
 #[macro_export]
 macro_rules! vk_make_version {
     ( $ major : expr , $ minor : expr , $ patch : expr ) => {
@@ -174,10 +179,19 @@ macro_rules! vk_bitflags_wrapped {
     };
 }
 macro_rules! handle_nondispatchable {
-    ( $ name : ident ) => {
+    ( $ name : ident , $ ty : ident ) => {
         #[repr(transparent)]
         #[derive(Eq, PartialEq, Ord, PartialOrd, Clone, Copy, Hash, Default)]
         pub struct $name(uint64_t);
+        impl Handle for $name {
+            const TYPE: ObjectType = ObjectType::$ty;
+            fn as_raw(self) -> u64 {
+                self.0 as u64
+            }
+            fn from_raw(x: u64) -> Self {
+                $name(x as _)
+            }
+        }
         impl $name {
             pub fn null() -> $name {
                 $name(0)
@@ -202,24 +216,29 @@ macro_rules! handle_nondispatchable {
     };
 }
 macro_rules! define_handle {
-    ( $ name : ident ) => {
-        #[derive(Clone, Copy, Debug)]
+    ( $ name : ident , $ ty : ident ) => {
         #[repr(transparent)]
-        pub struct $name {
-            ptr: *mut u8,
-        }
+        #[derive(Clone, Copy, Debug)]
+        pub struct $name(*mut u8);
         impl Default for $name {
             fn default() -> $name {
                 $name::null()
+            }
+        }
+        impl Handle for $name {
+            const TYPE: ObjectType = ObjectType::$ty;
+            fn as_raw(self) -> u64 {
+                self.0 as u64
+            }
+            fn from_raw(x: u64) -> Self {
+                $name(x as _)
             }
         }
         unsafe impl Send for $name {}
         unsafe impl Sync for $name {}
         impl $name {
             pub fn null() -> Self {
-                $name {
-                    ptr: ::std::ptr::null_mut(),
-                }
+                $name(::std::ptr::null_mut())
             }
         }
     };
@@ -4821,42 +4840,42 @@ vk_bitflags_wrapped!(
     0b0,
     Flags
 );
-define_handle!(Instance);
-define_handle!(PhysicalDevice);
-define_handle!(Device);
-define_handle!(Queue);
-define_handle!(CommandBuffer);
-handle_nondispatchable!(DeviceMemory);
-handle_nondispatchable!(CommandPool);
-handle_nondispatchable!(Buffer);
-handle_nondispatchable!(BufferView);
-handle_nondispatchable!(Image);
-handle_nondispatchable!(ImageView);
-handle_nondispatchable!(ShaderModule);
-handle_nondispatchable!(Pipeline);
-handle_nondispatchable!(PipelineLayout);
-handle_nondispatchable!(Sampler);
-handle_nondispatchable!(DescriptorSet);
-handle_nondispatchable!(DescriptorSetLayout);
-handle_nondispatchable!(DescriptorPool);
-handle_nondispatchable!(Fence);
-handle_nondispatchable!(Semaphore);
-handle_nondispatchable!(Event);
-handle_nondispatchable!(QueryPool);
-handle_nondispatchable!(Framebuffer);
-handle_nondispatchable!(RenderPass);
-handle_nondispatchable!(PipelineCache);
-handle_nondispatchable!(ObjectTableNVX);
-handle_nondispatchable!(IndirectCommandsLayoutNVX);
-handle_nondispatchable!(DescriptorUpdateTemplate);
-handle_nondispatchable!(SamplerYcbcrConversion);
-handle_nondispatchable!(ValidationCacheEXT);
-handle_nondispatchable!(DisplayKHR);
-handle_nondispatchable!(DisplayModeKHR);
-handle_nondispatchable!(SurfaceKHR);
-handle_nondispatchable!(SwapchainKHR);
-handle_nondispatchable!(DebugReportCallbackEXT);
-handle_nondispatchable!(DebugUtilsMessengerEXT);
+define_handle!(Instance, INSTANCE);
+define_handle!(PhysicalDevice, PHYSICAL_DEVICE);
+define_handle!(Device, DEVICE);
+define_handle!(Queue, QUEUE);
+define_handle!(CommandBuffer, COMMAND_BUFFER);
+handle_nondispatchable!(DeviceMemory, DEVICE_MEMORY);
+handle_nondispatchable!(CommandPool, COMMAND_POOL);
+handle_nondispatchable!(Buffer, BUFFER);
+handle_nondispatchable!(BufferView, BUFFER_VIEW);
+handle_nondispatchable!(Image, IMAGE);
+handle_nondispatchable!(ImageView, IMAGE_VIEW);
+handle_nondispatchable!(ShaderModule, SHADER_MODULE);
+handle_nondispatchable!(Pipeline, PIPELINE);
+handle_nondispatchable!(PipelineLayout, PIPELINE_LAYOUT);
+handle_nondispatchable!(Sampler, SAMPLER);
+handle_nondispatchable!(DescriptorSet, DESCRIPTOR_SET);
+handle_nondispatchable!(DescriptorSetLayout, DESCRIPTOR_SET_LAYOUT);
+handle_nondispatchable!(DescriptorPool, DESCRIPTOR_POOL);
+handle_nondispatchable!(Fence, FENCE);
+handle_nondispatchable!(Semaphore, SEMAPHORE);
+handle_nondispatchable!(Event, EVENT);
+handle_nondispatchable!(QueryPool, QUERY_POOL);
+handle_nondispatchable!(Framebuffer, FRAMEBUFFER);
+handle_nondispatchable!(RenderPass, RENDER_PASS);
+handle_nondispatchable!(PipelineCache, PIPELINE_CACHE);
+handle_nondispatchable!(ObjectTableNVX, OBJECT_TABLE_NVX);
+handle_nondispatchable!(IndirectCommandsLayoutNVX, INDIRECT_COMMANDS_LAYOUT_NVX);
+handle_nondispatchable!(DescriptorUpdateTemplate, DESCRIPTOR_UPDATE_TEMPLATE);
+handle_nondispatchable!(SamplerYcbcrConversion, SAMPLER_YCBCR_CONVERSION);
+handle_nondispatchable!(ValidationCacheEXT, VALIDATION_CACHE_EXT);
+handle_nondispatchable!(DisplayKHR, DISPLAY_KHR);
+handle_nondispatchable!(DisplayModeKHR, DISPLAY_MODE_KHR);
+handle_nondispatchable!(SurfaceKHR, SURFACE_KHR);
+handle_nondispatchable!(SwapchainKHR, SWAPCHAIN_KHR);
+handle_nondispatchable!(DebugReportCallbackEXT, DEBUG_REPORT_CALLBACK_EXT);
+handle_nondispatchable!(DebugUtilsMessengerEXT, DEBUG_UTILS_MESSENGER_EXT);
 #[allow(non_camel_case_types)]
 pub type PFN_vkInternalAllocationNotification =
     unsafe extern "system" fn(
