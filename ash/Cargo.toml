@@ -12,7 +12,7 @@ documentation = "https://docs.rs/ash"
 [dependencies]
 shared_library = "0.1.5"
 lazy_static = "0.2.1"
-vulkan-sys = { path = "../vulkan-sys", version = "1.1.79" }
+ash-sys = { path = "../ash-sys", version = "0.1" }
 
 [features]
 default = []
