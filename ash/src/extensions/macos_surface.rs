@@ -18,7 +18,7 @@ impl MacOSSurface {
         instance: &I,
     ) -> Result<MacOSSurface, Vec<&'static str>> {
         let surface_fn = vk::MvkMacosSurfaceFn::load(|name| unsafe {
-            mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
+            mem::transmute(entry.get_instance_proc_addr(Some(instance.handle()), name.as_ptr()))
         })?;
         Ok(MacOSSurface {
             handle: instance.handle(),

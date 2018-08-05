@@ -80,7 +80,7 @@ pub fn record_submit_commandbuffer<D: DeviceV1_0, F: FnOnce(&D, vk::CommandBuffe
             p_signal_semaphores: signal_semaphores.as_ptr(),
         };
         device
-            .queue_submit(submit_queue, &[submit_info], submit_fence)
+            .queue_submit(submit_queue, &[submit_info], Some(submit_fence))
             .expect("queue submit failed.");
         device
             .wait_for_fences(&[submit_fence], true, std::u64::MAX)
@@ -440,7 +440,7 @@ impl ExampleBase {
                 composite_alpha: vk::CompositeAlphaFlagsKHR::OPAQUE,
                 present_mode: present_mode,
                 clipped: 1,
-                old_swapchain: vk::SwapchainKHR::null(),
+                old_swapchain: None,
                 image_array_layers: 1,
                 p_queue_family_indices: ptr::null(),
                 queue_family_index_count: 0,

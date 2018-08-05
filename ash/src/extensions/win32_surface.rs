@@ -18,7 +18,7 @@ impl Win32Surface {
         instance: &I,
     ) -> Result<Win32Surface, Vec<&'static str>> {
         let surface_fn = vk::KhrWin32SurfaceFn::load(|name| unsafe {
-            mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
+            mem::transmute(entry.get_instance_proc_addr(Some(instance.handle()), name.as_ptr()))
         })?;
         Ok(Win32Surface {
             handle: instance.handle(),

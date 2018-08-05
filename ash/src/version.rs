@@ -39,7 +39,7 @@ impl EntryLoader for EntryFpV1_0 {
     }
     unsafe fn load(static_fn: &vk::StaticFn) -> Result<Self, Vec<&'static str>> {
         let entry_fn = vk::EntryFnV1_0::load(|name| {
-            mem::transmute(static_fn.get_instance_proc_addr(vk::Instance::null(), name.as_ptr()))
+            mem::transmute(static_fn.get_instance_proc_addr(None, name.as_ptr()))
         })?;
         Ok(EntryFpV1_0 { entry_fn: entry_fn })
     }
@@ -69,7 +69,7 @@ impl InstanceLoader for InstanceFpV1_0 {
         instance: vk::Instance,
     ) -> Result<Self, Vec<&'static str>> {
         let instance_fn = vk::InstanceFnV1_0::load(|name| {
-            mem::transmute(static_fn.get_instance_proc_addr(instance, name.as_ptr()))
+            mem::transmute(static_fn.get_instance_proc_addr(Some(instance), name.as_ptr()))
         })?;
         Ok(InstanceFpV1_0 {
             instance_fn: instance_fn,
@@ -90,10 +90,10 @@ impl InstanceLoader for InstanceFpV1_1 {
         instance: vk::Instance,
     ) -> Result<Self, Vec<&'static str>> {
         let instance_fn_1_0 = vk::InstanceFnV1_0::load(|name| {
-            mem::transmute(static_fn.get_instance_proc_addr(instance, name.as_ptr()))
+            mem::transmute(static_fn.get_instance_proc_addr(Some(instance), name.as_ptr()))
         })?;
         let instance_fn_1_1 = vk::InstanceFnV1_1::load(|name| {
-            mem::transmute(static_fn.get_instance_proc_addr(instance, name.as_ptr()))
+            mem::transmute(static_fn.get_instance_proc_addr(Some(instance), name.as_ptr()))
         })?;
 
         Ok(InstanceFpV1_1 {

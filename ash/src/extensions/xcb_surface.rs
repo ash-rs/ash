@@ -18,7 +18,7 @@ impl XcbSurface {
         instance: &I,
     ) -> Result<XcbSurface, Vec<&'static str>> {
         let surface_fn = vk::KhrXcbSurfaceFn::load(|name| unsafe {
-            mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
+            mem::transmute(entry.get_instance_proc_addr(Some(instance.handle()), name.as_ptr()))
         })?;
         Ok(XcbSurface {
             handle: instance.handle(),

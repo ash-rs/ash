@@ -133,7 +133,7 @@ pub trait EntryV1_0 {
 
     fn get_instance_proc_addr(
         &self,
-        instance: vk::Instance,
+        instance: Option<vk::Instance>,
         p_name: *const vk::c_char,
     ) -> vk::PFN_vkVoidFunction {
         unsafe { self.static_fn().get_instance_proc_addr(instance, p_name) }

@@ -18,7 +18,7 @@ impl IOSSurface {
         instance: &I,
     ) -> Result<IOSSurface, Vec<&'static str>> {
         let surface_fn = vk::MvkIosSurfaceFn::load(|name| unsafe {
-            mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
+            mem::transmute(entry.get_instance_proc_addr(Some(instance.handle()), name.as_ptr()))
         })?;
         Ok(IOSSurface {
             handle: instance.handle(),

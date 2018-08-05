@@ -91,27 +91,20 @@ pub fn define_handle_macro() -> Tokens {
             ($name: ident, $ty: ident) => {
                 #[repr(transparent)]
                 #[derive(Clone, Copy, Debug)]
-                pub struct $name(*mut u8);
-                impl Default for $name {
-                    fn default() -> $name {
-                        $name::null()
-                    }
-                }
+                pub struct $name(NonZeroUsize);
 
                 impl Handle for $name {
                     const TYPE: ObjectType = ObjectType::$ty;
-                    fn as_raw(self) -> u64 { self.0 as u64 }
-                    fn from_raw(x: u64) -> Self { $name(x as _) }
+                    fn as_raw(self) -> u64 { self.0.get() as u64 }
+                    fn from_raw(x: u64) -> Option<Self> { Some($name(NonZeroUsize::new(x as _)?)) }
+                }
+
+                impl Invalid for $name {
+                    fn invalid() -> Self { $name(NonZeroUsize::new(!0).unwrap()) }
                 }
 
                 unsafe impl Send for $name {}
                 unsafe impl Sync for $name {}
-
-                impl $name{
-                    pub fn null() -> Self{
-                        $name(::std::ptr::null_mut())
-                    }
-                }
             }
         }
     }
@@ -122,20 +115,19 @@ pub fn handle_nondispatchable_macro() -> Tokens {
         macro_rules! handle_nondispatchable {
             ($name: ident, $ty: ident) => {
                 #[repr(transparent)]
-                #[derive(Eq, PartialEq, Ord, PartialOrd, Clone, Copy, Hash, Default)]
-                pub struct $name(uint64_t);
+                #[derive(Eq, PartialEq, Ord, PartialOrd, Clone, Copy, Hash)]
+                pub struct $name(NonZeroU64);
 
                 impl Handle for $name {
                     const TYPE: ObjectType = ObjectType::$ty;
-                    fn as_raw(self) -> u64 { self.0 as u64 }
-                    fn from_raw(x: u64) -> Self { $name(x as _) }
+                    fn as_raw(self) -> u64 { self.0.get() }
+                    fn from_raw(x: u64) -> Option<Self> { Some($name(NonZeroU64::new(x)?)) }
                 }
 
-                impl $name{
-                    pub fn null() -> $name{
-                        $name(0)
-                    }
+                impl Invalid for $name {
+                    fn invalid() -> Self { $name(NonZeroU64::new(!0).unwrap()) }
                 }
+
                 impl ::std::fmt::Pointer for $name {
                     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::result::Result<(), ::std::fmt::Error> {
                         write!(f, "0x{:x}", self.0)
@@ -559,8 +551,11 @@ pub trait FieldExt {
     /// keywords
     fn param_ident(&self) -> Ident;
 
+    /// Whether the field('s pointee) may be omitted.
+    fn is_target_optional(&self) -> bool;
+
     /// Returns the basetype ident and removes the 'Vk' prefix
-    fn type_tokens(&self) -> Tokens;
+    fn type_tokens(&self, nonzero_tys: &HashSet<&str>) -> Tokens;
     fn is_clone(&self) -> bool;
 }
 
@@ -629,8 +624,23 @@ impl FieldExt for vkxml::Field {
         Ident::from(name_corrected.to_snake_case().as_str())
     }
 
-    fn type_tokens(&self) -> Tokens {
+    fn is_target_optional(&self) -> bool {
+        self.optional.as_ref().map_or(false, |x| {
+            use vkxml::ReferenceType::*;
+            let level_count = match self.reference {
+                None => 1,
+                Some(Pointer) => 2,
+                Some(PointerToPointer) => 3,
+                Some(PointerToConstPointer) => 3,
+            };
+            let levels = x.split(',').collect::<Vec<_>>();
+            levels.len() == level_count && *levels.last().unwrap() == "true"
+        })
+    }
+
+    fn type_tokens(&self, nonzero_tys: &HashSet<&str>) -> Tokens {
         let ty = name_to_tokens(&self.basetype);
+        let ty = if nonzero_tys.contains(self.basetype.as_str()) && self.is_target_optional() { quote!{Option<#ty>} } else { quote!{#ty} };
         let pointer = self
             .reference
             .as_ref()
@@ -662,7 +672,7 @@ impl FieldExt for vkxml::Field {
 
 pub type CommandMap<'a> = HashMap<vkxml::Identifier, &'a vkxml::Command>;
 
-fn generate_function_pointers(ident: Ident, commands: &[&vkxml::Command]) -> quote::Tokens {
+fn generate_function_pointers(ident: Ident, commands: &[&vkxml::Command], nonzero_tys: &HashSet<&str>) -> quote::Tokens {
     let names: Vec<_> = commands.iter().map(|cmd| cmd.command_ident()).collect();
     let names_ref = &names;
     let raw_names: Vec<_> = commands
@@ -681,7 +691,7 @@ fn generate_function_pointers(ident: Ident, commands: &[&vkxml::Command]) -> quo
                 .iter()
                 .map(|field| {
                     let name = field.param_ident();
-                    let ty = field.type_tokens();
+                    let ty = field.type_tokens(nonzero_tys);
                     (name, ty)
                 }).collect();
             params
@@ -710,7 +720,7 @@ fn generate_function_pointers(ident: Ident, commands: &[&vkxml::Command]) -> quo
 
     let return_types: Vec<_> = commands
         .iter()
-        .map(|cmd| cmd.return_type.type_tokens())
+        .map(|cmd| cmd.return_type.type_tokens(nonzero_tys))
         .collect();
     let return_types_ref = &return_types;
     quote!{
@@ -846,6 +856,7 @@ pub fn generate_extension_commands(
     extension_name: &str,
     items: &[vk_parse::ExtensionItem],
     cmd_map: &CommandMap,
+    nonzero_tys: &HashSet<&str>,
 ) -> Tokens {
     let commands = items
         .iter()
@@ -861,12 +872,13 @@ pub fn generate_extension_commands(
         .collect_vec();
     let name = format!("{}Fn", extension_name.to_camel_case());
     let ident = Ident::from(&name[2..]);
-    generate_function_pointers(ident, &commands)
+    generate_function_pointers(ident, &commands, nonzero_tys)
 }
 pub fn generate_extension<'a>(
     extension: &'a vk_parse::Extension,
     cmd_map: &CommandMap,
     const_cache: &mut HashSet<&'a str>,
+    nonzero_tys: &HashSet<&str>,
 ) -> Option<quote::Tokens> {
     // Okay this is a little bit odd. We need to generate all extensions, even disabled ones,
     // because otherwise some StructureTypes won't get generated. But we don't generate extensions
@@ -880,7 +892,7 @@ pub fn generate_extension<'a>(
         &extension.items,
         const_cache,
     );
-    let fp = generate_extension_commands(&extension.name, &extension.items, cmd_map);
+    let fp = generate_extension_commands(&extension.name, &extension.items, cmd_map, nonzero_tys);
     let q = quote!{
         #fp
         #extension_tokens
@@ -1092,7 +1104,7 @@ fn is_static_array(field: &vkxml::Field) -> bool {
             _ => false,
         }).unwrap_or(false)
 }
-pub fn derive_default(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> Option<Tokens> {
+pub fn derive_default(_struct: &vkxml::Struct, union_types: &HashSet<&str>, nonzero_tys: &HashSet<&str>) -> Option<Tokens> {
     let name = name_to_tokens(&_struct.name);
     let members = _struct.elements.iter().filter_map(|elem| match *elem {
         vkxml::StructElement::Member(ref field) => Some(field),
@@ -1112,9 +1124,10 @@ pub fn derive_default(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> O
     // also doesn't mark them as pointers
     let handles = ["LPCWSTR", "HANDLE", "HINSTANCE", "HWND"];
     let contains_ptr = members.clone().any(|field| field.reference.is_some());
-    let contains_strucutre_type = members.clone().any(is_structure_type);
+    let contains_structure_type = members.clone().any(is_structure_type);
     let contains_static_array = members.clone().any(is_static_array);
-    if !(contains_ptr || contains_pfn || contains_strucutre_type || contains_static_array) {
+    let contains_nonzero = members.clone().any(|field| nonzero_tys.contains(field.basetype.as_str()) && !field.is_target_optional());
+    if !(contains_ptr || contains_pfn || contains_structure_type || contains_static_array || contains_nonzero) {
         return None;
     };
     let default_fields = members.clone().map(|field| {
@@ -1143,10 +1156,13 @@ pub fn derive_default(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> O
             quote!{
                 #param_ident: unsafe { ::std::mem::zeroed() }
             }
-        } else {
-            let ty = field.type_tokens();
+        } else if nonzero_tys.contains(field.basetype.as_str()) && !field.is_target_optional() {
             quote!{
-                #param_ident: #ty::default()
+                #param_ident: Invalid::invalid()
+            }
+        } else {
+            quote!{
+                #param_ident: Default::default()
             }
         }
     });
@@ -1219,7 +1235,7 @@ pub fn derive_debug(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> Opt
     };
     Some(q)
 }
-pub fn generate_struct(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> Tokens {
+pub fn generate_struct(_struct: &vkxml::Struct, union_types: &HashSet<&str>, nonzero_tys: &HashSet<&str>) -> Tokens {
     let name = name_to_tokens(&_struct.name);
     let members = _struct.elements.iter().filter_map(|elem| match *elem {
         vkxml::StructElement::Member(ref field) => Some(field),
@@ -1228,12 +1244,16 @@ pub fn generate_struct(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> 
 
     let params = members.clone().map(|field| {
         let param_ident = field.param_ident();
-        let param_ty_tokens = field.type_tokens();
-        quote!{pub #param_ident: #param_ty_tokens}
+        let param_ty_tokens = field.type_tokens(nonzero_tys);
+        let doc = field.notation.as_ref().map_or_else(|| quote!(), |n| quote!(#[doc = #n]));
+        quote!{
+            #doc
+            pub #param_ident: #param_ty_tokens
+        }
     });
 
     let debug_tokens = derive_debug(_struct, union_types);
-    let default_tokens = derive_default(_struct, union_types);
+    let default_tokens = derive_default(_struct, union_types, nonzero_tys);
     let dbg_str = if debug_tokens.is_none() {
         quote!(Debug,)
     } else {
@@ -1279,12 +1299,12 @@ pub fn generate_handle(handle: &vkxml::Handle) -> Option<Tokens> {
     };
     Some(tokens)
 }
-fn generate_funcptr(fnptr: &vkxml::FunctionPointer) -> Tokens {
+fn generate_funcptr(fnptr: &vkxml::FunctionPointer, nonzero_tys: &HashSet<&str>) -> Tokens {
     let name = Ident::from(fnptr.name.as_str());
-    let ret_ty_tokens = fnptr.return_type.type_tokens();
+    let ret_ty_tokens = fnptr.return_type.type_tokens(nonzero_tys);
     let params = fnptr.param.iter().map(|field| {
         let ident = field.param_ident();
-        let type_tokens = field.type_tokens();
+        let type_tokens = field.type_tokens(nonzero_tys);
         quote!{
             #ident: #type_tokens
         }
@@ -1295,11 +1315,11 @@ fn generate_funcptr(fnptr: &vkxml::FunctionPointer) -> Tokens {
     }
 }
 
-fn generate_union(union: &vkxml::Union) -> Tokens {
+fn generate_union(union: &vkxml::Union, nonzero_tys: &HashSet<&str>) -> Tokens {
     let name = to_type_tokens(&union.name, None);
     let fields = union.elements.iter().map(|field| {
         let name = field.param_ident();
-        let ty = field.type_tokens();
+        let ty = field.type_tokens(nonzero_tys);
         quote!{
             pub #name: #ty
         }
@@ -1320,20 +1340,21 @@ fn generate_union(union: &vkxml::Union) -> Tokens {
 pub fn generate_definition(
     definition: &vkxml::DefinitionsElement,
     union_types: &HashSet<&str>,
+    nonzero_tys: &HashSet<&str>,
 ) -> Option<Tokens> {
     match *definition {
         vkxml::DefinitionsElement::Typedef(ref typedef) => Some(generate_typedef(typedef)),
         vkxml::DefinitionsElement::Struct(ref _struct) => {
-            Some(generate_struct(_struct, union_types))
+            Some(generate_struct(_struct, union_types, nonzero_tys))
         }
         vkxml::DefinitionsElement::Bitmask(ref mask) => generate_bitmask(mask),
         vkxml::DefinitionsElement::Handle(ref handle) => generate_handle(handle),
-        vkxml::DefinitionsElement::FuncPtr(ref fp) => Some(generate_funcptr(fp)),
-        vkxml::DefinitionsElement::Union(ref union) => Some(generate_union(union)),
+        vkxml::DefinitionsElement::FuncPtr(ref fp) => Some(generate_funcptr(fp, nonzero_tys)),
+        vkxml::DefinitionsElement::Union(ref union) => Some(generate_union(union, nonzero_tys)),
         _ => None,
     }
 }
-pub fn generate_feature(feature: &vkxml::Feature, commands: &CommandMap) -> quote::Tokens {
+pub fn generate_feature(feature: &vkxml::Feature, commands: &CommandMap, nonzero_tys: &HashSet<&str>) -> quote::Tokens {
     let (static_commands, entry_commands, device_commands, instance_commands) = feature
         .elements
         .iter()
@@ -1375,21 +1396,24 @@ pub fn generate_feature(feature: &vkxml::Feature, commands: &CommandMap) -> quot
         );
     let version = feature.version_string();
     let static_fn = if feature.version == 1.0 {
-        generate_function_pointers(Ident::from("StaticFn"), &static_commands)
+        generate_function_pointers(Ident::from("StaticFn"), &static_commands, nonzero_tys)
     } else {
         quote!{}
     };
     let entry = generate_function_pointers(
         Ident::from(format!("EntryFnV{}", version).as_str()),
         &entry_commands,
+        nonzero_tys
     );
     let instance = generate_function_pointers(
         Ident::from(format!("InstanceFnV{}", version).as_str()),
         &instance_commands,
+        nonzero_tys
     );
     let device = generate_function_pointers(
         Ident::from(format!("DeviceFnV{}", version).as_str()),
         &device_commands,
+        nonzero_tys
     );
     quote! {
         #static_fn
@@ -1478,6 +1502,10 @@ pub fn write_source_code(path: &Path) {
         }).flat_map(|definitions| definitions.elements.iter())
         .collect();
 
+    let nonzero_tys = definitions.iter()
+        .filter_map(|x| match *x { vkxml::DefinitionsElement::Handle(ref x) => Some(&x.name[..]), _ => None })
+        .collect::<HashSet<_>>();
+
     let enums: Vec<&vkxml::Enumeration> = spec
         .elements
         .iter()
@@ -1517,7 +1545,7 @@ pub fn write_source_code(path: &Path) {
         .collect();
     let extension_code = extensions
         .iter()
-        .filter_map(|ext| generate_extension(ext, &commands, &mut const_cache))
+        .filter_map(|ext| generate_extension(ext, &commands, &mut const_cache, &nonzero_tys))
         .collect_vec();
 
     let union_types = definitions
@@ -1529,12 +1557,12 @@ pub fn write_source_code(path: &Path) {
 
     let definition_code: Vec<_> = definitions
         .into_iter()
-        .filter_map(|def| generate_definition(def, &union_types))
+        .filter_map(|def| generate_definition(def, &union_types, &nonzero_tys))
         .collect();
 
     let feature_code: Vec<_> = features
         .iter()
-        .map(|feature| generate_feature(feature, &commands))
+        .map(|feature| generate_feature(feature, &commands, &nonzero_tys))
         .collect();
     let feature_extensions_code = generate_feature_extension(&spec2, &mut const_cache);
 
@@ -1545,6 +1573,7 @@ pub fn write_source_code(path: &Path) {
     let version_macros = vk_version_macros();
     let platform_specific_types = platform_specific_types();
     let source_code = quote!{
+        use std::num::{NonZeroUsize, NonZeroU64};
         #[doc(hidden)]
         pub use libc::*;
         #[doc(hidden)]
@@ -1555,7 +1584,12 @@ pub fn write_source_code(path: &Path) {
         pub trait Handle {
             const TYPE: ObjectType;
             fn as_raw(self) -> u64;
-            fn from_raw(u64) -> Self;
+            fn from_raw(u64) -> Option<Self> where Self: Sized;
+        }
+
+        /// Values that cannot be 0 but can be invalid. You should probably use an `Option<_>` instead at zero cost.
+        trait Invalid {
+            fn invalid() -> Self where Self: Sized;
         }
 
         #version_macros

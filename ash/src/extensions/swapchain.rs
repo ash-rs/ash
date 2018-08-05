@@ -38,7 +38,7 @@ impl Swapchain {
     ) {
         self.swapchain_fn.destroy_swapchain_khr(
             self.handle,
-            swapchain,
+            Some(swapchain),
             allocation_callbacks.as_raw_ptr(),
         );
     }
@@ -47,8 +47,8 @@ impl Swapchain {
         &self,
         swapchain: vk::SwapchainKHR,
         timeout: vk::uint64_t,
-        semaphore: vk::Semaphore,
-        fence: vk::Fence,
+        semaphore: Option<vk::Semaphore>,
+        fence: Option<vk::Fence>,
     ) -> VkResult<vk::uint32_t> {
         let mut index = mem::uninitialized();
         let err_code = self.swapchain_fn.acquire_next_image_khr(

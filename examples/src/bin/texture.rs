@@ -864,12 +864,12 @@ fn main() {
             layout: pipeline_layout,
             render_pass: renderpass,
             subpass: 0,
-            base_pipeline_handle: vk::Pipeline::null(),
+            base_pipeline_handle: None,
             base_pipeline_index: 0,
         };
         let graphics_pipelines = base
             .device
-            .create_graphics_pipelines(vk::PipelineCache::null(), &[graphic_pipeline_info], None)
+            .create_graphics_pipelines(None, &[graphic_pipeline_info], None)
             .unwrap();
 
         let graphic_pipeline = graphics_pipelines[0];
@@ -880,8 +880,8 @@ fn main() {
                 .acquire_next_image_khr(
                     base.swapchain,
                     std::u64::MAX,
-                    base.present_complete_semaphore,
-                    vk::Fence::null(),
+                    Some(base.present_complete_semaphore),
+                    None,
                 )
                 .unwrap();
             let clear_values = [

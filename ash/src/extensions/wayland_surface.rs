@@ -18,7 +18,7 @@ impl WaylandSurface {
         instance: &I,
     ) -> Result<WaylandSurface, Vec<&'static str>> {
         let surface_fn = vk::KhrWaylandSurfaceFn::load(|name| unsafe {
-            mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
+            mem::transmute(entry.get_instance_proc_addr(Some(instance.handle()), name.as_ptr()))
         })?;
         Ok(WaylandSurface {
             handle: instance.handle(),

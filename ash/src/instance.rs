@@ -306,7 +306,7 @@ pub trait InstanceV1_0 {
 
     unsafe fn destroy_instance(&self, allocation_callbacks: Option<&vk::AllocationCallbacks>) {
         self.fp_v1_0()
-            .destroy_instance(self.handle(), allocation_callbacks.as_raw_ptr());
+            .destroy_instance(Some(self.handle()), allocation_callbacks.as_raw_ptr());
     }
 
     fn get_physical_device_format_properties(

@@ -19,7 +19,7 @@ impl Surface {
         instance: &I,
     ) -> Result<Surface, Vec<&'static str>> {
         let surface_fn = vk::KhrSurfaceFn::load(|name| unsafe {
-            mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
+            mem::transmute(entry.get_instance_proc_addr(Some(instance.handle()), name.as_ptr()))
         })?;
         Ok(Surface {
             handle: instance.handle(),
@@ -135,7 +135,7 @@ impl Surface {
     ) {
         self.surface_fn.destroy_surface_khr(
             self.handle,
-            surface,
+            Some(surface),
             allocation_callbacks.as_raw_ptr(),
         );
     }

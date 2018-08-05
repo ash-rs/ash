@@ -163,7 +163,7 @@ pub trait DeviceV1_1: DeviceV1_0 {
     ) {
         self.fp_v1_1().destroy_sampler_ycbcr_conversion(
             self.handle(),
-            ycbcr_conversion,
+            Some(ycbcr_conversion),
             allocation_callbacks.as_raw_ptr(),
         );
     }
@@ -193,7 +193,7 @@ pub trait DeviceV1_1: DeviceV1_0 {
     ) {
         self.fp_v1_1().destroy_descriptor_update_template(
             self.handle(),
-            descriptor_update_template,
+            Some(descriptor_update_template),
             allocation_callbacks.as_raw_ptr(),
         );
     }
@@ -232,7 +232,7 @@ pub trait DeviceV1_0 {
     fn fp_v1_0(&self) -> &vk::DeviceFnV1_0;
     unsafe fn destroy_device(&self, allocation_callbacks: Option<&vk::AllocationCallbacks>) {
         self.fp_v1_0()
-            .destroy_device(self.handle(), allocation_callbacks.as_raw_ptr());
+            .destroy_device(Some(self.handle()), allocation_callbacks.as_raw_ptr());
     }
 
     unsafe fn destroy_sampler(
@@ -241,7 +241,7 @@ pub trait DeviceV1_0 {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
         self.fp_v1_0()
-            .destroy_sampler(self.handle(), sampler, allocation_callbacks.as_raw_ptr());
+            .destroy_sampler(self.handle(), Some(sampler), allocation_callbacks.as_raw_ptr());
     }
 
     unsafe fn free_memory(
@@ -250,7 +250,7 @@ pub trait DeviceV1_0 {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
         self.fp_v1_0()
-            .free_memory(self.handle(), memory, allocation_callbacks.as_raw_ptr());
+            .free_memory(self.handle(), Some(memory), allocation_callbacks.as_raw_ptr());
     }
 
     unsafe fn free_command_buffers(
@@ -272,7 +272,7 @@ pub trait DeviceV1_0 {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
         self.fp_v1_0()
-            .destroy_fence(self.handle(), fence, allocation_callbacks.as_raw_ptr());
+            .destroy_fence(self.handle(), Some(fence), allocation_callbacks.as_raw_ptr());
     }
 
     unsafe fn destroy_image(
@@ -281,7 +281,7 @@ pub trait DeviceV1_0 {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
         self.fp_v1_0()
-            .destroy_image(self.handle(), image, allocation_callbacks.as_raw_ptr());
+            .destroy_image(self.handle(), Some(image), allocation_callbacks.as_raw_ptr());
     }
 
     unsafe fn destroy_command_pool(
@@ -290,7 +290,7 @@ pub trait DeviceV1_0 {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
         self.fp_v1_0()
-            .destroy_command_pool(self.handle(), pool, allocation_callbacks.as_raw_ptr());
+            .destroy_command_pool(self.handle(), Some(pool), allocation_callbacks.as_raw_ptr());
     }
 
     unsafe fn destroy_image_view(
@@ -300,7 +300,7 @@ pub trait DeviceV1_0 {
     ) {
         self.fp_v1_0().destroy_image_view(
             self.handle(),
-            image_view,
+            Some(image_view),
             allocation_callbacks.as_raw_ptr(),
         );
     }
@@ -312,7 +312,7 @@ pub trait DeviceV1_0 {
     ) {
         self.fp_v1_0().destroy_render_pass(
             self.handle(),
-            renderpass,
+            Some(renderpass),
             allocation_callbacks.as_raw_ptr(),
         );
     }
@@ -324,7 +324,7 @@ pub trait DeviceV1_0 {
     ) {
         self.fp_v1_0().destroy_framebuffer(
             self.handle(),
-            framebuffer,
+            Some(framebuffer),
             allocation_callbacks.as_raw_ptr(),
         );
     }
@@ -336,7 +336,7 @@ pub trait DeviceV1_0 {
     ) {
         self.fp_v1_0().destroy_pipeline_layout(
             self.handle(),
-            pipeline_layout,
+            Some(pipeline_layout),
             allocation_callbacks.as_raw_ptr(),
         );
     }
@@ -348,7 +348,7 @@ pub trait DeviceV1_0 {
     ) {
         self.fp_v1_0().destroy_pipeline_cache(
             self.handle(),
-            pipeline_cache,
+            Some(pipeline_cache),
             allocation_callbacks.as_raw_ptr(),
         );
     }
@@ -359,7 +359,7 @@ pub trait DeviceV1_0 {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
         self.fp_v1_0()
-            .destroy_buffer(self.handle(), buffer, allocation_callbacks.as_raw_ptr());
+            .destroy_buffer(self.handle(), Some(buffer), allocation_callbacks.as_raw_ptr());
     }
 
     unsafe fn destroy_shader_module(
@@ -369,7 +369,7 @@ pub trait DeviceV1_0 {
     ) {
         self.fp_v1_0().destroy_shader_module(
             self.handle(),
-            shader,
+            Some(shader),
             allocation_callbacks.as_raw_ptr(),
         );
     }
@@ -380,7 +380,7 @@ pub trait DeviceV1_0 {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
         self.fp_v1_0()
-            .destroy_pipeline(self.handle(), pipeline, allocation_callbacks.as_raw_ptr());
+            .destroy_pipeline(self.handle(), Some(pipeline), allocation_callbacks.as_raw_ptr());
     }
 
     unsafe fn destroy_semaphore(
@@ -390,7 +390,7 @@ pub trait DeviceV1_0 {
     ) {
         self.fp_v1_0().destroy_semaphore(
             self.handle(),
-            semaphore,
+            Some(semaphore),
             allocation_callbacks.as_raw_ptr(),
         );
     }
@@ -402,7 +402,7 @@ pub trait DeviceV1_0 {
     ) {
         self.fp_v1_0().destroy_descriptor_pool(
             self.handle(),
-            pool,
+            Some(pool),
             allocation_callbacks.as_raw_ptr(),
         );
     }
@@ -413,7 +413,7 @@ pub trait DeviceV1_0 {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
         self.fp_v1_0()
-            .destroy_query_pool(self.handle(), pool, allocation_callbacks.as_raw_ptr());
+            .destroy_query_pool(self.handle(), Some(pool), allocation_callbacks.as_raw_ptr());
     }
 
     unsafe fn destroy_descriptor_set_layout(
@@ -423,7 +423,7 @@ pub trait DeviceV1_0 {
     ) {
         self.fp_v1_0().destroy_descriptor_set_layout(
             self.handle(),
-            layout,
+            Some(layout),
             allocation_callbacks.as_raw_ptr(),
         );
     }
@@ -1170,7 +1170,7 @@ pub trait DeviceV1_0 {
 
     unsafe fn create_graphics_pipelines(
         &self,
-        pipeline_cache: vk::PipelineCache,
+        pipeline_cache: Option<vk::PipelineCache>,
         create_infos: &[vk::GraphicsPipelineCreateInfo],
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> Result<Vec<vk::Pipeline>, (Vec<vk::Pipeline>, vk::Result)> {
@@ -1192,7 +1192,7 @@ pub trait DeviceV1_0 {
 
     unsafe fn create_compute_pipelines(
         &self,
-        pipeline_cache: vk::PipelineCache,
+        pipeline_cache: Option<vk::PipelineCache>,
         create_infos: &[vk::ComputePipelineCreateInfo],
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> Result<Vec<vk::Pipeline>, (Vec<vk::Pipeline>, vk::Result)> {
@@ -1447,7 +1447,7 @@ pub trait DeviceV1_0 {
         &self,
         queue: vk::Queue,
         submits: &[vk::SubmitInfo],
-        fence: vk::Fence,
+        fence: Option<vk::Fence>,
     ) -> VkResult<()> {
         let err_code = self.fp_v1_0().queue_submit(
             queue,
@@ -1486,7 +1486,7 @@ pub trait DeviceV1_0 {
     ) {
         self.fp_v1_0().destroy_buffer_view(
             self.handle(),
-            buffer_view,
+            Some(buffer_view),
             allocation_callbacks.as_raw_ptr(),
         );
     }
