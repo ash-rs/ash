@@ -132,7 +132,7 @@ pub trait DeviceV1_1: DeviceV1_0 {
     unsafe fn trim_command_pool(
         &self,
         command_pool: vk::CommandPool,
-        flags: vk::CommandPoolTrimFlags,
+        flags: Option<vk::CommandPoolTrimFlags>,
     ) {
         self.fp_v1_1()
             .trim_command_pool(self.handle(), command_pool, flags);
@@ -682,7 +682,7 @@ pub trait DeviceV1_0 {
     unsafe fn reset_descriptor_pool(
         &self,
         pool: vk::DescriptorPool,
-        flags: vk::DescriptorPoolResetFlags,
+        flags: Option<vk::DescriptorPoolResetFlags>,
     ) -> VkResult<()> {
         let err_code = self
             .fp_v1_0()
@@ -696,7 +696,7 @@ pub trait DeviceV1_0 {
     unsafe fn reset_command_pool(
         &self,
         command_pool: vk::CommandPool,
-        flags: vk::CommandPoolResetFlags,
+        flags: Option<vk::CommandPoolResetFlags>,
     ) -> VkResult<()> {
         let err_code = self
             .fp_v1_0()
@@ -710,7 +710,7 @@ pub trait DeviceV1_0 {
     unsafe fn reset_command_buffer(
         &self,
         command_buffer: vk::CommandBuffer,
-        flags: vk::CommandBufferResetFlags,
+        flags: Option<vk::CommandBufferResetFlags>,
     ) -> VkResult<()> {
         let err_code = self.fp_v1_0().reset_command_buffer(command_buffer, flags);
         match err_code {
@@ -1078,7 +1078,7 @@ pub trait DeviceV1_0 {
         first_query: vk::uint32_t,
         query_count: vk::uint32_t,
         data: &mut [T],
-        flags: vk::QueryResultFlags,
+        flags: Option<vk::QueryResultFlags>,
     ) -> VkResult<()> {
         let data_length = query_count as usize;
         assert!(
@@ -1112,7 +1112,7 @@ pub trait DeviceV1_0 {
         command_buffer: vk::CommandBuffer,
         query_pool: vk::QueryPool,
         query: u32,
-        flags: vk::QueryControlFlags,
+        flags: Option<vk::QueryControlFlags>,
     ) {
         self.fp_v1_0()
             .cmd_begin_query(command_buffer, query_pool, query, flags);
@@ -1272,7 +1272,7 @@ pub trait DeviceV1_0 {
         memory: vk::DeviceMemory,
         offset: vk::DeviceSize,
         size: vk::DeviceSize,
-        flags: vk::MemoryMapFlags,
+        flags: Option<vk::MemoryMapFlags>,
     ) -> VkResult<*mut vk::c_void> {
         let mut data: *mut vk::c_void = mem::uninitialized();
         let err_code =
@@ -1349,7 +1349,7 @@ pub trait DeviceV1_0 {
         command_buffer: vk::CommandBuffer,
         src_stage_mask: vk::PipelineStageFlags,
         dst_stage_mask: vk::PipelineStageFlags,
-        dependency_flags: vk::DependencyFlags,
+        dependency_flags: Option<vk::DependencyFlags>,
         memory_barriers: &[vk::MemoryBarrier],
         buffer_memory_barriers: &[vk::BufferMemoryBarrier],
         image_memory_barriers: &[vk::ImageMemoryBarrier],

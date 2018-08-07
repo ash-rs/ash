@@ -332,7 +332,7 @@ pub trait InstanceV1_0 {
         typ: vk::ImageType,
         tiling: vk::ImageTiling,
         usage: vk::ImageUsageFlags,
-        flags: vk::ImageCreateFlags,
+        flags: Option<vk::ImageCreateFlags>,
     ) -> VkResult<vk::ImageFormatProperties> {
         unsafe {
             let mut image_format_prop = mem::uninitialized();

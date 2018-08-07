@@ -177,13 +177,11 @@ pub fn vk_version_macros() -> Tokens {
 pub fn vk_bitflags_wrapped_macro() -> Tokens {
     quote!{
         macro_rules! vk_bitflags_wrapped {
-            ($name: ident, $all: expr, $flag_type: ty) => {
-
-                impl Default for $name{
-                    fn default() -> $name {
-                        $name(0)
-                    }
+            ($name: ident, $all: expr) => {
+                impl Invalid for $name {
+                    fn invalid() -> Self { $name(NonZeroU32::new(!0).unwrap()) }
                 }
+
                 impl ::std::fmt::Debug for $name {
                     fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::result::Result<(), ::std::fmt::Error> {
                         write!(f, "{}({:b})", stringify!($name), self.0)
@@ -192,53 +190,43 @@ pub fn vk_bitflags_wrapped_macro() -> Tokens {
 
                 impl $name {
                     #[inline]
-                    pub fn empty() -> $name {
-                        $name(0)
+                    pub fn all() -> Option<$name> {
+                        NonZeroU32::new($all).map($name)
                     }
 
                     #[inline]
-                    pub fn all() -> $name {
-                        $name($all)
+                    pub fn flags(self) -> u32 {
+                        self.0.get()
                     }
 
                     #[inline]
-                    pub fn flags(self) -> $flag_type {
-                        self.0
-                    }
-
-                    #[inline]
-                    pub fn from_flags(flags: $flag_type) -> Option<$name> {
+                    pub fn from_flags(flags: u32) -> Option<$name> {
                         if flags & !$all == 0 {
-                            Some($name(flags))
+                            Some($name(NonZeroU32::new(flags)?))
                         } else {
                             None
                         }
                     }
 
                     #[inline]
-                    pub fn from_flags_truncate(flags: $flag_type) -> $name {
-                        $name (flags & $all)
-                    }
-
-                    #[inline]
-                    pub fn is_empty(self) -> bool {
-                        self == $name::empty()
+                    pub fn from_flags_truncate(flags: u32) -> Option<$name> {
+                        NonZeroU32::new(flags & $all).map($name)
                     }
 
                     #[inline]
                     pub fn is_all(self) -> bool {
-                        self & $name::all() == $name::all()
+                        self.0.get() & $all == $all
                     }
 
                     #[inline]
                     pub fn intersects(self, other: $name) -> bool {
-                        self & other != $name::empty()
+                        self.0.get() & other.0.get() != 0
                     }
 
                     /// Returns true of `other` is a subset of `self`
                     #[inline]
                     pub fn subset(self, other: $name) -> bool {
-                        self & other == other
+                        self.0.get() & other.0.get() == other.0.get()
                     }
                 }
 
@@ -247,7 +235,7 @@ pub fn vk_bitflags_wrapped_macro() -> Tokens {
 
                     #[inline]
                     fn bitor(self, rhs: $name) -> $name {
-                        $name (self.0 | rhs.0 )
+                        $name (unsafe { NonZeroU32::new_unchecked(self.0.get() | rhs.0.get()) })
                     }
                 }
 
@@ -259,59 +247,38 @@ pub fn vk_bitflags_wrapped_macro() -> Tokens {
                 }
 
                 impl ::std::ops::BitAnd for $name {
-                    type Output = $name;
+                    type Output = Option<$name>;
 
                     #[inline]
-                    fn bitand(self, rhs: $name) -> $name {
-                        $name (self.0 & rhs.0)
-                    }
-                }
-
-                impl ::std::ops::BitAndAssign for $name {
-                    #[inline]
-                    fn bitand_assign(&mut self, rhs: $name) {
-                        *self = *self & rhs
+                    fn bitand(self, rhs: $name) -> Option<$name> {
+                        NonZeroU32::new(self.0.get() & rhs.0.get()).map($name)
                     }
                 }
 
                 impl ::std::ops::BitXor for $name {
-                    type Output = $name;
+                    type Output = Option<$name>;
 
                     #[inline]
-                    fn bitxor(self, rhs: $name) -> $name {
-                        $name (self.0 ^ rhs.0 )
-                    }
-                }
-
-                impl ::std::ops::BitXorAssign for $name {
-                    #[inline]
-                    fn bitxor_assign(&mut self, rhs: $name) {
-                        *self = *self ^ rhs
+                    fn bitxor(self, rhs: $name) -> Option<$name> {
+                        NonZeroU32::new(self.0.get() ^ rhs.0.get()).map($name)
                     }
                 }
 
                 impl ::std::ops::Sub for $name {
-                    type Output = $name;
+                    type Output = Option<$name>;
 
                     #[inline]
-                    fn sub(self, rhs: $name) -> $name {
-                        self & !rhs
-                    }
-                }
-
-                impl ::std::ops::SubAssign for $name {
-                    #[inline]
-                    fn sub_assign(&mut self, rhs: $name) {
-                        *self = *self - rhs
+                    fn sub(self, rhs: $name) -> Option<$name> {
+                        (!rhs).and_then(|x| self & x)
                     }
                 }
 
                 impl ::std::ops::Not for $name {
-                    type Output = $name;
+                    type Output = Option<$name>;
 
                     #[inline]
-                    fn not(self) -> $name {
-                        self ^ $name::all()
+                    fn not(self) -> Option<$name> {
+                        NonZeroU32::new(self.0.get() ^ $all).map($name)
                     }
                 }
             }
@@ -371,6 +338,7 @@ pub trait ConstantExt {
     fn variant_ident(&self, enum_name: &str) -> Ident;
     fn to_tokens(&self) -> Tokens;
     fn notation(&self) -> Option<&str>;
+    fn is_zero(&self) -> bool;
 }
 
 impl ConstantExt for vkxml::ExtensionEnum {
@@ -383,6 +351,9 @@ impl ConstantExt for vkxml::ExtensionEnum {
     fn notation(&self) -> Option<&str> {
         self.notation.as_ref().map(|s| s.as_str())
     }
+    fn is_zero(&self) -> bool {
+        self.number == Some(0)
+    }
 }
 
 impl ConstantExt for vkxml::Constant {
@@ -394,6 +365,9 @@ impl ConstantExt for vkxml::Constant {
     }
     fn notation(&self) -> Option<&str> {
         self.notation.as_ref().map(|s| s.as_str())
+    }
+    fn is_zero(&self) -> bool {
+        self.number == Some(0)
     }
 }
 
@@ -789,6 +763,9 @@ impl<'a> ConstantExt for ExtensionConstant<'a> {
     fn notation(&self) -> Option<&str> {
         None
     }
+    fn is_zero(&self) -> bool {
+        if let Constant::Number(0) = self.constant { true } else { false }
+    }
 }
 
 pub fn generate_extension_constants<'a>(
@@ -809,6 +786,7 @@ pub fn generate_extension_constants<'a>(
             if const_cache.contains(_enum.name.as_str()) {
                 return None;
             }
+            let mut is_enum = false;
             let (constant, extends) = match &_enum.spec {
                 EnumSpec::Alias { .. } => None,
                 EnumSpec::Value { .. } => None,
@@ -825,6 +803,7 @@ pub fn generate_extension_constants<'a>(
                     let ext_block_size = 1000;
                     let extnumber = extnumber.unwrap_or_else(|| extension_number);
                     let value = ext_base + (extnumber - 1) * ext_block_size + offset;
+                    is_enum = true;
                     Some((Constant::Number(value as i32), Some(extends.clone())))
                 }
                 _ => None,
@@ -836,7 +815,7 @@ pub fn generate_extension_constants<'a>(
                 constant,
             };
             let ident = name_to_tokens(&extends);
-            let impl_block = bitflags_impl_block(ident, &extends, &[&ext_constant]);
+            let impl_block = bitflags_impl_block(ident, &extends, &[&ext_constant], is_enum);
             let doc_string = format!("Generated from '{}'", extension_name);
             let q = quote!{
                 #[doc = #doc_string]
@@ -900,6 +879,7 @@ pub fn generate_extension<'a>(
     Some(q)
 }
 pub fn generate_typedef(typedef: &vkxml::Typedef) -> Tokens {
+    if typedef.name == "VkFlags" { return quote!(); }
     let typedef_name = to_type_tokens(&typedef.name, None);
     let typedef_ty = to_type_tokens(&typedef.basetype, None);
     quote!{
@@ -921,8 +901,8 @@ pub fn generate_bitmask(bitmask: &vkxml::Bitmask) -> Option<Tokens> {
     Some(quote!{
         #[repr(transparent)]
         #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-        pub struct #ident(Flags);
-        vk_bitflags_wrapped!(#ident, 0b0, Flags);
+        pub struct #ident(NonZeroU32);
+        vk_bitflags_wrapped!(#ident, 0b0);
     })
 }
 
@@ -966,13 +946,16 @@ pub fn bitflags_impl_block(
     ident: Ident,
     enum_name: &str,
     constants: &[&impl ConstantExt],
+    is_enum: bool,
 ) -> Tokens {
     let variants = constants
         .iter()
-        .map(|constant| {
+        .filter_map(|constant| {
+            if !is_enum && constant.is_zero() { return None; }
             let variant_ident = constant.variant_ident(enum_name);
             let tokens = constant.to_tokens();
-            (variant_ident, tokens)
+            let tokens = if is_enum { tokens } else { quote!{ unsafe { NonZeroU32::new_unchecked(#tokens) } } };
+            Some((variant_ident, tokens))
         }).collect_vec();
 
     let notations = constants.iter().map(|constant| {
@@ -1026,17 +1009,17 @@ pub fn generate_enum<'a>(
             .fold(0, |acc, next| acc | next.bits());
         let all_bits_term = Term::intern(&format!("0b{:b}", all_bits));
 
-        let impl_bitflags = bitflags_impl_block(ident, &_enum.name, &constants);
+        let impl_bitflags = bitflags_impl_block(ident, &_enum.name, &constants, false);
         let q = quote!{
             #[repr(transparent)]
             #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-            pub struct #ident(pub(crate) Flags);
-            vk_bitflags_wrapped!(#ident, #all_bits_term, Flags);
+            pub struct #ident(pub(crate) NonZeroU32);
+            vk_bitflags_wrapped!(#ident, #all_bits_term);
             #impl_bitflags
         };
         EnumType::Bitflags(q)
     } else {
-        let impl_block = bitflags_impl_block(ident, &_enum.name, &constants);
+        let impl_block = bitflags_impl_block(ident, &_enum.name, &constants, true);
         let enum_quote = quote!{
             #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
             #[repr(transparent)]
@@ -1503,7 +1486,12 @@ pub fn write_source_code(path: &Path) {
         .collect();
 
     let nonzero_tys = definitions.iter()
-        .filter_map(|x| match *x { vkxml::DefinitionsElement::Handle(ref x) => Some(&x.name[..]), _ => None })
+        .filter_map(|x| match *x {
+            vkxml::DefinitionsElement::Handle(ref x) => Some(&x.name[..]),
+            vkxml::DefinitionsElement::Bitmask(ref x) => Some(&x.name[..]),
+            vkxml::DefinitionsElement::Enumeration(ref x) if x.name.contains("FlagBits") => Some(&x.name[..]),
+            _ => None,
+        })
         .collect::<HashSet<_>>();
 
     let enums: Vec<&vkxml::Enumeration> = spec
@@ -1573,7 +1561,7 @@ pub fn write_source_code(path: &Path) {
     let version_macros = vk_version_macros();
     let platform_specific_types = platform_specific_types();
     let source_code = quote!{
-        use std::num::{NonZeroUsize, NonZeroU64};
+        use std::num::{NonZeroUsize, NonZeroU64, NonZeroU32};
         #[doc(hidden)]
         pub use libc::*;
         #[doc(hidden)]

@@ -4,7 +4,7 @@ pub use self::bitflags::*;
 pub use self::extensions::*;
 #[doc(hidden)]
 pub use libc::*;
-use std::num::{NonZeroU64, NonZeroUsize};
+use std::num::{NonZeroU32, NonZeroU64, NonZeroUsize};
 pub trait Handle {
     const TYPE: ObjectType;
     fn as_raw(self) -> u64;
@@ -69,10 +69,10 @@ pub type SECURITY_ATTRIBUTES = ();
 pub type ANativeWindow = c_void;
 pub type AHardwareBuffer = c_void;
 macro_rules! vk_bitflags_wrapped {
-    ($name:ident, $all:expr, $flag_type:ty) => {
-        impl Default for $name {
-            fn default() -> $name {
-                $name(0)
+    ($name:ident, $all:expr) => {
+        impl Invalid for $name {
+            fn invalid() -> Self {
+                $name(NonZeroU32::new(!0).unwrap())
             }
         }
         impl ::std::fmt::Debug for $name {
@@ -85,52 +85,44 @@ macro_rules! vk_bitflags_wrapped {
         }
         impl $name {
             #[inline]
-            pub fn empty() -> $name {
-                $name(0)
+            pub fn all() -> Option<$name> {
+                NonZeroU32::new($all).map($name)
             }
             #[inline]
-            pub fn all() -> $name {
-                $name($all)
+            pub fn flags(self) -> u32 {
+                self.0.get()
             }
             #[inline]
-            pub fn flags(self) -> $flag_type {
-                self.0
-            }
-            #[inline]
-            pub fn from_flags(flags: $flag_type) -> Option<$name> {
+            pub fn from_flags(flags: u32) -> Option<$name> {
                 if flags & !$all == 0 {
-                    Some($name(flags))
+                    Some($name(NonZeroU32::new(flags)?))
                 } else {
                     None
                 }
             }
             #[inline]
-            pub fn from_flags_truncate(flags: $flag_type) -> $name {
-                $name(flags & $all)
-            }
-            #[inline]
-            pub fn is_empty(self) -> bool {
-                self == $name::empty()
+            pub fn from_flags_truncate(flags: u32) -> Option<$name> {
+                NonZeroU32::new(flags & $all).map($name)
             }
             #[inline]
             pub fn is_all(self) -> bool {
-                self & $name::all() == $name::all()
+                self.0.get() & $all == $all
             }
             #[inline]
             pub fn intersects(self, other: $name) -> bool {
-                self & other != $name::empty()
+                self.0.get() & other.0.get() != 0
             }
             #[doc = r" Returns true of `other` is a subset of `self`"]
             #[inline]
             pub fn subset(self, other: $name) -> bool {
-                self & other == other
+                self.0.get() & other.0.get() == other.0.get()
             }
         }
         impl ::std::ops::BitOr for $name {
             type Output = $name;
             #[inline]
             fn bitor(self, rhs: $name) -> $name {
-                $name(self.0 | rhs.0)
+                $name(unsafe { NonZeroU32::new_unchecked(self.0.get() | rhs.0.get()) })
             }
         }
         impl ::std::ops::BitOrAssign for $name {
@@ -140,49 +132,31 @@ macro_rules! vk_bitflags_wrapped {
             }
         }
         impl ::std::ops::BitAnd for $name {
-            type Output = $name;
+            type Output = Option<$name>;
             #[inline]
-            fn bitand(self, rhs: $name) -> $name {
-                $name(self.0 & rhs.0)
-            }
-        }
-        impl ::std::ops::BitAndAssign for $name {
-            #[inline]
-            fn bitand_assign(&mut self, rhs: $name) {
-                *self = *self & rhs
+            fn bitand(self, rhs: $name) -> Option<$name> {
+                NonZeroU32::new(self.0.get() & rhs.0.get()).map($name)
             }
         }
         impl ::std::ops::BitXor for $name {
-            type Output = $name;
+            type Output = Option<$name>;
             #[inline]
-            fn bitxor(self, rhs: $name) -> $name {
-                $name(self.0 ^ rhs.0)
-            }
-        }
-        impl ::std::ops::BitXorAssign for $name {
-            #[inline]
-            fn bitxor_assign(&mut self, rhs: $name) {
-                *self = *self ^ rhs
+            fn bitxor(self, rhs: $name) -> Option<$name> {
+                NonZeroU32::new(self.0.get() ^ rhs.0.get()).map($name)
             }
         }
         impl ::std::ops::Sub for $name {
-            type Output = $name;
+            type Output = Option<$name>;
             #[inline]
-            fn sub(self, rhs: $name) -> $name {
-                self & !rhs
-            }
-        }
-        impl ::std::ops::SubAssign for $name {
-            #[inline]
-            fn sub_assign(&mut self, rhs: $name) {
-                *self = *self - rhs
+            fn sub(self, rhs: $name) -> Option<$name> {
+                (!rhs).and_then(|x| self & x)
             }
         }
         impl ::std::ops::Not for $name {
-            type Output = $name;
+            type Output = Option<$name>;
             #[inline]
-            fn not(self) -> $name {
-                self ^ $name::all()
+            fn not(self) -> Option<$name> {
+                NonZeroU32::new(self.0.get() ^ $all).map($name)
             }
         }
     };
@@ -409,7 +383,7 @@ pub struct InstanceFnV1_0 {
             ty: ImageType,
             tiling: ImageTiling,
             usage: ImageUsageFlags,
-            flags: ImageCreateFlags,
+            flags: Option<ImageCreateFlags>,
             p_image_format_properties: *mut ImageFormatProperties,
         ) -> Result,
     get_physical_device_properties: extern "system" fn(
@@ -651,7 +625,7 @@ impl InstanceFnV1_0 {
         ty: ImageType,
         tiling: ImageTiling,
         usage: ImageUsageFlags,
-        flags: ImageCreateFlags,
+        flags: Option<ImageCreateFlags>,
         p_image_format_properties: *mut ImageFormatProperties,
     ) -> Result {
         (self.get_physical_device_image_format_properties)(
@@ -785,7 +759,7 @@ pub struct DeviceFnV1_0 {
         memory: DeviceMemory,
         offset: DeviceSize,
         size: DeviceSize,
-        flags: MemoryMapFlags,
+        flags: Option<MemoryMapFlags>,
         pp_data: *mut *mut c_void,
     ) -> Result,
     unmap_memory: extern "system" fn(device: Device, memory: DeviceMemory) -> c_void,
@@ -906,7 +880,7 @@ pub struct DeviceFnV1_0 {
         data_size: size_t,
         p_data: *mut c_void,
         stride: DeviceSize,
-        flags: QueryResultFlags,
+        flags: Option<QueryResultFlags>,
     ) -> Result,
     create_buffer: extern "system" fn(
         device: Device,
@@ -1063,7 +1037,7 @@ pub struct DeviceFnV1_0 {
     reset_descriptor_pool: extern "system" fn(
         device: Device,
         descriptor_pool: DescriptorPool,
-        flags: DescriptorPoolResetFlags,
+        flags: Option<DescriptorPoolResetFlags>,
     ) -> Result,
     allocate_descriptor_sets: extern "system" fn(
         device: Device,
@@ -1119,9 +1093,11 @@ pub struct DeviceFnV1_0 {
         command_pool: Option<CommandPool>,
         p_allocator: *const AllocationCallbacks,
     ) -> c_void,
-    reset_command_pool:
-        extern "system" fn(device: Device, command_pool: CommandPool, flags: CommandPoolResetFlags)
-            -> Result,
+    reset_command_pool: extern "system" fn(
+        device: Device,
+        command_pool: CommandPool,
+        flags: Option<CommandPoolResetFlags>,
+    ) -> Result,
     allocate_command_buffers: extern "system" fn(
         device: Device,
         p_allocate_info: *const CommandBufferAllocateInfo,
@@ -1139,7 +1115,8 @@ pub struct DeviceFnV1_0 {
     ) -> Result,
     end_command_buffer: extern "system" fn(command_buffer: CommandBuffer) -> Result,
     reset_command_buffer:
-        extern "system" fn(command_buffer: CommandBuffer, flags: CommandBufferResetFlags) -> Result,
+        extern "system" fn(command_buffer: CommandBuffer, flags: Option<CommandBufferResetFlags>)
+            -> Result,
     cmd_bind_pipeline: extern "system" fn(
         command_buffer: CommandBuffer,
         pipeline_bind_point: PipelineBindPoint,
@@ -1364,7 +1341,7 @@ pub struct DeviceFnV1_0 {
         command_buffer: CommandBuffer,
         src_stage_mask: PipelineStageFlags,
         dst_stage_mask: PipelineStageFlags,
-        dependency_flags: DependencyFlags,
+        dependency_flags: Option<DependencyFlags>,
         memory_barrier_count: uint32_t,
         p_memory_barriers: *const MemoryBarrier,
         buffer_memory_barrier_count: uint32_t,
@@ -1376,7 +1353,7 @@ pub struct DeviceFnV1_0 {
         command_buffer: CommandBuffer,
         query_pool: QueryPool,
         query: uint32_t,
-        flags: QueryControlFlags,
+        flags: Option<QueryControlFlags>,
     ) -> c_void,
     cmd_end_query:
         extern "system" fn(command_buffer: CommandBuffer, query_pool: QueryPool, query: uint32_t)
@@ -1401,7 +1378,7 @@ pub struct DeviceFnV1_0 {
         dst_buffer: Buffer,
         dst_offset: DeviceSize,
         stride: DeviceSize,
-        flags: QueryResultFlags,
+        flags: Option<QueryResultFlags>,
     ) -> c_void,
     cmd_push_constants: extern "system" fn(
         command_buffer: CommandBuffer,
@@ -2701,7 +2678,7 @@ impl DeviceFnV1_0 {
         memory: DeviceMemory,
         offset: DeviceSize,
         size: DeviceSize,
-        flags: MemoryMapFlags,
+        flags: Option<MemoryMapFlags>,
         pp_data: *mut *mut c_void,
     ) -> Result {
         (self.map_memory)(device, memory, offset, size, flags, pp_data)
@@ -2897,7 +2874,7 @@ impl DeviceFnV1_0 {
         data_size: size_t,
         p_data: *mut c_void,
         stride: DeviceSize,
-        flags: QueryResultFlags,
+        flags: Option<QueryResultFlags>,
     ) -> Result {
         (self.get_query_pool_results)(
             device,
@@ -3155,7 +3132,7 @@ impl DeviceFnV1_0 {
         &self,
         device: Device,
         descriptor_pool: DescriptorPool,
-        flags: DescriptorPoolResetFlags,
+        flags: Option<DescriptorPoolResetFlags>,
     ) -> Result {
         (self.reset_descriptor_pool)(device, descriptor_pool, flags)
     }
@@ -3260,7 +3237,7 @@ impl DeviceFnV1_0 {
         &self,
         device: Device,
         command_pool: CommandPool,
-        flags: CommandPoolResetFlags,
+        flags: Option<CommandPoolResetFlags>,
     ) -> Result {
         (self.reset_command_pool)(device, command_pool, flags)
     }
@@ -3299,7 +3276,7 @@ impl DeviceFnV1_0 {
     pub unsafe fn reset_command_buffer(
         &self,
         command_buffer: CommandBuffer,
-        flags: CommandBufferResetFlags,
+        flags: Option<CommandBufferResetFlags>,
     ) -> Result {
         (self.reset_command_buffer)(command_buffer, flags)
     }
@@ -3742,7 +3719,7 @@ impl DeviceFnV1_0 {
         command_buffer: CommandBuffer,
         src_stage_mask: PipelineStageFlags,
         dst_stage_mask: PipelineStageFlags,
-        dependency_flags: DependencyFlags,
+        dependency_flags: Option<DependencyFlags>,
         memory_barrier_count: uint32_t,
         p_memory_barriers: *const MemoryBarrier,
         buffer_memory_barrier_count: uint32_t,
@@ -3768,7 +3745,7 @@ impl DeviceFnV1_0 {
         command_buffer: CommandBuffer,
         query_pool: QueryPool,
         query: uint32_t,
-        flags: QueryControlFlags,
+        flags: Option<QueryControlFlags>,
     ) -> c_void {
         (self.cmd_begin_query)(command_buffer, query_pool, query, flags)
     }
@@ -3807,7 +3784,7 @@ impl DeviceFnV1_0 {
         dst_buffer: Buffer,
         dst_offset: DeviceSize,
         stride: DeviceSize,
-        flags: QueryResultFlags,
+        flags: Option<QueryResultFlags>,
     ) -> c_void {
         (self.cmd_copy_query_pool_results)(
             command_buffer,
@@ -4262,9 +4239,11 @@ pub struct DeviceFnV1_1 {
             p_sparse_memory_requirement_count: *mut uint32_t,
             p_sparse_memory_requirements: *mut SparseImageMemoryRequirements2,
         ) -> c_void,
-    trim_command_pool:
-        extern "system" fn(device: Device, command_pool: CommandPool, flags: CommandPoolTrimFlags)
-            -> c_void,
+    trim_command_pool: extern "system" fn(
+        device: Device,
+        command_pool: CommandPool,
+        flags: Option<CommandPoolTrimFlags>,
+    ) -> c_void,
     get_device_queue2: extern "system" fn(
         device: Device,
         p_queue_info: *const DeviceQueueInfo2,
@@ -4585,7 +4564,7 @@ impl DeviceFnV1_1 {
         &self,
         device: Device,
         command_pool: CommandPool,
-        flags: CommandPoolTrimFlags,
+        flags: Option<CommandPoolTrimFlags>,
     ) -> c_void {
         (self.trim_command_pool)(device, command_pool, flags)
     }
@@ -4666,196 +4645,191 @@ impl DeviceFnV1_1 {
 }
 pub type SampleMask = uint32_t;
 pub type Bool32 = uint32_t;
-pub type Flags = uint32_t;
 pub type DeviceSize = uint64_t;
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct FramebufferCreateFlags(Flags);
-vk_bitflags_wrapped!(FramebufferCreateFlags, 0b0, Flags);
+pub struct FramebufferCreateFlags(NonZeroU32);
+vk_bitflags_wrapped!(FramebufferCreateFlags, 0b0);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct QueryPoolCreateFlags(Flags);
-vk_bitflags_wrapped!(QueryPoolCreateFlags, 0b0, Flags);
+pub struct QueryPoolCreateFlags(NonZeroU32);
+vk_bitflags_wrapped!(QueryPoolCreateFlags, 0b0);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct RenderPassCreateFlags(Flags);
-vk_bitflags_wrapped!(RenderPassCreateFlags, 0b0, Flags);
+pub struct RenderPassCreateFlags(NonZeroU32);
+vk_bitflags_wrapped!(RenderPassCreateFlags, 0b0);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct SamplerCreateFlags(Flags);
-vk_bitflags_wrapped!(SamplerCreateFlags, 0b0, Flags);
+pub struct SamplerCreateFlags(NonZeroU32);
+vk_bitflags_wrapped!(SamplerCreateFlags, 0b0);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct PipelineLayoutCreateFlags(Flags);
-vk_bitflags_wrapped!(PipelineLayoutCreateFlags, 0b0, Flags);
+pub struct PipelineLayoutCreateFlags(NonZeroU32);
+vk_bitflags_wrapped!(PipelineLayoutCreateFlags, 0b0);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct PipelineCacheCreateFlags(Flags);
-vk_bitflags_wrapped!(PipelineCacheCreateFlags, 0b0, Flags);
+pub struct PipelineCacheCreateFlags(NonZeroU32);
+vk_bitflags_wrapped!(PipelineCacheCreateFlags, 0b0);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct PipelineDepthStencilStateCreateFlags(Flags);
-vk_bitflags_wrapped!(PipelineDepthStencilStateCreateFlags, 0b0, Flags);
+pub struct PipelineDepthStencilStateCreateFlags(NonZeroU32);
+vk_bitflags_wrapped!(PipelineDepthStencilStateCreateFlags, 0b0);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct PipelineDynamicStateCreateFlags(Flags);
-vk_bitflags_wrapped!(PipelineDynamicStateCreateFlags, 0b0, Flags);
+pub struct PipelineDynamicStateCreateFlags(NonZeroU32);
+vk_bitflags_wrapped!(PipelineDynamicStateCreateFlags, 0b0);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct PipelineColorBlendStateCreateFlags(Flags);
-vk_bitflags_wrapped!(PipelineColorBlendStateCreateFlags, 0b0, Flags);
+pub struct PipelineColorBlendStateCreateFlags(NonZeroU32);
+vk_bitflags_wrapped!(PipelineColorBlendStateCreateFlags, 0b0);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct PipelineMultisampleStateCreateFlags(Flags);
-vk_bitflags_wrapped!(PipelineMultisampleStateCreateFlags, 0b0, Flags);
+pub struct PipelineMultisampleStateCreateFlags(NonZeroU32);
+vk_bitflags_wrapped!(PipelineMultisampleStateCreateFlags, 0b0);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct PipelineRasterizationStateCreateFlags(Flags);
-vk_bitflags_wrapped!(PipelineRasterizationStateCreateFlags, 0b0, Flags);
+pub struct PipelineRasterizationStateCreateFlags(NonZeroU32);
+vk_bitflags_wrapped!(PipelineRasterizationStateCreateFlags, 0b0);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct PipelineViewportStateCreateFlags(Flags);
-vk_bitflags_wrapped!(PipelineViewportStateCreateFlags, 0b0, Flags);
+pub struct PipelineViewportStateCreateFlags(NonZeroU32);
+vk_bitflags_wrapped!(PipelineViewportStateCreateFlags, 0b0);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct PipelineTessellationStateCreateFlags(Flags);
-vk_bitflags_wrapped!(PipelineTessellationStateCreateFlags, 0b0, Flags);
+pub struct PipelineTessellationStateCreateFlags(NonZeroU32);
+vk_bitflags_wrapped!(PipelineTessellationStateCreateFlags, 0b0);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct PipelineInputAssemblyStateCreateFlags(Flags);
-vk_bitflags_wrapped!(PipelineInputAssemblyStateCreateFlags, 0b0, Flags);
+pub struct PipelineInputAssemblyStateCreateFlags(NonZeroU32);
+vk_bitflags_wrapped!(PipelineInputAssemblyStateCreateFlags, 0b0);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct PipelineVertexInputStateCreateFlags(Flags);
-vk_bitflags_wrapped!(PipelineVertexInputStateCreateFlags, 0b0, Flags);
+pub struct PipelineVertexInputStateCreateFlags(NonZeroU32);
+vk_bitflags_wrapped!(PipelineVertexInputStateCreateFlags, 0b0);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct PipelineShaderStageCreateFlags(Flags);
-vk_bitflags_wrapped!(PipelineShaderStageCreateFlags, 0b0, Flags);
+pub struct PipelineShaderStageCreateFlags(NonZeroU32);
+vk_bitflags_wrapped!(PipelineShaderStageCreateFlags, 0b0);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct BufferViewCreateFlags(Flags);
-vk_bitflags_wrapped!(BufferViewCreateFlags, 0b0, Flags);
+pub struct BufferViewCreateFlags(NonZeroU32);
+vk_bitflags_wrapped!(BufferViewCreateFlags, 0b0);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct InstanceCreateFlags(Flags);
-vk_bitflags_wrapped!(InstanceCreateFlags, 0b0, Flags);
+pub struct InstanceCreateFlags(NonZeroU32);
+vk_bitflags_wrapped!(InstanceCreateFlags, 0b0);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct DeviceCreateFlags(Flags);
-vk_bitflags_wrapped!(DeviceCreateFlags, 0b0, Flags);
+pub struct DeviceCreateFlags(NonZeroU32);
+vk_bitflags_wrapped!(DeviceCreateFlags, 0b0);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct ImageViewCreateFlags(Flags);
-vk_bitflags_wrapped!(ImageViewCreateFlags, 0b0, Flags);
+pub struct ImageViewCreateFlags(NonZeroU32);
+vk_bitflags_wrapped!(ImageViewCreateFlags, 0b0);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct SemaphoreCreateFlags(Flags);
-vk_bitflags_wrapped!(SemaphoreCreateFlags, 0b0, Flags);
+pub struct SemaphoreCreateFlags(NonZeroU32);
+vk_bitflags_wrapped!(SemaphoreCreateFlags, 0b0);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct ShaderModuleCreateFlags(Flags);
-vk_bitflags_wrapped!(ShaderModuleCreateFlags, 0b0, Flags);
+pub struct ShaderModuleCreateFlags(NonZeroU32);
+vk_bitflags_wrapped!(ShaderModuleCreateFlags, 0b0);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct EventCreateFlags(Flags);
-vk_bitflags_wrapped!(EventCreateFlags, 0b0, Flags);
+pub struct EventCreateFlags(NonZeroU32);
+vk_bitflags_wrapped!(EventCreateFlags, 0b0);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct MemoryMapFlags(Flags);
-vk_bitflags_wrapped!(MemoryMapFlags, 0b0, Flags);
+pub struct MemoryMapFlags(NonZeroU32);
+vk_bitflags_wrapped!(MemoryMapFlags, 0b0);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct DescriptorPoolResetFlags(Flags);
-vk_bitflags_wrapped!(DescriptorPoolResetFlags, 0b0, Flags);
+pub struct DescriptorPoolResetFlags(NonZeroU32);
+vk_bitflags_wrapped!(DescriptorPoolResetFlags, 0b0);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct DescriptorUpdateTemplateCreateFlags(Flags);
-vk_bitflags_wrapped!(DescriptorUpdateTemplateCreateFlags, 0b0, Flags);
+pub struct DescriptorUpdateTemplateCreateFlags(NonZeroU32);
+vk_bitflags_wrapped!(DescriptorUpdateTemplateCreateFlags, 0b0);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct DisplayModeCreateFlagsKHR(Flags);
-vk_bitflags_wrapped!(DisplayModeCreateFlagsKHR, 0b0, Flags);
+pub struct DisplayModeCreateFlagsKHR(NonZeroU32);
+vk_bitflags_wrapped!(DisplayModeCreateFlagsKHR, 0b0);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct DisplaySurfaceCreateFlagsKHR(Flags);
-vk_bitflags_wrapped!(DisplaySurfaceCreateFlagsKHR, 0b0, Flags);
+pub struct DisplaySurfaceCreateFlagsKHR(NonZeroU32);
+vk_bitflags_wrapped!(DisplaySurfaceCreateFlagsKHR, 0b0);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct AndroidSurfaceCreateFlagsKHR(Flags);
-vk_bitflags_wrapped!(AndroidSurfaceCreateFlagsKHR, 0b0, Flags);
+pub struct AndroidSurfaceCreateFlagsKHR(NonZeroU32);
+vk_bitflags_wrapped!(AndroidSurfaceCreateFlagsKHR, 0b0);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct MirSurfaceCreateFlagsKHR(Flags);
-vk_bitflags_wrapped!(MirSurfaceCreateFlagsKHR, 0b0, Flags);
+pub struct MirSurfaceCreateFlagsKHR(NonZeroU32);
+vk_bitflags_wrapped!(MirSurfaceCreateFlagsKHR, 0b0);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct ViSurfaceCreateFlagsNN(Flags);
-vk_bitflags_wrapped!(ViSurfaceCreateFlagsNN, 0b0, Flags);
+pub struct ViSurfaceCreateFlagsNN(NonZeroU32);
+vk_bitflags_wrapped!(ViSurfaceCreateFlagsNN, 0b0);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct WaylandSurfaceCreateFlagsKHR(Flags);
-vk_bitflags_wrapped!(WaylandSurfaceCreateFlagsKHR, 0b0, Flags);
+pub struct WaylandSurfaceCreateFlagsKHR(NonZeroU32);
+vk_bitflags_wrapped!(WaylandSurfaceCreateFlagsKHR, 0b0);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct Win32SurfaceCreateFlagsKHR(Flags);
-vk_bitflags_wrapped!(Win32SurfaceCreateFlagsKHR, 0b0, Flags);
+pub struct Win32SurfaceCreateFlagsKHR(NonZeroU32);
+vk_bitflags_wrapped!(Win32SurfaceCreateFlagsKHR, 0b0);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct XlibSurfaceCreateFlagsKHR(Flags);
-vk_bitflags_wrapped!(XlibSurfaceCreateFlagsKHR, 0b0, Flags);
+pub struct XlibSurfaceCreateFlagsKHR(NonZeroU32);
+vk_bitflags_wrapped!(XlibSurfaceCreateFlagsKHR, 0b0);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct XcbSurfaceCreateFlagsKHR(Flags);
-vk_bitflags_wrapped!(XcbSurfaceCreateFlagsKHR, 0b0, Flags);
+pub struct XcbSurfaceCreateFlagsKHR(NonZeroU32);
+vk_bitflags_wrapped!(XcbSurfaceCreateFlagsKHR, 0b0);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct IOSSurfaceCreateFlagsMVK(Flags);
-vk_bitflags_wrapped!(IOSSurfaceCreateFlagsMVK, 0b0, Flags);
+pub struct IOSSurfaceCreateFlagsMVK(NonZeroU32);
+vk_bitflags_wrapped!(IOSSurfaceCreateFlagsMVK, 0b0);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct MacOSSurfaceCreateFlagsMVK(Flags);
-vk_bitflags_wrapped!(MacOSSurfaceCreateFlagsMVK, 0b0, Flags);
+pub struct MacOSSurfaceCreateFlagsMVK(NonZeroU32);
+vk_bitflags_wrapped!(MacOSSurfaceCreateFlagsMVK, 0b0);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct CommandPoolTrimFlags(Flags);
-vk_bitflags_wrapped!(CommandPoolTrimFlags, 0b0, Flags);
+pub struct CommandPoolTrimFlags(NonZeroU32);
+vk_bitflags_wrapped!(CommandPoolTrimFlags, 0b0);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct PipelineViewportSwizzleStateCreateFlagsNV(Flags);
-vk_bitflags_wrapped!(PipelineViewportSwizzleStateCreateFlagsNV, 0b0, Flags);
+pub struct PipelineViewportSwizzleStateCreateFlagsNV(NonZeroU32);
+vk_bitflags_wrapped!(PipelineViewportSwizzleStateCreateFlagsNV, 0b0);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct PipelineDiscardRectangleStateCreateFlagsEXT(Flags);
-vk_bitflags_wrapped!(PipelineDiscardRectangleStateCreateFlagsEXT, 0b0, Flags);
+pub struct PipelineDiscardRectangleStateCreateFlagsEXT(NonZeroU32);
+vk_bitflags_wrapped!(PipelineDiscardRectangleStateCreateFlagsEXT, 0b0);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct PipelineCoverageToColorStateCreateFlagsNV(Flags);
-vk_bitflags_wrapped!(PipelineCoverageToColorStateCreateFlagsNV, 0b0, Flags);
+pub struct PipelineCoverageToColorStateCreateFlagsNV(NonZeroU32);
+vk_bitflags_wrapped!(PipelineCoverageToColorStateCreateFlagsNV, 0b0);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct PipelineCoverageModulationStateCreateFlagsNV(Flags);
-vk_bitflags_wrapped!(PipelineCoverageModulationStateCreateFlagsNV, 0b0, Flags);
+pub struct PipelineCoverageModulationStateCreateFlagsNV(NonZeroU32);
+vk_bitflags_wrapped!(PipelineCoverageModulationStateCreateFlagsNV, 0b0);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct ValidationCacheCreateFlagsEXT(Flags);
-vk_bitflags_wrapped!(ValidationCacheCreateFlagsEXT, 0b0, Flags);
+pub struct ValidationCacheCreateFlagsEXT(NonZeroU32);
+vk_bitflags_wrapped!(ValidationCacheCreateFlagsEXT, 0b0);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct DebugUtilsMessengerCreateFlagsEXT(Flags);
-vk_bitflags_wrapped!(DebugUtilsMessengerCreateFlagsEXT, 0b0, Flags);
+pub struct DebugUtilsMessengerCreateFlagsEXT(NonZeroU32);
+vk_bitflags_wrapped!(DebugUtilsMessengerCreateFlagsEXT, 0b0);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct DebugUtilsMessengerCallbackDataFlagsEXT(Flags);
-vk_bitflags_wrapped!(DebugUtilsMessengerCallbackDataFlagsEXT, 0b0, Flags);
+pub struct DebugUtilsMessengerCallbackDataFlagsEXT(NonZeroU32);
+vk_bitflags_wrapped!(DebugUtilsMessengerCallbackDataFlagsEXT, 0b0);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct PipelineRasterizationConservativeStateCreateFlagsEXT(Flags);
-vk_bitflags_wrapped!(
-    PipelineRasterizationConservativeStateCreateFlagsEXT,
-    0b0,
-    Flags
-);
+pub struct PipelineRasterizationConservativeStateCreateFlagsEXT(NonZeroU32);
+vk_bitflags_wrapped!(PipelineRasterizationConservativeStateCreateFlagsEXT, 0b0);
 define_handle!(Instance, INSTANCE);
 define_handle!(PhysicalDevice, PHYSICAL_DEVICE);
 define_handle!(Device, DEVICE);
@@ -5177,7 +5151,7 @@ impl ::std::default::Default for AllocationCallbacks {
 pub struct DeviceQueueCreateInfo {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub flags: DeviceQueueCreateFlags,
+    pub flags: Option<DeviceQueueCreateFlags>,
     pub queue_family_index: uint32_t,
     pub queue_count: uint32_t,
     pub p_queue_priorities: *const c_float,
@@ -5199,7 +5173,7 @@ impl ::std::default::Default for DeviceQueueCreateInfo {
 pub struct DeviceCreateInfo {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub flags: DeviceCreateFlags,
+    pub flags: Option<DeviceCreateFlags>,
     pub queue_create_info_count: uint32_t,
     pub p_queue_create_infos: *const DeviceQueueCreateInfo,
     pub enabled_layer_count: uint32_t,
@@ -5230,7 +5204,7 @@ impl ::std::default::Default for DeviceCreateInfo {
 pub struct InstanceCreateInfo {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub flags: InstanceCreateFlags,
+    pub flags: Option<InstanceCreateFlags>,
     pub p_application_info: *const ApplicationInfo,
     pub enabled_layer_count: uint32_t,
     #[doc = "Ordered list of layer names to be enabled"]
@@ -5257,7 +5231,7 @@ impl ::std::default::Default for InstanceCreateInfo {
 #[derive(Copy, Clone, Debug)]
 pub struct QueueFamilyProperties {
     #[doc = "Queue flags"]
-    pub queue_flags: QueueFlags,
+    pub queue_flags: Option<QueueFlags>,
     pub queue_count: uint32_t,
     pub timestamp_valid_bits: uint32_t,
     #[doc = "Minimum alignment requirement for image transfers"]
@@ -5318,9 +5292,9 @@ pub struct MemoryRequirements {
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct SparseImageFormatProperties {
-    pub aspect_mask: ImageAspectFlags,
+    pub aspect_mask: Option<ImageAspectFlags>,
     pub image_granularity: Extent3D,
-    pub flags: SparseImageFormatFlags,
+    pub flags: Option<SparseImageFormatFlags>,
 }
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -5338,7 +5312,7 @@ pub struct SparseImageMemoryRequirements {
 #[derive(Copy, Clone, Debug)]
 pub struct MemoryType {
     #[doc = "Memory properties of this memory type"]
-    pub property_flags: MemoryPropertyFlags,
+    pub property_flags: Option<MemoryPropertyFlags>,
     #[doc = "Index of the memory heap allocations of this memory type are taken from"]
     pub heap_index: uint32_t,
 }
@@ -5348,7 +5322,7 @@ pub struct MemoryHeap {
     #[doc = "Available memory in the heap"]
     pub size: DeviceSize,
     #[doc = "Flags for the heap"]
-    pub flags: MemoryHeapFlags,
+    pub flags: Option<MemoryHeapFlags>,
 }
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -5377,11 +5351,11 @@ impl ::std::default::Default for MappedMemoryRange {
 #[derive(Copy, Clone, Debug)]
 pub struct FormatProperties {
     #[doc = "Format features in case of linear tiling"]
-    pub linear_tiling_features: FormatFeatureFlags,
+    pub linear_tiling_features: Option<FormatFeatureFlags>,
     #[doc = "Format features in case of optimal tiling"]
-    pub optimal_tiling_features: FormatFeatureFlags,
+    pub optimal_tiling_features: Option<FormatFeatureFlags>,
     #[doc = "Format features supported by buffers"]
-    pub buffer_features: FormatFeatureFlags,
+    pub buffer_features: Option<FormatFeatureFlags>,
 }
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -5393,7 +5367,7 @@ pub struct ImageFormatProperties {
     #[doc = "max array size for this resource type"]
     pub max_array_layers: uint32_t,
     #[doc = "supported sample counts for this resource type"]
-    pub sample_counts: SampleCountFlags,
+    pub sample_counts: Option<SampleCountFlags>,
     #[doc = "max size (in bytes) of this resource type"]
     pub max_resource_size: DeviceSize,
 }
@@ -5514,7 +5488,7 @@ pub struct BufferCreateInfo {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     #[doc = "Buffer creation flags"]
-    pub flags: BufferCreateFlags,
+    pub flags: Option<BufferCreateFlags>,
     #[doc = "Specified in bytes"]
     pub size: DeviceSize,
     #[doc = "Buffer usage flags"]
@@ -5530,7 +5504,7 @@ impl ::std::default::Default for BufferCreateInfo {
             p_next: unsafe { ::std::mem::zeroed() },
             flags: Default::default(),
             size: Default::default(),
-            usage: Default::default(),
+            usage: Invalid::invalid(),
             sharing_mode: Default::default(),
             queue_family_index_count: Default::default(),
             p_queue_family_indices: unsafe { ::std::mem::zeroed() },
@@ -5542,7 +5516,7 @@ impl ::std::default::Default for BufferCreateInfo {
 pub struct BufferViewCreateInfo {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub flags: BufferViewCreateFlags,
+    pub flags: Option<BufferViewCreateFlags>,
     pub buffer: Buffer,
     #[doc = "Optionally specifies format of elements"]
     pub format: Format,
@@ -5565,22 +5539,41 @@ impl ::std::default::Default for BufferViewCreateInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
+#[derive(Copy, Clone, Debug)]
 pub struct ImageSubresource {
     pub aspect_mask: ImageAspectFlags,
     pub mip_level: uint32_t,
     pub array_layer: uint32_t,
 }
+impl ::std::default::Default for ImageSubresource {
+    fn default() -> ImageSubresource {
+        ImageSubresource {
+            aspect_mask: Invalid::invalid(),
+            mip_level: Default::default(),
+            array_layer: Default::default(),
+        }
+    }
+}
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
+#[derive(Copy, Clone, Debug)]
 pub struct ImageSubresourceLayers {
     pub aspect_mask: ImageAspectFlags,
     pub mip_level: uint32_t,
     pub base_array_layer: uint32_t,
     pub layer_count: uint32_t,
 }
+impl ::std::default::Default for ImageSubresourceLayers {
+    fn default() -> ImageSubresourceLayers {
+        ImageSubresourceLayers {
+            aspect_mask: Invalid::invalid(),
+            mip_level: Default::default(),
+            base_array_layer: Default::default(),
+            layer_count: Default::default(),
+        }
+    }
+}
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
+#[derive(Copy, Clone, Debug)]
 pub struct ImageSubresourceRange {
     pub aspect_mask: ImageAspectFlags,
     pub base_mip_level: uint32_t,
@@ -5588,15 +5581,26 @@ pub struct ImageSubresourceRange {
     pub base_array_layer: uint32_t,
     pub layer_count: uint32_t,
 }
+impl ::std::default::Default for ImageSubresourceRange {
+    fn default() -> ImageSubresourceRange {
+        ImageSubresourceRange {
+            aspect_mask: Invalid::invalid(),
+            base_mip_level: Default::default(),
+            level_count: Default::default(),
+            base_array_layer: Default::default(),
+            layer_count: Default::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct MemoryBarrier {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     #[doc = "Memory accesses from the source of the dependency to synchronize"]
-    pub src_access_mask: AccessFlags,
+    pub src_access_mask: Option<AccessFlags>,
     #[doc = "Memory accesses from the destination of the dependency to synchronize"]
-    pub dst_access_mask: AccessFlags,
+    pub dst_access_mask: Option<AccessFlags>,
 }
 impl ::std::default::Default for MemoryBarrier {
     fn default() -> MemoryBarrier {
@@ -5614,9 +5618,9 @@ pub struct BufferMemoryBarrier {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     #[doc = "Memory accesses from the source of the dependency to synchronize"]
-    pub src_access_mask: AccessFlags,
+    pub src_access_mask: Option<AccessFlags>,
     #[doc = "Memory accesses from the destination of the dependency to synchronize"]
-    pub dst_access_mask: AccessFlags,
+    pub dst_access_mask: Option<AccessFlags>,
     #[doc = "Queue family to transition ownership from"]
     pub src_queue_family_index: uint32_t,
     #[doc = "Queue family to transition ownership to"]
@@ -5649,9 +5653,9 @@ pub struct ImageMemoryBarrier {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     #[doc = "Memory accesses from the source of the dependency to synchronize"]
-    pub src_access_mask: AccessFlags,
+    pub src_access_mask: Option<AccessFlags>,
     #[doc = "Memory accesses from the destination of the dependency to synchronize"]
-    pub dst_access_mask: AccessFlags,
+    pub dst_access_mask: Option<AccessFlags>,
     #[doc = "Current layout of the image"]
     pub old_layout: ImageLayout,
     #[doc = "New layout to transition the image to"]
@@ -5687,7 +5691,7 @@ pub struct ImageCreateInfo {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     #[doc = "Image creation flags"]
-    pub flags: ImageCreateFlags,
+    pub flags: Option<ImageCreateFlags>,
     pub image_type: ImageType,
     pub format: Format,
     pub extent: Extent3D,
@@ -5717,9 +5721,9 @@ impl ::std::default::Default for ImageCreateInfo {
             extent: Default::default(),
             mip_levels: Default::default(),
             array_layers: Default::default(),
-            samples: Default::default(),
+            samples: Invalid::invalid(),
             tiling: Default::default(),
-            usage: Default::default(),
+            usage: Invalid::invalid(),
             sharing_mode: Default::default(),
             queue_family_index_count: Default::default(),
             p_queue_family_indices: unsafe { ::std::mem::zeroed() },
@@ -5746,7 +5750,7 @@ pub struct SubresourceLayout {
 pub struct ImageViewCreateInfo {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub flags: ImageViewCreateFlags,
+    pub flags: Option<ImageViewCreateFlags>,
     pub image: Image,
     pub view_type: ImageViewType,
     pub format: Format,
@@ -5787,7 +5791,7 @@ pub struct SparseMemoryBind {
     pub memory: Option<DeviceMemory>,
     #[doc = "Specified in bytes"]
     pub memory_offset: DeviceSize,
-    pub flags: SparseMemoryBindFlags,
+    pub flags: Option<SparseMemoryBindFlags>,
 }
 #[repr(C)]
 #[derive(Copy, Clone, Default, Debug)]
@@ -5798,7 +5802,7 @@ pub struct SparseImageMemoryBind {
     pub memory: Option<DeviceMemory>,
     #[doc = "Specified in bytes"]
     pub memory_offset: DeviceSize,
-    pub flags: SparseMemoryBindFlags,
+    pub flags: Option<SparseMemoryBindFlags>,
 }
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -5956,7 +5960,7 @@ pub struct ImageResolve {
 pub struct ShaderModuleCreateInfo {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub flags: ShaderModuleCreateFlags,
+    pub flags: Option<ShaderModuleCreateFlags>,
     #[doc = "Specified in bytes"]
     pub code_size: size_t,
     #[doc = "Binary code of size codeSize"]
@@ -5993,7 +5997,7 @@ impl ::std::default::Default for DescriptorSetLayoutBinding {
             binding: Default::default(),
             descriptor_type: Default::default(),
             descriptor_count: Default::default(),
-            stage_flags: Default::default(),
+            stage_flags: Invalid::invalid(),
             p_immutable_samplers: unsafe { ::std::mem::zeroed() },
         }
     }
@@ -6003,7 +6007,7 @@ impl ::std::default::Default for DescriptorSetLayoutBinding {
 pub struct DescriptorSetLayoutCreateInfo {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub flags: DescriptorSetLayoutCreateFlags,
+    pub flags: Option<DescriptorSetLayoutCreateFlags>,
     #[doc = "Number of bindings in the descriptor set layout"]
     pub binding_count: uint32_t,
     #[doc = "Array of descriptor set layout bindings"]
@@ -6031,7 +6035,7 @@ pub struct DescriptorPoolSize {
 pub struct DescriptorPoolCreateInfo {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub flags: DescriptorPoolCreateFlags,
+    pub flags: Option<DescriptorPoolCreateFlags>,
     pub max_sets: uint32_t,
     pub pool_size_count: uint32_t,
     pub p_pool_sizes: *const DescriptorPoolSize,
@@ -6105,7 +6109,7 @@ impl ::std::default::Default for SpecializationInfo {
 pub struct PipelineShaderStageCreateInfo {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub flags: PipelineShaderStageCreateFlags,
+    pub flags: Option<PipelineShaderStageCreateFlags>,
     #[doc = "Shader stage"]
     pub stage: ShaderStageFlags,
     #[doc = "Module containing entry point"]
@@ -6120,7 +6124,7 @@ impl ::std::default::Default for PipelineShaderStageCreateInfo {
             s_type: StructureType::PIPELINE_SHADER_STAGE_CREATE_INFO,
             p_next: unsafe { ::std::mem::zeroed() },
             flags: Default::default(),
-            stage: Default::default(),
+            stage: Invalid::invalid(),
             module: Invalid::invalid(),
             p_name: unsafe { ::std::mem::zeroed() },
             p_specialization_info: unsafe { ::std::mem::zeroed() },
@@ -6133,7 +6137,7 @@ pub struct ComputePipelineCreateInfo {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     #[doc = "Pipeline creation flags"]
-    pub flags: PipelineCreateFlags,
+    pub flags: Option<PipelineCreateFlags>,
     pub stage: PipelineShaderStageCreateInfo,
     #[doc = "Interface layout of the pipeline"]
     pub layout: PipelineLayout,
@@ -6182,7 +6186,7 @@ pub struct VertexInputAttributeDescription {
 pub struct PipelineVertexInputStateCreateInfo {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub flags: PipelineVertexInputStateCreateFlags,
+    pub flags: Option<PipelineVertexInputStateCreateFlags>,
     #[doc = "number of bindings"]
     pub vertex_binding_description_count: uint32_t,
     pub p_vertex_binding_descriptions: *const VertexInputBindingDescription,
@@ -6208,7 +6212,7 @@ impl ::std::default::Default for PipelineVertexInputStateCreateInfo {
 pub struct PipelineInputAssemblyStateCreateInfo {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub flags: PipelineInputAssemblyStateCreateFlags,
+    pub flags: Option<PipelineInputAssemblyStateCreateFlags>,
     pub topology: PrimitiveTopology,
     pub primitive_restart_enable: Bool32,
 }
@@ -6228,7 +6232,7 @@ impl ::std::default::Default for PipelineInputAssemblyStateCreateInfo {
 pub struct PipelineTessellationStateCreateInfo {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub flags: PipelineTessellationStateCreateFlags,
+    pub flags: Option<PipelineTessellationStateCreateFlags>,
     pub patch_control_points: uint32_t,
 }
 impl ::std::default::Default for PipelineTessellationStateCreateInfo {
@@ -6246,7 +6250,7 @@ impl ::std::default::Default for PipelineTessellationStateCreateInfo {
 pub struct PipelineViewportStateCreateInfo {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub flags: PipelineViewportStateCreateFlags,
+    pub flags: Option<PipelineViewportStateCreateFlags>,
     pub viewport_count: uint32_t,
     pub p_viewports: *const Viewport,
     pub scissor_count: uint32_t,
@@ -6270,12 +6274,12 @@ impl ::std::default::Default for PipelineViewportStateCreateInfo {
 pub struct PipelineRasterizationStateCreateInfo {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub flags: PipelineRasterizationStateCreateFlags,
+    pub flags: Option<PipelineRasterizationStateCreateFlags>,
     pub depth_clamp_enable: Bool32,
     pub rasterizer_discard_enable: Bool32,
     #[doc = "optional (GL45)"]
     pub polygon_mode: PolygonMode,
-    pub cull_mode: CullModeFlags,
+    pub cull_mode: Option<CullModeFlags>,
     pub front_face: FrontFace,
     pub depth_bias_enable: Bool32,
     pub depth_bias_constant_factor: c_float,
@@ -6307,7 +6311,7 @@ impl ::std::default::Default for PipelineRasterizationStateCreateInfo {
 pub struct PipelineMultisampleStateCreateInfo {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub flags: PipelineMultisampleStateCreateFlags,
+    pub flags: Option<PipelineMultisampleStateCreateFlags>,
     #[doc = "Number of samples used for rasterization"]
     pub rasterization_samples: SampleCountFlags,
     #[doc = "optional (GL45)"]
@@ -6325,7 +6329,7 @@ impl ::std::default::Default for PipelineMultisampleStateCreateInfo {
             s_type: StructureType::PIPELINE_MULTISAMPLE_STATE_CREATE_INFO,
             p_next: unsafe { ::std::mem::zeroed() },
             flags: Default::default(),
-            rasterization_samples: Default::default(),
+            rasterization_samples: Invalid::invalid(),
             sample_shading_enable: Default::default(),
             min_sample_shading: Default::default(),
             p_sample_mask: unsafe { ::std::mem::zeroed() },
@@ -6344,14 +6348,14 @@ pub struct PipelineColorBlendAttachmentState {
     pub src_alpha_blend_factor: BlendFactor,
     pub dst_alpha_blend_factor: BlendFactor,
     pub alpha_blend_op: BlendOp,
-    pub color_write_mask: ColorComponentFlags,
+    pub color_write_mask: Option<ColorComponentFlags>,
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PipelineColorBlendStateCreateInfo {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub flags: PipelineColorBlendStateCreateFlags,
+    pub flags: Option<PipelineColorBlendStateCreateFlags>,
     pub logic_op_enable: Bool32,
     pub logic_op: LogicOp,
     #[doc = "# of pAttachments"]
@@ -6394,7 +6398,7 @@ impl ::std::default::Default for PipelineColorBlendStateCreateInfo {
 pub struct PipelineDynamicStateCreateInfo {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub flags: PipelineDynamicStateCreateFlags,
+    pub flags: Option<PipelineDynamicStateCreateFlags>,
     pub dynamic_state_count: uint32_t,
     pub p_dynamic_states: *const DynamicState,
 }
@@ -6425,7 +6429,7 @@ pub struct StencilOpState {
 pub struct PipelineDepthStencilStateCreateInfo {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub flags: PipelineDepthStencilStateCreateFlags,
+    pub flags: Option<PipelineDepthStencilStateCreateFlags>,
     pub depth_test_enable: Bool32,
     pub depth_write_enable: Bool32,
     pub depth_compare_op: CompareOp,
@@ -6461,7 +6465,7 @@ pub struct GraphicsPipelineCreateInfo {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     #[doc = "Pipeline creation flags"]
-    pub flags: PipelineCreateFlags,
+    pub flags: Option<PipelineCreateFlags>,
     pub stage_count: uint32_t,
     #[doc = "One entry for each active shader stage"]
     pub p_stages: *const PipelineShaderStageCreateInfo,
@@ -6513,7 +6517,7 @@ impl ::std::default::Default for GraphicsPipelineCreateInfo {
 pub struct PipelineCacheCreateInfo {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub flags: PipelineCacheCreateFlags,
+    pub flags: Option<PipelineCacheCreateFlags>,
     #[doc = "Size of initial data to populate cache, in bytes"]
     pub initial_data_size: size_t,
     #[doc = "Initial data to populate cache"]
@@ -6531,7 +6535,7 @@ impl ::std::default::Default for PipelineCacheCreateInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
+#[derive(Copy, Clone, Debug)]
 pub struct PushConstantRange {
     #[doc = "Which stages use the range"]
     pub stage_flags: ShaderStageFlags,
@@ -6540,12 +6544,21 @@ pub struct PushConstantRange {
     #[doc = "Size of the range, in bytes"]
     pub size: uint32_t,
 }
+impl ::std::default::Default for PushConstantRange {
+    fn default() -> PushConstantRange {
+        PushConstantRange {
+            stage_flags: Invalid::invalid(),
+            offset: Default::default(),
+            size: Default::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct PipelineLayoutCreateInfo {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub flags: PipelineLayoutCreateFlags,
+    pub flags: Option<PipelineLayoutCreateFlags>,
     #[doc = "Number of descriptor sets interfaced by the pipeline"]
     pub set_layout_count: uint32_t,
     #[doc = "Array of setCount number of descriptor set layout objects defining the layout of the"]
@@ -6573,7 +6586,7 @@ impl ::std::default::Default for PipelineLayoutCreateInfo {
 pub struct SamplerCreateInfo {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub flags: SamplerCreateFlags,
+    pub flags: Option<SamplerCreateFlags>,
     #[doc = "Filter mode for magnification"]
     pub mag_filter: Filter,
     #[doc = "Filter mode for minifiation"]
@@ -6623,7 +6636,7 @@ pub struct CommandPoolCreateInfo {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     #[doc = "Command pool creation flags"]
-    pub flags: CommandPoolCreateFlags,
+    pub flags: Option<CommandPoolCreateFlags>,
     pub queue_family_index: uint32_t,
 }
 impl ::std::default::Default for CommandPoolCreateInfo {
@@ -6669,9 +6682,9 @@ pub struct CommandBufferInheritanceInfo {
     #[doc = "Whether this secondary command buffer may be executed during an occlusion query"]
     pub occlusion_query_enable: Bool32,
     #[doc = "Query flags used by this secondary command buffer, if executed during an occlusion query"]
-    pub query_flags: QueryControlFlags,
+    pub query_flags: Option<QueryControlFlags>,
     #[doc = "Pipeline statistics that may be counted for this secondary command buffer"]
-    pub pipeline_statistics: QueryPipelineStatisticFlags,
+    pub pipeline_statistics: Option<QueryPipelineStatisticFlags>,
 }
 impl ::std::default::Default for CommandBufferInheritanceInfo {
     fn default() -> CommandBufferInheritanceInfo {
@@ -6693,7 +6706,7 @@ pub struct CommandBufferBeginInfo {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     #[doc = "Command buffer usage flags"]
-    pub flags: CommandBufferUsageFlags,
+    pub flags: Option<CommandBufferUsageFlags>,
     #[doc = "Pointer to inheritance info for secondary command buffers"]
     pub p_inheritance_info: *const CommandBufferInheritanceInfo,
 }
@@ -6774,7 +6787,7 @@ impl ::std::default::Default for ClearValue {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone)]
 pub struct ClearAttachment {
     pub aspect_mask: ImageAspectFlags,
     pub color_attachment: uint32_t,
@@ -6789,10 +6802,19 @@ impl ::std::fmt::Debug for ClearAttachment {
             .finish()
     }
 }
+impl ::std::default::Default for ClearAttachment {
+    fn default() -> ClearAttachment {
+        ClearAttachment {
+            aspect_mask: Invalid::invalid(),
+            color_attachment: Default::default(),
+            clear_value: Default::default(),
+        }
+    }
+}
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
+#[derive(Copy, Clone, Debug)]
 pub struct AttachmentDescription {
-    pub flags: AttachmentDescriptionFlags,
+    pub flags: Option<AttachmentDescriptionFlags>,
     pub format: Format,
     pub samples: SampleCountFlags,
     #[doc = "Load operation for color or depth data"]
@@ -6806,6 +6828,21 @@ pub struct AttachmentDescription {
     pub initial_layout: ImageLayout,
     pub final_layout: ImageLayout,
 }
+impl ::std::default::Default for AttachmentDescription {
+    fn default() -> AttachmentDescription {
+        AttachmentDescription {
+            flags: Default::default(),
+            format: Default::default(),
+            samples: Invalid::invalid(),
+            load_op: Default::default(),
+            store_op: Default::default(),
+            stencil_load_op: Default::default(),
+            stencil_store_op: Default::default(),
+            initial_layout: Default::default(),
+            final_layout: Default::default(),
+        }
+    }
+}
 #[repr(C)]
 #[derive(Copy, Clone, Default, Debug)]
 pub struct AttachmentReference {
@@ -6815,7 +6852,7 @@ pub struct AttachmentReference {
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct SubpassDescription {
-    pub flags: SubpassDescriptionFlags,
+    pub flags: Option<SubpassDescriptionFlags>,
     #[doc = "Must be VK_PIPELINE_BIND_POINT_GRAPHICS for now"]
     pub pipeline_bind_point: PipelineBindPoint,
     pub input_attachment_count: uint32_t,
@@ -6844,24 +6881,37 @@ impl ::std::default::Default for SubpassDescription {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
+#[derive(Copy, Clone, Debug)]
 pub struct SubpassDependency {
     pub src_subpass: uint32_t,
     pub dst_subpass: uint32_t,
     pub src_stage_mask: PipelineStageFlags,
     pub dst_stage_mask: PipelineStageFlags,
     #[doc = "Memory accesses from the source of the dependency to synchronize"]
-    pub src_access_mask: AccessFlags,
+    pub src_access_mask: Option<AccessFlags>,
     #[doc = "Memory accesses from the destination of the dependency to synchronize"]
-    pub dst_access_mask: AccessFlags,
-    pub dependency_flags: DependencyFlags,
+    pub dst_access_mask: Option<AccessFlags>,
+    pub dependency_flags: Option<DependencyFlags>,
+}
+impl ::std::default::Default for SubpassDependency {
+    fn default() -> SubpassDependency {
+        SubpassDependency {
+            src_subpass: Default::default(),
+            dst_subpass: Default::default(),
+            src_stage_mask: Invalid::invalid(),
+            dst_stage_mask: Invalid::invalid(),
+            src_access_mask: Default::default(),
+            dst_access_mask: Default::default(),
+            dependency_flags: Default::default(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct RenderPassCreateInfo {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub flags: RenderPassCreateFlags,
+    pub flags: Option<RenderPassCreateFlags>,
     pub attachment_count: uint32_t,
     pub p_attachments: *const AttachmentDescription,
     pub subpass_count: uint32_t,
@@ -6890,7 +6940,7 @@ pub struct EventCreateInfo {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     #[doc = "Event creation flags"]
-    pub flags: EventCreateFlags,
+    pub flags: Option<EventCreateFlags>,
 }
 impl ::std::default::Default for EventCreateInfo {
     fn default() -> EventCreateInfo {
@@ -6907,7 +6957,7 @@ pub struct FenceCreateInfo {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     #[doc = "Fence creation flags"]
-    pub flags: FenceCreateFlags,
+    pub flags: Option<FenceCreateFlags>,
 }
 impl ::std::default::Default for FenceCreateInfo {
     fn default() -> FenceCreateInfo {
@@ -7210,25 +7260,25 @@ pub struct PhysicalDeviceLimits {
     #[doc = "max layer count for a layered framebuffer"]
     pub max_framebuffer_layers: uint32_t,
     #[doc = "supported color sample counts for a framebuffer"]
-    pub framebuffer_color_sample_counts: SampleCountFlags,
+    pub framebuffer_color_sample_counts: Option<SampleCountFlags>,
     #[doc = "supported depth sample counts for a framebuffer"]
-    pub framebuffer_depth_sample_counts: SampleCountFlags,
+    pub framebuffer_depth_sample_counts: Option<SampleCountFlags>,
     #[doc = "supported stencil sample counts for a framebuffer"]
-    pub framebuffer_stencil_sample_counts: SampleCountFlags,
+    pub framebuffer_stencil_sample_counts: Option<SampleCountFlags>,
     #[doc = "supported sample counts for a framebuffer with no attachments"]
-    pub framebuffer_no_attachments_sample_counts: SampleCountFlags,
+    pub framebuffer_no_attachments_sample_counts: Option<SampleCountFlags>,
     #[doc = "max number of color attachments per subpass"]
     pub max_color_attachments: uint32_t,
     #[doc = "supported color sample counts for a non-integer sampled image"]
-    pub sampled_image_color_sample_counts: SampleCountFlags,
+    pub sampled_image_color_sample_counts: Option<SampleCountFlags>,
     #[doc = "supported sample counts for an integer image"]
-    pub sampled_image_integer_sample_counts: SampleCountFlags,
+    pub sampled_image_integer_sample_counts: Option<SampleCountFlags>,
     #[doc = "supported depth sample counts for a sampled image"]
-    pub sampled_image_depth_sample_counts: SampleCountFlags,
+    pub sampled_image_depth_sample_counts: Option<SampleCountFlags>,
     #[doc = "supported stencil sample counts for a sampled image"]
-    pub sampled_image_stencil_sample_counts: SampleCountFlags,
+    pub sampled_image_stencil_sample_counts: Option<SampleCountFlags>,
     #[doc = "supported sample counts for a storage image"]
-    pub storage_image_sample_counts: SampleCountFlags,
+    pub storage_image_sample_counts: Option<SampleCountFlags>,
     #[doc = "max number of sample mask words"]
     pub max_sample_mask_words: uint32_t,
     #[doc = "timestamps on graphics and compute queues"]
@@ -7563,7 +7613,7 @@ pub struct SemaphoreCreateInfo {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     #[doc = "Semaphore creation flags"]
-    pub flags: SemaphoreCreateFlags,
+    pub flags: Option<SemaphoreCreateFlags>,
 }
 impl ::std::default::Default for SemaphoreCreateInfo {
     fn default() -> SemaphoreCreateInfo {
@@ -7579,11 +7629,11 @@ impl ::std::default::Default for SemaphoreCreateInfo {
 pub struct QueryPoolCreateInfo {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub flags: QueryPoolCreateFlags,
+    pub flags: Option<QueryPoolCreateFlags>,
     pub query_type: QueryType,
     pub query_count: uint32_t,
     #[doc = "Optional"]
-    pub pipeline_statistics: QueryPipelineStatisticFlags,
+    pub pipeline_statistics: Option<QueryPipelineStatisticFlags>,
 }
 impl ::std::default::Default for QueryPoolCreateInfo {
     fn default() -> QueryPoolCreateInfo {
@@ -7602,7 +7652,7 @@ impl ::std::default::Default for QueryPoolCreateInfo {
 pub struct FramebufferCreateInfo {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub flags: FramebufferCreateFlags,
+    pub flags: Option<FramebufferCreateFlags>,
     pub render_pass: RenderPass,
     pub attachment_count: uint32_t,
     pub p_attachments: *const ImageView,
@@ -7689,7 +7739,7 @@ pub struct DisplayPropertiesKHR {
     #[doc = "Max resolution for CRT?"]
     pub physical_resolution: Extent2D,
     #[doc = "one or more bits from VkSurfaceTransformFlagsKHR"]
-    pub supported_transforms: SurfaceTransformFlagsKHR,
+    pub supported_transforms: Option<SurfaceTransformFlagsKHR>,
     #[doc = "VK_TRUE if the overlay plane\'s z-order can be changed on this display."]
     pub plane_reorder_possible: Bool32,
     #[doc = "VK_TRUE if this is a \"smart\" display that supports self-refresh/internal buffering."]
@@ -7724,7 +7774,7 @@ pub struct DisplayModePropertiesKHR {
 pub struct DisplayModeCreateInfoKHR {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub flags: DisplayModeCreateFlagsKHR,
+    pub flags: Option<DisplayModeCreateFlagsKHR>,
     #[doc = "The parameters this mode uses."]
     pub parameters: DisplayModeParametersKHR,
 }
@@ -7742,7 +7792,7 @@ impl ::std::default::Default for DisplayModeCreateInfoKHR {
 #[derive(Copy, Clone, Debug)]
 pub struct DisplayPlaneCapabilitiesKHR {
     #[doc = "Types of alpha blending supported, if any."]
-    pub supported_alpha: DisplayPlaneAlphaFlagsKHR,
+    pub supported_alpha: Option<DisplayPlaneAlphaFlagsKHR>,
     #[doc = "Does the plane have any position and extent restrictions?"]
     pub min_src_position: Offset2D,
     pub max_src_position: Offset2D,
@@ -7758,7 +7808,7 @@ pub struct DisplayPlaneCapabilitiesKHR {
 pub struct DisplaySurfaceCreateInfoKHR {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub flags: DisplaySurfaceCreateFlagsKHR,
+    pub flags: Option<DisplaySurfaceCreateFlagsKHR>,
     #[doc = "The mode to use when displaying this surface"]
     pub display_mode: DisplayModeKHR,
     #[doc = "The plane on which this surface appears.  Must be between 0 and the value returned by vkGetPhysicalDeviceDisplayPlanePropertiesKHR() in pPropertyCount."]
@@ -7783,9 +7833,9 @@ impl ::std::default::Default for DisplaySurfaceCreateInfoKHR {
             display_mode: Invalid::invalid(),
             plane_index: Default::default(),
             plane_stack_index: Default::default(),
-            transform: Default::default(),
+            transform: Invalid::invalid(),
             global_alpha: Default::default(),
-            alpha_mode: Default::default(),
+            alpha_mode: Invalid::invalid(),
             image_extent: Default::default(),
         }
     }
@@ -7829,20 +7879,20 @@ pub struct SurfaceCapabilitiesKHR {
     #[doc = "Supported maximum number of image layers for the surface"]
     pub max_image_array_layers: uint32_t,
     #[doc = "1 or more bits representing the transforms supported"]
-    pub supported_transforms: SurfaceTransformFlagsKHR,
+    pub supported_transforms: Option<SurfaceTransformFlagsKHR>,
     #[doc = "The surface\'s current transform relative to the device\'s natural orientation"]
     pub current_transform: SurfaceTransformFlagsKHR,
     #[doc = "1 or more bits representing the alpha compositing modes supported"]
-    pub supported_composite_alpha: CompositeAlphaFlagsKHR,
+    pub supported_composite_alpha: Option<CompositeAlphaFlagsKHR>,
     #[doc = "Supported image usage flags for the surface"]
-    pub supported_usage_flags: ImageUsageFlags,
+    pub supported_usage_flags: Option<ImageUsageFlags>,
 }
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct AndroidSurfaceCreateInfoKHR {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub flags: AndroidSurfaceCreateFlagsKHR,
+    pub flags: Option<AndroidSurfaceCreateFlagsKHR>,
     pub window: *mut ANativeWindow,
 }
 impl ::std::default::Default for AndroidSurfaceCreateInfoKHR {
@@ -7860,7 +7910,7 @@ impl ::std::default::Default for AndroidSurfaceCreateInfoKHR {
 pub struct MirSurfaceCreateInfoKHR {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub flags: MirSurfaceCreateFlagsKHR,
+    pub flags: Option<MirSurfaceCreateFlagsKHR>,
     pub connection: *mut MirConnection,
     pub mir_surface: *mut MirSurface,
 }
@@ -7880,7 +7930,7 @@ impl ::std::default::Default for MirSurfaceCreateInfoKHR {
 pub struct ViSurfaceCreateInfoNN {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub flags: ViSurfaceCreateFlagsNN,
+    pub flags: Option<ViSurfaceCreateFlagsNN>,
     pub window: *mut c_void,
 }
 impl ::std::default::Default for ViSurfaceCreateInfoNN {
@@ -7898,7 +7948,7 @@ impl ::std::default::Default for ViSurfaceCreateInfoNN {
 pub struct WaylandSurfaceCreateInfoKHR {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub flags: WaylandSurfaceCreateFlagsKHR,
+    pub flags: Option<WaylandSurfaceCreateFlagsKHR>,
     pub display: *mut wl_display,
     pub surface: *mut wl_surface,
 }
@@ -7918,7 +7968,7 @@ impl ::std::default::Default for WaylandSurfaceCreateInfoKHR {
 pub struct Win32SurfaceCreateInfoKHR {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub flags: Win32SurfaceCreateFlagsKHR,
+    pub flags: Option<Win32SurfaceCreateFlagsKHR>,
     pub hinstance: HINSTANCE,
     pub hwnd: HWND,
 }
@@ -7938,7 +7988,7 @@ impl ::std::default::Default for Win32SurfaceCreateInfoKHR {
 pub struct XlibSurfaceCreateInfoKHR {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub flags: XlibSurfaceCreateFlagsKHR,
+    pub flags: Option<XlibSurfaceCreateFlagsKHR>,
     pub dpy: *mut Display,
     pub window: Window,
 }
@@ -7958,7 +8008,7 @@ impl ::std::default::Default for XlibSurfaceCreateInfoKHR {
 pub struct XcbSurfaceCreateInfoKHR {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub flags: XcbSurfaceCreateFlagsKHR,
+    pub flags: Option<XcbSurfaceCreateFlagsKHR>,
     pub connection: *mut xcb_connection_t,
     pub window: xcb_window_t,
 }
@@ -7986,7 +8036,7 @@ pub struct SurfaceFormatKHR {
 pub struct SwapchainCreateInfoKHR {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub flags: SwapchainCreateFlagsKHR,
+    pub flags: Option<SwapchainCreateFlagsKHR>,
     #[doc = "The swapchain\'s target surface"]
     pub surface: SurfaceKHR,
     #[doc = "Minimum number of presentation images the application needs"]
@@ -8030,12 +8080,12 @@ impl ::std::default::Default for SwapchainCreateInfoKHR {
             image_color_space: Default::default(),
             image_extent: Default::default(),
             image_array_layers: Default::default(),
-            image_usage: Default::default(),
+            image_usage: Invalid::invalid(),
             image_sharing_mode: Default::default(),
             queue_family_index_count: Default::default(),
             p_queue_family_indices: unsafe { ::std::mem::zeroed() },
-            pre_transform: Default::default(),
-            composite_alpha: Default::default(),
+            pre_transform: Invalid::invalid(),
+            composite_alpha: Invalid::invalid(),
             present_mode: Default::default(),
             clipped: Default::default(),
             old_swapchain: Default::default(),
@@ -8080,7 +8130,7 @@ pub struct DebugReportCallbackCreateInfoEXT {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     #[doc = "Indicates which events call this callback"]
-    pub flags: DebugReportFlagsEXT,
+    pub flags: Option<DebugReportFlagsEXT>,
     #[doc = "Function pointer of a callback function"]
     pub pfn_callback: PFN_vkDebugReportCallbackEXT,
     #[doc = "User data provided to callback function"]
@@ -8288,16 +8338,16 @@ impl ::std::default::Default for DedicatedAllocationMemoryAllocateInfoNV {
 #[derive(Copy, Clone, Debug)]
 pub struct ExternalImageFormatPropertiesNV {
     pub image_format_properties: ImageFormatProperties,
-    pub external_memory_features: ExternalMemoryFeatureFlagsNV,
-    pub export_from_imported_handle_types: ExternalMemoryHandleTypeFlagsNV,
-    pub compatible_handle_types: ExternalMemoryHandleTypeFlagsNV,
+    pub external_memory_features: Option<ExternalMemoryFeatureFlagsNV>,
+    pub export_from_imported_handle_types: Option<ExternalMemoryHandleTypeFlagsNV>,
+    pub compatible_handle_types: Option<ExternalMemoryHandleTypeFlagsNV>,
 }
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct ExternalMemoryImageCreateInfoNV {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub handle_types: ExternalMemoryHandleTypeFlagsNV,
+    pub handle_types: Option<ExternalMemoryHandleTypeFlagsNV>,
 }
 impl ::std::default::Default for ExternalMemoryImageCreateInfoNV {
     fn default() -> ExternalMemoryImageCreateInfoNV {
@@ -8313,7 +8363,7 @@ impl ::std::default::Default for ExternalMemoryImageCreateInfoNV {
 pub struct ExportMemoryAllocateInfoNV {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub handle_types: ExternalMemoryHandleTypeFlagsNV,
+    pub handle_types: Option<ExternalMemoryHandleTypeFlagsNV>,
 }
 impl ::std::default::Default for ExportMemoryAllocateInfoNV {
     fn default() -> ExportMemoryAllocateInfoNV {
@@ -8329,7 +8379,7 @@ impl ::std::default::Default for ExportMemoryAllocateInfoNV {
 pub struct ImportMemoryWin32HandleInfoNV {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub handle_type: ExternalMemoryHandleTypeFlagsNV,
+    pub handle_type: Option<ExternalMemoryHandleTypeFlagsNV>,
     pub handle: HANDLE,
 }
 impl ::std::default::Default for ImportMemoryWin32HandleInfoNV {
@@ -8473,7 +8523,7 @@ impl ::std::default::Default for IndirectCommandsLayoutCreateInfoNVX {
             s_type: StructureType::INDIRECT_COMMANDS_LAYOUT_CREATE_INFO_NVX,
             p_next: unsafe { ::std::mem::zeroed() },
             pipeline_bind_point: Default::default(),
-            flags: Default::default(),
+            flags: Invalid::invalid(),
             token_count: Default::default(),
             p_tokens: unsafe { ::std::mem::zeroed() },
         }
@@ -8566,10 +8616,18 @@ impl ::std::default::Default for ObjectTableCreateInfoNVX {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
+#[derive(Copy, Clone, Debug)]
 pub struct ObjectTableEntryNVX {
     pub ty: ObjectEntryTypeNVX,
     pub flags: ObjectEntryUsageFlagsNVX,
+}
+impl ::std::default::Default for ObjectTableEntryNVX {
+    fn default() -> ObjectTableEntryNVX {
+        ObjectTableEntryNVX {
+            ty: Default::default(),
+            flags: Invalid::invalid(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -8582,7 +8640,7 @@ impl ::std::default::Default for ObjectTablePipelineEntryNVX {
     fn default() -> ObjectTablePipelineEntryNVX {
         ObjectTablePipelineEntryNVX {
             ty: Default::default(),
-            flags: Default::default(),
+            flags: Invalid::invalid(),
             pipeline: Invalid::invalid(),
         }
     }
@@ -8599,7 +8657,7 @@ impl ::std::default::Default for ObjectTableDescriptorSetEntryNVX {
     fn default() -> ObjectTableDescriptorSetEntryNVX {
         ObjectTableDescriptorSetEntryNVX {
             ty: Default::default(),
-            flags: Default::default(),
+            flags: Invalid::invalid(),
             pipeline_layout: Invalid::invalid(),
             descriptor_set: Invalid::invalid(),
         }
@@ -8616,7 +8674,7 @@ impl ::std::default::Default for ObjectTableVertexBufferEntryNVX {
     fn default() -> ObjectTableVertexBufferEntryNVX {
         ObjectTableVertexBufferEntryNVX {
             ty: Default::default(),
-            flags: Default::default(),
+            flags: Invalid::invalid(),
             buffer: Invalid::invalid(),
         }
     }
@@ -8633,7 +8691,7 @@ impl ::std::default::Default for ObjectTableIndexBufferEntryNVX {
     fn default() -> ObjectTableIndexBufferEntryNVX {
         ObjectTableIndexBufferEntryNVX {
             ty: Default::default(),
-            flags: Default::default(),
+            flags: Invalid::invalid(),
             buffer: Invalid::invalid(),
             index_type: Default::default(),
         }
@@ -8651,9 +8709,9 @@ impl ::std::default::Default for ObjectTablePushConstantEntryNVX {
     fn default() -> ObjectTablePushConstantEntryNVX {
         ObjectTablePushConstantEntryNVX {
             ty: Default::default(),
-            flags: Default::default(),
+            flags: Invalid::invalid(),
             pipeline_layout: Invalid::invalid(),
-            stage_flags: Default::default(),
+            stage_flags: Invalid::invalid(),
         }
     }
 }
@@ -8715,7 +8773,7 @@ pub struct PhysicalDeviceImageFormatInfo2 {
     pub ty: ImageType,
     pub tiling: ImageTiling,
     pub usage: ImageUsageFlags,
-    pub flags: ImageCreateFlags,
+    pub flags: Option<ImageCreateFlags>,
 }
 impl ::std::default::Default for PhysicalDeviceImageFormatInfo2 {
     fn default() -> PhysicalDeviceImageFormatInfo2 {
@@ -8725,7 +8783,7 @@ impl ::std::default::Default for PhysicalDeviceImageFormatInfo2 {
             format: Default::default(),
             ty: Default::default(),
             tiling: Default::default(),
-            usage: Default::default(),
+            usage: Invalid::invalid(),
             flags: Default::default(),
         }
     }
@@ -8781,8 +8839,8 @@ impl ::std::default::Default for PhysicalDeviceSparseImageFormatInfo2 {
             p_next: unsafe { ::std::mem::zeroed() },
             format: Default::default(),
             ty: Default::default(),
-            samples: Default::default(),
-            usage: Default::default(),
+            samples: Invalid::invalid(),
+            usage: Invalid::invalid(),
             tiling: Default::default(),
         }
     }
@@ -8877,7 +8935,7 @@ pub struct PhysicalDeviceVariablePointerFeaturesKHR {}
 #[derive(Copy, Clone, Debug)]
 pub struct ExternalMemoryProperties {
     pub external_memory_features: ExternalMemoryFeatureFlags,
-    pub export_from_imported_handle_types: ExternalMemoryHandleTypeFlags,
+    pub export_from_imported_handle_types: Option<ExternalMemoryHandleTypeFlags>,
     pub compatible_handle_types: ExternalMemoryHandleTypeFlags,
 }
 #[repr(C)]
@@ -8888,7 +8946,7 @@ pub struct ExternalMemoryPropertiesKHR {}
 pub struct PhysicalDeviceExternalImageFormatInfo {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub handle_type: ExternalMemoryHandleTypeFlags,
+    pub handle_type: Option<ExternalMemoryHandleTypeFlags>,
 }
 impl ::std::default::Default for PhysicalDeviceExternalImageFormatInfo {
     fn default() -> PhysicalDeviceExternalImageFormatInfo {
@@ -8917,7 +8975,7 @@ pub struct ExternalImageFormatPropertiesKHR {}
 pub struct PhysicalDeviceExternalBufferInfo {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub flags: BufferCreateFlags,
+    pub flags: Option<BufferCreateFlags>,
     pub usage: BufferUsageFlags,
     pub handle_type: ExternalMemoryHandleTypeFlags,
 }
@@ -8927,8 +8985,8 @@ impl ::std::default::Default for PhysicalDeviceExternalBufferInfo {
             s_type: StructureType::PHYSICAL_DEVICE_EXTERNAL_BUFFER_INFO,
             p_next: unsafe { ::std::mem::zeroed() },
             flags: Default::default(),
-            usage: Default::default(),
-            handle_type: Default::default(),
+            usage: Invalid::invalid(),
+            handle_type: Invalid::invalid(),
         }
     }
 }
@@ -8990,7 +9048,7 @@ impl ::std::default::Default for ExternalMemoryImageCreateInfo {
         ExternalMemoryImageCreateInfo {
             s_type: StructureType::EXTERNAL_MEMORY_IMAGE_CREATE_INFO,
             p_next: unsafe { ::std::mem::zeroed() },
-            handle_types: Default::default(),
+            handle_types: Invalid::invalid(),
         }
     }
 }
@@ -9002,7 +9060,7 @@ pub struct ExternalMemoryImageCreateInfoKHR {}
 pub struct ExternalMemoryBufferCreateInfo {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub handle_types: ExternalMemoryHandleTypeFlags,
+    pub handle_types: Option<ExternalMemoryHandleTypeFlags>,
 }
 impl ::std::default::Default for ExternalMemoryBufferCreateInfo {
     fn default() -> ExternalMemoryBufferCreateInfo {
@@ -9021,7 +9079,7 @@ pub struct ExternalMemoryBufferCreateInfoKHR {}
 pub struct ExportMemoryAllocateInfo {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub handle_types: ExternalMemoryHandleTypeFlags,
+    pub handle_types: Option<ExternalMemoryHandleTypeFlags>,
 }
 impl ::std::default::Default for ExportMemoryAllocateInfo {
     fn default() -> ExportMemoryAllocateInfo {
@@ -9040,7 +9098,7 @@ pub struct ExportMemoryAllocateInfoKHR {}
 pub struct ImportMemoryWin32HandleInfoKHR {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub handle_type: ExternalMemoryHandleTypeFlags,
+    pub handle_type: Option<ExternalMemoryHandleTypeFlags>,
     pub handle: HANDLE,
     pub name: LPCWSTR,
 }
@@ -9096,7 +9154,7 @@ impl ::std::default::Default for MemoryGetWin32HandleInfoKHR {
             s_type: StructureType::MEMORY_GET_WIN32_HANDLE_INFO_KHR,
             p_next: unsafe { ::std::mem::zeroed() },
             memory: Invalid::invalid(),
-            handle_type: Default::default(),
+            handle_type: Invalid::invalid(),
         }
     }
 }
@@ -9105,7 +9163,7 @@ impl ::std::default::Default for MemoryGetWin32HandleInfoKHR {
 pub struct ImportMemoryFdInfoKHR {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub handle_type: ExternalMemoryHandleTypeFlags,
+    pub handle_type: Option<ExternalMemoryHandleTypeFlags>,
     pub fd: c_int,
 }
 impl ::std::default::Default for ImportMemoryFdInfoKHR {
@@ -9139,7 +9197,7 @@ impl ::std::default::Default for MemoryGetFdInfoKHR {
             s_type: StructureType::MEMORY_GET_FD_INFO_KHR,
             p_next: unsafe { ::std::mem::zeroed() },
             memory: Invalid::invalid(),
-            handle_type: Default::default(),
+            handle_type: Invalid::invalid(),
         }
     }
 }
@@ -9183,7 +9241,7 @@ impl ::std::default::Default for PhysicalDeviceExternalSemaphoreInfo {
         PhysicalDeviceExternalSemaphoreInfo {
             s_type: StructureType::PHYSICAL_DEVICE_EXTERNAL_SEMAPHORE_INFO,
             p_next: unsafe { ::std::mem::zeroed() },
-            handle_type: Default::default(),
+            handle_type: Invalid::invalid(),
         }
     }
 }
@@ -9197,7 +9255,7 @@ pub struct ExternalSemaphoreProperties {
     pub p_next: *mut c_void,
     pub export_from_imported_handle_types: ExternalSemaphoreHandleTypeFlags,
     pub compatible_handle_types: ExternalSemaphoreHandleTypeFlags,
-    pub external_semaphore_features: ExternalSemaphoreFeatureFlags,
+    pub external_semaphore_features: Option<ExternalSemaphoreFeatureFlags>,
 }
 #[repr(C)]
 #[derive(Copy, Clone, Default, Debug)]
@@ -9207,7 +9265,7 @@ pub struct ExternalSemaphorePropertiesKHR {}
 pub struct ExportSemaphoreCreateInfo {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub handle_types: ExternalSemaphoreHandleTypeFlags,
+    pub handle_types: Option<ExternalSemaphoreHandleTypeFlags>,
 }
 impl ::std::default::Default for ExportSemaphoreCreateInfo {
     fn default() -> ExportSemaphoreCreateInfo {
@@ -9227,8 +9285,8 @@ pub struct ImportSemaphoreWin32HandleInfoKHR {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub semaphore: Semaphore,
-    pub flags: SemaphoreImportFlags,
-    pub handle_type: ExternalSemaphoreHandleTypeFlags,
+    pub flags: Option<SemaphoreImportFlags>,
+    pub handle_type: Option<ExternalSemaphoreHandleTypeFlags>,
     pub handle: HANDLE,
     pub name: LPCWSTR,
 }
@@ -9301,7 +9359,7 @@ impl ::std::default::Default for SemaphoreGetWin32HandleInfoKHR {
             s_type: StructureType::SEMAPHORE_GET_WIN32_HANDLE_INFO_KHR,
             p_next: unsafe { ::std::mem::zeroed() },
             semaphore: Invalid::invalid(),
-            handle_type: Default::default(),
+            handle_type: Invalid::invalid(),
         }
     }
 }
@@ -9311,7 +9369,7 @@ pub struct ImportSemaphoreFdInfoKHR {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub semaphore: Semaphore,
-    pub flags: SemaphoreImportFlags,
+    pub flags: Option<SemaphoreImportFlags>,
     pub handle_type: ExternalSemaphoreHandleTypeFlags,
     pub fd: c_int,
 }
@@ -9322,7 +9380,7 @@ impl ::std::default::Default for ImportSemaphoreFdInfoKHR {
             p_next: unsafe { ::std::mem::zeroed() },
             semaphore: Invalid::invalid(),
             flags: Default::default(),
-            handle_type: Default::default(),
+            handle_type: Invalid::invalid(),
             fd: Default::default(),
         }
     }
@@ -9341,7 +9399,7 @@ impl ::std::default::Default for SemaphoreGetFdInfoKHR {
             s_type: StructureType::SEMAPHORE_GET_FD_INFO_KHR,
             p_next: unsafe { ::std::mem::zeroed() },
             semaphore: Invalid::invalid(),
-            handle_type: Default::default(),
+            handle_type: Invalid::invalid(),
         }
     }
 }
@@ -9357,7 +9415,7 @@ impl ::std::default::Default for PhysicalDeviceExternalFenceInfo {
         PhysicalDeviceExternalFenceInfo {
             s_type: StructureType::PHYSICAL_DEVICE_EXTERNAL_FENCE_INFO,
             p_next: unsafe { ::std::mem::zeroed() },
-            handle_type: Default::default(),
+            handle_type: Invalid::invalid(),
         }
     }
 }
@@ -9371,7 +9429,7 @@ pub struct ExternalFenceProperties {
     pub p_next: *mut c_void,
     pub export_from_imported_handle_types: ExternalFenceHandleTypeFlags,
     pub compatible_handle_types: ExternalFenceHandleTypeFlags,
-    pub external_fence_features: ExternalFenceFeatureFlags,
+    pub external_fence_features: Option<ExternalFenceFeatureFlags>,
 }
 #[repr(C)]
 #[derive(Copy, Clone, Default, Debug)]
@@ -9381,7 +9439,7 @@ pub struct ExternalFencePropertiesKHR {}
 pub struct ExportFenceCreateInfo {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub handle_types: ExternalFenceHandleTypeFlags,
+    pub handle_types: Option<ExternalFenceHandleTypeFlags>,
 }
 impl ::std::default::Default for ExportFenceCreateInfo {
     fn default() -> ExportFenceCreateInfo {
@@ -9401,8 +9459,8 @@ pub struct ImportFenceWin32HandleInfoKHR {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub fence: Fence,
-    pub flags: FenceImportFlags,
-    pub handle_type: ExternalFenceHandleTypeFlags,
+    pub flags: Option<FenceImportFlags>,
+    pub handle_type: Option<ExternalFenceHandleTypeFlags>,
     pub handle: HANDLE,
     pub name: LPCWSTR,
 }
@@ -9453,7 +9511,7 @@ impl ::std::default::Default for FenceGetWin32HandleInfoKHR {
             s_type: StructureType::FENCE_GET_WIN32_HANDLE_INFO_KHR,
             p_next: unsafe { ::std::mem::zeroed() },
             fence: Invalid::invalid(),
-            handle_type: Default::default(),
+            handle_type: Invalid::invalid(),
         }
     }
 }
@@ -9463,7 +9521,7 @@ pub struct ImportFenceFdInfoKHR {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub fence: Fence,
-    pub flags: FenceImportFlags,
+    pub flags: Option<FenceImportFlags>,
     pub handle_type: ExternalFenceHandleTypeFlags,
     pub fd: c_int,
 }
@@ -9474,7 +9532,7 @@ impl ::std::default::Default for ImportFenceFdInfoKHR {
             p_next: unsafe { ::std::mem::zeroed() },
             fence: Invalid::invalid(),
             flags: Default::default(),
-            handle_type: Default::default(),
+            handle_type: Invalid::invalid(),
             fd: Default::default(),
         }
     }
@@ -9493,7 +9551,7 @@ impl ::std::default::Default for FenceGetFdInfoKHR {
             s_type: StructureType::FENCE_GET_FD_INFO_KHR,
             p_next: unsafe { ::std::mem::zeroed() },
             fence: Invalid::invalid(),
-            handle_type: Default::default(),
+            handle_type: Invalid::invalid(),
         }
     }
 }
@@ -9583,14 +9641,14 @@ pub struct SurfaceCapabilities2EXT {
     #[doc = "Supported maximum number of image layers for the surface"]
     pub max_image_array_layers: uint32_t,
     #[doc = "1 or more bits representing the transforms supported"]
-    pub supported_transforms: SurfaceTransformFlagsKHR,
+    pub supported_transforms: Option<SurfaceTransformFlagsKHR>,
     #[doc = "The surface\'s current transform relative to the device\'s natural orientation"]
     pub current_transform: SurfaceTransformFlagsKHR,
     #[doc = "1 or more bits representing the alpha compositing modes supported"]
-    pub supported_composite_alpha: CompositeAlphaFlagsKHR,
+    pub supported_composite_alpha: Option<CompositeAlphaFlagsKHR>,
     #[doc = "Supported image usage flags for the surface"]
-    pub supported_usage_flags: ImageUsageFlags,
-    pub supported_surface_counters: SurfaceCounterFlagsEXT,
+    pub supported_usage_flags: Option<ImageUsageFlags>,
+    pub supported_surface_counters: Option<SurfaceCounterFlagsEXT>,
 }
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -9645,7 +9703,7 @@ impl ::std::default::Default for DisplayEventInfoEXT {
 pub struct SwapchainCounterCreateInfoEXT {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub surface_counters: SurfaceCounterFlagsEXT,
+    pub surface_counters: Option<SurfaceCounterFlagsEXT>,
 }
 impl ::std::default::Default for SwapchainCounterCreateInfoEXT {
     fn default() -> SwapchainCounterCreateInfoEXT {
@@ -9686,7 +9744,7 @@ pub struct PhysicalDeviceGroupPropertiesKHR {}
 pub struct MemoryAllocateFlagsInfo {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub flags: MemoryAllocateFlags,
+    pub flags: Option<MemoryAllocateFlags>,
     pub device_mask: uint32_t,
 }
 impl ::std::default::Default for MemoryAllocateFlagsInfo {
@@ -9980,7 +10038,7 @@ impl ::std::default::Default for DeviceGroupPresentInfoKHR {
             p_next: unsafe { ::std::mem::zeroed() },
             swapchain_count: Default::default(),
             p_device_masks: unsafe { ::std::mem::zeroed() },
-            mode: Default::default(),
+            mode: Invalid::invalid(),
         }
     }
 }
@@ -10017,7 +10075,7 @@ impl ::std::default::Default for DeviceGroupSwapchainCreateInfoKHR {
         DeviceGroupSwapchainCreateInfoKHR {
             s_type: StructureType::DEVICE_GROUP_SWAPCHAIN_CREATE_INFO_KHR,
             p_next: unsafe { ::std::mem::zeroed() },
-            modes: Default::default(),
+            modes: Invalid::invalid(),
         }
     }
 }
@@ -10045,7 +10103,7 @@ pub struct DescriptorUpdateTemplateEntryKHR {}
 pub struct DescriptorUpdateTemplateCreateInfo {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
-    pub flags: DescriptorUpdateTemplateCreateFlags,
+    pub flags: Option<DescriptorUpdateTemplateCreateFlags>,
     #[doc = "Number of descriptor update entries to use for the update template"]
     pub descriptor_update_entry_count: uint32_t,
     #[doc = "Descriptor update entries for the template"]
@@ -10172,7 +10230,7 @@ pub struct PresentTimeGOOGLE {
 pub struct IOSSurfaceCreateInfoMVK {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub flags: IOSSurfaceCreateFlagsMVK,
+    pub flags: Option<IOSSurfaceCreateFlagsMVK>,
     pub p_view: *const c_void,
 }
 impl ::std::default::Default for IOSSurfaceCreateInfoMVK {
@@ -10190,7 +10248,7 @@ impl ::std::default::Default for IOSSurfaceCreateInfoMVK {
 pub struct MacOSSurfaceCreateInfoMVK {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub flags: MacOSSurfaceCreateFlagsMVK,
+    pub flags: Option<MacOSSurfaceCreateFlagsMVK>,
     pub p_view: *const c_void,
 }
 impl ::std::default::Default for MacOSSurfaceCreateInfoMVK {
@@ -10242,7 +10300,7 @@ pub struct ViewportSwizzleNV {
 pub struct PipelineViewportSwizzleStateCreateInfoNV {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub flags: PipelineViewportSwizzleStateCreateFlagsNV,
+    pub flags: Option<PipelineViewportSwizzleStateCreateFlagsNV>,
     pub viewport_count: uint32_t,
     pub p_viewport_swizzles: *const ViewportSwizzleNV,
 }
@@ -10279,7 +10337,7 @@ impl ::std::default::Default for PhysicalDeviceDiscardRectanglePropertiesEXT {
 pub struct PipelineDiscardRectangleStateCreateInfoEXT {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub flags: PipelineDiscardRectangleStateCreateFlagsEXT,
+    pub flags: Option<PipelineDiscardRectangleStateCreateFlagsEXT>,
     pub discard_rectangle_mode: DiscardRectangleModeEXT,
     pub discard_rectangle_count: uint32_t,
     pub p_discard_rectangles: *const Rect2D,
@@ -10304,11 +10362,20 @@ pub struct PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX {
     pub per_view_position_all_components: Bool32,
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
+#[derive(Copy, Clone, Debug)]
 pub struct InputAttachmentAspectReference {
     pub subpass: uint32_t,
     pub input_attachment_index: uint32_t,
     pub aspect_mask: ImageAspectFlags,
+}
+impl ::std::default::Default for InputAttachmentAspectReference {
+    fn default() -> InputAttachmentAspectReference {
+        InputAttachmentAspectReference {
+            subpass: Default::default(),
+            input_attachment_index: Default::default(),
+            aspect_mask: Invalid::invalid(),
+        }
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone, Default, Debug)]
@@ -10416,7 +10483,7 @@ pub struct SharedPresentSurfaceCapabilitiesKHR {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     #[doc = "Supported image usage flags if swapchain created using a shared present mode"]
-    pub shared_present_supported_usage_flags: ImageUsageFlags,
+    pub shared_present_supported_usage_flags: Option<ImageUsageFlags>,
 }
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -10594,7 +10661,7 @@ impl ::std::default::Default for ImageViewUsageCreateInfo {
         ImageViewUsageCreateInfo {
             s_type: StructureType::IMAGE_VIEW_USAGE_CREATE_INFO,
             p_next: unsafe { ::std::mem::zeroed() },
-            usage: Default::default(),
+            usage: Invalid::invalid(),
         }
     }
 }
@@ -10684,7 +10751,7 @@ impl ::std::default::Default for BindImagePlaneMemoryInfo {
         BindImagePlaneMemoryInfo {
             s_type: StructureType::BIND_IMAGE_PLANE_MEMORY_INFO,
             p_next: unsafe { ::std::mem::zeroed() },
-            plane_aspect: Default::default(),
+            plane_aspect: Invalid::invalid(),
         }
     }
 }
@@ -10703,7 +10770,7 @@ impl ::std::default::Default for ImagePlaneMemoryRequirementsInfo {
         ImagePlaneMemoryRequirementsInfo {
             s_type: StructureType::IMAGE_PLANE_MEMORY_REQUIREMENTS_INFO,
             p_next: unsafe { ::std::mem::zeroed() },
-            plane_aspect: Default::default(),
+            plane_aspect: Invalid::invalid(),
         }
     }
 }
@@ -10810,7 +10877,7 @@ impl ::std::default::Default for DeviceQueueInfo2 {
         DeviceQueueInfo2 {
             s_type: StructureType::DEVICE_QUEUE_INFO_2,
             p_next: unsafe { ::std::mem::zeroed() },
-            flags: Default::default(),
+            flags: Invalid::invalid(),
             queue_family_index: Default::default(),
             queue_index: Default::default(),
         }
@@ -10821,7 +10888,7 @@ impl ::std::default::Default for DeviceQueueInfo2 {
 pub struct PipelineCoverageToColorStateCreateInfoNV {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub flags: PipelineCoverageToColorStateCreateFlagsNV,
+    pub flags: Option<PipelineCoverageToColorStateCreateFlagsNV>,
     pub coverage_to_color_enable: Bool32,
     pub coverage_to_color_location: uint32_t,
 }
@@ -10865,7 +10932,7 @@ impl ::std::default::Default for SampleLocationsInfoEXT {
         SampleLocationsInfoEXT {
             s_type: StructureType::SAMPLE_LOCATIONS_INFO_EXT,
             p_next: unsafe { ::std::mem::zeroed() },
-            sample_locations_per_pixel: Default::default(),
+            sample_locations_per_pixel: Invalid::invalid(),
             sample_location_grid_size: Default::default(),
             sample_locations_count: Default::default(),
             p_sample_locations: unsafe { ::std::mem::zeroed() },
@@ -11037,7 +11104,7 @@ impl ::std::default::Default for PipelineColorBlendAdvancedStateCreateInfoEXT {
 pub struct PipelineCoverageModulationStateCreateInfoNV {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub flags: PipelineCoverageModulationStateCreateFlagsNV,
+    pub flags: Option<PipelineCoverageModulationStateCreateFlagsNV>,
     pub coverage_modulation_mode: CoverageModulationModeNV,
     pub coverage_modulation_table_enable: Bool32,
     pub coverage_modulation_table_count: uint32_t,
@@ -11079,7 +11146,7 @@ impl ::std::default::Default for ImageFormatListCreateInfoKHR {
 pub struct ValidationCacheCreateInfoEXT {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub flags: ValidationCacheCreateFlagsEXT,
+    pub flags: Option<ValidationCacheCreateFlagsEXT>,
     pub initial_data_size: size_t,
     pub p_initial_data: *const c_void,
 }
@@ -11299,7 +11366,7 @@ impl ::std::default::Default for DebugUtilsLabelEXT {
 pub struct DebugUtilsMessengerCreateInfoEXT {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub flags: DebugUtilsMessengerCreateFlagsEXT,
+    pub flags: Option<DebugUtilsMessengerCreateFlagsEXT>,
     pub message_severity: DebugUtilsMessageSeverityFlagsEXT,
     pub message_type: DebugUtilsMessageTypeFlagsEXT,
     pub pfn_user_callback: PFN_vkDebugUtilsMessengerCallbackEXT,
@@ -11324,8 +11391,8 @@ impl ::std::default::Default for DebugUtilsMessengerCreateInfoEXT {
             s_type: StructureType::DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT,
             p_next: unsafe { ::std::mem::zeroed() },
             flags: Default::default(),
-            message_severity: Default::default(),
-            message_type: Default::default(),
+            message_severity: Invalid::invalid(),
+            message_type: Invalid::invalid(),
             pfn_user_callback: unsafe { ::std::mem::zeroed() },
             p_user_data: unsafe { ::std::mem::zeroed() },
         }
@@ -11336,7 +11403,7 @@ impl ::std::default::Default for DebugUtilsMessengerCreateInfoEXT {
 pub struct DebugUtilsMessengerCallbackDataEXT {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub flags: DebugUtilsMessengerCallbackDataFlagsEXT,
+    pub flags: Option<DebugUtilsMessengerCallbackDataFlagsEXT>,
     pub p_message_id_name: *const c_char,
     pub message_id_number: int32_t,
     pub p_message: *const c_char,
@@ -11378,7 +11445,7 @@ impl ::std::default::Default for ImportMemoryHostPointerInfoEXT {
         ImportMemoryHostPointerInfoEXT {
             s_type: StructureType::IMPORT_MEMORY_HOST_POINTER_INFO_EXT,
             p_next: unsafe { ::std::mem::zeroed() },
-            handle_type: Default::default(),
+            handle_type: Invalid::invalid(),
             p_host_pointer: unsafe { ::std::mem::zeroed() },
         }
     }
@@ -11497,7 +11564,7 @@ pub struct PhysicalDeviceShaderCorePropertiesAMD {
 pub struct PipelineRasterizationConservativeStateCreateInfoEXT {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub flags: PipelineRasterizationConservativeStateCreateFlagsEXT,
+    pub flags: Option<PipelineRasterizationConservativeStateCreateFlagsEXT>,
     pub conservative_rasterization_mode: ConservativeRasterizationModeEXT,
     pub extra_primitive_overestimation_size: c_float,
 }
@@ -12743,739 +12810,896 @@ pub mod bitflags {
     use super::*;
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct CullModeFlags(pub(crate) Flags);
-    vk_bitflags_wrapped!(CullModeFlags, 0b11, Flags);
+    pub struct CullModeFlags(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(CullModeFlags, 0b11);
     impl CullModeFlags {
-        pub const NONE: Self = CullModeFlags(0);
-        pub const FRONT: Self = CullModeFlags(0b1);
-        pub const BACK: Self = CullModeFlags(0b10);
-        pub const FRONT_AND_BACK: Self = CullModeFlags(0x00000003);
+        pub const FRONT: Self = CullModeFlags(unsafe { NonZeroU32::new_unchecked(0b1) });
+        pub const BACK: Self = CullModeFlags(unsafe { NonZeroU32::new_unchecked(0b10) });
+        pub const FRONT_AND_BACK: Self =
+            CullModeFlags(unsafe { NonZeroU32::new_unchecked(0x00000003) });
     }
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct QueueFlags(pub(crate) Flags);
-    vk_bitflags_wrapped!(QueueFlags, 0b1111, Flags);
+    pub struct QueueFlags(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(QueueFlags, 0b1111);
     impl QueueFlags {
         #[doc = "Queue supports graphics operations"]
-        pub const GRAPHICS: Self = QueueFlags(0b1);
+        pub const GRAPHICS: Self = QueueFlags(unsafe { NonZeroU32::new_unchecked(0b1) });
         #[doc = "Queue supports compute operations"]
-        pub const COMPUTE: Self = QueueFlags(0b10);
+        pub const COMPUTE: Self = QueueFlags(unsafe { NonZeroU32::new_unchecked(0b10) });
         #[doc = "Queue supports transfer operations"]
-        pub const TRANSFER: Self = QueueFlags(0b100);
+        pub const TRANSFER: Self = QueueFlags(unsafe { NonZeroU32::new_unchecked(0b100) });
         #[doc = "Queue supports sparse resource memory management operations"]
-        pub const SPARSE_BINDING: Self = QueueFlags(0b1000);
+        pub const SPARSE_BINDING: Self = QueueFlags(unsafe { NonZeroU32::new_unchecked(0b1000) });
     }
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct DeviceQueueCreateFlags(pub(crate) Flags);
-    vk_bitflags_wrapped!(DeviceQueueCreateFlags, 0b0, Flags);
+    pub struct DeviceQueueCreateFlags(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(DeviceQueueCreateFlags, 0b0);
     impl DeviceQueueCreateFlags {}
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct MemoryPropertyFlags(pub(crate) Flags);
-    vk_bitflags_wrapped!(MemoryPropertyFlags, 0b11111, Flags);
+    pub struct MemoryPropertyFlags(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(MemoryPropertyFlags, 0b11111);
     impl MemoryPropertyFlags {
         #[doc = "If otherwise stated, then allocate memory on device"]
-        pub const DEVICE_LOCAL: Self = MemoryPropertyFlags(0b1);
+        pub const DEVICE_LOCAL: Self =
+            MemoryPropertyFlags(unsafe { NonZeroU32::new_unchecked(0b1) });
         #[doc = "Memory is mappable by host"]
-        pub const HOST_VISIBLE: Self = MemoryPropertyFlags(0b10);
+        pub const HOST_VISIBLE: Self =
+            MemoryPropertyFlags(unsafe { NonZeroU32::new_unchecked(0b10) });
         #[doc = "Memory will have i/o coherency. If not set, application may need to use vkFlushMappedMemoryRanges and vkInvalidateMappedMemoryRanges to flush/invalidate host cache"]
-        pub const HOST_COHERENT: Self = MemoryPropertyFlags(0b100);
+        pub const HOST_COHERENT: Self =
+            MemoryPropertyFlags(unsafe { NonZeroU32::new_unchecked(0b100) });
         #[doc = "Memory will be cached by the host"]
-        pub const HOST_CACHED: Self = MemoryPropertyFlags(0b1000);
+        pub const HOST_CACHED: Self =
+            MemoryPropertyFlags(unsafe { NonZeroU32::new_unchecked(0b1000) });
         #[doc = "Memory may be allocated by the driver when it is required"]
-        pub const LAZILY_ALLOCATED: Self = MemoryPropertyFlags(0b10000);
+        pub const LAZILY_ALLOCATED: Self =
+            MemoryPropertyFlags(unsafe { NonZeroU32::new_unchecked(0b10000) });
     }
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct MemoryHeapFlags(pub(crate) Flags);
-    vk_bitflags_wrapped!(MemoryHeapFlags, 0b1, Flags);
+    pub struct MemoryHeapFlags(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(MemoryHeapFlags, 0b1);
     impl MemoryHeapFlags {
         #[doc = "If set, heap represents device memory"]
-        pub const DEVICE_LOCAL: Self = MemoryHeapFlags(0b1);
+        pub const DEVICE_LOCAL: Self = MemoryHeapFlags(unsafe { NonZeroU32::new_unchecked(0b1) });
     }
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct AccessFlags(pub(crate) Flags);
-    vk_bitflags_wrapped!(AccessFlags, 0b11111111111111111, Flags);
+    pub struct AccessFlags(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(AccessFlags, 0b11111111111111111);
     impl AccessFlags {
         #[doc = "Controls coherency of indirect command reads"]
-        pub const INDIRECT_COMMAND_READ: Self = AccessFlags(0b1);
+        pub const INDIRECT_COMMAND_READ: Self =
+            AccessFlags(unsafe { NonZeroU32::new_unchecked(0b1) });
         #[doc = "Controls coherency of index reads"]
-        pub const INDEX_READ: Self = AccessFlags(0b10);
+        pub const INDEX_READ: Self = AccessFlags(unsafe { NonZeroU32::new_unchecked(0b10) });
         #[doc = "Controls coherency of vertex attribute reads"]
-        pub const VERTEX_ATTRIBUTE_READ: Self = AccessFlags(0b100);
+        pub const VERTEX_ATTRIBUTE_READ: Self =
+            AccessFlags(unsafe { NonZeroU32::new_unchecked(0b100) });
         #[doc = "Controls coherency of uniform buffer reads"]
-        pub const UNIFORM_READ: Self = AccessFlags(0b1000);
+        pub const UNIFORM_READ: Self = AccessFlags(unsafe { NonZeroU32::new_unchecked(0b1000) });
         #[doc = "Controls coherency of input attachment reads"]
-        pub const INPUT_ATTACHMENT_READ: Self = AccessFlags(0b10000);
+        pub const INPUT_ATTACHMENT_READ: Self =
+            AccessFlags(unsafe { NonZeroU32::new_unchecked(0b10000) });
         #[doc = "Controls coherency of shader reads"]
-        pub const SHADER_READ: Self = AccessFlags(0b100000);
+        pub const SHADER_READ: Self = AccessFlags(unsafe { NonZeroU32::new_unchecked(0b100000) });
         #[doc = "Controls coherency of shader writes"]
-        pub const SHADER_WRITE: Self = AccessFlags(0b1000000);
+        pub const SHADER_WRITE: Self = AccessFlags(unsafe { NonZeroU32::new_unchecked(0b1000000) });
         #[doc = "Controls coherency of color attachment reads"]
-        pub const COLOR_ATTACHMENT_READ: Self = AccessFlags(0b10000000);
+        pub const COLOR_ATTACHMENT_READ: Self =
+            AccessFlags(unsafe { NonZeroU32::new_unchecked(0b10000000) });
         #[doc = "Controls coherency of color attachment writes"]
-        pub const COLOR_ATTACHMENT_WRITE: Self = AccessFlags(0b100000000);
+        pub const COLOR_ATTACHMENT_WRITE: Self =
+            AccessFlags(unsafe { NonZeroU32::new_unchecked(0b100000000) });
         #[doc = "Controls coherency of depth/stencil attachment reads"]
-        pub const DEPTH_STENCIL_ATTACHMENT_READ: Self = AccessFlags(0b1000000000);
+        pub const DEPTH_STENCIL_ATTACHMENT_READ: Self =
+            AccessFlags(unsafe { NonZeroU32::new_unchecked(0b1000000000) });
         #[doc = "Controls coherency of depth/stencil attachment writes"]
-        pub const DEPTH_STENCIL_ATTACHMENT_WRITE: Self = AccessFlags(0b10000000000);
+        pub const DEPTH_STENCIL_ATTACHMENT_WRITE: Self =
+            AccessFlags(unsafe { NonZeroU32::new_unchecked(0b10000000000) });
         #[doc = "Controls coherency of transfer reads"]
-        pub const TRANSFER_READ: Self = AccessFlags(0b100000000000);
+        pub const TRANSFER_READ: Self =
+            AccessFlags(unsafe { NonZeroU32::new_unchecked(0b100000000000) });
         #[doc = "Controls coherency of transfer writes"]
-        pub const TRANSFER_WRITE: Self = AccessFlags(0b1000000000000);
+        pub const TRANSFER_WRITE: Self =
+            AccessFlags(unsafe { NonZeroU32::new_unchecked(0b1000000000000) });
         #[doc = "Controls coherency of host reads"]
-        pub const HOST_READ: Self = AccessFlags(0b10000000000000);
+        pub const HOST_READ: Self =
+            AccessFlags(unsafe { NonZeroU32::new_unchecked(0b10000000000000) });
         #[doc = "Controls coherency of host writes"]
-        pub const HOST_WRITE: Self = AccessFlags(0b100000000000000);
+        pub const HOST_WRITE: Self =
+            AccessFlags(unsafe { NonZeroU32::new_unchecked(0b100000000000000) });
         #[doc = "Controls coherency of memory reads"]
-        pub const MEMORY_READ: Self = AccessFlags(0b1000000000000000);
+        pub const MEMORY_READ: Self =
+            AccessFlags(unsafe { NonZeroU32::new_unchecked(0b1000000000000000) });
         #[doc = "Controls coherency of memory writes"]
-        pub const MEMORY_WRITE: Self = AccessFlags(0b10000000000000000);
+        pub const MEMORY_WRITE: Self =
+            AccessFlags(unsafe { NonZeroU32::new_unchecked(0b10000000000000000) });
     }
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct BufferUsageFlags(pub(crate) Flags);
-    vk_bitflags_wrapped!(BufferUsageFlags, 0b111111111, Flags);
+    pub struct BufferUsageFlags(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(BufferUsageFlags, 0b111111111);
     impl BufferUsageFlags {
         #[doc = "Can be used as a source of transfer operations"]
-        pub const TRANSFER_SRC: Self = BufferUsageFlags(0b1);
+        pub const TRANSFER_SRC: Self = BufferUsageFlags(unsafe { NonZeroU32::new_unchecked(0b1) });
         #[doc = "Can be used as a destination of transfer operations"]
-        pub const TRANSFER_DST: Self = BufferUsageFlags(0b10);
+        pub const TRANSFER_DST: Self = BufferUsageFlags(unsafe { NonZeroU32::new_unchecked(0b10) });
         #[doc = "Can be used as TBO"]
-        pub const UNIFORM_TEXEL_BUFFER: Self = BufferUsageFlags(0b100);
+        pub const UNIFORM_TEXEL_BUFFER: Self =
+            BufferUsageFlags(unsafe { NonZeroU32::new_unchecked(0b100) });
         #[doc = "Can be used as IBO"]
-        pub const STORAGE_TEXEL_BUFFER: Self = BufferUsageFlags(0b1000);
+        pub const STORAGE_TEXEL_BUFFER: Self =
+            BufferUsageFlags(unsafe { NonZeroU32::new_unchecked(0b1000) });
         #[doc = "Can be used as UBO"]
-        pub const UNIFORM_BUFFER: Self = BufferUsageFlags(0b10000);
+        pub const UNIFORM_BUFFER: Self =
+            BufferUsageFlags(unsafe { NonZeroU32::new_unchecked(0b10000) });
         #[doc = "Can be used as SSBO"]
-        pub const STORAGE_BUFFER: Self = BufferUsageFlags(0b100000);
+        pub const STORAGE_BUFFER: Self =
+            BufferUsageFlags(unsafe { NonZeroU32::new_unchecked(0b100000) });
         #[doc = "Can be used as source of fixed-function index fetch (index buffer)"]
-        pub const INDEX_BUFFER: Self = BufferUsageFlags(0b1000000);
+        pub const INDEX_BUFFER: Self =
+            BufferUsageFlags(unsafe { NonZeroU32::new_unchecked(0b1000000) });
         #[doc = "Can be used as source of fixed-function vertex fetch (VBO)"]
-        pub const VERTEX_BUFFER: Self = BufferUsageFlags(0b10000000);
+        pub const VERTEX_BUFFER: Self =
+            BufferUsageFlags(unsafe { NonZeroU32::new_unchecked(0b10000000) });
         #[doc = "Can be the source of indirect parameters (e.g. indirect buffer, parameter buffer)"]
-        pub const INDIRECT_BUFFER: Self = BufferUsageFlags(0b100000000);
+        pub const INDIRECT_BUFFER: Self =
+            BufferUsageFlags(unsafe { NonZeroU32::new_unchecked(0b100000000) });
     }
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct BufferCreateFlags(pub(crate) Flags);
-    vk_bitflags_wrapped!(BufferCreateFlags, 0b111, Flags);
+    pub struct BufferCreateFlags(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(BufferCreateFlags, 0b111);
     impl BufferCreateFlags {
         #[doc = "Buffer should support sparse backing"]
-        pub const SPARSE_BINDING: Self = BufferCreateFlags(0b1);
+        pub const SPARSE_BINDING: Self =
+            BufferCreateFlags(unsafe { NonZeroU32::new_unchecked(0b1) });
         #[doc = "Buffer should support sparse backing with partial residency"]
-        pub const SPARSE_RESIDENCY: Self = BufferCreateFlags(0b10);
+        pub const SPARSE_RESIDENCY: Self =
+            BufferCreateFlags(unsafe { NonZeroU32::new_unchecked(0b10) });
         #[doc = "Buffer should support constent data access to physical memory ranges mapped into multiple locations of sparse buffers"]
-        pub const SPARSE_ALIASED: Self = BufferCreateFlags(0b100);
+        pub const SPARSE_ALIASED: Self =
+            BufferCreateFlags(unsafe { NonZeroU32::new_unchecked(0b100) });
     }
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct ShaderStageFlags(pub(crate) Flags);
-    vk_bitflags_wrapped!(ShaderStageFlags, 0b1111111111111111111111111111111, Flags);
+    pub struct ShaderStageFlags(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(ShaderStageFlags, 0b1111111111111111111111111111111);
     impl ShaderStageFlags {
-        pub const VERTEX: Self = ShaderStageFlags(0b1);
-        pub const TESSELLATION_CONTROL: Self = ShaderStageFlags(0b10);
-        pub const TESSELLATION_EVALUATION: Self = ShaderStageFlags(0b100);
-        pub const GEOMETRY: Self = ShaderStageFlags(0b1000);
-        pub const FRAGMENT: Self = ShaderStageFlags(0b10000);
-        pub const COMPUTE: Self = ShaderStageFlags(0b100000);
-        pub const ALL_GRAPHICS: Self = ShaderStageFlags(0x0000001F);
-        pub const ALL: Self = ShaderStageFlags(0x7FFFFFFF);
+        pub const VERTEX: Self = ShaderStageFlags(unsafe { NonZeroU32::new_unchecked(0b1) });
+        pub const TESSELLATION_CONTROL: Self =
+            ShaderStageFlags(unsafe { NonZeroU32::new_unchecked(0b10) });
+        pub const TESSELLATION_EVALUATION: Self =
+            ShaderStageFlags(unsafe { NonZeroU32::new_unchecked(0b100) });
+        pub const GEOMETRY: Self = ShaderStageFlags(unsafe { NonZeroU32::new_unchecked(0b1000) });
+        pub const FRAGMENT: Self = ShaderStageFlags(unsafe { NonZeroU32::new_unchecked(0b10000) });
+        pub const COMPUTE: Self = ShaderStageFlags(unsafe { NonZeroU32::new_unchecked(0b100000) });
+        pub const ALL_GRAPHICS: Self =
+            ShaderStageFlags(unsafe { NonZeroU32::new_unchecked(0x0000001F) });
+        pub const ALL: Self = ShaderStageFlags(unsafe { NonZeroU32::new_unchecked(0x7FFFFFFF) });
     }
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct ImageUsageFlags(pub(crate) Flags);
-    vk_bitflags_wrapped!(ImageUsageFlags, 0b11111111, Flags);
+    pub struct ImageUsageFlags(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(ImageUsageFlags, 0b11111111);
     impl ImageUsageFlags {
         #[doc = "Can be used as a source of transfer operations"]
-        pub const TRANSFER_SRC: Self = ImageUsageFlags(0b1);
+        pub const TRANSFER_SRC: Self = ImageUsageFlags(unsafe { NonZeroU32::new_unchecked(0b1) });
         #[doc = "Can be used as a destination of transfer operations"]
-        pub const TRANSFER_DST: Self = ImageUsageFlags(0b10);
+        pub const TRANSFER_DST: Self = ImageUsageFlags(unsafe { NonZeroU32::new_unchecked(0b10) });
         #[doc = "Can be sampled from (SAMPLED_IMAGE and COMBINED_IMAGE_SAMPLER descriptor types)"]
-        pub const SAMPLED: Self = ImageUsageFlags(0b100);
+        pub const SAMPLED: Self = ImageUsageFlags(unsafe { NonZeroU32::new_unchecked(0b100) });
         #[doc = "Can be used as storage image (STORAGE_IMAGE descriptor type)"]
-        pub const STORAGE: Self = ImageUsageFlags(0b1000);
+        pub const STORAGE: Self = ImageUsageFlags(unsafe { NonZeroU32::new_unchecked(0b1000) });
         #[doc = "Can be used as framebuffer color attachment"]
-        pub const COLOR_ATTACHMENT: Self = ImageUsageFlags(0b10000);
+        pub const COLOR_ATTACHMENT: Self =
+            ImageUsageFlags(unsafe { NonZeroU32::new_unchecked(0b10000) });
         #[doc = "Can be used as framebuffer depth/stencil attachment"]
-        pub const DEPTH_STENCIL_ATTACHMENT: Self = ImageUsageFlags(0b100000);
+        pub const DEPTH_STENCIL_ATTACHMENT: Self =
+            ImageUsageFlags(unsafe { NonZeroU32::new_unchecked(0b100000) });
         #[doc = "Image data not needed outside of rendering"]
-        pub const TRANSIENT_ATTACHMENT: Self = ImageUsageFlags(0b1000000);
+        pub const TRANSIENT_ATTACHMENT: Self =
+            ImageUsageFlags(unsafe { NonZeroU32::new_unchecked(0b1000000) });
         #[doc = "Can be used as framebuffer input attachment"]
-        pub const INPUT_ATTACHMENT: Self = ImageUsageFlags(0b10000000);
+        pub const INPUT_ATTACHMENT: Self =
+            ImageUsageFlags(unsafe { NonZeroU32::new_unchecked(0b10000000) });
     }
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct ImageCreateFlags(pub(crate) Flags);
-    vk_bitflags_wrapped!(ImageCreateFlags, 0b11111, Flags);
+    pub struct ImageCreateFlags(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(ImageCreateFlags, 0b11111);
     impl ImageCreateFlags {
         #[doc = "Image should support sparse backing"]
-        pub const SPARSE_BINDING: Self = ImageCreateFlags(0b1);
+        pub const SPARSE_BINDING: Self =
+            ImageCreateFlags(unsafe { NonZeroU32::new_unchecked(0b1) });
         #[doc = "Image should support sparse backing with partial residency"]
-        pub const SPARSE_RESIDENCY: Self = ImageCreateFlags(0b10);
+        pub const SPARSE_RESIDENCY: Self =
+            ImageCreateFlags(unsafe { NonZeroU32::new_unchecked(0b10) });
         #[doc = "Image should support constent data access to physical memory ranges mapped into multiple locations of sparse images"]
-        pub const SPARSE_ALIASED: Self = ImageCreateFlags(0b100);
+        pub const SPARSE_ALIASED: Self =
+            ImageCreateFlags(unsafe { NonZeroU32::new_unchecked(0b100) });
         #[doc = "Allows image views to have different format than the base image"]
-        pub const MUTABLE_FORMAT: Self = ImageCreateFlags(0b1000);
+        pub const MUTABLE_FORMAT: Self =
+            ImageCreateFlags(unsafe { NonZeroU32::new_unchecked(0b1000) });
         #[doc = "Allows creating image views with cube type from the created image"]
-        pub const CUBE_COMPATIBLE: Self = ImageCreateFlags(0b10000);
+        pub const CUBE_COMPATIBLE: Self =
+            ImageCreateFlags(unsafe { NonZeroU32::new_unchecked(0b10000) });
     }
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct PipelineCreateFlags(pub(crate) Flags);
-    vk_bitflags_wrapped!(PipelineCreateFlags, 0b111, Flags);
+    pub struct PipelineCreateFlags(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(PipelineCreateFlags, 0b111);
     impl PipelineCreateFlags {
-        pub const DISABLE_OPTIMIZATION: Self = PipelineCreateFlags(0b1);
-        pub const ALLOW_DERIVATIVES: Self = PipelineCreateFlags(0b10);
-        pub const DERIVATIVE: Self = PipelineCreateFlags(0b100);
+        pub const DISABLE_OPTIMIZATION: Self =
+            PipelineCreateFlags(unsafe { NonZeroU32::new_unchecked(0b1) });
+        pub const ALLOW_DERIVATIVES: Self =
+            PipelineCreateFlags(unsafe { NonZeroU32::new_unchecked(0b10) });
+        pub const DERIVATIVE: Self =
+            PipelineCreateFlags(unsafe { NonZeroU32::new_unchecked(0b100) });
     }
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct ColorComponentFlags(pub(crate) Flags);
-    vk_bitflags_wrapped!(ColorComponentFlags, 0b1111, Flags);
+    pub struct ColorComponentFlags(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(ColorComponentFlags, 0b1111);
     impl ColorComponentFlags {
-        pub const R: Self = ColorComponentFlags(0b1);
-        pub const G: Self = ColorComponentFlags(0b10);
-        pub const B: Self = ColorComponentFlags(0b100);
-        pub const A: Self = ColorComponentFlags(0b1000);
+        pub const R: Self = ColorComponentFlags(unsafe { NonZeroU32::new_unchecked(0b1) });
+        pub const G: Self = ColorComponentFlags(unsafe { NonZeroU32::new_unchecked(0b10) });
+        pub const B: Self = ColorComponentFlags(unsafe { NonZeroU32::new_unchecked(0b100) });
+        pub const A: Self = ColorComponentFlags(unsafe { NonZeroU32::new_unchecked(0b1000) });
     }
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct FenceCreateFlags(pub(crate) Flags);
-    vk_bitflags_wrapped!(FenceCreateFlags, 0b1, Flags);
+    pub struct FenceCreateFlags(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(FenceCreateFlags, 0b1);
     impl FenceCreateFlags {
-        pub const SIGNALED: Self = FenceCreateFlags(0b1);
+        pub const SIGNALED: Self = FenceCreateFlags(unsafe { NonZeroU32::new_unchecked(0b1) });
     }
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct FormatFeatureFlags(pub(crate) Flags);
-    vk_bitflags_wrapped!(FormatFeatureFlags, 0b1111111111111, Flags);
+    pub struct FormatFeatureFlags(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(FormatFeatureFlags, 0b1111111111111);
     impl FormatFeatureFlags {
         #[doc = "Format can be used for sampled images (SAMPLED_IMAGE and COMBINED_IMAGE_SAMPLER descriptor types)"]
-        pub const SAMPLED_IMAGE: Self = FormatFeatureFlags(0b1);
+        pub const SAMPLED_IMAGE: Self =
+            FormatFeatureFlags(unsafe { NonZeroU32::new_unchecked(0b1) });
         #[doc = "Format can be used for storage images (STORAGE_IMAGE descriptor type)"]
-        pub const STORAGE_IMAGE: Self = FormatFeatureFlags(0b10);
+        pub const STORAGE_IMAGE: Self =
+            FormatFeatureFlags(unsafe { NonZeroU32::new_unchecked(0b10) });
         #[doc = "Format supports atomic operations in case it is used for storage images"]
-        pub const STORAGE_IMAGE_ATOMIC: Self = FormatFeatureFlags(0b100);
+        pub const STORAGE_IMAGE_ATOMIC: Self =
+            FormatFeatureFlags(unsafe { NonZeroU32::new_unchecked(0b100) });
         #[doc = "Format can be used for uniform texel buffers (TBOs)"]
-        pub const UNIFORM_TEXEL_BUFFER: Self = FormatFeatureFlags(0b1000);
+        pub const UNIFORM_TEXEL_BUFFER: Self =
+            FormatFeatureFlags(unsafe { NonZeroU32::new_unchecked(0b1000) });
         #[doc = "Format can be used for storage texel buffers (IBOs)"]
-        pub const STORAGE_TEXEL_BUFFER: Self = FormatFeatureFlags(0b10000);
+        pub const STORAGE_TEXEL_BUFFER: Self =
+            FormatFeatureFlags(unsafe { NonZeroU32::new_unchecked(0b10000) });
         #[doc = "Format supports atomic operations in case it is used for storage texel buffers"]
-        pub const STORAGE_TEXEL_BUFFER_ATOMIC: Self = FormatFeatureFlags(0b100000);
+        pub const STORAGE_TEXEL_BUFFER_ATOMIC: Self =
+            FormatFeatureFlags(unsafe { NonZeroU32::new_unchecked(0b100000) });
         #[doc = "Format can be used for vertex buffers (VBOs)"]
-        pub const VERTEX_BUFFER: Self = FormatFeatureFlags(0b1000000);
+        pub const VERTEX_BUFFER: Self =
+            FormatFeatureFlags(unsafe { NonZeroU32::new_unchecked(0b1000000) });
         #[doc = "Format can be used for color attachment images"]
-        pub const COLOR_ATTACHMENT: Self = FormatFeatureFlags(0b10000000);
+        pub const COLOR_ATTACHMENT: Self =
+            FormatFeatureFlags(unsafe { NonZeroU32::new_unchecked(0b10000000) });
         #[doc = "Format supports blending in case it is used for color attachment images"]
-        pub const COLOR_ATTACHMENT_BLEND: Self = FormatFeatureFlags(0b100000000);
+        pub const COLOR_ATTACHMENT_BLEND: Self =
+            FormatFeatureFlags(unsafe { NonZeroU32::new_unchecked(0b100000000) });
         #[doc = "Format can be used for depth/stencil attachment images"]
-        pub const DEPTH_STENCIL_ATTACHMENT: Self = FormatFeatureFlags(0b1000000000);
+        pub const DEPTH_STENCIL_ATTACHMENT: Self =
+            FormatFeatureFlags(unsafe { NonZeroU32::new_unchecked(0b1000000000) });
         #[doc = "Format can be used as the source image of blits with vkCmdBlitImage"]
-        pub const BLIT_SRC: Self = FormatFeatureFlags(0b10000000000);
+        pub const BLIT_SRC: Self =
+            FormatFeatureFlags(unsafe { NonZeroU32::new_unchecked(0b10000000000) });
         #[doc = "Format can be used as the destination image of blits with vkCmdBlitImage"]
-        pub const BLIT_DST: Self = FormatFeatureFlags(0b100000000000);
+        pub const BLIT_DST: Self =
+            FormatFeatureFlags(unsafe { NonZeroU32::new_unchecked(0b100000000000) });
         #[doc = "Format can be filtered with VK_FILTER_LINEAR when being sampled"]
-        pub const SAMPLED_IMAGE_FILTER_LINEAR: Self = FormatFeatureFlags(0b1000000000000);
+        pub const SAMPLED_IMAGE_FILTER_LINEAR: Self =
+            FormatFeatureFlags(unsafe { NonZeroU32::new_unchecked(0b1000000000000) });
     }
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct QueryControlFlags(pub(crate) Flags);
-    vk_bitflags_wrapped!(QueryControlFlags, 0b1, Flags);
+    pub struct QueryControlFlags(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(QueryControlFlags, 0b1);
     impl QueryControlFlags {
         #[doc = "Require precise results to be collected by the query"]
-        pub const PRECISE: Self = QueryControlFlags(0b1);
+        pub const PRECISE: Self = QueryControlFlags(unsafe { NonZeroU32::new_unchecked(0b1) });
     }
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct QueryResultFlags(pub(crate) Flags);
-    vk_bitflags_wrapped!(QueryResultFlags, 0b1111, Flags);
+    pub struct QueryResultFlags(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(QueryResultFlags, 0b1111);
     impl QueryResultFlags {
         #[doc = "Results of the queries are written to the destination buffer as 64-bit values"]
-        pub const TYPE_64: Self = QueryResultFlags(0b1);
+        pub const TYPE_64: Self = QueryResultFlags(unsafe { NonZeroU32::new_unchecked(0b1) });
         #[doc = "Results of the queries are waited on before proceeding with the result copy"]
-        pub const WAIT: Self = QueryResultFlags(0b10);
+        pub const WAIT: Self = QueryResultFlags(unsafe { NonZeroU32::new_unchecked(0b10) });
         #[doc = "Besides the results of the query, the availability of the results is also written"]
-        pub const WITH_AVAILABILITY: Self = QueryResultFlags(0b100);
+        pub const WITH_AVAILABILITY: Self =
+            QueryResultFlags(unsafe { NonZeroU32::new_unchecked(0b100) });
         #[doc = "Copy the partial results of the query even if the final results are not available"]
-        pub const PARTIAL: Self = QueryResultFlags(0b1000);
+        pub const PARTIAL: Self = QueryResultFlags(unsafe { NonZeroU32::new_unchecked(0b1000) });
     }
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct CommandBufferUsageFlags(pub(crate) Flags);
-    vk_bitflags_wrapped!(CommandBufferUsageFlags, 0b111, Flags);
+    pub struct CommandBufferUsageFlags(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(CommandBufferUsageFlags, 0b111);
     impl CommandBufferUsageFlags {
-        pub const ONE_TIME_SUBMIT: Self = CommandBufferUsageFlags(0b1);
-        pub const RENDER_PASS_CONTINUE: Self = CommandBufferUsageFlags(0b10);
+        pub const ONE_TIME_SUBMIT: Self =
+            CommandBufferUsageFlags(unsafe { NonZeroU32::new_unchecked(0b1) });
+        pub const RENDER_PASS_CONTINUE: Self =
+            CommandBufferUsageFlags(unsafe { NonZeroU32::new_unchecked(0b10) });
         #[doc = "Command buffer may be submitted/executed more than once simultaneously"]
-        pub const SIMULTANEOUS_USE: Self = CommandBufferUsageFlags(0b100);
+        pub const SIMULTANEOUS_USE: Self =
+            CommandBufferUsageFlags(unsafe { NonZeroU32::new_unchecked(0b100) });
     }
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct QueryPipelineStatisticFlags(pub(crate) Flags);
-    vk_bitflags_wrapped!(QueryPipelineStatisticFlags, 0b11111111111, Flags);
+    pub struct QueryPipelineStatisticFlags(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(QueryPipelineStatisticFlags, 0b11111111111);
     impl QueryPipelineStatisticFlags {
         #[doc = "Optional"]
-        pub const INPUT_ASSEMBLY_VERTICES: Self = QueryPipelineStatisticFlags(0b1);
+        pub const INPUT_ASSEMBLY_VERTICES: Self =
+            QueryPipelineStatisticFlags(unsafe { NonZeroU32::new_unchecked(0b1) });
         #[doc = "Optional"]
-        pub const INPUT_ASSEMBLY_PRIMITIVES: Self = QueryPipelineStatisticFlags(0b10);
+        pub const INPUT_ASSEMBLY_PRIMITIVES: Self =
+            QueryPipelineStatisticFlags(unsafe { NonZeroU32::new_unchecked(0b10) });
         #[doc = "Optional"]
-        pub const VERTEX_SHADER_INVOCATIONS: Self = QueryPipelineStatisticFlags(0b100);
+        pub const VERTEX_SHADER_INVOCATIONS: Self =
+            QueryPipelineStatisticFlags(unsafe { NonZeroU32::new_unchecked(0b100) });
         #[doc = "Optional"]
-        pub const GEOMETRY_SHADER_INVOCATIONS: Self = QueryPipelineStatisticFlags(0b1000);
+        pub const GEOMETRY_SHADER_INVOCATIONS: Self =
+            QueryPipelineStatisticFlags(unsafe { NonZeroU32::new_unchecked(0b1000) });
         #[doc = "Optional"]
-        pub const GEOMETRY_SHADER_PRIMITIVES: Self = QueryPipelineStatisticFlags(0b10000);
+        pub const GEOMETRY_SHADER_PRIMITIVES: Self =
+            QueryPipelineStatisticFlags(unsafe { NonZeroU32::new_unchecked(0b10000) });
         #[doc = "Optional"]
-        pub const CLIPPING_INVOCATIONS: Self = QueryPipelineStatisticFlags(0b100000);
+        pub const CLIPPING_INVOCATIONS: Self =
+            QueryPipelineStatisticFlags(unsafe { NonZeroU32::new_unchecked(0b100000) });
         #[doc = "Optional"]
-        pub const CLIPPING_PRIMITIVES: Self = QueryPipelineStatisticFlags(0b1000000);
+        pub const CLIPPING_PRIMITIVES: Self =
+            QueryPipelineStatisticFlags(unsafe { NonZeroU32::new_unchecked(0b1000000) });
         #[doc = "Optional"]
-        pub const FRAGMENT_SHADER_INVOCATIONS: Self = QueryPipelineStatisticFlags(0b10000000);
+        pub const FRAGMENT_SHADER_INVOCATIONS: Self =
+            QueryPipelineStatisticFlags(unsafe { NonZeroU32::new_unchecked(0b10000000) });
         #[doc = "Optional"]
         pub const TESSELLATION_CONTROL_SHADER_PATCHES: Self =
-            QueryPipelineStatisticFlags(0b100000000);
+            QueryPipelineStatisticFlags(unsafe { NonZeroU32::new_unchecked(0b100000000) });
         #[doc = "Optional"]
         pub const TESSELLATION_EVALUATION_SHADER_INVOCATIONS: Self =
-            QueryPipelineStatisticFlags(0b1000000000);
+            QueryPipelineStatisticFlags(unsafe { NonZeroU32::new_unchecked(0b1000000000) });
         #[doc = "Optional"]
-        pub const COMPUTE_SHADER_INVOCATIONS: Self = QueryPipelineStatisticFlags(0b10000000000);
+        pub const COMPUTE_SHADER_INVOCATIONS: Self =
+            QueryPipelineStatisticFlags(unsafe { NonZeroU32::new_unchecked(0b10000000000) });
     }
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct ImageAspectFlags(pub(crate) Flags);
-    vk_bitflags_wrapped!(ImageAspectFlags, 0b1111, Flags);
+    pub struct ImageAspectFlags(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(ImageAspectFlags, 0b1111);
     impl ImageAspectFlags {
-        pub const COLOR: Self = ImageAspectFlags(0b1);
-        pub const DEPTH: Self = ImageAspectFlags(0b10);
-        pub const STENCIL: Self = ImageAspectFlags(0b100);
-        pub const METADATA: Self = ImageAspectFlags(0b1000);
+        pub const COLOR: Self = ImageAspectFlags(unsafe { NonZeroU32::new_unchecked(0b1) });
+        pub const DEPTH: Self = ImageAspectFlags(unsafe { NonZeroU32::new_unchecked(0b10) });
+        pub const STENCIL: Self = ImageAspectFlags(unsafe { NonZeroU32::new_unchecked(0b100) });
+        pub const METADATA: Self = ImageAspectFlags(unsafe { NonZeroU32::new_unchecked(0b1000) });
     }
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct SparseImageFormatFlags(pub(crate) Flags);
-    vk_bitflags_wrapped!(SparseImageFormatFlags, 0b111, Flags);
+    pub struct SparseImageFormatFlags(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(SparseImageFormatFlags, 0b111);
     impl SparseImageFormatFlags {
         #[doc = "Image uses a single mip tail region for all array layers"]
-        pub const SINGLE_MIPTAIL: Self = SparseImageFormatFlags(0b1);
+        pub const SINGLE_MIPTAIL: Self =
+            SparseImageFormatFlags(unsafe { NonZeroU32::new_unchecked(0b1) });
         #[doc = "Image requires mip level dimensions to be an integer multiple of the sparse image block dimensions for non-tail mip levels."]
-        pub const ALIGNED_MIP_SIZE: Self = SparseImageFormatFlags(0b10);
+        pub const ALIGNED_MIP_SIZE: Self =
+            SparseImageFormatFlags(unsafe { NonZeroU32::new_unchecked(0b10) });
         #[doc = "Image uses a non-standard sparse image block dimensions"]
-        pub const NONSTANDARD_BLOCK_SIZE: Self = SparseImageFormatFlags(0b100);
+        pub const NONSTANDARD_BLOCK_SIZE: Self =
+            SparseImageFormatFlags(unsafe { NonZeroU32::new_unchecked(0b100) });
     }
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct SparseMemoryBindFlags(pub(crate) Flags);
-    vk_bitflags_wrapped!(SparseMemoryBindFlags, 0b1, Flags);
+    pub struct SparseMemoryBindFlags(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(SparseMemoryBindFlags, 0b1);
     impl SparseMemoryBindFlags {
         #[doc = "Operation binds resource metadata to memory"]
-        pub const METADATA: Self = SparseMemoryBindFlags(0b1);
+        pub const METADATA: Self = SparseMemoryBindFlags(unsafe { NonZeroU32::new_unchecked(0b1) });
     }
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct PipelineStageFlags(pub(crate) Flags);
-    vk_bitflags_wrapped!(PipelineStageFlags, 0b11111111111111111, Flags);
+    pub struct PipelineStageFlags(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(PipelineStageFlags, 0b11111111111111111);
     impl PipelineStageFlags {
         #[doc = "Before subsequent commands are processed"]
-        pub const TOP_OF_PIPE: Self = PipelineStageFlags(0b1);
+        pub const TOP_OF_PIPE: Self = PipelineStageFlags(unsafe { NonZeroU32::new_unchecked(0b1) });
         #[doc = "Draw/DispatchIndirect command fetch"]
-        pub const DRAW_INDIRECT: Self = PipelineStageFlags(0b10);
+        pub const DRAW_INDIRECT: Self =
+            PipelineStageFlags(unsafe { NonZeroU32::new_unchecked(0b10) });
         #[doc = "Vertex/index fetch"]
-        pub const VERTEX_INPUT: Self = PipelineStageFlags(0b100);
+        pub const VERTEX_INPUT: Self =
+            PipelineStageFlags(unsafe { NonZeroU32::new_unchecked(0b100) });
         #[doc = "Vertex shading"]
-        pub const VERTEX_SHADER: Self = PipelineStageFlags(0b1000);
+        pub const VERTEX_SHADER: Self =
+            PipelineStageFlags(unsafe { NonZeroU32::new_unchecked(0b1000) });
         #[doc = "Tessellation control shading"]
-        pub const TESSELLATION_CONTROL_SHADER: Self = PipelineStageFlags(0b10000);
+        pub const TESSELLATION_CONTROL_SHADER: Self =
+            PipelineStageFlags(unsafe { NonZeroU32::new_unchecked(0b10000) });
         #[doc = "Tessellation evaluation shading"]
-        pub const TESSELLATION_EVALUATION_SHADER: Self = PipelineStageFlags(0b100000);
+        pub const TESSELLATION_EVALUATION_SHADER: Self =
+            PipelineStageFlags(unsafe { NonZeroU32::new_unchecked(0b100000) });
         #[doc = "Geometry shading"]
-        pub const GEOMETRY_SHADER: Self = PipelineStageFlags(0b1000000);
+        pub const GEOMETRY_SHADER: Self =
+            PipelineStageFlags(unsafe { NonZeroU32::new_unchecked(0b1000000) });
         #[doc = "Fragment shading"]
-        pub const FRAGMENT_SHADER: Self = PipelineStageFlags(0b10000000);
+        pub const FRAGMENT_SHADER: Self =
+            PipelineStageFlags(unsafe { NonZeroU32::new_unchecked(0b10000000) });
         #[doc = "Early fragment (depth and stencil) tests"]
-        pub const EARLY_FRAGMENT_TESTS: Self = PipelineStageFlags(0b100000000);
+        pub const EARLY_FRAGMENT_TESTS: Self =
+            PipelineStageFlags(unsafe { NonZeroU32::new_unchecked(0b100000000) });
         #[doc = "Late fragment (depth and stencil) tests"]
-        pub const LATE_FRAGMENT_TESTS: Self = PipelineStageFlags(0b1000000000);
+        pub const LATE_FRAGMENT_TESTS: Self =
+            PipelineStageFlags(unsafe { NonZeroU32::new_unchecked(0b1000000000) });
         #[doc = "Color attachment writes"]
-        pub const COLOR_ATTACHMENT_OUTPUT: Self = PipelineStageFlags(0b10000000000);
+        pub const COLOR_ATTACHMENT_OUTPUT: Self =
+            PipelineStageFlags(unsafe { NonZeroU32::new_unchecked(0b10000000000) });
         #[doc = "Compute shading"]
-        pub const COMPUTE_SHADER: Self = PipelineStageFlags(0b100000000000);
+        pub const COMPUTE_SHADER: Self =
+            PipelineStageFlags(unsafe { NonZeroU32::new_unchecked(0b100000000000) });
         #[doc = "Transfer/copy operations"]
-        pub const TRANSFER: Self = PipelineStageFlags(0b1000000000000);
+        pub const TRANSFER: Self =
+            PipelineStageFlags(unsafe { NonZeroU32::new_unchecked(0b1000000000000) });
         #[doc = "After previous commands have completed"]
-        pub const BOTTOM_OF_PIPE: Self = PipelineStageFlags(0b10000000000000);
+        pub const BOTTOM_OF_PIPE: Self =
+            PipelineStageFlags(unsafe { NonZeroU32::new_unchecked(0b10000000000000) });
         #[doc = "Indicates host (CPU) is a source/sink of the dependency"]
-        pub const HOST: Self = PipelineStageFlags(0b100000000000000);
+        pub const HOST: Self =
+            PipelineStageFlags(unsafe { NonZeroU32::new_unchecked(0b100000000000000) });
         #[doc = "All stages of the graphics pipeline"]
-        pub const ALL_GRAPHICS: Self = PipelineStageFlags(0b1000000000000000);
+        pub const ALL_GRAPHICS: Self =
+            PipelineStageFlags(unsafe { NonZeroU32::new_unchecked(0b1000000000000000) });
         #[doc = "All stages supported on the queue"]
-        pub const ALL_COMMANDS: Self = PipelineStageFlags(0b10000000000000000);
+        pub const ALL_COMMANDS: Self =
+            PipelineStageFlags(unsafe { NonZeroU32::new_unchecked(0b10000000000000000) });
     }
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct CommandPoolCreateFlags(pub(crate) Flags);
-    vk_bitflags_wrapped!(CommandPoolCreateFlags, 0b11, Flags);
+    pub struct CommandPoolCreateFlags(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(CommandPoolCreateFlags, 0b11);
     impl CommandPoolCreateFlags {
         #[doc = "Command buffers have a short lifetime"]
-        pub const TRANSIENT: Self = CommandPoolCreateFlags(0b1);
+        pub const TRANSIENT: Self =
+            CommandPoolCreateFlags(unsafe { NonZeroU32::new_unchecked(0b1) });
         #[doc = "Command buffers may release their memory individually"]
-        pub const RESET_COMMAND_BUFFER: Self = CommandPoolCreateFlags(0b10);
+        pub const RESET_COMMAND_BUFFER: Self =
+            CommandPoolCreateFlags(unsafe { NonZeroU32::new_unchecked(0b10) });
     }
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct CommandPoolResetFlags(pub(crate) Flags);
-    vk_bitflags_wrapped!(CommandPoolResetFlags, 0b1, Flags);
+    pub struct CommandPoolResetFlags(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(CommandPoolResetFlags, 0b1);
     impl CommandPoolResetFlags {
         #[doc = "Release resources owned by the pool"]
-        pub const RELEASE_RESOURCES: Self = CommandPoolResetFlags(0b1);
+        pub const RELEASE_RESOURCES: Self =
+            CommandPoolResetFlags(unsafe { NonZeroU32::new_unchecked(0b1) });
     }
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct CommandBufferResetFlags(pub(crate) Flags);
-    vk_bitflags_wrapped!(CommandBufferResetFlags, 0b1, Flags);
+    pub struct CommandBufferResetFlags(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(CommandBufferResetFlags, 0b1);
     impl CommandBufferResetFlags {
         #[doc = "Release resources owned by the buffer"]
-        pub const RELEASE_RESOURCES: Self = CommandBufferResetFlags(0b1);
+        pub const RELEASE_RESOURCES: Self =
+            CommandBufferResetFlags(unsafe { NonZeroU32::new_unchecked(0b1) });
     }
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct SampleCountFlags(pub(crate) Flags);
-    vk_bitflags_wrapped!(SampleCountFlags, 0b1111111, Flags);
+    pub struct SampleCountFlags(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(SampleCountFlags, 0b1111111);
     impl SampleCountFlags {
         #[doc = "Sample count 1 supported"]
-        pub const TYPE_1: Self = SampleCountFlags(0b1);
+        pub const TYPE_1: Self = SampleCountFlags(unsafe { NonZeroU32::new_unchecked(0b1) });
         #[doc = "Sample count 2 supported"]
-        pub const TYPE_2: Self = SampleCountFlags(0b10);
+        pub const TYPE_2: Self = SampleCountFlags(unsafe { NonZeroU32::new_unchecked(0b10) });
         #[doc = "Sample count 4 supported"]
-        pub const TYPE_4: Self = SampleCountFlags(0b100);
+        pub const TYPE_4: Self = SampleCountFlags(unsafe { NonZeroU32::new_unchecked(0b100) });
         #[doc = "Sample count 8 supported"]
-        pub const TYPE_8: Self = SampleCountFlags(0b1000);
+        pub const TYPE_8: Self = SampleCountFlags(unsafe { NonZeroU32::new_unchecked(0b1000) });
         #[doc = "Sample count 16 supported"]
-        pub const TYPE_16: Self = SampleCountFlags(0b10000);
+        pub const TYPE_16: Self = SampleCountFlags(unsafe { NonZeroU32::new_unchecked(0b10000) });
         #[doc = "Sample count 32 supported"]
-        pub const TYPE_32: Self = SampleCountFlags(0b100000);
+        pub const TYPE_32: Self = SampleCountFlags(unsafe { NonZeroU32::new_unchecked(0b100000) });
         #[doc = "Sample count 64 supported"]
-        pub const TYPE_64: Self = SampleCountFlags(0b1000000);
+        pub const TYPE_64: Self = SampleCountFlags(unsafe { NonZeroU32::new_unchecked(0b1000000) });
     }
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct AttachmentDescriptionFlags(pub(crate) Flags);
-    vk_bitflags_wrapped!(AttachmentDescriptionFlags, 0b1, Flags);
+    pub struct AttachmentDescriptionFlags(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(AttachmentDescriptionFlags, 0b1);
     impl AttachmentDescriptionFlags {
         #[doc = "The attachment may alias physical memory of another attachment in the same render pass"]
-        pub const MAY_ALIAS: Self = AttachmentDescriptionFlags(0b1);
+        pub const MAY_ALIAS: Self =
+            AttachmentDescriptionFlags(unsafe { NonZeroU32::new_unchecked(0b1) });
     }
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct StencilFaceFlags(pub(crate) Flags);
-    vk_bitflags_wrapped!(StencilFaceFlags, 0b11, Flags);
+    pub struct StencilFaceFlags(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(StencilFaceFlags, 0b11);
     impl StencilFaceFlags {
         #[doc = "Front face"]
-        pub const FRONT: Self = StencilFaceFlags(0b1);
+        pub const FRONT: Self = StencilFaceFlags(unsafe { NonZeroU32::new_unchecked(0b1) });
         #[doc = "Back face"]
-        pub const BACK: Self = StencilFaceFlags(0b10);
+        pub const BACK: Self = StencilFaceFlags(unsafe { NonZeroU32::new_unchecked(0b10) });
         #[doc = "Front and back faces"]
-        pub const STENCIL_FRONT_AND_BACK: Self = StencilFaceFlags(0x00000003);
+        pub const STENCIL_FRONT_AND_BACK: Self =
+            StencilFaceFlags(unsafe { NonZeroU32::new_unchecked(0x00000003) });
     }
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct DescriptorPoolCreateFlags(pub(crate) Flags);
-    vk_bitflags_wrapped!(DescriptorPoolCreateFlags, 0b1, Flags);
+    pub struct DescriptorPoolCreateFlags(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(DescriptorPoolCreateFlags, 0b1);
     impl DescriptorPoolCreateFlags {
         #[doc = "Descriptor sets may be freed individually"]
-        pub const FREE_DESCRIPTOR_SET: Self = DescriptorPoolCreateFlags(0b1);
+        pub const FREE_DESCRIPTOR_SET: Self =
+            DescriptorPoolCreateFlags(unsafe { NonZeroU32::new_unchecked(0b1) });
     }
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct DependencyFlags(pub(crate) Flags);
-    vk_bitflags_wrapped!(DependencyFlags, 0b1, Flags);
+    pub struct DependencyFlags(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(DependencyFlags, 0b1);
     impl DependencyFlags {
         #[doc = "Dependency is per pixel region "]
-        pub const BY_REGION: Self = DependencyFlags(0b1);
+        pub const BY_REGION: Self = DependencyFlags(unsafe { NonZeroU32::new_unchecked(0b1) });
     }
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct DisplayPlaneAlphaFlagsKHR(pub(crate) Flags);
-    vk_bitflags_wrapped!(DisplayPlaneAlphaFlagsKHR, 0b1111, Flags);
+    pub struct DisplayPlaneAlphaFlagsKHR(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(DisplayPlaneAlphaFlagsKHR, 0b1111);
     impl DisplayPlaneAlphaFlagsKHR {
-        pub const OPAQUE: Self = DisplayPlaneAlphaFlagsKHR(0b1);
-        pub const GLOBAL: Self = DisplayPlaneAlphaFlagsKHR(0b10);
-        pub const PER_PIXEL: Self = DisplayPlaneAlphaFlagsKHR(0b100);
-        pub const PER_PIXEL_PREMULTIPLIED: Self = DisplayPlaneAlphaFlagsKHR(0b1000);
+        pub const OPAQUE: Self =
+            DisplayPlaneAlphaFlagsKHR(unsafe { NonZeroU32::new_unchecked(0b1) });
+        pub const GLOBAL: Self =
+            DisplayPlaneAlphaFlagsKHR(unsafe { NonZeroU32::new_unchecked(0b10) });
+        pub const PER_PIXEL: Self =
+            DisplayPlaneAlphaFlagsKHR(unsafe { NonZeroU32::new_unchecked(0b100) });
+        pub const PER_PIXEL_PREMULTIPLIED: Self =
+            DisplayPlaneAlphaFlagsKHR(unsafe { NonZeroU32::new_unchecked(0b1000) });
     }
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct CompositeAlphaFlagsKHR(pub(crate) Flags);
-    vk_bitflags_wrapped!(CompositeAlphaFlagsKHR, 0b1111, Flags);
+    pub struct CompositeAlphaFlagsKHR(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(CompositeAlphaFlagsKHR, 0b1111);
     impl CompositeAlphaFlagsKHR {
-        pub const OPAQUE: Self = CompositeAlphaFlagsKHR(0b1);
-        pub const PRE_MULTIPLIED: Self = CompositeAlphaFlagsKHR(0b10);
-        pub const POST_MULTIPLIED: Self = CompositeAlphaFlagsKHR(0b100);
-        pub const INHERIT: Self = CompositeAlphaFlagsKHR(0b1000);
+        pub const OPAQUE: Self = CompositeAlphaFlagsKHR(unsafe { NonZeroU32::new_unchecked(0b1) });
+        pub const PRE_MULTIPLIED: Self =
+            CompositeAlphaFlagsKHR(unsafe { NonZeroU32::new_unchecked(0b10) });
+        pub const POST_MULTIPLIED: Self =
+            CompositeAlphaFlagsKHR(unsafe { NonZeroU32::new_unchecked(0b100) });
+        pub const INHERIT: Self =
+            CompositeAlphaFlagsKHR(unsafe { NonZeroU32::new_unchecked(0b1000) });
     }
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct SurfaceTransformFlagsKHR(pub(crate) Flags);
-    vk_bitflags_wrapped!(SurfaceTransformFlagsKHR, 0b111111111, Flags);
+    pub struct SurfaceTransformFlagsKHR(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(SurfaceTransformFlagsKHR, 0b111111111);
     impl SurfaceTransformFlagsKHR {
-        pub const IDENTITY: Self = SurfaceTransformFlagsKHR(0b1);
-        pub const ROTATE_90: Self = SurfaceTransformFlagsKHR(0b10);
-        pub const ROTATE_180: Self = SurfaceTransformFlagsKHR(0b100);
-        pub const ROTATE_270: Self = SurfaceTransformFlagsKHR(0b1000);
-        pub const HORIZONTAL_MIRROR: Self = SurfaceTransformFlagsKHR(0b10000);
-        pub const HORIZONTAL_MIRROR_ROTATE_90: Self = SurfaceTransformFlagsKHR(0b100000);
-        pub const HORIZONTAL_MIRROR_ROTATE_180: Self = SurfaceTransformFlagsKHR(0b1000000);
-        pub const HORIZONTAL_MIRROR_ROTATE_270: Self = SurfaceTransformFlagsKHR(0b10000000);
-        pub const INHERIT: Self = SurfaceTransformFlagsKHR(0b100000000);
+        pub const IDENTITY: Self =
+            SurfaceTransformFlagsKHR(unsafe { NonZeroU32::new_unchecked(0b1) });
+        pub const ROTATE_90: Self =
+            SurfaceTransformFlagsKHR(unsafe { NonZeroU32::new_unchecked(0b10) });
+        pub const ROTATE_180: Self =
+            SurfaceTransformFlagsKHR(unsafe { NonZeroU32::new_unchecked(0b100) });
+        pub const ROTATE_270: Self =
+            SurfaceTransformFlagsKHR(unsafe { NonZeroU32::new_unchecked(0b1000) });
+        pub const HORIZONTAL_MIRROR: Self =
+            SurfaceTransformFlagsKHR(unsafe { NonZeroU32::new_unchecked(0b10000) });
+        pub const HORIZONTAL_MIRROR_ROTATE_90: Self =
+            SurfaceTransformFlagsKHR(unsafe { NonZeroU32::new_unchecked(0b100000) });
+        pub const HORIZONTAL_MIRROR_ROTATE_180: Self =
+            SurfaceTransformFlagsKHR(unsafe { NonZeroU32::new_unchecked(0b1000000) });
+        pub const HORIZONTAL_MIRROR_ROTATE_270: Self =
+            SurfaceTransformFlagsKHR(unsafe { NonZeroU32::new_unchecked(0b10000000) });
+        pub const INHERIT: Self =
+            SurfaceTransformFlagsKHR(unsafe { NonZeroU32::new_unchecked(0b100000000) });
     }
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct DebugReportFlagsEXT(pub(crate) Flags);
-    vk_bitflags_wrapped!(DebugReportFlagsEXT, 0b11111, Flags);
+    pub struct DebugReportFlagsEXT(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(DebugReportFlagsEXT, 0b11111);
     impl DebugReportFlagsEXT {
-        pub const INFORMATION: Self = DebugReportFlagsEXT(0b1);
-        pub const WARNING: Self = DebugReportFlagsEXT(0b10);
-        pub const PERFORMANCE_WARNING: Self = DebugReportFlagsEXT(0b100);
-        pub const ERROR: Self = DebugReportFlagsEXT(0b1000);
-        pub const DEBUG: Self = DebugReportFlagsEXT(0b10000);
+        pub const INFORMATION: Self =
+            DebugReportFlagsEXT(unsafe { NonZeroU32::new_unchecked(0b1) });
+        pub const WARNING: Self = DebugReportFlagsEXT(unsafe { NonZeroU32::new_unchecked(0b10) });
+        pub const PERFORMANCE_WARNING: Self =
+            DebugReportFlagsEXT(unsafe { NonZeroU32::new_unchecked(0b100) });
+        pub const ERROR: Self = DebugReportFlagsEXT(unsafe { NonZeroU32::new_unchecked(0b1000) });
+        pub const DEBUG: Self = DebugReportFlagsEXT(unsafe { NonZeroU32::new_unchecked(0b10000) });
     }
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct ExternalMemoryHandleTypeFlagsNV(pub(crate) Flags);
-    vk_bitflags_wrapped!(ExternalMemoryHandleTypeFlagsNV, 0b1111, Flags);
+    pub struct ExternalMemoryHandleTypeFlagsNV(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(ExternalMemoryHandleTypeFlagsNV, 0b1111);
     impl ExternalMemoryHandleTypeFlagsNV {
         pub const EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_NV: Self =
-            ExternalMemoryHandleTypeFlagsNV(0b1);
+            ExternalMemoryHandleTypeFlagsNV(unsafe { NonZeroU32::new_unchecked(0b1) });
         pub const EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_NV: Self =
-            ExternalMemoryHandleTypeFlagsNV(0b10);
+            ExternalMemoryHandleTypeFlagsNV(unsafe { NonZeroU32::new_unchecked(0b10) });
         pub const EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_NV: Self =
-            ExternalMemoryHandleTypeFlagsNV(0b100);
+            ExternalMemoryHandleTypeFlagsNV(unsafe { NonZeroU32::new_unchecked(0b100) });
         pub const EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_NV: Self =
-            ExternalMemoryHandleTypeFlagsNV(0b1000);
+            ExternalMemoryHandleTypeFlagsNV(unsafe { NonZeroU32::new_unchecked(0b1000) });
     }
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct ExternalMemoryFeatureFlagsNV(pub(crate) Flags);
-    vk_bitflags_wrapped!(ExternalMemoryFeatureFlagsNV, 0b111, Flags);
+    pub struct ExternalMemoryFeatureFlagsNV(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(ExternalMemoryFeatureFlagsNV, 0b111);
     impl ExternalMemoryFeatureFlagsNV {
         pub const EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_NV: Self =
-            ExternalMemoryFeatureFlagsNV(0b1);
-        pub const EXTERNAL_MEMORY_FEATURE_EXPORTABLE_NV: Self = ExternalMemoryFeatureFlagsNV(0b10);
-        pub const EXTERNAL_MEMORY_FEATURE_IMPORTABLE_NV: Self = ExternalMemoryFeatureFlagsNV(0b100);
+            ExternalMemoryFeatureFlagsNV(unsafe { NonZeroU32::new_unchecked(0b1) });
+        pub const EXTERNAL_MEMORY_FEATURE_EXPORTABLE_NV: Self =
+            ExternalMemoryFeatureFlagsNV(unsafe { NonZeroU32::new_unchecked(0b10) });
+        pub const EXTERNAL_MEMORY_FEATURE_IMPORTABLE_NV: Self =
+            ExternalMemoryFeatureFlagsNV(unsafe { NonZeroU32::new_unchecked(0b100) });
     }
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct SubgroupFeatureFlags(pub(crate) Flags);
-    vk_bitflags_wrapped!(SubgroupFeatureFlags, 0b11111111, Flags);
+    pub struct SubgroupFeatureFlags(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(SubgroupFeatureFlags, 0b11111111);
     impl SubgroupFeatureFlags {
         #[doc = "Basic subgroup operations"]
-        pub const BASIC: Self = SubgroupFeatureFlags(0b1);
+        pub const BASIC: Self = SubgroupFeatureFlags(unsafe { NonZeroU32::new_unchecked(0b1) });
         #[doc = "Vote subgroup operations"]
-        pub const VOTE: Self = SubgroupFeatureFlags(0b10);
+        pub const VOTE: Self = SubgroupFeatureFlags(unsafe { NonZeroU32::new_unchecked(0b10) });
         #[doc = "Arithmetic subgroup operations"]
-        pub const ARITHMETIC: Self = SubgroupFeatureFlags(0b100);
+        pub const ARITHMETIC: Self =
+            SubgroupFeatureFlags(unsafe { NonZeroU32::new_unchecked(0b100) });
         #[doc = "Ballot subgroup operations"]
-        pub const BALLOT: Self = SubgroupFeatureFlags(0b1000);
+        pub const BALLOT: Self = SubgroupFeatureFlags(unsafe { NonZeroU32::new_unchecked(0b1000) });
         #[doc = "Shuffle subgroup operations"]
-        pub const SHUFFLE: Self = SubgroupFeatureFlags(0b10000);
+        pub const SHUFFLE: Self =
+            SubgroupFeatureFlags(unsafe { NonZeroU32::new_unchecked(0b10000) });
         #[doc = "Shuffle relative subgroup operations"]
-        pub const SHUFFLE_RELATIVE: Self = SubgroupFeatureFlags(0b100000);
+        pub const SHUFFLE_RELATIVE: Self =
+            SubgroupFeatureFlags(unsafe { NonZeroU32::new_unchecked(0b100000) });
         #[doc = "Clustered subgroup operations"]
-        pub const CLUSTERED: Self = SubgroupFeatureFlags(0b1000000);
+        pub const CLUSTERED: Self =
+            SubgroupFeatureFlags(unsafe { NonZeroU32::new_unchecked(0b1000000) });
         #[doc = "Quad subgroup operations"]
-        pub const QUAD: Self = SubgroupFeatureFlags(0b10000000);
+        pub const QUAD: Self =
+            SubgroupFeatureFlags(unsafe { NonZeroU32::new_unchecked(0b10000000) });
     }
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct IndirectCommandsLayoutUsageFlagsNVX(pub(crate) Flags);
-    vk_bitflags_wrapped!(IndirectCommandsLayoutUsageFlagsNVX, 0b1111, Flags);
+    pub struct IndirectCommandsLayoutUsageFlagsNVX(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(IndirectCommandsLayoutUsageFlagsNVX, 0b1111);
     impl IndirectCommandsLayoutUsageFlagsNVX {
-        pub const UNORDERED_SEQUENCES: Self = IndirectCommandsLayoutUsageFlagsNVX(0b1);
-        pub const SPARSE_SEQUENCES: Self = IndirectCommandsLayoutUsageFlagsNVX(0b10);
-        pub const EMPTY_EXECUTIONS: Self = IndirectCommandsLayoutUsageFlagsNVX(0b100);
-        pub const INDEXED_SEQUENCES: Self = IndirectCommandsLayoutUsageFlagsNVX(0b1000);
+        pub const UNORDERED_SEQUENCES: Self =
+            IndirectCommandsLayoutUsageFlagsNVX(unsafe { NonZeroU32::new_unchecked(0b1) });
+        pub const SPARSE_SEQUENCES: Self =
+            IndirectCommandsLayoutUsageFlagsNVX(unsafe { NonZeroU32::new_unchecked(0b10) });
+        pub const EMPTY_EXECUTIONS: Self =
+            IndirectCommandsLayoutUsageFlagsNVX(unsafe { NonZeroU32::new_unchecked(0b100) });
+        pub const INDEXED_SEQUENCES: Self =
+            IndirectCommandsLayoutUsageFlagsNVX(unsafe { NonZeroU32::new_unchecked(0b1000) });
     }
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct ObjectEntryUsageFlagsNVX(pub(crate) Flags);
-    vk_bitflags_wrapped!(ObjectEntryUsageFlagsNVX, 0b11, Flags);
+    pub struct ObjectEntryUsageFlagsNVX(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(ObjectEntryUsageFlagsNVX, 0b11);
     impl ObjectEntryUsageFlagsNVX {
-        pub const GRAPHICS: Self = ObjectEntryUsageFlagsNVX(0b1);
-        pub const COMPUTE: Self = ObjectEntryUsageFlagsNVX(0b10);
+        pub const GRAPHICS: Self =
+            ObjectEntryUsageFlagsNVX(unsafe { NonZeroU32::new_unchecked(0b1) });
+        pub const COMPUTE: Self =
+            ObjectEntryUsageFlagsNVX(unsafe { NonZeroU32::new_unchecked(0b10) });
     }
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct DescriptorSetLayoutCreateFlags(pub(crate) Flags);
-    vk_bitflags_wrapped!(DescriptorSetLayoutCreateFlags, 0b0, Flags);
+    pub struct DescriptorSetLayoutCreateFlags(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(DescriptorSetLayoutCreateFlags, 0b0);
     impl DescriptorSetLayoutCreateFlags {}
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct ExternalMemoryHandleTypeFlags(pub(crate) Flags);
-    vk_bitflags_wrapped!(ExternalMemoryHandleTypeFlags, 0b1111111, Flags);
+    pub struct ExternalMemoryHandleTypeFlags(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(ExternalMemoryHandleTypeFlags, 0b1111111);
     impl ExternalMemoryHandleTypeFlags {
-        pub const EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD: Self = ExternalMemoryHandleTypeFlags(0b1);
+        pub const EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD: Self =
+            ExternalMemoryHandleTypeFlags(unsafe { NonZeroU32::new_unchecked(0b1) });
         pub const EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32: Self =
-            ExternalMemoryHandleTypeFlags(0b10);
+            ExternalMemoryHandleTypeFlags(unsafe { NonZeroU32::new_unchecked(0b10) });
         pub const EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT: Self =
-            ExternalMemoryHandleTypeFlags(0b100);
+            ExternalMemoryHandleTypeFlags(unsafe { NonZeroU32::new_unchecked(0b100) });
         pub const EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE: Self =
-            ExternalMemoryHandleTypeFlags(0b1000);
+            ExternalMemoryHandleTypeFlags(unsafe { NonZeroU32::new_unchecked(0b1000) });
         pub const EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT: Self =
-            ExternalMemoryHandleTypeFlags(0b10000);
+            ExternalMemoryHandleTypeFlags(unsafe { NonZeroU32::new_unchecked(0b10000) });
         pub const EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP: Self =
-            ExternalMemoryHandleTypeFlags(0b100000);
+            ExternalMemoryHandleTypeFlags(unsafe { NonZeroU32::new_unchecked(0b100000) });
         pub const EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE: Self =
-            ExternalMemoryHandleTypeFlags(0b1000000);
+            ExternalMemoryHandleTypeFlags(unsafe { NonZeroU32::new_unchecked(0b1000000) });
     }
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct ExternalMemoryFeatureFlags(pub(crate) Flags);
-    vk_bitflags_wrapped!(ExternalMemoryFeatureFlags, 0b111, Flags);
+    pub struct ExternalMemoryFeatureFlags(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(ExternalMemoryFeatureFlags, 0b111);
     impl ExternalMemoryFeatureFlags {
-        pub const EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY: Self = ExternalMemoryFeatureFlags(0b1);
-        pub const EXTERNAL_MEMORY_FEATURE_EXPORTABLE: Self = ExternalMemoryFeatureFlags(0b10);
-        pub const EXTERNAL_MEMORY_FEATURE_IMPORTABLE: Self = ExternalMemoryFeatureFlags(0b100);
+        pub const EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY: Self =
+            ExternalMemoryFeatureFlags(unsafe { NonZeroU32::new_unchecked(0b1) });
+        pub const EXTERNAL_MEMORY_FEATURE_EXPORTABLE: Self =
+            ExternalMemoryFeatureFlags(unsafe { NonZeroU32::new_unchecked(0b10) });
+        pub const EXTERNAL_MEMORY_FEATURE_IMPORTABLE: Self =
+            ExternalMemoryFeatureFlags(unsafe { NonZeroU32::new_unchecked(0b100) });
     }
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct ExternalSemaphoreHandleTypeFlags(pub(crate) Flags);
-    vk_bitflags_wrapped!(ExternalSemaphoreHandleTypeFlags, 0b11111, Flags);
+    pub struct ExternalSemaphoreHandleTypeFlags(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(ExternalSemaphoreHandleTypeFlags, 0b11111);
     impl ExternalSemaphoreHandleTypeFlags {
         pub const EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD: Self =
-            ExternalSemaphoreHandleTypeFlags(0b1);
+            ExternalSemaphoreHandleTypeFlags(unsafe { NonZeroU32::new_unchecked(0b1) });
         pub const EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32: Self =
-            ExternalSemaphoreHandleTypeFlags(0b10);
+            ExternalSemaphoreHandleTypeFlags(unsafe { NonZeroU32::new_unchecked(0b10) });
         pub const EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT: Self =
-            ExternalSemaphoreHandleTypeFlags(0b100);
+            ExternalSemaphoreHandleTypeFlags(unsafe { NonZeroU32::new_unchecked(0b100) });
         pub const EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE: Self =
-            ExternalSemaphoreHandleTypeFlags(0b1000);
+            ExternalSemaphoreHandleTypeFlags(unsafe { NonZeroU32::new_unchecked(0b1000) });
         pub const EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD: Self =
-            ExternalSemaphoreHandleTypeFlags(0b10000);
+            ExternalSemaphoreHandleTypeFlags(unsafe { NonZeroU32::new_unchecked(0b10000) });
     }
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct ExternalSemaphoreFeatureFlags(pub(crate) Flags);
-    vk_bitflags_wrapped!(ExternalSemaphoreFeatureFlags, 0b11, Flags);
+    pub struct ExternalSemaphoreFeatureFlags(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(ExternalSemaphoreFeatureFlags, 0b11);
     impl ExternalSemaphoreFeatureFlags {
-        pub const EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE: Self = ExternalSemaphoreFeatureFlags(0b1);
-        pub const EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE: Self = ExternalSemaphoreFeatureFlags(0b10);
+        pub const EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE: Self =
+            ExternalSemaphoreFeatureFlags(unsafe { NonZeroU32::new_unchecked(0b1) });
+        pub const EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE: Self =
+            ExternalSemaphoreFeatureFlags(unsafe { NonZeroU32::new_unchecked(0b10) });
     }
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct SemaphoreImportFlags(pub(crate) Flags);
-    vk_bitflags_wrapped!(SemaphoreImportFlags, 0b1, Flags);
+    pub struct SemaphoreImportFlags(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(SemaphoreImportFlags, 0b1);
     impl SemaphoreImportFlags {
-        pub const TEMPORARY: Self = SemaphoreImportFlags(0b1);
+        pub const TEMPORARY: Self = SemaphoreImportFlags(unsafe { NonZeroU32::new_unchecked(0b1) });
     }
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct ExternalFenceHandleTypeFlags(pub(crate) Flags);
-    vk_bitflags_wrapped!(ExternalFenceHandleTypeFlags, 0b1111, Flags);
+    pub struct ExternalFenceHandleTypeFlags(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(ExternalFenceHandleTypeFlags, 0b1111);
     impl ExternalFenceHandleTypeFlags {
-        pub const EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD: Self = ExternalFenceHandleTypeFlags(0b1);
+        pub const EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD: Self =
+            ExternalFenceHandleTypeFlags(unsafe { NonZeroU32::new_unchecked(0b1) });
         pub const EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32: Self =
-            ExternalFenceHandleTypeFlags(0b10);
+            ExternalFenceHandleTypeFlags(unsafe { NonZeroU32::new_unchecked(0b10) });
         pub const EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT: Self =
-            ExternalFenceHandleTypeFlags(0b100);
-        pub const EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD: Self = ExternalFenceHandleTypeFlags(0b1000);
+            ExternalFenceHandleTypeFlags(unsafe { NonZeroU32::new_unchecked(0b100) });
+        pub const EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD: Self =
+            ExternalFenceHandleTypeFlags(unsafe { NonZeroU32::new_unchecked(0b1000) });
     }
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct ExternalFenceFeatureFlags(pub(crate) Flags);
-    vk_bitflags_wrapped!(ExternalFenceFeatureFlags, 0b11, Flags);
+    pub struct ExternalFenceFeatureFlags(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(ExternalFenceFeatureFlags, 0b11);
     impl ExternalFenceFeatureFlags {
-        pub const EXTERNAL_FENCE_FEATURE_EXPORTABLE: Self = ExternalFenceFeatureFlags(0b1);
-        pub const EXTERNAL_FENCE_FEATURE_IMPORTABLE: Self = ExternalFenceFeatureFlags(0b10);
+        pub const EXTERNAL_FENCE_FEATURE_EXPORTABLE: Self =
+            ExternalFenceFeatureFlags(unsafe { NonZeroU32::new_unchecked(0b1) });
+        pub const EXTERNAL_FENCE_FEATURE_IMPORTABLE: Self =
+            ExternalFenceFeatureFlags(unsafe { NonZeroU32::new_unchecked(0b10) });
     }
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct FenceImportFlags(pub(crate) Flags);
-    vk_bitflags_wrapped!(FenceImportFlags, 0b1, Flags);
+    pub struct FenceImportFlags(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(FenceImportFlags, 0b1);
     impl FenceImportFlags {
-        pub const TEMPORARY: Self = FenceImportFlags(0b1);
+        pub const TEMPORARY: Self = FenceImportFlags(unsafe { NonZeroU32::new_unchecked(0b1) });
     }
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct SurfaceCounterFlagsEXT(pub(crate) Flags);
-    vk_bitflags_wrapped!(SurfaceCounterFlagsEXT, 0b1, Flags);
+    pub struct SurfaceCounterFlagsEXT(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(SurfaceCounterFlagsEXT, 0b1);
     impl SurfaceCounterFlagsEXT {
-        pub const VBLANK: Self = SurfaceCounterFlagsEXT(0b1);
+        pub const VBLANK: Self = SurfaceCounterFlagsEXT(unsafe { NonZeroU32::new_unchecked(0b1) });
     }
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct PeerMemoryFeatureFlags(pub(crate) Flags);
-    vk_bitflags_wrapped!(PeerMemoryFeatureFlags, 0b1111, Flags);
+    pub struct PeerMemoryFeatureFlags(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(PeerMemoryFeatureFlags, 0b1111);
     impl PeerMemoryFeatureFlags {
         #[doc = "Can read with vkCmdCopy commands"]
-        pub const COPY_SRC: Self = PeerMemoryFeatureFlags(0b1);
+        pub const COPY_SRC: Self =
+            PeerMemoryFeatureFlags(unsafe { NonZeroU32::new_unchecked(0b1) });
         #[doc = "Can write with vkCmdCopy commands"]
-        pub const COPY_DST: Self = PeerMemoryFeatureFlags(0b10);
+        pub const COPY_DST: Self =
+            PeerMemoryFeatureFlags(unsafe { NonZeroU32::new_unchecked(0b10) });
         #[doc = "Can read with any access type/command"]
-        pub const GENERIC_SRC: Self = PeerMemoryFeatureFlags(0b100);
+        pub const GENERIC_SRC: Self =
+            PeerMemoryFeatureFlags(unsafe { NonZeroU32::new_unchecked(0b100) });
         #[doc = "Can write with and access type/command"]
-        pub const GENERIC_DST: Self = PeerMemoryFeatureFlags(0b1000);
+        pub const GENERIC_DST: Self =
+            PeerMemoryFeatureFlags(unsafe { NonZeroU32::new_unchecked(0b1000) });
     }
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct MemoryAllocateFlags(pub(crate) Flags);
-    vk_bitflags_wrapped!(MemoryAllocateFlags, 0b1, Flags);
+    pub struct MemoryAllocateFlags(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(MemoryAllocateFlags, 0b1);
     impl MemoryAllocateFlags {
         #[doc = "Force allocation on specific devices"]
-        pub const DEVICE_MASK: Self = MemoryAllocateFlags(0b1);
+        pub const DEVICE_MASK: Self =
+            MemoryAllocateFlags(unsafe { NonZeroU32::new_unchecked(0b1) });
     }
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct DeviceGroupPresentModeFlagsKHR(pub(crate) Flags);
-    vk_bitflags_wrapped!(DeviceGroupPresentModeFlagsKHR, 0b1111, Flags);
+    pub struct DeviceGroupPresentModeFlagsKHR(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(DeviceGroupPresentModeFlagsKHR, 0b1111);
     impl DeviceGroupPresentModeFlagsKHR {
         #[doc = "Present from local memory"]
-        pub const LOCAL: Self = DeviceGroupPresentModeFlagsKHR(0b1);
+        pub const LOCAL: Self =
+            DeviceGroupPresentModeFlagsKHR(unsafe { NonZeroU32::new_unchecked(0b1) });
         #[doc = "Present from remote memory"]
-        pub const REMOTE: Self = DeviceGroupPresentModeFlagsKHR(0b10);
+        pub const REMOTE: Self =
+            DeviceGroupPresentModeFlagsKHR(unsafe { NonZeroU32::new_unchecked(0b10) });
         #[doc = "Present sum of local and/or remote memory"]
-        pub const SUM: Self = DeviceGroupPresentModeFlagsKHR(0b100);
+        pub const SUM: Self =
+            DeviceGroupPresentModeFlagsKHR(unsafe { NonZeroU32::new_unchecked(0b100) });
         #[doc = "Each physical device presents from local memory"]
-        pub const LOCAL_MULTI_DEVICE: Self = DeviceGroupPresentModeFlagsKHR(0b1000);
+        pub const LOCAL_MULTI_DEVICE: Self =
+            DeviceGroupPresentModeFlagsKHR(unsafe { NonZeroU32::new_unchecked(0b1000) });
     }
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct SwapchainCreateFlagsKHR(pub(crate) Flags);
-    vk_bitflags_wrapped!(SwapchainCreateFlagsKHR, 0b0, Flags);
+    pub struct SwapchainCreateFlagsKHR(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(SwapchainCreateFlagsKHR, 0b0);
     impl SwapchainCreateFlagsKHR {}
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct SubpassDescriptionFlags(pub(crate) Flags);
-    vk_bitflags_wrapped!(SubpassDescriptionFlags, 0b0, Flags);
+    pub struct SubpassDescriptionFlags(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(SubpassDescriptionFlags, 0b0);
     impl SubpassDescriptionFlags {}
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct DebugUtilsMessageSeverityFlagsEXT(pub(crate) Flags);
-    vk_bitflags_wrapped!(DebugUtilsMessageSeverityFlagsEXT, 0b1000100010001, Flags);
+    pub struct DebugUtilsMessageSeverityFlagsEXT(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(DebugUtilsMessageSeverityFlagsEXT, 0b1000100010001);
     impl DebugUtilsMessageSeverityFlagsEXT {
-        pub const VERBOSE: Self = DebugUtilsMessageSeverityFlagsEXT(0b1);
-        pub const INFO: Self = DebugUtilsMessageSeverityFlagsEXT(0b10000);
-        pub const WARNING: Self = DebugUtilsMessageSeverityFlagsEXT(0b100000000);
-        pub const ERROR: Self = DebugUtilsMessageSeverityFlagsEXT(0b1000000000000);
+        pub const VERBOSE: Self =
+            DebugUtilsMessageSeverityFlagsEXT(unsafe { NonZeroU32::new_unchecked(0b1) });
+        pub const INFO: Self =
+            DebugUtilsMessageSeverityFlagsEXT(unsafe { NonZeroU32::new_unchecked(0b10000) });
+        pub const WARNING: Self =
+            DebugUtilsMessageSeverityFlagsEXT(unsafe { NonZeroU32::new_unchecked(0b100000000) });
+        pub const ERROR: Self = DebugUtilsMessageSeverityFlagsEXT(unsafe {
+            NonZeroU32::new_unchecked(0b1000000000000)
+        });
     }
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct DebugUtilsMessageTypeFlagsEXT(pub(crate) Flags);
-    vk_bitflags_wrapped!(DebugUtilsMessageTypeFlagsEXT, 0b111, Flags);
+    pub struct DebugUtilsMessageTypeFlagsEXT(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(DebugUtilsMessageTypeFlagsEXT, 0b111);
     impl DebugUtilsMessageTypeFlagsEXT {
-        pub const GENERAL: Self = DebugUtilsMessageTypeFlagsEXT(0b1);
-        pub const VALIDATION: Self = DebugUtilsMessageTypeFlagsEXT(0b10);
-        pub const PERFORMANCE: Self = DebugUtilsMessageTypeFlagsEXT(0b100);
+        pub const GENERAL: Self =
+            DebugUtilsMessageTypeFlagsEXT(unsafe { NonZeroU32::new_unchecked(0b1) });
+        pub const VALIDATION: Self =
+            DebugUtilsMessageTypeFlagsEXT(unsafe { NonZeroU32::new_unchecked(0b10) });
+        pub const PERFORMANCE: Self =
+            DebugUtilsMessageTypeFlagsEXT(unsafe { NonZeroU32::new_unchecked(0b100) });
     }
     #[repr(transparent)]
     #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-    pub struct DescriptorBindingFlagsEXT(pub(crate) Flags);
-    vk_bitflags_wrapped!(DescriptorBindingFlagsEXT, 0b1111, Flags);
+    pub struct DescriptorBindingFlagsEXT(pub(crate) NonZeroU32);
+    vk_bitflags_wrapped!(DescriptorBindingFlagsEXT, 0b1111);
     impl DescriptorBindingFlagsEXT {
-        pub const UPDATE_AFTER_BIND: Self = DescriptorBindingFlagsEXT(0b1);
-        pub const UPDATE_UNUSED_WHILE_PENDING: Self = DescriptorBindingFlagsEXT(0b10);
-        pub const PARTIALLY_BOUND: Self = DescriptorBindingFlagsEXT(0b100);
-        pub const VARIABLE_DESCRIPTOR_COUNT: Self = DescriptorBindingFlagsEXT(0b1000);
+        pub const UPDATE_AFTER_BIND: Self =
+            DescriptorBindingFlagsEXT(unsafe { NonZeroU32::new_unchecked(0b1) });
+        pub const UPDATE_UNUSED_WHILE_PENDING: Self =
+            DescriptorBindingFlagsEXT(unsafe { NonZeroU32::new_unchecked(0b10) });
+        pub const PARTIALLY_BOUND: Self =
+            DescriptorBindingFlagsEXT(unsafe { NonZeroU32::new_unchecked(0b100) });
+        pub const VARIABLE_DESCRIPTOR_COUNT: Self =
+            DescriptorBindingFlagsEXT(unsafe { NonZeroU32::new_unchecked(0b1000) });
     }
 }
 pub const MAX_PHYSICAL_DEVICE_NAME_SIZE: usize = 256;
@@ -13684,7 +13908,7 @@ pub mod extensions {
     impl ObjectType {
         pub const SURFACE_KHR: Self = ObjectType(1000000000);
     }
-    pub struct KhrSwapchainFn { create_swapchain_khr : extern "system" fn ( device : Device , p_create_info : *const SwapchainCreateInfoKHR , p_allocator : *const AllocationCallbacks , p_swapchain : *mut SwapchainKHR , ) -> Result , destroy_swapchain_khr : extern "system" fn ( device : Device , swapchain : Option < SwapchainKHR > , p_allocator : *const AllocationCallbacks , ) -> c_void , get_swapchain_images_khr : extern "system" fn ( device : Device , swapchain : SwapchainKHR , p_swapchain_image_count : *mut uint32_t , p_swapchain_images : *mut Image , ) -> Result , acquire_next_image_khr : extern "system" fn ( device : Device , swapchain : SwapchainKHR , timeout : uint64_t , semaphore : Option < Semaphore > , fence : Option < Fence > , p_image_index : *mut uint32_t , ) -> Result , queue_present_khr : extern "system" fn ( queue : Queue , p_present_info : *const PresentInfoKHR , ) -> Result , get_device_group_present_capabilities_khr : extern "system" fn ( device : Device , p_device_group_present_capabilities : *mut DeviceGroupPresentCapabilitiesKHR , ) -> Result , get_device_group_surface_present_modes_khr : extern "system" fn ( device : Device , surface : SurfaceKHR , p_modes : *mut DeviceGroupPresentModeFlagsKHR , ) -> Result , get_physical_device_present_rectangles_khr : extern "system" fn ( physical_device : PhysicalDevice , surface : SurfaceKHR , p_rect_count : *mut uint32_t , p_rects : *mut Rect2D , ) -> Result , acquire_next_image2_khr : extern "system" fn ( device : Device , p_acquire_info : *const AcquireNextImageInfoKHR , p_image_index : *mut uint32_t , ) -> Result , }
+    pub struct KhrSwapchainFn { create_swapchain_khr : extern "system" fn ( device : Device , p_create_info : *const SwapchainCreateInfoKHR , p_allocator : *const AllocationCallbacks , p_swapchain : *mut SwapchainKHR , ) -> Result , destroy_swapchain_khr : extern "system" fn ( device : Device , swapchain : Option < SwapchainKHR > , p_allocator : *const AllocationCallbacks , ) -> c_void , get_swapchain_images_khr : extern "system" fn ( device : Device , swapchain : SwapchainKHR , p_swapchain_image_count : *mut uint32_t , p_swapchain_images : *mut Image , ) -> Result , acquire_next_image_khr : extern "system" fn ( device : Device , swapchain : SwapchainKHR , timeout : uint64_t , semaphore : Option < Semaphore > , fence : Option < Fence > , p_image_index : *mut uint32_t , ) -> Result , queue_present_khr : extern "system" fn ( queue : Queue , p_present_info : *const PresentInfoKHR , ) -> Result , get_device_group_present_capabilities_khr : extern "system" fn ( device : Device , p_device_group_present_capabilities : *mut DeviceGroupPresentCapabilitiesKHR , ) -> Result , get_device_group_surface_present_modes_khr : extern "system" fn ( device : Device , surface : SurfaceKHR , p_modes : *mut Option < DeviceGroupPresentModeFlagsKHR > , ) -> Result , get_physical_device_present_rectangles_khr : extern "system" fn ( physical_device : PhysicalDevice , surface : SurfaceKHR , p_rect_count : *mut uint32_t , p_rects : *mut Rect2D , ) -> Result , acquire_next_image2_khr : extern "system" fn ( device : Device , p_acquire_info : *const AcquireNextImageInfoKHR , p_image_index : *mut uint32_t , ) -> Result , }
     unsafe impl Send for KhrSwapchainFn {}
     unsafe impl Sync for KhrSwapchainFn {}
     impl ::std::clone::Clone for KhrSwapchainFn {
@@ -13870,7 +14094,7 @@ pub mod extensions {
             &self,
             device: Device,
             surface: SurfaceKHR,
-            p_modes: *mut DeviceGroupPresentModeFlagsKHR,
+            p_modes: *mut Option<DeviceGroupPresentModeFlagsKHR>,
         ) -> Result {
             (self.get_device_group_surface_present_modes_khr)(device, surface, p_modes)
         }
@@ -13947,11 +14171,13 @@ pub mod extensions {
     }
     #[doc = "Generated from \'VK_KHR_swapchain\'"]
     impl SwapchainCreateFlagsKHR {
-        pub const SPLIT_INSTANCE_BIND_REGIONS: Self = SwapchainCreateFlagsKHR(0b1);
+        pub const SPLIT_INSTANCE_BIND_REGIONS: Self =
+            SwapchainCreateFlagsKHR(unsafe { NonZeroU32::new_unchecked(0b1) });
     }
     #[doc = "Generated from \'VK_KHR_swapchain\'"]
     impl SwapchainCreateFlagsKHR {
-        pub const PROTECTED: Self = SwapchainCreateFlagsKHR(0b10);
+        pub const PROTECTED: Self =
+            SwapchainCreateFlagsKHR(unsafe { NonZeroU32::new_unchecked(0b10) });
     }
     pub struct KhrDisplayFn {
         get_physical_device_display_properties_khr:
@@ -15099,7 +15325,8 @@ pub mod extensions {
     }
     #[doc = "Generated from \'VK_IMG_filter_cubic\'"]
     impl FormatFeatureFlags {
-        pub const SAMPLED_IMAGE_FILTER_CUBIC_IMG: Self = FormatFeatureFlags(0b10000000000000);
+        pub const SAMPLED_IMAGE_FILTER_CUBIC_IMG: Self =
+            FormatFeatureFlags(unsafe { NonZeroU32::new_unchecked(0b10000000000000) });
     }
     pub struct AmdExtension17Fn {}
     unsafe impl Send for AmdExtension17Fn {}
@@ -16245,7 +16472,7 @@ pub mod extensions {
     impl Format {
         pub const PVRTC2_4BPP_SRGB_BLOCK_IMG: Self = Format(1000054007);
     }
-    pub struct NvExternalMemoryCapabilitiesFn { get_physical_device_external_image_format_properties_nv : extern "system" fn ( physical_device : PhysicalDevice , format : Format , ty : ImageType , tiling : ImageTiling , usage : ImageUsageFlags , flags : ImageCreateFlags , external_handle_type : ExternalMemoryHandleTypeFlagsNV , p_external_image_format_properties : *mut ExternalImageFormatPropertiesNV , ) -> Result , }
+    pub struct NvExternalMemoryCapabilitiesFn { get_physical_device_external_image_format_properties_nv : extern "system" fn ( physical_device : PhysicalDevice , format : Format , ty : ImageType , tiling : ImageTiling , usage : ImageUsageFlags , flags : Option < ImageCreateFlags > , external_handle_type : Option < ExternalMemoryHandleTypeFlagsNV > , p_external_image_format_properties : *mut ExternalImageFormatPropertiesNV , ) -> Result , }
     unsafe impl Send for NvExternalMemoryCapabilitiesFn {}
     unsafe impl Sync for NvExternalMemoryCapabilitiesFn {}
     impl ::std::clone::Clone for NvExternalMemoryCapabilitiesFn {
@@ -16286,8 +16513,8 @@ pub mod extensions {
             ty: ImageType,
             tiling: ImageTiling,
             usage: ImageUsageFlags,
-            flags: ImageCreateFlags,
-            external_handle_type: ExternalMemoryHandleTypeFlagsNV,
+            flags: Option<ImageCreateFlags>,
+            external_handle_type: Option<ExternalMemoryHandleTypeFlagsNV>,
             p_external_image_format_properties: *mut ExternalImageFormatPropertiesNV,
         ) -> Result {
             (self.get_physical_device_external_image_format_properties_nv)(
@@ -16439,7 +16666,7 @@ pub mod extensions {
             }
         }
     }
-    pub struct KhrDeviceGroupFn { get_device_group_present_capabilities_khr : extern "system" fn ( device : Device , p_device_group_present_capabilities : *mut DeviceGroupPresentCapabilitiesKHR , ) -> Result , get_device_group_surface_present_modes_khr : extern "system" fn ( device : Device , surface : SurfaceKHR , p_modes : *mut DeviceGroupPresentModeFlagsKHR , ) -> Result , get_physical_device_present_rectangles_khr : extern "system" fn ( physical_device : PhysicalDevice , surface : SurfaceKHR , p_rect_count : *mut uint32_t , p_rects : *mut Rect2D , ) -> Result , acquire_next_image2_khr : extern "system" fn ( device : Device , p_acquire_info : *const AcquireNextImageInfoKHR , p_image_index : *mut uint32_t , ) -> Result , }
+    pub struct KhrDeviceGroupFn { get_device_group_present_capabilities_khr : extern "system" fn ( device : Device , p_device_group_present_capabilities : *mut DeviceGroupPresentCapabilitiesKHR , ) -> Result , get_device_group_surface_present_modes_khr : extern "system" fn ( device : Device , surface : SurfaceKHR , p_modes : *mut Option < DeviceGroupPresentModeFlagsKHR > , ) -> Result , get_physical_device_present_rectangles_khr : extern "system" fn ( physical_device : PhysicalDevice , surface : SurfaceKHR , p_rect_count : *mut uint32_t , p_rects : *mut Rect2D , ) -> Result , acquire_next_image2_khr : extern "system" fn ( device : Device , p_acquire_info : *const AcquireNextImageInfoKHR , p_image_index : *mut uint32_t , ) -> Result , }
     unsafe impl Send for KhrDeviceGroupFn {}
     unsafe impl Sync for KhrDeviceGroupFn {}
     impl ::std::clone::Clone for KhrDeviceGroupFn {
@@ -16519,7 +16746,7 @@ pub mod extensions {
             &self,
             device: Device,
             surface: SurfaceKHR,
-            p_modes: *mut DeviceGroupPresentModeFlagsKHR,
+            p_modes: *mut Option<DeviceGroupPresentModeFlagsKHR>,
         ) -> Result {
             (self.get_device_group_surface_present_modes_khr)(device, surface, p_modes)
         }
@@ -17340,7 +17567,8 @@ pub mod extensions {
     }
     #[doc = "Generated from \'VK_KHR_push_descriptor\'"]
     impl DescriptorSetLayoutCreateFlags {
-        pub const PUSH_DESCRIPTOR_KHR: Self = DescriptorSetLayoutCreateFlags(0b1);
+        pub const PUSH_DESCRIPTOR_KHR: Self =
+            DescriptorSetLayoutCreateFlags(unsafe { NonZeroU32::new_unchecked(0b1) });
     }
     pub struct ExtExtension82Fn {}
     unsafe impl Send for ExtExtension82Fn {}
@@ -17792,15 +18020,18 @@ pub mod extensions {
     }
     #[doc = "Generated from \'VK_NVX_device_generated_commands\'"]
     impl PipelineStageFlags {
-        pub const COMMAND_PROCESS_NVX: Self = PipelineStageFlags(0b100000000000000000);
+        pub const COMMAND_PROCESS_NVX: Self =
+            PipelineStageFlags(unsafe { NonZeroU32::new_unchecked(0b100000000000000000) });
     }
     #[doc = "Generated from \'VK_NVX_device_generated_commands\'"]
     impl AccessFlags {
-        pub const COMMAND_PROCESS_READ_NVX: Self = AccessFlags(0b100000000000000000);
+        pub const COMMAND_PROCESS_READ_NVX: Self =
+            AccessFlags(unsafe { NonZeroU32::new_unchecked(0b100000000000000000) });
     }
     #[doc = "Generated from \'VK_NVX_device_generated_commands\'"]
     impl AccessFlags {
-        pub const COMMAND_PROCESS_WRITE_NVX: Self = AccessFlags(0b1000000000000000000);
+        pub const COMMAND_PROCESS_WRITE_NVX: Self =
+            AccessFlags(unsafe { NonZeroU32::new_unchecked(0b1000000000000000000) });
     }
     #[doc = "Generated from \'VK_NVX_device_generated_commands\'"]
     impl ObjectType {
@@ -18379,11 +18610,13 @@ pub mod extensions {
     }
     #[doc = "Generated from \'VK_NVX_multiview_per_view_attributes\'"]
     impl SubpassDescriptionFlags {
-        pub const PER_VIEW_ATTRIBUTES_NVX: Self = SubpassDescriptionFlags(0b1);
+        pub const PER_VIEW_ATTRIBUTES_NVX: Self =
+            SubpassDescriptionFlags(unsafe { NonZeroU32::new_unchecked(0b1) });
     }
     #[doc = "Generated from \'VK_NVX_multiview_per_view_attributes\'"]
     impl SubpassDescriptionFlags {
-        pub const PER_VIEW_POSITION_X_ONLY_NVX: Self = SubpassDescriptionFlags(0b10);
+        pub const PER_VIEW_POSITION_X_ONLY_NVX: Self =
+            SubpassDescriptionFlags(unsafe { NonZeroU32::new_unchecked(0b10) });
     }
     pub struct NvViewportSwizzleFn {}
     unsafe impl Send for NvViewportSwizzleFn {}
@@ -19575,7 +19808,7 @@ pub mod extensions {
     #[doc = "Generated from \'VK_EXT_external_memory_dma_buf\'"]
     impl ExternalMemoryHandleTypeFlags {
         pub const EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF: Self =
-            ExternalMemoryHandleTypeFlags(0b1000000000);
+            ExternalMemoryHandleTypeFlags(unsafe { NonZeroU32::new_unchecked(0b1000000000) });
     }
     pub struct ExtQueueFamilyForeignFn {}
     unsafe impl Send for ExtQueueFamilyForeignFn {}
@@ -19987,7 +20220,7 @@ pub mod extensions {
     #[doc = "Generated from \'VK_ANDROID_external_memory_android_hardware_buffer\'"]
     impl ExternalMemoryHandleTypeFlags {
         pub const EXTERNAL_MEMORY_HANDLE_TYPE_ANDROID_HARDWARE_BUFFER_ANDROID: Self =
-            ExternalMemoryHandleTypeFlags(0b10000000000);
+            ExternalMemoryHandleTypeFlags(unsafe { NonZeroU32::new_unchecked(0b10000000000) });
     }
     #[doc = "Generated from \'VK_ANDROID_external_memory_android_hardware_buffer\'"]
     impl StructureType {
@@ -20047,7 +20280,8 @@ pub mod extensions {
     }
     #[doc = "Generated from \'VK_EXT_sampler_filter_minmax\'"]
     impl FormatFeatureFlags {
-        pub const SAMPLED_IMAGE_FILTER_MINMAX_EXT: Self = FormatFeatureFlags(0b10000000000000000);
+        pub const SAMPLED_IMAGE_FILTER_MINMAX_EXT: Self =
+            FormatFeatureFlags(unsafe { NonZeroU32::new_unchecked(0b10000000000000000) });
     }
     pub struct KhrStorageBufferStorageClassFn {}
     unsafe impl Send for KhrStorageBufferStorageClassFn {}
@@ -20391,7 +20625,8 @@ pub mod extensions {
     }
     #[doc = "Generated from \'VK_EXT_sample_locations\'"]
     impl ImageCreateFlags {
-        pub const SAMPLE_LOCATIONS_COMPATIBLE_DEPTH_EXT: Self = ImageCreateFlags(0b1000000000000);
+        pub const SAMPLE_LOCATIONS_COMPATIBLE_DEPTH_EXT: Self =
+            ImageCreateFlags(unsafe { NonZeroU32::new_unchecked(0b1000000000000) });
     }
     #[doc = "Generated from \'VK_EXT_sample_locations\'"]
     impl StructureType {
@@ -20710,7 +20945,8 @@ pub mod extensions {
     }
     #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
     impl AccessFlags {
-        pub const COLOR_ATTACHMENT_READ_NONCOHERENT_EXT: Self = AccessFlags(0b10000000000000000000);
+        pub const COLOR_ATTACHMENT_READ_NONCOHERENT_EXT: Self =
+            AccessFlags(unsafe { NonZeroU32::new_unchecked(0b10000000000000000000) });
     }
     pub struct NvFragmentCoverageToColorFn {}
     unsafe impl Send for NvFragmentCoverageToColorFn {}
@@ -21158,11 +21394,13 @@ pub mod extensions {
     }
     #[doc = "Generated from \'VK_EXT_descriptor_indexing\'"]
     impl DescriptorPoolCreateFlags {
-        pub const UPDATE_AFTER_BIND_EXT: Self = DescriptorPoolCreateFlags(0b10);
+        pub const UPDATE_AFTER_BIND_EXT: Self =
+            DescriptorPoolCreateFlags(unsafe { NonZeroU32::new_unchecked(0b10) });
     }
     #[doc = "Generated from \'VK_EXT_descriptor_indexing\'"]
     impl DescriptorSetLayoutCreateFlags {
-        pub const UPDATE_AFTER_BIND_POOL_EXT: Self = DescriptorSetLayoutCreateFlags(0b10);
+        pub const UPDATE_AFTER_BIND_POOL_EXT: Self =
+            DescriptorSetLayoutCreateFlags(unsafe { NonZeroU32::new_unchecked(0b10) });
     }
     #[doc = "Generated from \'VK_EXT_descriptor_indexing\'"]
     impl Result {
@@ -21673,12 +21911,12 @@ pub mod extensions {
     #[doc = "Generated from \'VK_EXT_external_memory_host\'"]
     impl ExternalMemoryHandleTypeFlags {
         pub const EXTERNAL_MEMORY_HANDLE_TYPE_HOST_ALLOCATION: Self =
-            ExternalMemoryHandleTypeFlags(0b10000000);
+            ExternalMemoryHandleTypeFlags(unsafe { NonZeroU32::new_unchecked(0b10000000) });
     }
     #[doc = "Generated from \'VK_EXT_external_memory_host\'"]
     impl ExternalMemoryHandleTypeFlags {
         pub const EXTERNAL_MEMORY_HANDLE_TYPE_HOST_MAPPED_FOREIGN_MEMORY: Self =
-            ExternalMemoryHandleTypeFlags(0b100000000);
+            ExternalMemoryHandleTypeFlags(unsafe { NonZeroU32::new_unchecked(0b100000000) });
     }
     pub struct AmdBufferMarkerFn {
         cmd_write_buffer_marker_amd: extern "system" fn(
@@ -22172,7 +22410,8 @@ pub mod extensions {
     }
     #[doc = "Generated from \'VK_NV_shader_subgroup_partitioned\'"]
     impl SubgroupFeatureFlags {
-        pub const PARTITIONED_NV: Self = SubgroupFeatureFlags(0b100000000);
+        pub const PARTITIONED_NV: Self =
+            SubgroupFeatureFlags(unsafe { NonZeroU32::new_unchecked(0b100000000) });
     }
     pub struct KhrExtension200Fn {}
     unsafe impl Send for KhrExtension200Fn {}
@@ -22474,7 +22713,8 @@ pub mod extensions {
     }
     #[doc = "Generated from \'VK_VERSION_1_1\'"]
     impl ImageCreateFlags {
-        pub const ALIAS: Self = ImageCreateFlags(0b10000000000);
+        pub const ALIAS: Self =
+            ImageCreateFlags(unsafe { NonZeroU32::new_unchecked(0b10000000000) });
     }
     #[doc = "Generated from \'VK_VERSION_1_1\'"]
     impl StructureType {
@@ -22510,15 +22750,17 @@ pub mod extensions {
     }
     #[doc = "Generated from \'VK_VERSION_1_1\'"]
     impl PipelineCreateFlags {
-        pub const VIEW_INDEX_FROM_DEVICE_INDEX: Self = PipelineCreateFlags(0b1000);
+        pub const VIEW_INDEX_FROM_DEVICE_INDEX: Self =
+            PipelineCreateFlags(unsafe { NonZeroU32::new_unchecked(0b1000) });
     }
     #[doc = "Generated from \'VK_VERSION_1_1\'"]
     impl PipelineCreateFlags {
-        pub const DISPATCH_BASE: Self = PipelineCreateFlags(0b10000);
+        pub const DISPATCH_BASE: Self =
+            PipelineCreateFlags(unsafe { NonZeroU32::new_unchecked(0b10000) });
     }
     #[doc = "Generated from \'VK_VERSION_1_1\'"]
     impl DependencyFlags {
-        pub const DEVICE_GROUP: Self = DependencyFlags(0b100);
+        pub const DEVICE_GROUP: Self = DependencyFlags(unsafe { NonZeroU32::new_unchecked(0b100) });
     }
     #[doc = "Generated from \'VK_VERSION_1_1\'"]
     impl StructureType {
@@ -22530,7 +22772,8 @@ pub mod extensions {
     }
     #[doc = "Generated from \'VK_VERSION_1_1\'"]
     impl ImageCreateFlags {
-        pub const SPLIT_INSTANCE_BIND_REGIONS: Self = ImageCreateFlags(0b1000000);
+        pub const SPLIT_INSTANCE_BIND_REGIONS: Self =
+            ImageCreateFlags(unsafe { NonZeroU32::new_unchecked(0b1000000) });
     }
     #[doc = "Generated from \'VK_VERSION_1_1\'"]
     impl StructureType {
@@ -22542,7 +22785,8 @@ pub mod extensions {
     }
     #[doc = "Generated from \'VK_VERSION_1_1\'"]
     impl MemoryHeapFlags {
-        pub const MULTI_INSTANCE: Self = MemoryHeapFlags(0b10);
+        pub const MULTI_INSTANCE: Self =
+            MemoryHeapFlags(unsafe { NonZeroU32::new_unchecked(0b10) });
     }
     #[doc = "Generated from \'VK_VERSION_1_1\'"]
     impl StructureType {
@@ -22606,23 +22850,28 @@ pub mod extensions {
     }
     #[doc = "Generated from \'VK_VERSION_1_1\'"]
     impl FormatFeatureFlags {
-        pub const TRANSFER_SRC: Self = FormatFeatureFlags(0b100000000000000);
+        pub const TRANSFER_SRC: Self =
+            FormatFeatureFlags(unsafe { NonZeroU32::new_unchecked(0b100000000000000) });
     }
     #[doc = "Generated from \'VK_VERSION_1_1\'"]
     impl FormatFeatureFlags {
-        pub const TRANSFER_DST: Self = FormatFeatureFlags(0b1000000000000000);
+        pub const TRANSFER_DST: Self =
+            FormatFeatureFlags(unsafe { NonZeroU32::new_unchecked(0b1000000000000000) });
     }
     #[doc = "Generated from \'VK_VERSION_1_1\'"]
     impl ImageCreateFlags {
-        pub const TYPE_2D_ARRAY_COMPATIBLE: Self = ImageCreateFlags(0b100000);
+        pub const TYPE_2D_ARRAY_COMPATIBLE: Self =
+            ImageCreateFlags(unsafe { NonZeroU32::new_unchecked(0b100000) });
     }
     #[doc = "Generated from \'VK_VERSION_1_1\'"]
     impl ImageCreateFlags {
-        pub const BLOCK_TEXEL_VIEW_COMPATIBLE: Self = ImageCreateFlags(0b10000000);
+        pub const BLOCK_TEXEL_VIEW_COMPATIBLE: Self =
+            ImageCreateFlags(unsafe { NonZeroU32::new_unchecked(0b10000000) });
     }
     #[doc = "Generated from \'VK_VERSION_1_1\'"]
     impl ImageCreateFlags {
-        pub const EXTENDED_USAGE: Self = ImageCreateFlags(0b100000000);
+        pub const EXTENDED_USAGE: Self =
+            ImageCreateFlags(unsafe { NonZeroU32::new_unchecked(0b100000000) });
     }
     #[doc = "Generated from \'VK_VERSION_1_1\'"]
     impl StructureType {
@@ -22663,7 +22912,7 @@ pub mod extensions {
     }
     #[doc = "Generated from \'VK_VERSION_1_1\'"]
     impl DependencyFlags {
-        pub const VIEW_LOCAL: Self = DependencyFlags(0b10);
+        pub const VIEW_LOCAL: Self = DependencyFlags(unsafe { NonZeroU32::new_unchecked(0b10) });
     }
     #[doc = "Generated from \'VK_VERSION_1_1\'"]
     impl StructureType {
@@ -22687,27 +22936,31 @@ pub mod extensions {
     }
     #[doc = "Generated from \'VK_VERSION_1_1\'"]
     impl QueueFlags {
-        pub const PROTECTED: Self = QueueFlags(0b10000);
+        pub const PROTECTED: Self = QueueFlags(unsafe { NonZeroU32::new_unchecked(0b10000) });
     }
     #[doc = "Generated from \'VK_VERSION_1_1\'"]
     impl DeviceQueueCreateFlags {
-        pub const PROTECTED: Self = DeviceQueueCreateFlags(0b1);
+        pub const PROTECTED: Self =
+            DeviceQueueCreateFlags(unsafe { NonZeroU32::new_unchecked(0b1) });
     }
     #[doc = "Generated from \'VK_VERSION_1_1\'"]
     impl MemoryPropertyFlags {
-        pub const PROTECTED: Self = MemoryPropertyFlags(0b100000);
+        pub const PROTECTED: Self =
+            MemoryPropertyFlags(unsafe { NonZeroU32::new_unchecked(0b100000) });
     }
     #[doc = "Generated from \'VK_VERSION_1_1\'"]
     impl BufferCreateFlags {
-        pub const PROTECTED: Self = BufferCreateFlags(0b1000);
+        pub const PROTECTED: Self = BufferCreateFlags(unsafe { NonZeroU32::new_unchecked(0b1000) });
     }
     #[doc = "Generated from \'VK_VERSION_1_1\'"]
     impl ImageCreateFlags {
-        pub const PROTECTED: Self = ImageCreateFlags(0b100000000000);
+        pub const PROTECTED: Self =
+            ImageCreateFlags(unsafe { NonZeroU32::new_unchecked(0b100000000000) });
     }
     #[doc = "Generated from \'VK_VERSION_1_1\'"]
     impl CommandPoolCreateFlags {
-        pub const PROTECTED: Self = CommandPoolCreateFlags(0b100);
+        pub const PROTECTED: Self =
+            CommandPoolCreateFlags(unsafe { NonZeroU32::new_unchecked(0b100) });
     }
     #[doc = "Generated from \'VK_VERSION_1_1\'"]
     impl StructureType {
@@ -22877,51 +23130,55 @@ pub mod extensions {
     }
     #[doc = "Generated from \'VK_VERSION_1_1\'"]
     impl ImageAspectFlags {
-        pub const PLANE_0: Self = ImageAspectFlags(0b10000);
+        pub const PLANE_0: Self = ImageAspectFlags(unsafe { NonZeroU32::new_unchecked(0b10000) });
     }
     #[doc = "Generated from \'VK_VERSION_1_1\'"]
     impl ImageAspectFlags {
-        pub const PLANE_1: Self = ImageAspectFlags(0b100000);
+        pub const PLANE_1: Self = ImageAspectFlags(unsafe { NonZeroU32::new_unchecked(0b100000) });
     }
     #[doc = "Generated from \'VK_VERSION_1_1\'"]
     impl ImageAspectFlags {
-        pub const PLANE_2: Self = ImageAspectFlags(0b1000000);
+        pub const PLANE_2: Self = ImageAspectFlags(unsafe { NonZeroU32::new_unchecked(0b1000000) });
     }
     #[doc = "Generated from \'VK_VERSION_1_1\'"]
     impl ImageCreateFlags {
-        pub const DISJOINT: Self = ImageCreateFlags(0b1000000000);
+        pub const DISJOINT: Self =
+            ImageCreateFlags(unsafe { NonZeroU32::new_unchecked(0b1000000000) });
     }
     #[doc = "Generated from \'VK_VERSION_1_1\'"]
     impl FormatFeatureFlags {
-        pub const MIDPOINT_CHROMA_SAMPLES: Self = FormatFeatureFlags(0b100000000000000000);
+        pub const MIDPOINT_CHROMA_SAMPLES: Self =
+            FormatFeatureFlags(unsafe { NonZeroU32::new_unchecked(0b100000000000000000) });
     }
     #[doc = "Generated from \'VK_VERSION_1_1\'"]
     impl FormatFeatureFlags {
         pub const SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER: Self =
-            FormatFeatureFlags(0b1000000000000000000);
+            FormatFeatureFlags(unsafe { NonZeroU32::new_unchecked(0b1000000000000000000) });
     }
     #[doc = "Generated from \'VK_VERSION_1_1\'"]
     impl FormatFeatureFlags {
         pub const SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER: Self =
-            FormatFeatureFlags(0b10000000000000000000);
+            FormatFeatureFlags(unsafe { NonZeroU32::new_unchecked(0b10000000000000000000) });
     }
     #[doc = "Generated from \'VK_VERSION_1_1\'"]
     impl FormatFeatureFlags {
         pub const SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT: Self =
-            FormatFeatureFlags(0b100000000000000000000);
+            FormatFeatureFlags(unsafe { NonZeroU32::new_unchecked(0b100000000000000000000) });
     }
     #[doc = "Generated from \'VK_VERSION_1_1\'"]
     impl FormatFeatureFlags {
         pub const SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE: Self =
-            FormatFeatureFlags(0b1000000000000000000000);
+            FormatFeatureFlags(unsafe { NonZeroU32::new_unchecked(0b1000000000000000000000) });
     }
     #[doc = "Generated from \'VK_VERSION_1_1\'"]
     impl FormatFeatureFlags {
-        pub const DISJOINT: Self = FormatFeatureFlags(0b10000000000000000000000);
+        pub const DISJOINT: Self =
+            FormatFeatureFlags(unsafe { NonZeroU32::new_unchecked(0b10000000000000000000000) });
     }
     #[doc = "Generated from \'VK_VERSION_1_1\'"]
     impl FormatFeatureFlags {
-        pub const COSITED_CHROMA_SAMPLES: Self = FormatFeatureFlags(0b100000000000000000000000);
+        pub const COSITED_CHROMA_SAMPLES: Self =
+            FormatFeatureFlags(unsafe { NonZeroU32::new_unchecked(0b100000000000000000000000) });
     }
     #[doc = "Generated from \'VK_VERSION_1_1\'"]
     impl StructureType {

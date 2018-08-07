@@ -26,7 +26,7 @@ fn main() {
         let renderpass_attachments = [
             vk::AttachmentDescription {
                 format: base.surface_format.format,
-                flags: vk::AttachmentDescriptionFlags::empty(),
+                flags: None,
                 samples: vk::SampleCountFlags::TYPE_1,
                 load_op: vk::AttachmentLoadOp::CLEAR,
                 store_op: vk::AttachmentStoreOp::STORE,
@@ -37,7 +37,7 @@ fn main() {
             },
             vk::AttachmentDescription {
                 format: vk::Format::D16_UNORM,
-                flags: vk::AttachmentDescriptionFlags::empty(),
+                flags: None,
                 samples: vk::SampleCountFlags::TYPE_1,
                 load_op: vk::AttachmentLoadOp::CLEAR,
                 store_op: vk::AttachmentStoreOp::DONT_CARE,
@@ -60,9 +60,9 @@ fn main() {
             src_subpass: vk::SUBPASS_EXTERNAL,
             dst_subpass: Default::default(),
             src_stage_mask: vk::PipelineStageFlags::COLOR_ATTACHMENT_OUTPUT,
-            src_access_mask: Default::default(),
-            dst_access_mask: vk::AccessFlags::COLOR_ATTACHMENT_READ
-                | vk::AccessFlags::COLOR_ATTACHMENT_WRITE,
+            src_access_mask: None,
+            dst_access_mask: Some(vk::AccessFlags::COLOR_ATTACHMENT_READ
+                                  | vk::AccessFlags::COLOR_ATTACHMENT_WRITE),
             dst_stage_mask: vk::PipelineStageFlags::COLOR_ATTACHMENT_OUTPUT,
         };
         let subpass = vk::SubpassDescription {
@@ -117,7 +117,7 @@ fn main() {
         let index_buffer_info = vk::BufferCreateInfo {
             s_type: vk::StructureType::BUFFER_CREATE_INFO,
             p_next: ptr::null(),
-            flags: vk::BufferCreateFlags::empty(),
+            flags: None,
             size: std::mem::size_of_val(&index_buffer_data) as u64,
             usage: vk::BufferUsageFlags::INDEX_BUFFER,
             sharing_mode: vk::SharingMode::EXCLUSIVE,
@@ -148,7 +148,7 @@ fn main() {
                 index_buffer_memory,
                 0,
                 index_buffer_memory_req.size,
-                vk::MemoryMapFlags::empty(),
+                None,
             )
             .unwrap();
         let mut index_slice = Align::new(
@@ -165,7 +165,7 @@ fn main() {
         let vertex_input_buffer_info = vk::BufferCreateInfo {
             s_type: vk::StructureType::BUFFER_CREATE_INFO,
             p_next: ptr::null(),
-            flags: vk::BufferCreateFlags::empty(),
+            flags: None,
             size: 3 * std::mem::size_of::<Vertex>() as u64,
             usage: vk::BufferUsageFlags::VERTEX_BUFFER,
             sharing_mode: vk::SharingMode::EXCLUSIVE,
@@ -216,7 +216,7 @@ fn main() {
                 vertex_input_buffer_memory,
                 0,
                 vertex_input_buffer_memory_req.size,
-                vk::MemoryMapFlags::empty(),
+                None,
             )
             .unwrap();
         let mut vert_align = Align::new(
@@ -359,7 +359,7 @@ fn main() {
             s_type: vk::StructureType::PIPELINE_RASTERIZATION_STATE_CREATE_INFO,
             p_next: ptr::null(),
             flags: Default::default(),
-            cull_mode: vk::CullModeFlags::NONE,
+            cull_mode: None,
             depth_bias_clamp: 0.0,
             depth_bias_constant_factor: 0.0,
             depth_bias_enable: 0,
@@ -435,7 +435,7 @@ fn main() {
         let graphic_pipeline_info = vk::GraphicsPipelineCreateInfo {
             s_type: vk::StructureType::GRAPHICS_PIPELINE_CREATE_INFO,
             p_next: ptr::null(),
-            flags: vk::PipelineCreateFlags::empty(),
+            flags: None,
             stage_count: shader_stage_create_infos.len() as u32,
             p_stages: shader_stage_create_infos.as_ptr(),
             p_vertex_input_state: &vertex_input_state_info,

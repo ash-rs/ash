@@ -45,13 +45,13 @@ pub fn record_submit_commandbuffer<D: DeviceV1_0, F: FnOnce(&D, vk::CommandBuffe
         device
             .reset_command_buffer(
                 command_buffer,
-                vk::CommandBufferResetFlags::RELEASE_RESOURCES,
+                Some(vk::CommandBufferResetFlags::RELEASE_RESOURCES),
             ).expect("Reset command buffer failed.");
         let command_buffer_begin_info = vk::CommandBufferBeginInfo {
             s_type: vk::StructureType::COMMAND_BUFFER_BEGIN_INFO,
             p_next: ptr::null(),
             p_inheritance_info: ptr::null(),
-            flags: vk::CommandBufferUsageFlags::ONE_TIME_SUBMIT,
+            flags: Some(vk::CommandBufferUsageFlags::ONE_TIME_SUBMIT),
         };
         device
             .begin_command_buffer(command_buffer, &command_buffer_begin_info)
@@ -63,7 +63,7 @@ pub fn record_submit_commandbuffer<D: DeviceV1_0, F: FnOnce(&D, vk::CommandBuffe
         let fence_create_info = vk::FenceCreateInfo {
             s_type: vk::StructureType::FENCE_CREATE_INFO,
             p_next: ptr::null(),
-            flags: vk::FenceCreateFlags::empty(),
+            flags: None,
         };
         let submit_fence = device
             .create_fence(&fence_create_info, None)
@@ -174,18 +174,18 @@ pub fn find_memorytype_index(
     // Try to find an exactly matching memory flag
     let best_suitable_index =
         find_memorytype_index_f(memory_req, memory_prop, flags, |property_flags, flags| {
-            property_flags == flags
+            property_flags == Some(flags)
         });
     if best_suitable_index.is_some() {
         return best_suitable_index;
     }
     // Otherwise find a memory flag that works
     find_memorytype_index_f(memory_req, memory_prop, flags, |property_flags, flags| {
-        property_flags & flags == flags
+        property_flags.map_or(false, |x| x.subset(flags))
     })
 }
 
-pub fn find_memorytype_index_f<F: Fn(vk::MemoryPropertyFlags, vk::MemoryPropertyFlags) -> bool>(
+pub fn find_memorytype_index_f<F: Fn(Option<vk::MemoryPropertyFlags>, vk::MemoryPropertyFlags) -> bool>(
     memory_req: &vk::MemoryRequirements,
     memory_prop: &vk::PhysicalDeviceMemoryProperties,
     flags: vk::MemoryPropertyFlags,
@@ -306,9 +306,9 @@ impl ExampleBase {
             let debug_info = vk::DebugReportCallbackCreateInfoEXT {
                 s_type: vk::StructureType::DEBUG_REPORT_CALLBACK_CREATE_INFO_EXT,
                 p_next: ptr::null(),
-                flags: vk::DebugReportFlagsEXT::ERROR
-                    | vk::DebugReportFlagsEXT::WARNING
-                    | vk::DebugReportFlagsEXT::PERFORMANCE_WARNING,
+                flags: Some(vk::DebugReportFlagsEXT::ERROR
+                            | vk::DebugReportFlagsEXT::WARNING
+                            | vk::DebugReportFlagsEXT::PERFORMANCE_WARNING),
                 pfn_callback: vulkan_debug_callback,
                 p_user_data: ptr::null_mut(),
             };
@@ -332,7 +332,7 @@ impl ExampleBase {
                         .enumerate()
                         .filter_map(|(index, ref info)| {
                             let supports_graphic_and_surface =
-                                info.queue_flags.subset(vk::QueueFlags::GRAPHICS) && surface_loader
+                                info.queue_flags.map_or(false, |x| x.subset(vk::QueueFlags::GRAPHICS)) && surface_loader
                                     .get_physical_device_surface_support_khr(
                                         *pdevice,
                                         index as u32,
@@ -409,7 +409,7 @@ impl ExampleBase {
             };
             let pre_transform = if surface_capabilities
                 .supported_transforms
-                .subset(vk::SurfaceTransformFlagsKHR::IDENTITY)
+                .map_or(false, |x| x.subset(vk::SurfaceTransformFlagsKHR::IDENTITY))
             {
                 vk::SurfaceTransformFlagsKHR::IDENTITY
             } else {
@@ -451,7 +451,7 @@ impl ExampleBase {
             let pool_create_info = vk::CommandPoolCreateInfo {
                 s_type: vk::StructureType::COMMAND_POOL_CREATE_INFO,
                 p_next: ptr::null(),
-                flags: vk::CommandPoolCreateFlags::RESET_COMMAND_BUFFER,
+                flags: Some(vk::CommandPoolCreateFlags::RESET_COMMAND_BUFFER),
                 queue_family_index: queue_family_index,
             };
             let pool = device.create_command_pool(&pool_create_info, None).unwrap();
@@ -550,9 +550,9 @@ impl ExampleBase {
                     let layout_transition_barrier = vk::ImageMemoryBarrier {
                         s_type: vk::StructureType::IMAGE_MEMORY_BARRIER,
                         p_next: ptr::null(),
-                        src_access_mask: Default::default(),
-                        dst_access_mask: vk::AccessFlags::DEPTH_STENCIL_ATTACHMENT_READ
-                            | vk::AccessFlags::DEPTH_STENCIL_ATTACHMENT_WRITE,
+                        src_access_mask: None,
+                        dst_access_mask: Some(vk::AccessFlags::DEPTH_STENCIL_ATTACHMENT_READ
+                                              | vk::AccessFlags::DEPTH_STENCIL_ATTACHMENT_WRITE),
                         old_layout: vk::ImageLayout::UNDEFINED,
                         new_layout: vk::ImageLayout::DEPTH_STENCIL_ATTACHMENT_OPTIMAL,
                         src_queue_family_index: vk::QUEUE_FAMILY_IGNORED,
@@ -570,7 +570,7 @@ impl ExampleBase {
                         setup_command_buffer,
                         vk::PipelineStageFlags::BOTTOM_OF_PIPE,
                         vk::PipelineStageFlags::LATE_FRAGMENT_TESTS,
-                        vk::DependencyFlags::empty(),
+                        None,
                         &[],
                         &[],
                         &[layout_transition_barrier],
