@@ -5067,21 +5067,6 @@ impl ::std::fmt::Debug for PhysicalDeviceProperties {
             .finish()
     }
 }
-impl ::std::default::Default for PhysicalDeviceProperties {
-    fn default() -> PhysicalDeviceProperties {
-        PhysicalDeviceProperties {
-            api_version: Default::default(),
-            driver_version: Default::default(),
-            vendor_id: Default::default(),
-            device_id: Default::default(),
-            device_type: Default::default(),
-            device_name: unsafe { ::std::mem::zeroed() },
-            pipeline_cache_uuid: unsafe { ::std::mem::zeroed() },
-            limits: Default::default(),
-            sparse_properties: Default::default(),
-        }
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ExtensionProperties {
@@ -5098,14 +5083,6 @@ impl ::std::fmt::Debug for ExtensionProperties {
             })
             .field("spec_version", &self.spec_version)
             .finish()
-    }
-}
-impl ::std::default::Default for ExtensionProperties {
-    fn default() -> ExtensionProperties {
-        ExtensionProperties {
-            extension_name: unsafe { ::std::mem::zeroed() },
-            spec_version: Default::default(),
-        }
     }
 }
 #[repr(C)]
@@ -5132,16 +5109,6 @@ impl ::std::fmt::Debug for LayerProperties {
                 ::std::ffi::CStr::from_ptr(self.description.as_ptr() as *const i8)
             })
             .finish()
-    }
-}
-impl ::std::default::Default for LayerProperties {
-    fn default() -> LayerProperties {
-        LayerProperties {
-            layer_name: unsafe { ::std::mem::zeroed() },
-            spec_version: Default::default(),
-            implementation_version: Default::default(),
-            description: unsafe { ::std::mem::zeroed() },
-        }
     }
 }
 #[repr(C)]
@@ -5287,7 +5254,7 @@ impl ::std::default::Default for InstanceCreateInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
+#[derive(Copy, Clone, Debug)]
 pub struct QueueFamilyProperties {
     #[doc = "Queue flags"]
     pub queue_flags: QueueFlags,
@@ -5318,16 +5285,6 @@ impl ::std::fmt::Debug for PhysicalDeviceMemoryProperties {
             .finish()
     }
 }
-impl ::std::default::Default for PhysicalDeviceMemoryProperties {
-    fn default() -> PhysicalDeviceMemoryProperties {
-        PhysicalDeviceMemoryProperties {
-            memory_type_count: Default::default(),
-            memory_types: unsafe { ::std::mem::zeroed() },
-            memory_heap_count: Default::default(),
-            memory_heaps: unsafe { ::std::mem::zeroed() },
-        }
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct MemoryAllocateInfo {
@@ -5349,7 +5306,7 @@ impl ::std::default::Default for MemoryAllocateInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
+#[derive(Copy, Clone, Debug)]
 pub struct MemoryRequirements {
     #[doc = "Specified in bytes"]
     pub size: DeviceSize,
@@ -5359,14 +5316,14 @@ pub struct MemoryRequirements {
     pub memory_type_bits: uint32_t,
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
+#[derive(Copy, Clone, Debug)]
 pub struct SparseImageFormatProperties {
     pub aspect_mask: ImageAspectFlags,
     pub image_granularity: Extent3D,
     pub flags: SparseImageFormatFlags,
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
+#[derive(Copy, Clone, Debug)]
 pub struct SparseImageMemoryRequirements {
     pub format_properties: SparseImageFormatProperties,
     pub image_mip_tail_first_lod: uint32_t,
@@ -5378,7 +5335,7 @@ pub struct SparseImageMemoryRequirements {
     pub image_mip_tail_stride: DeviceSize,
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
+#[derive(Copy, Clone, Debug)]
 pub struct MemoryType {
     #[doc = "Memory properties of this memory type"]
     pub property_flags: MemoryPropertyFlags,
@@ -5386,7 +5343,7 @@ pub struct MemoryType {
     pub heap_index: uint32_t,
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
+#[derive(Copy, Clone, Debug)]
 pub struct MemoryHeap {
     #[doc = "Available memory in the heap"]
     pub size: DeviceSize,
@@ -5417,7 +5374,7 @@ impl ::std::default::Default for MappedMemoryRange {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
+#[derive(Copy, Clone, Debug)]
 pub struct FormatProperties {
     #[doc = "Format features in case of linear tiling"]
     pub linear_tiling_features: FormatFeatureFlags,
@@ -5427,7 +5384,7 @@ pub struct FormatProperties {
     pub buffer_features: FormatFeatureFlags,
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
+#[derive(Copy, Clone, Debug)]
 pub struct ImageFormatProperties {
     #[doc = "max image dimensions for this resource type"]
     pub max_extent: Extent3D,
@@ -5771,7 +5728,7 @@ impl ::std::default::Default for ImageCreateInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
+#[derive(Copy, Clone, Debug)]
 pub struct SubresourceLayout {
     #[doc = "Specified in bytes"]
     pub offset: DeviceSize,
@@ -7076,7 +7033,7 @@ pub struct PhysicalDeviceFeatures {
     pub inherited_queries: Bool32,
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
+#[derive(Copy, Clone, Debug)]
 pub struct PhysicalDeviceSparseProperties {
     #[doc = "Sparse resources support: GPU will access all 2D (single sample) sparse resources using the standard sparse image block shapes (based on pixel format)"]
     pub residency_standard2_d_block_shape: Bool32,
@@ -7600,118 +7557,6 @@ impl ::std::fmt::Debug for PhysicalDeviceLimits {
             .finish()
     }
 }
-impl ::std::default::Default for PhysicalDeviceLimits {
-    fn default() -> PhysicalDeviceLimits {
-        PhysicalDeviceLimits {
-            max_image_dimension1_d: Default::default(),
-            max_image_dimension2_d: Default::default(),
-            max_image_dimension3_d: Default::default(),
-            max_image_dimension_cube: Default::default(),
-            max_image_array_layers: Default::default(),
-            max_texel_buffer_elements: Default::default(),
-            max_uniform_buffer_range: Default::default(),
-            max_storage_buffer_range: Default::default(),
-            max_push_constants_size: Default::default(),
-            max_memory_allocation_count: Default::default(),
-            max_sampler_allocation_count: Default::default(),
-            buffer_image_granularity: Default::default(),
-            sparse_address_space_size: Default::default(),
-            max_bound_descriptor_sets: Default::default(),
-            max_per_stage_descriptor_samplers: Default::default(),
-            max_per_stage_descriptor_uniform_buffers: Default::default(),
-            max_per_stage_descriptor_storage_buffers: Default::default(),
-            max_per_stage_descriptor_sampled_images: Default::default(),
-            max_per_stage_descriptor_storage_images: Default::default(),
-            max_per_stage_descriptor_input_attachments: Default::default(),
-            max_per_stage_resources: Default::default(),
-            max_descriptor_set_samplers: Default::default(),
-            max_descriptor_set_uniform_buffers: Default::default(),
-            max_descriptor_set_uniform_buffers_dynamic: Default::default(),
-            max_descriptor_set_storage_buffers: Default::default(),
-            max_descriptor_set_storage_buffers_dynamic: Default::default(),
-            max_descriptor_set_sampled_images: Default::default(),
-            max_descriptor_set_storage_images: Default::default(),
-            max_descriptor_set_input_attachments: Default::default(),
-            max_vertex_input_attributes: Default::default(),
-            max_vertex_input_bindings: Default::default(),
-            max_vertex_input_attribute_offset: Default::default(),
-            max_vertex_input_binding_stride: Default::default(),
-            max_vertex_output_components: Default::default(),
-            max_tessellation_generation_level: Default::default(),
-            max_tessellation_patch_size: Default::default(),
-            max_tessellation_control_per_vertex_input_components: Default::default(),
-            max_tessellation_control_per_vertex_output_components: Default::default(),
-            max_tessellation_control_per_patch_output_components: Default::default(),
-            max_tessellation_control_total_output_components: Default::default(),
-            max_tessellation_evaluation_input_components: Default::default(),
-            max_tessellation_evaluation_output_components: Default::default(),
-            max_geometry_shader_invocations: Default::default(),
-            max_geometry_input_components: Default::default(),
-            max_geometry_output_components: Default::default(),
-            max_geometry_output_vertices: Default::default(),
-            max_geometry_total_output_components: Default::default(),
-            max_fragment_input_components: Default::default(),
-            max_fragment_output_attachments: Default::default(),
-            max_fragment_dual_src_attachments: Default::default(),
-            max_fragment_combined_output_resources: Default::default(),
-            max_compute_shared_memory_size: Default::default(),
-            max_compute_work_group_count: unsafe { ::std::mem::zeroed() },
-            max_compute_work_group_invocations: Default::default(),
-            max_compute_work_group_size: unsafe { ::std::mem::zeroed() },
-            sub_pixel_precision_bits: Default::default(),
-            sub_texel_precision_bits: Default::default(),
-            mipmap_precision_bits: Default::default(),
-            max_draw_indexed_index_value: Default::default(),
-            max_draw_indirect_count: Default::default(),
-            max_sampler_lod_bias: Default::default(),
-            max_sampler_anisotropy: Default::default(),
-            max_viewports: Default::default(),
-            max_viewport_dimensions: unsafe { ::std::mem::zeroed() },
-            viewport_bounds_range: unsafe { ::std::mem::zeroed() },
-            viewport_sub_pixel_bits: Default::default(),
-            min_memory_map_alignment: Default::default(),
-            min_texel_buffer_offset_alignment: Default::default(),
-            min_uniform_buffer_offset_alignment: Default::default(),
-            min_storage_buffer_offset_alignment: Default::default(),
-            min_texel_offset: Default::default(),
-            max_texel_offset: Default::default(),
-            min_texel_gather_offset: Default::default(),
-            max_texel_gather_offset: Default::default(),
-            min_interpolation_offset: Default::default(),
-            max_interpolation_offset: Default::default(),
-            sub_pixel_interpolation_offset_bits: Default::default(),
-            max_framebuffer_width: Default::default(),
-            max_framebuffer_height: Default::default(),
-            max_framebuffer_layers: Default::default(),
-            framebuffer_color_sample_counts: Default::default(),
-            framebuffer_depth_sample_counts: Default::default(),
-            framebuffer_stencil_sample_counts: Default::default(),
-            framebuffer_no_attachments_sample_counts: Default::default(),
-            max_color_attachments: Default::default(),
-            sampled_image_color_sample_counts: Default::default(),
-            sampled_image_integer_sample_counts: Default::default(),
-            sampled_image_depth_sample_counts: Default::default(),
-            sampled_image_stencil_sample_counts: Default::default(),
-            storage_image_sample_counts: Default::default(),
-            max_sample_mask_words: Default::default(),
-            timestamp_compute_and_graphics: Default::default(),
-            timestamp_period: Default::default(),
-            max_clip_distances: Default::default(),
-            max_cull_distances: Default::default(),
-            max_combined_clip_and_cull_distances: Default::default(),
-            discrete_queue_priorities: Default::default(),
-            point_size_range: unsafe { ::std::mem::zeroed() },
-            line_width_range: unsafe { ::std::mem::zeroed() },
-            point_size_granularity: Default::default(),
-            line_width_granularity: Default::default(),
-            strict_lines: Default::default(),
-            standard_sample_locations: Default::default(),
-            optimal_buffer_copy_offset_alignment: Default::default(),
-            optimal_buffer_copy_row_pitch_alignment: Default::default(),
-            non_coherent_atom_size: Default::default(),
-        }
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct SemaphoreCreateInfo {
@@ -7850,19 +7695,6 @@ pub struct DisplayPropertiesKHR {
     #[doc = "VK_TRUE if this is a \"smart\" display that supports self-refresh/internal buffering."]
     pub persistent_content: Bool32,
 }
-impl ::std::default::Default for DisplayPropertiesKHR {
-    fn default() -> DisplayPropertiesKHR {
-        DisplayPropertiesKHR {
-            display: Invalid::invalid(),
-            display_name: unsafe { ::std::mem::zeroed() },
-            physical_dimensions: Default::default(),
-            physical_resolution: Default::default(),
-            supported_transforms: Default::default(),
-            plane_reorder_possible: Default::default(),
-            persistent_content: Default::default(),
-        }
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct DisplayPlanePropertiesKHR {
@@ -7870,14 +7702,6 @@ pub struct DisplayPlanePropertiesKHR {
     pub current_display: DisplayKHR,
     #[doc = "Current z-order of the plane."]
     pub current_stack_index: uint32_t,
-}
-impl ::std::default::Default for DisplayPlanePropertiesKHR {
-    fn default() -> DisplayPlanePropertiesKHR {
-        DisplayPlanePropertiesKHR {
-            current_display: Invalid::invalid(),
-            current_stack_index: Default::default(),
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone, Default, Debug)]
@@ -7894,14 +7718,6 @@ pub struct DisplayModePropertiesKHR {
     pub display_mode: DisplayModeKHR,
     #[doc = "The parameters this mode uses."]
     pub parameters: DisplayModeParametersKHR,
-}
-impl ::std::default::Default for DisplayModePropertiesKHR {
-    fn default() -> DisplayModePropertiesKHR {
-        DisplayModePropertiesKHR {
-            display_mode: Invalid::invalid(),
-            parameters: Default::default(),
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -7923,7 +7739,7 @@ impl ::std::default::Default for DisplayModeCreateInfoKHR {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
+#[derive(Copy, Clone, Debug)]
 pub struct DisplayPlaneCapabilitiesKHR {
     #[doc = "Types of alpha blending supported, if any."]
     pub supported_alpha: DisplayPlaneAlphaFlagsKHR,
@@ -7998,7 +7814,7 @@ impl ::std::default::Default for DisplayPresentInfoKHR {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
+#[derive(Copy, Clone, Debug)]
 pub struct SurfaceCapabilitiesKHR {
     #[doc = "Supported minimum number of images for the surface"]
     pub min_image_count: uint32_t,
@@ -8158,7 +7974,7 @@ impl ::std::default::Default for XcbSurfaceCreateInfoKHR {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
+#[derive(Copy, Clone, Debug)]
 pub struct SurfaceFormatKHR {
     #[doc = "Supported pair of rendering format"]
     pub format: Format,
@@ -8469,7 +8285,7 @@ impl ::std::default::Default for DedicatedAllocationMemoryAllocateInfoNV {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
+#[derive(Copy, Clone, Debug)]
 pub struct ExternalImageFormatPropertiesNV {
     pub image_format_properties: ImageFormatProperties,
     pub external_memory_features: ExternalMemoryFeatureFlagsNV,
@@ -8867,15 +8683,6 @@ pub struct PhysicalDeviceProperties2 {
     pub p_next: *mut c_void,
     pub properties: PhysicalDeviceProperties,
 }
-impl ::std::default::Default for PhysicalDeviceProperties2 {
-    fn default() -> PhysicalDeviceProperties2 {
-        PhysicalDeviceProperties2 {
-            s_type: StructureType::PHYSICAL_DEVICE_PROPERTIES_2,
-            p_next: unsafe { ::std::mem::zeroed() },
-            properties: Default::default(),
-        }
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone, Default, Debug)]
 pub struct PhysicalDeviceProperties2KHR {}
@@ -8886,15 +8693,6 @@ pub struct FormatProperties2 {
     pub p_next: *mut c_void,
     pub format_properties: FormatProperties,
 }
-impl ::std::default::Default for FormatProperties2 {
-    fn default() -> FormatProperties2 {
-        FormatProperties2 {
-            s_type: StructureType::FORMAT_PROPERTIES_2,
-            p_next: unsafe { ::std::mem::zeroed() },
-            format_properties: Default::default(),
-        }
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone, Default, Debug)]
 pub struct FormatProperties2KHR {}
@@ -8904,15 +8702,6 @@ pub struct ImageFormatProperties2 {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub image_format_properties: ImageFormatProperties,
-}
-impl ::std::default::Default for ImageFormatProperties2 {
-    fn default() -> ImageFormatProperties2 {
-        ImageFormatProperties2 {
-            s_type: StructureType::IMAGE_FORMAT_PROPERTIES_2,
-            p_next: unsafe { ::std::mem::zeroed() },
-            image_format_properties: Default::default(),
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone, Default, Debug)]
@@ -8951,15 +8740,6 @@ pub struct QueueFamilyProperties2 {
     pub p_next: *mut c_void,
     pub queue_family_properties: QueueFamilyProperties,
 }
-impl ::std::default::Default for QueueFamilyProperties2 {
-    fn default() -> QueueFamilyProperties2 {
-        QueueFamilyProperties2 {
-            s_type: StructureType::QUEUE_FAMILY_PROPERTIES_2,
-            p_next: unsafe { ::std::mem::zeroed() },
-            queue_family_properties: Default::default(),
-        }
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone, Default, Debug)]
 pub struct QueueFamilyProperties2KHR {}
@@ -8970,15 +8750,6 @@ pub struct PhysicalDeviceMemoryProperties2 {
     pub p_next: *mut c_void,
     pub memory_properties: PhysicalDeviceMemoryProperties,
 }
-impl ::std::default::Default for PhysicalDeviceMemoryProperties2 {
-    fn default() -> PhysicalDeviceMemoryProperties2 {
-        PhysicalDeviceMemoryProperties2 {
-            s_type: StructureType::PHYSICAL_DEVICE_MEMORY_PROPERTIES_2,
-            p_next: unsafe { ::std::mem::zeroed() },
-            memory_properties: Default::default(),
-        }
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone, Default, Debug)]
 pub struct PhysicalDeviceMemoryProperties2KHR {}
@@ -8988,15 +8759,6 @@ pub struct SparseImageFormatProperties2 {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub properties: SparseImageFormatProperties,
-}
-impl ::std::default::Default for SparseImageFormatProperties2 {
-    fn default() -> SparseImageFormatProperties2 {
-        SparseImageFormatProperties2 {
-            s_type: StructureType::SPARSE_IMAGE_FORMAT_PROPERTIES_2,
-            p_next: unsafe { ::std::mem::zeroed() },
-            properties: Default::default(),
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone, Default, Debug)]
@@ -9112,7 +8874,7 @@ impl ::std::default::Default for PhysicalDeviceVariablePointerFeatures {
 #[derive(Copy, Clone, Default, Debug)]
 pub struct PhysicalDeviceVariablePointerFeaturesKHR {}
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
+#[derive(Copy, Clone, Debug)]
 pub struct ExternalMemoryProperties {
     pub external_memory_features: ExternalMemoryFeatureFlags,
     pub export_from_imported_handle_types: ExternalMemoryHandleTypeFlags,
@@ -9147,15 +8909,6 @@ pub struct ExternalImageFormatProperties {
     pub p_next: *mut c_void,
     pub external_memory_properties: ExternalMemoryProperties,
 }
-impl ::std::default::Default for ExternalImageFormatProperties {
-    fn default() -> ExternalImageFormatProperties {
-        ExternalImageFormatProperties {
-            s_type: StructureType::EXTERNAL_IMAGE_FORMAT_PROPERTIES,
-            p_next: unsafe { ::std::mem::zeroed() },
-            external_memory_properties: Default::default(),
-        }
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone, Default, Debug)]
 pub struct ExternalImageFormatPropertiesKHR {}
@@ -9189,15 +8942,6 @@ pub struct ExternalBufferProperties {
     pub p_next: *mut c_void,
     pub external_memory_properties: ExternalMemoryProperties,
 }
-impl ::std::default::Default for ExternalBufferProperties {
-    fn default() -> ExternalBufferProperties {
-        ExternalBufferProperties {
-            s_type: StructureType::EXTERNAL_BUFFER_PROPERTIES,
-            p_next: unsafe { ::std::mem::zeroed() },
-            external_memory_properties: Default::default(),
-        }
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone, Default, Debug)]
 pub struct ExternalBufferPropertiesKHR {}
@@ -9229,19 +8973,6 @@ impl ::std::fmt::Debug for PhysicalDeviceIDProperties {
             .field("device_node_mask", &self.device_node_mask)
             .field("device_luid_valid", &self.device_luid_valid)
             .finish()
-    }
-}
-impl ::std::default::Default for PhysicalDeviceIDProperties {
-    fn default() -> PhysicalDeviceIDProperties {
-        PhysicalDeviceIDProperties {
-            s_type: StructureType::PHYSICAL_DEVICE_ID_PROPERTIES,
-            p_next: unsafe { ::std::mem::zeroed() },
-            device_uuid: unsafe { ::std::mem::zeroed() },
-            driver_uuid: unsafe { ::std::mem::zeroed() },
-            device_luid: unsafe { ::std::mem::zeroed() },
-            device_node_mask: Default::default(),
-            device_luid_valid: Default::default(),
-        }
     }
 }
 #[repr(C)]
@@ -9351,15 +9082,6 @@ pub struct MemoryWin32HandlePropertiesKHR {
     pub p_next: *mut c_void,
     pub memory_type_bits: uint32_t,
 }
-impl ::std::default::Default for MemoryWin32HandlePropertiesKHR {
-    fn default() -> MemoryWin32HandlePropertiesKHR {
-        MemoryWin32HandlePropertiesKHR {
-            s_type: StructureType::MEMORY_WIN32_HANDLE_PROPERTIES_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
-            memory_type_bits: Default::default(),
-        }
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct MemoryGetWin32HandleInfoKHR {
@@ -9402,15 +9124,6 @@ pub struct MemoryFdPropertiesKHR {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub memory_type_bits: uint32_t,
-}
-impl ::std::default::Default for MemoryFdPropertiesKHR {
-    fn default() -> MemoryFdPropertiesKHR {
-        MemoryFdPropertiesKHR {
-            s_type: StructureType::MEMORY_FD_PROPERTIES_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
-            memory_type_bits: Default::default(),
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -9485,17 +9198,6 @@ pub struct ExternalSemaphoreProperties {
     pub export_from_imported_handle_types: ExternalSemaphoreHandleTypeFlags,
     pub compatible_handle_types: ExternalSemaphoreHandleTypeFlags,
     pub external_semaphore_features: ExternalSemaphoreFeatureFlags,
-}
-impl ::std::default::Default for ExternalSemaphoreProperties {
-    fn default() -> ExternalSemaphoreProperties {
-        ExternalSemaphoreProperties {
-            s_type: StructureType::EXTERNAL_SEMAPHORE_PROPERTIES,
-            p_next: unsafe { ::std::mem::zeroed() },
-            export_from_imported_handle_types: Default::default(),
-            compatible_handle_types: Default::default(),
-            external_semaphore_features: Default::default(),
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone, Default, Debug)]
@@ -9671,17 +9373,6 @@ pub struct ExternalFenceProperties {
     pub compatible_handle_types: ExternalFenceHandleTypeFlags,
     pub external_fence_features: ExternalFenceFeatureFlags,
 }
-impl ::std::default::Default for ExternalFenceProperties {
-    fn default() -> ExternalFenceProperties {
-        ExternalFenceProperties {
-            s_type: StructureType::EXTERNAL_FENCE_PROPERTIES,
-            p_next: unsafe { ::std::mem::zeroed() },
-            export_from_imported_handle_types: Default::default(),
-            compatible_handle_types: Default::default(),
-            external_fence_features: Default::default(),
-        }
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone, Default, Debug)]
 pub struct ExternalFencePropertiesKHR {}
@@ -9842,16 +9533,6 @@ pub struct PhysicalDeviceMultiviewProperties {
     #[doc = "max instance index for a draw in a multiview subpass"]
     pub max_multiview_instance_index: uint32_t,
 }
-impl ::std::default::Default for PhysicalDeviceMultiviewProperties {
-    fn default() -> PhysicalDeviceMultiviewProperties {
-        PhysicalDeviceMultiviewProperties {
-            s_type: StructureType::PHYSICAL_DEVICE_MULTIVIEW_PROPERTIES,
-            p_next: unsafe { ::std::mem::zeroed() },
-            max_multiview_view_count: Default::default(),
-            max_multiview_instance_index: Default::default(),
-        }
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone, Default, Debug)]
 pub struct PhysicalDeviceMultiviewPropertiesKHR {}
@@ -9910,25 +9591,6 @@ pub struct SurfaceCapabilities2EXT {
     #[doc = "Supported image usage flags for the surface"]
     pub supported_usage_flags: ImageUsageFlags,
     pub supported_surface_counters: SurfaceCounterFlagsEXT,
-}
-impl ::std::default::Default for SurfaceCapabilities2EXT {
-    fn default() -> SurfaceCapabilities2EXT {
-        SurfaceCapabilities2EXT {
-            s_type: StructureType::SURFACE_CAPABILITIES_2_EXT,
-            p_next: unsafe { ::std::mem::zeroed() },
-            min_image_count: Default::default(),
-            max_image_count: Default::default(),
-            current_extent: Default::default(),
-            min_image_extent: Default::default(),
-            max_image_extent: Default::default(),
-            max_image_array_layers: Default::default(),
-            supported_transforms: Default::default(),
-            current_transform: Default::default(),
-            supported_composite_alpha: Default::default(),
-            supported_usage_flags: Default::default(),
-            supported_surface_counters: Default::default(),
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -10014,17 +9676,6 @@ impl ::std::fmt::Debug for PhysicalDeviceGroupProperties {
             })
             .field("subset_allocation", &self.subset_allocation)
             .finish()
-    }
-}
-impl ::std::default::Default for PhysicalDeviceGroupProperties {
-    fn default() -> PhysicalDeviceGroupProperties {
-        PhysicalDeviceGroupProperties {
-            s_type: StructureType::PHYSICAL_DEVICE_GROUP_PROPERTIES,
-            p_next: unsafe { ::std::mem::zeroed() },
-            physical_device_count: Default::default(),
-            physical_devices: unsafe { ::std::mem::zeroed() },
-            subset_allocation: Default::default(),
-        }
     }
 }
 #[repr(C)]
@@ -10253,16 +9904,6 @@ impl ::std::fmt::Debug for DeviceGroupPresentCapabilitiesKHR {
             })
             .field("modes", &self.modes)
             .finish()
-    }
-}
-impl ::std::default::Default for DeviceGroupPresentCapabilitiesKHR {
-    fn default() -> DeviceGroupPresentCapabilitiesKHR {
-        DeviceGroupPresentCapabilitiesKHR {
-            s_type: StructureType::DEVICE_GROUP_PRESENT_CAPABILITIES_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
-            present_mask: unsafe { ::std::mem::zeroed() },
-            modes: Default::default(),
-        }
     }
 }
 #[repr(C)]
@@ -10662,15 +10303,6 @@ pub struct PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX {
     pub p_next: *mut c_void,
     pub per_view_position_all_components: Bool32,
 }
-impl ::std::default::Default for PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX {
-    fn default() -> PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX {
-        PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX {
-            s_type: StructureType::PHYSICAL_DEVICE_MULTIVIEW_PER_VIEW_ATTRIBUTES_PROPERTIES_NVX,
-            p_next: unsafe { ::std::mem::zeroed() },
-            per_view_position_all_components: Default::default(),
-        }
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone, Default, Debug)]
 pub struct InputAttachmentAspectReference {
@@ -10725,30 +10357,12 @@ pub struct SurfaceCapabilities2KHR {
     pub p_next: *mut c_void,
     pub surface_capabilities: SurfaceCapabilitiesKHR,
 }
-impl ::std::default::Default for SurfaceCapabilities2KHR {
-    fn default() -> SurfaceCapabilities2KHR {
-        SurfaceCapabilities2KHR {
-            s_type: StructureType::SURFACE_CAPABILITIES_2_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
-            surface_capabilities: Default::default(),
-        }
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct SurfaceFormat2KHR {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub surface_format: SurfaceFormatKHR,
-}
-impl ::std::default::Default for SurfaceFormat2KHR {
-    fn default() -> SurfaceFormat2KHR {
-        SurfaceFormat2KHR {
-            s_type: StructureType::SURFACE_FORMAT_2_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
-            surface_format: Default::default(),
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -10757,15 +10371,6 @@ pub struct DisplayProperties2KHR {
     pub p_next: *mut c_void,
     pub display_properties: DisplayPropertiesKHR,
 }
-impl ::std::default::Default for DisplayProperties2KHR {
-    fn default() -> DisplayProperties2KHR {
-        DisplayProperties2KHR {
-            s_type: StructureType::DISPLAY_PROPERTIES_2_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
-            display_properties: Default::default(),
-        }
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct DisplayPlaneProperties2KHR {
@@ -10773,30 +10378,12 @@ pub struct DisplayPlaneProperties2KHR {
     pub p_next: *mut c_void,
     pub display_plane_properties: DisplayPlanePropertiesKHR,
 }
-impl ::std::default::Default for DisplayPlaneProperties2KHR {
-    fn default() -> DisplayPlaneProperties2KHR {
-        DisplayPlaneProperties2KHR {
-            s_type: StructureType::DISPLAY_PLANE_PROPERTIES_2_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
-            display_plane_properties: Default::default(),
-        }
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct DisplayModeProperties2KHR {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub display_mode_properties: DisplayModePropertiesKHR,
-}
-impl ::std::default::Default for DisplayModeProperties2KHR {
-    fn default() -> DisplayModeProperties2KHR {
-        DisplayModeProperties2KHR {
-            s_type: StructureType::DISPLAY_MODE_PROPERTIES_2_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
-            display_mode_properties: Default::default(),
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -10823,15 +10410,6 @@ pub struct DisplayPlaneCapabilities2KHR {
     pub p_next: *mut c_void,
     pub capabilities: DisplayPlaneCapabilitiesKHR,
 }
-impl ::std::default::Default for DisplayPlaneCapabilities2KHR {
-    fn default() -> DisplayPlaneCapabilities2KHR {
-        DisplayPlaneCapabilities2KHR {
-            s_type: StructureType::DISPLAY_PLANE_CAPABILITIES_2_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
-            capabilities: Default::default(),
-        }
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct SharedPresentSurfaceCapabilitiesKHR {
@@ -10839,15 +10417,6 @@ pub struct SharedPresentSurfaceCapabilitiesKHR {
     pub p_next: *mut c_void,
     #[doc = "Supported image usage flags if swapchain created using a shared present mode"]
     pub shared_present_supported_usage_flags: ImageUsageFlags,
-}
-impl ::std::default::Default for SharedPresentSurfaceCapabilitiesKHR {
-    fn default() -> SharedPresentSurfaceCapabilitiesKHR {
-        SharedPresentSurfaceCapabilitiesKHR {
-            s_type: StructureType::SHARED_PRESENT_SURFACE_CAPABILITIES_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
-            shared_present_supported_usage_flags: Default::default(),
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -10891,18 +10460,6 @@ pub struct PhysicalDeviceSubgroupProperties {
     pub supported_operations: SubgroupFeatureFlags,
     #[doc = "Flag to specify whether quad operations are available in all stages."]
     pub quad_operations_in_all_stages: Bool32,
-}
-impl ::std::default::Default for PhysicalDeviceSubgroupProperties {
-    fn default() -> PhysicalDeviceSubgroupProperties {
-        PhysicalDeviceSubgroupProperties {
-            s_type: StructureType::PHYSICAL_DEVICE_SUBGROUP_PROPERTIES,
-            p_next: unsafe { ::std::mem::zeroed() },
-            subgroup_size: Default::default(),
-            supported_stages: Default::default(),
-            supported_operations: Default::default(),
-            quad_operations_in_all_stages: Default::default(),
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -10968,15 +10525,6 @@ pub struct MemoryRequirements2 {
     pub p_next: *mut c_void,
     pub memory_requirements: MemoryRequirements,
 }
-impl ::std::default::Default for MemoryRequirements2 {
-    fn default() -> MemoryRequirements2 {
-        MemoryRequirements2 {
-            s_type: StructureType::MEMORY_REQUIREMENTS_2,
-            p_next: unsafe { ::std::mem::zeroed() },
-            memory_requirements: Default::default(),
-        }
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone, Default, Debug)]
 pub struct MemoryRequirements2KHR {}
@@ -10986,15 +10534,6 @@ pub struct SparseImageMemoryRequirements2 {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub memory_requirements: SparseImageMemoryRequirements,
-}
-impl ::std::default::Default for SparseImageMemoryRequirements2 {
-    fn default() -> SparseImageMemoryRequirements2 {
-        SparseImageMemoryRequirements2 {
-            s_type: StructureType::SPARSE_IMAGE_MEMORY_REQUIREMENTS_2,
-            p_next: unsafe { ::std::mem::zeroed() },
-            memory_requirements: Default::default(),
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone, Default, Debug)]
@@ -11006,15 +10545,6 @@ pub struct PhysicalDevicePointClippingProperties {
     pub p_next: *mut c_void,
     pub point_clipping_behavior: PointClippingBehavior,
 }
-impl ::std::default::Default for PhysicalDevicePointClippingProperties {
-    fn default() -> PhysicalDevicePointClippingProperties {
-        PhysicalDevicePointClippingProperties {
-            s_type: StructureType::PHYSICAL_DEVICE_POINT_CLIPPING_PROPERTIES,
-            p_next: unsafe { ::std::mem::zeroed() },
-            point_clipping_behavior: Default::default(),
-        }
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone, Default, Debug)]
 pub struct PhysicalDevicePointClippingPropertiesKHR {}
@@ -11025,16 +10555,6 @@ pub struct MemoryDedicatedRequirements {
     pub p_next: *mut c_void,
     pub prefers_dedicated_allocation: Bool32,
     pub requires_dedicated_allocation: Bool32,
-}
-impl ::std::default::Default for MemoryDedicatedRequirements {
-    fn default() -> MemoryDedicatedRequirements {
-        MemoryDedicatedRequirements {
-            s_type: StructureType::MEMORY_DEDICATED_REQUIREMENTS,
-            p_next: unsafe { ::std::mem::zeroed() },
-            prefers_dedicated_allocation: Default::default(),
-            requires_dedicated_allocation: Default::default(),
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone, Default, Debug)]
@@ -11217,15 +10737,6 @@ pub struct SamplerYcbcrConversionImageFormatProperties {
     pub p_next: *mut c_void,
     pub combined_image_sampler_descriptor_count: uint32_t,
 }
-impl ::std::default::Default for SamplerYcbcrConversionImageFormatProperties {
-    fn default() -> SamplerYcbcrConversionImageFormatProperties {
-        SamplerYcbcrConversionImageFormatProperties {
-            s_type: StructureType::SAMPLER_YCBCR_CONVERSION_IMAGE_FORMAT_PROPERTIES,
-            p_next: unsafe { ::std::mem::zeroed() },
-            combined_image_sampler_descriptor_count: Default::default(),
-        }
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone, Default, Debug)]
 pub struct SamplerYcbcrConversionImageFormatPropertiesKHR {}
@@ -11235,15 +10746,6 @@ pub struct TextureLODGatherFormatPropertiesAMD {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub supports_texture_gather_lod_bias_amd: Bool32,
-}
-impl ::std::default::Default for TextureLODGatherFormatPropertiesAMD {
-    fn default() -> TextureLODGatherFormatPropertiesAMD {
-        TextureLODGatherFormatPropertiesAMD {
-            s_type: StructureType::TEXTURE_LOD_GATHER_FORMAT_PROPERTIES_AMD,
-            p_next: unsafe { ::std::mem::zeroed() },
-            supports_texture_gather_lod_bias_amd: Default::default(),
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -11341,16 +10843,6 @@ pub struct PhysicalDeviceSamplerFilterMinmaxPropertiesEXT {
     pub p_next: *mut c_void,
     pub filter_minmax_single_component_formats: Bool32,
     pub filter_minmax_image_component_mapping: Bool32,
-}
-impl ::std::default::Default for PhysicalDeviceSamplerFilterMinmaxPropertiesEXT {
-    fn default() -> PhysicalDeviceSamplerFilterMinmaxPropertiesEXT {
-        PhysicalDeviceSamplerFilterMinmaxPropertiesEXT {
-            s_type: StructureType::PHYSICAL_DEVICE_SAMPLER_FILTER_MINMAX_PROPERTIES_EXT,
-            p_next: unsafe { ::std::mem::zeroed() },
-            filter_minmax_single_component_formats: Default::default(),
-            filter_minmax_image_component_mapping: Default::default(),
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone, Default, Debug)]
@@ -11469,34 +10961,12 @@ impl ::std::fmt::Debug for PhysicalDeviceSampleLocationsPropertiesEXT {
             .finish()
     }
 }
-impl ::std::default::Default for PhysicalDeviceSampleLocationsPropertiesEXT {
-    fn default() -> PhysicalDeviceSampleLocationsPropertiesEXT {
-        PhysicalDeviceSampleLocationsPropertiesEXT {
-            s_type: StructureType::PHYSICAL_DEVICE_SAMPLE_LOCATIONS_PROPERTIES_EXT,
-            p_next: unsafe { ::std::mem::zeroed() },
-            sample_location_sample_counts: Default::default(),
-            max_sample_location_grid_size: Default::default(),
-            sample_location_coordinate_range: unsafe { ::std::mem::zeroed() },
-            sample_location_sub_pixel_bits: Default::default(),
-            variable_sample_locations: Default::default(),
-        }
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct MultisamplePropertiesEXT {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub max_sample_location_grid_size: Extent2D,
-}
-impl ::std::default::Default for MultisamplePropertiesEXT {
-    fn default() -> MultisamplePropertiesEXT {
-        MultisamplePropertiesEXT {
-            s_type: StructureType::MULTISAMPLE_PROPERTIES_EXT,
-            p_next: unsafe { ::std::mem::zeroed() },
-            max_sample_location_grid_size: Default::default(),
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -11541,20 +11011,6 @@ pub struct PhysicalDeviceBlendOperationAdvancedPropertiesEXT {
     pub advanced_blend_non_premultiplied_dst_color: Bool32,
     pub advanced_blend_correlated_overlap: Bool32,
     pub advanced_blend_all_operations: Bool32,
-}
-impl ::std::default::Default for PhysicalDeviceBlendOperationAdvancedPropertiesEXT {
-    fn default() -> PhysicalDeviceBlendOperationAdvancedPropertiesEXT {
-        PhysicalDeviceBlendOperationAdvancedPropertiesEXT {
-            s_type: StructureType::PHYSICAL_DEVICE_BLEND_OPERATION_ADVANCED_PROPERTIES_EXT,
-            p_next: unsafe { ::std::mem::zeroed() },
-            advanced_blend_max_color_attachments: Default::default(),
-            advanced_blend_independent_blend: Default::default(),
-            advanced_blend_non_premultiplied_src_color: Default::default(),
-            advanced_blend_non_premultiplied_dst_color: Default::default(),
-            advanced_blend_correlated_overlap: Default::default(),
-            advanced_blend_all_operations: Default::default(),
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -11662,16 +11118,6 @@ pub struct PhysicalDeviceMaintenance3Properties {
     pub max_per_set_descriptors: uint32_t,
     pub max_memory_allocation_size: DeviceSize,
 }
-impl ::std::default::Default for PhysicalDeviceMaintenance3Properties {
-    fn default() -> PhysicalDeviceMaintenance3Properties {
-        PhysicalDeviceMaintenance3Properties {
-            s_type: StructureType::PHYSICAL_DEVICE_MAINTENANCE_3_PROPERTIES,
-            p_next: unsafe { ::std::mem::zeroed() },
-            max_per_set_descriptors: Default::default(),
-            max_memory_allocation_size: Default::default(),
-        }
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone, Default, Debug)]
 pub struct PhysicalDeviceMaintenance3PropertiesKHR {}
@@ -11681,15 +11127,6 @@ pub struct DescriptorSetLayoutSupport {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub supported: Bool32,
-}
-impl ::std::default::Default for DescriptorSetLayoutSupport {
-    fn default() -> DescriptorSetLayoutSupport {
-        DescriptorSetLayoutSupport {
-            s_type: StructureType::DESCRIPTOR_SET_LAYOUT_SUPPORT,
-            p_next: unsafe { ::std::mem::zeroed() },
-            supported: Default::default(),
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone, Default, Debug)]
@@ -11733,7 +11170,7 @@ impl ::std::default::Default for NativeBufferANDROID {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
+#[derive(Copy, Clone, Debug)]
 pub struct ShaderResourceUsageAMD {
     pub num_used_vgprs: uint32_t,
     pub num_used_sgprs: uint32_t,
@@ -11765,19 +11202,6 @@ impl ::std::fmt::Debug for ShaderStatisticsInfoAMD {
                 ::std::ffi::CStr::from_ptr(self.compute_work_group_size.as_ptr() as *const i8)
             })
             .finish()
-    }
-}
-impl ::std::default::Default for ShaderStatisticsInfoAMD {
-    fn default() -> ShaderStatisticsInfoAMD {
-        ShaderStatisticsInfoAMD {
-            shader_stage_mask: Default::default(),
-            resource_usage: Default::default(),
-            num_physical_vgprs: Default::default(),
-            num_physical_sgprs: Default::default(),
-            num_available_vgprs: Default::default(),
-            num_available_sgprs: Default::default(),
-            compute_work_group_size: unsafe { ::std::mem::zeroed() },
-        }
     }
 }
 #[repr(C)]
@@ -12068,28 +11492,6 @@ pub struct PhysicalDeviceShaderCorePropertiesAMD {
     #[doc = "VGPRs are allocated in groups of this size"]
     pub vgpr_allocation_granularity: uint32_t,
 }
-impl ::std::default::Default for PhysicalDeviceShaderCorePropertiesAMD {
-    fn default() -> PhysicalDeviceShaderCorePropertiesAMD {
-        PhysicalDeviceShaderCorePropertiesAMD {
-            s_type: StructureType::PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_AMD,
-            p_next: unsafe { ::std::mem::zeroed() },
-            shader_engine_count: Default::default(),
-            shader_arrays_per_engine_count: Default::default(),
-            compute_units_per_shader_array: Default::default(),
-            simd_per_compute_unit: Default::default(),
-            wavefronts_per_simd: Default::default(),
-            wavefront_size: Default::default(),
-            sgprs_per_simd: Default::default(),
-            min_sgpr_allocation: Default::default(),
-            max_sgpr_allocation: Default::default(),
-            sgpr_allocation_granularity: Default::default(),
-            vgprs_per_simd: Default::default(),
-            min_vgpr_allocation: Default::default(),
-            max_vgpr_allocation: Default::default(),
-            vgpr_allocation_granularity: Default::default(),
-        }
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct PipelineRasterizationConservativeStateCreateInfoEXT {
@@ -12193,37 +11595,6 @@ pub struct PhysicalDeviceDescriptorIndexingPropertiesEXT {
     pub max_descriptor_set_update_after_bind_storage_images: uint32_t,
     pub max_descriptor_set_update_after_bind_input_attachments: uint32_t,
 }
-impl ::std::default::Default for PhysicalDeviceDescriptorIndexingPropertiesEXT {
-    fn default() -> PhysicalDeviceDescriptorIndexingPropertiesEXT {
-        PhysicalDeviceDescriptorIndexingPropertiesEXT {
-            s_type: StructureType::PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_PROPERTIES_EXT,
-            p_next: unsafe { ::std::mem::zeroed() },
-            max_update_after_bind_descriptors_in_all_pools: Default::default(),
-            shader_uniform_buffer_array_non_uniform_indexing_native: Default::default(),
-            shader_sampled_image_array_non_uniform_indexing_native: Default::default(),
-            shader_storage_buffer_array_non_uniform_indexing_native: Default::default(),
-            shader_storage_image_array_non_uniform_indexing_native: Default::default(),
-            shader_input_attachment_array_non_uniform_indexing_native: Default::default(),
-            robust_buffer_access_update_after_bind: Default::default(),
-            quad_divergent_implicit_lod: Default::default(),
-            max_per_stage_descriptor_update_after_bind_samplers: Default::default(),
-            max_per_stage_descriptor_update_after_bind_uniform_buffers: Default::default(),
-            max_per_stage_descriptor_update_after_bind_storage_buffers: Default::default(),
-            max_per_stage_descriptor_update_after_bind_sampled_images: Default::default(),
-            max_per_stage_descriptor_update_after_bind_storage_images: Default::default(),
-            max_per_stage_descriptor_update_after_bind_input_attachments: Default::default(),
-            max_per_stage_update_after_bind_resources: Default::default(),
-            max_descriptor_set_update_after_bind_samplers: Default::default(),
-            max_descriptor_set_update_after_bind_uniform_buffers: Default::default(),
-            max_descriptor_set_update_after_bind_uniform_buffers_dynamic: Default::default(),
-            max_descriptor_set_update_after_bind_storage_buffers: Default::default(),
-            max_descriptor_set_update_after_bind_storage_buffers_dynamic: Default::default(),
-            max_descriptor_set_update_after_bind_sampled_images: Default::default(),
-            max_descriptor_set_update_after_bind_storage_images: Default::default(),
-            max_descriptor_set_update_after_bind_input_attachments: Default::default(),
-        }
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct DescriptorSetLayoutBindingFlagsCreateInfoEXT {
@@ -12266,15 +11637,6 @@ pub struct DescriptorSetVariableDescriptorCountLayoutSupportEXT {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub max_variable_descriptor_count: uint32_t,
-}
-impl ::std::default::Default for DescriptorSetVariableDescriptorCountLayoutSupportEXT {
-    fn default() -> DescriptorSetVariableDescriptorCountLayoutSupportEXT {
-        DescriptorSetVariableDescriptorCountLayoutSupportEXT {
-            s_type: StructureType::DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_LAYOUT_SUPPORT_EXT,
-            p_next: unsafe { ::std::mem::zeroed() },
-            max_variable_descriptor_count: Default::default(),
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone, Default, Debug)]
@@ -12340,15 +11702,6 @@ pub struct AndroidHardwareBufferUsageANDROID {
     pub p_next: *mut c_void,
     pub android_hardware_buffer_usage: uint64_t,
 }
-impl ::std::default::Default for AndroidHardwareBufferUsageANDROID {
-    fn default() -> AndroidHardwareBufferUsageANDROID {
-        AndroidHardwareBufferUsageANDROID {
-            s_type: StructureType::ANDROID_HARDWARE_BUFFER_USAGE_ANDROID,
-            p_next: unsafe { ::std::mem::zeroed() },
-            android_hardware_buffer_usage: Default::default(),
-        }
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct AndroidHardwareBufferPropertiesANDROID {
@@ -12356,16 +11709,6 @@ pub struct AndroidHardwareBufferPropertiesANDROID {
     pub p_next: *mut c_void,
     pub allocation_size: DeviceSize,
     pub memory_type_bits: uint32_t,
-}
-impl ::std::default::Default for AndroidHardwareBufferPropertiesANDROID {
-    fn default() -> AndroidHardwareBufferPropertiesANDROID {
-        AndroidHardwareBufferPropertiesANDROID {
-            s_type: StructureType::ANDROID_HARDWARE_BUFFER_PROPERTIES_ANDROID,
-            p_next: unsafe { ::std::mem::zeroed() },
-            allocation_size: Default::default(),
-            memory_type_bits: Default::default(),
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
@@ -12396,22 +11739,6 @@ pub struct AndroidHardwareBufferFormatPropertiesANDROID {
     pub suggested_ycbcr_range: SamplerYcbcrRange,
     pub suggested_x_chroma_offset: ChromaLocation,
     pub suggested_y_chroma_offset: ChromaLocation,
-}
-impl ::std::default::Default for AndroidHardwareBufferFormatPropertiesANDROID {
-    fn default() -> AndroidHardwareBufferFormatPropertiesANDROID {
-        AndroidHardwareBufferFormatPropertiesANDROID {
-            s_type: StructureType::ANDROID_HARDWARE_BUFFER_FORMAT_PROPERTIES_ANDROID,
-            p_next: unsafe { ::std::mem::zeroed() },
-            format: Default::default(),
-            external_format: Default::default(),
-            format_features: Default::default(),
-            sampler_ycbcr_conversion_components: Default::default(),
-            suggested_ycbcr_model: Default::default(),
-            suggested_ycbcr_range: Default::default(),
-            suggested_x_chroma_offset: Default::default(),
-            suggested_y_chroma_offset: Default::default(),
-        }
-    }
 }
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]

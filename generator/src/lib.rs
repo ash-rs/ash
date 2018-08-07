@@ -1253,13 +1253,13 @@ pub fn generate_struct(_struct: &vkxml::Struct, union_types: &HashSet<&str>, non
     });
 
     let debug_tokens = derive_debug(_struct, union_types);
-    let default_tokens = derive_default(_struct, union_types, nonzero_tys);
+    let default_tokens = if _struct.is_return { None } else { derive_default(_struct, union_types, nonzero_tys) };
     let dbg_str = if debug_tokens.is_none() {
         quote!(Debug,)
     } else {
         quote!()
     };
-    let default_str = if default_tokens.is_none() {
+    let default_str = if !_struct.is_return && default_tokens.is_none() {
         quote!(Default,)
     } else {
         quote!()
