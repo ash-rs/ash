@@ -4982,21 +4982,11 @@ pub struct Extent2D {
     pub height: uint32_t,
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug, Eq, Hash)]
+#[derive(Copy, Clone, Default, Debug, PartialEq, Eq, Hash)]
 pub struct Extent3D {
     pub width: uint32_t,
     pub height: uint32_t,
     pub depth: uint32_t,
-}
-
-impl PartialEq for Extent3D {
-    fn eq(&self, other: &Extent3D) -> bool {
-        if self.width == other.width && self.height == other.height && self.depth == other.depth {
-            true
-        } else {
-            false
-        }
-    }
 }
 
 #[repr(C)]
