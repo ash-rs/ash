@@ -12125,7 +12125,7 @@ impl VertexInputRate {
 #[repr(transparent)]
 pub struct Format(pub(crate) i32);
 impl Format {
-    fn index(&self) -> i32 {
+    fn as_raw_id(&self) -> i32 {
         self.0
     }
 }
