@@ -12125,6 +12125,11 @@ impl VertexInputRate {
 #[repr(transparent)]
 pub struct Format(pub(crate) i32);
 impl Format {
+    fn index(&self) -> i32 {
+        self.0
+    }
+}
+impl Format {
     pub const UNDEFINED: Self = Format(0);
     pub const R4G4_UNORM_PACK8: Self = Format(1);
     pub const R4G4B4A4_UNORM_PACK16: Self = Format(2);
