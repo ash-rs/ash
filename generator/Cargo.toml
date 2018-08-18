@@ -4,7 +4,7 @@ version = "0.1.0"
 authors = ["Maik Klein <maikklein@googlemail.com>"]
 
 [dependencies]
-vk-parse = {git = "https://github.com/krolli/vk-parse"}
+vk-parse = "0.1"
 vkxml = {git = "https://github.com/terrybrashaw/vkxml"}
 #vkxml = {git = "https://github.com/maikklein/vkxml"}
 nom = "4.0"
