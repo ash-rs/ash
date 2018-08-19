@@ -4988,7 +4988,6 @@ pub struct Extent3D {
     pub height: uint32_t,
     pub depth: uint32_t,
 }
-
 #[repr(C)]
 #[derive(Copy, Clone, Default, Debug)]
 pub struct Viewport {
@@ -12124,11 +12123,6 @@ impl VertexInputRate {
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 pub struct Format(pub(crate) i32);
-impl Format {
-    pub fn as_raw_id(&self) -> i32 {
-        self.0
-    }
-}
 impl Format {
     pub const UNDEFINED: Self = Format(0);
     pub const R4G4_UNORM_PACK8: Self = Format(1);
