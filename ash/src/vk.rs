@@ -4984,7 +4984,7 @@ pub struct Extent2D {
 #[repr(C)]
 #[derive(Copy, Clone, Default, Debug, PartialEq, Eq, Hash)]
 pub struct Extent3D {
-    pub width: uint32_t
+    pub width: uint32_t,
     pub height: uint32_t,
     pub depth: uint32_t,
 }
