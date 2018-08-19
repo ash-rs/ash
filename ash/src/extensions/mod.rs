@@ -11,7 +11,7 @@ pub use self::wayland_surface::WaylandSurface;
 pub use self::win32_surface::Win32Surface;
 pub use self::xcb_surface::XcbSurface;
 pub use self::xlib_surface::XlibSurface;
-pub use self::debug_report::DebugUtils;
+pub use self::debug_utils::DebugUtils;
 
 mod android_surface;
 mod debug_marker;
