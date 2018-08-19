@@ -12,11 +12,11 @@ pub struct DebugUtils {
 
 impl DebugUtils {
     pub fn new<I: InstanceV1_0, D: DeviceV1_0>(
+        entry: &E,
         instance: &I,
-        device: &D,
     ) -> Result<DebugUtils, Vec<&'static str>> {
         let debug_utils_fn = vk::ExtDebugUtilsFn::load(|name| unsafe {
-            mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
+            mem::transmute(entry.get_instance_proc_addr(device.handle(), name.as_ptr()))
         })?;
         Ok(DebugUtils {
             debug_utils_fn: debug_utils_fn,
