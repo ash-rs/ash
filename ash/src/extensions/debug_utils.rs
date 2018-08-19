@@ -7,6 +7,7 @@ use {vk, RawPtr};
 
 #[derive(Clone)]
 pub struct DebugUtils {
+    handle: vk::Instance,
     debug_utils_fn: vk::ExtDebugUtilsFn,
 }
 
@@ -19,6 +20,7 @@ impl DebugUtils {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         })?;
         Ok(DebugUtils {
+            handle: instance.handle(),
             debug_utils_fn,
         })
     }
@@ -117,12 +119,11 @@ impl DebugUtils {
 
     pub unsafe fn destroy_debug_utils_messenger_ext(
         &self,
-        instance: vk::Instance,
         messenger: vk::DebugUtilsMessengerEXT,
         allocator: Option<&vk::AllocationCallbacks>,
     ) {
         self.debug_utils_fn.destroy_debug_utils_messenger_ext(
-            instance,
+            self.handle,
             messenger,
             allocator.as_raw_ptr(),
         );
