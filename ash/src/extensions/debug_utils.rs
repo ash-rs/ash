@@ -2,7 +2,7 @@
 use prelude::*;
 use std::ffi::CStr;
 use std::mem;
-use version::{DeviceV1_0, InstanceV1_0};
+use version::{EntryV1_0, InstanceV1_0};
 use {vk, RawPtr};
 
 #[derive(Clone)]
@@ -11,12 +11,12 @@ pub struct DebugUtils {
 }
 
 impl DebugUtils {
-    pub fn new<I: InstanceV1_0, D: DeviceV1_0>(
+    pub fn new<E: EntryV1_0, I: InstanceV1_0>(
         entry: &E,
         instance: &I,
     ) -> Result<DebugUtils, Vec<&'static str>> {
         let debug_utils_fn = vk::ExtDebugUtilsFn::load(|name| unsafe {
-            mem::transmute(entry.get_instance_proc_addr(device.handle(), name.as_ptr()))
+            mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         })?;
         Ok(DebugUtils {
             debug_utils_fn: debug_utils_fn,
