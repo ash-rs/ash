@@ -19,7 +19,7 @@ impl DebugUtils {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         })?;
         Ok(DebugUtils {
-            debug_utils_fn: debug_utils_fn,
+            debug_utils_fn,
         })
     }
 
