@@ -1092,7 +1092,7 @@ fn is_static_array(field: &vkxml::Field) -> bool {
             _ => false,
         }).unwrap_or(false)
 }
-pub fn derive_default(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> Option<Tokens> {
+pub fn derive_default(_struct: &vkxml::Struct) -> Option<Tokens> {
     let name = name_to_tokens(&_struct.name);
     let members = _struct.elements.iter().filter_map(|elem| match *elem {
         vkxml::StructElement::Member(ref field) => Some(field),
@@ -1219,6 +1219,27 @@ pub fn derive_debug(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> Opt
     };
     Some(q)
 }
+
+pub fn auto_derive_partial_eq_hash(_struct: &vkxml::Struct) -> Tokens {
+    // TODO: Properly detect which types can implement PartialEq and Hash.
+    // At the moment we only implement it for structs that contain primitivet
+    // types.
+    let is_primitive = _struct
+        .elements
+        .iter()
+        .filter_map(|elem| match *elem {
+            vkxml::StructElement::Member(ref field) => Some(field),
+            _ => None,
+        }).all(|field| match field.basetype.as_str() {
+            "c_float" | "uint32_t" => true,
+            _ => false,
+        });
+    if is_primitive {
+        quote!(Hash, PartialEq,)
+    } else {
+        quote!{}
+    }
+}
 pub fn generate_struct(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> Tokens {
     let name = name_to_tokens(&_struct.name);
     let members = _struct.elements.iter().filter_map(|elem| match *elem {
@@ -1233,7 +1254,8 @@ pub fn generate_struct(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> 
     });
 
     let debug_tokens = derive_debug(_struct, union_types);
-    let default_tokens = derive_default(_struct, union_types);
+    let default_tokens = derive_default(_struct);
+    let partial_eq_hash_str = auto_derive_partial_eq_hash(_struct);
     let dbg_str = if debug_tokens.is_none() {
         quote!(Debug,)
     } else {
@@ -1246,7 +1268,7 @@ pub fn generate_struct(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> 
     };
     quote!{
         #[repr(C)]
-        #[derive(Copy, Clone, #default_str #dbg_str)]
+        #[derive(Copy, Clone, #default_str #dbg_str #partial_eq_hash_str)]
         pub struct #name {
             #(#params,)*
         }

@@ -11,25 +11,25 @@ pub trait Handle {
 }
 #[macro_export]
 macro_rules! vk_make_version {
-    ($major:expr, $minor:expr, $patch:expr) => {
+    ( $ major : expr , $ minor : expr , $ patch : expr ) => {
         (($major as u32) << 22) | (($minor as u32) << 12) | $patch as u32
     };
 }
 #[macro_export]
 macro_rules! vk_version_major {
-    ($major:expr) => {
+    ( $ major : expr ) => {
         ($major as uint32_t) >> 22
     };
 }
 #[macro_export]
 macro_rules! vk_version_minor {
-    ($minor:expr) => {
+    ( $ minor : expr ) => {
         (($minor as uint32_t) >> 12) & 0x3ff
     };
 }
 #[macro_export]
 macro_rules! vk_version_patch {
-    ($minor:expr) => {
+    ( $ minor : expr ) => {
         ($minor as uint32_t) & 0xfff
     };
 }
@@ -60,7 +60,7 @@ pub type SECURITY_ATTRIBUTES = ();
 pub type ANativeWindow = c_void;
 pub type AHardwareBuffer = c_void;
 macro_rules! vk_bitflags_wrapped {
-    ($name:ident, $all:expr, $flag_type:ty) => {
+    ( $ name : ident , $ all : expr , $ flag_type : ty ) => {
         impl Default for $name {
             fn default() -> $name {
                 $name(0)
@@ -179,7 +179,7 @@ macro_rules! vk_bitflags_wrapped {
     };
 }
 macro_rules! handle_nondispatchable {
-    ($name:ident, $ty:ident) => {
+    ( $ name : ident , $ ty : ident ) => {
         #[repr(transparent)]
         #[derive(Eq, PartialEq, Ord, PartialOrd, Clone, Copy, Hash, Default)]
         pub struct $name(uint64_t);
@@ -216,7 +216,7 @@ macro_rules! handle_nondispatchable {
     };
 }
 macro_rules! define_handle {
-    ($name:ident, $ty:ident) => {
+    ( $ name : ident , $ ty : ident ) => {
         #[repr(transparent)]
         #[derive(Clone, Copy, Debug)]
         pub struct $name(*mut u8);
@@ -463,18 +463,18 @@ impl ::std::clone::Clone for InstanceFnV1_0 {
             enumerate_physical_devices: self.enumerate_physical_devices,
             get_physical_device_features: self.get_physical_device_features,
             get_physical_device_format_properties: self.get_physical_device_format_properties,
-            get_physical_device_image_format_properties: self
-                .get_physical_device_image_format_properties,
+            get_physical_device_image_format_properties:
+                self.get_physical_device_image_format_properties,
             get_physical_device_properties: self.get_physical_device_properties,
-            get_physical_device_queue_family_properties: self
-                .get_physical_device_queue_family_properties,
+            get_physical_device_queue_family_properties:
+                self.get_physical_device_queue_family_properties,
             get_physical_device_memory_properties: self.get_physical_device_memory_properties,
             get_device_proc_addr: self.get_device_proc_addr,
             create_device: self.create_device,
             enumerate_device_extension_properties: self.enumerate_device_extension_properties,
             enumerate_device_layer_properties: self.enumerate_device_layer_properties,
-            get_physical_device_sparse_image_format_properties: self
-                .get_physical_device_sparse_image_format_properties,
+            get_physical_device_sparse_image_format_properties:
+                self.get_physical_device_sparse_image_format_properties,
         }
     }
 }
@@ -3941,19 +3941,19 @@ impl ::std::clone::Clone for InstanceFnV1_1 {
             get_physical_device_features2: self.get_physical_device_features2,
             get_physical_device_properties2: self.get_physical_device_properties2,
             get_physical_device_format_properties2: self.get_physical_device_format_properties2,
-            get_physical_device_image_format_properties2: self
-                .get_physical_device_image_format_properties2,
-            get_physical_device_queue_family_properties2: self
-                .get_physical_device_queue_family_properties2,
+            get_physical_device_image_format_properties2:
+                self.get_physical_device_image_format_properties2,
+            get_physical_device_queue_family_properties2:
+                self.get_physical_device_queue_family_properties2,
             get_physical_device_memory_properties2: self.get_physical_device_memory_properties2,
-            get_physical_device_sparse_image_format_properties2: self
-                .get_physical_device_sparse_image_format_properties2,
-            get_physical_device_external_buffer_properties: self
-                .get_physical_device_external_buffer_properties,
-            get_physical_device_external_fence_properties: self
-                .get_physical_device_external_fence_properties,
-            get_physical_device_external_semaphore_properties: self
-                .get_physical_device_external_semaphore_properties,
+            get_physical_device_sparse_image_format_properties2:
+                self.get_physical_device_sparse_image_format_properties2,
+            get_physical_device_external_buffer_properties:
+                self.get_physical_device_external_buffer_properties,
+            get_physical_device_external_fence_properties:
+                self.get_physical_device_external_fence_properties,
+            get_physical_device_external_semaphore_properties:
+                self.get_physical_device_external_semaphore_properties,
         }
     }
 }
@@ -4976,7 +4976,7 @@ pub struct Offset3D {
     pub z: int32_t,
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
+#[derive(Copy, Clone, Default, Debug, Hash, PartialEq)]
 pub struct Extent2D {
     pub width: uint32_t,
     pub height: uint32_t,
@@ -4984,7 +4984,7 @@ pub struct Extent2D {
 #[repr(C)]
 #[derive(Copy, Clone, Default, Debug, PartialEq, Eq, Hash)]
 pub struct Extent3D {
-    pub width: uint32_t,
+    pub width: uint32_t
     pub height: uint32_t,
     pub depth: uint32_t,
 }
@@ -5042,11 +5042,9 @@ impl ::std::fmt::Debug for PhysicalDeviceProperties {
             .field("device_type", &self.device_type)
             .field("device_name", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.device_name.as_ptr() as *const i8)
-            })
-            .field("pipeline_cache_uuid", &unsafe {
+            }).field("pipeline_cache_uuid", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.pipeline_cache_uuid.as_ptr() as *const i8)
-            })
-            .field("limits", &self.limits)
+            }).field("limits", &self.limits)
             .field("sparse_properties", &self.sparse_properties)
             .finish()
     }
@@ -5077,8 +5075,7 @@ impl ::std::fmt::Debug for ExtensionProperties {
         fmt.debug_struct("ExtensionProperties")
             .field("extension_name", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.extension_name.as_ptr() as *const i8)
-            })
-            .field("spec_version", &self.spec_version)
+            }).field("spec_version", &self.spec_version)
             .finish()
     }
 }
@@ -5103,13 +5100,11 @@ impl ::std::fmt::Debug for LayerProperties {
         fmt.debug_struct("LayerProperties")
             .field("layer_name", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.layer_name.as_ptr() as *const i8)
-            })
-            .field("spec_version", &self.spec_version)
+            }).field("spec_version", &self.spec_version)
             .field("implementation_version", &self.implementation_version)
             .field("description", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.description.as_ptr() as *const i8)
-            })
-            .finish()
+            }).finish()
     }
 }
 impl ::std::default::Default for LayerProperties {
@@ -5166,8 +5161,7 @@ impl ::std::fmt::Debug for AllocationCallbacks {
             .field(
                 "pfn_internal_allocation",
                 &(self.pfn_internal_allocation as *const ()),
-            )
-            .field("pfn_internal_free", &(self.pfn_internal_free as *const ()))
+            ).field("pfn_internal_free", &(self.pfn_internal_free as *const ()))
             .finish()
     }
 }
@@ -5283,12 +5277,10 @@ impl ::std::fmt::Debug for PhysicalDeviceMemoryProperties {
             .field("memory_type_count", &self.memory_type_count)
             .field("memory_types", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.memory_types.as_ptr() as *const i8)
-            })
-            .field("memory_heap_count", &self.memory_heap_count)
+            }).field("memory_heap_count", &self.memory_heap_count)
             .field("memory_heaps", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.memory_heaps.as_ptr() as *const i8)
-            })
-            .finish()
+            }).finish()
     }
 }
 impl ::std::default::Default for PhysicalDeviceMemoryProperties {
@@ -5818,12 +5810,10 @@ impl ::std::fmt::Debug for ImageBlit {
             .field("src_subresource", &self.src_subresource)
             .field("src_offsets", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.src_offsets.as_ptr() as *const i8)
-            })
-            .field("dst_subresource", &self.dst_subresource)
+            }).field("dst_subresource", &self.dst_subresource)
             .field("dst_offsets", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.dst_offsets.as_ptr() as *const i8)
-            })
-            .finish()
+            }).finish()
     }
 }
 impl ::std::default::Default for ImageBlit {
@@ -6237,8 +6227,7 @@ impl ::std::fmt::Debug for PipelineColorBlendStateCreateInfo {
             .field("p_attachments", &self.p_attachments)
             .field("blend_constants", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.blend_constants.as_ptr() as *const i8)
-            })
-            .finish()
+            }).finish()
     }
 }
 impl ::std::default::Default for PipelineColorBlendStateCreateInfo {
@@ -6942,202 +6931,155 @@ impl ::std::fmt::Debug for PhysicalDeviceLimits {
             .field(
                 "max_memory_allocation_count",
                 &self.max_memory_allocation_count,
-            )
-            .field(
+            ).field(
                 "max_sampler_allocation_count",
                 &self.max_sampler_allocation_count,
-            )
-            .field("buffer_image_granularity", &self.buffer_image_granularity)
+            ).field("buffer_image_granularity", &self.buffer_image_granularity)
             .field("sparse_address_space_size", &self.sparse_address_space_size)
             .field("max_bound_descriptor_sets", &self.max_bound_descriptor_sets)
             .field(
                 "max_per_stage_descriptor_samplers",
                 &self.max_per_stage_descriptor_samplers,
-            )
-            .field(
+            ).field(
                 "max_per_stage_descriptor_uniform_buffers",
                 &self.max_per_stage_descriptor_uniform_buffers,
-            )
-            .field(
+            ).field(
                 "max_per_stage_descriptor_storage_buffers",
                 &self.max_per_stage_descriptor_storage_buffers,
-            )
-            .field(
+            ).field(
                 "max_per_stage_descriptor_sampled_images",
                 &self.max_per_stage_descriptor_sampled_images,
-            )
-            .field(
+            ).field(
                 "max_per_stage_descriptor_storage_images",
                 &self.max_per_stage_descriptor_storage_images,
-            )
-            .field(
+            ).field(
                 "max_per_stage_descriptor_input_attachments",
                 &self.max_per_stage_descriptor_input_attachments,
-            )
-            .field("max_per_stage_resources", &self.max_per_stage_resources)
+            ).field("max_per_stage_resources", &self.max_per_stage_resources)
             .field(
                 "max_descriptor_set_samplers",
                 &self.max_descriptor_set_samplers,
-            )
-            .field(
+            ).field(
                 "max_descriptor_set_uniform_buffers",
                 &self.max_descriptor_set_uniform_buffers,
-            )
-            .field(
+            ).field(
                 "max_descriptor_set_uniform_buffers_dynamic",
                 &self.max_descriptor_set_uniform_buffers_dynamic,
-            )
-            .field(
+            ).field(
                 "max_descriptor_set_storage_buffers",
                 &self.max_descriptor_set_storage_buffers,
-            )
-            .field(
+            ).field(
                 "max_descriptor_set_storage_buffers_dynamic",
                 &self.max_descriptor_set_storage_buffers_dynamic,
-            )
-            .field(
+            ).field(
                 "max_descriptor_set_sampled_images",
                 &self.max_descriptor_set_sampled_images,
-            )
-            .field(
+            ).field(
                 "max_descriptor_set_storage_images",
                 &self.max_descriptor_set_storage_images,
-            )
-            .field(
+            ).field(
                 "max_descriptor_set_input_attachments",
                 &self.max_descriptor_set_input_attachments,
-            )
-            .field(
+            ).field(
                 "max_vertex_input_attributes",
                 &self.max_vertex_input_attributes,
-            )
-            .field("max_vertex_input_bindings", &self.max_vertex_input_bindings)
+            ).field("max_vertex_input_bindings", &self.max_vertex_input_bindings)
             .field(
                 "max_vertex_input_attribute_offset",
                 &self.max_vertex_input_attribute_offset,
-            )
-            .field(
+            ).field(
                 "max_vertex_input_binding_stride",
                 &self.max_vertex_input_binding_stride,
-            )
-            .field(
+            ).field(
                 "max_vertex_output_components",
                 &self.max_vertex_output_components,
-            )
-            .field(
+            ).field(
                 "max_tessellation_generation_level",
                 &self.max_tessellation_generation_level,
-            )
-            .field(
+            ).field(
                 "max_tessellation_patch_size",
                 &self.max_tessellation_patch_size,
-            )
-            .field(
+            ).field(
                 "max_tessellation_control_per_vertex_input_components",
                 &self.max_tessellation_control_per_vertex_input_components,
-            )
-            .field(
+            ).field(
                 "max_tessellation_control_per_vertex_output_components",
                 &self.max_tessellation_control_per_vertex_output_components,
-            )
-            .field(
+            ).field(
                 "max_tessellation_control_per_patch_output_components",
                 &self.max_tessellation_control_per_patch_output_components,
-            )
-            .field(
+            ).field(
                 "max_tessellation_control_total_output_components",
                 &self.max_tessellation_control_total_output_components,
-            )
-            .field(
+            ).field(
                 "max_tessellation_evaluation_input_components",
                 &self.max_tessellation_evaluation_input_components,
-            )
-            .field(
+            ).field(
                 "max_tessellation_evaluation_output_components",
                 &self.max_tessellation_evaluation_output_components,
-            )
-            .field(
+            ).field(
                 "max_geometry_shader_invocations",
                 &self.max_geometry_shader_invocations,
-            )
-            .field(
+            ).field(
                 "max_geometry_input_components",
                 &self.max_geometry_input_components,
-            )
-            .field(
+            ).field(
                 "max_geometry_output_components",
                 &self.max_geometry_output_components,
-            )
-            .field(
+            ).field(
                 "max_geometry_output_vertices",
                 &self.max_geometry_output_vertices,
-            )
-            .field(
+            ).field(
                 "max_geometry_total_output_components",
                 &self.max_geometry_total_output_components,
-            )
-            .field(
+            ).field(
                 "max_fragment_input_components",
                 &self.max_fragment_input_components,
-            )
-            .field(
+            ).field(
                 "max_fragment_output_attachments",
                 &self.max_fragment_output_attachments,
-            )
-            .field(
+            ).field(
                 "max_fragment_dual_src_attachments",
                 &self.max_fragment_dual_src_attachments,
-            )
-            .field(
+            ).field(
                 "max_fragment_combined_output_resources",
                 &self.max_fragment_combined_output_resources,
-            )
-            .field(
+            ).field(
                 "max_compute_shared_memory_size",
                 &self.max_compute_shared_memory_size,
-            )
-            .field("max_compute_work_group_count", &unsafe {
+            ).field("max_compute_work_group_count", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.max_compute_work_group_count.as_ptr() as *const i8)
-            })
-            .field(
+            }).field(
                 "max_compute_work_group_invocations",
                 &self.max_compute_work_group_invocations,
-            )
-            .field("max_compute_work_group_size", &unsafe {
+            ).field("max_compute_work_group_size", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.max_compute_work_group_size.as_ptr() as *const i8)
-            })
-            .field("sub_pixel_precision_bits", &self.sub_pixel_precision_bits)
+            }).field("sub_pixel_precision_bits", &self.sub_pixel_precision_bits)
             .field("sub_texel_precision_bits", &self.sub_texel_precision_bits)
             .field("mipmap_precision_bits", &self.mipmap_precision_bits)
             .field(
                 "max_draw_indexed_index_value",
                 &self.max_draw_indexed_index_value,
-            )
-            .field("max_draw_indirect_count", &self.max_draw_indirect_count)
+            ).field("max_draw_indirect_count", &self.max_draw_indirect_count)
             .field("max_sampler_lod_bias", &self.max_sampler_lod_bias)
             .field("max_sampler_anisotropy", &self.max_sampler_anisotropy)
             .field("max_viewports", &self.max_viewports)
             .field("max_viewport_dimensions", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.max_viewport_dimensions.as_ptr() as *const i8)
-            })
-            .field("viewport_bounds_range", &unsafe {
+            }).field("viewport_bounds_range", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.viewport_bounds_range.as_ptr() as *const i8)
-            })
-            .field("viewport_sub_pixel_bits", &self.viewport_sub_pixel_bits)
+            }).field("viewport_sub_pixel_bits", &self.viewport_sub_pixel_bits)
             .field("min_memory_map_alignment", &self.min_memory_map_alignment)
             .field(
                 "min_texel_buffer_offset_alignment",
                 &self.min_texel_buffer_offset_alignment,
-            )
-            .field(
+            ).field(
                 "min_uniform_buffer_offset_alignment",
                 &self.min_uniform_buffer_offset_alignment,
-            )
-            .field(
+            ).field(
                 "min_storage_buffer_offset_alignment",
                 &self.min_storage_buffer_offset_alignment,
-            )
-            .field("min_texel_offset", &self.min_texel_offset)
+            ).field("min_texel_offset", &self.min_texel_offset)
             .field("max_texel_offset", &self.max_texel_offset)
             .field("min_texel_gather_offset", &self.min_texel_gather_offset)
             .field("max_texel_gather_offset", &self.max_texel_gather_offset)
@@ -7146,79 +7088,63 @@ impl ::std::fmt::Debug for PhysicalDeviceLimits {
             .field(
                 "sub_pixel_interpolation_offset_bits",
                 &self.sub_pixel_interpolation_offset_bits,
-            )
-            .field("max_framebuffer_width", &self.max_framebuffer_width)
+            ).field("max_framebuffer_width", &self.max_framebuffer_width)
             .field("max_framebuffer_height", &self.max_framebuffer_height)
             .field("max_framebuffer_layers", &self.max_framebuffer_layers)
             .field(
                 "framebuffer_color_sample_counts",
                 &self.framebuffer_color_sample_counts,
-            )
-            .field(
+            ).field(
                 "framebuffer_depth_sample_counts",
                 &self.framebuffer_depth_sample_counts,
-            )
-            .field(
+            ).field(
                 "framebuffer_stencil_sample_counts",
                 &self.framebuffer_stencil_sample_counts,
-            )
-            .field(
+            ).field(
                 "framebuffer_no_attachments_sample_counts",
                 &self.framebuffer_no_attachments_sample_counts,
-            )
-            .field("max_color_attachments", &self.max_color_attachments)
+            ).field("max_color_attachments", &self.max_color_attachments)
             .field(
                 "sampled_image_color_sample_counts",
                 &self.sampled_image_color_sample_counts,
-            )
-            .field(
+            ).field(
                 "sampled_image_integer_sample_counts",
                 &self.sampled_image_integer_sample_counts,
-            )
-            .field(
+            ).field(
                 "sampled_image_depth_sample_counts",
                 &self.sampled_image_depth_sample_counts,
-            )
-            .field(
+            ).field(
                 "sampled_image_stencil_sample_counts",
                 &self.sampled_image_stencil_sample_counts,
-            )
-            .field(
+            ).field(
                 "storage_image_sample_counts",
                 &self.storage_image_sample_counts,
-            )
-            .field("max_sample_mask_words", &self.max_sample_mask_words)
+            ).field("max_sample_mask_words", &self.max_sample_mask_words)
             .field(
                 "timestamp_compute_and_graphics",
                 &self.timestamp_compute_and_graphics,
-            )
-            .field("timestamp_period", &self.timestamp_period)
+            ).field("timestamp_period", &self.timestamp_period)
             .field("max_clip_distances", &self.max_clip_distances)
             .field("max_cull_distances", &self.max_cull_distances)
             .field(
                 "max_combined_clip_and_cull_distances",
                 &self.max_combined_clip_and_cull_distances,
-            )
-            .field("discrete_queue_priorities", &self.discrete_queue_priorities)
+            ).field("discrete_queue_priorities", &self.discrete_queue_priorities)
             .field("point_size_range", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.point_size_range.as_ptr() as *const i8)
-            })
-            .field("line_width_range", &unsafe {
+            }).field("line_width_range", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.line_width_range.as_ptr() as *const i8)
-            })
-            .field("point_size_granularity", &self.point_size_granularity)
+            }).field("point_size_granularity", &self.point_size_granularity)
             .field("line_width_granularity", &self.line_width_granularity)
             .field("strict_lines", &self.strict_lines)
             .field("standard_sample_locations", &self.standard_sample_locations)
             .field(
                 "optimal_buffer_copy_offset_alignment",
                 &self.optimal_buffer_copy_offset_alignment,
-            )
-            .field(
+            ).field(
                 "optimal_buffer_copy_row_pitch_alignment",
                 &self.optimal_buffer_copy_row_pitch_alignment,
-            )
-            .field("non_coherent_atom_size", &self.non_coherent_atom_size)
+            ).field("non_coherent_atom_size", &self.non_coherent_atom_size)
             .finish()
     }
 }
@@ -7401,7 +7327,7 @@ impl ::std::default::Default for FramebufferCreateInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
+#[derive(Copy, Clone, Default, Debug, Hash, PartialEq)]
 pub struct DrawIndirectCommand {
     pub vertex_count: uint32_t,
     pub instance_count: uint32_t,
@@ -7418,7 +7344,7 @@ pub struct DrawIndexedIndirectCommand {
     pub first_instance: uint32_t,
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
+#[derive(Copy, Clone, Default, Debug, Hash, PartialEq)]
 pub struct DispatchIndirectCommand {
     pub x: uint32_t,
     pub y: uint32_t,
@@ -7928,8 +7854,7 @@ impl ::std::fmt::Debug for DebugMarkerMarkerInfoEXT {
             .field("p_marker_name", &self.p_marker_name)
             .field("color", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.color.as_ptr() as *const i8)
-            })
-            .finish()
+            }).finish()
     }
 }
 impl ::std::default::Default for DebugMarkerMarkerInfoEXT {
@@ -8320,9 +8245,6 @@ impl ::std::default::Default for PhysicalDeviceFeatures2 {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct PhysicalDeviceFeatures2KHR {}
-#[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct PhysicalDeviceProperties2 {
     pub s_type: StructureType,
@@ -8338,9 +8260,6 @@ impl ::std::default::Default for PhysicalDeviceProperties2 {
         }
     }
 }
-#[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct PhysicalDeviceProperties2KHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct FormatProperties2 {
@@ -8358,9 +8277,6 @@ impl ::std::default::Default for FormatProperties2 {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct FormatProperties2KHR {}
-#[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct ImageFormatProperties2 {
     pub s_type: StructureType,
@@ -8376,9 +8292,6 @@ impl ::std::default::Default for ImageFormatProperties2 {
         }
     }
 }
-#[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct ImageFormatProperties2KHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct PhysicalDeviceImageFormatInfo2 {
@@ -8404,9 +8317,6 @@ impl ::std::default::Default for PhysicalDeviceImageFormatInfo2 {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct PhysicalDeviceImageFormatInfo2KHR {}
-#[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct QueueFamilyProperties2 {
     pub s_type: StructureType,
@@ -8422,9 +8332,6 @@ impl ::std::default::Default for QueueFamilyProperties2 {
         }
     }
 }
-#[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct QueueFamilyProperties2KHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct PhysicalDeviceMemoryProperties2 {
@@ -8442,9 +8349,6 @@ impl ::std::default::Default for PhysicalDeviceMemoryProperties2 {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct PhysicalDeviceMemoryProperties2KHR {}
-#[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct SparseImageFormatProperties2 {
     pub s_type: StructureType,
@@ -8460,9 +8364,6 @@ impl ::std::default::Default for SparseImageFormatProperties2 {
         }
     }
 }
-#[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct SparseImageFormatProperties2KHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct PhysicalDeviceSparseImageFormatInfo2 {
@@ -8487,9 +8388,6 @@ impl ::std::default::Default for PhysicalDeviceSparseImageFormatInfo2 {
         }
     }
 }
-#[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct PhysicalDeviceSparseImageFormatInfo2KHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct PhysicalDevicePushDescriptorPropertiesKHR {
@@ -8565,17 +8463,11 @@ impl ::std::default::Default for PhysicalDeviceVariablePointerFeatures {
 }
 #[repr(C)]
 #[derive(Copy, Clone, Default, Debug)]
-pub struct PhysicalDeviceVariablePointerFeaturesKHR {}
-#[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
 pub struct ExternalMemoryProperties {
     pub external_memory_features: ExternalMemoryFeatureFlags,
     pub export_from_imported_handle_types: ExternalMemoryHandleTypeFlags,
     pub compatible_handle_types: ExternalMemoryHandleTypeFlags,
 }
-#[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct ExternalMemoryPropertiesKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct PhysicalDeviceExternalImageFormatInfo {
@@ -8593,9 +8485,6 @@ impl ::std::default::Default for PhysicalDeviceExternalImageFormatInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct PhysicalDeviceExternalImageFormatInfoKHR {}
-#[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct ExternalImageFormatProperties {
     pub s_type: StructureType,
@@ -8611,9 +8500,6 @@ impl ::std::default::Default for ExternalImageFormatProperties {
         }
     }
 }
-#[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct ExternalImageFormatPropertiesKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct PhysicalDeviceExternalBufferInfo {
@@ -8635,9 +8521,6 @@ impl ::std::default::Default for PhysicalDeviceExternalBufferInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct PhysicalDeviceExternalBufferInfoKHR {}
-#[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct ExternalBufferProperties {
     pub s_type: StructureType,
@@ -8653,9 +8536,6 @@ impl ::std::default::Default for ExternalBufferProperties {
         }
     }
 }
-#[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct ExternalBufferPropertiesKHR {}
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct PhysicalDeviceIDProperties {
@@ -8674,14 +8554,11 @@ impl ::std::fmt::Debug for PhysicalDeviceIDProperties {
             .field("p_next", &self.p_next)
             .field("device_uuid", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.device_uuid.as_ptr() as *const i8)
-            })
-            .field("driver_uuid", &unsafe {
+            }).field("driver_uuid", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.driver_uuid.as_ptr() as *const i8)
-            })
-            .field("device_luid", &unsafe {
+            }).field("device_luid", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.device_luid.as_ptr() as *const i8)
-            })
-            .field("device_node_mask", &self.device_node_mask)
+            }).field("device_node_mask", &self.device_node_mask)
             .field("device_luid_valid", &self.device_luid_valid)
             .finish()
     }
@@ -8700,9 +8577,6 @@ impl ::std::default::Default for PhysicalDeviceIDProperties {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct PhysicalDeviceIDPropertiesKHR {}
-#[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct ExternalMemoryImageCreateInfo {
     pub s_type: StructureType,
@@ -8718,9 +8592,6 @@ impl ::std::default::Default for ExternalMemoryImageCreateInfo {
         }
     }
 }
-#[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct ExternalMemoryImageCreateInfoKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct ExternalMemoryBufferCreateInfo {
@@ -8738,9 +8609,6 @@ impl ::std::default::Default for ExternalMemoryBufferCreateInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct ExternalMemoryBufferCreateInfoKHR {}
-#[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct ExportMemoryAllocateInfo {
     pub s_type: StructureType,
@@ -8756,9 +8624,6 @@ impl ::std::default::Default for ExportMemoryAllocateInfo {
         }
     }
 }
-#[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct ExportMemoryAllocateInfoKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct ImportMemoryWin32HandleInfoKHR {
@@ -8930,9 +8795,6 @@ impl ::std::default::Default for PhysicalDeviceExternalSemaphoreInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct PhysicalDeviceExternalSemaphoreInfoKHR {}
-#[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct ExternalSemaphoreProperties {
     pub s_type: StructureType,
@@ -8953,9 +8815,6 @@ impl ::std::default::Default for ExternalSemaphoreProperties {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct ExternalSemaphorePropertiesKHR {}
-#[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct ExportSemaphoreCreateInfo {
     pub s_type: StructureType,
@@ -8971,9 +8830,6 @@ impl ::std::default::Default for ExportSemaphoreCreateInfo {
         }
     }
 }
-#[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct ExportSemaphoreCreateInfoKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct ImportSemaphoreWin32HandleInfoKHR {
@@ -9115,9 +8971,6 @@ impl ::std::default::Default for PhysicalDeviceExternalFenceInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct PhysicalDeviceExternalFenceInfoKHR {}
-#[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct ExternalFenceProperties {
     pub s_type: StructureType,
@@ -9138,9 +8991,6 @@ impl ::std::default::Default for ExternalFenceProperties {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct ExternalFencePropertiesKHR {}
-#[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct ExportFenceCreateInfo {
     pub s_type: StructureType,
@@ -9156,9 +9006,6 @@ impl ::std::default::Default for ExportFenceCreateInfo {
         }
     }
 }
-#[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct ExportFenceCreateInfoKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct ImportFenceWin32HandleInfoKHR {
@@ -9282,9 +9129,6 @@ impl ::std::default::Default for PhysicalDeviceMultiviewFeatures {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct PhysicalDeviceMultiviewFeaturesKHR {}
-#[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct PhysicalDeviceMultiviewProperties {
     pub s_type: StructureType,
@@ -9302,9 +9146,6 @@ impl ::std::default::Default for PhysicalDeviceMultiviewProperties {
         }
     }
 }
-#[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct PhysicalDeviceMultiviewPropertiesKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct RenderPassMultiviewCreateInfo {
@@ -9331,9 +9172,6 @@ impl ::std::default::Default for RenderPassMultiviewCreateInfo {
         }
     }
 }
-#[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct RenderPassMultiviewCreateInfoKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct SurfaceCapabilities2EXT {
@@ -9451,8 +9289,7 @@ impl ::std::fmt::Debug for PhysicalDeviceGroupProperties {
             .field("physical_device_count", &self.physical_device_count)
             .field("physical_devices", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.physical_devices.as_ptr() as *const i8)
-            })
-            .field("subset_allocation", &self.subset_allocation)
+            }).field("subset_allocation", &self.subset_allocation)
             .finish()
     }
 }
@@ -9467,9 +9304,6 @@ impl ::std::default::Default for PhysicalDeviceGroupProperties {
         }
     }
 }
-#[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct PhysicalDeviceGroupPropertiesKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct MemoryAllocateFlagsInfo {
@@ -9488,9 +9322,6 @@ impl ::std::default::Default for MemoryAllocateFlagsInfo {
         }
     }
 }
-#[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct MemoryAllocateFlagsInfoKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct BindBufferMemoryInfo {
@@ -9512,9 +9343,6 @@ impl ::std::default::Default for BindBufferMemoryInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct BindBufferMemoryInfoKHR {}
-#[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct BindBufferMemoryDeviceGroupInfo {
     pub s_type: StructureType,
@@ -9532,9 +9360,6 @@ impl ::std::default::Default for BindBufferMemoryDeviceGroupInfo {
         }
     }
 }
-#[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct BindBufferMemoryDeviceGroupInfoKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct BindImageMemoryInfo {
@@ -9555,9 +9380,6 @@ impl ::std::default::Default for BindImageMemoryInfo {
         }
     }
 }
-#[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct BindImageMemoryInfoKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct BindImageMemoryDeviceGroupInfo {
@@ -9581,9 +9403,6 @@ impl ::std::default::Default for BindImageMemoryDeviceGroupInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct BindImageMemoryDeviceGroupInfoKHR {}
-#[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct DeviceGroupRenderPassBeginInfo {
     pub s_type: StructureType,
@@ -9604,9 +9423,6 @@ impl ::std::default::Default for DeviceGroupRenderPassBeginInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct DeviceGroupRenderPassBeginInfoKHR {}
-#[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct DeviceGroupCommandBufferBeginInfo {
     pub s_type: StructureType,
@@ -9622,9 +9438,6 @@ impl ::std::default::Default for DeviceGroupCommandBufferBeginInfo {
         }
     }
 }
-#[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct DeviceGroupCommandBufferBeginInfoKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct DeviceGroupSubmitInfo {
@@ -9652,9 +9465,6 @@ impl ::std::default::Default for DeviceGroupSubmitInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct DeviceGroupSubmitInfoKHR {}
-#[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct DeviceGroupBindSparseInfo {
     pub s_type: StructureType,
@@ -9673,9 +9483,6 @@ impl ::std::default::Default for DeviceGroupBindSparseInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct DeviceGroupBindSparseInfoKHR {}
-#[repr(C)]
 #[derive(Copy, Clone)]
 pub struct DeviceGroupPresentCapabilitiesKHR {
     pub s_type: StructureType,
@@ -9690,8 +9497,7 @@ impl ::std::fmt::Debug for DeviceGroupPresentCapabilitiesKHR {
             .field("p_next", &self.p_next)
             .field("present_mask", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.present_mask.as_ptr() as *const i8)
-            })
-            .field("modes", &self.modes)
+            }).field("modes", &self.modes)
             .finish()
     }
 }
@@ -9802,9 +9608,6 @@ impl ::std::default::Default for DeviceGroupDeviceCreateInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct DeviceGroupDeviceCreateInfoKHR {}
-#[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct DeviceGroupSwapchainCreateInfoKHR {
     pub s_type: StructureType,
@@ -9830,9 +9633,6 @@ pub struct DescriptorUpdateTemplateEntry {
     pub offset: size_t,
     pub stride: size_t,
 }
-#[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct DescriptorUpdateTemplateEntryKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct DescriptorUpdateTemplateCreateInfo {
@@ -9863,9 +9663,6 @@ impl ::std::default::Default for DescriptorUpdateTemplateCreateInfo {
         }
     }
 }
-#[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct DescriptorUpdateTemplateCreateInfoKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Default, Debug)]
 pub struct XYColorEXT {
@@ -10092,9 +9889,6 @@ pub struct InputAttachmentAspectReference {
     pub aspect_mask: ImageAspectFlags,
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct InputAttachmentAspectReferenceKHR {}
-#[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct RenderPassInputAttachmentAspectCreateInfo {
     pub s_type: StructureType,
@@ -10112,9 +9906,6 @@ impl ::std::default::Default for RenderPassInputAttachmentAspectCreateInfo {
         }
     }
 }
-#[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct RenderPassInputAttachmentAspectCreateInfoKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct PhysicalDeviceSurfaceInfo2KHR {
@@ -10284,9 +10075,6 @@ impl ::std::default::Default for PhysicalDevice16BitStorageFeatures {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct PhysicalDevice16BitStorageFeaturesKHR {}
-#[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct PhysicalDeviceSubgroupProperties {
     pub s_type: StructureType,
@@ -10325,9 +10113,6 @@ impl ::std::default::Default for BufferMemoryRequirementsInfo2 {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct BufferMemoryRequirementsInfo2KHR {}
-#[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct ImageMemoryRequirementsInfo2 {
     pub s_type: StructureType,
@@ -10343,9 +10128,6 @@ impl ::std::default::Default for ImageMemoryRequirementsInfo2 {
         }
     }
 }
-#[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct ImageMemoryRequirementsInfo2KHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct ImageSparseMemoryRequirementsInfo2 {
@@ -10363,9 +10145,6 @@ impl ::std::default::Default for ImageSparseMemoryRequirementsInfo2 {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct ImageSparseMemoryRequirementsInfo2KHR {}
-#[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct MemoryRequirements2 {
     pub s_type: StructureType,
@@ -10381,9 +10160,6 @@ impl ::std::default::Default for MemoryRequirements2 {
         }
     }
 }
-#[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct MemoryRequirements2KHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct SparseImageMemoryRequirements2 {
@@ -10401,9 +10177,6 @@ impl ::std::default::Default for SparseImageMemoryRequirements2 {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct SparseImageMemoryRequirements2KHR {}
-#[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct PhysicalDevicePointClippingProperties {
     pub s_type: StructureType,
@@ -10419,9 +10192,6 @@ impl ::std::default::Default for PhysicalDevicePointClippingProperties {
         }
     }
 }
-#[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct PhysicalDevicePointClippingPropertiesKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct MemoryDedicatedRequirements {
@@ -10441,9 +10211,6 @@ impl ::std::default::Default for MemoryDedicatedRequirements {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct MemoryDedicatedRequirementsKHR {}
-#[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct MemoryDedicatedAllocateInfo {
     pub s_type: StructureType,
@@ -10462,9 +10229,6 @@ impl ::std::default::Default for MemoryDedicatedAllocateInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct MemoryDedicatedAllocateInfoKHR {}
-#[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct ImageViewUsageCreateInfo {
     pub s_type: StructureType,
@@ -10480,9 +10244,6 @@ impl ::std::default::Default for ImageViewUsageCreateInfo {
         }
     }
 }
-#[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct ImageViewUsageCreateInfoKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct PipelineTessellationDomainOriginStateCreateInfo {
@@ -10500,9 +10261,6 @@ impl ::std::default::Default for PipelineTessellationDomainOriginStateCreateInfo
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct PipelineTessellationDomainOriginStateCreateInfoKHR {}
-#[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct SamplerYcbcrConversionInfo {
     pub s_type: StructureType,
@@ -10518,9 +10276,6 @@ impl ::std::default::Default for SamplerYcbcrConversionInfo {
         }
     }
 }
-#[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct SamplerYcbcrConversionInfoKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct SamplerYcbcrConversionCreateInfo {
@@ -10552,9 +10307,6 @@ impl ::std::default::Default for SamplerYcbcrConversionCreateInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct SamplerYcbcrConversionCreateInfoKHR {}
-#[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct BindImagePlaneMemoryInfo {
     pub s_type: StructureType,
@@ -10570,9 +10322,6 @@ impl ::std::default::Default for BindImagePlaneMemoryInfo {
         }
     }
 }
-#[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct BindImagePlaneMemoryInfoKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct ImagePlaneMemoryRequirementsInfo {
@@ -10590,9 +10339,6 @@ impl ::std::default::Default for ImagePlaneMemoryRequirementsInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct ImagePlaneMemoryRequirementsInfoKHR {}
-#[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct PhysicalDeviceSamplerYcbcrConversionFeatures {
     pub s_type: StructureType,
@@ -10609,9 +10355,6 @@ impl ::std::default::Default for PhysicalDeviceSamplerYcbcrConversionFeatures {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct PhysicalDeviceSamplerYcbcrConversionFeaturesKHR {}
-#[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct SamplerYcbcrConversionImageFormatProperties {
     pub s_type: StructureType,
@@ -10627,9 +10370,6 @@ impl ::std::default::Default for SamplerYcbcrConversionImageFormatProperties {
         }
     }
 }
-#[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct SamplerYcbcrConversionImageFormatPropertiesKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct TextureLODGatherFormatPropertiesAMD {
@@ -10851,21 +10591,17 @@ impl ::std::fmt::Debug for PhysicalDeviceSampleLocationsPropertiesEXT {
             .field(
                 "sample_location_sample_counts",
                 &self.sample_location_sample_counts,
-            )
-            .field(
+            ).field(
                 "max_sample_location_grid_size",
                 &self.max_sample_location_grid_size,
-            )
-            .field("sample_location_coordinate_range", &unsafe {
+            ).field("sample_location_coordinate_range", &unsafe {
                 ::std::ffi::CStr::from_ptr(
                     self.sample_location_coordinate_range.as_ptr() as *const i8
                 )
-            })
-            .field(
+            }).field(
                 "sample_location_sub_pixel_bits",
                 &self.sample_location_sub_pixel_bits,
-            )
-            .field("variable_sample_locations", &self.variable_sample_locations)
+            ).field("variable_sample_locations", &self.variable_sample_locations)
             .finish()
     }
 }
@@ -11073,9 +10809,6 @@ impl ::std::default::Default for PhysicalDeviceMaintenance3Properties {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct PhysicalDeviceMaintenance3PropertiesKHR {}
-#[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct DescriptorSetLayoutSupport {
     pub s_type: StructureType,
@@ -11091,9 +10824,6 @@ impl ::std::default::Default for DescriptorSetLayoutSupport {
         }
     }
 }
-#[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
-pub struct DescriptorSetLayoutSupportKHR {}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct PhysicalDeviceShaderDrawParameterFeatures {
@@ -11163,8 +10893,7 @@ impl ::std::fmt::Debug for ShaderStatisticsInfoAMD {
             .field("num_available_sgprs", &self.num_available_sgprs)
             .field("compute_work_group_size", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.compute_work_group_size.as_ptr() as *const i8)
-            })
-            .finish()
+            }).finish()
     }
 }
 impl ::std::default::Default for ShaderStatisticsInfoAMD {
@@ -11256,8 +10985,7 @@ impl ::std::fmt::Debug for DebugUtilsLabelEXT {
             .field("p_label_name", &self.p_label_name)
             .field("color", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.color.as_ptr() as *const i8)
-            })
-            .finish()
+            }).finish()
     }
 }
 impl ::std::default::Default for DebugUtilsLabelEXT {
@@ -11652,7 +11380,7 @@ impl ::std::default::Default for DescriptorSetVariableDescriptorCountLayoutSuppo
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
+#[derive(Copy, Clone, Default, Debug, Hash, PartialEq)]
 pub struct VertexInputBindingDivisorDescriptionEXT {
     pub binding: uint32_t,
     pub divisor: uint32_t,
@@ -13588,12 +13316,12 @@ pub mod extensions {
                 destroy_surface_khr: self.destroy_surface_khr,
                 get_physical_device_surface_support_khr: self
                     .get_physical_device_surface_support_khr,
-                get_physical_device_surface_capabilities_khr: self
-                    .get_physical_device_surface_capabilities_khr,
+                get_physical_device_surface_capabilities_khr:
+                    self.get_physical_device_surface_capabilities_khr,
                 get_physical_device_surface_formats_khr: self
                     .get_physical_device_surface_formats_khr,
-                get_physical_device_surface_present_modes_khr: self
-                    .get_physical_device_surface_present_modes_khr,
+                get_physical_device_surface_present_modes_khr:
+                    self.get_physical_device_surface_present_modes_khr,
             }
         }
     }
@@ -13742,12 +13470,12 @@ pub mod extensions {
                 get_swapchain_images_khr: self.get_swapchain_images_khr,
                 acquire_next_image_khr: self.acquire_next_image_khr,
                 queue_present_khr: self.queue_present_khr,
-                get_device_group_present_capabilities_khr: self
-                    .get_device_group_present_capabilities_khr,
-                get_device_group_surface_present_modes_khr: self
-                    .get_device_group_surface_present_modes_khr,
-                get_physical_device_present_rectangles_khr: self
-                    .get_physical_device_present_rectangles_khr,
+                get_device_group_present_capabilities_khr:
+                    self.get_device_group_present_capabilities_khr,
+                get_device_group_surface_present_modes_khr:
+                    self.get_device_group_surface_present_modes_khr,
+                get_physical_device_present_rectangles_khr:
+                    self.get_physical_device_present_rectangles_khr,
                 acquire_next_image2_khr: self.acquire_next_image2_khr,
             }
         }
@@ -14054,10 +13782,10 @@ pub mod extensions {
     impl ::std::clone::Clone for KhrDisplayFn {
         fn clone(&self) -> Self {
             KhrDisplayFn {
-                get_physical_device_display_properties_khr: self
-                    .get_physical_device_display_properties_khr,
-                get_physical_device_display_plane_properties_khr: self
-                    .get_physical_device_display_plane_properties_khr,
+                get_physical_device_display_properties_khr:
+                    self.get_physical_device_display_properties_khr,
+                get_physical_device_display_plane_properties_khr:
+                    self.get_physical_device_display_plane_properties_khr,
                 get_display_plane_supported_displays_khr: self
                     .get_display_plane_supported_displays_khr,
                 get_display_mode_properties_khr: self.get_display_mode_properties_khr,
@@ -14340,8 +14068,8 @@ pub mod extensions {
         fn clone(&self) -> Self {
             KhrXlibSurfaceFn {
                 create_xlib_surface_khr: self.create_xlib_surface_khr,
-                get_physical_device_xlib_presentation_support_khr: self
-                    .get_physical_device_xlib_presentation_support_khr,
+                get_physical_device_xlib_presentation_support_khr:
+                    self.get_physical_device_xlib_presentation_support_khr,
             }
         }
     }
@@ -14426,8 +14154,8 @@ pub mod extensions {
         fn clone(&self) -> Self {
             KhrXcbSurfaceFn {
                 create_xcb_surface_khr: self.create_xcb_surface_khr,
-                get_physical_device_xcb_presentation_support_khr: self
-                    .get_physical_device_xcb_presentation_support_khr,
+                get_physical_device_xcb_presentation_support_khr:
+                    self.get_physical_device_xcb_presentation_support_khr,
             }
         }
     }
@@ -14512,8 +14240,8 @@ pub mod extensions {
         fn clone(&self) -> Self {
             KhrWaylandSurfaceFn {
                 create_wayland_surface_khr: self.create_wayland_surface_khr,
-                get_physical_device_wayland_presentation_support_khr: self
-                    .get_physical_device_wayland_presentation_support_khr,
+                get_physical_device_wayland_presentation_support_khr:
+                    self.get_physical_device_wayland_presentation_support_khr,
             }
         }
     }
@@ -14595,8 +14323,8 @@ pub mod extensions {
         fn clone(&self) -> Self {
             KhrMirSurfaceFn {
                 create_mir_surface_khr: self.create_mir_surface_khr,
-                get_physical_device_mir_presentation_support_khr: self
-                    .get_physical_device_mir_presentation_support_khr,
+                get_physical_device_mir_presentation_support_khr:
+                    self.get_physical_device_mir_presentation_support_khr,
             }
         }
     }
@@ -14731,8 +14459,8 @@ pub mod extensions {
         fn clone(&self) -> Self {
             KhrWin32SurfaceFn {
                 create_win32_surface_khr: self.create_win32_surface_khr,
-                get_physical_device_win32_presentation_support_khr: self
-                    .get_physical_device_win32_presentation_support_khr,
+                get_physical_device_win32_presentation_support_khr:
+                    self.get_physical_device_win32_presentation_support_khr,
             }
         }
     }
@@ -16298,8 +16026,8 @@ pub mod extensions {
     impl ::std::clone::Clone for NvExternalMemoryCapabilitiesFn {
         fn clone(&self) -> Self {
             NvExternalMemoryCapabilitiesFn {
-                get_physical_device_external_image_format_properties_nv: self
-                    .get_physical_device_external_image_format_properties_nv,
+                get_physical_device_external_image_format_properties_nv:
+                    self.get_physical_device_external_image_format_properties_nv,
             }
         }
     }
@@ -16492,12 +16220,12 @@ pub mod extensions {
     impl ::std::clone::Clone for KhrDeviceGroupFn {
         fn clone(&self) -> Self {
             KhrDeviceGroupFn {
-                get_device_group_present_capabilities_khr: self
-                    .get_device_group_present_capabilities_khr,
-                get_device_group_surface_present_modes_khr: self
-                    .get_device_group_surface_present_modes_khr,
-                get_physical_device_present_rectangles_khr: self
-                    .get_physical_device_present_rectangles_khr,
+                get_device_group_present_capabilities_khr:
+                    self.get_device_group_present_capabilities_khr,
+                get_device_group_surface_present_modes_khr:
+                    self.get_device_group_surface_present_modes_khr,
+                get_physical_device_present_rectangles_khr:
+                    self.get_physical_device_present_rectangles_khr,
                 acquire_next_image2_khr: self.acquire_next_image2_khr,
             }
         }
@@ -17309,8 +17037,8 @@ pub mod extensions {
         fn clone(&self) -> Self {
             KhrPushDescriptorFn {
                 cmd_push_descriptor_set_khr: self.cmd_push_descriptor_set_khr,
-                cmd_push_descriptor_set_with_template_khr: self
-                    .cmd_push_descriptor_set_with_template_khr,
+                cmd_push_descriptor_set_with_template_khr:
+                    self.cmd_push_descriptor_set_with_template_khr,
             }
         }
     }
@@ -17496,8 +17224,8 @@ pub mod extensions {
     impl ::std::clone::Clone for KhrDescriptorUpdateTemplateFn {
         fn clone(&self) -> Self {
             KhrDescriptorUpdateTemplateFn {
-                cmd_push_descriptor_set_with_template_khr: self
-                    .cmd_push_descriptor_set_with_template_khr,
+                cmd_push_descriptor_set_with_template_khr:
+                    self.cmd_push_descriptor_set_with_template_khr,
             }
         }
     }
@@ -17611,8 +17339,8 @@ pub mod extensions {
                 destroy_object_table_nvx: self.destroy_object_table_nvx,
                 register_objects_nvx: self.register_objects_nvx,
                 unregister_objects_nvx: self.unregister_objects_nvx,
-                get_physical_device_generated_commands_properties_nvx: self
-                    .get_physical_device_generated_commands_properties_nvx,
+                get_physical_device_generated_commands_properties_nvx:
+                    self.get_physical_device_generated_commands_properties_nvx,
             }
         }
     }
@@ -18052,8 +17780,8 @@ pub mod extensions {
     impl ::std::clone::Clone for ExtDisplaySurfaceCounterFn {
         fn clone(&self) -> Self {
             ExtDisplaySurfaceCounterFn {
-                get_physical_device_surface_capabilities2_ext: self
-                    .get_physical_device_surface_capabilities2_ext,
+                get_physical_device_surface_capabilities2_ext:
+                    self.get_physical_device_surface_capabilities2_ext,
             }
         }
     }
@@ -19204,8 +18932,8 @@ pub mod extensions {
     impl ::std::clone::Clone for KhrGetSurfaceCapabilities2Fn {
         fn clone(&self) -> Self {
             KhrGetSurfaceCapabilities2Fn {
-                get_physical_device_surface_capabilities2_khr: self
-                    .get_physical_device_surface_capabilities2_khr,
+                get_physical_device_surface_capabilities2_khr:
+                    self.get_physical_device_surface_capabilities2_khr,
                 get_physical_device_surface_formats2_khr: self
                     .get_physical_device_surface_formats2_khr,
             }
@@ -19336,10 +19064,10 @@ pub mod extensions {
     impl ::std::clone::Clone for KhrGetDisplayProperties2Fn {
         fn clone(&self) -> Self {
             KhrGetDisplayProperties2Fn {
-                get_physical_device_display_properties2_khr: self
-                    .get_physical_device_display_properties2_khr,
-                get_physical_device_display_plane_properties2_khr: self
-                    .get_physical_device_display_plane_properties2_khr,
+                get_physical_device_display_properties2_khr:
+                    self.get_physical_device_display_properties2_khr,
+                get_physical_device_display_plane_properties2_khr:
+                    self.get_physical_device_display_plane_properties2_khr,
                 get_display_mode_properties2_khr: self.get_display_mode_properties2_khr,
                 get_display_plane_capabilities2_khr: self.get_display_plane_capabilities2_khr,
             }
@@ -19975,10 +19703,10 @@ pub mod extensions {
     impl ::std::clone::Clone for AndroidExternalMemoryAndroidHardwareBufferFn {
         fn clone(&self) -> Self {
             AndroidExternalMemoryAndroidHardwareBufferFn {
-                get_android_hardware_buffer_properties_android: self
-                    .get_android_hardware_buffer_properties_android,
-                get_memory_android_hardware_buffer_android: self
-                    .get_memory_android_hardware_buffer_android,
+                get_android_hardware_buffer_properties_android:
+                    self.get_android_hardware_buffer_properties_android,
+                get_memory_android_hardware_buffer_android:
+                    self.get_memory_android_hardware_buffer_android,
             }
         }
     }
@@ -20379,8 +20107,8 @@ pub mod extensions {
         fn clone(&self) -> Self {
             ExtSampleLocationsFn {
                 cmd_set_sample_locations_ext: self.cmd_set_sample_locations_ext,
-                get_physical_device_multisample_properties_ext: self
-                    .get_physical_device_multisample_properties_ext,
+                get_physical_device_multisample_properties_ext:
+                    self.get_physical_device_multisample_properties_ext,
             }
         }
     }

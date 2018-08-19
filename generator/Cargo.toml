@@ -5,8 +5,7 @@ authors = ["Maik Klein <maikklein@googlemail.com>"]
 
 [dependencies]
 vk-parse = "0.1"
-vkxml = "0.3.1"
-#vkxml = {git = "https://github.com/maikklein/vkxml"}
+vkxml = "0.3"
 nom = "4.0"
 heck = "0.3"
 proc-macro2 = "0.2"
