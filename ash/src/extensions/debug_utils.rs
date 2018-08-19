@@ -100,13 +100,12 @@ impl DebugUtils {
 
     pub unsafe fn create_debug_utils_messenger_ext(
         &self,
-        instance: vk::Instance,
         create_info: &vk::DebugUtilsMessengerCreateInfoEXT,
         allocator: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::DebugUtilsMessengerEXT> {
         let mut messenger = mem::uninitialized();
         let err_code = self.debug_utils_fn.create_debug_utils_messenger_ext(
-            instance,
+            self.handle,
             create_info,
             allocator.as_raw_ptr(),
             &mut messenger,
