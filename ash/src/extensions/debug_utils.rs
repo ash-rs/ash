@@ -2,24 +2,26 @@
 use prelude::*;
 use std::ffi::CStr;
 use std::mem;
-use version::{DeviceV1_0, InstanceV1_0};
+use version::{EntryV1_0, InstanceV1_0};
 use {vk, RawPtr};
 
 #[derive(Clone)]
 pub struct DebugUtils {
+    handle: vk::Instance,
     debug_utils_fn: vk::ExtDebugUtilsFn,
 }
 
 impl DebugUtils {
-    pub fn new<I: InstanceV1_0, D: DeviceV1_0>(
+    pub fn new<E: EntryV1_0, I: InstanceV1_0>(
+        entry: &E,
         instance: &I,
-        device: &D,
     ) -> Result<DebugUtils, Vec<&'static str>> {
         let debug_utils_fn = vk::ExtDebugUtilsFn::load(|name| unsafe {
-            mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
+            mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         })?;
         Ok(DebugUtils {
-            debug_utils_fn: debug_utils_fn,
+            handle: instance.handle(),
+            debug_utils_fn,
         })
     }
 
@@ -98,13 +100,12 @@ impl DebugUtils {
 
     pub unsafe fn create_debug_utils_messenger_ext(
         &self,
-        instance: vk::Instance,
         create_info: &vk::DebugUtilsMessengerCreateInfoEXT,
         allocator: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::DebugUtilsMessengerEXT> {
         let mut messenger = mem::uninitialized();
         let err_code = self.debug_utils_fn.create_debug_utils_messenger_ext(
-            instance,
+            self.handle,
             create_info,
             allocator.as_raw_ptr(),
             &mut messenger,
@@ -117,12 +118,11 @@ impl DebugUtils {
 
     pub unsafe fn destroy_debug_utils_messenger_ext(
         &self,
-        instance: vk::Instance,
         messenger: vk::DebugUtilsMessengerEXT,
         allocator: Option<&vk::AllocationCallbacks>,
     ) {
         self.debug_utils_fn.destroy_debug_utils_messenger_ext(
-            instance,
+            self.handle,
             messenger,
             allocator.as_raw_ptr(),
         );

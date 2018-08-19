@@ -22,7 +22,7 @@ impl DebugReport {
         })?;
         Ok(DebugReport {
             handle: instance.handle(),
-            debug_report_fn: debug_report_fn,
+            debug_report_fn,
         })
     }
 
