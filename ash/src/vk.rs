@@ -4977,13 +4977,13 @@ pub struct Offset3D {
     pub z: int32_t,
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug, Hash, PartialEq)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct Extent2D {
     pub width: uint32_t,
     pub height: uint32_t,
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug, Hash, PartialEq)]
+#[derive(Copy, Clone, Default, Debug, PartialEq, Eq, Hash)]
 pub struct Extent3D {
     pub width: uint32_t,
     pub height: uint32_t,
@@ -7402,7 +7402,7 @@ impl ::std::default::Default for FramebufferCreateInfo {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug, Hash, PartialEq)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct DrawIndirectCommand {
     pub vertex_count: uint32_t,
     pub instance_count: uint32_t,
@@ -7419,7 +7419,7 @@ pub struct DrawIndexedIndirectCommand {
     pub first_instance: uint32_t,
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug, Hash, PartialEq)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct DispatchIndirectCommand {
     pub x: uint32_t,
     pub y: uint32_t,
@@ -11467,7 +11467,7 @@ impl ::std::default::Default for DescriptorSetVariableDescriptorCountLayoutSuppo
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug, Hash, PartialEq)]
+#[derive(Copy, Clone, Default, Debug)]
 pub struct VertexInputBindingDivisorDescriptionEXT {
     pub binding: uint32_t,
     pub divisor: uint32_t,

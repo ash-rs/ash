@@ -1236,24 +1236,14 @@ pub fn derive_debug(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> Opt
     Some(q)
 }
 
-pub fn auto_derive_partial_eq_hash(_struct: &vkxml::Struct) -> Tokens {
-    // TODO: Properly detect which types can implement PartialEq and Hash.
-    // At the moment we only implement it for structs that contain primitivet
-    // types.
-    let is_primitive = _struct
-        .elements
-        .iter()
-        .filter_map(|elem| match *elem {
-            vkxml::StructElement::Member(ref field) => Some(field),
-            _ => None,
-        }).all(|field| match field.basetype.as_str() {
-            "c_float" | "uint32_t" => true,
-            _ => false,
-        });
-    if is_primitive {
-        quote!(Hash, PartialEq,)
-    } else {
-        quote!{}
+/// At the moment `Ash` doesn't properly derive all the necessary drives
+/// like Eq, Hash etc.
+/// To Address some cases, you can add the name of the struct that you
+/// require and add the missing derives yourself.
+pub fn manual_derives(_struct: &vkxml::Struct) -> Tokens {
+    match _struct.name.as_str() {
+        "VkExtent3D" | "VKExtent2D" => quote!{PartialEq, Eq, Hash,},
+        _ => quote!{},
     }
 }
 pub fn generate_struct(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> Tokens {
@@ -1271,7 +1261,7 @@ pub fn generate_struct(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> 
 
     let debug_tokens = derive_debug(_struct, union_types);
     let default_tokens = derive_default(_struct);
-    let partial_eq_hash_str = auto_derive_partial_eq_hash(_struct);
+    let manual_derive_tokens = manual_derives(_struct);
     let dbg_str = if debug_tokens.is_none() {
         quote!(Debug,)
     } else {
@@ -1284,7 +1274,7 @@ pub fn generate_struct(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> 
     };
     quote!{
         #[repr(C)]
-        #[derive(Copy, Clone, #default_str #dbg_str #partial_eq_hash_str)]
+        #[derive(Copy, Clone, #default_str #dbg_str #manual_derive_tokens)]
         pub struct #name {
             #(#params,)*
         }
