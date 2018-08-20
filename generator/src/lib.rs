@@ -810,12 +810,13 @@ pub fn generate_extension_constants<'a>(
                     offset,
                     extends,
                     extnumber,
-                    ..
+                    dir: positive,
                 } => {
                     let ext_base = 1_000_000_000;
                     let ext_block_size = 1000;
                     let extnumber = extnumber.unwrap_or_else(|| extension_number);
                     let value = ext_base + (extnumber - 1) * ext_block_size + offset;
+                    let value = if *positive { value } else { -value };
                     Some((Constant::Number(value as i32), Some(extends.clone())))
                 }
                 _ => None,
