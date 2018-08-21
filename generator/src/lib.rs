@@ -1037,6 +1037,10 @@ pub fn generate_enum<'a>(
             #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
             #[repr(transparent)]
             pub struct #ident(pub(crate) i32);
+            impl #ident {
+                pub fn from_raw(x: i32) -> Self { #ident(x) }
+                pub fn as_raw(self) -> i32 { self.0 }
+            }
             #impl_block
         };
         let special_quote = match _name.as_str() {
