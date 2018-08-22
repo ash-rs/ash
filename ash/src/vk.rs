@@ -3844,12 +3844,16 @@ impl DeviceFnV1_0 {
         (self.cmd_execute_commands)(command_buffer, command_buffer_count, p_command_buffers)
     }
 }
-pub struct EntryFnV1_1 {}
+pub struct EntryFnV1_1 {
+    enumerate_instance_version: extern "system" fn(p_api_version: *mut uint32_t) -> Result,
+}
 unsafe impl Send for EntryFnV1_1 {}
 unsafe impl Sync for EntryFnV1_1 {}
 impl ::std::clone::Clone for EntryFnV1_1 {
     fn clone(&self) -> Self {
-        EntryFnV1_1 {}
+        EntryFnV1_1 {
+            enumerate_instance_version: self.enumerate_instance_version,
+        }
     }
 }
 impl EntryFnV1_1 {
@@ -3858,16 +3862,28 @@ impl EntryFnV1_1 {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         let mut _err_str = Vec::new();
-        let s = EntryFnV1_1 {};
+        let s = EntryFnV1_1 {
+            enumerate_instance_version: unsafe {
+                let raw_name = stringify!(vkEnumerateInstanceVersion);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    _err_str.push(raw_name);
+                }
+                ::std::mem::transmute(val)
+            },
+        };
         if _err_str.is_empty() {
             Ok(s)
         } else {
             Err(_err_str)
         }
     }
+    pub unsafe fn enumerate_instance_version(&self, p_api_version: *mut uint32_t) -> Result {
+        (self.enumerate_instance_version)(p_api_version)
+    }
 }
 pub struct InstanceFnV1_1 {
-    enumerate_instance_version: extern "system" fn(p_api_version: *mut uint32_t) -> Result,
     enumerate_physical_device_groups:
         extern "system" fn(
             instance: Instance,
@@ -3937,7 +3953,6 @@ unsafe impl Sync for InstanceFnV1_1 {}
 impl ::std::clone::Clone for InstanceFnV1_1 {
     fn clone(&self) -> Self {
         InstanceFnV1_1 {
-            enumerate_instance_version: self.enumerate_instance_version,
             enumerate_physical_device_groups: self.enumerate_physical_device_groups,
             get_physical_device_features2: self.get_physical_device_features2,
             get_physical_device_properties2: self.get_physical_device_properties2,
@@ -3965,15 +3980,6 @@ impl InstanceFnV1_1 {
     {
         let mut _err_str = Vec::new();
         let s = InstanceFnV1_1 {
-            enumerate_instance_version: unsafe {
-                let raw_name = stringify!(vkEnumerateInstanceVersion);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    _err_str.push(raw_name);
-                }
-                ::std::mem::transmute(val)
-            },
             enumerate_physical_device_groups: unsafe {
                 let raw_name = stringify!(vkEnumeratePhysicalDeviceGroups);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -4079,9 +4085,6 @@ impl InstanceFnV1_1 {
         } else {
             Err(_err_str)
         }
-    }
-    pub unsafe fn enumerate_instance_version(&self, p_api_version: *mut uint32_t) -> Result {
-        (self.enumerate_instance_version)(p_api_version)
     }
     pub unsafe fn enumerate_physical_device_groups(
         &self,
