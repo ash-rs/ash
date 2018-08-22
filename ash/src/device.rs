@@ -862,6 +862,29 @@ pub trait DeviceV1_0 {
         );
     }
 
+    unsafe fn cmd_copy_query_pool_results(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        query_pool: vk::QueryPool,
+        first_query: vk::uint32_t,
+        query_count: vk::uint32_t,
+        dst_buffer: vk::Buffer,
+        dst_offset: vk::DeviceSize,
+        stride: vk::DeviceSize,
+        flags: vk::QueryResultFlags,
+    ) {
+        self.fp_v1_0().cmd_copy_query_pool_results(
+            command_buffer,
+            query_pool,
+            first_query,
+            query_count,
+            dst_buffer,
+            dst_offset,
+            stride,
+            flags,
+        );
+    }
+
     unsafe fn cmd_push_constants(
         &self,
         command_buffer: vk::CommandBuffer,
