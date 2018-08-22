@@ -170,3 +170,17 @@ impl<V: FunctionPointers> Entry<V> {
         })
     }
 }
+
+#[allow(non_camel_case_types)]
+pub trait EntryV1_1: EntryV1_0 {
+    fn fp_v1_1(&self) -> &vk::EntryFnV1_1;
+
+    unsafe fn enumerate_instance_version(&self) -> VkResult<vk::uint32_t> {
+        let mut api_version = mem::uninitialized();
+        let err_code = self.fp_v1_1().enumerate_instance_version(&mut api_version);
+        match err_code {
+            vk::Result::SUCCESS => Ok(api_version),
+            _ => Err(err_code),
+        }
+    }
+}
