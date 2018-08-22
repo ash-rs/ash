@@ -1156,8 +1156,37 @@ pub fn derive_default(_struct: &vkxml::Struct) -> Option<Tokens> {
                     #param_ident: unsafe { ::std::mem::zeroed() }
                 }
             }
-        } else if field.reference.is_some()
-            || is_static_array(field)
+        } else if let Some(ref reference) = field.reference {
+            match reference {
+                vkxml::ReferenceType::Pointer => {
+                    if field.is_const {
+                        quote!{
+                            #param_ident: ::std::ptr::null()
+                        }
+                    } else {
+                        quote!{
+                            #param_ident: ::std::ptr::null_mut()
+                        }
+                    }
+                }
+                vkxml::ReferenceType::PointerToPointer => {
+                    quote!{
+                        #param_ident: ::std::ptr::null_mut()
+                    }
+                }
+                vkxml::ReferenceType::PointerToConstPointer => {
+                    if field.is_const {
+                        quote!{
+                            #param_ident: ::std::ptr::null()
+                        }
+                    } else {
+                        quote!{
+                            #param_ident: ::std::ptr::null_mut()
+                        }
+                    }
+                }
+            }
+        } else if is_static_array(field)
             || is_pfn(field)
             || handles.contains(&field.basetype.as_str())
         {
@@ -1610,7 +1639,7 @@ pub fn write_source_code(path: &Path) {
             };
             acc
         });
-    
+
     let constants_code: Vec<_> = constants
         .iter()
         .map(|constant| generate_constant(constant, &mut const_cache))
