@@ -4948,7 +4948,7 @@ impl ::std::default::Default for BaseOutStructure {
     fn default() -> BaseOutStructure {
         BaseOutStructure {
             s_type: unsafe { ::std::mem::zeroed() },
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
         }
     }
 }
@@ -4962,7 +4962,7 @@ impl ::std::default::Default for BaseInStructure {
     fn default() -> BaseInStructure {
         BaseInStructure {
             s_type: unsafe { ::std::mem::zeroed() },
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
         }
     }
 }
@@ -5141,10 +5141,10 @@ impl ::std::default::Default for ApplicationInfo {
     fn default() -> ApplicationInfo {
         ApplicationInfo {
             s_type: StructureType::APPLICATION_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
-            p_application_name: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
+            p_application_name: ::std::ptr::null(),
             application_version: uint32_t::default(),
-            p_engine_name: unsafe { ::std::mem::zeroed() },
+            p_engine_name: ::std::ptr::null(),
             engine_version: uint32_t::default(),
             api_version: uint32_t::default(),
         }
@@ -5178,7 +5178,7 @@ impl ::std::fmt::Debug for AllocationCallbacks {
 impl ::std::default::Default for AllocationCallbacks {
     fn default() -> AllocationCallbacks {
         AllocationCallbacks {
-            p_user_data: unsafe { ::std::mem::zeroed() },
+            p_user_data: ::std::ptr::null_mut(),
             pfn_allocation: unsafe { ::std::mem::zeroed() },
             pfn_reallocation: unsafe { ::std::mem::zeroed() },
             pfn_free: unsafe { ::std::mem::zeroed() },
@@ -5201,11 +5201,11 @@ impl ::std::default::Default for DeviceQueueCreateInfo {
     fn default() -> DeviceQueueCreateInfo {
         DeviceQueueCreateInfo {
             s_type: StructureType::DEVICE_QUEUE_CREATE_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: DeviceQueueCreateFlags::default(),
             queue_family_index: uint32_t::default(),
             queue_count: uint32_t::default(),
-            p_queue_priorities: unsafe { ::std::mem::zeroed() },
+            p_queue_priorities: ::std::ptr::null(),
         }
     }
 }
@@ -5227,15 +5227,15 @@ impl ::std::default::Default for DeviceCreateInfo {
     fn default() -> DeviceCreateInfo {
         DeviceCreateInfo {
             s_type: StructureType::DEVICE_CREATE_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: DeviceCreateFlags::default(),
             queue_create_info_count: uint32_t::default(),
-            p_queue_create_infos: unsafe { ::std::mem::zeroed() },
+            p_queue_create_infos: ::std::ptr::null(),
             enabled_layer_count: uint32_t::default(),
-            pp_enabled_layer_names: unsafe { ::std::mem::zeroed() },
+            pp_enabled_layer_names: ::std::ptr::null(),
             enabled_extension_count: uint32_t::default(),
-            pp_enabled_extension_names: unsafe { ::std::mem::zeroed() },
-            p_enabled_features: unsafe { ::std::mem::zeroed() },
+            pp_enabled_extension_names: ::std::ptr::null(),
+            p_enabled_features: ::std::ptr::null(),
         }
     }
 }
@@ -5255,13 +5255,13 @@ impl ::std::default::Default for InstanceCreateInfo {
     fn default() -> InstanceCreateInfo {
         InstanceCreateInfo {
             s_type: StructureType::INSTANCE_CREATE_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: InstanceCreateFlags::default(),
-            p_application_info: unsafe { ::std::mem::zeroed() },
+            p_application_info: ::std::ptr::null(),
             enabled_layer_count: uint32_t::default(),
-            pp_enabled_layer_names: unsafe { ::std::mem::zeroed() },
+            pp_enabled_layer_names: ::std::ptr::null(),
             enabled_extension_count: uint32_t::default(),
-            pp_enabled_extension_names: unsafe { ::std::mem::zeroed() },
+            pp_enabled_extension_names: ::std::ptr::null(),
         }
     }
 }
@@ -5317,7 +5317,7 @@ impl ::std::default::Default for MemoryAllocateInfo {
     fn default() -> MemoryAllocateInfo {
         MemoryAllocateInfo {
             s_type: StructureType::MEMORY_ALLOCATE_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             allocation_size: DeviceSize::default(),
             memory_type_index: uint32_t::default(),
         }
@@ -5371,7 +5371,7 @@ impl ::std::default::Default for MappedMemoryRange {
     fn default() -> MappedMemoryRange {
         MappedMemoryRange {
             s_type: StructureType::MAPPED_MEMORY_RANGE,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             memory: DeviceMemory::default(),
             offset: DeviceSize::default(),
             size: DeviceSize::default(),
@@ -5426,15 +5426,15 @@ impl ::std::default::Default for WriteDescriptorSet {
     fn default() -> WriteDescriptorSet {
         WriteDescriptorSet {
             s_type: StructureType::WRITE_DESCRIPTOR_SET,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             dst_set: DescriptorSet::default(),
             dst_binding: uint32_t::default(),
             dst_array_element: uint32_t::default(),
             descriptor_count: uint32_t::default(),
             descriptor_type: DescriptorType::default(),
-            p_image_info: unsafe { ::std::mem::zeroed() },
-            p_buffer_info: unsafe { ::std::mem::zeroed() },
-            p_texel_buffer_view: unsafe { ::std::mem::zeroed() },
+            p_image_info: ::std::ptr::null(),
+            p_buffer_info: ::std::ptr::null(),
+            p_texel_buffer_view: ::std::ptr::null(),
         }
     }
 }
@@ -5455,7 +5455,7 @@ impl ::std::default::Default for CopyDescriptorSet {
     fn default() -> CopyDescriptorSet {
         CopyDescriptorSet {
             s_type: StructureType::COPY_DESCRIPTOR_SET,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             src_set: DescriptorSet::default(),
             src_binding: uint32_t::default(),
             src_array_element: uint32_t::default(),
@@ -5482,13 +5482,13 @@ impl ::std::default::Default for BufferCreateInfo {
     fn default() -> BufferCreateInfo {
         BufferCreateInfo {
             s_type: StructureType::BUFFER_CREATE_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: BufferCreateFlags::default(),
             size: DeviceSize::default(),
             usage: BufferUsageFlags::default(),
             sharing_mode: SharingMode::default(),
             queue_family_index_count: uint32_t::default(),
-            p_queue_family_indices: unsafe { ::std::mem::zeroed() },
+            p_queue_family_indices: ::std::ptr::null(),
         }
     }
 }
@@ -5507,7 +5507,7 @@ impl ::std::default::Default for BufferViewCreateInfo {
     fn default() -> BufferViewCreateInfo {
         BufferViewCreateInfo {
             s_type: StructureType::BUFFER_VIEW_CREATE_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: BufferViewCreateFlags::default(),
             buffer: Buffer::default(),
             format: Format::default(),
@@ -5552,7 +5552,7 @@ impl ::std::default::Default for MemoryBarrier {
     fn default() -> MemoryBarrier {
         MemoryBarrier {
             s_type: StructureType::MEMORY_BARRIER,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             src_access_mask: AccessFlags::default(),
             dst_access_mask: AccessFlags::default(),
         }
@@ -5575,7 +5575,7 @@ impl ::std::default::Default for BufferMemoryBarrier {
     fn default() -> BufferMemoryBarrier {
         BufferMemoryBarrier {
             s_type: StructureType::BUFFER_MEMORY_BARRIER,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             src_access_mask: AccessFlags::default(),
             dst_access_mask: AccessFlags::default(),
             src_queue_family_index: uint32_t::default(),
@@ -5604,7 +5604,7 @@ impl ::std::default::Default for ImageMemoryBarrier {
     fn default() -> ImageMemoryBarrier {
         ImageMemoryBarrier {
             s_type: StructureType::IMAGE_MEMORY_BARRIER,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             src_access_mask: AccessFlags::default(),
             dst_access_mask: AccessFlags::default(),
             old_layout: ImageLayout::default(),
@@ -5639,7 +5639,7 @@ impl ::std::default::Default for ImageCreateInfo {
     fn default() -> ImageCreateInfo {
         ImageCreateInfo {
             s_type: StructureType::IMAGE_CREATE_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: ImageCreateFlags::default(),
             image_type: ImageType::default(),
             format: Format::default(),
@@ -5651,7 +5651,7 @@ impl ::std::default::Default for ImageCreateInfo {
             usage: ImageUsageFlags::default(),
             sharing_mode: SharingMode::default(),
             queue_family_index_count: uint32_t::default(),
-            p_queue_family_indices: unsafe { ::std::mem::zeroed() },
+            p_queue_family_indices: ::std::ptr::null(),
             initial_layout: ImageLayout::default(),
         }
     }
@@ -5681,7 +5681,7 @@ impl ::std::default::Default for ImageViewCreateInfo {
     fn default() -> ImageViewCreateInfo {
         ImageViewCreateInfo {
             s_type: StructureType::IMAGE_VIEW_CREATE_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: ImageViewCreateFlags::default(),
             image: Image::default(),
             view_type: ImageViewType::default(),
@@ -5729,7 +5729,7 @@ impl ::std::default::Default for SparseBufferMemoryBindInfo {
         SparseBufferMemoryBindInfo {
             buffer: Buffer::default(),
             bind_count: uint32_t::default(),
-            p_binds: unsafe { ::std::mem::zeroed() },
+            p_binds: ::std::ptr::null(),
         }
     }
 }
@@ -5745,7 +5745,7 @@ impl ::std::default::Default for SparseImageOpaqueMemoryBindInfo {
         SparseImageOpaqueMemoryBindInfo {
             image: Image::default(),
             bind_count: uint32_t::default(),
-            p_binds: unsafe { ::std::mem::zeroed() },
+            p_binds: ::std::ptr::null(),
         }
     }
 }
@@ -5761,7 +5761,7 @@ impl ::std::default::Default for SparseImageMemoryBindInfo {
         SparseImageMemoryBindInfo {
             image: Image::default(),
             bind_count: uint32_t::default(),
-            p_binds: unsafe { ::std::mem::zeroed() },
+            p_binds: ::std::ptr::null(),
         }
     }
 }
@@ -5785,17 +5785,17 @@ impl ::std::default::Default for BindSparseInfo {
     fn default() -> BindSparseInfo {
         BindSparseInfo {
             s_type: StructureType::BIND_SPARSE_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             wait_semaphore_count: uint32_t::default(),
-            p_wait_semaphores: unsafe { ::std::mem::zeroed() },
+            p_wait_semaphores: ::std::ptr::null(),
             buffer_bind_count: uint32_t::default(),
-            p_buffer_binds: unsafe { ::std::mem::zeroed() },
+            p_buffer_binds: ::std::ptr::null(),
             image_opaque_bind_count: uint32_t::default(),
-            p_image_opaque_binds: unsafe { ::std::mem::zeroed() },
+            p_image_opaque_binds: ::std::ptr::null(),
             image_bind_count: uint32_t::default(),
-            p_image_binds: unsafe { ::std::mem::zeroed() },
+            p_image_binds: ::std::ptr::null(),
             signal_semaphore_count: uint32_t::default(),
-            p_signal_semaphores: unsafe { ::std::mem::zeroed() },
+            p_signal_semaphores: ::std::ptr::null(),
         }
     }
 }
@@ -5872,10 +5872,10 @@ impl ::std::default::Default for ShaderModuleCreateInfo {
     fn default() -> ShaderModuleCreateInfo {
         ShaderModuleCreateInfo {
             s_type: StructureType::SHADER_MODULE_CREATE_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: ShaderModuleCreateFlags::default(),
             code_size: size_t::default(),
-            p_code: unsafe { ::std::mem::zeroed() },
+            p_code: ::std::ptr::null(),
         }
     }
 }
@@ -5895,7 +5895,7 @@ impl ::std::default::Default for DescriptorSetLayoutBinding {
             descriptor_type: DescriptorType::default(),
             descriptor_count: uint32_t::default(),
             stage_flags: ShaderStageFlags::default(),
-            p_immutable_samplers: unsafe { ::std::mem::zeroed() },
+            p_immutable_samplers: ::std::ptr::null(),
         }
     }
 }
@@ -5912,10 +5912,10 @@ impl ::std::default::Default for DescriptorSetLayoutCreateInfo {
     fn default() -> DescriptorSetLayoutCreateInfo {
         DescriptorSetLayoutCreateInfo {
             s_type: StructureType::DESCRIPTOR_SET_LAYOUT_CREATE_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: DescriptorSetLayoutCreateFlags::default(),
             binding_count: uint32_t::default(),
-            p_bindings: unsafe { ::std::mem::zeroed() },
+            p_bindings: ::std::ptr::null(),
         }
     }
 }
@@ -5939,11 +5939,11 @@ impl ::std::default::Default for DescriptorPoolCreateInfo {
     fn default() -> DescriptorPoolCreateInfo {
         DescriptorPoolCreateInfo {
             s_type: StructureType::DESCRIPTOR_POOL_CREATE_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: DescriptorPoolCreateFlags::default(),
             max_sets: uint32_t::default(),
             pool_size_count: uint32_t::default(),
-            p_pool_sizes: unsafe { ::std::mem::zeroed() },
+            p_pool_sizes: ::std::ptr::null(),
         }
     }
 }
@@ -5960,10 +5960,10 @@ impl ::std::default::Default for DescriptorSetAllocateInfo {
     fn default() -> DescriptorSetAllocateInfo {
         DescriptorSetAllocateInfo {
             s_type: StructureType::DESCRIPTOR_SET_ALLOCATE_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             descriptor_pool: DescriptorPool::default(),
             descriptor_set_count: uint32_t::default(),
-            p_set_layouts: unsafe { ::std::mem::zeroed() },
+            p_set_layouts: ::std::ptr::null(),
         }
     }
 }
@@ -5986,9 +5986,9 @@ impl ::std::default::Default for SpecializationInfo {
     fn default() -> SpecializationInfo {
         SpecializationInfo {
             map_entry_count: uint32_t::default(),
-            p_map_entries: unsafe { ::std::mem::zeroed() },
+            p_map_entries: ::std::ptr::null(),
             data_size: size_t::default(),
-            p_data: unsafe { ::std::mem::zeroed() },
+            p_data: ::std::ptr::null(),
         }
     }
 }
@@ -6007,12 +6007,12 @@ impl ::std::default::Default for PipelineShaderStageCreateInfo {
     fn default() -> PipelineShaderStageCreateInfo {
         PipelineShaderStageCreateInfo {
             s_type: StructureType::PIPELINE_SHADER_STAGE_CREATE_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: PipelineShaderStageCreateFlags::default(),
             stage: ShaderStageFlags::default(),
             module: ShaderModule::default(),
-            p_name: unsafe { ::std::mem::zeroed() },
-            p_specialization_info: unsafe { ::std::mem::zeroed() },
+            p_name: ::std::ptr::null(),
+            p_specialization_info: ::std::ptr::null(),
         }
     }
 }
@@ -6031,7 +6031,7 @@ impl ::std::default::Default for ComputePipelineCreateInfo {
     fn default() -> ComputePipelineCreateInfo {
         ComputePipelineCreateInfo {
             s_type: StructureType::COMPUTE_PIPELINE_CREATE_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: PipelineCreateFlags::default(),
             stage: PipelineShaderStageCreateInfo::default(),
             layout: PipelineLayout::default(),
@@ -6070,12 +6070,12 @@ impl ::std::default::Default for PipelineVertexInputStateCreateInfo {
     fn default() -> PipelineVertexInputStateCreateInfo {
         PipelineVertexInputStateCreateInfo {
             s_type: StructureType::PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: PipelineVertexInputStateCreateFlags::default(),
             vertex_binding_description_count: uint32_t::default(),
-            p_vertex_binding_descriptions: unsafe { ::std::mem::zeroed() },
+            p_vertex_binding_descriptions: ::std::ptr::null(),
             vertex_attribute_description_count: uint32_t::default(),
-            p_vertex_attribute_descriptions: unsafe { ::std::mem::zeroed() },
+            p_vertex_attribute_descriptions: ::std::ptr::null(),
         }
     }
 }
@@ -6092,7 +6092,7 @@ impl ::std::default::Default for PipelineInputAssemblyStateCreateInfo {
     fn default() -> PipelineInputAssemblyStateCreateInfo {
         PipelineInputAssemblyStateCreateInfo {
             s_type: StructureType::PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: PipelineInputAssemblyStateCreateFlags::default(),
             topology: PrimitiveTopology::default(),
             primitive_restart_enable: Bool32::default(),
@@ -6111,7 +6111,7 @@ impl ::std::default::Default for PipelineTessellationStateCreateInfo {
     fn default() -> PipelineTessellationStateCreateInfo {
         PipelineTessellationStateCreateInfo {
             s_type: StructureType::PIPELINE_TESSELLATION_STATE_CREATE_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: PipelineTessellationStateCreateFlags::default(),
             patch_control_points: uint32_t::default(),
         }
@@ -6132,12 +6132,12 @@ impl ::std::default::Default for PipelineViewportStateCreateInfo {
     fn default() -> PipelineViewportStateCreateInfo {
         PipelineViewportStateCreateInfo {
             s_type: StructureType::PIPELINE_VIEWPORT_STATE_CREATE_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: PipelineViewportStateCreateFlags::default(),
             viewport_count: uint32_t::default(),
-            p_viewports: unsafe { ::std::mem::zeroed() },
+            p_viewports: ::std::ptr::null(),
             scissor_count: uint32_t::default(),
-            p_scissors: unsafe { ::std::mem::zeroed() },
+            p_scissors: ::std::ptr::null(),
         }
     }
 }
@@ -6162,7 +6162,7 @@ impl ::std::default::Default for PipelineRasterizationStateCreateInfo {
     fn default() -> PipelineRasterizationStateCreateInfo {
         PipelineRasterizationStateCreateInfo {
             s_type: StructureType::PIPELINE_RASTERIZATION_STATE_CREATE_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: PipelineRasterizationStateCreateFlags::default(),
             depth_clamp_enable: Bool32::default(),
             rasterizer_discard_enable: Bool32::default(),
@@ -6194,12 +6194,12 @@ impl ::std::default::Default for PipelineMultisampleStateCreateInfo {
     fn default() -> PipelineMultisampleStateCreateInfo {
         PipelineMultisampleStateCreateInfo {
             s_type: StructureType::PIPELINE_MULTISAMPLE_STATE_CREATE_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: PipelineMultisampleStateCreateFlags::default(),
             rasterization_samples: SampleCountFlags::default(),
             sample_shading_enable: Bool32::default(),
             min_sample_shading: c_float::default(),
-            p_sample_mask: unsafe { ::std::mem::zeroed() },
+            p_sample_mask: ::std::ptr::null(),
             alpha_to_coverage_enable: Bool32::default(),
             alpha_to_one_enable: Bool32::default(),
         }
@@ -6249,12 +6249,12 @@ impl ::std::default::Default for PipelineColorBlendStateCreateInfo {
     fn default() -> PipelineColorBlendStateCreateInfo {
         PipelineColorBlendStateCreateInfo {
             s_type: StructureType::PIPELINE_COLOR_BLEND_STATE_CREATE_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: PipelineColorBlendStateCreateFlags::default(),
             logic_op_enable: Bool32::default(),
             logic_op: LogicOp::default(),
             attachment_count: uint32_t::default(),
-            p_attachments: unsafe { ::std::mem::zeroed() },
+            p_attachments: ::std::ptr::null(),
             blend_constants: unsafe { ::std::mem::zeroed() },
         }
     }
@@ -6272,10 +6272,10 @@ impl ::std::default::Default for PipelineDynamicStateCreateInfo {
     fn default() -> PipelineDynamicStateCreateInfo {
         PipelineDynamicStateCreateInfo {
             s_type: StructureType::PIPELINE_DYNAMIC_STATE_CREATE_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: PipelineDynamicStateCreateFlags::default(),
             dynamic_state_count: uint32_t::default(),
-            p_dynamic_states: unsafe { ::std::mem::zeroed() },
+            p_dynamic_states: ::std::ptr::null(),
         }
     }
 }
@@ -6310,7 +6310,7 @@ impl ::std::default::Default for PipelineDepthStencilStateCreateInfo {
     fn default() -> PipelineDepthStencilStateCreateInfo {
         PipelineDepthStencilStateCreateInfo {
             s_type: StructureType::PIPELINE_DEPTH_STENCIL_STATE_CREATE_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: PipelineDepthStencilStateCreateFlags::default(),
             depth_test_enable: Bool32::default(),
             depth_write_enable: Bool32::default(),
@@ -6351,19 +6351,19 @@ impl ::std::default::Default for GraphicsPipelineCreateInfo {
     fn default() -> GraphicsPipelineCreateInfo {
         GraphicsPipelineCreateInfo {
             s_type: StructureType::GRAPHICS_PIPELINE_CREATE_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: PipelineCreateFlags::default(),
             stage_count: uint32_t::default(),
-            p_stages: unsafe { ::std::mem::zeroed() },
-            p_vertex_input_state: unsafe { ::std::mem::zeroed() },
-            p_input_assembly_state: unsafe { ::std::mem::zeroed() },
-            p_tessellation_state: unsafe { ::std::mem::zeroed() },
-            p_viewport_state: unsafe { ::std::mem::zeroed() },
-            p_rasterization_state: unsafe { ::std::mem::zeroed() },
-            p_multisample_state: unsafe { ::std::mem::zeroed() },
-            p_depth_stencil_state: unsafe { ::std::mem::zeroed() },
-            p_color_blend_state: unsafe { ::std::mem::zeroed() },
-            p_dynamic_state: unsafe { ::std::mem::zeroed() },
+            p_stages: ::std::ptr::null(),
+            p_vertex_input_state: ::std::ptr::null(),
+            p_input_assembly_state: ::std::ptr::null(),
+            p_tessellation_state: ::std::ptr::null(),
+            p_viewport_state: ::std::ptr::null(),
+            p_rasterization_state: ::std::ptr::null(),
+            p_multisample_state: ::std::ptr::null(),
+            p_depth_stencil_state: ::std::ptr::null(),
+            p_color_blend_state: ::std::ptr::null(),
+            p_dynamic_state: ::std::ptr::null(),
             layout: PipelineLayout::default(),
             render_pass: RenderPass::default(),
             subpass: uint32_t::default(),
@@ -6385,10 +6385,10 @@ impl ::std::default::Default for PipelineCacheCreateInfo {
     fn default() -> PipelineCacheCreateInfo {
         PipelineCacheCreateInfo {
             s_type: StructureType::PIPELINE_CACHE_CREATE_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: PipelineCacheCreateFlags::default(),
             initial_data_size: size_t::default(),
-            p_initial_data: unsafe { ::std::mem::zeroed() },
+            p_initial_data: ::std::ptr::null(),
         }
     }
 }
@@ -6414,12 +6414,12 @@ impl ::std::default::Default for PipelineLayoutCreateInfo {
     fn default() -> PipelineLayoutCreateInfo {
         PipelineLayoutCreateInfo {
             s_type: StructureType::PIPELINE_LAYOUT_CREATE_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: PipelineLayoutCreateFlags::default(),
             set_layout_count: uint32_t::default(),
-            p_set_layouts: unsafe { ::std::mem::zeroed() },
+            p_set_layouts: ::std::ptr::null(),
             push_constant_range_count: uint32_t::default(),
-            p_push_constant_ranges: unsafe { ::std::mem::zeroed() },
+            p_push_constant_ranges: ::std::ptr::null(),
         }
     }
 }
@@ -6449,7 +6449,7 @@ impl ::std::default::Default for SamplerCreateInfo {
     fn default() -> SamplerCreateInfo {
         SamplerCreateInfo {
             s_type: StructureType::SAMPLER_CREATE_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: SamplerCreateFlags::default(),
             mag_filter: Filter::default(),
             min_filter: Filter::default(),
@@ -6481,7 +6481,7 @@ impl ::std::default::Default for CommandPoolCreateInfo {
     fn default() -> CommandPoolCreateInfo {
         CommandPoolCreateInfo {
             s_type: StructureType::COMMAND_POOL_CREATE_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: CommandPoolCreateFlags::default(),
             queue_family_index: uint32_t::default(),
         }
@@ -6500,7 +6500,7 @@ impl ::std::default::Default for CommandBufferAllocateInfo {
     fn default() -> CommandBufferAllocateInfo {
         CommandBufferAllocateInfo {
             s_type: StructureType::COMMAND_BUFFER_ALLOCATE_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             command_pool: CommandPool::default(),
             level: CommandBufferLevel::default(),
             command_buffer_count: uint32_t::default(),
@@ -6523,7 +6523,7 @@ impl ::std::default::Default for CommandBufferInheritanceInfo {
     fn default() -> CommandBufferInheritanceInfo {
         CommandBufferInheritanceInfo {
             s_type: StructureType::COMMAND_BUFFER_INHERITANCE_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             render_pass: RenderPass::default(),
             subpass: uint32_t::default(),
             framebuffer: Framebuffer::default(),
@@ -6545,9 +6545,9 @@ impl ::std::default::Default for CommandBufferBeginInfo {
     fn default() -> CommandBufferBeginInfo {
         CommandBufferBeginInfo {
             s_type: StructureType::COMMAND_BUFFER_BEGIN_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: CommandBufferUsageFlags::default(),
-            p_inheritance_info: unsafe { ::std::mem::zeroed() },
+            p_inheritance_info: ::std::ptr::null(),
         }
     }
 }
@@ -6579,12 +6579,12 @@ impl ::std::default::Default for RenderPassBeginInfo {
     fn default() -> RenderPassBeginInfo {
         RenderPassBeginInfo {
             s_type: StructureType::RENDER_PASS_BEGIN_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             render_pass: RenderPass::default(),
             framebuffer: Framebuffer::default(),
             render_area: Rect2D::default(),
             clear_value_count: uint32_t::default(),
-            p_clear_values: unsafe { ::std::mem::zeroed() },
+            p_clear_values: ::std::ptr::null(),
         }
     }
 }
@@ -6672,13 +6672,13 @@ impl ::std::default::Default for SubpassDescription {
             flags: SubpassDescriptionFlags::default(),
             pipeline_bind_point: PipelineBindPoint::default(),
             input_attachment_count: uint32_t::default(),
-            p_input_attachments: unsafe { ::std::mem::zeroed() },
+            p_input_attachments: ::std::ptr::null(),
             color_attachment_count: uint32_t::default(),
-            p_color_attachments: unsafe { ::std::mem::zeroed() },
-            p_resolve_attachments: unsafe { ::std::mem::zeroed() },
-            p_depth_stencil_attachment: unsafe { ::std::mem::zeroed() },
+            p_color_attachments: ::std::ptr::null(),
+            p_resolve_attachments: ::std::ptr::null(),
+            p_depth_stencil_attachment: ::std::ptr::null(),
             preserve_attachment_count: uint32_t::default(),
-            p_preserve_attachments: unsafe { ::std::mem::zeroed() },
+            p_preserve_attachments: ::std::ptr::null(),
         }
     }
 }
@@ -6710,14 +6710,14 @@ impl ::std::default::Default for RenderPassCreateInfo {
     fn default() -> RenderPassCreateInfo {
         RenderPassCreateInfo {
             s_type: StructureType::RENDER_PASS_CREATE_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: RenderPassCreateFlags::default(),
             attachment_count: uint32_t::default(),
-            p_attachments: unsafe { ::std::mem::zeroed() },
+            p_attachments: ::std::ptr::null(),
             subpass_count: uint32_t::default(),
-            p_subpasses: unsafe { ::std::mem::zeroed() },
+            p_subpasses: ::std::ptr::null(),
             dependency_count: uint32_t::default(),
-            p_dependencies: unsafe { ::std::mem::zeroed() },
+            p_dependencies: ::std::ptr::null(),
         }
     }
 }
@@ -6732,7 +6732,7 @@ impl ::std::default::Default for EventCreateInfo {
     fn default() -> EventCreateInfo {
         EventCreateInfo {
             s_type: StructureType::EVENT_CREATE_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: EventCreateFlags::default(),
         }
     }
@@ -6748,7 +6748,7 @@ impl ::std::default::Default for FenceCreateInfo {
     fn default() -> FenceCreateInfo {
         FenceCreateInfo {
             s_type: StructureType::FENCE_CREATE_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: FenceCreateFlags::default(),
         }
     }
@@ -7349,7 +7349,7 @@ impl ::std::default::Default for SemaphoreCreateInfo {
     fn default() -> SemaphoreCreateInfo {
         SemaphoreCreateInfo {
             s_type: StructureType::SEMAPHORE_CREATE_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: SemaphoreCreateFlags::default(),
         }
     }
@@ -7368,7 +7368,7 @@ impl ::std::default::Default for QueryPoolCreateInfo {
     fn default() -> QueryPoolCreateInfo {
         QueryPoolCreateInfo {
             s_type: StructureType::QUERY_POOL_CREATE_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: QueryPoolCreateFlags::default(),
             query_type: QueryType::default(),
             query_count: uint32_t::default(),
@@ -7393,11 +7393,11 @@ impl ::std::default::Default for FramebufferCreateInfo {
     fn default() -> FramebufferCreateInfo {
         FramebufferCreateInfo {
             s_type: StructureType::FRAMEBUFFER_CREATE_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: FramebufferCreateFlags::default(),
             render_pass: RenderPass::default(),
             attachment_count: uint32_t::default(),
-            p_attachments: unsafe { ::std::mem::zeroed() },
+            p_attachments: ::std::ptr::null(),
             width: uint32_t::default(),
             height: uint32_t::default(),
             layers: uint32_t::default(),
@@ -7445,14 +7445,14 @@ impl ::std::default::Default for SubmitInfo {
     fn default() -> SubmitInfo {
         SubmitInfo {
             s_type: StructureType::SUBMIT_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             wait_semaphore_count: uint32_t::default(),
-            p_wait_semaphores: unsafe { ::std::mem::zeroed() },
-            p_wait_dst_stage_mask: unsafe { ::std::mem::zeroed() },
+            p_wait_semaphores: ::std::ptr::null(),
+            p_wait_dst_stage_mask: ::std::ptr::null(),
             command_buffer_count: uint32_t::default(),
-            p_command_buffers: unsafe { ::std::mem::zeroed() },
+            p_command_buffers: ::std::ptr::null(),
             signal_semaphore_count: uint32_t::default(),
-            p_signal_semaphores: unsafe { ::std::mem::zeroed() },
+            p_signal_semaphores: ::std::ptr::null(),
         }
     }
 }
@@ -7471,7 +7471,7 @@ impl ::std::default::Default for DisplayPropertiesKHR {
     fn default() -> DisplayPropertiesKHR {
         DisplayPropertiesKHR {
             display: DisplayKHR::default(),
-            display_name: unsafe { ::std::mem::zeroed() },
+            display_name: ::std::ptr::null(),
             physical_dimensions: Extent2D::default(),
             physical_resolution: Extent2D::default(),
             supported_transforms: SurfaceTransformFlagsKHR::default(),
@@ -7510,7 +7510,7 @@ impl ::std::default::Default for DisplayModeCreateInfoKHR {
     fn default() -> DisplayModeCreateInfoKHR {
         DisplayModeCreateInfoKHR {
             s_type: StructureType::DISPLAY_MODE_CREATE_INFO_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: DisplayModeCreateFlagsKHR::default(),
             parameters: DisplayModeParametersKHR::default(),
         }
@@ -7547,7 +7547,7 @@ impl ::std::default::Default for DisplaySurfaceCreateInfoKHR {
     fn default() -> DisplaySurfaceCreateInfoKHR {
         DisplaySurfaceCreateInfoKHR {
             s_type: StructureType::DISPLAY_SURFACE_CREATE_INFO_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: DisplaySurfaceCreateFlagsKHR::default(),
             display_mode: DisplayModeKHR::default(),
             plane_index: uint32_t::default(),
@@ -7572,7 +7572,7 @@ impl ::std::default::Default for DisplayPresentInfoKHR {
     fn default() -> DisplayPresentInfoKHR {
         DisplayPresentInfoKHR {
             s_type: StructureType::DISPLAY_PRESENT_INFO_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             src_rect: Rect2D::default(),
             dst_rect: Rect2D::default(),
             persistent: Bool32::default(),
@@ -7605,9 +7605,9 @@ impl ::std::default::Default for AndroidSurfaceCreateInfoKHR {
     fn default() -> AndroidSurfaceCreateInfoKHR {
         AndroidSurfaceCreateInfoKHR {
             s_type: StructureType::ANDROID_SURFACE_CREATE_INFO_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: AndroidSurfaceCreateFlagsKHR::default(),
-            window: unsafe { ::std::mem::zeroed() },
+            window: ::std::ptr::null_mut(),
         }
     }
 }
@@ -7624,10 +7624,10 @@ impl ::std::default::Default for MirSurfaceCreateInfoKHR {
     fn default() -> MirSurfaceCreateInfoKHR {
         MirSurfaceCreateInfoKHR {
             s_type: StructureType::MIR_SURFACE_CREATE_INFO_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: MirSurfaceCreateFlagsKHR::default(),
-            connection: unsafe { ::std::mem::zeroed() },
-            mir_surface: unsafe { ::std::mem::zeroed() },
+            connection: ::std::ptr::null_mut(),
+            mir_surface: ::std::ptr::null_mut(),
         }
     }
 }
@@ -7643,9 +7643,9 @@ impl ::std::default::Default for ViSurfaceCreateInfoNN {
     fn default() -> ViSurfaceCreateInfoNN {
         ViSurfaceCreateInfoNN {
             s_type: StructureType::VI_SURFACE_CREATE_INFO_NN,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: ViSurfaceCreateFlagsNN::default(),
-            window: unsafe { ::std::mem::zeroed() },
+            window: ::std::ptr::null_mut(),
         }
     }
 }
@@ -7662,10 +7662,10 @@ impl ::std::default::Default for WaylandSurfaceCreateInfoKHR {
     fn default() -> WaylandSurfaceCreateInfoKHR {
         WaylandSurfaceCreateInfoKHR {
             s_type: StructureType::WAYLAND_SURFACE_CREATE_INFO_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: WaylandSurfaceCreateFlagsKHR::default(),
-            display: unsafe { ::std::mem::zeroed() },
-            surface: unsafe { ::std::mem::zeroed() },
+            display: ::std::ptr::null_mut(),
+            surface: ::std::ptr::null_mut(),
         }
     }
 }
@@ -7682,7 +7682,7 @@ impl ::std::default::Default for Win32SurfaceCreateInfoKHR {
     fn default() -> Win32SurfaceCreateInfoKHR {
         Win32SurfaceCreateInfoKHR {
             s_type: StructureType::WIN32_SURFACE_CREATE_INFO_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: Win32SurfaceCreateFlagsKHR::default(),
             hinstance: unsafe { ::std::mem::zeroed() },
             hwnd: unsafe { ::std::mem::zeroed() },
@@ -7702,9 +7702,9 @@ impl ::std::default::Default for XlibSurfaceCreateInfoKHR {
     fn default() -> XlibSurfaceCreateInfoKHR {
         XlibSurfaceCreateInfoKHR {
             s_type: StructureType::XLIB_SURFACE_CREATE_INFO_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: XlibSurfaceCreateFlagsKHR::default(),
-            dpy: unsafe { ::std::mem::zeroed() },
+            dpy: ::std::ptr::null_mut(),
             window: Window::default(),
         }
     }
@@ -7722,9 +7722,9 @@ impl ::std::default::Default for XcbSurfaceCreateInfoKHR {
     fn default() -> XcbSurfaceCreateInfoKHR {
         XcbSurfaceCreateInfoKHR {
             s_type: StructureType::XCB_SURFACE_CREATE_INFO_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: XcbSurfaceCreateFlagsKHR::default(),
-            connection: unsafe { ::std::mem::zeroed() },
+            connection: ::std::ptr::null_mut(),
             window: xcb_window_t::default(),
         }
     }
@@ -7761,7 +7761,7 @@ impl ::std::default::Default for SwapchainCreateInfoKHR {
     fn default() -> SwapchainCreateInfoKHR {
         SwapchainCreateInfoKHR {
             s_type: StructureType::SWAPCHAIN_CREATE_INFO_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: SwapchainCreateFlagsKHR::default(),
             surface: SurfaceKHR::default(),
             min_image_count: uint32_t::default(),
@@ -7772,7 +7772,7 @@ impl ::std::default::Default for SwapchainCreateInfoKHR {
             image_usage: ImageUsageFlags::default(),
             image_sharing_mode: SharingMode::default(),
             queue_family_index_count: uint32_t::default(),
-            p_queue_family_indices: unsafe { ::std::mem::zeroed() },
+            p_queue_family_indices: ::std::ptr::null(),
             pre_transform: SurfaceTransformFlagsKHR::default(),
             composite_alpha: CompositeAlphaFlagsKHR::default(),
             present_mode: PresentModeKHR::default(),
@@ -7797,13 +7797,13 @@ impl ::std::default::Default for PresentInfoKHR {
     fn default() -> PresentInfoKHR {
         PresentInfoKHR {
             s_type: StructureType::PRESENT_INFO_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             wait_semaphore_count: uint32_t::default(),
-            p_wait_semaphores: unsafe { ::std::mem::zeroed() },
+            p_wait_semaphores: ::std::ptr::null(),
             swapchain_count: uint32_t::default(),
-            p_swapchains: unsafe { ::std::mem::zeroed() },
-            p_image_indices: unsafe { ::std::mem::zeroed() },
-            p_results: unsafe { ::std::mem::zeroed() },
+            p_swapchains: ::std::ptr::null(),
+            p_image_indices: ::std::ptr::null(),
+            p_results: ::std::ptr::null_mut(),
         }
     }
 }
@@ -7831,10 +7831,10 @@ impl ::std::default::Default for DebugReportCallbackCreateInfoEXT {
     fn default() -> DebugReportCallbackCreateInfoEXT {
         DebugReportCallbackCreateInfoEXT {
             s_type: StructureType::DEBUG_REPORT_CALLBACK_CREATE_INFO_EXT,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: DebugReportFlagsEXT::default(),
             pfn_callback: unsafe { ::std::mem::zeroed() },
-            p_user_data: unsafe { ::std::mem::zeroed() },
+            p_user_data: ::std::ptr::null_mut(),
         }
     }
 }
@@ -7850,9 +7850,9 @@ impl ::std::default::Default for ValidationFlagsEXT {
     fn default() -> ValidationFlagsEXT {
         ValidationFlagsEXT {
             s_type: StructureType::VALIDATION_FLAGS_EXT,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             disabled_validation_check_count: uint32_t::default(),
-            p_disabled_validation_checks: unsafe { ::std::mem::zeroed() },
+            p_disabled_validation_checks: ::std::ptr::null_mut(),
         }
     }
 }
@@ -7867,7 +7867,7 @@ impl ::std::default::Default for PipelineRasterizationStateRasterizationOrderAMD
     fn default() -> PipelineRasterizationStateRasterizationOrderAMD {
         PipelineRasterizationStateRasterizationOrderAMD {
             s_type: StructureType::PIPELINE_RASTERIZATION_STATE_RASTERIZATION_ORDER_AMD,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             rasterization_order: RasterizationOrderAMD::default(),
         }
     }
@@ -7885,10 +7885,10 @@ impl ::std::default::Default for DebugMarkerObjectNameInfoEXT {
     fn default() -> DebugMarkerObjectNameInfoEXT {
         DebugMarkerObjectNameInfoEXT {
             s_type: StructureType::DEBUG_MARKER_OBJECT_NAME_INFO_EXT,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             object_type: DebugReportObjectTypeEXT::default(),
             object: uint64_t::default(),
-            p_object_name: unsafe { ::std::mem::zeroed() },
+            p_object_name: ::std::ptr::null(),
         }
     }
 }
@@ -7907,12 +7907,12 @@ impl ::std::default::Default for DebugMarkerObjectTagInfoEXT {
     fn default() -> DebugMarkerObjectTagInfoEXT {
         DebugMarkerObjectTagInfoEXT {
             s_type: StructureType::DEBUG_MARKER_OBJECT_TAG_INFO_EXT,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             object_type: DebugReportObjectTypeEXT::default(),
             object: uint64_t::default(),
             tag_name: uint64_t::default(),
             tag_size: size_t::default(),
-            p_tag: unsafe { ::std::mem::zeroed() },
+            p_tag: ::std::ptr::null(),
         }
     }
 }
@@ -7940,8 +7940,8 @@ impl ::std::default::Default for DebugMarkerMarkerInfoEXT {
     fn default() -> DebugMarkerMarkerInfoEXT {
         DebugMarkerMarkerInfoEXT {
             s_type: StructureType::DEBUG_MARKER_MARKER_INFO_EXT,
-            p_next: unsafe { ::std::mem::zeroed() },
-            p_marker_name: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
+            p_marker_name: ::std::ptr::null(),
             color: unsafe { ::std::mem::zeroed() },
         }
     }
@@ -7957,7 +7957,7 @@ impl ::std::default::Default for DedicatedAllocationImageCreateInfoNV {
     fn default() -> DedicatedAllocationImageCreateInfoNV {
         DedicatedAllocationImageCreateInfoNV {
             s_type: StructureType::DEDICATED_ALLOCATION_IMAGE_CREATE_INFO_NV,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             dedicated_allocation: Bool32::default(),
         }
     }
@@ -7973,7 +7973,7 @@ impl ::std::default::Default for DedicatedAllocationBufferCreateInfoNV {
     fn default() -> DedicatedAllocationBufferCreateInfoNV {
         DedicatedAllocationBufferCreateInfoNV {
             s_type: StructureType::DEDICATED_ALLOCATION_BUFFER_CREATE_INFO_NV,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             dedicated_allocation: Bool32::default(),
         }
     }
@@ -7990,7 +7990,7 @@ impl ::std::default::Default for DedicatedAllocationMemoryAllocateInfoNV {
     fn default() -> DedicatedAllocationMemoryAllocateInfoNV {
         DedicatedAllocationMemoryAllocateInfoNV {
             s_type: StructureType::DEDICATED_ALLOCATION_MEMORY_ALLOCATE_INFO_NV,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             image: Image::default(),
             buffer: Buffer::default(),
         }
@@ -8015,7 +8015,7 @@ impl ::std::default::Default for ExternalMemoryImageCreateInfoNV {
     fn default() -> ExternalMemoryImageCreateInfoNV {
         ExternalMemoryImageCreateInfoNV {
             s_type: StructureType::EXTERNAL_MEMORY_IMAGE_CREATE_INFO_NV,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             handle_types: ExternalMemoryHandleTypeFlagsNV::default(),
         }
     }
@@ -8031,7 +8031,7 @@ impl ::std::default::Default for ExportMemoryAllocateInfoNV {
     fn default() -> ExportMemoryAllocateInfoNV {
         ExportMemoryAllocateInfoNV {
             s_type: StructureType::EXPORT_MEMORY_ALLOCATE_INFO_NV,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             handle_types: ExternalMemoryHandleTypeFlagsNV::default(),
         }
     }
@@ -8048,7 +8048,7 @@ impl ::std::default::Default for ImportMemoryWin32HandleInfoNV {
     fn default() -> ImportMemoryWin32HandleInfoNV {
         ImportMemoryWin32HandleInfoNV {
             s_type: StructureType::IMPORT_MEMORY_WIN32_HANDLE_INFO_NV,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             handle_type: ExternalMemoryHandleTypeFlagsNV::default(),
             handle: unsafe { ::std::mem::zeroed() },
         }
@@ -8066,8 +8066,8 @@ impl ::std::default::Default for ExportMemoryWin32HandleInfoNV {
     fn default() -> ExportMemoryWin32HandleInfoNV {
         ExportMemoryWin32HandleInfoNV {
             s_type: StructureType::EXPORT_MEMORY_WIN32_HANDLE_INFO_NV,
-            p_next: unsafe { ::std::mem::zeroed() },
-            p_attributes: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
+            p_attributes: ::std::ptr::null(),
             dw_access: DWORD::default(),
         }
     }
@@ -8089,14 +8089,14 @@ impl ::std::default::Default for Win32KeyedMutexAcquireReleaseInfoNV {
     fn default() -> Win32KeyedMutexAcquireReleaseInfoNV {
         Win32KeyedMutexAcquireReleaseInfoNV {
             s_type: StructureType::WIN32_KEYED_MUTEX_ACQUIRE_RELEASE_INFO_NV,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             acquire_count: uint32_t::default(),
-            p_acquire_syncs: unsafe { ::std::mem::zeroed() },
-            p_acquire_keys: unsafe { ::std::mem::zeroed() },
-            p_acquire_timeout_milliseconds: unsafe { ::std::mem::zeroed() },
+            p_acquire_syncs: ::std::ptr::null(),
+            p_acquire_keys: ::std::ptr::null(),
+            p_acquire_timeout_milliseconds: ::std::ptr::null(),
             release_count: uint32_t::default(),
-            p_release_syncs: unsafe { ::std::mem::zeroed() },
-            p_release_keys: unsafe { ::std::mem::zeroed() },
+            p_release_syncs: ::std::ptr::null(),
+            p_release_keys: ::std::ptr::null(),
         }
     }
 }
@@ -8111,7 +8111,7 @@ impl ::std::default::Default for DeviceGeneratedCommandsFeaturesNVX {
     fn default() -> DeviceGeneratedCommandsFeaturesNVX {
         DeviceGeneratedCommandsFeaturesNVX {
             s_type: StructureType::DEVICE_GENERATED_COMMANDS_FEATURES_NVX,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             compute_binding_point_support: Bool32::default(),
         }
     }
@@ -8131,7 +8131,7 @@ impl ::std::default::Default for DeviceGeneratedCommandsLimitsNVX {
     fn default() -> DeviceGeneratedCommandsLimitsNVX {
         DeviceGeneratedCommandsLimitsNVX {
             s_type: StructureType::DEVICE_GENERATED_COMMANDS_LIMITS_NVX,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             max_indirect_commands_layout_token_count: uint32_t::default(),
             max_object_entry_counts: uint32_t::default(),
             min_sequence_count_buffer_offset_alignment: uint32_t::default(),
@@ -8169,11 +8169,11 @@ impl ::std::default::Default for IndirectCommandsLayoutCreateInfoNVX {
     fn default() -> IndirectCommandsLayoutCreateInfoNVX {
         IndirectCommandsLayoutCreateInfoNVX {
             s_type: StructureType::INDIRECT_COMMANDS_LAYOUT_CREATE_INFO_NVX,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             pipeline_bind_point: PipelineBindPoint::default(),
             flags: IndirectCommandsLayoutUsageFlagsNVX::default(),
             token_count: uint32_t::default(),
-            p_tokens: unsafe { ::std::mem::zeroed() },
+            p_tokens: ::std::ptr::null(),
         }
     }
 }
@@ -8197,11 +8197,11 @@ impl ::std::default::Default for CmdProcessCommandsInfoNVX {
     fn default() -> CmdProcessCommandsInfoNVX {
         CmdProcessCommandsInfoNVX {
             s_type: StructureType::CMD_PROCESS_COMMANDS_INFO_NVX,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             object_table: ObjectTableNVX::default(),
             indirect_commands_layout: IndirectCommandsLayoutNVX::default(),
             indirect_commands_token_count: uint32_t::default(),
-            p_indirect_commands_tokens: unsafe { ::std::mem::zeroed() },
+            p_indirect_commands_tokens: ::std::ptr::null(),
             max_sequences_count: uint32_t::default(),
             target_command_buffer: CommandBuffer::default(),
             sequences_count_buffer: Buffer::default(),
@@ -8224,7 +8224,7 @@ impl ::std::default::Default for CmdReserveSpaceForCommandsInfoNVX {
     fn default() -> CmdReserveSpaceForCommandsInfoNVX {
         CmdReserveSpaceForCommandsInfoNVX {
             s_type: StructureType::CMD_RESERVE_SPACE_FOR_COMMANDS_INFO_NVX,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             object_table: ObjectTableNVX::default(),
             indirect_commands_layout: IndirectCommandsLayoutNVX::default(),
             max_sequences_count: uint32_t::default(),
@@ -8250,11 +8250,11 @@ impl ::std::default::Default for ObjectTableCreateInfoNVX {
     fn default() -> ObjectTableCreateInfoNVX {
         ObjectTableCreateInfoNVX {
             s_type: StructureType::OBJECT_TABLE_CREATE_INFO_NVX,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             object_count: uint32_t::default(),
-            p_object_entry_types: unsafe { ::std::mem::zeroed() },
-            p_object_entry_counts: unsafe { ::std::mem::zeroed() },
-            p_object_entry_usage_flags: unsafe { ::std::mem::zeroed() },
+            p_object_entry_types: ::std::ptr::null(),
+            p_object_entry_counts: ::std::ptr::null(),
+            p_object_entry_usage_flags: ::std::ptr::null(),
             max_uniform_buffers_per_descriptor: uint32_t::default(),
             max_storage_buffers_per_descriptor: uint32_t::default(),
             max_storage_images_per_descriptor: uint32_t::default(),
@@ -8318,7 +8318,7 @@ impl ::std::default::Default for PhysicalDeviceFeatures2 {
     fn default() -> PhysicalDeviceFeatures2 {
         PhysicalDeviceFeatures2 {
             s_type: StructureType::PHYSICAL_DEVICE_FEATURES_2,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             features: PhysicalDeviceFeatures::default(),
         }
     }
@@ -8334,7 +8334,7 @@ impl ::std::default::Default for PhysicalDeviceProperties2 {
     fn default() -> PhysicalDeviceProperties2 {
         PhysicalDeviceProperties2 {
             s_type: StructureType::PHYSICAL_DEVICE_PROPERTIES_2,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             properties: PhysicalDeviceProperties::default(),
         }
     }
@@ -8350,7 +8350,7 @@ impl ::std::default::Default for FormatProperties2 {
     fn default() -> FormatProperties2 {
         FormatProperties2 {
             s_type: StructureType::FORMAT_PROPERTIES_2,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             format_properties: FormatProperties::default(),
         }
     }
@@ -8366,7 +8366,7 @@ impl ::std::default::Default for ImageFormatProperties2 {
     fn default() -> ImageFormatProperties2 {
         ImageFormatProperties2 {
             s_type: StructureType::IMAGE_FORMAT_PROPERTIES_2,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             image_format_properties: ImageFormatProperties::default(),
         }
     }
@@ -8386,7 +8386,7 @@ impl ::std::default::Default for PhysicalDeviceImageFormatInfo2 {
     fn default() -> PhysicalDeviceImageFormatInfo2 {
         PhysicalDeviceImageFormatInfo2 {
             s_type: StructureType::PHYSICAL_DEVICE_IMAGE_FORMAT_INFO_2,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             format: Format::default(),
             ty: ImageType::default(),
             tiling: ImageTiling::default(),
@@ -8406,7 +8406,7 @@ impl ::std::default::Default for QueueFamilyProperties2 {
     fn default() -> QueueFamilyProperties2 {
         QueueFamilyProperties2 {
             s_type: StructureType::QUEUE_FAMILY_PROPERTIES_2,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             queue_family_properties: QueueFamilyProperties::default(),
         }
     }
@@ -8422,7 +8422,7 @@ impl ::std::default::Default for PhysicalDeviceMemoryProperties2 {
     fn default() -> PhysicalDeviceMemoryProperties2 {
         PhysicalDeviceMemoryProperties2 {
             s_type: StructureType::PHYSICAL_DEVICE_MEMORY_PROPERTIES_2,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             memory_properties: PhysicalDeviceMemoryProperties::default(),
         }
     }
@@ -8438,7 +8438,7 @@ impl ::std::default::Default for SparseImageFormatProperties2 {
     fn default() -> SparseImageFormatProperties2 {
         SparseImageFormatProperties2 {
             s_type: StructureType::SPARSE_IMAGE_FORMAT_PROPERTIES_2,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             properties: SparseImageFormatProperties::default(),
         }
     }
@@ -8458,7 +8458,7 @@ impl ::std::default::Default for PhysicalDeviceSparseImageFormatInfo2 {
     fn default() -> PhysicalDeviceSparseImageFormatInfo2 {
         PhysicalDeviceSparseImageFormatInfo2 {
             s_type: StructureType::PHYSICAL_DEVICE_SPARSE_IMAGE_FORMAT_INFO_2,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             format: Format::default(),
             ty: ImageType::default(),
             samples: SampleCountFlags::default(),
@@ -8478,7 +8478,7 @@ impl ::std::default::Default for PhysicalDevicePushDescriptorPropertiesKHR {
     fn default() -> PhysicalDevicePushDescriptorPropertiesKHR {
         PhysicalDevicePushDescriptorPropertiesKHR {
             s_type: StructureType::PHYSICAL_DEVICE_PUSH_DESCRIPTOR_PROPERTIES_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             max_push_descriptors: uint32_t::default(),
         }
     }
@@ -8495,9 +8495,9 @@ impl ::std::default::Default for PresentRegionsKHR {
     fn default() -> PresentRegionsKHR {
         PresentRegionsKHR {
             s_type: StructureType::PRESENT_REGIONS_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             swapchain_count: uint32_t::default(),
-            p_regions: unsafe { ::std::mem::zeroed() },
+            p_regions: ::std::ptr::null(),
         }
     }
 }
@@ -8511,7 +8511,7 @@ impl ::std::default::Default for PresentRegionKHR {
     fn default() -> PresentRegionKHR {
         PresentRegionKHR {
             rectangle_count: uint32_t::default(),
-            p_rectangles: unsafe { ::std::mem::zeroed() },
+            p_rectangles: ::std::ptr::null(),
         }
     }
 }
@@ -8534,7 +8534,7 @@ impl ::std::default::Default for PhysicalDeviceVariablePointerFeatures {
     fn default() -> PhysicalDeviceVariablePointerFeatures {
         PhysicalDeviceVariablePointerFeatures {
             s_type: StructureType::PHYSICAL_DEVICE_VARIABLE_POINTER_FEATURES,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             variable_pointers_storage_buffer: Bool32::default(),
             variable_pointers: Bool32::default(),
         }
@@ -8558,7 +8558,7 @@ impl ::std::default::Default for PhysicalDeviceExternalImageFormatInfo {
     fn default() -> PhysicalDeviceExternalImageFormatInfo {
         PhysicalDeviceExternalImageFormatInfo {
             s_type: StructureType::PHYSICAL_DEVICE_EXTERNAL_IMAGE_FORMAT_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             handle_type: ExternalMemoryHandleTypeFlags::default(),
         }
     }
@@ -8574,7 +8574,7 @@ impl ::std::default::Default for ExternalImageFormatProperties {
     fn default() -> ExternalImageFormatProperties {
         ExternalImageFormatProperties {
             s_type: StructureType::EXTERNAL_IMAGE_FORMAT_PROPERTIES,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             external_memory_properties: ExternalMemoryProperties::default(),
         }
     }
@@ -8592,7 +8592,7 @@ impl ::std::default::Default for PhysicalDeviceExternalBufferInfo {
     fn default() -> PhysicalDeviceExternalBufferInfo {
         PhysicalDeviceExternalBufferInfo {
             s_type: StructureType::PHYSICAL_DEVICE_EXTERNAL_BUFFER_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: BufferCreateFlags::default(),
             usage: BufferUsageFlags::default(),
             handle_type: ExternalMemoryHandleTypeFlags::default(),
@@ -8610,7 +8610,7 @@ impl ::std::default::Default for ExternalBufferProperties {
     fn default() -> ExternalBufferProperties {
         ExternalBufferProperties {
             s_type: StructureType::EXTERNAL_BUFFER_PROPERTIES,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             external_memory_properties: ExternalMemoryProperties::default(),
         }
     }
@@ -8649,7 +8649,7 @@ impl ::std::default::Default for PhysicalDeviceIDProperties {
     fn default() -> PhysicalDeviceIDProperties {
         PhysicalDeviceIDProperties {
             s_type: StructureType::PHYSICAL_DEVICE_ID_PROPERTIES,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             device_uuid: unsafe { ::std::mem::zeroed() },
             driver_uuid: unsafe { ::std::mem::zeroed() },
             device_luid: unsafe { ::std::mem::zeroed() },
@@ -8669,7 +8669,7 @@ impl ::std::default::Default for ExternalMemoryImageCreateInfo {
     fn default() -> ExternalMemoryImageCreateInfo {
         ExternalMemoryImageCreateInfo {
             s_type: StructureType::EXTERNAL_MEMORY_IMAGE_CREATE_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             handle_types: ExternalMemoryHandleTypeFlags::default(),
         }
     }
@@ -8685,7 +8685,7 @@ impl ::std::default::Default for ExternalMemoryBufferCreateInfo {
     fn default() -> ExternalMemoryBufferCreateInfo {
         ExternalMemoryBufferCreateInfo {
             s_type: StructureType::EXTERNAL_MEMORY_BUFFER_CREATE_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             handle_types: ExternalMemoryHandleTypeFlags::default(),
         }
     }
@@ -8701,7 +8701,7 @@ impl ::std::default::Default for ExportMemoryAllocateInfo {
     fn default() -> ExportMemoryAllocateInfo {
         ExportMemoryAllocateInfo {
             s_type: StructureType::EXPORT_MEMORY_ALLOCATE_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             handle_types: ExternalMemoryHandleTypeFlags::default(),
         }
     }
@@ -8719,7 +8719,7 @@ impl ::std::default::Default for ImportMemoryWin32HandleInfoKHR {
     fn default() -> ImportMemoryWin32HandleInfoKHR {
         ImportMemoryWin32HandleInfoKHR {
             s_type: StructureType::IMPORT_MEMORY_WIN32_HANDLE_INFO_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             handle_type: ExternalMemoryHandleTypeFlags::default(),
             handle: unsafe { ::std::mem::zeroed() },
             name: unsafe { ::std::mem::zeroed() },
@@ -8739,8 +8739,8 @@ impl ::std::default::Default for ExportMemoryWin32HandleInfoKHR {
     fn default() -> ExportMemoryWin32HandleInfoKHR {
         ExportMemoryWin32HandleInfoKHR {
             s_type: StructureType::EXPORT_MEMORY_WIN32_HANDLE_INFO_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
-            p_attributes: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
+            p_attributes: ::std::ptr::null(),
             dw_access: DWORD::default(),
             name: unsafe { ::std::mem::zeroed() },
         }
@@ -8757,7 +8757,7 @@ impl ::std::default::Default for MemoryWin32HandlePropertiesKHR {
     fn default() -> MemoryWin32HandlePropertiesKHR {
         MemoryWin32HandlePropertiesKHR {
             s_type: StructureType::MEMORY_WIN32_HANDLE_PROPERTIES_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             memory_type_bits: uint32_t::default(),
         }
     }
@@ -8774,7 +8774,7 @@ impl ::std::default::Default for MemoryGetWin32HandleInfoKHR {
     fn default() -> MemoryGetWin32HandleInfoKHR {
         MemoryGetWin32HandleInfoKHR {
             s_type: StructureType::MEMORY_GET_WIN32_HANDLE_INFO_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             memory: DeviceMemory::default(),
             handle_type: ExternalMemoryHandleTypeFlags::default(),
         }
@@ -8792,7 +8792,7 @@ impl ::std::default::Default for ImportMemoryFdInfoKHR {
     fn default() -> ImportMemoryFdInfoKHR {
         ImportMemoryFdInfoKHR {
             s_type: StructureType::IMPORT_MEMORY_FD_INFO_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             handle_type: ExternalMemoryHandleTypeFlags::default(),
             fd: c_int::default(),
         }
@@ -8809,7 +8809,7 @@ impl ::std::default::Default for MemoryFdPropertiesKHR {
     fn default() -> MemoryFdPropertiesKHR {
         MemoryFdPropertiesKHR {
             s_type: StructureType::MEMORY_FD_PROPERTIES_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             memory_type_bits: uint32_t::default(),
         }
     }
@@ -8826,7 +8826,7 @@ impl ::std::default::Default for MemoryGetFdInfoKHR {
     fn default() -> MemoryGetFdInfoKHR {
         MemoryGetFdInfoKHR {
             s_type: StructureType::MEMORY_GET_FD_INFO_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             memory: DeviceMemory::default(),
             handle_type: ExternalMemoryHandleTypeFlags::default(),
         }
@@ -8849,14 +8849,14 @@ impl ::std::default::Default for Win32KeyedMutexAcquireReleaseInfoKHR {
     fn default() -> Win32KeyedMutexAcquireReleaseInfoKHR {
         Win32KeyedMutexAcquireReleaseInfoKHR {
             s_type: StructureType::WIN32_KEYED_MUTEX_ACQUIRE_RELEASE_INFO_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             acquire_count: uint32_t::default(),
-            p_acquire_syncs: unsafe { ::std::mem::zeroed() },
-            p_acquire_keys: unsafe { ::std::mem::zeroed() },
-            p_acquire_timeouts: unsafe { ::std::mem::zeroed() },
+            p_acquire_syncs: ::std::ptr::null(),
+            p_acquire_keys: ::std::ptr::null(),
+            p_acquire_timeouts: ::std::ptr::null(),
             release_count: uint32_t::default(),
-            p_release_syncs: unsafe { ::std::mem::zeroed() },
-            p_release_keys: unsafe { ::std::mem::zeroed() },
+            p_release_syncs: ::std::ptr::null(),
+            p_release_keys: ::std::ptr::null(),
         }
     }
 }
@@ -8871,7 +8871,7 @@ impl ::std::default::Default for PhysicalDeviceExternalSemaphoreInfo {
     fn default() -> PhysicalDeviceExternalSemaphoreInfo {
         PhysicalDeviceExternalSemaphoreInfo {
             s_type: StructureType::PHYSICAL_DEVICE_EXTERNAL_SEMAPHORE_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             handle_type: ExternalSemaphoreHandleTypeFlags::default(),
         }
     }
@@ -8889,7 +8889,7 @@ impl ::std::default::Default for ExternalSemaphoreProperties {
     fn default() -> ExternalSemaphoreProperties {
         ExternalSemaphoreProperties {
             s_type: StructureType::EXTERNAL_SEMAPHORE_PROPERTIES,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             export_from_imported_handle_types: ExternalSemaphoreHandleTypeFlags::default(),
             compatible_handle_types: ExternalSemaphoreHandleTypeFlags::default(),
             external_semaphore_features: ExternalSemaphoreFeatureFlags::default(),
@@ -8907,7 +8907,7 @@ impl ::std::default::Default for ExportSemaphoreCreateInfo {
     fn default() -> ExportSemaphoreCreateInfo {
         ExportSemaphoreCreateInfo {
             s_type: StructureType::EXPORT_SEMAPHORE_CREATE_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             handle_types: ExternalSemaphoreHandleTypeFlags::default(),
         }
     }
@@ -8927,7 +8927,7 @@ impl ::std::default::Default for ImportSemaphoreWin32HandleInfoKHR {
     fn default() -> ImportSemaphoreWin32HandleInfoKHR {
         ImportSemaphoreWin32HandleInfoKHR {
             s_type: StructureType::IMPORT_SEMAPHORE_WIN32_HANDLE_INFO_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             semaphore: Semaphore::default(),
             flags: SemaphoreImportFlags::default(),
             handle_type: ExternalSemaphoreHandleTypeFlags::default(),
@@ -8949,8 +8949,8 @@ impl ::std::default::Default for ExportSemaphoreWin32HandleInfoKHR {
     fn default() -> ExportSemaphoreWin32HandleInfoKHR {
         ExportSemaphoreWin32HandleInfoKHR {
             s_type: StructureType::EXPORT_SEMAPHORE_WIN32_HANDLE_INFO_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
-            p_attributes: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
+            p_attributes: ::std::ptr::null(),
             dw_access: DWORD::default(),
             name: unsafe { ::std::mem::zeroed() },
         }
@@ -8970,11 +8970,11 @@ impl ::std::default::Default for D3D12FenceSubmitInfoKHR {
     fn default() -> D3D12FenceSubmitInfoKHR {
         D3D12FenceSubmitInfoKHR {
             s_type: StructureType::D3D12_FENCE_SUBMIT_INFO_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             wait_semaphore_values_count: uint32_t::default(),
-            p_wait_semaphore_values: unsafe { ::std::mem::zeroed() },
+            p_wait_semaphore_values: ::std::ptr::null(),
             signal_semaphore_values_count: uint32_t::default(),
-            p_signal_semaphore_values: unsafe { ::std::mem::zeroed() },
+            p_signal_semaphore_values: ::std::ptr::null(),
         }
     }
 }
@@ -8990,7 +8990,7 @@ impl ::std::default::Default for SemaphoreGetWin32HandleInfoKHR {
     fn default() -> SemaphoreGetWin32HandleInfoKHR {
         SemaphoreGetWin32HandleInfoKHR {
             s_type: StructureType::SEMAPHORE_GET_WIN32_HANDLE_INFO_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             semaphore: Semaphore::default(),
             handle_type: ExternalSemaphoreHandleTypeFlags::default(),
         }
@@ -9010,7 +9010,7 @@ impl ::std::default::Default for ImportSemaphoreFdInfoKHR {
     fn default() -> ImportSemaphoreFdInfoKHR {
         ImportSemaphoreFdInfoKHR {
             s_type: StructureType::IMPORT_SEMAPHORE_FD_INFO_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             semaphore: Semaphore::default(),
             flags: SemaphoreImportFlags::default(),
             handle_type: ExternalSemaphoreHandleTypeFlags::default(),
@@ -9030,7 +9030,7 @@ impl ::std::default::Default for SemaphoreGetFdInfoKHR {
     fn default() -> SemaphoreGetFdInfoKHR {
         SemaphoreGetFdInfoKHR {
             s_type: StructureType::SEMAPHORE_GET_FD_INFO_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             semaphore: Semaphore::default(),
             handle_type: ExternalSemaphoreHandleTypeFlags::default(),
         }
@@ -9047,7 +9047,7 @@ impl ::std::default::Default for PhysicalDeviceExternalFenceInfo {
     fn default() -> PhysicalDeviceExternalFenceInfo {
         PhysicalDeviceExternalFenceInfo {
             s_type: StructureType::PHYSICAL_DEVICE_EXTERNAL_FENCE_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             handle_type: ExternalFenceHandleTypeFlags::default(),
         }
     }
@@ -9065,7 +9065,7 @@ impl ::std::default::Default for ExternalFenceProperties {
     fn default() -> ExternalFenceProperties {
         ExternalFenceProperties {
             s_type: StructureType::EXTERNAL_FENCE_PROPERTIES,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             export_from_imported_handle_types: ExternalFenceHandleTypeFlags::default(),
             compatible_handle_types: ExternalFenceHandleTypeFlags::default(),
             external_fence_features: ExternalFenceFeatureFlags::default(),
@@ -9083,7 +9083,7 @@ impl ::std::default::Default for ExportFenceCreateInfo {
     fn default() -> ExportFenceCreateInfo {
         ExportFenceCreateInfo {
             s_type: StructureType::EXPORT_FENCE_CREATE_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             handle_types: ExternalFenceHandleTypeFlags::default(),
         }
     }
@@ -9103,7 +9103,7 @@ impl ::std::default::Default for ImportFenceWin32HandleInfoKHR {
     fn default() -> ImportFenceWin32HandleInfoKHR {
         ImportFenceWin32HandleInfoKHR {
             s_type: StructureType::IMPORT_FENCE_WIN32_HANDLE_INFO_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             fence: Fence::default(),
             flags: FenceImportFlags::default(),
             handle_type: ExternalFenceHandleTypeFlags::default(),
@@ -9125,8 +9125,8 @@ impl ::std::default::Default for ExportFenceWin32HandleInfoKHR {
     fn default() -> ExportFenceWin32HandleInfoKHR {
         ExportFenceWin32HandleInfoKHR {
             s_type: StructureType::EXPORT_FENCE_WIN32_HANDLE_INFO_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
-            p_attributes: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
+            p_attributes: ::std::ptr::null(),
             dw_access: DWORD::default(),
             name: unsafe { ::std::mem::zeroed() },
         }
@@ -9144,7 +9144,7 @@ impl ::std::default::Default for FenceGetWin32HandleInfoKHR {
     fn default() -> FenceGetWin32HandleInfoKHR {
         FenceGetWin32HandleInfoKHR {
             s_type: StructureType::FENCE_GET_WIN32_HANDLE_INFO_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             fence: Fence::default(),
             handle_type: ExternalFenceHandleTypeFlags::default(),
         }
@@ -9164,7 +9164,7 @@ impl ::std::default::Default for ImportFenceFdInfoKHR {
     fn default() -> ImportFenceFdInfoKHR {
         ImportFenceFdInfoKHR {
             s_type: StructureType::IMPORT_FENCE_FD_INFO_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             fence: Fence::default(),
             flags: FenceImportFlags::default(),
             handle_type: ExternalFenceHandleTypeFlags::default(),
@@ -9184,7 +9184,7 @@ impl ::std::default::Default for FenceGetFdInfoKHR {
     fn default() -> FenceGetFdInfoKHR {
         FenceGetFdInfoKHR {
             s_type: StructureType::FENCE_GET_FD_INFO_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             fence: Fence::default(),
             handle_type: ExternalFenceHandleTypeFlags::default(),
         }
@@ -9203,7 +9203,7 @@ impl ::std::default::Default for PhysicalDeviceMultiviewFeatures {
     fn default() -> PhysicalDeviceMultiviewFeatures {
         PhysicalDeviceMultiviewFeatures {
             s_type: StructureType::PHYSICAL_DEVICE_MULTIVIEW_FEATURES,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             multiview: Bool32::default(),
             multiview_geometry_shader: Bool32::default(),
             multiview_tessellation_shader: Bool32::default(),
@@ -9222,7 +9222,7 @@ impl ::std::default::Default for PhysicalDeviceMultiviewProperties {
     fn default() -> PhysicalDeviceMultiviewProperties {
         PhysicalDeviceMultiviewProperties {
             s_type: StructureType::PHYSICAL_DEVICE_MULTIVIEW_PROPERTIES,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             max_multiview_view_count: uint32_t::default(),
             max_multiview_instance_index: uint32_t::default(),
         }
@@ -9244,13 +9244,13 @@ impl ::std::default::Default for RenderPassMultiviewCreateInfo {
     fn default() -> RenderPassMultiviewCreateInfo {
         RenderPassMultiviewCreateInfo {
             s_type: StructureType::RENDER_PASS_MULTIVIEW_CREATE_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             subpass_count: uint32_t::default(),
-            p_view_masks: unsafe { ::std::mem::zeroed() },
+            p_view_masks: ::std::ptr::null(),
             dependency_count: uint32_t::default(),
-            p_view_offsets: unsafe { ::std::mem::zeroed() },
+            p_view_offsets: ::std::ptr::null(),
             correlation_mask_count: uint32_t::default(),
-            p_correlation_masks: unsafe { ::std::mem::zeroed() },
+            p_correlation_masks: ::std::ptr::null(),
         }
     }
 }
@@ -9275,7 +9275,7 @@ impl ::std::default::Default for SurfaceCapabilities2EXT {
     fn default() -> SurfaceCapabilities2EXT {
         SurfaceCapabilities2EXT {
             s_type: StructureType::SURFACE_CAPABILITIES_2_EXT,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             min_image_count: uint32_t::default(),
             max_image_count: uint32_t::default(),
             current_extent: Extent2D::default(),
@@ -9301,7 +9301,7 @@ impl ::std::default::Default for DisplayPowerInfoEXT {
     fn default() -> DisplayPowerInfoEXT {
         DisplayPowerInfoEXT {
             s_type: StructureType::DISPLAY_POWER_INFO_EXT,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             power_state: DisplayPowerStateEXT::default(),
         }
     }
@@ -9317,7 +9317,7 @@ impl ::std::default::Default for DeviceEventInfoEXT {
     fn default() -> DeviceEventInfoEXT {
         DeviceEventInfoEXT {
             s_type: StructureType::DEVICE_EVENT_INFO_EXT,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             device_event: DeviceEventTypeEXT::default(),
         }
     }
@@ -9333,7 +9333,7 @@ impl ::std::default::Default for DisplayEventInfoEXT {
     fn default() -> DisplayEventInfoEXT {
         DisplayEventInfoEXT {
             s_type: StructureType::DISPLAY_EVENT_INFO_EXT,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             display_event: DisplayEventTypeEXT::default(),
         }
     }
@@ -9349,7 +9349,7 @@ impl ::std::default::Default for SwapchainCounterCreateInfoEXT {
     fn default() -> SwapchainCounterCreateInfoEXT {
         SwapchainCounterCreateInfoEXT {
             s_type: StructureType::SWAPCHAIN_COUNTER_CREATE_INFO_EXT,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             surface_counters: SurfaceCounterFlagsEXT::default(),
         }
     }
@@ -9380,7 +9380,7 @@ impl ::std::default::Default for PhysicalDeviceGroupProperties {
     fn default() -> PhysicalDeviceGroupProperties {
         PhysicalDeviceGroupProperties {
             s_type: StructureType::PHYSICAL_DEVICE_GROUP_PROPERTIES,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             physical_device_count: uint32_t::default(),
             physical_devices: unsafe { ::std::mem::zeroed() },
             subset_allocation: Bool32::default(),
@@ -9399,7 +9399,7 @@ impl ::std::default::Default for MemoryAllocateFlagsInfo {
     fn default() -> MemoryAllocateFlagsInfo {
         MemoryAllocateFlagsInfo {
             s_type: StructureType::MEMORY_ALLOCATE_FLAGS_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: MemoryAllocateFlags::default(),
             device_mask: uint32_t::default(),
         }
@@ -9418,7 +9418,7 @@ impl ::std::default::Default for BindBufferMemoryInfo {
     fn default() -> BindBufferMemoryInfo {
         BindBufferMemoryInfo {
             s_type: StructureType::BIND_BUFFER_MEMORY_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             buffer: Buffer::default(),
             memory: DeviceMemory::default(),
             memory_offset: DeviceSize::default(),
@@ -9437,9 +9437,9 @@ impl ::std::default::Default for BindBufferMemoryDeviceGroupInfo {
     fn default() -> BindBufferMemoryDeviceGroupInfo {
         BindBufferMemoryDeviceGroupInfo {
             s_type: StructureType::BIND_BUFFER_MEMORY_DEVICE_GROUP_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             device_index_count: uint32_t::default(),
-            p_device_indices: unsafe { ::std::mem::zeroed() },
+            p_device_indices: ::std::ptr::null(),
         }
     }
 }
@@ -9456,7 +9456,7 @@ impl ::std::default::Default for BindImageMemoryInfo {
     fn default() -> BindImageMemoryInfo {
         BindImageMemoryInfo {
             s_type: StructureType::BIND_IMAGE_MEMORY_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             image: Image::default(),
             memory: DeviceMemory::default(),
             memory_offset: DeviceSize::default(),
@@ -9477,11 +9477,11 @@ impl ::std::default::Default for BindImageMemoryDeviceGroupInfo {
     fn default() -> BindImageMemoryDeviceGroupInfo {
         BindImageMemoryDeviceGroupInfo {
             s_type: StructureType::BIND_IMAGE_MEMORY_DEVICE_GROUP_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             device_index_count: uint32_t::default(),
-            p_device_indices: unsafe { ::std::mem::zeroed() },
+            p_device_indices: ::std::ptr::null(),
             split_instance_bind_region_count: uint32_t::default(),
-            p_split_instance_bind_regions: unsafe { ::std::mem::zeroed() },
+            p_split_instance_bind_regions: ::std::ptr::null(),
         }
     }
 }
@@ -9498,10 +9498,10 @@ impl ::std::default::Default for DeviceGroupRenderPassBeginInfo {
     fn default() -> DeviceGroupRenderPassBeginInfo {
         DeviceGroupRenderPassBeginInfo {
             s_type: StructureType::DEVICE_GROUP_RENDER_PASS_BEGIN_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             device_mask: uint32_t::default(),
             device_render_area_count: uint32_t::default(),
-            p_device_render_areas: unsafe { ::std::mem::zeroed() },
+            p_device_render_areas: ::std::ptr::null(),
         }
     }
 }
@@ -9516,7 +9516,7 @@ impl ::std::default::Default for DeviceGroupCommandBufferBeginInfo {
     fn default() -> DeviceGroupCommandBufferBeginInfo {
         DeviceGroupCommandBufferBeginInfo {
             s_type: StructureType::DEVICE_GROUP_COMMAND_BUFFER_BEGIN_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             device_mask: uint32_t::default(),
         }
     }
@@ -9537,13 +9537,13 @@ impl ::std::default::Default for DeviceGroupSubmitInfo {
     fn default() -> DeviceGroupSubmitInfo {
         DeviceGroupSubmitInfo {
             s_type: StructureType::DEVICE_GROUP_SUBMIT_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             wait_semaphore_count: uint32_t::default(),
-            p_wait_semaphore_device_indices: unsafe { ::std::mem::zeroed() },
+            p_wait_semaphore_device_indices: ::std::ptr::null(),
             command_buffer_count: uint32_t::default(),
-            p_command_buffer_device_masks: unsafe { ::std::mem::zeroed() },
+            p_command_buffer_device_masks: ::std::ptr::null(),
             signal_semaphore_count: uint32_t::default(),
-            p_signal_semaphore_device_indices: unsafe { ::std::mem::zeroed() },
+            p_signal_semaphore_device_indices: ::std::ptr::null(),
         }
     }
 }
@@ -9559,7 +9559,7 @@ impl ::std::default::Default for DeviceGroupBindSparseInfo {
     fn default() -> DeviceGroupBindSparseInfo {
         DeviceGroupBindSparseInfo {
             s_type: StructureType::DEVICE_GROUP_BIND_SPARSE_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             resource_device_index: uint32_t::default(),
             memory_device_index: uint32_t::default(),
         }
@@ -9589,7 +9589,7 @@ impl ::std::default::Default for DeviceGroupPresentCapabilitiesKHR {
     fn default() -> DeviceGroupPresentCapabilitiesKHR {
         DeviceGroupPresentCapabilitiesKHR {
             s_type: StructureType::DEVICE_GROUP_PRESENT_CAPABILITIES_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             present_mask: unsafe { ::std::mem::zeroed() },
             modes: DeviceGroupPresentModeFlagsKHR::default(),
         }
@@ -9606,7 +9606,7 @@ impl ::std::default::Default for ImageSwapchainCreateInfoKHR {
     fn default() -> ImageSwapchainCreateInfoKHR {
         ImageSwapchainCreateInfoKHR {
             s_type: StructureType::IMAGE_SWAPCHAIN_CREATE_INFO_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             swapchain: SwapchainKHR::default(),
         }
     }
@@ -9623,7 +9623,7 @@ impl ::std::default::Default for BindImageMemorySwapchainInfoKHR {
     fn default() -> BindImageMemorySwapchainInfoKHR {
         BindImageMemorySwapchainInfoKHR {
             s_type: StructureType::BIND_IMAGE_MEMORY_SWAPCHAIN_INFO_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             swapchain: SwapchainKHR::default(),
             image_index: uint32_t::default(),
         }
@@ -9644,7 +9644,7 @@ impl ::std::default::Default for AcquireNextImageInfoKHR {
     fn default() -> AcquireNextImageInfoKHR {
         AcquireNextImageInfoKHR {
             s_type: StructureType::ACQUIRE_NEXT_IMAGE_INFO_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             swapchain: SwapchainKHR::default(),
             timeout: uint64_t::default(),
             semaphore: Semaphore::default(),
@@ -9666,9 +9666,9 @@ impl ::std::default::Default for DeviceGroupPresentInfoKHR {
     fn default() -> DeviceGroupPresentInfoKHR {
         DeviceGroupPresentInfoKHR {
             s_type: StructureType::DEVICE_GROUP_PRESENT_INFO_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             swapchain_count: uint32_t::default(),
-            p_device_masks: unsafe { ::std::mem::zeroed() },
+            p_device_masks: ::std::ptr::null(),
             mode: DeviceGroupPresentModeFlagsKHR::default(),
         }
     }
@@ -9685,9 +9685,9 @@ impl ::std::default::Default for DeviceGroupDeviceCreateInfo {
     fn default() -> DeviceGroupDeviceCreateInfo {
         DeviceGroupDeviceCreateInfo {
             s_type: StructureType::DEVICE_GROUP_DEVICE_CREATE_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             physical_device_count: uint32_t::default(),
-            p_physical_devices: unsafe { ::std::mem::zeroed() },
+            p_physical_devices: ::std::ptr::null(),
         }
     }
 }
@@ -9702,7 +9702,7 @@ impl ::std::default::Default for DeviceGroupSwapchainCreateInfoKHR {
     fn default() -> DeviceGroupSwapchainCreateInfoKHR {
         DeviceGroupSwapchainCreateInfoKHR {
             s_type: StructureType::DEVICE_GROUP_SWAPCHAIN_CREATE_INFO_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             modes: DeviceGroupPresentModeFlagsKHR::default(),
         }
     }
@@ -9735,10 +9735,10 @@ impl ::std::default::Default for DescriptorUpdateTemplateCreateInfo {
     fn default() -> DescriptorUpdateTemplateCreateInfo {
         DescriptorUpdateTemplateCreateInfo {
             s_type: StructureType::DESCRIPTOR_UPDATE_TEMPLATE_CREATE_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             flags: DescriptorUpdateTemplateCreateFlags::default(),
             descriptor_update_entry_count: uint32_t::default(),
-            p_descriptor_update_entries: unsafe { ::std::mem::zeroed() },
+            p_descriptor_update_entries: ::std::ptr::null(),
             template_type: DescriptorUpdateTemplateType::default(),
             descriptor_set_layout: DescriptorSetLayout::default(),
             pipeline_bind_point: PipelineBindPoint::default(),
@@ -9771,7 +9771,7 @@ impl ::std::default::Default for HdrMetadataEXT {
     fn default() -> HdrMetadataEXT {
         HdrMetadataEXT {
             s_type: StructureType::HDR_METADATA_EXT,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             display_primary_red: XYColorEXT::default(),
             display_primary_green: XYColorEXT::default(),
             display_primary_blue: XYColorEXT::default(),
@@ -9809,9 +9809,9 @@ impl ::std::default::Default for PresentTimesInfoGOOGLE {
     fn default() -> PresentTimesInfoGOOGLE {
         PresentTimesInfoGOOGLE {
             s_type: StructureType::PRESENT_TIMES_INFO_GOOGLE,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             swapchain_count: uint32_t::default(),
-            p_times: unsafe { ::std::mem::zeroed() },
+            p_times: ::std::ptr::null(),
         }
     }
 }
@@ -9833,9 +9833,9 @@ impl ::std::default::Default for IOSSurfaceCreateInfoMVK {
     fn default() -> IOSSurfaceCreateInfoMVK {
         IOSSurfaceCreateInfoMVK {
             s_type: StructureType::IOS_SURFACE_CREATE_INFO_M,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: IOSSurfaceCreateFlagsMVK::default(),
-            p_view: unsafe { ::std::mem::zeroed() },
+            p_view: ::std::ptr::null(),
         }
     }
 }
@@ -9851,9 +9851,9 @@ impl ::std::default::Default for MacOSSurfaceCreateInfoMVK {
     fn default() -> MacOSSurfaceCreateInfoMVK {
         MacOSSurfaceCreateInfoMVK {
             s_type: StructureType::MACOS_SURFACE_CREATE_INFO_M,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: MacOSSurfaceCreateFlagsMVK::default(),
-            p_view: unsafe { ::std::mem::zeroed() },
+            p_view: ::std::ptr::null(),
         }
     }
 }
@@ -9876,10 +9876,10 @@ impl ::std::default::Default for PipelineViewportWScalingStateCreateInfoNV {
     fn default() -> PipelineViewportWScalingStateCreateInfoNV {
         PipelineViewportWScalingStateCreateInfoNV {
             s_type: StructureType::PIPELINE_VIEWPORT_W_SCALING_STATE_CREATE_INFO_NV,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             viewport_w_scaling_enable: Bool32::default(),
             viewport_count: uint32_t::default(),
-            p_viewport_w_scalings: unsafe { ::std::mem::zeroed() },
+            p_viewport_w_scalings: ::std::ptr::null(),
         }
     }
 }
@@ -9904,10 +9904,10 @@ impl ::std::default::Default for PipelineViewportSwizzleStateCreateInfoNV {
     fn default() -> PipelineViewportSwizzleStateCreateInfoNV {
         PipelineViewportSwizzleStateCreateInfoNV {
             s_type: StructureType::PIPELINE_VIEWPORT_SWIZZLE_STATE_CREATE_INFO_NV,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: PipelineViewportSwizzleStateCreateFlagsNV::default(),
             viewport_count: uint32_t::default(),
-            p_viewport_swizzles: unsafe { ::std::mem::zeroed() },
+            p_viewport_swizzles: ::std::ptr::null(),
         }
     }
 }
@@ -9922,7 +9922,7 @@ impl ::std::default::Default for PhysicalDeviceDiscardRectanglePropertiesEXT {
     fn default() -> PhysicalDeviceDiscardRectanglePropertiesEXT {
         PhysicalDeviceDiscardRectanglePropertiesEXT {
             s_type: StructureType::PHYSICAL_DEVICE_DISCARD_RECTANGLE_PROPERTIES_EXT,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             max_discard_rectangles: uint32_t::default(),
         }
     }
@@ -9941,11 +9941,11 @@ impl ::std::default::Default for PipelineDiscardRectangleStateCreateInfoEXT {
     fn default() -> PipelineDiscardRectangleStateCreateInfoEXT {
         PipelineDiscardRectangleStateCreateInfoEXT {
             s_type: StructureType::PIPELINE_DISCARD_RECTANGLE_STATE_CREATE_INFO_EXT,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: PipelineDiscardRectangleStateCreateFlagsEXT::default(),
             discard_rectangle_mode: DiscardRectangleModeEXT::default(),
             discard_rectangle_count: uint32_t::default(),
-            p_discard_rectangles: unsafe { ::std::mem::zeroed() },
+            p_discard_rectangles: ::std::ptr::null(),
         }
     }
 }
@@ -9960,7 +9960,7 @@ impl ::std::default::Default for PhysicalDeviceMultiviewPerViewAttributesPropert
     fn default() -> PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX {
         PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX {
             s_type: StructureType::PHYSICAL_DEVICE_MULTIVIEW_PER_VIEW_ATTRIBUTES_PROPERTIES_NVX,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             per_view_position_all_components: Bool32::default(),
         }
     }
@@ -9984,9 +9984,9 @@ impl ::std::default::Default for RenderPassInputAttachmentAspectCreateInfo {
     fn default() -> RenderPassInputAttachmentAspectCreateInfo {
         RenderPassInputAttachmentAspectCreateInfo {
             s_type: StructureType::RENDER_PASS_INPUT_ATTACHMENT_ASPECT_CREATE_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             aspect_reference_count: uint32_t::default(),
-            p_aspect_references: unsafe { ::std::mem::zeroed() },
+            p_aspect_references: ::std::ptr::null(),
         }
     }
 }
@@ -10001,7 +10001,7 @@ impl ::std::default::Default for PhysicalDeviceSurfaceInfo2KHR {
     fn default() -> PhysicalDeviceSurfaceInfo2KHR {
         PhysicalDeviceSurfaceInfo2KHR {
             s_type: StructureType::PHYSICAL_DEVICE_SURFACE_INFO_2_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             surface: SurfaceKHR::default(),
         }
     }
@@ -10017,7 +10017,7 @@ impl ::std::default::Default for SurfaceCapabilities2KHR {
     fn default() -> SurfaceCapabilities2KHR {
         SurfaceCapabilities2KHR {
             s_type: StructureType::SURFACE_CAPABILITIES_2_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             surface_capabilities: SurfaceCapabilitiesKHR::default(),
         }
     }
@@ -10033,7 +10033,7 @@ impl ::std::default::Default for SurfaceFormat2KHR {
     fn default() -> SurfaceFormat2KHR {
         SurfaceFormat2KHR {
             s_type: StructureType::SURFACE_FORMAT_2_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             surface_format: SurfaceFormatKHR::default(),
         }
     }
@@ -10049,7 +10049,7 @@ impl ::std::default::Default for DisplayProperties2KHR {
     fn default() -> DisplayProperties2KHR {
         DisplayProperties2KHR {
             s_type: StructureType::DISPLAY_PROPERTIES_2_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             display_properties: DisplayPropertiesKHR::default(),
         }
     }
@@ -10065,7 +10065,7 @@ impl ::std::default::Default for DisplayPlaneProperties2KHR {
     fn default() -> DisplayPlaneProperties2KHR {
         DisplayPlaneProperties2KHR {
             s_type: StructureType::DISPLAY_PLANE_PROPERTIES_2_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             display_plane_properties: DisplayPlanePropertiesKHR::default(),
         }
     }
@@ -10081,7 +10081,7 @@ impl ::std::default::Default for DisplayModeProperties2KHR {
     fn default() -> DisplayModeProperties2KHR {
         DisplayModeProperties2KHR {
             s_type: StructureType::DISPLAY_MODE_PROPERTIES_2_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             display_mode_properties: DisplayModePropertiesKHR::default(),
         }
     }
@@ -10098,7 +10098,7 @@ impl ::std::default::Default for DisplayPlaneInfo2KHR {
     fn default() -> DisplayPlaneInfo2KHR {
         DisplayPlaneInfo2KHR {
             s_type: StructureType::DISPLAY_PLANE_INFO_2_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             mode: DisplayModeKHR::default(),
             plane_index: uint32_t::default(),
         }
@@ -10115,7 +10115,7 @@ impl ::std::default::Default for DisplayPlaneCapabilities2KHR {
     fn default() -> DisplayPlaneCapabilities2KHR {
         DisplayPlaneCapabilities2KHR {
             s_type: StructureType::DISPLAY_PLANE_CAPABILITIES_2_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             capabilities: DisplayPlaneCapabilitiesKHR::default(),
         }
     }
@@ -10131,7 +10131,7 @@ impl ::std::default::Default for SharedPresentSurfaceCapabilitiesKHR {
     fn default() -> SharedPresentSurfaceCapabilitiesKHR {
         SharedPresentSurfaceCapabilitiesKHR {
             s_type: StructureType::SHARED_PRESENT_SURFACE_CAPABILITIES_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             shared_present_supported_usage_flags: ImageUsageFlags::default(),
         }
     }
@@ -10150,7 +10150,7 @@ impl ::std::default::Default for PhysicalDevice16BitStorageFeatures {
     fn default() -> PhysicalDevice16BitStorageFeatures {
         PhysicalDevice16BitStorageFeatures {
             s_type: StructureType::PHYSICAL_DEVICE_16BIT_STORAGE_FEATURES,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             storage_buffer16_bit_access: Bool32::default(),
             uniform_and_storage_buffer16_bit_access: Bool32::default(),
             storage_push_constant16: Bool32::default(),
@@ -10172,7 +10172,7 @@ impl ::std::default::Default for PhysicalDeviceSubgroupProperties {
     fn default() -> PhysicalDeviceSubgroupProperties {
         PhysicalDeviceSubgroupProperties {
             s_type: StructureType::PHYSICAL_DEVICE_SUBGROUP_PROPERTIES,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             subgroup_size: uint32_t::default(),
             supported_stages: ShaderStageFlags::default(),
             supported_operations: SubgroupFeatureFlags::default(),
@@ -10191,7 +10191,7 @@ impl ::std::default::Default for BufferMemoryRequirementsInfo2 {
     fn default() -> BufferMemoryRequirementsInfo2 {
         BufferMemoryRequirementsInfo2 {
             s_type: StructureType::BUFFER_MEMORY_REQUIREMENTS_INFO_2,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             buffer: Buffer::default(),
         }
     }
@@ -10207,7 +10207,7 @@ impl ::std::default::Default for ImageMemoryRequirementsInfo2 {
     fn default() -> ImageMemoryRequirementsInfo2 {
         ImageMemoryRequirementsInfo2 {
             s_type: StructureType::IMAGE_MEMORY_REQUIREMENTS_INFO_2,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             image: Image::default(),
         }
     }
@@ -10223,7 +10223,7 @@ impl ::std::default::Default for ImageSparseMemoryRequirementsInfo2 {
     fn default() -> ImageSparseMemoryRequirementsInfo2 {
         ImageSparseMemoryRequirementsInfo2 {
             s_type: StructureType::IMAGE_SPARSE_MEMORY_REQUIREMENTS_INFO_2,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             image: Image::default(),
         }
     }
@@ -10239,7 +10239,7 @@ impl ::std::default::Default for MemoryRequirements2 {
     fn default() -> MemoryRequirements2 {
         MemoryRequirements2 {
             s_type: StructureType::MEMORY_REQUIREMENTS_2,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             memory_requirements: MemoryRequirements::default(),
         }
     }
@@ -10255,7 +10255,7 @@ impl ::std::default::Default for SparseImageMemoryRequirements2 {
     fn default() -> SparseImageMemoryRequirements2 {
         SparseImageMemoryRequirements2 {
             s_type: StructureType::SPARSE_IMAGE_MEMORY_REQUIREMENTS_2,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             memory_requirements: SparseImageMemoryRequirements::default(),
         }
     }
@@ -10271,7 +10271,7 @@ impl ::std::default::Default for PhysicalDevicePointClippingProperties {
     fn default() -> PhysicalDevicePointClippingProperties {
         PhysicalDevicePointClippingProperties {
             s_type: StructureType::PHYSICAL_DEVICE_POINT_CLIPPING_PROPERTIES,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             point_clipping_behavior: PointClippingBehavior::default(),
         }
     }
@@ -10288,7 +10288,7 @@ impl ::std::default::Default for MemoryDedicatedRequirements {
     fn default() -> MemoryDedicatedRequirements {
         MemoryDedicatedRequirements {
             s_type: StructureType::MEMORY_DEDICATED_REQUIREMENTS,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             prefers_dedicated_allocation: Bool32::default(),
             requires_dedicated_allocation: Bool32::default(),
         }
@@ -10306,7 +10306,7 @@ impl ::std::default::Default for MemoryDedicatedAllocateInfo {
     fn default() -> MemoryDedicatedAllocateInfo {
         MemoryDedicatedAllocateInfo {
             s_type: StructureType::MEMORY_DEDICATED_ALLOCATE_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             image: Image::default(),
             buffer: Buffer::default(),
         }
@@ -10323,7 +10323,7 @@ impl ::std::default::Default for ImageViewUsageCreateInfo {
     fn default() -> ImageViewUsageCreateInfo {
         ImageViewUsageCreateInfo {
             s_type: StructureType::IMAGE_VIEW_USAGE_CREATE_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             usage: ImageUsageFlags::default(),
         }
     }
@@ -10339,7 +10339,7 @@ impl ::std::default::Default for PipelineTessellationDomainOriginStateCreateInfo
     fn default() -> PipelineTessellationDomainOriginStateCreateInfo {
         PipelineTessellationDomainOriginStateCreateInfo {
             s_type: StructureType::PIPELINE_TESSELLATION_DOMAIN_ORIGIN_STATE_CREATE_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             domain_origin: TessellationDomainOrigin::default(),
         }
     }
@@ -10355,7 +10355,7 @@ impl ::std::default::Default for SamplerYcbcrConversionInfo {
     fn default() -> SamplerYcbcrConversionInfo {
         SamplerYcbcrConversionInfo {
             s_type: StructureType::SAMPLER_YCBCR_CONVERSION_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             conversion: SamplerYcbcrConversion::default(),
         }
     }
@@ -10378,7 +10378,7 @@ impl ::std::default::Default for SamplerYcbcrConversionCreateInfo {
     fn default() -> SamplerYcbcrConversionCreateInfo {
         SamplerYcbcrConversionCreateInfo {
             s_type: StructureType::SAMPLER_YCBCR_CONVERSION_CREATE_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             format: Format::default(),
             ycbcr_model: SamplerYcbcrModelConversion::default(),
             ycbcr_range: SamplerYcbcrRange::default(),
@@ -10401,7 +10401,7 @@ impl ::std::default::Default for BindImagePlaneMemoryInfo {
     fn default() -> BindImagePlaneMemoryInfo {
         BindImagePlaneMemoryInfo {
             s_type: StructureType::BIND_IMAGE_PLANE_MEMORY_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             plane_aspect: ImageAspectFlags::default(),
         }
     }
@@ -10417,7 +10417,7 @@ impl ::std::default::Default for ImagePlaneMemoryRequirementsInfo {
     fn default() -> ImagePlaneMemoryRequirementsInfo {
         ImagePlaneMemoryRequirementsInfo {
             s_type: StructureType::IMAGE_PLANE_MEMORY_REQUIREMENTS_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             plane_aspect: ImageAspectFlags::default(),
         }
     }
@@ -10433,7 +10433,7 @@ impl ::std::default::Default for PhysicalDeviceSamplerYcbcrConversionFeatures {
     fn default() -> PhysicalDeviceSamplerYcbcrConversionFeatures {
         PhysicalDeviceSamplerYcbcrConversionFeatures {
             s_type: StructureType::PHYSICAL_DEVICE_SAMPLER_YCBCR_CONVERSION_FEATURES,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             sampler_ycbcr_conversion: Bool32::default(),
         }
     }
@@ -10449,7 +10449,7 @@ impl ::std::default::Default for SamplerYcbcrConversionImageFormatProperties {
     fn default() -> SamplerYcbcrConversionImageFormatProperties {
         SamplerYcbcrConversionImageFormatProperties {
             s_type: StructureType::SAMPLER_YCBCR_CONVERSION_IMAGE_FORMAT_PROPERTIES,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             combined_image_sampler_descriptor_count: uint32_t::default(),
         }
     }
@@ -10465,7 +10465,7 @@ impl ::std::default::Default for TextureLODGatherFormatPropertiesAMD {
     fn default() -> TextureLODGatherFormatPropertiesAMD {
         TextureLODGatherFormatPropertiesAMD {
             s_type: StructureType::TEXTURE_LOD_GATHER_FORMAT_PROPERTIES_AMD,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             supports_texture_gather_lod_bias_amd: Bool32::default(),
         }
     }
@@ -10481,7 +10481,7 @@ impl ::std::default::Default for ProtectedSubmitInfo {
     fn default() -> ProtectedSubmitInfo {
         ProtectedSubmitInfo {
             s_type: StructureType::PROTECTED_SUBMIT_INFO,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             protected_submit: Bool32::default(),
         }
     }
@@ -10497,7 +10497,7 @@ impl ::std::default::Default for PhysicalDeviceProtectedMemoryFeatures {
     fn default() -> PhysicalDeviceProtectedMemoryFeatures {
         PhysicalDeviceProtectedMemoryFeatures {
             s_type: StructureType::PHYSICAL_DEVICE_PROTECTED_MEMORY_FEATURES,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             protected_memory: Bool32::default(),
         }
     }
@@ -10513,7 +10513,7 @@ impl ::std::default::Default for PhysicalDeviceProtectedMemoryProperties {
     fn default() -> PhysicalDeviceProtectedMemoryProperties {
         PhysicalDeviceProtectedMemoryProperties {
             s_type: StructureType::PHYSICAL_DEVICE_PROTECTED_MEMORY_PROPERTIES,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             protected_no_fault: Bool32::default(),
         }
     }
@@ -10531,7 +10531,7 @@ impl ::std::default::Default for DeviceQueueInfo2 {
     fn default() -> DeviceQueueInfo2 {
         DeviceQueueInfo2 {
             s_type: StructureType::DEVICE_QUEUE_INFO_2,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: DeviceQueueCreateFlags::default(),
             queue_family_index: uint32_t::default(),
             queue_index: uint32_t::default(),
@@ -10551,7 +10551,7 @@ impl ::std::default::Default for PipelineCoverageToColorStateCreateInfoNV {
     fn default() -> PipelineCoverageToColorStateCreateInfoNV {
         PipelineCoverageToColorStateCreateInfoNV {
             s_type: StructureType::PIPELINE_COVERAGE_TO_COLOR_STATE_CREATE_INFO_NV,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: PipelineCoverageToColorStateCreateFlagsNV::default(),
             coverage_to_color_enable: Bool32::default(),
             coverage_to_color_location: uint32_t::default(),
@@ -10570,7 +10570,7 @@ impl ::std::default::Default for PhysicalDeviceSamplerFilterMinmaxPropertiesEXT 
     fn default() -> PhysicalDeviceSamplerFilterMinmaxPropertiesEXT {
         PhysicalDeviceSamplerFilterMinmaxPropertiesEXT {
             s_type: StructureType::PHYSICAL_DEVICE_SAMPLER_FILTER_MINMAX_PROPERTIES_EXT,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             filter_minmax_single_component_formats: Bool32::default(),
             filter_minmax_image_component_mapping: Bool32::default(),
         }
@@ -10596,11 +10596,11 @@ impl ::std::default::Default for SampleLocationsInfoEXT {
     fn default() -> SampleLocationsInfoEXT {
         SampleLocationsInfoEXT {
             s_type: StructureType::SAMPLE_LOCATIONS_INFO_EXT,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             sample_locations_per_pixel: SampleCountFlags::default(),
             sample_location_grid_size: Extent2D::default(),
             sample_locations_count: uint32_t::default(),
-            p_sample_locations: unsafe { ::std::mem::zeroed() },
+            p_sample_locations: ::std::ptr::null(),
         }
     }
 }
@@ -10630,11 +10630,11 @@ impl ::std::default::Default for RenderPassSampleLocationsBeginInfoEXT {
     fn default() -> RenderPassSampleLocationsBeginInfoEXT {
         RenderPassSampleLocationsBeginInfoEXT {
             s_type: StructureType::RENDER_PASS_SAMPLE_LOCATIONS_BEGIN_INFO_EXT,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             attachment_initial_sample_locations_count: uint32_t::default(),
-            p_attachment_initial_sample_locations: unsafe { ::std::mem::zeroed() },
+            p_attachment_initial_sample_locations: ::std::ptr::null(),
             post_subpass_sample_locations_count: uint32_t::default(),
-            p_post_subpass_sample_locations: unsafe { ::std::mem::zeroed() },
+            p_post_subpass_sample_locations: ::std::ptr::null(),
         }
     }
 }
@@ -10650,7 +10650,7 @@ impl ::std::default::Default for PipelineSampleLocationsStateCreateInfoEXT {
     fn default() -> PipelineSampleLocationsStateCreateInfoEXT {
         PipelineSampleLocationsStateCreateInfoEXT {
             s_type: StructureType::PIPELINE_SAMPLE_LOCATIONS_STATE_CREATE_INFO_EXT,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             sample_locations_enable: Bool32::default(),
             sample_locations_info: SampleLocationsInfoEXT::default(),
         }
@@ -10697,7 +10697,7 @@ impl ::std::default::Default for PhysicalDeviceSampleLocationsPropertiesEXT {
     fn default() -> PhysicalDeviceSampleLocationsPropertiesEXT {
         PhysicalDeviceSampleLocationsPropertiesEXT {
             s_type: StructureType::PHYSICAL_DEVICE_SAMPLE_LOCATIONS_PROPERTIES_EXT,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             sample_location_sample_counts: SampleCountFlags::default(),
             max_sample_location_grid_size: Extent2D::default(),
             sample_location_coordinate_range: unsafe { ::std::mem::zeroed() },
@@ -10717,7 +10717,7 @@ impl ::std::default::Default for MultisamplePropertiesEXT {
     fn default() -> MultisamplePropertiesEXT {
         MultisamplePropertiesEXT {
             s_type: StructureType::MULTISAMPLE_PROPERTIES_EXT,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             max_sample_location_grid_size: Extent2D::default(),
         }
     }
@@ -10733,7 +10733,7 @@ impl ::std::default::Default for SamplerReductionModeCreateInfoEXT {
     fn default() -> SamplerReductionModeCreateInfoEXT {
         SamplerReductionModeCreateInfoEXT {
             s_type: StructureType::SAMPLER_REDUCTION_MODE_CREATE_INFO_EXT,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             reduction_mode: SamplerReductionModeEXT::default(),
         }
     }
@@ -10749,7 +10749,7 @@ impl ::std::default::Default for PhysicalDeviceBlendOperationAdvancedFeaturesEXT
     fn default() -> PhysicalDeviceBlendOperationAdvancedFeaturesEXT {
         PhysicalDeviceBlendOperationAdvancedFeaturesEXT {
             s_type: StructureType::PHYSICAL_DEVICE_BLEND_OPERATION_ADVANCED_FEATURES_EXT,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             advanced_blend_coherent_operations: Bool32::default(),
         }
     }
@@ -10770,7 +10770,7 @@ impl ::std::default::Default for PhysicalDeviceBlendOperationAdvancedPropertiesE
     fn default() -> PhysicalDeviceBlendOperationAdvancedPropertiesEXT {
         PhysicalDeviceBlendOperationAdvancedPropertiesEXT {
             s_type: StructureType::PHYSICAL_DEVICE_BLEND_OPERATION_ADVANCED_PROPERTIES_EXT,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             advanced_blend_max_color_attachments: uint32_t::default(),
             advanced_blend_independent_blend: Bool32::default(),
             advanced_blend_non_premultiplied_src_color: Bool32::default(),
@@ -10793,7 +10793,7 @@ impl ::std::default::Default for PipelineColorBlendAdvancedStateCreateInfoEXT {
     fn default() -> PipelineColorBlendAdvancedStateCreateInfoEXT {
         PipelineColorBlendAdvancedStateCreateInfoEXT {
             s_type: StructureType::PIPELINE_COLOR_BLEND_ADVANCED_STATE_CREATE_INFO_EXT,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             src_premultiplied: Bool32::default(),
             dst_premultiplied: Bool32::default(),
             blend_overlap: BlendOverlapEXT::default(),
@@ -10815,12 +10815,12 @@ impl ::std::default::Default for PipelineCoverageModulationStateCreateInfoNV {
     fn default() -> PipelineCoverageModulationStateCreateInfoNV {
         PipelineCoverageModulationStateCreateInfoNV {
             s_type: StructureType::PIPELINE_COVERAGE_MODULATION_STATE_CREATE_INFO_NV,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: PipelineCoverageModulationStateCreateFlagsNV::default(),
             coverage_modulation_mode: CoverageModulationModeNV::default(),
             coverage_modulation_table_enable: Bool32::default(),
             coverage_modulation_table_count: uint32_t::default(),
-            p_coverage_modulation_table: unsafe { ::std::mem::zeroed() },
+            p_coverage_modulation_table: ::std::ptr::null(),
         }
     }
 }
@@ -10836,9 +10836,9 @@ impl ::std::default::Default for ImageFormatListCreateInfoKHR {
     fn default() -> ImageFormatListCreateInfoKHR {
         ImageFormatListCreateInfoKHR {
             s_type: StructureType::IMAGE_FORMAT_LIST_CREATE_INFO_KHR,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             view_format_count: uint32_t::default(),
-            p_view_formats: unsafe { ::std::mem::zeroed() },
+            p_view_formats: ::std::ptr::null(),
         }
     }
 }
@@ -10855,10 +10855,10 @@ impl ::std::default::Default for ValidationCacheCreateInfoEXT {
     fn default() -> ValidationCacheCreateInfoEXT {
         ValidationCacheCreateInfoEXT {
             s_type: StructureType::VALIDATION_CACHE_CREATE_INFO_EXT,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: ValidationCacheCreateFlagsEXT::default(),
             initial_data_size: size_t::default(),
-            p_initial_data: unsafe { ::std::mem::zeroed() },
+            p_initial_data: ::std::ptr::null(),
         }
     }
 }
@@ -10873,7 +10873,7 @@ impl ::std::default::Default for ShaderModuleValidationCacheCreateInfoEXT {
     fn default() -> ShaderModuleValidationCacheCreateInfoEXT {
         ShaderModuleValidationCacheCreateInfoEXT {
             s_type: StructureType::SHADER_MODULE_VALIDATION_CACHE_CREATE_INFO_EXT,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             validation_cache: ValidationCacheEXT::default(),
         }
     }
@@ -10890,7 +10890,7 @@ impl ::std::default::Default for PhysicalDeviceMaintenance3Properties {
     fn default() -> PhysicalDeviceMaintenance3Properties {
         PhysicalDeviceMaintenance3Properties {
             s_type: StructureType::PHYSICAL_DEVICE_MAINTENANCE_3_PROPERTIES,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             max_per_set_descriptors: uint32_t::default(),
             max_memory_allocation_size: DeviceSize::default(),
         }
@@ -10907,7 +10907,7 @@ impl ::std::default::Default for DescriptorSetLayoutSupport {
     fn default() -> DescriptorSetLayoutSupport {
         DescriptorSetLayoutSupport {
             s_type: StructureType::DESCRIPTOR_SET_LAYOUT_SUPPORT,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             supported: Bool32::default(),
         }
     }
@@ -10923,7 +10923,7 @@ impl ::std::default::Default for PhysicalDeviceShaderDrawParameterFeatures {
     fn default() -> PhysicalDeviceShaderDrawParameterFeatures {
         PhysicalDeviceShaderDrawParameterFeatures {
             s_type: StructureType::PHYSICAL_DEVICE_SHADER_DRAW_PARAMETER_FEATURES,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             shader_draw_parameters: Bool32::default(),
         }
     }
@@ -10942,8 +10942,8 @@ impl ::std::default::Default for NativeBufferANDROID {
     fn default() -> NativeBufferANDROID {
         NativeBufferANDROID {
             s_type: StructureType::NATIVE_BUFFER_ANDROID,
-            p_next: unsafe { ::std::mem::zeroed() },
-            handle: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
+            handle: ::std::ptr::null(),
             stride: c_int::default(),
             format: c_int::default(),
             usage: c_int::default(),
@@ -11009,7 +11009,7 @@ impl ::std::default::Default for DeviceQueueGlobalPriorityCreateInfoEXT {
     fn default() -> DeviceQueueGlobalPriorityCreateInfoEXT {
         DeviceQueueGlobalPriorityCreateInfoEXT {
             s_type: StructureType::DEVICE_QUEUE_GLOBAL_PRIORITY_CREATE_INFO_EXT,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             global_priority: QueueGlobalPriorityEXT::default(),
         }
     }
@@ -11027,10 +11027,10 @@ impl ::std::default::Default for DebugUtilsObjectNameInfoEXT {
     fn default() -> DebugUtilsObjectNameInfoEXT {
         DebugUtilsObjectNameInfoEXT {
             s_type: StructureType::DEBUG_UTILS_OBJECT_NAME_INFO_EXT,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             object_type: ObjectType::default(),
             object_handle: uint64_t::default(),
-            p_object_name: unsafe { ::std::mem::zeroed() },
+            p_object_name: ::std::ptr::null(),
         }
     }
 }
@@ -11049,12 +11049,12 @@ impl ::std::default::Default for DebugUtilsObjectTagInfoEXT {
     fn default() -> DebugUtilsObjectTagInfoEXT {
         DebugUtilsObjectTagInfoEXT {
             s_type: StructureType::DEBUG_UTILS_OBJECT_TAG_INFO_EXT,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             object_type: ObjectType::default(),
             object_handle: uint64_t::default(),
             tag_name: uint64_t::default(),
             tag_size: size_t::default(),
-            p_tag: unsafe { ::std::mem::zeroed() },
+            p_tag: ::std::ptr::null(),
         }
     }
 }
@@ -11082,8 +11082,8 @@ impl ::std::default::Default for DebugUtilsLabelEXT {
     fn default() -> DebugUtilsLabelEXT {
         DebugUtilsLabelEXT {
             s_type: StructureType::DEBUG_UTILS_LABEL_EXT,
-            p_next: unsafe { ::std::mem::zeroed() },
-            p_label_name: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
+            p_label_name: ::std::ptr::null(),
             color: unsafe { ::std::mem::zeroed() },
         }
     }
@@ -11116,12 +11116,12 @@ impl ::std::default::Default for DebugUtilsMessengerCreateInfoEXT {
     fn default() -> DebugUtilsMessengerCreateInfoEXT {
         DebugUtilsMessengerCreateInfoEXT {
             s_type: StructureType::DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: DebugUtilsMessengerCreateFlagsEXT::default(),
             message_severity: DebugUtilsMessageSeverityFlagsEXT::default(),
             message_type: DebugUtilsMessageTypeFlagsEXT::default(),
             pfn_user_callback: unsafe { ::std::mem::zeroed() },
-            p_user_data: unsafe { ::std::mem::zeroed() },
+            p_user_data: ::std::ptr::null_mut(),
         }
     }
 }
@@ -11145,17 +11145,17 @@ impl ::std::default::Default for DebugUtilsMessengerCallbackDataEXT {
     fn default() -> DebugUtilsMessengerCallbackDataEXT {
         DebugUtilsMessengerCallbackDataEXT {
             s_type: StructureType::DEBUG_UTILS_MESSENGER_CALLBACK_DATA_EXT,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: DebugUtilsMessengerCallbackDataFlagsEXT::default(),
-            p_message_id_name: unsafe { ::std::mem::zeroed() },
+            p_message_id_name: ::std::ptr::null(),
             message_id_number: int32_t::default(),
-            p_message: unsafe { ::std::mem::zeroed() },
+            p_message: ::std::ptr::null(),
             queue_label_count: uint32_t::default(),
-            p_queue_labels: unsafe { ::std::mem::zeroed() },
+            p_queue_labels: ::std::ptr::null_mut(),
             cmd_buf_label_count: uint32_t::default(),
-            p_cmd_buf_labels: unsafe { ::std::mem::zeroed() },
+            p_cmd_buf_labels: ::std::ptr::null_mut(),
             object_count: uint32_t::default(),
-            p_objects: unsafe { ::std::mem::zeroed() },
+            p_objects: ::std::ptr::null_mut(),
         }
     }
 }
@@ -11171,9 +11171,9 @@ impl ::std::default::Default for ImportMemoryHostPointerInfoEXT {
     fn default() -> ImportMemoryHostPointerInfoEXT {
         ImportMemoryHostPointerInfoEXT {
             s_type: StructureType::IMPORT_MEMORY_HOST_POINTER_INFO_EXT,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             handle_type: ExternalMemoryHandleTypeFlags::default(),
-            p_host_pointer: unsafe { ::std::mem::zeroed() },
+            p_host_pointer: ::std::ptr::null_mut(),
         }
     }
 }
@@ -11188,7 +11188,7 @@ impl ::std::default::Default for MemoryHostPointerPropertiesEXT {
     fn default() -> MemoryHostPointerPropertiesEXT {
         MemoryHostPointerPropertiesEXT {
             s_type: StructureType::MEMORY_HOST_POINTER_PROPERTIES_EXT,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             memory_type_bits: uint32_t::default(),
         }
     }
@@ -11204,7 +11204,7 @@ impl ::std::default::Default for PhysicalDeviceExternalMemoryHostPropertiesEXT {
     fn default() -> PhysicalDeviceExternalMemoryHostPropertiesEXT {
         PhysicalDeviceExternalMemoryHostPropertiesEXT {
             s_type: StructureType::PHYSICAL_DEVICE_EXTERNAL_MEMORY_HOST_PROPERTIES_EXT,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             min_imported_host_pointer_alignment: DeviceSize::default(),
         }
     }
@@ -11228,7 +11228,7 @@ impl ::std::default::Default for PhysicalDeviceConservativeRasterizationProperti
     fn default() -> PhysicalDeviceConservativeRasterizationPropertiesEXT {
         PhysicalDeviceConservativeRasterizationPropertiesEXT {
             s_type: StructureType::PHYSICAL_DEVICE_CONSERVATIVE_RASTERIZATION_PROPERTIES_EXT,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             primitive_overestimation_size: c_float::default(),
             max_extra_primitive_overestimation_size: c_float::default(),
             extra_primitive_overestimation_size_granularity: c_float::default(),
@@ -11265,7 +11265,7 @@ impl ::std::default::Default for PhysicalDeviceShaderCorePropertiesAMD {
     fn default() -> PhysicalDeviceShaderCorePropertiesAMD {
         PhysicalDeviceShaderCorePropertiesAMD {
             s_type: StructureType::PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_AMD,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             shader_engine_count: uint32_t::default(),
             shader_arrays_per_engine_count: uint32_t::default(),
             compute_units_per_shader_array: uint32_t::default(),
@@ -11296,7 +11296,7 @@ impl ::std::default::Default for PipelineRasterizationConservativeStateCreateInf
     fn default() -> PipelineRasterizationConservativeStateCreateInfoEXT {
         PipelineRasterizationConservativeStateCreateInfoEXT {
             s_type: StructureType::PIPELINE_RASTERIZATION_CONSERVATIVE_STATE_CREATE_INFO_EXT,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             flags: PipelineRasterizationConservativeStateCreateFlagsEXT::default(),
             conservative_rasterization_mode: ConservativeRasterizationModeEXT::default(),
             extra_primitive_overestimation_size: c_float::default(),
@@ -11333,7 +11333,7 @@ impl ::std::default::Default for PhysicalDeviceDescriptorIndexingFeaturesEXT {
     fn default() -> PhysicalDeviceDescriptorIndexingFeaturesEXT {
         PhysicalDeviceDescriptorIndexingFeaturesEXT {
             s_type: StructureType::PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_FEATURES_EXT,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             shader_input_attachment_array_dynamic_indexing: Bool32::default(),
             shader_uniform_texel_buffer_array_dynamic_indexing: Bool32::default(),
             shader_storage_texel_buffer_array_dynamic_indexing: Bool32::default(),
@@ -11390,7 +11390,7 @@ impl ::std::default::Default for PhysicalDeviceDescriptorIndexingPropertiesEXT {
     fn default() -> PhysicalDeviceDescriptorIndexingPropertiesEXT {
         PhysicalDeviceDescriptorIndexingPropertiesEXT {
             s_type: StructureType::PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_PROPERTIES_EXT,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             max_update_after_bind_descriptors_in_all_pools: uint32_t::default(),
             shader_uniform_buffer_array_non_uniform_indexing_native: Bool32::default(),
             shader_sampled_image_array_non_uniform_indexing_native: Bool32::default(),
@@ -11429,9 +11429,9 @@ impl ::std::default::Default for DescriptorSetLayoutBindingFlagsCreateInfoEXT {
     fn default() -> DescriptorSetLayoutBindingFlagsCreateInfoEXT {
         DescriptorSetLayoutBindingFlagsCreateInfoEXT {
             s_type: StructureType::DESCRIPTOR_SET_LAYOUT_BINDING_FLAGS_CREATE_INFO_EXT,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             binding_count: uint32_t::default(),
-            p_binding_flags: unsafe { ::std::mem::zeroed() },
+            p_binding_flags: ::std::ptr::null(),
         }
     }
 }
@@ -11447,9 +11447,9 @@ impl ::std::default::Default for DescriptorSetVariableDescriptorCountAllocateInf
     fn default() -> DescriptorSetVariableDescriptorCountAllocateInfoEXT {
         DescriptorSetVariableDescriptorCountAllocateInfoEXT {
             s_type: StructureType::DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_ALLOCATE_INFO_EXT,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             descriptor_set_count: uint32_t::default(),
-            p_descriptor_counts: unsafe { ::std::mem::zeroed() },
+            p_descriptor_counts: ::std::ptr::null(),
         }
     }
 }
@@ -11464,7 +11464,7 @@ impl ::std::default::Default for DescriptorSetVariableDescriptorCountLayoutSuppo
     fn default() -> DescriptorSetVariableDescriptorCountLayoutSupportEXT {
         DescriptorSetVariableDescriptorCountLayoutSupportEXT {
             s_type: StructureType::DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_LAYOUT_SUPPORT_EXT,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             max_variable_descriptor_count: uint32_t::default(),
         }
     }
@@ -11487,9 +11487,9 @@ impl ::std::default::Default for PipelineVertexInputDivisorStateCreateInfoEXT {
     fn default() -> PipelineVertexInputDivisorStateCreateInfoEXT {
         PipelineVertexInputDivisorStateCreateInfoEXT {
             s_type: StructureType::PIPELINE_VERTEX_INPUT_DIVISOR_STATE_CREATE_INFO_EXT,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             vertex_binding_divisor_count: uint32_t::default(),
-            p_vertex_binding_divisors: unsafe { ::std::mem::zeroed() },
+            p_vertex_binding_divisors: ::std::ptr::null(),
         }
     }
 }
@@ -11504,7 +11504,7 @@ impl ::std::default::Default for PhysicalDeviceVertexAttributeDivisorPropertiesE
     fn default() -> PhysicalDeviceVertexAttributeDivisorPropertiesEXT {
         PhysicalDeviceVertexAttributeDivisorPropertiesEXT {
             s_type: StructureType::PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_PROPERTIES_EXT,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             max_vertex_attrib_divisor: uint32_t::default(),
         }
     }
@@ -11520,8 +11520,8 @@ impl ::std::default::Default for ImportAndroidHardwareBufferInfoANDROID {
     fn default() -> ImportAndroidHardwareBufferInfoANDROID {
         ImportAndroidHardwareBufferInfoANDROID {
             s_type: StructureType::IMPORT_ANDROID_HARDWARE_BUFFER_INFO_ANDROID,
-            p_next: unsafe { ::std::mem::zeroed() },
-            buffer: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
+            buffer: ::std::ptr::null_mut(),
         }
     }
 }
@@ -11536,7 +11536,7 @@ impl ::std::default::Default for AndroidHardwareBufferUsageANDROID {
     fn default() -> AndroidHardwareBufferUsageANDROID {
         AndroidHardwareBufferUsageANDROID {
             s_type: StructureType::ANDROID_HARDWARE_BUFFER_USAGE_ANDROID,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             android_hardware_buffer_usage: uint64_t::default(),
         }
     }
@@ -11553,7 +11553,7 @@ impl ::std::default::Default for AndroidHardwareBufferPropertiesANDROID {
     fn default() -> AndroidHardwareBufferPropertiesANDROID {
         AndroidHardwareBufferPropertiesANDROID {
             s_type: StructureType::ANDROID_HARDWARE_BUFFER_PROPERTIES_ANDROID,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             allocation_size: DeviceSize::default(),
             memory_type_bits: uint32_t::default(),
         }
@@ -11570,7 +11570,7 @@ impl ::std::default::Default for MemoryGetAndroidHardwareBufferInfoANDROID {
     fn default() -> MemoryGetAndroidHardwareBufferInfoANDROID {
         MemoryGetAndroidHardwareBufferInfoANDROID {
             s_type: StructureType::MEMORY_GET_ANDROID_HARDWARE_BUFFER_INFO_ANDROID,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null(),
             memory: DeviceMemory::default(),
         }
     }
@@ -11593,7 +11593,7 @@ impl ::std::default::Default for AndroidHardwareBufferFormatPropertiesANDROID {
     fn default() -> AndroidHardwareBufferFormatPropertiesANDROID {
         AndroidHardwareBufferFormatPropertiesANDROID {
             s_type: StructureType::ANDROID_HARDWARE_BUFFER_FORMAT_PROPERTIES_ANDROID,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             format: Format::default(),
             external_format: uint64_t::default(),
             format_features: FormatFeatureFlags::default(),
@@ -11616,7 +11616,7 @@ impl ::std::default::Default for ExternalFormatANDROID {
     fn default() -> ExternalFormatANDROID {
         ExternalFormatANDROID {
             s_type: StructureType::EXTERNAL_FORMAT_ANDROID,
-            p_next: unsafe { ::std::mem::zeroed() },
+            p_next: ::std::ptr::null_mut(),
             external_format: uint64_t::default(),
         }
     }
