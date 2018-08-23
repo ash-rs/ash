@@ -1515,7 +1515,7 @@ pub fn generate_const_displays<'a>(const_values: &HashMap<Ident, Vec<Ident>>) ->
             let mut first = true;
             let mut accum = value;
             for (bit, name) in known {
-                if accum & bit != 0 {
+                if *bit != 0 && accum & *bit == *bit {
                     if !first { f.write_str(" | ")?; }
                     f.write_str(name)?;
                     first = false;
