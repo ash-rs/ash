@@ -1,5 +1,5 @@
 pub use device::{DeviceV1_0, DeviceV1_1};
-pub use entry::EntryV1_0;
+pub use entry::{EntryV1_0, EntryV1_1};
 pub use instance::{InstanceV1_0, InstanceV1_1};
 use std::mem;
 use vk;
@@ -15,7 +15,7 @@ pub struct V1_1;
 impl FunctionPointers for V1_1 {
     type InstanceFp = InstanceFpV1_1;
     type DeviceFp = DeviceFpV1_1;
-    type EntryFp = EntryFpV1_0;
+    type EntryFp = EntryFpV1_1;
 }
 
 #[allow(non_camel_case_types)]
@@ -48,6 +48,32 @@ impl EntryLoader for EntryFpV1_0 {
 pub trait EntryLoader: Sized {
     fn fp_v1_0(&self) -> &vk::EntryFnV1_0;
     unsafe fn load(static_fn: &vk::StaticFn) -> Result<Self, Vec<&'static str>>;
+}
+
+#[allow(non_camel_case_types)]
+#[derive(Clone)]
+pub struct EntryFpV1_1 {
+    pub entry_fn_1_0: vk::EntryFnV1_0,
+    pub entry_fn_1_1: vk::EntryFnV1_1,
+}
+
+impl EntryLoader for EntryFpV1_1 {
+    fn fp_v1_0(&self) -> &vk::EntryFnV1_0 {
+        &self.entry_fn_1_0
+    }
+    unsafe fn load(static_fn: &vk::StaticFn) -> Result<Self, Vec<&'static str>> {
+        let entry_fn_1_0 = vk::EntryFnV1_0::load(|name| {
+            mem::transmute(static_fn.get_instance_proc_addr(vk::Instance::null(), name.as_ptr()))
+        })?;
+        let entry_fn_1_1 = vk::EntryFnV1_1::load(|name| {
+            mem::transmute(static_fn.get_instance_proc_addr(vk::Instance::null(), name.as_ptr()))
+        })?;
+
+        Ok(EntryFpV1_1 {
+            entry_fn_1_0,
+            entry_fn_1_1,
+        })
+    }
 }
 
 pub trait InstanceLoader: Sized {

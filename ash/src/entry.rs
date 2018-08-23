@@ -6,7 +6,7 @@ use std::fmt;
 use std::mem;
 use std::path::Path;
 use std::ptr;
-use version::{EntryLoader, FunctionPointers, InstanceLoader, V1_0};
+use version::{EntryLoader, FunctionPointers, InstanceLoader, V1_0, V1_1};
 use vk;
 use RawPtr;
 
@@ -150,6 +150,22 @@ impl EntryV1_0 for Entry<V1_0> {
     }
 }
 
+impl EntryV1_0 for Entry<V1_1> {
+    type Fp = V1_1;
+    fn fp_v1_0(&self) -> &vk::EntryFnV1_0 {
+        self.entry_fn.fp_v1_0()
+    }
+    fn static_fn(&self) -> &vk::StaticFn {
+        &self.static_fn
+    }
+}
+
+impl EntryV1_1 for Entry<V1_1> {
+    fn fp_v1_1(&self) -> &vk::EntryFnV1_1 {
+        &self.entry_fn.entry_fn_1_1
+    }
+}
+
 impl<V: FunctionPointers> Entry<V> {
     pub fn new() -> Result<Self, LoadingError> {
         let lib = VK_LIB
@@ -168,5 +184,21 @@ impl<V: FunctionPointers> Entry<V> {
             static_fn,
             entry_fn,
         })
+    }
+}
+
+#[allow(non_camel_case_types)]
+pub trait EntryV1_1: EntryV1_0 {
+    fn fp_v1_1(&self) -> &vk::EntryFnV1_1;
+
+    fn enumerate_instance_version(&self) -> VkResult<vk::uint32_t> {
+        unsafe {
+            let mut api_version = 0;
+            let err_code = self.fp_v1_1().enumerate_instance_version(&mut api_version);
+            match err_code {
+                vk::Result::SUCCESS => Ok(api_version),
+                _ => Err(err_code),
+            }
+        }
     }
 }

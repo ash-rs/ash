@@ -540,7 +540,8 @@ impl CommandExt for vkxml::Command {
             "vkGetInstanceProcAddr" => FunctionType::Static,
             "vkCreateInstance"
             | "vkEnumerateInstanceLayerProperties"
-            | "vkEnumerateInstanceExtensionProperties" => FunctionType::Entry,
+            | "vkEnumerateInstanceExtensionProperties"
+            | "vkEnumerateInstanceVersion" => FunctionType::Entry,
             // This is actually not a device level function
             "vkGetDeviceProcAddr" => FunctionType::Instance,
             _ => {
