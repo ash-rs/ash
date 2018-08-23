@@ -108,16 +108,13 @@ pub trait InstanceV1_1: InstanceV1_0 {
         }
     }
 
-    fn get_physical_device_properties2(
+    unsafe fn get_physical_device_properties2(
         &self,
         physical_device: vk::PhysicalDevice,
-    ) -> vk::PhysicalDeviceProperties2 {
-        unsafe {
-            let mut prop = mem::uninitialized();
-            self.fp_v1_1()
-                .get_physical_device_properties2(physical_device, &mut prop);
-            prop
-        }
+        prop: &mut vk::PhysicalDeviceProperties2,
+    ) {
+        self.fp_v1_1()
+            .get_physical_device_properties2(physical_device, prop);
     }
 
     fn get_physical_device_format_properties2(
@@ -140,15 +137,15 @@ pub trait InstanceV1_1: InstanceV1_0 {
         &self,
         physical_device: vk::PhysicalDevice,
         format_info: &vk::PhysicalDeviceImageFormatInfo2,
-    ) -> VkResult<vk::ImageFormatProperties2> {
-        let mut image_format_prop = mem::uninitialized();
+        image_format_prop: &mut vk::ImageFormatProperties2
+    ) -> VkResult<()> {
         let err_code = self.fp_v1_1().get_physical_device_image_format_properties2(
             physical_device,
             format_info,
-            &mut image_format_prop,
+            image_format_prop,
         );
         if err_code == vk::Result::SUCCESS {
-            Ok(image_format_prop)
+            Ok(())
         } else {
             Err(err_code)
         }
