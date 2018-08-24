@@ -540,7 +540,8 @@ impl CommandExt for vkxml::Command {
             "vkGetInstanceProcAddr" => FunctionType::Static,
             "vkCreateInstance"
             | "vkEnumerateInstanceLayerProperties"
-            | "vkEnumerateInstanceExtensionProperties" => FunctionType::Entry,
+            | "vkEnumerateInstanceExtensionProperties"
+            | "vkEnumerateInstanceVersion" => FunctionType::Entry,
             // This is actually not a device level function
             "vkGetDeviceProcAddr" => FunctionType::Instance,
             _ => {
@@ -786,6 +787,7 @@ pub fn generate_extension_constants<'a>(
     extension_number: i64,
     extension_items: &'a [vk_parse::ExtensionItem],
     const_cache: &mut HashSet<&'a str>,
+    const_values: &mut HashMap<Ident, Vec<Ident>>,
 ) -> quote::Tokens {
     let items = extension_items
         .iter()
@@ -809,23 +811,25 @@ pub fn generate_extension_constants<'a>(
                     offset,
                     extends,
                     extnumber,
-                    ..
+                    dir: positive,
                 } => {
                     let ext_base = 1_000_000_000;
                     let ext_block_size = 1000;
                     let extnumber = extnumber.unwrap_or_else(|| extension_number);
                     let value = ext_base + (extnumber - 1) * ext_block_size + offset;
+                    let value = if *positive { value } else { -value };
                     Some((Constant::Number(value as i32), Some(extends.clone())))
                 }
                 _ => None,
             }?;
-
             let extends = extends?;
             let ext_constant = ExtensionConstant {
                 name: &_enum.name,
                 constant,
             };
             let ident = name_to_tokens(&extends);
+            const_values.entry(ident.clone()).or_insert_with(Vec::new)
+                .push(ext_constant.variant_ident(&extends));
             let impl_block = bitflags_impl_block(ident, &extends, &[&ext_constant]);
             let doc_string = format!("Generated from '{}'", extension_name);
             let q = quote!{
@@ -867,6 +871,7 @@ pub fn generate_extension<'a>(
     extension: &'a vk_parse::Extension,
     cmd_map: &CommandMap,
     const_cache: &mut HashSet<&'a str>,
+    const_values: &mut HashMap<Ident, Vec<Ident>>
 ) -> Option<quote::Tokens> {
     // Okay this is a little bit odd. We need to generate all extensions, even disabled ones,
     // because otherwise some StructureTypes won't get generated. But we don't generate extensions
@@ -879,6 +884,7 @@ pub fn generate_extension<'a>(
         extension.number.unwrap_or(0),
         &extension.items,
         const_cache,
+        const_values,
     );
     let fp = generate_extension_commands(&extension.name, &extension.items, cmd_map);
     let q = quote!{
@@ -991,6 +997,7 @@ pub fn bitflags_impl_block(
 pub fn generate_enum<'a>(
     _enum: &'a vkxml::Enumeration,
     const_cache: &mut HashSet<&'a str>,
+    const_values: &mut HashMap<Ident, Vec<Ident>>
 ) -> EnumType {
     let name = &_enum.name[2..];
     let _name = name.replace("FlagBits", "Flags");
@@ -1002,8 +1009,10 @@ pub fn generate_enum<'a>(
             vkxml::EnumerationElement::Enum(ref constant) => Some(constant),
             _ => None,
         }).collect_vec();
+    let values = const_values.entry(ident.clone()).or_insert_with(Vec::new);
     for constant in &constants {
         const_cache.insert(constant.name.as_str());
+        values.push(constant.variant_ident(&_enum.name));
     }
 
     if name.contains("Bit") {
@@ -1029,6 +1038,10 @@ pub fn generate_enum<'a>(
             #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
             #[repr(transparent)]
             pub struct #ident(pub(crate) i32);
+            impl #ident {
+                pub fn from_raw(x: i32) -> Self { #ident(x) }
+                pub fn as_raw(self) -> i32 { self.0 }
+            }
             #impl_block
         };
         let special_quote = match _name.as_str() {
@@ -1061,22 +1074,31 @@ pub fn generate_result(ident: Ident, _enum: &vkxml::Enumeration) -> Tokens {
 
         let variant_ident = variant_ident(&_enum.name, variant_name);
         Some(quote!{
-            #ident::#variant_ident => write!(fmt, #notation)
+            #ident::#variant_ident => Some(#notation)
         })
     });
 
+    let notation2 = notation.clone();
     quote!{
         impl ::std::error::Error for #ident {
             fn description(&self) -> &str {
-                "vk::Result"
+                let name = match *self {
+                    #(#notation),*,
+                    _ => None,
+                };
+                name.unwrap_or("unknown error")
             }
         }
-        impl ::std::fmt::Display for #ident {
-            fn fmt(&self, fmt: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
-                writeln!(fmt, "vk::Result::{:?}", self)?;
-                match *self {
-                    #(#notation),*,
-                    _ => write!(fmt, "Unknown variant")
+        impl fmt::Display for #ident {
+            fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+                let name = match *self {
+                    #(#notation2),*,
+                    _ => None,
+                };
+                if let Some(x) = name {
+                    fmt.write_str(x)
+                } else {
+                    write!(fmt, "{}", self.0)
                 }
             }
         }
@@ -1135,8 +1157,37 @@ pub fn derive_default(_struct: &vkxml::Struct) -> Option<Tokens> {
                     #param_ident: unsafe { ::std::mem::zeroed() }
                 }
             }
-        } else if field.reference.is_some()
-            || is_static_array(field)
+        } else if let Some(ref reference) = field.reference {
+            match reference {
+                vkxml::ReferenceType::Pointer => {
+                    if field.is_const {
+                        quote!{
+                            #param_ident: ::std::ptr::null()
+                        }
+                    } else {
+                        quote!{
+                            #param_ident: ::std::ptr::null_mut()
+                        }
+                    }
+                }
+                vkxml::ReferenceType::PointerToPointer => {
+                    quote!{
+                        #param_ident: ::std::ptr::null_mut()
+                    }
+                }
+                vkxml::ReferenceType::PointerToConstPointer => {
+                    if field.is_const {
+                        quote!{
+                            #param_ident: ::std::ptr::null()
+                        }
+                    } else {
+                        quote!{
+                            #param_ident: ::std::ptr::null_mut()
+                        }
+                    }
+                }
+            }
+        } else if is_static_array(field)
             || is_pfn(field)
             || handles.contains(&field.basetype.as_str())
         {
@@ -1220,24 +1271,14 @@ pub fn derive_debug(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> Opt
     Some(q)
 }
 
-pub fn auto_derive_partial_eq_hash(_struct: &vkxml::Struct) -> Tokens {
-    // TODO: Properly detect which types can implement PartialEq and Hash.
-    // At the moment we only implement it for structs that contain primitivet
-    // types.
-    let is_primitive = _struct
-        .elements
-        .iter()
-        .filter_map(|elem| match *elem {
-            vkxml::StructElement::Member(ref field) => Some(field),
-            _ => None,
-        }).all(|field| match field.basetype.as_str() {
-            "c_float" | "uint32_t" => true,
-            _ => false,
-        });
-    if is_primitive {
-        quote!(Hash, PartialEq,)
-    } else {
-        quote!{}
+/// At the moment `Ash` doesn't properly derive all the necessary drives
+/// like Eq, Hash etc.
+/// To Address some cases, you can add the name of the struct that you
+/// require and add the missing derives yourself.
+pub fn manual_derives(_struct: &vkxml::Struct) -> Tokens {
+    match _struct.name.as_str() {
+        "VkExtent3D" | "VKExtent2D" => quote!{PartialEq, Eq, Hash,},
+        _ => quote!{},
     }
 }
 pub fn generate_struct(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> Tokens {
@@ -1255,7 +1296,7 @@ pub fn generate_struct(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> 
 
     let debug_tokens = derive_debug(_struct, union_types);
     let default_tokens = derive_default(_struct);
-    let partial_eq_hash_str = auto_derive_partial_eq_hash(_struct);
+    let manual_derive_tokens = manual_derives(_struct);
     let dbg_str = if debug_tokens.is_none() {
         quote!(Debug,)
     } else {
@@ -1268,7 +1309,7 @@ pub fn generate_struct(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> 
     };
     quote!{
         #[repr(C)]
-        #[derive(Copy, Clone, #default_str #dbg_str #partial_eq_hash_str)]
+        #[derive(Copy, Clone, #default_str #dbg_str #manual_derive_tokens)]
         pub struct #name {
             #(#params,)*
         }
@@ -1447,15 +1488,78 @@ pub fn generate_constant<'a>(
 pub fn generate_feature_extension<'a>(
     registry: &'a vk_parse::Registry,
     const_cache: &mut HashSet<&'a str>,
+    const_values: &mut HashMap<Ident, Vec<Ident>>
 ) -> Tokens {
     let constants = registry.0.iter().filter_map(|item| match item {
         vk_parse::RegistryItem::Feature { name, items, .. } => {
-            Some(generate_extension_constants(name, 0, items, const_cache))
+            Some(generate_extension_constants(name, 0, items, const_cache, const_values))
         }
         _ => None,
     });
     quote!{
         #(#constants)*
+    }
+}
+
+pub fn generate_const_displays<'a>(const_values: &HashMap<Ident, Vec<Ident>>) -> Tokens {
+    let impls = const_values.iter()
+        .filter(|(ty, _)| *ty != "Result")
+        .map(|(ty, values)| {
+            if ty.to_string().contains("Flags") {
+                let cases = values.iter().map(|value| {
+                    let name = value.to_string();
+                    quote!{ (#ty::#value.0, #name) }
+                });
+                quote!{
+                    impl fmt::Display for #ty {
+                        fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+                            const KNOWN: &[(Flags, &str)] = &[#(#cases),*];
+                            display_flags(f, KNOWN, self.0)
+                        }
+                    }
+                }
+            } else {
+                let cases = values.iter().map(|value| {
+                    let name = value.to_string();
+                    quote!{ Self::#value => Some(#name), }
+                });
+                quote!{
+                    impl fmt::Display for #ty {
+                        fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+                            let name = match *self {
+                                #(#cases)*
+                                _ => None,
+                            };
+                            if let Some(x) = name {
+                                f.write_str(x)
+                            } else {
+                                write!(f, "{}", self.0)
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    quote!{
+        fn display_flags(f: &mut fmt::Formatter, known: &[(Flags, &'static str)], value: Flags) -> fmt::Result {
+            let mut first = true;
+            let mut accum = value;
+            for (bit, name) in known {
+                if *bit != 0 && accum & *bit == *bit {
+                    if !first { f.write_str(" | ")?; }
+                    f.write_str(name)?;
+                    first = false;
+                    accum &= !bit;
+                }
+            }
+            if accum != 0 {
+                if !first { f.write_str(" | ")?; }
+                write!(f, "{:b}", accum)?;
+            }
+            Ok(())
+        }
+
+        #(#impls)*
     }
 }
 
@@ -1523,9 +1627,12 @@ pub fn write_source_code(path: &Path) {
         .collect();
 
     let mut const_cache = HashSet::new();
+
+    let mut const_values: HashMap<Ident, Vec<Ident>> = HashMap::new();
+
     let (enum_code, bitflags_code) = enums
         .into_iter()
-        .map(|e| generate_enum(e, &mut const_cache))
+        .map(|e| generate_enum(e, &mut const_cache, &mut const_values))
         .fold((Vec::new(), Vec::new()), |mut acc, elem| {
             match elem {
                 EnumType::Enum(token) => acc.0.push(token),
@@ -1533,13 +1640,14 @@ pub fn write_source_code(path: &Path) {
             };
             acc
         });
+
     let constants_code: Vec<_> = constants
         .iter()
         .map(|constant| generate_constant(constant, &mut const_cache))
         .collect();
     let extension_code = extensions
         .iter()
-        .filter_map(|ext| generate_extension(ext, &commands, &mut const_cache))
+        .filter_map(|ext| generate_extension(ext, &commands, &mut const_cache, &mut const_values))
         .collect_vec();
 
     let union_types = definitions
@@ -1558,7 +1666,9 @@ pub fn write_source_code(path: &Path) {
         .iter()
         .map(|feature| generate_feature(feature, &commands))
         .collect();
-    let feature_extensions_code = generate_feature_extension(&spec2, &mut const_cache);
+    let feature_extensions_code = generate_feature_extension(&spec2, &mut const_cache, &mut const_values);
+
+    let const_displays = generate_const_displays(&const_values);
 
     let mut file = File::create("../ash/src/vk.rs").expect("vk");
     let bitflags_macro = vk_bitflags_wrapped_macro();
@@ -1567,6 +1677,7 @@ pub fn write_source_code(path: &Path) {
     let version_macros = vk_version_macros();
     let platform_specific_types = platform_specific_types();
     let source_code = quote!{
+        use std::fmt;
         #[doc(hidden)]
         pub use libc::*;
         #[doc(hidden)]
@@ -1598,6 +1709,7 @@ pub fn write_source_code(path: &Path) {
             #(#extension_code)*
             #feature_extensions_code
         }
+        #const_displays
     };
     write!(&mut file, "{}", source_code).expect("Unable to write to file");
 }
