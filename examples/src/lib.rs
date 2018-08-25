@@ -253,7 +253,7 @@ impl ExampleBase {
                             ControlFlow::Continue
                         }
                     }
-                    WindowEvent::Destroyed => winit::ControlFlow::Break,
+                    WindowEvent::CloseRequested => winit::ControlFlow::Break,
                     _ => ControlFlow::Continue,
                 },
                 _ => ControlFlow::Continue,
