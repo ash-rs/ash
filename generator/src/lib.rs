@@ -123,7 +123,7 @@ pub fn handle_nondispatchable_macro() -> Tokens {
             ($name: ident, $ty: ident) => {
                 #[repr(transparent)]
                 #[derive(Eq, PartialEq, Ord, PartialOrd, Clone, Copy, Hash, Default)]
-                pub struct $name(uint64_t);
+                pub struct $name(u64);
 
                 impl Handle for $name {
                     const TYPE: ObjectType = ObjectType::$ty;
@@ -595,6 +595,15 @@ impl ToTokens for vkxml::ReferenceType {
 }
 fn name_to_tokens(type_name: &str) -> Ident {
     let new_name = match type_name {
+        "uint8_t" => "u8",
+        "uint16_t" => "u16",
+        "uint32_t" => "u32",
+        "uint64_t" => "u64",
+        "int8_t" => "i8",
+        "int16_t" => "i16",
+        "int32_t" => "i32",
+        "int64_t" => "i64",
+        "size_t" => "usize",
         "int" => "c_int",
         "void" => "c_void",
         "char" => "c_char",
