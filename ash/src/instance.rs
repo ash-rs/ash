@@ -4,6 +4,7 @@ use prelude::*;
 use std::error::Error;
 use std::fmt;
 use std::mem;
+use std::os::raw::c_char;
 use std::ptr;
 use version::DeviceLoader;
 use version::{FunctionPointers, V1_0, V1_1};
@@ -290,7 +291,7 @@ pub trait InstanceV1_0 {
     fn get_device_proc_addr(
         &self,
         device: vk::Device,
-        p_name: *const vk::c_char,
+        p_name: *const c_char,
     ) -> vk::PFN_vkVoidFunction {
         unsafe { self.fp_v1_0().get_device_proc_addr(device, p_name) }
     }

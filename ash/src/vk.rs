@@ -2,9 +2,8 @@
 pub use self::bitflags::*;
 #[doc(hidden)]
 pub use self::extensions::*;
-#[doc(hidden)]
-pub use libc::*;
 use std::fmt;
+use std::os::raw::*;
 pub trait Handle {
     const TYPE: ObjectType;
     fn as_raw(self) -> u64;
@@ -54,8 +53,7 @@ pub type wl_display = *const c_void;
 pub type wl_surface = *const c_void;
 pub type HANDLE = *mut c_void;
 pub type DWORD = c_ulong;
-pub type WCHAR = wchar_t;
-pub type LPCWSTR = *const WCHAR;
+pub type LPCWSTR = *const u16;
 #[allow(non_camel_case_types)]
 pub type SECURITY_ATTRIBUTES = ();
 pub type ANativeWindow = c_void;

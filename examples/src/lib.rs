@@ -18,6 +18,7 @@ use std::cell::RefCell;
 use std::default::Default;
 use std::ffi::{CStr, CString};
 use std::ops::Drop;
+use std::os::raw::{c_char, c_void};
 use std::ptr;
 
 // Simple offset_of macro akin to C++ offsetof
@@ -121,13 +122,13 @@ unsafe fn create_surface<E: EntryV1_0, I: InstanceV1_0>(
     use winit::os::windows::WindowExt;
 
     let hwnd = window.get_hwnd() as HWND;
-    let hinstance = GetWindow(hwnd, 0) as *const vk::c_void;
+    let hinstance = GetWindow(hwnd, 0) as *const c_void;
     let win32_create_info = vk::Win32SurfaceCreateInfoKHR {
         s_type: vk::StructureType::WIN32_SURFACE_CREATE_INFO_KHR,
         p_next: ptr::null(),
         flags: Default::default(),
         hinstance: hinstance,
-        hwnd: hwnd as *const vk::c_void,
+        hwnd: hwnd as *const c_void,
     };
     let win32_surface_loader =
         Win32Surface::new(entry, instance).expect("Unable to load win32 surface");
@@ -155,12 +156,12 @@ fn extension_names() -> Vec<*const i8> {
 unsafe extern "system" fn vulkan_debug_callback(
     _: vk::DebugReportFlagsEXT,
     _: vk::DebugReportObjectTypeEXT,
-    _: vk::uint64_t,
-    _: vk::size_t,
-    _: vk::int32_t,
-    _: *const vk::c_char,
-    p_message: *const vk::c_char,
-    _: *mut vk::c_void,
+    _: u64,
+    _: usize,
+    _: i32,
+    _: *const c_char,
+    p_message: *const c_char,
+    _: *mut c_void,
 ) -> u32 {
     println!("{:?}", CStr::from_ptr(p_message));
     1

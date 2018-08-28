@@ -8,6 +8,7 @@ use std::ffi::CString;
 use std::fs::File;
 use std::io::Read;
 use std::mem::{self, align_of};
+use std::os::raw::c_void;
 use std::path::Path;
 use std::ptr;
 
@@ -152,7 +153,7 @@ fn main() {
             .device
             .allocate_memory(&index_allocate_info, None)
             .unwrap();
-        let index_ptr: *mut vk::c_void = base
+        let index_ptr: *mut c_void = base
             .device
             .map_memory(
                 index_buffer_memory,

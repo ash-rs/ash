@@ -4,6 +4,7 @@ use shared_library::dynamic_library::DynamicLibrary;
 use std::error::Error;
 use std::fmt;
 use std::mem;
+use std::os::raw::c_char;
 use std::path::Path;
 use std::ptr;
 use version::{EntryLoader, FunctionPointers, InstanceLoader, V1_0, V1_1};
@@ -134,7 +135,7 @@ pub trait EntryV1_0 {
     fn get_instance_proc_addr(
         &self,
         instance: vk::Instance,
-        p_name: *const vk::c_char,
+        p_name: *const c_char,
     ) -> vk::PFN_vkVoidFunction {
         unsafe { self.static_fn().get_instance_proc_addr(instance, p_name) }
     }
@@ -191,7 +192,7 @@ impl<V: FunctionPointers> Entry<V> {
 pub trait EntryV1_1: EntryV1_0 {
     fn fp_v1_1(&self) -> &vk::EntryFnV1_1;
 
-    fn enumerate_instance_version(&self) -> VkResult<vk::uint32_t> {
+    fn enumerate_instance_version(&self) -> VkResult<u32> {
         unsafe {
             let mut api_version = 0;
             let err_code = self.fp_v1_1().enumerate_instance_version(&mut api_version);

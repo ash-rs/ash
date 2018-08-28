@@ -34,7 +34,7 @@ impl Surface {
     pub fn get_physical_device_surface_support_khr(
         &self,
         physical_device: vk::PhysicalDevice,
-        queue_index: vk::uint32_t,
+        queue_index: u32,
         surface: vk::SurfaceKHR,
     ) -> bool {
         unsafe {

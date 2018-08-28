@@ -1,6 +1,5 @@
 #[macro_use]
 extern crate lazy_static;
-extern crate libc;
 extern crate shared_library;
 pub use device::Device;
 pub use entry::{Entry, InstanceError, LoadingError};

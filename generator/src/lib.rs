@@ -349,8 +349,7 @@ pub fn platform_specific_types() -> Tokens {
         pub type wl_surface = *const c_void;
         pub type HANDLE = *mut c_void;
         pub type DWORD = c_ulong;
-        pub type WCHAR = wchar_t;
-        pub type LPCWSTR = *const WCHAR;
+        pub type LPCWSTR = *const u16;
 
         // FIXME: Platform specific types that should come from a library
         // typedefs are only here so that the code compiles for now
@@ -1687,8 +1686,7 @@ pub fn write_source_code(path: &Path) {
     let platform_specific_types = platform_specific_types();
     let source_code = quote!{
         use std::fmt;
-        #[doc(hidden)]
-        pub use libc::*;
+        use std::os::raw::*;
         #[doc(hidden)]
         pub use self::extensions::*;
         #[doc(hidden)]
