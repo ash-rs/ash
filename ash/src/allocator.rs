@@ -1,30 +1,31 @@
 #![allow(dead_code)]
 use vk;
+use std::os::raw::c_void;
 use std::ptr;
 pub trait VkAllocation {
     unsafe extern "system" fn allocation(
         *mut (),
-        vk::size_t,
-        vk::size_t,
+        usize,
+        usize,
         vk::SystemAllocationScope,
     ) -> *mut ();
     unsafe extern "system" fn reallocation(
-        *mut vk::c_void,
-        *mut vk::c_void,
-        vk::size_t,
-        vk::size_t,
+        *mut c_void,
+        *mut c_void,
+        usize,
+        usize,
         vk::SystemAllocationScope,
-    ) -> *mut vk::c_void;
-    unsafe extern "system" fn free(*mut vk::c_void, *mut vk::c_void);
+    ) -> *mut c_void;
+    unsafe extern "system" fn free(*mut c_void, *mut c_void);
     unsafe extern "system" fn internal_allocation(
-        *mut vk::c_void,
-        vk::size_t,
+        *mut c_void,
+        usize,
         vk::InternalAllocationType,
         vk::SystemAllocationScope,
     );
     unsafe extern "system" fn internal_free(
-        *mut vk::c_void,
-        vk::size_t,
+        *mut c_void,
+        usize,
         vk::InternalAllocationType,
         vk::SystemAllocationScope,
     );
@@ -47,33 +48,33 @@ pub struct TestAlloc;
 impl VkAllocation for TestAlloc {
     unsafe extern "system" fn allocation(
         _: *mut (),
-        _: vk::size_t,
-        _: vk::size_t,
+        _: usize,
+        _: usize,
         _: vk::SystemAllocationScope,
     ) -> *mut () {
         ptr::null_mut()
     }
 
     unsafe extern "system" fn reallocation(
-        _: *mut vk::c_void,
-        _: *mut vk::c_void,
-        _: vk::size_t,
-        _: vk::size_t,
+        _: *mut c_void,
+        _: *mut c_void,
+        _: usize,
+        _: usize,
         _: vk::SystemAllocationScope,
-    ) -> *mut vk::c_void {
+    ) -> *mut c_void {
         ptr::null_mut()
     }
-    unsafe extern "system" fn free(_: *mut vk::c_void, _: *mut vk::c_void) {}
+    unsafe extern "system" fn free(_: *mut c_void, _: *mut c_void) {}
     unsafe extern "system" fn internal_allocation(
-        _: *mut vk::c_void,
-        _: vk::size_t,
+        _: *mut c_void,
+        _: usize,
         _: vk::InternalAllocationType,
         _: vk::SystemAllocationScope,
     ) {
     }
     unsafe extern "system" fn internal_free(
-        _: *mut vk::c_void,
-        _: vk::size_t,
+        _: *mut c_void,
+        _: usize,
         _: vk::InternalAllocationType,
         _: vk::SystemAllocationScope,
     ) {
@@ -82,33 +83,33 @@ impl VkAllocation for TestAlloc {
 impl VkAllocation for DefaultAllocatorCallback {
     unsafe extern "system" fn allocation(
         _: *mut (),
-        _: vk::size_t,
-        _: vk::size_t,
+        _: usize,
+        _: usize,
         _: vk::SystemAllocationScope,
     ) -> *mut () {
         ptr::null_mut()
     }
 
     unsafe extern "system" fn reallocation(
-        _: *mut vk::c_void,
-        _: *mut vk::c_void,
-        _: vk::size_t,
-        _: vk::size_t,
+        _: *mut c_void,
+        _: *mut c_void,
+        _: usize,
+        _: usize,
         _: vk::SystemAllocationScope,
-    ) -> *mut vk::c_void {
+    ) -> *mut c_void {
         ptr::null_mut()
     }
-    unsafe extern "system" fn free(_: *mut vk::c_void, _: *mut vk::c_void) {}
+    unsafe extern "system" fn free(_: *mut c_void, _: *mut c_void) {}
     unsafe extern "system" fn internal_allocation(
-        _: *mut vk::c_void,
-        _: vk::size_t,
+        _: *mut c_void,
+        _: usize,
         _: vk::InternalAllocationType,
         _: vk::SystemAllocationScope,
     ) {
     }
     unsafe extern "system" fn internal_free(
-        _: *mut vk::c_void,
-        _: vk::size_t,
+        _: *mut c_void,
+        _: usize,
         _: vk::InternalAllocationType,
         _: vk::SystemAllocationScope,
     ) {

@@ -46,10 +46,10 @@ impl Swapchain {
     pub unsafe fn acquire_next_image_khr(
         &self,
         swapchain: vk::SwapchainKHR,
-        timeout: vk::uint64_t,
+        timeout: u64,
         semaphore: vk::Semaphore,
         fence: vk::Fence,
-    ) -> VkResult<vk::uint32_t> {
+    ) -> VkResult<u32> {
         let mut index = mem::uninitialized();
         let err_code = self.swapchain_fn.acquire_next_image_khr(
             self.handle,
@@ -108,14 +108,14 @@ impl Swapchain {
                 ptr::null_mut(),
             );
 
-            let mut v = Vec::with_capacity(count as vk::size_t);
+            let mut v = Vec::with_capacity(count as usize);
             let err_code = self.swapchain_fn.get_swapchain_images_khr(
                 self.handle,
                 swapchain,
                 &mut count,
                 v.as_mut_ptr(),
             );
-            v.set_len(count as vk::size_t);
+            v.set_len(count as usize);
             match err_code {
                 vk::Result::SUCCESS => Ok(v),
                 _ => Err(err_code),
