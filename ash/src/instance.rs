@@ -108,16 +108,13 @@ pub trait InstanceV1_1: InstanceV1_0 {
         }
     }
 
-    fn get_physical_device_properties2(
+    unsafe fn get_physical_device_properties2(
         &self,
         physical_device: vk::PhysicalDevice,
-    ) -> vk::PhysicalDeviceProperties2 {
-        unsafe {
-            let mut prop = mem::uninitialized();
-            self.fp_v1_1()
-                .get_physical_device_properties2(physical_device, &mut prop);
-            prop
-        }
+        prop: &mut vk::PhysicalDeviceProperties2,
+    ) {
+        self.fp_v1_1()
+            .get_physical_device_properties2(physical_device, prop);
     }
 
     fn get_physical_device_format_properties2(
@@ -140,24 +137,24 @@ pub trait InstanceV1_1: InstanceV1_0 {
         &self,
         physical_device: vk::PhysicalDevice,
         format_info: &vk::PhysicalDeviceImageFormatInfo2,
-    ) -> VkResult<vk::ImageFormatProperties2> {
-        let mut image_format_prop = mem::uninitialized();
+        image_format_prop: &mut vk::ImageFormatProperties2
+    ) -> VkResult<()> {
         let err_code = self.fp_v1_1().get_physical_device_image_format_properties2(
             physical_device,
             format_info,
-            &mut image_format_prop,
+            image_format_prop,
         );
         if err_code == vk::Result::SUCCESS {
-            Ok(image_format_prop)
+            Ok(())
         } else {
             Err(err_code)
         }
     }
 
-    fn get_physical_device_queue_family_properties2(
+    fn get_physical_device_queue_family_properties2_len(
         &self,
         physical_device: vk::PhysicalDevice,
-    ) -> Vec<vk::QueueFamilyProperties2> {
+    ) -> usize {
         unsafe {
             let mut queue_count = 0;
             self.fp_v1_1().get_physical_device_queue_family_properties2(
@@ -165,15 +162,21 @@ pub trait InstanceV1_1: InstanceV1_0 {
                 &mut queue_count,
                 ptr::null_mut(),
             );
-            let mut queue_families_vec = Vec::with_capacity(queue_count as usize);
-            self.fp_v1_1().get_physical_device_queue_family_properties2(
-                physical_device,
-                &mut queue_count,
-                queue_families_vec.as_mut_ptr(),
-            );
-            queue_families_vec.set_len(queue_count as usize);
-            queue_families_vec
+            queue_count as usize
         }
+    }
+
+    unsafe fn get_physical_device_queue_family_properties2(
+        &self,
+        physical_device: vk::PhysicalDevice,
+        queue_family_props: &mut [vk::QueueFamilyProperties2]
+    ) {
+        let mut queue_count = queue_family_props.len() as u32;
+        self.fp_v1_1().get_physical_device_queue_family_properties2(
+            physical_device,
+            &mut queue_count,
+            queue_family_props.as_mut_ptr(),
+        );
     }
 
     fn get_physical_device_memory_properties2(
