@@ -9,4 +9,4 @@ image = "0.10.4"
 ash = { path = "../ash" }
 
 [target.'cfg(windows)'.dependencies]
-winapi = { version = "0.3.4", features = ["windef", "winuser"] }
+winapi = { version = "0.3.4", features = ["windef", "libloaderapi"] }
