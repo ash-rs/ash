@@ -123,7 +123,7 @@ pub fn handle_nondispatchable_macro() -> Tokens {
             ($name: ident, $ty: ident) => {
                 #[repr(transparent)]
                 #[derive(Eq, PartialEq, Ord, PartialOrd, Clone, Copy, Hash, Default)]
-                pub struct $name(uint64_t);
+                pub struct $name(u64);
 
                 impl Handle for $name {
                     const TYPE: ObjectType = ObjectType::$ty;
@@ -163,21 +163,21 @@ pub fn vk_version_macros() -> Tokens {
         #[macro_export]
         macro_rules! vk_version_major {
             ($major:expr) => {
-                ($major as uint32_t) >> 22
+                ($major as u32) >> 22
             };
         }
 
         #[macro_export]
         macro_rules! vk_version_minor {
             ($minor:expr) => {
-                (($minor as uint32_t) >> 12) & 0x3ff
+                (($minor as u32) >> 12) & 0x3ff
             };
         }
 
         #[macro_export]
         macro_rules! vk_version_patch {
             ($minor:expr) => {
-                ($minor as uint32_t) & 0xfff
+                ($minor as u32) & 0xfff
             };
         }
     }
@@ -349,8 +349,7 @@ pub fn platform_specific_types() -> Tokens {
         pub type wl_surface = *const c_void;
         pub type HANDLE = *mut c_void;
         pub type DWORD = c_ulong;
-        pub type WCHAR = wchar_t;
-        pub type LPCWSTR = *const WCHAR;
+        pub type LPCWSTR = *const u16;
 
         // FIXME: Platform specific types that should come from a library
         // typedefs are only here so that the code compiles for now
@@ -595,6 +594,15 @@ impl ToTokens for vkxml::ReferenceType {
 }
 fn name_to_tokens(type_name: &str) -> Ident {
     let new_name = match type_name {
+        "uint8_t" => "u8",
+        "uint16_t" => "u16",
+        "uint32_t" => "u32",
+        "uint64_t" => "u64",
+        "int8_t" => "i8",
+        "int16_t" => "i16",
+        "int32_t" => "i32",
+        "int64_t" => "i64",
+        "size_t" => "usize",
         "int" => "c_int",
         "void" => "c_void",
         "char" => "c_char",
@@ -1678,8 +1686,7 @@ pub fn write_source_code(path: &Path) {
     let platform_specific_types = platform_specific_types();
     let source_code = quote!{
         use std::fmt;
-        #[doc(hidden)]
-        pub use libc::*;
+        use std::os::raw::*;
         #[doc(hidden)]
         pub use self::extensions::*;
         #[doc(hidden)]

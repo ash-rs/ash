@@ -1,6 +1,7 @@
 use std::iter::Iterator;
 use std::marker::PhantomData;
 use std::mem::size_of;
+use std::os::raw::c_void;
 use vk;
 
 /// `Align` handles dynamic alignment. The is useful for dynamic uniform buffers where
@@ -12,7 +13,7 @@ use vk;
 /// an additional allocation and with the correct alignment.
 #[derive(Debug, Clone)]
 pub struct Align<T> {
-    ptr: *mut vk::c_void,
+    ptr: *mut c_void,
     elem_size: vk::DeviceSize,
     size: vk::DeviceSize,
     _m: PhantomData<T>,
@@ -46,7 +47,7 @@ fn calc_padding(adr: vk::DeviceSize, align: vk::DeviceSize) -> vk::DeviceSize {
 
 impl<T> Align<T> {
     pub unsafe fn new(
-        ptr: *mut vk::c_void,
+        ptr: *mut c_void,
         alignment: vk::DeviceSize,
         size: vk::DeviceSize,
     ) -> Self {

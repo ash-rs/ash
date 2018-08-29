@@ -1,6 +1,7 @@
 #![allow(dead_code)]
 use prelude::*;
 use std::mem;
+use std::os::raw::c_void;
 use std::ptr;
 use version::{FunctionPointers, V1_0, V1_1};
 use vk;
@@ -36,9 +37,9 @@ pub trait DeviceV1_1: DeviceV1_0 {
 
 	unsafe fn get_device_group_peer_memory_features(
         &self,
-        heap_index: vk::uint32_t,
-        local_device_index: vk::uint32_t,
-        remote_device_index: vk::uint32_t,
+        heap_index: u32,
+        local_device_index: u32,
+        remote_device_index: u32,
     ) -> vk::PeerMemoryFeatureFlags {
         let mut peer_memory_features = mem::uninitialized();
         self.fp_v1_1().get_device_group_peer_memory_features(
@@ -54,7 +55,7 @@ pub trait DeviceV1_1: DeviceV1_0 {
     unsafe fn cmd_set_device_mask(
         &self,
         command_buffer: vk::CommandBuffer,
-        device_mask: vk::uint32_t,
+        device_mask: u32,
     ) {
         self.fp_v1_1()
             .cmd_set_device_mask(command_buffer, device_mask);
@@ -63,12 +64,12 @@ pub trait DeviceV1_1: DeviceV1_0 {
     unsafe fn cmd_dispatch_base(
         &self,
         command_buffer: vk::CommandBuffer,
-        base_group_x: vk::uint32_t,
-        base_group_y: vk::uint32_t,
-        base_group_z: vk::uint32_t,
-        group_count_x: vk::uint32_t,
-        group_count_y: vk::uint32_t,
-        group_count_z: vk::uint32_t,
+        base_group_x: u32,
+        base_group_y: u32,
+        base_group_z: u32,
+        group_count_x: u32,
+        group_count_y: u32,
+        group_count_z: u32,
     ) {
         self.fp_v1_1().cmd_dispatch_base(
             command_buffer,
@@ -202,7 +203,7 @@ pub trait DeviceV1_1: DeviceV1_0 {
         &self,
         descriptor_set: vk::DescriptorSet,
         descriptor_update_template: vk::DescriptorUpdateTemplate,
-        data: *const vk::c_void,
+        data: *const c_void,
     ) {
         self.fp_v1_1().update_descriptor_set_with_template(
             self.handle(),
@@ -261,7 +262,7 @@ pub trait DeviceV1_0 {
         self.fp_v1_0().free_command_buffers(
             self.handle(),
             command_pool,
-            command_buffers.len() as vk::uint32_t,
+            command_buffers.len() as u32,
             command_buffers.as_ptr(),
         );
     }
@@ -521,7 +522,7 @@ pub trait DeviceV1_0 {
         buffer: vk::Buffer,
         offset: vk::DeviceSize,
         size: vk::DeviceSize,
-        data: vk::uint32_t,
+        data: u32,
     ) {
         self.fp_v1_0()
             .cmd_fill_buffer(command_buffer, buffer, offset, size, data);
@@ -572,7 +573,7 @@ pub trait DeviceV1_0 {
             src_image,
             src_image_layout,
             dst_buffer,
-            regions.len() as vk::uint32_t,
+            regions.len() as u32,
             regions.as_ptr(),
         );
     }
@@ -722,7 +723,7 @@ pub trait DeviceV1_0 {
     unsafe fn reset_fences(&self, fences: &[vk::Fence]) -> VkResult<()> {
         let err_code = self.fp_v1_0().reset_fences(
             self.handle(),
-            fences.len() as vk::uint32_t,
+            fences.len() as u32,
             fences.as_ptr(),
         );
         match err_code {
@@ -755,7 +756,7 @@ pub trait DeviceV1_0 {
             image,
             image_layout,
             clear_color_value,
-            ranges.len() as vk::uint32_t,
+            ranges.len() as u32,
             ranges.as_ptr(),
         );
     }
@@ -773,7 +774,7 @@ pub trait DeviceV1_0 {
             image,
             image_layout,
             clear_depth_stencil_value,
-            ranges.len() as vk::uint32_t,
+            ranges.len() as u32,
             ranges.as_ptr(),
         );
     }
@@ -786,9 +787,9 @@ pub trait DeviceV1_0 {
     ) {
         self.fp_v1_0().cmd_clear_attachments(
             command_buffer,
-            attachments.len() as vk::uint32_t,
+            attachments.len() as u32,
             attachments.as_ptr(),
-            rects.len() as vk::uint32_t,
+            rects.len() as u32,
             rects.as_ptr(),
         );
     }
@@ -796,11 +797,11 @@ pub trait DeviceV1_0 {
     unsafe fn cmd_draw_indexed(
         &self,
         command_buffer: vk::CommandBuffer,
-        index_count: vk::uint32_t,
-        instance_count: vk::uint32_t,
-        first_index: vk::uint32_t,
-        vertex_offset: vk::int32_t,
-        first_instance: vk::uint32_t,
+        index_count: u32,
+        instance_count: u32,
+        first_index: u32,
+        vertex_offset: i32,
+        first_instance: u32,
     ) {
         self.fp_v1_0().cmd_draw_indexed(
             command_buffer,
@@ -817,8 +818,8 @@ pub trait DeviceV1_0 {
         command_buffer: vk::CommandBuffer,
         buffer: vk::Buffer,
         offset: vk::DeviceSize,
-        draw_count: vk::uint32_t,
-        stride: vk::uint32_t,
+        draw_count: u32,
+        stride: u32,
     ) {
         self.fp_v1_0().cmd_draw_indexed_indirect(
             command_buffer,
@@ -836,7 +837,7 @@ pub trait DeviceV1_0 {
     ) {
         self.fp_v1_0().cmd_execute_commands(
             primary_command_buffer,
-            secondary_command_buffers.len() as vk::uint32_t,
+            secondary_command_buffers.len() as u32,
             secondary_command_buffers.as_ptr(),
         );
     }
@@ -846,18 +847,18 @@ pub trait DeviceV1_0 {
         command_buffer: vk::CommandBuffer,
         pipeline_bind_point: vk::PipelineBindPoint,
         layout: vk::PipelineLayout,
-        first_set: vk::uint32_t,
+        first_set: u32,
         descriptor_sets: &[vk::DescriptorSet],
-        dynamic_offsets: &[vk::uint32_t],
+        dynamic_offsets: &[u32],
     ) {
         self.fp_v1_0().cmd_bind_descriptor_sets(
             command_buffer,
             pipeline_bind_point,
             layout,
             first_set,
-            descriptor_sets.len() as vk::uint32_t,
+            descriptor_sets.len() as u32,
             descriptor_sets.as_ptr(),
-            dynamic_offsets.len() as vk::uint32_t,
+            dynamic_offsets.len() as u32,
             dynamic_offsets.as_ptr(),
         );
     }
@@ -866,8 +867,8 @@ pub trait DeviceV1_0 {
         &self,
         command_buffer: vk::CommandBuffer,
         query_pool: vk::QueryPool,
-        first_query: vk::uint32_t,
-        query_count: vk::uint32_t,
+        first_query: u32,
+        query_count: u32,
         dst_buffer: vk::Buffer,
         dst_offset: vk::DeviceSize,
         stride: vk::DeviceSize,
@@ -890,7 +891,7 @@ pub trait DeviceV1_0 {
         command_buffer: vk::CommandBuffer,
         layout: vk::PipelineLayout,
         stage_flags: vk::ShaderStageFlags,
-        offset: vk::uint32_t,
+        offset: u32,
         constants: &[u8],
     ) {
         self.fp_v1_0().cmd_push_constants(
@@ -934,13 +935,13 @@ pub trait DeviceV1_0 {
     unsafe fn cmd_set_scissor(
         &self,
         command_buffer: vk::CommandBuffer,
-        first_scissor: vk::uint32_t,
+        first_scissor: u32,
         scissors: &[vk::Rect2D],
     ) {
         self.fp_v1_0().cmd_set_scissor(
             command_buffer,
             first_scissor,
-            scissors.len() as vk::uint32_t,
+            scissors.len() as u32,
             scissors.as_ptr(),
         );
     }
@@ -953,7 +954,7 @@ pub trait DeviceV1_0 {
     unsafe fn cmd_bind_vertex_buffers(
         &self,
         command_buffer: vk::CommandBuffer,
-        first_binding: vk::uint32_t,
+        first_binding: u32,
         buffers: &[vk::Buffer],
         offsets: &[vk::DeviceSize],
     ) {
@@ -961,7 +962,7 @@ pub trait DeviceV1_0 {
         self.fp_v1_0().cmd_bind_vertex_buffers(
             command_buffer,
             first_binding,
-            buffers.len() as vk::uint32_t,
+            buffers.len() as u32,
             buffers.as_ptr(),
             offsets.as_ptr(),
         );
@@ -974,10 +975,10 @@ pub trait DeviceV1_0 {
     unsafe fn cmd_draw(
         &self,
         command_buffer: vk::CommandBuffer,
-        vertex_count: vk::uint32_t,
-        instance_count: vk::uint32_t,
-        first_vertex: vk::uint32_t,
-        first_instance: vk::uint32_t,
+        vertex_count: u32,
+        instance_count: u32,
+        first_vertex: u32,
+        first_instance: u32,
     ) {
         self.fp_v1_0().cmd_draw(
             command_buffer,
@@ -993,8 +994,8 @@ pub trait DeviceV1_0 {
         command_buffer: vk::CommandBuffer,
         buffer: vk::Buffer,
         offset: vk::DeviceSize,
-        draw_count: vk::uint32_t,
-        stride: vk::uint32_t,
+        draw_count: u32,
+        stride: u32,
     ) {
         self.fp_v1_0()
             .cmd_draw_indirect(command_buffer, buffer, offset, draw_count, stride);
@@ -1003,9 +1004,9 @@ pub trait DeviceV1_0 {
     unsafe fn cmd_dispatch(
         &self,
         command_buffer: vk::CommandBuffer,
-        group_count_x: vk::uint32_t,
-        group_count_y: vk::uint32_t,
-        group_count_z: vk::uint32_t,
+        group_count_x: u32,
+        group_count_y: u32,
+        group_count_z: u32,
     ) {
         self.fp_v1_0()
             .cmd_dispatch(command_buffer, group_count_x, group_count_y, group_count_z);
@@ -1024,13 +1025,13 @@ pub trait DeviceV1_0 {
     unsafe fn cmd_set_viewport(
         &self,
         command_buffer: vk::CommandBuffer,
-        first_viewport: vk::uint32_t,
+        first_viewport: u32,
         viewports: &[vk::Viewport],
     ) {
         self.fp_v1_0().cmd_set_viewport(
             command_buffer,
             first_viewport,
-            viewports.len() as vk::uint32_t,
+            viewports.len() as u32,
             viewports.as_ptr(),
         );
     }
@@ -1098,8 +1099,8 @@ pub trait DeviceV1_0 {
     unsafe fn get_query_pool_results<T>(
         &self,
         query_pool: vk::QueryPool,
-        first_query: vk::uint32_t,
-        query_count: vk::uint32_t,
+        first_query: u32,
+        query_count: u32,
         data: &mut [T],
         flags: vk::QueryResultFlags,
     ) -> VkResult<()> {
@@ -1201,7 +1202,7 @@ pub trait DeviceV1_0 {
         let err_code = self.fp_v1_0().create_graphics_pipelines(
             self.handle(),
             pipeline_cache,
-            create_infos.len() as vk::uint32_t,
+            create_infos.len() as u32,
             create_infos.as_ptr(),
             allocation_callbacks.as_raw_ptr(),
             pipelines.as_mut_ptr(),
@@ -1223,7 +1224,7 @@ pub trait DeviceV1_0 {
         let err_code = self.fp_v1_0().create_compute_pipelines(
             self.handle(),
             pipeline_cache,
-            create_infos.len() as vk::uint32_t,
+            create_infos.len() as u32,
             create_infos.as_ptr(),
             allocation_callbacks.as_raw_ptr(),
             pipelines.as_mut_ptr(),
@@ -1296,8 +1297,8 @@ pub trait DeviceV1_0 {
         offset: vk::DeviceSize,
         size: vk::DeviceSize,
         flags: vk::MemoryMapFlags,
-    ) -> VkResult<*mut vk::c_void> {
-        let mut data: *mut vk::c_void = mem::uninitialized();
+    ) -> VkResult<*mut c_void> {
+        let mut data: *mut c_void = mem::uninitialized();
         let err_code =
             self.fp_v1_0()
                 .map_memory(self.handle(), memory, offset, size, flags, &mut data);
@@ -1317,7 +1318,7 @@ pub trait DeviceV1_0 {
     ) -> VkResult<()> {
         let err_code = self.fp_v1_0().invalidate_mapped_memory_ranges(
             self.handle(),
-            ranges.len() as vk::uint32_t,
+            ranges.len() as u32,
             ranges.as_ptr(),
         );
         match err_code {
@@ -1329,7 +1330,7 @@ pub trait DeviceV1_0 {
     unsafe fn flush_mapped_memory_ranges(&self, ranges: &[vk::MappedMemoryRange]) -> VkResult<()> {
         let err_code = self.fp_v1_0().flush_mapped_memory_ranges(
             self.handle(),
-            ranges.len() as vk::uint32_t,
+            ranges.len() as u32,
             ranges.as_ptr(),
         );
         match err_code {
@@ -1358,8 +1359,8 @@ pub trait DeviceV1_0 {
 
     unsafe fn get_device_queue(
         &self,
-        queue_family_index: vk::uint32_t,
-        queue_index: vk::uint32_t,
+        queue_family_index: u32,
+        queue_index: u32,
     ) -> vk::Queue {
         let mut queue = mem::uninitialized();
         self.fp_v1_0()
@@ -1382,11 +1383,11 @@ pub trait DeviceV1_0 {
             src_stage_mask,
             dst_stage_mask,
             dependency_flags,
-            memory_barriers.len() as vk::uint32_t,
+            memory_barriers.len() as u32,
             memory_barriers.as_ptr(),
-            buffer_memory_barriers.len() as vk::uint32_t,
+            buffer_memory_barriers.len() as u32,
             buffer_memory_barriers.as_ptr(),
-            image_memory_barriers.len() as vk::uint32_t,
+            image_memory_barriers.len() as u32,
             image_memory_barriers.as_ptr(),
         );
     }
@@ -1435,13 +1436,13 @@ pub trait DeviceV1_0 {
         &self,
         fences: &[vk::Fence],
         wait_all: bool,
-        timeout: vk::uint64_t,
+        timeout: u64,
     ) -> VkResult<()> {
         let err_code = self.fp_v1_0().wait_for_fences(
             self.handle(),
-            fences.len() as vk::uint32_t,
+            fences.len() as u32,
             fences.as_ptr(),
-            wait_all as vk::uint32_t,
+            wait_all as u32,
             timeout,
         );
         match err_code {
@@ -1474,7 +1475,7 @@ pub trait DeviceV1_0 {
     ) -> VkResult<()> {
         let err_code = self.fp_v1_0().queue_submit(
             queue,
-            submits.len() as vk::uint32_t,
+            submits.len() as u32,
             submits.as_ptr(),
             fence,
         );
@@ -1536,13 +1537,13 @@ pub trait DeviceV1_0 {
         &self,
         create_info: &vk::CommandBufferAllocateInfo,
     ) -> VkResult<Vec<vk::CommandBuffer>> {
-        let mut buffers = Vec::with_capacity(create_info.command_buffer_count as vk::size_t);
+        let mut buffers = Vec::with_capacity(create_info.command_buffer_count as usize);
         let err_code = self.fp_v1_0().allocate_command_buffers(
             self.handle(),
             create_info,
             buffers.as_mut_ptr(),
         );
-        buffers.set_len(create_info.command_buffer_count as vk::size_t);
+        buffers.set_len(create_info.command_buffer_count as usize);
         match err_code {
             vk::Result::SUCCESS => Ok(buffers),
             _ => Err(err_code),
