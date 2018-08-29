@@ -118,11 +118,11 @@ unsafe fn create_surface<E: EntryV1_0, I: InstanceV1_0>(
     window: &winit::Window,
 ) -> Result<vk::SurfaceKHR, vk::Result> {
     use winapi::shared::windef::HWND;
-    use winapi::um::winuser::GetWindow;
+    use winapi::um::libloaderapi::GetModuleHandleW;
     use winit::os::windows::WindowExt;
 
     let hwnd = window.get_hwnd() as HWND;
-    let hinstance = GetWindow(hwnd, 0) as *const c_void;
+    let hinstance = GetModuleHandleW(ptr::null()) as *const c_void;
     let win32_create_info = vk::Win32SurfaceCreateInfoKHR {
         s_type: vk::StructureType::WIN32_SURFACE_CREATE_INFO_KHR,
         p_next: ptr::null(),
