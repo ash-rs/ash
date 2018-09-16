@@ -90,7 +90,7 @@ pub fn define_handle_macro() -> Tokens {
         macro_rules! define_handle{
             ($name: ident, $ty: ident) => {
                 #[repr(transparent)]
-                #[derive(Clone, Copy, Debug)]
+                #[derive(Eq, PartialEq, Ord, PartialOrd, Clone, Copy, Hash)]
                 pub struct $name(*mut u8);
                 impl Default for $name {
                     fn default() -> $name {
@@ -110,6 +110,18 @@ pub fn define_handle_macro() -> Tokens {
                 impl $name{
                     pub fn null() -> Self{
                         $name(::std::ptr::null_mut())
+                    }
+                }
+
+                impl fmt::Pointer for $name {
+                    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+                        fmt::Pointer::fmt(&self.0, f)
+                    }
+                }
+
+                impl fmt::Debug for $name {
+                    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+                        fmt::Debug::fmt(&self.0, f)
                     }
                 }
             }
@@ -136,14 +148,15 @@ pub fn handle_nondispatchable_macro() -> Tokens {
                         $name(0)
                     }
                 }
-                impl ::std::fmt::Pointer for $name {
-                    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::result::Result<(), ::std::fmt::Error> {
+
+                impl fmt::Pointer for $name {
+                    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
                         write!(f, "0x{:x}", self.0)
                     }
                 }
 
-                impl ::std::fmt::Debug for $name {
-                    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::result::Result<(), ::std::fmt::Error> {
+                impl fmt::Debug for $name {
+                    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
                         write!(f, "0x{:x}", self.0)
                     }
                 }
@@ -192,8 +205,8 @@ pub fn vk_bitflags_wrapped_macro() -> Tokens {
                         $name(0)
                     }
                 }
-                impl ::std::fmt::Debug for $name {
-                    fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::result::Result<(), ::std::fmt::Error> {
+                impl fmt::Debug for $name {
+                    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
                         write!(f, "{}({:b})", stringify!($name), self.0)
                     }
                 }
@@ -1278,8 +1291,8 @@ pub fn derive_debug(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> Opt
     });
     let name_str = name.as_ref();
     let q = quote!{
-        impl ::std::fmt::Debug for #name {
-            fn fmt(&self, fmt: &mut ::std::fmt::Formatter) -> ::std::result::Result<(), ::std::fmt::Error> {
+        impl fmt::Debug for #name {
+            fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
                 fmt.debug_struct(#name_str)
                 #(#debug_fields)*
                 .finish()

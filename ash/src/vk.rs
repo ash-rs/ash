@@ -11,25 +11,25 @@ pub trait Handle {
 }
 #[macro_export]
 macro_rules! vk_make_version {
-    ($major:expr, $minor:expr, $patch:expr) => {
+    ( $ major : expr , $ minor : expr , $ patch : expr ) => {
         (($major as u32) << 22) | (($minor as u32) << 12) | $patch as u32
     };
 }
 #[macro_export]
 macro_rules! vk_version_major {
-    ($major:expr) => {
+    ( $ major : expr ) => {
         ($major as u32) >> 22
     };
 }
 #[macro_export]
 macro_rules! vk_version_minor {
-    ($minor:expr) => {
+    ( $ minor : expr ) => {
         (($minor as u32) >> 12) & 0x3ff
     };
 }
 #[macro_export]
 macro_rules! vk_version_patch {
-    ($minor:expr) => {
+    ( $ minor : expr ) => {
         ($minor as u32) & 0xfff
     };
 }
@@ -59,17 +59,14 @@ pub type SECURITY_ATTRIBUTES = ();
 pub type ANativeWindow = c_void;
 pub type AHardwareBuffer = c_void;
 macro_rules! vk_bitflags_wrapped {
-    ($name:ident, $all:expr, $flag_type:ty) => {
+    ( $ name : ident , $ all : expr , $ flag_type : ty ) => {
         impl Default for $name {
             fn default() -> $name {
                 $name(0)
             }
         }
-        impl ::std::fmt::Debug for $name {
-            fn fmt(
-                &self,
-                f: &mut ::std::fmt::Formatter,
-            ) -> ::std::result::Result<(), ::std::fmt::Error> {
+        impl fmt::Debug for $name {
+            fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
                 write!(f, "{}({:b})", stringify!($name), self.0)
             }
         }
@@ -178,7 +175,7 @@ macro_rules! vk_bitflags_wrapped {
     };
 }
 macro_rules! handle_nondispatchable {
-    ($name:ident, $ty:ident) => {
+    ( $ name : ident , $ ty : ident ) => {
         #[repr(transparent)]
         #[derive(Eq, PartialEq, Ord, PartialOrd, Clone, Copy, Hash, Default)]
         pub struct $name(u64);
@@ -196,28 +193,22 @@ macro_rules! handle_nondispatchable {
                 $name(0)
             }
         }
-        impl ::std::fmt::Pointer for $name {
-            fn fmt(
-                &self,
-                f: &mut ::std::fmt::Formatter,
-            ) -> ::std::result::Result<(), ::std::fmt::Error> {
+        impl fmt::Pointer for $name {
+            fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
                 write!(f, "0x{:x}", self.0)
             }
         }
-        impl ::std::fmt::Debug for $name {
-            fn fmt(
-                &self,
-                f: &mut ::std::fmt::Formatter,
-            ) -> ::std::result::Result<(), ::std::fmt::Error> {
+        impl fmt::Debug for $name {
+            fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
                 write!(f, "0x{:x}", self.0)
             }
         }
     };
 }
 macro_rules! define_handle {
-    ($name:ident, $ty:ident) => {
+    ( $ name : ident , $ ty : ident ) => {
         #[repr(transparent)]
-        #[derive(Clone, Copy, Debug)]
+        #[derive(Eq, PartialEq, Ord, PartialOrd, Clone, Copy, Hash)]
         pub struct $name(*mut u8);
         impl Default for $name {
             fn default() -> $name {
@@ -238,6 +229,16 @@ macro_rules! define_handle {
         impl $name {
             pub fn null() -> Self {
                 $name(::std::ptr::null_mut())
+            }
+        }
+        impl fmt::Pointer for $name {
+            fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+                fmt::Pointer::fmt(&self.0, f)
+            }
+        }
+        impl fmt::Debug for $name {
+            fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+                fmt::Debug::fmt(&self.0, f)
             }
         }
     };
@@ -462,18 +463,18 @@ impl ::std::clone::Clone for InstanceFnV1_0 {
             enumerate_physical_devices: self.enumerate_physical_devices,
             get_physical_device_features: self.get_physical_device_features,
             get_physical_device_format_properties: self.get_physical_device_format_properties,
-            get_physical_device_image_format_properties: self
-                .get_physical_device_image_format_properties,
+            get_physical_device_image_format_properties:
+                self.get_physical_device_image_format_properties,
             get_physical_device_properties: self.get_physical_device_properties,
-            get_physical_device_queue_family_properties: self
-                .get_physical_device_queue_family_properties,
+            get_physical_device_queue_family_properties:
+                self.get_physical_device_queue_family_properties,
             get_physical_device_memory_properties: self.get_physical_device_memory_properties,
             get_device_proc_addr: self.get_device_proc_addr,
             create_device: self.create_device,
             enumerate_device_extension_properties: self.enumerate_device_extension_properties,
             enumerate_device_layer_properties: self.enumerate_device_layer_properties,
-            get_physical_device_sparse_image_format_properties: self
-                .get_physical_device_sparse_image_format_properties,
+            get_physical_device_sparse_image_format_properties:
+                self.get_physical_device_sparse_image_format_properties,
         }
     }
 }
@@ -3955,19 +3956,19 @@ impl ::std::clone::Clone for InstanceFnV1_1 {
             get_physical_device_features2: self.get_physical_device_features2,
             get_physical_device_properties2: self.get_physical_device_properties2,
             get_physical_device_format_properties2: self.get_physical_device_format_properties2,
-            get_physical_device_image_format_properties2: self
-                .get_physical_device_image_format_properties2,
-            get_physical_device_queue_family_properties2: self
-                .get_physical_device_queue_family_properties2,
+            get_physical_device_image_format_properties2:
+                self.get_physical_device_image_format_properties2,
+            get_physical_device_queue_family_properties2:
+                self.get_physical_device_queue_family_properties2,
             get_physical_device_memory_properties2: self.get_physical_device_memory_properties2,
-            get_physical_device_sparse_image_format_properties2: self
-                .get_physical_device_sparse_image_format_properties2,
-            get_physical_device_external_buffer_properties: self
-                .get_physical_device_external_buffer_properties,
-            get_physical_device_external_fence_properties: self
-                .get_physical_device_external_fence_properties,
-            get_physical_device_external_semaphore_properties: self
-                .get_physical_device_external_semaphore_properties,
+            get_physical_device_sparse_image_format_properties2:
+                self.get_physical_device_sparse_image_format_properties2,
+            get_physical_device_external_buffer_properties:
+                self.get_physical_device_external_buffer_properties,
+            get_physical_device_external_fence_properties:
+                self.get_physical_device_external_fence_properties,
+            get_physical_device_external_semaphore_properties:
+                self.get_physical_device_external_semaphore_properties,
         }
     }
 }
@@ -5034,8 +5035,8 @@ pub struct PhysicalDeviceProperties {
     pub limits: PhysicalDeviceLimits,
     pub sparse_properties: PhysicalDeviceSparseProperties,
 }
-impl ::std::fmt::Debug for PhysicalDeviceProperties {
-    fn fmt(&self, fmt: &mut ::std::fmt::Formatter) -> ::std::result::Result<(), ::std::fmt::Error> {
+impl fmt::Debug for PhysicalDeviceProperties {
+    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
         fmt.debug_struct("PhysicalDeviceProperties")
             .field("api_version", &self.api_version)
             .field("driver_version", &self.driver_version)
@@ -5044,11 +5045,9 @@ impl ::std::fmt::Debug for PhysicalDeviceProperties {
             .field("device_type", &self.device_type)
             .field("device_name", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.device_name.as_ptr() as *const i8)
-            })
-            .field("pipeline_cache_uuid", &unsafe {
+            }).field("pipeline_cache_uuid", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.pipeline_cache_uuid.as_ptr() as *const i8)
-            })
-            .field("limits", &self.limits)
+            }).field("limits", &self.limits)
             .field("sparse_properties", &self.sparse_properties)
             .finish()
     }
@@ -5074,13 +5073,12 @@ pub struct ExtensionProperties {
     pub extension_name: [c_char; MAX_EXTENSION_NAME_SIZE],
     pub spec_version: u32,
 }
-impl ::std::fmt::Debug for ExtensionProperties {
-    fn fmt(&self, fmt: &mut ::std::fmt::Formatter) -> ::std::result::Result<(), ::std::fmt::Error> {
+impl fmt::Debug for ExtensionProperties {
+    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
         fmt.debug_struct("ExtensionProperties")
             .field("extension_name", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.extension_name.as_ptr() as *const i8)
-            })
-            .field("spec_version", &self.spec_version)
+            }).field("spec_version", &self.spec_version)
             .finish()
     }
 }
@@ -5100,18 +5098,16 @@ pub struct LayerProperties {
     pub implementation_version: u32,
     pub description: [c_char; MAX_DESCRIPTION_SIZE],
 }
-impl ::std::fmt::Debug for LayerProperties {
-    fn fmt(&self, fmt: &mut ::std::fmt::Formatter) -> ::std::result::Result<(), ::std::fmt::Error> {
+impl fmt::Debug for LayerProperties {
+    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
         fmt.debug_struct("LayerProperties")
             .field("layer_name", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.layer_name.as_ptr() as *const i8)
-            })
-            .field("spec_version", &self.spec_version)
+            }).field("spec_version", &self.spec_version)
             .field("implementation_version", &self.implementation_version)
             .field("description", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.description.as_ptr() as *const i8)
-            })
-            .finish()
+            }).finish()
     }
 }
 impl ::std::default::Default for LayerProperties {
@@ -5180,8 +5176,8 @@ pub struct AllocationCallbacks {
     pub pfn_internal_allocation: PFN_vkInternalAllocationNotification,
     pub pfn_internal_free: PFN_vkInternalFreeNotification,
 }
-impl ::std::fmt::Debug for AllocationCallbacks {
-    fn fmt(&self, fmt: &mut ::std::fmt::Formatter) -> ::std::result::Result<(), ::std::fmt::Error> {
+impl fmt::Debug for AllocationCallbacks {
+    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
         fmt.debug_struct("AllocationCallbacks")
             .field("p_user_data", &self.p_user_data)
             .field("pfn_allocation", &(self.pfn_allocation as *const ()))
@@ -5190,8 +5186,7 @@ impl ::std::fmt::Debug for AllocationCallbacks {
             .field(
                 "pfn_internal_allocation",
                 &(self.pfn_internal_allocation as *const ()),
-            )
-            .field("pfn_internal_free", &(self.pfn_internal_free as *const ()))
+            ).field("pfn_internal_free", &(self.pfn_internal_free as *const ()))
             .finish()
     }
 }
@@ -5415,18 +5410,16 @@ pub struct PhysicalDeviceMemoryProperties {
     pub memory_heap_count: u32,
     pub memory_heaps: [MemoryHeap; MAX_MEMORY_HEAPS],
 }
-impl ::std::fmt::Debug for PhysicalDeviceMemoryProperties {
-    fn fmt(&self, fmt: &mut ::std::fmt::Formatter) -> ::std::result::Result<(), ::std::fmt::Error> {
+impl fmt::Debug for PhysicalDeviceMemoryProperties {
+    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
         fmt.debug_struct("PhysicalDeviceMemoryProperties")
             .field("memory_type_count", &self.memory_type_count)
             .field("memory_types", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.memory_types.as_ptr() as *const i8)
-            })
-            .field("memory_heap_count", &self.memory_heap_count)
+            }).field("memory_heap_count", &self.memory_heap_count)
             .field("memory_heaps", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.memory_heaps.as_ptr() as *const i8)
-            })
-            .finish()
+            }).finish()
     }
 }
 impl ::std::default::Default for PhysicalDeviceMemoryProperties {
@@ -6231,18 +6224,16 @@ pub struct ImageBlit {
     pub dst_subresource: ImageSubresourceLayers,
     pub dst_offsets: [Offset3D; 2],
 }
-impl ::std::fmt::Debug for ImageBlit {
-    fn fmt(&self, fmt: &mut ::std::fmt::Formatter) -> ::std::result::Result<(), ::std::fmt::Error> {
+impl fmt::Debug for ImageBlit {
+    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
         fmt.debug_struct("ImageBlit")
             .field("src_subresource", &self.src_subresource)
             .field("src_offsets", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.src_offsets.as_ptr() as *const i8)
-            })
-            .field("dst_subresource", &self.dst_subresource)
+            }).field("dst_subresource", &self.dst_subresource)
             .field("dst_offsets", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.dst_offsets.as_ptr() as *const i8)
-            })
-            .finish()
+            }).finish()
     }
 }
 impl ::std::default::Default for ImageBlit {
@@ -7012,8 +7003,8 @@ pub struct PipelineColorBlendStateCreateInfo {
     pub p_attachments: *const PipelineColorBlendAttachmentState,
     pub blend_constants: [c_float; 4],
 }
-impl ::std::fmt::Debug for PipelineColorBlendStateCreateInfo {
-    fn fmt(&self, fmt: &mut ::std::fmt::Formatter) -> ::std::result::Result<(), ::std::fmt::Error> {
+impl fmt::Debug for PipelineColorBlendStateCreateInfo {
+    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
         fmt.debug_struct("PipelineColorBlendStateCreateInfo")
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
@@ -7024,8 +7015,7 @@ impl ::std::fmt::Debug for PipelineColorBlendStateCreateInfo {
             .field("p_attachments", &self.p_attachments)
             .field("blend_constants", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.blend_constants.as_ptr() as *const i8)
-            })
-            .finish()
+            }).finish()
     }
 }
 impl ::std::default::Default for PipelineColorBlendStateCreateInfo {
@@ -7770,8 +7760,8 @@ pub struct RenderPassBeginInfo {
     pub clear_value_count: u32,
     pub p_clear_values: *const ClearValue,
 }
-impl ::std::fmt::Debug for RenderPassBeginInfo {
-    fn fmt(&self, fmt: &mut ::std::fmt::Formatter) -> ::std::result::Result<(), ::std::fmt::Error> {
+impl fmt::Debug for RenderPassBeginInfo {
+    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
         fmt.debug_struct("RenderPassBeginInfo")
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
@@ -7855,8 +7845,8 @@ pub struct ClearAttachment {
     pub color_attachment: u32,
     pub clear_value: ClearValue,
 }
-impl ::std::fmt::Debug for ClearAttachment {
-    fn fmt(&self, fmt: &mut ::std::fmt::Formatter) -> ::std::result::Result<(), ::std::fmt::Error> {
+impl fmt::Debug for ClearAttachment {
+    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
         fmt.debug_struct("ClearAttachment")
             .field("aspect_mask", &self.aspect_mask)
             .field("color_attachment", &self.color_attachment)
@@ -8210,8 +8200,8 @@ pub struct PhysicalDeviceLimits {
     pub optimal_buffer_copy_row_pitch_alignment: DeviceSize,
     pub non_coherent_atom_size: DeviceSize,
 }
-impl ::std::fmt::Debug for PhysicalDeviceLimits {
-    fn fmt(&self, fmt: &mut ::std::fmt::Formatter) -> ::std::result::Result<(), ::std::fmt::Error> {
+impl fmt::Debug for PhysicalDeviceLimits {
+    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
         fmt.debug_struct("PhysicalDeviceLimits")
             .field("max_image_dimension1_d", &self.max_image_dimension1_d)
             .field("max_image_dimension2_d", &self.max_image_dimension2_d)
@@ -8225,202 +8215,155 @@ impl ::std::fmt::Debug for PhysicalDeviceLimits {
             .field(
                 "max_memory_allocation_count",
                 &self.max_memory_allocation_count,
-            )
-            .field(
+            ).field(
                 "max_sampler_allocation_count",
                 &self.max_sampler_allocation_count,
-            )
-            .field("buffer_image_granularity", &self.buffer_image_granularity)
+            ).field("buffer_image_granularity", &self.buffer_image_granularity)
             .field("sparse_address_space_size", &self.sparse_address_space_size)
             .field("max_bound_descriptor_sets", &self.max_bound_descriptor_sets)
             .field(
                 "max_per_stage_descriptor_samplers",
                 &self.max_per_stage_descriptor_samplers,
-            )
-            .field(
+            ).field(
                 "max_per_stage_descriptor_uniform_buffers",
                 &self.max_per_stage_descriptor_uniform_buffers,
-            )
-            .field(
+            ).field(
                 "max_per_stage_descriptor_storage_buffers",
                 &self.max_per_stage_descriptor_storage_buffers,
-            )
-            .field(
+            ).field(
                 "max_per_stage_descriptor_sampled_images",
                 &self.max_per_stage_descriptor_sampled_images,
-            )
-            .field(
+            ).field(
                 "max_per_stage_descriptor_storage_images",
                 &self.max_per_stage_descriptor_storage_images,
-            )
-            .field(
+            ).field(
                 "max_per_stage_descriptor_input_attachments",
                 &self.max_per_stage_descriptor_input_attachments,
-            )
-            .field("max_per_stage_resources", &self.max_per_stage_resources)
+            ).field("max_per_stage_resources", &self.max_per_stage_resources)
             .field(
                 "max_descriptor_set_samplers",
                 &self.max_descriptor_set_samplers,
-            )
-            .field(
+            ).field(
                 "max_descriptor_set_uniform_buffers",
                 &self.max_descriptor_set_uniform_buffers,
-            )
-            .field(
+            ).field(
                 "max_descriptor_set_uniform_buffers_dynamic",
                 &self.max_descriptor_set_uniform_buffers_dynamic,
-            )
-            .field(
+            ).field(
                 "max_descriptor_set_storage_buffers",
                 &self.max_descriptor_set_storage_buffers,
-            )
-            .field(
+            ).field(
                 "max_descriptor_set_storage_buffers_dynamic",
                 &self.max_descriptor_set_storage_buffers_dynamic,
-            )
-            .field(
+            ).field(
                 "max_descriptor_set_sampled_images",
                 &self.max_descriptor_set_sampled_images,
-            )
-            .field(
+            ).field(
                 "max_descriptor_set_storage_images",
                 &self.max_descriptor_set_storage_images,
-            )
-            .field(
+            ).field(
                 "max_descriptor_set_input_attachments",
                 &self.max_descriptor_set_input_attachments,
-            )
-            .field(
+            ).field(
                 "max_vertex_input_attributes",
                 &self.max_vertex_input_attributes,
-            )
-            .field("max_vertex_input_bindings", &self.max_vertex_input_bindings)
+            ).field("max_vertex_input_bindings", &self.max_vertex_input_bindings)
             .field(
                 "max_vertex_input_attribute_offset",
                 &self.max_vertex_input_attribute_offset,
-            )
-            .field(
+            ).field(
                 "max_vertex_input_binding_stride",
                 &self.max_vertex_input_binding_stride,
-            )
-            .field(
+            ).field(
                 "max_vertex_output_components",
                 &self.max_vertex_output_components,
-            )
-            .field(
+            ).field(
                 "max_tessellation_generation_level",
                 &self.max_tessellation_generation_level,
-            )
-            .field(
+            ).field(
                 "max_tessellation_patch_size",
                 &self.max_tessellation_patch_size,
-            )
-            .field(
+            ).field(
                 "max_tessellation_control_per_vertex_input_components",
                 &self.max_tessellation_control_per_vertex_input_components,
-            )
-            .field(
+            ).field(
                 "max_tessellation_control_per_vertex_output_components",
                 &self.max_tessellation_control_per_vertex_output_components,
-            )
-            .field(
+            ).field(
                 "max_tessellation_control_per_patch_output_components",
                 &self.max_tessellation_control_per_patch_output_components,
-            )
-            .field(
+            ).field(
                 "max_tessellation_control_total_output_components",
                 &self.max_tessellation_control_total_output_components,
-            )
-            .field(
+            ).field(
                 "max_tessellation_evaluation_input_components",
                 &self.max_tessellation_evaluation_input_components,
-            )
-            .field(
+            ).field(
                 "max_tessellation_evaluation_output_components",
                 &self.max_tessellation_evaluation_output_components,
-            )
-            .field(
+            ).field(
                 "max_geometry_shader_invocations",
                 &self.max_geometry_shader_invocations,
-            )
-            .field(
+            ).field(
                 "max_geometry_input_components",
                 &self.max_geometry_input_components,
-            )
-            .field(
+            ).field(
                 "max_geometry_output_components",
                 &self.max_geometry_output_components,
-            )
-            .field(
+            ).field(
                 "max_geometry_output_vertices",
                 &self.max_geometry_output_vertices,
-            )
-            .field(
+            ).field(
                 "max_geometry_total_output_components",
                 &self.max_geometry_total_output_components,
-            )
-            .field(
+            ).field(
                 "max_fragment_input_components",
                 &self.max_fragment_input_components,
-            )
-            .field(
+            ).field(
                 "max_fragment_output_attachments",
                 &self.max_fragment_output_attachments,
-            )
-            .field(
+            ).field(
                 "max_fragment_dual_src_attachments",
                 &self.max_fragment_dual_src_attachments,
-            )
-            .field(
+            ).field(
                 "max_fragment_combined_output_resources",
                 &self.max_fragment_combined_output_resources,
-            )
-            .field(
+            ).field(
                 "max_compute_shared_memory_size",
                 &self.max_compute_shared_memory_size,
-            )
-            .field("max_compute_work_group_count", &unsafe {
+            ).field("max_compute_work_group_count", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.max_compute_work_group_count.as_ptr() as *const i8)
-            })
-            .field(
+            }).field(
                 "max_compute_work_group_invocations",
                 &self.max_compute_work_group_invocations,
-            )
-            .field("max_compute_work_group_size", &unsafe {
+            ).field("max_compute_work_group_size", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.max_compute_work_group_size.as_ptr() as *const i8)
-            })
-            .field("sub_pixel_precision_bits", &self.sub_pixel_precision_bits)
+            }).field("sub_pixel_precision_bits", &self.sub_pixel_precision_bits)
             .field("sub_texel_precision_bits", &self.sub_texel_precision_bits)
             .field("mipmap_precision_bits", &self.mipmap_precision_bits)
             .field(
                 "max_draw_indexed_index_value",
                 &self.max_draw_indexed_index_value,
-            )
-            .field("max_draw_indirect_count", &self.max_draw_indirect_count)
+            ).field("max_draw_indirect_count", &self.max_draw_indirect_count)
             .field("max_sampler_lod_bias", &self.max_sampler_lod_bias)
             .field("max_sampler_anisotropy", &self.max_sampler_anisotropy)
             .field("max_viewports", &self.max_viewports)
             .field("max_viewport_dimensions", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.max_viewport_dimensions.as_ptr() as *const i8)
-            })
-            .field("viewport_bounds_range", &unsafe {
+            }).field("viewport_bounds_range", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.viewport_bounds_range.as_ptr() as *const i8)
-            })
-            .field("viewport_sub_pixel_bits", &self.viewport_sub_pixel_bits)
+            }).field("viewport_sub_pixel_bits", &self.viewport_sub_pixel_bits)
             .field("min_memory_map_alignment", &self.min_memory_map_alignment)
             .field(
                 "min_texel_buffer_offset_alignment",
                 &self.min_texel_buffer_offset_alignment,
-            )
-            .field(
+            ).field(
                 "min_uniform_buffer_offset_alignment",
                 &self.min_uniform_buffer_offset_alignment,
-            )
-            .field(
+            ).field(
                 "min_storage_buffer_offset_alignment",
                 &self.min_storage_buffer_offset_alignment,
-            )
-            .field("min_texel_offset", &self.min_texel_offset)
+            ).field("min_texel_offset", &self.min_texel_offset)
             .field("max_texel_offset", &self.max_texel_offset)
             .field("min_texel_gather_offset", &self.min_texel_gather_offset)
             .field("max_texel_gather_offset", &self.max_texel_gather_offset)
@@ -8429,79 +8372,63 @@ impl ::std::fmt::Debug for PhysicalDeviceLimits {
             .field(
                 "sub_pixel_interpolation_offset_bits",
                 &self.sub_pixel_interpolation_offset_bits,
-            )
-            .field("max_framebuffer_width", &self.max_framebuffer_width)
+            ).field("max_framebuffer_width", &self.max_framebuffer_width)
             .field("max_framebuffer_height", &self.max_framebuffer_height)
             .field("max_framebuffer_layers", &self.max_framebuffer_layers)
             .field(
                 "framebuffer_color_sample_counts",
                 &self.framebuffer_color_sample_counts,
-            )
-            .field(
+            ).field(
                 "framebuffer_depth_sample_counts",
                 &self.framebuffer_depth_sample_counts,
-            )
-            .field(
+            ).field(
                 "framebuffer_stencil_sample_counts",
                 &self.framebuffer_stencil_sample_counts,
-            )
-            .field(
+            ).field(
                 "framebuffer_no_attachments_sample_counts",
                 &self.framebuffer_no_attachments_sample_counts,
-            )
-            .field("max_color_attachments", &self.max_color_attachments)
+            ).field("max_color_attachments", &self.max_color_attachments)
             .field(
                 "sampled_image_color_sample_counts",
                 &self.sampled_image_color_sample_counts,
-            )
-            .field(
+            ).field(
                 "sampled_image_integer_sample_counts",
                 &self.sampled_image_integer_sample_counts,
-            )
-            .field(
+            ).field(
                 "sampled_image_depth_sample_counts",
                 &self.sampled_image_depth_sample_counts,
-            )
-            .field(
+            ).field(
                 "sampled_image_stencil_sample_counts",
                 &self.sampled_image_stencil_sample_counts,
-            )
-            .field(
+            ).field(
                 "storage_image_sample_counts",
                 &self.storage_image_sample_counts,
-            )
-            .field("max_sample_mask_words", &self.max_sample_mask_words)
+            ).field("max_sample_mask_words", &self.max_sample_mask_words)
             .field(
                 "timestamp_compute_and_graphics",
                 &self.timestamp_compute_and_graphics,
-            )
-            .field("timestamp_period", &self.timestamp_period)
+            ).field("timestamp_period", &self.timestamp_period)
             .field("max_clip_distances", &self.max_clip_distances)
             .field("max_cull_distances", &self.max_cull_distances)
             .field(
                 "max_combined_clip_and_cull_distances",
                 &self.max_combined_clip_and_cull_distances,
-            )
-            .field("discrete_queue_priorities", &self.discrete_queue_priorities)
+            ).field("discrete_queue_priorities", &self.discrete_queue_priorities)
             .field("point_size_range", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.point_size_range.as_ptr() as *const i8)
-            })
-            .field("line_width_range", &unsafe {
+            }).field("line_width_range", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.line_width_range.as_ptr() as *const i8)
-            })
-            .field("point_size_granularity", &self.point_size_granularity)
+            }).field("point_size_granularity", &self.point_size_granularity)
             .field("line_width_granularity", &self.line_width_granularity)
             .field("strict_lines", &self.strict_lines)
             .field("standard_sample_locations", &self.standard_sample_locations)
             .field(
                 "optimal_buffer_copy_offset_alignment",
                 &self.optimal_buffer_copy_offset_alignment,
-            )
-            .field(
+            ).field(
                 "optimal_buffer_copy_row_pitch_alignment",
                 &self.optimal_buffer_copy_row_pitch_alignment,
-            )
-            .field("non_coherent_atom_size", &self.non_coherent_atom_size)
+            ).field("non_coherent_atom_size", &self.non_coherent_atom_size)
             .finish()
     }
 }
@@ -9450,8 +9377,8 @@ pub struct DebugReportCallbackCreateInfoEXT {
     pub pfn_callback: PFN_vkDebugReportCallbackEXT,
     pub p_user_data: *mut c_void,
 }
-impl ::std::fmt::Debug for DebugReportCallbackCreateInfoEXT {
-    fn fmt(&self, fmt: &mut ::std::fmt::Formatter) -> ::std::result::Result<(), ::std::fmt::Error> {
+impl fmt::Debug for DebugReportCallbackCreateInfoEXT {
+    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
         fmt.debug_struct("DebugReportCallbackCreateInfoEXT")
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
@@ -9601,16 +9528,15 @@ pub struct DebugMarkerMarkerInfoEXT {
     pub p_marker_name: *const c_char,
     pub color: [c_float; 4],
 }
-impl ::std::fmt::Debug for DebugMarkerMarkerInfoEXT {
-    fn fmt(&self, fmt: &mut ::std::fmt::Formatter) -> ::std::result::Result<(), ::std::fmt::Error> {
+impl fmt::Debug for DebugMarkerMarkerInfoEXT {
+    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
         fmt.debug_struct("DebugMarkerMarkerInfoEXT")
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
             .field("p_marker_name", &self.p_marker_name)
             .field("color", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.color.as_ptr() as *const i8)
-            })
-            .finish()
+            }).finish()
     }
 }
 impl ::std::default::Default for DebugMarkerMarkerInfoEXT {
@@ -10691,21 +10617,18 @@ pub struct PhysicalDeviceIDProperties {
     pub device_node_mask: u32,
     pub device_luid_valid: Bool32,
 }
-impl ::std::fmt::Debug for PhysicalDeviceIDProperties {
-    fn fmt(&self, fmt: &mut ::std::fmt::Formatter) -> ::std::result::Result<(), ::std::fmt::Error> {
+impl fmt::Debug for PhysicalDeviceIDProperties {
+    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
         fmt.debug_struct("PhysicalDeviceIDProperties")
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
             .field("device_uuid", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.device_uuid.as_ptr() as *const i8)
-            })
-            .field("driver_uuid", &unsafe {
+            }).field("driver_uuid", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.driver_uuid.as_ptr() as *const i8)
-            })
-            .field("device_luid", &unsafe {
+            }).field("device_luid", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.device_luid.as_ptr() as *const i8)
-            })
-            .field("device_node_mask", &self.device_node_mask)
+            }).field("device_node_mask", &self.device_node_mask)
             .field("device_luid_valid", &self.device_luid_valid)
             .finish()
     }
@@ -11886,16 +11809,15 @@ pub struct PhysicalDeviceGroupProperties {
     pub physical_devices: [PhysicalDevice; MAX_DEVICE_GROUP_SIZE],
     pub subset_allocation: Bool32,
 }
-impl ::std::fmt::Debug for PhysicalDeviceGroupProperties {
-    fn fmt(&self, fmt: &mut ::std::fmt::Formatter) -> ::std::result::Result<(), ::std::fmt::Error> {
+impl fmt::Debug for PhysicalDeviceGroupProperties {
+    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
         fmt.debug_struct("PhysicalDeviceGroupProperties")
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
             .field("physical_device_count", &self.physical_device_count)
             .field("physical_devices", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.physical_devices.as_ptr() as *const i8)
-            })
-            .field("subset_allocation", &self.subset_allocation)
+            }).field("subset_allocation", &self.subset_allocation)
             .finish()
     }
 }
@@ -12267,15 +12189,14 @@ pub struct DeviceGroupPresentCapabilitiesKHR {
     pub present_mask: [u32; MAX_DEVICE_GROUP_SIZE],
     pub modes: DeviceGroupPresentModeFlagsKHR,
 }
-impl ::std::fmt::Debug for DeviceGroupPresentCapabilitiesKHR {
-    fn fmt(&self, fmt: &mut ::std::fmt::Formatter) -> ::std::result::Result<(), ::std::fmt::Error> {
+impl fmt::Debug for DeviceGroupPresentCapabilitiesKHR {
+    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
         fmt.debug_struct("DeviceGroupPresentCapabilitiesKHR")
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
             .field("present_mask", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.present_mask.as_ptr() as *const i8)
-            })
-            .field("modes", &self.modes)
+            }).field("modes", &self.modes)
             .finish()
     }
 }
@@ -13875,29 +13796,25 @@ pub struct PhysicalDeviceSampleLocationsPropertiesEXT {
     pub sample_location_sub_pixel_bits: u32,
     pub variable_sample_locations: Bool32,
 }
-impl ::std::fmt::Debug for PhysicalDeviceSampleLocationsPropertiesEXT {
-    fn fmt(&self, fmt: &mut ::std::fmt::Formatter) -> ::std::result::Result<(), ::std::fmt::Error> {
+impl fmt::Debug for PhysicalDeviceSampleLocationsPropertiesEXT {
+    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
         fmt.debug_struct("PhysicalDeviceSampleLocationsPropertiesEXT")
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
             .field(
                 "sample_location_sample_counts",
                 &self.sample_location_sample_counts,
-            )
-            .field(
+            ).field(
                 "max_sample_location_grid_size",
                 &self.max_sample_location_grid_size,
-            )
-            .field("sample_location_coordinate_range", &unsafe {
+            ).field("sample_location_coordinate_range", &unsafe {
                 ::std::ffi::CStr::from_ptr(
                     self.sample_location_coordinate_range.as_ptr() as *const i8
                 )
-            })
-            .field(
+            }).field(
                 "sample_location_sub_pixel_bits",
                 &self.sample_location_sub_pixel_bits,
-            )
-            .field("variable_sample_locations", &self.variable_sample_locations)
+            ).field("variable_sample_locations", &self.variable_sample_locations)
             .finish()
     }
 }
@@ -14286,8 +14203,8 @@ pub struct ShaderStatisticsInfoAMD {
     pub num_available_sgprs: u32,
     pub compute_work_group_size: [u32; 3],
 }
-impl ::std::fmt::Debug for ShaderStatisticsInfoAMD {
-    fn fmt(&self, fmt: &mut ::std::fmt::Formatter) -> ::std::result::Result<(), ::std::fmt::Error> {
+impl fmt::Debug for ShaderStatisticsInfoAMD {
+    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
         fmt.debug_struct("ShaderStatisticsInfoAMD")
             .field("shader_stage_mask", &self.shader_stage_mask)
             .field("resource_usage", &self.resource_usage)
@@ -14297,8 +14214,7 @@ impl ::std::fmt::Debug for ShaderStatisticsInfoAMD {
             .field("num_available_sgprs", &self.num_available_sgprs)
             .field("compute_work_group_size", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.compute_work_group_size.as_ptr() as *const i8)
-            })
-            .finish()
+            }).finish()
     }
 }
 impl ::std::default::Default for ShaderStatisticsInfoAMD {
@@ -14467,16 +14383,15 @@ pub struct DebugUtilsLabelEXT {
     pub p_label_name: *const c_char,
     pub color: [c_float; 4],
 }
-impl ::std::fmt::Debug for DebugUtilsLabelEXT {
-    fn fmt(&self, fmt: &mut ::std::fmt::Formatter) -> ::std::result::Result<(), ::std::fmt::Error> {
+impl fmt::Debug for DebugUtilsLabelEXT {
+    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
         fmt.debug_struct("DebugUtilsLabelEXT")
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
             .field("p_label_name", &self.p_label_name)
             .field("color", &unsafe {
                 ::std::ffi::CStr::from_ptr(self.color.as_ptr() as *const i8)
-            })
-            .finish()
+            }).finish()
     }
 }
 impl ::std::default::Default for DebugUtilsLabelEXT {
@@ -14500,8 +14415,8 @@ pub struct DebugUtilsMessengerCreateInfoEXT {
     pub pfn_user_callback: PFN_vkDebugUtilsMessengerCallbackEXT,
     pub p_user_data: *mut c_void,
 }
-impl ::std::fmt::Debug for DebugUtilsMessengerCreateInfoEXT {
-    fn fmt(&self, fmt: &mut ::std::fmt::Formatter) -> ::std::result::Result<(), ::std::fmt::Error> {
+impl fmt::Debug for DebugUtilsMessengerCreateInfoEXT {
+    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
         fmt.debug_struct("DebugUtilsMessengerCreateInfoEXT")
             .field("s_type", &self.s_type)
             .field("p_next", &self.p_next)
@@ -17428,12 +17343,12 @@ pub mod extensions {
                 destroy_surface_khr: self.destroy_surface_khr,
                 get_physical_device_surface_support_khr: self
                     .get_physical_device_surface_support_khr,
-                get_physical_device_surface_capabilities_khr: self
-                    .get_physical_device_surface_capabilities_khr,
+                get_physical_device_surface_capabilities_khr:
+                    self.get_physical_device_surface_capabilities_khr,
                 get_physical_device_surface_formats_khr: self
                     .get_physical_device_surface_formats_khr,
-                get_physical_device_surface_present_modes_khr: self
-                    .get_physical_device_surface_present_modes_khr,
+                get_physical_device_surface_present_modes_khr:
+                    self.get_physical_device_surface_present_modes_khr,
             }
         }
     }
@@ -17582,12 +17497,12 @@ pub mod extensions {
                 get_swapchain_images_khr: self.get_swapchain_images_khr,
                 acquire_next_image_khr: self.acquire_next_image_khr,
                 queue_present_khr: self.queue_present_khr,
-                get_device_group_present_capabilities_khr: self
-                    .get_device_group_present_capabilities_khr,
-                get_device_group_surface_present_modes_khr: self
-                    .get_device_group_surface_present_modes_khr,
-                get_physical_device_present_rectangles_khr: self
-                    .get_physical_device_present_rectangles_khr,
+                get_device_group_present_capabilities_khr:
+                    self.get_device_group_present_capabilities_khr,
+                get_device_group_surface_present_modes_khr:
+                    self.get_device_group_surface_present_modes_khr,
+                get_physical_device_present_rectangles_khr:
+                    self.get_physical_device_present_rectangles_khr,
                 acquire_next_image2_khr: self.acquire_next_image2_khr,
             }
         }
@@ -17894,10 +17809,10 @@ pub mod extensions {
     impl ::std::clone::Clone for KhrDisplayFn {
         fn clone(&self) -> Self {
             KhrDisplayFn {
-                get_physical_device_display_properties_khr: self
-                    .get_physical_device_display_properties_khr,
-                get_physical_device_display_plane_properties_khr: self
-                    .get_physical_device_display_plane_properties_khr,
+                get_physical_device_display_properties_khr:
+                    self.get_physical_device_display_properties_khr,
+                get_physical_device_display_plane_properties_khr:
+                    self.get_physical_device_display_plane_properties_khr,
                 get_display_plane_supported_displays_khr: self
                     .get_display_plane_supported_displays_khr,
                 get_display_mode_properties_khr: self.get_display_mode_properties_khr,
@@ -18180,8 +18095,8 @@ pub mod extensions {
         fn clone(&self) -> Self {
             KhrXlibSurfaceFn {
                 create_xlib_surface_khr: self.create_xlib_surface_khr,
-                get_physical_device_xlib_presentation_support_khr: self
-                    .get_physical_device_xlib_presentation_support_khr,
+                get_physical_device_xlib_presentation_support_khr:
+                    self.get_physical_device_xlib_presentation_support_khr,
             }
         }
     }
@@ -18266,8 +18181,8 @@ pub mod extensions {
         fn clone(&self) -> Self {
             KhrXcbSurfaceFn {
                 create_xcb_surface_khr: self.create_xcb_surface_khr,
-                get_physical_device_xcb_presentation_support_khr: self
-                    .get_physical_device_xcb_presentation_support_khr,
+                get_physical_device_xcb_presentation_support_khr:
+                    self.get_physical_device_xcb_presentation_support_khr,
             }
         }
     }
@@ -18352,8 +18267,8 @@ pub mod extensions {
         fn clone(&self) -> Self {
             KhrWaylandSurfaceFn {
                 create_wayland_surface_khr: self.create_wayland_surface_khr,
-                get_physical_device_wayland_presentation_support_khr: self
-                    .get_physical_device_wayland_presentation_support_khr,
+                get_physical_device_wayland_presentation_support_khr:
+                    self.get_physical_device_wayland_presentation_support_khr,
             }
         }
     }
@@ -18435,8 +18350,8 @@ pub mod extensions {
         fn clone(&self) -> Self {
             KhrMirSurfaceFn {
                 create_mir_surface_khr: self.create_mir_surface_khr,
-                get_physical_device_mir_presentation_support_khr: self
-                    .get_physical_device_mir_presentation_support_khr,
+                get_physical_device_mir_presentation_support_khr:
+                    self.get_physical_device_mir_presentation_support_khr,
             }
         }
     }
@@ -18570,8 +18485,8 @@ pub mod extensions {
         fn clone(&self) -> Self {
             KhrWin32SurfaceFn {
                 create_win32_surface_khr: self.create_win32_surface_khr,
-                get_physical_device_win32_presentation_support_khr: self
-                    .get_physical_device_win32_presentation_support_khr,
+                get_physical_device_win32_presentation_support_khr:
+                    self.get_physical_device_win32_presentation_support_khr,
             }
         }
     }
@@ -20137,8 +20052,8 @@ pub mod extensions {
     impl ::std::clone::Clone for NvExternalMemoryCapabilitiesFn {
         fn clone(&self) -> Self {
             NvExternalMemoryCapabilitiesFn {
-                get_physical_device_external_image_format_properties_nv: self
-                    .get_physical_device_external_image_format_properties_nv,
+                get_physical_device_external_image_format_properties_nv:
+                    self.get_physical_device_external_image_format_properties_nv,
             }
         }
     }
@@ -20331,12 +20246,12 @@ pub mod extensions {
     impl ::std::clone::Clone for KhrDeviceGroupFn {
         fn clone(&self) -> Self {
             KhrDeviceGroupFn {
-                get_device_group_present_capabilities_khr: self
-                    .get_device_group_present_capabilities_khr,
-                get_device_group_surface_present_modes_khr: self
-                    .get_device_group_surface_present_modes_khr,
-                get_physical_device_present_rectangles_khr: self
-                    .get_physical_device_present_rectangles_khr,
+                get_device_group_present_capabilities_khr:
+                    self.get_device_group_present_capabilities_khr,
+                get_device_group_surface_present_modes_khr:
+                    self.get_device_group_surface_present_modes_khr,
+                get_physical_device_present_rectangles_khr:
+                    self.get_physical_device_present_rectangles_khr,
                 acquire_next_image2_khr: self.acquire_next_image2_khr,
             }
         }
@@ -21148,8 +21063,8 @@ pub mod extensions {
         fn clone(&self) -> Self {
             KhrPushDescriptorFn {
                 cmd_push_descriptor_set_khr: self.cmd_push_descriptor_set_khr,
-                cmd_push_descriptor_set_with_template_khr: self
-                    .cmd_push_descriptor_set_with_template_khr,
+                cmd_push_descriptor_set_with_template_khr:
+                    self.cmd_push_descriptor_set_with_template_khr,
             }
         }
     }
@@ -21335,8 +21250,8 @@ pub mod extensions {
     impl ::std::clone::Clone for KhrDescriptorUpdateTemplateFn {
         fn clone(&self) -> Self {
             KhrDescriptorUpdateTemplateFn {
-                cmd_push_descriptor_set_with_template_khr: self
-                    .cmd_push_descriptor_set_with_template_khr,
+                cmd_push_descriptor_set_with_template_khr:
+                    self.cmd_push_descriptor_set_with_template_khr,
             }
         }
     }
@@ -21450,8 +21365,8 @@ pub mod extensions {
                 destroy_object_table_nvx: self.destroy_object_table_nvx,
                 register_objects_nvx: self.register_objects_nvx,
                 unregister_objects_nvx: self.unregister_objects_nvx,
-                get_physical_device_generated_commands_properties_nvx: self
-                    .get_physical_device_generated_commands_properties_nvx,
+                get_physical_device_generated_commands_properties_nvx:
+                    self.get_physical_device_generated_commands_properties_nvx,
             }
         }
     }
@@ -21891,8 +21806,8 @@ pub mod extensions {
     impl ::std::clone::Clone for ExtDisplaySurfaceCounterFn {
         fn clone(&self) -> Self {
             ExtDisplaySurfaceCounterFn {
-                get_physical_device_surface_capabilities2_ext: self
-                    .get_physical_device_surface_capabilities2_ext,
+                get_physical_device_surface_capabilities2_ext:
+                    self.get_physical_device_surface_capabilities2_ext,
             }
         }
     }
@@ -23043,8 +22958,8 @@ pub mod extensions {
     impl ::std::clone::Clone for KhrGetSurfaceCapabilities2Fn {
         fn clone(&self) -> Self {
             KhrGetSurfaceCapabilities2Fn {
-                get_physical_device_surface_capabilities2_khr: self
-                    .get_physical_device_surface_capabilities2_khr,
+                get_physical_device_surface_capabilities2_khr:
+                    self.get_physical_device_surface_capabilities2_khr,
                 get_physical_device_surface_formats2_khr: self
                     .get_physical_device_surface_formats2_khr,
             }
@@ -23175,10 +23090,10 @@ pub mod extensions {
     impl ::std::clone::Clone for KhrGetDisplayProperties2Fn {
         fn clone(&self) -> Self {
             KhrGetDisplayProperties2Fn {
-                get_physical_device_display_properties2_khr: self
-                    .get_physical_device_display_properties2_khr,
-                get_physical_device_display_plane_properties2_khr: self
-                    .get_physical_device_display_plane_properties2_khr,
+                get_physical_device_display_properties2_khr:
+                    self.get_physical_device_display_properties2_khr,
+                get_physical_device_display_plane_properties2_khr:
+                    self.get_physical_device_display_plane_properties2_khr,
                 get_display_mode_properties2_khr: self.get_display_mode_properties2_khr,
                 get_display_plane_capabilities2_khr: self.get_display_plane_capabilities2_khr,
             }
@@ -23814,10 +23729,10 @@ pub mod extensions {
     impl ::std::clone::Clone for AndroidExternalMemoryAndroidHardwareBufferFn {
         fn clone(&self) -> Self {
             AndroidExternalMemoryAndroidHardwareBufferFn {
-                get_android_hardware_buffer_properties_android: self
-                    .get_android_hardware_buffer_properties_android,
-                get_memory_android_hardware_buffer_android: self
-                    .get_memory_android_hardware_buffer_android,
+                get_android_hardware_buffer_properties_android:
+                    self.get_android_hardware_buffer_properties_android,
+                get_memory_android_hardware_buffer_android:
+                    self.get_memory_android_hardware_buffer_android,
             }
         }
     }
@@ -24218,8 +24133,8 @@ pub mod extensions {
         fn clone(&self) -> Self {
             ExtSampleLocationsFn {
                 cmd_set_sample_locations_ext: self.cmd_set_sample_locations_ext,
-                get_physical_device_multisample_properties_ext: self
-                    .get_physical_device_multisample_properties_ext,
+                get_physical_device_multisample_properties_ext:
+                    self.get_physical_device_multisample_properties_ext,
             }
         }
     }
@@ -26914,26 +26829,32 @@ fn display_flags(
     }
     Ok(())
 }
-impl fmt::Display for CommandPoolCreateFlags {
+impl fmt::Display for ExternalFenceFeatureFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
-            (CommandPoolCreateFlags::TRANSIENT.0, "TRANSIENT"),
             (
-                CommandPoolCreateFlags::RESET_COMMAND_BUFFER.0,
-                "RESET_COMMAND_BUFFER",
+                ExternalFenceFeatureFlags::EXTERNAL_FENCE_FEATURE_EXPORTABLE.0,
+                "EXTERNAL_FENCE_FEATURE_EXPORTABLE",
             ),
-            (CommandPoolCreateFlags::PROTECTED.0, "PROTECTED"),
+            (
+                ExternalFenceFeatureFlags::EXTERNAL_FENCE_FEATURE_IMPORTABLE.0,
+                "EXTERNAL_FENCE_FEATURE_IMPORTABLE",
+            ),
         ];
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for SamplerAddressMode {
+impl fmt::Display for SurfaceCounterFlagsEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(SurfaceCounterFlagsEXT::VBLANK.0, "VBLANK")];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for SamplerYcbcrRange {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::REPEAT => Some("REPEAT"),
-            Self::MIRRORED_REPEAT => Some("MIRRORED_REPEAT"),
-            Self::CLAMP_TO_EDGE => Some("CLAMP_TO_EDGE"),
-            Self::CLAMP_TO_BORDER => Some("CLAMP_TO_BORDER"),
+            Self::ITU_FULL => Some("ITU_FULL"),
+            Self::ITU_NARROW => Some("ITU_NARROW"),
             _ => None,
         };
         if let Some(x) = name {
@@ -26943,11 +26864,29 @@ impl fmt::Display for SamplerAddressMode {
         }
     }
 }
-impl fmt::Display for IndexType {
+impl fmt::Display for CompositeAlphaFlagsKHR {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (CompositeAlphaFlagsKHR::OPAQUE.0, "OPAQUE"),
+            (CompositeAlphaFlagsKHR::PRE_MULTIPLIED.0, "PRE_MULTIPLIED"),
+            (CompositeAlphaFlagsKHR::POST_MULTIPLIED.0, "POST_MULTIPLIED"),
+            (CompositeAlphaFlagsKHR::INHERIT.0, "INHERIT"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for SemaphoreImportFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(SemaphoreImportFlags::TEMPORARY.0, "TEMPORARY")];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for QueryType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::UINT16 => Some("UINT16"),
-            Self::UINT32 => Some("UINT32"),
+            Self::OCCLUSION => Some("OCCLUSION"),
+            Self::PIPELINE_STATISTICS => Some("PIPELINE_STATISTICS"),
+            Self::TIMESTAMP => Some("TIMESTAMP"),
             _ => None,
         };
         if let Some(x) = name {
@@ -26957,31 +26896,168 @@ impl fmt::Display for IndexType {
         }
     }
 }
-impl fmt::Display for StencilFaceFlags {
+impl fmt::Display for DebugReportObjectTypeEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::UNKNOWN => Some("UNKNOWN"),
+            Self::INSTANCE => Some("INSTANCE"),
+            Self::PHYSICAL_DEVICE => Some("PHYSICAL_DEVICE"),
+            Self::DEVICE => Some("DEVICE"),
+            Self::QUEUE => Some("QUEUE"),
+            Self::SEMAPHORE => Some("SEMAPHORE"),
+            Self::COMMAND_BUFFER => Some("COMMAND_BUFFER"),
+            Self::FENCE => Some("FENCE"),
+            Self::DEVICE_MEMORY => Some("DEVICE_MEMORY"),
+            Self::BUFFER => Some("BUFFER"),
+            Self::IMAGE => Some("IMAGE"),
+            Self::EVENT => Some("EVENT"),
+            Self::QUERY_POOL => Some("QUERY_POOL"),
+            Self::BUFFER_VIEW => Some("BUFFER_VIEW"),
+            Self::IMAGE_VIEW => Some("IMAGE_VIEW"),
+            Self::SHADER_MODULE => Some("SHADER_MODULE"),
+            Self::PIPELINE_CACHE => Some("PIPELINE_CACHE"),
+            Self::PIPELINE_LAYOUT => Some("PIPELINE_LAYOUT"),
+            Self::RENDER_PASS => Some("RENDER_PASS"),
+            Self::PIPELINE => Some("PIPELINE"),
+            Self::DESCRIPTOR_SET_LAYOUT => Some("DESCRIPTOR_SET_LAYOUT"),
+            Self::SAMPLER => Some("SAMPLER"),
+            Self::DESCRIPTOR_POOL => Some("DESCRIPTOR_POOL"),
+            Self::DESCRIPTOR_SET => Some("DESCRIPTOR_SET"),
+            Self::FRAMEBUFFER => Some("FRAMEBUFFER"),
+            Self::COMMAND_POOL => Some("COMMAND_POOL"),
+            Self::SURFACE_KHR => Some("SURFACE_KHR"),
+            Self::SWAPCHAIN_KHR => Some("SWAPCHAIN_KHR"),
+            Self::DEBUG_REPORT_CALLBACK => Some("DEBUG_REPORT_CALLBACK"),
+            Self::DISPLAY_KHR => Some("DISPLAY_KHR"),
+            Self::DISPLAY_MODE_KHR => Some("DISPLAY_MODE_KHR"),
+            Self::OBJECT_TABLE_NVX => Some("OBJECT_TABLE_NVX"),
+            Self::INDIRECT_COMMANDS_LAYOUT_NVX => Some("INDIRECT_COMMANDS_LAYOUT_NVX"),
+            Self::VALIDATION_CACHE => Some("VALIDATION_CACHE"),
+            Self::SAMPLER_YCBCR_CONVERSION => Some("SAMPLER_YCBCR_CONVERSION"),
+            Self::DESCRIPTOR_UPDATE_TEMPLATE => Some("DESCRIPTOR_UPDATE_TEMPLATE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for AttachmentLoadOp {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::LOAD => Some("LOAD"),
+            Self::CLEAR => Some("CLEAR"),
+            Self::DONT_CARE => Some("DONT_CARE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for CommandBufferResetFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(
+            CommandBufferResetFlags::RELEASE_RESOURCES.0,
+            "RELEASE_RESOURCES",
+        )];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for ComponentSwizzle {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::IDENTITY => Some("IDENTITY"),
+            Self::ZERO => Some("ZERO"),
+            Self::ONE => Some("ONE"),
+            Self::R => Some("R"),
+            Self::G => Some("G"),
+            Self::B => Some("B"),
+            Self::A => Some("A"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for DisplayPowerStateEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::OFF => Some("OFF"),
+            Self::SUSPEND => Some("SUSPEND"),
+            Self::ON => Some("ON"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for SamplerYcbcrModelConversion {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::RGB_IDENTITY => Some("RGB_IDENTITY"),
+            Self::YCBCR_IDENTITY => Some("YCBCR_IDENTITY"),
+            Self::YCBCR_709 => Some("YCBCR_709"),
+            Self::YCBCR_601 => Some("YCBCR_601"),
+            Self::YCBCR_2020 => Some("YCBCR_2020"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for ShaderStageFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
-            (StencilFaceFlags::FRONT.0, "FRONT"),
-            (StencilFaceFlags::BACK.0, "BACK"),
+            (ShaderStageFlags::VERTEX.0, "VERTEX"),
             (
-                StencilFaceFlags::STENCIL_FRONT_AND_BACK.0,
-                "STENCIL_FRONT_AND_BACK",
+                ShaderStageFlags::TESSELLATION_CONTROL.0,
+                "TESSELLATION_CONTROL",
             ),
+            (
+                ShaderStageFlags::TESSELLATION_EVALUATION.0,
+                "TESSELLATION_EVALUATION",
+            ),
+            (ShaderStageFlags::GEOMETRY.0, "GEOMETRY"),
+            (ShaderStageFlags::FRAGMENT.0, "FRAGMENT"),
+            (ShaderStageFlags::COMPUTE.0, "COMPUTE"),
+            (ShaderStageFlags::ALL_GRAPHICS.0, "ALL_GRAPHICS"),
+            (ShaderStageFlags::ALL.0, "ALL"),
         ];
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for DeviceGroupPresentModeFlagsKHR {
+impl fmt::Display for CompareOp {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (DeviceGroupPresentModeFlagsKHR::LOCAL.0, "LOCAL"),
-            (DeviceGroupPresentModeFlagsKHR::REMOTE.0, "REMOTE"),
-            (DeviceGroupPresentModeFlagsKHR::SUM.0, "SUM"),
-            (
-                DeviceGroupPresentModeFlagsKHR::LOCAL_MULTI_DEVICE.0,
-                "LOCAL_MULTI_DEVICE",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
+        let name = match *self {
+            Self::NEVER => Some("NEVER"),
+            Self::LESS => Some("LESS"),
+            Self::EQUAL => Some("EQUAL"),
+            Self::LESS_OR_EQUAL => Some("LESS_OR_EQUAL"),
+            Self::GREATER => Some("GREATER"),
+            Self::NOT_EQUAL => Some("NOT_EQUAL"),
+            Self::GREATER_OR_EQUAL => Some("GREATER_OR_EQUAL"),
+            Self::ALWAYS => Some("ALWAYS"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
     }
 }
 impl fmt::Display for ImageLayout {
@@ -27013,11 +27089,36 @@ impl fmt::Display for ImageLayout {
         }
     }
 }
-impl fmt::Display for CommandBufferLevel {
+impl fmt::Display for ExternalFenceHandleTypeFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD.0,
+                "EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD",
+            ),
+            (
+                ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32.0,
+                "EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32",
+            ),
+            (
+                ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT.0,
+                "EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT",
+            ),
+            (
+                ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD.0,
+                "EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for PolygonMode {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::PRIMARY => Some("PRIMARY"),
-            Self::SECONDARY => Some("SECONDARY"),
+            Self::FILL => Some("FILL"),
+            Self::LINE => Some("LINE"),
+            Self::POINT => Some("POINT"),
+            Self::FILL_RECTANGLE_NV => Some("FILL_RECTANGLE_NV"),
             _ => None,
         };
         if let Some(x) = name {
@@ -27027,10 +27128,12 @@ impl fmt::Display for CommandBufferLevel {
         }
     }
 }
-impl fmt::Display for PipelineCacheHeaderVersion {
+impl fmt::Display for ShaderInfoTypeAMD {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::ONE => Some("ONE"),
+            Self::STATISTICS => Some("STATISTICS"),
+            Self::BINARY => Some("BINARY"),
+            Self::DISASSEMBLY => Some("DISASSEMBLY"),
             _ => None,
         };
         if let Some(x) = name {
@@ -27040,124 +27143,95 @@ impl fmt::Display for PipelineCacheHeaderVersion {
         }
     }
 }
-impl fmt::Display for ImageAspectFlags {
+impl fmt::Display for SparseImageFormatFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
-            (ImageAspectFlags::COLOR.0, "COLOR"),
-            (ImageAspectFlags::DEPTH.0, "DEPTH"),
-            (ImageAspectFlags::STENCIL.0, "STENCIL"),
-            (ImageAspectFlags::METADATA.0, "METADATA"),
-            (ImageAspectFlags::PLANE_0.0, "PLANE_0"),
-            (ImageAspectFlags::PLANE_1.0, "PLANE_1"),
-            (ImageAspectFlags::PLANE_2.0, "PLANE_2"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for IndirectCommandsLayoutUsageFlagsNVX {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (PipelineStageFlags::TOP_OF_PIPE.0, "TOP_OF_PIPE"),
-            (PipelineStageFlags::DRAW_INDIRECT.0, "DRAW_INDIRECT"),
-            (PipelineStageFlags::VERTEX_INPUT.0, "VERTEX_INPUT"),
-            (PipelineStageFlags::VERTEX_SHADER.0, "VERTEX_SHADER"),
+            (SparseImageFormatFlags::SINGLE_MIPTAIL.0, "SINGLE_MIPTAIL"),
             (
-                IndirectCommandsLayoutUsageFlagsNVX::UNORDERED_SEQUENCES.0,
-                "UNORDERED_SEQUENCES",
-            ),
-            (PipelineStageFlags::GEOMETRY_SHADER.0, "GEOMETRY_SHADER"),
-            (PipelineStageFlags::FRAGMENT_SHADER.0, "FRAGMENT_SHADER"),
-            (
-                IndirectCommandsLayoutUsageFlagsNVX::SPARSE_SEQUENCES.0,
-                "SPARSE_SEQUENCES",
+                SparseImageFormatFlags::ALIGNED_MIP_SIZE.0,
+                "ALIGNED_MIP_SIZE",
             ),
             (
-                IndirectCommandsLayoutUsageFlagsNVX::EMPTY_EXECUTIONS.0,
-                "EMPTY_EXECUTIONS",
-            ),
-            (
-                IndirectCommandsLayoutUsageFlagsNVX::INDEXED_SEQUENCES.0,
-                "INDEXED_SEQUENCES",
+                SparseImageFormatFlags::NONSTANDARD_BLOCK_SIZE.0,
+                "NONSTANDARD_BLOCK_SIZE",
             ),
         ];
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for AccessFlags {
+impl fmt::Display for DescriptorType {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::SAMPLER => Some("SAMPLER"),
+            Self::COMBINED_IMAGE_SAMPLER => Some("COMBINED_IMAGE_SAMPLER"),
+            Self::SAMPLED_IMAGE => Some("SAMPLED_IMAGE"),
+            Self::STORAGE_IMAGE => Some("STORAGE_IMAGE"),
+            Self::UNIFORM_TEXEL_BUFFER => Some("UNIFORM_TEXEL_BUFFER"),
+            Self::STORAGE_TEXEL_BUFFER => Some("STORAGE_TEXEL_BUFFER"),
+            Self::UNIFORM_BUFFER => Some("UNIFORM_BUFFER"),
+            Self::STORAGE_BUFFER => Some("STORAGE_BUFFER"),
+            Self::UNIFORM_BUFFER_DYNAMIC => Some("UNIFORM_BUFFER_DYNAMIC"),
+            Self::STORAGE_BUFFER_DYNAMIC => Some("STORAGE_BUFFER_DYNAMIC"),
+            Self::INPUT_ATTACHMENT => Some("INPUT_ATTACHMENT"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for DisplayEventTypeEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::FIRST_PIXEL_OUT => Some("FIRST_PIXEL_OUT"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for DescriptorPoolCreateFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (
-                AccessFlags::INDIRECT_COMMAND_READ.0,
-                "INDIRECT_COMMAND_READ",
-            ),
-            (AccessFlags::INDEX_READ.0, "INDEX_READ"),
-            (
-                AccessFlags::VERTEX_ATTRIBUTE_READ.0,
-                "VERTEX_ATTRIBUTE_READ",
-            ),
-            (AccessFlags::UNIFORM_READ.0, "UNIFORM_READ"),
-            (
-                AccessFlags::INPUT_ATTACHMENT_READ.0,
-                "INPUT_ATTACHMENT_READ",
-            ),
-            (AccessFlags::SHADER_READ.0, "SHADER_READ"),
-            (AccessFlags::SHADER_WRITE.0, "SHADER_WRITE"),
-            (
-                AccessFlags::COLOR_ATTACHMENT_READ.0,
-                "COLOR_ATTACHMENT_READ",
+                DescriptorPoolCreateFlags::FREE_DESCRIPTOR_SET.0,
+                "FREE_DESCRIPTOR_SET",
             ),
             (
-                AccessFlags::COLOR_ATTACHMENT_WRITE.0,
-                "COLOR_ATTACHMENT_WRITE",
-            ),
-            (
-                AccessFlags::DEPTH_STENCIL_ATTACHMENT_READ.0,
-                "DEPTH_STENCIL_ATTACHMENT_READ",
-            ),
-            (
-                AccessFlags::DEPTH_STENCIL_ATTACHMENT_WRITE.0,
-                "DEPTH_STENCIL_ATTACHMENT_WRITE",
-            ),
-            (AccessFlags::TRANSFER_READ.0, "TRANSFER_READ"),
-            (AccessFlags::TRANSFER_WRITE.0, "TRANSFER_WRITE"),
-            (AccessFlags::HOST_READ.0, "HOST_READ"),
-            (AccessFlags::HOST_WRITE.0, "HOST_WRITE"),
-            (AccessFlags::MEMORY_READ.0, "MEMORY_READ"),
-            (AccessFlags::MEMORY_WRITE.0, "MEMORY_WRITE"),
-            (
-                AccessFlags::COMMAND_PROCESS_READ_NVX.0,
-                "COMMAND_PROCESS_READ_NVX",
-            ),
-            (
-                AccessFlags::COMMAND_PROCESS_WRITE_NVX.0,
-                "COMMAND_PROCESS_WRITE_NVX",
-            ),
-            (
-                AccessFlags::COLOR_ATTACHMENT_READ_NONCOHERENT_EXT.0,
-                "COLOR_ATTACHMENT_READ_NONCOHERENT_EXT",
+                DescriptorPoolCreateFlags::UPDATE_AFTER_BIND_EXT.0,
+                "UPDATE_AFTER_BIND_EXT",
             ),
         ];
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for SubpassDescriptionFlags {
+impl fmt::Display for SamplerReductionModeEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                SubpassDescriptionFlags::PER_VIEW_ATTRIBUTES_NVX.0,
-                "PER_VIEW_ATTRIBUTES_NVX",
-            ),
-            (
-                SubpassDescriptionFlags::PER_VIEW_POSITION_X_ONLY_NVX.0,
-                "PER_VIEW_POSITION_X_ONLY_NVX",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
+        let name = match *self {
+            Self::WEIGHTED_AVERAGE => Some("WEIGHTED_AVERAGE"),
+            Self::MIN => Some("MIN"),
+            Self::MAX => Some("MAX"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
     }
 }
-impl fmt::Display for SurfaceCounterFlagsEXT {
+impl fmt::Display for DebugUtilsMessageTypeFlagsEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(SurfaceCounterFlagsEXT::VBLANK.0, "VBLANK")];
+        const KNOWN: &[(Flags, &str)] = &[
+            (DebugUtilsMessageTypeFlagsEXT::GENERAL.0, "GENERAL"),
+            (DebugUtilsMessageTypeFlagsEXT::VALIDATION.0, "VALIDATION"),
+            (DebugUtilsMessageTypeFlagsEXT::PERFORMANCE.0, "PERFORMANCE"),
+        ];
         display_flags(f, KNOWN, self.0)
     }
 }
@@ -27167,110 +27241,6 @@ impl fmt::Display for BlendOverlapEXT {
             Self::UNCORRELATED => Some("UNCORRELATED"),
             Self::DISJOINT => Some("DISJOINT"),
             Self::CONJOINT => Some("CONJOINT"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for DisplayPowerStateEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::OFF => Some("OFF"),
-            Self::SUSPEND => Some("SUSPEND"),
-            Self::ON => Some("ON"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for DebugReportFlagsEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (DebugReportFlagsEXT::INFORMATION.0, "INFORMATION"),
-            (DebugReportFlagsEXT::WARNING.0, "WARNING"),
-            (
-                DebugReportFlagsEXT::PERFORMANCE_WARNING.0,
-                "PERFORMANCE_WARNING",
-            ),
-            (DebugReportFlagsEXT::ERROR.0, "ERROR"),
-            (DebugReportFlagsEXT::DEBUG.0, "DEBUG"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for PipelineCreateFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                PipelineCreateFlags::DISABLE_OPTIMIZATION.0,
-                "DISABLE_OPTIMIZATION",
-            ),
-            (
-                PipelineCreateFlags::ALLOW_DERIVATIVES.0,
-                "ALLOW_DERIVATIVES",
-            ),
-            (PipelineCreateFlags::DERIVATIVE.0, "DERIVATIVE"),
-            (
-                PipelineCreateFlags::VIEW_INDEX_FROM_DEVICE_INDEX.0,
-                "VIEW_INDEX_FROM_DEVICE_INDEX",
-            ),
-            (PipelineCreateFlags::DISPATCH_BASE.0, "DISPATCH_BASE"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for DescriptorUpdateTemplateType {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::DESCRIPTOR_SET => Some("DESCRIPTOR_SET"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for PresentModeKHR {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::IMMEDIATE => Some("IMMEDIATE"),
-            Self::MAILBOX => Some("MAILBOX"),
-            Self::FIFO => Some("FIFO"),
-            Self::FIFO_RELAXED => Some("FIFO_RELAXED"),
-            Self::SHARED_DEMAND_REFRESH => Some("SHARED_DEMAND_REFRESH"),
-            Self::SHARED_CONTINUOUS_REFRESH => Some("SHARED_CONTINUOUS_REFRESH"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ExternalMemoryHandleTypeFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN : & [ ( Flags , & str ) ] = & [ ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32 . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_ANDROID_HARDWARE_BUFFER_ANDROID . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_ANDROID_HARDWARE_BUFFER_ANDROID" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_HOST_ALLOCATION . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_HOST_ALLOCATION" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_HOST_MAPPED_FOREIGN_MEMORY . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_HOST_MAPPED_FOREIGN_MEMORY" ) ] ;
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for QueueGlobalPriorityEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::LOW => Some("LOW"),
-            Self::MEDIUM => Some("MEDIUM"),
-            Self::HIGH => Some("HIGH"),
-            Self::REALTIME => Some("REALTIME"),
             _ => None,
         };
         if let Some(x) = name {
@@ -27292,6 +27262,95 @@ impl fmt::Display for SwapchainCreateFlagsKHR {
         display_flags(f, KNOWN, self.0)
     }
 }
+impl fmt::Display for PipelineStageFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (PipelineStageFlags::TOP_OF_PIPE.0, "TOP_OF_PIPE"),
+            (PipelineStageFlags::DRAW_INDIRECT.0, "DRAW_INDIRECT"),
+            (PipelineStageFlags::VERTEX_INPUT.0, "VERTEX_INPUT"),
+            (PipelineStageFlags::VERTEX_SHADER.0, "VERTEX_SHADER"),
+            (
+                PipelineStageFlags::TESSELLATION_CONTROL_SHADER.0,
+                "TESSELLATION_CONTROL_SHADER",
+            ),
+            (
+                PipelineStageFlags::TESSELLATION_EVALUATION_SHADER.0,
+                "TESSELLATION_EVALUATION_SHADER",
+            ),
+            (PipelineStageFlags::GEOMETRY_SHADER.0, "GEOMETRY_SHADER"),
+            (PipelineStageFlags::FRAGMENT_SHADER.0, "FRAGMENT_SHADER"),
+            (
+                PipelineStageFlags::EARLY_FRAGMENT_TESTS.0,
+                "EARLY_FRAGMENT_TESTS",
+            ),
+            (
+                PipelineStageFlags::LATE_FRAGMENT_TESTS.0,
+                "LATE_FRAGMENT_TESTS",
+            ),
+            (
+                PipelineStageFlags::COLOR_ATTACHMENT_OUTPUT.0,
+                "COLOR_ATTACHMENT_OUTPUT",
+            ),
+            (PipelineStageFlags::COMPUTE_SHADER.0, "COMPUTE_SHADER"),
+            (PipelineStageFlags::TRANSFER.0, "TRANSFER"),
+            (PipelineStageFlags::BOTTOM_OF_PIPE.0, "BOTTOM_OF_PIPE"),
+            (PipelineStageFlags::HOST.0, "HOST"),
+            (PipelineStageFlags::ALL_GRAPHICS.0, "ALL_GRAPHICS"),
+            (PipelineStageFlags::ALL_COMMANDS.0, "ALL_COMMANDS"),
+            (
+                PipelineStageFlags::COMMAND_PROCESS_NVX.0,
+                "COMMAND_PROCESS_NVX",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for PipelineCacheHeaderVersion {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::ONE => Some("ONE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for ImageViewType {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::TYPE_1D => Some("TYPE_1D"),
+            Self::TYPE_2D => Some("TYPE_2D"),
+            Self::TYPE_3D => Some("TYPE_3D"),
+            Self::CUBE => Some("CUBE"),
+            Self::TYPE_1D_ARRAY => Some("TYPE_1D_ARRAY"),
+            Self::TYPE_2D_ARRAY => Some("TYPE_2D_ARRAY"),
+            Self::CUBE_ARRAY => Some("CUBE_ARRAY"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for ValidationCheckEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::ALL => Some("ALL"),
+            Self::SHADERS => Some("SHADERS"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
 impl fmt::Display for Filter {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
@@ -27307,84 +27366,84 @@ impl fmt::Display for Filter {
         }
     }
 }
-impl fmt::Display for CompositeAlphaFlagsKHR {
+impl fmt::Display for ExternalSemaphoreHandleTypeFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
-            (CompositeAlphaFlagsKHR::OPAQUE.0, "OPAQUE"),
-            (CompositeAlphaFlagsKHR::PRE_MULTIPLIED.0, "PRE_MULTIPLIED"),
-            (CompositeAlphaFlagsKHR::POST_MULTIPLIED.0, "POST_MULTIPLIED"),
-            (CompositeAlphaFlagsKHR::INHERIT.0, "INHERIT"),
+            (
+                ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD.0,
+                "EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD",
+            ),
+            (
+                ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32.0,
+                "EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32",
+            ),
+            (
+                ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT.0,
+                "EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT",
+            ),
+            (
+                ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE.0,
+                "EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE",
+            ),
+            (
+                ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD.0,
+                "EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD",
+            ),
         ];
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for SystemAllocationScope {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::COMMAND => Some("COMMAND"),
-            Self::OBJECT => Some("OBJECT"),
-            Self::CACHE => Some("CACHE"),
-            Self::DEVICE => Some("DEVICE"),
-            Self::INSTANCE => Some("INSTANCE"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for PolygonMode {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::FILL => Some("FILL"),
-            Self::LINE => Some("LINE"),
-            Self::POINT => Some("POINT"),
-            Self::FILL_RECTANGLE_NV => Some("FILL_RECTANGLE_NV"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for QueryType {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::OCCLUSION => Some("OCCLUSION"),
-            Self::PIPELINE_STATISTICS => Some("PIPELINE_STATISTICS"),
-            Self::TIMESTAMP => Some("TIMESTAMP"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for MemoryPropertyFlags {
+impl fmt::Display for SubgroupFeatureFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
-            (MemoryPropertyFlags::DEVICE_LOCAL.0, "DEVICE_LOCAL"),
-            (MemoryPropertyFlags::HOST_VISIBLE.0, "HOST_VISIBLE"),
-            (MemoryPropertyFlags::HOST_COHERENT.0, "HOST_COHERENT"),
-            (MemoryPropertyFlags::HOST_CACHED.0, "HOST_CACHED"),
-            (MemoryPropertyFlags::LAZILY_ALLOCATED.0, "LAZILY_ALLOCATED"),
-            (MemoryPropertyFlags::PROTECTED.0, "PROTECTED"),
+            (SubgroupFeatureFlags::BASIC.0, "BASIC"),
+            (SubgroupFeatureFlags::VOTE.0, "VOTE"),
+            (SubgroupFeatureFlags::ARITHMETIC.0, "ARITHMETIC"),
+            (SubgroupFeatureFlags::BALLOT.0, "BALLOT"),
+            (SubgroupFeatureFlags::SHUFFLE.0, "SHUFFLE"),
+            (SubgroupFeatureFlags::SHUFFLE_RELATIVE.0, "SHUFFLE_RELATIVE"),
+            (SubgroupFeatureFlags::CLUSTERED.0, "CLUSTERED"),
+            (SubgroupFeatureFlags::QUAD.0, "QUAD"),
+            (SubgroupFeatureFlags::PARTITIONED_NV.0, "PARTITIONED_NV"),
         ];
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for DependencyFlags {
+impl fmt::Display for ConservativeRasterizationModeEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::DISABLED => Some("DISABLED"),
+            Self::OVERESTIMATE => Some("OVERESTIMATE"),
+            Self::UNDERESTIMATE => Some("UNDERESTIMATE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for DebugUtilsMessageSeverityFlagsEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
-            (DependencyFlags::BY_REGION.0, "BY_REGION"),
-            (DependencyFlags::DEVICE_GROUP.0, "DEVICE_GROUP"),
-            (DependencyFlags::VIEW_LOCAL.0, "VIEW_LOCAL"),
+            (DebugUtilsMessageSeverityFlagsEXT::VERBOSE.0, "VERBOSE"),
+            (DebugUtilsMessageSeverityFlagsEXT::INFO.0, "INFO"),
+            (DebugUtilsMessageSeverityFlagsEXT::WARNING.0, "WARNING"),
+            (DebugUtilsMessageSeverityFlagsEXT::ERROR.0, "ERROR"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for StencilFaceFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (StencilFaceFlags::FRONT.0, "FRONT"),
+            (StencilFaceFlags::BACK.0, "BACK"),
+            (
+                StencilFaceFlags::STENCIL_FRONT_AND_BACK.0,
+                "STENCIL_FRONT_AND_BACK",
+            ),
         ];
         display_flags(f, KNOWN, self.0)
     }
@@ -27412,25 +27471,14 @@ impl fmt::Display for DescriptorBindingFlagsEXT {
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for SampleCountFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (SampleCountFlags::TYPE_1.0, "TYPE_1"),
-            (SampleCountFlags::TYPE_2.0, "TYPE_2"),
-            (SampleCountFlags::TYPE_4.0, "TYPE_4"),
-            (SampleCountFlags::TYPE_8.0, "TYPE_8"),
-            (SampleCountFlags::TYPE_16.0, "TYPE_16"),
-            (SampleCountFlags::TYPE_32.0, "TYPE_32"),
-            (SampleCountFlags::TYPE_64.0, "TYPE_64"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for PointClippingBehavior {
+impl fmt::Display for ObjectEntryTypeNVX {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::ALL_CLIP_PLANES => Some("ALL_CLIP_PLANES"),
-            Self::USER_CLIP_PLANES_ONLY => Some("USER_CLIP_PLANES_ONLY"),
+            Self::DESCRIPTOR_SET => Some("DESCRIPTOR_SET"),
+            Self::PIPELINE => Some("PIPELINE"),
+            Self::INDEX_BUFFER => Some("INDEX_BUFFER"),
+            Self::VERTEX_BUFFER => Some("VERTEX_BUFFER"),
+            Self::PUSH_CONSTANT => Some("PUSH_CONSTANT"),
             _ => None,
         };
         if let Some(x) = name {
@@ -27440,12 +27488,159 @@ impl fmt::Display for PointClippingBehavior {
         }
     }
 }
-impl fmt::Display for DebugUtilsMessageTypeFlagsEXT {
+impl fmt::Display for BorderColor {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::FLOAT_TRANSPARENT_BLACK => Some("FLOAT_TRANSPARENT_BLACK"),
+            Self::INT_TRANSPARENT_BLACK => Some("INT_TRANSPARENT_BLACK"),
+            Self::FLOAT_OPAQUE_BLACK => Some("FLOAT_OPAQUE_BLACK"),
+            Self::INT_OPAQUE_BLACK => Some("INT_OPAQUE_BLACK"),
+            Self::FLOAT_OPAQUE_WHITE => Some("FLOAT_OPAQUE_WHITE"),
+            Self::INT_OPAQUE_WHITE => Some("INT_OPAQUE_WHITE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for ExternalMemoryHandleTypeFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN : & [ ( Flags , & str ) ] = & [ ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32 . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_ANDROID_HARDWARE_BUFFER_ANDROID . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_ANDROID_HARDWARE_BUFFER_ANDROID" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_HOST_ALLOCATION . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_HOST_ALLOCATION" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_HOST_MAPPED_FOREIGN_MEMORY . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_HOST_MAPPED_FOREIGN_MEMORY" ) ] ;
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for MemoryHeapFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
-            (DebugUtilsMessageTypeFlagsEXT::GENERAL.0, "GENERAL"),
-            (DebugUtilsMessageTypeFlagsEXT::VALIDATION.0, "VALIDATION"),
-            (DebugUtilsMessageTypeFlagsEXT::PERFORMANCE.0, "PERFORMANCE"),
+            (MemoryHeapFlags::DEVICE_LOCAL.0, "DEVICE_LOCAL"),
+            (MemoryHeapFlags::MULTI_INSTANCE.0, "MULTI_INSTANCE"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for SubpassDescriptionFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                SubpassDescriptionFlags::PER_VIEW_ATTRIBUTES_NVX.0,
+                "PER_VIEW_ATTRIBUTES_NVX",
+            ),
+            (
+                SubpassDescriptionFlags::PER_VIEW_POSITION_X_ONLY_NVX.0,
+                "PER_VIEW_POSITION_X_ONLY_NVX",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for PrimitiveTopology {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::POINT_LIST => Some("POINT_LIST"),
+            Self::LINE_LIST => Some("LINE_LIST"),
+            Self::LINE_STRIP => Some("LINE_STRIP"),
+            Self::TRIANGLE_LIST => Some("TRIANGLE_LIST"),
+            Self::TRIANGLE_STRIP => Some("TRIANGLE_STRIP"),
+            Self::TRIANGLE_FAN => Some("TRIANGLE_FAN"),
+            Self::LINE_LIST_WITH_ADJACENCY => Some("LINE_LIST_WITH_ADJACENCY"),
+            Self::LINE_STRIP_WITH_ADJACENCY => Some("LINE_STRIP_WITH_ADJACENCY"),
+            Self::TRIANGLE_LIST_WITH_ADJACENCY => Some("TRIANGLE_LIST_WITH_ADJACENCY"),
+            Self::TRIANGLE_STRIP_WITH_ADJACENCY => Some("TRIANGLE_STRIP_WITH_ADJACENCY"),
+            Self::PATCH_LIST => Some("PATCH_LIST"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for DescriptorSetLayoutCreateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                DescriptorSetLayoutCreateFlags::PUSH_DESCRIPTOR_KHR.0,
+                "PUSH_DESCRIPTOR_KHR",
+            ),
+            (
+                DescriptorSetLayoutCreateFlags::UPDATE_AFTER_BIND_POOL_EXT.0,
+                "UPDATE_AFTER_BIND_POOL_EXT",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for LogicOp {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::CLEAR => Some("CLEAR"),
+            Self::AND => Some("AND"),
+            Self::AND_REVERSE => Some("AND_REVERSE"),
+            Self::COPY => Some("COPY"),
+            Self::AND_INVERTED => Some("AND_INVERTED"),
+            Self::NO_OP => Some("NO_OP"),
+            Self::XOR => Some("XOR"),
+            Self::OR => Some("OR"),
+            Self::NOR => Some("NOR"),
+            Self::EQUIVALENT => Some("EQUIVALENT"),
+            Self::INVERT => Some("INVERT"),
+            Self::OR_REVERSE => Some("OR_REVERSE"),
+            Self::COPY_INVERTED => Some("COPY_INVERTED"),
+            Self::OR_INVERTED => Some("OR_INVERTED"),
+            Self::NAND => Some("NAND"),
+            Self::SET => Some("SET"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for ImageType {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::TYPE_1D => Some("TYPE_1D"),
+            Self::TYPE_2D => Some("TYPE_2D"),
+            Self::TYPE_3D => Some("TYPE_3D"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for SurfaceTransformFlagsKHR {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (SurfaceTransformFlagsKHR::IDENTITY.0, "IDENTITY"),
+            (SurfaceTransformFlagsKHR::ROTATE_90.0, "ROTATE_90"),
+            (SurfaceTransformFlagsKHR::ROTATE_180.0, "ROTATE_180"),
+            (SurfaceTransformFlagsKHR::ROTATE_270.0, "ROTATE_270"),
+            (
+                SurfaceTransformFlagsKHR::HORIZONTAL_MIRROR.0,
+                "HORIZONTAL_MIRROR",
+            ),
+            (
+                SurfaceTransformFlagsKHR::HORIZONTAL_MIRROR_ROTATE_90.0,
+                "HORIZONTAL_MIRROR_ROTATE_90",
+            ),
+            (
+                SurfaceTransformFlagsKHR::HORIZONTAL_MIRROR_ROTATE_180.0,
+                "HORIZONTAL_MIRROR_ROTATE_180",
+            ),
+            (
+                SurfaceTransformFlagsKHR::HORIZONTAL_MIRROR_ROTATE_270.0,
+                "HORIZONTAL_MIRROR_ROTATE_270",
+            ),
+            (SurfaceTransformFlagsKHR::INHERIT.0, "INHERIT"),
         ];
         display_flags(f, KNOWN, self.0)
     }
@@ -27464,39 +27659,187 @@ impl fmt::Display for SamplerMipmapMode {
         }
     }
 }
-impl fmt::Display for MemoryAllocateFlags {
+impl fmt::Display for FenceCreateFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(MemoryAllocateFlags::DEVICE_MASK.0, "DEVICE_MASK")];
+        const KNOWN: &[(Flags, &str)] = &[(FenceCreateFlags::SIGNALED.0, "SIGNALED")];
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for BufferUsageFlags {
+impl fmt::Display for PhysicalDeviceType {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::OTHER => Some("OTHER"),
+            Self::INTEGRATED_GPU => Some("INTEGRATED_GPU"),
+            Self::DISCRETE_GPU => Some("DISCRETE_GPU"),
+            Self::VIRTUAL_GPU => Some("VIRTUAL_GPU"),
+            Self::CPU => Some("CPU"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for IndirectCommandsTokenTypeNVX {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::PIPELINE => Some("PIPELINE"),
+            Self::DESCRIPTOR_SET => Some("DESCRIPTOR_SET"),
+            Self::INDEX_BUFFER => Some("INDEX_BUFFER"),
+            Self::VERTEX_BUFFER => Some("VERTEX_BUFFER"),
+            Self::PUSH_CONSTANT => Some("PUSH_CONSTANT"),
+            Self::DRAW_INDEXED => Some("DRAW_INDEXED"),
+            Self::DRAW => Some("DRAW"),
+            Self::DISPATCH => Some("DISPATCH"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for BlendFactor {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::ZERO => Some("ZERO"),
+            Self::ONE => Some("ONE"),
+            Self::SRC_COLOR => Some("SRC_COLOR"),
+            Self::ONE_MINUS_SRC_COLOR => Some("ONE_MINUS_SRC_COLOR"),
+            Self::DST_COLOR => Some("DST_COLOR"),
+            Self::ONE_MINUS_DST_COLOR => Some("ONE_MINUS_DST_COLOR"),
+            Self::SRC_ALPHA => Some("SRC_ALPHA"),
+            Self::ONE_MINUS_SRC_ALPHA => Some("ONE_MINUS_SRC_ALPHA"),
+            Self::DST_ALPHA => Some("DST_ALPHA"),
+            Self::ONE_MINUS_DST_ALPHA => Some("ONE_MINUS_DST_ALPHA"),
+            Self::CONSTANT_COLOR => Some("CONSTANT_COLOR"),
+            Self::ONE_MINUS_CONSTANT_COLOR => Some("ONE_MINUS_CONSTANT_COLOR"),
+            Self::CONSTANT_ALPHA => Some("CONSTANT_ALPHA"),
+            Self::ONE_MINUS_CONSTANT_ALPHA => Some("ONE_MINUS_CONSTANT_ALPHA"),
+            Self::SRC_ALPHA_SATURATE => Some("SRC_ALPHA_SATURATE"),
+            Self::SRC1_COLOR => Some("SRC1_COLOR"),
+            Self::ONE_MINUS_SRC1_COLOR => Some("ONE_MINUS_SRC1_COLOR"),
+            Self::SRC1_ALPHA => Some("SRC1_ALPHA"),
+            Self::ONE_MINUS_SRC1_ALPHA => Some("ONE_MINUS_SRC1_ALPHA"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for SamplerAddressMode {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::REPEAT => Some("REPEAT"),
+            Self::MIRRORED_REPEAT => Some("MIRRORED_REPEAT"),
+            Self::CLAMP_TO_EDGE => Some("CLAMP_TO_EDGE"),
+            Self::CLAMP_TO_BORDER => Some("CLAMP_TO_BORDER"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for DynamicState {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::VIEWPORT => Some("VIEWPORT"),
+            Self::SCISSOR => Some("SCISSOR"),
+            Self::LINE_WIDTH => Some("LINE_WIDTH"),
+            Self::DEPTH_BIAS => Some("DEPTH_BIAS"),
+            Self::BLEND_CONSTANTS => Some("BLEND_CONSTANTS"),
+            Self::DEPTH_BOUNDS => Some("DEPTH_BOUNDS"),
+            Self::STENCIL_COMPARE_MASK => Some("STENCIL_COMPARE_MASK"),
+            Self::STENCIL_WRITE_MASK => Some("STENCIL_WRITE_MASK"),
+            Self::STENCIL_REFERENCE => Some("STENCIL_REFERENCE"),
+            Self::VIEWPORT_W_SCALING_NV => Some("VIEWPORT_W_SCALING_NV"),
+            Self::DISCARD_RECTANGLE_EXT => Some("DISCARD_RECTANGLE_EXT"),
+            Self::SAMPLE_LOCATIONS_EXT => Some("SAMPLE_LOCATIONS_EXT"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for CommandPoolResetFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(
+            CommandPoolResetFlags::RELEASE_RESOURCES.0,
+            "RELEASE_RESOURCES",
+        )];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for InternalAllocationType {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::EXECUTABLE => Some("EXECUTABLE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for DeviceQueueCreateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(DeviceQueueCreateFlags::PROTECTED.0, "PROTECTED")];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for ExternalMemoryFeatureFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
-            (BufferUsageFlags::TRANSFER_SRC.0, "TRANSFER_SRC"),
-            (BufferUsageFlags::TRANSFER_DST.0, "TRANSFER_DST"),
             (
-                BufferUsageFlags::UNIFORM_TEXEL_BUFFER.0,
-                "UNIFORM_TEXEL_BUFFER",
+                ExternalMemoryFeatureFlags::EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY.0,
+                "EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY",
             ),
             (
-                BufferUsageFlags::STORAGE_TEXEL_BUFFER.0,
-                "STORAGE_TEXEL_BUFFER",
+                ExternalMemoryFeatureFlags::EXTERNAL_MEMORY_FEATURE_EXPORTABLE.0,
+                "EXTERNAL_MEMORY_FEATURE_EXPORTABLE",
             ),
-            (BufferUsageFlags::UNIFORM_BUFFER.0, "UNIFORM_BUFFER"),
-            (BufferUsageFlags::STORAGE_BUFFER.0, "STORAGE_BUFFER"),
-            (BufferUsageFlags::INDEX_BUFFER.0, "INDEX_BUFFER"),
-            (BufferUsageFlags::VERTEX_BUFFER.0, "VERTEX_BUFFER"),
-            (BufferUsageFlags::INDIRECT_BUFFER.0, "INDIRECT_BUFFER"),
+            (
+                ExternalMemoryFeatureFlags::EXTERNAL_MEMORY_FEATURE_IMPORTABLE.0,
+                "EXTERNAL_MEMORY_FEATURE_IMPORTABLE",
+            ),
         ];
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for ImageTiling {
+impl fmt::Display for ExternalSemaphoreFeatureFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                ExternalSemaphoreFeatureFlags::EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE.0,
+                "EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE",
+            ),
+            (
+                ExternalSemaphoreFeatureFlags::EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE.0,
+                "EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for CommandBufferLevel {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::OPTIMAL => Some("OPTIMAL"),
-            Self::LINEAR => Some("LINEAR"),
+            Self::PRIMARY => Some("PRIMARY"),
+            Self::SECONDARY => Some("SECONDARY"),
             _ => None,
         };
         if let Some(x) = name {
@@ -27506,17 +27849,11 @@ impl fmt::Display for ImageTiling {
         }
     }
 }
-impl fmt::Display for CompareOp {
+impl fmt::Display for VertexInputRate {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::NEVER => Some("NEVER"),
-            Self::LESS => Some("LESS"),
-            Self::EQUAL => Some("EQUAL"),
-            Self::LESS_OR_EQUAL => Some("LESS_OR_EQUAL"),
-            Self::GREATER => Some("GREATER"),
-            Self::NOT_EQUAL => Some("NOT_EQUAL"),
-            Self::GREATER_OR_EQUAL => Some("GREATER_OR_EQUAL"),
-            Self::ALWAYS => Some("ALWAYS"),
+            Self::VERTEX => Some("VERTEX"),
+            Self::INSTANCE => Some("INSTANCE"),
             _ => None,
         };
         if let Some(x) = name {
@@ -27524,6 +27861,286 @@ impl fmt::Display for CompareOp {
         } else {
             write!(f, "{}", self.0)
         }
+    }
+}
+impl fmt::Display for SystemAllocationScope {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::COMMAND => Some("COMMAND"),
+            Self::OBJECT => Some("OBJECT"),
+            Self::CACHE => Some("CACHE"),
+            Self::DEVICE => Some("DEVICE"),
+            Self::INSTANCE => Some("INSTANCE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for CommandBufferUsageFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                CommandBufferUsageFlags::ONE_TIME_SUBMIT.0,
+                "ONE_TIME_SUBMIT",
+            ),
+            (
+                CommandBufferUsageFlags::RENDER_PASS_CONTINUE.0,
+                "RENDER_PASS_CONTINUE",
+            ),
+            (
+                CommandBufferUsageFlags::SIMULTANEOUS_USE.0,
+                "SIMULTANEOUS_USE",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for DeviceEventTypeEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::DISPLAY_HOTPLUG => Some("DISPLAY_HOTPLUG"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for PresentModeKHR {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::IMMEDIATE => Some("IMMEDIATE"),
+            Self::MAILBOX => Some("MAILBOX"),
+            Self::FIFO => Some("FIFO"),
+            Self::FIFO_RELAXED => Some("FIFO_RELAXED"),
+            Self::SHARED_DEMAND_REFRESH => Some("SHARED_DEMAND_REFRESH"),
+            Self::SHARED_CONTINUOUS_REFRESH => Some("SHARED_CONTINUOUS_REFRESH"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for BlendOp {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::ADD => Some("ADD"),
+            Self::SUBTRACT => Some("SUBTRACT"),
+            Self::REVERSE_SUBTRACT => Some("REVERSE_SUBTRACT"),
+            Self::MIN => Some("MIN"),
+            Self::MAX => Some("MAX"),
+            Self::ZERO_EXT => Some("ZERO_EXT"),
+            Self::SRC_EXT => Some("SRC_EXT"),
+            Self::DST_EXT => Some("DST_EXT"),
+            Self::SRC_OVER_EXT => Some("SRC_OVER_EXT"),
+            Self::DST_OVER_EXT => Some("DST_OVER_EXT"),
+            Self::SRC_IN_EXT => Some("SRC_IN_EXT"),
+            Self::DST_IN_EXT => Some("DST_IN_EXT"),
+            Self::SRC_OUT_EXT => Some("SRC_OUT_EXT"),
+            Self::DST_OUT_EXT => Some("DST_OUT_EXT"),
+            Self::SRC_ATOP_EXT => Some("SRC_ATOP_EXT"),
+            Self::DST_ATOP_EXT => Some("DST_ATOP_EXT"),
+            Self::XOR_EXT => Some("XOR_EXT"),
+            Self::MULTIPLY_EXT => Some("MULTIPLY_EXT"),
+            Self::SCREEN_EXT => Some("SCREEN_EXT"),
+            Self::OVERLAY_EXT => Some("OVERLAY_EXT"),
+            Self::DARKEN_EXT => Some("DARKEN_EXT"),
+            Self::LIGHTEN_EXT => Some("LIGHTEN_EXT"),
+            Self::COLORDODGE_EXT => Some("COLORDODGE_EXT"),
+            Self::COLORBURN_EXT => Some("COLORBURN_EXT"),
+            Self::HARDLIGHT_EXT => Some("HARDLIGHT_EXT"),
+            Self::SOFTLIGHT_EXT => Some("SOFTLIGHT_EXT"),
+            Self::DIFFERENCE_EXT => Some("DIFFERENCE_EXT"),
+            Self::EXCLUSION_EXT => Some("EXCLUSION_EXT"),
+            Self::INVERT_EXT => Some("INVERT_EXT"),
+            Self::INVERT_RGB_EXT => Some("INVERT_RGB_EXT"),
+            Self::LINEARDODGE_EXT => Some("LINEARDODGE_EXT"),
+            Self::LINEARBURN_EXT => Some("LINEARBURN_EXT"),
+            Self::VIVIDLIGHT_EXT => Some("VIVIDLIGHT_EXT"),
+            Self::LINEARLIGHT_EXT => Some("LINEARLIGHT_EXT"),
+            Self::PINLIGHT_EXT => Some("PINLIGHT_EXT"),
+            Self::HARDMIX_EXT => Some("HARDMIX_EXT"),
+            Self::HSL_HUE_EXT => Some("HSL_HUE_EXT"),
+            Self::HSL_SATURATION_EXT => Some("HSL_SATURATION_EXT"),
+            Self::HSL_COLOR_EXT => Some("HSL_COLOR_EXT"),
+            Self::HSL_LUMINOSITY_EXT => Some("HSL_LUMINOSITY_EXT"),
+            Self::PLUS_EXT => Some("PLUS_EXT"),
+            Self::PLUS_CLAMPED_EXT => Some("PLUS_CLAMPED_EXT"),
+            Self::PLUS_CLAMPED_ALPHA_EXT => Some("PLUS_CLAMPED_ALPHA_EXT"),
+            Self::PLUS_DARKER_EXT => Some("PLUS_DARKER_EXT"),
+            Self::MINUS_EXT => Some("MINUS_EXT"),
+            Self::MINUS_CLAMPED_EXT => Some("MINUS_CLAMPED_EXT"),
+            Self::CONTRAST_EXT => Some("CONTRAST_EXT"),
+            Self::INVERT_OVG_EXT => Some("INVERT_OVG_EXT"),
+            Self::RED_EXT => Some("RED_EXT"),
+            Self::GREEN_EXT => Some("GREEN_EXT"),
+            Self::BLUE_EXT => Some("BLUE_EXT"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for DebugReportFlagsEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (DebugReportFlagsEXT::INFORMATION.0, "INFORMATION"),
+            (DebugReportFlagsEXT::WARNING.0, "WARNING"),
+            (
+                DebugReportFlagsEXT::PERFORMANCE_WARNING.0,
+                "PERFORMANCE_WARNING",
+            ),
+            (DebugReportFlagsEXT::ERROR.0, "ERROR"),
+            (DebugReportFlagsEXT::DEBUG.0, "DEBUG"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for IndexType {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::UINT16 => Some("UINT16"),
+            Self::UINT32 => Some("UINT32"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for QueryResultFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (QueryResultFlags::TYPE_64.0, "TYPE_64"),
+            (QueryResultFlags::WAIT.0, "WAIT"),
+            (QueryResultFlags::WITH_AVAILABILITY.0, "WITH_AVAILABILITY"),
+            (QueryResultFlags::PARTIAL.0, "PARTIAL"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for SharingMode {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::EXCLUSIVE => Some("EXCLUSIVE"),
+            Self::CONCURRENT => Some("CONCURRENT"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for ImageUsageFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (ImageUsageFlags::TRANSFER_SRC.0, "TRANSFER_SRC"),
+            (ImageUsageFlags::TRANSFER_DST.0, "TRANSFER_DST"),
+            (ImageUsageFlags::SAMPLED.0, "SAMPLED"),
+            (ImageUsageFlags::STORAGE.0, "STORAGE"),
+            (ImageUsageFlags::COLOR_ATTACHMENT.0, "COLOR_ATTACHMENT"),
+            (
+                ImageUsageFlags::DEPTH_STENCIL_ATTACHMENT.0,
+                "DEPTH_STENCIL_ATTACHMENT",
+            ),
+            (
+                ImageUsageFlags::TRANSIENT_ATTACHMENT.0,
+                "TRANSIENT_ATTACHMENT",
+            ),
+            (ImageUsageFlags::INPUT_ATTACHMENT.0, "INPUT_ATTACHMENT"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for IndirectCommandsLayoutUsageFlagsNVX {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                IndirectCommandsLayoutUsageFlagsNVX::UNORDERED_SEQUENCES.0,
+                "UNORDERED_SEQUENCES",
+            ),
+            (
+                IndirectCommandsLayoutUsageFlagsNVX::SPARSE_SEQUENCES.0,
+                "SPARSE_SEQUENCES",
+            ),
+            (
+                IndirectCommandsLayoutUsageFlagsNVX::EMPTY_EXECUTIONS.0,
+                "EMPTY_EXECUTIONS",
+            ),
+            (
+                IndirectCommandsLayoutUsageFlagsNVX::INDEXED_SEQUENCES.0,
+                "INDEXED_SEQUENCES",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for ImageAspectFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (ImageAspectFlags::COLOR.0, "COLOR"),
+            (ImageAspectFlags::DEPTH.0, "DEPTH"),
+            (ImageAspectFlags::STENCIL.0, "STENCIL"),
+            (ImageAspectFlags::METADATA.0, "METADATA"),
+            (ImageAspectFlags::PLANE_0.0, "PLANE_0"),
+            (ImageAspectFlags::PLANE_1.0, "PLANE_1"),
+            (ImageAspectFlags::PLANE_2.0, "PLANE_2"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for PeerMemoryFeatureFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (PeerMemoryFeatureFlags::COPY_SRC.0, "COPY_SRC"),
+            (PeerMemoryFeatureFlags::COPY_DST.0, "COPY_DST"),
+            (PeerMemoryFeatureFlags::GENERIC_SRC.0, "GENERIC_SRC"),
+            (PeerMemoryFeatureFlags::GENERIC_DST.0, "GENERIC_DST"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for DiscardRectangleModeEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::INCLUSIVE => Some("INCLUSIVE"),
+            Self::EXCLUSIVE => Some("EXCLUSIVE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for MemoryPropertyFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (MemoryPropertyFlags::DEVICE_LOCAL.0, "DEVICE_LOCAL"),
+            (MemoryPropertyFlags::HOST_VISIBLE.0, "HOST_VISIBLE"),
+            (MemoryPropertyFlags::HOST_COHERENT.0, "HOST_COHERENT"),
+            (MemoryPropertyFlags::HOST_CACHED.0, "HOST_CACHED"),
+            (MemoryPropertyFlags::LAZILY_ALLOCATED.0, "LAZILY_ALLOCATED"),
+            (MemoryPropertyFlags::PROTECTED.0, "PROTECTED"),
+        ];
+        display_flags(f, KNOWN, self.0)
     }
 }
 impl fmt::Display for ExternalMemoryHandleTypeFlagsNV {
@@ -27549,10 +28166,11 @@ impl fmt::Display for ExternalMemoryHandleTypeFlagsNV {
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for InternalAllocationType {
+impl fmt::Display for ImageTiling {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::EXECUTABLE => Some("EXECUTABLE"),
+            Self::OPTIMAL => Some("OPTIMAL"),
+            Self::LINEAR => Some("LINEAR"),
             _ => None,
         };
         if let Some(x) = name {
@@ -27562,132 +28180,102 @@ impl fmt::Display for InternalAllocationType {
         }
     }
 }
-impl fmt::Display for PipelineBindPoint {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::GRAPHICS => Some("GRAPHICS"),
-            Self::COMPUTE => Some("COMPUTE"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for DynamicState {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::VIEWPORT => Some("VIEWPORT"),
-            Self::SCISSOR => Some("SCISSOR"),
-            Self::LINE_WIDTH => Some("LINE_WIDTH"),
-            Self::DEPTH_BIAS => Some("DEPTH_BIAS"),
-            Self::BLEND_CONSTANTS => Some("BLEND_CONSTANTS"),
-            Self::DEPTH_BOUNDS => Some("DEPTH_BOUNDS"),
-            Self::STENCIL_COMPARE_MASK => Some("STENCIL_COMPARE_MASK"),
-            Self::STENCIL_WRITE_MASK => Some("STENCIL_WRITE_MASK"),
-            Self::STENCIL_REFERENCE => Some("STENCIL_REFERENCE"),
-            Self::VIEWPORT_W_SCALING_NV => Some("VIEWPORT_W_SCALING_NV"),
-            Self::DISCARD_RECTANGLE_EXT => Some("DISCARD_RECTANGLE_EXT"),
-            Self::SAMPLE_LOCATIONS_EXT => Some("SAMPLE_LOCATIONS_EXT"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ValidationCacheHeaderVersionEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::ONE => Some("ONE"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ImageType {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::TYPE_1D => Some("TYPE_1D"),
-            Self::TYPE_2D => Some("TYPE_2D"),
-            Self::TYPE_3D => Some("TYPE_3D"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for DynamicState {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::VIEWPORT => Some("VIEWPORT"),
-            Self::SCISSOR => Some("SCISSOR"),
-            Self::LINE_WIDTH => Some("LINE_WIDTH"),
-            Self::DEPTH_BIAS => Some("DEPTH_BIAS"),
-            Self::BLEND_CONSTANTS => Some("BLEND_CONSTANTS"),
-            Self::DEPTH_BOUNDS => Some("DEPTH_BOUNDS"),
-            Self::STENCIL_COMPARE_MASK => Some("STENCIL_COMPARE_MASK"),
-            Self::STENCIL_WRITE_MASK => Some("STENCIL_WRITE_MASK"),
-            Self::STENCIL_REFERENCE => Some("STENCIL_REFERENCE"),
-            Self::VIEWPORT_W_SCALING_NV => Some("VIEWPORT_W_SCALING_NV"),
-            Self::DISCARD_RECTANGLE_EXT => Some("DISCARD_RECTANGLE_EXT"),
-            Self::SAMPLE_LOCATIONS_EXT => Some("SAMPLE_LOCATIONS_EXT"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ColorComponentFlags {
+impl fmt::Display for BufferUsageFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
-            (ColorComponentFlags::R.0, "R"),
-            (ColorComponentFlags::G.0, "G"),
-            (ColorComponentFlags::B.0, "B"),
-            (ColorComponentFlags::A.0, "A"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for QueryResultFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (QueryResultFlags::TYPE_64.0, "TYPE_64"),
-            (QueryResultFlags::WAIT.0, "WAIT"),
-            (QueryResultFlags::WITH_AVAILABILITY.0, "WITH_AVAILABILITY"),
-            (QueryResultFlags::PARTIAL.0, "PARTIAL"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for SparseImageFormatFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (SparseImageFormatFlags::SINGLE_MIPTAIL.0, "SINGLE_MIPTAIL"),
+            (BufferUsageFlags::TRANSFER_SRC.0, "TRANSFER_SRC"),
+            (BufferUsageFlags::TRANSFER_DST.0, "TRANSFER_DST"),
             (
-                SparseImageFormatFlags::ALIGNED_MIP_SIZE.0,
-                "ALIGNED_MIP_SIZE",
+                BufferUsageFlags::UNIFORM_TEXEL_BUFFER.0,
+                "UNIFORM_TEXEL_BUFFER",
             ),
             (
-                SparseImageFormatFlags::NONSTANDARD_BLOCK_SIZE.0,
-                "NONSTANDARD_BLOCK_SIZE",
+                BufferUsageFlags::STORAGE_TEXEL_BUFFER.0,
+                "STORAGE_TEXEL_BUFFER",
             ),
+            (BufferUsageFlags::UNIFORM_BUFFER.0, "UNIFORM_BUFFER"),
+            (BufferUsageFlags::STORAGE_BUFFER.0, "STORAGE_BUFFER"),
+            (BufferUsageFlags::INDEX_BUFFER.0, "INDEX_BUFFER"),
+            (BufferUsageFlags::VERTEX_BUFFER.0, "VERTEX_BUFFER"),
+            (BufferUsageFlags::INDIRECT_BUFFER.0, "INDIRECT_BUFFER"),
         ];
         display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for ObjectType {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::UNKNOWN => Some("UNKNOWN"),
+            Self::INSTANCE => Some("INSTANCE"),
+            Self::PHYSICAL_DEVICE => Some("PHYSICAL_DEVICE"),
+            Self::DEVICE => Some("DEVICE"),
+            Self::QUEUE => Some("QUEUE"),
+            Self::SEMAPHORE => Some("SEMAPHORE"),
+            Self::COMMAND_BUFFER => Some("COMMAND_BUFFER"),
+            Self::FENCE => Some("FENCE"),
+            Self::DEVICE_MEMORY => Some("DEVICE_MEMORY"),
+            Self::BUFFER => Some("BUFFER"),
+            Self::IMAGE => Some("IMAGE"),
+            Self::EVENT => Some("EVENT"),
+            Self::QUERY_POOL => Some("QUERY_POOL"),
+            Self::BUFFER_VIEW => Some("BUFFER_VIEW"),
+            Self::IMAGE_VIEW => Some("IMAGE_VIEW"),
+            Self::SHADER_MODULE => Some("SHADER_MODULE"),
+            Self::PIPELINE_CACHE => Some("PIPELINE_CACHE"),
+            Self::PIPELINE_LAYOUT => Some("PIPELINE_LAYOUT"),
+            Self::RENDER_PASS => Some("RENDER_PASS"),
+            Self::PIPELINE => Some("PIPELINE"),
+            Self::DESCRIPTOR_SET_LAYOUT => Some("DESCRIPTOR_SET_LAYOUT"),
+            Self::SAMPLER => Some("SAMPLER"),
+            Self::DESCRIPTOR_POOL => Some("DESCRIPTOR_POOL"),
+            Self::DESCRIPTOR_SET => Some("DESCRIPTOR_SET"),
+            Self::FRAMEBUFFER => Some("FRAMEBUFFER"),
+            Self::COMMAND_POOL => Some("COMMAND_POOL"),
+            Self::SURFACE_KHR => Some("SURFACE_KHR"),
+            Self::SWAPCHAIN_KHR => Some("SWAPCHAIN_KHR"),
+            Self::DISPLAY_KHR => Some("DISPLAY_KHR"),
+            Self::DISPLAY_MODE_KHR => Some("DISPLAY_MODE_KHR"),
+            Self::DEBUG_REPORT_CALLBACK_EXT => Some("DEBUG_REPORT_CALLBACK_EXT"),
+            Self::OBJECT_TABLE_NVX => Some("OBJECT_TABLE_NVX"),
+            Self::INDIRECT_COMMANDS_LAYOUT_NVX => Some("INDIRECT_COMMANDS_LAYOUT_NVX"),
+            Self::DEBUG_UTILS_MESSENGER_EXT => Some("DEBUG_UTILS_MESSENGER_EXT"),
+            Self::VALIDATION_CACHE_EXT => Some("VALIDATION_CACHE_EXT"),
+            Self::SAMPLER_YCBCR_CONVERSION => Some("SAMPLER_YCBCR_CONVERSION"),
+            Self::DESCRIPTOR_UPDATE_TEMPLATE => Some("DESCRIPTOR_UPDATE_TEMPLATE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for ColorSpaceKHR {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::SRGB_NONLINEAR => Some("SRGB_NONLINEAR"),
+            Self::DISPLAY_P3_NONLINEAR_EXT => Some("DISPLAY_P3_NONLINEAR_EXT"),
+            Self::EXTENDED_SRGB_LINEAR_EXT => Some("EXTENDED_SRGB_LINEAR_EXT"),
+            Self::DCI_P3_LINEAR_EXT => Some("DCI_P3_LINEAR_EXT"),
+            Self::DCI_P3_NONLINEAR_EXT => Some("DCI_P3_NONLINEAR_EXT"),
+            Self::BT709_LINEAR_EXT => Some("BT709_LINEAR_EXT"),
+            Self::BT709_NONLINEAR_EXT => Some("BT709_NONLINEAR_EXT"),
+            Self::BT2020_LINEAR_EXT => Some("BT2020_LINEAR_EXT"),
+            Self::HDR10_ST2084_EXT => Some("HDR10_ST2084_EXT"),
+            Self::DOLBYVISION_EXT => Some("DOLBYVISION_EXT"),
+            Self::HDR10_HLG_EXT => Some("HDR10_HLG_EXT"),
+            Self::ADOBERGB_LINEAR_EXT => Some("ADOBERGB_LINEAR_EXT"),
+            Self::ADOBERGB_NONLINEAR_EXT => Some("ADOBERGB_NONLINEAR_EXT"),
+            Self::PASS_THROUGH_EXT => Some("PASS_THROUGH_EXT"),
+            Self::EXTENDED_SRGB_NONLINEAR_EXT => Some("EXTENDED_SRGB_NONLINEAR_EXT"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
     }
 }
 impl fmt::Display for FenceImportFlags {
@@ -27696,10 +28284,20 @@ impl fmt::Display for FenceImportFlags {
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for AttachmentDescriptionFlags {
+impl fmt::Display for QueueGlobalPriorityEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(AttachmentDescriptionFlags::MAY_ALIAS.0, "MAY_ALIAS")];
-        display_flags(f, KNOWN, self.0)
+        let name = match *self {
+            Self::LOW => Some("LOW"),
+            Self::MEDIUM => Some("MEDIUM"),
+            Self::HIGH => Some("HIGH"),
+            Self::REALTIME => Some("REALTIME"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
     }
 }
 impl fmt::Display for StructureType {
@@ -28142,62 +28740,11 @@ impl fmt::Display for StructureType {
         }
     }
 }
-impl fmt::Display for DescriptorSetLayoutCreateFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                DescriptorSetLayoutCreateFlags::PUSH_DESCRIPTOR_KHR.0,
-                "PUSH_DESCRIPTOR_KHR",
-            ),
-            (
-                DescriptorSetLayoutCreateFlags::UPDATE_AFTER_BIND_POOL_EXT.0,
-                "UPDATE_AFTER_BIND_POOL_EXT",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for DebugUtilsMessageSeverityFlagsEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (DebugUtilsMessageSeverityFlagsEXT::VERBOSE.0, "VERBOSE"),
-            (DebugUtilsMessageSeverityFlagsEXT::INFO.0, "INFO"),
-            (DebugUtilsMessageSeverityFlagsEXT::WARNING.0, "WARNING"),
-            (DebugUtilsMessageSeverityFlagsEXT::ERROR.0, "ERROR"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for CullModeFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (CullModeFlags::NONE.0, "NONE"),
-            (CullModeFlags::FRONT.0, "FRONT"),
-            (CullModeFlags::BACK.0, "BACK"),
-            (CullModeFlags::FRONT_AND_BACK.0, "FRONT_AND_BACK"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for ExternalSemaphoreFeatureFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                ExternalSemaphoreFeatureFlags::EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE.0,
-                "EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE",
-            ),
-            (
-                ExternalSemaphoreFeatureFlags::EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE.0,
-                "EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for DisplayEventTypeEXT {
+impl fmt::Display for PointClippingBehavior {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::FIRST_PIXEL_OUT => Some("FIRST_PIXEL_OUT"),
+            Self::ALL_CLIP_PLANES => Some("ALL_CLIP_PLANES"),
+            Self::USER_CLIP_PLANES_ONLY => Some("USER_CLIP_PLANES_ONLY"),
             _ => None,
         };
         if let Some(x) = name {
@@ -28207,44 +28754,17 @@ impl fmt::Display for DisplayEventTypeEXT {
         }
     }
 }
-impl fmt::Display for ImageUsageFlags {
+impl fmt::Display for AttachmentDescriptionFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (ImageUsageFlags::TRANSFER_SRC.0, "TRANSFER_SRC"),
-            (ImageUsageFlags::TRANSFER_DST.0, "TRANSFER_DST"),
-            (ImageUsageFlags::SAMPLED.0, "SAMPLED"),
-            (ImageUsageFlags::STORAGE.0, "STORAGE"),
-            (ImageUsageFlags::COLOR_ATTACHMENT.0, "COLOR_ATTACHMENT"),
-            (
-                ImageUsageFlags::DEPTH_STENCIL_ATTACHMENT.0,
-                "DEPTH_STENCIL_ATTACHMENT",
-            ),
-            (
-                ImageUsageFlags::TRANSIENT_ATTACHMENT.0,
-                "TRANSIENT_ATTACHMENT",
-            ),
-            (ImageUsageFlags::INPUT_ATTACHMENT.0, "INPUT_ATTACHMENT"),
-        ];
+        const KNOWN: &[(Flags, &str)] = &[(AttachmentDescriptionFlags::MAY_ALIAS.0, "MAY_ALIAS")];
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for ObjectEntryUsageFlagsNVX {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (ObjectEntryUsageFlagsNVX::GRAPHICS.0, "GRAPHICS"),
-            (ObjectEntryUsageFlagsNVX::COMPUTE.0, "COMPUTE"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for SamplerYcbcrModelConversion {
+impl fmt::Display for FrontFace {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::RGB_IDENTITY => Some("RGB_IDENTITY"),
-            Self::YCBCR_IDENTITY => Some("YCBCR_IDENTITY"),
-            Self::YCBCR_709 => Some("YCBCR_709"),
-            Self::YCBCR_601 => Some("YCBCR_601"),
-            Self::YCBCR_2020 => Some("YCBCR_2020"),
+            Self::COUNTER_CLOCKWISE => Some("COUNTER_CLOCKWISE"),
+            Self::CLOCKWISE => Some("CLOCKWISE"),
             _ => None,
         };
         if let Some(x) = name {
@@ -28254,235 +28774,11 @@ impl fmt::Display for SamplerYcbcrModelConversion {
         }
     }
 }
-impl fmt::Display for ExternalFenceHandleTypeFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD.0,
-                "EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD",
-            ),
-            (
-                ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32.0,
-                "EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32",
-            ),
-            (
-                ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT.0,
-                "EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT",
-            ),
-            (
-                ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD.0,
-                "EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for PipelineStageFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (PipelineStageFlags::TOP_OF_PIPE.0, "TOP_OF_PIPE"),
-            (PipelineStageFlags::DRAW_INDIRECT.0, "DRAW_INDIRECT"),
-            (PipelineStageFlags::VERTEX_INPUT.0, "VERTEX_INPUT"),
-            (PipelineStageFlags::VERTEX_SHADER.0, "VERTEX_SHADER"),
-            (
-                PipelineStageFlags::TESSELLATION_CONTROL_SHADER.0,
-                "TESSELLATION_CONTROL_SHADER",
-            ),
-            (
-                PipelineStageFlags::TESSELLATION_EVALUATION_SHADER.0,
-                "TESSELLATION_EVALUATION_SHADER",
-            ),
-            (PipelineStageFlags::GEOMETRY_SHADER.0, "GEOMETRY_SHADER"),
-            (PipelineStageFlags::FRAGMENT_SHADER.0, "FRAGMENT_SHADER"),
-            (
-                PipelineStageFlags::EARLY_FRAGMENT_TESTS.0,
-                "EARLY_FRAGMENT_TESTS",
-            ),
-            (
-                PipelineStageFlags::LATE_FRAGMENT_TESTS.0,
-                "LATE_FRAGMENT_TESTS",
-            ),
-            (
-                PipelineStageFlags::COLOR_ATTACHMENT_OUTPUT.0,
-                "COLOR_ATTACHMENT_OUTPUT",
-            ),
-            (PipelineStageFlags::COMPUTE_SHADER.0, "COMPUTE_SHADER"),
-            (PipelineStageFlags::TRANSFER.0, "TRANSFER"),
-            (PipelineStageFlags::BOTTOM_OF_PIPE.0, "BOTTOM_OF_PIPE"),
-            (PipelineStageFlags::HOST.0, "HOST"),
-            (PipelineStageFlags::ALL_GRAPHICS.0, "ALL_GRAPHICS"),
-            (PipelineStageFlags::ALL_COMMANDS.0, "ALL_COMMANDS"),
-            (
-                PipelineStageFlags::COMMAND_PROCESS_NVX.0,
-                "COMMAND_PROCESS_NVX",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for DeviceEventTypeEXT {
+impl fmt::Display for PipelineBindPoint {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::DISPLAY_HOTPLUG => Some("DISPLAY_HOTPLUG"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ConservativeRasterizationModeEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::DISABLED => Some("DISABLED"),
-            Self::OVERESTIMATE => Some("OVERESTIMATE"),
-            Self::UNDERESTIMATE => Some("UNDERESTIMATE"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for PhysicalDeviceType {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::OTHER => Some("OTHER"),
-            Self::INTEGRATED_GPU => Some("INTEGRATED_GPU"),
-            Self::DISCRETE_GPU => Some("DISCRETE_GPU"),
-            Self::VIRTUAL_GPU => Some("VIRTUAL_GPU"),
-            Self::CPU => Some("CPU"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ComponentSwizzle {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::IDENTITY => Some("IDENTITY"),
-            Self::ZERO => Some("ZERO"),
-            Self::ONE => Some("ONE"),
-            Self::R => Some("R"),
-            Self::G => Some("G"),
-            Self::B => Some("B"),
-            Self::A => Some("A"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for QueueFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (QueueFlags::GRAPHICS.0, "GRAPHICS"),
-            (QueueFlags::COMPUTE.0, "COMPUTE"),
-            (QueueFlags::TRANSFER.0, "TRANSFER"),
-            (QueueFlags::SPARSE_BINDING.0, "SPARSE_BINDING"),
-            (QueueFlags::PROTECTED.0, "PROTECTED"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for DebugReportObjectTypeEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::UNKNOWN => Some("UNKNOWN"),
-            Self::INSTANCE => Some("INSTANCE"),
-            Self::PHYSICAL_DEVICE => Some("PHYSICAL_DEVICE"),
-            Self::DEVICE => Some("DEVICE"),
-            Self::QUEUE => Some("QUEUE"),
-            Self::SEMAPHORE => Some("SEMAPHORE"),
-            Self::COMMAND_BUFFER => Some("COMMAND_BUFFER"),
-            Self::FENCE => Some("FENCE"),
-            Self::DEVICE_MEMORY => Some("DEVICE_MEMORY"),
-            Self::BUFFER => Some("BUFFER"),
-            Self::IMAGE => Some("IMAGE"),
-            Self::EVENT => Some("EVENT"),
-            Self::QUERY_POOL => Some("QUERY_POOL"),
-            Self::BUFFER_VIEW => Some("BUFFER_VIEW"),
-            Self::IMAGE_VIEW => Some("IMAGE_VIEW"),
-            Self::SHADER_MODULE => Some("SHADER_MODULE"),
-            Self::PIPELINE_CACHE => Some("PIPELINE_CACHE"),
-            Self::PIPELINE_LAYOUT => Some("PIPELINE_LAYOUT"),
-            Self::RENDER_PASS => Some("RENDER_PASS"),
-            Self::PIPELINE => Some("PIPELINE"),
-            Self::DESCRIPTOR_SET_LAYOUT => Some("DESCRIPTOR_SET_LAYOUT"),
-            Self::SAMPLER => Some("SAMPLER"),
-            Self::DESCRIPTOR_POOL => Some("DESCRIPTOR_POOL"),
-            Self::DESCRIPTOR_SET => Some("DESCRIPTOR_SET"),
-            Self::FRAMEBUFFER => Some("FRAMEBUFFER"),
-            Self::COMMAND_POOL => Some("COMMAND_POOL"),
-            Self::SURFACE_KHR => Some("SURFACE_KHR"),
-            Self::SWAPCHAIN_KHR => Some("SWAPCHAIN_KHR"),
-            Self::DEBUG_REPORT_CALLBACK => Some("DEBUG_REPORT_CALLBACK"),
-            Self::DISPLAY_KHR => Some("DISPLAY_KHR"),
-            Self::DISPLAY_MODE_KHR => Some("DISPLAY_MODE_KHR"),
-            Self::OBJECT_TABLE_NVX => Some("OBJECT_TABLE_NVX"),
-            Self::INDIRECT_COMMANDS_LAYOUT_NVX => Some("INDIRECT_COMMANDS_LAYOUT_NVX"),
-            Self::VALIDATION_CACHE => Some("VALIDATION_CACHE"),
-            Self::SAMPLER_YCBCR_CONVERSION => Some("SAMPLER_YCBCR_CONVERSION"),
-            Self::DESCRIPTOR_UPDATE_TEMPLATE => Some("DESCRIPTOR_UPDATE_TEMPLATE"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for FormatFeatureFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN : & [ ( Flags , & str ) ] = & [ ( FormatFeatureFlags :: SAMPLED_IMAGE . 0 , "SAMPLED_IMAGE" ) , ( FormatFeatureFlags :: STORAGE_IMAGE . 0 , "STORAGE_IMAGE" ) , ( FormatFeatureFlags :: STORAGE_IMAGE_ATOMIC . 0 , "STORAGE_IMAGE_ATOMIC" ) , ( FormatFeatureFlags :: UNIFORM_TEXEL_BUFFER . 0 , "UNIFORM_TEXEL_BUFFER" ) , ( FormatFeatureFlags :: STORAGE_TEXEL_BUFFER . 0 , "STORAGE_TEXEL_BUFFER" ) , ( FormatFeatureFlags :: STORAGE_TEXEL_BUFFER_ATOMIC . 0 , "STORAGE_TEXEL_BUFFER_ATOMIC" ) , ( FormatFeatureFlags :: VERTEX_BUFFER . 0 , "VERTEX_BUFFER" ) , ( FormatFeatureFlags :: COLOR_ATTACHMENT . 0 , "COLOR_ATTACHMENT" ) , ( FormatFeatureFlags :: COLOR_ATTACHMENT_BLEND . 0 , "COLOR_ATTACHMENT_BLEND" ) , ( FormatFeatureFlags :: DEPTH_STENCIL_ATTACHMENT . 0 , "DEPTH_STENCIL_ATTACHMENT" ) , ( FormatFeatureFlags :: BLIT_SRC . 0 , "BLIT_SRC" ) , ( FormatFeatureFlags :: BLIT_DST . 0 , "BLIT_DST" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_FILTER_LINEAR . 0 , "SAMPLED_IMAGE_FILTER_LINEAR" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_FILTER_CUBIC_IMG . 0 , "SAMPLED_IMAGE_FILTER_CUBIC_IMG" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_FILTER_MINMAX_EXT . 0 , "SAMPLED_IMAGE_FILTER_MINMAX_EXT" ) , ( FormatFeatureFlags :: TRANSFER_SRC . 0 , "TRANSFER_SRC" ) , ( FormatFeatureFlags :: TRANSFER_DST . 0 , "TRANSFER_DST" ) , ( FormatFeatureFlags :: MIDPOINT_CHROMA_SAMPLES . 0 , "MIDPOINT_CHROMA_SAMPLES" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE" ) , ( FormatFeatureFlags :: DISJOINT . 0 , "DISJOINT" ) , ( FormatFeatureFlags :: COSITED_CHROMA_SAMPLES . 0 , "COSITED_CHROMA_SAMPLES" ) ] ;
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for CommandPoolResetFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(
-            CommandPoolResetFlags::RELEASE_RESOURCES.0,
-            "RELEASE_RESOURCES",
-        )];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for CommandBufferUsageFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                CommandBufferUsageFlags::ONE_TIME_SUBMIT.0,
-                "ONE_TIME_SUBMIT",
-            ),
-            (
-                CommandBufferUsageFlags::RENDER_PASS_CONTINUE.0,
-                "RENDER_PASS_CONTINUE",
-            ),
-            (
-                CommandBufferUsageFlags::SIMULTANEOUS_USE.0,
-                "SIMULTANEOUS_USE",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for RasterizationOrderAMD {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::STRICT => Some("STRICT"),
-            Self::RELAXED => Some("RELAXED"),
+            Self::GRAPHICS => Some("GRAPHICS"),
+            Self::COMPUTE => Some("COMPUTE"),
             _ => None,
         };
         if let Some(x) = name {
@@ -28543,283 +28839,6 @@ impl fmt::Display for QueryPipelineStatisticFlags {
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for BorderColor {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::FLOAT_TRANSPARENT_BLACK => Some("FLOAT_TRANSPARENT_BLACK"),
-            Self::INT_TRANSPARENT_BLACK => Some("INT_TRANSPARENT_BLACK"),
-            Self::FLOAT_OPAQUE_BLACK => Some("FLOAT_OPAQUE_BLACK"),
-            Self::INT_OPAQUE_BLACK => Some("INT_OPAQUE_BLACK"),
-            Self::FLOAT_OPAQUE_WHITE => Some("FLOAT_OPAQUE_WHITE"),
-            Self::INT_OPAQUE_WHITE => Some("INT_OPAQUE_WHITE"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ObjectEntryTypeNVX {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::DESCRIPTOR_SET => Some("DESCRIPTOR_SET"),
-            Self::PIPELINE => Some("PIPELINE"),
-            Self::INDEX_BUFFER => Some("INDEX_BUFFER"),
-            Self::VERTEX_BUFFER => Some("VERTEX_BUFFER"),
-            Self::PUSH_CONSTANT => Some("PUSH_CONSTANT"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ShaderStageFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (ShaderStageFlags::VERTEX.0, "VERTEX"),
-            (
-                ShaderStageFlags::TESSELLATION_CONTROL.0,
-                "TESSELLATION_CONTROL",
-            ),
-            (
-                ShaderStageFlags::TESSELLATION_EVALUATION.0,
-                "TESSELLATION_EVALUATION",
-            ),
-            (ShaderStageFlags::GEOMETRY.0, "GEOMETRY"),
-            (ShaderStageFlags::FRAGMENT.0, "FRAGMENT"),
-            (ShaderStageFlags::COMPUTE.0, "COMPUTE"),
-            (ShaderStageFlags::ALL_GRAPHICS.0, "ALL_GRAPHICS"),
-            (ShaderStageFlags::ALL.0, "ALL"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for FrontFace {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::COUNTER_CLOCKWISE => Some("COUNTER_CLOCKWISE"),
-            Self::CLOCKWISE => Some("CLOCKWISE"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for VertexInputRate {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::VERTEX => Some("VERTEX"),
-            Self::INSTANCE => Some("INSTANCE"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for QueryControlFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(QueryControlFlags::PRECISE.0, "PRECISE")];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for BufferCreateFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (BufferCreateFlags::SPARSE_BINDING.0, "SPARSE_BINDING"),
-            (BufferCreateFlags::SPARSE_RESIDENCY.0, "SPARSE_RESIDENCY"),
-            (BufferCreateFlags::SPARSE_ALIASED.0, "SPARSE_ALIASED"),
-            (BufferCreateFlags::PROTECTED.0, "PROTECTED"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for ExternalFenceFeatureFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                ExternalFenceFeatureFlags::EXTERNAL_FENCE_FEATURE_EXPORTABLE.0,
-                "EXTERNAL_FENCE_FEATURE_EXPORTABLE",
-            ),
-            (
-                ExternalFenceFeatureFlags::EXTERNAL_FENCE_FEATURE_IMPORTABLE.0,
-                "EXTERNAL_FENCE_FEATURE_IMPORTABLE",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for ValidationCheckEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::ALL => Some("ALL"),
-            Self::SHADERS => Some("SHADERS"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for LogicOp {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::CLEAR => Some("CLEAR"),
-            Self::AND => Some("AND"),
-            Self::AND_REVERSE => Some("AND_REVERSE"),
-            Self::COPY => Some("COPY"),
-            Self::AND_INVERTED => Some("AND_INVERTED"),
-            Self::NO_OP => Some("NO_OP"),
-            Self::XOR => Some("XOR"),
-            Self::OR => Some("OR"),
-            Self::NOR => Some("NOR"),
-            Self::EQUIVALENT => Some("EQUIVALENT"),
-            Self::INVERT => Some("INVERT"),
-            Self::OR_REVERSE => Some("OR_REVERSE"),
-            Self::COPY_INVERTED => Some("COPY_INVERTED"),
-            Self::OR_INVERTED => Some("OR_INVERTED"),
-            Self::NAND => Some("NAND"),
-            Self::SET => Some("SET"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for DescriptorPoolCreateFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                DescriptorPoolCreateFlags::FREE_DESCRIPTOR_SET.0,
-                "FREE_DESCRIPTOR_SET",
-            ),
-            (
-                DescriptorPoolCreateFlags::UPDATE_AFTER_BIND_EXT.0,
-                "UPDATE_AFTER_BIND_EXT",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for ExternalMemoryFeatureFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                ExternalMemoryFeatureFlags::EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY.0,
-                "EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY",
-            ),
-            (
-                ExternalMemoryFeatureFlags::EXTERNAL_MEMORY_FEATURE_EXPORTABLE.0,
-                "EXTERNAL_MEMORY_FEATURE_EXPORTABLE",
-            ),
-            (
-                ExternalMemoryFeatureFlags::EXTERNAL_MEMORY_FEATURE_IMPORTABLE.0,
-                "EXTERNAL_MEMORY_FEATURE_IMPORTABLE",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for DiscardRectangleModeEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::INCLUSIVE => Some("INCLUSIVE"),
-            Self::EXCLUSIVE => Some("EXCLUSIVE"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for FenceCreateFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(FenceCreateFlags::SIGNALED.0, "SIGNALED")];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for SubgroupFeatureFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (SubgroupFeatureFlags::BASIC.0, "BASIC"),
-            (SubgroupFeatureFlags::VOTE.0, "VOTE"),
-            (SubgroupFeatureFlags::ARITHMETIC.0, "ARITHMETIC"),
-            (SubgroupFeatureFlags::BALLOT.0, "BALLOT"),
-            (SubgroupFeatureFlags::SHUFFLE.0, "SHUFFLE"),
-            (SubgroupFeatureFlags::SHUFFLE_RELATIVE.0, "SHUFFLE_RELATIVE"),
-            (SubgroupFeatureFlags::CLUSTERED.0, "CLUSTERED"),
-            (SubgroupFeatureFlags::QUAD.0, "QUAD"),
-            (SubgroupFeatureFlags::PARTITIONED_NV.0, "PARTITIONED_NV"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for SamplerReductionModeEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::WEIGHTED_AVERAGE => Some("WEIGHTED_AVERAGE"),
-            Self::MIN => Some("MIN"),
-            Self::MAX => Some("MAX"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for SemaphoreImportFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(SemaphoreImportFlags::TEMPORARY.0, "TEMPORARY")];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for SamplerYcbcrRange {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::ITU_FULL => Some("ITU_FULL"),
-            Self::ITU_NARROW => Some("ITU_NARROW"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for AttachmentStoreOp {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::STORE => Some("STORE"),
-            Self::DONT_CARE => Some("DONT_CARE"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
 impl fmt::Display for ViewportCoordinateSwizzleNV {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
@@ -28840,245 +28859,20 @@ impl fmt::Display for ViewportCoordinateSwizzleNV {
         }
     }
 }
-impl fmt::Display for DescriptorType {
+impl fmt::Display for CommandPoolCreateFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::SAMPLER => Some("SAMPLER"),
-            Self::COMBINED_IMAGE_SAMPLER => Some("COMBINED_IMAGE_SAMPLER"),
-            Self::SAMPLED_IMAGE => Some("SAMPLED_IMAGE"),
-            Self::STORAGE_IMAGE => Some("STORAGE_IMAGE"),
-            Self::UNIFORM_TEXEL_BUFFER => Some("UNIFORM_TEXEL_BUFFER"),
-            Self::STORAGE_TEXEL_BUFFER => Some("STORAGE_TEXEL_BUFFER"),
-            Self::UNIFORM_BUFFER => Some("UNIFORM_BUFFER"),
-            Self::STORAGE_BUFFER => Some("STORAGE_BUFFER"),
-            Self::UNIFORM_BUFFER_DYNAMIC => Some("UNIFORM_BUFFER_DYNAMIC"),
-            Self::STORAGE_BUFFER_DYNAMIC => Some("STORAGE_BUFFER_DYNAMIC"),
-            Self::INPUT_ATTACHMENT => Some("INPUT_ATTACHMENT"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ColorSpaceKHR {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::SRGB_NONLINEAR => Some("SRGB_NONLINEAR"),
-            Self::DISPLAY_P3_NONLINEAR_EXT => Some("DISPLAY_P3_NONLINEAR_EXT"),
-            Self::EXTENDED_SRGB_LINEAR_EXT => Some("EXTENDED_SRGB_LINEAR_EXT"),
-            Self::DCI_P3_LINEAR_EXT => Some("DCI_P3_LINEAR_EXT"),
-            Self::DCI_P3_NONLINEAR_EXT => Some("DCI_P3_NONLINEAR_EXT"),
-            Self::BT709_LINEAR_EXT => Some("BT709_LINEAR_EXT"),
-            Self::BT709_NONLINEAR_EXT => Some("BT709_NONLINEAR_EXT"),
-            Self::BT2020_LINEAR_EXT => Some("BT2020_LINEAR_EXT"),
-            Self::HDR10_ST2084_EXT => Some("HDR10_ST2084_EXT"),
-            Self::DOLBYVISION_EXT => Some("DOLBYVISION_EXT"),
-            Self::HDR10_HLG_EXT => Some("HDR10_HLG_EXT"),
-            Self::ADOBERGB_LINEAR_EXT => Some("ADOBERGB_LINEAR_EXT"),
-            Self::ADOBERGB_NONLINEAR_EXT => Some("ADOBERGB_NONLINEAR_EXT"),
-            Self::PASS_THROUGH_EXT => Some("PASS_THROUGH_EXT"),
-            Self::EXTENDED_SRGB_NONLINEAR_EXT => Some("EXTENDED_SRGB_NONLINEAR_EXT"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for VendorId {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::VIV => Some("VIV"),
-            Self::VSI => Some("VSI"),
-            Self::KAZAN => Some("KAZAN"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for SubpassContents {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::INLINE => Some("INLINE"),
-            Self::SECONDARY_COMMAND_BUFFERS => Some("SECONDARY_COMMAND_BUFFERS"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for TessellationDomainOrigin {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::UPPER_LEFT => Some("UPPER_LEFT"),
-            Self::LOWER_LEFT => Some("LOWER_LEFT"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for CoverageModulationModeNV {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::NONE => Some("NONE"),
-            Self::RGB => Some("RGB"),
-            Self::ALPHA => Some("ALPHA"),
-            Self::RGBA => Some("RGBA"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for PrimitiveTopology {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::POINT_LIST => Some("POINT_LIST"),
-            Self::LINE_LIST => Some("LINE_LIST"),
-            Self::LINE_STRIP => Some("LINE_STRIP"),
-            Self::TRIANGLE_LIST => Some("TRIANGLE_LIST"),
-            Self::TRIANGLE_STRIP => Some("TRIANGLE_STRIP"),
-            Self::TRIANGLE_FAN => Some("TRIANGLE_FAN"),
-            Self::LINE_LIST_WITH_ADJACENCY => Some("LINE_LIST_WITH_ADJACENCY"),
-            Self::LINE_STRIP_WITH_ADJACENCY => Some("LINE_STRIP_WITH_ADJACENCY"),
-            Self::TRIANGLE_LIST_WITH_ADJACENCY => Some("TRIANGLE_LIST_WITH_ADJACENCY"),
-            Self::TRIANGLE_STRIP_WITH_ADJACENCY => Some("TRIANGLE_STRIP_WITH_ADJACENCY"),
-            Self::PATCH_LIST => Some("PATCH_LIST"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for CommandBufferResetFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(
-            CommandBufferResetFlags::RELEASE_RESOURCES.0,
-            "RELEASE_RESOURCES",
-        )];
+        const KNOWN: &[(Flags, &str)] = &[
+            (CommandPoolCreateFlags::TRANSIENT.0, "TRANSIENT"),
+            (
+                CommandPoolCreateFlags::RESET_COMMAND_BUFFER.0,
+                "RESET_COMMAND_BUFFER",
+            ),
+            (CommandPoolCreateFlags::PROTECTED.0, "PROTECTED"),
+        ];
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for AttachmentLoadOp {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::LOAD => Some("LOAD"),
-            Self::CLEAR => Some("CLEAR"),
-            Self::DONT_CARE => Some("DONT_CARE"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ImageViewType {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::TYPE_1D => Some("TYPE_1D"),
-            Self::TYPE_2D => Some("TYPE_2D"),
-            Self::TYPE_3D => Some("TYPE_3D"),
-            Self::CUBE => Some("CUBE"),
-            Self::TYPE_1D_ARRAY => Some("TYPE_1D_ARRAY"),
-            Self::TYPE_2D_ARRAY => Some("TYPE_2D_ARRAY"),
-            Self::CUBE_ARRAY => Some("CUBE_ARRAY"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for BlendOp {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::ADD => Some("ADD"),
-            Self::SUBTRACT => Some("SUBTRACT"),
-            Self::REVERSE_SUBTRACT => Some("REVERSE_SUBTRACT"),
-            Self::MIN => Some("MIN"),
-            Self::MAX => Some("MAX"),
-            Self::ZERO_EXT => Some("ZERO_EXT"),
-            Self::SRC_EXT => Some("SRC_EXT"),
-            Self::DST_EXT => Some("DST_EXT"),
-            Self::SRC_OVER_EXT => Some("SRC_OVER_EXT"),
-            Self::DST_OVER_EXT => Some("DST_OVER_EXT"),
-            Self::SRC_IN_EXT => Some("SRC_IN_EXT"),
-            Self::DST_IN_EXT => Some("DST_IN_EXT"),
-            Self::SRC_OUT_EXT => Some("SRC_OUT_EXT"),
-            Self::DST_OUT_EXT => Some("DST_OUT_EXT"),
-            Self::SRC_ATOP_EXT => Some("SRC_ATOP_EXT"),
-            Self::DST_ATOP_EXT => Some("DST_ATOP_EXT"),
-            Self::XOR_EXT => Some("XOR_EXT"),
-            Self::MULTIPLY_EXT => Some("MULTIPLY_EXT"),
-            Self::SCREEN_EXT => Some("SCREEN_EXT"),
-            Self::OVERLAY_EXT => Some("OVERLAY_EXT"),
-            Self::DARKEN_EXT => Some("DARKEN_EXT"),
-            Self::LIGHTEN_EXT => Some("LIGHTEN_EXT"),
-            Self::COLORDODGE_EXT => Some("COLORDODGE_EXT"),
-            Self::COLORBURN_EXT => Some("COLORBURN_EXT"),
-            Self::HARDLIGHT_EXT => Some("HARDLIGHT_EXT"),
-            Self::SOFTLIGHT_EXT => Some("SOFTLIGHT_EXT"),
-            Self::DIFFERENCE_EXT => Some("DIFFERENCE_EXT"),
-            Self::EXCLUSION_EXT => Some("EXCLUSION_EXT"),
-            Self::INVERT_EXT => Some("INVERT_EXT"),
-            Self::INVERT_RGB_EXT => Some("INVERT_RGB_EXT"),
-            Self::LINEARDODGE_EXT => Some("LINEARDODGE_EXT"),
-            Self::LINEARBURN_EXT => Some("LINEARBURN_EXT"),
-            Self::VIVIDLIGHT_EXT => Some("VIVIDLIGHT_EXT"),
-            Self::LINEARLIGHT_EXT => Some("LINEARLIGHT_EXT"),
-            Self::PINLIGHT_EXT => Some("PINLIGHT_EXT"),
-            Self::HARDMIX_EXT => Some("HARDMIX_EXT"),
-            Self::HSL_HUE_EXT => Some("HSL_HUE_EXT"),
-            Self::HSL_SATURATION_EXT => Some("HSL_SATURATION_EXT"),
-            Self::HSL_COLOR_EXT => Some("HSL_COLOR_EXT"),
-            Self::HSL_LUMINOSITY_EXT => Some("HSL_LUMINOSITY_EXT"),
-            Self::PLUS_EXT => Some("PLUS_EXT"),
-            Self::PLUS_CLAMPED_EXT => Some("PLUS_CLAMPED_EXT"),
-            Self::PLUS_CLAMPED_ALPHA_EXT => Some("PLUS_CLAMPED_ALPHA_EXT"),
-            Self::PLUS_DARKER_EXT => Some("PLUS_DARKER_EXT"),
-            Self::MINUS_EXT => Some("MINUS_EXT"),
-            Self::MINUS_CLAMPED_EXT => Some("MINUS_CLAMPED_EXT"),
-            Self::CONTRAST_EXT => Some("CONTRAST_EXT"),
-            Self::INVERT_OVG_EXT => Some("INVERT_OVG_EXT"),
-            Self::RED_EXT => Some("RED_EXT"),
-            Self::GREEN_EXT => Some("GREEN_EXT"),
-            Self::BLUE_EXT => Some("BLUE_EXT"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for PeerMemoryFeatureFlags {
+impl fmt::Display for DisplayPlaneAlphaFlagsKHR {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (DisplayPlaneAlphaFlagsKHR::OPAQUE.0, "OPAQUE"),
@@ -29087,122 +28881,6 @@ impl fmt::Display for PeerMemoryFeatureFlags {
             (
                 DisplayPlaneAlphaFlagsKHR::PER_PIXEL_PREMULTIPLIED.0,
                 "PER_PIXEL_PREMULTIPLIED",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for BlendFactor {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::ZERO => Some("ZERO"),
-            Self::ONE => Some("ONE"),
-            Self::SRC_COLOR => Some("SRC_COLOR"),
-            Self::ONE_MINUS_SRC_COLOR => Some("ONE_MINUS_SRC_COLOR"),
-            Self::DST_COLOR => Some("DST_COLOR"),
-            Self::ONE_MINUS_DST_COLOR => Some("ONE_MINUS_DST_COLOR"),
-            Self::SRC_ALPHA => Some("SRC_ALPHA"),
-            Self::ONE_MINUS_SRC_ALPHA => Some("ONE_MINUS_SRC_ALPHA"),
-            Self::DST_ALPHA => Some("DST_ALPHA"),
-            Self::ONE_MINUS_DST_ALPHA => Some("ONE_MINUS_DST_ALPHA"),
-            Self::CONSTANT_COLOR => Some("CONSTANT_COLOR"),
-            Self::ONE_MINUS_CONSTANT_COLOR => Some("ONE_MINUS_CONSTANT_COLOR"),
-            Self::CONSTANT_ALPHA => Some("CONSTANT_ALPHA"),
-            Self::ONE_MINUS_CONSTANT_ALPHA => Some("ONE_MINUS_CONSTANT_ALPHA"),
-            Self::SRC_ALPHA_SATURATE => Some("SRC_ALPHA_SATURATE"),
-            Self::SRC1_COLOR => Some("SRC1_COLOR"),
-            Self::ONE_MINUS_SRC1_COLOR => Some("ONE_MINUS_SRC1_COLOR"),
-            Self::SRC1_ALPHA => Some("SRC1_ALPHA"),
-            Self::ONE_MINUS_SRC1_ALPHA => Some("ONE_MINUS_SRC1_ALPHA"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for MemoryHeapFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (MemoryHeapFlags::DEVICE_LOCAL.0, "DEVICE_LOCAL"),
-            (MemoryHeapFlags::MULTI_INSTANCE.0, "MULTI_INSTANCE"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for ObjectType {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::UNKNOWN => Some("UNKNOWN"),
-            Self::INSTANCE => Some("INSTANCE"),
-            Self::PHYSICAL_DEVICE => Some("PHYSICAL_DEVICE"),
-            Self::DEVICE => Some("DEVICE"),
-            Self::QUEUE => Some("QUEUE"),
-            Self::SEMAPHORE => Some("SEMAPHORE"),
-            Self::COMMAND_BUFFER => Some("COMMAND_BUFFER"),
-            Self::FENCE => Some("FENCE"),
-            Self::DEVICE_MEMORY => Some("DEVICE_MEMORY"),
-            Self::BUFFER => Some("BUFFER"),
-            Self::IMAGE => Some("IMAGE"),
-            Self::EVENT => Some("EVENT"),
-            Self::QUERY_POOL => Some("QUERY_POOL"),
-            Self::BUFFER_VIEW => Some("BUFFER_VIEW"),
-            Self::IMAGE_VIEW => Some("IMAGE_VIEW"),
-            Self::SHADER_MODULE => Some("SHADER_MODULE"),
-            Self::PIPELINE_CACHE => Some("PIPELINE_CACHE"),
-            Self::PIPELINE_LAYOUT => Some("PIPELINE_LAYOUT"),
-            Self::RENDER_PASS => Some("RENDER_PASS"),
-            Self::PIPELINE => Some("PIPELINE"),
-            Self::DESCRIPTOR_SET_LAYOUT => Some("DESCRIPTOR_SET_LAYOUT"),
-            Self::SAMPLER => Some("SAMPLER"),
-            Self::DESCRIPTOR_POOL => Some("DESCRIPTOR_POOL"),
-            Self::DESCRIPTOR_SET => Some("DESCRIPTOR_SET"),
-            Self::FRAMEBUFFER => Some("FRAMEBUFFER"),
-            Self::COMMAND_POOL => Some("COMMAND_POOL"),
-            Self::SURFACE_KHR => Some("SURFACE_KHR"),
-            Self::SWAPCHAIN_KHR => Some("SWAPCHAIN_KHR"),
-            Self::DISPLAY_KHR => Some("DISPLAY_KHR"),
-            Self::DISPLAY_MODE_KHR => Some("DISPLAY_MODE_KHR"),
-            Self::DEBUG_REPORT_CALLBACK_EXT => Some("DEBUG_REPORT_CALLBACK_EXT"),
-            Self::OBJECT_TABLE_NVX => Some("OBJECT_TABLE_NVX"),
-            Self::INDIRECT_COMMANDS_LAYOUT_NVX => Some("INDIRECT_COMMANDS_LAYOUT_NVX"),
-            Self::DEBUG_UTILS_MESSENGER_EXT => Some("DEBUG_UTILS_MESSENGER_EXT"),
-            Self::VALIDATION_CACHE_EXT => Some("VALIDATION_CACHE_EXT"),
-            Self::SAMPLER_YCBCR_CONVERSION => Some("SAMPLER_YCBCR_CONVERSION"),
-            Self::DESCRIPTOR_UPDATE_TEMPLATE => Some("DESCRIPTOR_UPDATE_TEMPLATE"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ExternalSemaphoreHandleTypeFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD.0,
-                "EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD",
-            ),
-            (
-                ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32.0,
-                "EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32",
-            ),
-            (
-                ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT.0,
-                "EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT",
-            ),
-            (
-                ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE.0,
-                "EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE",
-            ),
-            (
-                ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD.0,
-                "EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD",
             ),
         ];
         display_flags(f, KNOWN, self.0)
@@ -29475,54 +29153,34 @@ impl fmt::Display for Format {
         }
     }
 }
-impl fmt::Display for SharingMode {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::EXCLUSIVE => Some("EXCLUSIVE"),
-            Self::CONCURRENT => Some("CONCURRENT"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for SurfaceTransformFlagsKHR {
+impl fmt::Display for QueueFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
-            (SurfaceTransformFlagsKHR::IDENTITY.0, "IDENTITY"),
-            (SurfaceTransformFlagsKHR::ROTATE_90.0, "ROTATE_90"),
-            (SurfaceTransformFlagsKHR::ROTATE_180.0, "ROTATE_180"),
-            (SurfaceTransformFlagsKHR::ROTATE_270.0, "ROTATE_270"),
-            (
-                SurfaceTransformFlagsKHR::HORIZONTAL_MIRROR.0,
-                "HORIZONTAL_MIRROR",
-            ),
-            (ImageCreateFlags::ALIAS.0, "ALIAS"),
-            (
-                SurfaceTransformFlagsKHR::HORIZONTAL_MIRROR_ROTATE_90.0,
-                "HORIZONTAL_MIRROR_ROTATE_90",
-            ),
-            (
-                SurfaceTransformFlagsKHR::HORIZONTAL_MIRROR_ROTATE_180.0,
-                "HORIZONTAL_MIRROR_ROTATE_180",
-            ),
-            (
-                SurfaceTransformFlagsKHR::HORIZONTAL_MIRROR_ROTATE_270.0,
-                "HORIZONTAL_MIRROR_ROTATE_270",
-            ),
-            (SurfaceTransformFlagsKHR::INHERIT.0, "INHERIT"),
+            (QueueFlags::GRAPHICS.0, "GRAPHICS"),
+            (QueueFlags::COMPUTE.0, "COMPUTE"),
+            (QueueFlags::TRANSFER.0, "TRANSFER"),
+            (QueueFlags::SPARSE_BINDING.0, "SPARSE_BINDING"),
+            (QueueFlags::PROTECTED.0, "PROTECTED"),
         ];
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for ChromaLocation {
+impl fmt::Display for BufferCreateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (BufferCreateFlags::SPARSE_BINDING.0, "SPARSE_BINDING"),
+            (BufferCreateFlags::SPARSE_RESIDENCY.0, "SPARSE_RESIDENCY"),
+            (BufferCreateFlags::SPARSE_ALIASED.0, "SPARSE_ALIASED"),
+            (BufferCreateFlags::PROTECTED.0, "PROTECTED"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for RasterizationOrderAMD {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::COSITED_EVEN => Some("COSITED_EVEN"),
-            Self::MIDPOINT => Some("MIDPOINT"),
+            Self::STRICT => Some("STRICT"),
+            Self::RELAXED => Some("RELAXED"),
             _ => None,
         };
         if let Some(x) = name {
@@ -29530,6 +29188,34 @@ impl fmt::Display for ChromaLocation {
         } else {
             write!(f, "{}", self.0)
         }
+    }
+}
+impl fmt::Display for SubpassContents {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::INLINE => Some("INLINE"),
+            Self::SECONDARY_COMMAND_BUFFERS => Some("SECONDARY_COMMAND_BUFFERS"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for DeviceGroupPresentModeFlagsKHR {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (DeviceGroupPresentModeFlagsKHR::LOCAL.0, "LOCAL"),
+            (DeviceGroupPresentModeFlagsKHR::REMOTE.0, "REMOTE"),
+            (DeviceGroupPresentModeFlagsKHR::SUM.0, "SUM"),
+            (
+                DeviceGroupPresentModeFlagsKHR::LOCAL_MULTI_DEVICE.0,
+                "LOCAL_MULTI_DEVICE",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
     }
 }
 impl fmt::Display for ExternalMemoryFeatureFlagsNV {
@@ -29551,15 +29237,47 @@ impl fmt::Display for ExternalMemoryFeatureFlagsNV {
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for SparseMemoryBindFlags {
+impl fmt::Display for ColorComponentFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(SparseMemoryBindFlags::METADATA.0, "METADATA")];
+        const KNOWN: &[(Flags, &str)] = &[
+            (ColorComponentFlags::R.0, "R"),
+            (ColorComponentFlags::G.0, "G"),
+            (ColorComponentFlags::B.0, "B"),
+            (ColorComponentFlags::A.0, "A"),
+        ];
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for DeviceQueueCreateFlags {
+impl fmt::Display for AttachmentStoreOp {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(DeviceQueueCreateFlags::PROTECTED.0, "PROTECTED")];
+        let name = match *self {
+            Self::STORE => Some("STORE"),
+            Self::DONT_CARE => Some("DONT_CARE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for DescriptorUpdateTemplateType {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::DESCRIPTOR_SET => Some("DESCRIPTOR_SET"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for MemoryAllocateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(MemoryAllocateFlags::DEVICE_MASK.0, "DEVICE_MASK")];
         display_flags(f, KNOWN, self.0)
     }
 }
@@ -29581,6 +29299,104 @@ impl fmt::Display for StencilOp {
         } else {
             write!(f, "{}", self.0)
         }
+    }
+}
+impl fmt::Display for FormatFeatureFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN : & [ ( Flags , & str ) ] = & [ ( FormatFeatureFlags :: SAMPLED_IMAGE . 0 , "SAMPLED_IMAGE" ) , ( FormatFeatureFlags :: STORAGE_IMAGE . 0 , "STORAGE_IMAGE" ) , ( FormatFeatureFlags :: STORAGE_IMAGE_ATOMIC . 0 , "STORAGE_IMAGE_ATOMIC" ) , ( FormatFeatureFlags :: UNIFORM_TEXEL_BUFFER . 0 , "UNIFORM_TEXEL_BUFFER" ) , ( FormatFeatureFlags :: STORAGE_TEXEL_BUFFER . 0 , "STORAGE_TEXEL_BUFFER" ) , ( FormatFeatureFlags :: STORAGE_TEXEL_BUFFER_ATOMIC . 0 , "STORAGE_TEXEL_BUFFER_ATOMIC" ) , ( FormatFeatureFlags :: VERTEX_BUFFER . 0 , "VERTEX_BUFFER" ) , ( FormatFeatureFlags :: COLOR_ATTACHMENT . 0 , "COLOR_ATTACHMENT" ) , ( FormatFeatureFlags :: COLOR_ATTACHMENT_BLEND . 0 , "COLOR_ATTACHMENT_BLEND" ) , ( FormatFeatureFlags :: DEPTH_STENCIL_ATTACHMENT . 0 , "DEPTH_STENCIL_ATTACHMENT" ) , ( FormatFeatureFlags :: BLIT_SRC . 0 , "BLIT_SRC" ) , ( FormatFeatureFlags :: BLIT_DST . 0 , "BLIT_DST" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_FILTER_LINEAR . 0 , "SAMPLED_IMAGE_FILTER_LINEAR" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_FILTER_CUBIC_IMG . 0 , "SAMPLED_IMAGE_FILTER_CUBIC_IMG" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_FILTER_MINMAX_EXT . 0 , "SAMPLED_IMAGE_FILTER_MINMAX_EXT" ) , ( FormatFeatureFlags :: TRANSFER_SRC . 0 , "TRANSFER_SRC" ) , ( FormatFeatureFlags :: TRANSFER_DST . 0 , "TRANSFER_DST" ) , ( FormatFeatureFlags :: MIDPOINT_CHROMA_SAMPLES . 0 , "MIDPOINT_CHROMA_SAMPLES" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE" ) , ( FormatFeatureFlags :: DISJOINT . 0 , "DISJOINT" ) , ( FormatFeatureFlags :: COSITED_CHROMA_SAMPLES . 0 , "COSITED_CHROMA_SAMPLES" ) ] ;
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for QueryControlFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(QueryControlFlags::PRECISE.0, "PRECISE")];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for CullModeFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (CullModeFlags::NONE.0, "NONE"),
+            (CullModeFlags::FRONT.0, "FRONT"),
+            (CullModeFlags::BACK.0, "BACK"),
+            (CullModeFlags::FRONT_AND_BACK.0, "FRONT_AND_BACK"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for DependencyFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (DependencyFlags::BY_REGION.0, "BY_REGION"),
+            (DependencyFlags::DEVICE_GROUP.0, "DEVICE_GROUP"),
+            (DependencyFlags::VIEW_LOCAL.0, "VIEW_LOCAL"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for CoverageModulationModeNV {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::NONE => Some("NONE"),
+            Self::RGB => Some("RGB"),
+            Self::ALPHA => Some("ALPHA"),
+            Self::RGBA => Some("RGBA"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for TessellationDomainOrigin {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::UPPER_LEFT => Some("UPPER_LEFT"),
+            Self::LOWER_LEFT => Some("LOWER_LEFT"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for ChromaLocation {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::COSITED_EVEN => Some("COSITED_EVEN"),
+            Self::MIDPOINT => Some("MIDPOINT"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for PipelineCreateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                PipelineCreateFlags::DISABLE_OPTIMIZATION.0,
+                "DISABLE_OPTIMIZATION",
+            ),
+            (
+                PipelineCreateFlags::ALLOW_DERIVATIVES.0,
+                "ALLOW_DERIVATIVES",
+            ),
+            (PipelineCreateFlags::DERIVATIVE.0, "DERIVATIVE"),
+            (
+                PipelineCreateFlags::VIEW_INDEX_FROM_DEVICE_INDEX.0,
+                "VIEW_INDEX_FROM_DEVICE_INDEX",
+            ),
+            (PipelineCreateFlags::DISPATCH_BASE.0, "DISPATCH_BASE"),
+        ];
+        display_flags(f, KNOWN, self.0)
     }
 }
 impl fmt::Display for ImageCreateFlags {
@@ -29621,21 +29437,6 @@ impl fmt::Display for DescriptorPoolCreateFlags {
             (ImageCreateFlags::DISJOINT.0, "DISJOINT"),
         ];
         display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for ShaderInfoTypeAMD {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::STATISTICS => Some("STATISTICS"),
-            Self::BINARY => Some("BINARY"),
-            Self::DISASSEMBLY => Some("DISASSEMBLY"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
     }
 }
 impl fmt::Display for AccessFlags {
@@ -29692,6 +29493,63 @@ impl fmt::Display for AccessFlags {
                 "COLOR_ATTACHMENT_READ_NONCOHERENT_EXT",
             ),
         ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for ObjectEntryUsageFlagsNVX {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (ObjectEntryUsageFlagsNVX::GRAPHICS.0, "GRAPHICS"),
+            (ObjectEntryUsageFlagsNVX::COMPUTE.0, "COMPUTE"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for VendorId {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::VIV => Some("VIV"),
+            Self::VSI => Some("VSI"),
+            Self::KAZAN => Some("KAZAN"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for SampleCountFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (SampleCountFlags::TYPE_1.0, "TYPE_1"),
+            (SampleCountFlags::TYPE_2.0, "TYPE_2"),
+            (SampleCountFlags::TYPE_4.0, "TYPE_4"),
+            (SampleCountFlags::TYPE_8.0, "TYPE_8"),
+            (SampleCountFlags::TYPE_16.0, "TYPE_16"),
+            (SampleCountFlags::TYPE_32.0, "TYPE_32"),
+            (SampleCountFlags::TYPE_64.0, "TYPE_64"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for ValidationCacheHeaderVersionEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::ONE => Some("ONE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for SparseMemoryBindFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(SparseMemoryBindFlags::METADATA.0, "METADATA")];
         display_flags(f, KNOWN, self.0)
     }
 }
