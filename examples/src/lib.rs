@@ -333,7 +333,7 @@ impl ExampleBase {
                         .enumerate()
                         .filter_map(|(index, ref info)| {
                             let supports_graphic_and_surface =
-                                info.queue_flags.subset(vk::QueueFlags::GRAPHICS) && surface_loader
+                                info.queue_flags.contains(vk::QueueFlags::GRAPHICS) && surface_loader
                                     .get_physical_device_surface_support_khr(
                                         *pdevice,
                                         index as u32,
@@ -410,7 +410,7 @@ impl ExampleBase {
             };
             let pre_transform = if surface_capabilities
                 .supported_transforms
-                .subset(vk::SurfaceTransformFlagsKHR::IDENTITY)
+                .contains(vk::SurfaceTransformFlagsKHR::IDENTITY)
             {
                 vk::SurfaceTransformFlagsKHR::IDENTITY
             } else {
