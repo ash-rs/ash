@@ -1584,10 +1584,9 @@ pub fn generate_const_displays<'a>(const_values: &HashMap<Ident, Vec<Ident>>) ->
     }
 }
 
-pub fn write_source_code(path: &Path) {
-    use std::fs::File;
-    use std::io::Write;
-    let spec2 = vk_parse::parse_file(path);
+pub fn write_source_code(xml: &Path, output: &Path) {
+    use std::fs;
+    let spec2 = vk_parse::parse_file(xml);
     let extensions: &Vec<vk_parse::Extension> = spec2
         .0
         .iter()
@@ -1597,7 +1596,7 @@ pub fn write_source_code(path: &Path) {
         }).nth(0)
         .expect("extension");
 
-    let spec = vk_parse::parse_file_as_vkxml(path);
+    let spec = vk_parse::parse_file_as_vkxml(xml);
     let commands: HashMap<vkxml::Identifier, &vkxml::Command> = spec
         .elements
         .iter()
@@ -1691,7 +1690,6 @@ pub fn write_source_code(path: &Path) {
 
     let const_displays = generate_const_displays(&const_values);
 
-    let mut file = File::create("../ash/src/vk.rs").expect("vk");
     let bitflags_macro = vk_bitflags_wrapped_macro();
     let handle_nondispatchable_macro = handle_nondispatchable_macro();
     let define_handle_macro = define_handle_macro();
@@ -1731,5 +1729,5 @@ pub fn write_source_code(path: &Path) {
         }
         #const_displays
     };
-    write!(&mut file, "{}", source_code).expect("Unable to write to file");
+    fs::write(output, source_code.to_string()).expect("Unable to write to file");
 }

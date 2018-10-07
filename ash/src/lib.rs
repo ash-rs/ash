@@ -12,7 +12,8 @@ mod instance;
 pub mod prelude;
 pub mod util;
 pub mod version;
-pub mod vk;
+pub mod vk { include!(concat!(env!("OUT_DIR"), "/vk.rs")); }
+
 pub trait RawPtr<T> {
     fn as_raw_ptr(&self) -> *const T;
 }
