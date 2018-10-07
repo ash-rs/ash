@@ -43,13 +43,14 @@ impl Swapchain {
         );
     }
 
+    /// On success, returns the next image's index and whether the swapchain is suboptimal for the surface.
     pub unsafe fn acquire_next_image_khr(
         &self,
         swapchain: vk::SwapchainKHR,
         timeout: u64,
         semaphore: vk::Semaphore,
         fence: vk::Fence,
-    ) -> VkResult<u32> {
+    ) -> VkResult<(u32, bool)> {
         let mut index = mem::uninitialized();
         let err_code = self.swapchain_fn.acquire_next_image_khr(
             self.handle,
@@ -60,7 +61,8 @@ impl Swapchain {
             &mut index,
         );
         match err_code {
-            vk::Result::SUCCESS => Ok(index),
+            vk::Result::SUCCESS => Ok((index, false)),
+            vk::Result::SUBOPTIMAL_KHR => Ok((index, true)),
             _ => Err(err_code),
         }
     }
@@ -83,14 +85,16 @@ impl Swapchain {
         }
     }
 
+    /// On success, returns whether the swapchain is suboptimal for the surface.
     pub unsafe fn queue_present_khr(
         &self,
         queue: vk::Queue,
         create_info: &vk::PresentInfoKHR,
-    ) -> VkResult<()> {
+    ) -> VkResult<bool> {
         let err_code = self.swapchain_fn.queue_present_khr(queue, create_info);
         match err_code {
-            vk::Result::SUCCESS => Ok(()),
+            vk::Result::SUCCESS => Ok(false),
+            vk::Result::SUBOPTIMAL_KHR => Ok(true),
             _ => Err(err_code),
         }
     }

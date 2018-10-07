@@ -876,7 +876,7 @@ fn main() {
         let graphic_pipeline = graphics_pipelines[0];
 
         base.render_loop(|| {
-            let present_index = base
+            let (present_index, _) = base
                 .swapchain_loader
                 .acquire_next_image_khr(
                     base.swapchain,
