@@ -652,13 +652,11 @@ pub trait DeviceV1_0 {
         }
     }
 
-    fn device_wait_idle(&self) -> VkResult<()> {
-        unsafe {
-            let err_code = self.fp_v1_0().device_wait_idle(self.handle());
-            match err_code {
-                vk::Result::SUCCESS => Ok(()),
-                _ => Err(err_code),
-            }
+    unsafe fn device_wait_idle(&self) -> VkResult<()> {
+        let err_code = self.fp_v1_0().device_wait_idle(self.handle());
+        match err_code {
+            vk::Result::SUCCESS => Ok(()),
+            _ => Err(err_code),
         }
     }
 
@@ -1604,39 +1602,33 @@ pub trait DeviceV1_0 {
         }
     }
 
-    fn get_image_subresource_layout(
+    unsafe fn get_image_subresource_layout(
         &self,
         image: vk::Image,
         subresource: vk::ImageSubresource,
     ) -> vk::SubresourceLayout {
-        unsafe {
-            let mut layout = mem::uninitialized();
-            self.fp_v1_0().get_image_subresource_layout(
-                self.handle(),
-                image,
-                &subresource,
-                &mut layout,
-            );
-            layout
-        }
+        let mut layout = mem::uninitialized();
+        self.fp_v1_0().get_image_subresource_layout(
+            self.handle(),
+            image,
+            &subresource,
+            &mut layout,
+        );
+        layout
     }
 
-    fn get_image_memory_requirements(&self, image: vk::Image) -> vk::MemoryRequirements {
-        unsafe {
-            let mut mem_req = mem::uninitialized();
-            self.fp_v1_0()
-                .get_image_memory_requirements(self.handle(), image, &mut mem_req);
-            mem_req
-        }
+    unsafe fn get_image_memory_requirements(&self, image: vk::Image) -> vk::MemoryRequirements {
+        let mut mem_req = mem::uninitialized();
+        self.fp_v1_0()
+            .get_image_memory_requirements(self.handle(), image, &mut mem_req);
+        mem_req
     }
 
-    fn get_buffer_memory_requirements(&self, buffer: vk::Buffer) -> vk::MemoryRequirements {
-        unsafe {
-            let mut mem_req = mem::uninitialized();
-            self.fp_v1_0()
-                .get_buffer_memory_requirements(self.handle(), buffer, &mut mem_req);
-            mem_req
-        }
+    unsafe fn get_buffer_memory_requirements(&self, buffer: vk::Buffer) -> vk::MemoryRequirements {
+        let mut mem_req = mem::uninitialized();
+        self.fp_v1_0()
+            .get_buffer_memory_requirements(self.handle(), buffer, &mut mem_req);
+        mem_req
     }
 
     unsafe fn allocate_memory(
