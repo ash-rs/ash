@@ -1142,14 +1142,6 @@ pub fn derive_default(_struct: &vkxml::Struct) -> Option<Tokens> {
         _ => None,
     });
     let is_structure_type = |field: &vkxml::Field| field.basetype == "VkStructureType";
-    let is_pfn = |field: &vkxml::Field| {
-        field
-            .name
-            .as_ref()
-            .map(|n| n.contains("pfn"))
-            .unwrap_or(false)
-    };
-    let contains_pfn = members.clone().any(is_pfn);
 
     // This are also pointers, and therefor also don't implement Default. The spec
     // also doesn't mark them as pointers
@@ -1157,7 +1149,7 @@ pub fn derive_default(_struct: &vkxml::Struct) -> Option<Tokens> {
     let contains_ptr = members.clone().any(|field| field.reference.is_some());
     let contains_strucutre_type = members.clone().any(is_structure_type);
     let contains_static_array = members.clone().any(is_static_array);
-    if !(contains_ptr || contains_pfn || contains_strucutre_type || contains_static_array) {
+    if !(contains_ptr || contains_strucutre_type || contains_static_array) {
         return None;
     };
     let default_fields = members.clone().map(|field| {
@@ -1209,7 +1201,6 @@ pub fn derive_default(_struct: &vkxml::Struct) -> Option<Tokens> {
                 }
             }
         } else if is_static_array(field)
-            || is_pfn(field)
             || handles.contains(&field.basetype.as_str())
         {
             quote!{
@@ -1266,7 +1257,7 @@ pub fn derive_debug(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> Opt
             }
         } else if param_ident.as_ref().contains("pfn") {
             quote!{
-                &(self.#param_ident as *const())
+                &(self.#param_ident.map(|x| x as *const ()))
             }
         } else if union_types.contains(field.basetype.as_str()) {
             quote!(&"union")
@@ -1375,7 +1366,7 @@ fn generate_funcptr(fnptr: &vkxml::FunctionPointer) -> Tokens {
     });
     quote!{
         #[allow(non_camel_case_types)]
-        pub type #name = unsafe extern "system" fn(#(#params),*) -> #ret_ty_tokens;
+        pub type #name = Option<unsafe extern "system" fn(#(#params),*) -> #ret_ty_tokens>;
     }
 }
 

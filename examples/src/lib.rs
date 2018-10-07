@@ -310,7 +310,7 @@ impl ExampleBase {
                 flags: vk::DebugReportFlagsEXT::ERROR
                     | vk::DebugReportFlagsEXT::WARNING
                     | vk::DebugReportFlagsEXT::PERFORMANCE_WARNING,
-                pfn_callback: vulkan_debug_callback,
+                pfn_callback: Some(vulkan_debug_callback),
                 p_user_data: ptr::null_mut(),
             };
             let debug_report_loader =
