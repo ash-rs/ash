@@ -95,31 +95,29 @@ impl Swapchain {
         }
     }
 
-    pub fn get_swapchain_images_khr(
+    pub unsafe fn get_swapchain_images_khr(
         &self,
         swapchain: vk::SwapchainKHR,
     ) -> VkResult<Vec<vk::Image>> {
-        unsafe {
-            let mut count = 0;
-            self.swapchain_fn.get_swapchain_images_khr(
-                self.handle,
-                swapchain,
-                &mut count,
-                ptr::null_mut(),
-            );
+        let mut count = 0;
+        self.swapchain_fn.get_swapchain_images_khr(
+            self.handle,
+            swapchain,
+            &mut count,
+            ptr::null_mut(),
+        );
 
-            let mut v = Vec::with_capacity(count as usize);
-            let err_code = self.swapchain_fn.get_swapchain_images_khr(
-                self.handle,
-                swapchain,
-                &mut count,
-                v.as_mut_ptr(),
-            );
-            v.set_len(count as usize);
-            match err_code {
-                vk::Result::SUCCESS => Ok(v),
-                _ => Err(err_code),
-            }
+        let mut v = Vec::with_capacity(count as usize);
+        let err_code = self.swapchain_fn.get_swapchain_images_khr(
+            self.handle,
+            swapchain,
+            &mut count,
+            v.as_mut_ptr(),
+        );
+        v.set_len(count as usize);
+        match err_code {
+            vk::Result::SUCCESS => Ok(v),
+            _ => Err(err_code),
         }
     }
 }
