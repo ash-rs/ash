@@ -1248,7 +1248,7 @@ pub fn derive_debug(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> Opt
             .map(|n| n.contains("pfn"))
             .unwrap_or(false)
     });
-    let contains_static_array = members.clone().any(is_static_array);
+    let contains_static_array = members.clone().any(|x| is_static_array(x) && x.basetype == "char");
     let contains_union = members
         .clone()
         .any(|field| union_types.contains(field.basetype.as_str()));
@@ -1258,7 +1258,7 @@ pub fn derive_debug(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> Opt
     let debug_fields = members.clone().map(|field| {
         let param_ident = field.param_ident();
         let param_str = param_ident.as_ref();
-        let debug_value = if is_static_array(field) {
+        let debug_value = if is_static_array(field) && field.basetype == "char" {
             quote!{
                 &unsafe {
                     ::std::ffi::CStr::from_ptr(self.#param_ident.as_ptr() as *const i8)
