@@ -87,25 +87,23 @@ impl<V: FunctionPointers> Instance<V> {
 pub trait InstanceV1_1: InstanceV1_0 {
     fn fp_v1_1(&self) -> &vk::InstanceFnV1_1;
 
-    fn enumerate_physical_device_groups(&self) -> VkResult<Vec<vk::PhysicalDeviceGroupProperties>> {
-        unsafe {
-            let mut group_count = mem::uninitialized();
-            self.fp_v1_1().enumerate_physical_device_groups(
-                self.handle(),
-                &mut group_count,
-                ptr::null_mut(),
-            );
-            let mut physical_device_groups = Vec::with_capacity(group_count as usize);
-            let err_code = self.fp_v1_1().enumerate_physical_device_groups(
-                self.handle(),
-                &mut group_count,
-                physical_device_groups.as_mut_ptr(),
-            );
-            physical_device_groups.set_len(group_count as usize);
-            match err_code {
-                vk::Result::SUCCESS => Ok(physical_device_groups),
-                _ => Err(err_code),
-            }
+    unsafe fn enumerate_physical_device_groups(&self) -> VkResult<Vec<vk::PhysicalDeviceGroupProperties>> {
+        let mut group_count = mem::uninitialized();
+        self.fp_v1_1().enumerate_physical_device_groups(
+            self.handle(),
+            &mut group_count,
+            ptr::null_mut(),
+        );
+        let mut physical_device_groups = Vec::with_capacity(group_count as usize);
+        let err_code = self.fp_v1_1().enumerate_physical_device_groups(
+            self.handle(),
+            &mut group_count,
+            physical_device_groups.as_mut_ptr(),
+        );
+        physical_device_groups.set_len(group_count as usize);
+        match err_code {
+            vk::Result::SUCCESS => Ok(physical_device_groups),
+            _ => Err(err_code),
         }
     }
 
@@ -118,20 +116,18 @@ pub trait InstanceV1_1: InstanceV1_0 {
             .get_physical_device_properties2(physical_device, prop);
     }
 
-    fn get_physical_device_format_properties2(
+    unsafe fn get_physical_device_format_properties2(
         &self,
         physical_device: vk::PhysicalDevice,
         format: vk::Format,
     ) -> vk::FormatProperties2 {
-        unsafe {
-            let mut format_prop = mem::uninitialized();
-            self.fp_v1_1().get_physical_device_format_properties2(
-                physical_device,
-                format,
-                &mut format_prop,
-            );
-            format_prop
-        }
+        let mut format_prop = mem::uninitialized();
+        self.fp_v1_1().get_physical_device_format_properties2(
+            physical_device,
+            format,
+            &mut format_prop,
+        );
+        format_prop
     }
 
     unsafe fn get_physical_device_image_format_properties2(
@@ -152,19 +148,17 @@ pub trait InstanceV1_1: InstanceV1_0 {
         }
     }
 
-    fn get_physical_device_queue_family_properties2_len(
+    unsafe fn get_physical_device_queue_family_properties2_len(
         &self,
         physical_device: vk::PhysicalDevice,
     ) -> usize {
-        unsafe {
-            let mut queue_count = 0;
-            self.fp_v1_1().get_physical_device_queue_family_properties2(
-                physical_device,
-                &mut queue_count,
-                ptr::null_mut(),
-            );
-            queue_count as usize
-        }
+        let mut queue_count = 0;
+        self.fp_v1_1().get_physical_device_queue_family_properties2(
+            physical_device,
+            &mut queue_count,
+            ptr::null_mut(),
+        );
+        queue_count as usize
     }
 
     unsafe fn get_physical_device_queue_family_properties2(
@@ -180,16 +174,14 @@ pub trait InstanceV1_1: InstanceV1_0 {
         );
     }
 
-    fn get_physical_device_memory_properties2(
+    unsafe fn get_physical_device_memory_properties2(
         &self,
         physical_device: vk::PhysicalDevice,
     ) -> vk::PhysicalDeviceMemoryProperties2 {
-        unsafe {
-            let mut memory_prop = mem::uninitialized();
-            self.fp_v1_1()
-                .get_physical_device_memory_properties2(physical_device, &mut memory_prop);
-            memory_prop
-        }
+        let mut memory_prop = mem::uninitialized();
+        self.fp_v1_1()
+            .get_physical_device_memory_properties2(physical_device, &mut memory_prop);
+        memory_prop
     }
 
     unsafe fn get_physical_device_sparse_image_format_properties2(
@@ -291,12 +283,12 @@ pub trait InstanceV1_0 {
         Ok(Device::from_raw(device, device_fn))
     }
 
-    fn get_device_proc_addr(
+    unsafe fn get_device_proc_addr(
         &self,
         device: vk::Device,
         p_name: *const c_char,
     ) -> vk::PFN_vkVoidFunction {
-        unsafe { self.fp_v1_0().get_device_proc_addr(device, p_name) }
+        self.fp_v1_0().get_device_proc_addr(device, p_name)
     }
 
     unsafe fn destroy_instance(&self, allocation_callbacks: Option<&vk::AllocationCallbacks>) {
@@ -304,23 +296,21 @@ pub trait InstanceV1_0 {
             .destroy_instance(self.handle(), allocation_callbacks.as_raw_ptr());
     }
 
-    fn get_physical_device_format_properties(
+    unsafe fn get_physical_device_format_properties(
         &self,
         physical_device: vk::PhysicalDevice,
         format: vk::Format,
     ) -> vk::FormatProperties {
-        unsafe {
-            let mut format_prop = mem::uninitialized();
-            self.fp_v1_0().get_physical_device_format_properties(
-                physical_device,
-                format,
-                &mut format_prop,
-            );
-            format_prop
-        }
+        let mut format_prop = mem::uninitialized();
+        self.fp_v1_0().get_physical_device_format_properties(
+            physical_device,
+            format,
+            &mut format_prop,
+        );
+        format_prop
     }
 
-    fn get_physical_device_image_format_properties(
+    unsafe fn get_physical_device_image_format_properties(
         &self,
         physical_device: vk::PhysicalDevice,
         format: vk::Format,
@@ -329,126 +319,112 @@ pub trait InstanceV1_0 {
         usage: vk::ImageUsageFlags,
         flags: vk::ImageCreateFlags,
     ) -> VkResult<vk::ImageFormatProperties> {
-        unsafe {
-            let mut image_format_prop = mem::uninitialized();
-            let err_code = self.fp_v1_0().get_physical_device_image_format_properties(
-                physical_device,
-                format,
-                typ,
-                tiling,
-                usage,
-                flags,
-                &mut image_format_prop,
-            );
-            if err_code == vk::Result::SUCCESS {
-                Ok(image_format_prop)
-            } else {
-                Err(err_code)
-            }
+        let mut image_format_prop = mem::uninitialized();
+        let err_code = self.fp_v1_0().get_physical_device_image_format_properties(
+            physical_device,
+            format,
+            typ,
+            tiling,
+            usage,
+            flags,
+            &mut image_format_prop,
+        );
+        if err_code == vk::Result::SUCCESS {
+            Ok(image_format_prop)
+        } else {
+            Err(err_code)
         }
     }
 
-    fn get_physical_device_memory_properties(
+    unsafe fn get_physical_device_memory_properties(
         &self,
         physical_device: vk::PhysicalDevice,
     ) -> vk::PhysicalDeviceMemoryProperties {
-        unsafe {
-            let mut memory_prop = mem::uninitialized();
-            self.fp_v1_0()
-                .get_physical_device_memory_properties(physical_device, &mut memory_prop);
-            memory_prop
-        }
+        let mut memory_prop = mem::uninitialized();
+        self.fp_v1_0()
+            .get_physical_device_memory_properties(physical_device, &mut memory_prop);
+        memory_prop
     }
 
-    fn get_physical_device_properties(
+    unsafe fn get_physical_device_properties(
         &self,
         physical_device: vk::PhysicalDevice,
     ) -> vk::PhysicalDeviceProperties {
-        unsafe {
-            let mut prop = mem::uninitialized();
-            self.fp_v1_0()
-                .get_physical_device_properties(physical_device, &mut prop);
-            prop
-        }
+        let mut prop = mem::uninitialized();
+        self.fp_v1_0()
+            .get_physical_device_properties(physical_device, &mut prop);
+        prop
     }
 
-    fn get_physical_device_queue_family_properties(
+    unsafe fn get_physical_device_queue_family_properties(
         &self,
         physical_device: vk::PhysicalDevice,
     ) -> Vec<vk::QueueFamilyProperties> {
-        unsafe {
-            let mut queue_count = 0;
-            self.fp_v1_0().get_physical_device_queue_family_properties(
-                physical_device,
-                &mut queue_count,
-                ptr::null_mut(),
-            );
-            let mut queue_families_vec = Vec::with_capacity(queue_count as usize);
-            self.fp_v1_0().get_physical_device_queue_family_properties(
-                physical_device,
-                &mut queue_count,
-                queue_families_vec.as_mut_ptr(),
-            );
-            queue_families_vec.set_len(queue_count as usize);
-            queue_families_vec
-        }
+        let mut queue_count = 0;
+        self.fp_v1_0().get_physical_device_queue_family_properties(
+            physical_device,
+            &mut queue_count,
+            ptr::null_mut(),
+        );
+        let mut queue_families_vec = Vec::with_capacity(queue_count as usize);
+        self.fp_v1_0().get_physical_device_queue_family_properties(
+            physical_device,
+            &mut queue_count,
+            queue_families_vec.as_mut_ptr(),
+        );
+        queue_families_vec.set_len(queue_count as usize);
+        queue_families_vec
     }
 
-    fn get_physical_device_features(
+    unsafe fn get_physical_device_features(
         &self,
         physical_device: vk::PhysicalDevice,
     ) -> vk::PhysicalDeviceFeatures {
-        unsafe {
-            let mut prop = mem::uninitialized();
-            self.fp_v1_0()
-                .get_physical_device_features(physical_device, &mut prop);
-            prop
+        let mut prop = mem::uninitialized();
+        self.fp_v1_0()
+            .get_physical_device_features(physical_device, &mut prop);
+        prop
+    }
+
+    unsafe fn enumerate_physical_devices(&self) -> VkResult<Vec<vk::PhysicalDevice>> {
+        let mut num = mem::uninitialized();
+        self.fp_v1_0()
+            .enumerate_physical_devices(self.handle(), &mut num, ptr::null_mut());
+        let mut physical_devices = Vec::<vk::PhysicalDevice>::with_capacity(num as usize);
+        let err_code = self.fp_v1_0().enumerate_physical_devices(
+            self.handle(),
+            &mut num,
+            physical_devices.as_mut_ptr(),
+        );
+        physical_devices.set_len(num as usize);
+        match err_code {
+            vk::Result::SUCCESS => Ok(physical_devices),
+            _ => Err(err_code),
         }
     }
 
-    fn enumerate_physical_devices(&self) -> VkResult<Vec<vk::PhysicalDevice>> {
-        unsafe {
-            let mut num = mem::uninitialized();
-            self.fp_v1_0()
-                .enumerate_physical_devices(self.handle(), &mut num, ptr::null_mut());
-            let mut physical_devices = Vec::<vk::PhysicalDevice>::with_capacity(num as usize);
-            let err_code = self.fp_v1_0().enumerate_physical_devices(
-                self.handle(),
-                &mut num,
-                physical_devices.as_mut_ptr(),
-            );
-            physical_devices.set_len(num as usize);
-            match err_code {
-                vk::Result::SUCCESS => Ok(physical_devices),
-                _ => Err(err_code),
-            }
-        }
-    }
-
-    fn enumerate_device_extension_properties(
+    unsafe fn enumerate_device_extension_properties(
         &self,
         device: vk::PhysicalDevice,
     ) -> Result<Vec<vk::ExtensionProperties>, vk::Result> {
-        unsafe {
-            let mut num = 0;
-            self.fp_v1_0().enumerate_device_extension_properties(
-                device,
-                ptr::null(),
-                &mut num,
-                ptr::null_mut(),
-            );
-            let mut data = Vec::with_capacity(num as usize);
-            let err_code = self.fp_v1_0().enumerate_device_extension_properties(
-                device,
-                ptr::null(),
-                &mut num,
-                data.as_mut_ptr(),
-            );
-            data.set_len(num as usize);
-            match err_code {
-                vk::Result::SUCCESS => Ok(data),
-                _ => Err(err_code),
-            }
+        let mut num = 0;
+        self.fp_v1_0().enumerate_device_extension_properties(
+            device,
+            ptr::null(),
+            &mut num,
+            ptr::null_mut(),
+        );
+        let mut data = Vec::with_capacity(num as usize);
+        let err_code = self.fp_v1_0().enumerate_device_extension_properties(
+            device,
+            ptr::null(),
+            &mut num,
+            data.as_mut_ptr(),
+        );
+        data.set_len(num as usize);
+        match err_code {
+            vk::Result::SUCCESS => Ok(data),
+            _ => Err(err_code),
         }
     }
 }

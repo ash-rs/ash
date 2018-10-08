@@ -31,100 +31,93 @@ impl Surface {
         CStr::from_bytes_with_nul(b"VK_KHR_surface\0").expect("Wrong extension string")
     }
 
-    pub fn get_physical_device_surface_support_khr(
+    pub unsafe fn get_physical_device_surface_support_khr(
         &self,
         physical_device: vk::PhysicalDevice,
         queue_index: u32,
         surface: vk::SurfaceKHR,
     ) -> bool {
-        unsafe {
-            let mut b = mem::uninitialized();
-            self.surface_fn.get_physical_device_surface_support_khr(
-                physical_device,
-                queue_index,
-                surface,
-                &mut b,
-            );
-            b > 0
-        }
+        let mut b = mem::uninitialized();
+        self.surface_fn.get_physical_device_surface_support_khr(
+            physical_device,
+            queue_index,
+            surface,
+            &mut b,
+        );
+        b > 0
     }
-    pub fn get_physical_device_surface_present_modes_khr(
+
+    pub unsafe fn get_physical_device_surface_present_modes_khr(
         &self,
         physical_device: vk::PhysicalDevice,
         surface: vk::SurfaceKHR,
     ) -> VkResult<Vec<vk::PresentModeKHR>> {
-        unsafe {
-            let mut count = 0;
-            self.surface_fn
-                .get_physical_device_surface_present_modes_khr(
-                    physical_device,
-                    surface,
-                    &mut count,
-                    ptr::null_mut(),
-                );
-            let mut v = Vec::with_capacity(count as usize);
-            let err_code = self
-                .surface_fn
-                .get_physical_device_surface_present_modes_khr(
-                    physical_device,
-                    surface,
-                    &mut count,
-                    v.as_mut_ptr(),
-                );
-            v.set_len(count as usize);
-            match err_code {
-                vk::Result::SUCCESS => Ok(v),
-                _ => Err(err_code),
-            }
-        }
-    }
-
-    pub fn get_physical_device_surface_capabilities_khr(
-        &self,
-        physical_device: vk::PhysicalDevice,
-        surface: vk::SurfaceKHR,
-    ) -> VkResult<vk::SurfaceCapabilitiesKHR> {
-        unsafe {
-            let mut surface_capabilities = mem::uninitialized();
-            let err_code = self
-                .surface_fn
-                .get_physical_device_surface_capabilities_khr(
-                    physical_device,
-                    surface,
-                    &mut surface_capabilities,
-                );
-            match err_code {
-                vk::Result::SUCCESS => Ok(surface_capabilities),
-                _ => Err(err_code),
-            }
-        }
-    }
-
-    pub fn get_physical_device_surface_formats_khr(
-        &self,
-        physical_device: vk::PhysicalDevice,
-        surface: vk::SurfaceKHR,
-    ) -> VkResult<Vec<vk::SurfaceFormatKHR>> {
-        unsafe {
-            let mut count = 0;
-            self.surface_fn.get_physical_device_surface_formats_khr(
+        let mut count = 0;
+        self.surface_fn
+            .get_physical_device_surface_present_modes_khr(
                 physical_device,
                 surface,
                 &mut count,
                 ptr::null_mut(),
             );
-            let mut v = Vec::with_capacity(count as usize);
-            let err_code = self.surface_fn.get_physical_device_surface_formats_khr(
+        let mut v = Vec::with_capacity(count as usize);
+        let err_code = self
+            .surface_fn
+            .get_physical_device_surface_present_modes_khr(
                 physical_device,
                 surface,
                 &mut count,
                 v.as_mut_ptr(),
             );
-            v.set_len(count as usize);
-            match err_code {
-                vk::Result::SUCCESS => Ok(v),
-                _ => Err(err_code),
-            }
+        v.set_len(count as usize);
+        match err_code {
+            vk::Result::SUCCESS => Ok(v),
+            _ => Err(err_code),
+        }
+    }
+
+    pub unsafe fn get_physical_device_surface_capabilities_khr(
+        &self,
+        physical_device: vk::PhysicalDevice,
+        surface: vk::SurfaceKHR,
+    ) -> VkResult<vk::SurfaceCapabilitiesKHR> {
+        let mut surface_capabilities = mem::uninitialized();
+        let err_code = self
+            .surface_fn
+            .get_physical_device_surface_capabilities_khr(
+                physical_device,
+                surface,
+                &mut surface_capabilities,
+            );
+        match err_code {
+            vk::Result::SUCCESS => Ok(surface_capabilities),
+            _ => Err(err_code),
+        }
+    }
+
+    pub unsafe fn get_physical_device_surface_formats_khr(
+        &self,
+        physical_device: vk::PhysicalDevice,
+        surface: vk::SurfaceKHR,
+    ) -> VkResult<Vec<vk::SurfaceFormatKHR>> {
+        let mut count = 0;
+        self.surface_fn.get_physical_device_surface_formats_khr(
+            physical_device,
+            surface,
+            &mut count,
+            ptr::null_mut(),
+        );
+        let mut v = Vec::with_capacity(count as usize);
+        let err_code = self.surface_fn.get_physical_device_surface_formats_khr(
+            physical_device,
+            surface,
+            &mut count,
+            v.as_mut_ptr(),
+        );
+        v.set_len(count as usize);
+        match err_code {
+            vk::Result::SUCCESS => Ok(v),
+            _ => Err(err_code),
         }
     }
 
