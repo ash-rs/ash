@@ -1342,12 +1342,12 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
                         let slice_param_ty_tokens;
                         let ptr_mutability;
                         if param_ty_string.starts_with("*const ") {
-                            slice_param_ty_tokens = "&[".to_string() + &param_ty_string[7..] + "]";
+                            slice_param_ty_tokens = "&'a [".to_string() + &param_ty_string[7..] + "]";
                             ptr_mutability = ".as_ptr()";
                         } else {
                             // *mut
                             slice_param_ty_tokens =
-                                "&mut [".to_string() + &param_ty_string[5..] + "]";
+                                "&'a mut [".to_string() + &param_ty_string[5..] + "]";
                             ptr_mutability = ".as_mut_ptr()";
                         }
                         let slice_param_ty_tokens = Term::intern(&slice_param_ty_tokens);
@@ -1398,6 +1398,14 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
         pub struct #name_builder<'a> {
             inner: #name,
             marker: ::std::marker::PhantomData<&'a ()>,
+        }
+
+        impl<'a> ::std::ops::Deref for #name_builder<'a> {
+            type Target = #name;
+
+            fn deref(&self) -> &Self::Target {
+                &self.inner
+            }
         }
 
         impl<'a> #name_builder<'a> {
