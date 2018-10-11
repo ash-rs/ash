@@ -1008,14 +1008,16 @@ pub fn bitflags_impl_block(
         })
     });
 
-    let variants = variants.iter().zip(notations.clone()).map(
-        |((variant_ident, value), ref notation)| {
-            quote!{
-                #notation
-                pub const #variant_ident: Self = #ident(#value);
-            }
-        },
-    );
+    let variants =
+        variants
+            .iter()
+            .zip(notations.clone())
+            .map(|((variant_ident, value), ref notation)| {
+                quote!{
+                    #notation
+                    pub const #variant_ident: Self = #ident(#value);
+                }
+            });
     quote!{
         impl #ident {
             #(#variants)*
@@ -1210,9 +1212,7 @@ pub fn derive_default(_struct: &vkxml::Struct) -> Option<Tokens> {
                     }
                 }
             }
-        } else if is_static_array(field)
-            || handles.contains(&field.basetype.as_str())
-        {
+        } else if is_static_array(field) || handles.contains(&field.basetype.as_str()) {
             quote!{
                 #param_ident: unsafe { ::std::mem::zeroed() }
             }
@@ -1249,7 +1249,9 @@ pub fn derive_debug(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> Opt
             .map(|n| n.contains("pfn"))
             .unwrap_or(false)
     });
-    let contains_static_array = members.clone().any(|x| is_static_array(x) && x.basetype == "char");
+    let contains_static_array = members
+        .clone()
+        .any(|x| is_static_array(x) && x.basetype == "char");
     let contains_union = members
         .clone()
         .any(|field| union_types.contains(field.basetype.as_str()));
@@ -1295,6 +1297,7 @@ pub fn derive_debug(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> Opt
 
 pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
     let name = name_to_tokens(&_struct.name);
+    let name_builder = name_to_tokens(&(_struct.name.to_string() + "Builder"));
 
     if !name.to_string().contains("Info") {
         return None;
@@ -1360,9 +1363,9 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
                         match array_type {
                             vkxml::ArrayType::Dynamic => {
                                 return Some(quote!{
-                                    pub fn #param_ident(mut self, #param_ident: #slice_param_ty_tokens) -> #name {
-                                        self.#array_size_ident = #param_ident.len() as #length_type;
-                                        self.#param_ident = #param_ident#ptr_mutability;
+                                    pub fn #param_ident(mut self, #param_ident: #slice_param_ty_tokens) -> #name_builder<'a> {
+                                        self.inner.#array_size_ident = #param_ident.len() as #length_type;
+                                        self.inner.#param_ident = #param_ident#ptr_mutability;
                                         self
                                     }
                                 });
@@ -1375,8 +1378,8 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
         }
 
         Some(quote!{
-            pub fn #param_ident(mut self, #param_ident: #param_ty_tokens) -> #name {
-                self.#param_ident = #param_ident;
+            pub fn #param_ident(mut self, #param_ident: #param_ty_tokens) -> #name_builder<'a> {
+                self.inner.#param_ident = #param_ident;
                 self
             }
         })
@@ -1384,6 +1387,20 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
 
     let q = quote!{
         impl #name {
+             pub fn builder<'a>() -> #name_builder<'a> {
+                #name_builder {
+                    inner: #name::default(),
+                    marker: ::std::marker::PhantomData,
+                }
+             }
+         }
+
+        pub struct #name_builder<'a> {
+            inner: #name,
+            marker: ::std::marker::PhantomData<&'a ()>,
+        }
+
+        impl<'a> #name_builder<'a> {
             #(#setters)*
         }
     };
