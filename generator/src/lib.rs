@@ -1333,11 +1333,12 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
 
         // TODO: Improve in future when https://github.com/rust-lang/rust/issues/53667 is merged
         if param_ident.to_string().starts_with("p_") || param_ident.to_string().starts_with("pp_") {
+            let param_ty_string = param_ty_tokens.to_string();
+
             if let Some(ref array_type) = field.array {
                 if let Some(ref array_size) = field.size {
                     if !array_size.starts_with("latexmath") {
-                        let array_size_ident = Ident::from(array_size.to_snake_case().as_str());
-                        let param_ty_string = param_ty_tokens.to_string();
+                        let array_size_ident = Ident::from(array_size.to_snake_case().as_str());                        
 
                         let slice_param_ty_tokens;
                         let ptr_mutability;
@@ -1374,6 +1375,21 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
                         }
                     }
                 }
+            }
+
+            if param_ty_string == "*const char" {
+
+            }
+
+            if param_ty_string.starts_with("*const ") && param_ty_string.ends_with("Info") {
+                let slice_param_ty_tokens = "&'a ".to_string() + &param_ty_string[7..];
+                let slice_param_ty_tokens = Term::intern(&slice_param_ty_tokens);
+                return Some(quote!{
+                        pub fn #param_ident(mut self, #param_ident: #slice_param_ty_tokens) -> #name_builder<'a> {
+                            self.inner.#param_ident = #param_ident;
+                            self
+                        }
+                }); 
             }
         }
 
