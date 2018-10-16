@@ -1309,19 +1309,21 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
         let param_ty_tokens = field.type_tokens();
 
         let param_ident_string = param_ident.to_string();
-        if param_ident_string == "s_type" || param_ident_string == "p_next" || param_ident_string.ends_with("count") {
+        if param_ident_string == "s_type" || param_ident_string == "p_next" {
             return None;
         }
 
+        let mut param_ident_short = param_ident_string.as_str();
+        if param_ident_string.starts_with("p_") {
+            param_ident_short = &param_ident_string[2..];
+        };
+        if param_ident_string.starts_with("pp_") {
+            param_ident_short = &param_ident_string[3..];
+        };
+        let param_ident_short = Term::intern(&param_ident_short);
+
         // TODO: Improve in future when https://github.com/rust-lang/rust/issues/53667 is merged
         if param_ident.to_string().starts_with("p_") || param_ident.to_string().starts_with("pp_") {
-            let param_ident_short = match param_ident.to_string().starts_with("p_") {
-                true => &param_ident_string[2..],
-                false => &param_ident_string[3..],
-            };
-            let param_ident_short = Term::intern(&param_ident_short);
-
-
             let param_ty_string = param_ty_tokens.to_string();
 
             if param_ty_string == "*const c_char" {
@@ -1372,9 +1374,9 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
                         match array_type {
                             vkxml::ArrayType::Dynamic => {
                                 return Some(quote!{
-                                    pub fn #param_ident(mut self, #param_ident: #slice_param_ty_tokens) -> #name_builder<'a> {
-                                        self.inner.#array_size_ident = #param_ident.len() as #length_type;
-                                        self.inner.#param_ident = #param_ident#ptr_mutability;
+                                    pub fn #param_ident_short(mut self, #param_ident_short: #slice_param_ty_tokens) -> #name_builder<'a> {
+                                        self.inner.#array_size_ident = #param_ident_short.len() as #length_type;
+                                        self.inner.#param_ident = #param_ident_short#ptr_mutability;
                                         self
                                     }
                                 });
@@ -1389,8 +1391,8 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
                 let slice_param_ty_tokens = "&'a ".to_string() + &param_ty_string[7..];
                 let slice_param_ty_tokens = Term::intern(&slice_param_ty_tokens);
                 return Some(quote!{
-                        pub fn #param_ident(mut self, #param_ident: #slice_param_ty_tokens) -> #name_builder<'a> {
-                            self.inner.#param_ident = #param_ident;
+                        pub fn #param_ident_short(mut self, #param_ident_short: #slice_param_ty_tokens) -> #name_builder<'a> {
+                            self.inner.#param_ident = #param_ident_short;
                             self
                         }
                 }); 
@@ -1398,8 +1400,8 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
         }
 
         Some(quote!{
-            pub fn #param_ident(mut self, #param_ident: #param_ty_tokens) -> #name_builder<'a> {
-                self.inner.#param_ident = #param_ident;
+            pub fn #param_ident_short(mut self, #param_ident_short: #param_ty_tokens) -> #name_builder<'a> {
+                self.inner.#param_ident = #param_ident_short;
                 self
             }
         })
