@@ -1299,18 +1299,51 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
         let param_ident = field.param_ident();
         let param_ty_tokens = field.type_tokens();
 
-        if param_ident.to_string() == "s_type" || param_ident.to_string() == "p_next" {
+        let param_ident_string = param_ident.to_string();
+        if param_ident_string == "s_type" || param_ident_string == "p_next" || param_ident_string.ends_with("count") {
             return None;
         }
 
         // TODO: Improve in future when https://github.com/rust-lang/rust/issues/53667 is merged
         if param_ident.to_string().starts_with("p_") || param_ident.to_string().starts_with("pp_") {
+            let param_ident_str = match param_ident.to_string().starts_with("p_") {
+                true => &param_ident_string[2..],
+                false => &param_ident_string[3..],
+            };
+            let param_ident = Term::intern(&param_ident_str);
+
+
             let param_ty_string = param_ty_tokens.to_string();
+
+            if param_ty_string == "*const c_char" {
+                return Some(quote!{
+                        pub fn #param_ident(mut self, #param_ident: &'a ::std::ffi::CStr) -> #name_builder<'a> {
+                            self.inner.#param_ident = #param_ident.as_ptr();
+                            self
+                        }
+                }); 
+            }
 
             if let Some(ref array_type) = field.array {
                 if let Some(ref array_size) = field.size {
                     if !array_size.starts_with("latexmath") {
-                        let array_size_ident = Ident::from(array_size.to_snake_case().as_str());                        
+                        let length_type;
+                        let array_size_ident = Ident::from(array_size.to_snake_case().as_str());  
+                        if array_size_ident.to_string().contains("_count") {
+                            length_type = Term::intern("u32");
+                        } else {
+                            length_type = Term::intern("usize");
+                        }                        
+
+                        if param_ty_string == "*const *const c_char" {
+                            return Some(quote!{
+                                    pub fn #param_ident(mut self, #param_ident: &'a [*const c_char]) -> #name_builder<'a> {
+                                        self.inner.#param_ident = #param_ident.as_ptr();
+                                        self.inner.#array_size_ident = #param_ident.len() as #length_type;
+                                        self
+                                    }
+                            }); 
+                        }                      
 
                         let slice_param_ty_tokens;
                         let ptr_mutability;
@@ -1326,12 +1359,6 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
                         let slice_param_ty_tokens = Term::intern(&slice_param_ty_tokens);
                         let ptr_mutability = Term::intern(ptr_mutability);
 
-                        let length_type;
-                        if array_size_ident.to_string().contains("_count") {
-                            length_type = Term::intern("u32");
-                        } else {
-                            length_type = Term::intern("usize");
-                        }
 
                         match array_type {
                             vkxml::ArrayType::Dynamic => {
@@ -1347,10 +1374,6 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
                         }
                     }
                 }
-            }
-
-            if param_ty_string == "*const char" {
-                // TODO what do here?
             }
 
             if param_ty_string.starts_with("*const ") && param_ty_string.ends_with("Info") {
