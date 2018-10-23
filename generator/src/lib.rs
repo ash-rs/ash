@@ -1292,7 +1292,24 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
         _ => None,
     });
 
+    let count_members: Vec<String> = members.clone().filter_map(|field| {
+        if field.array.is_some() {
+            if let Some(ref array_size) = field.size {
+                if !array_size.starts_with("latexmath") && array_size.ends_with("Count") {
+                    return Some((*array_size).clone());
+                }
+            }
+        }
+        None
+    }).collect();
+
     let setters = members.clone().filter_map(|field| {
+        if let Some(name) = field.name.as_ref() {            
+            if count_members.iter().any(|n| *n == *name) {
+                return None;
+            }
+        }
+
         let param_ident = field.param_ident();
         let param_ty_tokens = field.type_tokens();
 
