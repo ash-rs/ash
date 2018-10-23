@@ -1295,7 +1295,7 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
     let count_members: Vec<String> = members.clone().filter_map(|field| {
         if field.array.is_some() {
             if let Some(ref array_size) = field.size {
-                if !array_size.starts_with("latexmath") && array_size.ends_with("Count") {
+                if !array_size.starts_with("latexmath") {
                     return Some((*array_size).clone());
                 }
             }
