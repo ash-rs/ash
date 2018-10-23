@@ -357,9 +357,9 @@ pub fn platform_specific_types() -> Tokens {
         pub type HINSTANCE = *const c_void;
         pub type HWND = *const c_void;
         #[allow(non_camel_case_types)]
-        pub type wl_display = *const c_void;
+        pub type wl_display = c_void;
         #[allow(non_camel_case_types)]
-        pub type wl_surface = *const c_void;
+        pub type wl_surface = c_void;
         pub type HANDLE = *mut c_void;
         pub type DWORD = c_ulong;
         pub type LPCWSTR = *const u16;
