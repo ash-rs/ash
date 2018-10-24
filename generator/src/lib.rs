@@ -1292,7 +1292,8 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
         _ => None,
     });
 
-    let count_members: Vec<String> = members.clone().filter_map(|field| {
+    let filter_members: Vec<String> = members.clone().filter_map(|field| {
+        // Associated _count members
         if field.array.is_some() {
             if let Some(ref array_size) = field.size {
                 if !array_size.starts_with("latexmath") {
@@ -1300,16 +1301,16 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
                 }
             }
         }
+
+        // VkShaderModuleCreateInfo requiers a custom setter
+        if field.name.as_ref().unwrap() == "codeSize" {
+            return Some(field.name.clone().unwrap());
+        }
+        
         None
     }).collect();
 
     let setters = members.clone().filter_map(|field| {
-        if let Some(name) = field.name.as_ref() {            
-            if count_members.iter().any(|n| *n == *name) {
-                return None;
-            }
-        }
-
         let param_ident = field.param_ident();
         let param_ty_tokens = field.type_tokens();
 
@@ -1327,8 +1328,26 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
         };
         let param_ident_short = Term::intern(&param_ident_short);
 
+        if let Some(name) = field.name.as_ref() { 
+            // Fiter           
+            if filter_members.iter().any(|n| *n == *name) {
+                return None;
+            }
+
+            // Unique cases
+            if name == "pCode" {
+                return Some(quote!{
+                        pub fn code(mut self, code: &'a [u8]) -> #name_builder<'a> {
+                            self.inner.code_size = code.len();
+                            self.inner.p_code = code.as_ptr() as *const u32;
+                            self
+                        }
+                }); 
+            }
+        }
+
         // TODO: Improve in future when https://github.com/rust-lang/rust/issues/53667 is merged
-        if param_ident.to_string().starts_with("p_") || param_ident.to_string().starts_with("pp_") {
+        if param_ident_string.starts_with("p_") || param_ident_string.starts_with("pp_") {
             let param_ty_string = param_ty_tokens.to_string();
 
             if param_ty_string == "*const c_char" {
