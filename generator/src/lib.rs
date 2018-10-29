@@ -1337,8 +1337,8 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
             // Unique cases
             if name == "pCode" {
                 return Some(quote!{
-                        pub fn code(mut self, code: &'a [u8]) -> #name_builder<'a> {
-                            self.inner.code_size = code.len();
+                        pub fn code(mut self, code: &'a [u32]) -> #name_builder<'a> {
+                            self.inner.code_size = code.len() * 4;
                             self.inner.p_code = code.as_ptr() as *const u32;
                             self
                         }
