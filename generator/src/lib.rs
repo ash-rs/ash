@@ -1283,6 +1283,189 @@ pub fn derive_debug(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> Opt
     Some(q)
 }
 
+pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
+    let name = name_to_tokens(&_struct.name);
+    let name_builder = name_to_tokens(&(_struct.name.to_string() + "Builder"));
+
+    let members = _struct.elements.iter().filter_map(|elem| match *elem {
+        vkxml::StructElement::Member(ref field) => Some(field),
+        _ => None,
+    });
+
+    let filter_members: Vec<String> = members.clone().filter_map(|field| {
+        // Associated _count members
+        if field.array.is_some() {
+            if let Some(ref array_size) = field.size {
+                if !array_size.starts_with("latexmath") {
+                    return Some((*array_size).clone());
+                }
+            }
+        }
+
+        // VkShaderModuleCreateInfo requiers a custom setter
+        if field.name.as_ref().unwrap() == "codeSize" {
+            return Some(field.name.clone().unwrap());
+        }
+        
+        None
+    }).collect();
+
+    let setters = members.clone().filter_map(|field| {
+        let param_ident = field.param_ident();
+        let param_ty_tokens = field.type_tokens();
+
+        let param_ident_string = param_ident.to_string();
+        if param_ident_string == "s_type" || param_ident_string == "p_next" {
+            return None;
+        }
+
+        let mut param_ident_short = param_ident_string.as_str();
+        if param_ident_string.starts_with("p_") {
+            param_ident_short = &param_ident_string[2..];
+        };
+        if param_ident_string.starts_with("pp_") {
+            param_ident_short = &param_ident_string[3..];
+        };
+        let param_ident_short = Term::intern(&param_ident_short);
+
+        if let Some(name) = field.name.as_ref() { 
+            // Fiter           
+            if filter_members.iter().any(|n| *n == *name) {
+                return None;
+            }
+
+            // Unique cases
+            if name == "pCode" {
+                return Some(quote!{
+                        pub fn code(mut self, code: &'a [u32]) -> #name_builder<'a> {
+                            self.inner.code_size = code.len() * 4;
+                            self.inner.p_code = code.as_ptr() as *const u32;
+                            self
+                        }
+                }); 
+            }
+        }
+
+        // TODO: Improve in future when https://github.com/rust-lang/rust/issues/53667 is merged
+        if param_ident_string.starts_with("p_") || param_ident_string.starts_with("pp_") {
+            let param_ty_string = param_ty_tokens.to_string();
+
+            if param_ty_string == "*const c_char" {
+                return Some(quote!{
+                        pub fn #param_ident_short(mut self, #param_ident_short: &'a ::std::ffi::CStr) -> #name_builder<'a> {
+                            self.inner.#param_ident = #param_ident_short.as_ptr();
+                            self
+                        }
+                }); 
+            }
+
+            if let Some(ref array_type) = field.array {
+                if let Some(ref array_size) = field.size {
+                    if !array_size.starts_with("latexmath") {
+                        let length_type;
+                        let array_size_ident = Ident::from(array_size.to_snake_case().as_str());  
+                        if array_size_ident.to_string().contains("_count") {
+                            length_type = Term::intern("u32");
+                        } else {
+                            length_type = Term::intern("usize");
+                        }                        
+
+                        if param_ty_string == "*const *const c_char" {
+                            return Some(quote!{
+                                    pub fn #param_ident_short(mut self, #param_ident_short: &'a [*const c_char]) -> #name_builder<'a> {
+                                        self.inner.#param_ident = #param_ident_short.as_ptr();
+                                        self.inner.#array_size_ident = #param_ident_short.len() as #length_type;
+                                        self
+                                    }
+                            }); 
+                        }                      
+
+                        let slice_param_ty_tokens;
+                        let ptr_mutability;
+                        if param_ty_string.starts_with("*const ") {
+                            slice_param_ty_tokens = "&'a [".to_string() + &param_ty_string[7..] + "]";
+                            ptr_mutability = ".as_ptr()";
+                        } else {
+                            // *mut
+                            slice_param_ty_tokens =
+                                "&'a mut [".to_string() + &param_ty_string[5..] + "]";
+                            ptr_mutability = ".as_mut_ptr()";
+                        }
+                        let slice_param_ty_tokens = Term::intern(&slice_param_ty_tokens);
+                        let ptr_mutability = Term::intern(ptr_mutability);
+
+
+                        match array_type {
+                            vkxml::ArrayType::Dynamic => {
+                                return Some(quote!{
+                                    pub fn #param_ident_short(mut self, #param_ident_short: #slice_param_ty_tokens) -> #name_builder<'a> {
+                                        self.inner.#array_size_ident = #param_ident_short.len() as #length_type;
+                                        self.inner.#param_ident = #param_ident_short#ptr_mutability;
+                                        self
+                                    }
+                                });
+                            }
+                            _ => {}
+                        }
+                    }
+                }
+            }
+
+            if param_ty_string.starts_with("*const ") {
+                let slice_param_ty_tokens = "&'a ".to_string() + &param_ty_string[7..];
+                let slice_param_ty_tokens = Term::intern(&slice_param_ty_tokens);
+                return Some(quote!{
+                        pub fn #param_ident_short(mut self, #param_ident_short: #slice_param_ty_tokens) -> #name_builder<'a> {
+                            self.inner.#param_ident = #param_ident_short;
+                            self
+                        }
+                }); 
+            }
+        }
+
+        Some(quote!{
+            pub fn #param_ident_short(mut self, #param_ident_short: #param_ty_tokens) -> #name_builder<'a> {
+                self.inner.#param_ident = #param_ident_short;
+                self
+            }
+        })
+    });
+
+    let q = quote!{
+        impl #name {
+             pub fn builder<'a>() -> #name_builder<'a> {
+                #name_builder {
+                    inner: #name::default(),
+                    marker: ::std::marker::PhantomData,
+                }
+             }
+         }
+
+        pub struct #name_builder<'a> {
+            inner: #name,
+            marker: ::std::marker::PhantomData<&'a ()>,
+        }
+
+        impl<'a> ::std::ops::Deref for #name_builder<'a> {
+            type Target = #name;
+
+            fn deref(&self) -> &Self::Target {
+                &self.inner
+            }
+        }
+
+        impl<'a> #name_builder<'a> {
+            #(#setters)*
+
+            pub fn build(self) -> #name {
+                self.inner
+            }
+        }
+    };
+
+    Some(q)
+}
+
 /// At the moment `Ash` doesn't properly derive all the necessary drives
 /// like Eq, Hash etc.
 /// To Address some cases, you can add the name of the struct that you
@@ -1308,6 +1491,7 @@ pub fn generate_struct(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> 
 
     let debug_tokens = derive_debug(_struct, union_types);
     let default_tokens = derive_default(_struct);
+    let setter_tokens = derive_setters(_struct);
     let manual_derive_tokens = manual_derives(_struct);
     let dbg_str = if debug_tokens.is_none() {
         quote!(Debug,)
@@ -1327,6 +1511,7 @@ pub fn generate_struct(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> 
         }
         #debug_tokens
         #default_tokens
+        #setter_tokens
     }
 }
 
