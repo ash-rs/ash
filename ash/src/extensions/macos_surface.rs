@@ -16,14 +16,14 @@ impl MacOSSurface {
     pub fn new<E: EntryV1_0, I: InstanceV1_0>(
         entry: &E,
         instance: &I,
-    ) -> Result<MacOSSurface, Vec<&'static str>> {
+    ) -> MacOSSurface {
         let surface_fn = vk::MvkMacosSurfaceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
-        })?;
-        Ok(MacOSSurface {
+        });
+        MacOSSurface {
             handle: instance.handle(),
             macos_surface_fn: surface_fn,
-        })
+        }
     }
 
     pub fn name() -> &'static CStr {

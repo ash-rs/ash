@@ -15,14 +15,14 @@ impl DebugUtils {
     pub fn new<E: EntryV1_0, I: InstanceV1_0>(
         entry: &E,
         instance: &I,
-    ) -> Result<DebugUtils, Vec<&'static str>> {
+    ) -> DebugUtils {
         let debug_utils_fn = vk::ExtDebugUtilsFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
-        })?;
-        Ok(DebugUtils {
+        });
+        DebugUtils {
             handle: instance.handle(),
             debug_utils_fn,
-        })
+        }
     }
 
     pub fn name() -> &'static CStr {

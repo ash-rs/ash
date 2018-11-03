@@ -14,13 +14,13 @@ impl DebugMarker {
     pub fn new<I: InstanceV1_0, D: DeviceV1_0>(
         instance: &I,
         device: &D,
-    ) -> Result<DebugMarker, Vec<&'static str>> {
+    ) -> DebugMarker {
         let debug_marker_fn = vk::ExtDebugMarkerFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
-        })?;
-        Ok(DebugMarker {
+        });
+        DebugMarker {
             debug_marker_fn: debug_marker_fn,
-        })
+        }
     }
 
     pub fn name() -> &'static CStr {

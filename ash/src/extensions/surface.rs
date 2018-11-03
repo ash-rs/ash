@@ -17,14 +17,14 @@ impl Surface {
     pub fn new<E: EntryV1_0, I: InstanceV1_0>(
         entry: &E,
         instance: &I,
-    ) -> Result<Surface, Vec<&'static str>> {
+    ) -> Surface {
         let surface_fn = vk::KhrSurfaceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
-        })?;
-        Ok(Surface {
+        });
+        Surface {
             handle: instance.handle(),
             surface_fn: surface_fn,
-        })
+        }
     }
 
     pub fn name() -> &'static CStr {

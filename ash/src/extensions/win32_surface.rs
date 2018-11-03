@@ -16,14 +16,14 @@ impl Win32Surface {
     pub fn new<E: EntryV1_0, I: InstanceV1_0>(
         entry: &E,
         instance: &I,
-    ) -> Result<Win32Surface, Vec<&'static str>> {
+    ) -> Win32Surface {
         let surface_fn = vk::KhrWin32SurfaceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
-        })?;
-        Ok(Win32Surface {
+        });
+        Win32Surface {
             handle: instance.handle(),
             win32_surface_fn: surface_fn,
-        })
+        }
     }
 
     pub fn name() -> &'static CStr {

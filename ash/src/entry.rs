@@ -37,8 +37,6 @@ pub struct Entry<V: FunctionPointers> {
 #[derive(Debug)]
 pub enum LoadingError {
     LibraryLoadError(String),
-    EntryLoadError(Vec<&'static str>),
-    StaticLoadError(Vec<&'static str>),
 }
 
 #[derive(Debug)]
@@ -87,8 +85,7 @@ pub trait EntryV1_0 {
             return Err(InstanceError::VkError(err_code));
         }
         let instance_fp =
-            <Self::Fp as FunctionPointers>::InstanceFp::load(&self.static_fn(), instance)
-                .map_err(InstanceError::LoadError)?;
+            <Self::Fp as FunctionPointers>::InstanceFp::load(&self.static_fn(), instance);
         Ok(Instance::from_raw(instance, instance_fp))
     }
 
@@ -176,10 +173,10 @@ impl<V: FunctionPointers> Entry<V> {
         let static_fn = vk::StaticFn::load(|name| unsafe {
             lib.symbol(&*name.to_string_lossy())
                 .unwrap_or(ptr::null_mut())
-        }).map_err(LoadingError::StaticLoadError)?;
+        });
 
         let entry_fn =
-            unsafe { V::EntryFp::load(&static_fn) }.map_err(LoadingError::EntryLoadError)?;
+            unsafe { V::EntryFp::load(&static_fn) };
 
         Ok(Entry {
             static_fn,

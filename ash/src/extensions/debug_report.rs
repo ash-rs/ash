@@ -16,14 +16,14 @@ impl DebugReport {
     pub fn new<E: EntryV1_0, I: InstanceV1_0>(
         entry: &E,
         instance: &I,
-    ) -> Result<DebugReport, Vec<&'static str>> {
+    ) -> DebugReport {
         let debug_report_fn = vk::ExtDebugReportFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
-        })?;
-        Ok(DebugReport {
+        });
+        DebugReport {
             handle: instance.handle(),
             debug_report_fn,
-        })
+        }
     }
 
     pub fn name() -> &'static CStr {

@@ -279,7 +279,7 @@ pub trait InstanceV1_0 {
         let device_fn = <<Self as InstanceV1_0>::Fp as FunctionPointers>::DeviceFp::load(
             self.fp_v1_0(),
             device,
-        ).map_err(|err| DeviceError::LoadError(err))?;
+        );
         Ok(Device::from_raw(device, device_fn))
     }
 

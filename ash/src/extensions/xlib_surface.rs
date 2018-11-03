@@ -16,14 +16,14 @@ impl XlibSurface {
     pub fn new<E: EntryV1_0, I: InstanceV1_0>(
         entry: &E,
         instance: &I,
-    ) -> Result<XlibSurface, Vec<&'static str>> {
+    ) -> XlibSurface {
         let surface_fn = vk::KhrXlibSurfaceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
-        })?;
-        Ok(XlibSurface {
+        });
+        XlibSurface {
             handle: instance.handle(),
             xlib_surface_fn: surface_fn,
-        })
+        }
     }
 
     pub fn name() -> &'static CStr {

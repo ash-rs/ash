@@ -16,14 +16,14 @@ impl AndroidSurface {
     pub fn new<E: EntryV1_0, I: InstanceV1_0>(
         entry: &E,
         instance: &I,
-    ) -> Result<AndroidSurface, Vec<&'static str>> {
+    ) -> AndroidSurface {
         let surface_fn = vk::KhrAndroidSurfaceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
-        })?;
-        Ok(AndroidSurface {
+        });
+        AndroidSurface {
             handle: instance.handle(),
             android_surface_fn: surface_fn,
-        })
+        }
     }
 
     pub fn name() -> &'static CStr {
