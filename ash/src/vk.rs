@@ -267,7 +267,10 @@ impl StaticFn {
                     _instance: Instance,
                     _p_name: *const c_char,
                 ) -> PFN_vkVoidFunction {
-                    panic!("Unable to load {}", stringify!(get_instance_proc_addr))
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_instance_proc_addr)
+                    ))
                 }
                 let raw_name = stringify!(vkGetInstanceProcAddr);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -327,7 +330,7 @@ impl EntryFnV1_0 {
                     _p_allocator: *const AllocationCallbacks,
                     _p_instance: *mut Instance,
                 ) -> Result {
-                    panic!("Unable to load {}", stringify!(create_instance))
+                    panic!(concat!("Unable to load ", stringify!(create_instance)))
                 }
                 let raw_name = stringify!(vkCreateInstance);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -344,10 +347,10 @@ impl EntryFnV1_0 {
                     _p_property_count: *mut u32,
                     _p_properties: *mut ExtensionProperties,
                 ) -> Result {
-                    panic!(
-                        "Unable to load {}",
+                    panic!(concat!(
+                        "Unable to load ",
                         stringify!(enumerate_instance_extension_properties)
-                    )
+                    ))
                 }
                 let raw_name = stringify!(vkEnumerateInstanceExtensionProperties);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -363,10 +366,10 @@ impl EntryFnV1_0 {
                     _p_property_count: *mut u32,
                     _p_properties: *mut LayerProperties,
                 ) -> Result {
-                    panic!(
-                        "Unable to load {}",
+                    panic!(concat!(
+                        "Unable to load ",
                         stringify!(enumerate_instance_layer_properties)
-                    )
+                    ))
                 }
                 let raw_name = stringify!(vkEnumerateInstanceLayerProperties);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -513,7 +516,7 @@ impl InstanceFnV1_0 {
                     _instance: Instance,
                     _p_allocator: *const AllocationCallbacks,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(destroy_instance))
+                    panic!(concat!("Unable to load ", stringify!(destroy_instance)))
                 }
                 let raw_name = stringify!(vkDestroyInstance);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -530,7 +533,10 @@ impl InstanceFnV1_0 {
                     _p_physical_device_count: *mut u32,
                     _p_physical_devices: *mut PhysicalDevice,
                 ) -> Result {
-                    panic!("Unable to load {}", stringify!(enumerate_physical_devices))
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(enumerate_physical_devices)
+                    ))
                 }
                 let raw_name = stringify!(vkEnumeratePhysicalDevices);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -546,10 +552,10 @@ impl InstanceFnV1_0 {
                     _physical_device: PhysicalDevice,
                     _p_features: *mut PhysicalDeviceFeatures,
                 ) -> c_void {
-                    panic!(
-                        "Unable to load {}",
+                    panic!(concat!(
+                        "Unable to load ",
                         stringify!(get_physical_device_features)
-                    )
+                    ))
                 }
                 let raw_name = stringify!(vkGetPhysicalDeviceFeatures);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -566,10 +572,10 @@ impl InstanceFnV1_0 {
                     _format: Format,
                     _p_format_properties: *mut FormatProperties,
                 ) -> c_void {
-                    panic!(
-                        "Unable to load {}",
+                    panic!(concat!(
+                        "Unable to load ",
                         stringify!(get_physical_device_format_properties)
-                    )
+                    ))
                 }
                 let raw_name = stringify!(vkGetPhysicalDeviceFormatProperties);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -590,10 +596,10 @@ impl InstanceFnV1_0 {
                     _flags: ImageCreateFlags,
                     _p_image_format_properties: *mut ImageFormatProperties,
                 ) -> Result {
-                    panic!(
-                        "Unable to load {}",
+                    panic!(concat!(
+                        "Unable to load ",
                         stringify!(get_physical_device_image_format_properties)
-                    )
+                    ))
                 }
                 let raw_name = stringify!(vkGetPhysicalDeviceImageFormatProperties);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -609,10 +615,10 @@ impl InstanceFnV1_0 {
                     _physical_device: PhysicalDevice,
                     _p_properties: *mut PhysicalDeviceProperties,
                 ) -> c_void {
-                    panic!(
-                        "Unable to load {}",
+                    panic!(concat!(
+                        "Unable to load ",
                         stringify!(get_physical_device_properties)
-                    )
+                    ))
                 }
                 let raw_name = stringify!(vkGetPhysicalDeviceProperties);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -629,10 +635,10 @@ impl InstanceFnV1_0 {
                     _p_queue_family_property_count: *mut u32,
                     _p_queue_family_properties: *mut QueueFamilyProperties,
                 ) -> c_void {
-                    panic!(
-                        "Unable to load {}",
+                    panic!(concat!(
+                        "Unable to load ",
                         stringify!(get_physical_device_queue_family_properties)
-                    )
+                    ))
                 }
                 let raw_name = stringify!(vkGetPhysicalDeviceQueueFamilyProperties);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -648,10 +654,10 @@ impl InstanceFnV1_0 {
                     _physical_device: PhysicalDevice,
                     _p_memory_properties: *mut PhysicalDeviceMemoryProperties,
                 ) -> c_void {
-                    panic!(
-                        "Unable to load {}",
+                    panic!(concat!(
+                        "Unable to load ",
                         stringify!(get_physical_device_memory_properties)
-                    )
+                    ))
                 }
                 let raw_name = stringify!(vkGetPhysicalDeviceMemoryProperties);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -667,7 +673,7 @@ impl InstanceFnV1_0 {
                     _device: Device,
                     _p_name: *const c_char,
                 ) -> PFN_vkVoidFunction {
-                    panic!("Unable to load {}", stringify!(get_device_proc_addr))
+                    panic!(concat!("Unable to load ", stringify!(get_device_proc_addr)))
                 }
                 let raw_name = stringify!(vkGetDeviceProcAddr);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -685,7 +691,7 @@ impl InstanceFnV1_0 {
                     _p_allocator: *const AllocationCallbacks,
                     _p_device: *mut Device,
                 ) -> Result {
-                    panic!("Unable to load {}", stringify!(create_device))
+                    panic!(concat!("Unable to load ", stringify!(create_device)))
                 }
                 let raw_name = stringify!(vkCreateDevice);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -703,10 +709,10 @@ impl InstanceFnV1_0 {
                     _p_property_count: *mut u32,
                     _p_properties: *mut ExtensionProperties,
                 ) -> Result {
-                    panic!(
-                        "Unable to load {}",
+                    panic!(concat!(
+                        "Unable to load ",
                         stringify!(enumerate_device_extension_properties)
-                    )
+                    ))
                 }
                 let raw_name = stringify!(vkEnumerateDeviceExtensionProperties);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -723,10 +729,10 @@ impl InstanceFnV1_0 {
                     _p_property_count: *mut u32,
                     _p_properties: *mut LayerProperties,
                 ) -> Result {
-                    panic!(
-                        "Unable to load {}",
+                    panic!(concat!(
+                        "Unable to load ",
                         stringify!(enumerate_device_layer_properties)
-                    )
+                    ))
                 }
                 let raw_name = stringify!(vkEnumerateDeviceLayerProperties);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -748,10 +754,10 @@ impl InstanceFnV1_0 {
                     _p_property_count: *mut u32,
                     _p_properties: *mut SparseImageFormatProperties,
                 ) -> c_void {
-                    panic!(
-                        "Unable to load {}",
+                    panic!(concat!(
+                        "Unable to load ",
                         stringify!(get_physical_device_sparse_image_format_properties)
-                    )
+                    ))
                 }
                 let raw_name = stringify!(vkGetPhysicalDeviceSparseImageFormatProperties);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -1704,7 +1710,7 @@ impl DeviceFnV1_0 {
                     _device: Device,
                     _p_allocator: *const AllocationCallbacks,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(destroy_device))
+                    panic!(concat!("Unable to load ", stringify!(destroy_device)))
                 }
                 let raw_name = stringify!(vkDestroyDevice);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -1722,7 +1728,7 @@ impl DeviceFnV1_0 {
                     _queue_index: u32,
                     _p_queue: *mut Queue,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(get_device_queue))
+                    panic!(concat!("Unable to load ", stringify!(get_device_queue)))
                 }
                 let raw_name = stringify!(vkGetDeviceQueue);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -1740,7 +1746,7 @@ impl DeviceFnV1_0 {
                     _p_submits: *const SubmitInfo,
                     _fence: Fence,
                 ) -> Result {
-                    panic!("Unable to load {}", stringify!(queue_submit))
+                    panic!(concat!("Unable to load ", stringify!(queue_submit)))
                 }
                 let raw_name = stringify!(vkQueueSubmit);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -1753,7 +1759,7 @@ impl DeviceFnV1_0 {
             },
             queue_wait_idle: unsafe {
                 extern "system" fn queue_wait_idle(_queue: Queue) -> Result {
-                    panic!("Unable to load {}", stringify!(queue_wait_idle))
+                    panic!(concat!("Unable to load ", stringify!(queue_wait_idle)))
                 }
                 let raw_name = stringify!(vkQueueWaitIdle);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -1766,7 +1772,7 @@ impl DeviceFnV1_0 {
             },
             device_wait_idle: unsafe {
                 extern "system" fn device_wait_idle(_device: Device) -> Result {
-                    panic!("Unable to load {}", stringify!(device_wait_idle))
+                    panic!(concat!("Unable to load ", stringify!(device_wait_idle)))
                 }
                 let raw_name = stringify!(vkDeviceWaitIdle);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -1784,7 +1790,7 @@ impl DeviceFnV1_0 {
                     _p_allocator: *const AllocationCallbacks,
                     _p_memory: *mut DeviceMemory,
                 ) -> Result {
-                    panic!("Unable to load {}", stringify!(allocate_memory))
+                    panic!(concat!("Unable to load ", stringify!(allocate_memory)))
                 }
                 let raw_name = stringify!(vkAllocateMemory);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -1801,7 +1807,7 @@ impl DeviceFnV1_0 {
                     _memory: DeviceMemory,
                     _p_allocator: *const AllocationCallbacks,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(free_memory))
+                    panic!(concat!("Unable to load ", stringify!(free_memory)))
                 }
                 let raw_name = stringify!(vkFreeMemory);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -1821,7 +1827,7 @@ impl DeviceFnV1_0 {
                     _flags: MemoryMapFlags,
                     _pp_data: *mut *mut c_void,
                 ) -> Result {
-                    panic!("Unable to load {}", stringify!(map_memory))
+                    panic!(concat!("Unable to load ", stringify!(map_memory)))
                 }
                 let raw_name = stringify!(vkMapMemory);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -1834,7 +1840,7 @@ impl DeviceFnV1_0 {
             },
             unmap_memory: unsafe {
                 extern "system" fn unmap_memory(_device: Device, _memory: DeviceMemory) -> c_void {
-                    panic!("Unable to load {}", stringify!(unmap_memory))
+                    panic!(concat!("Unable to load ", stringify!(unmap_memory)))
                 }
                 let raw_name = stringify!(vkUnmapMemory);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -1851,7 +1857,10 @@ impl DeviceFnV1_0 {
                     _memory_range_count: u32,
                     _p_memory_ranges: *const MappedMemoryRange,
                 ) -> Result {
-                    panic!("Unable to load {}", stringify!(flush_mapped_memory_ranges))
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(flush_mapped_memory_ranges)
+                    ))
                 }
                 let raw_name = stringify!(vkFlushMappedMemoryRanges);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -1868,10 +1877,10 @@ impl DeviceFnV1_0 {
                     _memory_range_count: u32,
                     _p_memory_ranges: *const MappedMemoryRange,
                 ) -> Result {
-                    panic!(
-                        "Unable to load {}",
+                    panic!(concat!(
+                        "Unable to load ",
                         stringify!(invalidate_mapped_memory_ranges)
-                    )
+                    ))
                 }
                 let raw_name = stringify!(vkInvalidateMappedMemoryRanges);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -1888,10 +1897,10 @@ impl DeviceFnV1_0 {
                     _memory: DeviceMemory,
                     _p_committed_memory_in_bytes: *mut DeviceSize,
                 ) -> c_void {
-                    panic!(
-                        "Unable to load {}",
+                    panic!(concat!(
+                        "Unable to load ",
                         stringify!(get_device_memory_commitment)
-                    )
+                    ))
                 }
                 let raw_name = stringify!(vkGetDeviceMemoryCommitment);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -1909,7 +1918,7 @@ impl DeviceFnV1_0 {
                     _memory: DeviceMemory,
                     _memory_offset: DeviceSize,
                 ) -> Result {
-                    panic!("Unable to load {}", stringify!(bind_buffer_memory))
+                    panic!(concat!("Unable to load ", stringify!(bind_buffer_memory)))
                 }
                 let raw_name = stringify!(vkBindBufferMemory);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -1927,7 +1936,7 @@ impl DeviceFnV1_0 {
                     _memory: DeviceMemory,
                     _memory_offset: DeviceSize,
                 ) -> Result {
-                    panic!("Unable to load {}", stringify!(bind_image_memory))
+                    panic!(concat!("Unable to load ", stringify!(bind_image_memory)))
                 }
                 let raw_name = stringify!(vkBindImageMemory);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -1944,10 +1953,10 @@ impl DeviceFnV1_0 {
                     _buffer: Buffer,
                     _p_memory_requirements: *mut MemoryRequirements,
                 ) -> c_void {
-                    panic!(
-                        "Unable to load {}",
+                    panic!(concat!(
+                        "Unable to load ",
                         stringify!(get_buffer_memory_requirements)
-                    )
+                    ))
                 }
                 let raw_name = stringify!(vkGetBufferMemoryRequirements);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -1964,10 +1973,10 @@ impl DeviceFnV1_0 {
                     _image: Image,
                     _p_memory_requirements: *mut MemoryRequirements,
                 ) -> c_void {
-                    panic!(
-                        "Unable to load {}",
+                    panic!(concat!(
+                        "Unable to load ",
                         stringify!(get_image_memory_requirements)
-                    )
+                    ))
                 }
                 let raw_name = stringify!(vkGetImageMemoryRequirements);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -1985,10 +1994,10 @@ impl DeviceFnV1_0 {
                     _p_sparse_memory_requirement_count: *mut u32,
                     _p_sparse_memory_requirements: *mut SparseImageMemoryRequirements,
                 ) -> c_void {
-                    panic!(
-                        "Unable to load {}",
+                    panic!(concat!(
+                        "Unable to load ",
                         stringify!(get_image_sparse_memory_requirements)
-                    )
+                    ))
                 }
                 let raw_name = stringify!(vkGetImageSparseMemoryRequirements);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2006,7 +2015,7 @@ impl DeviceFnV1_0 {
                     _p_bind_info: *const BindSparseInfo,
                     _fence: Fence,
                 ) -> Result {
-                    panic!("Unable to load {}", stringify!(queue_bind_sparse))
+                    panic!(concat!("Unable to load ", stringify!(queue_bind_sparse)))
                 }
                 let raw_name = stringify!(vkQueueBindSparse);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2024,7 +2033,7 @@ impl DeviceFnV1_0 {
                     _p_allocator: *const AllocationCallbacks,
                     _p_fence: *mut Fence,
                 ) -> Result {
-                    panic!("Unable to load {}", stringify!(create_fence))
+                    panic!(concat!("Unable to load ", stringify!(create_fence)))
                 }
                 let raw_name = stringify!(vkCreateFence);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2041,7 +2050,7 @@ impl DeviceFnV1_0 {
                     _fence: Fence,
                     _p_allocator: *const AllocationCallbacks,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(destroy_fence))
+                    panic!(concat!("Unable to load ", stringify!(destroy_fence)))
                 }
                 let raw_name = stringify!(vkDestroyFence);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2058,7 +2067,7 @@ impl DeviceFnV1_0 {
                     _fence_count: u32,
                     _p_fences: *const Fence,
                 ) -> Result {
-                    panic!("Unable to load {}", stringify!(reset_fences))
+                    panic!(concat!("Unable to load ", stringify!(reset_fences)))
                 }
                 let raw_name = stringify!(vkResetFences);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2071,7 +2080,7 @@ impl DeviceFnV1_0 {
             },
             get_fence_status: unsafe {
                 extern "system" fn get_fence_status(_device: Device, _fence: Fence) -> Result {
-                    panic!("Unable to load {}", stringify!(get_fence_status))
+                    panic!(concat!("Unable to load ", stringify!(get_fence_status)))
                 }
                 let raw_name = stringify!(vkGetFenceStatus);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2090,7 +2099,7 @@ impl DeviceFnV1_0 {
                     _wait_all: Bool32,
                     _timeout: u64,
                 ) -> Result {
-                    panic!("Unable to load {}", stringify!(wait_for_fences))
+                    panic!(concat!("Unable to load ", stringify!(wait_for_fences)))
                 }
                 let raw_name = stringify!(vkWaitForFences);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2108,7 +2117,7 @@ impl DeviceFnV1_0 {
                     _p_allocator: *const AllocationCallbacks,
                     _p_semaphore: *mut Semaphore,
                 ) -> Result {
-                    panic!("Unable to load {}", stringify!(create_semaphore))
+                    panic!(concat!("Unable to load ", stringify!(create_semaphore)))
                 }
                 let raw_name = stringify!(vkCreateSemaphore);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2125,7 +2134,7 @@ impl DeviceFnV1_0 {
                     _semaphore: Semaphore,
                     _p_allocator: *const AllocationCallbacks,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(destroy_semaphore))
+                    panic!(concat!("Unable to load ", stringify!(destroy_semaphore)))
                 }
                 let raw_name = stringify!(vkDestroySemaphore);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2143,7 +2152,7 @@ impl DeviceFnV1_0 {
                     _p_allocator: *const AllocationCallbacks,
                     _p_event: *mut Event,
                 ) -> Result {
-                    panic!("Unable to load {}", stringify!(create_event))
+                    panic!(concat!("Unable to load ", stringify!(create_event)))
                 }
                 let raw_name = stringify!(vkCreateEvent);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2160,7 +2169,7 @@ impl DeviceFnV1_0 {
                     _event: Event,
                     _p_allocator: *const AllocationCallbacks,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(destroy_event))
+                    panic!(concat!("Unable to load ", stringify!(destroy_event)))
                 }
                 let raw_name = stringify!(vkDestroyEvent);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2173,7 +2182,7 @@ impl DeviceFnV1_0 {
             },
             get_event_status: unsafe {
                 extern "system" fn get_event_status(_device: Device, _event: Event) -> Result {
-                    panic!("Unable to load {}", stringify!(get_event_status))
+                    panic!(concat!("Unable to load ", stringify!(get_event_status)))
                 }
                 let raw_name = stringify!(vkGetEventStatus);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2186,7 +2195,7 @@ impl DeviceFnV1_0 {
             },
             set_event: unsafe {
                 extern "system" fn set_event(_device: Device, _event: Event) -> Result {
-                    panic!("Unable to load {}", stringify!(set_event))
+                    panic!(concat!("Unable to load ", stringify!(set_event)))
                 }
                 let raw_name = stringify!(vkSetEvent);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2199,7 +2208,7 @@ impl DeviceFnV1_0 {
             },
             reset_event: unsafe {
                 extern "system" fn reset_event(_device: Device, _event: Event) -> Result {
-                    panic!("Unable to load {}", stringify!(reset_event))
+                    panic!(concat!("Unable to load ", stringify!(reset_event)))
                 }
                 let raw_name = stringify!(vkResetEvent);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2217,7 +2226,7 @@ impl DeviceFnV1_0 {
                     _p_allocator: *const AllocationCallbacks,
                     _p_query_pool: *mut QueryPool,
                 ) -> Result {
-                    panic!("Unable to load {}", stringify!(create_query_pool))
+                    panic!(concat!("Unable to load ", stringify!(create_query_pool)))
                 }
                 let raw_name = stringify!(vkCreateQueryPool);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2234,7 +2243,7 @@ impl DeviceFnV1_0 {
                     _query_pool: QueryPool,
                     _p_allocator: *const AllocationCallbacks,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(destroy_query_pool))
+                    panic!(concat!("Unable to load ", stringify!(destroy_query_pool)))
                 }
                 let raw_name = stringify!(vkDestroyQueryPool);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2256,7 +2265,10 @@ impl DeviceFnV1_0 {
                     _stride: DeviceSize,
                     _flags: QueryResultFlags,
                 ) -> Result {
-                    panic!("Unable to load {}", stringify!(get_query_pool_results))
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_query_pool_results)
+                    ))
                 }
                 let raw_name = stringify!(vkGetQueryPoolResults);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2274,7 +2286,7 @@ impl DeviceFnV1_0 {
                     _p_allocator: *const AllocationCallbacks,
                     _p_buffer: *mut Buffer,
                 ) -> Result {
-                    panic!("Unable to load {}", stringify!(create_buffer))
+                    panic!(concat!("Unable to load ", stringify!(create_buffer)))
                 }
                 let raw_name = stringify!(vkCreateBuffer);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2291,7 +2303,7 @@ impl DeviceFnV1_0 {
                     _buffer: Buffer,
                     _p_allocator: *const AllocationCallbacks,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(destroy_buffer))
+                    panic!(concat!("Unable to load ", stringify!(destroy_buffer)))
                 }
                 let raw_name = stringify!(vkDestroyBuffer);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2309,7 +2321,7 @@ impl DeviceFnV1_0 {
                     _p_allocator: *const AllocationCallbacks,
                     _p_view: *mut BufferView,
                 ) -> Result {
-                    panic!("Unable to load {}", stringify!(create_buffer_view))
+                    panic!(concat!("Unable to load ", stringify!(create_buffer_view)))
                 }
                 let raw_name = stringify!(vkCreateBufferView);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2326,7 +2338,7 @@ impl DeviceFnV1_0 {
                     _buffer_view: BufferView,
                     _p_allocator: *const AllocationCallbacks,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(destroy_buffer_view))
+                    panic!(concat!("Unable to load ", stringify!(destroy_buffer_view)))
                 }
                 let raw_name = stringify!(vkDestroyBufferView);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2344,7 +2356,7 @@ impl DeviceFnV1_0 {
                     _p_allocator: *const AllocationCallbacks,
                     _p_image: *mut Image,
                 ) -> Result {
-                    panic!("Unable to load {}", stringify!(create_image))
+                    panic!(concat!("Unable to load ", stringify!(create_image)))
                 }
                 let raw_name = stringify!(vkCreateImage);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2361,7 +2373,7 @@ impl DeviceFnV1_0 {
                     _image: Image,
                     _p_allocator: *const AllocationCallbacks,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(destroy_image))
+                    panic!(concat!("Unable to load ", stringify!(destroy_image)))
                 }
                 let raw_name = stringify!(vkDestroyImage);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2379,10 +2391,10 @@ impl DeviceFnV1_0 {
                     _p_subresource: *const ImageSubresource,
                     _p_layout: *mut SubresourceLayout,
                 ) -> c_void {
-                    panic!(
-                        "Unable to load {}",
+                    panic!(concat!(
+                        "Unable to load ",
                         stringify!(get_image_subresource_layout)
-                    )
+                    ))
                 }
                 let raw_name = stringify!(vkGetImageSubresourceLayout);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2400,7 +2412,7 @@ impl DeviceFnV1_0 {
                     _p_allocator: *const AllocationCallbacks,
                     _p_view: *mut ImageView,
                 ) -> Result {
-                    panic!("Unable to load {}", stringify!(create_image_view))
+                    panic!(concat!("Unable to load ", stringify!(create_image_view)))
                 }
                 let raw_name = stringify!(vkCreateImageView);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2417,7 +2429,7 @@ impl DeviceFnV1_0 {
                     _image_view: ImageView,
                     _p_allocator: *const AllocationCallbacks,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(destroy_image_view))
+                    panic!(concat!("Unable to load ", stringify!(destroy_image_view)))
                 }
                 let raw_name = stringify!(vkDestroyImageView);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2435,7 +2447,7 @@ impl DeviceFnV1_0 {
                     _p_allocator: *const AllocationCallbacks,
                     _p_shader_module: *mut ShaderModule,
                 ) -> Result {
-                    panic!("Unable to load {}", stringify!(create_shader_module))
+                    panic!(concat!("Unable to load ", stringify!(create_shader_module)))
                 }
                 let raw_name = stringify!(vkCreateShaderModule);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2452,7 +2464,10 @@ impl DeviceFnV1_0 {
                     _shader_module: ShaderModule,
                     _p_allocator: *const AllocationCallbacks,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(destroy_shader_module))
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(destroy_shader_module)
+                    ))
                 }
                 let raw_name = stringify!(vkDestroyShaderModule);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2470,7 +2485,10 @@ impl DeviceFnV1_0 {
                     _p_allocator: *const AllocationCallbacks,
                     _p_pipeline_cache: *mut PipelineCache,
                 ) -> Result {
-                    panic!("Unable to load {}", stringify!(create_pipeline_cache))
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(create_pipeline_cache)
+                    ))
                 }
                 let raw_name = stringify!(vkCreatePipelineCache);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2487,7 +2505,10 @@ impl DeviceFnV1_0 {
                     _pipeline_cache: PipelineCache,
                     _p_allocator: *const AllocationCallbacks,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(destroy_pipeline_cache))
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(destroy_pipeline_cache)
+                    ))
                 }
                 let raw_name = stringify!(vkDestroyPipelineCache);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2505,7 +2526,10 @@ impl DeviceFnV1_0 {
                     _p_data_size: *mut usize,
                     _p_data: *mut c_void,
                 ) -> Result {
-                    panic!("Unable to load {}", stringify!(get_pipeline_cache_data))
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_pipeline_cache_data)
+                    ))
                 }
                 let raw_name = stringify!(vkGetPipelineCacheData);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2523,7 +2547,10 @@ impl DeviceFnV1_0 {
                     _src_cache_count: u32,
                     _p_src_caches: *const PipelineCache,
                 ) -> Result {
-                    panic!("Unable to load {}", stringify!(merge_pipeline_caches))
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(merge_pipeline_caches)
+                    ))
                 }
                 let raw_name = stringify!(vkMergePipelineCaches);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2543,7 +2570,10 @@ impl DeviceFnV1_0 {
                     _p_allocator: *const AllocationCallbacks,
                     _p_pipelines: *mut Pipeline,
                 ) -> Result {
-                    panic!("Unable to load {}", stringify!(create_graphics_pipelines))
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(create_graphics_pipelines)
+                    ))
                 }
                 let raw_name = stringify!(vkCreateGraphicsPipelines);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2563,7 +2593,10 @@ impl DeviceFnV1_0 {
                     _p_allocator: *const AllocationCallbacks,
                     _p_pipelines: *mut Pipeline,
                 ) -> Result {
-                    panic!("Unable to load {}", stringify!(create_compute_pipelines))
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(create_compute_pipelines)
+                    ))
                 }
                 let raw_name = stringify!(vkCreateComputePipelines);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2580,7 +2613,7 @@ impl DeviceFnV1_0 {
                     _pipeline: Pipeline,
                     _p_allocator: *const AllocationCallbacks,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(destroy_pipeline))
+                    panic!(concat!("Unable to load ", stringify!(destroy_pipeline)))
                 }
                 let raw_name = stringify!(vkDestroyPipeline);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2598,7 +2631,10 @@ impl DeviceFnV1_0 {
                     _p_allocator: *const AllocationCallbacks,
                     _p_pipeline_layout: *mut PipelineLayout,
                 ) -> Result {
-                    panic!("Unable to load {}", stringify!(create_pipeline_layout))
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(create_pipeline_layout)
+                    ))
                 }
                 let raw_name = stringify!(vkCreatePipelineLayout);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2615,7 +2651,10 @@ impl DeviceFnV1_0 {
                     _pipeline_layout: PipelineLayout,
                     _p_allocator: *const AllocationCallbacks,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(destroy_pipeline_layout))
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(destroy_pipeline_layout)
+                    ))
                 }
                 let raw_name = stringify!(vkDestroyPipelineLayout);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2633,7 +2672,7 @@ impl DeviceFnV1_0 {
                     _p_allocator: *const AllocationCallbacks,
                     _p_sampler: *mut Sampler,
                 ) -> Result {
-                    panic!("Unable to load {}", stringify!(create_sampler))
+                    panic!(concat!("Unable to load ", stringify!(create_sampler)))
                 }
                 let raw_name = stringify!(vkCreateSampler);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2650,7 +2689,7 @@ impl DeviceFnV1_0 {
                     _sampler: Sampler,
                     _p_allocator: *const AllocationCallbacks,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(destroy_sampler))
+                    panic!(concat!("Unable to load ", stringify!(destroy_sampler)))
                 }
                 let raw_name = stringify!(vkDestroySampler);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2668,10 +2707,10 @@ impl DeviceFnV1_0 {
                     _p_allocator: *const AllocationCallbacks,
                     _p_set_layout: *mut DescriptorSetLayout,
                 ) -> Result {
-                    panic!(
-                        "Unable to load {}",
+                    panic!(concat!(
+                        "Unable to load ",
                         stringify!(create_descriptor_set_layout)
-                    )
+                    ))
                 }
                 let raw_name = stringify!(vkCreateDescriptorSetLayout);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2688,10 +2727,10 @@ impl DeviceFnV1_0 {
                     _descriptor_set_layout: DescriptorSetLayout,
                     _p_allocator: *const AllocationCallbacks,
                 ) -> c_void {
-                    panic!(
-                        "Unable to load {}",
+                    panic!(concat!(
+                        "Unable to load ",
                         stringify!(destroy_descriptor_set_layout)
-                    )
+                    ))
                 }
                 let raw_name = stringify!(vkDestroyDescriptorSetLayout);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2709,7 +2748,10 @@ impl DeviceFnV1_0 {
                     _p_allocator: *const AllocationCallbacks,
                     _p_descriptor_pool: *mut DescriptorPool,
                 ) -> Result {
-                    panic!("Unable to load {}", stringify!(create_descriptor_pool))
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(create_descriptor_pool)
+                    ))
                 }
                 let raw_name = stringify!(vkCreateDescriptorPool);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2726,7 +2768,10 @@ impl DeviceFnV1_0 {
                     _descriptor_pool: DescriptorPool,
                     _p_allocator: *const AllocationCallbacks,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(destroy_descriptor_pool))
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(destroy_descriptor_pool)
+                    ))
                 }
                 let raw_name = stringify!(vkDestroyDescriptorPool);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2743,7 +2788,10 @@ impl DeviceFnV1_0 {
                     _descriptor_pool: DescriptorPool,
                     _flags: DescriptorPoolResetFlags,
                 ) -> Result {
-                    panic!("Unable to load {}", stringify!(reset_descriptor_pool))
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(reset_descriptor_pool)
+                    ))
                 }
                 let raw_name = stringify!(vkResetDescriptorPool);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2760,7 +2808,10 @@ impl DeviceFnV1_0 {
                     _p_allocate_info: *const DescriptorSetAllocateInfo,
                     _p_descriptor_sets: *mut DescriptorSet,
                 ) -> Result {
-                    panic!("Unable to load {}", stringify!(allocate_descriptor_sets))
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(allocate_descriptor_sets)
+                    ))
                 }
                 let raw_name = stringify!(vkAllocateDescriptorSets);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2778,7 +2829,7 @@ impl DeviceFnV1_0 {
                     _descriptor_set_count: u32,
                     _p_descriptor_sets: *const DescriptorSet,
                 ) -> Result {
-                    panic!("Unable to load {}", stringify!(free_descriptor_sets))
+                    panic!(concat!("Unable to load ", stringify!(free_descriptor_sets)))
                 }
                 let raw_name = stringify!(vkFreeDescriptorSets);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2797,7 +2848,10 @@ impl DeviceFnV1_0 {
                     _descriptor_copy_count: u32,
                     _p_descriptor_copies: *const CopyDescriptorSet,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(update_descriptor_sets))
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(update_descriptor_sets)
+                    ))
                 }
                 let raw_name = stringify!(vkUpdateDescriptorSets);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2815,7 +2869,7 @@ impl DeviceFnV1_0 {
                     _p_allocator: *const AllocationCallbacks,
                     _p_framebuffer: *mut Framebuffer,
                 ) -> Result {
-                    panic!("Unable to load {}", stringify!(create_framebuffer))
+                    panic!(concat!("Unable to load ", stringify!(create_framebuffer)))
                 }
                 let raw_name = stringify!(vkCreateFramebuffer);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2832,7 +2886,7 @@ impl DeviceFnV1_0 {
                     _framebuffer: Framebuffer,
                     _p_allocator: *const AllocationCallbacks,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(destroy_framebuffer))
+                    panic!(concat!("Unable to load ", stringify!(destroy_framebuffer)))
                 }
                 let raw_name = stringify!(vkDestroyFramebuffer);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2850,7 +2904,7 @@ impl DeviceFnV1_0 {
                     _p_allocator: *const AllocationCallbacks,
                     _p_render_pass: *mut RenderPass,
                 ) -> Result {
-                    panic!("Unable to load {}", stringify!(create_render_pass))
+                    panic!(concat!("Unable to load ", stringify!(create_render_pass)))
                 }
                 let raw_name = stringify!(vkCreateRenderPass);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2867,7 +2921,7 @@ impl DeviceFnV1_0 {
                     _render_pass: RenderPass,
                     _p_allocator: *const AllocationCallbacks,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(destroy_render_pass))
+                    panic!(concat!("Unable to load ", stringify!(destroy_render_pass)))
                 }
                 let raw_name = stringify!(vkDestroyRenderPass);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2884,7 +2938,10 @@ impl DeviceFnV1_0 {
                     _render_pass: RenderPass,
                     _p_granularity: *mut Extent2D,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(get_render_area_granularity))
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_render_area_granularity)
+                    ))
                 }
                 let raw_name = stringify!(vkGetRenderAreaGranularity);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2902,7 +2959,7 @@ impl DeviceFnV1_0 {
                     _p_allocator: *const AllocationCallbacks,
                     _p_command_pool: *mut CommandPool,
                 ) -> Result {
-                    panic!("Unable to load {}", stringify!(create_command_pool))
+                    panic!(concat!("Unable to load ", stringify!(create_command_pool)))
                 }
                 let raw_name = stringify!(vkCreateCommandPool);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2919,7 +2976,7 @@ impl DeviceFnV1_0 {
                     _command_pool: CommandPool,
                     _p_allocator: *const AllocationCallbacks,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(destroy_command_pool))
+                    panic!(concat!("Unable to load ", stringify!(destroy_command_pool)))
                 }
                 let raw_name = stringify!(vkDestroyCommandPool);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2936,7 +2993,7 @@ impl DeviceFnV1_0 {
                     _command_pool: CommandPool,
                     _flags: CommandPoolResetFlags,
                 ) -> Result {
-                    panic!("Unable to load {}", stringify!(reset_command_pool))
+                    panic!(concat!("Unable to load ", stringify!(reset_command_pool)))
                 }
                 let raw_name = stringify!(vkResetCommandPool);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2953,7 +3010,10 @@ impl DeviceFnV1_0 {
                     _p_allocate_info: *const CommandBufferAllocateInfo,
                     _p_command_buffers: *mut CommandBuffer,
                 ) -> Result {
-                    panic!("Unable to load {}", stringify!(allocate_command_buffers))
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(allocate_command_buffers)
+                    ))
                 }
                 let raw_name = stringify!(vkAllocateCommandBuffers);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2971,7 +3031,7 @@ impl DeviceFnV1_0 {
                     _command_buffer_count: u32,
                     _p_command_buffers: *const CommandBuffer,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(free_command_buffers))
+                    panic!(concat!("Unable to load ", stringify!(free_command_buffers)))
                 }
                 let raw_name = stringify!(vkFreeCommandBuffers);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -2987,7 +3047,7 @@ impl DeviceFnV1_0 {
                     _command_buffer: CommandBuffer,
                     _p_begin_info: *const CommandBufferBeginInfo,
                 ) -> Result {
-                    panic!("Unable to load {}", stringify!(begin_command_buffer))
+                    panic!(concat!("Unable to load ", stringify!(begin_command_buffer)))
                 }
                 let raw_name = stringify!(vkBeginCommandBuffer);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -3000,7 +3060,7 @@ impl DeviceFnV1_0 {
             },
             end_command_buffer: unsafe {
                 extern "system" fn end_command_buffer(_command_buffer: CommandBuffer) -> Result {
-                    panic!("Unable to load {}", stringify!(end_command_buffer))
+                    panic!(concat!("Unable to load ", stringify!(end_command_buffer)))
                 }
                 let raw_name = stringify!(vkEndCommandBuffer);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -3016,7 +3076,7 @@ impl DeviceFnV1_0 {
                     _command_buffer: CommandBuffer,
                     _flags: CommandBufferResetFlags,
                 ) -> Result {
-                    panic!("Unable to load {}", stringify!(reset_command_buffer))
+                    panic!(concat!("Unable to load ", stringify!(reset_command_buffer)))
                 }
                 let raw_name = stringify!(vkResetCommandBuffer);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -3033,7 +3093,7 @@ impl DeviceFnV1_0 {
                     _pipeline_bind_point: PipelineBindPoint,
                     _pipeline: Pipeline,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(cmd_bind_pipeline))
+                    panic!(concat!("Unable to load ", stringify!(cmd_bind_pipeline)))
                 }
                 let raw_name = stringify!(vkCmdBindPipeline);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -3051,7 +3111,7 @@ impl DeviceFnV1_0 {
                     _viewport_count: u32,
                     _p_viewports: *const Viewport,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(cmd_set_viewport))
+                    panic!(concat!("Unable to load ", stringify!(cmd_set_viewport)))
                 }
                 let raw_name = stringify!(vkCmdSetViewport);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -3069,7 +3129,7 @@ impl DeviceFnV1_0 {
                     _scissor_count: u32,
                     _p_scissors: *const Rect2D,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(cmd_set_scissor))
+                    panic!(concat!("Unable to load ", stringify!(cmd_set_scissor)))
                 }
                 let raw_name = stringify!(vkCmdSetScissor);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -3085,7 +3145,7 @@ impl DeviceFnV1_0 {
                     _command_buffer: CommandBuffer,
                     _line_width: c_float,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(cmd_set_line_width))
+                    panic!(concat!("Unable to load ", stringify!(cmd_set_line_width)))
                 }
                 let raw_name = stringify!(vkCmdSetLineWidth);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -3103,7 +3163,7 @@ impl DeviceFnV1_0 {
                     _depth_bias_clamp: c_float,
                     _depth_bias_slope_factor: c_float,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(cmd_set_depth_bias))
+                    panic!(concat!("Unable to load ", stringify!(cmd_set_depth_bias)))
                 }
                 let raw_name = stringify!(vkCmdSetDepthBias);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -3119,7 +3179,10 @@ impl DeviceFnV1_0 {
                     _command_buffer: CommandBuffer,
                     _blend_constants: [c_float; 4],
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(cmd_set_blend_constants))
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_blend_constants)
+                    ))
                 }
                 let raw_name = stringify!(vkCmdSetBlendConstants);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -3136,7 +3199,7 @@ impl DeviceFnV1_0 {
                     _min_depth_bounds: c_float,
                     _max_depth_bounds: c_float,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(cmd_set_depth_bounds))
+                    panic!(concat!("Unable to load ", stringify!(cmd_set_depth_bounds)))
                 }
                 let raw_name = stringify!(vkCmdSetDepthBounds);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -3153,10 +3216,10 @@ impl DeviceFnV1_0 {
                     _face_mask: StencilFaceFlags,
                     _compare_mask: u32,
                 ) -> c_void {
-                    panic!(
-                        "Unable to load {}",
+                    panic!(concat!(
+                        "Unable to load ",
                         stringify!(cmd_set_stencil_compare_mask)
-                    )
+                    ))
                 }
                 let raw_name = stringify!(vkCmdSetStencilCompareMask);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -3173,7 +3236,10 @@ impl DeviceFnV1_0 {
                     _face_mask: StencilFaceFlags,
                     _write_mask: u32,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(cmd_set_stencil_write_mask))
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_stencil_write_mask)
+                    ))
                 }
                 let raw_name = stringify!(vkCmdSetStencilWriteMask);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -3190,7 +3256,10 @@ impl DeviceFnV1_0 {
                     _face_mask: StencilFaceFlags,
                     _reference: u32,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(cmd_set_stencil_reference))
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_stencil_reference)
+                    ))
                 }
                 let raw_name = stringify!(vkCmdSetStencilReference);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -3212,7 +3281,10 @@ impl DeviceFnV1_0 {
                     _dynamic_offset_count: u32,
                     _p_dynamic_offsets: *const u32,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(cmd_bind_descriptor_sets))
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_bind_descriptor_sets)
+                    ))
                 }
                 let raw_name = stringify!(vkCmdBindDescriptorSets);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -3230,7 +3302,10 @@ impl DeviceFnV1_0 {
                     _offset: DeviceSize,
                     _index_type: IndexType,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(cmd_bind_index_buffer))
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_bind_index_buffer)
+                    ))
                 }
                 let raw_name = stringify!(vkCmdBindIndexBuffer);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -3249,7 +3324,10 @@ impl DeviceFnV1_0 {
                     _p_buffers: *const Buffer,
                     _p_offsets: *const DeviceSize,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(cmd_bind_vertex_buffers))
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_bind_vertex_buffers)
+                    ))
                 }
                 let raw_name = stringify!(vkCmdBindVertexBuffers);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -3268,7 +3346,7 @@ impl DeviceFnV1_0 {
                     _first_vertex: u32,
                     _first_instance: u32,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(cmd_draw))
+                    panic!(concat!("Unable to load ", stringify!(cmd_draw)))
                 }
                 let raw_name = stringify!(vkCmdDraw);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -3288,7 +3366,7 @@ impl DeviceFnV1_0 {
                     _vertex_offset: i32,
                     _first_instance: u32,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(cmd_draw_indexed))
+                    panic!(concat!("Unable to load ", stringify!(cmd_draw_indexed)))
                 }
                 let raw_name = stringify!(vkCmdDrawIndexed);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -3307,7 +3385,7 @@ impl DeviceFnV1_0 {
                     _draw_count: u32,
                     _stride: u32,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(cmd_draw_indirect))
+                    panic!(concat!("Unable to load ", stringify!(cmd_draw_indirect)))
                 }
                 let raw_name = stringify!(vkCmdDrawIndirect);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -3326,7 +3404,10 @@ impl DeviceFnV1_0 {
                     _draw_count: u32,
                     _stride: u32,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(cmd_draw_indexed_indirect))
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_draw_indexed_indirect)
+                    ))
                 }
                 let raw_name = stringify!(vkCmdDrawIndexedIndirect);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -3344,7 +3425,7 @@ impl DeviceFnV1_0 {
                     _group_count_y: u32,
                     _group_count_z: u32,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(cmd_dispatch))
+                    panic!(concat!("Unable to load ", stringify!(cmd_dispatch)))
                 }
                 let raw_name = stringify!(vkCmdDispatch);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -3361,7 +3442,10 @@ impl DeviceFnV1_0 {
                     _buffer: Buffer,
                     _offset: DeviceSize,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(cmd_dispatch_indirect))
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_dispatch_indirect)
+                    ))
                 }
                 let raw_name = stringify!(vkCmdDispatchIndirect);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -3380,7 +3464,7 @@ impl DeviceFnV1_0 {
                     _region_count: u32,
                     _p_regions: *const BufferCopy,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(cmd_copy_buffer))
+                    panic!(concat!("Unable to load ", stringify!(cmd_copy_buffer)))
                 }
                 let raw_name = stringify!(vkCmdCopyBuffer);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -3401,7 +3485,7 @@ impl DeviceFnV1_0 {
                     _region_count: u32,
                     _p_regions: *const ImageCopy,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(cmd_copy_image))
+                    panic!(concat!("Unable to load ", stringify!(cmd_copy_image)))
                 }
                 let raw_name = stringify!(vkCmdCopyImage);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -3423,7 +3507,7 @@ impl DeviceFnV1_0 {
                     _p_regions: *const ImageBlit,
                     _filter: Filter,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(cmd_blit_image))
+                    panic!(concat!("Unable to load ", stringify!(cmd_blit_image)))
                 }
                 let raw_name = stringify!(vkCmdBlitImage);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -3443,7 +3527,10 @@ impl DeviceFnV1_0 {
                     _region_count: u32,
                     _p_regions: *const BufferImageCopy,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(cmd_copy_buffer_to_image))
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_copy_buffer_to_image)
+                    ))
                 }
                 let raw_name = stringify!(vkCmdCopyBufferToImage);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -3463,7 +3550,10 @@ impl DeviceFnV1_0 {
                     _region_count: u32,
                     _p_regions: *const BufferImageCopy,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(cmd_copy_image_to_buffer))
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_copy_image_to_buffer)
+                    ))
                 }
                 let raw_name = stringify!(vkCmdCopyImageToBuffer);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -3482,7 +3572,7 @@ impl DeviceFnV1_0 {
                     _data_size: DeviceSize,
                     _p_data: *const c_void,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(cmd_update_buffer))
+                    panic!(concat!("Unable to load ", stringify!(cmd_update_buffer)))
                 }
                 let raw_name = stringify!(vkCmdUpdateBuffer);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -3501,7 +3591,7 @@ impl DeviceFnV1_0 {
                     _size: DeviceSize,
                     _data: u32,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(cmd_fill_buffer))
+                    panic!(concat!("Unable to load ", stringify!(cmd_fill_buffer)))
                 }
                 let raw_name = stringify!(vkCmdFillBuffer);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -3521,7 +3611,10 @@ impl DeviceFnV1_0 {
                     _range_count: u32,
                     _p_ranges: *const ImageSubresourceRange,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(cmd_clear_color_image))
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_clear_color_image)
+                    ))
                 }
                 let raw_name = stringify!(vkCmdClearColorImage);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -3541,10 +3634,10 @@ impl DeviceFnV1_0 {
                     _range_count: u32,
                     _p_ranges: *const ImageSubresourceRange,
                 ) -> c_void {
-                    panic!(
-                        "Unable to load {}",
+                    panic!(concat!(
+                        "Unable to load ",
                         stringify!(cmd_clear_depth_stencil_image)
-                    )
+                    ))
                 }
                 let raw_name = stringify!(vkCmdClearDepthStencilImage);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -3563,7 +3656,10 @@ impl DeviceFnV1_0 {
                     _rect_count: u32,
                     _p_rects: *const ClearRect,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(cmd_clear_attachments))
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_clear_attachments)
+                    ))
                 }
                 let raw_name = stringify!(vkCmdClearAttachments);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -3584,7 +3680,7 @@ impl DeviceFnV1_0 {
                     _region_count: u32,
                     _p_regions: *const ImageResolve,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(cmd_resolve_image))
+                    panic!(concat!("Unable to load ", stringify!(cmd_resolve_image)))
                 }
                 let raw_name = stringify!(vkCmdResolveImage);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -3601,7 +3697,7 @@ impl DeviceFnV1_0 {
                     _event: Event,
                     _stage_mask: PipelineStageFlags,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(cmd_set_event))
+                    panic!(concat!("Unable to load ", stringify!(cmd_set_event)))
                 }
                 let raw_name = stringify!(vkCmdSetEvent);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -3618,7 +3714,7 @@ impl DeviceFnV1_0 {
                     _event: Event,
                     _stage_mask: PipelineStageFlags,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(cmd_reset_event))
+                    panic!(concat!("Unable to load ", stringify!(cmd_reset_event)))
                 }
                 let raw_name = stringify!(vkCmdResetEvent);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -3643,7 +3739,7 @@ impl DeviceFnV1_0 {
                     _image_memory_barrier_count: u32,
                     _p_image_memory_barriers: *const ImageMemoryBarrier,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(cmd_wait_events))
+                    panic!(concat!("Unable to load ", stringify!(cmd_wait_events)))
                 }
                 let raw_name = stringify!(vkCmdWaitEvents);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -3667,7 +3763,7 @@ impl DeviceFnV1_0 {
                     _image_memory_barrier_count: u32,
                     _p_image_memory_barriers: *const ImageMemoryBarrier,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(cmd_pipeline_barrier))
+                    panic!(concat!("Unable to load ", stringify!(cmd_pipeline_barrier)))
                 }
                 let raw_name = stringify!(vkCmdPipelineBarrier);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -3685,7 +3781,7 @@ impl DeviceFnV1_0 {
                     _query: u32,
                     _flags: QueryControlFlags,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(cmd_begin_query))
+                    panic!(concat!("Unable to load ", stringify!(cmd_begin_query)))
                 }
                 let raw_name = stringify!(vkCmdBeginQuery);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -3702,7 +3798,7 @@ impl DeviceFnV1_0 {
                     _query_pool: QueryPool,
                     _query: u32,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(cmd_end_query))
+                    panic!(concat!("Unable to load ", stringify!(cmd_end_query)))
                 }
                 let raw_name = stringify!(vkCmdEndQuery);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -3720,7 +3816,7 @@ impl DeviceFnV1_0 {
                     _first_query: u32,
                     _query_count: u32,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(cmd_reset_query_pool))
+                    panic!(concat!("Unable to load ", stringify!(cmd_reset_query_pool)))
                 }
                 let raw_name = stringify!(vkCmdResetQueryPool);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -3738,7 +3834,7 @@ impl DeviceFnV1_0 {
                     _query_pool: QueryPool,
                     _query: u32,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(cmd_write_timestamp))
+                    panic!(concat!("Unable to load ", stringify!(cmd_write_timestamp)))
                 }
                 let raw_name = stringify!(vkCmdWriteTimestamp);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -3760,7 +3856,10 @@ impl DeviceFnV1_0 {
                     _stride: DeviceSize,
                     _flags: QueryResultFlags,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(cmd_copy_query_pool_results))
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_copy_query_pool_results)
+                    ))
                 }
                 let raw_name = stringify!(vkCmdCopyQueryPoolResults);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -3780,7 +3879,7 @@ impl DeviceFnV1_0 {
                     _size: u32,
                     _p_values: *const c_void,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(cmd_push_constants))
+                    panic!(concat!("Unable to load ", stringify!(cmd_push_constants)))
                 }
                 let raw_name = stringify!(vkCmdPushConstants);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -3797,7 +3896,10 @@ impl DeviceFnV1_0 {
                     _p_render_pass_begin: *const RenderPassBeginInfo,
                     _contents: SubpassContents,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(cmd_begin_render_pass))
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_begin_render_pass)
+                    ))
                 }
                 let raw_name = stringify!(vkCmdBeginRenderPass);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -3813,7 +3915,7 @@ impl DeviceFnV1_0 {
                     _command_buffer: CommandBuffer,
                     _contents: SubpassContents,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(cmd_next_subpass))
+                    panic!(concat!("Unable to load ", stringify!(cmd_next_subpass)))
                 }
                 let raw_name = stringify!(vkCmdNextSubpass);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -3826,7 +3928,7 @@ impl DeviceFnV1_0 {
             },
             cmd_end_render_pass: unsafe {
                 extern "system" fn cmd_end_render_pass(_command_buffer: CommandBuffer) -> c_void {
-                    panic!("Unable to load {}", stringify!(cmd_end_render_pass))
+                    panic!(concat!("Unable to load ", stringify!(cmd_end_render_pass)))
                 }
                 let raw_name = stringify!(vkCmdEndRenderPass);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -3843,7 +3945,7 @@ impl DeviceFnV1_0 {
                     _command_buffer_count: u32,
                     _p_command_buffers: *const CommandBuffer,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(cmd_execute_commands))
+                    panic!(concat!("Unable to load ", stringify!(cmd_execute_commands)))
                 }
                 let raw_name = stringify!(vkCmdExecuteCommands);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -5087,7 +5189,10 @@ impl EntryFnV1_1 {
         EntryFnV1_1 {
             enumerate_instance_version: unsafe {
                 extern "system" fn enumerate_instance_version(_p_api_version: *mut u32) -> Result {
-                    panic!("Unable to load {}", stringify!(enumerate_instance_version))
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(enumerate_instance_version)
+                    ))
                 }
                 let raw_name = stringify!(vkEnumerateInstanceVersion);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -5206,10 +5311,10 @@ impl InstanceFnV1_1 {
                     _p_physical_device_group_count: *mut u32,
                     _p_physical_device_group_properties: *mut PhysicalDeviceGroupProperties,
                 ) -> Result {
-                    panic!(
-                        "Unable to load {}",
+                    panic!(concat!(
+                        "Unable to load ",
                         stringify!(enumerate_physical_device_groups)
-                    )
+                    ))
                 }
                 let raw_name = stringify!(vkEnumeratePhysicalDeviceGroups);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -5225,10 +5330,10 @@ impl InstanceFnV1_1 {
                     _physical_device: PhysicalDevice,
                     _p_features: *mut PhysicalDeviceFeatures2,
                 ) -> c_void {
-                    panic!(
-                        "Unable to load {}",
+                    panic!(concat!(
+                        "Unable to load ",
                         stringify!(get_physical_device_features2)
-                    )
+                    ))
                 }
                 let raw_name = stringify!(vkGetPhysicalDeviceFeatures2);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -5244,10 +5349,10 @@ impl InstanceFnV1_1 {
                     _physical_device: PhysicalDevice,
                     _p_properties: *mut PhysicalDeviceProperties2,
                 ) -> c_void {
-                    panic!(
-                        "Unable to load {}",
+                    panic!(concat!(
+                        "Unable to load ",
                         stringify!(get_physical_device_properties2)
-                    )
+                    ))
                 }
                 let raw_name = stringify!(vkGetPhysicalDeviceProperties2);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -5264,10 +5369,10 @@ impl InstanceFnV1_1 {
                     _format: Format,
                     _p_format_properties: *mut FormatProperties2,
                 ) -> c_void {
-                    panic!(
-                        "Unable to load {}",
+                    panic!(concat!(
+                        "Unable to load ",
                         stringify!(get_physical_device_format_properties2)
-                    )
+                    ))
                 }
                 let raw_name = stringify!(vkGetPhysicalDeviceFormatProperties2);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -5284,10 +5389,10 @@ impl InstanceFnV1_1 {
                     _p_image_format_info: *const PhysicalDeviceImageFormatInfo2,
                     _p_image_format_properties: *mut ImageFormatProperties2,
                 ) -> Result {
-                    panic!(
-                        "Unable to load {}",
+                    panic!(concat!(
+                        "Unable to load ",
                         stringify!(get_physical_device_image_format_properties2)
-                    )
+                    ))
                 }
                 let raw_name = stringify!(vkGetPhysicalDeviceImageFormatProperties2);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -5304,10 +5409,10 @@ impl InstanceFnV1_1 {
                     _p_queue_family_property_count: *mut u32,
                     _p_queue_family_properties: *mut QueueFamilyProperties2,
                 ) -> c_void {
-                    panic!(
-                        "Unable to load {}",
+                    panic!(concat!(
+                        "Unable to load ",
                         stringify!(get_physical_device_queue_family_properties2)
-                    )
+                    ))
                 }
                 let raw_name = stringify!(vkGetPhysicalDeviceQueueFamilyProperties2);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -5323,10 +5428,10 @@ impl InstanceFnV1_1 {
                     _physical_device: PhysicalDevice,
                     _p_memory_properties: *mut PhysicalDeviceMemoryProperties2,
                 ) -> c_void {
-                    panic!(
-                        "Unable to load {}",
+                    panic!(concat!(
+                        "Unable to load ",
                         stringify!(get_physical_device_memory_properties2)
-                    )
+                    ))
                 }
                 let raw_name = stringify!(vkGetPhysicalDeviceMemoryProperties2);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -5344,10 +5449,10 @@ impl InstanceFnV1_1 {
                     _p_property_count: *mut u32,
                     _p_properties: *mut SparseImageFormatProperties2,
                 ) -> c_void {
-                    panic!(
-                        "Unable to load {}",
+                    panic!(concat!(
+                        "Unable to load ",
                         stringify!(get_physical_device_sparse_image_format_properties2)
-                    )
+                    ))
                 }
                 let raw_name = stringify!(vkGetPhysicalDeviceSparseImageFormatProperties2);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -5364,10 +5469,10 @@ impl InstanceFnV1_1 {
                     _p_external_buffer_info: *const PhysicalDeviceExternalBufferInfo,
                     _p_external_buffer_properties: *mut ExternalBufferProperties,
                 ) -> c_void {
-                    panic!(
-                        "Unable to load {}",
+                    panic!(concat!(
+                        "Unable to load ",
                         stringify!(get_physical_device_external_buffer_properties)
-                    )
+                    ))
                 }
                 let raw_name = stringify!(vkGetPhysicalDeviceExternalBufferProperties);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -5384,10 +5489,10 @@ impl InstanceFnV1_1 {
                     _p_external_fence_info: *const PhysicalDeviceExternalFenceInfo,
                     _p_external_fence_properties: *mut ExternalFenceProperties,
                 ) -> c_void {
-                    panic!(
-                        "Unable to load {}",
+                    panic!(concat!(
+                        "Unable to load ",
                         stringify!(get_physical_device_external_fence_properties)
-                    )
+                    ))
                 }
                 let raw_name = stringify!(vkGetPhysicalDeviceExternalFenceProperties);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -5404,10 +5509,10 @@ impl InstanceFnV1_1 {
                     _p_external_semaphore_info: *const PhysicalDeviceExternalSemaphoreInfo,
                     _p_external_semaphore_properties: *mut ExternalSemaphoreProperties,
                 ) -> c_void {
-                    panic!(
-                        "Unable to load {}",
+                    panic!(concat!(
+                        "Unable to load ",
                         stringify!(get_physical_device_external_semaphore_properties)
-                    )
+                    ))
                 }
                 let raw_name = stringify!(vkGetPhysicalDeviceExternalSemaphoreProperties);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -5668,7 +5773,7 @@ impl DeviceFnV1_1 {
                     _bind_info_count: u32,
                     _p_bind_infos: *const BindBufferMemoryInfo,
                 ) -> Result {
-                    panic!("Unable to load {}", stringify!(bind_buffer_memory2))
+                    panic!(concat!("Unable to load ", stringify!(bind_buffer_memory2)))
                 }
                 let raw_name = stringify!(vkBindBufferMemory2);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -5685,7 +5790,7 @@ impl DeviceFnV1_1 {
                     _bind_info_count: u32,
                     _p_bind_infos: *const BindImageMemoryInfo,
                 ) -> Result {
-                    panic!("Unable to load {}", stringify!(bind_image_memory2))
+                    panic!(concat!("Unable to load ", stringify!(bind_image_memory2)))
                 }
                 let raw_name = stringify!(vkBindImageMemory2);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -5704,10 +5809,10 @@ impl DeviceFnV1_1 {
                     _remote_device_index: u32,
                     _p_peer_memory_features: *mut PeerMemoryFeatureFlags,
                 ) -> c_void {
-                    panic!(
-                        "Unable to load {}",
+                    panic!(concat!(
+                        "Unable to load ",
                         stringify!(get_device_group_peer_memory_features)
-                    )
+                    ))
                 }
                 let raw_name = stringify!(vkGetDeviceGroupPeerMemoryFeatures);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -5723,7 +5828,7 @@ impl DeviceFnV1_1 {
                     _command_buffer: CommandBuffer,
                     _device_mask: u32,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(cmd_set_device_mask))
+                    panic!(concat!("Unable to load ", stringify!(cmd_set_device_mask)))
                 }
                 let raw_name = stringify!(vkCmdSetDeviceMask);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -5744,7 +5849,7 @@ impl DeviceFnV1_1 {
                     _group_count_y: u32,
                     _group_count_z: u32,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(cmd_dispatch_base))
+                    panic!(concat!("Unable to load ", stringify!(cmd_dispatch_base)))
                 }
                 let raw_name = stringify!(vkCmdDispatchBase);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -5761,10 +5866,10 @@ impl DeviceFnV1_1 {
                     _p_info: *const ImageMemoryRequirementsInfo2,
                     _p_memory_requirements: *mut MemoryRequirements2,
                 ) -> c_void {
-                    panic!(
-                        "Unable to load {}",
+                    panic!(concat!(
+                        "Unable to load ",
                         stringify!(get_image_memory_requirements2)
-                    )
+                    ))
                 }
                 let raw_name = stringify!(vkGetImageMemoryRequirements2);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -5781,10 +5886,10 @@ impl DeviceFnV1_1 {
                     _p_info: *const BufferMemoryRequirementsInfo2,
                     _p_memory_requirements: *mut MemoryRequirements2,
                 ) -> c_void {
-                    panic!(
-                        "Unable to load {}",
+                    panic!(concat!(
+                        "Unable to load ",
                         stringify!(get_buffer_memory_requirements2)
-                    )
+                    ))
                 }
                 let raw_name = stringify!(vkGetBufferMemoryRequirements2);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -5802,10 +5907,10 @@ impl DeviceFnV1_1 {
                     _p_sparse_memory_requirement_count: *mut u32,
                     _p_sparse_memory_requirements: *mut SparseImageMemoryRequirements2,
                 ) -> c_void {
-                    panic!(
-                        "Unable to load {}",
+                    panic!(concat!(
+                        "Unable to load ",
                         stringify!(get_image_sparse_memory_requirements2)
-                    )
+                    ))
                 }
                 let raw_name = stringify!(vkGetImageSparseMemoryRequirements2);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -5822,7 +5927,7 @@ impl DeviceFnV1_1 {
                     _command_pool: CommandPool,
                     _flags: CommandPoolTrimFlags,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(trim_command_pool))
+                    panic!(concat!("Unable to load ", stringify!(trim_command_pool)))
                 }
                 let raw_name = stringify!(vkTrimCommandPool);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -5839,7 +5944,7 @@ impl DeviceFnV1_1 {
                     _p_queue_info: *const DeviceQueueInfo2,
                     _p_queue: *mut Queue,
                 ) -> c_void {
-                    panic!("Unable to load {}", stringify!(get_device_queue2))
+                    panic!(concat!("Unable to load ", stringify!(get_device_queue2)))
                 }
                 let raw_name = stringify!(vkGetDeviceQueue2);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -5857,10 +5962,10 @@ impl DeviceFnV1_1 {
                     _p_allocator: *const AllocationCallbacks,
                     _p_ycbcr_conversion: *mut SamplerYcbcrConversion,
                 ) -> Result {
-                    panic!(
-                        "Unable to load {}",
+                    panic!(concat!(
+                        "Unable to load ",
                         stringify!(create_sampler_ycbcr_conversion)
-                    )
+                    ))
                 }
                 let raw_name = stringify!(vkCreateSamplerYcbcrConversion);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -5877,10 +5982,10 @@ impl DeviceFnV1_1 {
                     _ycbcr_conversion: SamplerYcbcrConversion,
                     _p_allocator: *const AllocationCallbacks,
                 ) -> c_void {
-                    panic!(
-                        "Unable to load {}",
+                    panic!(concat!(
+                        "Unable to load ",
                         stringify!(destroy_sampler_ycbcr_conversion)
-                    )
+                    ))
                 }
                 let raw_name = stringify!(vkDestroySamplerYcbcrConversion);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -5898,10 +6003,10 @@ impl DeviceFnV1_1 {
                     _p_allocator: *const AllocationCallbacks,
                     _p_descriptor_update_template: *mut DescriptorUpdateTemplate,
                 ) -> Result {
-                    panic!(
-                        "Unable to load {}",
+                    panic!(concat!(
+                        "Unable to load ",
                         stringify!(create_descriptor_update_template)
-                    )
+                    ))
                 }
                 let raw_name = stringify!(vkCreateDescriptorUpdateTemplate);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -5918,10 +6023,10 @@ impl DeviceFnV1_1 {
                     _descriptor_update_template: DescriptorUpdateTemplate,
                     _p_allocator: *const AllocationCallbacks,
                 ) -> c_void {
-                    panic!(
-                        "Unable to load {}",
+                    panic!(concat!(
+                        "Unable to load ",
                         stringify!(destroy_descriptor_update_template)
-                    )
+                    ))
                 }
                 let raw_name = stringify!(vkDestroyDescriptorUpdateTemplate);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -5939,10 +6044,10 @@ impl DeviceFnV1_1 {
                     _descriptor_update_template: DescriptorUpdateTemplate,
                     _p_data: *const c_void,
                 ) -> c_void {
-                    panic!(
-                        "Unable to load {}",
+                    panic!(concat!(
+                        "Unable to load ",
                         stringify!(update_descriptor_set_with_template)
-                    )
+                    ))
                 }
                 let raw_name = stringify!(vkUpdateDescriptorSetWithTemplate);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -5959,10 +6064,10 @@ impl DeviceFnV1_1 {
                     _p_create_info: *const DescriptorSetLayoutCreateInfo,
                     _p_support: *mut DescriptorSetLayoutSupport,
                 ) -> c_void {
-                    panic!(
-                        "Unable to load {}",
+                    panic!(concat!(
+                        "Unable to load ",
                         stringify!(get_descriptor_set_layout_support)
-                    )
+                    ))
                 }
                 let raw_name = stringify!(vkGetDescriptorSetLayoutSupport);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -30068,7 +30173,7 @@ pub mod extensions {
                         _surface: SurfaceKHR,
                         _p_allocator: *const AllocationCallbacks,
                     ) -> c_void {
-                        panic!("Unable to load {}", stringify!(destroy_surface_khr))
+                        panic!(concat!("Unable to load ", stringify!(destroy_surface_khr)))
                     }
                     let raw_name = stringify!(vkDestroySurfaceKHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -30086,10 +30191,10 @@ pub mod extensions {
                         _surface: SurfaceKHR,
                         _p_supported: *mut Bool32,
                     ) -> Result {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(get_physical_device_surface_support_khr)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkGetPhysicalDeviceSurfaceSupportKHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -30106,10 +30211,10 @@ pub mod extensions {
                         _surface: SurfaceKHR,
                         _p_surface_capabilities: *mut SurfaceCapabilitiesKHR,
                     ) -> Result {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(get_physical_device_surface_capabilities_khr)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkGetPhysicalDeviceSurfaceCapabilitiesKHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -30127,10 +30232,10 @@ pub mod extensions {
                         _p_surface_format_count: *mut u32,
                         _p_surface_formats: *mut SurfaceFormatKHR,
                     ) -> Result {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(get_physical_device_surface_formats_khr)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkGetPhysicalDeviceSurfaceFormatsKHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -30148,10 +30253,10 @@ pub mod extensions {
                         _p_present_mode_count: *mut u32,
                         _p_present_modes: *mut PresentModeKHR,
                     ) -> Result {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(get_physical_device_surface_present_modes_khr)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkGetPhysicalDeviceSurfacePresentModesKHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -30273,7 +30378,7 @@ pub mod extensions {
                         _p_allocator: *const AllocationCallbacks,
                         _p_swapchain: *mut SwapchainKHR,
                     ) -> Result {
-                        panic!("Unable to load {}", stringify!(create_swapchain_khr))
+                        panic!(concat!("Unable to load ", stringify!(create_swapchain_khr)))
                     }
                     let raw_name = stringify!(vkCreateSwapchainKHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -30290,7 +30395,10 @@ pub mod extensions {
                         _swapchain: SwapchainKHR,
                         _p_allocator: *const AllocationCallbacks,
                     ) -> c_void {
-                        panic!("Unable to load {}", stringify!(destroy_swapchain_khr))
+                        panic!(concat!(
+                            "Unable to load ",
+                            stringify!(destroy_swapchain_khr)
+                        ))
                     }
                     let raw_name = stringify!(vkDestroySwapchainKHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -30308,7 +30416,10 @@ pub mod extensions {
                         _p_swapchain_image_count: *mut u32,
                         _p_swapchain_images: *mut Image,
                     ) -> Result {
-                        panic!("Unable to load {}", stringify!(get_swapchain_images_khr))
+                        panic!(concat!(
+                            "Unable to load ",
+                            stringify!(get_swapchain_images_khr)
+                        ))
                     }
                     let raw_name = stringify!(vkGetSwapchainImagesKHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -30328,7 +30439,10 @@ pub mod extensions {
                         _fence: Fence,
                         _p_image_index: *mut u32,
                     ) -> Result {
-                        panic!("Unable to load {}", stringify!(acquire_next_image_khr))
+                        panic!(concat!(
+                            "Unable to load ",
+                            stringify!(acquire_next_image_khr)
+                        ))
                     }
                     let raw_name = stringify!(vkAcquireNextImageKHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -30344,7 +30458,7 @@ pub mod extensions {
                         _queue: Queue,
                         _p_present_info: *const PresentInfoKHR,
                     ) -> Result {
-                        panic!("Unable to load {}", stringify!(queue_present_khr))
+                        panic!(concat!("Unable to load ", stringify!(queue_present_khr)))
                     }
                     let raw_name = stringify!(vkQueuePresentKHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -30356,10 +30470,10 @@ pub mod extensions {
                     }
                 },
                 get_device_group_present_capabilities_khr: unsafe {extern "system" fn get_device_group_present_capabilities_khr ( _device : Device , _p_device_group_present_capabilities : *mut DeviceGroupPresentCapabilitiesKHR , ) -> Result{
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(get_device_group_present_capabilities_khr)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkGetDeviceGroupPresentCapabilitiesKHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -30376,10 +30490,10 @@ pub mod extensions {
                         _surface: SurfaceKHR,
                         _p_modes: *mut DeviceGroupPresentModeFlagsKHR,
                     ) -> Result {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(get_device_group_surface_present_modes_khr)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkGetDeviceGroupSurfacePresentModesKHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -30397,10 +30511,10 @@ pub mod extensions {
                         _p_rect_count: *mut u32,
                         _p_rects: *mut Rect2D,
                     ) -> Result {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(get_physical_device_present_rectangles_khr)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkGetPhysicalDevicePresentRectanglesKHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -30417,7 +30531,10 @@ pub mod extensions {
                         _p_acquire_info: *const AcquireNextImageInfoKHR,
                         _p_image_index: *mut u32,
                     ) -> Result {
-                        panic!("Unable to load {}", stringify!(acquire_next_image2_khr))
+                        panic!(concat!(
+                            "Unable to load ",
+                            stringify!(acquire_next_image2_khr)
+                        ))
                     }
                     let raw_name = stringify!(vkAcquireNextImage2KHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -30662,10 +30779,10 @@ pub mod extensions {
                         _p_property_count: *mut u32,
                         _p_properties: *mut DisplayPropertiesKHR,
                     ) -> Result {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(get_physical_device_display_properties_khr)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkGetPhysicalDeviceDisplayPropertiesKHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -30682,10 +30799,10 @@ pub mod extensions {
                         _p_property_count: *mut u32,
                         _p_properties: *mut DisplayPlanePropertiesKHR,
                     ) -> Result {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(get_physical_device_display_plane_properties_khr)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkGetPhysicalDeviceDisplayPlanePropertiesKHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -30703,10 +30820,10 @@ pub mod extensions {
                         _p_display_count: *mut u32,
                         _p_displays: *mut DisplayKHR,
                     ) -> Result {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(get_display_plane_supported_displays_khr)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkGetDisplayPlaneSupportedDisplaysKHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -30724,10 +30841,10 @@ pub mod extensions {
                         _p_property_count: *mut u32,
                         _p_properties: *mut DisplayModePropertiesKHR,
                     ) -> Result {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(get_display_mode_properties_khr)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkGetDisplayModePropertiesKHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -30746,7 +30863,10 @@ pub mod extensions {
                         _p_allocator: *const AllocationCallbacks,
                         _p_mode: *mut DisplayModeKHR,
                     ) -> Result {
-                        panic!("Unable to load {}", stringify!(create_display_mode_khr))
+                        panic!(concat!(
+                            "Unable to load ",
+                            stringify!(create_display_mode_khr)
+                        ))
                     }
                     let raw_name = stringify!(vkCreateDisplayModeKHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -30764,10 +30884,10 @@ pub mod extensions {
                         _plane_index: u32,
                         _p_capabilities: *mut DisplayPlaneCapabilitiesKHR,
                     ) -> Result {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(get_display_plane_capabilities_khr)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkGetDisplayPlaneCapabilitiesKHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -30785,10 +30905,10 @@ pub mod extensions {
                         _p_allocator: *const AllocationCallbacks,
                         _p_surface: *mut SurfaceKHR,
                     ) -> Result {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(create_display_plane_surface_khr)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkCreateDisplayPlaneSurfaceKHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -30942,10 +31062,10 @@ pub mod extensions {
                         _p_allocator: *const AllocationCallbacks,
                         _p_swapchains: *mut SwapchainKHR,
                     ) -> Result {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(create_shared_swapchains_khr)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkCreateSharedSwapchainsKHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -31022,7 +31142,10 @@ pub mod extensions {
                         _p_allocator: *const AllocationCallbacks,
                         _p_surface: *mut SurfaceKHR,
                     ) -> Result {
-                        panic!("Unable to load {}", stringify!(create_xlib_surface_khr))
+                        panic!(concat!(
+                            "Unable to load ",
+                            stringify!(create_xlib_surface_khr)
+                        ))
                     }
                     let raw_name = stringify!(vkCreateXlibSurfaceKHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -31040,10 +31163,10 @@ pub mod extensions {
                         _dpy: *mut Display,
                         _visual_id: VisualID,
                     ) -> Bool32 {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(get_physical_device_xlib_presentation_support_khr)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkGetPhysicalDeviceXlibPresentationSupportKHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -31123,7 +31246,10 @@ pub mod extensions {
                         _p_allocator: *const AllocationCallbacks,
                         _p_surface: *mut SurfaceKHR,
                     ) -> Result {
-                        panic!("Unable to load {}", stringify!(create_xcb_surface_khr))
+                        panic!(concat!(
+                            "Unable to load ",
+                            stringify!(create_xcb_surface_khr)
+                        ))
                     }
                     let raw_name = stringify!(vkCreateXcbSurfaceKHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -31141,10 +31267,10 @@ pub mod extensions {
                         _connection: *mut xcb_connection_t,
                         _visual_id: xcb_visualid_t,
                     ) -> Bool32 {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(get_physical_device_xcb_presentation_support_khr)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkGetPhysicalDeviceXcbPresentationSupportKHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -31224,7 +31350,10 @@ pub mod extensions {
                         _p_allocator: *const AllocationCallbacks,
                         _p_surface: *mut SurfaceKHR,
                     ) -> Result {
-                        panic!("Unable to load {}", stringify!(create_wayland_surface_khr))
+                        panic!(concat!(
+                            "Unable to load ",
+                            stringify!(create_wayland_surface_khr)
+                        ))
                     }
                     let raw_name = stringify!(vkCreateWaylandSurfaceKHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -31241,10 +31370,10 @@ pub mod extensions {
                         _queue_family_index: u32,
                         _display: *mut wl_display,
                     ) -> Bool32 {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(get_physical_device_wayland_presentation_support_khr)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkGetPhysicalDeviceWaylandPresentationSupportKHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -31321,7 +31450,10 @@ pub mod extensions {
                         _p_allocator: *const AllocationCallbacks,
                         _p_surface: *mut SurfaceKHR,
                     ) -> Result {
-                        panic!("Unable to load {}", stringify!(create_mir_surface_khr))
+                        panic!(concat!(
+                            "Unable to load ",
+                            stringify!(create_mir_surface_khr)
+                        ))
                     }
                     let raw_name = stringify!(vkCreateMirSurfaceKHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -31338,10 +31470,10 @@ pub mod extensions {
                         _queue_family_index: u32,
                         _connection: *mut MirConnection,
                     ) -> Bool32 {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(get_physical_device_mir_presentation_support_khr)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkGetPhysicalDeviceMirPresentationSupportKHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -31411,7 +31543,10 @@ pub mod extensions {
                         _p_allocator: *const AllocationCallbacks,
                         _p_surface: *mut SurfaceKHR,
                     ) -> Result {
-                        panic!("Unable to load {}", stringify!(create_android_surface_khr))
+                        panic!(concat!(
+                            "Unable to load ",
+                            stringify!(create_android_surface_khr)
+                        ))
                     }
                     let raw_name = stringify!(vkCreateAndroidSurfaceKHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -31473,7 +31608,10 @@ pub mod extensions {
                         _p_allocator: *const AllocationCallbacks,
                         _p_surface: *mut SurfaceKHR,
                     ) -> Result {
-                        panic!("Unable to load {}", stringify!(create_win32_surface_khr))
+                        panic!(concat!(
+                            "Unable to load ",
+                            stringify!(create_win32_surface_khr)
+                        ))
                     }
                     let raw_name = stringify!(vkCreateWin32SurfaceKHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -31489,10 +31627,10 @@ pub mod extensions {
                         _physical_device: PhysicalDevice,
                         _queue_family_index: u32,
                     ) -> Bool32 {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(get_physical_device_win32_presentation_support_khr)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkGetPhysicalDeviceWin32PresentationSupportKHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -31575,10 +31713,10 @@ pub mod extensions {
                         _image_usage: ImageUsageFlags,
                         _gralloc_usage: *mut c_int,
                     ) -> Result {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(get_swapchain_gralloc_usage_android)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkGetSwapchainGrallocUsageANDROID);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -31597,7 +31735,10 @@ pub mod extensions {
                         _semaphore: Semaphore,
                         _fence: Fence,
                     ) -> Result {
-                        panic!("Unable to load {}", stringify!(acquire_image_android))
+                        panic!(concat!(
+                            "Unable to load ",
+                            stringify!(acquire_image_android)
+                        ))
                     }
                     let raw_name = stringify!(vkAcquireImageANDROID);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -31616,10 +31757,10 @@ pub mod extensions {
                         _image: Image,
                         _p_native_fence_fd: *mut c_int,
                     ) -> Result {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(queue_signal_release_image_android)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkQueueSignalReleaseImageANDROID);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -31721,10 +31862,10 @@ pub mod extensions {
                         _p_allocator: *const AllocationCallbacks,
                         _p_callback: *mut DebugReportCallbackEXT,
                     ) -> Result {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(create_debug_report_callback_ext)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkCreateDebugReportCallbackEXT);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -31741,10 +31882,10 @@ pub mod extensions {
                         _callback: DebugReportCallbackEXT,
                         _p_allocator: *const AllocationCallbacks,
                     ) -> c_void {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(destroy_debug_report_callback_ext)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkDestroyDebugReportCallbackEXT);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -31766,7 +31907,10 @@ pub mod extensions {
                         _p_layer_prefix: *const c_char,
                         _p_message: *const c_char,
                     ) -> c_void {
-                        panic!("Unable to load {}", stringify!(debug_report_message_ext))
+                        panic!(concat!(
+                            "Unable to load ",
+                            stringify!(debug_report_message_ext)
+                        ))
                     }
                     let raw_name = stringify!(vkDebugReportMessageEXT);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -32064,10 +32208,10 @@ pub mod extensions {
                         _device: Device,
                         _p_tag_info: *const DebugMarkerObjectTagInfoEXT,
                     ) -> Result {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(debug_marker_set_object_tag_ext)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkDebugMarkerSetObjectTagEXT);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -32083,10 +32227,10 @@ pub mod extensions {
                         _device: Device,
                         _p_name_info: *const DebugMarkerObjectNameInfoEXT,
                     ) -> Result {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(debug_marker_set_object_name_ext)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkDebugMarkerSetObjectNameEXT);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -32102,7 +32246,10 @@ pub mod extensions {
                         _command_buffer: CommandBuffer,
                         _p_marker_info: *const DebugMarkerMarkerInfoEXT,
                     ) -> c_void {
-                        panic!("Unable to load {}", stringify!(cmd_debug_marker_begin_ext))
+                        panic!(concat!(
+                            "Unable to load ",
+                            stringify!(cmd_debug_marker_begin_ext)
+                        ))
                     }
                     let raw_name = stringify!(vkCmdDebugMarkerBeginEXT);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -32117,7 +32264,10 @@ pub mod extensions {
                     extern "system" fn cmd_debug_marker_end_ext(
                         _command_buffer: CommandBuffer,
                     ) -> c_void {
-                        panic!("Unable to load {}", stringify!(cmd_debug_marker_end_ext))
+                        panic!(concat!(
+                            "Unable to load ",
+                            stringify!(cmd_debug_marker_end_ext)
+                        ))
                     }
                     let raw_name = stringify!(vkCmdDebugMarkerEndEXT);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -32133,7 +32283,10 @@ pub mod extensions {
                         _command_buffer: CommandBuffer,
                         _p_marker_info: *const DebugMarkerMarkerInfoEXT,
                     ) -> c_void {
-                        panic!("Unable to load {}", stringify!(cmd_debug_marker_insert_ext))
+                        panic!(concat!(
+                            "Unable to load ",
+                            stringify!(cmd_debug_marker_insert_ext)
+                        ))
                     }
                     let raw_name = stringify!(vkCmdDebugMarkerInsertEXT);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -32408,7 +32561,10 @@ pub mod extensions {
                         _max_draw_count: u32,
                         _stride: u32,
                     ) -> c_void {
-                        panic!("Unable to load {}", stringify!(cmd_draw_indirect_count_amd))
+                        panic!(concat!(
+                            "Unable to load ",
+                            stringify!(cmd_draw_indirect_count_amd)
+                        ))
                     }
                     let raw_name = stringify!(vkCmdDrawIndirectCountAMD);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -32429,10 +32585,10 @@ pub mod extensions {
                         _max_draw_count: u32,
                         _stride: u32,
                     ) -> c_void {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(cmd_draw_indexed_indirect_count_amd)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkCmdDrawIndexedIndirectCountAMD);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -32652,7 +32808,7 @@ pub mod extensions {
                         _p_info_size: *mut usize,
                         _p_info: *mut c_void,
                     ) -> Result {
-                        panic!("Unable to load {}", stringify!(get_shader_info_amd))
+                        panic!(concat!("Unable to load ", stringify!(get_shader_info_amd)))
                     }
                     let raw_name = stringify!(vkGetShaderInfoAMD);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -32936,10 +33092,10 @@ pub mod extensions {
                         _external_handle_type: ExternalMemoryHandleTypeFlagsNV,
                         _p_external_image_format_properties: *mut ExternalImageFormatPropertiesNV,
                     ) -> Result {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(get_physical_device_external_image_format_properties_nv)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkGetPhysicalDeviceExternalImageFormatPropertiesNV);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -33030,7 +33186,10 @@ pub mod extensions {
                         _handle_type: ExternalMemoryHandleTypeFlagsNV,
                         _p_handle: *mut HANDLE,
                     ) -> Result {
-                        panic!("Unable to load {}", stringify!(get_memory_win32_handle_nv))
+                        panic!(concat!(
+                            "Unable to load ",
+                            stringify!(get_memory_win32_handle_nv)
+                        ))
                     }
                     let raw_name = stringify!(vkGetMemoryWin32HandleNV);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -33120,10 +33279,10 @@ pub mod extensions {
         {
             KhrDeviceGroupFn {
                 get_device_group_present_capabilities_khr: unsafe {extern "system" fn get_device_group_present_capabilities_khr ( _device : Device , _p_device_group_present_capabilities : *mut DeviceGroupPresentCapabilitiesKHR , ) -> Result{
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(get_device_group_present_capabilities_khr)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkGetDeviceGroupPresentCapabilitiesKHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -33140,10 +33299,10 @@ pub mod extensions {
                         _surface: SurfaceKHR,
                         _p_modes: *mut DeviceGroupPresentModeFlagsKHR,
                     ) -> Result {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(get_device_group_surface_present_modes_khr)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkGetDeviceGroupSurfacePresentModesKHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -33161,10 +33320,10 @@ pub mod extensions {
                         _p_rect_count: *mut u32,
                         _p_rects: *mut Rect2D,
                     ) -> Result {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(get_physical_device_present_rectangles_khr)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkGetPhysicalDevicePresentRectanglesKHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -33181,7 +33340,10 @@ pub mod extensions {
                         _p_acquire_info: *const AcquireNextImageInfoKHR,
                         _p_image_index: *mut u32,
                     ) -> Result {
-                        panic!("Unable to load {}", stringify!(acquire_next_image2_khr))
+                        panic!(concat!(
+                            "Unable to load ",
+                            stringify!(acquire_next_image2_khr)
+                        ))
                     }
                     let raw_name = stringify!(vkAcquireNextImage2KHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -33285,7 +33447,7 @@ pub mod extensions {
                         _p_allocator: *const AllocationCallbacks,
                         _p_surface: *mut SurfaceKHR,
                     ) -> Result {
-                        panic!("Unable to load {}", stringify!(create_vi_surface_nn))
+                        panic!(concat!("Unable to load ", stringify!(create_vi_surface_nn)))
                     }
                     let raw_name = stringify!(vkCreateViSurfaceNN);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -33495,7 +33657,10 @@ pub mod extensions {
                         _p_get_win32_handle_info: *const MemoryGetWin32HandleInfoKHR,
                         _p_handle: *mut HANDLE,
                     ) -> Result {
-                        panic!("Unable to load {}", stringify!(get_memory_win32_handle_khr))
+                        panic!(concat!(
+                            "Unable to load ",
+                            stringify!(get_memory_win32_handle_khr)
+                        ))
                     }
                     let raw_name = stringify!(vkGetMemoryWin32HandleKHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -33513,10 +33678,10 @@ pub mod extensions {
                         _handle: HANDLE,
                         _p_memory_win32_handle_properties: *mut MemoryWin32HandlePropertiesKHR,
                     ) -> Result {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(get_memory_win32_handle_properties_khr)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkGetMemoryWin32HandlePropertiesKHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -33604,7 +33769,7 @@ pub mod extensions {
                         _p_get_fd_info: *const MemoryGetFdInfoKHR,
                         _p_fd: *mut c_int,
                     ) -> Result {
-                        panic!("Unable to load {}", stringify!(get_memory_fd_khr))
+                        panic!(concat!("Unable to load ", stringify!(get_memory_fd_khr)))
                     }
                     let raw_name = stringify!(vkGetMemoryFdKHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -33622,10 +33787,10 @@ pub mod extensions {
                         _fd: c_int,
                         _p_memory_fd_properties: *mut MemoryFdPropertiesKHR,
                     ) -> Result {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(get_memory_fd_properties_khr)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkGetMemoryFdPropertiesKHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -33738,10 +33903,10 @@ pub mod extensions {
         {
             KhrExternalSemaphoreWin32Fn {
                 import_semaphore_win32_handle_khr: unsafe {extern "system" fn import_semaphore_win32_handle_khr ( _device : Device , _p_import_semaphore_win32_handle_info : *const ImportSemaphoreWin32HandleInfoKHR , ) -> Result{
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(import_semaphore_win32_handle_khr)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkImportSemaphoreWin32HandleKHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -33758,10 +33923,10 @@ pub mod extensions {
                         _p_get_win32_handle_info: *const SemaphoreGetWin32HandleInfoKHR,
                         _p_handle: *mut HANDLE,
                     ) -> Result {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(get_semaphore_win32_handle_khr)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkGetSemaphoreWin32HandleKHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -33839,7 +34004,10 @@ pub mod extensions {
                         _device: Device,
                         _p_import_semaphore_fd_info: *const ImportSemaphoreFdInfoKHR,
                     ) -> Result {
-                        panic!("Unable to load {}", stringify!(import_semaphore_fd_khr))
+                        panic!(concat!(
+                            "Unable to load ",
+                            stringify!(import_semaphore_fd_khr)
+                        ))
                     }
                     let raw_name = stringify!(vkImportSemaphoreFdKHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -33856,7 +34024,7 @@ pub mod extensions {
                         _p_get_fd_info: *const SemaphoreGetFdInfoKHR,
                         _p_fd: *mut c_int,
                     ) -> Result {
-                        panic!("Unable to load {}", stringify!(get_semaphore_fd_khr))
+                        panic!(concat!("Unable to load ", stringify!(get_semaphore_fd_khr)))
                     }
                     let raw_name = stringify!(vkGetSemaphoreFdKHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -33938,7 +34106,10 @@ pub mod extensions {
                         _descriptor_write_count: u32,
                         _p_descriptor_writes: *const WriteDescriptorSet,
                     ) -> c_void {
-                        panic!("Unable to load {}", stringify!(cmd_push_descriptor_set_khr))
+                        panic!(concat!(
+                            "Unable to load ",
+                            stringify!(cmd_push_descriptor_set_khr)
+                        ))
                     }
                     let raw_name = stringify!(vkCmdPushDescriptorSetKHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -33957,10 +34128,10 @@ pub mod extensions {
                         _set: u32,
                         _p_data: *const c_void,
                     ) -> c_void {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(cmd_push_descriptor_set_with_template_khr)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkCmdPushDescriptorSetWithTemplateKHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -34118,10 +34289,10 @@ pub mod extensions {
                         _set: u32,
                         _p_data: *const c_void,
                     ) -> c_void {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(cmd_push_descriptor_set_with_template_khr)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkCmdPushDescriptorSetWithTemplateKHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -34237,7 +34408,10 @@ pub mod extensions {
                         _command_buffer: CommandBuffer,
                         _p_process_commands_info: *const CmdProcessCommandsInfoNVX,
                     ) -> c_void {
-                        panic!("Unable to load {}", stringify!(cmd_process_commands_nvx))
+                        panic!(concat!(
+                            "Unable to load ",
+                            stringify!(cmd_process_commands_nvx)
+                        ))
                     }
                     let raw_name = stringify!(vkCmdProcessCommandsNVX);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -34253,10 +34427,10 @@ pub mod extensions {
                         _command_buffer: CommandBuffer,
                         _p_reserve_space_info: *const CmdReserveSpaceForCommandsInfoNVX,
                     ) -> c_void {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(cmd_reserve_space_for_commands_nvx)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkCmdReserveSpaceForCommandsNVX);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -34274,10 +34448,10 @@ pub mod extensions {
                         _p_allocator: *const AllocationCallbacks,
                         _p_indirect_commands_layout: *mut IndirectCommandsLayoutNVX,
                     ) -> Result {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(create_indirect_commands_layout_nvx)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkCreateIndirectCommandsLayoutNVX);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -34294,10 +34468,10 @@ pub mod extensions {
                         _indirect_commands_layout: IndirectCommandsLayoutNVX,
                         _p_allocator: *const AllocationCallbacks,
                     ) -> c_void {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(destroy_indirect_commands_layout_nvx)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkDestroyIndirectCommandsLayoutNVX);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -34315,7 +34489,10 @@ pub mod extensions {
                         _p_allocator: *const AllocationCallbacks,
                         _p_object_table: *mut ObjectTableNVX,
                     ) -> Result {
-                        panic!("Unable to load {}", stringify!(create_object_table_nvx))
+                        panic!(concat!(
+                            "Unable to load ",
+                            stringify!(create_object_table_nvx)
+                        ))
                     }
                     let raw_name = stringify!(vkCreateObjectTableNVX);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -34332,7 +34509,10 @@ pub mod extensions {
                         _object_table: ObjectTableNVX,
                         _p_allocator: *const AllocationCallbacks,
                     ) -> c_void {
-                        panic!("Unable to load {}", stringify!(destroy_object_table_nvx))
+                        panic!(concat!(
+                            "Unable to load ",
+                            stringify!(destroy_object_table_nvx)
+                        ))
                     }
                     let raw_name = stringify!(vkDestroyObjectTableNVX);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -34351,7 +34531,7 @@ pub mod extensions {
                         _pp_object_table_entries: *const *const ObjectTableEntryNVX,
                         _p_object_indices: *const u32,
                     ) -> Result {
-                        panic!("Unable to load {}", stringify!(register_objects_nvx))
+                        panic!(concat!("Unable to load ", stringify!(register_objects_nvx)))
                     }
                     let raw_name = stringify!(vkRegisterObjectsNVX);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -34370,7 +34550,10 @@ pub mod extensions {
                         _p_object_entry_types: *const ObjectEntryTypeNVX,
                         _p_object_indices: *const u32,
                     ) -> Result {
-                        panic!("Unable to load {}", stringify!(unregister_objects_nvx))
+                        panic!(concat!(
+                            "Unable to load ",
+                            stringify!(unregister_objects_nvx)
+                        ))
                     }
                     let raw_name = stringify!(vkUnregisterObjectsNVX);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -34387,10 +34570,10 @@ pub mod extensions {
                         _p_features: *mut DeviceGeneratedCommandsFeaturesNVX,
                         _p_limits: *mut DeviceGeneratedCommandsLimitsNVX,
                     ) -> c_void {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(get_physical_device_generated_commands_properties_nvx)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -34580,10 +34763,10 @@ pub mod extensions {
                         _viewport_count: u32,
                         _p_viewport_w_scalings: *const ViewportWScalingNV,
                     ) -> c_void {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(cmd_set_viewport_w_scaling_nv)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkCmdSetViewportWScalingNV);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -34644,7 +34827,7 @@ pub mod extensions {
                         _physical_device: PhysicalDevice,
                         _display: DisplayKHR,
                     ) -> Result {
-                        panic!("Unable to load {}", stringify!(release_display_ext))
+                        panic!(concat!("Unable to load ", stringify!(release_display_ext)))
                     }
                     let raw_name = stringify!(vkReleaseDisplayEXT);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -34700,7 +34883,10 @@ pub mod extensions {
                         _dpy: *mut Display,
                         _display: DisplayKHR,
                     ) -> Result {
-                        panic!("Unable to load {}", stringify!(acquire_xlib_display_ext))
+                        panic!(concat!(
+                            "Unable to load ",
+                            stringify!(acquire_xlib_display_ext)
+                        ))
                     }
                     let raw_name = stringify!(vkAcquireXlibDisplayEXT);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -34718,10 +34904,10 @@ pub mod extensions {
                         _rr_output: RROutput,
                         _p_display: *mut DisplayKHR,
                     ) -> Result {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(get_rand_r_output_display_ext)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkGetRandROutputDisplayEXT);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -34782,10 +34968,10 @@ pub mod extensions {
                         _surface: SurfaceKHR,
                         _p_surface_capabilities: *mut SurfaceCapabilities2EXT,
                     ) -> Result {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(get_physical_device_surface_capabilities2_ext)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkGetPhysicalDeviceSurfaceCapabilities2EXT);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -34868,7 +35054,10 @@ pub mod extensions {
                         _display: DisplayKHR,
                         _p_display_power_info: *const DisplayPowerInfoEXT,
                     ) -> Result {
-                        panic!("Unable to load {}", stringify!(display_power_control_ext))
+                        panic!(concat!(
+                            "Unable to load ",
+                            stringify!(display_power_control_ext)
+                        ))
                     }
                     let raw_name = stringify!(vkDisplayPowerControlEXT);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -34886,7 +35075,10 @@ pub mod extensions {
                         _p_allocator: *const AllocationCallbacks,
                         _p_fence: *mut Fence,
                     ) -> Result {
-                        panic!("Unable to load {}", stringify!(register_device_event_ext))
+                        panic!(concat!(
+                            "Unable to load ",
+                            stringify!(register_device_event_ext)
+                        ))
                     }
                     let raw_name = stringify!(vkRegisterDeviceEventEXT);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -34905,7 +35097,10 @@ pub mod extensions {
                         _p_allocator: *const AllocationCallbacks,
                         _p_fence: *mut Fence,
                     ) -> Result {
-                        panic!("Unable to load {}", stringify!(register_display_event_ext))
+                        panic!(concat!(
+                            "Unable to load ",
+                            stringify!(register_display_event_ext)
+                        ))
                     }
                     let raw_name = stringify!(vkRegisterDisplayEventEXT);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -34923,7 +35118,10 @@ pub mod extensions {
                         _counter: SurfaceCounterFlagsEXT,
                         _p_counter_value: *mut u64,
                     ) -> Result {
-                        panic!("Unable to load {}", stringify!(get_swapchain_counter_ext))
+                        panic!(concat!(
+                            "Unable to load ",
+                            stringify!(get_swapchain_counter_ext)
+                        ))
                     }
                     let raw_name = stringify!(vkGetSwapchainCounterEXT);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -35032,10 +35230,10 @@ pub mod extensions {
                         _swapchain: SwapchainKHR,
                         _p_display_timing_properties: *mut RefreshCycleDurationGOOGLE,
                     ) -> Result {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(get_refresh_cycle_duration_google)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkGetRefreshCycleDurationGOOGLE);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -35053,10 +35251,10 @@ pub mod extensions {
                         _p_presentation_timing_count: *mut u32,
                         _p_presentation_timings: *mut PastPresentationTimingGOOGLE,
                     ) -> Result {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(get_past_presentation_timing_google)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkGetPastPresentationTimingGOOGLE);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -35223,10 +35421,10 @@ pub mod extensions {
                         _discard_rectangle_count: u32,
                         _p_discard_rectangles: *const Rect2D,
                     ) -> c_void {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(cmd_set_discard_rectangle_ext)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkCmdSetDiscardRectangleEXT);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -35444,7 +35642,7 @@ pub mod extensions {
                         _p_swapchains: *const SwapchainKHR,
                         _p_metadata: *const HdrMetadataEXT,
                     ) -> c_void {
-                        panic!("Unable to load {}", stringify!(set_hdr_metadata_ext))
+                        panic!(concat!("Unable to load ", stringify!(set_hdr_metadata_ext)))
                     }
                     let raw_name = stringify!(vkSetHdrMetadataEXT);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -35575,7 +35773,10 @@ pub mod extensions {
                         _device: Device,
                         _swapchain: SwapchainKHR,
                     ) -> Result {
-                        panic!("Unable to load {}", stringify!(get_swapchain_status_khr))
+                        panic!(concat!(
+                            "Unable to load ",
+                            stringify!(get_swapchain_status_khr)
+                        ))
                     }
                     let raw_name = stringify!(vkGetSwapchainStatusKHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -35666,10 +35867,10 @@ pub mod extensions {
                         _device: Device,
                         _p_import_fence_win32_handle_info: *const ImportFenceWin32HandleInfoKHR,
                     ) -> Result {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(import_fence_win32_handle_khr)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkImportFenceWin32HandleKHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -35686,7 +35887,10 @@ pub mod extensions {
                         _p_get_win32_handle_info: *const FenceGetWin32HandleInfoKHR,
                         _p_handle: *mut HANDLE,
                     ) -> Result {
-                        panic!("Unable to load {}", stringify!(get_fence_win32_handle_khr))
+                        panic!(concat!(
+                            "Unable to load ",
+                            stringify!(get_fence_win32_handle_khr)
+                        ))
                     }
                     let raw_name = stringify!(vkGetFenceWin32HandleKHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -35758,7 +35962,7 @@ pub mod extensions {
                         _device: Device,
                         _p_import_fence_fd_info: *const ImportFenceFdInfoKHR,
                     ) -> Result {
-                        panic!("Unable to load {}", stringify!(import_fence_fd_khr))
+                        panic!(concat!("Unable to load ", stringify!(import_fence_fd_khr)))
                     }
                     let raw_name = stringify!(vkImportFenceFdKHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -35775,7 +35979,7 @@ pub mod extensions {
                         _p_get_fd_info: *const FenceGetFdInfoKHR,
                         _p_fd: *mut c_int,
                     ) -> Result {
-                        panic!("Unable to load {}", stringify!(get_fence_fd_khr))
+                        panic!(concat!("Unable to load ", stringify!(get_fence_fd_khr)))
                     }
                     let raw_name = stringify!(vkGetFenceFdKHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -35899,10 +36103,10 @@ pub mod extensions {
                         _p_surface_info: *const PhysicalDeviceSurfaceInfo2KHR,
                         _p_surface_capabilities: *mut SurfaceCapabilities2KHR,
                     ) -> Result {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(get_physical_device_surface_capabilities2_khr)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkGetPhysicalDeviceSurfaceCapabilities2KHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -35920,10 +36124,10 @@ pub mod extensions {
                         _p_surface_format_count: *mut u32,
                         _p_surface_formats: *mut SurfaceFormat2KHR,
                     ) -> Result {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(get_physical_device_surface_formats2_khr)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkGetPhysicalDeviceSurfaceFormats2KHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -36044,10 +36248,10 @@ pub mod extensions {
                         _p_property_count: *mut u32,
                         _p_properties: *mut DisplayProperties2KHR,
                     ) -> Result {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(get_physical_device_display_properties2_khr)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkGetPhysicalDeviceDisplayProperties2KHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -36064,10 +36268,10 @@ pub mod extensions {
                         _p_property_count: *mut u32,
                         _p_properties: *mut DisplayPlaneProperties2KHR,
                     ) -> Result {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(get_physical_device_display_plane_properties2_khr)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkGetPhysicalDeviceDisplayPlaneProperties2KHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -36085,10 +36289,10 @@ pub mod extensions {
                         _p_property_count: *mut u32,
                         _p_properties: *mut DisplayModeProperties2KHR,
                     ) -> Result {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(get_display_mode_properties2_khr)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkGetDisplayModeProperties2KHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -36105,10 +36309,10 @@ pub mod extensions {
                         _p_display_plane_info: *const DisplayPlaneInfo2KHR,
                         _p_capabilities: *mut DisplayPlaneCapabilities2KHR,
                     ) -> Result {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(get_display_plane_capabilities2_khr)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkGetDisplayPlaneCapabilities2KHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -36222,7 +36426,10 @@ pub mod extensions {
                         _p_allocator: *const AllocationCallbacks,
                         _p_surface: *mut SurfaceKHR,
                     ) -> Result {
-                        panic!("Unable to load {}", stringify!(create_ios_surface_mvk))
+                        panic!(concat!(
+                            "Unable to load ",
+                            stringify!(create_ios_surface_mvk)
+                        ))
                     }
                     let raw_name = stringify!(vkCreateIOSSurfaceMVK);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -36280,7 +36487,10 @@ pub mod extensions {
                         _p_allocator: *const AllocationCallbacks,
                         _p_surface: *mut SurfaceKHR,
                     ) -> Result {
-                        panic!("Unable to load {}", stringify!(create_mac_os_surface_mvk))
+                        panic!(concat!(
+                            "Unable to load ",
+                            stringify!(create_mac_os_surface_mvk)
+                        ))
                     }
                     let raw_name = stringify!(vkCreateMacOSSurfaceMVK);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -36450,10 +36660,10 @@ pub mod extensions {
                         _device: Device,
                         _p_name_info: *const DebugUtilsObjectNameInfoEXT,
                     ) -> Result {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(set_debug_utils_object_name_ext)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkSetDebugUtilsObjectNameEXT);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -36469,10 +36679,10 @@ pub mod extensions {
                         _device: Device,
                         _p_tag_info: *const DebugUtilsObjectTagInfoEXT,
                     ) -> Result {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(set_debug_utils_object_tag_ext)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkSetDebugUtilsObjectTagEXT);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -36488,10 +36698,10 @@ pub mod extensions {
                         _queue: Queue,
                         _p_label_info: *const DebugUtilsLabelEXT,
                     ) -> c_void {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(queue_begin_debug_utils_label_ext)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkQueueBeginDebugUtilsLabelEXT);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -36504,10 +36714,10 @@ pub mod extensions {
                 },
                 queue_end_debug_utils_label_ext: unsafe {
                     extern "system" fn queue_end_debug_utils_label_ext(_queue: Queue) -> c_void {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(queue_end_debug_utils_label_ext)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkQueueEndDebugUtilsLabelEXT);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -36523,10 +36733,10 @@ pub mod extensions {
                         _queue: Queue,
                         _p_label_info: *const DebugUtilsLabelEXT,
                     ) -> c_void {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(queue_insert_debug_utils_label_ext)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkQueueInsertDebugUtilsLabelEXT);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -36542,10 +36752,10 @@ pub mod extensions {
                         _command_buffer: CommandBuffer,
                         _p_label_info: *const DebugUtilsLabelEXT,
                     ) -> c_void {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(cmd_begin_debug_utils_label_ext)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkCmdBeginDebugUtilsLabelEXT);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -36560,10 +36770,10 @@ pub mod extensions {
                     extern "system" fn cmd_end_debug_utils_label_ext(
                         _command_buffer: CommandBuffer,
                     ) -> c_void {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(cmd_end_debug_utils_label_ext)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkCmdEndDebugUtilsLabelEXT);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -36579,10 +36789,10 @@ pub mod extensions {
                         _command_buffer: CommandBuffer,
                         _p_label_info: *const DebugUtilsLabelEXT,
                     ) -> c_void {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(cmd_insert_debug_utils_label_ext)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkCmdInsertDebugUtilsLabelEXT);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -36600,10 +36810,10 @@ pub mod extensions {
                         _p_allocator: *const AllocationCallbacks,
                         _p_messenger: *mut DebugUtilsMessengerEXT,
                     ) -> Result {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(create_debug_utils_messenger_ext)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkCreateDebugUtilsMessengerEXT);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -36620,10 +36830,10 @@ pub mod extensions {
                         _messenger: DebugUtilsMessengerEXT,
                         _p_allocator: *const AllocationCallbacks,
                     ) -> c_void {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(destroy_debug_utils_messenger_ext)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkDestroyDebugUtilsMessengerEXT);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -36641,10 +36851,10 @@ pub mod extensions {
                         _message_types: DebugUtilsMessageTypeFlagsEXT,
                         _p_callback_data: *const DebugUtilsMessengerCallbackDataEXT,
                     ) -> c_void {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(submit_debug_utils_message_ext)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkSubmitDebugUtilsMessageEXT);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -36807,10 +37017,10 @@ pub mod extensions {
                         _buffer: *const AHardwareBuffer,
                         _p_properties: *mut AndroidHardwareBufferPropertiesANDROID,
                     ) -> Result {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(get_android_hardware_buffer_properties_android)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkGetAndroidHardwareBufferPropertiesANDROID);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -36827,10 +37037,10 @@ pub mod extensions {
                         _p_info: *const MemoryGetAndroidHardwareBufferInfoANDROID,
                         _p_buffer: *mut *mut AHardwareBuffer,
                     ) -> Result {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(get_memory_android_hardware_buffer_android)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkGetMemoryAndroidHardwareBufferANDROID);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -37146,10 +37356,10 @@ pub mod extensions {
                         _command_buffer: CommandBuffer,
                         _p_sample_locations_info: *const SampleLocationsInfoEXT,
                     ) -> c_void {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(cmd_set_sample_locations_ext)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkCmdSetSampleLocationsEXT);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -37166,10 +37376,10 @@ pub mod extensions {
                         _samples: SampleCountFlags,
                         _p_multisample_properties: *mut MultisamplePropertiesEXT,
                     ) -> c_void {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(get_physical_device_multisample_properties_ext)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkGetPhysicalDeviceMultisamplePropertiesEXT);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -37741,7 +37951,10 @@ pub mod extensions {
                         _p_allocator: *const AllocationCallbacks,
                         _p_validation_cache: *mut ValidationCacheEXT,
                     ) -> Result {
-                        panic!("Unable to load {}", stringify!(create_validation_cache_ext))
+                        panic!(concat!(
+                            "Unable to load ",
+                            stringify!(create_validation_cache_ext)
+                        ))
                     }
                     let raw_name = stringify!(vkCreateValidationCacheEXT);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -37758,10 +37971,10 @@ pub mod extensions {
                         _validation_cache: ValidationCacheEXT,
                         _p_allocator: *const AllocationCallbacks,
                     ) -> c_void {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(destroy_validation_cache_ext)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkDestroyValidationCacheEXT);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -37779,7 +37992,10 @@ pub mod extensions {
                         _src_cache_count: u32,
                         _p_src_caches: *const ValidationCacheEXT,
                     ) -> Result {
-                        panic!("Unable to load {}", stringify!(merge_validation_caches_ext))
+                        panic!(concat!(
+                            "Unable to load ",
+                            stringify!(merge_validation_caches_ext)
+                        ))
                     }
                     let raw_name = stringify!(vkMergeValidationCachesEXT);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -37797,10 +38013,10 @@ pub mod extensions {
                         _p_data_size: *mut usize,
                         _p_data: *mut c_void,
                     ) -> Result {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(get_validation_cache_data_ext)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkGetValidationCacheDataEXT);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -38077,7 +38293,10 @@ pub mod extensions {
                         _max_draw_count: u32,
                         _stride: u32,
                     ) -> c_void {
-                        panic!("Unable to load {}", stringify!(cmd_draw_indirect_count_khr))
+                        panic!(concat!(
+                            "Unable to load ",
+                            stringify!(cmd_draw_indirect_count_khr)
+                        ))
                     }
                     let raw_name = stringify!(vkCmdDrawIndirectCountKHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -38098,10 +38317,10 @@ pub mod extensions {
                         _max_draw_count: u32,
                         _stride: u32,
                     ) -> c_void {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(cmd_draw_indexed_indirect_count_khr)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkCmdDrawIndexedIndirectCountKHR);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -38314,10 +38533,10 @@ pub mod extensions {
                         _p_host_pointer: *const c_void,
                         _p_memory_host_pointer_properties: *mut MemoryHostPointerPropertiesEXT,
                     ) -> Result {
-                        panic!(
-                            "Unable to load {}",
+                        panic!(concat!(
+                            "Unable to load ",
                             stringify!(get_memory_host_pointer_properties_ext)
-                        )
+                        ))
                     }
                     let raw_name = stringify!(vkGetMemoryHostPointerPropertiesEXT);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -38400,7 +38619,10 @@ pub mod extensions {
                         _dst_offset: DeviceSize,
                         _marker: u32,
                     ) -> c_void {
-                        panic!("Unable to load {}", stringify!(cmd_write_buffer_marker_amd))
+                        panic!(concat!(
+                            "Unable to load ",
+                            stringify!(cmd_write_buffer_marker_amd)
+                        ))
                     }
                     let raw_name = stringify!(vkCmdWriteBufferMarkerAMD);
                     let cname = ::std::ffi::CString::new(raw_name).unwrap();
@@ -39529,13 +39751,20 @@ fn display_flags(
     }
     Ok(())
 }
-impl fmt::Display for PolygonMode {
+impl fmt::Display for FormatFeatureFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN : & [ ( Flags , & str ) ] = & [ ( FormatFeatureFlags :: SAMPLED_IMAGE . 0 , "SAMPLED_IMAGE" ) , ( FormatFeatureFlags :: STORAGE_IMAGE . 0 , "STORAGE_IMAGE" ) , ( FormatFeatureFlags :: STORAGE_IMAGE_ATOMIC . 0 , "STORAGE_IMAGE_ATOMIC" ) , ( FormatFeatureFlags :: UNIFORM_TEXEL_BUFFER . 0 , "UNIFORM_TEXEL_BUFFER" ) , ( FormatFeatureFlags :: STORAGE_TEXEL_BUFFER . 0 , "STORAGE_TEXEL_BUFFER" ) , ( FormatFeatureFlags :: STORAGE_TEXEL_BUFFER_ATOMIC . 0 , "STORAGE_TEXEL_BUFFER_ATOMIC" ) , ( FormatFeatureFlags :: VERTEX_BUFFER . 0 , "VERTEX_BUFFER" ) , ( FormatFeatureFlags :: COLOR_ATTACHMENT . 0 , "COLOR_ATTACHMENT" ) , ( FormatFeatureFlags :: COLOR_ATTACHMENT_BLEND . 0 , "COLOR_ATTACHMENT_BLEND" ) , ( FormatFeatureFlags :: DEPTH_STENCIL_ATTACHMENT . 0 , "DEPTH_STENCIL_ATTACHMENT" ) , ( FormatFeatureFlags :: BLIT_SRC . 0 , "BLIT_SRC" ) , ( FormatFeatureFlags :: BLIT_DST . 0 , "BLIT_DST" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_FILTER_LINEAR . 0 , "SAMPLED_IMAGE_FILTER_LINEAR" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_FILTER_CUBIC_IMG . 0 , "SAMPLED_IMAGE_FILTER_CUBIC_IMG" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_FILTER_MINMAX_EXT . 0 , "SAMPLED_IMAGE_FILTER_MINMAX_EXT" ) , ( FormatFeatureFlags :: TRANSFER_SRC . 0 , "TRANSFER_SRC" ) , ( FormatFeatureFlags :: TRANSFER_DST . 0 , "TRANSFER_DST" ) , ( FormatFeatureFlags :: MIDPOINT_CHROMA_SAMPLES . 0 , "MIDPOINT_CHROMA_SAMPLES" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE" ) , ( FormatFeatureFlags :: DISJOINT . 0 , "DISJOINT" ) , ( FormatFeatureFlags :: COSITED_CHROMA_SAMPLES . 0 , "COSITED_CHROMA_SAMPLES" ) ] ;
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for ObjectEntryTypeNVX {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::FILL => Some("FILL"),
-            Self::LINE => Some("LINE"),
-            Self::POINT => Some("POINT"),
-            Self::FILL_RECTANGLE_NV => Some("FILL_RECTANGLE_NV"),
+            Self::DESCRIPTOR_SET => Some("DESCRIPTOR_SET"),
+            Self::PIPELINE => Some("PIPELINE"),
+            Self::INDEX_BUFFER => Some("INDEX_BUFFER"),
+            Self::VERTEX_BUFFER => Some("VERTEX_BUFFER"),
+            Self::PUSH_CONSTANT => Some("PUSH_CONSTANT"),
             _ => None,
         };
         if let Some(x) = name {
@@ -39545,13 +39774,264 @@ impl fmt::Display for PolygonMode {
         }
     }
 }
-impl fmt::Display for CoverageModulationModeNV {
+impl fmt::Display for Format {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::NONE => Some("NONE"),
-            Self::RGB => Some("RGB"),
-            Self::ALPHA => Some("ALPHA"),
-            Self::RGBA => Some("RGBA"),
+            Self::UNDEFINED => Some("UNDEFINED"),
+            Self::R4G4_UNORM_PACK8 => Some("R4G4_UNORM_PACK8"),
+            Self::R4G4B4A4_UNORM_PACK16 => Some("R4G4B4A4_UNORM_PACK16"),
+            Self::B4G4R4A4_UNORM_PACK16 => Some("B4G4R4A4_UNORM_PACK16"),
+            Self::R5G6B5_UNORM_PACK16 => Some("R5G6B5_UNORM_PACK16"),
+            Self::B5G6R5_UNORM_PACK16 => Some("B5G6R5_UNORM_PACK16"),
+            Self::R5G5B5A1_UNORM_PACK16 => Some("R5G5B5A1_UNORM_PACK16"),
+            Self::B5G5R5A1_UNORM_PACK16 => Some("B5G5R5A1_UNORM_PACK16"),
+            Self::A1R5G5B5_UNORM_PACK16 => Some("A1R5G5B5_UNORM_PACK16"),
+            Self::R8_UNORM => Some("R8_UNORM"),
+            Self::R8_SNORM => Some("R8_SNORM"),
+            Self::R8_USCALED => Some("R8_USCALED"),
+            Self::R8_SSCALED => Some("R8_SSCALED"),
+            Self::R8_UINT => Some("R8_UINT"),
+            Self::R8_SINT => Some("R8_SINT"),
+            Self::R8_SRGB => Some("R8_SRGB"),
+            Self::R8G8_UNORM => Some("R8G8_UNORM"),
+            Self::R8G8_SNORM => Some("R8G8_SNORM"),
+            Self::R8G8_USCALED => Some("R8G8_USCALED"),
+            Self::R8G8_SSCALED => Some("R8G8_SSCALED"),
+            Self::R8G8_UINT => Some("R8G8_UINT"),
+            Self::R8G8_SINT => Some("R8G8_SINT"),
+            Self::R8G8_SRGB => Some("R8G8_SRGB"),
+            Self::R8G8B8_UNORM => Some("R8G8B8_UNORM"),
+            Self::R8G8B8_SNORM => Some("R8G8B8_SNORM"),
+            Self::R8G8B8_USCALED => Some("R8G8B8_USCALED"),
+            Self::R8G8B8_SSCALED => Some("R8G8B8_SSCALED"),
+            Self::R8G8B8_UINT => Some("R8G8B8_UINT"),
+            Self::R8G8B8_SINT => Some("R8G8B8_SINT"),
+            Self::R8G8B8_SRGB => Some("R8G8B8_SRGB"),
+            Self::B8G8R8_UNORM => Some("B8G8R8_UNORM"),
+            Self::B8G8R8_SNORM => Some("B8G8R8_SNORM"),
+            Self::B8G8R8_USCALED => Some("B8G8R8_USCALED"),
+            Self::B8G8R8_SSCALED => Some("B8G8R8_SSCALED"),
+            Self::B8G8R8_UINT => Some("B8G8R8_UINT"),
+            Self::B8G8R8_SINT => Some("B8G8R8_SINT"),
+            Self::B8G8R8_SRGB => Some("B8G8R8_SRGB"),
+            Self::R8G8B8A8_UNORM => Some("R8G8B8A8_UNORM"),
+            Self::R8G8B8A8_SNORM => Some("R8G8B8A8_SNORM"),
+            Self::R8G8B8A8_USCALED => Some("R8G8B8A8_USCALED"),
+            Self::R8G8B8A8_SSCALED => Some("R8G8B8A8_SSCALED"),
+            Self::R8G8B8A8_UINT => Some("R8G8B8A8_UINT"),
+            Self::R8G8B8A8_SINT => Some("R8G8B8A8_SINT"),
+            Self::R8G8B8A8_SRGB => Some("R8G8B8A8_SRGB"),
+            Self::B8G8R8A8_UNORM => Some("B8G8R8A8_UNORM"),
+            Self::B8G8R8A8_SNORM => Some("B8G8R8A8_SNORM"),
+            Self::B8G8R8A8_USCALED => Some("B8G8R8A8_USCALED"),
+            Self::B8G8R8A8_SSCALED => Some("B8G8R8A8_SSCALED"),
+            Self::B8G8R8A8_UINT => Some("B8G8R8A8_UINT"),
+            Self::B8G8R8A8_SINT => Some("B8G8R8A8_SINT"),
+            Self::B8G8R8A8_SRGB => Some("B8G8R8A8_SRGB"),
+            Self::A8B8G8R8_UNORM_PACK32 => Some("A8B8G8R8_UNORM_PACK32"),
+            Self::A8B8G8R8_SNORM_PACK32 => Some("A8B8G8R8_SNORM_PACK32"),
+            Self::A8B8G8R8_USCALED_PACK32 => Some("A8B8G8R8_USCALED_PACK32"),
+            Self::A8B8G8R8_SSCALED_PACK32 => Some("A8B8G8R8_SSCALED_PACK32"),
+            Self::A8B8G8R8_UINT_PACK32 => Some("A8B8G8R8_UINT_PACK32"),
+            Self::A8B8G8R8_SINT_PACK32 => Some("A8B8G8R8_SINT_PACK32"),
+            Self::A8B8G8R8_SRGB_PACK32 => Some("A8B8G8R8_SRGB_PACK32"),
+            Self::A2R10G10B10_UNORM_PACK32 => Some("A2R10G10B10_UNORM_PACK32"),
+            Self::A2R10G10B10_SNORM_PACK32 => Some("A2R10G10B10_SNORM_PACK32"),
+            Self::A2R10G10B10_USCALED_PACK32 => Some("A2R10G10B10_USCALED_PACK32"),
+            Self::A2R10G10B10_SSCALED_PACK32 => Some("A2R10G10B10_SSCALED_PACK32"),
+            Self::A2R10G10B10_UINT_PACK32 => Some("A2R10G10B10_UINT_PACK32"),
+            Self::A2R10G10B10_SINT_PACK32 => Some("A2R10G10B10_SINT_PACK32"),
+            Self::A2B10G10R10_UNORM_PACK32 => Some("A2B10G10R10_UNORM_PACK32"),
+            Self::A2B10G10R10_SNORM_PACK32 => Some("A2B10G10R10_SNORM_PACK32"),
+            Self::A2B10G10R10_USCALED_PACK32 => Some("A2B10G10R10_USCALED_PACK32"),
+            Self::A2B10G10R10_SSCALED_PACK32 => Some("A2B10G10R10_SSCALED_PACK32"),
+            Self::A2B10G10R10_UINT_PACK32 => Some("A2B10G10R10_UINT_PACK32"),
+            Self::A2B10G10R10_SINT_PACK32 => Some("A2B10G10R10_SINT_PACK32"),
+            Self::R16_UNORM => Some("R16_UNORM"),
+            Self::R16_SNORM => Some("R16_SNORM"),
+            Self::R16_USCALED => Some("R16_USCALED"),
+            Self::R16_SSCALED => Some("R16_SSCALED"),
+            Self::R16_UINT => Some("R16_UINT"),
+            Self::R16_SINT => Some("R16_SINT"),
+            Self::R16_SFLOAT => Some("R16_SFLOAT"),
+            Self::R16G16_UNORM => Some("R16G16_UNORM"),
+            Self::R16G16_SNORM => Some("R16G16_SNORM"),
+            Self::R16G16_USCALED => Some("R16G16_USCALED"),
+            Self::R16G16_SSCALED => Some("R16G16_SSCALED"),
+            Self::R16G16_UINT => Some("R16G16_UINT"),
+            Self::R16G16_SINT => Some("R16G16_SINT"),
+            Self::R16G16_SFLOAT => Some("R16G16_SFLOAT"),
+            Self::R16G16B16_UNORM => Some("R16G16B16_UNORM"),
+            Self::R16G16B16_SNORM => Some("R16G16B16_SNORM"),
+            Self::R16G16B16_USCALED => Some("R16G16B16_USCALED"),
+            Self::R16G16B16_SSCALED => Some("R16G16B16_SSCALED"),
+            Self::R16G16B16_UINT => Some("R16G16B16_UINT"),
+            Self::R16G16B16_SINT => Some("R16G16B16_SINT"),
+            Self::R16G16B16_SFLOAT => Some("R16G16B16_SFLOAT"),
+            Self::R16G16B16A16_UNORM => Some("R16G16B16A16_UNORM"),
+            Self::R16G16B16A16_SNORM => Some("R16G16B16A16_SNORM"),
+            Self::R16G16B16A16_USCALED => Some("R16G16B16A16_USCALED"),
+            Self::R16G16B16A16_SSCALED => Some("R16G16B16A16_SSCALED"),
+            Self::R16G16B16A16_UINT => Some("R16G16B16A16_UINT"),
+            Self::R16G16B16A16_SINT => Some("R16G16B16A16_SINT"),
+            Self::R16G16B16A16_SFLOAT => Some("R16G16B16A16_SFLOAT"),
+            Self::R32_UINT => Some("R32_UINT"),
+            Self::R32_SINT => Some("R32_SINT"),
+            Self::R32_SFLOAT => Some("R32_SFLOAT"),
+            Self::R32G32_UINT => Some("R32G32_UINT"),
+            Self::R32G32_SINT => Some("R32G32_SINT"),
+            Self::R32G32_SFLOAT => Some("R32G32_SFLOAT"),
+            Self::R32G32B32_UINT => Some("R32G32B32_UINT"),
+            Self::R32G32B32_SINT => Some("R32G32B32_SINT"),
+            Self::R32G32B32_SFLOAT => Some("R32G32B32_SFLOAT"),
+            Self::R32G32B32A32_UINT => Some("R32G32B32A32_UINT"),
+            Self::R32G32B32A32_SINT => Some("R32G32B32A32_SINT"),
+            Self::R32G32B32A32_SFLOAT => Some("R32G32B32A32_SFLOAT"),
+            Self::R64_UINT => Some("R64_UINT"),
+            Self::R64_SINT => Some("R64_SINT"),
+            Self::R64_SFLOAT => Some("R64_SFLOAT"),
+            Self::R64G64_UINT => Some("R64G64_UINT"),
+            Self::R64G64_SINT => Some("R64G64_SINT"),
+            Self::R64G64_SFLOAT => Some("R64G64_SFLOAT"),
+            Self::R64G64B64_UINT => Some("R64G64B64_UINT"),
+            Self::R64G64B64_SINT => Some("R64G64B64_SINT"),
+            Self::R64G64B64_SFLOAT => Some("R64G64B64_SFLOAT"),
+            Self::R64G64B64A64_UINT => Some("R64G64B64A64_UINT"),
+            Self::R64G64B64A64_SINT => Some("R64G64B64A64_SINT"),
+            Self::R64G64B64A64_SFLOAT => Some("R64G64B64A64_SFLOAT"),
+            Self::B10G11R11_UFLOAT_PACK32 => Some("B10G11R11_UFLOAT_PACK32"),
+            Self::E5B9G9R9_UFLOAT_PACK32 => Some("E5B9G9R9_UFLOAT_PACK32"),
+            Self::D16_UNORM => Some("D16_UNORM"),
+            Self::X8_D24_UNORM_PACK32 => Some("X8_D24_UNORM_PACK32"),
+            Self::D32_SFLOAT => Some("D32_SFLOAT"),
+            Self::S8_UINT => Some("S8_UINT"),
+            Self::D16_UNORM_S8_UINT => Some("D16_UNORM_S8_UINT"),
+            Self::D24_UNORM_S8_UINT => Some("D24_UNORM_S8_UINT"),
+            Self::D32_SFLOAT_S8_UINT => Some("D32_SFLOAT_S8_UINT"),
+            Self::BC1_RGB_UNORM_BLOCK => Some("BC1_RGB_UNORM_BLOCK"),
+            Self::BC1_RGB_SRGB_BLOCK => Some("BC1_RGB_SRGB_BLOCK"),
+            Self::BC1_RGBA_UNORM_BLOCK => Some("BC1_RGBA_UNORM_BLOCK"),
+            Self::BC1_RGBA_SRGB_BLOCK => Some("BC1_RGBA_SRGB_BLOCK"),
+            Self::BC2_UNORM_BLOCK => Some("BC2_UNORM_BLOCK"),
+            Self::BC2_SRGB_BLOCK => Some("BC2_SRGB_BLOCK"),
+            Self::BC3_UNORM_BLOCK => Some("BC3_UNORM_BLOCK"),
+            Self::BC3_SRGB_BLOCK => Some("BC3_SRGB_BLOCK"),
+            Self::BC4_UNORM_BLOCK => Some("BC4_UNORM_BLOCK"),
+            Self::BC4_SNORM_BLOCK => Some("BC4_SNORM_BLOCK"),
+            Self::BC5_UNORM_BLOCK => Some("BC5_UNORM_BLOCK"),
+            Self::BC5_SNORM_BLOCK => Some("BC5_SNORM_BLOCK"),
+            Self::BC6H_UFLOAT_BLOCK => Some("BC6H_UFLOAT_BLOCK"),
+            Self::BC6H_SFLOAT_BLOCK => Some("BC6H_SFLOAT_BLOCK"),
+            Self::BC7_UNORM_BLOCK => Some("BC7_UNORM_BLOCK"),
+            Self::BC7_SRGB_BLOCK => Some("BC7_SRGB_BLOCK"),
+            Self::ETC2_R8G8B8_UNORM_BLOCK => Some("ETC2_R8G8B8_UNORM_BLOCK"),
+            Self::ETC2_R8G8B8_SRGB_BLOCK => Some("ETC2_R8G8B8_SRGB_BLOCK"),
+            Self::ETC2_R8G8B8A1_UNORM_BLOCK => Some("ETC2_R8G8B8A1_UNORM_BLOCK"),
+            Self::ETC2_R8G8B8A1_SRGB_BLOCK => Some("ETC2_R8G8B8A1_SRGB_BLOCK"),
+            Self::ETC2_R8G8B8A8_UNORM_BLOCK => Some("ETC2_R8G8B8A8_UNORM_BLOCK"),
+            Self::ETC2_R8G8B8A8_SRGB_BLOCK => Some("ETC2_R8G8B8A8_SRGB_BLOCK"),
+            Self::EAC_R11_UNORM_BLOCK => Some("EAC_R11_UNORM_BLOCK"),
+            Self::EAC_R11_SNORM_BLOCK => Some("EAC_R11_SNORM_BLOCK"),
+            Self::EAC_R11G11_UNORM_BLOCK => Some("EAC_R11G11_UNORM_BLOCK"),
+            Self::EAC_R11G11_SNORM_BLOCK => Some("EAC_R11G11_SNORM_BLOCK"),
+            Self::ASTC_4X4_UNORM_BLOCK => Some("ASTC_4X4_UNORM_BLOCK"),
+            Self::ASTC_4X4_SRGB_BLOCK => Some("ASTC_4X4_SRGB_BLOCK"),
+            Self::ASTC_5X4_UNORM_BLOCK => Some("ASTC_5X4_UNORM_BLOCK"),
+            Self::ASTC_5X4_SRGB_BLOCK => Some("ASTC_5X4_SRGB_BLOCK"),
+            Self::ASTC_5X5_UNORM_BLOCK => Some("ASTC_5X5_UNORM_BLOCK"),
+            Self::ASTC_5X5_SRGB_BLOCK => Some("ASTC_5X5_SRGB_BLOCK"),
+            Self::ASTC_6X5_UNORM_BLOCK => Some("ASTC_6X5_UNORM_BLOCK"),
+            Self::ASTC_6X5_SRGB_BLOCK => Some("ASTC_6X5_SRGB_BLOCK"),
+            Self::ASTC_6X6_UNORM_BLOCK => Some("ASTC_6X6_UNORM_BLOCK"),
+            Self::ASTC_6X6_SRGB_BLOCK => Some("ASTC_6X6_SRGB_BLOCK"),
+            Self::ASTC_8X5_UNORM_BLOCK => Some("ASTC_8X5_UNORM_BLOCK"),
+            Self::ASTC_8X5_SRGB_BLOCK => Some("ASTC_8X5_SRGB_BLOCK"),
+            Self::ASTC_8X6_UNORM_BLOCK => Some("ASTC_8X6_UNORM_BLOCK"),
+            Self::ASTC_8X6_SRGB_BLOCK => Some("ASTC_8X6_SRGB_BLOCK"),
+            Self::ASTC_8X8_UNORM_BLOCK => Some("ASTC_8X8_UNORM_BLOCK"),
+            Self::ASTC_8X8_SRGB_BLOCK => Some("ASTC_8X8_SRGB_BLOCK"),
+            Self::ASTC_10X5_UNORM_BLOCK => Some("ASTC_10X5_UNORM_BLOCK"),
+            Self::ASTC_10X5_SRGB_BLOCK => Some("ASTC_10X5_SRGB_BLOCK"),
+            Self::ASTC_10X6_UNORM_BLOCK => Some("ASTC_10X6_UNORM_BLOCK"),
+            Self::ASTC_10X6_SRGB_BLOCK => Some("ASTC_10X6_SRGB_BLOCK"),
+            Self::ASTC_10X8_UNORM_BLOCK => Some("ASTC_10X8_UNORM_BLOCK"),
+            Self::ASTC_10X8_SRGB_BLOCK => Some("ASTC_10X8_SRGB_BLOCK"),
+            Self::ASTC_10X10_UNORM_BLOCK => Some("ASTC_10X10_UNORM_BLOCK"),
+            Self::ASTC_10X10_SRGB_BLOCK => Some("ASTC_10X10_SRGB_BLOCK"),
+            Self::ASTC_12X10_UNORM_BLOCK => Some("ASTC_12X10_UNORM_BLOCK"),
+            Self::ASTC_12X10_SRGB_BLOCK => Some("ASTC_12X10_SRGB_BLOCK"),
+            Self::ASTC_12X12_UNORM_BLOCK => Some("ASTC_12X12_UNORM_BLOCK"),
+            Self::ASTC_12X12_SRGB_BLOCK => Some("ASTC_12X12_SRGB_BLOCK"),
+            Self::PVRTC1_2BPP_UNORM_BLOCK_IMG => Some("PVRTC1_2BPP_UNORM_BLOCK_IMG"),
+            Self::PVRTC1_4BPP_UNORM_BLOCK_IMG => Some("PVRTC1_4BPP_UNORM_BLOCK_IMG"),
+            Self::PVRTC2_2BPP_UNORM_BLOCK_IMG => Some("PVRTC2_2BPP_UNORM_BLOCK_IMG"),
+            Self::PVRTC2_4BPP_UNORM_BLOCK_IMG => Some("PVRTC2_4BPP_UNORM_BLOCK_IMG"),
+            Self::PVRTC1_2BPP_SRGB_BLOCK_IMG => Some("PVRTC1_2BPP_SRGB_BLOCK_IMG"),
+            Self::PVRTC1_4BPP_SRGB_BLOCK_IMG => Some("PVRTC1_4BPP_SRGB_BLOCK_IMG"),
+            Self::PVRTC2_2BPP_SRGB_BLOCK_IMG => Some("PVRTC2_2BPP_SRGB_BLOCK_IMG"),
+            Self::PVRTC2_4BPP_SRGB_BLOCK_IMG => Some("PVRTC2_4BPP_SRGB_BLOCK_IMG"),
+            Self::G8B8G8R8_422_UNORM => Some("G8B8G8R8_422_UNORM"),
+            Self::B8G8R8G8_422_UNORM => Some("B8G8R8G8_422_UNORM"),
+            Self::G8_B8_R8_3PLANE_420_UNORM => Some("G8_B8_R8_3PLANE_420_UNORM"),
+            Self::G8_B8R8_2PLANE_420_UNORM => Some("G8_B8R8_2PLANE_420_UNORM"),
+            Self::G8_B8_R8_3PLANE_422_UNORM => Some("G8_B8_R8_3PLANE_422_UNORM"),
+            Self::G8_B8R8_2PLANE_422_UNORM => Some("G8_B8R8_2PLANE_422_UNORM"),
+            Self::G8_B8_R8_3PLANE_444_UNORM => Some("G8_B8_R8_3PLANE_444_UNORM"),
+            Self::R10X6_UNORM_PACK16 => Some("R10X6_UNORM_PACK16"),
+            Self::R10X6G10X6_UNORM_2PACK16 => Some("R10X6G10X6_UNORM_2PACK16"),
+            Self::R10X6G10X6B10X6A10X6_UNORM_4PACK16 => Some("R10X6G10X6B10X6A10X6_UNORM_4PACK16"),
+            Self::G10X6B10X6G10X6R10X6_422_UNORM_4PACK16 => {
+                Some("G10X6B10X6G10X6R10X6_422_UNORM_4PACK16")
+            }
+            Self::B10X6G10X6R10X6G10X6_422_UNORM_4PACK16 => {
+                Some("B10X6G10X6R10X6G10X6_422_UNORM_4PACK16")
+            }
+            Self::G10X6_B10X6_R10X6_3PLANE_420_UNORM_3PACK16 => {
+                Some("G10X6_B10X6_R10X6_3PLANE_420_UNORM_3PACK16")
+            }
+            Self::G10X6_B10X6R10X6_2PLANE_420_UNORM_3PACK16 => {
+                Some("G10X6_B10X6R10X6_2PLANE_420_UNORM_3PACK16")
+            }
+            Self::G10X6_B10X6_R10X6_3PLANE_422_UNORM_3PACK16 => {
+                Some("G10X6_B10X6_R10X6_3PLANE_422_UNORM_3PACK16")
+            }
+            Self::G10X6_B10X6R10X6_2PLANE_422_UNORM_3PACK16 => {
+                Some("G10X6_B10X6R10X6_2PLANE_422_UNORM_3PACK16")
+            }
+            Self::G10X6_B10X6_R10X6_3PLANE_444_UNORM_3PACK16 => {
+                Some("G10X6_B10X6_R10X6_3PLANE_444_UNORM_3PACK16")
+            }
+            Self::R12X4_UNORM_PACK16 => Some("R12X4_UNORM_PACK16"),
+            Self::R12X4G12X4_UNORM_2PACK16 => Some("R12X4G12X4_UNORM_2PACK16"),
+            Self::R12X4G12X4B12X4A12X4_UNORM_4PACK16 => Some("R12X4G12X4B12X4A12X4_UNORM_4PACK16"),
+            Self::G12X4B12X4G12X4R12X4_422_UNORM_4PACK16 => {
+                Some("G12X4B12X4G12X4R12X4_422_UNORM_4PACK16")
+            }
+            Self::B12X4G12X4R12X4G12X4_422_UNORM_4PACK16 => {
+                Some("B12X4G12X4R12X4G12X4_422_UNORM_4PACK16")
+            }
+            Self::G12X4_B12X4_R12X4_3PLANE_420_UNORM_3PACK16 => {
+                Some("G12X4_B12X4_R12X4_3PLANE_420_UNORM_3PACK16")
+            }
+            Self::G12X4_B12X4R12X4_2PLANE_420_UNORM_3PACK16 => {
+                Some("G12X4_B12X4R12X4_2PLANE_420_UNORM_3PACK16")
+            }
+            Self::G12X4_B12X4_R12X4_3PLANE_422_UNORM_3PACK16 => {
+                Some("G12X4_B12X4_R12X4_3PLANE_422_UNORM_3PACK16")
+            }
+            Self::G12X4_B12X4R12X4_2PLANE_422_UNORM_3PACK16 => {
+                Some("G12X4_B12X4R12X4_2PLANE_422_UNORM_3PACK16")
+            }
+            Self::G12X4_B12X4_R12X4_3PLANE_444_UNORM_3PACK16 => {
+                Some("G12X4_B12X4_R12X4_3PLANE_444_UNORM_3PACK16")
+            }
+            Self::G16B16G16R16_422_UNORM => Some("G16B16G16R16_422_UNORM"),
+            Self::B16G16R16G16_422_UNORM => Some("B16G16R16G16_422_UNORM"),
+            Self::G16_B16_R16_3PLANE_420_UNORM => Some("G16_B16_R16_3PLANE_420_UNORM"),
+            Self::G16_B16R16_2PLANE_420_UNORM => Some("G16_B16R16_2PLANE_420_UNORM"),
+            Self::G16_B16_R16_3PLANE_422_UNORM => Some("G16_B16_R16_3PLANE_422_UNORM"),
+            Self::G16_B16R16_2PLANE_422_UNORM => Some("G16_B16R16_2PLANE_422_UNORM"),
+            Self::G16_B16_R16_3PLANE_444_UNORM => Some("G16_B16_R16_3PLANE_444_UNORM"),
             _ => None,
         };
         if let Some(x) = name {
@@ -39576,45 +40056,20 @@ impl fmt::Display for DebugReportFlagsEXT {
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for DebugReportObjectTypeEXT {
+impl fmt::Display for PrimitiveTopology {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::UNKNOWN => Some("UNKNOWN"),
-            Self::INSTANCE => Some("INSTANCE"),
-            Self::PHYSICAL_DEVICE => Some("PHYSICAL_DEVICE"),
-            Self::DEVICE => Some("DEVICE"),
-            Self::QUEUE => Some("QUEUE"),
-            Self::SEMAPHORE => Some("SEMAPHORE"),
-            Self::COMMAND_BUFFER => Some("COMMAND_BUFFER"),
-            Self::FENCE => Some("FENCE"),
-            Self::DEVICE_MEMORY => Some("DEVICE_MEMORY"),
-            Self::BUFFER => Some("BUFFER"),
-            Self::IMAGE => Some("IMAGE"),
-            Self::EVENT => Some("EVENT"),
-            Self::QUERY_POOL => Some("QUERY_POOL"),
-            Self::BUFFER_VIEW => Some("BUFFER_VIEW"),
-            Self::IMAGE_VIEW => Some("IMAGE_VIEW"),
-            Self::SHADER_MODULE => Some("SHADER_MODULE"),
-            Self::PIPELINE_CACHE => Some("PIPELINE_CACHE"),
-            Self::PIPELINE_LAYOUT => Some("PIPELINE_LAYOUT"),
-            Self::RENDER_PASS => Some("RENDER_PASS"),
-            Self::PIPELINE => Some("PIPELINE"),
-            Self::DESCRIPTOR_SET_LAYOUT => Some("DESCRIPTOR_SET_LAYOUT"),
-            Self::SAMPLER => Some("SAMPLER"),
-            Self::DESCRIPTOR_POOL => Some("DESCRIPTOR_POOL"),
-            Self::DESCRIPTOR_SET => Some("DESCRIPTOR_SET"),
-            Self::FRAMEBUFFER => Some("FRAMEBUFFER"),
-            Self::COMMAND_POOL => Some("COMMAND_POOL"),
-            Self::SURFACE_KHR => Some("SURFACE_KHR"),
-            Self::SWAPCHAIN_KHR => Some("SWAPCHAIN_KHR"),
-            Self::DEBUG_REPORT_CALLBACK => Some("DEBUG_REPORT_CALLBACK"),
-            Self::DISPLAY_KHR => Some("DISPLAY_KHR"),
-            Self::DISPLAY_MODE_KHR => Some("DISPLAY_MODE_KHR"),
-            Self::OBJECT_TABLE_NVX => Some("OBJECT_TABLE_NVX"),
-            Self::INDIRECT_COMMANDS_LAYOUT_NVX => Some("INDIRECT_COMMANDS_LAYOUT_NVX"),
-            Self::VALIDATION_CACHE => Some("VALIDATION_CACHE"),
-            Self::SAMPLER_YCBCR_CONVERSION => Some("SAMPLER_YCBCR_CONVERSION"),
-            Self::DESCRIPTOR_UPDATE_TEMPLATE => Some("DESCRIPTOR_UPDATE_TEMPLATE"),
+            Self::POINT_LIST => Some("POINT_LIST"),
+            Self::LINE_LIST => Some("LINE_LIST"),
+            Self::LINE_STRIP => Some("LINE_STRIP"),
+            Self::TRIANGLE_LIST => Some("TRIANGLE_LIST"),
+            Self::TRIANGLE_STRIP => Some("TRIANGLE_STRIP"),
+            Self::TRIANGLE_FAN => Some("TRIANGLE_FAN"),
+            Self::LINE_LIST_WITH_ADJACENCY => Some("LINE_LIST_WITH_ADJACENCY"),
+            Self::LINE_STRIP_WITH_ADJACENCY => Some("LINE_STRIP_WITH_ADJACENCY"),
+            Self::TRIANGLE_LIST_WITH_ADJACENCY => Some("TRIANGLE_LIST_WITH_ADJACENCY"),
+            Self::TRIANGLE_STRIP_WITH_ADJACENCY => Some("TRIANGLE_STRIP_WITH_ADJACENCY"),
+            Self::PATCH_LIST => Some("PATCH_LIST"),
             _ => None,
         };
         if let Some(x) = name {
@@ -39622,41 +40077,6 @@ impl fmt::Display for DebugReportObjectTypeEXT {
         } else {
             write!(f, "{}", self.0)
         }
-    }
-}
-impl fmt::Display for QueryControlFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(QueryControlFlags::PRECISE.0, "PRECISE")];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for DeviceEventTypeEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::DISPLAY_HOTPLUG => Some("DISPLAY_HOTPLUG"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for DeviceQueueCreateFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(DeviceQueueCreateFlags::PROTECTED.0, "PROTECTED")];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for DebugUtilsMessageTypeFlagsEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (DebugUtilsMessageTypeFlagsEXT::GENERAL.0, "GENERAL"),
-            (DebugUtilsMessageTypeFlagsEXT::VALIDATION.0, "VALIDATION"),
-            (DebugUtilsMessageTypeFlagsEXT::PERFORMANCE.0, "PERFORMANCE"),
-        ];
-        display_flags(f, KNOWN, self.0)
     }
 }
 impl fmt::Display for DescriptorPoolCreateFlags {
@@ -39674,20 +40094,25 @@ impl fmt::Display for DescriptorPoolCreateFlags {
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for DescriptorType {
+impl fmt::Display for DeviceGroupPresentModeFlagsKHR {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (DeviceGroupPresentModeFlagsKHR::LOCAL.0, "LOCAL"),
+            (DeviceGroupPresentModeFlagsKHR::REMOTE.0, "REMOTE"),
+            (DeviceGroupPresentModeFlagsKHR::SUM.0, "SUM"),
+            (
+                DeviceGroupPresentModeFlagsKHR::LOCAL_MULTI_DEVICE.0,
+                "LOCAL_MULTI_DEVICE",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for SharingMode {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::SAMPLER => Some("SAMPLER"),
-            Self::COMBINED_IMAGE_SAMPLER => Some("COMBINED_IMAGE_SAMPLER"),
-            Self::SAMPLED_IMAGE => Some("SAMPLED_IMAGE"),
-            Self::STORAGE_IMAGE => Some("STORAGE_IMAGE"),
-            Self::UNIFORM_TEXEL_BUFFER => Some("UNIFORM_TEXEL_BUFFER"),
-            Self::STORAGE_TEXEL_BUFFER => Some("STORAGE_TEXEL_BUFFER"),
-            Self::UNIFORM_BUFFER => Some("UNIFORM_BUFFER"),
-            Self::STORAGE_BUFFER => Some("STORAGE_BUFFER"),
-            Self::UNIFORM_BUFFER_DYNAMIC => Some("UNIFORM_BUFFER_DYNAMIC"),
-            Self::STORAGE_BUFFER_DYNAMIC => Some("STORAGE_BUFFER_DYNAMIC"),
-            Self::INPUT_ATTACHMENT => Some("INPUT_ATTACHMENT"),
+            Self::EXCLUSIVE => Some("EXCLUSIVE"),
+            Self::CONCURRENT => Some("CONCURRENT"),
             _ => None,
         };
         if let Some(x) = name {
@@ -39720,46 +40145,6 @@ impl fmt::Display for ExternalFenceHandleTypeFlags {
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for SparseMemoryBindFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(SparseMemoryBindFlags::METADATA.0, "METADATA")];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for ImageType {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::TYPE_1D => Some("TYPE_1D"),
-            Self::TYPE_2D => Some("TYPE_2D"),
-            Self::TYPE_3D => Some("TYPE_3D"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for StencilFaceFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (StencilFaceFlags::FRONT.0, "FRONT"),
-            (StencilFaceFlags::BACK.0, "BACK"),
-            (
-                StencilFaceFlags::STENCIL_FRONT_AND_BACK.0,
-                "STENCIL_FRONT_AND_BACK",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for SurfaceCounterFlagsEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(SurfaceCounterFlagsEXT::VBLANK.0, "VBLANK")];
-        display_flags(f, KNOWN, self.0)
-    }
-}
 impl fmt::Display for ExternalFenceFeatureFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
@@ -39775,288 +40160,53 @@ impl fmt::Display for ExternalFenceFeatureFlags {
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for ShaderStageFlags {
+impl fmt::Display for SparseMemoryBindFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(SparseMemoryBindFlags::METADATA.0, "METADATA")];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for ObjectEntryUsageFlagsNVX {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
-            (ShaderStageFlags::VERTEX.0, "VERTEX"),
-            (
-                ShaderStageFlags::TESSELLATION_CONTROL.0,
-                "TESSELLATION_CONTROL",
-            ),
-            (
-                ShaderStageFlags::TESSELLATION_EVALUATION.0,
-                "TESSELLATION_EVALUATION",
-            ),
-            (ShaderStageFlags::GEOMETRY.0, "GEOMETRY"),
-            (ShaderStageFlags::FRAGMENT.0, "FRAGMENT"),
-            (ShaderStageFlags::COMPUTE.0, "COMPUTE"),
-            (ShaderStageFlags::ALL_GRAPHICS.0, "ALL_GRAPHICS"),
-            (ShaderStageFlags::ALL.0, "ALL"),
+            (ObjectEntryUsageFlagsNVX::GRAPHICS.0, "GRAPHICS"),
+            (ObjectEntryUsageFlagsNVX::COMPUTE.0, "COMPUTE"),
         ];
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for MemoryPropertyFlags {
+impl fmt::Display for DisplayEventTypeEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (MemoryPropertyFlags::DEVICE_LOCAL.0, "DEVICE_LOCAL"),
-            (MemoryPropertyFlags::HOST_VISIBLE.0, "HOST_VISIBLE"),
-            (MemoryPropertyFlags::HOST_COHERENT.0, "HOST_COHERENT"),
-            (MemoryPropertyFlags::HOST_CACHED.0, "HOST_CACHED"),
-            (MemoryPropertyFlags::LAZILY_ALLOCATED.0, "LAZILY_ALLOCATED"),
-            (MemoryPropertyFlags::PROTECTED.0, "PROTECTED"),
-        ];
-        display_flags(f, KNOWN, self.0)
+        let name = match *self {
+            Self::FIRST_PIXEL_OUT => Some("FIRST_PIXEL_OUT"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
     }
 }
-impl fmt::Display for ExternalMemoryHandleTypeFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN : & [ ( Flags , & str ) ] = & [ ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32 . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_ANDROID_HARDWARE_BUFFER_ANDROID . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_ANDROID_HARDWARE_BUFFER_ANDROID" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_HOST_ALLOCATION . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_HOST_ALLOCATION" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_HOST_MAPPED_FOREIGN_MEMORY . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_HOST_MAPPED_FOREIGN_MEMORY" ) ] ;
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for DescriptorBindingFlagsEXT {
+impl fmt::Display for PipelineCreateFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (
-                DescriptorBindingFlagsEXT::UPDATE_AFTER_BIND.0,
-                "UPDATE_AFTER_BIND",
+                PipelineCreateFlags::DISABLE_OPTIMIZATION.0,
+                "DISABLE_OPTIMIZATION",
             ),
             (
-                DescriptorBindingFlagsEXT::UPDATE_UNUSED_WHILE_PENDING.0,
-                "UPDATE_UNUSED_WHILE_PENDING",
+                PipelineCreateFlags::ALLOW_DERIVATIVES.0,
+                "ALLOW_DERIVATIVES",
             ),
+            (PipelineCreateFlags::DERIVATIVE.0, "DERIVATIVE"),
             (
-                DescriptorBindingFlagsEXT::PARTIALLY_BOUND.0,
-                "PARTIALLY_BOUND",
+                PipelineCreateFlags::VIEW_INDEX_FROM_DEVICE_INDEX.0,
+                "VIEW_INDEX_FROM_DEVICE_INDEX",
             ),
-            (
-                DescriptorBindingFlagsEXT::VARIABLE_DESCRIPTOR_COUNT.0,
-                "VARIABLE_DESCRIPTOR_COUNT",
-            ),
+            (PipelineCreateFlags::DISPATCH_BASE.0, "DISPATCH_BASE"),
         ];
         display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for PhysicalDeviceType {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::OTHER => Some("OTHER"),
-            Self::INTEGRATED_GPU => Some("INTEGRATED_GPU"),
-            Self::DISCRETE_GPU => Some("DISCRETE_GPU"),
-            Self::VIRTUAL_GPU => Some("VIRTUAL_GPU"),
-            Self::CPU => Some("CPU"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for SharingMode {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::EXCLUSIVE => Some("EXCLUSIVE"),
-            Self::CONCURRENT => Some("CONCURRENT"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for SamplerAddressMode {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::REPEAT => Some("REPEAT"),
-            Self::MIRRORED_REPEAT => Some("MIRRORED_REPEAT"),
-            Self::CLAMP_TO_EDGE => Some("CLAMP_TO_EDGE"),
-            Self::CLAMP_TO_BORDER => Some("CLAMP_TO_BORDER"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for StencilOp {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::KEEP => Some("KEEP"),
-            Self::ZERO => Some("ZERO"),
-            Self::REPLACE => Some("REPLACE"),
-            Self::INCREMENT_AND_CLAMP => Some("INCREMENT_AND_CLAMP"),
-            Self::DECREMENT_AND_CLAMP => Some("DECREMENT_AND_CLAMP"),
-            Self::INVERT => Some("INVERT"),
-            Self::INCREMENT_AND_WRAP => Some("INCREMENT_AND_WRAP"),
-            Self::DECREMENT_AND_WRAP => Some("DECREMENT_AND_WRAP"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for FrontFace {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::COUNTER_CLOCKWISE => Some("COUNTER_CLOCKWISE"),
-            Self::CLOCKWISE => Some("CLOCKWISE"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for SubgroupFeatureFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (SubgroupFeatureFlags::BASIC.0, "BASIC"),
-            (SubgroupFeatureFlags::VOTE.0, "VOTE"),
-            (SubgroupFeatureFlags::ARITHMETIC.0, "ARITHMETIC"),
-            (SubgroupFeatureFlags::BALLOT.0, "BALLOT"),
-            (SubgroupFeatureFlags::SHUFFLE.0, "SHUFFLE"),
-            (SubgroupFeatureFlags::SHUFFLE_RELATIVE.0, "SHUFFLE_RELATIVE"),
-            (SubgroupFeatureFlags::CLUSTERED.0, "CLUSTERED"),
-            (SubgroupFeatureFlags::QUAD.0, "QUAD"),
-            (SubgroupFeatureFlags::PARTITIONED_NV.0, "PARTITIONED_NV"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for SamplerYcbcrRange {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::ITU_FULL => Some("ITU_FULL"),
-            Self::ITU_NARROW => Some("ITU_NARROW"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ObjectEntryTypeNVX {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::DESCRIPTOR_SET => Some("DESCRIPTOR_SET"),
-            Self::PIPELINE => Some("PIPELINE"),
-            Self::INDEX_BUFFER => Some("INDEX_BUFFER"),
-            Self::VERTEX_BUFFER => Some("VERTEX_BUFFER"),
-            Self::PUSH_CONSTANT => Some("PUSH_CONSTANT"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for PointClippingBehavior {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::ALL_CLIP_PLANES => Some("ALL_CLIP_PLANES"),
-            Self::USER_CLIP_PLANES_ONLY => Some("USER_CLIP_PLANES_ONLY"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for RasterizationOrderAMD {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::STRICT => Some("STRICT"),
-            Self::RELAXED => Some("RELAXED"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for CommandBufferResetFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(
-            CommandBufferResetFlags::RELEASE_RESOURCES.0,
-            "RELEASE_RESOURCES",
-        )];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for LogicOp {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::CLEAR => Some("CLEAR"),
-            Self::AND => Some("AND"),
-            Self::AND_REVERSE => Some("AND_REVERSE"),
-            Self::COPY => Some("COPY"),
-            Self::AND_INVERTED => Some("AND_INVERTED"),
-            Self::NO_OP => Some("NO_OP"),
-            Self::XOR => Some("XOR"),
-            Self::OR => Some("OR"),
-            Self::NOR => Some("NOR"),
-            Self::EQUIVALENT => Some("EQUIVALENT"),
-            Self::INVERT => Some("INVERT"),
-            Self::OR_REVERSE => Some("OR_REVERSE"),
-            Self::COPY_INVERTED => Some("COPY_INVERTED"),
-            Self::OR_INVERTED => Some("OR_INVERTED"),
-            Self::NAND => Some("NAND"),
-            Self::SET => Some("SET"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ValidationCheckEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::ALL => Some("ALL"),
-            Self::SHADERS => Some("SHADERS"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for VertexInputRate {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::VERTEX => Some("VERTEX"),
-            Self::INSTANCE => Some("INSTANCE"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
     }
 }
 impl fmt::Display for ImageTiling {
@@ -40073,21 +40223,12 @@ impl fmt::Display for ImageTiling {
         }
     }
 }
-impl fmt::Display for MemoryHeapFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (MemoryHeapFlags::DEVICE_LOCAL.0, "DEVICE_LOCAL"),
-            (MemoryHeapFlags::MULTI_INSTANCE.0, "MULTI_INSTANCE"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for QueryType {
+impl fmt::Display for ShaderInfoTypeAMD {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::OCCLUSION => Some("OCCLUSION"),
-            Self::PIPELINE_STATISTICS => Some("PIPELINE_STATISTICS"),
-            Self::TIMESTAMP => Some("TIMESTAMP"),
+            Self::STATISTICS => Some("STATISTICS"),
+            Self::BINARY => Some("BINARY"),
+            Self::DISASSEMBLY => Some("DISASSEMBLY"),
             _ => None,
         };
         if let Some(x) = name {
@@ -40097,50 +40238,11 @@ impl fmt::Display for QueryType {
         }
     }
 }
-impl fmt::Display for ExternalMemoryHandleTypeFlagsNV {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                ExternalMemoryHandleTypeFlagsNV::EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_NV.0,
-                "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_NV",
-            ),
-            (
-                ExternalMemoryHandleTypeFlagsNV::EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_NV.0,
-                "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_NV",
-            ),
-            (
-                ExternalMemoryHandleTypeFlagsNV::EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_NV.0,
-                "EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_NV",
-            ),
-            (
-                ExternalMemoryHandleTypeFlagsNV::EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_NV.0,
-                "EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_NV",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for FenceImportFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(FenceImportFlags::TEMPORARY.0, "TEMPORARY")];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for DynamicState {
+impl fmt::Display for SubpassContents {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::VIEWPORT => Some("VIEWPORT"),
-            Self::SCISSOR => Some("SCISSOR"),
-            Self::LINE_WIDTH => Some("LINE_WIDTH"),
-            Self::DEPTH_BIAS => Some("DEPTH_BIAS"),
-            Self::BLEND_CONSTANTS => Some("BLEND_CONSTANTS"),
-            Self::DEPTH_BOUNDS => Some("DEPTH_BOUNDS"),
-            Self::STENCIL_COMPARE_MASK => Some("STENCIL_COMPARE_MASK"),
-            Self::STENCIL_WRITE_MASK => Some("STENCIL_WRITE_MASK"),
-            Self::STENCIL_REFERENCE => Some("STENCIL_REFERENCE"),
-            Self::VIEWPORT_W_SCALING_NV => Some("VIEWPORT_W_SCALING_NV"),
-            Self::DISCARD_RECTANGLE_EXT => Some("DISCARD_RECTANGLE_EXT"),
-            Self::SAMPLE_LOCATIONS_EXT => Some("SAMPLE_LOCATIONS_EXT"),
+            Self::INLINE => Some("INLINE"),
+            Self::SECONDARY_COMMAND_BUFFERS => Some("SECONDARY_COMMAND_BUFFERS"),
             _ => None,
         };
         if let Some(x) = name {
@@ -40150,66 +40252,10 @@ impl fmt::Display for DynamicState {
         }
     }
 }
-impl fmt::Display for CommandBufferUsageFlags {
+impl fmt::Display for ExternalMemoryHandleTypeFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                CommandBufferUsageFlags::ONE_TIME_SUBMIT.0,
-                "ONE_TIME_SUBMIT",
-            ),
-            (
-                CommandBufferUsageFlags::RENDER_PASS_CONTINUE.0,
-                "RENDER_PASS_CONTINUE",
-            ),
-            (
-                CommandBufferUsageFlags::SIMULTANEOUS_USE.0,
-                "SIMULTANEOUS_USE",
-            ),
-        ];
+        const KNOWN : & [ ( Flags , & str ) ] = & [ ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32 . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_ANDROID_HARDWARE_BUFFER_ANDROID . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_ANDROID_HARDWARE_BUFFER_ANDROID" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_HOST_ALLOCATION . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_HOST_ALLOCATION" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_HOST_MAPPED_FOREIGN_MEMORY . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_HOST_MAPPED_FOREIGN_MEMORY" ) ] ;
         display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for DependencyFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (DependencyFlags::BY_REGION.0, "BY_REGION"),
-            (DependencyFlags::DEVICE_GROUP.0, "DEVICE_GROUP"),
-            (DependencyFlags::VIEW_LOCAL.0, "VIEW_LOCAL"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for ChromaLocation {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::COSITED_EVEN => Some("COSITED_EVEN"),
-            Self::MIDPOINT => Some("MIDPOINT"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ComponentSwizzle {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::IDENTITY => Some("IDENTITY"),
-            Self::ZERO => Some("ZERO"),
-            Self::ONE => Some("ONE"),
-            Self::R => Some("R"),
-            Self::G => Some("G"),
-            Self::B => Some("B"),
-            Self::A => Some("A"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
     }
 }
 impl fmt::Display for PeerMemoryFeatureFlags {
@@ -40223,12 +40269,17 @@ impl fmt::Display for PeerMemoryFeatureFlags {
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for AttachmentLoadOp {
+impl fmt::Display for FenceImportFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(FenceImportFlags::TEMPORARY.0, "TEMPORARY")];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for RasterizationOrderAMD {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::LOAD => Some("LOAD"),
-            Self::CLEAR => Some("CLEAR"),
-            Self::DONT_CARE => Some("DONT_CARE"),
+            Self::STRICT => Some("STRICT"),
+            Self::RELAXED => Some("RELAXED"),
             _ => None,
         };
         if let Some(x) = name {
@@ -40238,86 +40289,52 @@ impl fmt::Display for AttachmentLoadOp {
         }
     }
 }
-impl fmt::Display for DisplayEventTypeEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::FIRST_PIXEL_OUT => Some("FIRST_PIXEL_OUT"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for DisplayPowerStateEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::OFF => Some("OFF"),
-            Self::SUSPEND => Some("SUSPEND"),
-            Self::ON => Some("ON"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for SystemAllocationScope {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::COMMAND => Some("COMMAND"),
-            Self::OBJECT => Some("OBJECT"),
-            Self::CACHE => Some("CACHE"),
-            Self::DEVICE => Some("DEVICE"),
-            Self::INSTANCE => Some("INSTANCE"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ImageCreateFlags {
+impl fmt::Display for ColorComponentFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
-            (ImageCreateFlags::SPARSE_BINDING.0, "SPARSE_BINDING"),
-            (ImageCreateFlags::SPARSE_RESIDENCY.0, "SPARSE_RESIDENCY"),
-            (ImageCreateFlags::SPARSE_ALIASED.0, "SPARSE_ALIASED"),
-            (ImageCreateFlags::MUTABLE_FORMAT.0, "MUTABLE_FORMAT"),
-            (ImageCreateFlags::CUBE_COMPATIBLE.0, "CUBE_COMPATIBLE"),
-            (
-                ImageCreateFlags::SAMPLE_LOCATIONS_COMPATIBLE_DEPTH_EXT.0,
-                "SAMPLE_LOCATIONS_COMPATIBLE_DEPTH_EXT",
-            ),
-            (ImageCreateFlags::ALIAS.0, "ALIAS"),
-            (
-                ImageCreateFlags::SPLIT_INSTANCE_BIND_REGIONS.0,
-                "SPLIT_INSTANCE_BIND_REGIONS",
-            ),
-            (
-                ImageCreateFlags::TYPE_2D_ARRAY_COMPATIBLE.0,
-                "TYPE_2D_ARRAY_COMPATIBLE",
-            ),
-            (
-                ImageCreateFlags::BLOCK_TEXEL_VIEW_COMPATIBLE.0,
-                "BLOCK_TEXEL_VIEW_COMPATIBLE",
-            ),
-            (ImageCreateFlags::EXTENDED_USAGE.0, "EXTENDED_USAGE"),
-            (ImageCreateFlags::PROTECTED.0, "PROTECTED"),
-            (ImageCreateFlags::DISJOINT.0, "DISJOINT"),
+            (ColorComponentFlags::R.0, "R"),
+            (ColorComponentFlags::G.0, "G"),
+            (ColorComponentFlags::B.0, "B"),
+            (ColorComponentFlags::A.0, "A"),
         ];
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for MemoryAllocateFlags {
+impl fmt::Display for MemoryHeapFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(MemoryAllocateFlags::DEVICE_MASK.0, "DEVICE_MASK")];
+        const KNOWN: &[(Flags, &str)] = &[
+            (MemoryHeapFlags::DEVICE_LOCAL.0, "DEVICE_LOCAL"),
+            (MemoryHeapFlags::MULTI_INSTANCE.0, "MULTI_INSTANCE"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for ValidationCheckEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::ALL => Some("ALL"),
+            Self::SHADERS => Some("SHADERS"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for SubpassDescriptionFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                SubpassDescriptionFlags::PER_VIEW_ATTRIBUTES_NVX.0,
+                "PER_VIEW_ATTRIBUTES_NVX",
+            ),
+            (
+                SubpassDescriptionFlags::PER_VIEW_POSITION_X_ONLY_NVX.0,
+                "PER_VIEW_POSITION_X_ONLY_NVX",
+            ),
+        ];
         display_flags(f, KNOWN, self.0)
     }
 }
@@ -40338,6 +40355,22 @@ impl fmt::Display for SamplerYcbcrModelConversion {
         }
     }
 }
+impl fmt::Display for PolygonMode {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::FILL => Some("FILL"),
+            Self::LINE => Some("LINE"),
+            Self::POINT => Some("POINT"),
+            Self::FILL_RECTANGLE_NV => Some("FILL_RECTANGLE_NV"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
 impl fmt::Display for CompositeAlphaFlagsKHR {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
@@ -40349,11 +40382,11 @@ impl fmt::Display for CompositeAlphaFlagsKHR {
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for AttachmentStoreOp {
+impl fmt::Display for PointClippingBehavior {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::STORE => Some("STORE"),
-            Self::DONT_CARE => Some("DONT_CARE"),
+            Self::ALL_CLIP_PLANES => Some("ALL_CLIP_PLANES"),
+            Self::USER_CLIP_PLANES_ONLY => Some("USER_CLIP_PLANES_ONLY"),
             _ => None,
         };
         if let Some(x) = name {
@@ -40361,6 +40394,100 @@ impl fmt::Display for AttachmentStoreOp {
         } else {
             write!(f, "{}", self.0)
         }
+    }
+}
+impl fmt::Display for QueryPipelineStatisticFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                QueryPipelineStatisticFlags::INPUT_ASSEMBLY_VERTICES.0,
+                "INPUT_ASSEMBLY_VERTICES",
+            ),
+            (
+                QueryPipelineStatisticFlags::INPUT_ASSEMBLY_PRIMITIVES.0,
+                "INPUT_ASSEMBLY_PRIMITIVES",
+            ),
+            (
+                QueryPipelineStatisticFlags::VERTEX_SHADER_INVOCATIONS.0,
+                "VERTEX_SHADER_INVOCATIONS",
+            ),
+            (
+                QueryPipelineStatisticFlags::GEOMETRY_SHADER_INVOCATIONS.0,
+                "GEOMETRY_SHADER_INVOCATIONS",
+            ),
+            (
+                QueryPipelineStatisticFlags::GEOMETRY_SHADER_PRIMITIVES.0,
+                "GEOMETRY_SHADER_PRIMITIVES",
+            ),
+            (
+                QueryPipelineStatisticFlags::CLIPPING_INVOCATIONS.0,
+                "CLIPPING_INVOCATIONS",
+            ),
+            (
+                QueryPipelineStatisticFlags::CLIPPING_PRIMITIVES.0,
+                "CLIPPING_PRIMITIVES",
+            ),
+            (
+                QueryPipelineStatisticFlags::FRAGMENT_SHADER_INVOCATIONS.0,
+                "FRAGMENT_SHADER_INVOCATIONS",
+            ),
+            (
+                QueryPipelineStatisticFlags::TESSELLATION_CONTROL_SHADER_PATCHES.0,
+                "TESSELLATION_CONTROL_SHADER_PATCHES",
+            ),
+            (
+                QueryPipelineStatisticFlags::TESSELLATION_EVALUATION_SHADER_INVOCATIONS.0,
+                "TESSELLATION_EVALUATION_SHADER_INVOCATIONS",
+            ),
+            (
+                QueryPipelineStatisticFlags::COMPUTE_SHADER_INVOCATIONS.0,
+                "COMPUTE_SHADER_INVOCATIONS",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for PipelineStageFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (PipelineStageFlags::TOP_OF_PIPE.0, "TOP_OF_PIPE"),
+            (PipelineStageFlags::DRAW_INDIRECT.0, "DRAW_INDIRECT"),
+            (PipelineStageFlags::VERTEX_INPUT.0, "VERTEX_INPUT"),
+            (PipelineStageFlags::VERTEX_SHADER.0, "VERTEX_SHADER"),
+            (
+                PipelineStageFlags::TESSELLATION_CONTROL_SHADER.0,
+                "TESSELLATION_CONTROL_SHADER",
+            ),
+            (
+                PipelineStageFlags::TESSELLATION_EVALUATION_SHADER.0,
+                "TESSELLATION_EVALUATION_SHADER",
+            ),
+            (PipelineStageFlags::GEOMETRY_SHADER.0, "GEOMETRY_SHADER"),
+            (PipelineStageFlags::FRAGMENT_SHADER.0, "FRAGMENT_SHADER"),
+            (
+                PipelineStageFlags::EARLY_FRAGMENT_TESTS.0,
+                "EARLY_FRAGMENT_TESTS",
+            ),
+            (
+                PipelineStageFlags::LATE_FRAGMENT_TESTS.0,
+                "LATE_FRAGMENT_TESTS",
+            ),
+            (
+                PipelineStageFlags::COLOR_ATTACHMENT_OUTPUT.0,
+                "COLOR_ATTACHMENT_OUTPUT",
+            ),
+            (PipelineStageFlags::COMPUTE_SHADER.0, "COMPUTE_SHADER"),
+            (PipelineStageFlags::TRANSFER.0, "TRANSFER"),
+            (PipelineStageFlags::BOTTOM_OF_PIPE.0, "BOTTOM_OF_PIPE"),
+            (PipelineStageFlags::HOST.0, "HOST"),
+            (PipelineStageFlags::ALL_GRAPHICS.0, "ALL_GRAPHICS"),
+            (PipelineStageFlags::ALL_COMMANDS.0, "ALL_COMMANDS"),
+            (
+                PipelineStageFlags::COMMAND_PROCESS_NVX.0,
+                "COMMAND_PROCESS_NVX",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
     }
 }
 impl fmt::Display for BlendOp {
@@ -40426,6 +40553,12 @@ impl fmt::Display for BlendOp {
         }
     }
 }
+impl fmt::Display for DeviceQueueCreateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(DeviceQueueCreateFlags::PROTECTED.0, "PROTECTED")];
+        display_flags(f, KNOWN, self.0)
+    }
+}
 impl fmt::Display for ImageLayout {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
@@ -40455,21 +40588,24 @@ impl fmt::Display for ImageLayout {
         }
     }
 }
-impl fmt::Display for ColorComponentFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (ColorComponentFlags::R.0, "R"),
-            (ColorComponentFlags::G.0, "G"),
-            (ColorComponentFlags::B.0, "B"),
-            (ColorComponentFlags::A.0, "A"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for PipelineCacheHeaderVersion {
+impl fmt::Display for ColorSpaceKHR {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::ONE => Some("ONE"),
+            Self::SRGB_NONLINEAR => Some("SRGB_NONLINEAR"),
+            Self::DISPLAY_P3_NONLINEAR_EXT => Some("DISPLAY_P3_NONLINEAR_EXT"),
+            Self::EXTENDED_SRGB_LINEAR_EXT => Some("EXTENDED_SRGB_LINEAR_EXT"),
+            Self::DCI_P3_LINEAR_EXT => Some("DCI_P3_LINEAR_EXT"),
+            Self::DCI_P3_NONLINEAR_EXT => Some("DCI_P3_NONLINEAR_EXT"),
+            Self::BT709_LINEAR_EXT => Some("BT709_LINEAR_EXT"),
+            Self::BT709_NONLINEAR_EXT => Some("BT709_NONLINEAR_EXT"),
+            Self::BT2020_LINEAR_EXT => Some("BT2020_LINEAR_EXT"),
+            Self::HDR10_ST2084_EXT => Some("HDR10_ST2084_EXT"),
+            Self::DOLBYVISION_EXT => Some("DOLBYVISION_EXT"),
+            Self::HDR10_HLG_EXT => Some("HDR10_HLG_EXT"),
+            Self::ADOBERGB_LINEAR_EXT => Some("ADOBERGB_LINEAR_EXT"),
+            Self::ADOBERGB_NONLINEAR_EXT => Some("ADOBERGB_NONLINEAR_EXT"),
+            Self::PASS_THROUGH_EXT => Some("PASS_THROUGH_EXT"),
+            Self::EXTENDED_SRGB_NONLINEAR_EXT => Some("EXTENDED_SRGB_NONLINEAR_EXT"),
             _ => None,
         };
         if let Some(x) = name {
@@ -40477,6 +40613,88 @@ impl fmt::Display for PipelineCacheHeaderVersion {
         } else {
             write!(f, "{}", self.0)
         }
+    }
+}
+impl fmt::Display for ExternalSemaphoreHandleTypeFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD.0,
+                "EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD",
+            ),
+            (
+                ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32.0,
+                "EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32",
+            ),
+            (
+                ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT.0,
+                "EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT",
+            ),
+            (
+                ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE.0,
+                "EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE",
+            ),
+            (
+                ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD.0,
+                "EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for QueryControlFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(QueryControlFlags::PRECISE.0, "PRECISE")];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for BufferCreateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (BufferCreateFlags::SPARSE_BINDING.0, "SPARSE_BINDING"),
+            (BufferCreateFlags::SPARSE_RESIDENCY.0, "SPARSE_RESIDENCY"),
+            (BufferCreateFlags::SPARSE_ALIASED.0, "SPARSE_ALIASED"),
+            (BufferCreateFlags::PROTECTED.0, "PROTECTED"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for LogicOp {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::CLEAR => Some("CLEAR"),
+            Self::AND => Some("AND"),
+            Self::AND_REVERSE => Some("AND_REVERSE"),
+            Self::COPY => Some("COPY"),
+            Self::AND_INVERTED => Some("AND_INVERTED"),
+            Self::NO_OP => Some("NO_OP"),
+            Self::XOR => Some("XOR"),
+            Self::OR => Some("OR"),
+            Self::NOR => Some("NOR"),
+            Self::EQUIVALENT => Some("EQUIVALENT"),
+            Self::INVERT => Some("INVERT"),
+            Self::OR_REVERSE => Some("OR_REVERSE"),
+            Self::COPY_INVERTED => Some("COPY_INVERTED"),
+            Self::OR_INVERTED => Some("OR_INVERTED"),
+            Self::NAND => Some("NAND"),
+            Self::SET => Some("SET"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for DependencyFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (DependencyFlags::BY_REGION.0, "BY_REGION"),
+            (DependencyFlags::DEVICE_GROUP.0, "DEVICE_GROUP"),
+            (DependencyFlags::VIEW_LOCAL.0, "VIEW_LOCAL"),
+        ];
+        display_flags(f, KNOWN, self.0)
     }
 }
 impl fmt::Display for CommandPoolResetFlags {
@@ -40503,6 +40721,351 @@ impl fmt::Display for BlendOverlapEXT {
         }
     }
 }
+impl fmt::Display for ViewportCoordinateSwizzleNV {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::POSITIVE_X => Some("POSITIVE_X"),
+            Self::NEGATIVE_X => Some("NEGATIVE_X"),
+            Self::POSITIVE_Y => Some("POSITIVE_Y"),
+            Self::NEGATIVE_Y => Some("NEGATIVE_Y"),
+            Self::POSITIVE_Z => Some("POSITIVE_Z"),
+            Self::NEGATIVE_Z => Some("NEGATIVE_Z"),
+            Self::POSITIVE_W => Some("POSITIVE_W"),
+            Self::NEGATIVE_W => Some("NEGATIVE_W"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for CommandPoolCreateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (CommandPoolCreateFlags::TRANSIENT.0, "TRANSIENT"),
+            (
+                CommandPoolCreateFlags::RESET_COMMAND_BUFFER.0,
+                "RESET_COMMAND_BUFFER",
+            ),
+            (CommandPoolCreateFlags::PROTECTED.0, "PROTECTED"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for DescriptorBindingFlagsEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                DescriptorBindingFlagsEXT::UPDATE_AFTER_BIND.0,
+                "UPDATE_AFTER_BIND",
+            ),
+            (
+                DescriptorBindingFlagsEXT::UPDATE_UNUSED_WHILE_PENDING.0,
+                "UPDATE_UNUSED_WHILE_PENDING",
+            ),
+            (
+                DescriptorBindingFlagsEXT::PARTIALLY_BOUND.0,
+                "PARTIALLY_BOUND",
+            ),
+            (
+                DescriptorBindingFlagsEXT::VARIABLE_DESCRIPTOR_COUNT.0,
+                "VARIABLE_DESCRIPTOR_COUNT",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for SparseImageFormatFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (SparseImageFormatFlags::SINGLE_MIPTAIL.0, "SINGLE_MIPTAIL"),
+            (
+                SparseImageFormatFlags::ALIGNED_MIP_SIZE.0,
+                "ALIGNED_MIP_SIZE",
+            ),
+            (
+                SparseImageFormatFlags::NONSTANDARD_BLOCK_SIZE.0,
+                "NONSTANDARD_BLOCK_SIZE",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for SubgroupFeatureFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (SubgroupFeatureFlags::BASIC.0, "BASIC"),
+            (SubgroupFeatureFlags::VOTE.0, "VOTE"),
+            (SubgroupFeatureFlags::ARITHMETIC.0, "ARITHMETIC"),
+            (SubgroupFeatureFlags::BALLOT.0, "BALLOT"),
+            (SubgroupFeatureFlags::SHUFFLE.0, "SHUFFLE"),
+            (SubgroupFeatureFlags::SHUFFLE_RELATIVE.0, "SHUFFLE_RELATIVE"),
+            (SubgroupFeatureFlags::CLUSTERED.0, "CLUSTERED"),
+            (SubgroupFeatureFlags::QUAD.0, "QUAD"),
+            (SubgroupFeatureFlags::PARTITIONED_NV.0, "PARTITIONED_NV"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for FenceCreateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(FenceCreateFlags::SIGNALED.0, "SIGNALED")];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for SemaphoreImportFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(SemaphoreImportFlags::TEMPORARY.0, "TEMPORARY")];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for QueueFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (QueueFlags::GRAPHICS.0, "GRAPHICS"),
+            (QueueFlags::COMPUTE.0, "COMPUTE"),
+            (QueueFlags::TRANSFER.0, "TRANSFER"),
+            (QueueFlags::SPARSE_BINDING.0, "SPARSE_BINDING"),
+            (QueueFlags::PROTECTED.0, "PROTECTED"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for DebugReportObjectTypeEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::UNKNOWN => Some("UNKNOWN"),
+            Self::INSTANCE => Some("INSTANCE"),
+            Self::PHYSICAL_DEVICE => Some("PHYSICAL_DEVICE"),
+            Self::DEVICE => Some("DEVICE"),
+            Self::QUEUE => Some("QUEUE"),
+            Self::SEMAPHORE => Some("SEMAPHORE"),
+            Self::COMMAND_BUFFER => Some("COMMAND_BUFFER"),
+            Self::FENCE => Some("FENCE"),
+            Self::DEVICE_MEMORY => Some("DEVICE_MEMORY"),
+            Self::BUFFER => Some("BUFFER"),
+            Self::IMAGE => Some("IMAGE"),
+            Self::EVENT => Some("EVENT"),
+            Self::QUERY_POOL => Some("QUERY_POOL"),
+            Self::BUFFER_VIEW => Some("BUFFER_VIEW"),
+            Self::IMAGE_VIEW => Some("IMAGE_VIEW"),
+            Self::SHADER_MODULE => Some("SHADER_MODULE"),
+            Self::PIPELINE_CACHE => Some("PIPELINE_CACHE"),
+            Self::PIPELINE_LAYOUT => Some("PIPELINE_LAYOUT"),
+            Self::RENDER_PASS => Some("RENDER_PASS"),
+            Self::PIPELINE => Some("PIPELINE"),
+            Self::DESCRIPTOR_SET_LAYOUT => Some("DESCRIPTOR_SET_LAYOUT"),
+            Self::SAMPLER => Some("SAMPLER"),
+            Self::DESCRIPTOR_POOL => Some("DESCRIPTOR_POOL"),
+            Self::DESCRIPTOR_SET => Some("DESCRIPTOR_SET"),
+            Self::FRAMEBUFFER => Some("FRAMEBUFFER"),
+            Self::COMMAND_POOL => Some("COMMAND_POOL"),
+            Self::SURFACE_KHR => Some("SURFACE_KHR"),
+            Self::SWAPCHAIN_KHR => Some("SWAPCHAIN_KHR"),
+            Self::DEBUG_REPORT_CALLBACK => Some("DEBUG_REPORT_CALLBACK"),
+            Self::DISPLAY_KHR => Some("DISPLAY_KHR"),
+            Self::DISPLAY_MODE_KHR => Some("DISPLAY_MODE_KHR"),
+            Self::OBJECT_TABLE_NVX => Some("OBJECT_TABLE_NVX"),
+            Self::INDIRECT_COMMANDS_LAYOUT_NVX => Some("INDIRECT_COMMANDS_LAYOUT_NVX"),
+            Self::VALIDATION_CACHE => Some("VALIDATION_CACHE"),
+            Self::SAMPLER_YCBCR_CONVERSION => Some("SAMPLER_YCBCR_CONVERSION"),
+            Self::DESCRIPTOR_UPDATE_TEMPLATE => Some("DESCRIPTOR_UPDATE_TEMPLATE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for IndirectCommandsLayoutUsageFlagsNVX {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                IndirectCommandsLayoutUsageFlagsNVX::UNORDERED_SEQUENCES.0,
+                "UNORDERED_SEQUENCES",
+            ),
+            (
+                IndirectCommandsLayoutUsageFlagsNVX::SPARSE_SEQUENCES.0,
+                "SPARSE_SEQUENCES",
+            ),
+            (
+                IndirectCommandsLayoutUsageFlagsNVX::EMPTY_EXECUTIONS.0,
+                "EMPTY_EXECUTIONS",
+            ),
+            (
+                IndirectCommandsLayoutUsageFlagsNVX::INDEXED_SEQUENCES.0,
+                "INDEXED_SEQUENCES",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for VendorId {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::VIV => Some("VIV"),
+            Self::VSI => Some("VSI"),
+            Self::KAZAN => Some("KAZAN"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for AttachmentLoadOp {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::LOAD => Some("LOAD"),
+            Self::CLEAR => Some("CLEAR"),
+            Self::DONT_CARE => Some("DONT_CARE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for ExternalMemoryFeatureFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                ExternalMemoryFeatureFlags::EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY.0,
+                "EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY",
+            ),
+            (
+                ExternalMemoryFeatureFlags::EXTERNAL_MEMORY_FEATURE_EXPORTABLE.0,
+                "EXTERNAL_MEMORY_FEATURE_EXPORTABLE",
+            ),
+            (
+                ExternalMemoryFeatureFlags::EXTERNAL_MEMORY_FEATURE_IMPORTABLE.0,
+                "EXTERNAL_MEMORY_FEATURE_IMPORTABLE",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for IndexType {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::UINT16 => Some("UINT16"),
+            Self::UINT32 => Some("UINT32"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for VertexInputRate {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::VERTEX => Some("VERTEX"),
+            Self::INSTANCE => Some("INSTANCE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for SurfaceTransformFlagsKHR {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (SurfaceTransformFlagsKHR::IDENTITY.0, "IDENTITY"),
+            (SurfaceTransformFlagsKHR::ROTATE_90.0, "ROTATE_90"),
+            (SurfaceTransformFlagsKHR::ROTATE_180.0, "ROTATE_180"),
+            (SurfaceTransformFlagsKHR::ROTATE_270.0, "ROTATE_270"),
+            (
+                SurfaceTransformFlagsKHR::HORIZONTAL_MIRROR.0,
+                "HORIZONTAL_MIRROR",
+            ),
+            (
+                SurfaceTransformFlagsKHR::HORIZONTAL_MIRROR_ROTATE_90.0,
+                "HORIZONTAL_MIRROR_ROTATE_90",
+            ),
+            (
+                SurfaceTransformFlagsKHR::HORIZONTAL_MIRROR_ROTATE_180.0,
+                "HORIZONTAL_MIRROR_ROTATE_180",
+            ),
+            (
+                SurfaceTransformFlagsKHR::HORIZONTAL_MIRROR_ROTATE_270.0,
+                "HORIZONTAL_MIRROR_ROTATE_270",
+            ),
+            (SurfaceTransformFlagsKHR::INHERIT.0, "INHERIT"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for ImageAspectFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (ImageAspectFlags::COLOR.0, "COLOR"),
+            (ImageAspectFlags::DEPTH.0, "DEPTH"),
+            (ImageAspectFlags::STENCIL.0, "STENCIL"),
+            (ImageAspectFlags::METADATA.0, "METADATA"),
+            (ImageAspectFlags::PLANE_0.0, "PLANE_0"),
+            (ImageAspectFlags::PLANE_1.0, "PLANE_1"),
+            (ImageAspectFlags::PLANE_2.0, "PLANE_2"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for ConservativeRasterizationModeEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::DISABLED => Some("DISABLED"),
+            Self::OVERESTIMATE => Some("OVERESTIMATE"),
+            Self::UNDERESTIMATE => Some("UNDERESTIMATE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for BufferUsageFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (BufferUsageFlags::TRANSFER_SRC.0, "TRANSFER_SRC"),
+            (BufferUsageFlags::TRANSFER_DST.0, "TRANSFER_DST"),
+            (
+                BufferUsageFlags::UNIFORM_TEXEL_BUFFER.0,
+                "UNIFORM_TEXEL_BUFFER",
+            ),
+            (
+                BufferUsageFlags::STORAGE_TEXEL_BUFFER.0,
+                "STORAGE_TEXEL_BUFFER",
+            ),
+            (BufferUsageFlags::UNIFORM_BUFFER.0, "UNIFORM_BUFFER"),
+            (BufferUsageFlags::STORAGE_BUFFER.0, "STORAGE_BUFFER"),
+            (BufferUsageFlags::INDEX_BUFFER.0, "INDEX_BUFFER"),
+            (BufferUsageFlags::VERTEX_BUFFER.0, "VERTEX_BUFFER"),
+            (BufferUsageFlags::INDIRECT_BUFFER.0, "INDIRECT_BUFFER"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for MemoryAllocateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(MemoryAllocateFlags::DEVICE_MASK.0, "DEVICE_MASK")];
+        display_flags(f, KNOWN, self.0)
+    }
+}
 impl fmt::Display for PipelineBindPoint {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
@@ -40517,15 +41080,70 @@ impl fmt::Display for PipelineBindPoint {
         }
     }
 }
-impl fmt::Display for PresentModeKHR {
+impl fmt::Display for ExternalSemaphoreFeatureFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                ExternalSemaphoreFeatureFlags::EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE.0,
+                "EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE",
+            ),
+            (
+                ExternalSemaphoreFeatureFlags::EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE.0,
+                "EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for PhysicalDeviceType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::IMMEDIATE => Some("IMMEDIATE"),
-            Self::MAILBOX => Some("MAILBOX"),
-            Self::FIFO => Some("FIFO"),
-            Self::FIFO_RELAXED => Some("FIFO_RELAXED"),
-            Self::SHARED_DEMAND_REFRESH => Some("SHARED_DEMAND_REFRESH"),
-            Self::SHARED_CONTINUOUS_REFRESH => Some("SHARED_CONTINUOUS_REFRESH"),
+            Self::OTHER => Some("OTHER"),
+            Self::INTEGRATED_GPU => Some("INTEGRATED_GPU"),
+            Self::DISCRETE_GPU => Some("DISCRETE_GPU"),
+            Self::VIRTUAL_GPU => Some("VIRTUAL_GPU"),
+            Self::CPU => Some("CPU"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for SystemAllocationScope {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::COMMAND => Some("COMMAND"),
+            Self::OBJECT => Some("OBJECT"),
+            Self::CACHE => Some("CACHE"),
+            Self::DEVICE => Some("DEVICE"),
+            Self::INSTANCE => Some("INSTANCE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for DynamicState {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::VIEWPORT => Some("VIEWPORT"),
+            Self::SCISSOR => Some("SCISSOR"),
+            Self::LINE_WIDTH => Some("LINE_WIDTH"),
+            Self::DEPTH_BIAS => Some("DEPTH_BIAS"),
+            Self::BLEND_CONSTANTS => Some("BLEND_CONSTANTS"),
+            Self::DEPTH_BOUNDS => Some("DEPTH_BOUNDS"),
+            Self::STENCIL_COMPARE_MASK => Some("STENCIL_COMPARE_MASK"),
+            Self::STENCIL_WRITE_MASK => Some("STENCIL_WRITE_MASK"),
+            Self::STENCIL_REFERENCE => Some("STENCIL_REFERENCE"),
+            Self::VIEWPORT_W_SCALING_NV => Some("VIEWPORT_W_SCALING_NV"),
+            Self::DISCARD_RECTANGLE_EXT => Some("DISCARD_RECTANGLE_EXT"),
+            Self::SAMPLE_LOCATIONS_EXT => Some("SAMPLE_LOCATIONS_EXT"),
             _ => None,
         };
         if let Some(x) = name {
@@ -40975,758 +41593,6 @@ impl fmt::Display for StructureType {
         }
     }
 }
-impl fmt::Display for IndirectCommandsTokenTypeNVX {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::PIPELINE => Some("PIPELINE"),
-            Self::DESCRIPTOR_SET => Some("DESCRIPTOR_SET"),
-            Self::INDEX_BUFFER => Some("INDEX_BUFFER"),
-            Self::VERTEX_BUFFER => Some("VERTEX_BUFFER"),
-            Self::PUSH_CONSTANT => Some("PUSH_CONSTANT"),
-            Self::DRAW_INDEXED => Some("DRAW_INDEXED"),
-            Self::DRAW => Some("DRAW"),
-            Self::DISPATCH => Some("DISPATCH"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for BorderColor {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::FLOAT_TRANSPARENT_BLACK => Some("FLOAT_TRANSPARENT_BLACK"),
-            Self::INT_TRANSPARENT_BLACK => Some("INT_TRANSPARENT_BLACK"),
-            Self::FLOAT_OPAQUE_BLACK => Some("FLOAT_OPAQUE_BLACK"),
-            Self::INT_OPAQUE_BLACK => Some("INT_OPAQUE_BLACK"),
-            Self::FLOAT_OPAQUE_WHITE => Some("FLOAT_OPAQUE_WHITE"),
-            Self::INT_OPAQUE_WHITE => Some("INT_OPAQUE_WHITE"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for DeviceGroupPresentModeFlagsKHR {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (DeviceGroupPresentModeFlagsKHR::LOCAL.0, "LOCAL"),
-            (DeviceGroupPresentModeFlagsKHR::REMOTE.0, "REMOTE"),
-            (DeviceGroupPresentModeFlagsKHR::SUM.0, "SUM"),
-            (
-                DeviceGroupPresentModeFlagsKHR::LOCAL_MULTI_DEVICE.0,
-                "LOCAL_MULTI_DEVICE",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for DisplayPlaneAlphaFlagsKHR {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (DisplayPlaneAlphaFlagsKHR::OPAQUE.0, "OPAQUE"),
-            (DisplayPlaneAlphaFlagsKHR::GLOBAL.0, "GLOBAL"),
-            (DisplayPlaneAlphaFlagsKHR::PER_PIXEL.0, "PER_PIXEL"),
-            (
-                DisplayPlaneAlphaFlagsKHR::PER_PIXEL_PREMULTIPLIED.0,
-                "PER_PIXEL_PREMULTIPLIED",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for SamplerReductionModeEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::WEIGHTED_AVERAGE => Some("WEIGHTED_AVERAGE"),
-            Self::MIN => Some("MIN"),
-            Self::MAX => Some("MAX"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for DebugUtilsMessageSeverityFlagsEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (DebugUtilsMessageSeverityFlagsEXT::VERBOSE.0, "VERBOSE"),
-            (DebugUtilsMessageSeverityFlagsEXT::INFO.0, "INFO"),
-            (DebugUtilsMessageSeverityFlagsEXT::WARNING.0, "WARNING"),
-            (DebugUtilsMessageSeverityFlagsEXT::ERROR.0, "ERROR"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for QueueGlobalPriorityEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::LOW => Some("LOW"),
-            Self::MEDIUM => Some("MEDIUM"),
-            Self::HIGH => Some("HIGH"),
-            Self::REALTIME => Some("REALTIME"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for SwapchainCreateFlagsKHR {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                SwapchainCreateFlagsKHR::SPLIT_INSTANCE_BIND_REGIONS.0,
-                "SPLIT_INSTANCE_BIND_REGIONS",
-            ),
-            (SwapchainCreateFlagsKHR::PROTECTED.0, "PROTECTED"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for SamplerMipmapMode {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::NEAREST => Some("NEAREST"),
-            Self::LINEAR => Some("LINEAR"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for CommandPoolCreateFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (CommandPoolCreateFlags::TRANSIENT.0, "TRANSIENT"),
-            (
-                CommandPoolCreateFlags::RESET_COMMAND_BUFFER.0,
-                "RESET_COMMAND_BUFFER",
-            ),
-            (CommandPoolCreateFlags::PROTECTED.0, "PROTECTED"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for SparseImageFormatFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (SparseImageFormatFlags::SINGLE_MIPTAIL.0, "SINGLE_MIPTAIL"),
-            (
-                SparseImageFormatFlags::ALIGNED_MIP_SIZE.0,
-                "ALIGNED_MIP_SIZE",
-            ),
-            (
-                SparseImageFormatFlags::NONSTANDARD_BLOCK_SIZE.0,
-                "NONSTANDARD_BLOCK_SIZE",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for PrimitiveTopology {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::POINT_LIST => Some("POINT_LIST"),
-            Self::LINE_LIST => Some("LINE_LIST"),
-            Self::LINE_STRIP => Some("LINE_STRIP"),
-            Self::TRIANGLE_LIST => Some("TRIANGLE_LIST"),
-            Self::TRIANGLE_STRIP => Some("TRIANGLE_STRIP"),
-            Self::TRIANGLE_FAN => Some("TRIANGLE_FAN"),
-            Self::LINE_LIST_WITH_ADJACENCY => Some("LINE_LIST_WITH_ADJACENCY"),
-            Self::LINE_STRIP_WITH_ADJACENCY => Some("LINE_STRIP_WITH_ADJACENCY"),
-            Self::TRIANGLE_LIST_WITH_ADJACENCY => Some("TRIANGLE_LIST_WITH_ADJACENCY"),
-            Self::TRIANGLE_STRIP_WITH_ADJACENCY => Some("TRIANGLE_STRIP_WITH_ADJACENCY"),
-            Self::PATCH_LIST => Some("PATCH_LIST"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ObjectType {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::UNKNOWN => Some("UNKNOWN"),
-            Self::INSTANCE => Some("INSTANCE"),
-            Self::PHYSICAL_DEVICE => Some("PHYSICAL_DEVICE"),
-            Self::DEVICE => Some("DEVICE"),
-            Self::QUEUE => Some("QUEUE"),
-            Self::SEMAPHORE => Some("SEMAPHORE"),
-            Self::COMMAND_BUFFER => Some("COMMAND_BUFFER"),
-            Self::FENCE => Some("FENCE"),
-            Self::DEVICE_MEMORY => Some("DEVICE_MEMORY"),
-            Self::BUFFER => Some("BUFFER"),
-            Self::IMAGE => Some("IMAGE"),
-            Self::EVENT => Some("EVENT"),
-            Self::QUERY_POOL => Some("QUERY_POOL"),
-            Self::BUFFER_VIEW => Some("BUFFER_VIEW"),
-            Self::IMAGE_VIEW => Some("IMAGE_VIEW"),
-            Self::SHADER_MODULE => Some("SHADER_MODULE"),
-            Self::PIPELINE_CACHE => Some("PIPELINE_CACHE"),
-            Self::PIPELINE_LAYOUT => Some("PIPELINE_LAYOUT"),
-            Self::RENDER_PASS => Some("RENDER_PASS"),
-            Self::PIPELINE => Some("PIPELINE"),
-            Self::DESCRIPTOR_SET_LAYOUT => Some("DESCRIPTOR_SET_LAYOUT"),
-            Self::SAMPLER => Some("SAMPLER"),
-            Self::DESCRIPTOR_POOL => Some("DESCRIPTOR_POOL"),
-            Self::DESCRIPTOR_SET => Some("DESCRIPTOR_SET"),
-            Self::FRAMEBUFFER => Some("FRAMEBUFFER"),
-            Self::COMMAND_POOL => Some("COMMAND_POOL"),
-            Self::SURFACE_KHR => Some("SURFACE_KHR"),
-            Self::SWAPCHAIN_KHR => Some("SWAPCHAIN_KHR"),
-            Self::DISPLAY_KHR => Some("DISPLAY_KHR"),
-            Self::DISPLAY_MODE_KHR => Some("DISPLAY_MODE_KHR"),
-            Self::DEBUG_REPORT_CALLBACK_EXT => Some("DEBUG_REPORT_CALLBACK_EXT"),
-            Self::OBJECT_TABLE_NVX => Some("OBJECT_TABLE_NVX"),
-            Self::INDIRECT_COMMANDS_LAYOUT_NVX => Some("INDIRECT_COMMANDS_LAYOUT_NVX"),
-            Self::DEBUG_UTILS_MESSENGER_EXT => Some("DEBUG_UTILS_MESSENGER_EXT"),
-            Self::VALIDATION_CACHE_EXT => Some("VALIDATION_CACHE_EXT"),
-            Self::SAMPLER_YCBCR_CONVERSION => Some("SAMPLER_YCBCR_CONVERSION"),
-            Self::DESCRIPTOR_UPDATE_TEMPLATE => Some("DESCRIPTOR_UPDATE_TEMPLATE"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for FenceCreateFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(FenceCreateFlags::SIGNALED.0, "SIGNALED")];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for PipelineStageFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (PipelineStageFlags::TOP_OF_PIPE.0, "TOP_OF_PIPE"),
-            (PipelineStageFlags::DRAW_INDIRECT.0, "DRAW_INDIRECT"),
-            (PipelineStageFlags::VERTEX_INPUT.0, "VERTEX_INPUT"),
-            (PipelineStageFlags::VERTEX_SHADER.0, "VERTEX_SHADER"),
-            (
-                PipelineStageFlags::TESSELLATION_CONTROL_SHADER.0,
-                "TESSELLATION_CONTROL_SHADER",
-            ),
-            (
-                PipelineStageFlags::TESSELLATION_EVALUATION_SHADER.0,
-                "TESSELLATION_EVALUATION_SHADER",
-            ),
-            (PipelineStageFlags::GEOMETRY_SHADER.0, "GEOMETRY_SHADER"),
-            (PipelineStageFlags::FRAGMENT_SHADER.0, "FRAGMENT_SHADER"),
-            (
-                PipelineStageFlags::EARLY_FRAGMENT_TESTS.0,
-                "EARLY_FRAGMENT_TESTS",
-            ),
-            (
-                PipelineStageFlags::LATE_FRAGMENT_TESTS.0,
-                "LATE_FRAGMENT_TESTS",
-            ),
-            (
-                PipelineStageFlags::COLOR_ATTACHMENT_OUTPUT.0,
-                "COLOR_ATTACHMENT_OUTPUT",
-            ),
-            (PipelineStageFlags::COMPUTE_SHADER.0, "COMPUTE_SHADER"),
-            (PipelineStageFlags::TRANSFER.0, "TRANSFER"),
-            (PipelineStageFlags::BOTTOM_OF_PIPE.0, "BOTTOM_OF_PIPE"),
-            (PipelineStageFlags::HOST.0, "HOST"),
-            (PipelineStageFlags::ALL_GRAPHICS.0, "ALL_GRAPHICS"),
-            (PipelineStageFlags::ALL_COMMANDS.0, "ALL_COMMANDS"),
-            (
-                PipelineStageFlags::COMMAND_PROCESS_NVX.0,
-                "COMMAND_PROCESS_NVX",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for SubpassContents {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::INLINE => Some("INLINE"),
-            Self::SECONDARY_COMMAND_BUFFERS => Some("SECONDARY_COMMAND_BUFFERS"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for DescriptorUpdateTemplateType {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::DESCRIPTOR_SET => Some("DESCRIPTOR_SET"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for AttachmentDescriptionFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(AttachmentDescriptionFlags::MAY_ALIAS.0, "MAY_ALIAS")];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for QueueFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (QueueFlags::GRAPHICS.0, "GRAPHICS"),
-            (QueueFlags::COMPUTE.0, "COMPUTE"),
-            (QueueFlags::TRANSFER.0, "TRANSFER"),
-            (QueueFlags::SPARSE_BINDING.0, "SPARSE_BINDING"),
-            (QueueFlags::PROTECTED.0, "PROTECTED"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for DiscardRectangleModeEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::INCLUSIVE => Some("INCLUSIVE"),
-            Self::EXCLUSIVE => Some("EXCLUSIVE"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for Filter {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::NEAREST => Some("NEAREST"),
-            Self::LINEAR => Some("LINEAR"),
-            Self::CUBIC_IMG => Some("CUBIC_IMG"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for BufferCreateFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (BufferCreateFlags::SPARSE_BINDING.0, "SPARSE_BINDING"),
-            (BufferCreateFlags::SPARSE_RESIDENCY.0, "SPARSE_RESIDENCY"),
-            (BufferCreateFlags::SPARSE_ALIASED.0, "SPARSE_ALIASED"),
-            (BufferCreateFlags::PROTECTED.0, "PROTECTED"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for SampleCountFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (SampleCountFlags::TYPE_1.0, "TYPE_1"),
-            (SampleCountFlags::TYPE_2.0, "TYPE_2"),
-            (SampleCountFlags::TYPE_4.0, "TYPE_4"),
-            (SampleCountFlags::TYPE_8.0, "TYPE_8"),
-            (SampleCountFlags::TYPE_16.0, "TYPE_16"),
-            (SampleCountFlags::TYPE_32.0, "TYPE_32"),
-            (SampleCountFlags::TYPE_64.0, "TYPE_64"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for ObjectEntryUsageFlagsNVX {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (ObjectEntryUsageFlagsNVX::GRAPHICS.0, "GRAPHICS"),
-            (ObjectEntryUsageFlagsNVX::COMPUTE.0, "COMPUTE"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for CullModeFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (CullModeFlags::NONE.0, "NONE"),
-            (CullModeFlags::FRONT.0, "FRONT"),
-            (CullModeFlags::BACK.0, "BACK"),
-            (CullModeFlags::FRONT_AND_BACK.0, "FRONT_AND_BACK"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for ExternalMemoryFeatureFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                ExternalMemoryFeatureFlags::EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY.0,
-                "EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY",
-            ),
-            (
-                ExternalMemoryFeatureFlags::EXTERNAL_MEMORY_FEATURE_EXPORTABLE.0,
-                "EXTERNAL_MEMORY_FEATURE_EXPORTABLE",
-            ),
-            (
-                ExternalMemoryFeatureFlags::EXTERNAL_MEMORY_FEATURE_IMPORTABLE.0,
-                "EXTERNAL_MEMORY_FEATURE_IMPORTABLE",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for VendorId {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::VIV => Some("VIV"),
-            Self::VSI => Some("VSI"),
-            Self::KAZAN => Some("KAZAN"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ImageUsageFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (ImageUsageFlags::TRANSFER_SRC.0, "TRANSFER_SRC"),
-            (ImageUsageFlags::TRANSFER_DST.0, "TRANSFER_DST"),
-            (ImageUsageFlags::SAMPLED.0, "SAMPLED"),
-            (ImageUsageFlags::STORAGE.0, "STORAGE"),
-            (ImageUsageFlags::COLOR_ATTACHMENT.0, "COLOR_ATTACHMENT"),
-            (
-                ImageUsageFlags::DEPTH_STENCIL_ATTACHMENT.0,
-                "DEPTH_STENCIL_ATTACHMENT",
-            ),
-            (
-                ImageUsageFlags::TRANSIENT_ATTACHMENT.0,
-                "TRANSIENT_ATTACHMENT",
-            ),
-            (ImageUsageFlags::INPUT_ATTACHMENT.0, "INPUT_ATTACHMENT"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for ExternalSemaphoreFeatureFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                ExternalSemaphoreFeatureFlags::EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE.0,
-                "EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE",
-            ),
-            (
-                ExternalSemaphoreFeatureFlags::EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE.0,
-                "EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for SemaphoreImportFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(SemaphoreImportFlags::TEMPORARY.0, "TEMPORARY")];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for QueryPipelineStatisticFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                QueryPipelineStatisticFlags::INPUT_ASSEMBLY_VERTICES.0,
-                "INPUT_ASSEMBLY_VERTICES",
-            ),
-            (
-                QueryPipelineStatisticFlags::INPUT_ASSEMBLY_PRIMITIVES.0,
-                "INPUT_ASSEMBLY_PRIMITIVES",
-            ),
-            (
-                QueryPipelineStatisticFlags::VERTEX_SHADER_INVOCATIONS.0,
-                "VERTEX_SHADER_INVOCATIONS",
-            ),
-            (
-                QueryPipelineStatisticFlags::GEOMETRY_SHADER_INVOCATIONS.0,
-                "GEOMETRY_SHADER_INVOCATIONS",
-            ),
-            (
-                QueryPipelineStatisticFlags::GEOMETRY_SHADER_PRIMITIVES.0,
-                "GEOMETRY_SHADER_PRIMITIVES",
-            ),
-            (
-                QueryPipelineStatisticFlags::CLIPPING_INVOCATIONS.0,
-                "CLIPPING_INVOCATIONS",
-            ),
-            (
-                QueryPipelineStatisticFlags::CLIPPING_PRIMITIVES.0,
-                "CLIPPING_PRIMITIVES",
-            ),
-            (
-                QueryPipelineStatisticFlags::FRAGMENT_SHADER_INVOCATIONS.0,
-                "FRAGMENT_SHADER_INVOCATIONS",
-            ),
-            (
-                QueryPipelineStatisticFlags::TESSELLATION_CONTROL_SHADER_PATCHES.0,
-                "TESSELLATION_CONTROL_SHADER_PATCHES",
-            ),
-            (
-                QueryPipelineStatisticFlags::TESSELLATION_EVALUATION_SHADER_INVOCATIONS.0,
-                "TESSELLATION_EVALUATION_SHADER_INVOCATIONS",
-            ),
-            (
-                QueryPipelineStatisticFlags::COMPUTE_SHADER_INVOCATIONS.0,
-                "COMPUTE_SHADER_INVOCATIONS",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for ViewportCoordinateSwizzleNV {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::POSITIVE_X => Some("POSITIVE_X"),
-            Self::NEGATIVE_X => Some("NEGATIVE_X"),
-            Self::POSITIVE_Y => Some("POSITIVE_Y"),
-            Self::NEGATIVE_Y => Some("NEGATIVE_Y"),
-            Self::POSITIVE_Z => Some("POSITIVE_Z"),
-            Self::NEGATIVE_Z => Some("NEGATIVE_Z"),
-            Self::POSITIVE_W => Some("POSITIVE_W"),
-            Self::NEGATIVE_W => Some("NEGATIVE_W"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for FormatFeatureFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN : & [ ( Flags , & str ) ] = & [ ( FormatFeatureFlags :: SAMPLED_IMAGE . 0 , "SAMPLED_IMAGE" ) , ( FormatFeatureFlags :: STORAGE_IMAGE . 0 , "STORAGE_IMAGE" ) , ( FormatFeatureFlags :: STORAGE_IMAGE_ATOMIC . 0 , "STORAGE_IMAGE_ATOMIC" ) , ( FormatFeatureFlags :: UNIFORM_TEXEL_BUFFER . 0 , "UNIFORM_TEXEL_BUFFER" ) , ( FormatFeatureFlags :: STORAGE_TEXEL_BUFFER . 0 , "STORAGE_TEXEL_BUFFER" ) , ( FormatFeatureFlags :: STORAGE_TEXEL_BUFFER_ATOMIC . 0 , "STORAGE_TEXEL_BUFFER_ATOMIC" ) , ( FormatFeatureFlags :: VERTEX_BUFFER . 0 , "VERTEX_BUFFER" ) , ( FormatFeatureFlags :: COLOR_ATTACHMENT . 0 , "COLOR_ATTACHMENT" ) , ( FormatFeatureFlags :: COLOR_ATTACHMENT_BLEND . 0 , "COLOR_ATTACHMENT_BLEND" ) , ( FormatFeatureFlags :: DEPTH_STENCIL_ATTACHMENT . 0 , "DEPTH_STENCIL_ATTACHMENT" ) , ( FormatFeatureFlags :: BLIT_SRC . 0 , "BLIT_SRC" ) , ( FormatFeatureFlags :: BLIT_DST . 0 , "BLIT_DST" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_FILTER_LINEAR . 0 , "SAMPLED_IMAGE_FILTER_LINEAR" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_FILTER_CUBIC_IMG . 0 , "SAMPLED_IMAGE_FILTER_CUBIC_IMG" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_FILTER_MINMAX_EXT . 0 , "SAMPLED_IMAGE_FILTER_MINMAX_EXT" ) , ( FormatFeatureFlags :: TRANSFER_SRC . 0 , "TRANSFER_SRC" ) , ( FormatFeatureFlags :: TRANSFER_DST . 0 , "TRANSFER_DST" ) , ( FormatFeatureFlags :: MIDPOINT_CHROMA_SAMPLES . 0 , "MIDPOINT_CHROMA_SAMPLES" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE" ) , ( FormatFeatureFlags :: DISJOINT . 0 , "DISJOINT" ) , ( FormatFeatureFlags :: COSITED_CHROMA_SAMPLES . 0 , "COSITED_CHROMA_SAMPLES" ) ] ;
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for BufferUsageFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (BufferUsageFlags::TRANSFER_SRC.0, "TRANSFER_SRC"),
-            (BufferUsageFlags::TRANSFER_DST.0, "TRANSFER_DST"),
-            (
-                BufferUsageFlags::UNIFORM_TEXEL_BUFFER.0,
-                "UNIFORM_TEXEL_BUFFER",
-            ),
-            (
-                BufferUsageFlags::STORAGE_TEXEL_BUFFER.0,
-                "STORAGE_TEXEL_BUFFER",
-            ),
-            (BufferUsageFlags::UNIFORM_BUFFER.0, "UNIFORM_BUFFER"),
-            (BufferUsageFlags::STORAGE_BUFFER.0, "STORAGE_BUFFER"),
-            (BufferUsageFlags::INDEX_BUFFER.0, "INDEX_BUFFER"),
-            (BufferUsageFlags::VERTEX_BUFFER.0, "VERTEX_BUFFER"),
-            (BufferUsageFlags::INDIRECT_BUFFER.0, "INDIRECT_BUFFER"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for CommandBufferLevel {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::PRIMARY => Some("PRIMARY"),
-            Self::SECONDARY => Some("SECONDARY"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for SurfaceTransformFlagsKHR {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (SurfaceTransformFlagsKHR::IDENTITY.0, "IDENTITY"),
-            (SurfaceTransformFlagsKHR::ROTATE_90.0, "ROTATE_90"),
-            (SurfaceTransformFlagsKHR::ROTATE_180.0, "ROTATE_180"),
-            (SurfaceTransformFlagsKHR::ROTATE_270.0, "ROTATE_270"),
-            (
-                SurfaceTransformFlagsKHR::HORIZONTAL_MIRROR.0,
-                "HORIZONTAL_MIRROR",
-            ),
-            (
-                SurfaceTransformFlagsKHR::HORIZONTAL_MIRROR_ROTATE_90.0,
-                "HORIZONTAL_MIRROR_ROTATE_90",
-            ),
-            (
-                SurfaceTransformFlagsKHR::HORIZONTAL_MIRROR_ROTATE_180.0,
-                "HORIZONTAL_MIRROR_ROTATE_180",
-            ),
-            (
-                SurfaceTransformFlagsKHR::HORIZONTAL_MIRROR_ROTATE_270.0,
-                "HORIZONTAL_MIRROR_ROTATE_270",
-            ),
-            (SurfaceTransformFlagsKHR::INHERIT.0, "INHERIT"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for ImageAspectFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (ImageAspectFlags::COLOR.0, "COLOR"),
-            (ImageAspectFlags::DEPTH.0, "DEPTH"),
-            (ImageAspectFlags::STENCIL.0, "STENCIL"),
-            (ImageAspectFlags::METADATA.0, "METADATA"),
-            (ImageAspectFlags::PLANE_0.0, "PLANE_0"),
-            (ImageAspectFlags::PLANE_1.0, "PLANE_1"),
-            (ImageAspectFlags::PLANE_2.0, "PLANE_2"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for ImageViewType {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::TYPE_1D => Some("TYPE_1D"),
-            Self::TYPE_2D => Some("TYPE_2D"),
-            Self::TYPE_3D => Some("TYPE_3D"),
-            Self::CUBE => Some("CUBE"),
-            Self::TYPE_1D_ARRAY => Some("TYPE_1D_ARRAY"),
-            Self::TYPE_2D_ARRAY => Some("TYPE_2D_ARRAY"),
-            Self::CUBE_ARRAY => Some("CUBE_ARRAY"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for BlendFactor {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::ZERO => Some("ZERO"),
-            Self::ONE => Some("ONE"),
-            Self::SRC_COLOR => Some("SRC_COLOR"),
-            Self::ONE_MINUS_SRC_COLOR => Some("ONE_MINUS_SRC_COLOR"),
-            Self::DST_COLOR => Some("DST_COLOR"),
-            Self::ONE_MINUS_DST_COLOR => Some("ONE_MINUS_DST_COLOR"),
-            Self::SRC_ALPHA => Some("SRC_ALPHA"),
-            Self::ONE_MINUS_SRC_ALPHA => Some("ONE_MINUS_SRC_ALPHA"),
-            Self::DST_ALPHA => Some("DST_ALPHA"),
-            Self::ONE_MINUS_DST_ALPHA => Some("ONE_MINUS_DST_ALPHA"),
-            Self::CONSTANT_COLOR => Some("CONSTANT_COLOR"),
-            Self::ONE_MINUS_CONSTANT_COLOR => Some("ONE_MINUS_CONSTANT_COLOR"),
-            Self::CONSTANT_ALPHA => Some("CONSTANT_ALPHA"),
-            Self::ONE_MINUS_CONSTANT_ALPHA => Some("ONE_MINUS_CONSTANT_ALPHA"),
-            Self::SRC_ALPHA_SATURATE => Some("SRC_ALPHA_SATURATE"),
-            Self::SRC1_COLOR => Some("SRC1_COLOR"),
-            Self::ONE_MINUS_SRC1_COLOR => Some("ONE_MINUS_SRC1_COLOR"),
-            Self::SRC1_ALPHA => Some("SRC1_ALPHA"),
-            Self::ONE_MINUS_SRC1_ALPHA => Some("ONE_MINUS_SRC1_ALPHA"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ValidationCacheHeaderVersionEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::ONE => Some("ONE"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ShaderInfoTypeAMD {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::STATISTICS => Some("STATISTICS"),
-            Self::BINARY => Some("BINARY"),
-            Self::DISASSEMBLY => Some("DISASSEMBLY"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for QueryResultFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (QueryResultFlags::TYPE_64.0, "TYPE_64"),
-            (QueryResultFlags::WAIT.0, "WAIT"),
-            (QueryResultFlags::WITH_AVAILABILITY.0, "WITH_AVAILABILITY"),
-            (QueryResultFlags::PARTIAL.0, "PARTIAL"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for ConservativeRasterizationModeEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::DISABLED => Some("DISABLED"),
-            Self::OVERESTIMATE => Some("OVERESTIMATE"),
-            Self::UNDERESTIMATE => Some("UNDERESTIMATE"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for IndexType {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::UINT16 => Some("UINT16"),
-            Self::UINT32 => Some("UINT32"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
 impl fmt::Display for AccessFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
@@ -41784,17 +41650,155 @@ impl fmt::Display for AccessFlags {
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for CompareOp {
+impl fmt::Display for CoverageModulationModeNV {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::NEVER => Some("NEVER"),
-            Self::LESS => Some("LESS"),
-            Self::EQUAL => Some("EQUAL"),
-            Self::LESS_OR_EQUAL => Some("LESS_OR_EQUAL"),
-            Self::GREATER => Some("GREATER"),
-            Self::NOT_EQUAL => Some("NOT_EQUAL"),
-            Self::GREATER_OR_EQUAL => Some("GREATER_OR_EQUAL"),
-            Self::ALWAYS => Some("ALWAYS"),
+            Self::NONE => Some("NONE"),
+            Self::RGB => Some("RGB"),
+            Self::ALPHA => Some("ALPHA"),
+            Self::RGBA => Some("RGBA"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for QueueGlobalPriorityEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::LOW => Some("LOW"),
+            Self::MEDIUM => Some("MEDIUM"),
+            Self::HIGH => Some("HIGH"),
+            Self::REALTIME => Some("REALTIME"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for DisplayPlaneAlphaFlagsKHR {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (DisplayPlaneAlphaFlagsKHR::OPAQUE.0, "OPAQUE"),
+            (DisplayPlaneAlphaFlagsKHR::GLOBAL.0, "GLOBAL"),
+            (DisplayPlaneAlphaFlagsKHR::PER_PIXEL.0, "PER_PIXEL"),
+            (
+                DisplayPlaneAlphaFlagsKHR::PER_PIXEL_PREMULTIPLIED.0,
+                "PER_PIXEL_PREMULTIPLIED",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for ChromaLocation {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::COSITED_EVEN => Some("COSITED_EVEN"),
+            Self::MIDPOINT => Some("MIDPOINT"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for AttachmentStoreOp {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::STORE => Some("STORE"),
+            Self::DONT_CARE => Some("DONT_CARE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for SamplerReductionModeEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::WEIGHTED_AVERAGE => Some("WEIGHTED_AVERAGE"),
+            Self::MIN => Some("MIN"),
+            Self::MAX => Some("MAX"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for CommandBufferResetFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(
+            CommandBufferResetFlags::RELEASE_RESOURCES.0,
+            "RELEASE_RESOURCES",
+        )];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for SamplerMipmapMode {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::NEAREST => Some("NEAREST"),
+            Self::LINEAR => Some("LINEAR"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for BorderColor {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::FLOAT_TRANSPARENT_BLACK => Some("FLOAT_TRANSPARENT_BLACK"),
+            Self::INT_TRANSPARENT_BLACK => Some("INT_TRANSPARENT_BLACK"),
+            Self::FLOAT_OPAQUE_BLACK => Some("FLOAT_OPAQUE_BLACK"),
+            Self::INT_OPAQUE_BLACK => Some("INT_OPAQUE_BLACK"),
+            Self::FLOAT_OPAQUE_WHITE => Some("FLOAT_OPAQUE_WHITE"),
+            Self::INT_OPAQUE_WHITE => Some("INT_OPAQUE_WHITE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for DescriptorSetLayoutCreateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                DescriptorSetLayoutCreateFlags::PUSH_DESCRIPTOR_KHR.0,
+                "PUSH_DESCRIPTOR_KHR",
+            ),
+            (
+                DescriptorSetLayoutCreateFlags::UPDATE_AFTER_BIND_POOL_EXT.0,
+                "UPDATE_AFTER_BIND_POOL_EXT",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for PipelineCacheHeaderVersion {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::ONE => Some("ONE"),
             _ => None,
         };
         if let Some(x) = name {
@@ -41823,279 +41827,75 @@ impl fmt::Display for ExternalMemoryFeatureFlagsNV {
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for SubpassDescriptionFlags {
+impl fmt::Display for AttachmentDescriptionFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(AttachmentDescriptionFlags::MAY_ALIAS.0, "MAY_ALIAS")];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for CullModeFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (CullModeFlags::NONE.0, "NONE"),
+            (CullModeFlags::FRONT.0, "FRONT"),
+            (CullModeFlags::BACK.0, "BACK"),
+            (CullModeFlags::FRONT_AND_BACK.0, "FRONT_AND_BACK"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for CommandBufferUsageFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (
-                SubpassDescriptionFlags::PER_VIEW_ATTRIBUTES_NVX.0,
-                "PER_VIEW_ATTRIBUTES_NVX",
+                CommandBufferUsageFlags::ONE_TIME_SUBMIT.0,
+                "ONE_TIME_SUBMIT",
             ),
             (
-                SubpassDescriptionFlags::PER_VIEW_POSITION_X_ONLY_NVX.0,
-                "PER_VIEW_POSITION_X_ONLY_NVX",
+                CommandBufferUsageFlags::RENDER_PASS_CONTINUE.0,
+                "RENDER_PASS_CONTINUE",
+            ),
+            (
+                CommandBufferUsageFlags::SIMULTANEOUS_USE.0,
+                "SIMULTANEOUS_USE",
             ),
         ];
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for Format {
+impl fmt::Display for QueryResultFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (QueryResultFlags::TYPE_64.0, "TYPE_64"),
+            (QueryResultFlags::WAIT.0, "WAIT"),
+            (QueryResultFlags::WITH_AVAILABILITY.0, "WITH_AVAILABILITY"),
+            (QueryResultFlags::PARTIAL.0, "PARTIAL"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for BlendFactor {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::UNDEFINED => Some("UNDEFINED"),
-            Self::R4G4_UNORM_PACK8 => Some("R4G4_UNORM_PACK8"),
-            Self::R4G4B4A4_UNORM_PACK16 => Some("R4G4B4A4_UNORM_PACK16"),
-            Self::B4G4R4A4_UNORM_PACK16 => Some("B4G4R4A4_UNORM_PACK16"),
-            Self::R5G6B5_UNORM_PACK16 => Some("R5G6B5_UNORM_PACK16"),
-            Self::B5G6R5_UNORM_PACK16 => Some("B5G6R5_UNORM_PACK16"),
-            Self::R5G5B5A1_UNORM_PACK16 => Some("R5G5B5A1_UNORM_PACK16"),
-            Self::B5G5R5A1_UNORM_PACK16 => Some("B5G5R5A1_UNORM_PACK16"),
-            Self::A1R5G5B5_UNORM_PACK16 => Some("A1R5G5B5_UNORM_PACK16"),
-            Self::R8_UNORM => Some("R8_UNORM"),
-            Self::R8_SNORM => Some("R8_SNORM"),
-            Self::R8_USCALED => Some("R8_USCALED"),
-            Self::R8_SSCALED => Some("R8_SSCALED"),
-            Self::R8_UINT => Some("R8_UINT"),
-            Self::R8_SINT => Some("R8_SINT"),
-            Self::R8_SRGB => Some("R8_SRGB"),
-            Self::R8G8_UNORM => Some("R8G8_UNORM"),
-            Self::R8G8_SNORM => Some("R8G8_SNORM"),
-            Self::R8G8_USCALED => Some("R8G8_USCALED"),
-            Self::R8G8_SSCALED => Some("R8G8_SSCALED"),
-            Self::R8G8_UINT => Some("R8G8_UINT"),
-            Self::R8G8_SINT => Some("R8G8_SINT"),
-            Self::R8G8_SRGB => Some("R8G8_SRGB"),
-            Self::R8G8B8_UNORM => Some("R8G8B8_UNORM"),
-            Self::R8G8B8_SNORM => Some("R8G8B8_SNORM"),
-            Self::R8G8B8_USCALED => Some("R8G8B8_USCALED"),
-            Self::R8G8B8_SSCALED => Some("R8G8B8_SSCALED"),
-            Self::R8G8B8_UINT => Some("R8G8B8_UINT"),
-            Self::R8G8B8_SINT => Some("R8G8B8_SINT"),
-            Self::R8G8B8_SRGB => Some("R8G8B8_SRGB"),
-            Self::B8G8R8_UNORM => Some("B8G8R8_UNORM"),
-            Self::B8G8R8_SNORM => Some("B8G8R8_SNORM"),
-            Self::B8G8R8_USCALED => Some("B8G8R8_USCALED"),
-            Self::B8G8R8_SSCALED => Some("B8G8R8_SSCALED"),
-            Self::B8G8R8_UINT => Some("B8G8R8_UINT"),
-            Self::B8G8R8_SINT => Some("B8G8R8_SINT"),
-            Self::B8G8R8_SRGB => Some("B8G8R8_SRGB"),
-            Self::R8G8B8A8_UNORM => Some("R8G8B8A8_UNORM"),
-            Self::R8G8B8A8_SNORM => Some("R8G8B8A8_SNORM"),
-            Self::R8G8B8A8_USCALED => Some("R8G8B8A8_USCALED"),
-            Self::R8G8B8A8_SSCALED => Some("R8G8B8A8_SSCALED"),
-            Self::R8G8B8A8_UINT => Some("R8G8B8A8_UINT"),
-            Self::R8G8B8A8_SINT => Some("R8G8B8A8_SINT"),
-            Self::R8G8B8A8_SRGB => Some("R8G8B8A8_SRGB"),
-            Self::B8G8R8A8_UNORM => Some("B8G8R8A8_UNORM"),
-            Self::B8G8R8A8_SNORM => Some("B8G8R8A8_SNORM"),
-            Self::B8G8R8A8_USCALED => Some("B8G8R8A8_USCALED"),
-            Self::B8G8R8A8_SSCALED => Some("B8G8R8A8_SSCALED"),
-            Self::B8G8R8A8_UINT => Some("B8G8R8A8_UINT"),
-            Self::B8G8R8A8_SINT => Some("B8G8R8A8_SINT"),
-            Self::B8G8R8A8_SRGB => Some("B8G8R8A8_SRGB"),
-            Self::A8B8G8R8_UNORM_PACK32 => Some("A8B8G8R8_UNORM_PACK32"),
-            Self::A8B8G8R8_SNORM_PACK32 => Some("A8B8G8R8_SNORM_PACK32"),
-            Self::A8B8G8R8_USCALED_PACK32 => Some("A8B8G8R8_USCALED_PACK32"),
-            Self::A8B8G8R8_SSCALED_PACK32 => Some("A8B8G8R8_SSCALED_PACK32"),
-            Self::A8B8G8R8_UINT_PACK32 => Some("A8B8G8R8_UINT_PACK32"),
-            Self::A8B8G8R8_SINT_PACK32 => Some("A8B8G8R8_SINT_PACK32"),
-            Self::A8B8G8R8_SRGB_PACK32 => Some("A8B8G8R8_SRGB_PACK32"),
-            Self::A2R10G10B10_UNORM_PACK32 => Some("A2R10G10B10_UNORM_PACK32"),
-            Self::A2R10G10B10_SNORM_PACK32 => Some("A2R10G10B10_SNORM_PACK32"),
-            Self::A2R10G10B10_USCALED_PACK32 => Some("A2R10G10B10_USCALED_PACK32"),
-            Self::A2R10G10B10_SSCALED_PACK32 => Some("A2R10G10B10_SSCALED_PACK32"),
-            Self::A2R10G10B10_UINT_PACK32 => Some("A2R10G10B10_UINT_PACK32"),
-            Self::A2R10G10B10_SINT_PACK32 => Some("A2R10G10B10_SINT_PACK32"),
-            Self::A2B10G10R10_UNORM_PACK32 => Some("A2B10G10R10_UNORM_PACK32"),
-            Self::A2B10G10R10_SNORM_PACK32 => Some("A2B10G10R10_SNORM_PACK32"),
-            Self::A2B10G10R10_USCALED_PACK32 => Some("A2B10G10R10_USCALED_PACK32"),
-            Self::A2B10G10R10_SSCALED_PACK32 => Some("A2B10G10R10_SSCALED_PACK32"),
-            Self::A2B10G10R10_UINT_PACK32 => Some("A2B10G10R10_UINT_PACK32"),
-            Self::A2B10G10R10_SINT_PACK32 => Some("A2B10G10R10_SINT_PACK32"),
-            Self::R16_UNORM => Some("R16_UNORM"),
-            Self::R16_SNORM => Some("R16_SNORM"),
-            Self::R16_USCALED => Some("R16_USCALED"),
-            Self::R16_SSCALED => Some("R16_SSCALED"),
-            Self::R16_UINT => Some("R16_UINT"),
-            Self::R16_SINT => Some("R16_SINT"),
-            Self::R16_SFLOAT => Some("R16_SFLOAT"),
-            Self::R16G16_UNORM => Some("R16G16_UNORM"),
-            Self::R16G16_SNORM => Some("R16G16_SNORM"),
-            Self::R16G16_USCALED => Some("R16G16_USCALED"),
-            Self::R16G16_SSCALED => Some("R16G16_SSCALED"),
-            Self::R16G16_UINT => Some("R16G16_UINT"),
-            Self::R16G16_SINT => Some("R16G16_SINT"),
-            Self::R16G16_SFLOAT => Some("R16G16_SFLOAT"),
-            Self::R16G16B16_UNORM => Some("R16G16B16_UNORM"),
-            Self::R16G16B16_SNORM => Some("R16G16B16_SNORM"),
-            Self::R16G16B16_USCALED => Some("R16G16B16_USCALED"),
-            Self::R16G16B16_SSCALED => Some("R16G16B16_SSCALED"),
-            Self::R16G16B16_UINT => Some("R16G16B16_UINT"),
-            Self::R16G16B16_SINT => Some("R16G16B16_SINT"),
-            Self::R16G16B16_SFLOAT => Some("R16G16B16_SFLOAT"),
-            Self::R16G16B16A16_UNORM => Some("R16G16B16A16_UNORM"),
-            Self::R16G16B16A16_SNORM => Some("R16G16B16A16_SNORM"),
-            Self::R16G16B16A16_USCALED => Some("R16G16B16A16_USCALED"),
-            Self::R16G16B16A16_SSCALED => Some("R16G16B16A16_SSCALED"),
-            Self::R16G16B16A16_UINT => Some("R16G16B16A16_UINT"),
-            Self::R16G16B16A16_SINT => Some("R16G16B16A16_SINT"),
-            Self::R16G16B16A16_SFLOAT => Some("R16G16B16A16_SFLOAT"),
-            Self::R32_UINT => Some("R32_UINT"),
-            Self::R32_SINT => Some("R32_SINT"),
-            Self::R32_SFLOAT => Some("R32_SFLOAT"),
-            Self::R32G32_UINT => Some("R32G32_UINT"),
-            Self::R32G32_SINT => Some("R32G32_SINT"),
-            Self::R32G32_SFLOAT => Some("R32G32_SFLOAT"),
-            Self::R32G32B32_UINT => Some("R32G32B32_UINT"),
-            Self::R32G32B32_SINT => Some("R32G32B32_SINT"),
-            Self::R32G32B32_SFLOAT => Some("R32G32B32_SFLOAT"),
-            Self::R32G32B32A32_UINT => Some("R32G32B32A32_UINT"),
-            Self::R32G32B32A32_SINT => Some("R32G32B32A32_SINT"),
-            Self::R32G32B32A32_SFLOAT => Some("R32G32B32A32_SFLOAT"),
-            Self::R64_UINT => Some("R64_UINT"),
-            Self::R64_SINT => Some("R64_SINT"),
-            Self::R64_SFLOAT => Some("R64_SFLOAT"),
-            Self::R64G64_UINT => Some("R64G64_UINT"),
-            Self::R64G64_SINT => Some("R64G64_SINT"),
-            Self::R64G64_SFLOAT => Some("R64G64_SFLOAT"),
-            Self::R64G64B64_UINT => Some("R64G64B64_UINT"),
-            Self::R64G64B64_SINT => Some("R64G64B64_SINT"),
-            Self::R64G64B64_SFLOAT => Some("R64G64B64_SFLOAT"),
-            Self::R64G64B64A64_UINT => Some("R64G64B64A64_UINT"),
-            Self::R64G64B64A64_SINT => Some("R64G64B64A64_SINT"),
-            Self::R64G64B64A64_SFLOAT => Some("R64G64B64A64_SFLOAT"),
-            Self::B10G11R11_UFLOAT_PACK32 => Some("B10G11R11_UFLOAT_PACK32"),
-            Self::E5B9G9R9_UFLOAT_PACK32 => Some("E5B9G9R9_UFLOAT_PACK32"),
-            Self::D16_UNORM => Some("D16_UNORM"),
-            Self::X8_D24_UNORM_PACK32 => Some("X8_D24_UNORM_PACK32"),
-            Self::D32_SFLOAT => Some("D32_SFLOAT"),
-            Self::S8_UINT => Some("S8_UINT"),
-            Self::D16_UNORM_S8_UINT => Some("D16_UNORM_S8_UINT"),
-            Self::D24_UNORM_S8_UINT => Some("D24_UNORM_S8_UINT"),
-            Self::D32_SFLOAT_S8_UINT => Some("D32_SFLOAT_S8_UINT"),
-            Self::BC1_RGB_UNORM_BLOCK => Some("BC1_RGB_UNORM_BLOCK"),
-            Self::BC1_RGB_SRGB_BLOCK => Some("BC1_RGB_SRGB_BLOCK"),
-            Self::BC1_RGBA_UNORM_BLOCK => Some("BC1_RGBA_UNORM_BLOCK"),
-            Self::BC1_RGBA_SRGB_BLOCK => Some("BC1_RGBA_SRGB_BLOCK"),
-            Self::BC2_UNORM_BLOCK => Some("BC2_UNORM_BLOCK"),
-            Self::BC2_SRGB_BLOCK => Some("BC2_SRGB_BLOCK"),
-            Self::BC3_UNORM_BLOCK => Some("BC3_UNORM_BLOCK"),
-            Self::BC3_SRGB_BLOCK => Some("BC3_SRGB_BLOCK"),
-            Self::BC4_UNORM_BLOCK => Some("BC4_UNORM_BLOCK"),
-            Self::BC4_SNORM_BLOCK => Some("BC4_SNORM_BLOCK"),
-            Self::BC5_UNORM_BLOCK => Some("BC5_UNORM_BLOCK"),
-            Self::BC5_SNORM_BLOCK => Some("BC5_SNORM_BLOCK"),
-            Self::BC6H_UFLOAT_BLOCK => Some("BC6H_UFLOAT_BLOCK"),
-            Self::BC6H_SFLOAT_BLOCK => Some("BC6H_SFLOAT_BLOCK"),
-            Self::BC7_UNORM_BLOCK => Some("BC7_UNORM_BLOCK"),
-            Self::BC7_SRGB_BLOCK => Some("BC7_SRGB_BLOCK"),
-            Self::ETC2_R8G8B8_UNORM_BLOCK => Some("ETC2_R8G8B8_UNORM_BLOCK"),
-            Self::ETC2_R8G8B8_SRGB_BLOCK => Some("ETC2_R8G8B8_SRGB_BLOCK"),
-            Self::ETC2_R8G8B8A1_UNORM_BLOCK => Some("ETC2_R8G8B8A1_UNORM_BLOCK"),
-            Self::ETC2_R8G8B8A1_SRGB_BLOCK => Some("ETC2_R8G8B8A1_SRGB_BLOCK"),
-            Self::ETC2_R8G8B8A8_UNORM_BLOCK => Some("ETC2_R8G8B8A8_UNORM_BLOCK"),
-            Self::ETC2_R8G8B8A8_SRGB_BLOCK => Some("ETC2_R8G8B8A8_SRGB_BLOCK"),
-            Self::EAC_R11_UNORM_BLOCK => Some("EAC_R11_UNORM_BLOCK"),
-            Self::EAC_R11_SNORM_BLOCK => Some("EAC_R11_SNORM_BLOCK"),
-            Self::EAC_R11G11_UNORM_BLOCK => Some("EAC_R11G11_UNORM_BLOCK"),
-            Self::EAC_R11G11_SNORM_BLOCK => Some("EAC_R11G11_SNORM_BLOCK"),
-            Self::ASTC_4X4_UNORM_BLOCK => Some("ASTC_4X4_UNORM_BLOCK"),
-            Self::ASTC_4X4_SRGB_BLOCK => Some("ASTC_4X4_SRGB_BLOCK"),
-            Self::ASTC_5X4_UNORM_BLOCK => Some("ASTC_5X4_UNORM_BLOCK"),
-            Self::ASTC_5X4_SRGB_BLOCK => Some("ASTC_5X4_SRGB_BLOCK"),
-            Self::ASTC_5X5_UNORM_BLOCK => Some("ASTC_5X5_UNORM_BLOCK"),
-            Self::ASTC_5X5_SRGB_BLOCK => Some("ASTC_5X5_SRGB_BLOCK"),
-            Self::ASTC_6X5_UNORM_BLOCK => Some("ASTC_6X5_UNORM_BLOCK"),
-            Self::ASTC_6X5_SRGB_BLOCK => Some("ASTC_6X5_SRGB_BLOCK"),
-            Self::ASTC_6X6_UNORM_BLOCK => Some("ASTC_6X6_UNORM_BLOCK"),
-            Self::ASTC_6X6_SRGB_BLOCK => Some("ASTC_6X6_SRGB_BLOCK"),
-            Self::ASTC_8X5_UNORM_BLOCK => Some("ASTC_8X5_UNORM_BLOCK"),
-            Self::ASTC_8X5_SRGB_BLOCK => Some("ASTC_8X5_SRGB_BLOCK"),
-            Self::ASTC_8X6_UNORM_BLOCK => Some("ASTC_8X6_UNORM_BLOCK"),
-            Self::ASTC_8X6_SRGB_BLOCK => Some("ASTC_8X6_SRGB_BLOCK"),
-            Self::ASTC_8X8_UNORM_BLOCK => Some("ASTC_8X8_UNORM_BLOCK"),
-            Self::ASTC_8X8_SRGB_BLOCK => Some("ASTC_8X8_SRGB_BLOCK"),
-            Self::ASTC_10X5_UNORM_BLOCK => Some("ASTC_10X5_UNORM_BLOCK"),
-            Self::ASTC_10X5_SRGB_BLOCK => Some("ASTC_10X5_SRGB_BLOCK"),
-            Self::ASTC_10X6_UNORM_BLOCK => Some("ASTC_10X6_UNORM_BLOCK"),
-            Self::ASTC_10X6_SRGB_BLOCK => Some("ASTC_10X6_SRGB_BLOCK"),
-            Self::ASTC_10X8_UNORM_BLOCK => Some("ASTC_10X8_UNORM_BLOCK"),
-            Self::ASTC_10X8_SRGB_BLOCK => Some("ASTC_10X8_SRGB_BLOCK"),
-            Self::ASTC_10X10_UNORM_BLOCK => Some("ASTC_10X10_UNORM_BLOCK"),
-            Self::ASTC_10X10_SRGB_BLOCK => Some("ASTC_10X10_SRGB_BLOCK"),
-            Self::ASTC_12X10_UNORM_BLOCK => Some("ASTC_12X10_UNORM_BLOCK"),
-            Self::ASTC_12X10_SRGB_BLOCK => Some("ASTC_12X10_SRGB_BLOCK"),
-            Self::ASTC_12X12_UNORM_BLOCK => Some("ASTC_12X12_UNORM_BLOCK"),
-            Self::ASTC_12X12_SRGB_BLOCK => Some("ASTC_12X12_SRGB_BLOCK"),
-            Self::PVRTC1_2BPP_UNORM_BLOCK_IMG => Some("PVRTC1_2BPP_UNORM_BLOCK_IMG"),
-            Self::PVRTC1_4BPP_UNORM_BLOCK_IMG => Some("PVRTC1_4BPP_UNORM_BLOCK_IMG"),
-            Self::PVRTC2_2BPP_UNORM_BLOCK_IMG => Some("PVRTC2_2BPP_UNORM_BLOCK_IMG"),
-            Self::PVRTC2_4BPP_UNORM_BLOCK_IMG => Some("PVRTC2_4BPP_UNORM_BLOCK_IMG"),
-            Self::PVRTC1_2BPP_SRGB_BLOCK_IMG => Some("PVRTC1_2BPP_SRGB_BLOCK_IMG"),
-            Self::PVRTC1_4BPP_SRGB_BLOCK_IMG => Some("PVRTC1_4BPP_SRGB_BLOCK_IMG"),
-            Self::PVRTC2_2BPP_SRGB_BLOCK_IMG => Some("PVRTC2_2BPP_SRGB_BLOCK_IMG"),
-            Self::PVRTC2_4BPP_SRGB_BLOCK_IMG => Some("PVRTC2_4BPP_SRGB_BLOCK_IMG"),
-            Self::G8B8G8R8_422_UNORM => Some("G8B8G8R8_422_UNORM"),
-            Self::B8G8R8G8_422_UNORM => Some("B8G8R8G8_422_UNORM"),
-            Self::G8_B8_R8_3PLANE_420_UNORM => Some("G8_B8_R8_3PLANE_420_UNORM"),
-            Self::G8_B8R8_2PLANE_420_UNORM => Some("G8_B8R8_2PLANE_420_UNORM"),
-            Self::G8_B8_R8_3PLANE_422_UNORM => Some("G8_B8_R8_3PLANE_422_UNORM"),
-            Self::G8_B8R8_2PLANE_422_UNORM => Some("G8_B8R8_2PLANE_422_UNORM"),
-            Self::G8_B8_R8_3PLANE_444_UNORM => Some("G8_B8_R8_3PLANE_444_UNORM"),
-            Self::R10X6_UNORM_PACK16 => Some("R10X6_UNORM_PACK16"),
-            Self::R10X6G10X6_UNORM_2PACK16 => Some("R10X6G10X6_UNORM_2PACK16"),
-            Self::R10X6G10X6B10X6A10X6_UNORM_4PACK16 => Some("R10X6G10X6B10X6A10X6_UNORM_4PACK16"),
-            Self::G10X6B10X6G10X6R10X6_422_UNORM_4PACK16 => {
-                Some("G10X6B10X6G10X6R10X6_422_UNORM_4PACK16")
-            }
-            Self::B10X6G10X6R10X6G10X6_422_UNORM_4PACK16 => {
-                Some("B10X6G10X6R10X6G10X6_422_UNORM_4PACK16")
-            }
-            Self::G10X6_B10X6_R10X6_3PLANE_420_UNORM_3PACK16 => {
-                Some("G10X6_B10X6_R10X6_3PLANE_420_UNORM_3PACK16")
-            }
-            Self::G10X6_B10X6R10X6_2PLANE_420_UNORM_3PACK16 => {
-                Some("G10X6_B10X6R10X6_2PLANE_420_UNORM_3PACK16")
-            }
-            Self::G10X6_B10X6_R10X6_3PLANE_422_UNORM_3PACK16 => {
-                Some("G10X6_B10X6_R10X6_3PLANE_422_UNORM_3PACK16")
-            }
-            Self::G10X6_B10X6R10X6_2PLANE_422_UNORM_3PACK16 => {
-                Some("G10X6_B10X6R10X6_2PLANE_422_UNORM_3PACK16")
-            }
-            Self::G10X6_B10X6_R10X6_3PLANE_444_UNORM_3PACK16 => {
-                Some("G10X6_B10X6_R10X6_3PLANE_444_UNORM_3PACK16")
-            }
-            Self::R12X4_UNORM_PACK16 => Some("R12X4_UNORM_PACK16"),
-            Self::R12X4G12X4_UNORM_2PACK16 => Some("R12X4G12X4_UNORM_2PACK16"),
-            Self::R12X4G12X4B12X4A12X4_UNORM_4PACK16 => Some("R12X4G12X4B12X4A12X4_UNORM_4PACK16"),
-            Self::G12X4B12X4G12X4R12X4_422_UNORM_4PACK16 => {
-                Some("G12X4B12X4G12X4R12X4_422_UNORM_4PACK16")
-            }
-            Self::B12X4G12X4R12X4G12X4_422_UNORM_4PACK16 => {
-                Some("B12X4G12X4R12X4G12X4_422_UNORM_4PACK16")
-            }
-            Self::G12X4_B12X4_R12X4_3PLANE_420_UNORM_3PACK16 => {
-                Some("G12X4_B12X4_R12X4_3PLANE_420_UNORM_3PACK16")
-            }
-            Self::G12X4_B12X4R12X4_2PLANE_420_UNORM_3PACK16 => {
-                Some("G12X4_B12X4R12X4_2PLANE_420_UNORM_3PACK16")
-            }
-            Self::G12X4_B12X4_R12X4_3PLANE_422_UNORM_3PACK16 => {
-                Some("G12X4_B12X4_R12X4_3PLANE_422_UNORM_3PACK16")
-            }
-            Self::G12X4_B12X4R12X4_2PLANE_422_UNORM_3PACK16 => {
-                Some("G12X4_B12X4R12X4_2PLANE_422_UNORM_3PACK16")
-            }
-            Self::G12X4_B12X4_R12X4_3PLANE_444_UNORM_3PACK16 => {
-                Some("G12X4_B12X4_R12X4_3PLANE_444_UNORM_3PACK16")
-            }
-            Self::G16B16G16R16_422_UNORM => Some("G16B16G16R16_422_UNORM"),
-            Self::B16G16R16G16_422_UNORM => Some("B16G16R16G16_422_UNORM"),
-            Self::G16_B16_R16_3PLANE_420_UNORM => Some("G16_B16_R16_3PLANE_420_UNORM"),
-            Self::G16_B16R16_2PLANE_420_UNORM => Some("G16_B16R16_2PLANE_420_UNORM"),
-            Self::G16_B16_R16_3PLANE_422_UNORM => Some("G16_B16_R16_3PLANE_422_UNORM"),
-            Self::G16_B16R16_2PLANE_422_UNORM => Some("G16_B16R16_2PLANE_422_UNORM"),
-            Self::G16_B16_R16_3PLANE_444_UNORM => Some("G16_B16_R16_3PLANE_444_UNORM"),
+            Self::ZERO => Some("ZERO"),
+            Self::ONE => Some("ONE"),
+            Self::SRC_COLOR => Some("SRC_COLOR"),
+            Self::ONE_MINUS_SRC_COLOR => Some("ONE_MINUS_SRC_COLOR"),
+            Self::DST_COLOR => Some("DST_COLOR"),
+            Self::ONE_MINUS_DST_COLOR => Some("ONE_MINUS_DST_COLOR"),
+            Self::SRC_ALPHA => Some("SRC_ALPHA"),
+            Self::ONE_MINUS_SRC_ALPHA => Some("ONE_MINUS_SRC_ALPHA"),
+            Self::DST_ALPHA => Some("DST_ALPHA"),
+            Self::ONE_MINUS_DST_ALPHA => Some("ONE_MINUS_DST_ALPHA"),
+            Self::CONSTANT_COLOR => Some("CONSTANT_COLOR"),
+            Self::ONE_MINUS_CONSTANT_COLOR => Some("ONE_MINUS_CONSTANT_COLOR"),
+            Self::CONSTANT_ALPHA => Some("CONSTANT_ALPHA"),
+            Self::ONE_MINUS_CONSTANT_ALPHA => Some("ONE_MINUS_CONSTANT_ALPHA"),
+            Self::SRC_ALPHA_SATURATE => Some("SRC_ALPHA_SATURATE"),
+            Self::SRC1_COLOR => Some("SRC1_COLOR"),
+            Self::ONE_MINUS_SRC1_COLOR => Some("ONE_MINUS_SRC1_COLOR"),
+            Self::SRC1_ALPHA => Some("SRC1_ALPHA"),
+            Self::ONE_MINUS_SRC1_ALPHA => Some("ONE_MINUS_SRC1_ALPHA"),
             _ => None,
         };
         if let Some(x) = name {
@@ -42103,6 +41903,530 @@ impl fmt::Display for Format {
         } else {
             write!(f, "{}", self.0)
         }
+    }
+}
+impl fmt::Display for SampleCountFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (SampleCountFlags::TYPE_1.0, "TYPE_1"),
+            (SampleCountFlags::TYPE_2.0, "TYPE_2"),
+            (SampleCountFlags::TYPE_4.0, "TYPE_4"),
+            (SampleCountFlags::TYPE_8.0, "TYPE_8"),
+            (SampleCountFlags::TYPE_16.0, "TYPE_16"),
+            (SampleCountFlags::TYPE_32.0, "TYPE_32"),
+            (SampleCountFlags::TYPE_64.0, "TYPE_64"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for SamplerAddressMode {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::REPEAT => Some("REPEAT"),
+            Self::MIRRORED_REPEAT => Some("MIRRORED_REPEAT"),
+            Self::CLAMP_TO_EDGE => Some("CLAMP_TO_EDGE"),
+            Self::CLAMP_TO_BORDER => Some("CLAMP_TO_BORDER"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for ImageUsageFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (ImageUsageFlags::TRANSFER_SRC.0, "TRANSFER_SRC"),
+            (ImageUsageFlags::TRANSFER_DST.0, "TRANSFER_DST"),
+            (ImageUsageFlags::SAMPLED.0, "SAMPLED"),
+            (ImageUsageFlags::STORAGE.0, "STORAGE"),
+            (ImageUsageFlags::COLOR_ATTACHMENT.0, "COLOR_ATTACHMENT"),
+            (
+                ImageUsageFlags::DEPTH_STENCIL_ATTACHMENT.0,
+                "DEPTH_STENCIL_ATTACHMENT",
+            ),
+            (
+                ImageUsageFlags::TRANSIENT_ATTACHMENT.0,
+                "TRANSIENT_ATTACHMENT",
+            ),
+            (ImageUsageFlags::INPUT_ATTACHMENT.0, "INPUT_ATTACHMENT"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for DisplayPowerStateEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::OFF => Some("OFF"),
+            Self::SUSPEND => Some("SUSPEND"),
+            Self::ON => Some("ON"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for ImageViewType {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::TYPE_1D => Some("TYPE_1D"),
+            Self::TYPE_2D => Some("TYPE_2D"),
+            Self::TYPE_3D => Some("TYPE_3D"),
+            Self::CUBE => Some("CUBE"),
+            Self::TYPE_1D_ARRAY => Some("TYPE_1D_ARRAY"),
+            Self::TYPE_2D_ARRAY => Some("TYPE_2D_ARRAY"),
+            Self::CUBE_ARRAY => Some("CUBE_ARRAY"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for DeviceEventTypeEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::DISPLAY_HOTPLUG => Some("DISPLAY_HOTPLUG"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for ShaderStageFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (ShaderStageFlags::VERTEX.0, "VERTEX"),
+            (
+                ShaderStageFlags::TESSELLATION_CONTROL.0,
+                "TESSELLATION_CONTROL",
+            ),
+            (
+                ShaderStageFlags::TESSELLATION_EVALUATION.0,
+                "TESSELLATION_EVALUATION",
+            ),
+            (ShaderStageFlags::GEOMETRY.0, "GEOMETRY"),
+            (ShaderStageFlags::FRAGMENT.0, "FRAGMENT"),
+            (ShaderStageFlags::COMPUTE.0, "COMPUTE"),
+            (ShaderStageFlags::ALL_GRAPHICS.0, "ALL_GRAPHICS"),
+            (ShaderStageFlags::ALL.0, "ALL"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for SwapchainCreateFlagsKHR {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                SwapchainCreateFlagsKHR::SPLIT_INSTANCE_BIND_REGIONS.0,
+                "SPLIT_INSTANCE_BIND_REGIONS",
+            ),
+            (SwapchainCreateFlagsKHR::PROTECTED.0, "PROTECTED"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for Filter {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::NEAREST => Some("NEAREST"),
+            Self::LINEAR => Some("LINEAR"),
+            Self::CUBIC_IMG => Some("CUBIC_IMG"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for StencilOp {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::KEEP => Some("KEEP"),
+            Self::ZERO => Some("ZERO"),
+            Self::REPLACE => Some("REPLACE"),
+            Self::INCREMENT_AND_CLAMP => Some("INCREMENT_AND_CLAMP"),
+            Self::DECREMENT_AND_CLAMP => Some("DECREMENT_AND_CLAMP"),
+            Self::INVERT => Some("INVERT"),
+            Self::INCREMENT_AND_WRAP => Some("INCREMENT_AND_WRAP"),
+            Self::DECREMENT_AND_WRAP => Some("DECREMENT_AND_WRAP"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for ComponentSwizzle {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::IDENTITY => Some("IDENTITY"),
+            Self::ZERO => Some("ZERO"),
+            Self::ONE => Some("ONE"),
+            Self::R => Some("R"),
+            Self::G => Some("G"),
+            Self::B => Some("B"),
+            Self::A => Some("A"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for DescriptorUpdateTemplateType {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::DESCRIPTOR_SET => Some("DESCRIPTOR_SET"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for ImageType {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::TYPE_1D => Some("TYPE_1D"),
+            Self::TYPE_2D => Some("TYPE_2D"),
+            Self::TYPE_3D => Some("TYPE_3D"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for QueryType {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::OCCLUSION => Some("OCCLUSION"),
+            Self::PIPELINE_STATISTICS => Some("PIPELINE_STATISTICS"),
+            Self::TIMESTAMP => Some("TIMESTAMP"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for DiscardRectangleModeEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::INCLUSIVE => Some("INCLUSIVE"),
+            Self::EXCLUSIVE => Some("EXCLUSIVE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for DescriptorType {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::SAMPLER => Some("SAMPLER"),
+            Self::COMBINED_IMAGE_SAMPLER => Some("COMBINED_IMAGE_SAMPLER"),
+            Self::SAMPLED_IMAGE => Some("SAMPLED_IMAGE"),
+            Self::STORAGE_IMAGE => Some("STORAGE_IMAGE"),
+            Self::UNIFORM_TEXEL_BUFFER => Some("UNIFORM_TEXEL_BUFFER"),
+            Self::STORAGE_TEXEL_BUFFER => Some("STORAGE_TEXEL_BUFFER"),
+            Self::UNIFORM_BUFFER => Some("UNIFORM_BUFFER"),
+            Self::STORAGE_BUFFER => Some("STORAGE_BUFFER"),
+            Self::UNIFORM_BUFFER_DYNAMIC => Some("UNIFORM_BUFFER_DYNAMIC"),
+            Self::STORAGE_BUFFER_DYNAMIC => Some("STORAGE_BUFFER_DYNAMIC"),
+            Self::INPUT_ATTACHMENT => Some("INPUT_ATTACHMENT"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for FrontFace {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::COUNTER_CLOCKWISE => Some("COUNTER_CLOCKWISE"),
+            Self::CLOCKWISE => Some("CLOCKWISE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for DebugUtilsMessageTypeFlagsEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (DebugUtilsMessageTypeFlagsEXT::GENERAL.0, "GENERAL"),
+            (DebugUtilsMessageTypeFlagsEXT::VALIDATION.0, "VALIDATION"),
+            (DebugUtilsMessageTypeFlagsEXT::PERFORMANCE.0, "PERFORMANCE"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for ImageCreateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (ImageCreateFlags::SPARSE_BINDING.0, "SPARSE_BINDING"),
+            (ImageCreateFlags::SPARSE_RESIDENCY.0, "SPARSE_RESIDENCY"),
+            (ImageCreateFlags::SPARSE_ALIASED.0, "SPARSE_ALIASED"),
+            (ImageCreateFlags::MUTABLE_FORMAT.0, "MUTABLE_FORMAT"),
+            (ImageCreateFlags::CUBE_COMPATIBLE.0, "CUBE_COMPATIBLE"),
+            (
+                ImageCreateFlags::SAMPLE_LOCATIONS_COMPATIBLE_DEPTH_EXT.0,
+                "SAMPLE_LOCATIONS_COMPATIBLE_DEPTH_EXT",
+            ),
+            (ImageCreateFlags::ALIAS.0, "ALIAS"),
+            (
+                ImageCreateFlags::SPLIT_INSTANCE_BIND_REGIONS.0,
+                "SPLIT_INSTANCE_BIND_REGIONS",
+            ),
+            (
+                ImageCreateFlags::TYPE_2D_ARRAY_COMPATIBLE.0,
+                "TYPE_2D_ARRAY_COMPATIBLE",
+            ),
+            (
+                ImageCreateFlags::BLOCK_TEXEL_VIEW_COMPATIBLE.0,
+                "BLOCK_TEXEL_VIEW_COMPATIBLE",
+            ),
+            (ImageCreateFlags::EXTENDED_USAGE.0, "EXTENDED_USAGE"),
+            (ImageCreateFlags::PROTECTED.0, "PROTECTED"),
+            (ImageCreateFlags::DISJOINT.0, "DISJOINT"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for SamplerYcbcrRange {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::ITU_FULL => Some("ITU_FULL"),
+            Self::ITU_NARROW => Some("ITU_NARROW"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for CompareOp {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::NEVER => Some("NEVER"),
+            Self::LESS => Some("LESS"),
+            Self::EQUAL => Some("EQUAL"),
+            Self::LESS_OR_EQUAL => Some("LESS_OR_EQUAL"),
+            Self::GREATER => Some("GREATER"),
+            Self::NOT_EQUAL => Some("NOT_EQUAL"),
+            Self::GREATER_OR_EQUAL => Some("GREATER_OR_EQUAL"),
+            Self::ALWAYS => Some("ALWAYS"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for PresentModeKHR {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::IMMEDIATE => Some("IMMEDIATE"),
+            Self::MAILBOX => Some("MAILBOX"),
+            Self::FIFO => Some("FIFO"),
+            Self::FIFO_RELAXED => Some("FIFO_RELAXED"),
+            Self::SHARED_DEMAND_REFRESH => Some("SHARED_DEMAND_REFRESH"),
+            Self::SHARED_CONTINUOUS_REFRESH => Some("SHARED_CONTINUOUS_REFRESH"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for StencilFaceFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (StencilFaceFlags::FRONT.0, "FRONT"),
+            (StencilFaceFlags::BACK.0, "BACK"),
+            (
+                StencilFaceFlags::STENCIL_FRONT_AND_BACK.0,
+                "STENCIL_FRONT_AND_BACK",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for CommandBufferLevel {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::PRIMARY => Some("PRIMARY"),
+            Self::SECONDARY => Some("SECONDARY"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for IndirectCommandsTokenTypeNVX {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::PIPELINE => Some("PIPELINE"),
+            Self::DESCRIPTOR_SET => Some("DESCRIPTOR_SET"),
+            Self::INDEX_BUFFER => Some("INDEX_BUFFER"),
+            Self::VERTEX_BUFFER => Some("VERTEX_BUFFER"),
+            Self::PUSH_CONSTANT => Some("PUSH_CONSTANT"),
+            Self::DRAW_INDEXED => Some("DRAW_INDEXED"),
+            Self::DRAW => Some("DRAW"),
+            Self::DISPATCH => Some("DISPATCH"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for ExternalMemoryHandleTypeFlagsNV {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                ExternalMemoryHandleTypeFlagsNV::EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_NV.0,
+                "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_NV",
+            ),
+            (
+                ExternalMemoryHandleTypeFlagsNV::EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_NV.0,
+                "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_NV",
+            ),
+            (
+                ExternalMemoryHandleTypeFlagsNV::EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_NV.0,
+                "EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_NV",
+            ),
+            (
+                ExternalMemoryHandleTypeFlagsNV::EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_NV.0,
+                "EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_NV",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for SurfaceCounterFlagsEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(SurfaceCounterFlagsEXT::VBLANK.0, "VBLANK")];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for ObjectType {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::UNKNOWN => Some("UNKNOWN"),
+            Self::INSTANCE => Some("INSTANCE"),
+            Self::PHYSICAL_DEVICE => Some("PHYSICAL_DEVICE"),
+            Self::DEVICE => Some("DEVICE"),
+            Self::QUEUE => Some("QUEUE"),
+            Self::SEMAPHORE => Some("SEMAPHORE"),
+            Self::COMMAND_BUFFER => Some("COMMAND_BUFFER"),
+            Self::FENCE => Some("FENCE"),
+            Self::DEVICE_MEMORY => Some("DEVICE_MEMORY"),
+            Self::BUFFER => Some("BUFFER"),
+            Self::IMAGE => Some("IMAGE"),
+            Self::EVENT => Some("EVENT"),
+            Self::QUERY_POOL => Some("QUERY_POOL"),
+            Self::BUFFER_VIEW => Some("BUFFER_VIEW"),
+            Self::IMAGE_VIEW => Some("IMAGE_VIEW"),
+            Self::SHADER_MODULE => Some("SHADER_MODULE"),
+            Self::PIPELINE_CACHE => Some("PIPELINE_CACHE"),
+            Self::PIPELINE_LAYOUT => Some("PIPELINE_LAYOUT"),
+            Self::RENDER_PASS => Some("RENDER_PASS"),
+            Self::PIPELINE => Some("PIPELINE"),
+            Self::DESCRIPTOR_SET_LAYOUT => Some("DESCRIPTOR_SET_LAYOUT"),
+            Self::SAMPLER => Some("SAMPLER"),
+            Self::DESCRIPTOR_POOL => Some("DESCRIPTOR_POOL"),
+            Self::DESCRIPTOR_SET => Some("DESCRIPTOR_SET"),
+            Self::FRAMEBUFFER => Some("FRAMEBUFFER"),
+            Self::COMMAND_POOL => Some("COMMAND_POOL"),
+            Self::SURFACE_KHR => Some("SURFACE_KHR"),
+            Self::SWAPCHAIN_KHR => Some("SWAPCHAIN_KHR"),
+            Self::DISPLAY_KHR => Some("DISPLAY_KHR"),
+            Self::DISPLAY_MODE_KHR => Some("DISPLAY_MODE_KHR"),
+            Self::DEBUG_REPORT_CALLBACK_EXT => Some("DEBUG_REPORT_CALLBACK_EXT"),
+            Self::OBJECT_TABLE_NVX => Some("OBJECT_TABLE_NVX"),
+            Self::INDIRECT_COMMANDS_LAYOUT_NVX => Some("INDIRECT_COMMANDS_LAYOUT_NVX"),
+            Self::DEBUG_UTILS_MESSENGER_EXT => Some("DEBUG_UTILS_MESSENGER_EXT"),
+            Self::VALIDATION_CACHE_EXT => Some("VALIDATION_CACHE_EXT"),
+            Self::SAMPLER_YCBCR_CONVERSION => Some("SAMPLER_YCBCR_CONVERSION"),
+            Self::DESCRIPTOR_UPDATE_TEMPLATE => Some("DESCRIPTOR_UPDATE_TEMPLATE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for ValidationCacheHeaderVersionEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::ONE => Some("ONE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for MemoryPropertyFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (MemoryPropertyFlags::DEVICE_LOCAL.0, "DEVICE_LOCAL"),
+            (MemoryPropertyFlags::HOST_VISIBLE.0, "HOST_VISIBLE"),
+            (MemoryPropertyFlags::HOST_COHERENT.0, "HOST_COHERENT"),
+            (MemoryPropertyFlags::HOST_CACHED.0, "HOST_CACHED"),
+            (MemoryPropertyFlags::LAZILY_ALLOCATED.0, "LAZILY_ALLOCATED"),
+            (MemoryPropertyFlags::PROTECTED.0, "PROTECTED"),
+        ];
+        display_flags(f, KNOWN, self.0)
     }
 }
 impl fmt::Display for TessellationDomainOrigin {
@@ -42119,56 +42443,6 @@ impl fmt::Display for TessellationDomainOrigin {
         }
     }
 }
-impl fmt::Display for ExternalSemaphoreHandleTypeFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD.0,
-                "EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD",
-            ),
-            (
-                ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32.0,
-                "EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32",
-            ),
-            (
-                ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT.0,
-                "EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT",
-            ),
-            (
-                ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE.0,
-                "EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE",
-            ),
-            (
-                ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD.0,
-                "EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for IndirectCommandsLayoutUsageFlagsNVX {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                IndirectCommandsLayoutUsageFlagsNVX::UNORDERED_SEQUENCES.0,
-                "UNORDERED_SEQUENCES",
-            ),
-            (
-                IndirectCommandsLayoutUsageFlagsNVX::SPARSE_SEQUENCES.0,
-                "SPARSE_SEQUENCES",
-            ),
-            (
-                IndirectCommandsLayoutUsageFlagsNVX::EMPTY_EXECUTIONS.0,
-                "EMPTY_EXECUTIONS",
-            ),
-            (
-                IndirectCommandsLayoutUsageFlagsNVX::INDEXED_SEQUENCES.0,
-                "INDEXED_SEQUENCES",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
 impl fmt::Display for InternalAllocationType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
@@ -42182,65 +42456,13 @@ impl fmt::Display for InternalAllocationType {
         }
     }
 }
-impl fmt::Display for ColorSpaceKHR {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::SRGB_NONLINEAR => Some("SRGB_NONLINEAR"),
-            Self::DISPLAY_P3_NONLINEAR_EXT => Some("DISPLAY_P3_NONLINEAR_EXT"),
-            Self::EXTENDED_SRGB_LINEAR_EXT => Some("EXTENDED_SRGB_LINEAR_EXT"),
-            Self::DCI_P3_LINEAR_EXT => Some("DCI_P3_LINEAR_EXT"),
-            Self::DCI_P3_NONLINEAR_EXT => Some("DCI_P3_NONLINEAR_EXT"),
-            Self::BT709_LINEAR_EXT => Some("BT709_LINEAR_EXT"),
-            Self::BT709_NONLINEAR_EXT => Some("BT709_NONLINEAR_EXT"),
-            Self::BT2020_LINEAR_EXT => Some("BT2020_LINEAR_EXT"),
-            Self::HDR10_ST2084_EXT => Some("HDR10_ST2084_EXT"),
-            Self::DOLBYVISION_EXT => Some("DOLBYVISION_EXT"),
-            Self::HDR10_HLG_EXT => Some("HDR10_HLG_EXT"),
-            Self::ADOBERGB_LINEAR_EXT => Some("ADOBERGB_LINEAR_EXT"),
-            Self::ADOBERGB_NONLINEAR_EXT => Some("ADOBERGB_NONLINEAR_EXT"),
-            Self::PASS_THROUGH_EXT => Some("PASS_THROUGH_EXT"),
-            Self::EXTENDED_SRGB_NONLINEAR_EXT => Some("EXTENDED_SRGB_NONLINEAR_EXT"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for PipelineCreateFlags {
+impl fmt::Display for DebugUtilsMessageSeverityFlagsEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
-            (
-                PipelineCreateFlags::DISABLE_OPTIMIZATION.0,
-                "DISABLE_OPTIMIZATION",
-            ),
-            (
-                PipelineCreateFlags::ALLOW_DERIVATIVES.0,
-                "ALLOW_DERIVATIVES",
-            ),
-            (PipelineCreateFlags::DERIVATIVE.0, "DERIVATIVE"),
-            (
-                PipelineCreateFlags::VIEW_INDEX_FROM_DEVICE_INDEX.0,
-                "VIEW_INDEX_FROM_DEVICE_INDEX",
-            ),
-            (PipelineCreateFlags::DISPATCH_BASE.0, "DISPATCH_BASE"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for DescriptorSetLayoutCreateFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                DescriptorSetLayoutCreateFlags::PUSH_DESCRIPTOR_KHR.0,
-                "PUSH_DESCRIPTOR_KHR",
-            ),
-            (
-                DescriptorSetLayoutCreateFlags::UPDATE_AFTER_BIND_POOL_EXT.0,
-                "UPDATE_AFTER_BIND_POOL_EXT",
-            ),
+            (DebugUtilsMessageSeverityFlagsEXT::VERBOSE.0, "VERBOSE"),
+            (DebugUtilsMessageSeverityFlagsEXT::INFO.0, "INFO"),
+            (DebugUtilsMessageSeverityFlagsEXT::WARNING.0, "WARNING"),
+            (DebugUtilsMessageSeverityFlagsEXT::ERROR.0, "ERROR"),
         ];
         display_flags(f, KNOWN, self.0)
     }
