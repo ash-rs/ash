@@ -1,8 +1,6 @@
 #![allow(dead_code)]
 use device::Device;
 use prelude::*;
-use std::error::Error;
-use std::fmt;
 use std::mem;
 use std::os::raw::c_char;
 use std::ptr;
@@ -10,31 +8,6 @@ use version::DeviceLoader;
 use version::{FunctionPointers, V1_0, V1_1};
 use vk;
 use RawPtr;
-
-#[derive(Debug)]
-pub enum DeviceError {
-    LoadError(Vec<&'static str>),
-    VkError(vk::Result),
-}
-
-impl fmt::Display for DeviceError {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "DeviceError::{:?}", self)
-    }
-}
-
-impl Error for DeviceError {
-    fn description(&self) -> &str {
-        "DeviceErrorr"
-    }
-
-    fn cause(&self) -> Option<&Error> {
-        if let &DeviceError::VkError(ref err) = self {
-            return err.cause();
-        }
-        None
-    }
-}
 
 #[derive(Clone)]
 pub struct Instance<V: FunctionPointers> {
@@ -87,7 +60,9 @@ impl<V: FunctionPointers> Instance<V> {
 pub trait InstanceV1_1: InstanceV1_0 {
     fn fp_v1_1(&self) -> &vk::InstanceFnV1_1;
 
-    unsafe fn enumerate_physical_device_groups(&self) -> VkResult<Vec<vk::PhysicalDeviceGroupProperties>> {
+    unsafe fn enumerate_physical_device_groups(
+        &self,
+    ) -> VkResult<Vec<vk::PhysicalDeviceGroupProperties>> {
         let mut group_count = mem::uninitialized();
         self.fp_v1_1().enumerate_physical_device_groups(
             self.handle(),
@@ -134,7 +109,7 @@ pub trait InstanceV1_1: InstanceV1_0 {
         &self,
         physical_device: vk::PhysicalDevice,
         format_info: &vk::PhysicalDeviceImageFormatInfo2,
-        image_format_prop: &mut vk::ImageFormatProperties2
+        image_format_prop: &mut vk::ImageFormatProperties2,
     ) -> VkResult<()> {
         let err_code = self.fp_v1_1().get_physical_device_image_format_properties2(
             physical_device,
@@ -164,7 +139,7 @@ pub trait InstanceV1_1: InstanceV1_0 {
     unsafe fn get_physical_device_queue_family_properties2(
         &self,
         physical_device: vk::PhysicalDevice,
-        queue_family_props: &mut [vk::QueueFamilyProperties2]
+        queue_family_props: &mut [vk::QueueFamilyProperties2],
     ) {
         let mut queue_count = queue_family_props.len() as u32;
         self.fp_v1_1().get_physical_device_queue_family_properties2(
@@ -265,7 +240,7 @@ pub trait InstanceV1_0 {
         physical_device: vk::PhysicalDevice,
         create_info: &vk::DeviceCreateInfo,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
-    ) -> Result<Device<Self::Fp>, DeviceError> {
+    ) -> Result<Device<Self::Fp>, vk::Result> {
         let mut device: vk::Device = mem::uninitialized();
         let err_code = self.fp_v1_0().create_device(
             physical_device,
@@ -274,7 +249,7 @@ pub trait InstanceV1_0 {
             &mut device,
         );
         if err_code != vk::Result::SUCCESS {
-            return Err(DeviceError::VkError(err_code));
+            return Err(err_code);
         }
         let device_fn = <<Self as InstanceV1_0>::Fp as FunctionPointers>::DeviceFp::load(
             self.fp_v1_0(),
