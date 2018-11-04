@@ -775,7 +775,7 @@ fn generate_function_pointers(ident: Ident, commands: &[&vkxml::Command]) -> quo
                         #names_ref: unsafe {
 
                             extern "system" fn #names_ref1 (#expanded_params_unused) -> #return_types_ref {
-                                panic!("Unable to load {}", stringify!(#names_ref2))
+                                panic!(concat!("Unable to load ", stringify!(#names_ref2)))
                             }
                             let raw_name = stringify!(#raw_names_ref);
                             let cname = ::std::ffi::CString::new(raw_name).unwrap();
