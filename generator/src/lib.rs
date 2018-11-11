@@ -687,6 +687,9 @@ pub type CommandMap<'a> = HashMap<vkxml::Identifier, &'a vkxml::Command>;
 fn generate_function_pointers(ident: Ident, commands: &[&vkxml::Command]) -> quote::Tokens {
     let names: Vec<_> = commands.iter().map(|cmd| cmd.command_ident()).collect();
     let names_ref = &names;
+    let names_ref1 = &names;
+    let names_ref2 = &names;
+    let names_ref3 = &names;
     let raw_names: Vec<_> = commands
         .iter()
         .map(|cmd| Ident::from(cmd.name.as_str()))
@@ -728,6 +731,17 @@ fn generate_function_pointers(ident: Ident, commands: &[&vkxml::Command]) -> quo
                 #(#inner_params_iter,)*
             }
         }).collect();
+    let expanded_params_unused: Vec<_> = params
+        .iter()
+        .map(|inner_params| {
+            let inner_params_iter = inner_params.iter().map(|&(ref param_name, ref param_ty)| {
+                let unused_name = Ident::from(format!("_{}", param_name).as_str());
+                quote!{#unused_name: #param_ty}
+            });
+            quote!{
+                #(#inner_params_iter,)*
+            }
+        }).collect();
     let expanded_params_ref = &expanded_params;
 
     let return_types: Vec<_> = commands
@@ -753,31 +767,28 @@ fn generate_function_pointers(ident: Ident, commands: &[&vkxml::Command]) -> quo
             }
         }
         impl #ident {
-            pub fn load<F>(mut _f: F) -> ::std::result::Result<Self, Vec<&'static str>>
+            pub fn load<F>(mut _f: F) -> Self
                 where F: FnMut(&::std::ffi::CStr) -> *const c_void
             {
-                let mut _err_str = Vec::new();
-                let s = #ident {
+                #ident {
                     #(
                         #names_ref: unsafe {
+
+                            extern "system" fn #names_ref1 (#expanded_params_unused) -> #return_types_ref {
+                                panic!(concat!("Unable to load ", stringify!(#names_ref2)))
+                            }
                             let raw_name = stringify!(#raw_names_ref);
                             let cname = ::std::ffi::CString::new(raw_name).unwrap();
                             let val = _f(&cname);
                             if val.is_null(){
-                                _err_str.push(raw_name);
+                                #names_ref3
                             }
-                            ::std::mem::transmute(val)
+                            else{
+                                ::std::mem::transmute(val)
+                            }
                         },
                     )*
-                };
-
-                if _err_str.is_empty() {
-                    Ok(s)
                 }
-                else{
-                    Err(_err_str)
-                }
-
             }
             #(
                 pub unsafe fn #names_ref(&self, #expanded_params_ref) -> #return_types_ref {

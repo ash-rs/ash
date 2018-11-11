@@ -16,14 +16,14 @@ impl IOSSurface {
     pub fn new<E: EntryV1_0, I: InstanceV1_0>(
         entry: &E,
         instance: &I,
-    ) -> Result<IOSSurface, Vec<&'static str>> {
+    ) -> IOSSurface{
         let surface_fn = vk::MvkIosSurfaceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
-        })?;
-        Ok(IOSSurface {
+        });
+        IOSSurface {
             handle: instance.handle(),
             ios_surface_fn: surface_fn,
-        })
+        }
     }
 
     pub fn name() -> &'static CStr {

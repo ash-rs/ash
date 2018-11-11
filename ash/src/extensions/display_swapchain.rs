@@ -16,14 +16,14 @@ impl DisplaySwapchain {
     pub fn new<I: InstanceV1_0, D: DeviceV1_0>(
         instance: &I,
         device: &D,
-    ) -> Result<DisplaySwapchain, Vec<&'static str>> {
+    ) -> DisplaySwapchain {
         let swapchain_fn = vk::KhrDisplaySwapchainFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
-        })?;
-        Ok(DisplaySwapchain {
+        });
+        DisplaySwapchain {
             handle: device.handle(),
             swapchain_fn: swapchain_fn,
-        })
+        }
     }
 
     pub fn name() -> &'static CStr {

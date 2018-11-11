@@ -107,7 +107,7 @@ unsafe fn create_surface<E: EntryV1_0, I: InstanceV1_0>(
         dpy: x11_display as *mut vk::Display,
     };
     let xlib_surface_loader =
-        XlibSurface::new(entry, instance).expect("Unable to load xlib surface");
+        XlibSurface::new(entry, instance);
     xlib_surface_loader.create_xlib_surface_khr(&x11_create_info, None)
 }
 
@@ -131,7 +131,7 @@ unsafe fn create_surface<E: EntryV1_0, I: InstanceV1_0>(
         hwnd: hwnd as *const c_void,
     };
     let win32_surface_loader =
-        Win32Surface::new(entry, instance).expect("Unable to load win32 surface");
+        Win32Surface::new(entry, instance);
     win32_surface_loader.create_win32_surface_khr(&win32_create_info, None)
 }
 
@@ -314,7 +314,7 @@ impl ExampleBase {
                 p_user_data: ptr::null_mut(),
             };
             let debug_report_loader =
-                DebugReport::new(&entry, &instance).expect("Unable to load debug report");
+                DebugReport::new(&entry, &instance);
             let debug_call_back = debug_report_loader
                 .create_debug_report_callback_ext(&debug_info, None)
                 .unwrap();
@@ -323,7 +323,7 @@ impl ExampleBase {
                 .enumerate_physical_devices()
                 .expect("Physical device error");
             let surface_loader =
-                Surface::new(&entry, &instance).expect("Unable to load the Surface extension");
+                Surface::new(&entry, &instance);
             let (pdevice, queue_family_index) = pdevices
                 .iter()
                 .map(|pdevice| {
@@ -425,7 +425,7 @@ impl ExampleBase {
                 .find(|&mode| mode == vk::PresentModeKHR::MAILBOX)
                 .unwrap_or(vk::PresentModeKHR::FIFO);
             let swapchain_loader =
-                Swapchain::new(&instance, &device).expect("Unable to load swapchain");
+                Swapchain::new(&instance, &device);
             let swapchain_create_info = vk::SwapchainCreateInfoKHR {
                 s_type: vk::StructureType::SWAPCHAIN_CREATE_INFO_KHR,
                 p_next: ptr::null(),
