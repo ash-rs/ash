@@ -10,49 +10,63 @@ use vk;
 use RawPtr;
 
 #[derive(Clone)]
-pub struct Instance<V: FunctionPointers> {
+pub struct Instance {
     handle: vk::Instance,
-    instance_fp: V::InstanceFp,
+    instance_fn_1_0: vk::InstanceFnV1_0,
+    instance_fn_1_1: vk::InstanceFnV1_1,
 }
+impl Instance {
+    pub unsafe fn load(
+        static_fn: &vk::StaticFn,
+        instance: vk::Instance,
+    ) -> Self {
+        let instance_fn_1_0 = vk::InstanceFnV1_0::load(|name| {
+            mem::transmute(static_fn.get_instance_proc_addr(instance, name.as_ptr()))
+        });
+        let instance_fn_1_1 = vk::InstanceFnV1_1::load(|name| {
+            mem::transmute(static_fn.get_instance_proc_addr(instance, name.as_ptr()))
+        });
 
-impl InstanceV1_0 for Instance<V1_0> {
-    type Fp = V1_0;
-    fn handle(&self) -> vk::Instance {
-        self.handle
-    }
-
-    fn fp_v1_0(&self) -> &vk::InstanceFnV1_0 {
-        &self.instance_fp.instance_fn
-    }
-}
-
-impl InstanceV1_0 for Instance<V1_1> {
-    type Fp = V1_1;
-    fn handle(&self) -> vk::Instance {
-        self.handle
-    }
-
-    fn fp_v1_0(&self) -> &vk::InstanceFnV1_0 {
-        &self.instance_fp.instance_fn_1_0
-    }
-}
-
-impl InstanceV1_1 for Instance<V1_1> {
-    fn fp_v1_1(&self) -> &vk::InstanceFnV1_1 {
-        &self.instance_fp.instance_fn_1_1
-    }
-}
-
-impl<V: FunctionPointers> Instance<V> {
-    pub fn handle(&self) -> vk::Instance {
-        self.handle
-    }
-
-    pub fn from_raw(handle: vk::Instance, version: V::InstanceFp) -> Self {
         Instance {
-            handle: handle,
-            instance_fp: version,
+            handle: instance,
+            instance_fn_1_0,
+            instance_fn_1_1,
         }
+    }
+}
+
+impl InstanceV1_0 for Instance {
+    type Device = Device;
+    unsafe fn create_device(
+        &self,
+        physical_device: vk::PhysicalDevice,
+        create_info: &vk::DeviceCreateInfo,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+    ) -> Result<Self::Device, vk::Result> {
+        let mut device: vk::Device = mem::uninitialized();
+        let err_code = self.fp_v1_0().create_device(
+            physical_device,
+            create_info,
+            allocation_callbacks.as_raw_ptr(),
+            &mut device,
+        );
+        if err_code != vk::Result::SUCCESS {
+            return Err(err_code);
+        }
+        Ok(Device::load(&self.instance_fn_1_0, device))
+    }
+    fn handle(&self) -> vk::Instance {
+        self.handle
+    }
+
+    fn fp_v1_0(&self) -> &vk::InstanceFnV1_0 {
+        &self.instance_fn_1_0
+    }
+}
+
+impl InstanceV1_1 for Instance {
+    fn fp_v1_1(&self) -> &vk::InstanceFnV1_1 {
+        &self.instance_fn_1_1
     }
 }
 
@@ -232,7 +246,7 @@ pub trait InstanceV1_1: InstanceV1_0 {
 
 #[allow(non_camel_case_types)]
 pub trait InstanceV1_0 {
-    type Fp: FunctionPointers;
+    type Device;
     fn handle(&self) -> vk::Instance;
     fn fp_v1_0(&self) -> &vk::InstanceFnV1_0;
     unsafe fn create_device(
@@ -240,23 +254,7 @@ pub trait InstanceV1_0 {
         physical_device: vk::PhysicalDevice,
         create_info: &vk::DeviceCreateInfo,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
-    ) -> Result<Device<Self::Fp>, vk::Result> {
-        let mut device: vk::Device = mem::uninitialized();
-        let err_code = self.fp_v1_0().create_device(
-            physical_device,
-            create_info,
-            allocation_callbacks.as_raw_ptr(),
-            &mut device,
-        );
-        if err_code != vk::Result::SUCCESS {
-            return Err(err_code);
-        }
-        let device_fn = <<Self as InstanceV1_0>::Fp as FunctionPointers>::DeviceFp::load(
-            self.fp_v1_0(),
-            device,
-        );
-        Ok(Device::from_raw(device, device_fn))
-    }
+    ) -> Result<Self::Device, vk::Result>;
 
     unsafe fn get_device_proc_addr(
         &self,
