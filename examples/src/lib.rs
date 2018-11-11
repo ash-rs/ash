@@ -9,7 +9,7 @@ use ash::extensions::Win32Surface;
 #[cfg(not(windows))]
 use ash::extensions::XlibSurface;
 use ash::extensions::{DebugReport, Surface, Swapchain};
-pub use ash::version::{DeviceV1_0, EntryV1_0, InstanceV1_0, V1_0};
+pub use ash::version::{DeviceV1_0, EntryV1_0, InstanceV1_0,};
 use ash::vk;
 use ash::Device;
 use ash::Entry;
@@ -205,9 +205,9 @@ pub fn find_memorytype_index_f<F: Fn(vk::MemoryPropertyFlags, vk::MemoryProperty
 }
 
 pub struct ExampleBase {
-    pub entry: Entry<V1_0>,
-    pub instance: Instance<V1_0>,
-    pub device: Device<V1_0>,
+    pub entry: Entry,
+    pub instance: Instance,
+    pub device: Device,
     pub surface_loader: Surface,
     pub swapchain_loader: Swapchain,
     pub debug_report_loader: DebugReport,
@@ -301,7 +301,7 @@ impl ExampleBase {
                 pp_enabled_extension_names: extension_names_raw.as_ptr(),
                 enabled_extension_count: extension_names_raw.len() as u32,
             };
-            let instance: Instance<V1_0> = entry
+            let instance: Instance = entry
                 .create_instance(&create_info, None)
                 .expect("Instance creation error");
             let debug_info = vk::DebugReportCallbackCreateInfoEXT {
@@ -374,7 +374,7 @@ impl ExampleBase {
                 pp_enabled_extension_names: device_extension_names_raw.as_ptr(),
                 p_enabled_features: &features,
             };
-            let device: Device<V1_0> = instance
+            let device: Device = instance
                 .create_device(pdevice, &device_create_info, None)
                 .unwrap();
             let present_queue = device.get_device_queue(queue_family_index as u32, 0);
