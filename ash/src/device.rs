@@ -3,7 +3,6 @@ use prelude::*;
 use std::mem;
 use std::os::raw::c_void;
 use std::ptr;
-use version::{FunctionPointers, V1_0, V1_1};
 use vk;
 use RawPtr;
 

@@ -7,7 +7,6 @@ use std::mem;
 use std::os::raw::c_char;
 use std::path::Path;
 use std::ptr;
-use version::{EntryLoader, FunctionPointers, InstanceLoader, V1_0, V1_1};
 use vk;
 use RawPtr;
 
