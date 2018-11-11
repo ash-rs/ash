@@ -223,23 +223,10 @@ pub fn vk_bitflags_wrapped_macro() -> Tokens {
                     }
 
                     #[inline]
-                    pub fn flags(self) -> $flag_type {
-                        self.0
-                    }
+                    pub fn from_raw(x: $flag_type) -> Self { $name(x) }
 
                     #[inline]
-                    pub fn from_flags(flags: $flag_type) -> Option<$name> {
-                        if flags & !$all == 0 {
-                            Some($name(flags))
-                        } else {
-                            None
-                        }
-                    }
-
-                    #[inline]
-                    pub fn from_flags_truncate(flags: $flag_type) -> $name {
-                        $name (flags & $all)
-                    }
+                    pub fn as_raw(self) -> $flag_type { self.0 }
 
                     #[inline]
                     pub fn is_empty(self) -> bool {
@@ -256,9 +243,9 @@ pub fn vk_bitflags_wrapped_macro() -> Tokens {
                         self & other != $name::empty()
                     }
 
-                    /// Returns true of `other` is a subset of `self`
+                    /// Returns whether `other` is a subset of `self`
                     #[inline]
-                    pub fn subset(self, other: $name) -> bool {
+                    pub fn contains(self, other: $name) -> bool {
                         self & other == other
                     }
                 }
