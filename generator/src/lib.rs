@@ -606,7 +606,7 @@ fn name_to_tokens(type_name: &str) -> Ident {
         "int" => "c_int",
         "void" => "c_void",
         "char" => "c_char",
-        "float" => "c_float",
+        "float" => "f32",
         "long" => "c_ulong",
         _ => {
             if type_name.starts_with("Vk") {
@@ -1874,10 +1874,6 @@ pub fn write_source_code(path: &Path) {
     let source_code = quote!{
         use std::fmt;
         use std::os::raw::*;
-        #[doc(hidden)]
-        pub use self::extensions::*;
-        #[doc(hidden)]
-        pub use self::bitflags::*;
 
         pub trait Handle {
             const TYPE: ObjectType;
@@ -1893,16 +1889,10 @@ pub fn write_source_code(path: &Path) {
         #(#feature_code)*
         #(#definition_code)*
         #(#enum_code)*
-        pub mod bitflags {
-            use super::*;
-            #(#bitflags_code)*
-        }
+        #(#bitflags_code)*
         #(#constants_code)*
-        pub mod extensions {
-            use super::*;
-            #(#extension_code)*
-            #feature_extensions_code
-        }
+        #(#extension_code)*
+        #feature_extensions_code
         #const_displays
     };
     write!(&mut file, "{}", source_code).expect("Unable to write to file");
