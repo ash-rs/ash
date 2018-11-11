@@ -1,5 +1,4 @@
 extern crate ash;
-#[macro_use]
 extern crate examples;
 
 use ash::util::*;

@@ -3,7 +3,6 @@ use prelude::*;
 use std::mem;
 use std::os::raw::c_void;
 use std::ptr;
-use version::{FunctionPointers, V1_0, V1_1};
 use vk;
 use RawPtr;
 
@@ -1717,46 +1716,48 @@ pub trait DeviceV1_0 {
 }
 
 #[derive(Clone)]
-pub struct Device<V: FunctionPointers> {
+pub struct Device {
     handle: vk::Device,
-    device_fn: V::DeviceFp,
+    device_fn_1_0: vk::DeviceFnV1_0,
+    device_fn_1_1: vk::DeviceFnV1_1,
+}
+impl Device {
+    pub unsafe fn load(
+        instance_fn: &vk::InstanceFnV1_0,
+        device: vk::Device,
+    ) -> Self {
+        let device_fn_1_0 = vk::DeviceFnV1_0::load(|name| {
+            mem::transmute(instance_fn.get_device_proc_addr(device, name.as_ptr()))
+        });
+        let device_fn_1_1 = vk::DeviceFnV1_1::load(|name| {
+            mem::transmute(instance_fn.get_device_proc_addr(device, name.as_ptr()))
+        });
+        Device {
+            handle: device,
+            device_fn_1_0,
+            device_fn_1_1,
+        }
+    }
 }
 
-impl DeviceV1_0 for Device<V1_0> {
+impl DeviceV1_0 for Device {
     fn handle(&self) -> vk::Device {
         self.handle
     }
 
     fn fp_v1_0(&self) -> &vk::DeviceFnV1_0 {
-        &self.device_fn.device_fn
+        &self.device_fn_1_0
     }
 }
 
-impl DeviceV1_0 for Device<V1_1> {
-    fn handle(&self) -> vk::Device {
-        self.handle
-    }
-
-    fn fp_v1_0(&self) -> &vk::DeviceFnV1_0 {
-        &self.device_fn.device_fn_1_0
-    }
-}
-
-impl DeviceV1_1 for Device<V1_1> {
+impl DeviceV1_1 for Device {
     fn fp_v1_1(&self) -> &vk::DeviceFnV1_1 {
-        &self.device_fn.device_fn_1_1
+        &self.device_fn_1_1
     }
 }
 
-impl<V: FunctionPointers> Device<V> {
+impl Device {
     pub fn handle(&self) -> vk::Device {
         self.handle
-    }
-
-    pub unsafe fn from_raw(handle: vk::Device, device_fn: V::DeviceFp) -> Self {
-        Device {
-            handle: handle,
-            device_fn: device_fn,
-        }
     }
 }

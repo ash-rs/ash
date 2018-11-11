@@ -7,14 +7,24 @@ use std::mem;
 use std::os::raw::c_char;
 use std::path::Path;
 use std::ptr;
-use version::{EntryLoader, FunctionPointers, InstanceLoader, V1_0, V1_1};
 use vk;
 use RawPtr;
 
 #[cfg(windows)]
 const LIB_PATH: &'static str = "vulkan-1.dll";
 
-#[cfg(all(unix, not(any(target_os = "macos", target_os = "ios", target_os = "android"))))]
+#[cfg(
+    all(
+        unix,
+        not(
+            any(
+                target_os = "macos",
+                target_os = "ios",
+                target_os = "android"
+            )
+        )
+    )
+)]
 const LIB_PATH: &'static str = "libvulkan.so.1";
 
 #[cfg(target_os = "android")]
@@ -29,9 +39,10 @@ lazy_static! {
 }
 
 #[derive(Clone)]
-pub struct Entry<V: FunctionPointers> {
+pub struct Entry {
     static_fn: vk::StaticFn,
-    entry_fn: V::EntryFp,
+    entry_fn_1_0: vk::EntryFnV1_0,
+    entry_fn_1_1: vk::EntryFnV1_1,
 }
 
 #[derive(Debug)]
@@ -66,29 +77,14 @@ impl Error for InstanceError {
 
 #[allow(non_camel_case_types)]
 pub trait EntryV1_0 {
-    type Fp: FunctionPointers;
+    type Instance;
     fn fp_v1_0(&self) -> &vk::EntryFnV1_0;
     fn static_fn(&self) -> &vk::StaticFn;
-
     unsafe fn create_instance(
         &self,
         create_info: &vk::InstanceCreateInfo,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
-    ) -> Result<Instance<Self::Fp>, InstanceError> {
-        let mut instance: vk::Instance = mem::uninitialized();
-        let err_code = self.fp_v1_0().create_instance(
-            create_info,
-            allocation_callbacks.as_raw_ptr(),
-            &mut instance,
-        );
-        if err_code != vk::Result::SUCCESS {
-            return Err(InstanceError::VkError(err_code));
-        }
-        let instance_fp =
-            <Self::Fp as FunctionPointers>::InstanceFp::load(&self.static_fn(), instance);
-        Ok(Instance::from_raw(instance, instance_fp))
-    }
-
+    ) -> Result<Self::Instance, InstanceError>;
     fn enumerate_instance_layer_properties(&self) -> VkResult<Vec<vk::LayerProperties>> {
         unsafe {
             let mut num = 0;
@@ -106,7 +102,6 @@ pub trait EntryV1_0 {
             }
         }
     }
-
     fn enumerate_instance_extension_properties(&self) -> VkResult<Vec<vk::ExtensionProperties>> {
         unsafe {
             let mut num = 0;
@@ -138,33 +133,33 @@ pub trait EntryV1_0 {
     }
 }
 
-impl EntryV1_0 for Entry<V1_0> {
-    type Fp = V1_0;
+impl EntryV1_0 for Entry {
+    type Instance = Instance;
+    unsafe fn create_instance(
+        &self,
+        create_info: &vk::InstanceCreateInfo,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+    ) -> Result<Self::Instance, InstanceError> {
+        let mut instance: vk::Instance = mem::uninitialized();
+        let err_code = self.fp_v1_0().create_instance(
+            create_info,
+            allocation_callbacks.as_raw_ptr(),
+            &mut instance,
+        );
+        if err_code != vk::Result::SUCCESS {
+            return Err(InstanceError::VkError(err_code));
+        }
+        Ok(Instance::load(&self.static_fn, instance))
+    }
     fn fp_v1_0(&self) -> &vk::EntryFnV1_0 {
-        self.entry_fn.fp_v1_0()
+        &self.entry_fn_1_0
     }
     fn static_fn(&self) -> &vk::StaticFn {
         &self.static_fn
     }
 }
 
-impl EntryV1_0 for Entry<V1_1> {
-    type Fp = V1_1;
-    fn fp_v1_0(&self) -> &vk::EntryFnV1_0 {
-        self.entry_fn.fp_v1_0()
-    }
-    fn static_fn(&self) -> &vk::StaticFn {
-        &self.static_fn
-    }
-}
-
-impl EntryV1_1 for Entry<V1_1> {
-    fn fp_v1_1(&self) -> &vk::EntryFnV1_1 {
-        &self.entry_fn.entry_fn_1_1
-    }
-}
-
-impl<V: FunctionPointers> Entry<V> {
+impl Entry {
     pub fn new() -> Result<Self, LoadingError> {
         let lib = VK_LIB
             .as_ref()
@@ -175,12 +170,18 @@ impl<V: FunctionPointers> Entry<V> {
                 .unwrap_or(ptr::null_mut())
         });
 
-        let entry_fn =
-            unsafe { V::EntryFp::load(&static_fn) };
+        let entry_fn_1_0 = vk::EntryFnV1_0::load(|name| unsafe {
+            mem::transmute(static_fn.get_instance_proc_addr(vk::Instance::null(), name.as_ptr()))
+        });
+
+        let entry_fn_1_1 = vk::EntryFnV1_1::load(|name| unsafe {
+            mem::transmute(static_fn.get_instance_proc_addr(vk::Instance::null(), name.as_ptr()))
+        });
 
         Ok(Entry {
             static_fn,
-            entry_fn,
+            entry_fn_1_0,
+            entry_fn_1_1,
         })
     }
 }
