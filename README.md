@@ -12,11 +12,11 @@ A very lightweight wrapper around Vulkan
 [![](https://tokei.rs/b1/github/maikklein/ash)](https://github.com/MaikKlein/ash)
 
 ## Overview
-- [x]: A true Vulkan API without compromises
-- [x]: Convenience features that don't limit the functionality
-- [x]: Function pointer loading
-- [x]: No validation, everything is **unsafe**
-- [x]: Generated from `vk.xml`
+- [x] A true Vulkan API without compromises
+- [x] Convenience features that don't limit the functionality
+- [x] Function pointer loading
+- [x] No validation, everything is **unsafe**
+- [x] Generated from `vk.xml`
 
 ## Features
 ### Explicit returns with `Result`
