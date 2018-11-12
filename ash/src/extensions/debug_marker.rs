@@ -1,29 +1,26 @@
 #![allow(dead_code)]
 use prelude::*;
-use std::mem;
-use vk;
 use std::ffi::CStr;
-use version::{InstanceV1_0, DeviceV1_0};
+use std::mem;
+use version::{DeviceV1_0, InstanceV1_0};
+use vk;
 
 #[derive(Clone)]
 pub struct DebugMarker {
-    debug_marker_fn: vk::DebugMarkerFn,
+    debug_marker_fn: vk::ExtDebugMarkerFn,
 }
 
 impl DebugMarker {
     pub fn new<I: InstanceV1_0, D: DeviceV1_0>(
         instance: &I,
-        device: &D
-    ) -> Result<DebugMarker, Vec<&'static str>> {
-        let debug_marker_fn = vk::DebugMarkerFn::load(|name| unsafe {
-            mem::transmute(instance.get_device_proc_addr(
-                device.handle(),
-                name.as_ptr(),
-            ))
-        })?;
-        Ok(DebugMarker {
+        device: &D,
+    ) -> DebugMarker {
+        let debug_marker_fn = vk::ExtDebugMarkerFn::load(|name| unsafe {
+            mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
+        });
+        DebugMarker {
             debug_marker_fn: debug_marker_fn,
-        })
+        }
     }
 
     pub fn name() -> &'static CStr {
@@ -33,46 +30,37 @@ impl DebugMarker {
     pub unsafe fn debug_marker_set_object_name_ext(
         &self,
         device: vk::Device,
-        name_info: &vk::DebugMarkerObjectNameInfoEXT
+        name_info: &vk::DebugMarkerObjectNameInfoEXT,
     ) -> VkResult<()> {
-        let err_code = self.debug_marker_fn.debug_marker_set_object_name_ext(
-            device,
-            name_info
-        );
+        let err_code = self
+            .debug_marker_fn
+            .debug_marker_set_object_name_ext(device, name_info);
         match err_code {
-            vk::Result::Success => Ok(()),
-            _ => Err(err_code)
+            vk::Result::SUCCESS => Ok(()),
+            _ => Err(err_code),
         }
     }
 
     pub unsafe fn cmd_debug_marker_begin_ext(
         &self,
         command_buffer: vk::CommandBuffer,
-        marker_info: &vk::DebugMarkerMarkerInfoEXT
+        marker_info: &vk::DebugMarkerMarkerInfoEXT,
     ) {
-        self.debug_marker_fn.cmd_debug_marker_begin_ext(
-            command_buffer,
-            marker_info
-        );
+        self.debug_marker_fn
+            .cmd_debug_marker_begin_ext(command_buffer, marker_info);
     }
 
-    pub unsafe fn cmd_debug_marker_end_ext(
-        &self,
-        command_buffer: vk::CommandBuffer,
-    ) {
-        self.debug_marker_fn.cmd_debug_marker_end_ext(
-            command_buffer,
-        );
+    pub unsafe fn cmd_debug_marker_end_ext(&self, command_buffer: vk::CommandBuffer) {
+        self.debug_marker_fn
+            .cmd_debug_marker_end_ext(command_buffer);
     }
 
     pub unsafe fn cmd_debug_marker_insert_ext(
         &self,
         command_buffer: vk::CommandBuffer,
-        marker_info: &vk::DebugMarkerMarkerInfoEXT
+        marker_info: &vk::DebugMarkerMarkerInfoEXT,
     ) {
-        self.debug_marker_fn.cmd_debug_marker_insert_ext(
-            command_buffer,
-            marker_info
-        );
+        self.debug_marker_fn
+            .cmd_debug_marker_insert_ext(command_buffer, marker_info);
     }
 }

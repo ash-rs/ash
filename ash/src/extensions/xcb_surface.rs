@@ -1,32 +1,29 @@
 #![allow(dead_code)]
 use prelude::*;
-use std::mem;
-use vk;
 use std::ffi::CStr;
-use RawPtr;
+use std::mem;
 use version::{EntryV1_0, InstanceV1_0};
+use vk;
+use RawPtr;
 
 #[derive(Clone)]
 pub struct XcbSurface {
     handle: vk::Instance,
-    xcb_surface_fn: vk::XcbSurfaceFn,
+    xcb_surface_fn: vk::KhrXcbSurfaceFn,
 }
 
 impl XcbSurface {
     pub fn new<E: EntryV1_0, I: InstanceV1_0>(
         entry: &E,
         instance: &I,
-    ) -> Result<XcbSurface, Vec<&'static str>> {
-        let surface_fn = vk::XcbSurfaceFn::load(|name| unsafe {
-            mem::transmute(entry.get_instance_proc_addr(
-                instance.handle(),
-                name.as_ptr(),
-            ))
-        })?;
-        Ok(XcbSurface {
+    ) -> XcbSurface {
+        let surface_fn = vk::KhrXcbSurfaceFn::load(|name| unsafe {
+            mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
+        });
+        XcbSurface {
             handle: instance.handle(),
             xcb_surface_fn: surface_fn,
-        })
+        }
     }
 
     pub fn name() -> &'static CStr {
@@ -46,7 +43,7 @@ impl XcbSurface {
             &mut surface,
         );
         match err_code {
-            vk::Result::Success => Ok(surface),
+            vk::Result::SUCCESS => Ok(surface),
             _ => Err(err_code),
         }
     }

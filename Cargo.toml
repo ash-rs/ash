@@ -2,4 +2,5 @@
 members = [
     "examples",
     "ash",
+    "generator",
 ]

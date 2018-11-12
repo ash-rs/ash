@@ -1,32 +1,29 @@
 #![allow(dead_code)]
 use prelude::*;
-use std::mem;
-use vk;
 use std::ffi::CStr;
-use RawPtr;
+use std::mem;
 use version::{EntryV1_0, InstanceV1_0};
+use vk;
+use RawPtr;
 
 #[derive(Clone)]
 pub struct DebugReport {
     handle: vk::Instance,
-    debug_report_fn: vk::DebugReportFn,
+    debug_report_fn: vk::ExtDebugReportFn,
 }
 
 impl DebugReport {
     pub fn new<E: EntryV1_0, I: InstanceV1_0>(
         entry: &E,
         instance: &I,
-    ) -> Result<DebugReport, Vec<&'static str>> {
-        let debug_report_fn = vk::DebugReportFn::load(|name| unsafe {
-            mem::transmute(entry.get_instance_proc_addr(
-                instance.handle(),
-                name.as_ptr(),
-            ))
-        })?;
-        Ok(DebugReport {
+    ) -> DebugReport {
+        let debug_report_fn = vk::ExtDebugReportFn::load(|name| unsafe {
+            mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
+        });
+        DebugReport {
             handle: instance.handle(),
-            debug_report_fn: debug_report_fn,
-        })
+            debug_report_fn,
+        }
     }
 
     pub fn name() -> &'static CStr {
@@ -58,7 +55,7 @@ impl DebugReport {
             &mut debug_cb,
         );
         match err_code {
-            vk::Result::Success => Ok(debug_cb),
+            vk::Result::SUCCESS => Ok(debug_cb),
             _ => Err(err_code),
         }
     }

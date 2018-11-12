@@ -1,33 +1,30 @@
 #![allow(dead_code)]
 use prelude::*;
-use std::ptr;
-use std::mem;
-use vk;
 use std::ffi::CStr;
+use std::mem;
+use std::ptr;
+use version::{DeviceV1_0, InstanceV1_0};
+use vk;
 use RawPtr;
-use version::{InstanceV1_0, DeviceV1_0};
 
 #[derive(Clone)]
 pub struct Swapchain {
     handle: vk::Device,
-    swapchain_fn: vk::SwapchainFn,
+    swapchain_fn: vk::KhrSwapchainFn,
 }
 
 impl Swapchain {
     pub fn new<I: InstanceV1_0, D: DeviceV1_0>(
         instance: &I,
         device: &D,
-    ) -> Result<Swapchain, Vec<&'static str>> {
-        let swapchain_fn = vk::SwapchainFn::load(|name| unsafe {
-            mem::transmute(instance.get_device_proc_addr(
-                device.handle(),
-                name.as_ptr(),
-            ))
-        })?;
-        Ok(Swapchain {
+    ) -> Swapchain {
+        let swapchain_fn = vk::KhrSwapchainFn::load(|name| unsafe {
+            mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
+        });
+        Swapchain {
             handle: device.handle(),
             swapchain_fn: swapchain_fn,
-        })
+        }
     }
 
     pub fn name() -> &'static CStr {
@@ -46,13 +43,14 @@ impl Swapchain {
         );
     }
 
+    /// On success, returns the next image's index and whether the swapchain is suboptimal for the surface.
     pub unsafe fn acquire_next_image_khr(
         &self,
         swapchain: vk::SwapchainKHR,
-        timeout: vk::uint64_t,
+        timeout: u64,
         semaphore: vk::Semaphore,
         fence: vk::Fence,
-    ) -> VkResult<vk::uint32_t> {
+    ) -> VkResult<(u32, bool)> {
         let mut index = mem::uninitialized();
         let err_code = self.swapchain_fn.acquire_next_image_khr(
             self.handle,
@@ -63,7 +61,8 @@ impl Swapchain {
             &mut index,
         );
         match err_code {
-            vk::Result::Success => Ok(index),
+            vk::Result::SUCCESS => Ok((index, false)),
+            vk::Result::SUBOPTIMAL_KHR => Ok((index, true)),
             _ => Err(err_code),
         }
     }
@@ -81,48 +80,48 @@ impl Swapchain {
             &mut swapchain,
         );
         match err_code {
-            vk::Result::Success => Ok(swapchain),
+            vk::Result::SUCCESS => Ok(swapchain),
             _ => Err(err_code),
         }
     }
 
+    /// On success, returns whether the swapchain is suboptimal for the surface.
     pub unsafe fn queue_present_khr(
         &self,
         queue: vk::Queue,
         create_info: &vk::PresentInfoKHR,
-    ) -> VkResult<()> {
+    ) -> VkResult<bool> {
         let err_code = self.swapchain_fn.queue_present_khr(queue, create_info);
         match err_code {
-            vk::Result::Success => Ok(()),
+            vk::Result::SUCCESS => Ok(false),
+            vk::Result::SUBOPTIMAL_KHR => Ok(true),
             _ => Err(err_code),
         }
     }
 
-    pub fn get_swapchain_images_khr(
+    pub unsafe fn get_swapchain_images_khr(
         &self,
         swapchain: vk::SwapchainKHR,
     ) -> VkResult<Vec<vk::Image>> {
-        unsafe {
-            let mut count = 0;
-            self.swapchain_fn.get_swapchain_images_khr(
-                self.handle,
-                swapchain,
-                &mut count,
-                ptr::null_mut(),
-            );
+        let mut count = 0;
+        self.swapchain_fn.get_swapchain_images_khr(
+            self.handle,
+            swapchain,
+            &mut count,
+            ptr::null_mut(),
+        );
 
-            let mut v = Vec::with_capacity(count as vk::size_t);
-            let err_code = self.swapchain_fn.get_swapchain_images_khr(
-                self.handle,
-                swapchain,
-                &mut count,
-                v.as_mut_ptr(),
-            );
-            v.set_len(count as vk::size_t);
-            match err_code {
-                vk::Result::Success => Ok(v),
-                _ => Err(err_code),
-            }
+        let mut v = Vec::with_capacity(count as usize);
+        let err_code = self.swapchain_fn.get_swapchain_images_khr(
+            self.handle,
+            swapchain,
+            &mut count,
+            v.as_mut_ptr(),
+        );
+        v.set_len(count as usize);
+        match err_code {
+            vk::Result::SUCCESS => Ok(v),
+            _ => Err(err_code),
         }
     }
 }

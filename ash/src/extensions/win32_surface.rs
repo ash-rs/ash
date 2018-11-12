@@ -1,32 +1,29 @@
 #![allow(dead_code)]
 use prelude::*;
-use std::mem;
-use vk;
 use std::ffi::CStr;
-use RawPtr;
+use std::mem;
 use version::{EntryV1_0, InstanceV1_0};
+use vk;
+use RawPtr;
 
 #[derive(Clone)]
 pub struct Win32Surface {
     handle: vk::Instance,
-    win32_surface_fn: vk::Win32SurfaceFn,
+    win32_surface_fn: vk::KhrWin32SurfaceFn,
 }
 
 impl Win32Surface {
     pub fn new<E: EntryV1_0, I: InstanceV1_0>(
         entry: &E,
         instance: &I,
-    ) -> Result<Win32Surface, Vec<&'static str>> {
-        let surface_fn = vk::Win32SurfaceFn::load(|name| unsafe {
-            mem::transmute(entry.get_instance_proc_addr(
-                instance.handle(),
-                name.as_ptr(),
-            ))
-        })?;
-        Ok(Win32Surface {
+    ) -> Win32Surface {
+        let surface_fn = vk::KhrWin32SurfaceFn::load(|name| unsafe {
+            mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
+        });
+        Win32Surface {
             handle: instance.handle(),
             win32_surface_fn: surface_fn,
-        })
+        }
     }
 
     pub fn name() -> &'static CStr {
@@ -46,7 +43,7 @@ impl Win32Surface {
             &mut surface,
         );
         match err_code {
-            vk::Result::Success => Ok(surface),
+            vk::Result::SUCCESS => Ok(surface),
             _ => Err(err_code),
         }
     }

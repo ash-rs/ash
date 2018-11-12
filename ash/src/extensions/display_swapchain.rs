@@ -1,32 +1,29 @@
 #![allow(dead_code)]
 use prelude::*;
-use std::mem;
-use vk;
 use std::ffi::CStr;
+use std::mem;
+use version::{DeviceV1_0, InstanceV1_0};
+use vk;
 use RawPtr;
-use version::{InstanceV1_0, DeviceV1_0};
 
 #[derive(Clone)]
 pub struct DisplaySwapchain {
     handle: vk::Device,
-    swapchain_fn: vk::DisplaySwapchainFn,
+    swapchain_fn: vk::KhrDisplaySwapchainFn,
 }
 
 impl DisplaySwapchain {
     pub fn new<I: InstanceV1_0, D: DeviceV1_0>(
         instance: &I,
         device: &D,
-    ) -> Result<DisplaySwapchain, Vec<&'static str>> {
-        let swapchain_fn = vk::DisplaySwapchainFn::load(|name| unsafe {
-            mem::transmute(instance.get_device_proc_addr(
-                device.handle(),
-                name.as_ptr(),
-            ))
-        })?;
-        Ok(DisplaySwapchain {
+    ) -> DisplaySwapchain {
+        let swapchain_fn = vk::KhrDisplaySwapchainFn::load(|name| unsafe {
+            mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
+        });
+        DisplaySwapchain {
             handle: device.handle(),
             swapchain_fn: swapchain_fn,
-        })
+        }
     }
 
     pub fn name() -> &'static CStr {
@@ -48,7 +45,7 @@ impl DisplaySwapchain {
         );
         swapchains.set_len(create_infos.len());
         match err_code {
-            vk::Result::Success => Ok(swapchains),
+            vk::Result::SUCCESS => Ok(swapchains),
             _ => Err(err_code),
         }
     }

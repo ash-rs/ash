@@ -22,7 +22,7 @@ use objc::runtime::YES;
 use std::mem;
 
 use ash::vk;
-use std::default::Default;
+use ash::Device;
 use ash::Entry;
 use ash::Instance;
 use ash::Device;
@@ -35,22 +35,22 @@ use ash::extensions::XlibSurface;
 #[cfg(target_os = "macos")]
 use ash::extensions::MacOSSurface;
 use std::cell::RefCell;
-use std::ptr;
+use std::default::Default;
 use std::ffi::{CStr, CString};
 use std::ops::Drop;
+use std::os::raw::{c_char, c_void};
+use std::ptr;
 
 // Simple offset_of macro akin to C++ offsetof
 #[macro_export]
-macro_rules! offset_of{
-    ($base: path, $field: ident) => {
-        {
-            #[allow(unused_unsafe)]
-            unsafe{
-                let b: $base = mem::uninitialized();
-                (&b.$field as *const _ as isize) - (&b as *const _ as isize)
-            }
+macro_rules! offset_of {
+    ($base:path, $field:ident) => {{
+        #[allow(unused_unsafe)]
+        unsafe {
+            let b: $base = mem::uninitialized();
+            (&b.$field as *const _ as isize) - (&b as *const _ as isize)
         }
-    }
+    }};
 }
 
 pub fn record_submit_commandbuffer<D: DeviceV1_0, F: FnOnce(&D, vk::CommandBuffer)>(
@@ -66,14 +66,13 @@ pub fn record_submit_commandbuffer<D: DeviceV1_0, F: FnOnce(&D, vk::CommandBuffe
         device
             .reset_command_buffer(
                 command_buffer,
-                vk::COMMAND_BUFFER_RESET_RELEASE_RESOURCES_BIT,
-            )
-            .expect("Reset command buffer failed.");
+                vk::CommandBufferResetFlags::RELEASE_RESOURCES,
+            ).expect("Reset command buffer failed.");
         let command_buffer_begin_info = vk::CommandBufferBeginInfo {
-            s_type: vk::StructureType::CommandBufferBeginInfo,
+            s_type: vk::StructureType::COMMAND_BUFFER_BEGIN_INFO,
             p_next: ptr::null(),
             p_inheritance_info: ptr::null(),
-            flags: vk::COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT,
+            flags: vk::CommandBufferUsageFlags::ONE_TIME_SUBMIT,
         };
         device
             .begin_command_buffer(command_buffer, &command_buffer_begin_info)
@@ -83,7 +82,7 @@ pub fn record_submit_commandbuffer<D: DeviceV1_0, F: FnOnce(&D, vk::CommandBuffe
             .end_command_buffer(command_buffer)
             .expect("End commandbuffer");
         let fence_create_info = vk::FenceCreateInfo {
-            s_type: vk::StructureType::FenceCreateInfo,
+            s_type: vk::StructureType::FENCE_CREATE_INFO,
             p_next: ptr::null(),
             flags: vk::FenceCreateFlags::empty(),
         };
@@ -91,7 +90,7 @@ pub fn record_submit_commandbuffer<D: DeviceV1_0, F: FnOnce(&D, vk::CommandBuffe
             .create_fence(&fence_create_info, None)
             .expect("Create fence failed.");
         let submit_info = vk::SubmitInfo {
-            s_type: vk::StructureType::SubmitInfo,
+            s_type: vk::StructureType::SUBMIT_INFO,
             p_next: ptr::null(),
             wait_semaphore_count: wait_semaphores.len() as u32,
             p_wait_semaphores: wait_semaphores.as_ptr(),
@@ -121,14 +120,14 @@ unsafe fn create_surface<E: EntryV1_0, I: InstanceV1_0>(
     let x11_display = window.get_xlib_display().unwrap();
     let x11_window = window.get_xlib_window().unwrap();
     let x11_create_info = vk::XlibSurfaceCreateInfoKHR {
-        s_type: vk::StructureType::XlibSurfaceCreateInfoKhr,
+        s_type: vk::StructureType::XLIB_SURFACE_CREATE_INFO_KHR,
         p_next: ptr::null(),
         flags: Default::default(),
         window: x11_window as vk::Window,
         dpy: x11_display as *mut vk::Display,
     };
     let xlib_surface_loader =
-        XlibSurface::new(entry, instance).expect("Unable to load xlib surface");
+        XlibSurface::new(entry, instance);
     xlib_surface_loader.create_xlib_surface_khr(&x11_create_info, None)
 }
 
@@ -173,20 +172,20 @@ unsafe fn create_surface<E: EntryV1_0, I: InstanceV1_0>(
     window: &winit::Window,
 ) -> Result<vk::SurfaceKHR, vk::Result> {
     use winapi::shared::windef::HWND;
-    use winapi::um::winuser::GetWindow;
+    use winapi::um::libloaderapi::GetModuleHandleW;
     use winit::os::windows::WindowExt;
 
     let hwnd = window.get_hwnd() as HWND;
-    let hinstance = GetWindow(hwnd, 0) as *const vk::c_void;
+    let hinstance = GetModuleHandleW(ptr::null()) as *const c_void;
     let win32_create_info = vk::Win32SurfaceCreateInfoKHR {
-        s_type: vk::StructureType::Win32SurfaceCreateInfoKhr,
+        s_type: vk::StructureType::WIN32_SURFACE_CREATE_INFO_KHR,
         p_next: ptr::null(),
         flags: Default::default(),
         hinstance: hinstance,
-        hwnd: hwnd as *const vk::c_void,
+        hwnd: hwnd as *const c_void,
     };
     let win32_surface_loader =
-        Win32Surface::new(entry, instance).expect("Unable to load win32 surface");
+        Win32Surface::new(entry, instance);
     win32_surface_loader.create_win32_surface_khr(&win32_create_info, None)
 }
 
@@ -220,12 +219,12 @@ fn extension_names() -> Vec<*const i8> {
 unsafe extern "system" fn vulkan_debug_callback(
     _: vk::DebugReportFlagsEXT,
     _: vk::DebugReportObjectTypeEXT,
-    _: vk::uint64_t,
-    _: vk::size_t,
-    _: vk::int32_t,
-    _: *const vk::c_char,
-    p_message: *const vk::c_char,
-    _: *mut vk::c_void,
+    _: u64,
+    _: usize,
+    _: i32,
+    _: *const c_char,
+    p_message: *const c_char,
+    _: *mut c_void,
 ) -> u32 {
     println!("{:?}", CStr::from_ptr(p_message));
     vk::VK_FALSE
@@ -269,9 +268,9 @@ pub fn find_memorytype_index_f<F: Fn(vk::MemoryPropertyFlags, vk::MemoryProperty
 }
 
 pub struct ExampleBase {
-    pub entry: Entry<V1_0>,
-    pub instance: Instance<V1_0>,
-    pub device: Device<V1_0>,
+    pub entry: Entry,
+    pub instance: Instance,
+    pub device: Device,
     pub surface_loader: Surface,
     pub swapchain_loader: Swapchain,
     pub debug_report_loader: DebugReport,
@@ -318,7 +317,7 @@ impl ExampleBase {
                             ControlFlow::Continue
                         }
                     }
-                    WindowEvent::Closed => winit::ControlFlow::Break,
+                    WindowEvent::CloseRequested => winit::ControlFlow::Break,
                     _ => ControlFlow::Continue,
                 },
                 _ => ControlFlow::Continue,
@@ -331,8 +330,10 @@ impl ExampleBase {
             let events_loop = winit::EventsLoop::new();
             let window = winit::WindowBuilder::new()
                 .with_title("Ash - Example")
-                .with_dimensions(window_width, window_height)
-                .build(&events_loop)
+                .with_dimensions(winit::dpi::LogicalSize::new(
+                    window_width as f64,
+                    window_height as f64,
+                )).build(&events_loop)
                 .unwrap();
             let entry = Entry::new().unwrap();
             let app_name = CString::new("VulkanTriangle").unwrap();
@@ -347,7 +348,7 @@ impl ExampleBase {
             let extension_names_raw = extension_names();
             let appinfo = vk::ApplicationInfo {
                 p_application_name: raw_name,
-                s_type: vk::StructureType::ApplicationInfo,
+                s_type: vk::StructureType::APPLICATION_INFO,
                 p_next: ptr::null(),
                 application_version: 0,
                 p_engine_name: raw_name,
@@ -355,7 +356,7 @@ impl ExampleBase {
                 api_version: vk_make_version!(1, 0, 36),
             };
             let create_info = vk::InstanceCreateInfo {
-                s_type: vk::StructureType::InstanceCreateInfo,
+                s_type: vk::StructureType::INSTANCE_CREATE_INFO,
                 p_next: ptr::null(),
                 flags: Default::default(),
                 p_application_info: &appinfo,
@@ -364,19 +365,20 @@ impl ExampleBase {
                 pp_enabled_extension_names: extension_names_raw.as_ptr(),
                 enabled_extension_count: extension_names_raw.len() as u32,
             };
-            let instance: Instance<V1_0> = entry
+            let instance: Instance = entry
                 .create_instance(&create_info, None)
                 .expect("Instance creation error");
             let debug_info = vk::DebugReportCallbackCreateInfoEXT {
-                s_type: vk::StructureType::DebugReportCallbackCreateInfoExt,
+                s_type: vk::StructureType::DEBUG_REPORT_CALLBACK_CREATE_INFO_EXT,
                 p_next: ptr::null(),
-                flags: vk::DEBUG_REPORT_ERROR_BIT_EXT | vk::DEBUG_REPORT_WARNING_BIT_EXT
-                    | vk::DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT,
-                pfn_callback: vulkan_debug_callback,
+                flags: vk::DebugReportFlagsEXT::ERROR
+                    | vk::DebugReportFlagsEXT::WARNING
+                    | vk::DebugReportFlagsEXT::PERFORMANCE_WARNING,
+                pfn_callback: Some(vulkan_debug_callback),
                 p_user_data: ptr::null_mut(),
             };
             let debug_report_loader =
-                DebugReport::new(&entry, &instance).expect("Unable to load debug report");
+                DebugReport::new(&entry, &instance);
             let debug_call_back = debug_report_loader
                 .create_debug_report_callback_ext(&debug_info, None)
                 .unwrap();
@@ -385,7 +387,7 @@ impl ExampleBase {
                 .enumerate_physical_devices()
                 .expect("Physical device error");
             let surface_loader =
-                Surface::new(&entry, &instance).expect("Unable to load the Surface extension");
+                Surface::new(&entry, &instance);
             let (pdevice, queue_family_index) = pdevices
                 .iter()
                 .map(|pdevice| {
@@ -394,21 +396,19 @@ impl ExampleBase {
                         .iter()
                         .enumerate()
                         .filter_map(|(index, ref info)| {
-                            let supports_graphic_and_surface = info.queue_flags
-                                .subset(vk::QUEUE_GRAPHICS_BIT)
-                                && surface_loader.get_physical_device_surface_support_khr(
-                                    *pdevice,
-                                    index as u32,
-                                    surface,
-                                );
+                            let supports_graphic_and_surface =
+                                info.queue_flags.contains(vk::QueueFlags::GRAPHICS) && surface_loader
+                                    .get_physical_device_surface_support_khr(
+                                        *pdevice,
+                                        index as u32,
+                                        surface,
+                                    );
                             match supports_graphic_and_surface {
                                 true => Some((*pdevice, index)),
                                 _ => None,
                             }
-                        })
-                        .nth(0)
-                })
-                .filter_map(|v| v)
+                        }).nth(0)
+                }).filter_map(|v| v)
                 .nth(0)
                 .expect("Couldn't find suitable device.");
             let queue_family_index = queue_family_index as u32;
@@ -419,7 +419,7 @@ impl ExampleBase {
             };
             let priorities = [1.0];
             let queue_info = vk::DeviceQueueCreateInfo {
-                s_type: vk::StructureType::DeviceQueueCreateInfo,
+                s_type: vk::StructureType::DEVICE_QUEUE_CREATE_INFO,
                 p_next: ptr::null(),
                 flags: Default::default(),
                 queue_family_index: queue_family_index as u32,
@@ -427,7 +427,7 @@ impl ExampleBase {
                 queue_count: priorities.len() as u32,
             };
             let device_create_info = vk::DeviceCreateInfo {
-                s_type: vk::StructureType::DeviceCreateInfo,
+                s_type: vk::StructureType::DEVICE_CREATE_INFO,
                 p_next: ptr::null(),
                 flags: Default::default(),
                 queue_create_info_count: 1,
@@ -438,7 +438,7 @@ impl ExampleBase {
                 pp_enabled_extension_names: device_extension_names_raw.as_ptr(),
                 p_enabled_features: &features,
             };
-            let device: Device<V1_0> = instance
+            let device: Device = instance
                 .create_device(pdevice, &device_create_info, None)
                 .unwrap();
             let present_queue = device.get_device_queue(queue_family_index as u32, 0);
@@ -449,13 +449,12 @@ impl ExampleBase {
             let surface_format = surface_formats
                 .iter()
                 .map(|sfmt| match sfmt.format {
-                    vk::Format::Undefined => vk::SurfaceFormatKHR {
-                        format: vk::Format::B8g8r8Unorm,
+                    vk::Format::UNDEFINED => vk::SurfaceFormatKHR {
+                        format: vk::Format::B8G8R8_UNORM,
                         color_space: sfmt.color_space,
                     },
                     _ => sfmt.clone(),
-                })
-                .nth(0)
+                }).nth(0)
                 .expect("Unable to find suitable surface format.");
             let surface_capabilities = surface_loader
                 .get_physical_device_surface_capabilities_khr(pdevice, surface)
@@ -475,9 +474,9 @@ impl ExampleBase {
             };
             let pre_transform = if surface_capabilities
                 .supported_transforms
-                .subset(vk::SURFACE_TRANSFORM_IDENTITY_BIT_KHR)
+                .contains(vk::SurfaceTransformFlagsKHR::IDENTITY)
             {
-                vk::SURFACE_TRANSFORM_IDENTITY_BIT_KHR
+                vk::SurfaceTransformFlagsKHR::IDENTITY
             } else {
                 surface_capabilities.current_transform
             };
@@ -487,12 +486,12 @@ impl ExampleBase {
             let present_mode = present_modes
                 .iter()
                 .cloned()
-                .find(|&mode| mode == vk::PresentModeKHR::Mailbox)
-                .unwrap_or(vk::PresentModeKHR::Fifo);
+                .find(|&mode| mode == vk::PresentModeKHR::MAILBOX)
+                .unwrap_or(vk::PresentModeKHR::FIFO);
             let swapchain_loader =
-                Swapchain::new(&instance, &device).expect("Unable to load swapchain");
+                Swapchain::new(&instance, &device);
             let swapchain_create_info = vk::SwapchainCreateInfoKHR {
-                s_type: vk::StructureType::SwapchainCreateInfoKhr,
+                s_type: vk::StructureType::SWAPCHAIN_CREATE_INFO_KHR,
                 p_next: ptr::null(),
                 flags: Default::default(),
                 surface: surface,
@@ -500,10 +499,10 @@ impl ExampleBase {
                 image_color_space: surface_format.color_space,
                 image_format: surface_format.format,
                 image_extent: surface_resolution.clone(),
-                image_usage: vk::IMAGE_USAGE_COLOR_ATTACHMENT_BIT,
-                image_sharing_mode: vk::SharingMode::Exclusive,
+                image_usage: vk::ImageUsageFlags::COLOR_ATTACHMENT,
+                image_sharing_mode: vk::SharingMode::EXCLUSIVE,
                 pre_transform: pre_transform,
-                composite_alpha: vk::COMPOSITE_ALPHA_OPAQUE_BIT_KHR,
+                composite_alpha: vk::CompositeAlphaFlagsKHR::OPAQUE,
                 present_mode: present_mode,
                 clipped: 1,
                 old_swapchain: vk::SwapchainKHR::null(),
@@ -515,18 +514,18 @@ impl ExampleBase {
                 .create_swapchain_khr(&swapchain_create_info, None)
                 .unwrap();
             let pool_create_info = vk::CommandPoolCreateInfo {
-                s_type: vk::StructureType::CommandPoolCreateInfo,
+                s_type: vk::StructureType::COMMAND_POOL_CREATE_INFO,
                 p_next: ptr::null(),
-                flags: vk::COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT,
+                flags: vk::CommandPoolCreateFlags::RESET_COMMAND_BUFFER,
                 queue_family_index: queue_family_index,
             };
             let pool = device.create_command_pool(&pool_create_info, None).unwrap();
             let command_buffer_allocate_info = vk::CommandBufferAllocateInfo {
-                s_type: vk::StructureType::CommandBufferAllocateInfo,
+                s_type: vk::StructureType::COMMAND_BUFFER_ALLOCATE_INFO,
                 p_next: ptr::null(),
                 command_buffer_count: 2,
                 command_pool: pool,
-                level: vk::CommandBufferLevel::Primary,
+                level: vk::CommandBufferLevel::PRIMARY,
             };
             let command_buffers = device
                 .allocate_command_buffers(&command_buffer_allocate_info)
@@ -541,10 +540,10 @@ impl ExampleBase {
                 .iter()
                 .map(|&image| {
                     let create_view_info = vk::ImageViewCreateInfo {
-                        s_type: vk::StructureType::ImageViewCreateInfo,
+                        s_type: vk::StructureType::IMAGE_VIEW_CREATE_INFO,
                         p_next: ptr::null(),
                         flags: Default::default(),
-                        view_type: vk::ImageViewType::Type2d,
+                        view_type: vk::ImageViewType::TYPE_2D,
                         format: surface_format.format,
                         components: vk::ComponentMapping {
                             r: vk::ComponentSwizzle::R,
@@ -553,7 +552,7 @@ impl ExampleBase {
                             a: vk::ComponentSwizzle::A,
                         },
                         subresource_range: vk::ImageSubresourceRange {
-                            aspect_mask: vk::IMAGE_ASPECT_COLOR_BIT,
+                            aspect_mask: vk::ImageAspectFlags::COLOR,
                             base_mip_level: 0,
                             level_count: 1,
                             base_array_layer: 0,
@@ -562,15 +561,14 @@ impl ExampleBase {
                         image: image,
                     };
                     device.create_image_view(&create_view_info, None).unwrap()
-                })
-                .collect();
+                }).collect();
             let device_memory_properties = instance.get_physical_device_memory_properties(pdevice);
             let depth_image_create_info = vk::ImageCreateInfo {
-                s_type: vk::StructureType::ImageCreateInfo,
+                s_type: vk::StructureType::IMAGE_CREATE_INFO,
                 p_next: ptr::null(),
                 flags: Default::default(),
-                image_type: vk::ImageType::Type2d,
-                format: vk::Format::D16Unorm,
+                image_type: vk::ImageType::TYPE_2D,
+                format: vk::Format::D16_UNORM,
                 extent: vk::Extent3D {
                     width: surface_resolution.width,
                     height: surface_resolution.height,
@@ -578,25 +576,24 @@ impl ExampleBase {
                 },
                 mip_levels: 1,
                 array_layers: 1,
-                samples: vk::SAMPLE_COUNT_1_BIT,
-                tiling: vk::ImageTiling::Optimal,
-                usage: vk::IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT,
-                sharing_mode: vk::SharingMode::Exclusive,
+                samples: vk::SampleCountFlags::TYPE_1,
+                tiling: vk::ImageTiling::OPTIMAL,
+                usage: vk::ImageUsageFlags::DEPTH_STENCIL_ATTACHMENT,
+                sharing_mode: vk::SharingMode::EXCLUSIVE,
                 queue_family_index_count: 0,
                 p_queue_family_indices: ptr::null(),
-                initial_layout: vk::ImageLayout::Undefined,
+                initial_layout: vk::ImageLayout::UNDEFINED,
             };
             let depth_image = device.create_image(&depth_image_create_info, None).unwrap();
             let depth_image_memory_req = device.get_image_memory_requirements(depth_image);
-            let depth_image_memory_index =
-                find_memorytype_index(
-                    &depth_image_memory_req,
-                    &device_memory_properties,
-                    vk::MEMORY_PROPERTY_DEVICE_LOCAL_BIT,
-                ).expect("Unable to find suitable memory index for depth image.");
+            let depth_image_memory_index = find_memorytype_index(
+                &depth_image_memory_req,
+                &device_memory_properties,
+                vk::MemoryPropertyFlags::DEVICE_LOCAL,
+            ).expect("Unable to find suitable memory index for depth image.");
 
             let depth_image_allocate_info = vk::MemoryAllocateInfo {
-                s_type: vk::StructureType::MemoryAllocateInfo,
+                s_type: vk::StructureType::MEMORY_ALLOCATE_INFO,
                 p_next: ptr::null(),
                 allocation_size: depth_image_memory_req.size,
                 memory_type_index: depth_image_memory_index,
@@ -611,23 +608,23 @@ impl ExampleBase {
                 &device,
                 setup_command_buffer,
                 present_queue,
-                &[vk::PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT],
+                &[vk::PipelineStageFlags::BOTTOM_OF_PIPE],
                 &[],
                 &[],
                 |device, setup_command_buffer| {
                     let layout_transition_barrier = vk::ImageMemoryBarrier {
-                        s_type: vk::StructureType::ImageMemoryBarrier,
+                        s_type: vk::StructureType::IMAGE_MEMORY_BARRIER,
                         p_next: ptr::null(),
                         src_access_mask: Default::default(),
-                        dst_access_mask: vk::ACCESS_DEPTH_STENCIL_ATTACHMENT_READ_BIT
-                            | vk::ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT,
-                        old_layout: vk::ImageLayout::Undefined,
-                        new_layout: vk::ImageLayout::DepthStencilAttachmentOptimal,
-                        src_queue_family_index: vk::VK_QUEUE_FAMILY_IGNORED,
-                        dst_queue_family_index: vk::VK_QUEUE_FAMILY_IGNORED,
+                        dst_access_mask: vk::AccessFlags::DEPTH_STENCIL_ATTACHMENT_READ
+                            | vk::AccessFlags::DEPTH_STENCIL_ATTACHMENT_WRITE,
+                        old_layout: vk::ImageLayout::UNDEFINED,
+                        new_layout: vk::ImageLayout::DEPTH_STENCIL_ATTACHMENT_OPTIMAL,
+                        src_queue_family_index: vk::QUEUE_FAMILY_IGNORED,
+                        dst_queue_family_index: vk::QUEUE_FAMILY_IGNORED,
                         image: depth_image,
                         subresource_range: vk::ImageSubresourceRange {
-                            aspect_mask: vk::IMAGE_ASPECT_DEPTH_BIT,
+                            aspect_mask: vk::ImageAspectFlags::DEPTH,
                             base_mip_level: 0,
                             level_count: 1,
                             base_array_layer: 0,
@@ -636,8 +633,8 @@ impl ExampleBase {
                     };
                     device.cmd_pipeline_barrier(
                         setup_command_buffer,
-                        vk::PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT,
-                        vk::PIPELINE_STAGE_LATE_FRAGMENT_TESTS_BIT,
+                        vk::PipelineStageFlags::BOTTOM_OF_PIPE,
+                        vk::PipelineStageFlags::LATE_FRAGMENT_TESTS,
                         vk::DependencyFlags::empty(),
                         &[],
                         &[],
@@ -646,19 +643,19 @@ impl ExampleBase {
                 },
             );
             let depth_image_view_info = vk::ImageViewCreateInfo {
-                s_type: vk::StructureType::ImageViewCreateInfo,
+                s_type: vk::StructureType::IMAGE_VIEW_CREATE_INFO,
                 p_next: ptr::null(),
                 flags: Default::default(),
-                view_type: vk::ImageViewType::Type2d,
+                view_type: vk::ImageViewType::TYPE_2D,
                 format: depth_image_create_info.format,
                 components: vk::ComponentMapping {
-                    r: vk::ComponentSwizzle::Identity,
-                    g: vk::ComponentSwizzle::Identity,
-                    b: vk::ComponentSwizzle::Identity,
-                    a: vk::ComponentSwizzle::Identity,
+                    r: vk::ComponentSwizzle::IDENTITY,
+                    g: vk::ComponentSwizzle::IDENTITY,
+                    b: vk::ComponentSwizzle::IDENTITY,
+                    a: vk::ComponentSwizzle::IDENTITY,
                 },
                 subresource_range: vk::ImageSubresourceRange {
-                    aspect_mask: vk::IMAGE_ASPECT_DEPTH_BIT,
+                    aspect_mask: vk::ImageAspectFlags::DEPTH,
                     base_mip_level: 0,
                     level_count: 1,
                     base_array_layer: 0,
@@ -670,7 +667,7 @@ impl ExampleBase {
                 .create_image_view(&depth_image_view_info, None)
                 .unwrap();
             let semaphore_create_info = vk::SemaphoreCreateInfo {
-                s_type: vk::StructureType::SemaphoreCreateInfo,
+                s_type: vk::StructureType::SEMAPHORE_CREATE_INFO,
                 p_next: ptr::null(),
                 flags: Default::default(),
             };

@@ -6,3 +6,4 @@ rust:
 script:
   - cargo build --manifest-path ash/Cargo.toml
   - cargo build --manifest-path examples/Cargo.toml
+  - cargo build --manifest-path generator/Cargo.toml
