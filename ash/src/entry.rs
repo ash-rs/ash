@@ -5,8 +5,10 @@ use std::error::Error;
 use std::fmt;
 use std::mem;
 use std::os::raw::c_char;
+use std::os::raw::c_void;
 use std::path::Path;
 use std::ptr;
+use std::sync::Arc;
 use vk;
 use RawPtr;
 
@@ -38,11 +40,13 @@ lazy_static! {
         DynamicLibrary::open(Some(&Path::new(LIB_PATH)));
 }
 
+pub type Entry = EntryCustom<Arc<DynamicLibrary>>;
 #[derive(Clone)]
-pub struct Entry {
+pub struct EntryCustom<L> {
     static_fn: vk::StaticFn,
     entry_fn_1_0: vk::EntryFnV1_0,
     entry_fn_1_1: vk::EntryFnV1_1,
+    lib: L,
 }
 
 #[derive(Debug)]
@@ -133,7 +137,7 @@ pub trait EntryV1_0 {
     }
 }
 
-impl EntryV1_0 for Entry {
+impl<L> EntryV1_0 for EntryCustom<L> {
     type Instance = Instance;
     unsafe fn create_instance(
         &self,
@@ -159,33 +163,6 @@ impl EntryV1_0 for Entry {
     }
 }
 
-impl Entry {
-    pub fn new() -> Result<Self, LoadingError> {
-        let lib = VK_LIB
-            .as_ref()
-            .map_err(|err| LoadingError::LibraryLoadError(err.clone()))?;
-
-        let static_fn = vk::StaticFn::load(|name| unsafe {
-            lib.symbol(&*name.to_string_lossy())
-                .unwrap_or(ptr::null_mut())
-        });
-
-        let entry_fn_1_0 = vk::EntryFnV1_0::load(|name| unsafe {
-            mem::transmute(static_fn.get_instance_proc_addr(vk::Instance::null(), name.as_ptr()))
-        });
-
-        let entry_fn_1_1 = vk::EntryFnV1_1::load(|name| unsafe {
-            mem::transmute(static_fn.get_instance_proc_addr(vk::Instance::null(), name.as_ptr()))
-        });
-
-        Ok(Entry {
-            static_fn,
-            entry_fn_1_0,
-            entry_fn_1_1,
-        })
-    }
-}
-
 #[allow(non_camel_case_types)]
 pub trait EntryV1_1: EntryV1_0 {
     fn fp_v1_1(&self) -> &vk::EntryFnV1_1;
@@ -199,5 +176,47 @@ pub trait EntryV1_1: EntryV1_0 {
                 _ => Err(err_code),
             }
         }
+    }
+}
+impl<L> EntryCustom<L> {
+    pub fn new_custom<Open, Load>(open: Open, mut load: Load) -> Result<Self, LoadingError>
+    where
+        Open: FnOnce() -> Result<L, LoadingError>,
+        Load: FnMut(&mut L, &::std::ffi::CStr) -> *const c_void,
+    {
+        let mut lib = open()?;
+        let static_fn = vk::StaticFn::load(|name| load(&mut lib, name));
+
+        let entry_fn_1_0 = vk::EntryFnV1_0::load(|name| unsafe {
+            mem::transmute(static_fn.get_instance_proc_addr(vk::Instance::null(), name.as_ptr()))
+        });
+
+        let entry_fn_1_1 = vk::EntryFnV1_1::load(|name| unsafe {
+            mem::transmute(static_fn.get_instance_proc_addr(vk::Instance::null(), name.as_ptr()))
+        });
+
+        Ok(EntryCustom {
+            static_fn,
+            entry_fn_1_0,
+            entry_fn_1_1,
+            lib,
+        })
+    }
+}
+
+impl Entry {
+    pub fn new() -> Result<Self, LoadingError> {
+        Self::new_custom(
+            || {
+                DynamicLibrary::open(Some(&Path::new(LIB_PATH)))
+                    .map_err(|err| LoadingError::LibraryLoadError(err.clone()))
+                    .map(|dl| Arc::new(dl))
+            },
+            |vk_lib, name| unsafe {
+                vk_lib
+                    .symbol(&*name.to_string_lossy())
+                    .unwrap_or(ptr::null_mut())
+            },
+        )
     }
 }
