@@ -34,7 +34,7 @@ pub trait DeviceV1_1: DeviceV1_0 {
         }
     }
 
-	unsafe fn get_device_group_peer_memory_features(
+    unsafe fn get_device_group_peer_memory_features(
         &self,
         heap_index: u32,
         local_device_index: u32,
@@ -84,33 +84,31 @@ pub trait DeviceV1_1: DeviceV1_0 {
     unsafe fn get_image_memory_requirements2(
         &self,
         info: &vk::ImageMemoryRequirementsInfo2,
-    ) -> vk::MemoryRequirements2 {
-        let mut image_memory_requirements = mem::uninitialized();
+        out: &mut vk::MemoryRequirements2,
+    ) {
         self.fp_v1_1().get_image_memory_requirements2(
             self.handle(),
             info,
-            &mut image_memory_requirements,
+            out,
         );
-        image_memory_requirements
     }
 
     unsafe fn get_buffer_memory_requirements2(
         &self,
         info: &vk::BufferMemoryRequirementsInfo2,
-    ) -> vk::MemoryRequirements2 {
-        let mut image_memory_requirements = mem::uninitialized();
+        out: &mut vk::MemoryRequirements2,
+    ) {
         self.fp_v1_1().get_buffer_memory_requirements2(
             self.handle(),
             info,
-            &mut image_memory_requirements,
+            out,
         );
-        image_memory_requirements
     }
 
-    unsafe fn get_image_sparse_memory_requirements2(
+    unsafe fn get_image_sparse_memory_requirements2_len(
         &self,
         info: &vk::ImageSparseMemoryRequirementsInfo2,
-    ) -> Vec<vk::SparseImageMemoryRequirements2> {
+    ) -> usize {
         let mut count = mem::uninitialized();
         self.fp_v1_1().get_image_sparse_memory_requirements2(
             self.handle(),
@@ -118,15 +116,21 @@ pub trait DeviceV1_1: DeviceV1_0 {
             &mut count,
             ptr::null_mut(),
         );
-        let mut requirements = Vec::with_capacity(count as usize);
+        count as usize
+    }
+
+    unsafe fn get_image_sparse_memory_requirements2(
+        &self,
+        info: &vk::ImageSparseMemoryRequirementsInfo2,
+        out: &mut [vk::SparseImageMemoryRequirements2],
+    ) {
+        let mut count = out.len() as u32;
         self.fp_v1_1().get_image_sparse_memory_requirements2(
             self.handle(),
             info,
             &mut count,
-            requirements.as_mut_ptr(),
+            out.as_mut_ptr(),
         );
-        requirements.set_len(count as usize);
-        requirements
     }
 
     unsafe fn trim_command_pool(
@@ -215,14 +219,13 @@ pub trait DeviceV1_1: DeviceV1_0 {
     unsafe fn get_descriptor_set_layout_support(
         &self,
         create_info: &vk::DescriptorSetLayoutCreateInfo,
-    ) -> vk::DescriptorSetLayoutSupport {
-        let mut descriptor_set_layout_support = mem::uninitialized();
+        out: &mut vk::DescriptorSetLayoutSupport,
+    ) {
         self.fp_v1_1().get_descriptor_set_layout_support(
             self.handle(),
             create_info,
-            &mut descriptor_set_layout_support,
+            out,
         );
-        descriptor_set_layout_support
     }
 }
 
