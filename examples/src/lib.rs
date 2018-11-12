@@ -25,8 +25,7 @@ use ash::vk;
 use ash::Device;
 use ash::Entry;
 use ash::Instance;
-use ash::Device;
-pub use ash::version::{DeviceV1_0, EntryV1_0, InstanceV1_0, V1_0};
+pub use ash::version::{DeviceV1_0, EntryV1_0, InstanceV1_0};
 use ash::extensions::{DebugReport, Surface, Swapchain};
 #[cfg(target_os = "windows")]
 use ash::extensions::Win32Surface;
@@ -227,7 +226,7 @@ unsafe extern "system" fn vulkan_debug_callback(
     _: *mut c_void,
 ) -> u32 {
     println!("{:?}", CStr::from_ptr(p_message));
-    vk::VK_FALSE
+    vk::FALSE
 }
 
 pub fn find_memorytype_index(
