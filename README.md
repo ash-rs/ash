@@ -13,11 +13,12 @@ A very lightweight wrapper around Vulkan
 
 ## Overview
 - [x] A true Vulkan API without compromises
-- [x] Convenience features that don't limit the functionality
+- [x] Convenience features without limiting functionality
 - [x] Additional type safety
 - [x] Device local function pointer loading
 - [x] No validation, everything is **unsafe**
 - [x] Generated from `vk.xml`
+- [x] Support for Vulkan 1.1
 
 ## Features
 ### Explicit returns with `Result`
