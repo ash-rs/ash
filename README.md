@@ -14,7 +14,8 @@ A very lightweight wrapper around Vulkan
 ## Overview
 - [x] A true Vulkan API without compromises
 - [x] Convenience features that don't limit the functionality
-- [x] Function pointer loading
+- [x] Additional type safety
+- [x] Device local function pointer loading
 - [x] No validation, everything is **unsafe**
 - [x] Generated from `vk.xml`
 
@@ -31,7 +32,7 @@ let instance = entry.create_instance(&create_info, None)
 ```
 
 
-### Returns a `Vec<T>` (*when possible*) for functions that output multiple values.
+### `Vec<T>` instead of mutable slices
 
 ```Rust
 pub fn get_swapchain_images_khr(&self,
@@ -39,8 +40,9 @@ pub fn get_swapchain_images_khr(&self,
                                 -> VkResult<Vec<vk::Image>>;
 let present_images = swapchain_loader.get_swapchain_images_khr(swapchain).unwrap();
 ```
+*Note*: Functions don't return `Vec<T>` if this would limit the functionality. See `p_next`.
 
-### Slices in functions
+### Slices
 ```Rust
 pub fn cmd_pipeline_barrier(&self,
                             command_buffer: vk::CommandBuffer,
@@ -72,12 +74,13 @@ let pipeline_vertex_input_state_create_info = vk::PipelineVertexInputStateCreate
 ### Flags and constants as associated constants
 
 ```Rust
-dst_access_mask: vk::AccessFlags::COLOR_ATTACHMENT_READ
-    | vk::AccessFlags::COLOR_ATTACHMENT_WRITE,
+// Bitflag
+vk::AccessFlags::COLOR_ATTACHMENT_READ | vk::AccessFlags::COLOR_ATTACHMENT_WRITE
 ```
 
 ```Rust
-pipeline_bind_point: vk::PipelineBindPoint::GRAPHICS,
+// Constant
+vk::PipelineBindPoint::GRAPHICS,
 ```
 ### Debug/Display for Flags
 
@@ -92,7 +95,7 @@ println!("Display: {}", flag);
 ```
 
 ### Interop
-
+Vulkan objects inside Ash can be constructed from raw values with `Object::from:raw`. Useful if you need to interact with a C library.
 ```Rust
 PipelineBindPoint::from_raw(bindpoint);
 ```
@@ -106,6 +109,14 @@ Additionally, every Vulkan extension has to be loaded explicitly. You can find a
 use ash::extensions::Swapchain;
 let swapchain_loader = Swapchain::new(&instance, &device);
 let swapchain = swapchain_loader.create_swapchain_khr(&swapchain_create_info).unwrap();
+```
+
+### Raw function pointers
+
+Raw function pointers are available, if something hasn't been exposed yet in the higher level API. Please open an issue if anything is missing.
+
+```Rust
+device.fp_v1_0().destroy_device(...);
 ```
 
 ### Support for extension names
