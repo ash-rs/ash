@@ -14,10 +14,7 @@ pub struct Instance {
     instance_fn_1_1: vk::InstanceFnV1_1,
 }
 impl Instance {
-    pub unsafe fn load(
-        static_fn: &vk::StaticFn,
-        instance: vk::Instance,
-    ) -> Self {
+    pub unsafe fn load(static_fn: &vk::StaticFn, instance: vk::Instance) -> Self {
         let instance_fn_1_0 = vk::InstanceFnV1_0::load(|name| {
             mem::transmute(static_fn.get_instance_proc_addr(instance, name.as_ptr()))
         });
@@ -84,7 +81,7 @@ pub trait InstanceV1_1: InstanceV1_0 {
 
     fn enumerate_physical_device_groups(
         &self,
-        out: &mut [vk::PhysicalDeviceGroupProperties]
+        out: &mut [vk::PhysicalDeviceGroupProperties],
     ) -> VkResult<()> {
         unsafe {
             let mut group_count = out.len() as u32;
@@ -95,7 +92,9 @@ pub trait InstanceV1_1: InstanceV1_0 {
             );
             if err_code == vk::Result::SUCCESS {
                 Ok(())
-            } else { Err(err_code) }
+            } else {
+                Err(err_code)
+            }
         }
     }
 
@@ -114,13 +113,8 @@ pub trait InstanceV1_1: InstanceV1_0 {
         format: vk::Format,
         out: &mut vk::FormatProperties2,
     ) {
-        unsafe {
-            self.fp_v1_1().get_physical_device_format_properties2(
-                physical_device,
-                format,
-                out,
-            );
-        }
+        self.fp_v1_1()
+            .get_physical_device_format_properties2(physical_device, format, out);
     }
 
     unsafe fn get_physical_device_image_format_properties2(
@@ -172,10 +166,8 @@ pub trait InstanceV1_1: InstanceV1_0 {
         physical_device: vk::PhysicalDevice,
         out: &mut vk::PhysicalDeviceMemoryProperties2,
     ) {
-        unsafe {
-            self.fp_v1_1()
-                .get_physical_device_memory_properties2(physical_device, out);
-        }
+        self.fp_v1_1()
+            .get_physical_device_memory_properties2(physical_device, out);
     }
 
     unsafe fn get_physical_device_sparse_image_format_properties2_len(
