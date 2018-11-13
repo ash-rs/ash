@@ -102,7 +102,19 @@ PipelineBindPoint::from_raw(bindpoint);
 ```
 
 ### Function pointer loading
-Ash also takes care of loading the function pointers. Function pointers are split into 3 categories, Entry, Instance and Device. The reason for not loading it into a global is that in Vulkan you can have multiple devices and each device will load its own function pointers to achieve better performance. Click [here](https://github.com/KhronosGroup/Vulkan-LoaderAndValidationLayers/blob/master/loader/LoaderAndLayerInterface.md) for more information.
+Ash also takes care of loading the function pointers. Function pointers are split into 3 categories.
+
+* Entry: Loads the Vulkan library. Needs to outlive `Instance` and `Device`.
+* Instance: Loads instance level functions. Needs to outlive the `Device`s it has created.
+* Device: Loads device **local** functions.
+
+The loader is just one possible implementation:
+
+* Device level functions are retrieved on a per device basis.
+* Everything is loaded by default, functions that failed to load are initialized to a function that always panics.
+* Do not call Vulkan 1.1 functions if you have created a 1.0 instance. Doing so will result in a panic.
+
+Custom loaders can be implemented.
 
 ### Extension loading
 Additionally, every Vulkan extension has to be loaded explicitly. You can find all extensions under [ash::extensions](https://github.com/MaikKlein/ash/tree/master/ash/src/extensions).
