@@ -1550,7 +1550,7 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
             }
         } else {
             quote!{
-                pub fn next<T>(mut self, next: &mut T) -> #name_builder<'a> where T: #name_builder_next {
+                pub fn next<T>(mut self, next: &'a mut T) -> #name_builder<'a> where T: #name_builder_next {
                     self.inner.p_next = next as *mut T as *mut c_void;
                     self
                 }
