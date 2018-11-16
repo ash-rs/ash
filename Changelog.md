@@ -1,3 +1,10 @@
+# 0.26.0
+
+* Fix loader on MacOS.
+
+* Expose function pointers for easier interop with external libraries.
+
+* Builder now uses bool instead of Bool32.
 # 0.25.0
 
 * Adds support for Vulkan 1.1
