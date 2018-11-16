@@ -87,6 +87,7 @@ named!(cfloat<&str, f32>,
 
 pub fn define_handle_macro() -> Tokens {
     quote! {
+        #[macro_export]
         macro_rules! define_handle{
             ($name: ident, $ty: ident) => {
                 #[repr(transparent)]
@@ -131,6 +132,7 @@ pub fn define_handle_macro() -> Tokens {
 
 pub fn handle_nondispatchable_macro() -> Tokens {
     quote!{
+        #[macro_export]
         macro_rules! handle_nondispatchable {
             ($name: ident, $ty: ident) => {
                 #[repr(transparent)]
@@ -197,6 +199,7 @@ pub fn vk_version_macros() -> Tokens {
 }
 pub fn vk_bitflags_wrapped_macro() -> Tokens {
     quote!{
+        #[macro_export]
         macro_rules! vk_bitflags_wrapped {
             ($name: ident, $all: expr, $flag_type: ty) => {
 
@@ -1363,7 +1366,7 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
         }
 
         // TODO: Improve in future when https://github.com/rust-lang/rust/issues/53667 is merged
-        if param_ident_string.starts_with("p_") || param_ident_string.starts_with("pp_") {           
+        if param_ident_string.starts_with("p_") || param_ident_string.starts_with("pp_") {
             if param_ty_string == "*const c_char" {
                 return Some(quote!{
                         pub fn #param_ident_short(mut self, #param_ident_short: &'a ::std::ffi::CStr) -> #name_builder<'a> {
