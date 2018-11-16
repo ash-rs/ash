@@ -1338,6 +1338,10 @@ pub fn derive_debug(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> Opt
 }
 
 pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
+    if &_struct.name == "VkBaseInStructure" || &_struct.name == "VkBaseOutStructure"   {
+        return None;
+    }
+
     let name = name_to_tokens(&_struct.name);
     let name_builder = name_to_tokens(&(_struct.name.clone() + "Builder"));
 
@@ -1345,6 +1349,17 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
         vkxml::StructElement::Member(ref field) => Some(field),
         _ => None,
     });
+
+    let (has_next, is_next_const) = match members.clone().find(|field| field.param_ident().to_string() == "p_next") {
+        Some(p_next) => {
+            if p_next.type_tokens().to_string().starts_with("*const") {
+                (true, true)
+            } else {
+                (true, false)
+            }
+        },
+        None => (false, false),
+    };
 
     let nofilter_count_members = [
         "VkPipelineViewportStateCreateInfo.pViewports",
@@ -1382,7 +1397,7 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
         let param_ty_string = param_ty_tokens.to_string();
 
         let param_ident_string = param_ident.to_string();
-        if param_ident_string == "s_type" || param_ident_string == "p_next" {
+        if param_ident_string == "s_type" || param_ident_string == "p_next"  {
             return None;
         }
 
@@ -1514,20 +1529,61 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
         })
     });
 
+    let mut nexts = Vec::new();    
+    let name_builder_next = name_to_tokens(&(_struct.name.clone() + "BuilderNext"));        
+    if let Some(extends) = &_struct.extends {
+        for target in extends.split(',') {
+            let target_ident = name_to_tokens(&(target.to_string() + "BuilderNext"));
+            nexts.push(quote! {
+                impl #target_ident for #name_builder_next {}
+            });
+        }
+    }
+
+    let next_function = if has_next {
+        if is_next_const {
+            quote!{
+                pub fn next<T>(mut self, next: &T) -> #name_builder<'a> where T: #name_builder_next {
+                    self.inner.p_next = next as *const T as *const c_void;
+                    self
+                }
+            }
+        } else {
+            quote!{
+                pub fn next<T>(mut self, next: &mut T) -> #name_builder<'a> where T: #name_builder_next {
+                    self.inner.p_next = next as *mut T as *mut c_void;
+                    self
+                }
+            }
+        }
+    } else {
+        quote!{}
+    };
+
+    let next_trait = if has_next {
+        quote!{pub trait #name_builder_next {}}
+    } else {
+        quote!{}
+    };
+
     let q = quote!{
         impl #name {
-             pub fn builder<'a>() -> #name_builder<'a> {
+            pub fn builder<'a>() -> #name_builder<'a> {
                 #name_builder {
                     inner: #name::default(),
                     marker: ::std::marker::PhantomData,
                 }
-             }
-         }
+            }
+        }
 
         pub struct #name_builder<'a> {
             inner: #name,
             marker: ::std::marker::PhantomData<&'a ()>,
         }
+
+        #next_trait
+
+        #(#nexts)*
 
         impl<'a> ::std::ops::Deref for #name_builder<'a> {
             type Target = #name;
@@ -1540,6 +1596,8 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
         impl<'a> #name_builder<'a> {
             #(#setters)*
 
+            #next_function
+
             pub fn build(self) -> #name {
                 self.inner
             }
@@ -1548,7 +1606,6 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
 
     Some(q)
 }
-
 /// At the moment `Ash` doesn't properly derive all the necessary drives
 /// like Eq, Hash etc.
 /// To Address some cases, you can add the name of the struct that you
