@@ -153,15 +153,15 @@ unsafe fn create_surface<E: EntryV1_0, I: InstanceV1_0>(
     view.setWantsLayer(YES);
 
     let create_info = vk::MacOSSurfaceCreateInfoMVK {
-        s_type: vk::StructureType::MacOSSurfaceCreateInfoMvk,
+        s_type: vk::StructureType::MACOS_SURFACE_CREATE_INFO_M,
         p_next: ptr::null(),
         flags: Default::default(),
-        p_view: window.get_nsview() as *const vk::types::c_void
+        p_view: window.get_nsview() as *const c_void
     };
 
     let macos_surface_loader =
-        MacOSSurface::new(entry, instance).expect("Unable to load macOS surface");
-    macos_surface_loader.create_macos_surface_mvk(&create_info, None)
+        MacOSSurface::new(entry, instance);
+    macos_surface_loader.create_mac_os_surface_mvk(&create_info, None)
 }
 
 #[cfg(target_os = "windows")]
