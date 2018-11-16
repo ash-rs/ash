@@ -33,7 +33,7 @@ const LIB_PATH: &'static str = "libvulkan.so.1";
 const LIB_PATH: &'static str = "libvulkan.so";
 
 #[cfg(any(target_os = "macos", target_os = "ios"))]
-const LIB_PATH: &'static str = "libMoltenVK.dylib";
+const LIB_PATH: &'static str = "libvulkan.dylib";
 
 lazy_static! {
     static ref VK_LIB: Result<DynamicLibrary, String> =
