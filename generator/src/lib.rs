@@ -1283,34 +1283,43 @@ pub fn derive_debug(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> Opt
 
 pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
     let name = name_to_tokens(&_struct.name);
-    let name_builder = name_to_tokens(&(_struct.name.to_string() + "Builder"));
+    let name_builder = name_to_tokens(&(_struct.name.clone() + "Builder"));
 
     let members = _struct.elements.iter().filter_map(|elem| match *elem {
         vkxml::StructElement::Member(ref field) => Some(field),
         _ => None,
     });
 
+    let nofilter_count_members = [
+        "VkPipelineViewportStateCreateInfo.pViewports",
+        "VkPipelineViewportStateCreateInfo.pScissors",
+        "VkDescriptorSetLayoutBinding.pImmutableSamplers",
+    ];
     let filter_members: Vec<String> = members.clone().filter_map(|field| {
+        let field_name = field.name.as_ref().unwrap();
+
         // Associated _count members
         if field.array.is_some() {
             if let Some(ref array_size) = field.size {
-                if !array_size.starts_with("latexmath") {
+                if !array_size.starts_with("latexmath")
+                && !nofilter_count_members.iter().any(|n| *n == &(_struct.name.clone() + "." + field_name)) {
                     return Some((*array_size).clone());
                 }
             }
         }
 
         // VkShaderModuleCreateInfo requiers a custom setter
-        if field.name.as_ref().unwrap() == "codeSize" {
-            return Some(field.name.clone().unwrap());
+        if field_name == "codeSize" {
+            return Some(field_name.clone());
         }
-        
+
         None
     }).collect();
 
     let setters = members.clone().filter_map(|field| {
         let param_ident = field.param_ident();
         let param_ty_tokens = field.type_tokens();
+        let param_ty_string = param_ty_tokens.to_string();
 
         let param_ident_string = param_ident.to_string();
         if param_ident_string == "s_type" || param_ident_string == "p_next" {
@@ -1326,8 +1335,8 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
         };
         let param_ident_short = Term::intern(&param_ident_short);
 
-        if let Some(name) = field.name.as_ref() { 
-            // Fiter           
+        if let Some(name) = field.name.as_ref() {
+            // Fiter
             if filter_members.iter().any(|n| *n == *name) {
                 return None;
             }
@@ -1340,33 +1349,40 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
                             self.inner.p_code = code.as_ptr() as *const u32;
                             self
                         }
-                }); 
+                });
+            }
+
+            if name == "pSampleMask" {
+                return Some(quote!{
+                        pub fn sample_mask(mut self, sample_mask: &'a [SampleMask]) -> #name_builder<'a> {
+                            self.inner.p_sample_mask = sample_mask.as_ptr() as *const SampleMask;
+                            self
+                        }
+                });
             }
         }
 
         // TODO: Improve in future when https://github.com/rust-lang/rust/issues/53667 is merged
-        if param_ident_string.starts_with("p_") || param_ident_string.starts_with("pp_") {
-            let param_ty_string = param_ty_tokens.to_string();
-
+        if param_ident_string.starts_with("p_") || param_ident_string.starts_with("pp_") {           
             if param_ty_string == "*const c_char" {
                 return Some(quote!{
                         pub fn #param_ident_short(mut self, #param_ident_short: &'a ::std::ffi::CStr) -> #name_builder<'a> {
                             self.inner.#param_ident = #param_ident_short.as_ptr();
                             self
                         }
-                }); 
+                });
             }
 
             if let Some(ref array_type) = field.array {
                 if let Some(ref array_size) = field.size {
                     if !array_size.starts_with("latexmath") {
                         let length_type;
-                        let array_size_ident = Ident::from(array_size.to_snake_case().as_str());  
+                        let array_size_ident = Ident::from(array_size.to_snake_case().as_str());
                         if array_size_ident.to_string().contains("_count") {
                             length_type = Term::intern("u32");
                         } else {
                             length_type = Term::intern("usize");
-                        }                        
+                        }
 
                         if param_ty_string == "*const *const c_char" {
                             return Some(quote!{
@@ -1375,8 +1391,8 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
                                         self.inner.#array_size_ident = #param_ident_short.len() as #length_type;
                                         self
                                     }
-                            }); 
-                        }                      
+                            });
+                        }
 
                         let slice_param_ty_tokens;
                         let ptr_mutability;
@@ -1417,8 +1433,17 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
                             self.inner.#param_ident = #param_ident_short;
                             self
                         }
-                }); 
+                });
             }
+        }
+
+        if param_ty_string == "Bool32" {
+            return Some(quote!{
+                pub fn #param_ident_short(mut self, #param_ident_short: bool) -> #name_builder<'a> {
+                    self.inner.#param_ident = #param_ident_short.into();
+                    self
+                }
+            });
         }
 
         Some(quote!{
