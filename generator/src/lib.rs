@@ -873,8 +873,6 @@ pub fn generate_extension_constants<'a>(
                 return None;
             }
             let (constant, extends) = match &_enum.spec {
-                EnumSpec::Alias { .. } => None,
-                EnumSpec::Value { .. } => None,
                 EnumSpec::Bitpos { bitpos, extends } => {
                     Some((Constant::BitPos(*bitpos as u32), extends.clone()))
                 }
@@ -930,7 +928,9 @@ pub fn generate_extension_commands<'a>(
         .filter_map(|ext_item| match ext_item {
             vk_parse::ExtensionChild::Require { items, .. } => {
                 Some(items.iter().filter_map(|item| match item {
-                    vk_parse::InterfaceItem::Command { ref name, .. } => cmd_map.get(name).map(|c| *c),
+                    vk_parse::InterfaceItem::Command { ref name, .. } => {
+                        cmd_map.get(name).map(|c| *c)
+                    }
                     _ => None,
                 }))
             }
@@ -1777,13 +1777,16 @@ pub fn generate_feature_extension<'a>(
     const_cache: &mut HashSet<&'a str>,
     const_values: &mut HashMap<Ident, Vec<Ident>>,
 ) -> Tokens {
-    let constants =
-        registry.0.iter().filter_map(|item| match item {
-            vk_parse::RegistryChild::Feature(feature) => Some(
-                generate_extension_constants(&feature.name, 0, &feature.children, const_cache, const_values),
-            ),
-            _ => None,
-        });
+    let constants = registry.0.iter().filter_map(|item| match item {
+        vk_parse::RegistryChild::Feature(feature) => Some(generate_extension_constants(
+            &feature.name,
+            0,
+            &feature.children,
+            const_cache,
+            const_values,
+        )),
+        _ => None,
+    });
     quote!{
         #(#constants)*
     }
@@ -1851,7 +1854,28 @@ pub fn generate_const_displays<'a>(const_values: &HashMap<Ident, Vec<Ident>>) ->
         #(#impls)*
     }
 }
-
+pub fn generate_aliases_of_types<'a>(types: &'a vk_parse::Types, ty_cache: &mut HashSet<Ident>) -> Tokens {
+    let aliases = types.children.iter().filter_map(|child|{
+        match child {
+            vk_parse::TypesChild::Type(ty) => {
+                Some((ty.name.as_ref()?, ty.alias.as_ref()?))
+            }
+            _ => None
+        }
+    }).filter_map(|(name, alias)|{
+        let name_ident = name_to_tokens(name);
+        if ty_cache.contains(&name_ident) {return None};
+        ty_cache.insert(name_ident.clone());
+        let alias_ident = name_to_tokens(alias);
+        let tokens = quote!{
+            pub type #name_ident = #alias_ident;
+        };
+        Some(tokens)
+    });
+    quote!{
+        #(#aliases)*
+    }
+}
 pub fn write_source_code(path: &Path) {
     use std::fs::File;
     use std::io::Write;
@@ -1864,6 +1888,14 @@ pub fn write_source_code(path: &Path) {
             _ => None,
         }).nth(0)
         .expect("extension");
+    let mut ty_cache = HashSet::new();
+    let aliases: Vec<_> = spec2
+        .0
+        .iter()
+        .filter_map(|item| match item {
+            vk_parse::RegistryChild::Types(ref ty) => Some(generate_aliases_of_types(ty, &mut ty_cache)),
+            _ => None,
+        }).collect();
 
     let spec = vk_parse::parse_file_as_vkxml(path);
     let commands: HashMap<vkxml::Identifier, &vkxml::Command> = spec
@@ -1997,6 +2029,7 @@ pub fn write_source_code(path: &Path) {
         #(#extension_code)*
         #feature_extensions_code
         #const_displays
+        #(#aliases)*
     };
     write!(&mut file, "{}", source_code).expect("Unable to write to file");
 }
