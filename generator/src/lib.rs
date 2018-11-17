@@ -1338,7 +1338,7 @@ pub fn derive_debug(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> Opt
 }
 
 pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
-    if &_struct.name == "VkBaseInStructure" || &_struct.name == "VkBaseOutStructure"   {
+    if &_struct.name == "VkBaseInStructure" || &_struct.name == "VkBaseOutStructure" {
         return None;
     }
 
@@ -1350,13 +1350,14 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
         _ => None,
     });
 
-    let (has_next, is_next_const) = match members.clone().find(|field| field.param_ident().to_string() == "p_next") {
-        Some(p_next) => {
-            if p_next.type_tokens().to_string().starts_with("*const") {
-                (true, true)
-            } else {
-                (true, false)
-            }
+    let (has_next, is_next_const) = match members
+        .clone()
+        .find(|field| field.param_ident().to_string() == "p_next")
+    {
+        Some(p_next) => if p_next.type_tokens().to_string().starts_with("*const") {
+            (true, true)
+        } else {
+            (true, false)
         },
         None => (false, false),
     };
@@ -1529,13 +1530,13 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
         })
     });
 
-    let mut nexts = Vec::new();    
-    let name_builder_next = name_to_tokens(&(_struct.name.clone() + "BuilderNext"));        
+    let mut nexts = Vec::new();
+    let name_builder_next = name_to_tokens(&(_struct.name.clone() + "BuilderNext"));
     if let Some(extends) = &_struct.extends {
         for target in extends.split(',') {
             let target_ident = name_to_tokens(&(target.to_string() + "BuilderNext"));
             nexts.push(quote! {
-                impl #target_ident for #name_builder_next {}
+                unsafe impl #target_ident for #name_builder_next {}
             });
         }
     }
@@ -1561,7 +1562,7 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
     };
 
     let next_trait = if has_next {
-        quote!{pub trait #name_builder_next {}}
+        quote!{pub unsafe trait #name_builder_next {}}
     } else {
         quote!{}
     };
