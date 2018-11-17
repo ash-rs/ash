@@ -856,14 +856,14 @@ impl<'a> ConstantExt for ExtensionConstant<'a> {
 pub fn generate_extension_constants<'a>(
     extension_name: &str,
     extension_number: i64,
-    extension_items: &'a [vk_parse::ExtensionItem],
+    extension_items: &'a [vk_parse::ExtensionChild],
     const_cache: &mut HashSet<&'a str>,
     const_values: &mut HashMap<Ident, Vec<Ident>>,
 ) -> quote::Tokens {
     let items = extension_items
         .iter()
         .filter_map(|item| match item {
-            vk_parse::ExtensionItem::Require { items, .. } => Some(items.iter()),
+            vk_parse::ExtensionChild::Require { items, .. } => Some(items.iter()),
             _ => None,
         }).flat_map(|iter| iter);
     let enum_tokens = items.filter_map(|item| match item {
@@ -921,16 +921,16 @@ pub fn generate_extension_constants<'a>(
 }
 pub fn generate_extension_commands<'a>(
     extension_name: &str,
-    items: &[vk_parse::ExtensionItem],
+    items: &[vk_parse::ExtensionChild],
     cmd_map: &CommandMap<'a>,
     fn_cache: &mut HashSet<&'a str>,
 ) -> Tokens {
     let commands = items
         .iter()
         .filter_map(|ext_item| match ext_item {
-            vk_parse::ExtensionItem::Require { items, .. } => {
+            vk_parse::ExtensionChild::Require { items, .. } => {
                 Some(items.iter().filter_map(|item| match item {
-                    vk_parse::InterfaceItem::Command { name, .. } => cmd_map.get(name).map(|c| *c),
+                    vk_parse::InterfaceItem::Command { ref name, .. } => cmd_map.get(name).map(|c| *c),
                     _ => None,
                 }))
             }
@@ -957,11 +957,11 @@ pub fn generate_extension<'a>(
     let extension_tokens = generate_extension_constants(
         &extension.name,
         extension.number.unwrap_or(0),
-        &extension.items,
+        &extension.children,
         const_cache,
         const_values,
     );
-    let fp = generate_extension_commands(&extension.name, &extension.items, cmd_map, fn_cache);
+    let fp = generate_extension_commands(&extension.name, &extension.children, cmd_map, fn_cache);
     let q = quote!{
         #fp
         #extension_tokens
@@ -1779,8 +1779,8 @@ pub fn generate_feature_extension<'a>(
 ) -> Tokens {
     let constants =
         registry.0.iter().filter_map(|item| match item {
-            vk_parse::RegistryItem::Feature { name, items, .. } => Some(
-                generate_extension_constants(name, 0, items, const_cache, const_values),
+            vk_parse::RegistryChild::Feature(feature) => Some(
+                generate_extension_constants(&feature.name, 0, &feature.children, const_cache, const_values),
             ),
             _ => None,
         });
@@ -1860,7 +1860,7 @@ pub fn write_source_code(path: &Path) {
         .0
         .iter()
         .filter_map(|item| match item {
-            vk_parse::RegistryItem::Extensions { items: ext, .. } => Some(ext),
+            vk_parse::RegistryChild::Extensions(ref ext) => Some(&ext.children),
             _ => None,
         }).nth(0)
         .expect("extension");
