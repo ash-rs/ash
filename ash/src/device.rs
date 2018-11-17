@@ -51,11 +51,7 @@ pub trait DeviceV1_1: DeviceV1_0 {
         peer_memory_features
     }
 
-    unsafe fn cmd_set_device_mask(
-        &self,
-        command_buffer: vk::CommandBuffer,
-        device_mask: u32,
-    ) {
+    unsafe fn cmd_set_device_mask(&self, command_buffer: vk::CommandBuffer, device_mask: u32) {
         self.fp_v1_1()
             .cmd_set_device_mask(command_buffer, device_mask);
     }
@@ -86,11 +82,8 @@ pub trait DeviceV1_1: DeviceV1_0 {
         info: &vk::ImageMemoryRequirementsInfo2,
         out: &mut vk::MemoryRequirements2,
     ) {
-        self.fp_v1_1().get_image_memory_requirements2(
-            self.handle(),
-            info,
-            out,
-        );
+        self.fp_v1_1()
+            .get_image_memory_requirements2(self.handle(), info, out);
     }
 
     unsafe fn get_buffer_memory_requirements2(
@@ -98,11 +91,8 @@ pub trait DeviceV1_1: DeviceV1_0 {
         info: &vk::BufferMemoryRequirementsInfo2,
         out: &mut vk::MemoryRequirements2,
     ) {
-        self.fp_v1_1().get_buffer_memory_requirements2(
-            self.handle(),
-            info,
-            out,
-        );
+        self.fp_v1_1()
+            .get_buffer_memory_requirements2(self.handle(), info, out);
     }
 
     unsafe fn get_image_sparse_memory_requirements2_len(
@@ -221,11 +211,8 @@ pub trait DeviceV1_1: DeviceV1_0 {
         create_info: &vk::DescriptorSetLayoutCreateInfo,
         out: &mut vk::DescriptorSetLayoutSupport,
     ) {
-        self.fp_v1_1().get_descriptor_set_layout_support(
-            self.handle(),
-            create_info,
-            out,
-        );
+        self.fp_v1_1()
+            .get_descriptor_set_layout_support(self.handle(), create_info, out);
     }
 }
 
@@ -721,11 +708,9 @@ pub trait DeviceV1_0 {
     }
 
     unsafe fn reset_fences(&self, fences: &[vk::Fence]) -> VkResult<()> {
-        let err_code = self.fp_v1_0().reset_fences(
-            self.handle(),
-            fences.len() as u32,
-            fences.as_ptr(),
-        );
+        let err_code =
+            self.fp_v1_0()
+                .reset_fences(self.handle(), fences.len() as u32, fences.as_ptr());
         match err_code {
             vk::Result::SUCCESS => Ok(()),
             _ => Err(err_code),
@@ -1357,11 +1342,7 @@ pub trait DeviceV1_0 {
         }
     }
 
-    unsafe fn get_device_queue(
-        &self,
-        queue_family_index: u32,
-        queue_index: u32,
-    ) -> vk::Queue {
+    unsafe fn get_device_queue(&self, queue_family_index: u32, queue_index: u32) -> vk::Queue {
         let mut queue = mem::uninitialized();
         self.fp_v1_0()
             .get_device_queue(self.handle(), queue_family_index, queue_index, &mut queue);
@@ -1473,12 +1454,9 @@ pub trait DeviceV1_0 {
         submits: &[vk::SubmitInfo],
         fence: vk::Fence,
     ) -> VkResult<()> {
-        let err_code = self.fp_v1_0().queue_submit(
-            queue,
-            submits.len() as u32,
-            submits.as_ptr(),
-            fence,
-        );
+        let err_code =
+            self.fp_v1_0()
+                .queue_submit(queue, submits.len() as u32, submits.as_ptr(), fence);
         match err_code {
             vk::Result::SUCCESS => Ok(()),
             _ => Err(err_code),
@@ -1725,10 +1703,7 @@ pub struct Device {
     device_fn_1_1: vk::DeviceFnV1_1,
 }
 impl Device {
-    pub unsafe fn load(
-        instance_fn: &vk::InstanceFnV1_0,
-        device: vk::Device,
-    ) -> Self {
+    pub unsafe fn load(instance_fn: &vk::InstanceFnV1_0, device: vk::Device) -> Self {
         let device_fn_1_0 = vk::DeviceFnV1_0::load(|name| {
             mem::transmute(instance_fn.get_device_proc_addr(device, name.as_ptr()))
         });

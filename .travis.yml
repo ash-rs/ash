@@ -1,12 +1,17 @@
 os:
   - linux
   - osx
+
 language: rust
+
+before_script:
+- rustup component add rustfmt-preview
 
 rust:
   - stable
 
 script:
+  - cargo fmt --all -- --check
   - cargo build --manifest-path ash/Cargo.toml
   - cargo build --manifest-path examples/Cargo.toml
   - cargo build --manifest-path generator/Cargo.toml

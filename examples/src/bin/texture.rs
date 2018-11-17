@@ -121,8 +121,7 @@ fn main() {
                 base.device
                     .create_framebuffer(&frame_buffer_create_info, None)
                     .unwrap()
-            })
-            .collect();
+            }).collect();
         let index_buffer_data = [0u32, 1, 2, 2, 3, 0];
         let index_buffer_info = vk::BufferCreateInfo {
             s_type: vk::StructureType::BUFFER_CREATE_INFO,
@@ -136,12 +135,11 @@ fn main() {
         };
         let index_buffer = base.device.create_buffer(&index_buffer_info, None).unwrap();
         let index_buffer_memory_req = base.device.get_buffer_memory_requirements(index_buffer);
-        let index_buffer_memory_index =
-            find_memorytype_index(
-                &index_buffer_memory_req,
-                &base.device_memory_properties,
-                vk::MemoryPropertyFlags::HOST_VISIBLE,
-            ).expect("Unable to find suitable memorytype for the index buffer.");
+        let index_buffer_memory_index = find_memorytype_index(
+            &index_buffer_memory_req,
+            &base.device_memory_properties,
+            vk::MemoryPropertyFlags::HOST_VISIBLE,
+        ).expect("Unable to find suitable memorytype for the index buffer.");
         let index_allocate_info = vk::MemoryAllocateInfo {
             s_type: vk::StructureType::MEMORY_ALLOCATE_INFO,
             p_next: ptr::null(),
@@ -159,8 +157,7 @@ fn main() {
                 0,
                 index_buffer_memory_req.size,
                 vk::MemoryMapFlags::empty(),
-            )
-            .unwrap();
+            ).unwrap();
         let mut index_slice = Align::new(
             index_ptr,
             align_of::<u32>() as u64,
@@ -207,12 +204,11 @@ fn main() {
         let vertex_input_buffer_memory_req = base
             .device
             .get_buffer_memory_requirements(vertex_input_buffer);
-        let vertex_input_buffer_memory_index =
-            find_memorytype_index(
-                &vertex_input_buffer_memory_req,
-                &base.device_memory_properties,
-                vk::MemoryPropertyFlags::HOST_VISIBLE,
-            ).expect("Unable to find suitable memorytype for the vertex buffer.");
+        let vertex_input_buffer_memory_index = find_memorytype_index(
+            &vertex_input_buffer_memory_req,
+            &base.device_memory_properties,
+            vk::MemoryPropertyFlags::HOST_VISIBLE,
+        ).expect("Unable to find suitable memorytype for the vertex buffer.");
 
         let vertex_buffer_allocate_info = vk::MemoryAllocateInfo {
             s_type: vk::StructureType::MEMORY_ALLOCATE_INFO,
@@ -231,8 +227,7 @@ fn main() {
                 0,
                 vertex_input_buffer_memory_req.size,
                 vk::MemoryMapFlags::empty(),
-            )
-            .unwrap();
+            ).unwrap();
         let mut slice = Align::new(
             vert_ptr,
             align_of::<Vertex>() as u64,
@@ -267,12 +262,11 @@ fn main() {
         let uniform_color_buffer_memory_req = base
             .device
             .get_buffer_memory_requirements(uniform_color_buffer);
-        let uniform_color_buffer_memory_index =
-            find_memorytype_index(
-                &uniform_color_buffer_memory_req,
-                &base.device_memory_properties,
-                vk::MemoryPropertyFlags::HOST_VISIBLE,
-            ).expect("Unable to find suitable memorytype for the vertex buffer.");
+        let uniform_color_buffer_memory_index = find_memorytype_index(
+            &uniform_color_buffer_memory_req,
+            &base.device_memory_properties,
+            vk::MemoryPropertyFlags::HOST_VISIBLE,
+        ).expect("Unable to find suitable memorytype for the vertex buffer.");
 
         let uniform_color_buffer_allocate_info = vk::MemoryAllocateInfo {
             s_type: vk::StructureType::MEMORY_ALLOCATE_INFO,
@@ -291,8 +285,7 @@ fn main() {
                 0,
                 uniform_color_buffer_memory_req.size,
                 vk::MemoryMapFlags::empty(),
-            )
-            .unwrap();
+            ).unwrap();
         let mut uniform_aligned_slice = Align::new(
             uniform_ptr,
             align_of::<Vector3>() as u64,
@@ -319,12 +312,11 @@ fn main() {
         };
         let image_buffer = base.device.create_buffer(&image_buffer_info, None).unwrap();
         let image_buffer_memory_req = base.device.get_buffer_memory_requirements(image_buffer);
-        let image_buffer_memory_index =
-            find_memorytype_index(
-                &image_buffer_memory_req,
-                &base.device_memory_properties,
-                vk::MemoryPropertyFlags::HOST_VISIBLE,
-            ).expect("Unable to find suitable memorytype for the vertex buffer.");
+        let image_buffer_memory_index = find_memorytype_index(
+            &image_buffer_memory_req,
+            &base.device_memory_properties,
+            vk::MemoryPropertyFlags::HOST_VISIBLE,
+        ).expect("Unable to find suitable memorytype for the vertex buffer.");
 
         let image_buffer_allocate_info = vk::MemoryAllocateInfo {
             s_type: vk::StructureType::MEMORY_ALLOCATE_INFO,
@@ -343,8 +335,7 @@ fn main() {
                 0,
                 image_buffer_memory_req.size,
                 vk::MemoryMapFlags::empty(),
-            )
-            .unwrap();
+            ).unwrap();
         let mut image_slice = Align::new(
             image_ptr,
             std::mem::align_of::<u8>() as u64,
@@ -382,12 +373,11 @@ fn main() {
             .create_image(&texture_create_info, None)
             .unwrap();
         let texture_memory_req = base.device.get_image_memory_requirements(texture_image);
-        let texture_memory_index =
-            find_memorytype_index(
-                &texture_memory_req,
-                &base.device_memory_properties,
-                vk::MemoryPropertyFlags::DEVICE_LOCAL,
-            ).expect("Unable to find suitable memory index for depth image.");
+        let texture_memory_index = find_memorytype_index(
+            &texture_memory_req,
+            &base.device_memory_properties,
+            vk::MemoryPropertyFlags::DEVICE_LOCAL,
+        ).expect("Unable to find suitable memory index for depth image.");
 
         let texture_allocate_info = vk::MemoryAllocateInfo {
             s_type: vk::StructureType::MEMORY_ALLOCATE_INFO,
@@ -882,8 +872,7 @@ fn main() {
                     std::u64::MAX,
                     base.present_complete_semaphore,
                     vk::Fence::null(),
-                )
-                .unwrap();
+                ).unwrap();
             let clear_values = [
                 vk::ClearValue {
                     color: vk::ClearColorValue {

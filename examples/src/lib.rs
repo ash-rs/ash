@@ -5,11 +5,11 @@ extern crate winapi;
 extern crate winit;
 
 #[cfg(target_os = "macos")]
-extern crate objc;
-#[cfg(target_os = "macos")]
 extern crate cocoa;
 #[cfg(target_os = "macos")]
 extern crate metal_rs as metal;
+#[cfg(target_os = "macos")]
+extern crate objc;
 #[cfg(target_os = "macos")]
 use cocoa::appkit::{NSView, NSWindow};
 #[cfg(target_os = "macos")]
@@ -21,18 +21,18 @@ use objc::runtime::YES;
 #[cfg(target_os = "macos")]
 use std::mem;
 
-use ash::vk;
-use ash::Device;
-use ash::Entry;
-use ash::Instance;
-pub use ash::version::{DeviceV1_0, EntryV1_0, InstanceV1_0};
-use ash::extensions::{DebugReport, Surface, Swapchain};
+#[cfg(target_os = "macos")]
+use ash::extensions::MacOSSurface;
 #[cfg(target_os = "windows")]
 use ash::extensions::Win32Surface;
 #[cfg(all(unix, not(target_os = "android"), not(target_os = "macos")))]
 use ash::extensions::XlibSurface;
-#[cfg(target_os = "macos")]
-use ash::extensions::MacOSSurface;
+use ash::extensions::{DebugReport, Surface, Swapchain};
+pub use ash::version::{DeviceV1_0, EntryV1_0, InstanceV1_0};
+use ash::vk;
+use ash::Device;
+use ash::Entry;
+use ash::Instance;
 use std::cell::RefCell;
 use std::default::Default;
 use std::ffi::{CStr, CString};
@@ -125,8 +125,7 @@ unsafe fn create_surface<E: EntryV1_0, I: InstanceV1_0>(
         window: x11_window as vk::Window,
         dpy: x11_display as *mut vk::Display,
     };
-    let xlib_surface_loader =
-        XlibSurface::new(entry, instance);
+    let xlib_surface_loader = XlibSurface::new(entry, instance);
     xlib_surface_loader.create_xlib_surface_khr(&x11_create_info, None)
 }
 
@@ -156,11 +155,10 @@ unsafe fn create_surface<E: EntryV1_0, I: InstanceV1_0>(
         s_type: vk::StructureType::MACOS_SURFACE_CREATE_INFO_M,
         p_next: ptr::null(),
         flags: Default::default(),
-        p_view: window.get_nsview() as *const c_void
+        p_view: window.get_nsview() as *const c_void,
     };
 
-    let macos_surface_loader =
-        MacOSSurface::new(entry, instance);
+    let macos_surface_loader = MacOSSurface::new(entry, instance);
     macos_surface_loader.create_mac_os_surface_mvk(&create_info, None)
 }
 
@@ -183,8 +181,7 @@ unsafe fn create_surface<E: EntryV1_0, I: InstanceV1_0>(
         hinstance: hinstance,
         hwnd: hwnd as *const c_void,
     };
-    let win32_surface_loader =
-        Win32Surface::new(entry, instance);
+    let win32_surface_loader = Win32Surface::new(entry, instance);
     win32_surface_loader.create_win32_surface_khr(&win32_create_info, None)
 }
 
@@ -376,8 +373,7 @@ impl ExampleBase {
                 pfn_callback: Some(vulkan_debug_callback),
                 p_user_data: ptr::null_mut(),
             };
-            let debug_report_loader =
-                DebugReport::new(&entry, &instance);
+            let debug_report_loader = DebugReport::new(&entry, &instance);
             let debug_call_back = debug_report_loader
                 .create_debug_report_callback_ext(&debug_info, None)
                 .unwrap();
@@ -385,8 +381,7 @@ impl ExampleBase {
             let pdevices = instance
                 .enumerate_physical_devices()
                 .expect("Physical device error");
-            let surface_loader =
-                Surface::new(&entry, &instance);
+            let surface_loader = Surface::new(&entry, &instance);
             let (pdevice, queue_family_index) = pdevices
                 .iter()
                 .map(|pdevice| {
@@ -396,8 +391,8 @@ impl ExampleBase {
                         .enumerate()
                         .filter_map(|(index, ref info)| {
                             let supports_graphic_and_surface =
-                                info.queue_flags.contains(vk::QueueFlags::GRAPHICS) && surface_loader
-                                    .get_physical_device_surface_support_khr(
+                                info.queue_flags.contains(vk::QueueFlags::GRAPHICS)
+                                    && surface_loader.get_physical_device_surface_support_khr(
                                         *pdevice,
                                         index as u32,
                                         surface,
@@ -487,8 +482,7 @@ impl ExampleBase {
                 .cloned()
                 .find(|&mode| mode == vk::PresentModeKHR::MAILBOX)
                 .unwrap_or(vk::PresentModeKHR::FIFO);
-            let swapchain_loader =
-                Swapchain::new(&instance, &device);
+            let swapchain_loader = Swapchain::new(&instance, &device);
             let swapchain_create_info = vk::SwapchainCreateInfoKHR {
                 s_type: vk::StructureType::SWAPCHAIN_CREATE_INFO_KHR,
                 p_next: ptr::null(),
