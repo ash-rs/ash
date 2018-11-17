@@ -353,6 +353,8 @@ pub fn platform_specific_types() -> Tokens {
         pub type HANDLE = *mut c_void;
         pub type DWORD = c_ulong;
         pub type LPCWSTR = *const u16;
+        #[allow(non_camel_case_types)]
+        pub type zx_handle_t = u32;
 
         // FIXME: Platform specific types that should come from a library id:0
         // typedefs are only here so that the code compiles for now
