@@ -1398,7 +1398,7 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
         let param_ty_string = param_ty_tokens.to_string();
 
         let param_ident_string = param_ident.to_string();
-        if param_ident_string == "s_type" || param_ident_string == "p_next"  {
+        if param_ident_string == "s_type" || param_ident_string == "p_next" {
             return None;
         }
 
