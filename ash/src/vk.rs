@@ -240,7 +240,7 @@ macro_rules! define_handle {
 pub type PFN_vkGetInstanceProcAddr =
     extern "system" fn(instance: Instance, p_name: *const c_char) -> PFN_vkVoidFunction;
 pub struct StaticFn {
-    get_instance_proc_addr:
+    pub get_instance_proc_addr:
         extern "system" fn(instance: Instance, p_name: *const c_char) -> PFN_vkVoidFunction,
 }
 unsafe impl Send for StaticFn {}
@@ -304,18 +304,18 @@ pub type PFN_vkEnumerateInstanceExtensionProperties =
 pub type PFN_vkEnumerateInstanceLayerProperties =
     extern "system" fn(p_property_count: *mut u32, p_properties: *mut LayerProperties) -> Result;
 pub struct EntryFnV1_0 {
-    create_instance: extern "system" fn(
+    pub create_instance: extern "system" fn(
         p_create_info: *const InstanceCreateInfo,
         p_allocator: *const AllocationCallbacks,
         p_instance: *mut Instance,
     ) -> Result,
-    enumerate_instance_extension_properties:
+    pub enumerate_instance_extension_properties:
         extern "system" fn(
             p_layer_name: *const c_char,
             p_property_count: *mut u32,
             p_properties: *mut ExtensionProperties,
         ) -> Result,
-    enumerate_instance_layer_properties:
+    pub enumerate_instance_layer_properties:
         extern "system" fn(p_property_count: *mut u32, p_properties: *mut LayerProperties)
             -> Result,
 }
@@ -507,24 +507,24 @@ pub type PFN_vkGetPhysicalDeviceSparseImageFormatProperties =
         p_properties: *mut SparseImageFormatProperties,
     ) -> c_void;
 pub struct InstanceFnV1_0 {
-    destroy_instance:
+    pub destroy_instance:
         extern "system" fn(instance: Instance, p_allocator: *const AllocationCallbacks) -> c_void,
-    enumerate_physical_devices: extern "system" fn(
+    pub enumerate_physical_devices: extern "system" fn(
         instance: Instance,
         p_physical_device_count: *mut u32,
         p_physical_devices: *mut PhysicalDevice,
     ) -> Result,
-    get_physical_device_features: extern "system" fn(
+    pub get_physical_device_features: extern "system" fn(
         physical_device: PhysicalDevice,
         p_features: *mut PhysicalDeviceFeatures,
     ) -> c_void,
-    get_physical_device_format_properties:
+    pub get_physical_device_format_properties:
         extern "system" fn(
             physical_device: PhysicalDevice,
             format: Format,
             p_format_properties: *mut FormatProperties,
         ) -> c_void,
-    get_physical_device_image_format_properties:
+    pub get_physical_device_image_format_properties:
         extern "system" fn(
             physical_device: PhysicalDevice,
             format: Format,
@@ -534,42 +534,43 @@ pub struct InstanceFnV1_0 {
             flags: ImageCreateFlags,
             p_image_format_properties: *mut ImageFormatProperties,
         ) -> Result,
-    get_physical_device_properties: extern "system" fn(
-        physical_device: PhysicalDevice,
-        p_properties: *mut PhysicalDeviceProperties,
-    ) -> c_void,
-    get_physical_device_queue_family_properties:
+    pub get_physical_device_properties:
+        extern "system" fn(
+            physical_device: PhysicalDevice,
+            p_properties: *mut PhysicalDeviceProperties,
+        ) -> c_void,
+    pub get_physical_device_queue_family_properties:
         extern "system" fn(
             physical_device: PhysicalDevice,
             p_queue_family_property_count: *mut u32,
             p_queue_family_properties: *mut QueueFamilyProperties,
         ) -> c_void,
-    get_physical_device_memory_properties:
+    pub get_physical_device_memory_properties:
         extern "system" fn(
             physical_device: PhysicalDevice,
             p_memory_properties: *mut PhysicalDeviceMemoryProperties,
         ) -> c_void,
-    get_device_proc_addr:
+    pub get_device_proc_addr:
         extern "system" fn(device: Device, p_name: *const c_char) -> PFN_vkVoidFunction,
-    create_device: extern "system" fn(
+    pub create_device: extern "system" fn(
         physical_device: PhysicalDevice,
         p_create_info: *const DeviceCreateInfo,
         p_allocator: *const AllocationCallbacks,
         p_device: *mut Device,
     ) -> Result,
-    enumerate_device_extension_properties:
+    pub enumerate_device_extension_properties:
         extern "system" fn(
             physical_device: PhysicalDevice,
             p_layer_name: *const c_char,
             p_property_count: *mut u32,
             p_properties: *mut ExtensionProperties,
         ) -> Result,
-    enumerate_device_layer_properties: extern "system" fn(
+    pub enumerate_device_layer_properties: extern "system" fn(
         physical_device: PhysicalDevice,
         p_property_count: *mut u32,
         p_properties: *mut LayerProperties,
     ) -> Result,
-    get_physical_device_sparse_image_format_properties:
+    pub get_physical_device_sparse_image_format_properties:
         extern "system" fn(
             physical_device: PhysicalDevice,
             format: Format,
@@ -1786,34 +1787,34 @@ pub type PFN_vkCmdExecuteCommands = extern "system" fn(
     p_command_buffers: *const CommandBuffer,
 ) -> c_void;
 pub struct DeviceFnV1_0 {
-    destroy_device:
+    pub destroy_device:
         extern "system" fn(device: Device, p_allocator: *const AllocationCallbacks) -> c_void,
-    get_device_queue: extern "system" fn(
+    pub get_device_queue: extern "system" fn(
         device: Device,
         queue_family_index: u32,
         queue_index: u32,
         p_queue: *mut Queue,
     ) -> c_void,
-    queue_submit: extern "system" fn(
+    pub queue_submit: extern "system" fn(
         queue: Queue,
         submit_count: u32,
         p_submits: *const SubmitInfo,
         fence: Fence,
     ) -> Result,
-    queue_wait_idle: extern "system" fn(queue: Queue) -> Result,
-    device_wait_idle: extern "system" fn(device: Device) -> Result,
-    allocate_memory: extern "system" fn(
+    pub queue_wait_idle: extern "system" fn(queue: Queue) -> Result,
+    pub device_wait_idle: extern "system" fn(device: Device) -> Result,
+    pub allocate_memory: extern "system" fn(
         device: Device,
         p_allocate_info: *const MemoryAllocateInfo,
         p_allocator: *const AllocationCallbacks,
         p_memory: *mut DeviceMemory,
     ) -> Result,
-    free_memory: extern "system" fn(
+    pub free_memory: extern "system" fn(
         device: Device,
         memory: DeviceMemory,
         p_allocator: *const AllocationCallbacks,
     ) -> c_void,
-    map_memory: extern "system" fn(
+    pub map_memory: extern "system" fn(
         device: Device,
         memory: DeviceMemory,
         offset: DeviceSize,
@@ -1821,113 +1822,115 @@ pub struct DeviceFnV1_0 {
         flags: MemoryMapFlags,
         pp_data: *mut *mut c_void,
     ) -> Result,
-    unmap_memory: extern "system" fn(device: Device, memory: DeviceMemory) -> c_void,
-    flush_mapped_memory_ranges: extern "system" fn(
+    pub unmap_memory: extern "system" fn(device: Device, memory: DeviceMemory) -> c_void,
+    pub flush_mapped_memory_ranges: extern "system" fn(
         device: Device,
         memory_range_count: u32,
         p_memory_ranges: *const MappedMemoryRange,
     ) -> Result,
-    invalidate_mapped_memory_ranges: extern "system" fn(
-        device: Device,
-        memory_range_count: u32,
-        p_memory_ranges: *const MappedMemoryRange,
-    ) -> Result,
-    get_device_memory_commitment: extern "system" fn(
-        device: Device,
-        memory: DeviceMemory,
-        p_committed_memory_in_bytes: *mut DeviceSize,
-    ) -> c_void,
-    bind_buffer_memory: extern "system" fn(
+    pub invalidate_mapped_memory_ranges:
+        extern "system" fn(
+            device: Device,
+            memory_range_count: u32,
+            p_memory_ranges: *const MappedMemoryRange,
+        ) -> Result,
+    pub get_device_memory_commitment:
+        extern "system" fn(
+            device: Device,
+            memory: DeviceMemory,
+            p_committed_memory_in_bytes: *mut DeviceSize,
+        ) -> c_void,
+    pub bind_buffer_memory: extern "system" fn(
         device: Device,
         buffer: Buffer,
         memory: DeviceMemory,
         memory_offset: DeviceSize,
     ) -> Result,
-    bind_image_memory: extern "system" fn(
+    pub bind_image_memory: extern "system" fn(
         device: Device,
         image: Image,
         memory: DeviceMemory,
         memory_offset: DeviceSize,
     ) -> Result,
-    get_buffer_memory_requirements:
+    pub get_buffer_memory_requirements:
         extern "system" fn(
             device: Device,
             buffer: Buffer,
             p_memory_requirements: *mut MemoryRequirements,
         ) -> c_void,
-    get_image_memory_requirements:
+    pub get_image_memory_requirements:
         extern "system" fn(
             device: Device,
             image: Image,
             p_memory_requirements: *mut MemoryRequirements,
         ) -> c_void,
-    get_image_sparse_memory_requirements:
+    pub get_image_sparse_memory_requirements:
         extern "system" fn(
             device: Device,
             image: Image,
             p_sparse_memory_requirement_count: *mut u32,
             p_sparse_memory_requirements: *mut SparseImageMemoryRequirements,
         ) -> c_void,
-    queue_bind_sparse: extern "system" fn(
+    pub queue_bind_sparse: extern "system" fn(
         queue: Queue,
         bind_info_count: u32,
         p_bind_info: *const BindSparseInfo,
         fence: Fence,
     ) -> Result,
-    create_fence: extern "system" fn(
+    pub create_fence: extern "system" fn(
         device: Device,
         p_create_info: *const FenceCreateInfo,
         p_allocator: *const AllocationCallbacks,
         p_fence: *mut Fence,
     ) -> Result,
-    destroy_fence:
+    pub destroy_fence:
         extern "system" fn(device: Device, fence: Fence, p_allocator: *const AllocationCallbacks)
             -> c_void,
-    reset_fences:
+    pub reset_fences:
         extern "system" fn(device: Device, fence_count: u32, p_fences: *const Fence) -> Result,
-    get_fence_status: extern "system" fn(device: Device, fence: Fence) -> Result,
-    wait_for_fences: extern "system" fn(
+    pub get_fence_status: extern "system" fn(device: Device, fence: Fence) -> Result,
+    pub wait_for_fences: extern "system" fn(
         device: Device,
         fence_count: u32,
         p_fences: *const Fence,
         wait_all: Bool32,
         timeout: u64,
     ) -> Result,
-    create_semaphore: extern "system" fn(
+    pub create_semaphore: extern "system" fn(
         device: Device,
         p_create_info: *const SemaphoreCreateInfo,
         p_allocator: *const AllocationCallbacks,
         p_semaphore: *mut Semaphore,
     ) -> Result,
-    destroy_semaphore: extern "system" fn(
+    pub destroy_semaphore: extern "system" fn(
         device: Device,
         semaphore: Semaphore,
         p_allocator: *const AllocationCallbacks,
     ) -> c_void,
-    create_event: extern "system" fn(
+    pub create_event: extern "system" fn(
         device: Device,
         p_create_info: *const EventCreateInfo,
         p_allocator: *const AllocationCallbacks,
         p_event: *mut Event,
     ) -> Result,
-    destroy_event:
+    pub destroy_event:
         extern "system" fn(device: Device, event: Event, p_allocator: *const AllocationCallbacks)
             -> c_void,
-    get_event_status: extern "system" fn(device: Device, event: Event) -> Result,
-    set_event: extern "system" fn(device: Device, event: Event) -> Result,
-    reset_event: extern "system" fn(device: Device, event: Event) -> Result,
-    create_query_pool: extern "system" fn(
+    pub get_event_status: extern "system" fn(device: Device, event: Event) -> Result,
+    pub set_event: extern "system" fn(device: Device, event: Event) -> Result,
+    pub reset_event: extern "system" fn(device: Device, event: Event) -> Result,
+    pub create_query_pool: extern "system" fn(
         device: Device,
         p_create_info: *const QueryPoolCreateInfo,
         p_allocator: *const AllocationCallbacks,
         p_query_pool: *mut QueryPool,
     ) -> Result,
-    destroy_query_pool: extern "system" fn(
+    pub destroy_query_pool: extern "system" fn(
         device: Device,
         query_pool: QueryPool,
         p_allocator: *const AllocationCallbacks,
     ) -> c_void,
-    get_query_pool_results: extern "system" fn(
+    pub get_query_pool_results: extern "system" fn(
         device: Device,
         query_pool: QueryPool,
         first_query: u32,
@@ -1937,87 +1940,87 @@ pub struct DeviceFnV1_0 {
         stride: DeviceSize,
         flags: QueryResultFlags,
     ) -> Result,
-    create_buffer: extern "system" fn(
+    pub create_buffer: extern "system" fn(
         device: Device,
         p_create_info: *const BufferCreateInfo,
         p_allocator: *const AllocationCallbacks,
         p_buffer: *mut Buffer,
     ) -> Result,
-    destroy_buffer:
+    pub destroy_buffer:
         extern "system" fn(device: Device, buffer: Buffer, p_allocator: *const AllocationCallbacks)
             -> c_void,
-    create_buffer_view: extern "system" fn(
+    pub create_buffer_view: extern "system" fn(
         device: Device,
         p_create_info: *const BufferViewCreateInfo,
         p_allocator: *const AllocationCallbacks,
         p_view: *mut BufferView,
     ) -> Result,
-    destroy_buffer_view: extern "system" fn(
+    pub destroy_buffer_view: extern "system" fn(
         device: Device,
         buffer_view: BufferView,
         p_allocator: *const AllocationCallbacks,
     ) -> c_void,
-    create_image: extern "system" fn(
+    pub create_image: extern "system" fn(
         device: Device,
         p_create_info: *const ImageCreateInfo,
         p_allocator: *const AllocationCallbacks,
         p_image: *mut Image,
     ) -> Result,
-    destroy_image:
+    pub destroy_image:
         extern "system" fn(device: Device, image: Image, p_allocator: *const AllocationCallbacks)
             -> c_void,
-    get_image_subresource_layout: extern "system" fn(
+    pub get_image_subresource_layout: extern "system" fn(
         device: Device,
         image: Image,
         p_subresource: *const ImageSubresource,
         p_layout: *mut SubresourceLayout,
     ) -> c_void,
-    create_image_view: extern "system" fn(
+    pub create_image_view: extern "system" fn(
         device: Device,
         p_create_info: *const ImageViewCreateInfo,
         p_allocator: *const AllocationCallbacks,
         p_view: *mut ImageView,
     ) -> Result,
-    destroy_image_view: extern "system" fn(
+    pub destroy_image_view: extern "system" fn(
         device: Device,
         image_view: ImageView,
         p_allocator: *const AllocationCallbacks,
     ) -> c_void,
-    create_shader_module: extern "system" fn(
+    pub create_shader_module: extern "system" fn(
         device: Device,
         p_create_info: *const ShaderModuleCreateInfo,
         p_allocator: *const AllocationCallbacks,
         p_shader_module: *mut ShaderModule,
     ) -> Result,
-    destroy_shader_module: extern "system" fn(
+    pub destroy_shader_module: extern "system" fn(
         device: Device,
         shader_module: ShaderModule,
         p_allocator: *const AllocationCallbacks,
     ) -> c_void,
-    create_pipeline_cache: extern "system" fn(
+    pub create_pipeline_cache: extern "system" fn(
         device: Device,
         p_create_info: *const PipelineCacheCreateInfo,
         p_allocator: *const AllocationCallbacks,
         p_pipeline_cache: *mut PipelineCache,
     ) -> Result,
-    destroy_pipeline_cache: extern "system" fn(
+    pub destroy_pipeline_cache: extern "system" fn(
         device: Device,
         pipeline_cache: PipelineCache,
         p_allocator: *const AllocationCallbacks,
     ) -> c_void,
-    get_pipeline_cache_data: extern "system" fn(
+    pub get_pipeline_cache_data: extern "system" fn(
         device: Device,
         pipeline_cache: PipelineCache,
         p_data_size: *mut usize,
         p_data: *mut c_void,
     ) -> Result,
-    merge_pipeline_caches: extern "system" fn(
+    pub merge_pipeline_caches: extern "system" fn(
         device: Device,
         dst_cache: PipelineCache,
         src_cache_count: u32,
         p_src_caches: *const PipelineCache,
     ) -> Result,
-    create_graphics_pipelines:
+    pub create_graphics_pipelines:
         extern "system" fn(
             device: Device,
             pipeline_cache: PipelineCache,
@@ -2026,192 +2029,196 @@ pub struct DeviceFnV1_0 {
             p_allocator: *const AllocationCallbacks,
             p_pipelines: *mut Pipeline,
         ) -> Result,
-    create_compute_pipelines: extern "system" fn(
-        device: Device,
-        pipeline_cache: PipelineCache,
-        create_info_count: u32,
-        p_create_infos: *const ComputePipelineCreateInfo,
-        p_allocator: *const AllocationCallbacks,
-        p_pipelines: *mut Pipeline,
-    ) -> Result,
-    destroy_pipeline: extern "system" fn(
+    pub create_compute_pipelines:
+        extern "system" fn(
+            device: Device,
+            pipeline_cache: PipelineCache,
+            create_info_count: u32,
+            p_create_infos: *const ComputePipelineCreateInfo,
+            p_allocator: *const AllocationCallbacks,
+            p_pipelines: *mut Pipeline,
+        ) -> Result,
+    pub destroy_pipeline: extern "system" fn(
         device: Device,
         pipeline: Pipeline,
         p_allocator: *const AllocationCallbacks,
     ) -> c_void,
-    create_pipeline_layout: extern "system" fn(
+    pub create_pipeline_layout: extern "system" fn(
         device: Device,
         p_create_info: *const PipelineLayoutCreateInfo,
         p_allocator: *const AllocationCallbacks,
         p_pipeline_layout: *mut PipelineLayout,
     ) -> Result,
-    destroy_pipeline_layout: extern "system" fn(
+    pub destroy_pipeline_layout: extern "system" fn(
         device: Device,
         pipeline_layout: PipelineLayout,
         p_allocator: *const AllocationCallbacks,
     ) -> c_void,
-    create_sampler: extern "system" fn(
+    pub create_sampler: extern "system" fn(
         device: Device,
         p_create_info: *const SamplerCreateInfo,
         p_allocator: *const AllocationCallbacks,
         p_sampler: *mut Sampler,
     ) -> Result,
-    destroy_sampler: extern "system" fn(
+    pub destroy_sampler: extern "system" fn(
         device: Device,
         sampler: Sampler,
         p_allocator: *const AllocationCallbacks,
     ) -> c_void,
-    create_descriptor_set_layout:
+    pub create_descriptor_set_layout:
         extern "system" fn(
             device: Device,
             p_create_info: *const DescriptorSetLayoutCreateInfo,
             p_allocator: *const AllocationCallbacks,
             p_set_layout: *mut DescriptorSetLayout,
         ) -> Result,
-    destroy_descriptor_set_layout: extern "system" fn(
-        device: Device,
-        descriptor_set_layout: DescriptorSetLayout,
-        p_allocator: *const AllocationCallbacks,
-    ) -> c_void,
-    create_descriptor_pool: extern "system" fn(
+    pub destroy_descriptor_set_layout:
+        extern "system" fn(
+            device: Device,
+            descriptor_set_layout: DescriptorSetLayout,
+            p_allocator: *const AllocationCallbacks,
+        ) -> c_void,
+    pub create_descriptor_pool: extern "system" fn(
         device: Device,
         p_create_info: *const DescriptorPoolCreateInfo,
         p_allocator: *const AllocationCallbacks,
         p_descriptor_pool: *mut DescriptorPool,
     ) -> Result,
-    destroy_descriptor_pool: extern "system" fn(
+    pub destroy_descriptor_pool: extern "system" fn(
         device: Device,
         descriptor_pool: DescriptorPool,
         p_allocator: *const AllocationCallbacks,
     ) -> c_void,
-    reset_descriptor_pool: extern "system" fn(
+    pub reset_descriptor_pool: extern "system" fn(
         device: Device,
         descriptor_pool: DescriptorPool,
         flags: DescriptorPoolResetFlags,
     ) -> Result,
-    allocate_descriptor_sets: extern "system" fn(
-        device: Device,
-        p_allocate_info: *const DescriptorSetAllocateInfo,
-        p_descriptor_sets: *mut DescriptorSet,
-    ) -> Result,
-    free_descriptor_sets: extern "system" fn(
+    pub allocate_descriptor_sets:
+        extern "system" fn(
+            device: Device,
+            p_allocate_info: *const DescriptorSetAllocateInfo,
+            p_descriptor_sets: *mut DescriptorSet,
+        ) -> Result,
+    pub free_descriptor_sets: extern "system" fn(
         device: Device,
         descriptor_pool: DescriptorPool,
         descriptor_set_count: u32,
         p_descriptor_sets: *const DescriptorSet,
     ) -> Result,
-    update_descriptor_sets: extern "system" fn(
+    pub update_descriptor_sets: extern "system" fn(
         device: Device,
         descriptor_write_count: u32,
         p_descriptor_writes: *const WriteDescriptorSet,
         descriptor_copy_count: u32,
         p_descriptor_copies: *const CopyDescriptorSet,
     ) -> c_void,
-    create_framebuffer: extern "system" fn(
+    pub create_framebuffer: extern "system" fn(
         device: Device,
         p_create_info: *const FramebufferCreateInfo,
         p_allocator: *const AllocationCallbacks,
         p_framebuffer: *mut Framebuffer,
     ) -> Result,
-    destroy_framebuffer: extern "system" fn(
+    pub destroy_framebuffer: extern "system" fn(
         device: Device,
         framebuffer: Framebuffer,
         p_allocator: *const AllocationCallbacks,
     ) -> c_void,
-    create_render_pass: extern "system" fn(
+    pub create_render_pass: extern "system" fn(
         device: Device,
         p_create_info: *const RenderPassCreateInfo,
         p_allocator: *const AllocationCallbacks,
         p_render_pass: *mut RenderPass,
     ) -> Result,
-    destroy_render_pass: extern "system" fn(
+    pub destroy_render_pass: extern "system" fn(
         device: Device,
         render_pass: RenderPass,
         p_allocator: *const AllocationCallbacks,
     ) -> c_void,
-    get_render_area_granularity:
+    pub get_render_area_granularity:
         extern "system" fn(device: Device, render_pass: RenderPass, p_granularity: *mut Extent2D)
             -> c_void,
-    create_command_pool: extern "system" fn(
+    pub create_command_pool: extern "system" fn(
         device: Device,
         p_create_info: *const CommandPoolCreateInfo,
         p_allocator: *const AllocationCallbacks,
         p_command_pool: *mut CommandPool,
     ) -> Result,
-    destroy_command_pool: extern "system" fn(
+    pub destroy_command_pool: extern "system" fn(
         device: Device,
         command_pool: CommandPool,
         p_allocator: *const AllocationCallbacks,
     ) -> c_void,
-    reset_command_pool:
+    pub reset_command_pool:
         extern "system" fn(device: Device, command_pool: CommandPool, flags: CommandPoolResetFlags)
             -> Result,
-    allocate_command_buffers: extern "system" fn(
-        device: Device,
-        p_allocate_info: *const CommandBufferAllocateInfo,
-        p_command_buffers: *mut CommandBuffer,
-    ) -> Result,
-    free_command_buffers: extern "system" fn(
+    pub allocate_command_buffers:
+        extern "system" fn(
+            device: Device,
+            p_allocate_info: *const CommandBufferAllocateInfo,
+            p_command_buffers: *mut CommandBuffer,
+        ) -> Result,
+    pub free_command_buffers: extern "system" fn(
         device: Device,
         command_pool: CommandPool,
         command_buffer_count: u32,
         p_command_buffers: *const CommandBuffer,
     ) -> c_void,
-    begin_command_buffer: extern "system" fn(
+    pub begin_command_buffer: extern "system" fn(
         command_buffer: CommandBuffer,
         p_begin_info: *const CommandBufferBeginInfo,
     ) -> Result,
-    end_command_buffer: extern "system" fn(command_buffer: CommandBuffer) -> Result,
-    reset_command_buffer:
+    pub end_command_buffer: extern "system" fn(command_buffer: CommandBuffer) -> Result,
+    pub reset_command_buffer:
         extern "system" fn(command_buffer: CommandBuffer, flags: CommandBufferResetFlags) -> Result,
-    cmd_bind_pipeline: extern "system" fn(
+    pub cmd_bind_pipeline: extern "system" fn(
         command_buffer: CommandBuffer,
         pipeline_bind_point: PipelineBindPoint,
         pipeline: Pipeline,
     ) -> c_void,
-    cmd_set_viewport: extern "system" fn(
+    pub cmd_set_viewport: extern "system" fn(
         command_buffer: CommandBuffer,
         first_viewport: u32,
         viewport_count: u32,
         p_viewports: *const Viewport,
     ) -> c_void,
-    cmd_set_scissor: extern "system" fn(
+    pub cmd_set_scissor: extern "system" fn(
         command_buffer: CommandBuffer,
         first_scissor: u32,
         scissor_count: u32,
         p_scissors: *const Rect2D,
     ) -> c_void,
-    cmd_set_line_width:
+    pub cmd_set_line_width:
         extern "system" fn(command_buffer: CommandBuffer, line_width: f32) -> c_void,
-    cmd_set_depth_bias: extern "system" fn(
+    pub cmd_set_depth_bias: extern "system" fn(
         command_buffer: CommandBuffer,
         depth_bias_constant_factor: f32,
         depth_bias_clamp: f32,
         depth_bias_slope_factor: f32,
     ) -> c_void,
-    cmd_set_blend_constants:
+    pub cmd_set_blend_constants:
         extern "system" fn(command_buffer: CommandBuffer, blend_constants: [f32; 4]) -> c_void,
-    cmd_set_depth_bounds: extern "system" fn(
+    pub cmd_set_depth_bounds: extern "system" fn(
         command_buffer: CommandBuffer,
         min_depth_bounds: f32,
         max_depth_bounds: f32,
     ) -> c_void,
-    cmd_set_stencil_compare_mask: extern "system" fn(
+    pub cmd_set_stencil_compare_mask: extern "system" fn(
         command_buffer: CommandBuffer,
         face_mask: StencilFaceFlags,
         compare_mask: u32,
     ) -> c_void,
-    cmd_set_stencil_write_mask: extern "system" fn(
+    pub cmd_set_stencil_write_mask: extern "system" fn(
         command_buffer: CommandBuffer,
         face_mask: StencilFaceFlags,
         write_mask: u32,
     ) -> c_void,
-    cmd_set_stencil_reference: extern "system" fn(
+    pub cmd_set_stencil_reference: extern "system" fn(
         command_buffer: CommandBuffer,
         face_mask: StencilFaceFlags,
         reference: u32,
     ) -> c_void,
-    cmd_bind_descriptor_sets: extern "system" fn(
+    pub cmd_bind_descriptor_sets: extern "system" fn(
         command_buffer: CommandBuffer,
         pipeline_bind_point: PipelineBindPoint,
         layout: PipelineLayout,
@@ -2221,27 +2228,27 @@ pub struct DeviceFnV1_0 {
         dynamic_offset_count: u32,
         p_dynamic_offsets: *const u32,
     ) -> c_void,
-    cmd_bind_index_buffer: extern "system" fn(
+    pub cmd_bind_index_buffer: extern "system" fn(
         command_buffer: CommandBuffer,
         buffer: Buffer,
         offset: DeviceSize,
         index_type: IndexType,
     ) -> c_void,
-    cmd_bind_vertex_buffers: extern "system" fn(
+    pub cmd_bind_vertex_buffers: extern "system" fn(
         command_buffer: CommandBuffer,
         first_binding: u32,
         binding_count: u32,
         p_buffers: *const Buffer,
         p_offsets: *const DeviceSize,
     ) -> c_void,
-    cmd_draw: extern "system" fn(
+    pub cmd_draw: extern "system" fn(
         command_buffer: CommandBuffer,
         vertex_count: u32,
         instance_count: u32,
         first_vertex: u32,
         first_instance: u32,
     ) -> c_void,
-    cmd_draw_indexed: extern "system" fn(
+    pub cmd_draw_indexed: extern "system" fn(
         command_buffer: CommandBuffer,
         index_count: u32,
         instance_count: u32,
@@ -2249,37 +2256,37 @@ pub struct DeviceFnV1_0 {
         vertex_offset: i32,
         first_instance: u32,
     ) -> c_void,
-    cmd_draw_indirect: extern "system" fn(
+    pub cmd_draw_indirect: extern "system" fn(
         command_buffer: CommandBuffer,
         buffer: Buffer,
         offset: DeviceSize,
         draw_count: u32,
         stride: u32,
     ) -> c_void,
-    cmd_draw_indexed_indirect: extern "system" fn(
+    pub cmd_draw_indexed_indirect: extern "system" fn(
         command_buffer: CommandBuffer,
         buffer: Buffer,
         offset: DeviceSize,
         draw_count: u32,
         stride: u32,
     ) -> c_void,
-    cmd_dispatch: extern "system" fn(
+    pub cmd_dispatch: extern "system" fn(
         command_buffer: CommandBuffer,
         group_count_x: u32,
         group_count_y: u32,
         group_count_z: u32,
     ) -> c_void,
-    cmd_dispatch_indirect:
+    pub cmd_dispatch_indirect:
         extern "system" fn(command_buffer: CommandBuffer, buffer: Buffer, offset: DeviceSize)
             -> c_void,
-    cmd_copy_buffer: extern "system" fn(
+    pub cmd_copy_buffer: extern "system" fn(
         command_buffer: CommandBuffer,
         src_buffer: Buffer,
         dst_buffer: Buffer,
         region_count: u32,
         p_regions: *const BufferCopy,
     ) -> c_void,
-    cmd_copy_image: extern "system" fn(
+    pub cmd_copy_image: extern "system" fn(
         command_buffer: CommandBuffer,
         src_image: Image,
         src_image_layout: ImageLayout,
@@ -2288,7 +2295,7 @@ pub struct DeviceFnV1_0 {
         region_count: u32,
         p_regions: *const ImageCopy,
     ) -> c_void,
-    cmd_blit_image: extern "system" fn(
+    pub cmd_blit_image: extern "system" fn(
         command_buffer: CommandBuffer,
         src_image: Image,
         src_image_layout: ImageLayout,
@@ -2298,7 +2305,7 @@ pub struct DeviceFnV1_0 {
         p_regions: *const ImageBlit,
         filter: Filter,
     ) -> c_void,
-    cmd_copy_buffer_to_image: extern "system" fn(
+    pub cmd_copy_buffer_to_image: extern "system" fn(
         command_buffer: CommandBuffer,
         src_buffer: Buffer,
         dst_image: Image,
@@ -2306,7 +2313,7 @@ pub struct DeviceFnV1_0 {
         region_count: u32,
         p_regions: *const BufferImageCopy,
     ) -> c_void,
-    cmd_copy_image_to_buffer: extern "system" fn(
+    pub cmd_copy_image_to_buffer: extern "system" fn(
         command_buffer: CommandBuffer,
         src_image: Image,
         src_image_layout: ImageLayout,
@@ -2314,21 +2321,21 @@ pub struct DeviceFnV1_0 {
         region_count: u32,
         p_regions: *const BufferImageCopy,
     ) -> c_void,
-    cmd_update_buffer: extern "system" fn(
+    pub cmd_update_buffer: extern "system" fn(
         command_buffer: CommandBuffer,
         dst_buffer: Buffer,
         dst_offset: DeviceSize,
         data_size: DeviceSize,
         p_data: *const c_void,
     ) -> c_void,
-    cmd_fill_buffer: extern "system" fn(
+    pub cmd_fill_buffer: extern "system" fn(
         command_buffer: CommandBuffer,
         dst_buffer: Buffer,
         dst_offset: DeviceSize,
         size: DeviceSize,
         data: u32,
     ) -> c_void,
-    cmd_clear_color_image: extern "system" fn(
+    pub cmd_clear_color_image: extern "system" fn(
         command_buffer: CommandBuffer,
         image: Image,
         image_layout: ImageLayout,
@@ -2336,7 +2343,7 @@ pub struct DeviceFnV1_0 {
         range_count: u32,
         p_ranges: *const ImageSubresourceRange,
     ) -> c_void,
-    cmd_clear_depth_stencil_image:
+    pub cmd_clear_depth_stencil_image:
         extern "system" fn(
             command_buffer: CommandBuffer,
             image: Image,
@@ -2345,14 +2352,14 @@ pub struct DeviceFnV1_0 {
             range_count: u32,
             p_ranges: *const ImageSubresourceRange,
         ) -> c_void,
-    cmd_clear_attachments: extern "system" fn(
+    pub cmd_clear_attachments: extern "system" fn(
         command_buffer: CommandBuffer,
         attachment_count: u32,
         p_attachments: *const ClearAttachment,
         rect_count: u32,
         p_rects: *const ClearRect,
     ) -> c_void,
-    cmd_resolve_image: extern "system" fn(
+    pub cmd_resolve_image: extern "system" fn(
         command_buffer: CommandBuffer,
         src_image: Image,
         src_image_layout: ImageLayout,
@@ -2361,17 +2368,17 @@ pub struct DeviceFnV1_0 {
         region_count: u32,
         p_regions: *const ImageResolve,
     ) -> c_void,
-    cmd_set_event: extern "system" fn(
+    pub cmd_set_event: extern "system" fn(
         command_buffer: CommandBuffer,
         event: Event,
         stage_mask: PipelineStageFlags,
     ) -> c_void,
-    cmd_reset_event: extern "system" fn(
+    pub cmd_reset_event: extern "system" fn(
         command_buffer: CommandBuffer,
         event: Event,
         stage_mask: PipelineStageFlags,
     ) -> c_void,
-    cmd_wait_events: extern "system" fn(
+    pub cmd_wait_events: extern "system" fn(
         command_buffer: CommandBuffer,
         event_count: u32,
         p_events: *const Event,
@@ -2384,40 +2391,41 @@ pub struct DeviceFnV1_0 {
         image_memory_barrier_count: u32,
         p_image_memory_barriers: *const ImageMemoryBarrier,
     ) -> c_void,
-    cmd_pipeline_barrier: extern "system" fn(
-        command_buffer: CommandBuffer,
-        src_stage_mask: PipelineStageFlags,
-        dst_stage_mask: PipelineStageFlags,
-        dependency_flags: DependencyFlags,
-        memory_barrier_count: u32,
-        p_memory_barriers: *const MemoryBarrier,
-        buffer_memory_barrier_count: u32,
-        p_buffer_memory_barriers: *const BufferMemoryBarrier,
-        image_memory_barrier_count: u32,
-        p_image_memory_barriers: *const ImageMemoryBarrier,
-    ) -> c_void,
-    cmd_begin_query: extern "system" fn(
+    pub cmd_pipeline_barrier:
+        extern "system" fn(
+            command_buffer: CommandBuffer,
+            src_stage_mask: PipelineStageFlags,
+            dst_stage_mask: PipelineStageFlags,
+            dependency_flags: DependencyFlags,
+            memory_barrier_count: u32,
+            p_memory_barriers: *const MemoryBarrier,
+            buffer_memory_barrier_count: u32,
+            p_buffer_memory_barriers: *const BufferMemoryBarrier,
+            image_memory_barrier_count: u32,
+            p_image_memory_barriers: *const ImageMemoryBarrier,
+        ) -> c_void,
+    pub cmd_begin_query: extern "system" fn(
         command_buffer: CommandBuffer,
         query_pool: QueryPool,
         query: u32,
         flags: QueryControlFlags,
     ) -> c_void,
-    cmd_end_query:
+    pub cmd_end_query:
         extern "system" fn(command_buffer: CommandBuffer, query_pool: QueryPool, query: u32)
             -> c_void,
-    cmd_reset_query_pool: extern "system" fn(
+    pub cmd_reset_query_pool: extern "system" fn(
         command_buffer: CommandBuffer,
         query_pool: QueryPool,
         first_query: u32,
         query_count: u32,
     ) -> c_void,
-    cmd_write_timestamp: extern "system" fn(
+    pub cmd_write_timestamp: extern "system" fn(
         command_buffer: CommandBuffer,
         pipeline_stage: PipelineStageFlags,
         query_pool: QueryPool,
         query: u32,
     ) -> c_void,
-    cmd_copy_query_pool_results: extern "system" fn(
+    pub cmd_copy_query_pool_results: extern "system" fn(
         command_buffer: CommandBuffer,
         query_pool: QueryPool,
         first_query: u32,
@@ -2427,7 +2435,7 @@ pub struct DeviceFnV1_0 {
         stride: DeviceSize,
         flags: QueryResultFlags,
     ) -> c_void,
-    cmd_push_constants: extern "system" fn(
+    pub cmd_push_constants: extern "system" fn(
         command_buffer: CommandBuffer,
         layout: PipelineLayout,
         stage_flags: ShaderStageFlags,
@@ -2435,15 +2443,15 @@ pub struct DeviceFnV1_0 {
         size: u32,
         p_values: *const c_void,
     ) -> c_void,
-    cmd_begin_render_pass: extern "system" fn(
+    pub cmd_begin_render_pass: extern "system" fn(
         command_buffer: CommandBuffer,
         p_render_pass_begin: *const RenderPassBeginInfo,
         contents: SubpassContents,
     ) -> c_void,
-    cmd_next_subpass:
+    pub cmd_next_subpass:
         extern "system" fn(command_buffer: CommandBuffer, contents: SubpassContents) -> c_void,
-    cmd_end_render_pass: extern "system" fn(command_buffer: CommandBuffer) -> c_void,
-    cmd_execute_commands: extern "system" fn(
+    pub cmd_end_render_pass: extern "system" fn(command_buffer: CommandBuffer) -> c_void,
+    pub cmd_execute_commands: extern "system" fn(
         command_buffer: CommandBuffer,
         command_buffer_count: u32,
         p_command_buffers: *const CommandBuffer,
@@ -6050,7 +6058,7 @@ impl DeviceFnV1_0 {
 #[allow(non_camel_case_types)]
 pub type PFN_vkEnumerateInstanceVersion = extern "system" fn(p_api_version: *mut u32) -> Result;
 pub struct EntryFnV1_1 {
-    enumerate_instance_version: extern "system" fn(p_api_version: *mut u32) -> Result,
+    pub enumerate_instance_version: extern "system" fn(p_api_version: *mut u32) -> Result,
 }
 unsafe impl Send for EntryFnV1_1 {}
 unsafe impl Sync for EntryFnV1_1 {}
@@ -6163,64 +6171,64 @@ pub type PFN_vkGetPhysicalDeviceExternalSemaphoreProperties =
         p_external_semaphore_properties: *mut ExternalSemaphoreProperties,
     ) -> c_void;
 pub struct InstanceFnV1_1 {
-    enumerate_physical_device_groups:
+    pub enumerate_physical_device_groups:
         extern "system" fn(
             instance: Instance,
             p_physical_device_group_count: *mut u32,
             p_physical_device_group_properties: *mut PhysicalDeviceGroupProperties,
         ) -> Result,
-    get_physical_device_features2: extern "system" fn(
+    pub get_physical_device_features2: extern "system" fn(
         physical_device: PhysicalDevice,
         p_features: *mut PhysicalDeviceFeatures2,
     ) -> c_void,
-    get_physical_device_properties2:
+    pub get_physical_device_properties2:
         extern "system" fn(
             physical_device: PhysicalDevice,
             p_properties: *mut PhysicalDeviceProperties2,
         ) -> c_void,
-    get_physical_device_format_properties2:
+    pub get_physical_device_format_properties2:
         extern "system" fn(
             physical_device: PhysicalDevice,
             format: Format,
             p_format_properties: *mut FormatProperties2,
         ) -> c_void,
-    get_physical_device_image_format_properties2:
+    pub get_physical_device_image_format_properties2:
         extern "system" fn(
             physical_device: PhysicalDevice,
             p_image_format_info: *const PhysicalDeviceImageFormatInfo2,
             p_image_format_properties: *mut ImageFormatProperties2,
         ) -> Result,
-    get_physical_device_queue_family_properties2:
+    pub get_physical_device_queue_family_properties2:
         extern "system" fn(
             physical_device: PhysicalDevice,
             p_queue_family_property_count: *mut u32,
             p_queue_family_properties: *mut QueueFamilyProperties2,
         ) -> c_void,
-    get_physical_device_memory_properties2:
+    pub get_physical_device_memory_properties2:
         extern "system" fn(
             physical_device: PhysicalDevice,
             p_memory_properties: *mut PhysicalDeviceMemoryProperties2,
         ) -> c_void,
-    get_physical_device_sparse_image_format_properties2:
+    pub get_physical_device_sparse_image_format_properties2:
         extern "system" fn(
             physical_device: PhysicalDevice,
             p_format_info: *const PhysicalDeviceSparseImageFormatInfo2,
             p_property_count: *mut u32,
             p_properties: *mut SparseImageFormatProperties2,
         ) -> c_void,
-    get_physical_device_external_buffer_properties:
+    pub get_physical_device_external_buffer_properties:
         extern "system" fn(
             physical_device: PhysicalDevice,
             p_external_buffer_info: *const PhysicalDeviceExternalBufferInfo,
             p_external_buffer_properties: *mut ExternalBufferProperties,
         ) -> c_void,
-    get_physical_device_external_fence_properties:
+    pub get_physical_device_external_fence_properties:
         extern "system" fn(
             physical_device: PhysicalDevice,
             p_external_fence_info: *const PhysicalDeviceExternalFenceInfo,
             p_external_fence_properties: *mut ExternalFenceProperties,
         ) -> c_void,
-    get_physical_device_external_semaphore_properties:
+    pub get_physical_device_external_semaphore_properties:
         extern "system" fn(
             physical_device: PhysicalDevice,
             p_external_semaphore_info: *const PhysicalDeviceExternalSemaphoreInfo,
@@ -6704,17 +6712,17 @@ pub type PFN_vkGetDescriptorSetLayoutSupport =
         p_support: *mut DescriptorSetLayoutSupport,
     ) -> c_void;
 pub struct DeviceFnV1_1 {
-    bind_buffer_memory2: extern "system" fn(
+    pub bind_buffer_memory2: extern "system" fn(
         device: Device,
         bind_info_count: u32,
         p_bind_infos: *const BindBufferMemoryInfo,
     ) -> Result,
-    bind_image_memory2: extern "system" fn(
+    pub bind_image_memory2: extern "system" fn(
         device: Device,
         bind_info_count: u32,
         p_bind_infos: *const BindImageMemoryInfo,
     ) -> Result,
-    get_device_group_peer_memory_features:
+    pub get_device_group_peer_memory_features:
         extern "system" fn(
             device: Device,
             heap_index: u32,
@@ -6722,9 +6730,9 @@ pub struct DeviceFnV1_1 {
             remote_device_index: u32,
             p_peer_memory_features: *mut PeerMemoryFeatureFlags,
         ) -> c_void,
-    cmd_set_device_mask:
+    pub cmd_set_device_mask:
         extern "system" fn(command_buffer: CommandBuffer, device_mask: u32) -> c_void,
-    cmd_dispatch_base: extern "system" fn(
+    pub cmd_dispatch_base: extern "system" fn(
         command_buffer: CommandBuffer,
         base_group_x: u32,
         base_group_y: u32,
@@ -6733,66 +6741,67 @@ pub struct DeviceFnV1_1 {
         group_count_y: u32,
         group_count_z: u32,
     ) -> c_void,
-    get_image_memory_requirements2:
+    pub get_image_memory_requirements2:
         extern "system" fn(
             device: Device,
             p_info: *const ImageMemoryRequirementsInfo2,
             p_memory_requirements: *mut MemoryRequirements2,
         ) -> c_void,
-    get_buffer_memory_requirements2:
+    pub get_buffer_memory_requirements2:
         extern "system" fn(
             device: Device,
             p_info: *const BufferMemoryRequirementsInfo2,
             p_memory_requirements: *mut MemoryRequirements2,
         ) -> c_void,
-    get_image_sparse_memory_requirements2:
+    pub get_image_sparse_memory_requirements2:
         extern "system" fn(
             device: Device,
             p_info: *const ImageSparseMemoryRequirementsInfo2,
             p_sparse_memory_requirement_count: *mut u32,
             p_sparse_memory_requirements: *mut SparseImageMemoryRequirements2,
         ) -> c_void,
-    trim_command_pool:
+    pub trim_command_pool:
         extern "system" fn(device: Device, command_pool: CommandPool, flags: CommandPoolTrimFlags)
             -> c_void,
-    get_device_queue2: extern "system" fn(
+    pub get_device_queue2: extern "system" fn(
         device: Device,
         p_queue_info: *const DeviceQueueInfo2,
         p_queue: *mut Queue,
     ) -> c_void,
-    create_sampler_ycbcr_conversion:
+    pub create_sampler_ycbcr_conversion:
         extern "system" fn(
             device: Device,
             p_create_info: *const SamplerYcbcrConversionCreateInfo,
             p_allocator: *const AllocationCallbacks,
             p_ycbcr_conversion: *mut SamplerYcbcrConversion,
         ) -> Result,
-    destroy_sampler_ycbcr_conversion: extern "system" fn(
-        device: Device,
-        ycbcr_conversion: SamplerYcbcrConversion,
-        p_allocator: *const AllocationCallbacks,
-    ) -> c_void,
-    create_descriptor_update_template:
+    pub destroy_sampler_ycbcr_conversion:
+        extern "system" fn(
+            device: Device,
+            ycbcr_conversion: SamplerYcbcrConversion,
+            p_allocator: *const AllocationCallbacks,
+        ) -> c_void,
+    pub create_descriptor_update_template:
         extern "system" fn(
             device: Device,
             p_create_info: *const DescriptorUpdateTemplateCreateInfo,
             p_allocator: *const AllocationCallbacks,
             p_descriptor_update_template: *mut DescriptorUpdateTemplate,
         ) -> Result,
-    destroy_descriptor_update_template:
+    pub destroy_descriptor_update_template:
         extern "system" fn(
             device: Device,
             descriptor_update_template: DescriptorUpdateTemplate,
             p_allocator: *const AllocationCallbacks,
         ) -> c_void,
-    update_descriptor_set_with_template:
+    pub update_descriptor_set_with_template:
         extern "system" fn(
             device: Device,
             descriptor_set: DescriptorSet,
             descriptor_update_template: DescriptorUpdateTemplate,
             p_data: *const c_void,
         ) -> c_void,
-    get_descriptor_set_layout_support:
+    pub get_descriptor_set_layout_support:
         extern "system" fn(
             device: Device,
             p_create_info: *const DescriptorSetLayoutCreateInfo,
@@ -7621,29 +7630,6 @@ impl ::std::default::Default for BaseOutStructure {
         }
     }
 }
-impl BaseOutStructure {
-    pub fn builder<'a>() -> BaseOutStructureBuilder<'a> {
-        BaseOutStructureBuilder {
-            inner: BaseOutStructure::default(),
-            marker: ::std::marker::PhantomData,
-        }
-    }
-}
-pub struct BaseOutStructureBuilder<'a> {
-    inner: BaseOutStructure,
-    marker: ::std::marker::PhantomData<&'a ()>,
-}
-impl<'a> ::std::ops::Deref for BaseOutStructureBuilder<'a> {
-    type Target = BaseOutStructure;
-    fn deref(&self) -> &Self::Target {
-        &self.inner
-    }
-}
-impl<'a> BaseOutStructureBuilder<'a> {
-    pub fn build(self) -> BaseOutStructure {
-        self.inner
-    }
-}
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
 pub struct BaseInStructure {
@@ -7656,29 +7642,6 @@ impl ::std::default::Default for BaseInStructure {
             s_type: unsafe { ::std::mem::zeroed() },
             p_next: ::std::ptr::null(),
         }
-    }
-}
-impl BaseInStructure {
-    pub fn builder<'a>() -> BaseInStructureBuilder<'a> {
-        BaseInStructureBuilder {
-            inner: BaseInStructure::default(),
-            marker: ::std::marker::PhantomData,
-        }
-    }
-}
-pub struct BaseInStructureBuilder<'a> {
-    inner: BaseInStructure,
-    marker: ::std::marker::PhantomData<&'a ()>,
-}
-impl<'a> ::std::ops::Deref for BaseInStructureBuilder<'a> {
-    type Target = BaseInStructure;
-    fn deref(&self) -> &Self::Target {
-        &self.inner
-    }
-}
-impl<'a> BaseInStructureBuilder<'a> {
-    pub fn build(self) -> BaseInStructure {
-        self.inner
     }
 }
 #[repr(C)]
@@ -7699,6 +7662,7 @@ pub struct Offset2DBuilder<'a> {
     inner: Offset2D,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait Offset2DBuilderNext {}
 impl<'a> ::std::ops::Deref for Offset2DBuilder<'a> {
     type Target = Offset2D;
     fn deref(&self) -> &Self::Target {
@@ -7737,6 +7701,7 @@ pub struct Offset3DBuilder<'a> {
     inner: Offset3D,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait Offset3DBuilderNext {}
 impl<'a> ::std::ops::Deref for Offset3DBuilder<'a> {
     type Target = Offset3D;
     fn deref(&self) -> &Self::Target {
@@ -7778,6 +7743,7 @@ pub struct Extent2DBuilder<'a> {
     inner: Extent2D,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait Extent2DBuilderNext {}
 impl<'a> ::std::ops::Deref for Extent2DBuilder<'a> {
     type Target = Extent2D;
     fn deref(&self) -> &Self::Target {
@@ -7816,6 +7782,7 @@ pub struct Extent3DBuilder<'a> {
     inner: Extent3D,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait Extent3DBuilderNext {}
 impl<'a> ::std::ops::Deref for Extent3DBuilder<'a> {
     type Target = Extent3D;
     fn deref(&self) -> &Self::Target {
@@ -7861,6 +7828,7 @@ pub struct ViewportBuilder<'a> {
     inner: Viewport,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ViewportBuilderNext {}
 impl<'a> ::std::ops::Deref for ViewportBuilder<'a> {
     type Target = Viewport;
     fn deref(&self) -> &Self::Target {
@@ -7914,6 +7882,7 @@ pub struct Rect2DBuilder<'a> {
     inner: Rect2D,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait Rect2DBuilderNext {}
 impl<'a> ::std::ops::Deref for Rect2DBuilder<'a> {
     type Target = Rect2D;
     fn deref(&self) -> &Self::Target {
@@ -7952,6 +7921,7 @@ pub struct ClearRectBuilder<'a> {
     inner: ClearRect,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ClearRectBuilderNext {}
 impl<'a> ::std::ops::Deref for ClearRectBuilder<'a> {
     type Target = ClearRect;
     fn deref(&self) -> &Self::Target {
@@ -7995,6 +7965,7 @@ pub struct ComponentMappingBuilder<'a> {
     inner: ComponentMapping,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ComponentMappingBuilderNext {}
 impl<'a> ::std::ops::Deref for ComponentMappingBuilder<'a> {
     type Target = ComponentMapping;
     fn deref(&self) -> &Self::Target {
@@ -8078,6 +8049,7 @@ pub struct PhysicalDevicePropertiesBuilder<'a> {
     inner: PhysicalDeviceProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDevicePropertiesBuilderNext {}
 impl<'a> ::std::ops::Deref for PhysicalDevicePropertiesBuilder<'a> {
     type Target = PhysicalDeviceProperties;
     fn deref(&self) -> &Self::Target {
@@ -8172,6 +8144,7 @@ pub struct ExtensionPropertiesBuilder<'a> {
     inner: ExtensionProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ExtensionPropertiesBuilderNext {}
 impl<'a> ::std::ops::Deref for ExtensionPropertiesBuilder<'a> {
     type Target = ExtensionProperties;
     fn deref(&self) -> &Self::Target {
@@ -8236,6 +8209,7 @@ pub struct LayerPropertiesBuilder<'a> {
     inner: LayerProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait LayerPropertiesBuilderNext {}
 impl<'a> ::std::ops::Deref for LayerPropertiesBuilder<'a> {
     type Target = LayerProperties;
     fn deref(&self) -> &Self::Target {
@@ -8308,6 +8282,7 @@ pub struct ApplicationInfoBuilder<'a> {
     inner: ApplicationInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ApplicationInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for ApplicationInfoBuilder<'a> {
     type Target = ApplicationInfo;
     fn deref(&self) -> &Self::Target {
@@ -8336,6 +8311,13 @@ impl<'a> ApplicationInfoBuilder<'a> {
     }
     pub fn api_version(mut self, api_version: u32) -> ApplicationInfoBuilder<'a> {
         self.inner.api_version = api_version;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> ApplicationInfoBuilder<'a>
+    where
+        T: ApplicationInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ApplicationInfo {
@@ -8396,6 +8378,7 @@ pub struct AllocationCallbacksBuilder<'a> {
     inner: AllocationCallbacks,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait AllocationCallbacksBuilderNext {}
 impl<'a> ::std::ops::Deref for AllocationCallbacksBuilder<'a> {
     type Target = AllocationCallbacks;
     fn deref(&self) -> &Self::Target {
@@ -8477,6 +8460,7 @@ pub struct DeviceQueueCreateInfoBuilder<'a> {
     inner: DeviceQueueCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DeviceQueueCreateInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for DeviceQueueCreateInfoBuilder<'a> {
     type Target = DeviceQueueCreateInfo;
     fn deref(&self) -> &Self::Target {
@@ -8501,6 +8485,13 @@ impl<'a> DeviceQueueCreateInfoBuilder<'a> {
     ) -> DeviceQueueCreateInfoBuilder<'a> {
         self.inner.queue_count = queue_priorities.len() as _;
         self.inner.p_queue_priorities = queue_priorities.as_ptr();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> DeviceQueueCreateInfoBuilder<'a>
+    where
+        T: DeviceQueueCreateInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DeviceQueueCreateInfo {
@@ -8549,6 +8540,7 @@ pub struct DeviceCreateInfoBuilder<'a> {
     inner: DeviceCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DeviceCreateInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for DeviceCreateInfoBuilder<'a> {
     type Target = DeviceCreateInfo;
     fn deref(&self) -> &Self::Target {
@@ -8589,6 +8581,13 @@ impl<'a> DeviceCreateInfoBuilder<'a> {
         enabled_features: &'a PhysicalDeviceFeatures,
     ) -> DeviceCreateInfoBuilder<'a> {
         self.inner.p_enabled_features = enabled_features;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> DeviceCreateInfoBuilder<'a>
+    where
+        T: DeviceCreateInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DeviceCreateInfo {
@@ -8633,6 +8632,7 @@ pub struct InstanceCreateInfoBuilder<'a> {
     inner: InstanceCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait InstanceCreateInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for InstanceCreateInfoBuilder<'a> {
     type Target = InstanceCreateInfo;
     fn deref(&self) -> &Self::Target {
@@ -8667,6 +8667,13 @@ impl<'a> InstanceCreateInfoBuilder<'a> {
         self.inner.enabled_extension_count = enabled_extension_names.len() as _;
         self
     }
+    pub fn next<T>(mut self, next: &'a T) -> InstanceCreateInfoBuilder<'a>
+    where
+        T: InstanceCreateInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
+        self
+    }
     pub fn build(self) -> InstanceCreateInfo {
         self.inner
     }
@@ -8691,6 +8698,7 @@ pub struct QueueFamilyPropertiesBuilder<'a> {
     inner: QueueFamilyProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait QueueFamilyPropertiesBuilderNext {}
 impl<'a> ::std::ops::Deref for QueueFamilyPropertiesBuilder<'a> {
     type Target = QueueFamilyProperties;
     fn deref(&self) -> &Self::Target {
@@ -8754,6 +8762,7 @@ pub struct PhysicalDeviceMemoryPropertiesBuilder<'a> {
     inner: PhysicalDeviceMemoryProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceMemoryPropertiesBuilderNext {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceMemoryPropertiesBuilder<'a> {
     type Target = PhysicalDeviceMemoryProperties;
     fn deref(&self) -> &Self::Target {
@@ -8823,6 +8832,7 @@ pub struct MemoryAllocateInfoBuilder<'a> {
     inner: MemoryAllocateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait MemoryAllocateInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for MemoryAllocateInfoBuilder<'a> {
     type Target = MemoryAllocateInfo;
     fn deref(&self) -> &Self::Target {
@@ -8836,6 +8846,13 @@ impl<'a> MemoryAllocateInfoBuilder<'a> {
     }
     pub fn memory_type_index(mut self, memory_type_index: u32) -> MemoryAllocateInfoBuilder<'a> {
         self.inner.memory_type_index = memory_type_index;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> MemoryAllocateInfoBuilder<'a>
+    where
+        T: MemoryAllocateInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> MemoryAllocateInfo {
@@ -8861,6 +8878,7 @@ pub struct MemoryRequirementsBuilder<'a> {
     inner: MemoryRequirements,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait MemoryRequirementsBuilderNext {}
 impl<'a> ::std::ops::Deref for MemoryRequirementsBuilder<'a> {
     type Target = MemoryRequirements;
     fn deref(&self) -> &Self::Target {
@@ -8903,6 +8921,7 @@ pub struct SparseImageFormatPropertiesBuilder<'a> {
     inner: SparseImageFormatProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait SparseImageFormatPropertiesBuilderNext {}
 impl<'a> ::std::ops::Deref for SparseImageFormatPropertiesBuilder<'a> {
     type Target = SparseImageFormatProperties;
     fn deref(&self) -> &Self::Target {
@@ -8956,6 +8975,7 @@ pub struct SparseImageMemoryRequirementsBuilder<'a> {
     inner: SparseImageMemoryRequirements,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait SparseImageMemoryRequirementsBuilderNext {}
 impl<'a> ::std::ops::Deref for SparseImageMemoryRequirementsBuilder<'a> {
     type Target = SparseImageMemoryRequirements;
     fn deref(&self) -> &Self::Target {
@@ -9020,6 +9040,7 @@ pub struct MemoryTypeBuilder<'a> {
     inner: MemoryType,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait MemoryTypeBuilderNext {}
 impl<'a> ::std::ops::Deref for MemoryTypeBuilder<'a> {
     type Target = MemoryType;
     fn deref(&self) -> &Self::Target {
@@ -9057,6 +9078,7 @@ pub struct MemoryHeapBuilder<'a> {
     inner: MemoryHeap,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait MemoryHeapBuilderNext {}
 impl<'a> ::std::ops::Deref for MemoryHeapBuilder<'a> {
     type Target = MemoryHeap;
     fn deref(&self) -> &Self::Target {
@@ -9108,6 +9130,7 @@ pub struct MappedMemoryRangeBuilder<'a> {
     inner: MappedMemoryRange,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait MappedMemoryRangeBuilderNext {}
 impl<'a> ::std::ops::Deref for MappedMemoryRangeBuilder<'a> {
     type Target = MappedMemoryRange;
     fn deref(&self) -> &Self::Target {
@@ -9125,6 +9148,13 @@ impl<'a> MappedMemoryRangeBuilder<'a> {
     }
     pub fn size(mut self, size: DeviceSize) -> MappedMemoryRangeBuilder<'a> {
         self.inner.size = size;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> MappedMemoryRangeBuilder<'a>
+    where
+        T: MappedMemoryRangeBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> MappedMemoryRange {
@@ -9150,6 +9180,7 @@ pub struct FormatPropertiesBuilder<'a> {
     inner: FormatProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait FormatPropertiesBuilderNext {}
 impl<'a> ::std::ops::Deref for FormatPropertiesBuilder<'a> {
     type Target = FormatProperties;
     fn deref(&self) -> &Self::Target {
@@ -9203,6 +9234,7 @@ pub struct ImageFormatPropertiesBuilder<'a> {
     inner: ImageFormatProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ImageFormatPropertiesBuilderNext {}
 impl<'a> ::std::ops::Deref for ImageFormatPropertiesBuilder<'a> {
     type Target = ImageFormatProperties;
     fn deref(&self) -> &Self::Target {
@@ -9259,6 +9291,7 @@ pub struct DescriptorBufferInfoBuilder<'a> {
     inner: DescriptorBufferInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DescriptorBufferInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for DescriptorBufferInfoBuilder<'a> {
     type Target = DescriptorBufferInfo;
     fn deref(&self) -> &Self::Target {
@@ -9301,6 +9334,7 @@ pub struct DescriptorImageInfoBuilder<'a> {
     inner: DescriptorImageInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DescriptorImageInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for DescriptorImageInfoBuilder<'a> {
     type Target = DescriptorImageInfo;
     fn deref(&self) -> &Self::Target {
@@ -9366,6 +9400,7 @@ pub struct WriteDescriptorSetBuilder<'a> {
     inner: WriteDescriptorSet,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait WriteDescriptorSetBuilderNext {}
 impl<'a> ::std::ops::Deref for WriteDescriptorSetBuilder<'a> {
     type Target = WriteDescriptorSet;
     fn deref(&self) -> &Self::Target {
@@ -9416,6 +9451,13 @@ impl<'a> WriteDescriptorSetBuilder<'a> {
         self.inner.p_texel_buffer_view = texel_buffer_view.as_ptr();
         self
     }
+    pub fn next<T>(mut self, next: &'a T) -> WriteDescriptorSetBuilder<'a>
+    where
+        T: WriteDescriptorSetBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
+        self
+    }
     pub fn build(self) -> WriteDescriptorSet {
         self.inner
     }
@@ -9460,6 +9502,7 @@ pub struct CopyDescriptorSetBuilder<'a> {
     inner: CopyDescriptorSet,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait CopyDescriptorSetBuilderNext {}
 impl<'a> ::std::ops::Deref for CopyDescriptorSetBuilder<'a> {
     type Target = CopyDescriptorSet;
     fn deref(&self) -> &Self::Target {
@@ -9493,6 +9536,13 @@ impl<'a> CopyDescriptorSetBuilder<'a> {
     }
     pub fn descriptor_count(mut self, descriptor_count: u32) -> CopyDescriptorSetBuilder<'a> {
         self.inner.descriptor_count = descriptor_count;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> CopyDescriptorSetBuilder<'a>
+    where
+        T: CopyDescriptorSetBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> CopyDescriptorSet {
@@ -9537,6 +9587,7 @@ pub struct BufferCreateInfoBuilder<'a> {
     inner: BufferCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait BufferCreateInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for BufferCreateInfoBuilder<'a> {
     type Target = BufferCreateInfo;
     fn deref(&self) -> &Self::Target {
@@ -9566,6 +9617,13 @@ impl<'a> BufferCreateInfoBuilder<'a> {
     ) -> BufferCreateInfoBuilder<'a> {
         self.inner.queue_family_index_count = queue_family_indices.len() as _;
         self.inner.p_queue_family_indices = queue_family_indices.as_ptr();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> BufferCreateInfoBuilder<'a>
+    where
+        T: BufferCreateInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> BufferCreateInfo {
@@ -9608,6 +9666,7 @@ pub struct BufferViewCreateInfoBuilder<'a> {
     inner: BufferViewCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait BufferViewCreateInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for BufferViewCreateInfoBuilder<'a> {
     type Target = BufferViewCreateInfo;
     fn deref(&self) -> &Self::Target {
@@ -9635,6 +9694,13 @@ impl<'a> BufferViewCreateInfoBuilder<'a> {
         self.inner.range = range;
         self
     }
+    pub fn next<T>(mut self, next: &'a T) -> BufferViewCreateInfoBuilder<'a>
+    where
+        T: BufferViewCreateInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
+        self
+    }
     pub fn build(self) -> BufferViewCreateInfo {
         self.inner
     }
@@ -9658,6 +9724,7 @@ pub struct ImageSubresourceBuilder<'a> {
     inner: ImageSubresource,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ImageSubresourceBuilderNext {}
 impl<'a> ::std::ops::Deref for ImageSubresourceBuilder<'a> {
     type Target = ImageSubresource;
     fn deref(&self) -> &Self::Target {
@@ -9701,6 +9768,7 @@ pub struct ImageSubresourceLayersBuilder<'a> {
     inner: ImageSubresourceLayers,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ImageSubresourceLayersBuilderNext {}
 impl<'a> ::std::ops::Deref for ImageSubresourceLayersBuilder<'a> {
     type Target = ImageSubresourceLayers;
     fn deref(&self) -> &Self::Target {
@@ -9752,6 +9820,7 @@ pub struct ImageSubresourceRangeBuilder<'a> {
     inner: ImageSubresourceRange,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ImageSubresourceRangeBuilderNext {}
 impl<'a> ::std::ops::Deref for ImageSubresourceRangeBuilder<'a> {
     type Target = ImageSubresourceRange;
     fn deref(&self) -> &Self::Target {
@@ -9816,6 +9885,7 @@ pub struct MemoryBarrierBuilder<'a> {
     inner: MemoryBarrier,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait MemoryBarrierBuilderNext {}
 impl<'a> ::std::ops::Deref for MemoryBarrierBuilder<'a> {
     type Target = MemoryBarrier;
     fn deref(&self) -> &Self::Target {
@@ -9829,6 +9899,13 @@ impl<'a> MemoryBarrierBuilder<'a> {
     }
     pub fn dst_access_mask(mut self, dst_access_mask: AccessFlags) -> MemoryBarrierBuilder<'a> {
         self.inner.dst_access_mask = dst_access_mask;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> MemoryBarrierBuilder<'a>
+    where
+        T: MemoryBarrierBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> MemoryBarrier {
@@ -9875,6 +9952,7 @@ pub struct BufferMemoryBarrierBuilder<'a> {
     inner: BufferMemoryBarrier,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait BufferMemoryBarrierBuilderNext {}
 impl<'a> ::std::ops::Deref for BufferMemoryBarrierBuilder<'a> {
     type Target = BufferMemoryBarrier;
     fn deref(&self) -> &Self::Target {
@@ -9920,6 +9998,13 @@ impl<'a> BufferMemoryBarrierBuilder<'a> {
     }
     pub fn size(mut self, size: DeviceSize) -> BufferMemoryBarrierBuilder<'a> {
         self.inner.size = size;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> BufferMemoryBarrierBuilder<'a>
+    where
+        T: BufferMemoryBarrierBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> BufferMemoryBarrier {
@@ -9968,6 +10053,7 @@ pub struct ImageMemoryBarrierBuilder<'a> {
     inner: ImageMemoryBarrier,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ImageMemoryBarrierBuilderNext {}
 impl<'a> ::std::ops::Deref for ImageMemoryBarrierBuilder<'a> {
     type Target = ImageMemoryBarrier;
     fn deref(&self) -> &Self::Target {
@@ -10020,6 +10106,13 @@ impl<'a> ImageMemoryBarrierBuilder<'a> {
         subresource_range: ImageSubresourceRange,
     ) -> ImageMemoryBarrierBuilder<'a> {
         self.inner.subresource_range = subresource_range;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> ImageMemoryBarrierBuilder<'a>
+    where
+        T: ImageMemoryBarrierBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ImageMemoryBarrier {
@@ -10078,6 +10171,7 @@ pub struct ImageCreateInfoBuilder<'a> {
     inner: ImageCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ImageCreateInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for ImageCreateInfoBuilder<'a> {
     type Target = ImageCreateInfo;
     fn deref(&self) -> &Self::Target {
@@ -10137,6 +10231,13 @@ impl<'a> ImageCreateInfoBuilder<'a> {
         self.inner.initial_layout = initial_layout;
         self
     }
+    pub fn next<T>(mut self, next: &'a T) -> ImageCreateInfoBuilder<'a>
+    where
+        T: ImageCreateInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
+        self
+    }
     pub fn build(self) -> ImageCreateInfo {
         self.inner
     }
@@ -10162,6 +10263,7 @@ pub struct SubresourceLayoutBuilder<'a> {
     inner: SubresourceLayout,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait SubresourceLayoutBuilderNext {}
 impl<'a> ::std::ops::Deref for SubresourceLayoutBuilder<'a> {
     type Target = SubresourceLayout;
     fn deref(&self) -> &Self::Target {
@@ -10231,6 +10333,7 @@ pub struct ImageViewCreateInfoBuilder<'a> {
     inner: ImageViewCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ImageViewCreateInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for ImageViewCreateInfoBuilder<'a> {
     type Target = ImageViewCreateInfo;
     fn deref(&self) -> &Self::Target {
@@ -10265,6 +10368,13 @@ impl<'a> ImageViewCreateInfoBuilder<'a> {
         self.inner.subresource_range = subresource_range;
         self
     }
+    pub fn next<T>(mut self, next: &'a T) -> ImageViewCreateInfoBuilder<'a>
+    where
+        T: ImageViewCreateInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
+        self
+    }
     pub fn build(self) -> ImageViewCreateInfo {
         self.inner
     }
@@ -10288,6 +10398,7 @@ pub struct BufferCopyBuilder<'a> {
     inner: BufferCopy,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait BufferCopyBuilderNext {}
 impl<'a> ::std::ops::Deref for BufferCopyBuilder<'a> {
     type Target = BufferCopy;
     fn deref(&self) -> &Self::Target {
@@ -10332,6 +10443,7 @@ pub struct SparseMemoryBindBuilder<'a> {
     inner: SparseMemoryBind,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait SparseMemoryBindBuilderNext {}
 impl<'a> ::std::ops::Deref for SparseMemoryBindBuilder<'a> {
     type Target = SparseMemoryBind;
     fn deref(&self) -> &Self::Target {
@@ -10385,6 +10497,7 @@ pub struct SparseImageMemoryBindBuilder<'a> {
     inner: SparseImageMemoryBind,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait SparseImageMemoryBindBuilderNext {}
 impl<'a> ::std::ops::Deref for SparseImageMemoryBindBuilder<'a> {
     type Target = SparseImageMemoryBind;
     fn deref(&self) -> &Self::Target {
@@ -10451,6 +10564,7 @@ pub struct SparseBufferMemoryBindInfoBuilder<'a> {
     inner: SparseBufferMemoryBindInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait SparseBufferMemoryBindInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for SparseBufferMemoryBindInfoBuilder<'a> {
     type Target = SparseBufferMemoryBindInfo;
     fn deref(&self) -> &Self::Target {
@@ -10499,6 +10613,7 @@ pub struct SparseImageOpaqueMemoryBindInfoBuilder<'a> {
     inner: SparseImageOpaqueMemoryBindInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait SparseImageOpaqueMemoryBindInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for SparseImageOpaqueMemoryBindInfoBuilder<'a> {
     type Target = SparseImageOpaqueMemoryBindInfo;
     fn deref(&self) -> &Self::Target {
@@ -10550,6 +10665,7 @@ pub struct SparseImageMemoryBindInfoBuilder<'a> {
     inner: SparseImageMemoryBindInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait SparseImageMemoryBindInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for SparseImageMemoryBindInfoBuilder<'a> {
     type Target = SparseImageMemoryBindInfo;
     fn deref(&self) -> &Self::Target {
@@ -10619,6 +10735,7 @@ pub struct BindSparseInfoBuilder<'a> {
     inner: BindSparseInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait BindSparseInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for BindSparseInfoBuilder<'a> {
     type Target = BindSparseInfo;
     fn deref(&self) -> &Self::Target {
@@ -10666,6 +10783,13 @@ impl<'a> BindSparseInfoBuilder<'a> {
         self.inner.p_signal_semaphores = signal_semaphores.as_ptr();
         self
     }
+    pub fn next<T>(mut self, next: &'a T) -> BindSparseInfoBuilder<'a>
+    where
+        T: BindSparseInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
+        self
+    }
     pub fn build(self) -> BindSparseInfo {
         self.inner
     }
@@ -10691,6 +10815,7 @@ pub struct ImageCopyBuilder<'a> {
     inner: ImageCopy,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ImageCopyBuilderNext {}
 impl<'a> ::std::ops::Deref for ImageCopyBuilder<'a> {
     type Target = ImageCopy;
     fn deref(&self) -> &Self::Target {
@@ -10758,6 +10883,7 @@ pub struct ImageBlitBuilder<'a> {
     inner: ImageBlit,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ImageBlitBuilderNext {}
 impl<'a> ::std::ops::Deref for ImageBlitBuilder<'a> {
     type Target = ImageBlit;
     fn deref(&self) -> &Self::Target {
@@ -10813,6 +10939,7 @@ pub struct BufferImageCopyBuilder<'a> {
     inner: BufferImageCopy,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait BufferImageCopyBuilderNext {}
 impl<'a> ::std::ops::Deref for BufferImageCopyBuilder<'a> {
     type Target = BufferImageCopy;
     fn deref(&self) -> &Self::Target {
@@ -10872,6 +10999,7 @@ pub struct ImageResolveBuilder<'a> {
     inner: ImageResolve,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ImageResolveBuilderNext {}
 impl<'a> ::std::ops::Deref for ImageResolveBuilder<'a> {
     type Target = ImageResolve;
     fn deref(&self) -> &Self::Target {
@@ -10941,6 +11069,7 @@ pub struct ShaderModuleCreateInfoBuilder<'a> {
     inner: ShaderModuleCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ShaderModuleCreateInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for ShaderModuleCreateInfoBuilder<'a> {
     type Target = ShaderModuleCreateInfo;
     fn deref(&self) -> &Self::Target {
@@ -10955,6 +11084,13 @@ impl<'a> ShaderModuleCreateInfoBuilder<'a> {
     pub fn code(mut self, code: &'a [u32]) -> ShaderModuleCreateInfoBuilder<'a> {
         self.inner.code_size = code.len() * 4;
         self.inner.p_code = code.as_ptr() as *const u32;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> ShaderModuleCreateInfoBuilder<'a>
+    where
+        T: ShaderModuleCreateInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ShaderModuleCreateInfo {
@@ -10993,6 +11129,7 @@ pub struct DescriptorSetLayoutBindingBuilder<'a> {
     inner: DescriptorSetLayoutBinding,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DescriptorSetLayoutBindingBuilderNext {}
 impl<'a> ::std::ops::Deref for DescriptorSetLayoutBindingBuilder<'a> {
     type Target = DescriptorSetLayoutBinding;
     fn deref(&self) -> &Self::Target {
@@ -11069,6 +11206,7 @@ pub struct DescriptorSetLayoutCreateInfoBuilder<'a> {
     inner: DescriptorSetLayoutCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DescriptorSetLayoutCreateInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for DescriptorSetLayoutCreateInfoBuilder<'a> {
     type Target = DescriptorSetLayoutCreateInfo;
     fn deref(&self) -> &Self::Target {
@@ -11089,6 +11227,13 @@ impl<'a> DescriptorSetLayoutCreateInfoBuilder<'a> {
     ) -> DescriptorSetLayoutCreateInfoBuilder<'a> {
         self.inner.binding_count = bindings.len() as _;
         self.inner.p_bindings = bindings.as_ptr();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> DescriptorSetLayoutCreateInfoBuilder<'a>
+    where
+        T: DescriptorSetLayoutCreateInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DescriptorSetLayoutCreateInfo {
@@ -11113,6 +11258,7 @@ pub struct DescriptorPoolSizeBuilder<'a> {
     inner: DescriptorPoolSize,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DescriptorPoolSizeBuilderNext {}
 impl<'a> ::std::ops::Deref for DescriptorPoolSizeBuilder<'a> {
     type Target = DescriptorPoolSize;
     fn deref(&self) -> &Self::Target {
@@ -11166,6 +11312,7 @@ pub struct DescriptorPoolCreateInfoBuilder<'a> {
     inner: DescriptorPoolCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DescriptorPoolCreateInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for DescriptorPoolCreateInfoBuilder<'a> {
     type Target = DescriptorPoolCreateInfo;
     fn deref(&self) -> &Self::Target {
@@ -11190,6 +11337,13 @@ impl<'a> DescriptorPoolCreateInfoBuilder<'a> {
     ) -> DescriptorPoolCreateInfoBuilder<'a> {
         self.inner.pool_size_count = pool_sizes.len() as _;
         self.inner.p_pool_sizes = pool_sizes.as_ptr();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> DescriptorPoolCreateInfoBuilder<'a>
+    where
+        T: DescriptorPoolCreateInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DescriptorPoolCreateInfo {
@@ -11228,6 +11382,7 @@ pub struct DescriptorSetAllocateInfoBuilder<'a> {
     inner: DescriptorSetAllocateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DescriptorSetAllocateInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for DescriptorSetAllocateInfoBuilder<'a> {
     type Target = DescriptorSetAllocateInfo;
     fn deref(&self) -> &Self::Target {
@@ -11248,6 +11403,13 @@ impl<'a> DescriptorSetAllocateInfoBuilder<'a> {
     ) -> DescriptorSetAllocateInfoBuilder<'a> {
         self.inner.descriptor_set_count = set_layouts.len() as _;
         self.inner.p_set_layouts = set_layouts.as_ptr();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> DescriptorSetAllocateInfoBuilder<'a>
+    where
+        T: DescriptorSetAllocateInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DescriptorSetAllocateInfo {
@@ -11273,6 +11435,7 @@ pub struct SpecializationMapEntryBuilder<'a> {
     inner: SpecializationMapEntry,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait SpecializationMapEntryBuilderNext {}
 impl<'a> ::std::ops::Deref for SpecializationMapEntryBuilder<'a> {
     type Target = SpecializationMapEntry;
     fn deref(&self) -> &Self::Target {
@@ -11326,6 +11489,7 @@ pub struct SpecializationInfoBuilder<'a> {
     inner: SpecializationInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait SpecializationInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for SpecializationInfoBuilder<'a> {
     type Target = SpecializationInfo;
     fn deref(&self) -> &Self::Target {
@@ -11386,6 +11550,7 @@ pub struct PipelineShaderStageCreateInfoBuilder<'a> {
     inner: PipelineShaderStageCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PipelineShaderStageCreateInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for PipelineShaderStageCreateInfoBuilder<'a> {
     type Target = PipelineShaderStageCreateInfo;
     fn deref(&self) -> &Self::Target {
@@ -11417,6 +11582,13 @@ impl<'a> PipelineShaderStageCreateInfoBuilder<'a> {
         specialization_info: &'a SpecializationInfo,
     ) -> PipelineShaderStageCreateInfoBuilder<'a> {
         self.inner.p_specialization_info = specialization_info;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> PipelineShaderStageCreateInfoBuilder<'a>
+    where
+        T: PipelineShaderStageCreateInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> PipelineShaderStageCreateInfo {
@@ -11459,6 +11631,7 @@ pub struct ComputePipelineCreateInfoBuilder<'a> {
     inner: ComputePipelineCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ComputePipelineCreateInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for ComputePipelineCreateInfoBuilder<'a> {
     type Target = ComputePipelineCreateInfo;
     fn deref(&self) -> &Self::Target {
@@ -11495,6 +11668,13 @@ impl<'a> ComputePipelineCreateInfoBuilder<'a> {
         self.inner.base_pipeline_index = base_pipeline_index;
         self
     }
+    pub fn next<T>(mut self, next: &'a T) -> ComputePipelineCreateInfoBuilder<'a>
+    where
+        T: ComputePipelineCreateInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
+        self
+    }
     pub fn build(self) -> ComputePipelineCreateInfo {
         self.inner
     }
@@ -11518,6 +11698,7 @@ pub struct VertexInputBindingDescriptionBuilder<'a> {
     inner: VertexInputBindingDescription,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait VertexInputBindingDescriptionBuilderNext {}
 impl<'a> ::std::ops::Deref for VertexInputBindingDescriptionBuilder<'a> {
     type Target = VertexInputBindingDescription;
     fn deref(&self) -> &Self::Target {
@@ -11564,6 +11745,7 @@ pub struct VertexInputAttributeDescriptionBuilder<'a> {
     inner: VertexInputAttributeDescription,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait VertexInputAttributeDescriptionBuilderNext {}
 impl<'a> ::std::ops::Deref for VertexInputAttributeDescriptionBuilder<'a> {
     type Target = VertexInputAttributeDescription;
     fn deref(&self) -> &Self::Target {
@@ -11627,6 +11809,7 @@ pub struct PipelineVertexInputStateCreateInfoBuilder<'a> {
     inner: PipelineVertexInputStateCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PipelineVertexInputStateCreateInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for PipelineVertexInputStateCreateInfoBuilder<'a> {
     type Target = PipelineVertexInputStateCreateInfo;
     fn deref(&self) -> &Self::Target {
@@ -11655,6 +11838,13 @@ impl<'a> PipelineVertexInputStateCreateInfoBuilder<'a> {
     ) -> PipelineVertexInputStateCreateInfoBuilder<'a> {
         self.inner.vertex_attribute_description_count = vertex_attribute_descriptions.len() as _;
         self.inner.p_vertex_attribute_descriptions = vertex_attribute_descriptions.as_ptr();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> PipelineVertexInputStateCreateInfoBuilder<'a>
+    where
+        T: PipelineVertexInputStateCreateInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> PipelineVertexInputStateCreateInfo {
@@ -11693,6 +11883,7 @@ pub struct PipelineInputAssemblyStateCreateInfoBuilder<'a> {
     inner: PipelineInputAssemblyStateCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PipelineInputAssemblyStateCreateInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for PipelineInputAssemblyStateCreateInfoBuilder<'a> {
     type Target = PipelineInputAssemblyStateCreateInfo;
     fn deref(&self) -> &Self::Target {
@@ -11719,6 +11910,13 @@ impl<'a> PipelineInputAssemblyStateCreateInfoBuilder<'a> {
         primitive_restart_enable: bool,
     ) -> PipelineInputAssemblyStateCreateInfoBuilder<'a> {
         self.inner.primitive_restart_enable = primitive_restart_enable.into();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> PipelineInputAssemblyStateCreateInfoBuilder<'a>
+    where
+        T: PipelineInputAssemblyStateCreateInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> PipelineInputAssemblyStateCreateInfo {
@@ -11755,6 +11953,7 @@ pub struct PipelineTessellationStateCreateInfoBuilder<'a> {
     inner: PipelineTessellationStateCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PipelineTessellationStateCreateInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for PipelineTessellationStateCreateInfoBuilder<'a> {
     type Target = PipelineTessellationStateCreateInfo;
     fn deref(&self) -> &Self::Target {
@@ -11774,6 +11973,13 @@ impl<'a> PipelineTessellationStateCreateInfoBuilder<'a> {
         patch_control_points: u32,
     ) -> PipelineTessellationStateCreateInfoBuilder<'a> {
         self.inner.patch_control_points = patch_control_points;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> PipelineTessellationStateCreateInfoBuilder<'a>
+    where
+        T: PipelineTessellationStateCreateInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> PipelineTessellationStateCreateInfo {
@@ -11816,6 +12022,7 @@ pub struct PipelineViewportStateCreateInfoBuilder<'a> {
     inner: PipelineViewportStateCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PipelineViewportStateCreateInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for PipelineViewportStateCreateInfoBuilder<'a> {
     type Target = PipelineViewportStateCreateInfo;
     fn deref(&self) -> &Self::Target {
@@ -11858,6 +12065,13 @@ impl<'a> PipelineViewportStateCreateInfoBuilder<'a> {
     ) -> PipelineViewportStateCreateInfoBuilder<'a> {
         self.inner.scissor_count = scissors.len() as _;
         self.inner.p_scissors = scissors.as_ptr();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> PipelineViewportStateCreateInfoBuilder<'a>
+    where
+        T: PipelineViewportStateCreateInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> PipelineViewportStateCreateInfo {
@@ -11912,6 +12126,7 @@ pub struct PipelineRasterizationStateCreateInfoBuilder<'a> {
     inner: PipelineRasterizationStateCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PipelineRasterizationStateCreateInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for PipelineRasterizationStateCreateInfoBuilder<'a> {
     type Target = PipelineRasterizationStateCreateInfo;
     fn deref(&self) -> &Self::Target {
@@ -11996,6 +12211,13 @@ impl<'a> PipelineRasterizationStateCreateInfoBuilder<'a> {
         self.inner.line_width = line_width;
         self
     }
+    pub fn next<T>(mut self, next: &'a T) -> PipelineRasterizationStateCreateInfoBuilder<'a>
+    where
+        T: PipelineRasterizationStateCreateInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
+        self
+    }
     pub fn build(self) -> PipelineRasterizationStateCreateInfo {
         self.inner
     }
@@ -12040,6 +12262,7 @@ pub struct PipelineMultisampleStateCreateInfoBuilder<'a> {
     inner: PipelineMultisampleStateCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PipelineMultisampleStateCreateInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for PipelineMultisampleStateCreateInfoBuilder<'a> {
     type Target = PipelineMultisampleStateCreateInfo;
     fn deref(&self) -> &Self::Target {
@@ -12096,6 +12319,13 @@ impl<'a> PipelineMultisampleStateCreateInfoBuilder<'a> {
         self.inner.alpha_to_one_enable = alpha_to_one_enable.into();
         self
     }
+    pub fn next<T>(mut self, next: &'a T) -> PipelineMultisampleStateCreateInfoBuilder<'a>
+    where
+        T: PipelineMultisampleStateCreateInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
+        self
+    }
     pub fn build(self) -> PipelineMultisampleStateCreateInfo {
         self.inner
     }
@@ -12124,6 +12354,7 @@ pub struct PipelineColorBlendAttachmentStateBuilder<'a> {
     inner: PipelineColorBlendAttachmentState,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PipelineColorBlendAttachmentStateBuilderNext {}
 impl<'a> ::std::ops::Deref for PipelineColorBlendAttachmentStateBuilder<'a> {
     type Target = PipelineColorBlendAttachmentState;
     fn deref(&self) -> &Self::Target {
@@ -12229,6 +12460,7 @@ pub struct PipelineColorBlendStateCreateInfoBuilder<'a> {
     inner: PipelineColorBlendStateCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PipelineColorBlendStateCreateInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for PipelineColorBlendStateCreateInfoBuilder<'a> {
     type Target = PipelineColorBlendStateCreateInfo;
     fn deref(&self) -> &Self::Target {
@@ -12269,6 +12501,13 @@ impl<'a> PipelineColorBlendStateCreateInfoBuilder<'a> {
         self.inner.blend_constants = blend_constants;
         self
     }
+    pub fn next<T>(mut self, next: &'a T) -> PipelineColorBlendStateCreateInfoBuilder<'a>
+    where
+        T: PipelineColorBlendStateCreateInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
+        self
+    }
     pub fn build(self) -> PipelineColorBlendStateCreateInfo {
         self.inner
     }
@@ -12305,6 +12544,7 @@ pub struct PipelineDynamicStateCreateInfoBuilder<'a> {
     inner: PipelineDynamicStateCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PipelineDynamicStateCreateInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for PipelineDynamicStateCreateInfoBuilder<'a> {
     type Target = PipelineDynamicStateCreateInfo;
     fn deref(&self) -> &Self::Target {
@@ -12325,6 +12565,13 @@ impl<'a> PipelineDynamicStateCreateInfoBuilder<'a> {
     ) -> PipelineDynamicStateCreateInfoBuilder<'a> {
         self.inner.dynamic_state_count = dynamic_states.len() as _;
         self.inner.p_dynamic_states = dynamic_states.as_ptr();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> PipelineDynamicStateCreateInfoBuilder<'a>
+    where
+        T: PipelineDynamicStateCreateInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> PipelineDynamicStateCreateInfo {
@@ -12354,6 +12601,7 @@ pub struct StencilOpStateBuilder<'a> {
     inner: StencilOpState,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait StencilOpStateBuilderNext {}
 impl<'a> ::std::ops::Deref for StencilOpStateBuilder<'a> {
     type Target = StencilOpState;
     fn deref(&self) -> &Self::Target {
@@ -12439,6 +12687,7 @@ pub struct PipelineDepthStencilStateCreateInfoBuilder<'a> {
     inner: PipelineDepthStencilStateCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PipelineDepthStencilStateCreateInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for PipelineDepthStencilStateCreateInfoBuilder<'a> {
     type Target = PipelineDepthStencilStateCreateInfo;
     fn deref(&self) -> &Self::Target {
@@ -12513,6 +12762,13 @@ impl<'a> PipelineDepthStencilStateCreateInfoBuilder<'a> {
         self.inner.max_depth_bounds = max_depth_bounds;
         self
     }
+    pub fn next<T>(mut self, next: &'a T) -> PipelineDepthStencilStateCreateInfoBuilder<'a>
+    where
+        T: PipelineDepthStencilStateCreateInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
+        self
+    }
     pub fn build(self) -> PipelineDepthStencilStateCreateInfo {
         self.inner
     }
@@ -12577,6 +12833,7 @@ pub struct GraphicsPipelineCreateInfoBuilder<'a> {
     inner: GraphicsPipelineCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait GraphicsPipelineCreateInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for GraphicsPipelineCreateInfoBuilder<'a> {
     type Target = GraphicsPipelineCreateInfo;
     fn deref(&self) -> &Self::Target {
@@ -12685,6 +12942,13 @@ impl<'a> GraphicsPipelineCreateInfoBuilder<'a> {
         self.inner.base_pipeline_index = base_pipeline_index;
         self
     }
+    pub fn next<T>(mut self, next: &'a T) -> GraphicsPipelineCreateInfoBuilder<'a>
+    where
+        T: GraphicsPipelineCreateInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
+        self
+    }
     pub fn build(self) -> GraphicsPipelineCreateInfo {
         self.inner
     }
@@ -12721,6 +12985,7 @@ pub struct PipelineCacheCreateInfoBuilder<'a> {
     inner: PipelineCacheCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PipelineCacheCreateInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for PipelineCacheCreateInfoBuilder<'a> {
     type Target = PipelineCacheCreateInfo;
     fn deref(&self) -> &Self::Target {
@@ -12738,6 +13003,13 @@ impl<'a> PipelineCacheCreateInfoBuilder<'a> {
     ) -> PipelineCacheCreateInfoBuilder<'a> {
         self.inner.initial_data_size = initial_data.len() as _;
         self.inner.p_initial_data = initial_data.as_ptr();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> PipelineCacheCreateInfoBuilder<'a>
+    where
+        T: PipelineCacheCreateInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> PipelineCacheCreateInfo {
@@ -12763,6 +13035,7 @@ pub struct PushConstantRangeBuilder<'a> {
     inner: PushConstantRange,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PushConstantRangeBuilderNext {}
 impl<'a> ::std::ops::Deref for PushConstantRangeBuilder<'a> {
     type Target = PushConstantRange;
     fn deref(&self) -> &Self::Target {
@@ -12822,6 +13095,7 @@ pub struct PipelineLayoutCreateInfoBuilder<'a> {
     inner: PipelineLayoutCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PipelineLayoutCreateInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for PipelineLayoutCreateInfoBuilder<'a> {
     type Target = PipelineLayoutCreateInfo;
     fn deref(&self) -> &Self::Target {
@@ -12850,6 +13124,13 @@ impl<'a> PipelineLayoutCreateInfoBuilder<'a> {
     ) -> PipelineLayoutCreateInfoBuilder<'a> {
         self.inner.push_constant_range_count = push_constant_ranges.len() as _;
         self.inner.p_push_constant_ranges = push_constant_ranges.as_ptr();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> PipelineLayoutCreateInfoBuilder<'a>
+    where
+        T: PipelineLayoutCreateInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> PipelineLayoutCreateInfo {
@@ -12914,6 +13195,7 @@ pub struct SamplerCreateInfoBuilder<'a> {
     inner: SamplerCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait SamplerCreateInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for SamplerCreateInfoBuilder<'a> {
     type Target = SamplerCreateInfo;
     fn deref(&self) -> &Self::Target {
@@ -12997,6 +13279,13 @@ impl<'a> SamplerCreateInfoBuilder<'a> {
         self.inner.unnormalized_coordinates = unnormalized_coordinates.into();
         self
     }
+    pub fn next<T>(mut self, next: &'a T) -> SamplerCreateInfoBuilder<'a>
+    where
+        T: SamplerCreateInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
+        self
+    }
     pub fn build(self) -> SamplerCreateInfo {
         self.inner
     }
@@ -13031,6 +13320,7 @@ pub struct CommandPoolCreateInfoBuilder<'a> {
     inner: CommandPoolCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait CommandPoolCreateInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for CommandPoolCreateInfoBuilder<'a> {
     type Target = CommandPoolCreateInfo;
     fn deref(&self) -> &Self::Target {
@@ -13047,6 +13337,13 @@ impl<'a> CommandPoolCreateInfoBuilder<'a> {
         queue_family_index: u32,
     ) -> CommandPoolCreateInfoBuilder<'a> {
         self.inner.queue_family_index = queue_family_index;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> CommandPoolCreateInfoBuilder<'a>
+    where
+        T: CommandPoolCreateInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> CommandPoolCreateInfo {
@@ -13085,6 +13382,7 @@ pub struct CommandBufferAllocateInfoBuilder<'a> {
     inner: CommandBufferAllocateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait CommandBufferAllocateInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for CommandBufferAllocateInfoBuilder<'a> {
     type Target = CommandBufferAllocateInfo;
     fn deref(&self) -> &Self::Target {
@@ -13108,6 +13406,13 @@ impl<'a> CommandBufferAllocateInfoBuilder<'a> {
         command_buffer_count: u32,
     ) -> CommandBufferAllocateInfoBuilder<'a> {
         self.inner.command_buffer_count = command_buffer_count;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> CommandBufferAllocateInfoBuilder<'a>
+    where
+        T: CommandBufferAllocateInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> CommandBufferAllocateInfo {
@@ -13152,6 +13457,7 @@ pub struct CommandBufferInheritanceInfoBuilder<'a> {
     inner: CommandBufferInheritanceInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait CommandBufferInheritanceInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for CommandBufferInheritanceInfoBuilder<'a> {
     type Target = CommandBufferInheritanceInfo;
     fn deref(&self) -> &Self::Target {
@@ -13198,6 +13504,13 @@ impl<'a> CommandBufferInheritanceInfoBuilder<'a> {
         self.inner.pipeline_statistics = pipeline_statistics;
         self
     }
+    pub fn next<T>(mut self, next: &'a T) -> CommandBufferInheritanceInfoBuilder<'a>
+    where
+        T: CommandBufferInheritanceInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
+        self
+    }
     pub fn build(self) -> CommandBufferInheritanceInfo {
         self.inner
     }
@@ -13232,6 +13545,7 @@ pub struct CommandBufferBeginInfoBuilder<'a> {
     inner: CommandBufferBeginInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait CommandBufferBeginInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for CommandBufferBeginInfoBuilder<'a> {
     type Target = CommandBufferBeginInfo;
     fn deref(&self) -> &Self::Target {
@@ -13248,6 +13562,13 @@ impl<'a> CommandBufferBeginInfoBuilder<'a> {
         inheritance_info: &'a CommandBufferInheritanceInfo,
     ) -> CommandBufferBeginInfoBuilder<'a> {
         self.inner.p_inheritance_info = inheritance_info;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> CommandBufferBeginInfoBuilder<'a>
+    where
+        T: CommandBufferBeginInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> CommandBufferBeginInfo {
@@ -13303,6 +13624,7 @@ pub struct RenderPassBeginInfoBuilder<'a> {
     inner: RenderPassBeginInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait RenderPassBeginInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for RenderPassBeginInfoBuilder<'a> {
     type Target = RenderPassBeginInfo;
     fn deref(&self) -> &Self::Target {
@@ -13328,6 +13650,13 @@ impl<'a> RenderPassBeginInfoBuilder<'a> {
     ) -> RenderPassBeginInfoBuilder<'a> {
         self.inner.clear_value_count = clear_values.len() as _;
         self.inner.p_clear_values = clear_values.as_ptr();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> RenderPassBeginInfoBuilder<'a>
+    where
+        T: RenderPassBeginInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> RenderPassBeginInfo {
@@ -13364,6 +13693,7 @@ pub struct ClearDepthStencilValueBuilder<'a> {
     inner: ClearDepthStencilValue,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ClearDepthStencilValueBuilderNext {}
 impl<'a> ::std::ops::Deref for ClearDepthStencilValueBuilder<'a> {
     type Target = ClearDepthStencilValue;
     fn deref(&self) -> &Self::Target {
@@ -13422,6 +13752,7 @@ pub struct ClearAttachmentBuilder<'a> {
     inner: ClearAttachment,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ClearAttachmentBuilderNext {}
 impl<'a> ::std::ops::Deref for ClearAttachmentBuilder<'a> {
     type Target = ClearAttachment;
     fn deref(&self) -> &Self::Target {
@@ -13470,6 +13801,7 @@ pub struct AttachmentDescriptionBuilder<'a> {
     inner: AttachmentDescription,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait AttachmentDescriptionBuilderNext {}
 impl<'a> ::std::ops::Deref for AttachmentDescriptionBuilder<'a> {
     type Target = AttachmentDescription;
     fn deref(&self) -> &Self::Target {
@@ -13544,6 +13876,7 @@ pub struct AttachmentReferenceBuilder<'a> {
     inner: AttachmentReference,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait AttachmentReferenceBuilderNext {}
 impl<'a> ::std::ops::Deref for AttachmentReferenceBuilder<'a> {
     type Target = AttachmentReference;
     fn deref(&self) -> &Self::Target {
@@ -13605,6 +13938,7 @@ pub struct SubpassDescriptionBuilder<'a> {
     inner: SubpassDescription,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait SubpassDescriptionBuilderNext {}
 impl<'a> ::std::ops::Deref for SubpassDescriptionBuilder<'a> {
     type Target = SubpassDescription;
     fn deref(&self) -> &Self::Target {
@@ -13689,6 +14023,7 @@ pub struct SubpassDependencyBuilder<'a> {
     inner: SubpassDependency,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait SubpassDependencyBuilderNext {}
 impl<'a> ::std::ops::Deref for SubpassDependencyBuilder<'a> {
     type Target = SubpassDependency;
     fn deref(&self) -> &Self::Target {
@@ -13777,6 +14112,7 @@ pub struct RenderPassCreateInfoBuilder<'a> {
     inner: RenderPassCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait RenderPassCreateInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for RenderPassCreateInfoBuilder<'a> {
     type Target = RenderPassCreateInfo;
     fn deref(&self) -> &Self::Target {
@@ -13812,6 +14148,13 @@ impl<'a> RenderPassCreateInfoBuilder<'a> {
         self.inner.p_dependencies = dependencies.as_ptr();
         self
     }
+    pub fn next<T>(mut self, next: &'a T) -> RenderPassCreateInfoBuilder<'a>
+    where
+        T: RenderPassCreateInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
+        self
+    }
     pub fn build(self) -> RenderPassCreateInfo {
         self.inner
     }
@@ -13844,6 +14187,7 @@ pub struct EventCreateInfoBuilder<'a> {
     inner: EventCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait EventCreateInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for EventCreateInfoBuilder<'a> {
     type Target = EventCreateInfo;
     fn deref(&self) -> &Self::Target {
@@ -13853,6 +14197,13 @@ impl<'a> ::std::ops::Deref for EventCreateInfoBuilder<'a> {
 impl<'a> EventCreateInfoBuilder<'a> {
     pub fn flags(mut self, flags: EventCreateFlags) -> EventCreateInfoBuilder<'a> {
         self.inner.flags = flags;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> EventCreateInfoBuilder<'a>
+    where
+        T: EventCreateInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> EventCreateInfo {
@@ -13887,6 +14238,7 @@ pub struct FenceCreateInfoBuilder<'a> {
     inner: FenceCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait FenceCreateInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for FenceCreateInfoBuilder<'a> {
     type Target = FenceCreateInfo;
     fn deref(&self) -> &Self::Target {
@@ -13896,6 +14248,13 @@ impl<'a> ::std::ops::Deref for FenceCreateInfoBuilder<'a> {
 impl<'a> FenceCreateInfoBuilder<'a> {
     pub fn flags(mut self, flags: FenceCreateFlags) -> FenceCreateInfoBuilder<'a> {
         self.inner.flags = flags;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> FenceCreateInfoBuilder<'a>
+    where
+        T: FenceCreateInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> FenceCreateInfo {
@@ -13973,6 +14332,7 @@ pub struct PhysicalDeviceFeaturesBuilder<'a> {
     inner: PhysicalDeviceFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceFeaturesBuilderNext {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceFeaturesBuilder<'a> {
     type Target = PhysicalDeviceFeatures;
     fn deref(&self) -> &Self::Target {
@@ -14353,6 +14713,7 @@ pub struct PhysicalDeviceSparsePropertiesBuilder<'a> {
     inner: PhysicalDeviceSparseProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceSparsePropertiesBuilderNext {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceSparsePropertiesBuilder<'a> {
     type Target = PhysicalDeviceSparseProperties;
     fn deref(&self) -> &Self::Target {
@@ -14634,6 +14995,7 @@ pub struct PhysicalDeviceLimitsBuilder<'a> {
     inner: PhysicalDeviceLimits,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceLimitsBuilderNext {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceLimitsBuilder<'a> {
     type Target = PhysicalDeviceLimits;
     fn deref(&self) -> &Self::Target {
@@ -15418,6 +15780,7 @@ pub struct SemaphoreCreateInfoBuilder<'a> {
     inner: SemaphoreCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait SemaphoreCreateInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for SemaphoreCreateInfoBuilder<'a> {
     type Target = SemaphoreCreateInfo;
     fn deref(&self) -> &Self::Target {
@@ -15427,6 +15790,13 @@ impl<'a> ::std::ops::Deref for SemaphoreCreateInfoBuilder<'a> {
 impl<'a> SemaphoreCreateInfoBuilder<'a> {
     pub fn flags(mut self, flags: SemaphoreCreateFlags) -> SemaphoreCreateInfoBuilder<'a> {
         self.inner.flags = flags;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> SemaphoreCreateInfoBuilder<'a>
+    where
+        T: SemaphoreCreateInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> SemaphoreCreateInfo {
@@ -15467,6 +15837,7 @@ pub struct QueryPoolCreateInfoBuilder<'a> {
     inner: QueryPoolCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait QueryPoolCreateInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for QueryPoolCreateInfoBuilder<'a> {
     type Target = QueryPoolCreateInfo;
     fn deref(&self) -> &Self::Target {
@@ -15491,6 +15862,13 @@ impl<'a> QueryPoolCreateInfoBuilder<'a> {
         pipeline_statistics: QueryPipelineStatisticFlags,
     ) -> QueryPoolCreateInfoBuilder<'a> {
         self.inner.pipeline_statistics = pipeline_statistics;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> QueryPoolCreateInfoBuilder<'a>
+    where
+        T: QueryPoolCreateInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> QueryPoolCreateInfo {
@@ -15537,6 +15915,7 @@ pub struct FramebufferCreateInfoBuilder<'a> {
     inner: FramebufferCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait FramebufferCreateInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for FramebufferCreateInfoBuilder<'a> {
     type Target = FramebufferCreateInfo;
     fn deref(&self) -> &Self::Target {
@@ -15569,6 +15948,13 @@ impl<'a> FramebufferCreateInfoBuilder<'a> {
         self.inner.layers = layers;
         self
     }
+    pub fn next<T>(mut self, next: &'a T) -> FramebufferCreateInfoBuilder<'a>
+    where
+        T: FramebufferCreateInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
+        self
+    }
     pub fn build(self) -> FramebufferCreateInfo {
         self.inner
     }
@@ -15593,6 +15979,7 @@ pub struct DrawIndirectCommandBuilder<'a> {
     inner: DrawIndirectCommand,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DrawIndirectCommandBuilderNext {}
 impl<'a> ::std::ops::Deref for DrawIndirectCommandBuilder<'a> {
     type Target = DrawIndirectCommand;
     fn deref(&self) -> &Self::Target {
@@ -15641,6 +16028,7 @@ pub struct DrawIndexedIndirectCommandBuilder<'a> {
     inner: DrawIndexedIndirectCommand,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DrawIndexedIndirectCommandBuilderNext {}
 impl<'a> ::std::ops::Deref for DrawIndexedIndirectCommandBuilder<'a> {
     type Target = DrawIndexedIndirectCommand;
     fn deref(&self) -> &Self::Target {
@@ -15691,6 +16079,7 @@ pub struct DispatchIndirectCommandBuilder<'a> {
     inner: DispatchIndirectCommand,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DispatchIndirectCommandBuilderNext {}
 impl<'a> ::std::ops::Deref for DispatchIndirectCommandBuilder<'a> {
     type Target = DispatchIndirectCommand;
     fn deref(&self) -> &Self::Target {
@@ -15754,6 +16143,7 @@ pub struct SubmitInfoBuilder<'a> {
     inner: SubmitInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait SubmitInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for SubmitInfoBuilder<'a> {
     type Target = SubmitInfo;
     fn deref(&self) -> &Self::Target {
@@ -15788,6 +16178,13 @@ impl<'a> SubmitInfoBuilder<'a> {
     ) -> SubmitInfoBuilder<'a> {
         self.inner.signal_semaphore_count = signal_semaphores.len() as _;
         self.inner.p_signal_semaphores = signal_semaphores.as_ptr();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> SubmitInfoBuilder<'a>
+    where
+        T: SubmitInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> SubmitInfo {
@@ -15830,6 +16227,7 @@ pub struct DisplayPropertiesKHRBuilder<'a> {
     inner: DisplayPropertiesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DisplayPropertiesKHRBuilderNext {}
 impl<'a> ::std::ops::Deref for DisplayPropertiesKHRBuilder<'a> {
     type Target = DisplayPropertiesKHR;
     fn deref(&self) -> &Self::Target {
@@ -15902,6 +16300,7 @@ pub struct DisplayPlanePropertiesKHRBuilder<'a> {
     inner: DisplayPlanePropertiesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DisplayPlanePropertiesKHRBuilderNext {}
 impl<'a> ::std::ops::Deref for DisplayPlanePropertiesKHRBuilder<'a> {
     type Target = DisplayPlanePropertiesKHR;
     fn deref(&self) -> &Self::Target {
@@ -15945,6 +16344,7 @@ pub struct DisplayModeParametersKHRBuilder<'a> {
     inner: DisplayModeParametersKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DisplayModeParametersKHRBuilderNext {}
 impl<'a> ::std::ops::Deref for DisplayModeParametersKHRBuilder<'a> {
     type Target = DisplayModeParametersKHR;
     fn deref(&self) -> &Self::Target {
@@ -15985,6 +16385,7 @@ pub struct DisplayModePropertiesKHRBuilder<'a> {
     inner: DisplayModePropertiesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DisplayModePropertiesKHRBuilderNext {}
 impl<'a> ::std::ops::Deref for DisplayModePropertiesKHRBuilder<'a> {
     type Target = DisplayModePropertiesKHR;
     fn deref(&self) -> &Self::Target {
@@ -16040,6 +16441,7 @@ pub struct DisplayModeCreateInfoKHRBuilder<'a> {
     inner: DisplayModeCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DisplayModeCreateInfoKHRBuilderNext {}
 impl<'a> ::std::ops::Deref for DisplayModeCreateInfoKHRBuilder<'a> {
     type Target = DisplayModeCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -16059,6 +16461,13 @@ impl<'a> DisplayModeCreateInfoKHRBuilder<'a> {
         parameters: DisplayModeParametersKHR,
     ) -> DisplayModeCreateInfoKHRBuilder<'a> {
         self.inner.parameters = parameters;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> DisplayModeCreateInfoKHRBuilder<'a>
+    where
+        T: DisplayModeCreateInfoKHRBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DisplayModeCreateInfoKHR {
@@ -16090,6 +16499,7 @@ pub struct DisplayPlaneCapabilitiesKHRBuilder<'a> {
     inner: DisplayPlaneCapabilitiesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DisplayPlaneCapabilitiesKHRBuilderNext {}
 impl<'a> ::std::ops::Deref for DisplayPlaneCapabilitiesKHRBuilder<'a> {
     type Target = DisplayPlaneCapabilitiesKHR;
     fn deref(&self) -> &Self::Target {
@@ -16206,6 +16616,7 @@ pub struct DisplaySurfaceCreateInfoKHRBuilder<'a> {
     inner: DisplaySurfaceCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DisplaySurfaceCreateInfoKHRBuilderNext {}
 impl<'a> ::std::ops::Deref for DisplaySurfaceCreateInfoKHRBuilder<'a> {
     type Target = DisplaySurfaceCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -16263,6 +16674,13 @@ impl<'a> DisplaySurfaceCreateInfoKHRBuilder<'a> {
         self.inner.image_extent = image_extent;
         self
     }
+    pub fn next<T>(mut self, next: &'a T) -> DisplaySurfaceCreateInfoKHRBuilder<'a>
+    where
+        T: DisplaySurfaceCreateInfoKHRBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
+        self
+    }
     pub fn build(self) -> DisplaySurfaceCreateInfoKHR {
         self.inner
     }
@@ -16299,6 +16717,8 @@ pub struct DisplayPresentInfoKHRBuilder<'a> {
     inner: DisplayPresentInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DisplayPresentInfoKHRBuilderNext {}
+unsafe impl PresentInfoKHRBuilderNext for DisplayPresentInfoKHRBuilderNext {}
 impl<'a> ::std::ops::Deref for DisplayPresentInfoKHRBuilder<'a> {
     type Target = DisplayPresentInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -16316,6 +16736,13 @@ impl<'a> DisplayPresentInfoKHRBuilder<'a> {
     }
     pub fn persistent(mut self, persistent: bool) -> DisplayPresentInfoKHRBuilder<'a> {
         self.inner.persistent = persistent.into();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> DisplayPresentInfoKHRBuilder<'a>
+    where
+        T: DisplayPresentInfoKHRBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DisplayPresentInfoKHR {
@@ -16348,6 +16775,7 @@ pub struct SurfaceCapabilitiesKHRBuilder<'a> {
     inner: SurfaceCapabilitiesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait SurfaceCapabilitiesKHRBuilderNext {}
 impl<'a> ::std::ops::Deref for SurfaceCapabilitiesKHRBuilder<'a> {
     type Target = SurfaceCapabilitiesKHR;
     fn deref(&self) -> &Self::Target {
@@ -16450,6 +16878,7 @@ pub struct AndroidSurfaceCreateInfoKHRBuilder<'a> {
     inner: AndroidSurfaceCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait AndroidSurfaceCreateInfoKHRBuilderNext {}
 impl<'a> ::std::ops::Deref for AndroidSurfaceCreateInfoKHRBuilder<'a> {
     type Target = AndroidSurfaceCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -16466,6 +16895,13 @@ impl<'a> AndroidSurfaceCreateInfoKHRBuilder<'a> {
     }
     pub fn window(mut self, window: *mut ANativeWindow) -> AndroidSurfaceCreateInfoKHRBuilder<'a> {
         self.inner.window = window;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> AndroidSurfaceCreateInfoKHRBuilder<'a>
+    where
+        T: AndroidSurfaceCreateInfoKHRBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> AndroidSurfaceCreateInfoKHR {
@@ -16502,6 +16938,7 @@ pub struct ViSurfaceCreateInfoNNBuilder<'a> {
     inner: ViSurfaceCreateInfoNN,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ViSurfaceCreateInfoNNBuilderNext {}
 impl<'a> ::std::ops::Deref for ViSurfaceCreateInfoNNBuilder<'a> {
     type Target = ViSurfaceCreateInfoNN;
     fn deref(&self) -> &Self::Target {
@@ -16515,6 +16952,13 @@ impl<'a> ViSurfaceCreateInfoNNBuilder<'a> {
     }
     pub fn window(mut self, window: *mut c_void) -> ViSurfaceCreateInfoNNBuilder<'a> {
         self.inner.window = window;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> ViSurfaceCreateInfoNNBuilder<'a>
+    where
+        T: ViSurfaceCreateInfoNNBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ViSurfaceCreateInfoNN {
@@ -16553,6 +16997,7 @@ pub struct WaylandSurfaceCreateInfoKHRBuilder<'a> {
     inner: WaylandSurfaceCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait WaylandSurfaceCreateInfoKHRBuilderNext {}
 impl<'a> ::std::ops::Deref for WaylandSurfaceCreateInfoKHRBuilder<'a> {
     type Target = WaylandSurfaceCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -16573,6 +17018,13 @@ impl<'a> WaylandSurfaceCreateInfoKHRBuilder<'a> {
     }
     pub fn surface(mut self, surface: *mut wl_surface) -> WaylandSurfaceCreateInfoKHRBuilder<'a> {
         self.inner.surface = surface;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> WaylandSurfaceCreateInfoKHRBuilder<'a>
+    where
+        T: WaylandSurfaceCreateInfoKHRBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> WaylandSurfaceCreateInfoKHR {
@@ -16611,6 +17063,7 @@ pub struct Win32SurfaceCreateInfoKHRBuilder<'a> {
     inner: Win32SurfaceCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait Win32SurfaceCreateInfoKHRBuilderNext {}
 impl<'a> ::std::ops::Deref for Win32SurfaceCreateInfoKHRBuilder<'a> {
     type Target = Win32SurfaceCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -16631,6 +17084,13 @@ impl<'a> Win32SurfaceCreateInfoKHRBuilder<'a> {
     }
     pub fn hwnd(mut self, hwnd: HWND) -> Win32SurfaceCreateInfoKHRBuilder<'a> {
         self.inner.hwnd = hwnd;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> Win32SurfaceCreateInfoKHRBuilder<'a>
+    where
+        T: Win32SurfaceCreateInfoKHRBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> Win32SurfaceCreateInfoKHR {
@@ -16669,6 +17129,7 @@ pub struct XlibSurfaceCreateInfoKHRBuilder<'a> {
     inner: XlibSurfaceCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait XlibSurfaceCreateInfoKHRBuilderNext {}
 impl<'a> ::std::ops::Deref for XlibSurfaceCreateInfoKHRBuilder<'a> {
     type Target = XlibSurfaceCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -16689,6 +17150,13 @@ impl<'a> XlibSurfaceCreateInfoKHRBuilder<'a> {
     }
     pub fn window(mut self, window: Window) -> XlibSurfaceCreateInfoKHRBuilder<'a> {
         self.inner.window = window;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> XlibSurfaceCreateInfoKHRBuilder<'a>
+    where
+        T: XlibSurfaceCreateInfoKHRBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> XlibSurfaceCreateInfoKHR {
@@ -16727,6 +17195,7 @@ pub struct XcbSurfaceCreateInfoKHRBuilder<'a> {
     inner: XcbSurfaceCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait XcbSurfaceCreateInfoKHRBuilderNext {}
 impl<'a> ::std::ops::Deref for XcbSurfaceCreateInfoKHRBuilder<'a> {
     type Target = XcbSurfaceCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -16747,6 +17216,13 @@ impl<'a> XcbSurfaceCreateInfoKHRBuilder<'a> {
     }
     pub fn window(mut self, window: xcb_window_t) -> XcbSurfaceCreateInfoKHRBuilder<'a> {
         self.inner.window = window;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> XcbSurfaceCreateInfoKHRBuilder<'a>
+    where
+        T: XcbSurfaceCreateInfoKHRBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> XcbSurfaceCreateInfoKHR {
@@ -16783,6 +17259,7 @@ pub struct ImagePipeSurfaceCreateInfoFUCHSIABuilder<'a> {
     inner: ImagePipeSurfaceCreateInfoFUCHSIA,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ImagePipeSurfaceCreateInfoFUCHSIABuilderNext {}
 impl<'a> ::std::ops::Deref for ImagePipeSurfaceCreateInfoFUCHSIABuilder<'a> {
     type Target = ImagePipeSurfaceCreateInfoFUCHSIA;
     fn deref(&self) -> &Self::Target {
@@ -16802,6 +17279,13 @@ impl<'a> ImagePipeSurfaceCreateInfoFUCHSIABuilder<'a> {
         image_pipe_handle: zx_handle_t,
     ) -> ImagePipeSurfaceCreateInfoFUCHSIABuilder<'a> {
         self.inner.image_pipe_handle = image_pipe_handle;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> ImagePipeSurfaceCreateInfoFUCHSIABuilder<'a>
+    where
+        T: ImagePipeSurfaceCreateInfoFUCHSIABuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ImagePipeSurfaceCreateInfoFUCHSIA {
@@ -16826,6 +17310,7 @@ pub struct SurfaceFormatKHRBuilder<'a> {
     inner: SurfaceFormatKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait SurfaceFormatKHRBuilderNext {}
 impl<'a> ::std::ops::Deref for SurfaceFormatKHRBuilder<'a> {
     type Target = SurfaceFormatKHR;
     fn deref(&self) -> &Self::Target {
@@ -16903,6 +17388,7 @@ pub struct SwapchainCreateInfoKHRBuilder<'a> {
     inner: SwapchainCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait SwapchainCreateInfoKHRBuilderNext {}
 impl<'a> ::std::ops::Deref for SwapchainCreateInfoKHRBuilder<'a> {
     type Target = SwapchainCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -16998,6 +17484,13 @@ impl<'a> SwapchainCreateInfoKHRBuilder<'a> {
         self.inner.old_swapchain = old_swapchain;
         self
     }
+    pub fn next<T>(mut self, next: &'a T) -> SwapchainCreateInfoKHRBuilder<'a>
+    where
+        T: SwapchainCreateInfoKHRBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
+        self
+    }
     pub fn build(self) -> SwapchainCreateInfoKHR {
         self.inner
     }
@@ -17040,6 +17533,7 @@ pub struct PresentInfoKHRBuilder<'a> {
     inner: PresentInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PresentInfoKHRBuilderNext {}
 impl<'a> ::std::ops::Deref for PresentInfoKHRBuilder<'a> {
     type Target = PresentInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -17068,6 +17562,13 @@ impl<'a> PresentInfoKHRBuilder<'a> {
     pub fn results(mut self, results: &'a mut [Result]) -> PresentInfoKHRBuilder<'a> {
         self.inner.swapchain_count = results.len() as _;
         self.inner.p_results = results.as_mut_ptr();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> PresentInfoKHRBuilder<'a>
+    where
+        T: PresentInfoKHRBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> PresentInfoKHR {
@@ -17117,6 +17618,8 @@ pub struct DebugReportCallbackCreateInfoEXTBuilder<'a> {
     inner: DebugReportCallbackCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DebugReportCallbackCreateInfoEXTBuilderNext {}
+unsafe impl InstanceCreateInfoBuilderNext for DebugReportCallbackCreateInfoEXTBuilderNext {}
 impl<'a> ::std::ops::Deref for DebugReportCallbackCreateInfoEXTBuilder<'a> {
     type Target = DebugReportCallbackCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
@@ -17143,6 +17646,13 @@ impl<'a> DebugReportCallbackCreateInfoEXTBuilder<'a> {
         user_data: *mut c_void,
     ) -> DebugReportCallbackCreateInfoEXTBuilder<'a> {
         self.inner.p_user_data = user_data;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> DebugReportCallbackCreateInfoEXTBuilder<'a>
+    where
+        T: DebugReportCallbackCreateInfoEXTBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DebugReportCallbackCreateInfoEXT {
@@ -17179,6 +17689,8 @@ pub struct ValidationFlagsEXTBuilder<'a> {
     inner: ValidationFlagsEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ValidationFlagsEXTBuilderNext {}
+unsafe impl InstanceCreateInfoBuilderNext for ValidationFlagsEXTBuilderNext {}
 impl<'a> ::std::ops::Deref for ValidationFlagsEXTBuilder<'a> {
     type Target = ValidationFlagsEXT;
     fn deref(&self) -> &Self::Target {
@@ -17192,6 +17704,13 @@ impl<'a> ValidationFlagsEXTBuilder<'a> {
     ) -> ValidationFlagsEXTBuilder<'a> {
         self.inner.disabled_validation_check_count = disabled_validation_checks.len() as _;
         self.inner.p_disabled_validation_checks = disabled_validation_checks.as_ptr();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> ValidationFlagsEXTBuilder<'a>
+    where
+        T: ValidationFlagsEXTBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ValidationFlagsEXT {
@@ -17226,6 +17745,10 @@ pub struct PipelineRasterizationStateRasterizationOrderAMDBuilder<'a> {
     inner: PipelineRasterizationStateRasterizationOrderAMD,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PipelineRasterizationStateRasterizationOrderAMDBuilderNext {}
+unsafe impl PipelineRasterizationStateCreateInfoBuilderNext
+    for PipelineRasterizationStateRasterizationOrderAMDBuilderNext
+{}
 impl<'a> ::std::ops::Deref for PipelineRasterizationStateRasterizationOrderAMDBuilder<'a> {
     type Target = PipelineRasterizationStateRasterizationOrderAMD;
     fn deref(&self) -> &Self::Target {
@@ -17238,6 +17761,16 @@ impl<'a> PipelineRasterizationStateRasterizationOrderAMDBuilder<'a> {
         rasterization_order: RasterizationOrderAMD,
     ) -> PipelineRasterizationStateRasterizationOrderAMDBuilder<'a> {
         self.inner.rasterization_order = rasterization_order;
+        self
+    }
+    pub fn next<T>(
+        mut self,
+        next: &'a T,
+    ) -> PipelineRasterizationStateRasterizationOrderAMDBuilder<'a>
+    where
+        T: PipelineRasterizationStateRasterizationOrderAMDBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> PipelineRasterizationStateRasterizationOrderAMD {
@@ -17276,6 +17809,7 @@ pub struct DebugMarkerObjectNameInfoEXTBuilder<'a> {
     inner: DebugMarkerObjectNameInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DebugMarkerObjectNameInfoEXTBuilderNext {}
 impl<'a> ::std::ops::Deref for DebugMarkerObjectNameInfoEXTBuilder<'a> {
     type Target = DebugMarkerObjectNameInfoEXT;
     fn deref(&self) -> &Self::Target {
@@ -17299,6 +17833,13 @@ impl<'a> DebugMarkerObjectNameInfoEXTBuilder<'a> {
         object_name: &'a ::std::ffi::CStr,
     ) -> DebugMarkerObjectNameInfoEXTBuilder<'a> {
         self.inner.p_object_name = object_name.as_ptr();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> DebugMarkerObjectNameInfoEXTBuilder<'a>
+    where
+        T: DebugMarkerObjectNameInfoEXTBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DebugMarkerObjectNameInfoEXT {
@@ -17341,6 +17882,7 @@ pub struct DebugMarkerObjectTagInfoEXTBuilder<'a> {
     inner: DebugMarkerObjectTagInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DebugMarkerObjectTagInfoEXTBuilderNext {}
 impl<'a> ::std::ops::Deref for DebugMarkerObjectTagInfoEXTBuilder<'a> {
     type Target = DebugMarkerObjectTagInfoEXT;
     fn deref(&self) -> &Self::Target {
@@ -17366,6 +17908,13 @@ impl<'a> DebugMarkerObjectTagInfoEXTBuilder<'a> {
     pub fn tag(mut self, tag: &'a [c_void]) -> DebugMarkerObjectTagInfoEXTBuilder<'a> {
         self.inner.tag_size = tag.len() as _;
         self.inner.p_tag = tag.as_ptr();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> DebugMarkerObjectTagInfoEXTBuilder<'a>
+    where
+        T: DebugMarkerObjectTagInfoEXTBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DebugMarkerObjectTagInfoEXT {
@@ -17402,6 +17951,7 @@ pub struct DebugMarkerMarkerInfoEXTBuilder<'a> {
     inner: DebugMarkerMarkerInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DebugMarkerMarkerInfoEXTBuilderNext {}
 impl<'a> ::std::ops::Deref for DebugMarkerMarkerInfoEXTBuilder<'a> {
     type Target = DebugMarkerMarkerInfoEXT;
     fn deref(&self) -> &Self::Target {
@@ -17418,6 +17968,13 @@ impl<'a> DebugMarkerMarkerInfoEXTBuilder<'a> {
     }
     pub fn color(mut self, color: [f32; 4]) -> DebugMarkerMarkerInfoEXTBuilder<'a> {
         self.inner.color = color;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> DebugMarkerMarkerInfoEXTBuilder<'a>
+    where
+        T: DebugMarkerMarkerInfoEXTBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DebugMarkerMarkerInfoEXT {
@@ -17452,6 +18009,8 @@ pub struct DedicatedAllocationImageCreateInfoNVBuilder<'a> {
     inner: DedicatedAllocationImageCreateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DedicatedAllocationImageCreateInfoNVBuilderNext {}
+unsafe impl ImageCreateInfoBuilderNext for DedicatedAllocationImageCreateInfoNVBuilderNext {}
 impl<'a> ::std::ops::Deref for DedicatedAllocationImageCreateInfoNVBuilder<'a> {
     type Target = DedicatedAllocationImageCreateInfoNV;
     fn deref(&self) -> &Self::Target {
@@ -17464,6 +18023,13 @@ impl<'a> DedicatedAllocationImageCreateInfoNVBuilder<'a> {
         dedicated_allocation: bool,
     ) -> DedicatedAllocationImageCreateInfoNVBuilder<'a> {
         self.inner.dedicated_allocation = dedicated_allocation.into();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> DedicatedAllocationImageCreateInfoNVBuilder<'a>
+    where
+        T: DedicatedAllocationImageCreateInfoNVBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DedicatedAllocationImageCreateInfoNV {
@@ -17498,6 +18064,8 @@ pub struct DedicatedAllocationBufferCreateInfoNVBuilder<'a> {
     inner: DedicatedAllocationBufferCreateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DedicatedAllocationBufferCreateInfoNVBuilderNext {}
+unsafe impl BufferCreateInfoBuilderNext for DedicatedAllocationBufferCreateInfoNVBuilderNext {}
 impl<'a> ::std::ops::Deref for DedicatedAllocationBufferCreateInfoNVBuilder<'a> {
     type Target = DedicatedAllocationBufferCreateInfoNV;
     fn deref(&self) -> &Self::Target {
@@ -17510,6 +18078,13 @@ impl<'a> DedicatedAllocationBufferCreateInfoNVBuilder<'a> {
         dedicated_allocation: bool,
     ) -> DedicatedAllocationBufferCreateInfoNVBuilder<'a> {
         self.inner.dedicated_allocation = dedicated_allocation.into();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> DedicatedAllocationBufferCreateInfoNVBuilder<'a>
+    where
+        T: DedicatedAllocationBufferCreateInfoNVBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DedicatedAllocationBufferCreateInfoNV {
@@ -17546,6 +18121,8 @@ pub struct DedicatedAllocationMemoryAllocateInfoNVBuilder<'a> {
     inner: DedicatedAllocationMemoryAllocateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DedicatedAllocationMemoryAllocateInfoNVBuilderNext {}
+unsafe impl MemoryAllocateInfoBuilderNext for DedicatedAllocationMemoryAllocateInfoNVBuilderNext {}
 impl<'a> ::std::ops::Deref for DedicatedAllocationMemoryAllocateInfoNVBuilder<'a> {
     type Target = DedicatedAllocationMemoryAllocateInfoNV;
     fn deref(&self) -> &Self::Target {
@@ -17559,6 +18136,13 @@ impl<'a> DedicatedAllocationMemoryAllocateInfoNVBuilder<'a> {
     }
     pub fn buffer(mut self, buffer: Buffer) -> DedicatedAllocationMemoryAllocateInfoNVBuilder<'a> {
         self.inner.buffer = buffer;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> DedicatedAllocationMemoryAllocateInfoNVBuilder<'a>
+    where
+        T: DedicatedAllocationMemoryAllocateInfoNVBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DedicatedAllocationMemoryAllocateInfoNV {
@@ -17585,6 +18169,7 @@ pub struct ExternalImageFormatPropertiesNVBuilder<'a> {
     inner: ExternalImageFormatPropertiesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ExternalImageFormatPropertiesNVBuilderNext {}
 impl<'a> ::std::ops::Deref for ExternalImageFormatPropertiesNVBuilder<'a> {
     type Target = ExternalImageFormatPropertiesNV;
     fn deref(&self) -> &Self::Target {
@@ -17652,6 +18237,8 @@ pub struct ExternalMemoryImageCreateInfoNVBuilder<'a> {
     inner: ExternalMemoryImageCreateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ExternalMemoryImageCreateInfoNVBuilderNext {}
+unsafe impl ImageCreateInfoBuilderNext for ExternalMemoryImageCreateInfoNVBuilderNext {}
 impl<'a> ::std::ops::Deref for ExternalMemoryImageCreateInfoNVBuilder<'a> {
     type Target = ExternalMemoryImageCreateInfoNV;
     fn deref(&self) -> &Self::Target {
@@ -17664,6 +18251,13 @@ impl<'a> ExternalMemoryImageCreateInfoNVBuilder<'a> {
         handle_types: ExternalMemoryHandleTypeFlagsNV,
     ) -> ExternalMemoryImageCreateInfoNVBuilder<'a> {
         self.inner.handle_types = handle_types;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> ExternalMemoryImageCreateInfoNVBuilder<'a>
+    where
+        T: ExternalMemoryImageCreateInfoNVBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ExternalMemoryImageCreateInfoNV {
@@ -17698,6 +18292,8 @@ pub struct ExportMemoryAllocateInfoNVBuilder<'a> {
     inner: ExportMemoryAllocateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ExportMemoryAllocateInfoNVBuilderNext {}
+unsafe impl MemoryAllocateInfoBuilderNext for ExportMemoryAllocateInfoNVBuilderNext {}
 impl<'a> ::std::ops::Deref for ExportMemoryAllocateInfoNVBuilder<'a> {
     type Target = ExportMemoryAllocateInfoNV;
     fn deref(&self) -> &Self::Target {
@@ -17710,6 +18306,13 @@ impl<'a> ExportMemoryAllocateInfoNVBuilder<'a> {
         handle_types: ExternalMemoryHandleTypeFlagsNV,
     ) -> ExportMemoryAllocateInfoNVBuilder<'a> {
         self.inner.handle_types = handle_types;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> ExportMemoryAllocateInfoNVBuilder<'a>
+    where
+        T: ExportMemoryAllocateInfoNVBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ExportMemoryAllocateInfoNV {
@@ -17746,6 +18349,8 @@ pub struct ImportMemoryWin32HandleInfoNVBuilder<'a> {
     inner: ImportMemoryWin32HandleInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ImportMemoryWin32HandleInfoNVBuilderNext {}
+unsafe impl MemoryAllocateInfoBuilderNext for ImportMemoryWin32HandleInfoNVBuilderNext {}
 impl<'a> ::std::ops::Deref for ImportMemoryWin32HandleInfoNVBuilder<'a> {
     type Target = ImportMemoryWin32HandleInfoNV;
     fn deref(&self) -> &Self::Target {
@@ -17762,6 +18367,13 @@ impl<'a> ImportMemoryWin32HandleInfoNVBuilder<'a> {
     }
     pub fn handle(mut self, handle: HANDLE) -> ImportMemoryWin32HandleInfoNVBuilder<'a> {
         self.inner.handle = handle;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> ImportMemoryWin32HandleInfoNVBuilder<'a>
+    where
+        T: ImportMemoryWin32HandleInfoNVBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ImportMemoryWin32HandleInfoNV {
@@ -17798,6 +18410,8 @@ pub struct ExportMemoryWin32HandleInfoNVBuilder<'a> {
     inner: ExportMemoryWin32HandleInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ExportMemoryWin32HandleInfoNVBuilderNext {}
+unsafe impl MemoryAllocateInfoBuilderNext for ExportMemoryWin32HandleInfoNVBuilderNext {}
 impl<'a> ::std::ops::Deref for ExportMemoryWin32HandleInfoNVBuilder<'a> {
     type Target = ExportMemoryWin32HandleInfoNV;
     fn deref(&self) -> &Self::Target {
@@ -17814,6 +18428,13 @@ impl<'a> ExportMemoryWin32HandleInfoNVBuilder<'a> {
     }
     pub fn dw_access(mut self, dw_access: DWORD) -> ExportMemoryWin32HandleInfoNVBuilder<'a> {
         self.inner.dw_access = dw_access;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> ExportMemoryWin32HandleInfoNVBuilder<'a>
+    where
+        T: ExportMemoryWin32HandleInfoNVBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ExportMemoryWin32HandleInfoNV {
@@ -17860,6 +18481,8 @@ pub struct Win32KeyedMutexAcquireReleaseInfoNVBuilder<'a> {
     inner: Win32KeyedMutexAcquireReleaseInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait Win32KeyedMutexAcquireReleaseInfoNVBuilderNext {}
+unsafe impl SubmitInfoBuilderNext for Win32KeyedMutexAcquireReleaseInfoNVBuilderNext {}
 impl<'a> ::std::ops::Deref for Win32KeyedMutexAcquireReleaseInfoNVBuilder<'a> {
     type Target = Win32KeyedMutexAcquireReleaseInfoNV;
     fn deref(&self) -> &Self::Target {
@@ -17907,6 +18530,13 @@ impl<'a> Win32KeyedMutexAcquireReleaseInfoNVBuilder<'a> {
         self.inner.p_release_keys = release_keys.as_ptr();
         self
     }
+    pub fn next<T>(mut self, next: &'a T) -> Win32KeyedMutexAcquireReleaseInfoNVBuilder<'a>
+    where
+        T: Win32KeyedMutexAcquireReleaseInfoNVBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
+        self
+    }
     pub fn build(self) -> Win32KeyedMutexAcquireReleaseInfoNV {
         self.inner
     }
@@ -17939,6 +18569,7 @@ pub struct DeviceGeneratedCommandsFeaturesNVXBuilder<'a> {
     inner: DeviceGeneratedCommandsFeaturesNVX,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DeviceGeneratedCommandsFeaturesNVXBuilderNext {}
 impl<'a> ::std::ops::Deref for DeviceGeneratedCommandsFeaturesNVXBuilder<'a> {
     type Target = DeviceGeneratedCommandsFeaturesNVX;
     fn deref(&self) -> &Self::Target {
@@ -17951,6 +18582,13 @@ impl<'a> DeviceGeneratedCommandsFeaturesNVXBuilder<'a> {
         compute_binding_point_support: bool,
     ) -> DeviceGeneratedCommandsFeaturesNVXBuilder<'a> {
         self.inner.compute_binding_point_support = compute_binding_point_support.into();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> DeviceGeneratedCommandsFeaturesNVXBuilder<'a>
+    where
+        T: DeviceGeneratedCommandsFeaturesNVXBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DeviceGeneratedCommandsFeaturesNVX {
@@ -17993,6 +18631,7 @@ pub struct DeviceGeneratedCommandsLimitsNVXBuilder<'a> {
     inner: DeviceGeneratedCommandsLimitsNVX,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DeviceGeneratedCommandsLimitsNVXBuilderNext {}
 impl<'a> ::std::ops::Deref for DeviceGeneratedCommandsLimitsNVXBuilder<'a> {
     type Target = DeviceGeneratedCommandsLimitsNVX;
     fn deref(&self) -> &Self::Target {
@@ -18039,6 +18678,13 @@ impl<'a> DeviceGeneratedCommandsLimitsNVXBuilder<'a> {
             min_commands_token_buffer_offset_alignment;
         self
     }
+    pub fn next<T>(mut self, next: &'a T) -> DeviceGeneratedCommandsLimitsNVXBuilder<'a>
+    where
+        T: DeviceGeneratedCommandsLimitsNVXBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
+        self
+    }
     pub fn build(self) -> DeviceGeneratedCommandsLimitsNVX {
         self.inner
     }
@@ -18062,6 +18708,7 @@ pub struct IndirectCommandsTokenNVXBuilder<'a> {
     inner: IndirectCommandsTokenNVX,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait IndirectCommandsTokenNVXBuilderNext {}
 impl<'a> ::std::ops::Deref for IndirectCommandsTokenNVXBuilder<'a> {
     type Target = IndirectCommandsTokenNVX;
     fn deref(&self) -> &Self::Target {
@@ -18108,6 +18755,7 @@ pub struct IndirectCommandsLayoutTokenNVXBuilder<'a> {
     inner: IndirectCommandsLayoutTokenNVX,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait IndirectCommandsLayoutTokenNVXBuilderNext {}
 impl<'a> ::std::ops::Deref for IndirectCommandsLayoutTokenNVXBuilder<'a> {
     type Target = IndirectCommandsLayoutTokenNVX;
     fn deref(&self) -> &Self::Target {
@@ -18175,6 +18823,7 @@ pub struct IndirectCommandsLayoutCreateInfoNVXBuilder<'a> {
     inner: IndirectCommandsLayoutCreateInfoNVX,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait IndirectCommandsLayoutCreateInfoNVXBuilderNext {}
 impl<'a> ::std::ops::Deref for IndirectCommandsLayoutCreateInfoNVXBuilder<'a> {
     type Target = IndirectCommandsLayoutCreateInfoNVX;
     fn deref(&self) -> &Self::Target {
@@ -18202,6 +18851,13 @@ impl<'a> IndirectCommandsLayoutCreateInfoNVXBuilder<'a> {
     ) -> IndirectCommandsLayoutCreateInfoNVXBuilder<'a> {
         self.inner.token_count = tokens.len() as _;
         self.inner.p_tokens = tokens.as_ptr();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> IndirectCommandsLayoutCreateInfoNVXBuilder<'a>
+    where
+        T: IndirectCommandsLayoutCreateInfoNVXBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> IndirectCommandsLayoutCreateInfoNVX {
@@ -18254,6 +18910,7 @@ pub struct CmdProcessCommandsInfoNVXBuilder<'a> {
     inner: CmdProcessCommandsInfoNVX,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait CmdProcessCommandsInfoNVXBuilderNext {}
 impl<'a> ::std::ops::Deref for CmdProcessCommandsInfoNVXBuilder<'a> {
     type Target = CmdProcessCommandsInfoNVX;
     fn deref(&self) -> &Self::Target {
@@ -18325,6 +18982,13 @@ impl<'a> CmdProcessCommandsInfoNVXBuilder<'a> {
         self.inner.sequences_index_offset = sequences_index_offset;
         self
     }
+    pub fn next<T>(mut self, next: &'a T) -> CmdProcessCommandsInfoNVXBuilder<'a>
+    where
+        T: CmdProcessCommandsInfoNVXBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
+        self
+    }
     pub fn build(self) -> CmdProcessCommandsInfoNVX {
         self.inner
     }
@@ -18361,6 +19025,7 @@ pub struct CmdReserveSpaceForCommandsInfoNVXBuilder<'a> {
     inner: CmdReserveSpaceForCommandsInfoNVX,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait CmdReserveSpaceForCommandsInfoNVXBuilderNext {}
 impl<'a> ::std::ops::Deref for CmdReserveSpaceForCommandsInfoNVXBuilder<'a> {
     type Target = CmdReserveSpaceForCommandsInfoNVX;
     fn deref(&self) -> &Self::Target {
@@ -18387,6 +19052,13 @@ impl<'a> CmdReserveSpaceForCommandsInfoNVXBuilder<'a> {
         max_sequences_count: u32,
     ) -> CmdReserveSpaceForCommandsInfoNVXBuilder<'a> {
         self.inner.max_sequences_count = max_sequences_count;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> CmdReserveSpaceForCommandsInfoNVXBuilder<'a>
+    where
+        T: CmdReserveSpaceForCommandsInfoNVXBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> CmdReserveSpaceForCommandsInfoNVX {
@@ -18437,6 +19109,7 @@ pub struct ObjectTableCreateInfoNVXBuilder<'a> {
     inner: ObjectTableCreateInfoNVX,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ObjectTableCreateInfoNVXBuilderNext {}
 impl<'a> ::std::ops::Deref for ObjectTableCreateInfoNVXBuilder<'a> {
     type Target = ObjectTableCreateInfoNVX;
     fn deref(&self) -> &Self::Target {
@@ -18503,6 +19176,13 @@ impl<'a> ObjectTableCreateInfoNVXBuilder<'a> {
         self.inner.max_pipeline_layouts = max_pipeline_layouts;
         self
     }
+    pub fn next<T>(mut self, next: &'a T) -> ObjectTableCreateInfoNVXBuilder<'a>
+    where
+        T: ObjectTableCreateInfoNVXBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
+        self
+    }
     pub fn build(self) -> ObjectTableCreateInfoNVX {
         self.inner
     }
@@ -18525,6 +19205,7 @@ pub struct ObjectTableEntryNVXBuilder<'a> {
     inner: ObjectTableEntryNVX,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ObjectTableEntryNVXBuilderNext {}
 impl<'a> ::std::ops::Deref for ObjectTableEntryNVXBuilder<'a> {
     type Target = ObjectTableEntryNVX;
     fn deref(&self) -> &Self::Target {
@@ -18563,6 +19244,7 @@ pub struct ObjectTablePipelineEntryNVXBuilder<'a> {
     inner: ObjectTablePipelineEntryNVX,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ObjectTablePipelineEntryNVXBuilderNext {}
 impl<'a> ::std::ops::Deref for ObjectTablePipelineEntryNVXBuilder<'a> {
     type Target = ObjectTablePipelineEntryNVX;
     fn deref(&self) -> &Self::Target {
@@ -18609,6 +19291,7 @@ pub struct ObjectTableDescriptorSetEntryNVXBuilder<'a> {
     inner: ObjectTableDescriptorSetEntryNVX,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ObjectTableDescriptorSetEntryNVXBuilderNext {}
 impl<'a> ::std::ops::Deref for ObjectTableDescriptorSetEntryNVXBuilder<'a> {
     type Target = ObjectTableDescriptorSetEntryNVX;
     fn deref(&self) -> &Self::Target {
@@ -18664,6 +19347,7 @@ pub struct ObjectTableVertexBufferEntryNVXBuilder<'a> {
     inner: ObjectTableVertexBufferEntryNVX,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ObjectTableVertexBufferEntryNVXBuilderNext {}
 impl<'a> ::std::ops::Deref for ObjectTableVertexBufferEntryNVXBuilder<'a> {
     type Target = ObjectTableVertexBufferEntryNVX;
     fn deref(&self) -> &Self::Target {
@@ -18710,6 +19394,7 @@ pub struct ObjectTableIndexBufferEntryNVXBuilder<'a> {
     inner: ObjectTableIndexBufferEntryNVX,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ObjectTableIndexBufferEntryNVXBuilderNext {}
 impl<'a> ::std::ops::Deref for ObjectTableIndexBufferEntryNVXBuilder<'a> {
     type Target = ObjectTableIndexBufferEntryNVX;
     fn deref(&self) -> &Self::Target {
@@ -18763,6 +19448,7 @@ pub struct ObjectTablePushConstantEntryNVXBuilder<'a> {
     inner: ObjectTablePushConstantEntryNVX,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ObjectTablePushConstantEntryNVXBuilderNext {}
 impl<'a> ::std::ops::Deref for ObjectTablePushConstantEntryNVXBuilder<'a> {
     type Target = ObjectTablePushConstantEntryNVX;
     fn deref(&self) -> &Self::Target {
@@ -18827,6 +19513,8 @@ pub struct PhysicalDeviceFeatures2Builder<'a> {
     inner: PhysicalDeviceFeatures2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceFeatures2BuilderNext {}
+unsafe impl DeviceCreateInfoBuilderNext for PhysicalDeviceFeatures2BuilderNext {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceFeatures2Builder<'a> {
     type Target = PhysicalDeviceFeatures2;
     fn deref(&self) -> &Self::Target {
@@ -18839,6 +19527,13 @@ impl<'a> PhysicalDeviceFeatures2Builder<'a> {
         features: PhysicalDeviceFeatures,
     ) -> PhysicalDeviceFeatures2Builder<'a> {
         self.inner.features = features;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceFeatures2Builder<'a>
+    where
+        T: PhysicalDeviceFeatures2BuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceFeatures2 {
@@ -18873,6 +19568,7 @@ pub struct PhysicalDeviceProperties2Builder<'a> {
     inner: PhysicalDeviceProperties2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceProperties2BuilderNext {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceProperties2Builder<'a> {
     type Target = PhysicalDeviceProperties2;
     fn deref(&self) -> &Self::Target {
@@ -18885,6 +19581,13 @@ impl<'a> PhysicalDeviceProperties2Builder<'a> {
         properties: PhysicalDeviceProperties,
     ) -> PhysicalDeviceProperties2Builder<'a> {
         self.inner.properties = properties;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceProperties2Builder<'a>
+    where
+        T: PhysicalDeviceProperties2BuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceProperties2 {
@@ -18919,6 +19622,7 @@ pub struct FormatProperties2Builder<'a> {
     inner: FormatProperties2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait FormatProperties2BuilderNext {}
 impl<'a> ::std::ops::Deref for FormatProperties2Builder<'a> {
     type Target = FormatProperties2;
     fn deref(&self) -> &Self::Target {
@@ -18931,6 +19635,13 @@ impl<'a> FormatProperties2Builder<'a> {
         format_properties: FormatProperties,
     ) -> FormatProperties2Builder<'a> {
         self.inner.format_properties = format_properties;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> FormatProperties2Builder<'a>
+    where
+        T: FormatProperties2BuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> FormatProperties2 {
@@ -18965,6 +19676,7 @@ pub struct ImageFormatProperties2Builder<'a> {
     inner: ImageFormatProperties2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ImageFormatProperties2BuilderNext {}
 impl<'a> ::std::ops::Deref for ImageFormatProperties2Builder<'a> {
     type Target = ImageFormatProperties2;
     fn deref(&self) -> &Self::Target {
@@ -18977,6 +19689,13 @@ impl<'a> ImageFormatProperties2Builder<'a> {
         image_format_properties: ImageFormatProperties,
     ) -> ImageFormatProperties2Builder<'a> {
         self.inner.image_format_properties = image_format_properties;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> ImageFormatProperties2Builder<'a>
+    where
+        T: ImageFormatProperties2BuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> ImageFormatProperties2 {
@@ -19019,6 +19738,7 @@ pub struct PhysicalDeviceImageFormatInfo2Builder<'a> {
     inner: PhysicalDeviceImageFormatInfo2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceImageFormatInfo2BuilderNext {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceImageFormatInfo2Builder<'a> {
     type Target = PhysicalDeviceImageFormatInfo2;
     fn deref(&self) -> &Self::Target {
@@ -19044,6 +19764,13 @@ impl<'a> PhysicalDeviceImageFormatInfo2Builder<'a> {
     }
     pub fn flags(mut self, flags: ImageCreateFlags) -> PhysicalDeviceImageFormatInfo2Builder<'a> {
         self.inner.flags = flags;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> PhysicalDeviceImageFormatInfo2Builder<'a>
+    where
+        T: PhysicalDeviceImageFormatInfo2BuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceImageFormatInfo2 {
@@ -19078,6 +19805,7 @@ pub struct QueueFamilyProperties2Builder<'a> {
     inner: QueueFamilyProperties2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait QueueFamilyProperties2BuilderNext {}
 impl<'a> ::std::ops::Deref for QueueFamilyProperties2Builder<'a> {
     type Target = QueueFamilyProperties2;
     fn deref(&self) -> &Self::Target {
@@ -19090,6 +19818,13 @@ impl<'a> QueueFamilyProperties2Builder<'a> {
         queue_family_properties: QueueFamilyProperties,
     ) -> QueueFamilyProperties2Builder<'a> {
         self.inner.queue_family_properties = queue_family_properties;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> QueueFamilyProperties2Builder<'a>
+    where
+        T: QueueFamilyProperties2BuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> QueueFamilyProperties2 {
@@ -19124,6 +19859,7 @@ pub struct PhysicalDeviceMemoryProperties2Builder<'a> {
     inner: PhysicalDeviceMemoryProperties2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceMemoryProperties2BuilderNext {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceMemoryProperties2Builder<'a> {
     type Target = PhysicalDeviceMemoryProperties2;
     fn deref(&self) -> &Self::Target {
@@ -19136,6 +19872,13 @@ impl<'a> PhysicalDeviceMemoryProperties2Builder<'a> {
         memory_properties: PhysicalDeviceMemoryProperties,
     ) -> PhysicalDeviceMemoryProperties2Builder<'a> {
         self.inner.memory_properties = memory_properties;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceMemoryProperties2Builder<'a>
+    where
+        T: PhysicalDeviceMemoryProperties2BuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceMemoryProperties2 {
@@ -19170,6 +19913,7 @@ pub struct SparseImageFormatProperties2Builder<'a> {
     inner: SparseImageFormatProperties2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait SparseImageFormatProperties2BuilderNext {}
 impl<'a> ::std::ops::Deref for SparseImageFormatProperties2Builder<'a> {
     type Target = SparseImageFormatProperties2;
     fn deref(&self) -> &Self::Target {
@@ -19182,6 +19926,13 @@ impl<'a> SparseImageFormatProperties2Builder<'a> {
         properties: SparseImageFormatProperties,
     ) -> SparseImageFormatProperties2Builder<'a> {
         self.inner.properties = properties;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> SparseImageFormatProperties2Builder<'a>
+    where
+        T: SparseImageFormatProperties2BuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> SparseImageFormatProperties2 {
@@ -19224,6 +19975,7 @@ pub struct PhysicalDeviceSparseImageFormatInfo2Builder<'a> {
     inner: PhysicalDeviceSparseImageFormatInfo2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceSparseImageFormatInfo2BuilderNext {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceSparseImageFormatInfo2Builder<'a> {
     type Target = PhysicalDeviceSparseImageFormatInfo2;
     fn deref(&self) -> &Self::Target {
@@ -19260,6 +20012,13 @@ impl<'a> PhysicalDeviceSparseImageFormatInfo2Builder<'a> {
         self.inner.tiling = tiling;
         self
     }
+    pub fn next<T>(mut self, next: &'a T) -> PhysicalDeviceSparseImageFormatInfo2Builder<'a>
+    where
+        T: PhysicalDeviceSparseImageFormatInfo2BuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
+        self
+    }
     pub fn build(self) -> PhysicalDeviceSparseImageFormatInfo2 {
         self.inner
     }
@@ -19292,6 +20051,10 @@ pub struct PhysicalDevicePushDescriptorPropertiesKHRBuilder<'a> {
     inner: PhysicalDevicePushDescriptorPropertiesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDevicePushDescriptorPropertiesKHRBuilderNext {}
+unsafe impl PhysicalDeviceProperties2BuilderNext
+    for PhysicalDevicePushDescriptorPropertiesKHRBuilderNext
+{}
 impl<'a> ::std::ops::Deref for PhysicalDevicePushDescriptorPropertiesKHRBuilder<'a> {
     type Target = PhysicalDevicePushDescriptorPropertiesKHR;
     fn deref(&self) -> &Self::Target {
@@ -19304,6 +20067,16 @@ impl<'a> PhysicalDevicePushDescriptorPropertiesKHRBuilder<'a> {
         max_push_descriptors: u32,
     ) -> PhysicalDevicePushDescriptorPropertiesKHRBuilder<'a> {
         self.inner.max_push_descriptors = max_push_descriptors;
+        self
+    }
+    pub fn next<T>(
+        mut self,
+        next: &'a mut T,
+    ) -> PhysicalDevicePushDescriptorPropertiesKHRBuilder<'a>
+    where
+        T: PhysicalDevicePushDescriptorPropertiesKHRBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDevicePushDescriptorPropertiesKHR {
@@ -19330,6 +20103,7 @@ pub struct ConformanceVersionKHRBuilder<'a> {
     inner: ConformanceVersionKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ConformanceVersionKHRBuilderNext {}
 impl<'a> ::std::ops::Deref for ConformanceVersionKHRBuilder<'a> {
     type Target = ConformanceVersionKHR;
     fn deref(&self) -> &Self::Target {
@@ -19405,6 +20179,8 @@ pub struct PhysicalDeviceDriverPropertiesKHRBuilder<'a> {
     inner: PhysicalDeviceDriverPropertiesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceDriverPropertiesKHRBuilderNext {}
+unsafe impl PhysicalDeviceProperties2BuilderNext for PhysicalDeviceDriverPropertiesKHRBuilderNext {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceDriverPropertiesKHRBuilder<'a> {
     type Target = PhysicalDeviceDriverPropertiesKHR;
     fn deref(&self) -> &Self::Target {
@@ -19438,6 +20214,13 @@ impl<'a> PhysicalDeviceDriverPropertiesKHRBuilder<'a> {
         conformance_version: ConformanceVersionKHR,
     ) -> PhysicalDeviceDriverPropertiesKHRBuilder<'a> {
         self.inner.conformance_version = conformance_version;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceDriverPropertiesKHRBuilder<'a>
+    where
+        T: PhysicalDeviceDriverPropertiesKHRBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceDriverPropertiesKHR {
@@ -19474,6 +20257,8 @@ pub struct PresentRegionsKHRBuilder<'a> {
     inner: PresentRegionsKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PresentRegionsKHRBuilderNext {}
+unsafe impl PresentInfoKHRBuilderNext for PresentRegionsKHRBuilderNext {}
 impl<'a> ::std::ops::Deref for PresentRegionsKHRBuilder<'a> {
     type Target = PresentRegionsKHR;
     fn deref(&self) -> &Self::Target {
@@ -19484,6 +20269,13 @@ impl<'a> PresentRegionsKHRBuilder<'a> {
     pub fn regions(mut self, regions: &'a [PresentRegionKHR]) -> PresentRegionsKHRBuilder<'a> {
         self.inner.swapchain_count = regions.len() as _;
         self.inner.p_regions = regions.as_ptr();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> PresentRegionsKHRBuilder<'a>
+    where
+        T: PresentRegionsKHRBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> PresentRegionsKHR {
@@ -19516,6 +20308,7 @@ pub struct PresentRegionKHRBuilder<'a> {
     inner: PresentRegionKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PresentRegionKHRBuilderNext {}
 impl<'a> ::std::ops::Deref for PresentRegionKHRBuilder<'a> {
     type Target = PresentRegionKHR;
     fn deref(&self) -> &Self::Target {
@@ -19551,6 +20344,7 @@ pub struct RectLayerKHRBuilder<'a> {
     inner: RectLayerKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait RectLayerKHRBuilderNext {}
 impl<'a> ::std::ops::Deref for RectLayerKHRBuilder<'a> {
     type Target = RectLayerKHR;
     fn deref(&self) -> &Self::Target {
@@ -19604,6 +20398,11 @@ pub struct PhysicalDeviceVariablePointerFeaturesBuilder<'a> {
     inner: PhysicalDeviceVariablePointerFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceVariablePointerFeaturesBuilderNext {}
+unsafe impl PhysicalDeviceFeatures2BuilderNext
+    for PhysicalDeviceVariablePointerFeaturesBuilderNext
+{}
+unsafe impl DeviceCreateInfoBuilderNext for PhysicalDeviceVariablePointerFeaturesBuilderNext {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceVariablePointerFeaturesBuilder<'a> {
     type Target = PhysicalDeviceVariablePointerFeatures;
     fn deref(&self) -> &Self::Target {
@@ -19623,6 +20422,13 @@ impl<'a> PhysicalDeviceVariablePointerFeaturesBuilder<'a> {
         variable_pointers: bool,
     ) -> PhysicalDeviceVariablePointerFeaturesBuilder<'a> {
         self.inner.variable_pointers = variable_pointers.into();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceVariablePointerFeaturesBuilder<'a>
+    where
+        T: PhysicalDeviceVariablePointerFeaturesBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceVariablePointerFeatures {
@@ -19648,6 +20454,7 @@ pub struct ExternalMemoryPropertiesBuilder<'a> {
     inner: ExternalMemoryProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ExternalMemoryPropertiesBuilderNext {}
 impl<'a> ::std::ops::Deref for ExternalMemoryPropertiesBuilder<'a> {
     type Target = ExternalMemoryProperties;
     fn deref(&self) -> &Self::Target {
@@ -19708,6 +20515,10 @@ pub struct PhysicalDeviceExternalImageFormatInfoBuilder<'a> {
     inner: PhysicalDeviceExternalImageFormatInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceExternalImageFormatInfoBuilderNext {}
+unsafe impl PhysicalDeviceImageFormatInfo2BuilderNext
+    for PhysicalDeviceExternalImageFormatInfoBuilderNext
+{}
 impl<'a> ::std::ops::Deref for PhysicalDeviceExternalImageFormatInfoBuilder<'a> {
     type Target = PhysicalDeviceExternalImageFormatInfo;
     fn deref(&self) -> &Self::Target {
@@ -19720,6 +20531,13 @@ impl<'a> PhysicalDeviceExternalImageFormatInfoBuilder<'a> {
         handle_type: ExternalMemoryHandleTypeFlags,
     ) -> PhysicalDeviceExternalImageFormatInfoBuilder<'a> {
         self.inner.handle_type = handle_type;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> PhysicalDeviceExternalImageFormatInfoBuilder<'a>
+    where
+        T: PhysicalDeviceExternalImageFormatInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceExternalImageFormatInfo {
@@ -19754,6 +20572,8 @@ pub struct ExternalImageFormatPropertiesBuilder<'a> {
     inner: ExternalImageFormatProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ExternalImageFormatPropertiesBuilderNext {}
+unsafe impl ImageFormatProperties2BuilderNext for ExternalImageFormatPropertiesBuilderNext {}
 impl<'a> ::std::ops::Deref for ExternalImageFormatPropertiesBuilder<'a> {
     type Target = ExternalImageFormatProperties;
     fn deref(&self) -> &Self::Target {
@@ -19766,6 +20586,13 @@ impl<'a> ExternalImageFormatPropertiesBuilder<'a> {
         external_memory_properties: ExternalMemoryProperties,
     ) -> ExternalImageFormatPropertiesBuilder<'a> {
         self.inner.external_memory_properties = external_memory_properties;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> ExternalImageFormatPropertiesBuilder<'a>
+    where
+        T: ExternalImageFormatPropertiesBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> ExternalImageFormatProperties {
@@ -19804,6 +20631,7 @@ pub struct PhysicalDeviceExternalBufferInfoBuilder<'a> {
     inner: PhysicalDeviceExternalBufferInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceExternalBufferInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceExternalBufferInfoBuilder<'a> {
     type Target = PhysicalDeviceExternalBufferInfo;
     fn deref(&self) -> &Self::Target {
@@ -19827,6 +20655,13 @@ impl<'a> PhysicalDeviceExternalBufferInfoBuilder<'a> {
         handle_type: ExternalMemoryHandleTypeFlags,
     ) -> PhysicalDeviceExternalBufferInfoBuilder<'a> {
         self.inner.handle_type = handle_type;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> PhysicalDeviceExternalBufferInfoBuilder<'a>
+    where
+        T: PhysicalDeviceExternalBufferInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceExternalBufferInfo {
@@ -19861,6 +20696,7 @@ pub struct ExternalBufferPropertiesBuilder<'a> {
     inner: ExternalBufferProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ExternalBufferPropertiesBuilderNext {}
 impl<'a> ::std::ops::Deref for ExternalBufferPropertiesBuilder<'a> {
     type Target = ExternalBufferProperties;
     fn deref(&self) -> &Self::Target {
@@ -19873,6 +20709,13 @@ impl<'a> ExternalBufferPropertiesBuilder<'a> {
         external_memory_properties: ExternalMemoryProperties,
     ) -> ExternalBufferPropertiesBuilder<'a> {
         self.inner.external_memory_properties = external_memory_properties;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> ExternalBufferPropertiesBuilder<'a>
+    where
+        T: ExternalBufferPropertiesBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> ExternalBufferProperties {
@@ -19915,6 +20758,8 @@ pub struct PhysicalDeviceIDPropertiesBuilder<'a> {
     inner: PhysicalDeviceIDProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceIDPropertiesBuilderNext {}
+unsafe impl PhysicalDeviceProperties2BuilderNext for PhysicalDeviceIDPropertiesBuilderNext {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceIDPropertiesBuilder<'a> {
     type Target = PhysicalDeviceIDProperties;
     fn deref(&self) -> &Self::Target {
@@ -19957,6 +20802,13 @@ impl<'a> PhysicalDeviceIDPropertiesBuilder<'a> {
         self.inner.device_luid_valid = device_luid_valid.into();
         self
     }
+    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceIDPropertiesBuilder<'a>
+    where
+        T: PhysicalDeviceIDPropertiesBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
+        self
+    }
     pub fn build(self) -> PhysicalDeviceIDProperties {
         self.inner
     }
@@ -19989,6 +20841,8 @@ pub struct ExternalMemoryImageCreateInfoBuilder<'a> {
     inner: ExternalMemoryImageCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ExternalMemoryImageCreateInfoBuilderNext {}
+unsafe impl ImageCreateInfoBuilderNext for ExternalMemoryImageCreateInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for ExternalMemoryImageCreateInfoBuilder<'a> {
     type Target = ExternalMemoryImageCreateInfo;
     fn deref(&self) -> &Self::Target {
@@ -20001,6 +20855,13 @@ impl<'a> ExternalMemoryImageCreateInfoBuilder<'a> {
         handle_types: ExternalMemoryHandleTypeFlags,
     ) -> ExternalMemoryImageCreateInfoBuilder<'a> {
         self.inner.handle_types = handle_types;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> ExternalMemoryImageCreateInfoBuilder<'a>
+    where
+        T: ExternalMemoryImageCreateInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ExternalMemoryImageCreateInfo {
@@ -20035,6 +20896,8 @@ pub struct ExternalMemoryBufferCreateInfoBuilder<'a> {
     inner: ExternalMemoryBufferCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ExternalMemoryBufferCreateInfoBuilderNext {}
+unsafe impl BufferCreateInfoBuilderNext for ExternalMemoryBufferCreateInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for ExternalMemoryBufferCreateInfoBuilder<'a> {
     type Target = ExternalMemoryBufferCreateInfo;
     fn deref(&self) -> &Self::Target {
@@ -20047,6 +20910,13 @@ impl<'a> ExternalMemoryBufferCreateInfoBuilder<'a> {
         handle_types: ExternalMemoryHandleTypeFlags,
     ) -> ExternalMemoryBufferCreateInfoBuilder<'a> {
         self.inner.handle_types = handle_types;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> ExternalMemoryBufferCreateInfoBuilder<'a>
+    where
+        T: ExternalMemoryBufferCreateInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ExternalMemoryBufferCreateInfo {
@@ -20081,6 +20951,8 @@ pub struct ExportMemoryAllocateInfoBuilder<'a> {
     inner: ExportMemoryAllocateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ExportMemoryAllocateInfoBuilderNext {}
+unsafe impl MemoryAllocateInfoBuilderNext for ExportMemoryAllocateInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for ExportMemoryAllocateInfoBuilder<'a> {
     type Target = ExportMemoryAllocateInfo;
     fn deref(&self) -> &Self::Target {
@@ -20093,6 +20965,13 @@ impl<'a> ExportMemoryAllocateInfoBuilder<'a> {
         handle_types: ExternalMemoryHandleTypeFlags,
     ) -> ExportMemoryAllocateInfoBuilder<'a> {
         self.inner.handle_types = handle_types;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> ExportMemoryAllocateInfoBuilder<'a>
+    where
+        T: ExportMemoryAllocateInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ExportMemoryAllocateInfo {
@@ -20131,6 +21010,8 @@ pub struct ImportMemoryWin32HandleInfoKHRBuilder<'a> {
     inner: ImportMemoryWin32HandleInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ImportMemoryWin32HandleInfoKHRBuilderNext {}
+unsafe impl MemoryAllocateInfoBuilderNext for ImportMemoryWin32HandleInfoKHRBuilderNext {}
 impl<'a> ::std::ops::Deref for ImportMemoryWin32HandleInfoKHRBuilder<'a> {
     type Target = ImportMemoryWin32HandleInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -20151,6 +21032,13 @@ impl<'a> ImportMemoryWin32HandleInfoKHRBuilder<'a> {
     }
     pub fn name(mut self, name: LPCWSTR) -> ImportMemoryWin32HandleInfoKHRBuilder<'a> {
         self.inner.name = name;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> ImportMemoryWin32HandleInfoKHRBuilder<'a>
+    where
+        T: ImportMemoryWin32HandleInfoKHRBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ImportMemoryWin32HandleInfoKHR {
@@ -20189,6 +21077,8 @@ pub struct ExportMemoryWin32HandleInfoKHRBuilder<'a> {
     inner: ExportMemoryWin32HandleInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ExportMemoryWin32HandleInfoKHRBuilderNext {}
+unsafe impl MemoryAllocateInfoBuilderNext for ExportMemoryWin32HandleInfoKHRBuilderNext {}
 impl<'a> ::std::ops::Deref for ExportMemoryWin32HandleInfoKHRBuilder<'a> {
     type Target = ExportMemoryWin32HandleInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -20209,6 +21099,13 @@ impl<'a> ExportMemoryWin32HandleInfoKHRBuilder<'a> {
     }
     pub fn name(mut self, name: LPCWSTR) -> ExportMemoryWin32HandleInfoKHRBuilder<'a> {
         self.inner.name = name;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> ExportMemoryWin32HandleInfoKHRBuilder<'a>
+    where
+        T: ExportMemoryWin32HandleInfoKHRBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ExportMemoryWin32HandleInfoKHR {
@@ -20243,6 +21140,7 @@ pub struct MemoryWin32HandlePropertiesKHRBuilder<'a> {
     inner: MemoryWin32HandlePropertiesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait MemoryWin32HandlePropertiesKHRBuilderNext {}
 impl<'a> ::std::ops::Deref for MemoryWin32HandlePropertiesKHRBuilder<'a> {
     type Target = MemoryWin32HandlePropertiesKHR;
     fn deref(&self) -> &Self::Target {
@@ -20255,6 +21153,13 @@ impl<'a> MemoryWin32HandlePropertiesKHRBuilder<'a> {
         memory_type_bits: u32,
     ) -> MemoryWin32HandlePropertiesKHRBuilder<'a> {
         self.inner.memory_type_bits = memory_type_bits;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> MemoryWin32HandlePropertiesKHRBuilder<'a>
+    where
+        T: MemoryWin32HandlePropertiesKHRBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> MemoryWin32HandlePropertiesKHR {
@@ -20291,6 +21196,7 @@ pub struct MemoryGetWin32HandleInfoKHRBuilder<'a> {
     inner: MemoryGetWin32HandleInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait MemoryGetWin32HandleInfoKHRBuilderNext {}
 impl<'a> ::std::ops::Deref for MemoryGetWin32HandleInfoKHRBuilder<'a> {
     type Target = MemoryGetWin32HandleInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -20307,6 +21213,13 @@ impl<'a> MemoryGetWin32HandleInfoKHRBuilder<'a> {
         handle_type: ExternalMemoryHandleTypeFlags,
     ) -> MemoryGetWin32HandleInfoKHRBuilder<'a> {
         self.inner.handle_type = handle_type;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> MemoryGetWin32HandleInfoKHRBuilder<'a>
+    where
+        T: MemoryGetWin32HandleInfoKHRBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> MemoryGetWin32HandleInfoKHR {
@@ -20343,6 +21256,8 @@ pub struct ImportMemoryFdInfoKHRBuilder<'a> {
     inner: ImportMemoryFdInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ImportMemoryFdInfoKHRBuilderNext {}
+unsafe impl MemoryAllocateInfoBuilderNext for ImportMemoryFdInfoKHRBuilderNext {}
 impl<'a> ::std::ops::Deref for ImportMemoryFdInfoKHRBuilder<'a> {
     type Target = ImportMemoryFdInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -20359,6 +21274,13 @@ impl<'a> ImportMemoryFdInfoKHRBuilder<'a> {
     }
     pub fn fd(mut self, fd: c_int) -> ImportMemoryFdInfoKHRBuilder<'a> {
         self.inner.fd = fd;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> ImportMemoryFdInfoKHRBuilder<'a>
+    where
+        T: ImportMemoryFdInfoKHRBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ImportMemoryFdInfoKHR {
@@ -20393,6 +21315,7 @@ pub struct MemoryFdPropertiesKHRBuilder<'a> {
     inner: MemoryFdPropertiesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait MemoryFdPropertiesKHRBuilderNext {}
 impl<'a> ::std::ops::Deref for MemoryFdPropertiesKHRBuilder<'a> {
     type Target = MemoryFdPropertiesKHR;
     fn deref(&self) -> &Self::Target {
@@ -20402,6 +21325,13 @@ impl<'a> ::std::ops::Deref for MemoryFdPropertiesKHRBuilder<'a> {
 impl<'a> MemoryFdPropertiesKHRBuilder<'a> {
     pub fn memory_type_bits(mut self, memory_type_bits: u32) -> MemoryFdPropertiesKHRBuilder<'a> {
         self.inner.memory_type_bits = memory_type_bits;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> MemoryFdPropertiesKHRBuilder<'a>
+    where
+        T: MemoryFdPropertiesKHRBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> MemoryFdPropertiesKHR {
@@ -20438,6 +21368,7 @@ pub struct MemoryGetFdInfoKHRBuilder<'a> {
     inner: MemoryGetFdInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait MemoryGetFdInfoKHRBuilderNext {}
 impl<'a> ::std::ops::Deref for MemoryGetFdInfoKHRBuilder<'a> {
     type Target = MemoryGetFdInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -20454,6 +21385,13 @@ impl<'a> MemoryGetFdInfoKHRBuilder<'a> {
         handle_type: ExternalMemoryHandleTypeFlags,
     ) -> MemoryGetFdInfoKHRBuilder<'a> {
         self.inner.handle_type = handle_type;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> MemoryGetFdInfoKHRBuilder<'a>
+    where
+        T: MemoryGetFdInfoKHRBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> MemoryGetFdInfoKHR {
@@ -20500,6 +21438,8 @@ pub struct Win32KeyedMutexAcquireReleaseInfoKHRBuilder<'a> {
     inner: Win32KeyedMutexAcquireReleaseInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait Win32KeyedMutexAcquireReleaseInfoKHRBuilderNext {}
+unsafe impl SubmitInfoBuilderNext for Win32KeyedMutexAcquireReleaseInfoKHRBuilderNext {}
 impl<'a> ::std::ops::Deref for Win32KeyedMutexAcquireReleaseInfoKHRBuilder<'a> {
     type Target = Win32KeyedMutexAcquireReleaseInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -20547,6 +21487,13 @@ impl<'a> Win32KeyedMutexAcquireReleaseInfoKHRBuilder<'a> {
         self.inner.p_release_keys = release_keys.as_ptr();
         self
     }
+    pub fn next<T>(mut self, next: &'a T) -> Win32KeyedMutexAcquireReleaseInfoKHRBuilder<'a>
+    where
+        T: Win32KeyedMutexAcquireReleaseInfoKHRBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
+        self
+    }
     pub fn build(self) -> Win32KeyedMutexAcquireReleaseInfoKHR {
         self.inner
     }
@@ -20579,6 +21526,7 @@ pub struct PhysicalDeviceExternalSemaphoreInfoBuilder<'a> {
     inner: PhysicalDeviceExternalSemaphoreInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceExternalSemaphoreInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceExternalSemaphoreInfoBuilder<'a> {
     type Target = PhysicalDeviceExternalSemaphoreInfo;
     fn deref(&self) -> &Self::Target {
@@ -20591,6 +21539,13 @@ impl<'a> PhysicalDeviceExternalSemaphoreInfoBuilder<'a> {
         handle_type: ExternalSemaphoreHandleTypeFlags,
     ) -> PhysicalDeviceExternalSemaphoreInfoBuilder<'a> {
         self.inner.handle_type = handle_type;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> PhysicalDeviceExternalSemaphoreInfoBuilder<'a>
+    where
+        T: PhysicalDeviceExternalSemaphoreInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceExternalSemaphoreInfo {
@@ -20629,6 +21584,7 @@ pub struct ExternalSemaphorePropertiesBuilder<'a> {
     inner: ExternalSemaphoreProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ExternalSemaphorePropertiesBuilderNext {}
 impl<'a> ::std::ops::Deref for ExternalSemaphorePropertiesBuilder<'a> {
     type Target = ExternalSemaphoreProperties;
     fn deref(&self) -> &Self::Target {
@@ -20655,6 +21611,13 @@ impl<'a> ExternalSemaphorePropertiesBuilder<'a> {
         external_semaphore_features: ExternalSemaphoreFeatureFlags,
     ) -> ExternalSemaphorePropertiesBuilder<'a> {
         self.inner.external_semaphore_features = external_semaphore_features;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> ExternalSemaphorePropertiesBuilder<'a>
+    where
+        T: ExternalSemaphorePropertiesBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> ExternalSemaphoreProperties {
@@ -20689,6 +21652,8 @@ pub struct ExportSemaphoreCreateInfoBuilder<'a> {
     inner: ExportSemaphoreCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ExportSemaphoreCreateInfoBuilderNext {}
+unsafe impl SemaphoreCreateInfoBuilderNext for ExportSemaphoreCreateInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for ExportSemaphoreCreateInfoBuilder<'a> {
     type Target = ExportSemaphoreCreateInfo;
     fn deref(&self) -> &Self::Target {
@@ -20701,6 +21666,13 @@ impl<'a> ExportSemaphoreCreateInfoBuilder<'a> {
         handle_types: ExternalSemaphoreHandleTypeFlags,
     ) -> ExportSemaphoreCreateInfoBuilder<'a> {
         self.inner.handle_types = handle_types;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> ExportSemaphoreCreateInfoBuilder<'a>
+    where
+        T: ExportSemaphoreCreateInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ExportSemaphoreCreateInfo {
@@ -20743,6 +21715,7 @@ pub struct ImportSemaphoreWin32HandleInfoKHRBuilder<'a> {
     inner: ImportSemaphoreWin32HandleInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ImportSemaphoreWin32HandleInfoKHRBuilderNext {}
 impl<'a> ::std::ops::Deref for ImportSemaphoreWin32HandleInfoKHRBuilder<'a> {
     type Target = ImportSemaphoreWin32HandleInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -20777,6 +21750,13 @@ impl<'a> ImportSemaphoreWin32HandleInfoKHRBuilder<'a> {
     }
     pub fn name(mut self, name: LPCWSTR) -> ImportSemaphoreWin32HandleInfoKHRBuilder<'a> {
         self.inner.name = name;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> ImportSemaphoreWin32HandleInfoKHRBuilder<'a>
+    where
+        T: ImportSemaphoreWin32HandleInfoKHRBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ImportSemaphoreWin32HandleInfoKHR {
@@ -20815,6 +21795,8 @@ pub struct ExportSemaphoreWin32HandleInfoKHRBuilder<'a> {
     inner: ExportSemaphoreWin32HandleInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ExportSemaphoreWin32HandleInfoKHRBuilderNext {}
+unsafe impl SemaphoreCreateInfoBuilderNext for ExportSemaphoreWin32HandleInfoKHRBuilderNext {}
 impl<'a> ::std::ops::Deref for ExportSemaphoreWin32HandleInfoKHRBuilder<'a> {
     type Target = ExportSemaphoreWin32HandleInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -20835,6 +21817,13 @@ impl<'a> ExportSemaphoreWin32HandleInfoKHRBuilder<'a> {
     }
     pub fn name(mut self, name: LPCWSTR) -> ExportSemaphoreWin32HandleInfoKHRBuilder<'a> {
         self.inner.name = name;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> ExportSemaphoreWin32HandleInfoKHRBuilder<'a>
+    where
+        T: ExportSemaphoreWin32HandleInfoKHRBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ExportSemaphoreWin32HandleInfoKHR {
@@ -20875,6 +21864,8 @@ pub struct D3D12FenceSubmitInfoKHRBuilder<'a> {
     inner: D3D12FenceSubmitInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait D3D12FenceSubmitInfoKHRBuilderNext {}
+unsafe impl SubmitInfoBuilderNext for D3D12FenceSubmitInfoKHRBuilderNext {}
 impl<'a> ::std::ops::Deref for D3D12FenceSubmitInfoKHRBuilder<'a> {
     type Target = D3D12FenceSubmitInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -20896,6 +21887,13 @@ impl<'a> D3D12FenceSubmitInfoKHRBuilder<'a> {
     ) -> D3D12FenceSubmitInfoKHRBuilder<'a> {
         self.inner.signal_semaphore_values_count = signal_semaphore_values.len() as _;
         self.inner.p_signal_semaphore_values = signal_semaphore_values.as_ptr();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> D3D12FenceSubmitInfoKHRBuilder<'a>
+    where
+        T: D3D12FenceSubmitInfoKHRBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> D3D12FenceSubmitInfoKHR {
@@ -20932,6 +21930,7 @@ pub struct SemaphoreGetWin32HandleInfoKHRBuilder<'a> {
     inner: SemaphoreGetWin32HandleInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait SemaphoreGetWin32HandleInfoKHRBuilderNext {}
 impl<'a> ::std::ops::Deref for SemaphoreGetWin32HandleInfoKHRBuilder<'a> {
     type Target = SemaphoreGetWin32HandleInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -20948,6 +21947,13 @@ impl<'a> SemaphoreGetWin32HandleInfoKHRBuilder<'a> {
         handle_type: ExternalSemaphoreHandleTypeFlags,
     ) -> SemaphoreGetWin32HandleInfoKHRBuilder<'a> {
         self.inner.handle_type = handle_type;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> SemaphoreGetWin32HandleInfoKHRBuilder<'a>
+    where
+        T: SemaphoreGetWin32HandleInfoKHRBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> SemaphoreGetWin32HandleInfoKHR {
@@ -20988,6 +21994,7 @@ pub struct ImportSemaphoreFdInfoKHRBuilder<'a> {
     inner: ImportSemaphoreFdInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ImportSemaphoreFdInfoKHRBuilderNext {}
 impl<'a> ::std::ops::Deref for ImportSemaphoreFdInfoKHRBuilder<'a> {
     type Target = ImportSemaphoreFdInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -21012,6 +22019,13 @@ impl<'a> ImportSemaphoreFdInfoKHRBuilder<'a> {
     }
     pub fn fd(mut self, fd: c_int) -> ImportSemaphoreFdInfoKHRBuilder<'a> {
         self.inner.fd = fd;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> ImportSemaphoreFdInfoKHRBuilder<'a>
+    where
+        T: ImportSemaphoreFdInfoKHRBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ImportSemaphoreFdInfoKHR {
@@ -21048,6 +22062,7 @@ pub struct SemaphoreGetFdInfoKHRBuilder<'a> {
     inner: SemaphoreGetFdInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait SemaphoreGetFdInfoKHRBuilderNext {}
 impl<'a> ::std::ops::Deref for SemaphoreGetFdInfoKHRBuilder<'a> {
     type Target = SemaphoreGetFdInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -21064,6 +22079,13 @@ impl<'a> SemaphoreGetFdInfoKHRBuilder<'a> {
         handle_type: ExternalSemaphoreHandleTypeFlags,
     ) -> SemaphoreGetFdInfoKHRBuilder<'a> {
         self.inner.handle_type = handle_type;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> SemaphoreGetFdInfoKHRBuilder<'a>
+    where
+        T: SemaphoreGetFdInfoKHRBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> SemaphoreGetFdInfoKHR {
@@ -21098,6 +22120,7 @@ pub struct PhysicalDeviceExternalFenceInfoBuilder<'a> {
     inner: PhysicalDeviceExternalFenceInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceExternalFenceInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceExternalFenceInfoBuilder<'a> {
     type Target = PhysicalDeviceExternalFenceInfo;
     fn deref(&self) -> &Self::Target {
@@ -21110,6 +22133,13 @@ impl<'a> PhysicalDeviceExternalFenceInfoBuilder<'a> {
         handle_type: ExternalFenceHandleTypeFlags,
     ) -> PhysicalDeviceExternalFenceInfoBuilder<'a> {
         self.inner.handle_type = handle_type;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> PhysicalDeviceExternalFenceInfoBuilder<'a>
+    where
+        T: PhysicalDeviceExternalFenceInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceExternalFenceInfo {
@@ -21148,6 +22178,7 @@ pub struct ExternalFencePropertiesBuilder<'a> {
     inner: ExternalFenceProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ExternalFencePropertiesBuilderNext {}
 impl<'a> ::std::ops::Deref for ExternalFencePropertiesBuilder<'a> {
     type Target = ExternalFenceProperties;
     fn deref(&self) -> &Self::Target {
@@ -21174,6 +22205,13 @@ impl<'a> ExternalFencePropertiesBuilder<'a> {
         external_fence_features: ExternalFenceFeatureFlags,
     ) -> ExternalFencePropertiesBuilder<'a> {
         self.inner.external_fence_features = external_fence_features;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> ExternalFencePropertiesBuilder<'a>
+    where
+        T: ExternalFencePropertiesBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> ExternalFenceProperties {
@@ -21208,6 +22246,8 @@ pub struct ExportFenceCreateInfoBuilder<'a> {
     inner: ExportFenceCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ExportFenceCreateInfoBuilderNext {}
+unsafe impl FenceCreateInfoBuilderNext for ExportFenceCreateInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for ExportFenceCreateInfoBuilder<'a> {
     type Target = ExportFenceCreateInfo;
     fn deref(&self) -> &Self::Target {
@@ -21220,6 +22260,13 @@ impl<'a> ExportFenceCreateInfoBuilder<'a> {
         handle_types: ExternalFenceHandleTypeFlags,
     ) -> ExportFenceCreateInfoBuilder<'a> {
         self.inner.handle_types = handle_types;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> ExportFenceCreateInfoBuilder<'a>
+    where
+        T: ExportFenceCreateInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ExportFenceCreateInfo {
@@ -21262,6 +22309,7 @@ pub struct ImportFenceWin32HandleInfoKHRBuilder<'a> {
     inner: ImportFenceWin32HandleInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ImportFenceWin32HandleInfoKHRBuilderNext {}
 impl<'a> ::std::ops::Deref for ImportFenceWin32HandleInfoKHRBuilder<'a> {
     type Target = ImportFenceWin32HandleInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -21290,6 +22338,13 @@ impl<'a> ImportFenceWin32HandleInfoKHRBuilder<'a> {
     }
     pub fn name(mut self, name: LPCWSTR) -> ImportFenceWin32HandleInfoKHRBuilder<'a> {
         self.inner.name = name;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> ImportFenceWin32HandleInfoKHRBuilder<'a>
+    where
+        T: ImportFenceWin32HandleInfoKHRBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ImportFenceWin32HandleInfoKHR {
@@ -21328,6 +22383,8 @@ pub struct ExportFenceWin32HandleInfoKHRBuilder<'a> {
     inner: ExportFenceWin32HandleInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ExportFenceWin32HandleInfoKHRBuilderNext {}
+unsafe impl FenceCreateInfoBuilderNext for ExportFenceWin32HandleInfoKHRBuilderNext {}
 impl<'a> ::std::ops::Deref for ExportFenceWin32HandleInfoKHRBuilder<'a> {
     type Target = ExportFenceWin32HandleInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -21348,6 +22405,13 @@ impl<'a> ExportFenceWin32HandleInfoKHRBuilder<'a> {
     }
     pub fn name(mut self, name: LPCWSTR) -> ExportFenceWin32HandleInfoKHRBuilder<'a> {
         self.inner.name = name;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> ExportFenceWin32HandleInfoKHRBuilder<'a>
+    where
+        T: ExportFenceWin32HandleInfoKHRBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ExportFenceWin32HandleInfoKHR {
@@ -21384,6 +22448,7 @@ pub struct FenceGetWin32HandleInfoKHRBuilder<'a> {
     inner: FenceGetWin32HandleInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait FenceGetWin32HandleInfoKHRBuilderNext {}
 impl<'a> ::std::ops::Deref for FenceGetWin32HandleInfoKHRBuilder<'a> {
     type Target = FenceGetWin32HandleInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -21400,6 +22465,13 @@ impl<'a> FenceGetWin32HandleInfoKHRBuilder<'a> {
         handle_type: ExternalFenceHandleTypeFlags,
     ) -> FenceGetWin32HandleInfoKHRBuilder<'a> {
         self.inner.handle_type = handle_type;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> FenceGetWin32HandleInfoKHRBuilder<'a>
+    where
+        T: FenceGetWin32HandleInfoKHRBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> FenceGetWin32HandleInfoKHR {
@@ -21440,6 +22512,7 @@ pub struct ImportFenceFdInfoKHRBuilder<'a> {
     inner: ImportFenceFdInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ImportFenceFdInfoKHRBuilderNext {}
 impl<'a> ::std::ops::Deref for ImportFenceFdInfoKHRBuilder<'a> {
     type Target = ImportFenceFdInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -21464,6 +22537,13 @@ impl<'a> ImportFenceFdInfoKHRBuilder<'a> {
     }
     pub fn fd(mut self, fd: c_int) -> ImportFenceFdInfoKHRBuilder<'a> {
         self.inner.fd = fd;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> ImportFenceFdInfoKHRBuilder<'a>
+    where
+        T: ImportFenceFdInfoKHRBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ImportFenceFdInfoKHR {
@@ -21500,6 +22580,7 @@ pub struct FenceGetFdInfoKHRBuilder<'a> {
     inner: FenceGetFdInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait FenceGetFdInfoKHRBuilderNext {}
 impl<'a> ::std::ops::Deref for FenceGetFdInfoKHRBuilder<'a> {
     type Target = FenceGetFdInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -21516,6 +22597,13 @@ impl<'a> FenceGetFdInfoKHRBuilder<'a> {
         handle_type: ExternalFenceHandleTypeFlags,
     ) -> FenceGetFdInfoKHRBuilder<'a> {
         self.inner.handle_type = handle_type;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> FenceGetFdInfoKHRBuilder<'a>
+    where
+        T: FenceGetFdInfoKHRBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> FenceGetFdInfoKHR {
@@ -21554,6 +22642,9 @@ pub struct PhysicalDeviceMultiviewFeaturesBuilder<'a> {
     inner: PhysicalDeviceMultiviewFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceMultiviewFeaturesBuilderNext {}
+unsafe impl PhysicalDeviceFeatures2BuilderNext for PhysicalDeviceMultiviewFeaturesBuilderNext {}
+unsafe impl DeviceCreateInfoBuilderNext for PhysicalDeviceMultiviewFeaturesBuilderNext {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceMultiviewFeaturesBuilder<'a> {
     type Target = PhysicalDeviceMultiviewFeatures;
     fn deref(&self) -> &Self::Target {
@@ -21577,6 +22668,13 @@ impl<'a> PhysicalDeviceMultiviewFeaturesBuilder<'a> {
         multiview_tessellation_shader: bool,
     ) -> PhysicalDeviceMultiviewFeaturesBuilder<'a> {
         self.inner.multiview_tessellation_shader = multiview_tessellation_shader.into();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceMultiviewFeaturesBuilder<'a>
+    where
+        T: PhysicalDeviceMultiviewFeaturesBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceMultiviewFeatures {
@@ -21613,6 +22711,8 @@ pub struct PhysicalDeviceMultiviewPropertiesBuilder<'a> {
     inner: PhysicalDeviceMultiviewProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceMultiviewPropertiesBuilderNext {}
+unsafe impl PhysicalDeviceProperties2BuilderNext for PhysicalDeviceMultiviewPropertiesBuilderNext {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceMultiviewPropertiesBuilder<'a> {
     type Target = PhysicalDeviceMultiviewProperties;
     fn deref(&self) -> &Self::Target {
@@ -21632,6 +22732,13 @@ impl<'a> PhysicalDeviceMultiviewPropertiesBuilder<'a> {
         max_multiview_instance_index: u32,
     ) -> PhysicalDeviceMultiviewPropertiesBuilder<'a> {
         self.inner.max_multiview_instance_index = max_multiview_instance_index;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceMultiviewPropertiesBuilder<'a>
+    where
+        T: PhysicalDeviceMultiviewPropertiesBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceMultiviewProperties {
@@ -21676,6 +22783,8 @@ pub struct RenderPassMultiviewCreateInfoBuilder<'a> {
     inner: RenderPassMultiviewCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait RenderPassMultiviewCreateInfoBuilderNext {}
+unsafe impl RenderPassCreateInfoBuilderNext for RenderPassMultiviewCreateInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for RenderPassMultiviewCreateInfoBuilder<'a> {
     type Target = RenderPassMultiviewCreateInfo;
     fn deref(&self) -> &Self::Target {
@@ -21702,6 +22811,13 @@ impl<'a> RenderPassMultiviewCreateInfoBuilder<'a> {
     ) -> RenderPassMultiviewCreateInfoBuilder<'a> {
         self.inner.correlation_mask_count = correlation_masks.len() as _;
         self.inner.p_correlation_masks = correlation_masks.as_ptr();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> RenderPassMultiviewCreateInfoBuilder<'a>
+    where
+        T: RenderPassMultiviewCreateInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> RenderPassMultiviewCreateInfo {
@@ -21756,6 +22872,7 @@ pub struct SurfaceCapabilities2EXTBuilder<'a> {
     inner: SurfaceCapabilities2EXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait SurfaceCapabilities2EXTBuilderNext {}
 impl<'a> ::std::ops::Deref for SurfaceCapabilities2EXTBuilder<'a> {
     type Target = SurfaceCapabilities2EXT;
     fn deref(&self) -> &Self::Target {
@@ -21834,6 +22951,13 @@ impl<'a> SurfaceCapabilities2EXTBuilder<'a> {
         self.inner.supported_surface_counters = supported_surface_counters;
         self
     }
+    pub fn next<T>(mut self, next: &'a mut T) -> SurfaceCapabilities2EXTBuilder<'a>
+    where
+        T: SurfaceCapabilities2EXTBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
+        self
+    }
     pub fn build(self) -> SurfaceCapabilities2EXT {
         self.inner
     }
@@ -21866,6 +22990,7 @@ pub struct DisplayPowerInfoEXTBuilder<'a> {
     inner: DisplayPowerInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DisplayPowerInfoEXTBuilderNext {}
 impl<'a> ::std::ops::Deref for DisplayPowerInfoEXTBuilder<'a> {
     type Target = DisplayPowerInfoEXT;
     fn deref(&self) -> &Self::Target {
@@ -21878,6 +23003,13 @@ impl<'a> DisplayPowerInfoEXTBuilder<'a> {
         power_state: DisplayPowerStateEXT,
     ) -> DisplayPowerInfoEXTBuilder<'a> {
         self.inner.power_state = power_state;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> DisplayPowerInfoEXTBuilder<'a>
+    where
+        T: DisplayPowerInfoEXTBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DisplayPowerInfoEXT {
@@ -21912,6 +23044,7 @@ pub struct DeviceEventInfoEXTBuilder<'a> {
     inner: DeviceEventInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DeviceEventInfoEXTBuilderNext {}
 impl<'a> ::std::ops::Deref for DeviceEventInfoEXTBuilder<'a> {
     type Target = DeviceEventInfoEXT;
     fn deref(&self) -> &Self::Target {
@@ -21924,6 +23057,13 @@ impl<'a> DeviceEventInfoEXTBuilder<'a> {
         device_event: DeviceEventTypeEXT,
     ) -> DeviceEventInfoEXTBuilder<'a> {
         self.inner.device_event = device_event;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> DeviceEventInfoEXTBuilder<'a>
+    where
+        T: DeviceEventInfoEXTBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DeviceEventInfoEXT {
@@ -21958,6 +23098,7 @@ pub struct DisplayEventInfoEXTBuilder<'a> {
     inner: DisplayEventInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DisplayEventInfoEXTBuilderNext {}
 impl<'a> ::std::ops::Deref for DisplayEventInfoEXTBuilder<'a> {
     type Target = DisplayEventInfoEXT;
     fn deref(&self) -> &Self::Target {
@@ -21970,6 +23111,13 @@ impl<'a> DisplayEventInfoEXTBuilder<'a> {
         display_event: DisplayEventTypeEXT,
     ) -> DisplayEventInfoEXTBuilder<'a> {
         self.inner.display_event = display_event;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> DisplayEventInfoEXTBuilder<'a>
+    where
+        T: DisplayEventInfoEXTBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DisplayEventInfoEXT {
@@ -22004,6 +23152,8 @@ pub struct SwapchainCounterCreateInfoEXTBuilder<'a> {
     inner: SwapchainCounterCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait SwapchainCounterCreateInfoEXTBuilderNext {}
+unsafe impl SwapchainCreateInfoKHRBuilderNext for SwapchainCounterCreateInfoEXTBuilderNext {}
 impl<'a> ::std::ops::Deref for SwapchainCounterCreateInfoEXTBuilder<'a> {
     type Target = SwapchainCounterCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
@@ -22016,6 +23166,13 @@ impl<'a> SwapchainCounterCreateInfoEXTBuilder<'a> {
         surface_counters: SurfaceCounterFlagsEXT,
     ) -> SwapchainCounterCreateInfoEXTBuilder<'a> {
         self.inner.surface_counters = surface_counters;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> SwapchainCounterCreateInfoEXTBuilder<'a>
+    where
+        T: SwapchainCounterCreateInfoEXTBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> SwapchainCounterCreateInfoEXT {
@@ -22054,6 +23211,7 @@ pub struct PhysicalDeviceGroupPropertiesBuilder<'a> {
     inner: PhysicalDeviceGroupProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceGroupPropertiesBuilderNext {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceGroupPropertiesBuilder<'a> {
     type Target = PhysicalDeviceGroupProperties;
     fn deref(&self) -> &Self::Target {
@@ -22080,6 +23238,13 @@ impl<'a> PhysicalDeviceGroupPropertiesBuilder<'a> {
         subset_allocation: bool,
     ) -> PhysicalDeviceGroupPropertiesBuilder<'a> {
         self.inner.subset_allocation = subset_allocation.into();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceGroupPropertiesBuilder<'a>
+    where
+        T: PhysicalDeviceGroupPropertiesBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceGroupProperties {
@@ -22116,6 +23281,8 @@ pub struct MemoryAllocateFlagsInfoBuilder<'a> {
     inner: MemoryAllocateFlagsInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait MemoryAllocateFlagsInfoBuilderNext {}
+unsafe impl MemoryAllocateInfoBuilderNext for MemoryAllocateFlagsInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for MemoryAllocateFlagsInfoBuilder<'a> {
     type Target = MemoryAllocateFlagsInfo;
     fn deref(&self) -> &Self::Target {
@@ -22129,6 +23296,13 @@ impl<'a> MemoryAllocateFlagsInfoBuilder<'a> {
     }
     pub fn device_mask(mut self, device_mask: u32) -> MemoryAllocateFlagsInfoBuilder<'a> {
         self.inner.device_mask = device_mask;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> MemoryAllocateFlagsInfoBuilder<'a>
+    where
+        T: MemoryAllocateFlagsInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> MemoryAllocateFlagsInfo {
@@ -22167,6 +23341,7 @@ pub struct BindBufferMemoryInfoBuilder<'a> {
     inner: BindBufferMemoryInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait BindBufferMemoryInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for BindBufferMemoryInfoBuilder<'a> {
     type Target = BindBufferMemoryInfo;
     fn deref(&self) -> &Self::Target {
@@ -22184,6 +23359,13 @@ impl<'a> BindBufferMemoryInfoBuilder<'a> {
     }
     pub fn memory_offset(mut self, memory_offset: DeviceSize) -> BindBufferMemoryInfoBuilder<'a> {
         self.inner.memory_offset = memory_offset;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> BindBufferMemoryInfoBuilder<'a>
+    where
+        T: BindBufferMemoryInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> BindBufferMemoryInfo {
@@ -22220,6 +23402,8 @@ pub struct BindBufferMemoryDeviceGroupInfoBuilder<'a> {
     inner: BindBufferMemoryDeviceGroupInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait BindBufferMemoryDeviceGroupInfoBuilderNext {}
+unsafe impl BindBufferMemoryInfoBuilderNext for BindBufferMemoryDeviceGroupInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for BindBufferMemoryDeviceGroupInfoBuilder<'a> {
     type Target = BindBufferMemoryDeviceGroupInfo;
     fn deref(&self) -> &Self::Target {
@@ -22233,6 +23417,13 @@ impl<'a> BindBufferMemoryDeviceGroupInfoBuilder<'a> {
     ) -> BindBufferMemoryDeviceGroupInfoBuilder<'a> {
         self.inner.device_index_count = device_indices.len() as _;
         self.inner.p_device_indices = device_indices.as_ptr();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> BindBufferMemoryDeviceGroupInfoBuilder<'a>
+    where
+        T: BindBufferMemoryDeviceGroupInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> BindBufferMemoryDeviceGroupInfo {
@@ -22271,6 +23462,7 @@ pub struct BindImageMemoryInfoBuilder<'a> {
     inner: BindImageMemoryInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait BindImageMemoryInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for BindImageMemoryInfoBuilder<'a> {
     type Target = BindImageMemoryInfo;
     fn deref(&self) -> &Self::Target {
@@ -22288,6 +23480,13 @@ impl<'a> BindImageMemoryInfoBuilder<'a> {
     }
     pub fn memory_offset(mut self, memory_offset: DeviceSize) -> BindImageMemoryInfoBuilder<'a> {
         self.inner.memory_offset = memory_offset;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> BindImageMemoryInfoBuilder<'a>
+    where
+        T: BindImageMemoryInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> BindImageMemoryInfo {
@@ -22328,6 +23527,8 @@ pub struct BindImageMemoryDeviceGroupInfoBuilder<'a> {
     inner: BindImageMemoryDeviceGroupInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait BindImageMemoryDeviceGroupInfoBuilderNext {}
+unsafe impl BindImageMemoryInfoBuilderNext for BindImageMemoryDeviceGroupInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for BindImageMemoryDeviceGroupInfoBuilder<'a> {
     type Target = BindImageMemoryDeviceGroupInfo;
     fn deref(&self) -> &Self::Target {
@@ -22349,6 +23550,13 @@ impl<'a> BindImageMemoryDeviceGroupInfoBuilder<'a> {
     ) -> BindImageMemoryDeviceGroupInfoBuilder<'a> {
         self.inner.split_instance_bind_region_count = split_instance_bind_regions.len() as _;
         self.inner.p_split_instance_bind_regions = split_instance_bind_regions.as_ptr();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> BindImageMemoryDeviceGroupInfoBuilder<'a>
+    where
+        T: BindImageMemoryDeviceGroupInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> BindImageMemoryDeviceGroupInfo {
@@ -22387,6 +23595,8 @@ pub struct DeviceGroupRenderPassBeginInfoBuilder<'a> {
     inner: DeviceGroupRenderPassBeginInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DeviceGroupRenderPassBeginInfoBuilderNext {}
+unsafe impl RenderPassBeginInfoBuilderNext for DeviceGroupRenderPassBeginInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for DeviceGroupRenderPassBeginInfoBuilder<'a> {
     type Target = DeviceGroupRenderPassBeginInfo;
     fn deref(&self) -> &Self::Target {
@@ -22404,6 +23614,13 @@ impl<'a> DeviceGroupRenderPassBeginInfoBuilder<'a> {
     ) -> DeviceGroupRenderPassBeginInfoBuilder<'a> {
         self.inner.device_render_area_count = device_render_areas.len() as _;
         self.inner.p_device_render_areas = device_render_areas.as_ptr();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> DeviceGroupRenderPassBeginInfoBuilder<'a>
+    where
+        T: DeviceGroupRenderPassBeginInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DeviceGroupRenderPassBeginInfo {
@@ -22438,6 +23655,8 @@ pub struct DeviceGroupCommandBufferBeginInfoBuilder<'a> {
     inner: DeviceGroupCommandBufferBeginInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DeviceGroupCommandBufferBeginInfoBuilderNext {}
+unsafe impl CommandBufferBeginInfoBuilderNext for DeviceGroupCommandBufferBeginInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for DeviceGroupCommandBufferBeginInfoBuilder<'a> {
     type Target = DeviceGroupCommandBufferBeginInfo;
     fn deref(&self) -> &Self::Target {
@@ -22447,6 +23666,13 @@ impl<'a> ::std::ops::Deref for DeviceGroupCommandBufferBeginInfoBuilder<'a> {
 impl<'a> DeviceGroupCommandBufferBeginInfoBuilder<'a> {
     pub fn device_mask(mut self, device_mask: u32) -> DeviceGroupCommandBufferBeginInfoBuilder<'a> {
         self.inner.device_mask = device_mask;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> DeviceGroupCommandBufferBeginInfoBuilder<'a>
+    where
+        T: DeviceGroupCommandBufferBeginInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DeviceGroupCommandBufferBeginInfo {
@@ -22491,6 +23717,8 @@ pub struct DeviceGroupSubmitInfoBuilder<'a> {
     inner: DeviceGroupSubmitInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DeviceGroupSubmitInfoBuilderNext {}
+unsafe impl SubmitInfoBuilderNext for DeviceGroupSubmitInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for DeviceGroupSubmitInfoBuilder<'a> {
     type Target = DeviceGroupSubmitInfo;
     fn deref(&self) -> &Self::Target {
@@ -22520,6 +23748,13 @@ impl<'a> DeviceGroupSubmitInfoBuilder<'a> {
     ) -> DeviceGroupSubmitInfoBuilder<'a> {
         self.inner.signal_semaphore_count = signal_semaphore_device_indices.len() as _;
         self.inner.p_signal_semaphore_device_indices = signal_semaphore_device_indices.as_ptr();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> DeviceGroupSubmitInfoBuilder<'a>
+    where
+        T: DeviceGroupSubmitInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DeviceGroupSubmitInfo {
@@ -22556,6 +23791,8 @@ pub struct DeviceGroupBindSparseInfoBuilder<'a> {
     inner: DeviceGroupBindSparseInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DeviceGroupBindSparseInfoBuilderNext {}
+unsafe impl BindSparseInfoBuilderNext for DeviceGroupBindSparseInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for DeviceGroupBindSparseInfoBuilder<'a> {
     type Target = DeviceGroupBindSparseInfo;
     fn deref(&self) -> &Self::Target {
@@ -22575,6 +23812,13 @@ impl<'a> DeviceGroupBindSparseInfoBuilder<'a> {
         memory_device_index: u32,
     ) -> DeviceGroupBindSparseInfoBuilder<'a> {
         self.inner.memory_device_index = memory_device_index;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> DeviceGroupBindSparseInfoBuilder<'a>
+    where
+        T: DeviceGroupBindSparseInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DeviceGroupBindSparseInfo {
@@ -22611,6 +23855,7 @@ pub struct DeviceGroupPresentCapabilitiesKHRBuilder<'a> {
     inner: DeviceGroupPresentCapabilitiesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DeviceGroupPresentCapabilitiesKHRBuilderNext {}
 impl<'a> ::std::ops::Deref for DeviceGroupPresentCapabilitiesKHRBuilder<'a> {
     type Target = DeviceGroupPresentCapabilitiesKHR;
     fn deref(&self) -> &Self::Target {
@@ -22630,6 +23875,13 @@ impl<'a> DeviceGroupPresentCapabilitiesKHRBuilder<'a> {
         modes: DeviceGroupPresentModeFlagsKHR,
     ) -> DeviceGroupPresentCapabilitiesKHRBuilder<'a> {
         self.inner.modes = modes;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> DeviceGroupPresentCapabilitiesKHRBuilder<'a>
+    where
+        T: DeviceGroupPresentCapabilitiesKHRBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DeviceGroupPresentCapabilitiesKHR {
@@ -22664,6 +23916,8 @@ pub struct ImageSwapchainCreateInfoKHRBuilder<'a> {
     inner: ImageSwapchainCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ImageSwapchainCreateInfoKHRBuilderNext {}
+unsafe impl ImageCreateInfoBuilderNext for ImageSwapchainCreateInfoKHRBuilderNext {}
 impl<'a> ::std::ops::Deref for ImageSwapchainCreateInfoKHRBuilder<'a> {
     type Target = ImageSwapchainCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -22673,6 +23927,13 @@ impl<'a> ::std::ops::Deref for ImageSwapchainCreateInfoKHRBuilder<'a> {
 impl<'a> ImageSwapchainCreateInfoKHRBuilder<'a> {
     pub fn swapchain(mut self, swapchain: SwapchainKHR) -> ImageSwapchainCreateInfoKHRBuilder<'a> {
         self.inner.swapchain = swapchain;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> ImageSwapchainCreateInfoKHRBuilder<'a>
+    where
+        T: ImageSwapchainCreateInfoKHRBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ImageSwapchainCreateInfoKHR {
@@ -22709,6 +23970,8 @@ pub struct BindImageMemorySwapchainInfoKHRBuilder<'a> {
     inner: BindImageMemorySwapchainInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait BindImageMemorySwapchainInfoKHRBuilderNext {}
+unsafe impl BindImageMemoryInfoBuilderNext for BindImageMemorySwapchainInfoKHRBuilderNext {}
 impl<'a> ::std::ops::Deref for BindImageMemorySwapchainInfoKHRBuilder<'a> {
     type Target = BindImageMemorySwapchainInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -22725,6 +23988,13 @@ impl<'a> BindImageMemorySwapchainInfoKHRBuilder<'a> {
     }
     pub fn image_index(mut self, image_index: u32) -> BindImageMemorySwapchainInfoKHRBuilder<'a> {
         self.inner.image_index = image_index;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> BindImageMemorySwapchainInfoKHRBuilder<'a>
+    where
+        T: BindImageMemorySwapchainInfoKHRBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> BindImageMemorySwapchainInfoKHR {
@@ -22767,6 +24037,7 @@ pub struct AcquireNextImageInfoKHRBuilder<'a> {
     inner: AcquireNextImageInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait AcquireNextImageInfoKHRBuilderNext {}
 impl<'a> ::std::ops::Deref for AcquireNextImageInfoKHRBuilder<'a> {
     type Target = AcquireNextImageInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -22792,6 +24063,13 @@ impl<'a> AcquireNextImageInfoKHRBuilder<'a> {
     }
     pub fn device_mask(mut self, device_mask: u32) -> AcquireNextImageInfoKHRBuilder<'a> {
         self.inner.device_mask = device_mask;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> AcquireNextImageInfoKHRBuilder<'a>
+    where
+        T: AcquireNextImageInfoKHRBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> AcquireNextImageInfoKHR {
@@ -22830,6 +24108,8 @@ pub struct DeviceGroupPresentInfoKHRBuilder<'a> {
     inner: DeviceGroupPresentInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DeviceGroupPresentInfoKHRBuilderNext {}
+unsafe impl PresentInfoKHRBuilderNext for DeviceGroupPresentInfoKHRBuilderNext {}
 impl<'a> ::std::ops::Deref for DeviceGroupPresentInfoKHRBuilder<'a> {
     type Target = DeviceGroupPresentInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -22847,6 +24127,13 @@ impl<'a> DeviceGroupPresentInfoKHRBuilder<'a> {
         mode: DeviceGroupPresentModeFlagsKHR,
     ) -> DeviceGroupPresentInfoKHRBuilder<'a> {
         self.inner.mode = mode;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> DeviceGroupPresentInfoKHRBuilder<'a>
+    where
+        T: DeviceGroupPresentInfoKHRBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DeviceGroupPresentInfoKHR {
@@ -22883,6 +24170,8 @@ pub struct DeviceGroupDeviceCreateInfoBuilder<'a> {
     inner: DeviceGroupDeviceCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DeviceGroupDeviceCreateInfoBuilderNext {}
+unsafe impl DeviceCreateInfoBuilderNext for DeviceGroupDeviceCreateInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for DeviceGroupDeviceCreateInfoBuilder<'a> {
     type Target = DeviceGroupDeviceCreateInfo;
     fn deref(&self) -> &Self::Target {
@@ -22896,6 +24185,13 @@ impl<'a> DeviceGroupDeviceCreateInfoBuilder<'a> {
     ) -> DeviceGroupDeviceCreateInfoBuilder<'a> {
         self.inner.physical_device_count = physical_devices.len() as _;
         self.inner.p_physical_devices = physical_devices.as_ptr();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> DeviceGroupDeviceCreateInfoBuilder<'a>
+    where
+        T: DeviceGroupDeviceCreateInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DeviceGroupDeviceCreateInfo {
@@ -22930,6 +24226,8 @@ pub struct DeviceGroupSwapchainCreateInfoKHRBuilder<'a> {
     inner: DeviceGroupSwapchainCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DeviceGroupSwapchainCreateInfoKHRBuilderNext {}
+unsafe impl SwapchainCreateInfoKHRBuilderNext for DeviceGroupSwapchainCreateInfoKHRBuilderNext {}
 impl<'a> ::std::ops::Deref for DeviceGroupSwapchainCreateInfoKHRBuilder<'a> {
     type Target = DeviceGroupSwapchainCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -22942,6 +24240,13 @@ impl<'a> DeviceGroupSwapchainCreateInfoKHRBuilder<'a> {
         modes: DeviceGroupPresentModeFlagsKHR,
     ) -> DeviceGroupSwapchainCreateInfoKHRBuilder<'a> {
         self.inner.modes = modes;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> DeviceGroupSwapchainCreateInfoKHRBuilder<'a>
+    where
+        T: DeviceGroupSwapchainCreateInfoKHRBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DeviceGroupSwapchainCreateInfoKHR {
@@ -22970,6 +24275,7 @@ pub struct DescriptorUpdateTemplateEntryBuilder<'a> {
     inner: DescriptorUpdateTemplateEntry,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DescriptorUpdateTemplateEntryBuilderNext {}
 impl<'a> ::std::ops::Deref for DescriptorUpdateTemplateEntryBuilder<'a> {
     type Target = DescriptorUpdateTemplateEntry;
     fn deref(&self) -> &Self::Target {
@@ -23056,6 +24362,7 @@ pub struct DescriptorUpdateTemplateCreateInfoBuilder<'a> {
     inner: DescriptorUpdateTemplateCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DescriptorUpdateTemplateCreateInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for DescriptorUpdateTemplateCreateInfoBuilder<'a> {
     type Target = DescriptorUpdateTemplateCreateInfo;
     fn deref(&self) -> &Self::Target {
@@ -23110,6 +24417,13 @@ impl<'a> DescriptorUpdateTemplateCreateInfoBuilder<'a> {
         self.inner.set = set;
         self
     }
+    pub fn next<T>(mut self, next: &'a mut T) -> DescriptorUpdateTemplateCreateInfoBuilder<'a>
+    where
+        T: DescriptorUpdateTemplateCreateInfoBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
+        self
+    }
     pub fn build(self) -> DescriptorUpdateTemplateCreateInfo {
         self.inner
     }
@@ -23132,6 +24446,7 @@ pub struct XYColorEXTBuilder<'a> {
     inner: XYColorEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait XYColorEXTBuilderNext {}
 impl<'a> ::std::ops::Deref for XYColorEXTBuilder<'a> {
     type Target = XYColorEXT;
     fn deref(&self) -> &Self::Target {
@@ -23193,6 +24508,7 @@ pub struct HdrMetadataEXTBuilder<'a> {
     inner: HdrMetadataEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait HdrMetadataEXTBuilderNext {}
 impl<'a> ::std::ops::Deref for HdrMetadataEXTBuilder<'a> {
     type Target = HdrMetadataEXT;
     fn deref(&self) -> &Self::Target {
@@ -23247,6 +24563,13 @@ impl<'a> HdrMetadataEXTBuilder<'a> {
         self.inner.max_frame_average_light_level = max_frame_average_light_level;
         self
     }
+    pub fn next<T>(mut self, next: &'a T) -> HdrMetadataEXTBuilder<'a>
+    where
+        T: HdrMetadataEXTBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
+        self
+    }
     pub fn build(self) -> HdrMetadataEXT {
         self.inner
     }
@@ -23268,6 +24591,7 @@ pub struct RefreshCycleDurationGOOGLEBuilder<'a> {
     inner: RefreshCycleDurationGOOGLE,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait RefreshCycleDurationGOOGLEBuilderNext {}
 impl<'a> ::std::ops::Deref for RefreshCycleDurationGOOGLEBuilder<'a> {
     type Target = RefreshCycleDurationGOOGLE;
     fn deref(&self) -> &Self::Target {
@@ -23307,6 +24631,7 @@ pub struct PastPresentationTimingGOOGLEBuilder<'a> {
     inner: PastPresentationTimingGOOGLE,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PastPresentationTimingGOOGLEBuilderNext {}
 impl<'a> ::std::ops::Deref for PastPresentationTimingGOOGLEBuilder<'a> {
     type Target = PastPresentationTimingGOOGLE;
     fn deref(&self) -> &Self::Target {
@@ -23380,6 +24705,8 @@ pub struct PresentTimesInfoGOOGLEBuilder<'a> {
     inner: PresentTimesInfoGOOGLE,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PresentTimesInfoGOOGLEBuilderNext {}
+unsafe impl PresentInfoKHRBuilderNext for PresentTimesInfoGOOGLEBuilderNext {}
 impl<'a> ::std::ops::Deref for PresentTimesInfoGOOGLEBuilder<'a> {
     type Target = PresentTimesInfoGOOGLE;
     fn deref(&self) -> &Self::Target {
@@ -23390,6 +24717,13 @@ impl<'a> PresentTimesInfoGOOGLEBuilder<'a> {
     pub fn times(mut self, times: &'a [PresentTimeGOOGLE]) -> PresentTimesInfoGOOGLEBuilder<'a> {
         self.inner.swapchain_count = times.len() as _;
         self.inner.p_times = times.as_ptr();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> PresentTimesInfoGOOGLEBuilder<'a>
+    where
+        T: PresentTimesInfoGOOGLEBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> PresentTimesInfoGOOGLE {
@@ -23414,6 +24748,7 @@ pub struct PresentTimeGOOGLEBuilder<'a> {
     inner: PresentTimeGOOGLE,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PresentTimeGOOGLEBuilderNext {}
 impl<'a> ::std::ops::Deref for PresentTimeGOOGLEBuilder<'a> {
     type Target = PresentTimeGOOGLE;
     fn deref(&self) -> &Self::Target {
@@ -23466,6 +24801,7 @@ pub struct IOSSurfaceCreateInfoMVKBuilder<'a> {
     inner: IOSSurfaceCreateInfoMVK,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait IOSSurfaceCreateInfoMVKBuilderNext {}
 impl<'a> ::std::ops::Deref for IOSSurfaceCreateInfoMVKBuilder<'a> {
     type Target = IOSSurfaceCreateInfoMVK;
     fn deref(&self) -> &Self::Target {
@@ -23479,6 +24815,13 @@ impl<'a> IOSSurfaceCreateInfoMVKBuilder<'a> {
     }
     pub fn view(mut self, view: &'a c_void) -> IOSSurfaceCreateInfoMVKBuilder<'a> {
         self.inner.p_view = view;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> IOSSurfaceCreateInfoMVKBuilder<'a>
+    where
+        T: IOSSurfaceCreateInfoMVKBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> IOSSurfaceCreateInfoMVK {
@@ -23515,6 +24858,7 @@ pub struct MacOSSurfaceCreateInfoMVKBuilder<'a> {
     inner: MacOSSurfaceCreateInfoMVK,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait MacOSSurfaceCreateInfoMVKBuilderNext {}
 impl<'a> ::std::ops::Deref for MacOSSurfaceCreateInfoMVKBuilder<'a> {
     type Target = MacOSSurfaceCreateInfoMVK;
     fn deref(&self) -> &Self::Target {
@@ -23531,6 +24875,13 @@ impl<'a> MacOSSurfaceCreateInfoMVKBuilder<'a> {
     }
     pub fn view(mut self, view: &'a c_void) -> MacOSSurfaceCreateInfoMVKBuilder<'a> {
         self.inner.p_view = view;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> MacOSSurfaceCreateInfoMVKBuilder<'a>
+    where
+        T: MacOSSurfaceCreateInfoMVKBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> MacOSSurfaceCreateInfoMVK {
@@ -23555,6 +24906,7 @@ pub struct ViewportWScalingNVBuilder<'a> {
     inner: ViewportWScalingNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ViewportWScalingNVBuilderNext {}
 impl<'a> ::std::ops::Deref for ViewportWScalingNVBuilder<'a> {
     type Target = ViewportWScalingNV;
     fn deref(&self) -> &Self::Target {
@@ -23606,6 +24958,10 @@ pub struct PipelineViewportWScalingStateCreateInfoNVBuilder<'a> {
     inner: PipelineViewportWScalingStateCreateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PipelineViewportWScalingStateCreateInfoNVBuilderNext {}
+unsafe impl PipelineViewportStateCreateInfoBuilderNext
+    for PipelineViewportWScalingStateCreateInfoNVBuilderNext
+{}
 impl<'a> ::std::ops::Deref for PipelineViewportWScalingStateCreateInfoNVBuilder<'a> {
     type Target = PipelineViewportWScalingStateCreateInfoNV;
     fn deref(&self) -> &Self::Target {
@@ -23626,6 +24982,13 @@ impl<'a> PipelineViewportWScalingStateCreateInfoNVBuilder<'a> {
     ) -> PipelineViewportWScalingStateCreateInfoNVBuilder<'a> {
         self.inner.viewport_count = viewport_w_scalings.len() as _;
         self.inner.p_viewport_w_scalings = viewport_w_scalings.as_ptr();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> PipelineViewportWScalingStateCreateInfoNVBuilder<'a>
+    where
+        T: PipelineViewportWScalingStateCreateInfoNVBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> PipelineViewportWScalingStateCreateInfoNV {
@@ -23652,6 +25015,7 @@ pub struct ViewportSwizzleNVBuilder<'a> {
     inner: ViewportSwizzleNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ViewportSwizzleNVBuilderNext {}
 impl<'a> ::std::ops::Deref for ViewportSwizzleNVBuilder<'a> {
     type Target = ViewportSwizzleNV;
     fn deref(&self) -> &Self::Target {
@@ -23711,6 +25075,10 @@ pub struct PipelineViewportSwizzleStateCreateInfoNVBuilder<'a> {
     inner: PipelineViewportSwizzleStateCreateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PipelineViewportSwizzleStateCreateInfoNVBuilderNext {}
+unsafe impl PipelineViewportStateCreateInfoBuilderNext
+    for PipelineViewportSwizzleStateCreateInfoNVBuilderNext
+{}
 impl<'a> ::std::ops::Deref for PipelineViewportSwizzleStateCreateInfoNVBuilder<'a> {
     type Target = PipelineViewportSwizzleStateCreateInfoNV;
     fn deref(&self) -> &Self::Target {
@@ -23731,6 +25099,13 @@ impl<'a> PipelineViewportSwizzleStateCreateInfoNVBuilder<'a> {
     ) -> PipelineViewportSwizzleStateCreateInfoNVBuilder<'a> {
         self.inner.viewport_count = viewport_swizzles.len() as _;
         self.inner.p_viewport_swizzles = viewport_swizzles.as_ptr();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> PipelineViewportSwizzleStateCreateInfoNVBuilder<'a>
+    where
+        T: PipelineViewportSwizzleStateCreateInfoNVBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> PipelineViewportSwizzleStateCreateInfoNV {
@@ -23765,6 +25140,10 @@ pub struct PhysicalDeviceDiscardRectanglePropertiesEXTBuilder<'a> {
     inner: PhysicalDeviceDiscardRectanglePropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceDiscardRectanglePropertiesEXTBuilderNext {}
+unsafe impl PhysicalDeviceProperties2BuilderNext
+    for PhysicalDeviceDiscardRectanglePropertiesEXTBuilderNext
+{}
 impl<'a> ::std::ops::Deref for PhysicalDeviceDiscardRectanglePropertiesEXTBuilder<'a> {
     type Target = PhysicalDeviceDiscardRectanglePropertiesEXT;
     fn deref(&self) -> &Self::Target {
@@ -23777,6 +25156,16 @@ impl<'a> PhysicalDeviceDiscardRectanglePropertiesEXTBuilder<'a> {
         max_discard_rectangles: u32,
     ) -> PhysicalDeviceDiscardRectanglePropertiesEXTBuilder<'a> {
         self.inner.max_discard_rectangles = max_discard_rectangles;
+        self
+    }
+    pub fn next<T>(
+        mut self,
+        next: &'a mut T,
+    ) -> PhysicalDeviceDiscardRectanglePropertiesEXTBuilder<'a>
+    where
+        T: PhysicalDeviceDiscardRectanglePropertiesEXTBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceDiscardRectanglePropertiesEXT {
@@ -23817,6 +25206,10 @@ pub struct PipelineDiscardRectangleStateCreateInfoEXTBuilder<'a> {
     inner: PipelineDiscardRectangleStateCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PipelineDiscardRectangleStateCreateInfoEXTBuilderNext {}
+unsafe impl GraphicsPipelineCreateInfoBuilderNext
+    for PipelineDiscardRectangleStateCreateInfoEXTBuilderNext
+{}
 impl<'a> ::std::ops::Deref for PipelineDiscardRectangleStateCreateInfoEXTBuilder<'a> {
     type Target = PipelineDiscardRectangleStateCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
@@ -23844,6 +25237,13 @@ impl<'a> PipelineDiscardRectangleStateCreateInfoEXTBuilder<'a> {
     ) -> PipelineDiscardRectangleStateCreateInfoEXTBuilder<'a> {
         self.inner.discard_rectangle_count = discard_rectangles.len() as _;
         self.inner.p_discard_rectangles = discard_rectangles.as_ptr();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> PipelineDiscardRectangleStateCreateInfoEXTBuilder<'a>
+    where
+        T: PipelineDiscardRectangleStateCreateInfoEXTBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> PipelineDiscardRectangleStateCreateInfoEXT {
@@ -23878,6 +25278,10 @@ pub struct PhysicalDeviceMultiviewPerViewAttributesPropertiesNVXBuilder<'a> {
     inner: PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceMultiviewPerViewAttributesPropertiesNVXBuilderNext {}
+unsafe impl PhysicalDeviceProperties2BuilderNext
+    for PhysicalDeviceMultiviewPerViewAttributesPropertiesNVXBuilderNext
+{}
 impl<'a> ::std::ops::Deref for PhysicalDeviceMultiviewPerViewAttributesPropertiesNVXBuilder<'a> {
     type Target = PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX;
     fn deref(&self) -> &Self::Target {
@@ -23890,6 +25294,16 @@ impl<'a> PhysicalDeviceMultiviewPerViewAttributesPropertiesNVXBuilder<'a> {
         per_view_position_all_components: bool,
     ) -> PhysicalDeviceMultiviewPerViewAttributesPropertiesNVXBuilder<'a> {
         self.inner.per_view_position_all_components = per_view_position_all_components.into();
+        self
+    }
+    pub fn next<T>(
+        mut self,
+        next: &'a mut T,
+    ) -> PhysicalDeviceMultiviewPerViewAttributesPropertiesNVXBuilder<'a>
+    where
+        T: PhysicalDeviceMultiviewPerViewAttributesPropertiesNVXBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX {
@@ -23915,6 +25329,7 @@ pub struct InputAttachmentAspectReferenceBuilder<'a> {
     inner: InputAttachmentAspectReference,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait InputAttachmentAspectReferenceBuilderNext {}
 impl<'a> ::std::ops::Deref for InputAttachmentAspectReferenceBuilder<'a> {
     type Target = InputAttachmentAspectReference;
     fn deref(&self) -> &Self::Target {
@@ -23974,6 +25389,10 @@ pub struct RenderPassInputAttachmentAspectCreateInfoBuilder<'a> {
     inner: RenderPassInputAttachmentAspectCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait RenderPassInputAttachmentAspectCreateInfoBuilderNext {}
+unsafe impl RenderPassCreateInfoBuilderNext
+    for RenderPassInputAttachmentAspectCreateInfoBuilderNext
+{}
 impl<'a> ::std::ops::Deref for RenderPassInputAttachmentAspectCreateInfoBuilder<'a> {
     type Target = RenderPassInputAttachmentAspectCreateInfo;
     fn deref(&self) -> &Self::Target {
@@ -23987,6 +25406,13 @@ impl<'a> RenderPassInputAttachmentAspectCreateInfoBuilder<'a> {
     ) -> RenderPassInputAttachmentAspectCreateInfoBuilder<'a> {
         self.inner.aspect_reference_count = aspect_references.len() as _;
         self.inner.p_aspect_references = aspect_references.as_ptr();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> RenderPassInputAttachmentAspectCreateInfoBuilder<'a>
+    where
+        T: RenderPassInputAttachmentAspectCreateInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> RenderPassInputAttachmentAspectCreateInfo {
@@ -24021,6 +25447,7 @@ pub struct PhysicalDeviceSurfaceInfo2KHRBuilder<'a> {
     inner: PhysicalDeviceSurfaceInfo2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceSurfaceInfo2KHRBuilderNext {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceSurfaceInfo2KHRBuilder<'a> {
     type Target = PhysicalDeviceSurfaceInfo2KHR;
     fn deref(&self) -> &Self::Target {
@@ -24030,6 +25457,13 @@ impl<'a> ::std::ops::Deref for PhysicalDeviceSurfaceInfo2KHRBuilder<'a> {
 impl<'a> PhysicalDeviceSurfaceInfo2KHRBuilder<'a> {
     pub fn surface(mut self, surface: SurfaceKHR) -> PhysicalDeviceSurfaceInfo2KHRBuilder<'a> {
         self.inner.surface = surface;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> PhysicalDeviceSurfaceInfo2KHRBuilder<'a>
+    where
+        T: PhysicalDeviceSurfaceInfo2KHRBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceSurfaceInfo2KHR {
@@ -24064,6 +25498,7 @@ pub struct SurfaceCapabilities2KHRBuilder<'a> {
     inner: SurfaceCapabilities2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait SurfaceCapabilities2KHRBuilderNext {}
 impl<'a> ::std::ops::Deref for SurfaceCapabilities2KHRBuilder<'a> {
     type Target = SurfaceCapabilities2KHR;
     fn deref(&self) -> &Self::Target {
@@ -24076,6 +25511,13 @@ impl<'a> SurfaceCapabilities2KHRBuilder<'a> {
         surface_capabilities: SurfaceCapabilitiesKHR,
     ) -> SurfaceCapabilities2KHRBuilder<'a> {
         self.inner.surface_capabilities = surface_capabilities;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> SurfaceCapabilities2KHRBuilder<'a>
+    where
+        T: SurfaceCapabilities2KHRBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> SurfaceCapabilities2KHR {
@@ -24110,6 +25552,7 @@ pub struct SurfaceFormat2KHRBuilder<'a> {
     inner: SurfaceFormat2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait SurfaceFormat2KHRBuilderNext {}
 impl<'a> ::std::ops::Deref for SurfaceFormat2KHRBuilder<'a> {
     type Target = SurfaceFormat2KHR;
     fn deref(&self) -> &Self::Target {
@@ -24122,6 +25565,13 @@ impl<'a> SurfaceFormat2KHRBuilder<'a> {
         surface_format: SurfaceFormatKHR,
     ) -> SurfaceFormat2KHRBuilder<'a> {
         self.inner.surface_format = surface_format;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> SurfaceFormat2KHRBuilder<'a>
+    where
+        T: SurfaceFormat2KHRBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> SurfaceFormat2KHR {
@@ -24156,6 +25606,7 @@ pub struct DisplayProperties2KHRBuilder<'a> {
     inner: DisplayProperties2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DisplayProperties2KHRBuilderNext {}
 impl<'a> ::std::ops::Deref for DisplayProperties2KHRBuilder<'a> {
     type Target = DisplayProperties2KHR;
     fn deref(&self) -> &Self::Target {
@@ -24168,6 +25619,13 @@ impl<'a> DisplayProperties2KHRBuilder<'a> {
         display_properties: DisplayPropertiesKHR,
     ) -> DisplayProperties2KHRBuilder<'a> {
         self.inner.display_properties = display_properties;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> DisplayProperties2KHRBuilder<'a>
+    where
+        T: DisplayProperties2KHRBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> DisplayProperties2KHR {
@@ -24202,6 +25660,7 @@ pub struct DisplayPlaneProperties2KHRBuilder<'a> {
     inner: DisplayPlaneProperties2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DisplayPlaneProperties2KHRBuilderNext {}
 impl<'a> ::std::ops::Deref for DisplayPlaneProperties2KHRBuilder<'a> {
     type Target = DisplayPlaneProperties2KHR;
     fn deref(&self) -> &Self::Target {
@@ -24214,6 +25673,13 @@ impl<'a> DisplayPlaneProperties2KHRBuilder<'a> {
         display_plane_properties: DisplayPlanePropertiesKHR,
     ) -> DisplayPlaneProperties2KHRBuilder<'a> {
         self.inner.display_plane_properties = display_plane_properties;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> DisplayPlaneProperties2KHRBuilder<'a>
+    where
+        T: DisplayPlaneProperties2KHRBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> DisplayPlaneProperties2KHR {
@@ -24248,6 +25714,7 @@ pub struct DisplayModeProperties2KHRBuilder<'a> {
     inner: DisplayModeProperties2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DisplayModeProperties2KHRBuilderNext {}
 impl<'a> ::std::ops::Deref for DisplayModeProperties2KHRBuilder<'a> {
     type Target = DisplayModeProperties2KHR;
     fn deref(&self) -> &Self::Target {
@@ -24260,6 +25727,13 @@ impl<'a> DisplayModeProperties2KHRBuilder<'a> {
         display_mode_properties: DisplayModePropertiesKHR,
     ) -> DisplayModeProperties2KHRBuilder<'a> {
         self.inner.display_mode_properties = display_mode_properties;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> DisplayModeProperties2KHRBuilder<'a>
+    where
+        T: DisplayModeProperties2KHRBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> DisplayModeProperties2KHR {
@@ -24296,6 +25770,7 @@ pub struct DisplayPlaneInfo2KHRBuilder<'a> {
     inner: DisplayPlaneInfo2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DisplayPlaneInfo2KHRBuilderNext {}
 impl<'a> ::std::ops::Deref for DisplayPlaneInfo2KHRBuilder<'a> {
     type Target = DisplayPlaneInfo2KHR;
     fn deref(&self) -> &Self::Target {
@@ -24309,6 +25784,13 @@ impl<'a> DisplayPlaneInfo2KHRBuilder<'a> {
     }
     pub fn plane_index(mut self, plane_index: u32) -> DisplayPlaneInfo2KHRBuilder<'a> {
         self.inner.plane_index = plane_index;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> DisplayPlaneInfo2KHRBuilder<'a>
+    where
+        T: DisplayPlaneInfo2KHRBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DisplayPlaneInfo2KHR {
@@ -24343,6 +25825,7 @@ pub struct DisplayPlaneCapabilities2KHRBuilder<'a> {
     inner: DisplayPlaneCapabilities2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DisplayPlaneCapabilities2KHRBuilderNext {}
 impl<'a> ::std::ops::Deref for DisplayPlaneCapabilities2KHRBuilder<'a> {
     type Target = DisplayPlaneCapabilities2KHR;
     fn deref(&self) -> &Self::Target {
@@ -24355,6 +25838,13 @@ impl<'a> DisplayPlaneCapabilities2KHRBuilder<'a> {
         capabilities: DisplayPlaneCapabilitiesKHR,
     ) -> DisplayPlaneCapabilities2KHRBuilder<'a> {
         self.inner.capabilities = capabilities;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> DisplayPlaneCapabilities2KHRBuilder<'a>
+    where
+        T: DisplayPlaneCapabilities2KHRBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> DisplayPlaneCapabilities2KHR {
@@ -24389,6 +25879,8 @@ pub struct SharedPresentSurfaceCapabilitiesKHRBuilder<'a> {
     inner: SharedPresentSurfaceCapabilitiesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait SharedPresentSurfaceCapabilitiesKHRBuilderNext {}
+unsafe impl SurfaceCapabilities2KHRBuilderNext for SharedPresentSurfaceCapabilitiesKHRBuilderNext {}
 impl<'a> ::std::ops::Deref for SharedPresentSurfaceCapabilitiesKHRBuilder<'a> {
     type Target = SharedPresentSurfaceCapabilitiesKHR;
     fn deref(&self) -> &Self::Target {
@@ -24401,6 +25893,13 @@ impl<'a> SharedPresentSurfaceCapabilitiesKHRBuilder<'a> {
         shared_present_supported_usage_flags: ImageUsageFlags,
     ) -> SharedPresentSurfaceCapabilitiesKHRBuilder<'a> {
         self.inner.shared_present_supported_usage_flags = shared_present_supported_usage_flags;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> SharedPresentSurfaceCapabilitiesKHRBuilder<'a>
+    where
+        T: SharedPresentSurfaceCapabilitiesKHRBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> SharedPresentSurfaceCapabilitiesKHR {
@@ -24441,6 +25940,9 @@ pub struct PhysicalDevice16BitStorageFeaturesBuilder<'a> {
     inner: PhysicalDevice16BitStorageFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDevice16BitStorageFeaturesBuilderNext {}
+unsafe impl PhysicalDeviceFeatures2BuilderNext for PhysicalDevice16BitStorageFeaturesBuilderNext {}
+unsafe impl DeviceCreateInfoBuilderNext for PhysicalDevice16BitStorageFeaturesBuilderNext {}
 impl<'a> ::std::ops::Deref for PhysicalDevice16BitStorageFeaturesBuilder<'a> {
     type Target = PhysicalDevice16BitStorageFeatures;
     fn deref(&self) -> &Self::Target {
@@ -24475,6 +25977,13 @@ impl<'a> PhysicalDevice16BitStorageFeaturesBuilder<'a> {
         storage_input_output16: bool,
     ) -> PhysicalDevice16BitStorageFeaturesBuilder<'a> {
         self.inner.storage_input_output16 = storage_input_output16.into();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDevice16BitStorageFeaturesBuilder<'a>
+    where
+        T: PhysicalDevice16BitStorageFeaturesBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDevice16BitStorageFeatures {
@@ -24515,6 +26024,8 @@ pub struct PhysicalDeviceSubgroupPropertiesBuilder<'a> {
     inner: PhysicalDeviceSubgroupProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceSubgroupPropertiesBuilderNext {}
+unsafe impl PhysicalDeviceProperties2BuilderNext for PhysicalDeviceSubgroupPropertiesBuilderNext {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceSubgroupPropertiesBuilder<'a> {
     type Target = PhysicalDeviceSubgroupProperties;
     fn deref(&self) -> &Self::Target {
@@ -24550,6 +26061,13 @@ impl<'a> PhysicalDeviceSubgroupPropertiesBuilder<'a> {
         self.inner.quad_operations_in_all_stages = quad_operations_in_all_stages.into();
         self
     }
+    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceSubgroupPropertiesBuilder<'a>
+    where
+        T: PhysicalDeviceSubgroupPropertiesBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
+        self
+    }
     pub fn build(self) -> PhysicalDeviceSubgroupProperties {
         self.inner
     }
@@ -24582,6 +26100,7 @@ pub struct BufferMemoryRequirementsInfo2Builder<'a> {
     inner: BufferMemoryRequirementsInfo2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait BufferMemoryRequirementsInfo2BuilderNext {}
 impl<'a> ::std::ops::Deref for BufferMemoryRequirementsInfo2Builder<'a> {
     type Target = BufferMemoryRequirementsInfo2;
     fn deref(&self) -> &Self::Target {
@@ -24591,6 +26110,13 @@ impl<'a> ::std::ops::Deref for BufferMemoryRequirementsInfo2Builder<'a> {
 impl<'a> BufferMemoryRequirementsInfo2Builder<'a> {
     pub fn buffer(mut self, buffer: Buffer) -> BufferMemoryRequirementsInfo2Builder<'a> {
         self.inner.buffer = buffer;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> BufferMemoryRequirementsInfo2Builder<'a>
+    where
+        T: BufferMemoryRequirementsInfo2BuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> BufferMemoryRequirementsInfo2 {
@@ -24625,6 +26151,7 @@ pub struct ImageMemoryRequirementsInfo2Builder<'a> {
     inner: ImageMemoryRequirementsInfo2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ImageMemoryRequirementsInfo2BuilderNext {}
 impl<'a> ::std::ops::Deref for ImageMemoryRequirementsInfo2Builder<'a> {
     type Target = ImageMemoryRequirementsInfo2;
     fn deref(&self) -> &Self::Target {
@@ -24634,6 +26161,13 @@ impl<'a> ::std::ops::Deref for ImageMemoryRequirementsInfo2Builder<'a> {
 impl<'a> ImageMemoryRequirementsInfo2Builder<'a> {
     pub fn image(mut self, image: Image) -> ImageMemoryRequirementsInfo2Builder<'a> {
         self.inner.image = image;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> ImageMemoryRequirementsInfo2Builder<'a>
+    where
+        T: ImageMemoryRequirementsInfo2BuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ImageMemoryRequirementsInfo2 {
@@ -24668,6 +26202,7 @@ pub struct ImageSparseMemoryRequirementsInfo2Builder<'a> {
     inner: ImageSparseMemoryRequirementsInfo2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ImageSparseMemoryRequirementsInfo2BuilderNext {}
 impl<'a> ::std::ops::Deref for ImageSparseMemoryRequirementsInfo2Builder<'a> {
     type Target = ImageSparseMemoryRequirementsInfo2;
     fn deref(&self) -> &Self::Target {
@@ -24677,6 +26212,13 @@ impl<'a> ::std::ops::Deref for ImageSparseMemoryRequirementsInfo2Builder<'a> {
 impl<'a> ImageSparseMemoryRequirementsInfo2Builder<'a> {
     pub fn image(mut self, image: Image) -> ImageSparseMemoryRequirementsInfo2Builder<'a> {
         self.inner.image = image;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> ImageSparseMemoryRequirementsInfo2Builder<'a>
+    where
+        T: ImageSparseMemoryRequirementsInfo2BuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ImageSparseMemoryRequirementsInfo2 {
@@ -24711,6 +26253,7 @@ pub struct MemoryRequirements2Builder<'a> {
     inner: MemoryRequirements2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait MemoryRequirements2BuilderNext {}
 impl<'a> ::std::ops::Deref for MemoryRequirements2Builder<'a> {
     type Target = MemoryRequirements2;
     fn deref(&self) -> &Self::Target {
@@ -24723,6 +26266,13 @@ impl<'a> MemoryRequirements2Builder<'a> {
         memory_requirements: MemoryRequirements,
     ) -> MemoryRequirements2Builder<'a> {
         self.inner.memory_requirements = memory_requirements;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> MemoryRequirements2Builder<'a>
+    where
+        T: MemoryRequirements2BuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> MemoryRequirements2 {
@@ -24757,6 +26307,7 @@ pub struct SparseImageMemoryRequirements2Builder<'a> {
     inner: SparseImageMemoryRequirements2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait SparseImageMemoryRequirements2BuilderNext {}
 impl<'a> ::std::ops::Deref for SparseImageMemoryRequirements2Builder<'a> {
     type Target = SparseImageMemoryRequirements2;
     fn deref(&self) -> &Self::Target {
@@ -24769,6 +26320,13 @@ impl<'a> SparseImageMemoryRequirements2Builder<'a> {
         memory_requirements: SparseImageMemoryRequirements,
     ) -> SparseImageMemoryRequirements2Builder<'a> {
         self.inner.memory_requirements = memory_requirements;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> SparseImageMemoryRequirements2Builder<'a>
+    where
+        T: SparseImageMemoryRequirements2BuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> SparseImageMemoryRequirements2 {
@@ -24803,6 +26361,10 @@ pub struct PhysicalDevicePointClippingPropertiesBuilder<'a> {
     inner: PhysicalDevicePointClippingProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDevicePointClippingPropertiesBuilderNext {}
+unsafe impl PhysicalDeviceProperties2BuilderNext
+    for PhysicalDevicePointClippingPropertiesBuilderNext
+{}
 impl<'a> ::std::ops::Deref for PhysicalDevicePointClippingPropertiesBuilder<'a> {
     type Target = PhysicalDevicePointClippingProperties;
     fn deref(&self) -> &Self::Target {
@@ -24815,6 +26377,13 @@ impl<'a> PhysicalDevicePointClippingPropertiesBuilder<'a> {
         point_clipping_behavior: PointClippingBehavior,
     ) -> PhysicalDevicePointClippingPropertiesBuilder<'a> {
         self.inner.point_clipping_behavior = point_clipping_behavior;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDevicePointClippingPropertiesBuilder<'a>
+    where
+        T: PhysicalDevicePointClippingPropertiesBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDevicePointClippingProperties {
@@ -24851,6 +26420,8 @@ pub struct MemoryDedicatedRequirementsBuilder<'a> {
     inner: MemoryDedicatedRequirements,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait MemoryDedicatedRequirementsBuilderNext {}
+unsafe impl MemoryRequirements2BuilderNext for MemoryDedicatedRequirementsBuilderNext {}
 impl<'a> ::std::ops::Deref for MemoryDedicatedRequirementsBuilder<'a> {
     type Target = MemoryDedicatedRequirements;
     fn deref(&self) -> &Self::Target {
@@ -24870,6 +26441,13 @@ impl<'a> MemoryDedicatedRequirementsBuilder<'a> {
         requires_dedicated_allocation: bool,
     ) -> MemoryDedicatedRequirementsBuilder<'a> {
         self.inner.requires_dedicated_allocation = requires_dedicated_allocation.into();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> MemoryDedicatedRequirementsBuilder<'a>
+    where
+        T: MemoryDedicatedRequirementsBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> MemoryDedicatedRequirements {
@@ -24906,6 +26484,8 @@ pub struct MemoryDedicatedAllocateInfoBuilder<'a> {
     inner: MemoryDedicatedAllocateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait MemoryDedicatedAllocateInfoBuilderNext {}
+unsafe impl MemoryAllocateInfoBuilderNext for MemoryDedicatedAllocateInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for MemoryDedicatedAllocateInfoBuilder<'a> {
     type Target = MemoryDedicatedAllocateInfo;
     fn deref(&self) -> &Self::Target {
@@ -24919,6 +26499,13 @@ impl<'a> MemoryDedicatedAllocateInfoBuilder<'a> {
     }
     pub fn buffer(mut self, buffer: Buffer) -> MemoryDedicatedAllocateInfoBuilder<'a> {
         self.inner.buffer = buffer;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> MemoryDedicatedAllocateInfoBuilder<'a>
+    where
+        T: MemoryDedicatedAllocateInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> MemoryDedicatedAllocateInfo {
@@ -24953,6 +26540,8 @@ pub struct ImageViewUsageCreateInfoBuilder<'a> {
     inner: ImageViewUsageCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ImageViewUsageCreateInfoBuilderNext {}
+unsafe impl ImageViewCreateInfoBuilderNext for ImageViewUsageCreateInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for ImageViewUsageCreateInfoBuilder<'a> {
     type Target = ImageViewUsageCreateInfo;
     fn deref(&self) -> &Self::Target {
@@ -24962,6 +26551,13 @@ impl<'a> ::std::ops::Deref for ImageViewUsageCreateInfoBuilder<'a> {
 impl<'a> ImageViewUsageCreateInfoBuilder<'a> {
     pub fn usage(mut self, usage: ImageUsageFlags) -> ImageViewUsageCreateInfoBuilder<'a> {
         self.inner.usage = usage;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> ImageViewUsageCreateInfoBuilder<'a>
+    where
+        T: ImageViewUsageCreateInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ImageViewUsageCreateInfo {
@@ -24996,6 +26592,10 @@ pub struct PipelineTessellationDomainOriginStateCreateInfoBuilder<'a> {
     inner: PipelineTessellationDomainOriginStateCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PipelineTessellationDomainOriginStateCreateInfoBuilderNext {}
+unsafe impl PipelineTessellationStateCreateInfoBuilderNext
+    for PipelineTessellationDomainOriginStateCreateInfoBuilderNext
+{}
 impl<'a> ::std::ops::Deref for PipelineTessellationDomainOriginStateCreateInfoBuilder<'a> {
     type Target = PipelineTessellationDomainOriginStateCreateInfo;
     fn deref(&self) -> &Self::Target {
@@ -25008,6 +26608,16 @@ impl<'a> PipelineTessellationDomainOriginStateCreateInfoBuilder<'a> {
         domain_origin: TessellationDomainOrigin,
     ) -> PipelineTessellationDomainOriginStateCreateInfoBuilder<'a> {
         self.inner.domain_origin = domain_origin;
+        self
+    }
+    pub fn next<T>(
+        mut self,
+        next: &'a T,
+    ) -> PipelineTessellationDomainOriginStateCreateInfoBuilder<'a>
+    where
+        T: PipelineTessellationDomainOriginStateCreateInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> PipelineTessellationDomainOriginStateCreateInfo {
@@ -25042,6 +26652,9 @@ pub struct SamplerYcbcrConversionInfoBuilder<'a> {
     inner: SamplerYcbcrConversionInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait SamplerYcbcrConversionInfoBuilderNext {}
+unsafe impl SamplerCreateInfoBuilderNext for SamplerYcbcrConversionInfoBuilderNext {}
+unsafe impl ImageViewCreateInfoBuilderNext for SamplerYcbcrConversionInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for SamplerYcbcrConversionInfoBuilder<'a> {
     type Target = SamplerYcbcrConversionInfo;
     fn deref(&self) -> &Self::Target {
@@ -25054,6 +26667,13 @@ impl<'a> SamplerYcbcrConversionInfoBuilder<'a> {
         conversion: SamplerYcbcrConversion,
     ) -> SamplerYcbcrConversionInfoBuilder<'a> {
         self.inner.conversion = conversion;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> SamplerYcbcrConversionInfoBuilder<'a>
+    where
+        T: SamplerYcbcrConversionInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> SamplerYcbcrConversionInfo {
@@ -25102,6 +26722,7 @@ pub struct SamplerYcbcrConversionCreateInfoBuilder<'a> {
     inner: SamplerYcbcrConversionCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait SamplerYcbcrConversionCreateInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for SamplerYcbcrConversionCreateInfoBuilder<'a> {
     type Target = SamplerYcbcrConversionCreateInfo;
     fn deref(&self) -> &Self::Target {
@@ -25162,6 +26783,13 @@ impl<'a> SamplerYcbcrConversionCreateInfoBuilder<'a> {
         self.inner.force_explicit_reconstruction = force_explicit_reconstruction.into();
         self
     }
+    pub fn next<T>(mut self, next: &'a T) -> SamplerYcbcrConversionCreateInfoBuilder<'a>
+    where
+        T: SamplerYcbcrConversionCreateInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
+        self
+    }
     pub fn build(self) -> SamplerYcbcrConversionCreateInfo {
         self.inner
     }
@@ -25194,6 +26822,8 @@ pub struct BindImagePlaneMemoryInfoBuilder<'a> {
     inner: BindImagePlaneMemoryInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait BindImagePlaneMemoryInfoBuilderNext {}
+unsafe impl BindImageMemoryInfoBuilderNext for BindImagePlaneMemoryInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for BindImagePlaneMemoryInfoBuilder<'a> {
     type Target = BindImagePlaneMemoryInfo;
     fn deref(&self) -> &Self::Target {
@@ -25206,6 +26836,13 @@ impl<'a> BindImagePlaneMemoryInfoBuilder<'a> {
         plane_aspect: ImageAspectFlags,
     ) -> BindImagePlaneMemoryInfoBuilder<'a> {
         self.inner.plane_aspect = plane_aspect;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> BindImagePlaneMemoryInfoBuilder<'a>
+    where
+        T: BindImagePlaneMemoryInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> BindImagePlaneMemoryInfo {
@@ -25240,6 +26877,10 @@ pub struct ImagePlaneMemoryRequirementsInfoBuilder<'a> {
     inner: ImagePlaneMemoryRequirementsInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ImagePlaneMemoryRequirementsInfoBuilderNext {}
+unsafe impl ImageMemoryRequirementsInfo2BuilderNext
+    for ImagePlaneMemoryRequirementsInfoBuilderNext
+{}
 impl<'a> ::std::ops::Deref for ImagePlaneMemoryRequirementsInfoBuilder<'a> {
     type Target = ImagePlaneMemoryRequirementsInfo;
     fn deref(&self) -> &Self::Target {
@@ -25252,6 +26893,13 @@ impl<'a> ImagePlaneMemoryRequirementsInfoBuilder<'a> {
         plane_aspect: ImageAspectFlags,
     ) -> ImagePlaneMemoryRequirementsInfoBuilder<'a> {
         self.inner.plane_aspect = plane_aspect;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> ImagePlaneMemoryRequirementsInfoBuilder<'a>
+    where
+        T: ImagePlaneMemoryRequirementsInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ImagePlaneMemoryRequirementsInfo {
@@ -25286,6 +26934,13 @@ pub struct PhysicalDeviceSamplerYcbcrConversionFeaturesBuilder<'a> {
     inner: PhysicalDeviceSamplerYcbcrConversionFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceSamplerYcbcrConversionFeaturesBuilderNext {}
+unsafe impl PhysicalDeviceFeatures2BuilderNext
+    for PhysicalDeviceSamplerYcbcrConversionFeaturesBuilderNext
+{}
+unsafe impl DeviceCreateInfoBuilderNext
+    for PhysicalDeviceSamplerYcbcrConversionFeaturesBuilderNext
+{}
 impl<'a> ::std::ops::Deref for PhysicalDeviceSamplerYcbcrConversionFeaturesBuilder<'a> {
     type Target = PhysicalDeviceSamplerYcbcrConversionFeatures;
     fn deref(&self) -> &Self::Target {
@@ -25298,6 +26953,16 @@ impl<'a> PhysicalDeviceSamplerYcbcrConversionFeaturesBuilder<'a> {
         sampler_ycbcr_conversion: bool,
     ) -> PhysicalDeviceSamplerYcbcrConversionFeaturesBuilder<'a> {
         self.inner.sampler_ycbcr_conversion = sampler_ycbcr_conversion.into();
+        self
+    }
+    pub fn next<T>(
+        mut self,
+        next: &'a mut T,
+    ) -> PhysicalDeviceSamplerYcbcrConversionFeaturesBuilder<'a>
+    where
+        T: PhysicalDeviceSamplerYcbcrConversionFeaturesBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceSamplerYcbcrConversionFeatures {
@@ -25332,6 +26997,10 @@ pub struct SamplerYcbcrConversionImageFormatPropertiesBuilder<'a> {
     inner: SamplerYcbcrConversionImageFormatProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait SamplerYcbcrConversionImageFormatPropertiesBuilderNext {}
+unsafe impl ImageFormatProperties2BuilderNext
+    for SamplerYcbcrConversionImageFormatPropertiesBuilderNext
+{}
 impl<'a> ::std::ops::Deref for SamplerYcbcrConversionImageFormatPropertiesBuilder<'a> {
     type Target = SamplerYcbcrConversionImageFormatProperties;
     fn deref(&self) -> &Self::Target {
@@ -25345,6 +27014,16 @@ impl<'a> SamplerYcbcrConversionImageFormatPropertiesBuilder<'a> {
     ) -> SamplerYcbcrConversionImageFormatPropertiesBuilder<'a> {
         self.inner.combined_image_sampler_descriptor_count =
             combined_image_sampler_descriptor_count;
+        self
+    }
+    pub fn next<T>(
+        mut self,
+        next: &'a mut T,
+    ) -> SamplerYcbcrConversionImageFormatPropertiesBuilder<'a>
+    where
+        T: SamplerYcbcrConversionImageFormatPropertiesBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> SamplerYcbcrConversionImageFormatProperties {
@@ -25379,6 +27058,8 @@ pub struct TextureLODGatherFormatPropertiesAMDBuilder<'a> {
     inner: TextureLODGatherFormatPropertiesAMD,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait TextureLODGatherFormatPropertiesAMDBuilderNext {}
+unsafe impl ImageFormatProperties2BuilderNext for TextureLODGatherFormatPropertiesAMDBuilderNext {}
 impl<'a> ::std::ops::Deref for TextureLODGatherFormatPropertiesAMDBuilder<'a> {
     type Target = TextureLODGatherFormatPropertiesAMD;
     fn deref(&self) -> &Self::Target {
@@ -25392,6 +27073,13 @@ impl<'a> TextureLODGatherFormatPropertiesAMDBuilder<'a> {
     ) -> TextureLODGatherFormatPropertiesAMDBuilder<'a> {
         self.inner.supports_texture_gather_lod_bias_amd =
             supports_texture_gather_lod_bias_amd.into();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> TextureLODGatherFormatPropertiesAMDBuilder<'a>
+    where
+        T: TextureLODGatherFormatPropertiesAMDBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> TextureLODGatherFormatPropertiesAMD {
@@ -25430,6 +27118,7 @@ pub struct ConditionalRenderingBeginInfoEXTBuilder<'a> {
     inner: ConditionalRenderingBeginInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ConditionalRenderingBeginInfoEXTBuilderNext {}
 impl<'a> ::std::ops::Deref for ConditionalRenderingBeginInfoEXTBuilder<'a> {
     type Target = ConditionalRenderingBeginInfoEXT;
     fn deref(&self) -> &Self::Target {
@@ -25450,6 +27139,13 @@ impl<'a> ConditionalRenderingBeginInfoEXTBuilder<'a> {
         flags: ConditionalRenderingFlagsEXT,
     ) -> ConditionalRenderingBeginInfoEXTBuilder<'a> {
         self.inner.flags = flags;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> ConditionalRenderingBeginInfoEXTBuilder<'a>
+    where
+        T: ConditionalRenderingBeginInfoEXTBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ConditionalRenderingBeginInfoEXT {
@@ -25484,6 +27180,8 @@ pub struct ProtectedSubmitInfoBuilder<'a> {
     inner: ProtectedSubmitInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ProtectedSubmitInfoBuilderNext {}
+unsafe impl SubmitInfoBuilderNext for ProtectedSubmitInfoBuilderNext {}
 impl<'a> ::std::ops::Deref for ProtectedSubmitInfoBuilder<'a> {
     type Target = ProtectedSubmitInfo;
     fn deref(&self) -> &Self::Target {
@@ -25493,6 +27191,13 @@ impl<'a> ::std::ops::Deref for ProtectedSubmitInfoBuilder<'a> {
 impl<'a> ProtectedSubmitInfoBuilder<'a> {
     pub fn protected_submit(mut self, protected_submit: bool) -> ProtectedSubmitInfoBuilder<'a> {
         self.inner.protected_submit = protected_submit.into();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> ProtectedSubmitInfoBuilder<'a>
+    where
+        T: ProtectedSubmitInfoBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ProtectedSubmitInfo {
@@ -25527,6 +27232,11 @@ pub struct PhysicalDeviceProtectedMemoryFeaturesBuilder<'a> {
     inner: PhysicalDeviceProtectedMemoryFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceProtectedMemoryFeaturesBuilderNext {}
+unsafe impl PhysicalDeviceFeatures2BuilderNext
+    for PhysicalDeviceProtectedMemoryFeaturesBuilderNext
+{}
+unsafe impl DeviceCreateInfoBuilderNext for PhysicalDeviceProtectedMemoryFeaturesBuilderNext {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceProtectedMemoryFeaturesBuilder<'a> {
     type Target = PhysicalDeviceProtectedMemoryFeatures;
     fn deref(&self) -> &Self::Target {
@@ -25539,6 +27249,13 @@ impl<'a> PhysicalDeviceProtectedMemoryFeaturesBuilder<'a> {
         protected_memory: bool,
     ) -> PhysicalDeviceProtectedMemoryFeaturesBuilder<'a> {
         self.inner.protected_memory = protected_memory.into();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceProtectedMemoryFeaturesBuilder<'a>
+    where
+        T: PhysicalDeviceProtectedMemoryFeaturesBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceProtectedMemoryFeatures {
@@ -25573,6 +27290,10 @@ pub struct PhysicalDeviceProtectedMemoryPropertiesBuilder<'a> {
     inner: PhysicalDeviceProtectedMemoryProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceProtectedMemoryPropertiesBuilderNext {}
+unsafe impl PhysicalDeviceProperties2BuilderNext
+    for PhysicalDeviceProtectedMemoryPropertiesBuilderNext
+{}
 impl<'a> ::std::ops::Deref for PhysicalDeviceProtectedMemoryPropertiesBuilder<'a> {
     type Target = PhysicalDeviceProtectedMemoryProperties;
     fn deref(&self) -> &Self::Target {
@@ -25585,6 +27306,13 @@ impl<'a> PhysicalDeviceProtectedMemoryPropertiesBuilder<'a> {
         protected_no_fault: bool,
     ) -> PhysicalDeviceProtectedMemoryPropertiesBuilder<'a> {
         self.inner.protected_no_fault = protected_no_fault.into();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceProtectedMemoryPropertiesBuilder<'a>
+    where
+        T: PhysicalDeviceProtectedMemoryPropertiesBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceProtectedMemoryProperties {
@@ -25623,6 +27351,7 @@ pub struct DeviceQueueInfo2Builder<'a> {
     inner: DeviceQueueInfo2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DeviceQueueInfo2BuilderNext {}
 impl<'a> ::std::ops::Deref for DeviceQueueInfo2Builder<'a> {
     type Target = DeviceQueueInfo2;
     fn deref(&self) -> &Self::Target {
@@ -25640,6 +27369,13 @@ impl<'a> DeviceQueueInfo2Builder<'a> {
     }
     pub fn queue_index(mut self, queue_index: u32) -> DeviceQueueInfo2Builder<'a> {
         self.inner.queue_index = queue_index;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> DeviceQueueInfo2Builder<'a>
+    where
+        T: DeviceQueueInfo2BuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DeviceQueueInfo2 {
@@ -25678,6 +27414,10 @@ pub struct PipelineCoverageToColorStateCreateInfoNVBuilder<'a> {
     inner: PipelineCoverageToColorStateCreateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PipelineCoverageToColorStateCreateInfoNVBuilderNext {}
+unsafe impl PipelineMultisampleStateCreateInfoBuilderNext
+    for PipelineCoverageToColorStateCreateInfoNVBuilderNext
+{}
 impl<'a> ::std::ops::Deref for PipelineCoverageToColorStateCreateInfoNVBuilder<'a> {
     type Target = PipelineCoverageToColorStateCreateInfoNV;
     fn deref(&self) -> &Self::Target {
@@ -25704,6 +27444,13 @@ impl<'a> PipelineCoverageToColorStateCreateInfoNVBuilder<'a> {
         coverage_to_color_location: u32,
     ) -> PipelineCoverageToColorStateCreateInfoNVBuilder<'a> {
         self.inner.coverage_to_color_location = coverage_to_color_location;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> PipelineCoverageToColorStateCreateInfoNVBuilder<'a>
+    where
+        T: PipelineCoverageToColorStateCreateInfoNVBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> PipelineCoverageToColorStateCreateInfoNV {
@@ -25740,6 +27487,10 @@ pub struct PhysicalDeviceSamplerFilterMinmaxPropertiesEXTBuilder<'a> {
     inner: PhysicalDeviceSamplerFilterMinmaxPropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceSamplerFilterMinmaxPropertiesEXTBuilderNext {}
+unsafe impl PhysicalDeviceProperties2BuilderNext
+    for PhysicalDeviceSamplerFilterMinmaxPropertiesEXTBuilderNext
+{}
 impl<'a> ::std::ops::Deref for PhysicalDeviceSamplerFilterMinmaxPropertiesEXTBuilder<'a> {
     type Target = PhysicalDeviceSamplerFilterMinmaxPropertiesEXT;
     fn deref(&self) -> &Self::Target {
@@ -25761,6 +27512,16 @@ impl<'a> PhysicalDeviceSamplerFilterMinmaxPropertiesEXTBuilder<'a> {
     ) -> PhysicalDeviceSamplerFilterMinmaxPropertiesEXTBuilder<'a> {
         self.inner.filter_minmax_image_component_mapping =
             filter_minmax_image_component_mapping.into();
+        self
+    }
+    pub fn next<T>(
+        mut self,
+        next: &'a mut T,
+    ) -> PhysicalDeviceSamplerFilterMinmaxPropertiesEXTBuilder<'a>
+    where
+        T: PhysicalDeviceSamplerFilterMinmaxPropertiesEXTBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceSamplerFilterMinmaxPropertiesEXT {
@@ -25785,6 +27546,7 @@ pub struct SampleLocationEXTBuilder<'a> {
     inner: SampleLocationEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait SampleLocationEXTBuilderNext {}
 impl<'a> ::std::ops::Deref for SampleLocationEXTBuilder<'a> {
     type Target = SampleLocationEXT;
     fn deref(&self) -> &Self::Target {
@@ -25838,6 +27600,8 @@ pub struct SampleLocationsInfoEXTBuilder<'a> {
     inner: SampleLocationsInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait SampleLocationsInfoEXTBuilderNext {}
+unsafe impl ImageMemoryBarrierBuilderNext for SampleLocationsInfoEXTBuilderNext {}
 impl<'a> ::std::ops::Deref for SampleLocationsInfoEXTBuilder<'a> {
     type Target = SampleLocationsInfoEXT;
     fn deref(&self) -> &Self::Target {
@@ -25867,6 +27631,13 @@ impl<'a> SampleLocationsInfoEXTBuilder<'a> {
         self.inner.p_sample_locations = sample_locations.as_ptr();
         self
     }
+    pub fn next<T>(mut self, next: &'a T) -> SampleLocationsInfoEXTBuilder<'a>
+    where
+        T: SampleLocationsInfoEXTBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
+        self
+    }
     pub fn build(self) -> SampleLocationsInfoEXT {
         self.inner
     }
@@ -25889,6 +27660,7 @@ pub struct AttachmentSampleLocationsEXTBuilder<'a> {
     inner: AttachmentSampleLocationsEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait AttachmentSampleLocationsEXTBuilderNext {}
 impl<'a> ::std::ops::Deref for AttachmentSampleLocationsEXTBuilder<'a> {
     type Target = AttachmentSampleLocationsEXT;
     fn deref(&self) -> &Self::Target {
@@ -25932,6 +27704,7 @@ pub struct SubpassSampleLocationsEXTBuilder<'a> {
     inner: SubpassSampleLocationsEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait SubpassSampleLocationsEXTBuilderNext {}
 impl<'a> ::std::ops::Deref for SubpassSampleLocationsEXTBuilder<'a> {
     type Target = SubpassSampleLocationsEXT;
     fn deref(&self) -> &Self::Target {
@@ -25988,6 +27761,8 @@ pub struct RenderPassSampleLocationsBeginInfoEXTBuilder<'a> {
     inner: RenderPassSampleLocationsBeginInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait RenderPassSampleLocationsBeginInfoEXTBuilderNext {}
+unsafe impl RenderPassBeginInfoBuilderNext for RenderPassSampleLocationsBeginInfoEXTBuilderNext {}
 impl<'a> ::std::ops::Deref for RenderPassSampleLocationsBeginInfoEXTBuilder<'a> {
     type Target = RenderPassSampleLocationsBeginInfoEXT;
     fn deref(&self) -> &Self::Target {
@@ -26011,6 +27786,13 @@ impl<'a> RenderPassSampleLocationsBeginInfoEXTBuilder<'a> {
     ) -> RenderPassSampleLocationsBeginInfoEXTBuilder<'a> {
         self.inner.post_subpass_sample_locations_count = post_subpass_sample_locations.len() as _;
         self.inner.p_post_subpass_sample_locations = post_subpass_sample_locations.as_ptr();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> RenderPassSampleLocationsBeginInfoEXTBuilder<'a>
+    where
+        T: RenderPassSampleLocationsBeginInfoEXTBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> RenderPassSampleLocationsBeginInfoEXT {
@@ -26047,6 +27829,10 @@ pub struct PipelineSampleLocationsStateCreateInfoEXTBuilder<'a> {
     inner: PipelineSampleLocationsStateCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PipelineSampleLocationsStateCreateInfoEXTBuilderNext {}
+unsafe impl PipelineMultisampleStateCreateInfoBuilderNext
+    for PipelineSampleLocationsStateCreateInfoEXTBuilderNext
+{}
 impl<'a> ::std::ops::Deref for PipelineSampleLocationsStateCreateInfoEXTBuilder<'a> {
     type Target = PipelineSampleLocationsStateCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
@@ -26066,6 +27852,13 @@ impl<'a> PipelineSampleLocationsStateCreateInfoEXTBuilder<'a> {
         sample_locations_info: SampleLocationsInfoEXT,
     ) -> PipelineSampleLocationsStateCreateInfoEXTBuilder<'a> {
         self.inner.sample_locations_info = sample_locations_info;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> PipelineSampleLocationsStateCreateInfoEXTBuilder<'a>
+    where
+        T: PipelineSampleLocationsStateCreateInfoEXTBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> PipelineSampleLocationsStateCreateInfoEXT {
@@ -26108,6 +27901,10 @@ pub struct PhysicalDeviceSampleLocationsPropertiesEXTBuilder<'a> {
     inner: PhysicalDeviceSampleLocationsPropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceSampleLocationsPropertiesEXTBuilderNext {}
+unsafe impl PhysicalDeviceProperties2BuilderNext
+    for PhysicalDeviceSampleLocationsPropertiesEXTBuilderNext
+{}
 impl<'a> ::std::ops::Deref for PhysicalDeviceSampleLocationsPropertiesEXTBuilder<'a> {
     type Target = PhysicalDeviceSampleLocationsPropertiesEXT;
     fn deref(&self) -> &Self::Target {
@@ -26150,6 +27947,16 @@ impl<'a> PhysicalDeviceSampleLocationsPropertiesEXTBuilder<'a> {
         self.inner.variable_sample_locations = variable_sample_locations.into();
         self
     }
+    pub fn next<T>(
+        mut self,
+        next: &'a mut T,
+    ) -> PhysicalDeviceSampleLocationsPropertiesEXTBuilder<'a>
+    where
+        T: PhysicalDeviceSampleLocationsPropertiesEXTBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
+        self
+    }
     pub fn build(self) -> PhysicalDeviceSampleLocationsPropertiesEXT {
         self.inner
     }
@@ -26182,6 +27989,7 @@ pub struct MultisamplePropertiesEXTBuilder<'a> {
     inner: MultisamplePropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait MultisamplePropertiesEXTBuilderNext {}
 impl<'a> ::std::ops::Deref for MultisamplePropertiesEXTBuilder<'a> {
     type Target = MultisamplePropertiesEXT;
     fn deref(&self) -> &Self::Target {
@@ -26194,6 +28002,13 @@ impl<'a> MultisamplePropertiesEXTBuilder<'a> {
         max_sample_location_grid_size: Extent2D,
     ) -> MultisamplePropertiesEXTBuilder<'a> {
         self.inner.max_sample_location_grid_size = max_sample_location_grid_size;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> MultisamplePropertiesEXTBuilder<'a>
+    where
+        T: MultisamplePropertiesEXTBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> MultisamplePropertiesEXT {
@@ -26228,6 +28043,8 @@ pub struct SamplerReductionModeCreateInfoEXTBuilder<'a> {
     inner: SamplerReductionModeCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait SamplerReductionModeCreateInfoEXTBuilderNext {}
+unsafe impl SamplerCreateInfoBuilderNext for SamplerReductionModeCreateInfoEXTBuilderNext {}
 impl<'a> ::std::ops::Deref for SamplerReductionModeCreateInfoEXTBuilder<'a> {
     type Target = SamplerReductionModeCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
@@ -26240,6 +28057,13 @@ impl<'a> SamplerReductionModeCreateInfoEXTBuilder<'a> {
         reduction_mode: SamplerReductionModeEXT,
     ) -> SamplerReductionModeCreateInfoEXTBuilder<'a> {
         self.inner.reduction_mode = reduction_mode;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> SamplerReductionModeCreateInfoEXTBuilder<'a>
+    where
+        T: SamplerReductionModeCreateInfoEXTBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> SamplerReductionModeCreateInfoEXT {
@@ -26274,6 +28098,13 @@ pub struct PhysicalDeviceBlendOperationAdvancedFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceBlendOperationAdvancedFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceBlendOperationAdvancedFeaturesEXTBuilderNext {}
+unsafe impl PhysicalDeviceFeatures2BuilderNext
+    for PhysicalDeviceBlendOperationAdvancedFeaturesEXTBuilderNext
+{}
+unsafe impl DeviceCreateInfoBuilderNext
+    for PhysicalDeviceBlendOperationAdvancedFeaturesEXTBuilderNext
+{}
 impl<'a> ::std::ops::Deref for PhysicalDeviceBlendOperationAdvancedFeaturesEXTBuilder<'a> {
     type Target = PhysicalDeviceBlendOperationAdvancedFeaturesEXT;
     fn deref(&self) -> &Self::Target {
@@ -26286,6 +28117,16 @@ impl<'a> PhysicalDeviceBlendOperationAdvancedFeaturesEXTBuilder<'a> {
         advanced_blend_coherent_operations: bool,
     ) -> PhysicalDeviceBlendOperationAdvancedFeaturesEXTBuilder<'a> {
         self.inner.advanced_blend_coherent_operations = advanced_blend_coherent_operations.into();
+        self
+    }
+    pub fn next<T>(
+        mut self,
+        next: &'a mut T,
+    ) -> PhysicalDeviceBlendOperationAdvancedFeaturesEXTBuilder<'a>
+    where
+        T: PhysicalDeviceBlendOperationAdvancedFeaturesEXTBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceBlendOperationAdvancedFeaturesEXT {
@@ -26330,6 +28171,10 @@ pub struct PhysicalDeviceBlendOperationAdvancedPropertiesEXTBuilder<'a> {
     inner: PhysicalDeviceBlendOperationAdvancedPropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceBlendOperationAdvancedPropertiesEXTBuilderNext {}
+unsafe impl PhysicalDeviceProperties2BuilderNext
+    for PhysicalDeviceBlendOperationAdvancedPropertiesEXTBuilderNext
+{}
 impl<'a> ::std::ops::Deref for PhysicalDeviceBlendOperationAdvancedPropertiesEXTBuilder<'a> {
     type Target = PhysicalDeviceBlendOperationAdvancedPropertiesEXT;
     fn deref(&self) -> &Self::Target {
@@ -26381,6 +28226,16 @@ impl<'a> PhysicalDeviceBlendOperationAdvancedPropertiesEXTBuilder<'a> {
         self.inner.advanced_blend_all_operations = advanced_blend_all_operations.into();
         self
     }
+    pub fn next<T>(
+        mut self,
+        next: &'a mut T,
+    ) -> PhysicalDeviceBlendOperationAdvancedPropertiesEXTBuilder<'a>
+    where
+        T: PhysicalDeviceBlendOperationAdvancedPropertiesEXTBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
+        self
+    }
     pub fn build(self) -> PhysicalDeviceBlendOperationAdvancedPropertiesEXT {
         self.inner
     }
@@ -26417,6 +28272,10 @@ pub struct PipelineColorBlendAdvancedStateCreateInfoEXTBuilder<'a> {
     inner: PipelineColorBlendAdvancedStateCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PipelineColorBlendAdvancedStateCreateInfoEXTBuilderNext {}
+unsafe impl PipelineColorBlendStateCreateInfoBuilderNext
+    for PipelineColorBlendAdvancedStateCreateInfoEXTBuilderNext
+{}
 impl<'a> ::std::ops::Deref for PipelineColorBlendAdvancedStateCreateInfoEXTBuilder<'a> {
     type Target = PipelineColorBlendAdvancedStateCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
@@ -26443,6 +28302,13 @@ impl<'a> PipelineColorBlendAdvancedStateCreateInfoEXTBuilder<'a> {
         blend_overlap: BlendOverlapEXT,
     ) -> PipelineColorBlendAdvancedStateCreateInfoEXTBuilder<'a> {
         self.inner.blend_overlap = blend_overlap;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> PipelineColorBlendAdvancedStateCreateInfoEXTBuilder<'a>
+    where
+        T: PipelineColorBlendAdvancedStateCreateInfoEXTBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> PipelineColorBlendAdvancedStateCreateInfoEXT {
@@ -26479,6 +28345,11 @@ pub struct PhysicalDeviceInlineUniformBlockFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceInlineUniformBlockFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceInlineUniformBlockFeaturesEXTBuilderNext {}
+unsafe impl PhysicalDeviceFeatures2BuilderNext
+    for PhysicalDeviceInlineUniformBlockFeaturesEXTBuilderNext
+{}
+unsafe impl DeviceCreateInfoBuilderNext for PhysicalDeviceInlineUniformBlockFeaturesEXTBuilderNext {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceInlineUniformBlockFeaturesEXTBuilder<'a> {
     type Target = PhysicalDeviceInlineUniformBlockFeaturesEXT;
     fn deref(&self) -> &Self::Target {
@@ -26500,6 +28371,16 @@ impl<'a> PhysicalDeviceInlineUniformBlockFeaturesEXTBuilder<'a> {
         self.inner
             .descriptor_binding_inline_uniform_block_update_after_bind =
             descriptor_binding_inline_uniform_block_update_after_bind.into();
+        self
+    }
+    pub fn next<T>(
+        mut self,
+        next: &'a mut T,
+    ) -> PhysicalDeviceInlineUniformBlockFeaturesEXTBuilder<'a>
+    where
+        T: PhysicalDeviceInlineUniformBlockFeaturesEXTBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceInlineUniformBlockFeaturesEXT {
@@ -26542,6 +28423,10 @@ pub struct PhysicalDeviceInlineUniformBlockPropertiesEXTBuilder<'a> {
     inner: PhysicalDeviceInlineUniformBlockPropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceInlineUniformBlockPropertiesEXTBuilderNext {}
+unsafe impl PhysicalDeviceProperties2BuilderNext
+    for PhysicalDeviceInlineUniformBlockPropertiesEXTBuilderNext
+{}
 impl<'a> ::std::ops::Deref for PhysicalDeviceInlineUniformBlockPropertiesEXTBuilder<'a> {
     type Target = PhysicalDeviceInlineUniformBlockPropertiesEXT;
     fn deref(&self) -> &Self::Target {
@@ -26590,6 +28475,16 @@ impl<'a> PhysicalDeviceInlineUniformBlockPropertiesEXTBuilder<'a> {
             max_descriptor_set_update_after_bind_inline_uniform_blocks;
         self
     }
+    pub fn next<T>(
+        mut self,
+        next: &'a mut T,
+    ) -> PhysicalDeviceInlineUniformBlockPropertiesEXTBuilder<'a>
+    where
+        T: PhysicalDeviceInlineUniformBlockPropertiesEXTBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
+        self
+    }
     pub fn build(self) -> PhysicalDeviceInlineUniformBlockPropertiesEXT {
         self.inner
     }
@@ -26624,6 +28519,8 @@ pub struct WriteDescriptorSetInlineUniformBlockEXTBuilder<'a> {
     inner: WriteDescriptorSetInlineUniformBlockEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait WriteDescriptorSetInlineUniformBlockEXTBuilderNext {}
+unsafe impl WriteDescriptorSetBuilderNext for WriteDescriptorSetInlineUniformBlockEXTBuilderNext {}
 impl<'a> ::std::ops::Deref for WriteDescriptorSetInlineUniformBlockEXTBuilder<'a> {
     type Target = WriteDescriptorSetInlineUniformBlockEXT;
     fn deref(&self) -> &Self::Target {
@@ -26637,6 +28534,13 @@ impl<'a> WriteDescriptorSetInlineUniformBlockEXTBuilder<'a> {
     ) -> WriteDescriptorSetInlineUniformBlockEXTBuilder<'a> {
         self.inner.data_size = data.len() as _;
         self.inner.p_data = data.as_ptr();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> WriteDescriptorSetInlineUniformBlockEXTBuilder<'a>
+    where
+        T: WriteDescriptorSetInlineUniformBlockEXTBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> WriteDescriptorSetInlineUniformBlockEXT {
@@ -26671,6 +28575,10 @@ pub struct DescriptorPoolInlineUniformBlockCreateInfoEXTBuilder<'a> {
     inner: DescriptorPoolInlineUniformBlockCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DescriptorPoolInlineUniformBlockCreateInfoEXTBuilderNext {}
+unsafe impl DescriptorPoolCreateInfoBuilderNext
+    for DescriptorPoolInlineUniformBlockCreateInfoEXTBuilderNext
+{}
 impl<'a> ::std::ops::Deref for DescriptorPoolInlineUniformBlockCreateInfoEXTBuilder<'a> {
     type Target = DescriptorPoolInlineUniformBlockCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
@@ -26683,6 +28591,16 @@ impl<'a> DescriptorPoolInlineUniformBlockCreateInfoEXTBuilder<'a> {
         max_inline_uniform_block_bindings: u32,
     ) -> DescriptorPoolInlineUniformBlockCreateInfoEXTBuilder<'a> {
         self.inner.max_inline_uniform_block_bindings = max_inline_uniform_block_bindings;
+        self
+    }
+    pub fn next<T>(
+        mut self,
+        next: &'a T,
+    ) -> DescriptorPoolInlineUniformBlockCreateInfoEXTBuilder<'a>
+    where
+        T: DescriptorPoolInlineUniformBlockCreateInfoEXTBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DescriptorPoolInlineUniformBlockCreateInfoEXT {
@@ -26725,6 +28643,10 @@ pub struct PipelineCoverageModulationStateCreateInfoNVBuilder<'a> {
     inner: PipelineCoverageModulationStateCreateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PipelineCoverageModulationStateCreateInfoNVBuilderNext {}
+unsafe impl PipelineMultisampleStateCreateInfoBuilderNext
+    for PipelineCoverageModulationStateCreateInfoNVBuilderNext
+{}
 impl<'a> ::std::ops::Deref for PipelineCoverageModulationStateCreateInfoNVBuilder<'a> {
     type Target = PipelineCoverageModulationStateCreateInfoNV;
     fn deref(&self) -> &Self::Target {
@@ -26761,6 +28683,13 @@ impl<'a> PipelineCoverageModulationStateCreateInfoNVBuilder<'a> {
         self.inner.p_coverage_modulation_table = coverage_modulation_table.as_ptr();
         self
     }
+    pub fn next<T>(mut self, next: &'a T) -> PipelineCoverageModulationStateCreateInfoNVBuilder<'a>
+    where
+        T: PipelineCoverageModulationStateCreateInfoNVBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
+        self
+    }
     pub fn build(self) -> PipelineCoverageModulationStateCreateInfoNV {
         self.inner
     }
@@ -26795,6 +28724,9 @@ pub struct ImageFormatListCreateInfoKHRBuilder<'a> {
     inner: ImageFormatListCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ImageFormatListCreateInfoKHRBuilderNext {}
+unsafe impl ImageCreateInfoBuilderNext for ImageFormatListCreateInfoKHRBuilderNext {}
+unsafe impl PhysicalDeviceImageFormatInfo2BuilderNext for ImageFormatListCreateInfoKHRBuilderNext {}
 impl<'a> ::std::ops::Deref for ImageFormatListCreateInfoKHRBuilder<'a> {
     type Target = ImageFormatListCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -26808,6 +28740,13 @@ impl<'a> ImageFormatListCreateInfoKHRBuilder<'a> {
     ) -> ImageFormatListCreateInfoKHRBuilder<'a> {
         self.inner.view_format_count = view_formats.len() as _;
         self.inner.p_view_formats = view_formats.as_ptr();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> ImageFormatListCreateInfoKHRBuilder<'a>
+    where
+        T: ImageFormatListCreateInfoKHRBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ImageFormatListCreateInfoKHR {
@@ -26846,6 +28785,7 @@ pub struct ValidationCacheCreateInfoEXTBuilder<'a> {
     inner: ValidationCacheCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ValidationCacheCreateInfoEXTBuilderNext {}
 impl<'a> ::std::ops::Deref for ValidationCacheCreateInfoEXTBuilder<'a> {
     type Target = ValidationCacheCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
@@ -26866,6 +28806,13 @@ impl<'a> ValidationCacheCreateInfoEXTBuilder<'a> {
     ) -> ValidationCacheCreateInfoEXTBuilder<'a> {
         self.inner.initial_data_size = initial_data.len() as _;
         self.inner.p_initial_data = initial_data.as_ptr();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> ValidationCacheCreateInfoEXTBuilder<'a>
+    where
+        T: ValidationCacheCreateInfoEXTBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ValidationCacheCreateInfoEXT {
@@ -26900,6 +28847,10 @@ pub struct ShaderModuleValidationCacheCreateInfoEXTBuilder<'a> {
     inner: ShaderModuleValidationCacheCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ShaderModuleValidationCacheCreateInfoEXTBuilderNext {}
+unsafe impl ShaderModuleCreateInfoBuilderNext
+    for ShaderModuleValidationCacheCreateInfoEXTBuilderNext
+{}
 impl<'a> ::std::ops::Deref for ShaderModuleValidationCacheCreateInfoEXTBuilder<'a> {
     type Target = ShaderModuleValidationCacheCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
@@ -26912,6 +28863,13 @@ impl<'a> ShaderModuleValidationCacheCreateInfoEXTBuilder<'a> {
         validation_cache: ValidationCacheEXT,
     ) -> ShaderModuleValidationCacheCreateInfoEXTBuilder<'a> {
         self.inner.validation_cache = validation_cache;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> ShaderModuleValidationCacheCreateInfoEXTBuilder<'a>
+    where
+        T: ShaderModuleValidationCacheCreateInfoEXTBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ShaderModuleValidationCacheCreateInfoEXT {
@@ -26948,6 +28906,10 @@ pub struct PhysicalDeviceMaintenance3PropertiesBuilder<'a> {
     inner: PhysicalDeviceMaintenance3Properties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceMaintenance3PropertiesBuilderNext {}
+unsafe impl PhysicalDeviceProperties2BuilderNext
+    for PhysicalDeviceMaintenance3PropertiesBuilderNext
+{}
 impl<'a> ::std::ops::Deref for PhysicalDeviceMaintenance3PropertiesBuilder<'a> {
     type Target = PhysicalDeviceMaintenance3Properties;
     fn deref(&self) -> &Self::Target {
@@ -26967,6 +28929,13 @@ impl<'a> PhysicalDeviceMaintenance3PropertiesBuilder<'a> {
         max_memory_allocation_size: DeviceSize,
     ) -> PhysicalDeviceMaintenance3PropertiesBuilder<'a> {
         self.inner.max_memory_allocation_size = max_memory_allocation_size;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceMaintenance3PropertiesBuilder<'a>
+    where
+        T: PhysicalDeviceMaintenance3PropertiesBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceMaintenance3Properties {
@@ -27001,6 +28970,7 @@ pub struct DescriptorSetLayoutSupportBuilder<'a> {
     inner: DescriptorSetLayoutSupport,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DescriptorSetLayoutSupportBuilderNext {}
 impl<'a> ::std::ops::Deref for DescriptorSetLayoutSupportBuilder<'a> {
     type Target = DescriptorSetLayoutSupport;
     fn deref(&self) -> &Self::Target {
@@ -27010,6 +28980,13 @@ impl<'a> ::std::ops::Deref for DescriptorSetLayoutSupportBuilder<'a> {
 impl<'a> DescriptorSetLayoutSupportBuilder<'a> {
     pub fn supported(mut self, supported: bool) -> DescriptorSetLayoutSupportBuilder<'a> {
         self.inner.supported = supported.into();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> DescriptorSetLayoutSupportBuilder<'a>
+    where
+        T: DescriptorSetLayoutSupportBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> DescriptorSetLayoutSupport {
@@ -27044,6 +29021,11 @@ pub struct PhysicalDeviceShaderDrawParameterFeaturesBuilder<'a> {
     inner: PhysicalDeviceShaderDrawParameterFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceShaderDrawParameterFeaturesBuilderNext {}
+unsafe impl PhysicalDeviceFeatures2BuilderNext
+    for PhysicalDeviceShaderDrawParameterFeaturesBuilderNext
+{}
+unsafe impl DeviceCreateInfoBuilderNext for PhysicalDeviceShaderDrawParameterFeaturesBuilderNext {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceShaderDrawParameterFeaturesBuilder<'a> {
     type Target = PhysicalDeviceShaderDrawParameterFeatures;
     fn deref(&self) -> &Self::Target {
@@ -27056,6 +29038,16 @@ impl<'a> PhysicalDeviceShaderDrawParameterFeaturesBuilder<'a> {
         shader_draw_parameters: bool,
     ) -> PhysicalDeviceShaderDrawParameterFeaturesBuilder<'a> {
         self.inner.shader_draw_parameters = shader_draw_parameters.into();
+        self
+    }
+    pub fn next<T>(
+        mut self,
+        next: &'a mut T,
+    ) -> PhysicalDeviceShaderDrawParameterFeaturesBuilder<'a>
+    where
+        T: PhysicalDeviceShaderDrawParameterFeaturesBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceShaderDrawParameterFeatures {
@@ -27096,6 +29088,7 @@ pub struct NativeBufferANDROIDBuilder<'a> {
     inner: NativeBufferANDROID,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait NativeBufferANDROIDBuilderNext {}
 impl<'a> ::std::ops::Deref for NativeBufferANDROIDBuilder<'a> {
     type Target = NativeBufferANDROID;
     fn deref(&self) -> &Self::Target {
@@ -27117,6 +29110,13 @@ impl<'a> NativeBufferANDROIDBuilder<'a> {
     }
     pub fn usage(mut self, usage: c_int) -> NativeBufferANDROIDBuilder<'a> {
         self.inner.usage = usage;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> NativeBufferANDROIDBuilder<'a>
+    where
+        T: NativeBufferANDROIDBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> NativeBufferANDROID {
@@ -27144,6 +29144,7 @@ pub struct ShaderResourceUsageAMDBuilder<'a> {
     inner: ShaderResourceUsageAMD,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ShaderResourceUsageAMDBuilderNext {}
 impl<'a> ::std::ops::Deref for ShaderResourceUsageAMDBuilder<'a> {
     type Target = ShaderResourceUsageAMD;
     fn deref(&self) -> &Self::Target {
@@ -27220,6 +29221,7 @@ pub struct ShaderStatisticsInfoAMDBuilder<'a> {
     inner: ShaderStatisticsInfoAMD,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ShaderStatisticsInfoAMDBuilderNext {}
 impl<'a> ::std::ops::Deref for ShaderStatisticsInfoAMDBuilder<'a> {
     type Target = ShaderStatisticsInfoAMD;
     fn deref(&self) -> &Self::Target {
@@ -27308,6 +29310,8 @@ pub struct DeviceQueueGlobalPriorityCreateInfoEXTBuilder<'a> {
     inner: DeviceQueueGlobalPriorityCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DeviceQueueGlobalPriorityCreateInfoEXTBuilderNext {}
+unsafe impl DeviceQueueCreateInfoBuilderNext for DeviceQueueGlobalPriorityCreateInfoEXTBuilderNext {}
 impl<'a> ::std::ops::Deref for DeviceQueueGlobalPriorityCreateInfoEXTBuilder<'a> {
     type Target = DeviceQueueGlobalPriorityCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
@@ -27320,6 +29324,13 @@ impl<'a> DeviceQueueGlobalPriorityCreateInfoEXTBuilder<'a> {
         global_priority: QueueGlobalPriorityEXT,
     ) -> DeviceQueueGlobalPriorityCreateInfoEXTBuilder<'a> {
         self.inner.global_priority = global_priority;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> DeviceQueueGlobalPriorityCreateInfoEXTBuilder<'a>
+    where
+        T: DeviceQueueGlobalPriorityCreateInfoEXTBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DeviceQueueGlobalPriorityCreateInfoEXT {
@@ -27358,6 +29369,7 @@ pub struct DebugUtilsObjectNameInfoEXTBuilder<'a> {
     inner: DebugUtilsObjectNameInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DebugUtilsObjectNameInfoEXTBuilderNext {}
 impl<'a> ::std::ops::Deref for DebugUtilsObjectNameInfoEXTBuilder<'a> {
     type Target = DebugUtilsObjectNameInfoEXT;
     fn deref(&self) -> &Self::Target {
@@ -27381,6 +29393,13 @@ impl<'a> DebugUtilsObjectNameInfoEXTBuilder<'a> {
         object_name: &'a ::std::ffi::CStr,
     ) -> DebugUtilsObjectNameInfoEXTBuilder<'a> {
         self.inner.p_object_name = object_name.as_ptr();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> DebugUtilsObjectNameInfoEXTBuilder<'a>
+    where
+        T: DebugUtilsObjectNameInfoEXTBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DebugUtilsObjectNameInfoEXT {
@@ -27423,6 +29442,7 @@ pub struct DebugUtilsObjectTagInfoEXTBuilder<'a> {
     inner: DebugUtilsObjectTagInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DebugUtilsObjectTagInfoEXTBuilderNext {}
 impl<'a> ::std::ops::Deref for DebugUtilsObjectTagInfoEXTBuilder<'a> {
     type Target = DebugUtilsObjectTagInfoEXT;
     fn deref(&self) -> &Self::Target {
@@ -27445,6 +29465,13 @@ impl<'a> DebugUtilsObjectTagInfoEXTBuilder<'a> {
     pub fn tag(mut self, tag: &'a [c_void]) -> DebugUtilsObjectTagInfoEXTBuilder<'a> {
         self.inner.tag_size = tag.len() as _;
         self.inner.p_tag = tag.as_ptr();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> DebugUtilsObjectTagInfoEXTBuilder<'a>
+    where
+        T: DebugUtilsObjectTagInfoEXTBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DebugUtilsObjectTagInfoEXT {
@@ -27481,6 +29508,7 @@ pub struct DebugUtilsLabelEXTBuilder<'a> {
     inner: DebugUtilsLabelEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DebugUtilsLabelEXTBuilderNext {}
 impl<'a> ::std::ops::Deref for DebugUtilsLabelEXTBuilder<'a> {
     type Target = DebugUtilsLabelEXT;
     fn deref(&self) -> &Self::Target {
@@ -27494,6 +29522,13 @@ impl<'a> DebugUtilsLabelEXTBuilder<'a> {
     }
     pub fn color(mut self, color: [f32; 4]) -> DebugUtilsLabelEXTBuilder<'a> {
         self.inner.color = color;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> DebugUtilsLabelEXTBuilder<'a>
+    where
+        T: DebugUtilsLabelEXTBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DebugUtilsLabelEXT {
@@ -27551,6 +29586,8 @@ pub struct DebugUtilsMessengerCreateInfoEXTBuilder<'a> {
     inner: DebugUtilsMessengerCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DebugUtilsMessengerCreateInfoEXTBuilderNext {}
+unsafe impl InstanceCreateInfoBuilderNext for DebugUtilsMessengerCreateInfoEXTBuilderNext {}
 impl<'a> ::std::ops::Deref for DebugUtilsMessengerCreateInfoEXTBuilder<'a> {
     type Target = DebugUtilsMessengerCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
@@ -27591,6 +29628,13 @@ impl<'a> DebugUtilsMessengerCreateInfoEXTBuilder<'a> {
         user_data: *mut c_void,
     ) -> DebugUtilsMessengerCreateInfoEXTBuilder<'a> {
         self.inner.p_user_data = user_data;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> DebugUtilsMessengerCreateInfoEXTBuilder<'a>
+    where
+        T: DebugUtilsMessengerCreateInfoEXTBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DebugUtilsMessengerCreateInfoEXT {
@@ -27643,6 +29687,7 @@ pub struct DebugUtilsMessengerCallbackDataEXTBuilder<'a> {
     inner: DebugUtilsMessengerCallbackDataEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DebugUtilsMessengerCallbackDataEXTBuilderNext {}
 impl<'a> ::std::ops::Deref for DebugUtilsMessengerCallbackDataEXTBuilder<'a> {
     type Target = DebugUtilsMessengerCallbackDataEXT;
     fn deref(&self) -> &Self::Target {
@@ -27702,6 +29747,13 @@ impl<'a> DebugUtilsMessengerCallbackDataEXTBuilder<'a> {
         self.inner.p_objects = objects.as_mut_ptr();
         self
     }
+    pub fn next<T>(mut self, next: &'a T) -> DebugUtilsMessengerCallbackDataEXTBuilder<'a>
+    where
+        T: DebugUtilsMessengerCallbackDataEXTBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
+        self
+    }
     pub fn build(self) -> DebugUtilsMessengerCallbackDataEXT {
         self.inner
     }
@@ -27736,6 +29788,8 @@ pub struct ImportMemoryHostPointerInfoEXTBuilder<'a> {
     inner: ImportMemoryHostPointerInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ImportMemoryHostPointerInfoEXTBuilderNext {}
+unsafe impl MemoryAllocateInfoBuilderNext for ImportMemoryHostPointerInfoEXTBuilderNext {}
 impl<'a> ::std::ops::Deref for ImportMemoryHostPointerInfoEXTBuilder<'a> {
     type Target = ImportMemoryHostPointerInfoEXT;
     fn deref(&self) -> &Self::Target {
@@ -27755,6 +29809,13 @@ impl<'a> ImportMemoryHostPointerInfoEXTBuilder<'a> {
         host_pointer: *mut c_void,
     ) -> ImportMemoryHostPointerInfoEXTBuilder<'a> {
         self.inner.p_host_pointer = host_pointer;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> ImportMemoryHostPointerInfoEXTBuilder<'a>
+    where
+        T: ImportMemoryHostPointerInfoEXTBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ImportMemoryHostPointerInfoEXT {
@@ -27789,6 +29850,7 @@ pub struct MemoryHostPointerPropertiesEXTBuilder<'a> {
     inner: MemoryHostPointerPropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait MemoryHostPointerPropertiesEXTBuilderNext {}
 impl<'a> ::std::ops::Deref for MemoryHostPointerPropertiesEXTBuilder<'a> {
     type Target = MemoryHostPointerPropertiesEXT;
     fn deref(&self) -> &Self::Target {
@@ -27801,6 +29863,13 @@ impl<'a> MemoryHostPointerPropertiesEXTBuilder<'a> {
         memory_type_bits: u32,
     ) -> MemoryHostPointerPropertiesEXTBuilder<'a> {
         self.inner.memory_type_bits = memory_type_bits;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> MemoryHostPointerPropertiesEXTBuilder<'a>
+    where
+        T: MemoryHostPointerPropertiesEXTBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> MemoryHostPointerPropertiesEXT {
@@ -27835,6 +29904,10 @@ pub struct PhysicalDeviceExternalMemoryHostPropertiesEXTBuilder<'a> {
     inner: PhysicalDeviceExternalMemoryHostPropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceExternalMemoryHostPropertiesEXTBuilderNext {}
+unsafe impl PhysicalDeviceProperties2BuilderNext
+    for PhysicalDeviceExternalMemoryHostPropertiesEXTBuilderNext
+{}
 impl<'a> ::std::ops::Deref for PhysicalDeviceExternalMemoryHostPropertiesEXTBuilder<'a> {
     type Target = PhysicalDeviceExternalMemoryHostPropertiesEXT;
     fn deref(&self) -> &Self::Target {
@@ -27847,6 +29920,16 @@ impl<'a> PhysicalDeviceExternalMemoryHostPropertiesEXTBuilder<'a> {
         min_imported_host_pointer_alignment: DeviceSize,
     ) -> PhysicalDeviceExternalMemoryHostPropertiesEXTBuilder<'a> {
         self.inner.min_imported_host_pointer_alignment = min_imported_host_pointer_alignment;
+        self
+    }
+    pub fn next<T>(
+        mut self,
+        next: &'a mut T,
+    ) -> PhysicalDeviceExternalMemoryHostPropertiesEXTBuilder<'a>
+    where
+        T: PhysicalDeviceExternalMemoryHostPropertiesEXTBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceExternalMemoryHostPropertiesEXT {
@@ -27897,6 +29980,10 @@ pub struct PhysicalDeviceConservativeRasterizationPropertiesEXTBuilder<'a> {
     inner: PhysicalDeviceConservativeRasterizationPropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceConservativeRasterizationPropertiesEXTBuilderNext {}
+unsafe impl PhysicalDeviceProperties2BuilderNext
+    for PhysicalDeviceConservativeRasterizationPropertiesEXTBuilderNext
+{}
 impl<'a> ::std::ops::Deref for PhysicalDeviceConservativeRasterizationPropertiesEXTBuilder<'a> {
     type Target = PhysicalDeviceConservativeRasterizationPropertiesEXT;
     fn deref(&self) -> &Self::Target {
@@ -27972,6 +30059,16 @@ impl<'a> PhysicalDeviceConservativeRasterizationPropertiesEXTBuilder<'a> {
             conservative_rasterization_post_depth_coverage.into();
         self
     }
+    pub fn next<T>(
+        mut self,
+        next: &'a mut T,
+    ) -> PhysicalDeviceConservativeRasterizationPropertiesEXTBuilder<'a>
+    where
+        T: PhysicalDeviceConservativeRasterizationPropertiesEXTBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
+        self
+    }
     pub fn build(self) -> PhysicalDeviceConservativeRasterizationPropertiesEXT {
         self.inner
     }
@@ -28004,6 +30101,7 @@ pub struct CalibratedTimestampInfoEXTBuilder<'a> {
     inner: CalibratedTimestampInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait CalibratedTimestampInfoEXTBuilderNext {}
 impl<'a> ::std::ops::Deref for CalibratedTimestampInfoEXTBuilder<'a> {
     type Target = CalibratedTimestampInfoEXT;
     fn deref(&self) -> &Self::Target {
@@ -28016,6 +30114,13 @@ impl<'a> CalibratedTimestampInfoEXTBuilder<'a> {
         time_domain: TimeDomainEXT,
     ) -> CalibratedTimestampInfoEXTBuilder<'a> {
         self.inner.time_domain = time_domain;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> CalibratedTimestampInfoEXTBuilder<'a>
+    where
+        T: CalibratedTimestampInfoEXTBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> CalibratedTimestampInfoEXT {
@@ -28076,6 +30181,10 @@ pub struct PhysicalDeviceShaderCorePropertiesAMDBuilder<'a> {
     inner: PhysicalDeviceShaderCorePropertiesAMD,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceShaderCorePropertiesAMDBuilderNext {}
+unsafe impl PhysicalDeviceProperties2BuilderNext
+    for PhysicalDeviceShaderCorePropertiesAMDBuilderNext
+{}
 impl<'a> ::std::ops::Deref for PhysicalDeviceShaderCorePropertiesAMDBuilder<'a> {
     type Target = PhysicalDeviceShaderCorePropertiesAMD;
     fn deref(&self) -> &Self::Target {
@@ -28181,6 +30290,13 @@ impl<'a> PhysicalDeviceShaderCorePropertiesAMDBuilder<'a> {
         self.inner.vgpr_allocation_granularity = vgpr_allocation_granularity;
         self
     }
+    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceShaderCorePropertiesAMDBuilder<'a>
+    where
+        T: PhysicalDeviceShaderCorePropertiesAMDBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
+        self
+    }
     pub fn build(self) -> PhysicalDeviceShaderCorePropertiesAMD {
         self.inner
     }
@@ -28217,6 +30333,10 @@ pub struct PipelineRasterizationConservativeStateCreateInfoEXTBuilder<'a> {
     inner: PipelineRasterizationConservativeStateCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PipelineRasterizationConservativeStateCreateInfoEXTBuilderNext {}
+unsafe impl PipelineRasterizationStateCreateInfoBuilderNext
+    for PipelineRasterizationConservativeStateCreateInfoEXTBuilderNext
+{}
 impl<'a> ::std::ops::Deref for PipelineRasterizationConservativeStateCreateInfoEXTBuilder<'a> {
     type Target = PipelineRasterizationConservativeStateCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
@@ -28243,6 +30363,16 @@ impl<'a> PipelineRasterizationConservativeStateCreateInfoEXTBuilder<'a> {
         extra_primitive_overestimation_size: f32,
     ) -> PipelineRasterizationConservativeStateCreateInfoEXTBuilder<'a> {
         self.inner.extra_primitive_overestimation_size = extra_primitive_overestimation_size;
+        self
+    }
+    pub fn next<T>(
+        mut self,
+        next: &'a T,
+    ) -> PipelineRasterizationConservativeStateCreateInfoEXTBuilder<'a>
+    where
+        T: PipelineRasterizationConservativeStateCreateInfoEXTBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> PipelineRasterizationConservativeStateCreateInfoEXT {
@@ -28315,6 +30445,11 @@ pub struct PhysicalDeviceDescriptorIndexingFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceDescriptorIndexingFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceDescriptorIndexingFeaturesEXTBuilderNext {}
+unsafe impl PhysicalDeviceFeatures2BuilderNext
+    for PhysicalDeviceDescriptorIndexingFeaturesEXTBuilderNext
+{}
+unsafe impl DeviceCreateInfoBuilderNext for PhysicalDeviceDescriptorIndexingFeaturesEXTBuilderNext {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceDescriptorIndexingFeaturesEXTBuilder<'a> {
     type Target = PhysicalDeviceDescriptorIndexingFeaturesEXT;
     fn deref(&self) -> &Self::Target {
@@ -28491,6 +30626,16 @@ impl<'a> PhysicalDeviceDescriptorIndexingFeaturesEXTBuilder<'a> {
         self.inner.runtime_descriptor_array = runtime_descriptor_array.into();
         self
     }
+    pub fn next<T>(
+        mut self,
+        next: &'a mut T,
+    ) -> PhysicalDeviceDescriptorIndexingFeaturesEXTBuilder<'a>
+    where
+        T: PhysicalDeviceDescriptorIndexingFeaturesEXTBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
+        self
+    }
     pub fn build(self) -> PhysicalDeviceDescriptorIndexingFeaturesEXT {
         self.inner
     }
@@ -28567,6 +30712,10 @@ pub struct PhysicalDeviceDescriptorIndexingPropertiesEXTBuilder<'a> {
     inner: PhysicalDeviceDescriptorIndexingPropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceDescriptorIndexingPropertiesEXTBuilderNext {}
+unsafe impl PhysicalDeviceProperties2BuilderNext
+    for PhysicalDeviceDescriptorIndexingPropertiesEXTBuilderNext
+{}
 impl<'a> ::std::ops::Deref for PhysicalDeviceDescriptorIndexingPropertiesEXTBuilder<'a> {
     type Target = PhysicalDeviceDescriptorIndexingPropertiesEXT;
     fn deref(&self) -> &Self::Target {
@@ -28775,6 +30924,16 @@ impl<'a> PhysicalDeviceDescriptorIndexingPropertiesEXTBuilder<'a> {
             max_descriptor_set_update_after_bind_input_attachments;
         self
     }
+    pub fn next<T>(
+        mut self,
+        next: &'a mut T,
+    ) -> PhysicalDeviceDescriptorIndexingPropertiesEXTBuilder<'a>
+    where
+        T: PhysicalDeviceDescriptorIndexingPropertiesEXTBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
+        self
+    }
     pub fn build(self) -> PhysicalDeviceDescriptorIndexingPropertiesEXT {
         self.inner
     }
@@ -28809,6 +30968,10 @@ pub struct DescriptorSetLayoutBindingFlagsCreateInfoEXTBuilder<'a> {
     inner: DescriptorSetLayoutBindingFlagsCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DescriptorSetLayoutBindingFlagsCreateInfoEXTBuilderNext {}
+unsafe impl DescriptorSetLayoutCreateInfoBuilderNext
+    for DescriptorSetLayoutBindingFlagsCreateInfoEXTBuilderNext
+{}
 impl<'a> ::std::ops::Deref for DescriptorSetLayoutBindingFlagsCreateInfoEXTBuilder<'a> {
     type Target = DescriptorSetLayoutBindingFlagsCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
@@ -28822,6 +30985,13 @@ impl<'a> DescriptorSetLayoutBindingFlagsCreateInfoEXTBuilder<'a> {
     ) -> DescriptorSetLayoutBindingFlagsCreateInfoEXTBuilder<'a> {
         self.inner.binding_count = binding_flags.len() as _;
         self.inner.p_binding_flags = binding_flags.as_ptr();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> DescriptorSetLayoutBindingFlagsCreateInfoEXTBuilder<'a>
+    where
+        T: DescriptorSetLayoutBindingFlagsCreateInfoEXTBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DescriptorSetLayoutBindingFlagsCreateInfoEXT {
@@ -28858,6 +31028,10 @@ pub struct DescriptorSetVariableDescriptorCountAllocateInfoEXTBuilder<'a> {
     inner: DescriptorSetVariableDescriptorCountAllocateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DescriptorSetVariableDescriptorCountAllocateInfoEXTBuilderNext {}
+unsafe impl DescriptorSetAllocateInfoBuilderNext
+    for DescriptorSetVariableDescriptorCountAllocateInfoEXTBuilderNext
+{}
 impl<'a> ::std::ops::Deref for DescriptorSetVariableDescriptorCountAllocateInfoEXTBuilder<'a> {
     type Target = DescriptorSetVariableDescriptorCountAllocateInfoEXT;
     fn deref(&self) -> &Self::Target {
@@ -28871,6 +31045,16 @@ impl<'a> DescriptorSetVariableDescriptorCountAllocateInfoEXTBuilder<'a> {
     ) -> DescriptorSetVariableDescriptorCountAllocateInfoEXTBuilder<'a> {
         self.inner.descriptor_set_count = descriptor_counts.len() as _;
         self.inner.p_descriptor_counts = descriptor_counts.as_ptr();
+        self
+    }
+    pub fn next<T>(
+        mut self,
+        next: &'a T,
+    ) -> DescriptorSetVariableDescriptorCountAllocateInfoEXTBuilder<'a>
+    where
+        T: DescriptorSetVariableDescriptorCountAllocateInfoEXTBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DescriptorSetVariableDescriptorCountAllocateInfoEXT {
@@ -28905,6 +31089,10 @@ pub struct DescriptorSetVariableDescriptorCountLayoutSupportEXTBuilder<'a> {
     inner: DescriptorSetVariableDescriptorCountLayoutSupportEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DescriptorSetVariableDescriptorCountLayoutSupportEXTBuilderNext {}
+unsafe impl DescriptorSetLayoutSupportBuilderNext
+    for DescriptorSetVariableDescriptorCountLayoutSupportEXTBuilderNext
+{}
 impl<'a> ::std::ops::Deref for DescriptorSetVariableDescriptorCountLayoutSupportEXTBuilder<'a> {
     type Target = DescriptorSetVariableDescriptorCountLayoutSupportEXT;
     fn deref(&self) -> &Self::Target {
@@ -28917,6 +31105,16 @@ impl<'a> DescriptorSetVariableDescriptorCountLayoutSupportEXTBuilder<'a> {
         max_variable_descriptor_count: u32,
     ) -> DescriptorSetVariableDescriptorCountLayoutSupportEXTBuilder<'a> {
         self.inner.max_variable_descriptor_count = max_variable_descriptor_count;
+        self
+    }
+    pub fn next<T>(
+        mut self,
+        next: &'a mut T,
+    ) -> DescriptorSetVariableDescriptorCountLayoutSupportEXTBuilder<'a>
+    where
+        T: DescriptorSetVariableDescriptorCountLayoutSupportEXTBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> DescriptorSetVariableDescriptorCountLayoutSupportEXT {
@@ -28967,6 +31165,7 @@ pub struct AttachmentDescription2KHRBuilder<'a> {
     inner: AttachmentDescription2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait AttachmentDescription2KHRBuilderNext {}
 impl<'a> ::std::ops::Deref for AttachmentDescription2KHRBuilder<'a> {
     type Target = AttachmentDescription2KHR;
     fn deref(&self) -> &Self::Target {
@@ -29025,6 +31224,13 @@ impl<'a> AttachmentDescription2KHRBuilder<'a> {
         self.inner.final_layout = final_layout;
         self
     }
+    pub fn next<T>(mut self, next: &'a T) -> AttachmentDescription2KHRBuilder<'a>
+    where
+        T: AttachmentDescription2KHRBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
+        self
+    }
     pub fn build(self) -> AttachmentDescription2KHR {
         self.inner
     }
@@ -29061,6 +31267,7 @@ pub struct AttachmentReference2KHRBuilder<'a> {
     inner: AttachmentReference2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait AttachmentReference2KHRBuilderNext {}
 impl<'a> ::std::ops::Deref for AttachmentReference2KHRBuilder<'a> {
     type Target = AttachmentReference2KHR;
     fn deref(&self) -> &Self::Target {
@@ -29081,6 +31288,13 @@ impl<'a> AttachmentReference2KHRBuilder<'a> {
         aspect_mask: ImageAspectFlags,
     ) -> AttachmentReference2KHRBuilder<'a> {
         self.inner.aspect_mask = aspect_mask;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> AttachmentReference2KHRBuilder<'a>
+    where
+        T: AttachmentReference2KHRBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> AttachmentReference2KHR {
@@ -29135,6 +31349,7 @@ pub struct SubpassDescription2KHRBuilder<'a> {
     inner: SubpassDescription2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait SubpassDescription2KHRBuilderNext {}
 impl<'a> ::std::ops::Deref for SubpassDescription2KHRBuilder<'a> {
     type Target = SubpassDescription2KHR;
     fn deref(&self) -> &Self::Target {
@@ -29196,6 +31411,13 @@ impl<'a> SubpassDescription2KHRBuilder<'a> {
         self.inner.p_preserve_attachments = preserve_attachments.as_ptr();
         self
     }
+    pub fn next<T>(mut self, next: &'a T) -> SubpassDescription2KHRBuilder<'a>
+    where
+        T: SubpassDescription2KHRBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
+        self
+    }
     pub fn build(self) -> SubpassDescription2KHR {
         self.inner
     }
@@ -29242,6 +31464,7 @@ pub struct SubpassDependency2KHRBuilder<'a> {
     inner: SubpassDependency2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait SubpassDependency2KHRBuilderNext {}
 impl<'a> ::std::ops::Deref for SubpassDependency2KHRBuilder<'a> {
     type Target = SubpassDependency2KHR;
     fn deref(&self) -> &Self::Target {
@@ -29296,6 +31519,13 @@ impl<'a> SubpassDependency2KHRBuilder<'a> {
         self.inner.view_offset = view_offset;
         self
     }
+    pub fn next<T>(mut self, next: &'a T) -> SubpassDependency2KHRBuilder<'a>
+    where
+        T: SubpassDependency2KHRBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
+        self
+    }
     pub fn build(self) -> SubpassDependency2KHR {
         self.inner
     }
@@ -29344,6 +31574,7 @@ pub struct RenderPassCreateInfo2KHRBuilder<'a> {
     inner: RenderPassCreateInfo2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait RenderPassCreateInfo2KHRBuilderNext {}
 impl<'a> ::std::ops::Deref for RenderPassCreateInfo2KHRBuilder<'a> {
     type Target = RenderPassCreateInfo2KHR;
     fn deref(&self) -> &Self::Target {
@@ -29387,6 +31618,13 @@ impl<'a> RenderPassCreateInfo2KHRBuilder<'a> {
         self.inner.p_correlated_view_masks = correlated_view_masks.as_ptr();
         self
     }
+    pub fn next<T>(mut self, next: &'a T) -> RenderPassCreateInfo2KHRBuilder<'a>
+    where
+        T: RenderPassCreateInfo2KHRBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
+        self
+    }
     pub fn build(self) -> RenderPassCreateInfo2KHR {
         self.inner
     }
@@ -29419,6 +31657,7 @@ pub struct SubpassBeginInfoKHRBuilder<'a> {
     inner: SubpassBeginInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait SubpassBeginInfoKHRBuilderNext {}
 impl<'a> ::std::ops::Deref for SubpassBeginInfoKHRBuilder<'a> {
     type Target = SubpassBeginInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -29428,6 +31667,13 @@ impl<'a> ::std::ops::Deref for SubpassBeginInfoKHRBuilder<'a> {
 impl<'a> SubpassBeginInfoKHRBuilder<'a> {
     pub fn contents(mut self, contents: SubpassContents) -> SubpassBeginInfoKHRBuilder<'a> {
         self.inner.contents = contents;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> SubpassBeginInfoKHRBuilder<'a>
+    where
+        T: SubpassBeginInfoKHRBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> SubpassBeginInfoKHR {
@@ -29460,6 +31706,7 @@ pub struct SubpassEndInfoKHRBuilder<'a> {
     inner: SubpassEndInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait SubpassEndInfoKHRBuilderNext {}
 impl<'a> ::std::ops::Deref for SubpassEndInfoKHRBuilder<'a> {
     type Target = SubpassEndInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -29467,6 +31714,13 @@ impl<'a> ::std::ops::Deref for SubpassEndInfoKHRBuilder<'a> {
     }
 }
 impl<'a> SubpassEndInfoKHRBuilder<'a> {
+    pub fn next<T>(mut self, next: &'a T) -> SubpassEndInfoKHRBuilder<'a>
+    where
+        T: SubpassEndInfoKHRBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
+        self
+    }
     pub fn build(self) -> SubpassEndInfoKHR {
         self.inner
     }
@@ -29489,6 +31743,7 @@ pub struct VertexInputBindingDivisorDescriptionEXTBuilder<'a> {
     inner: VertexInputBindingDivisorDescriptionEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait VertexInputBindingDivisorDescriptionEXTBuilderNext {}
 impl<'a> ::std::ops::Deref for VertexInputBindingDivisorDescriptionEXTBuilder<'a> {
     type Target = VertexInputBindingDivisorDescriptionEXT;
     fn deref(&self) -> &Self::Target {
@@ -29538,6 +31793,10 @@ pub struct PipelineVertexInputDivisorStateCreateInfoEXTBuilder<'a> {
     inner: PipelineVertexInputDivisorStateCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PipelineVertexInputDivisorStateCreateInfoEXTBuilderNext {}
+unsafe impl PipelineVertexInputStateCreateInfoBuilderNext
+    for PipelineVertexInputDivisorStateCreateInfoEXTBuilderNext
+{}
 impl<'a> ::std::ops::Deref for PipelineVertexInputDivisorStateCreateInfoEXTBuilder<'a> {
     type Target = PipelineVertexInputDivisorStateCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
@@ -29551,6 +31810,13 @@ impl<'a> PipelineVertexInputDivisorStateCreateInfoEXTBuilder<'a> {
     ) -> PipelineVertexInputDivisorStateCreateInfoEXTBuilder<'a> {
         self.inner.vertex_binding_divisor_count = vertex_binding_divisors.len() as _;
         self.inner.p_vertex_binding_divisors = vertex_binding_divisors.as_ptr();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> PipelineVertexInputDivisorStateCreateInfoEXTBuilder<'a>
+    where
+        T: PipelineVertexInputDivisorStateCreateInfoEXTBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> PipelineVertexInputDivisorStateCreateInfoEXT {
@@ -29585,6 +31851,10 @@ pub struct PhysicalDeviceVertexAttributeDivisorPropertiesEXTBuilder<'a> {
     inner: PhysicalDeviceVertexAttributeDivisorPropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceVertexAttributeDivisorPropertiesEXTBuilderNext {}
+unsafe impl PhysicalDeviceProperties2BuilderNext
+    for PhysicalDeviceVertexAttributeDivisorPropertiesEXTBuilderNext
+{}
 impl<'a> ::std::ops::Deref for PhysicalDeviceVertexAttributeDivisorPropertiesEXTBuilder<'a> {
     type Target = PhysicalDeviceVertexAttributeDivisorPropertiesEXT;
     fn deref(&self) -> &Self::Target {
@@ -29597,6 +31867,16 @@ impl<'a> PhysicalDeviceVertexAttributeDivisorPropertiesEXTBuilder<'a> {
         max_vertex_attrib_divisor: u32,
     ) -> PhysicalDeviceVertexAttributeDivisorPropertiesEXTBuilder<'a> {
         self.inner.max_vertex_attrib_divisor = max_vertex_attrib_divisor;
+        self
+    }
+    pub fn next<T>(
+        mut self,
+        next: &'a mut T,
+    ) -> PhysicalDeviceVertexAttributeDivisorPropertiesEXTBuilder<'a>
+    where
+        T: PhysicalDeviceVertexAttributeDivisorPropertiesEXTBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceVertexAttributeDivisorPropertiesEXT {
@@ -29637,6 +31917,10 @@ pub struct PhysicalDevicePCIBusInfoPropertiesEXTBuilder<'a> {
     inner: PhysicalDevicePCIBusInfoPropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDevicePCIBusInfoPropertiesEXTBuilderNext {}
+unsafe impl PhysicalDeviceProperties2BuilderNext
+    for PhysicalDevicePCIBusInfoPropertiesEXTBuilderNext
+{}
 impl<'a> ::std::ops::Deref for PhysicalDevicePCIBusInfoPropertiesEXTBuilder<'a> {
     type Target = PhysicalDevicePCIBusInfoPropertiesEXT;
     fn deref(&self) -> &Self::Target {
@@ -29667,6 +31951,13 @@ impl<'a> PhysicalDevicePCIBusInfoPropertiesEXTBuilder<'a> {
         pci_function: u8,
     ) -> PhysicalDevicePCIBusInfoPropertiesEXTBuilder<'a> {
         self.inner.pci_function = pci_function;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDevicePCIBusInfoPropertiesEXTBuilder<'a>
+    where
+        T: PhysicalDevicePCIBusInfoPropertiesEXTBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDevicePCIBusInfoPropertiesEXT {
@@ -29701,6 +31992,8 @@ pub struct ImportAndroidHardwareBufferInfoANDROIDBuilder<'a> {
     inner: ImportAndroidHardwareBufferInfoANDROID,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ImportAndroidHardwareBufferInfoANDROIDBuilderNext {}
+unsafe impl MemoryAllocateInfoBuilderNext for ImportAndroidHardwareBufferInfoANDROIDBuilderNext {}
 impl<'a> ::std::ops::Deref for ImportAndroidHardwareBufferInfoANDROIDBuilder<'a> {
     type Target = ImportAndroidHardwareBufferInfoANDROID;
     fn deref(&self) -> &Self::Target {
@@ -29713,6 +32006,13 @@ impl<'a> ImportAndroidHardwareBufferInfoANDROIDBuilder<'a> {
         buffer: *mut AHardwareBuffer,
     ) -> ImportAndroidHardwareBufferInfoANDROIDBuilder<'a> {
         self.inner.buffer = buffer;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> ImportAndroidHardwareBufferInfoANDROIDBuilder<'a>
+    where
+        T: ImportAndroidHardwareBufferInfoANDROIDBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ImportAndroidHardwareBufferInfoANDROID {
@@ -29747,6 +32047,8 @@ pub struct AndroidHardwareBufferUsageANDROIDBuilder<'a> {
     inner: AndroidHardwareBufferUsageANDROID,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait AndroidHardwareBufferUsageANDROIDBuilderNext {}
+unsafe impl ImageFormatProperties2BuilderNext for AndroidHardwareBufferUsageANDROIDBuilderNext {}
 impl<'a> ::std::ops::Deref for AndroidHardwareBufferUsageANDROIDBuilder<'a> {
     type Target = AndroidHardwareBufferUsageANDROID;
     fn deref(&self) -> &Self::Target {
@@ -29759,6 +32061,13 @@ impl<'a> AndroidHardwareBufferUsageANDROIDBuilder<'a> {
         android_hardware_buffer_usage: u64,
     ) -> AndroidHardwareBufferUsageANDROIDBuilder<'a> {
         self.inner.android_hardware_buffer_usage = android_hardware_buffer_usage;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> AndroidHardwareBufferUsageANDROIDBuilder<'a>
+    where
+        T: AndroidHardwareBufferUsageANDROIDBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> AndroidHardwareBufferUsageANDROID {
@@ -29795,6 +32104,7 @@ pub struct AndroidHardwareBufferPropertiesANDROIDBuilder<'a> {
     inner: AndroidHardwareBufferPropertiesANDROID,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait AndroidHardwareBufferPropertiesANDROIDBuilderNext {}
 impl<'a> ::std::ops::Deref for AndroidHardwareBufferPropertiesANDROIDBuilder<'a> {
     type Target = AndroidHardwareBufferPropertiesANDROID;
     fn deref(&self) -> &Self::Target {
@@ -29814,6 +32124,13 @@ impl<'a> AndroidHardwareBufferPropertiesANDROIDBuilder<'a> {
         memory_type_bits: u32,
     ) -> AndroidHardwareBufferPropertiesANDROIDBuilder<'a> {
         self.inner.memory_type_bits = memory_type_bits;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> AndroidHardwareBufferPropertiesANDROIDBuilder<'a>
+    where
+        T: AndroidHardwareBufferPropertiesANDROIDBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> AndroidHardwareBufferPropertiesANDROID {
@@ -29848,6 +32165,7 @@ pub struct MemoryGetAndroidHardwareBufferInfoANDROIDBuilder<'a> {
     inner: MemoryGetAndroidHardwareBufferInfoANDROID,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait MemoryGetAndroidHardwareBufferInfoANDROIDBuilderNext {}
 impl<'a> ::std::ops::Deref for MemoryGetAndroidHardwareBufferInfoANDROIDBuilder<'a> {
     type Target = MemoryGetAndroidHardwareBufferInfoANDROID;
     fn deref(&self) -> &Self::Target {
@@ -29860,6 +32178,13 @@ impl<'a> MemoryGetAndroidHardwareBufferInfoANDROIDBuilder<'a> {
         memory: DeviceMemory,
     ) -> MemoryGetAndroidHardwareBufferInfoANDROIDBuilder<'a> {
         self.inner.memory = memory;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> MemoryGetAndroidHardwareBufferInfoANDROIDBuilder<'a>
+    where
+        T: MemoryGetAndroidHardwareBufferInfoANDROIDBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> MemoryGetAndroidHardwareBufferInfoANDROID {
@@ -29908,6 +32233,10 @@ pub struct AndroidHardwareBufferFormatPropertiesANDROIDBuilder<'a> {
     inner: AndroidHardwareBufferFormatPropertiesANDROID,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait AndroidHardwareBufferFormatPropertiesANDROIDBuilderNext {}
+unsafe impl AndroidHardwareBufferPropertiesANDROIDBuilderNext
+    for AndroidHardwareBufferFormatPropertiesANDROIDBuilderNext
+{}
 impl<'a> ::std::ops::Deref for AndroidHardwareBufferFormatPropertiesANDROIDBuilder<'a> {
     type Target = AndroidHardwareBufferFormatPropertiesANDROID;
     fn deref(&self) -> &Self::Target {
@@ -29971,6 +32300,16 @@ impl<'a> AndroidHardwareBufferFormatPropertiesANDROIDBuilder<'a> {
         self.inner.suggested_y_chroma_offset = suggested_y_chroma_offset;
         self
     }
+    pub fn next<T>(
+        mut self,
+        next: &'a mut T,
+    ) -> AndroidHardwareBufferFormatPropertiesANDROIDBuilder<'a>
+    where
+        T: AndroidHardwareBufferFormatPropertiesANDROIDBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
+        self
+    }
     pub fn build(self) -> AndroidHardwareBufferFormatPropertiesANDROID {
         self.inner
     }
@@ -30003,6 +32342,10 @@ pub struct CommandBufferInheritanceConditionalRenderingInfoEXTBuilder<'a> {
     inner: CommandBufferInheritanceConditionalRenderingInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait CommandBufferInheritanceConditionalRenderingInfoEXTBuilderNext {}
+unsafe impl CommandBufferInheritanceInfoBuilderNext
+    for CommandBufferInheritanceConditionalRenderingInfoEXTBuilderNext
+{}
 impl<'a> ::std::ops::Deref for CommandBufferInheritanceConditionalRenderingInfoEXTBuilder<'a> {
     type Target = CommandBufferInheritanceConditionalRenderingInfoEXT;
     fn deref(&self) -> &Self::Target {
@@ -30015,6 +32358,16 @@ impl<'a> CommandBufferInheritanceConditionalRenderingInfoEXTBuilder<'a> {
         conditional_rendering_enable: bool,
     ) -> CommandBufferInheritanceConditionalRenderingInfoEXTBuilder<'a> {
         self.inner.conditional_rendering_enable = conditional_rendering_enable.into();
+        self
+    }
+    pub fn next<T>(
+        mut self,
+        next: &'a T,
+    ) -> CommandBufferInheritanceConditionalRenderingInfoEXTBuilder<'a>
+    where
+        T: CommandBufferInheritanceConditionalRenderingInfoEXTBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> CommandBufferInheritanceConditionalRenderingInfoEXT {
@@ -30049,6 +32402,9 @@ pub struct ExternalFormatANDROIDBuilder<'a> {
     inner: ExternalFormatANDROID,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ExternalFormatANDROIDBuilderNext {}
+unsafe impl ImageCreateInfoBuilderNext for ExternalFormatANDROIDBuilderNext {}
+unsafe impl SamplerYcbcrConversionCreateInfoBuilderNext for ExternalFormatANDROIDBuilderNext {}
 impl<'a> ::std::ops::Deref for ExternalFormatANDROIDBuilder<'a> {
     type Target = ExternalFormatANDROID;
     fn deref(&self) -> &Self::Target {
@@ -30058,6 +32414,13 @@ impl<'a> ::std::ops::Deref for ExternalFormatANDROIDBuilder<'a> {
 impl<'a> ExternalFormatANDROIDBuilder<'a> {
     pub fn external_format(mut self, external_format: u64) -> ExternalFormatANDROIDBuilder<'a> {
         self.inner.external_format = external_format;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> ExternalFormatANDROIDBuilder<'a>
+    where
+        T: ExternalFormatANDROIDBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> ExternalFormatANDROID {
@@ -30096,6 +32459,9 @@ pub struct PhysicalDevice8BitStorageFeaturesKHRBuilder<'a> {
     inner: PhysicalDevice8BitStorageFeaturesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDevice8BitStorageFeaturesKHRBuilderNext {}
+unsafe impl PhysicalDeviceFeatures2BuilderNext for PhysicalDevice8BitStorageFeaturesKHRBuilderNext {}
+unsafe impl DeviceCreateInfoBuilderNext for PhysicalDevice8BitStorageFeaturesKHRBuilderNext {}
 impl<'a> ::std::ops::Deref for PhysicalDevice8BitStorageFeaturesKHRBuilder<'a> {
     type Target = PhysicalDevice8BitStorageFeaturesKHR;
     fn deref(&self) -> &Self::Target {
@@ -30123,6 +32489,13 @@ impl<'a> PhysicalDevice8BitStorageFeaturesKHRBuilder<'a> {
         storage_push_constant8: bool,
     ) -> PhysicalDevice8BitStorageFeaturesKHRBuilder<'a> {
         self.inner.storage_push_constant8 = storage_push_constant8.into();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDevice8BitStorageFeaturesKHRBuilder<'a>
+    where
+        T: PhysicalDevice8BitStorageFeaturesKHRBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDevice8BitStorageFeaturesKHR {
@@ -30159,6 +32532,13 @@ pub struct PhysicalDeviceConditionalRenderingFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceConditionalRenderingFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceConditionalRenderingFeaturesEXTBuilderNext {}
+unsafe impl PhysicalDeviceFeatures2BuilderNext
+    for PhysicalDeviceConditionalRenderingFeaturesEXTBuilderNext
+{}
+unsafe impl DeviceCreateInfoBuilderNext
+    for PhysicalDeviceConditionalRenderingFeaturesEXTBuilderNext
+{}
 impl<'a> ::std::ops::Deref for PhysicalDeviceConditionalRenderingFeaturesEXTBuilder<'a> {
     type Target = PhysicalDeviceConditionalRenderingFeaturesEXT;
     fn deref(&self) -> &Self::Target {
@@ -30178,6 +32558,16 @@ impl<'a> PhysicalDeviceConditionalRenderingFeaturesEXTBuilder<'a> {
         inherited_conditional_rendering: bool,
     ) -> PhysicalDeviceConditionalRenderingFeaturesEXTBuilder<'a> {
         self.inner.inherited_conditional_rendering = inherited_conditional_rendering.into();
+        self
+    }
+    pub fn next<T>(
+        mut self,
+        next: &'a mut T,
+    ) -> PhysicalDeviceConditionalRenderingFeaturesEXTBuilder<'a>
+    where
+        T: PhysicalDeviceConditionalRenderingFeaturesEXTBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceConditionalRenderingFeaturesEXT {
@@ -30214,6 +32604,11 @@ pub struct PhysicalDeviceVulkanMemoryModelFeaturesKHRBuilder<'a> {
     inner: PhysicalDeviceVulkanMemoryModelFeaturesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceVulkanMemoryModelFeaturesKHRBuilderNext {}
+unsafe impl PhysicalDeviceFeatures2BuilderNext
+    for PhysicalDeviceVulkanMemoryModelFeaturesKHRBuilderNext
+{}
+unsafe impl DeviceCreateInfoBuilderNext for PhysicalDeviceVulkanMemoryModelFeaturesKHRBuilderNext {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceVulkanMemoryModelFeaturesKHRBuilder<'a> {
     type Target = PhysicalDeviceVulkanMemoryModelFeaturesKHR;
     fn deref(&self) -> &Self::Target {
@@ -30233,6 +32628,16 @@ impl<'a> PhysicalDeviceVulkanMemoryModelFeaturesKHRBuilder<'a> {
         vulkan_memory_model_device_scope: bool,
     ) -> PhysicalDeviceVulkanMemoryModelFeaturesKHRBuilder<'a> {
         self.inner.vulkan_memory_model_device_scope = vulkan_memory_model_device_scope.into();
+        self
+    }
+    pub fn next<T>(
+        mut self,
+        next: &'a mut T,
+    ) -> PhysicalDeviceVulkanMemoryModelFeaturesKHRBuilder<'a>
+    where
+        T: PhysicalDeviceVulkanMemoryModelFeaturesKHRBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceVulkanMemoryModelFeaturesKHR {
@@ -30269,6 +32674,11 @@ pub struct PhysicalDeviceShaderAtomicInt64FeaturesKHRBuilder<'a> {
     inner: PhysicalDeviceShaderAtomicInt64FeaturesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceShaderAtomicInt64FeaturesKHRBuilderNext {}
+unsafe impl PhysicalDeviceFeatures2BuilderNext
+    for PhysicalDeviceShaderAtomicInt64FeaturesKHRBuilderNext
+{}
+unsafe impl DeviceCreateInfoBuilderNext for PhysicalDeviceShaderAtomicInt64FeaturesKHRBuilderNext {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceShaderAtomicInt64FeaturesKHRBuilder<'a> {
     type Target = PhysicalDeviceShaderAtomicInt64FeaturesKHR;
     fn deref(&self) -> &Self::Target {
@@ -30288,6 +32698,16 @@ impl<'a> PhysicalDeviceShaderAtomicInt64FeaturesKHRBuilder<'a> {
         shader_shared_int64_atomics: bool,
     ) -> PhysicalDeviceShaderAtomicInt64FeaturesKHRBuilder<'a> {
         self.inner.shader_shared_int64_atomics = shader_shared_int64_atomics.into();
+        self
+    }
+    pub fn next<T>(
+        mut self,
+        next: &'a mut T,
+    ) -> PhysicalDeviceShaderAtomicInt64FeaturesKHRBuilder<'a>
+    where
+        T: PhysicalDeviceShaderAtomicInt64FeaturesKHRBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceShaderAtomicInt64FeaturesKHR {
@@ -30324,6 +32744,13 @@ pub struct PhysicalDeviceVertexAttributeDivisorFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceVertexAttributeDivisorFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceVertexAttributeDivisorFeaturesEXTBuilderNext {}
+unsafe impl PhysicalDeviceFeatures2BuilderNext
+    for PhysicalDeviceVertexAttributeDivisorFeaturesEXTBuilderNext
+{}
+unsafe impl DeviceCreateInfoBuilderNext
+    for PhysicalDeviceVertexAttributeDivisorFeaturesEXTBuilderNext
+{}
 impl<'a> ::std::ops::Deref for PhysicalDeviceVertexAttributeDivisorFeaturesEXTBuilder<'a> {
     type Target = PhysicalDeviceVertexAttributeDivisorFeaturesEXT;
     fn deref(&self) -> &Self::Target {
@@ -30345,6 +32772,16 @@ impl<'a> PhysicalDeviceVertexAttributeDivisorFeaturesEXTBuilder<'a> {
     ) -> PhysicalDeviceVertexAttributeDivisorFeaturesEXTBuilder<'a> {
         self.inner.vertex_attribute_instance_rate_zero_divisor =
             vertex_attribute_instance_rate_zero_divisor.into();
+        self
+    }
+    pub fn next<T>(
+        mut self,
+        next: &'a mut T,
+    ) -> PhysicalDeviceVertexAttributeDivisorFeaturesEXTBuilder<'a>
+    where
+        T: PhysicalDeviceVertexAttributeDivisorFeaturesEXTBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceVertexAttributeDivisorFeaturesEXT {
@@ -30379,6 +32816,8 @@ pub struct QueueFamilyCheckpointPropertiesNVBuilder<'a> {
     inner: QueueFamilyCheckpointPropertiesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait QueueFamilyCheckpointPropertiesNVBuilderNext {}
+unsafe impl QueueFamilyProperties2BuilderNext for QueueFamilyCheckpointPropertiesNVBuilderNext {}
 impl<'a> ::std::ops::Deref for QueueFamilyCheckpointPropertiesNVBuilder<'a> {
     type Target = QueueFamilyCheckpointPropertiesNV;
     fn deref(&self) -> &Self::Target {
@@ -30391,6 +32830,13 @@ impl<'a> QueueFamilyCheckpointPropertiesNVBuilder<'a> {
         checkpoint_execution_stage_mask: PipelineStageFlags,
     ) -> QueueFamilyCheckpointPropertiesNVBuilder<'a> {
         self.inner.checkpoint_execution_stage_mask = checkpoint_execution_stage_mask;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> QueueFamilyCheckpointPropertiesNVBuilder<'a>
+    where
+        T: QueueFamilyCheckpointPropertiesNVBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> QueueFamilyCheckpointPropertiesNV {
@@ -30427,6 +32873,7 @@ pub struct CheckpointDataNVBuilder<'a> {
     inner: CheckpointDataNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait CheckpointDataNVBuilderNext {}
 impl<'a> ::std::ops::Deref for CheckpointDataNVBuilder<'a> {
     type Target = CheckpointDataNV;
     fn deref(&self) -> &Self::Target {
@@ -30443,6 +32890,13 @@ impl<'a> CheckpointDataNVBuilder<'a> {
         checkpoint_marker: *mut c_void,
     ) -> CheckpointDataNVBuilder<'a> {
         self.inner.p_checkpoint_marker = checkpoint_marker;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> CheckpointDataNVBuilder<'a>
+    where
+        T: CheckpointDataNVBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> CheckpointDataNV {
@@ -30477,6 +32931,8 @@ pub struct ImageViewASTCDecodeModeEXTBuilder<'a> {
     inner: ImageViewASTCDecodeModeEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ImageViewASTCDecodeModeEXTBuilderNext {}
+unsafe impl ImageViewCreateInfoBuilderNext for ImageViewASTCDecodeModeEXTBuilderNext {}
 impl<'a> ::std::ops::Deref for ImageViewASTCDecodeModeEXTBuilder<'a> {
     type Target = ImageViewASTCDecodeModeEXT;
     fn deref(&self) -> &Self::Target {
@@ -30486,6 +32942,13 @@ impl<'a> ::std::ops::Deref for ImageViewASTCDecodeModeEXTBuilder<'a> {
 impl<'a> ImageViewASTCDecodeModeEXTBuilder<'a> {
     pub fn decode_mode(mut self, decode_mode: Format) -> ImageViewASTCDecodeModeEXTBuilder<'a> {
         self.inner.decode_mode = decode_mode;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> ImageViewASTCDecodeModeEXTBuilder<'a>
+    where
+        T: ImageViewASTCDecodeModeEXTBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ImageViewASTCDecodeModeEXT {
@@ -30520,6 +32983,9 @@ pub struct PhysicalDeviceASTCDecodeFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceASTCDecodeFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceASTCDecodeFeaturesEXTBuilderNext {}
+unsafe impl PhysicalDeviceFeatures2BuilderNext for PhysicalDeviceASTCDecodeFeaturesEXTBuilderNext {}
+unsafe impl DeviceCreateInfoBuilderNext for PhysicalDeviceASTCDecodeFeaturesEXTBuilderNext {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceASTCDecodeFeaturesEXTBuilder<'a> {
     type Target = PhysicalDeviceASTCDecodeFeaturesEXT;
     fn deref(&self) -> &Self::Target {
@@ -30532,6 +32998,13 @@ impl<'a> PhysicalDeviceASTCDecodeFeaturesEXTBuilder<'a> {
         decode_mode_shared_exponent: bool,
     ) -> PhysicalDeviceASTCDecodeFeaturesEXTBuilder<'a> {
         self.inner.decode_mode_shared_exponent = decode_mode_shared_exponent.into();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceASTCDecodeFeaturesEXTBuilder<'a>
+    where
+        T: PhysicalDeviceASTCDecodeFeaturesEXTBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceASTCDecodeFeaturesEXT {
@@ -30568,6 +33041,11 @@ pub struct PhysicalDeviceTransformFeedbackFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceTransformFeedbackFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceTransformFeedbackFeaturesEXTBuilderNext {}
+unsafe impl PhysicalDeviceFeatures2BuilderNext
+    for PhysicalDeviceTransformFeedbackFeaturesEXTBuilderNext
+{}
+unsafe impl DeviceCreateInfoBuilderNext for PhysicalDeviceTransformFeedbackFeaturesEXTBuilderNext {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceTransformFeedbackFeaturesEXTBuilder<'a> {
     type Target = PhysicalDeviceTransformFeedbackFeaturesEXT;
     fn deref(&self) -> &Self::Target {
@@ -30587,6 +33065,16 @@ impl<'a> PhysicalDeviceTransformFeedbackFeaturesEXTBuilder<'a> {
         geometry_streams: bool,
     ) -> PhysicalDeviceTransformFeedbackFeaturesEXTBuilder<'a> {
         self.inner.geometry_streams = geometry_streams.into();
+        self
+    }
+    pub fn next<T>(
+        mut self,
+        next: &'a mut T,
+    ) -> PhysicalDeviceTransformFeedbackFeaturesEXTBuilder<'a>
+    where
+        T: PhysicalDeviceTransformFeedbackFeaturesEXTBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceTransformFeedbackFeaturesEXT {
@@ -30639,6 +33127,10 @@ pub struct PhysicalDeviceTransformFeedbackPropertiesEXTBuilder<'a> {
     inner: PhysicalDeviceTransformFeedbackPropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceTransformFeedbackPropertiesEXTBuilderNext {}
+unsafe impl PhysicalDeviceProperties2BuilderNext
+    for PhysicalDeviceTransformFeedbackPropertiesEXTBuilderNext
+{}
 impl<'a> ::std::ops::Deref for PhysicalDeviceTransformFeedbackPropertiesEXTBuilder<'a> {
     type Target = PhysicalDeviceTransformFeedbackPropertiesEXT;
     fn deref(&self) -> &Self::Target {
@@ -30721,6 +33213,16 @@ impl<'a> PhysicalDeviceTransformFeedbackPropertiesEXTBuilder<'a> {
         self.inner.transform_feedback_draw = transform_feedback_draw.into();
         self
     }
+    pub fn next<T>(
+        mut self,
+        next: &'a mut T,
+    ) -> PhysicalDeviceTransformFeedbackPropertiesEXTBuilder<'a>
+    where
+        T: PhysicalDeviceTransformFeedbackPropertiesEXTBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
+        self
+    }
     pub fn build(self) -> PhysicalDeviceTransformFeedbackPropertiesEXT {
         self.inner
     }
@@ -30755,6 +33257,10 @@ pub struct PipelineRasterizationStateStreamCreateInfoEXTBuilder<'a> {
     inner: PipelineRasterizationStateStreamCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PipelineRasterizationStateStreamCreateInfoEXTBuilderNext {}
+unsafe impl PipelineRasterizationStateCreateInfoBuilderNext
+    for PipelineRasterizationStateStreamCreateInfoEXTBuilderNext
+{}
 impl<'a> ::std::ops::Deref for PipelineRasterizationStateStreamCreateInfoEXTBuilder<'a> {
     type Target = PipelineRasterizationStateStreamCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
@@ -30774,6 +33280,16 @@ impl<'a> PipelineRasterizationStateStreamCreateInfoEXTBuilder<'a> {
         rasterization_stream: u32,
     ) -> PipelineRasterizationStateStreamCreateInfoEXTBuilder<'a> {
         self.inner.rasterization_stream = rasterization_stream;
+        self
+    }
+    pub fn next<T>(
+        mut self,
+        next: &'a T,
+    ) -> PipelineRasterizationStateStreamCreateInfoEXTBuilder<'a>
+    where
+        T: PipelineRasterizationStateStreamCreateInfoEXTBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> PipelineRasterizationStateStreamCreateInfoEXT {
@@ -30808,6 +33324,13 @@ pub struct PhysicalDeviceRepresentativeFragmentTestFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceRepresentativeFragmentTestFeaturesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceRepresentativeFragmentTestFeaturesNVBuilderNext {}
+unsafe impl PhysicalDeviceFeatures2BuilderNext
+    for PhysicalDeviceRepresentativeFragmentTestFeaturesNVBuilderNext
+{}
+unsafe impl DeviceCreateInfoBuilderNext
+    for PhysicalDeviceRepresentativeFragmentTestFeaturesNVBuilderNext
+{}
 impl<'a> ::std::ops::Deref for PhysicalDeviceRepresentativeFragmentTestFeaturesNVBuilder<'a> {
     type Target = PhysicalDeviceRepresentativeFragmentTestFeaturesNV;
     fn deref(&self) -> &Self::Target {
@@ -30820,6 +33343,16 @@ impl<'a> PhysicalDeviceRepresentativeFragmentTestFeaturesNVBuilder<'a> {
         representative_fragment_test: bool,
     ) -> PhysicalDeviceRepresentativeFragmentTestFeaturesNVBuilder<'a> {
         self.inner.representative_fragment_test = representative_fragment_test.into();
+        self
+    }
+    pub fn next<T>(
+        mut self,
+        next: &'a mut T,
+    ) -> PhysicalDeviceRepresentativeFragmentTestFeaturesNVBuilder<'a>
+    where
+        T: PhysicalDeviceRepresentativeFragmentTestFeaturesNVBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceRepresentativeFragmentTestFeaturesNV {
@@ -30854,6 +33387,10 @@ pub struct PipelineRepresentativeFragmentTestStateCreateInfoNVBuilder<'a> {
     inner: PipelineRepresentativeFragmentTestStateCreateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PipelineRepresentativeFragmentTestStateCreateInfoNVBuilderNext {}
+unsafe impl GraphicsPipelineCreateInfoBuilderNext
+    for PipelineRepresentativeFragmentTestStateCreateInfoNVBuilderNext
+{}
 impl<'a> ::std::ops::Deref for PipelineRepresentativeFragmentTestStateCreateInfoNVBuilder<'a> {
     type Target = PipelineRepresentativeFragmentTestStateCreateInfoNV;
     fn deref(&self) -> &Self::Target {
@@ -30866,6 +33403,16 @@ impl<'a> PipelineRepresentativeFragmentTestStateCreateInfoNVBuilder<'a> {
         representative_fragment_test_enable: bool,
     ) -> PipelineRepresentativeFragmentTestStateCreateInfoNVBuilder<'a> {
         self.inner.representative_fragment_test_enable = representative_fragment_test_enable.into();
+        self
+    }
+    pub fn next<T>(
+        mut self,
+        next: &'a T,
+    ) -> PipelineRepresentativeFragmentTestStateCreateInfoNVBuilder<'a>
+    where
+        T: PipelineRepresentativeFragmentTestStateCreateInfoNVBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> PipelineRepresentativeFragmentTestStateCreateInfoNV {
@@ -30900,6 +33447,11 @@ pub struct PhysicalDeviceExclusiveScissorFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceExclusiveScissorFeaturesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceExclusiveScissorFeaturesNVBuilderNext {}
+unsafe impl PhysicalDeviceFeatures2BuilderNext
+    for PhysicalDeviceExclusiveScissorFeaturesNVBuilderNext
+{}
+unsafe impl DeviceCreateInfoBuilderNext for PhysicalDeviceExclusiveScissorFeaturesNVBuilderNext {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceExclusiveScissorFeaturesNVBuilder<'a> {
     type Target = PhysicalDeviceExclusiveScissorFeaturesNV;
     fn deref(&self) -> &Self::Target {
@@ -30912,6 +33464,13 @@ impl<'a> PhysicalDeviceExclusiveScissorFeaturesNVBuilder<'a> {
         exclusive_scissor: bool,
     ) -> PhysicalDeviceExclusiveScissorFeaturesNVBuilder<'a> {
         self.inner.exclusive_scissor = exclusive_scissor.into();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceExclusiveScissorFeaturesNVBuilder<'a>
+    where
+        T: PhysicalDeviceExclusiveScissorFeaturesNVBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceExclusiveScissorFeaturesNV {
@@ -30948,6 +33507,10 @@ pub struct PipelineViewportExclusiveScissorStateCreateInfoNVBuilder<'a> {
     inner: PipelineViewportExclusiveScissorStateCreateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PipelineViewportExclusiveScissorStateCreateInfoNVBuilderNext {}
+unsafe impl PipelineViewportStateCreateInfoBuilderNext
+    for PipelineViewportExclusiveScissorStateCreateInfoNVBuilderNext
+{}
 impl<'a> ::std::ops::Deref for PipelineViewportExclusiveScissorStateCreateInfoNVBuilder<'a> {
     type Target = PipelineViewportExclusiveScissorStateCreateInfoNV;
     fn deref(&self) -> &Self::Target {
@@ -30961,6 +33524,16 @@ impl<'a> PipelineViewportExclusiveScissorStateCreateInfoNVBuilder<'a> {
     ) -> PipelineViewportExclusiveScissorStateCreateInfoNVBuilder<'a> {
         self.inner.exclusive_scissor_count = exclusive_scissors.len() as _;
         self.inner.p_exclusive_scissors = exclusive_scissors.as_ptr();
+        self
+    }
+    pub fn next<T>(
+        mut self,
+        next: &'a T,
+    ) -> PipelineViewportExclusiveScissorStateCreateInfoNVBuilder<'a>
+    where
+        T: PipelineViewportExclusiveScissorStateCreateInfoNVBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> PipelineViewportExclusiveScissorStateCreateInfoNV {
@@ -30995,6 +33568,11 @@ pub struct PhysicalDeviceCornerSampledImageFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceCornerSampledImageFeaturesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceCornerSampledImageFeaturesNVBuilderNext {}
+unsafe impl PhysicalDeviceFeatures2BuilderNext
+    for PhysicalDeviceCornerSampledImageFeaturesNVBuilderNext
+{}
+unsafe impl DeviceCreateInfoBuilderNext for PhysicalDeviceCornerSampledImageFeaturesNVBuilderNext {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceCornerSampledImageFeaturesNVBuilder<'a> {
     type Target = PhysicalDeviceCornerSampledImageFeaturesNV;
     fn deref(&self) -> &Self::Target {
@@ -31007,6 +33585,16 @@ impl<'a> PhysicalDeviceCornerSampledImageFeaturesNVBuilder<'a> {
         corner_sampled_image: bool,
     ) -> PhysicalDeviceCornerSampledImageFeaturesNVBuilder<'a> {
         self.inner.corner_sampled_image = corner_sampled_image.into();
+        self
+    }
+    pub fn next<T>(
+        mut self,
+        next: &'a mut T,
+    ) -> PhysicalDeviceCornerSampledImageFeaturesNVBuilder<'a>
+    where
+        T: PhysicalDeviceCornerSampledImageFeaturesNVBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceCornerSampledImageFeaturesNV {
@@ -31043,6 +33631,13 @@ pub struct PhysicalDeviceComputeShaderDerivativesFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceComputeShaderDerivativesFeaturesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceComputeShaderDerivativesFeaturesNVBuilderNext {}
+unsafe impl PhysicalDeviceFeatures2BuilderNext
+    for PhysicalDeviceComputeShaderDerivativesFeaturesNVBuilderNext
+{}
+unsafe impl DeviceCreateInfoBuilderNext
+    for PhysicalDeviceComputeShaderDerivativesFeaturesNVBuilderNext
+{}
 impl<'a> ::std::ops::Deref for PhysicalDeviceComputeShaderDerivativesFeaturesNVBuilder<'a> {
     type Target = PhysicalDeviceComputeShaderDerivativesFeaturesNV;
     fn deref(&self) -> &Self::Target {
@@ -31062,6 +33657,16 @@ impl<'a> PhysicalDeviceComputeShaderDerivativesFeaturesNVBuilder<'a> {
         compute_derivative_group_linear: bool,
     ) -> PhysicalDeviceComputeShaderDerivativesFeaturesNVBuilder<'a> {
         self.inner.compute_derivative_group_linear = compute_derivative_group_linear.into();
+        self
+    }
+    pub fn next<T>(
+        mut self,
+        next: &'a mut T,
+    ) -> PhysicalDeviceComputeShaderDerivativesFeaturesNVBuilder<'a>
+    where
+        T: PhysicalDeviceComputeShaderDerivativesFeaturesNVBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceComputeShaderDerivativesFeaturesNV {
@@ -31096,6 +33701,13 @@ pub struct PhysicalDeviceFragmentShaderBarycentricFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceFragmentShaderBarycentricFeaturesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceFragmentShaderBarycentricFeaturesNVBuilderNext {}
+unsafe impl PhysicalDeviceFeatures2BuilderNext
+    for PhysicalDeviceFragmentShaderBarycentricFeaturesNVBuilderNext
+{}
+unsafe impl DeviceCreateInfoBuilderNext
+    for PhysicalDeviceFragmentShaderBarycentricFeaturesNVBuilderNext
+{}
 impl<'a> ::std::ops::Deref for PhysicalDeviceFragmentShaderBarycentricFeaturesNVBuilder<'a> {
     type Target = PhysicalDeviceFragmentShaderBarycentricFeaturesNV;
     fn deref(&self) -> &Self::Target {
@@ -31108,6 +33720,16 @@ impl<'a> PhysicalDeviceFragmentShaderBarycentricFeaturesNVBuilder<'a> {
         fragment_shader_barycentric: bool,
     ) -> PhysicalDeviceFragmentShaderBarycentricFeaturesNVBuilder<'a> {
         self.inner.fragment_shader_barycentric = fragment_shader_barycentric.into();
+        self
+    }
+    pub fn next<T>(
+        mut self,
+        next: &'a mut T,
+    ) -> PhysicalDeviceFragmentShaderBarycentricFeaturesNVBuilder<'a>
+    where
+        T: PhysicalDeviceFragmentShaderBarycentricFeaturesNVBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceFragmentShaderBarycentricFeaturesNV {
@@ -31142,6 +33764,13 @@ pub struct PhysicalDeviceShaderImageFootprintFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceShaderImageFootprintFeaturesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceShaderImageFootprintFeaturesNVBuilderNext {}
+unsafe impl PhysicalDeviceFeatures2BuilderNext
+    for PhysicalDeviceShaderImageFootprintFeaturesNVBuilderNext
+{}
+unsafe impl DeviceCreateInfoBuilderNext
+    for PhysicalDeviceShaderImageFootprintFeaturesNVBuilderNext
+{}
 impl<'a> ::std::ops::Deref for PhysicalDeviceShaderImageFootprintFeaturesNVBuilder<'a> {
     type Target = PhysicalDeviceShaderImageFootprintFeaturesNV;
     fn deref(&self) -> &Self::Target {
@@ -31154,6 +33783,16 @@ impl<'a> PhysicalDeviceShaderImageFootprintFeaturesNVBuilder<'a> {
         image_footprint: bool,
     ) -> PhysicalDeviceShaderImageFootprintFeaturesNVBuilder<'a> {
         self.inner.image_footprint = image_footprint.into();
+        self
+    }
+    pub fn next<T>(
+        mut self,
+        next: &'a mut T,
+    ) -> PhysicalDeviceShaderImageFootprintFeaturesNVBuilder<'a>
+    where
+        T: PhysicalDeviceShaderImageFootprintFeaturesNVBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceShaderImageFootprintFeaturesNV {
@@ -31186,6 +33825,7 @@ pub struct ShadingRatePaletteNVBuilder<'a> {
     inner: ShadingRatePaletteNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ShadingRatePaletteNVBuilderNext {}
 impl<'a> ::std::ops::Deref for ShadingRatePaletteNVBuilder<'a> {
     type Target = ShadingRatePaletteNV;
     fn deref(&self) -> &Self::Target {
@@ -31237,6 +33877,10 @@ pub struct PipelineViewportShadingRateImageStateCreateInfoNVBuilder<'a> {
     inner: PipelineViewportShadingRateImageStateCreateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PipelineViewportShadingRateImageStateCreateInfoNVBuilderNext {}
+unsafe impl PipelineViewportStateCreateInfoBuilderNext
+    for PipelineViewportShadingRateImageStateCreateInfoNVBuilderNext
+{}
 impl<'a> ::std::ops::Deref for PipelineViewportShadingRateImageStateCreateInfoNVBuilder<'a> {
     type Target = PipelineViewportShadingRateImageStateCreateInfoNV;
     fn deref(&self) -> &Self::Target {
@@ -31257,6 +33901,16 @@ impl<'a> PipelineViewportShadingRateImageStateCreateInfoNVBuilder<'a> {
     ) -> PipelineViewportShadingRateImageStateCreateInfoNVBuilder<'a> {
         self.inner.viewport_count = shading_rate_palettes.len() as _;
         self.inner.p_shading_rate_palettes = shading_rate_palettes.as_ptr();
+        self
+    }
+    pub fn next<T>(
+        mut self,
+        next: &'a T,
+    ) -> PipelineViewportShadingRateImageStateCreateInfoNVBuilder<'a>
+    where
+        T: PipelineViewportShadingRateImageStateCreateInfoNVBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> PipelineViewportShadingRateImageStateCreateInfoNV {
@@ -31293,6 +33947,11 @@ pub struct PhysicalDeviceShadingRateImageFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceShadingRateImageFeaturesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceShadingRateImageFeaturesNVBuilderNext {}
+unsafe impl PhysicalDeviceFeatures2BuilderNext
+    for PhysicalDeviceShadingRateImageFeaturesNVBuilderNext
+{}
+unsafe impl DeviceCreateInfoBuilderNext for PhysicalDeviceShadingRateImageFeaturesNVBuilderNext {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceShadingRateImageFeaturesNVBuilder<'a> {
     type Target = PhysicalDeviceShadingRateImageFeaturesNV;
     fn deref(&self) -> &Self::Target {
@@ -31312,6 +33971,13 @@ impl<'a> PhysicalDeviceShadingRateImageFeaturesNVBuilder<'a> {
         shading_rate_coarse_sample_order: bool,
     ) -> PhysicalDeviceShadingRateImageFeaturesNVBuilder<'a> {
         self.inner.shading_rate_coarse_sample_order = shading_rate_coarse_sample_order.into();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceShadingRateImageFeaturesNVBuilder<'a>
+    where
+        T: PhysicalDeviceShadingRateImageFeaturesNVBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceShadingRateImageFeaturesNV {
@@ -31350,6 +34016,10 @@ pub struct PhysicalDeviceShadingRateImagePropertiesNVBuilder<'a> {
     inner: PhysicalDeviceShadingRateImagePropertiesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceShadingRateImagePropertiesNVBuilderNext {}
+unsafe impl PhysicalDevicePropertiesBuilderNext
+    for PhysicalDeviceShadingRateImagePropertiesNVBuilderNext
+{}
 impl<'a> ::std::ops::Deref for PhysicalDeviceShadingRateImagePropertiesNVBuilder<'a> {
     type Target = PhysicalDeviceShadingRateImagePropertiesNV;
     fn deref(&self) -> &Self::Target {
@@ -31378,6 +34048,16 @@ impl<'a> PhysicalDeviceShadingRateImagePropertiesNVBuilder<'a> {
         self.inner.shading_rate_max_coarse_samples = shading_rate_max_coarse_samples;
         self
     }
+    pub fn next<T>(
+        mut self,
+        next: &'a mut T,
+    ) -> PhysicalDeviceShadingRateImagePropertiesNVBuilder<'a>
+    where
+        T: PhysicalDeviceShadingRateImagePropertiesNVBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
+        self
+    }
     pub fn build(self) -> PhysicalDeviceShadingRateImagePropertiesNV {
         self.inner
     }
@@ -31401,6 +34081,7 @@ pub struct CoarseSampleLocationNVBuilder<'a> {
     inner: CoarseSampleLocationNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait CoarseSampleLocationNVBuilderNext {}
 impl<'a> ::std::ops::Deref for CoarseSampleLocationNVBuilder<'a> {
     type Target = CoarseSampleLocationNV;
     fn deref(&self) -> &Self::Target {
@@ -31454,6 +34135,7 @@ pub struct CoarseSampleOrderCustomNVBuilder<'a> {
     inner: CoarseSampleOrderCustomNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait CoarseSampleOrderCustomNVBuilderNext {}
 impl<'a> ::std::ops::Deref for CoarseSampleOrderCustomNVBuilder<'a> {
     type Target = CoarseSampleOrderCustomNV;
     fn deref(&self) -> &Self::Target {
@@ -31516,6 +34198,10 @@ pub struct PipelineViewportCoarseSampleOrderStateCreateInfoNVBuilder<'a> {
     inner: PipelineViewportCoarseSampleOrderStateCreateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PipelineViewportCoarseSampleOrderStateCreateInfoNVBuilderNext {}
+unsafe impl PipelineViewportStateCreateInfoBuilderNext
+    for PipelineViewportCoarseSampleOrderStateCreateInfoNVBuilderNext
+{}
 impl<'a> ::std::ops::Deref for PipelineViewportCoarseSampleOrderStateCreateInfoNVBuilder<'a> {
     type Target = PipelineViewportCoarseSampleOrderStateCreateInfoNV;
     fn deref(&self) -> &Self::Target {
@@ -31536,6 +34222,16 @@ impl<'a> PipelineViewportCoarseSampleOrderStateCreateInfoNVBuilder<'a> {
     ) -> PipelineViewportCoarseSampleOrderStateCreateInfoNVBuilder<'a> {
         self.inner.custom_sample_order_count = custom_sample_orders.len() as _;
         self.inner.p_custom_sample_orders = custom_sample_orders.as_ptr();
+        self
+    }
+    pub fn next<T>(
+        mut self,
+        next: &'a T,
+    ) -> PipelineViewportCoarseSampleOrderStateCreateInfoNVBuilder<'a>
+    where
+        T: PipelineViewportCoarseSampleOrderStateCreateInfoNVBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> PipelineViewportCoarseSampleOrderStateCreateInfoNV {
@@ -31572,6 +34268,9 @@ pub struct PhysicalDeviceMeshShaderFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceMeshShaderFeaturesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceMeshShaderFeaturesNVBuilderNext {}
+unsafe impl PhysicalDeviceFeatures2BuilderNext for PhysicalDeviceMeshShaderFeaturesNVBuilderNext {}
+unsafe impl DeviceCreateInfoBuilderNext for PhysicalDeviceMeshShaderFeaturesNVBuilderNext {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceMeshShaderFeaturesNVBuilder<'a> {
     type Target = PhysicalDeviceMeshShaderFeaturesNV;
     fn deref(&self) -> &Self::Target {
@@ -31591,6 +34290,13 @@ impl<'a> PhysicalDeviceMeshShaderFeaturesNVBuilder<'a> {
         mesh_shader: bool,
     ) -> PhysicalDeviceMeshShaderFeaturesNVBuilder<'a> {
         self.inner.mesh_shader = mesh_shader.into();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceMeshShaderFeaturesNVBuilder<'a>
+    where
+        T: PhysicalDeviceMeshShaderFeaturesNVBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceMeshShaderFeaturesNV {
@@ -31649,6 +34355,10 @@ pub struct PhysicalDeviceMeshShaderPropertiesNVBuilder<'a> {
     inner: PhysicalDeviceMeshShaderPropertiesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceMeshShaderPropertiesNVBuilderNext {}
+unsafe impl PhysicalDeviceProperties2BuilderNext
+    for PhysicalDeviceMeshShaderPropertiesNVBuilderNext
+{}
 impl<'a> ::std::ops::Deref for PhysicalDeviceMeshShaderPropertiesNVBuilder<'a> {
     type Target = PhysicalDeviceMeshShaderPropertiesNV;
     fn deref(&self) -> &Self::Target {
@@ -31747,6 +34457,13 @@ impl<'a> PhysicalDeviceMeshShaderPropertiesNVBuilder<'a> {
         self.inner.mesh_output_per_primitive_granularity = mesh_output_per_primitive_granularity;
         self
     }
+    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceMeshShaderPropertiesNVBuilder<'a>
+    where
+        T: PhysicalDeviceMeshShaderPropertiesNVBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
+        self
+    }
     pub fn build(self) -> PhysicalDeviceMeshShaderPropertiesNV {
         self.inner
     }
@@ -31769,6 +34486,7 @@ pub struct DrawMeshTasksIndirectCommandNVBuilder<'a> {
     inner: DrawMeshTasksIndirectCommandNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DrawMeshTasksIndirectCommandNVBuilderNext {}
 impl<'a> ::std::ops::Deref for DrawMeshTasksIndirectCommandNVBuilder<'a> {
     type Target = DrawMeshTasksIndirectCommandNV;
     fn deref(&self) -> &Self::Target {
@@ -31824,6 +34542,7 @@ pub struct RayTracingShaderGroupCreateInfoNVBuilder<'a> {
     inner: RayTracingShaderGroupCreateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait RayTracingShaderGroupCreateInfoNVBuilderNext {}
 impl<'a> ::std::ops::Deref for RayTracingShaderGroupCreateInfoNVBuilder<'a> {
     type Target = RayTracingShaderGroupCreateInfoNV;
     fn deref(&self) -> &Self::Target {
@@ -31864,6 +34583,13 @@ impl<'a> RayTracingShaderGroupCreateInfoNVBuilder<'a> {
         intersection_shader: u32,
     ) -> RayTracingShaderGroupCreateInfoNVBuilder<'a> {
         self.inner.intersection_shader = intersection_shader;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> RayTracingShaderGroupCreateInfoNVBuilder<'a>
+    where
+        T: RayTracingShaderGroupCreateInfoNVBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> RayTracingShaderGroupCreateInfoNV {
@@ -31914,6 +34640,7 @@ pub struct RayTracingPipelineCreateInfoNVBuilder<'a> {
     inner: RayTracingPipelineCreateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait RayTracingPipelineCreateInfoNVBuilderNext {}
 impl<'a> ::std::ops::Deref for RayTracingPipelineCreateInfoNVBuilder<'a> {
     type Target = RayTracingPipelineCreateInfoNV;
     fn deref(&self) -> &Self::Target {
@@ -31969,6 +34696,13 @@ impl<'a> RayTracingPipelineCreateInfoNVBuilder<'a> {
         self.inner.base_pipeline_index = base_pipeline_index;
         self
     }
+    pub fn next<T>(mut self, next: &'a T) -> RayTracingPipelineCreateInfoNVBuilder<'a>
+    where
+        T: RayTracingPipelineCreateInfoNVBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
+        self
+    }
     pub fn build(self) -> RayTracingPipelineCreateInfoNV {
         self.inner
     }
@@ -32021,6 +34755,7 @@ pub struct GeometryTrianglesNVBuilder<'a> {
     inner: GeometryTrianglesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait GeometryTrianglesNVBuilderNext {}
 impl<'a> ::std::ops::Deref for GeometryTrianglesNVBuilder<'a> {
     type Target = GeometryTrianglesNV;
     fn deref(&self) -> &Self::Target {
@@ -32075,6 +34810,13 @@ impl<'a> GeometryTrianglesNVBuilder<'a> {
         self.inner.transform_offset = transform_offset;
         self
     }
+    pub fn next<T>(mut self, next: &'a T) -> GeometryTrianglesNVBuilder<'a>
+    where
+        T: GeometryTrianglesNVBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
+        self
+    }
     pub fn build(self) -> GeometryTrianglesNV {
         self.inner
     }
@@ -32113,6 +34855,7 @@ pub struct GeometryAABBNVBuilder<'a> {
     inner: GeometryAABBNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait GeometryAABBNVBuilderNext {}
 impl<'a> ::std::ops::Deref for GeometryAABBNVBuilder<'a> {
     type Target = GeometryAABBNV;
     fn deref(&self) -> &Self::Target {
@@ -32134,6 +34877,13 @@ impl<'a> GeometryAABBNVBuilder<'a> {
     }
     pub fn offset(mut self, offset: DeviceSize) -> GeometryAABBNVBuilder<'a> {
         self.inner.offset = offset;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> GeometryAABBNVBuilder<'a>
+    where
+        T: GeometryAABBNVBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> GeometryAABBNV {
@@ -32158,6 +34908,7 @@ pub struct GeometryDataNVBuilder<'a> {
     inner: GeometryDataNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait GeometryDataNVBuilderNext {}
 impl<'a> ::std::ops::Deref for GeometryDataNVBuilder<'a> {
     type Target = GeometryDataNV;
     fn deref(&self) -> &Self::Target {
@@ -32209,6 +34960,7 @@ pub struct GeometryNVBuilder<'a> {
     inner: GeometryNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait GeometryNVBuilderNext {}
 impl<'a> ::std::ops::Deref for GeometryNVBuilder<'a> {
     type Target = GeometryNV;
     fn deref(&self) -> &Self::Target {
@@ -32226,6 +34978,13 @@ impl<'a> GeometryNVBuilder<'a> {
     }
     pub fn flags(mut self, flags: GeometryFlagsNV) -> GeometryNVBuilder<'a> {
         self.inner.flags = flags;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> GeometryNVBuilder<'a>
+    where
+        T: GeometryNVBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> GeometryNV {
@@ -32268,6 +35027,7 @@ pub struct AccelerationStructureInfoNVBuilder<'a> {
     inner: AccelerationStructureInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait AccelerationStructureInfoNVBuilderNext {}
 impl<'a> ::std::ops::Deref for AccelerationStructureInfoNVBuilder<'a> {
     type Target = AccelerationStructureInfoNV;
     fn deref(&self) -> &Self::Target {
@@ -32296,6 +35056,13 @@ impl<'a> AccelerationStructureInfoNVBuilder<'a> {
     ) -> AccelerationStructureInfoNVBuilder<'a> {
         self.inner.geometry_count = geometries.len() as _;
         self.inner.p_geometries = geometries.as_ptr();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> AccelerationStructureInfoNVBuilder<'a>
+    where
+        T: AccelerationStructureInfoNVBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> AccelerationStructureInfoNV {
@@ -32332,6 +35099,7 @@ pub struct AccelerationStructureCreateInfoNVBuilder<'a> {
     inner: AccelerationStructureCreateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait AccelerationStructureCreateInfoNVBuilderNext {}
 impl<'a> ::std::ops::Deref for AccelerationStructureCreateInfoNVBuilder<'a> {
     type Target = AccelerationStructureCreateInfoNV;
     fn deref(&self) -> &Self::Target {
@@ -32351,6 +35119,13 @@ impl<'a> AccelerationStructureCreateInfoNVBuilder<'a> {
         info: AccelerationStructureInfoNV,
     ) -> AccelerationStructureCreateInfoNVBuilder<'a> {
         self.inner.info = info;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> AccelerationStructureCreateInfoNVBuilder<'a>
+    where
+        T: AccelerationStructureCreateInfoNVBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> AccelerationStructureCreateInfoNV {
@@ -32393,6 +35168,7 @@ pub struct BindAccelerationStructureMemoryInfoNVBuilder<'a> {
     inner: BindAccelerationStructureMemoryInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait BindAccelerationStructureMemoryInfoNVBuilderNext {}
 impl<'a> ::std::ops::Deref for BindAccelerationStructureMemoryInfoNVBuilder<'a> {
     type Target = BindAccelerationStructureMemoryInfoNV;
     fn deref(&self) -> &Self::Target {
@@ -32429,6 +35205,13 @@ impl<'a> BindAccelerationStructureMemoryInfoNVBuilder<'a> {
         self.inner.p_device_indices = device_indices.as_ptr();
         self
     }
+    pub fn next<T>(mut self, next: &'a T) -> BindAccelerationStructureMemoryInfoNVBuilder<'a>
+    where
+        T: BindAccelerationStructureMemoryInfoNVBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
+        self
+    }
     pub fn build(self) -> BindAccelerationStructureMemoryInfoNV {
         self.inner
     }
@@ -32463,6 +35246,8 @@ pub struct WriteDescriptorSetAccelerationStructureNVBuilder<'a> {
     inner: WriteDescriptorSetAccelerationStructureNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait WriteDescriptorSetAccelerationStructureNVBuilderNext {}
+unsafe impl WriteDescriptorSetBuilderNext for WriteDescriptorSetAccelerationStructureNVBuilderNext {}
 impl<'a> ::std::ops::Deref for WriteDescriptorSetAccelerationStructureNVBuilder<'a> {
     type Target = WriteDescriptorSetAccelerationStructureNV;
     fn deref(&self) -> &Self::Target {
@@ -32476,6 +35261,13 @@ impl<'a> WriteDescriptorSetAccelerationStructureNVBuilder<'a> {
     ) -> WriteDescriptorSetAccelerationStructureNVBuilder<'a> {
         self.inner.acceleration_structure_count = acceleration_structures.len() as _;
         self.inner.p_acceleration_structures = acceleration_structures.as_ptr();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> WriteDescriptorSetAccelerationStructureNVBuilder<'a>
+    where
+        T: WriteDescriptorSetAccelerationStructureNVBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> WriteDescriptorSetAccelerationStructureNV {
@@ -32512,6 +35304,7 @@ pub struct AccelerationStructureMemoryRequirementsInfoNVBuilder<'a> {
     inner: AccelerationStructureMemoryRequirementsInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait AccelerationStructureMemoryRequirementsInfoNVBuilderNext {}
 impl<'a> ::std::ops::Deref for AccelerationStructureMemoryRequirementsInfoNVBuilder<'a> {
     type Target = AccelerationStructureMemoryRequirementsInfoNV;
     fn deref(&self) -> &Self::Target {
@@ -32531,6 +35324,16 @@ impl<'a> AccelerationStructureMemoryRequirementsInfoNVBuilder<'a> {
         acceleration_structure: AccelerationStructureNV,
     ) -> AccelerationStructureMemoryRequirementsInfoNVBuilder<'a> {
         self.inner.acceleration_structure = acceleration_structure;
+        self
+    }
+    pub fn next<T>(
+        mut self,
+        next: &'a T,
+    ) -> AccelerationStructureMemoryRequirementsInfoNVBuilder<'a>
+    where
+        T: AccelerationStructureMemoryRequirementsInfoNVBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> AccelerationStructureMemoryRequirementsInfoNV {
@@ -32579,6 +35382,10 @@ pub struct PhysicalDeviceRayTracingPropertiesNVBuilder<'a> {
     inner: PhysicalDeviceRayTracingPropertiesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceRayTracingPropertiesNVBuilderNext {}
+unsafe impl PhysicalDeviceProperties2BuilderNext
+    for PhysicalDeviceRayTracingPropertiesNVBuilderNext
+{}
 impl<'a> ::std::ops::Deref for PhysicalDeviceRayTracingPropertiesNVBuilder<'a> {
     type Target = PhysicalDeviceRayTracingPropertiesNV;
     fn deref(&self) -> &Self::Target {
@@ -32643,6 +35450,13 @@ impl<'a> PhysicalDeviceRayTracingPropertiesNVBuilder<'a> {
             max_descriptor_set_acceleration_structures;
         self
     }
+    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceRayTracingPropertiesNVBuilder<'a>
+    where
+        T: PhysicalDeviceRayTracingPropertiesNVBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
+        self
+    }
     pub fn build(self) -> PhysicalDeviceRayTracingPropertiesNV {
         self.inner
     }
@@ -32677,6 +35491,8 @@ pub struct DrmFormatModifierPropertiesListEXTBuilder<'a> {
     inner: DrmFormatModifierPropertiesListEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DrmFormatModifierPropertiesListEXTBuilderNext {}
+unsafe impl FormatProperties2BuilderNext for DrmFormatModifierPropertiesListEXTBuilderNext {}
 impl<'a> ::std::ops::Deref for DrmFormatModifierPropertiesListEXTBuilder<'a> {
     type Target = DrmFormatModifierPropertiesListEXT;
     fn deref(&self) -> &Self::Target {
@@ -32690,6 +35506,13 @@ impl<'a> DrmFormatModifierPropertiesListEXTBuilder<'a> {
     ) -> DrmFormatModifierPropertiesListEXTBuilder<'a> {
         self.inner.drm_format_modifier_count = drm_format_modifier_properties.len() as _;
         self.inner.p_drm_format_modifier_properties = drm_format_modifier_properties.as_mut_ptr();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> DrmFormatModifierPropertiesListEXTBuilder<'a>
+    where
+        T: DrmFormatModifierPropertiesListEXTBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> DrmFormatModifierPropertiesListEXT {
@@ -32715,6 +35538,7 @@ pub struct DrmFormatModifierPropertiesEXTBuilder<'a> {
     inner: DrmFormatModifierPropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DrmFormatModifierPropertiesEXTBuilderNext {}
 impl<'a> ::std::ops::Deref for DrmFormatModifierPropertiesEXTBuilder<'a> {
     type Target = DrmFormatModifierPropertiesEXT;
     fn deref(&self) -> &Self::Target {
@@ -32781,6 +35605,10 @@ pub struct PhysicalDeviceImageDrmFormatModifierInfoEXTBuilder<'a> {
     inner: PhysicalDeviceImageDrmFormatModifierInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait PhysicalDeviceImageDrmFormatModifierInfoEXTBuilderNext {}
+unsafe impl PhysicalDeviceImageFormatInfo2BuilderNext
+    for PhysicalDeviceImageDrmFormatModifierInfoEXTBuilderNext
+{}
 impl<'a> ::std::ops::Deref for PhysicalDeviceImageDrmFormatModifierInfoEXTBuilder<'a> {
     type Target = PhysicalDeviceImageDrmFormatModifierInfoEXT;
     fn deref(&self) -> &Self::Target {
@@ -32808,6 +35636,13 @@ impl<'a> PhysicalDeviceImageDrmFormatModifierInfoEXTBuilder<'a> {
     ) -> PhysicalDeviceImageDrmFormatModifierInfoEXTBuilder<'a> {
         self.inner.queue_family_index_count = queue_family_indices.len() as _;
         self.inner.p_queue_family_indices = queue_family_indices.as_ptr();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> PhysicalDeviceImageDrmFormatModifierInfoEXTBuilder<'a>
+    where
+        T: PhysicalDeviceImageDrmFormatModifierInfoEXTBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceImageDrmFormatModifierInfoEXT {
@@ -32844,6 +35679,8 @@ pub struct ImageDrmFormatModifierListCreateInfoEXTBuilder<'a> {
     inner: ImageDrmFormatModifierListCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ImageDrmFormatModifierListCreateInfoEXTBuilderNext {}
+unsafe impl ImageCreateInfoBuilderNext for ImageDrmFormatModifierListCreateInfoEXTBuilderNext {}
 impl<'a> ::std::ops::Deref for ImageDrmFormatModifierListCreateInfoEXTBuilder<'a> {
     type Target = ImageDrmFormatModifierListCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
@@ -32857,6 +35694,13 @@ impl<'a> ImageDrmFormatModifierListCreateInfoEXTBuilder<'a> {
     ) -> ImageDrmFormatModifierListCreateInfoEXTBuilder<'a> {
         self.inner.drm_format_modifier_count = drm_format_modifiers.len() as _;
         self.inner.p_drm_format_modifiers = drm_format_modifiers.as_ptr();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> ImageDrmFormatModifierListCreateInfoEXTBuilder<'a>
+    where
+        T: ImageDrmFormatModifierListCreateInfoEXTBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ImageDrmFormatModifierListCreateInfoEXT {
@@ -32895,6 +35739,8 @@ pub struct ImageDrmFormatModifierExplicitCreateInfoEXTBuilder<'a> {
     inner: ImageDrmFormatModifierExplicitCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ImageDrmFormatModifierExplicitCreateInfoEXTBuilderNext {}
+unsafe impl ImageCreateInfoBuilderNext for ImageDrmFormatModifierExplicitCreateInfoEXTBuilderNext {}
 impl<'a> ::std::ops::Deref for ImageDrmFormatModifierExplicitCreateInfoEXTBuilder<'a> {
     type Target = ImageDrmFormatModifierExplicitCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
@@ -32915,6 +35761,13 @@ impl<'a> ImageDrmFormatModifierExplicitCreateInfoEXTBuilder<'a> {
     ) -> ImageDrmFormatModifierExplicitCreateInfoEXTBuilder<'a> {
         self.inner.drm_format_modifier_plane_count = plane_layouts.len() as _;
         self.inner.p_plane_layouts = plane_layouts.as_ptr();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> ImageDrmFormatModifierExplicitCreateInfoEXTBuilder<'a>
+    where
+        T: ImageDrmFormatModifierExplicitCreateInfoEXTBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ImageDrmFormatModifierExplicitCreateInfoEXT {
@@ -32949,6 +35802,7 @@ pub struct ImageDrmFormatModifierPropertiesEXTBuilder<'a> {
     inner: ImageDrmFormatModifierPropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait ImageDrmFormatModifierPropertiesEXTBuilderNext {}
 impl<'a> ::std::ops::Deref for ImageDrmFormatModifierPropertiesEXTBuilder<'a> {
     type Target = ImageDrmFormatModifierPropertiesEXT;
     fn deref(&self) -> &Self::Target {
@@ -32961,6 +35815,13 @@ impl<'a> ImageDrmFormatModifierPropertiesEXTBuilder<'a> {
         drm_format_modifier: u64,
     ) -> ImageDrmFormatModifierPropertiesEXTBuilder<'a> {
         self.inner.drm_format_modifier = drm_format_modifier;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> ImageDrmFormatModifierPropertiesEXTBuilder<'a>
+    where
+        T: ImageDrmFormatModifierPropertiesEXTBuilderNext,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> ImageDrmFormatModifierPropertiesEXT {
@@ -32995,6 +35856,8 @@ pub struct DeviceMemoryOverallocationCreateInfoAMDBuilder<'a> {
     inner: DeviceMemoryOverallocationCreateInfoAMD,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+pub unsafe trait DeviceMemoryOverallocationCreateInfoAMDBuilderNext {}
+unsafe impl DeviceCreateInfoBuilderNext for DeviceMemoryOverallocationCreateInfoAMDBuilderNext {}
 impl<'a> ::std::ops::Deref for DeviceMemoryOverallocationCreateInfoAMDBuilder<'a> {
     type Target = DeviceMemoryOverallocationCreateInfoAMD;
     fn deref(&self) -> &Self::Target {
@@ -33007,6 +35870,13 @@ impl<'a> DeviceMemoryOverallocationCreateInfoAMDBuilder<'a> {
         overallocation_behavior: MemoryOverallocationBehaviorAMD,
     ) -> DeviceMemoryOverallocationCreateInfoAMDBuilder<'a> {
         self.inner.overallocation_behavior = overallocation_behavior;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> DeviceMemoryOverallocationCreateInfoAMDBuilder<'a>
+    where
+        T: DeviceMemoryOverallocationCreateInfoAMDBuilderNext,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DeviceMemoryOverallocationCreateInfoAMD {
@@ -35531,31 +38401,32 @@ pub type PFN_vkGetPhysicalDeviceSurfacePresentModesKHR =
         p_present_modes: *mut PresentModeKHR,
     ) -> Result;
 pub struct KhrSurfaceFn {
-    destroy_surface_khr: extern "system" fn(
+    pub destroy_surface_khr: extern "system" fn(
         instance: Instance,
         surface: SurfaceKHR,
         p_allocator: *const AllocationCallbacks,
     ) -> c_void,
-    get_physical_device_surface_support_khr: extern "system" fn(
-        physical_device: PhysicalDevice,
-        queue_family_index: u32,
-        surface: SurfaceKHR,
-        p_supported: *mut Bool32,
-    ) -> Result,
-    get_physical_device_surface_capabilities_khr:
+    pub get_physical_device_surface_support_khr:
+        extern "system" fn(
+            physical_device: PhysicalDevice,
+            queue_family_index: u32,
+            surface: SurfaceKHR,
+            p_supported: *mut Bool32,
+        ) -> Result,
+    pub get_physical_device_surface_capabilities_khr:
         extern "system" fn(
             physical_device: PhysicalDevice,
             surface: SurfaceKHR,
             p_surface_capabilities: *mut SurfaceCapabilitiesKHR,
         ) -> Result,
-    get_physical_device_surface_formats_khr:
+    pub get_physical_device_surface_formats_khr:
         extern "system" fn(
             physical_device: PhysicalDevice,
             surface: SurfaceKHR,
             p_surface_format_count: *mut u32,
             p_surface_formats: *mut SurfaceFormatKHR,
         ) -> Result,
-    get_physical_device_surface_present_modes_khr:
+    pub get_physical_device_surface_present_modes_khr:
         extern "system" fn(
             physical_device: PhysicalDevice,
             surface: SurfaceKHR,
@@ -35822,7 +38693,7 @@ pub type PFN_vkAcquireNextImage2KHR =
         p_acquire_info: *const AcquireNextImageInfoKHR,
         p_image_index: *mut u32,
     ) -> Result;
-pub struct KhrSwapchainFn { create_swapchain_khr : extern "system" fn ( device : Device , p_create_info : *const SwapchainCreateInfoKHR , p_allocator : *const AllocationCallbacks , p_swapchain : *mut SwapchainKHR , ) -> Result , destroy_swapchain_khr : extern "system" fn ( device : Device , swapchain : SwapchainKHR , p_allocator : *const AllocationCallbacks , ) -> c_void , get_swapchain_images_khr : extern "system" fn ( device : Device , swapchain : SwapchainKHR , p_swapchain_image_count : *mut u32 , p_swapchain_images : *mut Image , ) -> Result , acquire_next_image_khr : extern "system" fn ( device : Device , swapchain : SwapchainKHR , timeout : u64 , semaphore : Semaphore , fence : Fence , p_image_index : *mut u32 , ) -> Result , queue_present_khr : extern "system" fn ( queue : Queue , p_present_info : *const PresentInfoKHR , ) -> Result , get_device_group_present_capabilities_khr : extern "system" fn ( device : Device , p_device_group_present_capabilities : *mut DeviceGroupPresentCapabilitiesKHR , ) -> Result , get_device_group_surface_present_modes_khr : extern "system" fn ( device : Device , surface : SurfaceKHR , p_modes : *mut DeviceGroupPresentModeFlagsKHR , ) -> Result , get_physical_device_present_rectangles_khr : extern "system" fn ( physical_device : PhysicalDevice , surface : SurfaceKHR , p_rect_count : *mut u32 , p_rects : *mut Rect2D , ) -> Result , acquire_next_image2_khr : extern "system" fn ( device : Device , p_acquire_info : *const AcquireNextImageInfoKHR , p_image_index : *mut u32 , ) -> Result , }
+pub struct KhrSwapchainFn { pub create_swapchain_khr : extern "system" fn ( device : Device , p_create_info : *const SwapchainCreateInfoKHR , p_allocator : *const AllocationCallbacks , p_swapchain : *mut SwapchainKHR , ) -> Result , pub destroy_swapchain_khr : extern "system" fn ( device : Device , swapchain : SwapchainKHR , p_allocator : *const AllocationCallbacks , ) -> c_void , pub get_swapchain_images_khr : extern "system" fn ( device : Device , swapchain : SwapchainKHR , p_swapchain_image_count : *mut u32 , p_swapchain_images : *mut Image , ) -> Result , pub acquire_next_image_khr : extern "system" fn ( device : Device , swapchain : SwapchainKHR , timeout : u64 , semaphore : Semaphore , fence : Fence , p_image_index : *mut u32 , ) -> Result , pub queue_present_khr : extern "system" fn ( queue : Queue , p_present_info : *const PresentInfoKHR , ) -> Result , pub get_device_group_present_capabilities_khr : extern "system" fn ( device : Device , p_device_group_present_capabilities : *mut DeviceGroupPresentCapabilitiesKHR , ) -> Result , pub get_device_group_surface_present_modes_khr : extern "system" fn ( device : Device , surface : SurfaceKHR , p_modes : *mut DeviceGroupPresentModeFlagsKHR , ) -> Result , pub get_physical_device_present_rectangles_khr : extern "system" fn ( physical_device : PhysicalDevice , surface : SurfaceKHR , p_rect_count : *mut u32 , p_rects : *mut Rect2D , ) -> Result , pub acquire_next_image2_khr : extern "system" fn ( device : Device , p_acquire_info : *const AcquireNextImageInfoKHR , p_image_index : *mut u32 , ) -> Result , }
 unsafe impl Send for KhrSwapchainFn {}
 unsafe impl Sync for KhrSwapchainFn {}
 impl ::std::clone::Clone for KhrSwapchainFn {
@@ -36231,46 +39102,47 @@ pub type PFN_vkCreateDisplayPlaneSurfaceKHR =
         p_surface: *mut SurfaceKHR,
     ) -> Result;
 pub struct KhrDisplayFn {
-    get_physical_device_display_properties_khr:
+    pub get_physical_device_display_properties_khr:
         extern "system" fn(
             physical_device: PhysicalDevice,
             p_property_count: *mut u32,
             p_properties: *mut DisplayPropertiesKHR,
         ) -> Result,
-    get_physical_device_display_plane_properties_khr:
+    pub get_physical_device_display_plane_properties_khr:
         extern "system" fn(
             physical_device: PhysicalDevice,
             p_property_count: *mut u32,
             p_properties: *mut DisplayPlanePropertiesKHR,
         ) -> Result,
-    get_display_plane_supported_displays_khr: extern "system" fn(
-        physical_device: PhysicalDevice,
-        plane_index: u32,
-        p_display_count: *mut u32,
-        p_displays: *mut DisplayKHR,
-    ) -> Result,
-    get_display_mode_properties_khr:
+    pub get_display_plane_supported_displays_khr:
+        extern "system" fn(
+            physical_device: PhysicalDevice,
+            plane_index: u32,
+            p_display_count: *mut u32,
+            p_displays: *mut DisplayKHR,
+        ) -> Result,
+    pub get_display_mode_properties_khr:
         extern "system" fn(
             physical_device: PhysicalDevice,
             display: DisplayKHR,
             p_property_count: *mut u32,
             p_properties: *mut DisplayModePropertiesKHR,
         ) -> Result,
-    create_display_mode_khr: extern "system" fn(
+    pub create_display_mode_khr: extern "system" fn(
         physical_device: PhysicalDevice,
         display: DisplayKHR,
         p_create_info: *const DisplayModeCreateInfoKHR,
         p_allocator: *const AllocationCallbacks,
         p_mode: *mut DisplayModeKHR,
     ) -> Result,
-    get_display_plane_capabilities_khr:
+    pub get_display_plane_capabilities_khr:
         extern "system" fn(
             physical_device: PhysicalDevice,
             mode: DisplayModeKHR,
             plane_index: u32,
             p_capabilities: *mut DisplayPlaneCapabilitiesKHR,
         ) -> Result,
-    create_display_plane_surface_khr:
+    pub create_display_plane_surface_khr:
         extern "system" fn(
             instance: Instance,
             p_create_info: *const DisplaySurfaceCreateInfoKHR,
@@ -36561,13 +39433,14 @@ pub type PFN_vkCreateSharedSwapchainsKHR =
         p_swapchains: *mut SwapchainKHR,
     ) -> Result;
 pub struct KhrDisplaySwapchainFn {
-    create_shared_swapchains_khr: extern "system" fn(
-        device: Device,
-        swapchain_count: u32,
-        p_create_infos: *const SwapchainCreateInfoKHR,
-        p_allocator: *const AllocationCallbacks,
-        p_swapchains: *mut SwapchainKHR,
-    ) -> Result,
+    pub create_shared_swapchains_khr:
+        extern "system" fn(
+            device: Device,
+            swapchain_count: u32,
+            p_create_infos: *const SwapchainCreateInfoKHR,
+            p_allocator: *const AllocationCallbacks,
+            p_swapchains: *mut SwapchainKHR,
+        ) -> Result,
 }
 unsafe impl Send for KhrDisplaySwapchainFn {}
 unsafe impl Sync for KhrDisplaySwapchainFn {}
@@ -36650,13 +39523,13 @@ pub type PFN_vkGetPhysicalDeviceXlibPresentationSupportKHR =
         visual_id: VisualID,
     ) -> Bool32;
 pub struct KhrXlibSurfaceFn {
-    create_xlib_surface_khr: extern "system" fn(
+    pub create_xlib_surface_khr: extern "system" fn(
         instance: Instance,
         p_create_info: *const XlibSurfaceCreateInfoKHR,
         p_allocator: *const AllocationCallbacks,
         p_surface: *mut SurfaceKHR,
     ) -> Result,
-    get_physical_device_xlib_presentation_support_khr:
+    pub get_physical_device_xlib_presentation_support_khr:
         extern "system" fn(
             physical_device: PhysicalDevice,
             queue_family_index: u32,
@@ -36770,13 +39643,13 @@ pub type PFN_vkGetPhysicalDeviceXcbPresentationSupportKHR =
         visual_id: xcb_visualid_t,
     ) -> Bool32;
 pub struct KhrXcbSurfaceFn {
-    create_xcb_surface_khr: extern "system" fn(
+    pub create_xcb_surface_khr: extern "system" fn(
         instance: Instance,
         p_create_info: *const XcbSurfaceCreateInfoKHR,
         p_allocator: *const AllocationCallbacks,
         p_surface: *mut SurfaceKHR,
     ) -> Result,
-    get_physical_device_xcb_presentation_support_khr:
+    pub get_physical_device_xcb_presentation_support_khr:
         extern "system" fn(
             physical_device: PhysicalDevice,
             queue_family_index: u32,
@@ -36889,14 +39762,14 @@ pub type PFN_vkGetPhysicalDeviceWaylandPresentationSupportKHR =
         display: *mut wl_display,
     ) -> Bool32;
 pub struct KhrWaylandSurfaceFn {
-    create_wayland_surface_khr:
+    pub create_wayland_surface_khr:
         extern "system" fn(
             instance: Instance,
             p_create_info: *const WaylandSurfaceCreateInfoKHR,
             p_allocator: *const AllocationCallbacks,
             p_surface: *mut SurfaceKHR,
         ) -> Result,
-    get_physical_device_wayland_presentation_support_khr:
+    pub get_physical_device_wayland_presentation_support_khr:
         extern "system" fn(
             physical_device: PhysicalDevice,
             queue_family_index: u32,
@@ -37014,7 +39887,7 @@ pub type PFN_vkCreateAndroidSurfaceKHR =
         p_surface: *mut SurfaceKHR,
     ) -> Result;
 pub struct KhrAndroidSurfaceFn {
-    create_android_surface_khr:
+    pub create_android_surface_khr:
         extern "system" fn(
             instance: Instance,
             p_create_info: *const AndroidSurfaceCreateInfoKHR,
@@ -37086,13 +39959,14 @@ pub type PFN_vkCreateWin32SurfaceKHR =
 pub type PFN_vkGetPhysicalDeviceWin32PresentationSupportKHR =
     extern "system" fn(physical_device: PhysicalDevice, queue_family_index: u32) -> Bool32;
 pub struct KhrWin32SurfaceFn {
-    create_win32_surface_khr: extern "system" fn(
-        instance: Instance,
-        p_create_info: *const Win32SurfaceCreateInfoKHR,
-        p_allocator: *const AllocationCallbacks,
-        p_surface: *mut SurfaceKHR,
-    ) -> Result,
-    get_physical_device_win32_presentation_support_khr:
+    pub create_win32_surface_khr:
+        extern "system" fn(
+            instance: Instance,
+            p_create_info: *const Win32SurfaceCreateInfoKHR,
+            p_allocator: *const AllocationCallbacks,
+            p_surface: *mut SurfaceKHR,
+        ) -> Result,
+    pub get_physical_device_win32_presentation_support_khr:
         extern "system" fn(physical_device: PhysicalDevice, queue_family_index: u32) -> Bool32,
 }
 unsafe impl Send for KhrWin32SurfaceFn {}
@@ -37203,20 +40077,20 @@ pub type PFN_vkQueueSignalReleaseImageANDROID =
         p_native_fence_fd: *mut c_int,
     ) -> Result;
 pub struct AndroidNativeBufferFn {
-    get_swapchain_gralloc_usage_android: extern "system" fn(
+    pub get_swapchain_gralloc_usage_android: extern "system" fn(
         device: Device,
         format: Format,
         image_usage: ImageUsageFlags,
         gralloc_usage: *mut c_int,
     ) -> Result,
-    acquire_image_android: extern "system" fn(
+    pub acquire_image_android: extern "system" fn(
         device: Device,
         image: Image,
         native_fence_fd: c_int,
         semaphore: Semaphore,
         fence: Fence,
     ) -> Result,
-    queue_signal_release_image_android: extern "system" fn(
+    pub queue_signal_release_image_android: extern "system" fn(
         queue: Queue,
         wait_semaphore_count: u32,
         p_wait_semaphores: *const Semaphore,
@@ -37375,19 +40249,20 @@ pub type PFN_vkDebugReportMessageEXT = extern "system" fn(
     p_message: *const c_char,
 ) -> c_void;
 pub struct ExtDebugReportFn {
-    create_debug_report_callback_ext:
+    pub create_debug_report_callback_ext:
         extern "system" fn(
             instance: Instance,
             p_create_info: *const DebugReportCallbackCreateInfoEXT,
             p_allocator: *const AllocationCallbacks,
             p_callback: *mut DebugReportCallbackEXT,
         ) -> Result,
-    destroy_debug_report_callback_ext: extern "system" fn(
-        instance: Instance,
-        callback: DebugReportCallbackEXT,
-        p_allocator: *const AllocationCallbacks,
-    ) -> c_void,
-    debug_report_message_ext: extern "system" fn(
+    pub destroy_debug_report_callback_ext:
+        extern "system" fn(
+            instance: Instance,
+            callback: DebugReportCallbackEXT,
+            p_allocator: *const AllocationCallbacks,
+        ) -> c_void,
+    pub debug_report_message_ext: extern "system" fn(
         instance: Instance,
         flags: DebugReportFlagsEXT,
         object_type: DebugReportObjectTypeEXT,
@@ -37741,21 +40616,23 @@ pub type PFN_vkCmdDebugMarkerInsertEXT =
         p_marker_info: *const DebugMarkerMarkerInfoEXT,
     ) -> c_void;
 pub struct ExtDebugMarkerFn {
-    debug_marker_set_object_tag_ext:
+    pub debug_marker_set_object_tag_ext:
         extern "system" fn(device: Device, p_tag_info: *const DebugMarkerObjectTagInfoEXT)
             -> Result,
-    debug_marker_set_object_name_ext:
+    pub debug_marker_set_object_name_ext:
         extern "system" fn(device: Device, p_name_info: *const DebugMarkerObjectNameInfoEXT)
             -> Result,
-    cmd_debug_marker_begin_ext: extern "system" fn(
-        command_buffer: CommandBuffer,
-        p_marker_info: *const DebugMarkerMarkerInfoEXT,
-    ) -> c_void,
-    cmd_debug_marker_end_ext: extern "system" fn(command_buffer: CommandBuffer) -> c_void,
-    cmd_debug_marker_insert_ext: extern "system" fn(
-        command_buffer: CommandBuffer,
-        p_marker_info: *const DebugMarkerMarkerInfoEXT,
-    ) -> c_void,
+    pub cmd_debug_marker_begin_ext:
+        extern "system" fn(
+            command_buffer: CommandBuffer,
+            p_marker_info: *const DebugMarkerMarkerInfoEXT,
+        ) -> c_void,
+    pub cmd_debug_marker_end_ext: extern "system" fn(command_buffer: CommandBuffer) -> c_void,
+    pub cmd_debug_marker_insert_ext:
+        extern "system" fn(
+            command_buffer: CommandBuffer,
+            p_marker_info: *const DebugMarkerMarkerInfoEXT,
+        ) -> c_void,
 }
 unsafe impl Send for ExtDebugMarkerFn {}
 unsafe impl Sync for ExtDebugMarkerFn {}
@@ -38062,7 +40939,7 @@ pub type PFN_vkCmdDrawIndirectByteCountEXT = extern "system" fn(
     vertex_stride: u32,
 ) -> c_void;
 pub struct ExtTransformFeedbackFn {
-    cmd_bind_transform_feedback_buffers_ext: extern "system" fn(
+    pub cmd_bind_transform_feedback_buffers_ext: extern "system" fn(
         command_buffer: CommandBuffer,
         first_binding: u32,
         binding_count: u32,
@@ -38070,7 +40947,7 @@ pub struct ExtTransformFeedbackFn {
         p_offsets: *const DeviceSize,
         p_sizes: *const DeviceSize,
     ) -> c_void,
-    cmd_begin_transform_feedback_ext:
+    pub cmd_begin_transform_feedback_ext:
         extern "system" fn(
             command_buffer: CommandBuffer,
             first_counter_buffer: u32,
@@ -38078,27 +40955,28 @@ pub struct ExtTransformFeedbackFn {
             p_counter_buffers: *const Buffer,
             p_counter_buffer_offsets: *const DeviceSize,
         ) -> c_void,
-    cmd_end_transform_feedback_ext: extern "system" fn(
-        command_buffer: CommandBuffer,
-        first_counter_buffer: u32,
-        counter_buffer_count: u32,
-        p_counter_buffers: *const Buffer,
-        p_counter_buffer_offsets: *const DeviceSize,
-    ) -> c_void,
-    cmd_begin_query_indexed_ext: extern "system" fn(
+    pub cmd_end_transform_feedback_ext:
+        extern "system" fn(
+            command_buffer: CommandBuffer,
+            first_counter_buffer: u32,
+            counter_buffer_count: u32,
+            p_counter_buffers: *const Buffer,
+            p_counter_buffer_offsets: *const DeviceSize,
+        ) -> c_void,
+    pub cmd_begin_query_indexed_ext: extern "system" fn(
         command_buffer: CommandBuffer,
         query_pool: QueryPool,
         query: u32,
         flags: QueryControlFlags,
         index: u32,
     ) -> c_void,
-    cmd_end_query_indexed_ext: extern "system" fn(
+    pub cmd_end_query_indexed_ext: extern "system" fn(
         command_buffer: CommandBuffer,
         query_pool: QueryPool,
         query: u32,
         index: u32,
     ) -> c_void,
-    cmd_draw_indirect_byte_count_ext: extern "system" fn(
+    pub cmd_draw_indirect_byte_count_ext: extern "system" fn(
         command_buffer: CommandBuffer,
         instance_count: u32,
         first_instance: u32,
@@ -38481,7 +41359,7 @@ pub type PFN_vkCmdDrawIndexedIndirectCountAMD = extern "system" fn(
     stride: u32,
 ) -> c_void;
 pub struct AmdDrawIndirectCountFn {
-    cmd_draw_indirect_count_amd: extern "system" fn(
+    pub cmd_draw_indirect_count_amd: extern "system" fn(
         command_buffer: CommandBuffer,
         buffer: Buffer,
         offset: DeviceSize,
@@ -38490,7 +41368,7 @@ pub struct AmdDrawIndirectCountFn {
         max_draw_count: u32,
         stride: u32,
     ) -> c_void,
-    cmd_draw_indexed_indirect_count_amd: extern "system" fn(
+    pub cmd_draw_indexed_indirect_count_amd: extern "system" fn(
         command_buffer: CommandBuffer,
         buffer: Buffer,
         offset: DeviceSize,
@@ -38749,7 +41627,7 @@ pub type PFN_vkGetShaderInfoAMD = extern "system" fn(
     p_info: *mut c_void,
 ) -> Result;
 pub struct AmdShaderInfoFn {
-    get_shader_info_amd: extern "system" fn(
+    pub get_shader_info_amd: extern "system" fn(
         device: Device,
         pipeline: Pipeline,
         shader_stage: ShaderStageFlags,
@@ -39058,7 +41936,7 @@ pub type PFN_vkGetPhysicalDeviceExternalImageFormatPropertiesNV =
         external_handle_type: ExternalMemoryHandleTypeFlagsNV,
         p_external_image_format_properties: *mut ExternalImageFormatPropertiesNV,
     ) -> Result;
-pub struct NvExternalMemoryCapabilitiesFn { get_physical_device_external_image_format_properties_nv : extern "system" fn ( physical_device : PhysicalDevice , format : Format , ty : ImageType , tiling : ImageTiling , usage : ImageUsageFlags , flags : ImageCreateFlags , external_handle_type : ExternalMemoryHandleTypeFlagsNV , p_external_image_format_properties : *mut ExternalImageFormatPropertiesNV , ) -> Result , }
+pub struct NvExternalMemoryCapabilitiesFn { pub get_physical_device_external_image_format_properties_nv : extern "system" fn ( physical_device : PhysicalDevice , format : Format , ty : ImageType , tiling : ImageTiling , usage : ImageUsageFlags , flags : ImageCreateFlags , external_handle_type : ExternalMemoryHandleTypeFlagsNV , p_external_image_format_properties : *mut ExternalImageFormatPropertiesNV , ) -> Result , }
 unsafe impl Send for NvExternalMemoryCapabilitiesFn {}
 unsafe impl Sync for NvExternalMemoryCapabilitiesFn {}
 impl ::std::clone::Clone for NvExternalMemoryCapabilitiesFn {
@@ -39158,12 +42036,13 @@ pub type PFN_vkGetMemoryWin32HandleNV =
         p_handle: *mut HANDLE,
     ) -> Result;
 pub struct NvExternalMemoryWin32Fn {
-    get_memory_win32_handle_nv: extern "system" fn(
-        device: Device,
-        memory: DeviceMemory,
-        handle_type: ExternalMemoryHandleTypeFlagsNV,
-        p_handle: *mut HANDLE,
-    ) -> Result,
+    pub get_memory_win32_handle_nv:
+        extern "system" fn(
+            device: Device,
+            memory: DeviceMemory,
+            handle_type: ExternalMemoryHandleTypeFlagsNV,
+            p_handle: *mut HANDLE,
+        ) -> Result,
 }
 unsafe impl Send for NvExternalMemoryWin32Fn {}
 unsafe impl Sync for NvExternalMemoryWin32Fn {}
@@ -39257,7 +42136,7 @@ impl KhrGetPhysicalDeviceProperties2Fn {
         KhrGetPhysicalDeviceProperties2Fn {}
     }
 }
-pub struct KhrDeviceGroupFn { get_device_group_present_capabilities_khr : extern "system" fn ( device : Device , p_device_group_present_capabilities : *mut DeviceGroupPresentCapabilitiesKHR , ) -> Result , get_device_group_surface_present_modes_khr : extern "system" fn ( device : Device , surface : SurfaceKHR , p_modes : *mut DeviceGroupPresentModeFlagsKHR , ) -> Result , get_physical_device_present_rectangles_khr : extern "system" fn ( physical_device : PhysicalDevice , surface : SurfaceKHR , p_rect_count : *mut u32 , p_rects : *mut Rect2D , ) -> Result , acquire_next_image2_khr : extern "system" fn ( device : Device , p_acquire_info : *const AcquireNextImageInfoKHR , p_image_index : *mut u32 , ) -> Result , }
+pub struct KhrDeviceGroupFn { pub get_device_group_present_capabilities_khr : extern "system" fn ( device : Device , p_device_group_present_capabilities : *mut DeviceGroupPresentCapabilitiesKHR , ) -> Result , pub get_device_group_surface_present_modes_khr : extern "system" fn ( device : Device , surface : SurfaceKHR , p_modes : *mut DeviceGroupPresentModeFlagsKHR , ) -> Result , pub get_physical_device_present_rectangles_khr : extern "system" fn ( physical_device : PhysicalDevice , surface : SurfaceKHR , p_rect_count : *mut u32 , p_rects : *mut Rect2D , ) -> Result , pub acquire_next_image2_khr : extern "system" fn ( device : Device , p_acquire_info : *const AcquireNextImageInfoKHR , p_image_index : *mut u32 , ) -> Result , }
 unsafe impl Send for KhrDeviceGroupFn {}
 unsafe impl Sync for KhrDeviceGroupFn {}
 impl ::std::clone::Clone for KhrDeviceGroupFn {
@@ -39430,7 +42309,7 @@ pub type PFN_vkCreateViSurfaceNN = extern "system" fn(
     p_surface: *mut SurfaceKHR,
 ) -> Result;
 pub struct NnViSurfaceFn {
-    create_vi_surface_nn: extern "system" fn(
+    pub create_vi_surface_nn: extern "system" fn(
         instance: Instance,
         p_create_info: *const ViSurfaceCreateInfoNN,
         p_allocator: *const AllocationCallbacks,
@@ -39670,13 +42549,13 @@ pub type PFN_vkGetMemoryWin32HandlePropertiesKHR =
         p_memory_win32_handle_properties: *mut MemoryWin32HandlePropertiesKHR,
     ) -> Result;
 pub struct KhrExternalMemoryWin32Fn {
-    get_memory_win32_handle_khr:
+    pub get_memory_win32_handle_khr:
         extern "system" fn(
             device: Device,
             p_get_win32_handle_info: *const MemoryGetWin32HandleInfoKHR,
             p_handle: *mut HANDLE,
         ) -> Result,
-    get_memory_win32_handle_properties_khr:
+    pub get_memory_win32_handle_properties_khr:
         extern "system" fn(
             device: Device,
             handle_type: ExternalMemoryHandleTypeFlags,
@@ -39795,12 +42674,12 @@ pub type PFN_vkGetMemoryFdPropertiesKHR =
         p_memory_fd_properties: *mut MemoryFdPropertiesKHR,
     ) -> Result;
 pub struct KhrExternalMemoryFdFn {
-    get_memory_fd_khr: extern "system" fn(
+    pub get_memory_fd_khr: extern "system" fn(
         device: Device,
         p_get_fd_info: *const MemoryGetFdInfoKHR,
         p_fd: *mut c_int,
     ) -> Result,
-    get_memory_fd_properties_khr:
+    pub get_memory_fd_properties_khr:
         extern "system" fn(
             device: Device,
             handle_type: ExternalMemoryHandleTypeFlags,
@@ -39955,7 +42834,7 @@ pub type PFN_vkGetSemaphoreWin32HandleKHR =
         p_get_win32_handle_info: *const SemaphoreGetWin32HandleInfoKHR,
         p_handle: *mut HANDLE,
     ) -> Result;
-pub struct KhrExternalSemaphoreWin32Fn { import_semaphore_win32_handle_khr : extern "system" fn ( device : Device , p_import_semaphore_win32_handle_info : *const ImportSemaphoreWin32HandleInfoKHR , ) -> Result , get_semaphore_win32_handle_khr : extern "system" fn ( device : Device , p_get_win32_handle_info : *const SemaphoreGetWin32HandleInfoKHR , p_handle : *mut HANDLE , ) -> Result , }
+pub struct KhrExternalSemaphoreWin32Fn { pub import_semaphore_win32_handle_khr : extern "system" fn ( device : Device , p_import_semaphore_win32_handle_info : *const ImportSemaphoreWin32HandleInfoKHR , ) -> Result , pub get_semaphore_win32_handle_khr : extern "system" fn ( device : Device , p_get_win32_handle_info : *const SemaphoreGetWin32HandleInfoKHR , p_handle : *mut HANDLE , ) -> Result , }
 unsafe impl Send for KhrExternalSemaphoreWin32Fn {}
 unsafe impl Sync for KhrExternalSemaphoreWin32Fn {}
 impl ::std::clone::Clone for KhrExternalSemaphoreWin32Fn {
@@ -40056,12 +42935,12 @@ pub type PFN_vkGetSemaphoreFdKHR = extern "system" fn(
     p_fd: *mut c_int,
 ) -> Result;
 pub struct KhrExternalSemaphoreFdFn {
-    import_semaphore_fd_khr:
+    pub import_semaphore_fd_khr:
         extern "system" fn(
             device: Device,
             p_import_semaphore_fd_info: *const ImportSemaphoreFdInfoKHR,
         ) -> Result,
-    get_semaphore_fd_khr: extern "system" fn(
+    pub get_semaphore_fd_khr: extern "system" fn(
         device: Device,
         p_get_fd_info: *const SemaphoreGetFdInfoKHR,
         p_fd: *mut c_int,
@@ -40165,15 +43044,16 @@ pub type PFN_vkCmdPushDescriptorSetWithTemplateKHR =
         p_data: *const c_void,
     ) -> c_void;
 pub struct KhrPushDescriptorFn {
-    cmd_push_descriptor_set_khr: extern "system" fn(
-        command_buffer: CommandBuffer,
-        pipeline_bind_point: PipelineBindPoint,
-        layout: PipelineLayout,
-        set: u32,
-        descriptor_write_count: u32,
-        p_descriptor_writes: *const WriteDescriptorSet,
-    ) -> c_void,
-    cmd_push_descriptor_set_with_template_khr:
+    pub cmd_push_descriptor_set_khr:
+        extern "system" fn(
+            command_buffer: CommandBuffer,
+            pipeline_bind_point: PipelineBindPoint,
+            layout: PipelineLayout,
+            set: u32,
+            descriptor_write_count: u32,
+            p_descriptor_writes: *const WriteDescriptorSet,
+        ) -> c_void,
+    pub cmd_push_descriptor_set_with_template_khr:
         extern "system" fn(
             command_buffer: CommandBuffer,
             descriptor_update_template: DescriptorUpdateTemplate,
@@ -40299,12 +43179,13 @@ pub type PFN_vkCmdBeginConditionalRenderingEXT =
 pub type PFN_vkCmdEndConditionalRenderingEXT =
     extern "system" fn(command_buffer: CommandBuffer) -> c_void;
 pub struct ExtConditionalRenderingFn {
-    cmd_begin_conditional_rendering_ext:
+    pub cmd_begin_conditional_rendering_ext:
         extern "system" fn(
             command_buffer: CommandBuffer,
             p_conditional_rendering_begin: *const ConditionalRenderingBeginInfoEXT,
         ) -> c_void,
-    cmd_end_conditional_rendering_ext: extern "system" fn(command_buffer: CommandBuffer) -> c_void,
+    pub cmd_end_conditional_rendering_ext:
+        extern "system" fn(command_buffer: CommandBuffer) -> c_void,
 }
 unsafe impl Send for ExtConditionalRenderingFn {}
 unsafe impl Sync for ExtConditionalRenderingFn {}
@@ -40453,7 +43334,7 @@ impl StructureType {
     pub const PRESENT_REGIONS_KHR: Self = StructureType(1000084000);
 }
 pub struct KhrDescriptorUpdateTemplateFn {
-    cmd_push_descriptor_set_with_template_khr:
+    pub cmd_push_descriptor_set_with_template_khr:
         extern "system" fn(
             command_buffer: CommandBuffer,
             descriptor_update_template: DescriptorUpdateTemplate,
@@ -40586,41 +43467,41 @@ pub type PFN_vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX =
         p_limits: *mut DeviceGeneratedCommandsLimitsNVX,
     ) -> c_void;
 pub struct NvxDeviceGeneratedCommandsFn {
-    cmd_process_commands_nvx:
+    pub cmd_process_commands_nvx:
         extern "system" fn(
             command_buffer: CommandBuffer,
             p_process_commands_info: *const CmdProcessCommandsInfoNVX,
         ) -> c_void,
-    cmd_reserve_space_for_commands_nvx:
+    pub cmd_reserve_space_for_commands_nvx:
         extern "system" fn(
             command_buffer: CommandBuffer,
             p_reserve_space_info: *const CmdReserveSpaceForCommandsInfoNVX,
         ) -> c_void,
-    create_indirect_commands_layout_nvx:
+    pub create_indirect_commands_layout_nvx:
         extern "system" fn(
             device: Device,
             p_create_info: *const IndirectCommandsLayoutCreateInfoNVX,
             p_allocator: *const AllocationCallbacks,
             p_indirect_commands_layout: *mut IndirectCommandsLayoutNVX,
         ) -> Result,
-    destroy_indirect_commands_layout_nvx:
+    pub destroy_indirect_commands_layout_nvx:
         extern "system" fn(
             device: Device,
             indirect_commands_layout: IndirectCommandsLayoutNVX,
             p_allocator: *const AllocationCallbacks,
         ) -> c_void,
-    create_object_table_nvx: extern "system" fn(
+    pub create_object_table_nvx: extern "system" fn(
         device: Device,
         p_create_info: *const ObjectTableCreateInfoNVX,
         p_allocator: *const AllocationCallbacks,
         p_object_table: *mut ObjectTableNVX,
     ) -> Result,
-    destroy_object_table_nvx: extern "system" fn(
+    pub destroy_object_table_nvx: extern "system" fn(
         device: Device,
         object_table: ObjectTableNVX,
         p_allocator: *const AllocationCallbacks,
     ) -> c_void,
-    register_objects_nvx:
+    pub register_objects_nvx:
         extern "system" fn(
             device: Device,
             object_table: ObjectTableNVX,
@@ -40628,14 +43509,14 @@ pub struct NvxDeviceGeneratedCommandsFn {
             pp_object_table_entries: *const *const ObjectTableEntryNVX,
             p_object_indices: *const u32,
         ) -> Result,
-    unregister_objects_nvx: extern "system" fn(
+    pub unregister_objects_nvx: extern "system" fn(
         device: Device,
         object_table: ObjectTableNVX,
         object_count: u32,
         p_object_entry_types: *const ObjectEntryTypeNVX,
         p_object_indices: *const u32,
     ) -> Result,
-    get_physical_device_generated_commands_properties_nvx:
+    pub get_physical_device_generated_commands_properties_nvx:
         extern "system" fn(
             physical_device: PhysicalDevice,
             p_features: *mut DeviceGeneratedCommandsFeaturesNVX,
@@ -41000,7 +43881,7 @@ pub type PFN_vkCmdSetViewportWScalingNV =
         p_viewport_w_scalings: *const ViewportWScalingNV,
     ) -> c_void;
 pub struct NvClipSpaceWScalingFn {
-    cmd_set_viewport_w_scaling_nv:
+    pub cmd_set_viewport_w_scaling_nv:
         extern "system" fn(
             command_buffer: CommandBuffer,
             first_viewport: u32,
@@ -41073,7 +43954,7 @@ impl DynamicState {
 pub type PFN_vkReleaseDisplayEXT =
     extern "system" fn(physical_device: PhysicalDevice, display: DisplayKHR) -> Result;
 pub struct ExtDirectModeDisplayFn {
-    release_display_ext:
+    pub release_display_ext:
         extern "system" fn(physical_device: PhysicalDevice, display: DisplayKHR) -> Result,
 }
 unsafe impl Send for ExtDirectModeDisplayFn {}
@@ -41129,10 +44010,10 @@ pub type PFN_vkGetRandROutputDisplayEXT = extern "system" fn(
     p_display: *mut DisplayKHR,
 ) -> Result;
 pub struct ExtAcquireXlibDisplayFn {
-    acquire_xlib_display_ext:
+    pub acquire_xlib_display_ext:
         extern "system" fn(physical_device: PhysicalDevice, dpy: *mut Display, display: DisplayKHR)
             -> Result,
-    get_rand_r_output_display_ext: extern "system" fn(
+    pub get_rand_r_output_display_ext: extern "system" fn(
         physical_device: PhysicalDevice,
         dpy: *mut Display,
         rr_output: RROutput,
@@ -41224,7 +44105,7 @@ pub type PFN_vkGetPhysicalDeviceSurfaceCapabilities2EXT =
         p_surface_capabilities: *mut SurfaceCapabilities2EXT,
     ) -> Result;
 pub struct ExtDisplaySurfaceCounterFn {
-    get_physical_device_surface_capabilities2_ext:
+    pub get_physical_device_surface_capabilities2_ext:
         extern "system" fn(
             physical_device: PhysicalDevice,
             surface: SurfaceKHR,
@@ -41318,18 +44199,20 @@ pub type PFN_vkGetSwapchainCounterEXT = extern "system" fn(
     p_counter_value: *mut u64,
 ) -> Result;
 pub struct ExtDisplayControlFn {
-    display_power_control_ext: extern "system" fn(
-        device: Device,
-        display: DisplayKHR,
-        p_display_power_info: *const DisplayPowerInfoEXT,
-    ) -> Result,
-    register_device_event_ext: extern "system" fn(
-        device: Device,
-        p_device_event_info: *const DeviceEventInfoEXT,
-        p_allocator: *const AllocationCallbacks,
-        p_fence: *mut Fence,
-    ) -> Result,
-    register_display_event_ext:
+    pub display_power_control_ext:
+        extern "system" fn(
+            device: Device,
+            display: DisplayKHR,
+            p_display_power_info: *const DisplayPowerInfoEXT,
+        ) -> Result,
+    pub register_device_event_ext:
+        extern "system" fn(
+            device: Device,
+            p_device_event_info: *const DeviceEventInfoEXT,
+            p_allocator: *const AllocationCallbacks,
+            p_fence: *mut Fence,
+        ) -> Result,
+    pub register_display_event_ext:
         extern "system" fn(
             device: Device,
             display: DisplayKHR,
@@ -41337,7 +44220,7 @@ pub struct ExtDisplayControlFn {
             p_allocator: *const AllocationCallbacks,
             p_fence: *mut Fence,
         ) -> Result,
-    get_swapchain_counter_ext: extern "system" fn(
+    pub get_swapchain_counter_ext: extern "system" fn(
         device: Device,
         swapchain: SwapchainKHR,
         counter: SurfaceCounterFlagsEXT,
@@ -41523,13 +44406,13 @@ pub type PFN_vkGetPastPresentationTimingGOOGLE =
         p_presentation_timings: *mut PastPresentationTimingGOOGLE,
     ) -> Result;
 pub struct GoogleDisplayTimingFn {
-    get_refresh_cycle_duration_google:
+    pub get_refresh_cycle_duration_google:
         extern "system" fn(
             device: Device,
             swapchain: SwapchainKHR,
             p_display_timing_properties: *mut RefreshCycleDurationGOOGLE,
         ) -> Result,
-    get_past_presentation_timing_google:
+    pub get_past_presentation_timing_google:
         extern "system" fn(
             device: Device,
             swapchain: SwapchainKHR,
@@ -41728,7 +44611,7 @@ pub type PFN_vkCmdSetDiscardRectangleEXT = extern "system" fn(
     p_discard_rectangles: *const Rect2D,
 ) -> c_void;
 pub struct ExtDiscardRectanglesFn {
-    cmd_set_discard_rectangle_ext: extern "system" fn(
+    pub cmd_set_discard_rectangle_ext: extern "system" fn(
         command_buffer: CommandBuffer,
         first_discard_rectangle: u32,
         discard_rectangle_count: u32,
@@ -41954,7 +44837,7 @@ pub type PFN_vkSetHdrMetadataEXT = extern "system" fn(
     p_metadata: *const HdrMetadataEXT,
 ) -> c_void;
 pub struct ExtHdrMetadataFn {
-    set_hdr_metadata_ext: extern "system" fn(
+    pub set_hdr_metadata_ext: extern "system" fn(
         device: Device,
         swapchain_count: u32,
         p_swapchains: *const SwapchainKHR,
@@ -42085,24 +44968,24 @@ pub type PFN_vkCmdEndRenderPass2KHR =
     extern "system" fn(command_buffer: CommandBuffer, p_subpass_end_info: *const SubpassEndInfoKHR)
         -> c_void;
 pub struct KhrCreateRenderpass2Fn {
-    create_render_pass2_khr: extern "system" fn(
+    pub create_render_pass2_khr: extern "system" fn(
         device: Device,
         p_create_info: *const RenderPassCreateInfo2KHR,
         p_allocator: *const AllocationCallbacks,
         p_render_pass: *mut RenderPass,
     ) -> Result,
-    cmd_begin_render_pass2_khr:
+    pub cmd_begin_render_pass2_khr:
         extern "system" fn(
             command_buffer: CommandBuffer,
             p_render_pass_begin: *const RenderPassBeginInfo,
             p_subpass_begin_info: *const SubpassBeginInfoKHR,
         ) -> c_void,
-    cmd_next_subpass2_khr: extern "system" fn(
+    pub cmd_next_subpass2_khr: extern "system" fn(
         command_buffer: CommandBuffer,
         p_subpass_begin_info: *const SubpassBeginInfoKHR,
         p_subpass_end_info: *const SubpassEndInfoKHR,
     ) -> c_void,
-    cmd_end_render_pass2_khr: extern "system" fn(
+    pub cmd_end_render_pass2_khr: extern "system" fn(
         command_buffer: CommandBuffer,
         p_subpass_end_info: *const SubpassEndInfoKHR,
     ) -> c_void,
@@ -42288,7 +45171,8 @@ impl ImgExtension111Fn {
 pub type PFN_vkGetSwapchainStatusKHR =
     extern "system" fn(device: Device, swapchain: SwapchainKHR) -> Result;
 pub struct KhrSharedPresentableImageFn {
-    get_swapchain_status_khr: extern "system" fn(device: Device, swapchain: SwapchainKHR) -> Result,
+    pub get_swapchain_status_khr:
+        extern "system" fn(device: Device, swapchain: SwapchainKHR) -> Result,
 }
 unsafe impl Send for KhrSharedPresentableImageFn {}
 unsafe impl Sync for KhrSharedPresentableImageFn {}
@@ -42396,12 +45280,12 @@ pub type PFN_vkGetFenceWin32HandleKHR =
         p_handle: *mut HANDLE,
     ) -> Result;
 pub struct KhrExternalFenceWin32Fn {
-    import_fence_win32_handle_khr:
+    pub import_fence_win32_handle_khr:
         extern "system" fn(
             device: Device,
             p_import_fence_win32_handle_info: *const ImportFenceWin32HandleInfoKHR,
         ) -> Result,
-    get_fence_win32_handle_khr:
+    pub get_fence_win32_handle_khr:
         extern "system" fn(
             device: Device,
             p_get_win32_handle_info: *const FenceGetWin32HandleInfoKHR,
@@ -42502,10 +45386,10 @@ pub type PFN_vkGetFenceFdKHR =
     extern "system" fn(device: Device, p_get_fd_info: *const FenceGetFdInfoKHR, p_fd: *mut c_int)
         -> Result;
 pub struct KhrExternalFenceFdFn {
-    import_fence_fd_khr:
+    pub import_fence_fd_khr:
         extern "system" fn(device: Device, p_import_fence_fd_info: *const ImportFenceFdInfoKHR)
             -> Result,
-    get_fence_fd_khr: extern "system" fn(
+    pub get_fence_fd_khr: extern "system" fn(
         device: Device,
         p_get_fd_info: *const FenceGetFdInfoKHR,
         p_fd: *mut c_int,
@@ -42650,13 +45534,13 @@ pub type PFN_vkGetPhysicalDeviceSurfaceFormats2KHR =
         p_surface_formats: *mut SurfaceFormat2KHR,
     ) -> Result;
 pub struct KhrGetSurfaceCapabilities2Fn {
-    get_physical_device_surface_capabilities2_khr:
+    pub get_physical_device_surface_capabilities2_khr:
         extern "system" fn(
             physical_device: PhysicalDevice,
             p_surface_info: *const PhysicalDeviceSurfaceInfo2KHR,
             p_surface_capabilities: *mut SurfaceCapabilities2KHR,
         ) -> Result,
-    get_physical_device_surface_formats2_khr:
+    pub get_physical_device_surface_formats2_khr:
         extern "system" fn(
             physical_device: PhysicalDevice,
             p_surface_info: *const PhysicalDeviceSurfaceInfo2KHR,
@@ -42809,26 +45693,26 @@ pub type PFN_vkGetDisplayPlaneCapabilities2KHR =
         p_capabilities: *mut DisplayPlaneCapabilities2KHR,
     ) -> Result;
 pub struct KhrGetDisplayProperties2Fn {
-    get_physical_device_display_properties2_khr:
+    pub get_physical_device_display_properties2_khr:
         extern "system" fn(
             physical_device: PhysicalDevice,
             p_property_count: *mut u32,
             p_properties: *mut DisplayProperties2KHR,
         ) -> Result,
-    get_physical_device_display_plane_properties2_khr:
+    pub get_physical_device_display_plane_properties2_khr:
         extern "system" fn(
             physical_device: PhysicalDevice,
             p_property_count: *mut u32,
             p_properties: *mut DisplayPlaneProperties2KHR,
         ) -> Result,
-    get_display_mode_properties2_khr:
+    pub get_display_mode_properties2_khr:
         extern "system" fn(
             physical_device: PhysicalDevice,
             display: DisplayKHR,
             p_property_count: *mut u32,
             p_properties: *mut DisplayModeProperties2KHR,
         ) -> Result,
-    get_display_plane_capabilities2_khr:
+    pub get_display_plane_capabilities2_khr:
         extern "system" fn(
             physical_device: PhysicalDevice,
             p_display_plane_info: *const DisplayPlaneInfo2KHR,
@@ -43018,7 +45902,7 @@ pub type PFN_vkCreateIOSSurfaceMVK =
         p_surface: *mut SurfaceKHR,
     ) -> Result;
 pub struct MvkIosSurfaceFn {
-    create_ios_surface_mvk: extern "system" fn(
+    pub create_ios_surface_mvk: extern "system" fn(
         instance: Instance,
         p_create_info: *const IOSSurfaceCreateInfoMVK,
         p_allocator: *const AllocationCallbacks,
@@ -43086,12 +45970,13 @@ pub type PFN_vkCreateMacOSSurfaceMVK =
         p_surface: *mut SurfaceKHR,
     ) -> Result;
 pub struct MvkMacosSurfaceFn {
-    create_mac_os_surface_mvk: extern "system" fn(
-        instance: Instance,
-        p_create_info: *const MacOSSurfaceCreateInfoMVK,
-        p_allocator: *const AllocationCallbacks,
-        p_surface: *mut SurfaceKHR,
-    ) -> Result,
+    pub create_mac_os_surface_mvk:
+        extern "system" fn(
+            instance: Instance,
+            p_create_info: *const MacOSSurfaceCreateInfoMVK,
+            p_allocator: *const AllocationCallbacks,
+            p_surface: *mut SurfaceKHR,
+        ) -> Result,
 }
 unsafe impl Send for MvkMacosSurfaceFn {}
 unsafe impl Sync for MvkMacosSurfaceFn {}
@@ -43263,36 +46148,37 @@ pub type PFN_vkSubmitDebugUtilsMessageEXT =
         p_callback_data: *const DebugUtilsMessengerCallbackDataEXT,
     ) -> c_void;
 pub struct ExtDebugUtilsFn {
-    set_debug_utils_object_name_ext:
+    pub set_debug_utils_object_name_ext:
         extern "system" fn(device: Device, p_name_info: *const DebugUtilsObjectNameInfoEXT)
             -> Result,
-    set_debug_utils_object_tag_ext:
+    pub set_debug_utils_object_tag_ext:
         extern "system" fn(device: Device, p_tag_info: *const DebugUtilsObjectTagInfoEXT) -> Result,
-    queue_begin_debug_utils_label_ext:
+    pub queue_begin_debug_utils_label_ext:
         extern "system" fn(queue: Queue, p_label_info: *const DebugUtilsLabelEXT) -> c_void,
-    queue_end_debug_utils_label_ext: extern "system" fn(queue: Queue) -> c_void,
-    queue_insert_debug_utils_label_ext:
+    pub queue_end_debug_utils_label_ext: extern "system" fn(queue: Queue) -> c_void,
+    pub queue_insert_debug_utils_label_ext:
         extern "system" fn(queue: Queue, p_label_info: *const DebugUtilsLabelEXT) -> c_void,
-    cmd_begin_debug_utils_label_ext:
+    pub cmd_begin_debug_utils_label_ext:
         extern "system" fn(command_buffer: CommandBuffer, p_label_info: *const DebugUtilsLabelEXT)
             -> c_void,
-    cmd_end_debug_utils_label_ext: extern "system" fn(command_buffer: CommandBuffer) -> c_void,
-    cmd_insert_debug_utils_label_ext:
+    pub cmd_end_debug_utils_label_ext: extern "system" fn(command_buffer: CommandBuffer) -> c_void,
+    pub cmd_insert_debug_utils_label_ext:
         extern "system" fn(command_buffer: CommandBuffer, p_label_info: *const DebugUtilsLabelEXT)
             -> c_void,
-    create_debug_utils_messenger_ext:
+    pub create_debug_utils_messenger_ext:
         extern "system" fn(
             instance: Instance,
             p_create_info: *const DebugUtilsMessengerCreateInfoEXT,
             p_allocator: *const AllocationCallbacks,
             p_messenger: *mut DebugUtilsMessengerEXT,
         ) -> Result,
-    destroy_debug_utils_messenger_ext: extern "system" fn(
-        instance: Instance,
-        messenger: DebugUtilsMessengerEXT,
-        p_allocator: *const AllocationCallbacks,
-    ) -> c_void,
-    submit_debug_utils_message_ext:
+    pub destroy_debug_utils_messenger_ext:
+        extern "system" fn(
+            instance: Instance,
+            messenger: DebugUtilsMessengerEXT,
+            p_allocator: *const AllocationCallbacks,
+        ) -> c_void,
+    pub submit_debug_utils_message_ext:
         extern "system" fn(
             instance: Instance,
             message_severity: DebugUtilsMessageSeverityFlagsEXT,
@@ -43656,13 +46542,13 @@ pub type PFN_vkGetMemoryAndroidHardwareBufferANDROID =
         p_buffer: *mut *mut AHardwareBuffer,
     ) -> Result;
 pub struct AndroidExternalMemoryAndroidHardwareBufferFn {
-    get_android_hardware_buffer_properties_android:
+    pub get_android_hardware_buffer_properties_android:
         extern "system" fn(
             device: Device,
             buffer: *const AHardwareBuffer,
             p_properties: *mut AndroidHardwareBufferPropertiesANDROID,
         ) -> Result,
-    get_memory_android_hardware_buffer_android:
+    pub get_memory_android_hardware_buffer_android:
         extern "system" fn(
             device: Device,
             p_info: *const MemoryGetAndroidHardwareBufferInfoANDROID,
@@ -44031,12 +46917,12 @@ pub type PFN_vkGetPhysicalDeviceMultisamplePropertiesEXT =
         p_multisample_properties: *mut MultisamplePropertiesEXT,
     ) -> c_void;
 pub struct ExtSampleLocationsFn {
-    cmd_set_sample_locations_ext:
+    pub cmd_set_sample_locations_ext:
         extern "system" fn(
             command_buffer: CommandBuffer,
             p_sample_locations_info: *const SampleLocationsInfoEXT,
         ) -> c_void,
-    get_physical_device_multisample_properties_ext:
+    pub get_physical_device_multisample_properties_ext:
         extern "system" fn(
             physical_device: PhysicalDevice,
             samples: SampleCountFlags,
@@ -44583,7 +47469,7 @@ pub type PFN_vkGetImageDrmFormatModifierPropertiesEXT =
         p_properties: *mut ImageDrmFormatModifierPropertiesEXT,
     ) -> Result;
 pub struct ExtImageDrmFormatModifierFn {
-    get_image_drm_format_modifier_properties_ext:
+    pub get_image_drm_format_modifier_properties_ext:
         extern "system" fn(
             device: Device,
             image: Image,
@@ -44732,25 +47618,25 @@ pub type PFN_vkGetValidationCacheDataEXT = extern "system" fn(
     p_data: *mut c_void,
 ) -> Result;
 pub struct ExtValidationCacheFn {
-    create_validation_cache_ext:
+    pub create_validation_cache_ext:
         extern "system" fn(
             device: Device,
             p_create_info: *const ValidationCacheCreateInfoEXT,
             p_allocator: *const AllocationCallbacks,
             p_validation_cache: *mut ValidationCacheEXT,
         ) -> Result,
-    destroy_validation_cache_ext: extern "system" fn(
+    pub destroy_validation_cache_ext: extern "system" fn(
         device: Device,
         validation_cache: ValidationCacheEXT,
         p_allocator: *const AllocationCallbacks,
     ) -> c_void,
-    merge_validation_caches_ext: extern "system" fn(
+    pub merge_validation_caches_ext: extern "system" fn(
         device: Device,
         dst_cache: ValidationCacheEXT,
         src_cache_count: u32,
         p_src_caches: *const ValidationCacheEXT,
     ) -> Result,
-    get_validation_cache_data_ext: extern "system" fn(
+    pub get_validation_cache_data_ext: extern "system" fn(
         device: Device,
         validation_cache: ValidationCacheEXT,
         p_data_size: *mut usize,
@@ -45013,19 +47899,19 @@ pub type PFN_vkCmdSetCoarseSampleOrderNV =
         p_custom_sample_orders: *const CoarseSampleOrderCustomNV,
     ) -> c_void;
 pub struct NvShadingRateImageFn {
-    cmd_bind_shading_rate_image_nv: extern "system" fn(
+    pub cmd_bind_shading_rate_image_nv: extern "system" fn(
         command_buffer: CommandBuffer,
         image_view: ImageView,
         image_layout: ImageLayout,
     ) -> c_void,
-    cmd_set_viewport_shading_rate_palette_nv:
+    pub cmd_set_viewport_shading_rate_palette_nv:
         extern "system" fn(
             command_buffer: CommandBuffer,
             first_viewport: u32,
             viewport_count: u32,
             p_shading_rate_palettes: *const ShadingRatePaletteNV,
         ) -> c_void,
-    cmd_set_coarse_sample_order_nv:
+    pub cmd_set_coarse_sample_order_nv:
         extern "system" fn(
             command_buffer: CommandBuffer,
             sample_order_type: CoarseSampleOrderTypeNV,
@@ -45302,32 +48188,32 @@ pub type PFN_vkCmdWriteAccelerationStructuresPropertiesNV =
 pub type PFN_vkCompileDeferredNV =
     extern "system" fn(device: Device, pipeline: Pipeline, shader: u32) -> Result;
 pub struct NvRayTracingFn {
-    create_acceleration_structure_nv:
+    pub create_acceleration_structure_nv:
         extern "system" fn(
             device: Device,
             p_create_info: *const AccelerationStructureCreateInfoNV,
             p_allocator: *const AllocationCallbacks,
             p_acceleration_structure: *mut AccelerationStructureNV,
         ) -> Result,
-    destroy_acceleration_structure_nv:
+    pub destroy_acceleration_structure_nv:
         extern "system" fn(
             device: Device,
             acceleration_structure: AccelerationStructureNV,
             p_allocator: *const AllocationCallbacks,
         ) -> c_void,
-    get_acceleration_structure_memory_requirements_nv:
+    pub get_acceleration_structure_memory_requirements_nv:
         extern "system" fn(
             device: Device,
             p_info: *const AccelerationStructureMemoryRequirementsInfoNV,
             p_memory_requirements: *mut MemoryRequirements2KHR,
         ) -> c_void,
-    bind_acceleration_structure_memory_nv:
+    pub bind_acceleration_structure_memory_nv:
         extern "system" fn(
             device: Device,
             bind_info_count: u32,
             p_bind_infos: *const BindAccelerationStructureMemoryInfoNV,
         ) -> Result,
-    cmd_build_acceleration_structure_nv:
+    pub cmd_build_acceleration_structure_nv:
         extern "system" fn(
             command_buffer: CommandBuffer,
             p_info: *const AccelerationStructureInfoNV,
@@ -45339,13 +48225,14 @@ pub struct NvRayTracingFn {
             scratch: Buffer,
             scratch_offset: DeviceSize,
         ) -> c_void,
-    cmd_copy_acceleration_structure_nv: extern "system" fn(
-        command_buffer: CommandBuffer,
-        dst: AccelerationStructureNV,
-        src: AccelerationStructureNV,
-        mode: CopyAccelerationStructureModeNV,
-    ) -> c_void,
-    cmd_trace_rays_nv: extern "system" fn(
+    pub cmd_copy_acceleration_structure_nv:
+        extern "system" fn(
+            command_buffer: CommandBuffer,
+            dst: AccelerationStructureNV,
+            src: AccelerationStructureNV,
+            mode: CopyAccelerationStructureModeNV,
+        ) -> c_void,
+    pub cmd_trace_rays_nv: extern "system" fn(
         command_buffer: CommandBuffer,
         raygen_shader_binding_table_buffer: Buffer,
         raygen_shader_binding_offset: DeviceSize,
@@ -45362,7 +48249,7 @@ pub struct NvRayTracingFn {
         height: u32,
         depth: u32,
     ) -> c_void,
-    create_ray_tracing_pipelines_nv:
+    pub create_ray_tracing_pipelines_nv:
         extern "system" fn(
             device: Device,
             pipeline_cache: PipelineCache,
@@ -45371,7 +48258,7 @@ pub struct NvRayTracingFn {
             p_allocator: *const AllocationCallbacks,
             p_pipelines: *mut Pipeline,
         ) -> Result,
-    get_ray_tracing_shader_group_handles_nv: extern "system" fn(
+    pub get_ray_tracing_shader_group_handles_nv: extern "system" fn(
         device: Device,
         pipeline: Pipeline,
         first_group: u32,
@@ -45379,14 +48266,14 @@ pub struct NvRayTracingFn {
         data_size: usize,
         p_data: *mut c_void,
     ) -> Result,
-    get_acceleration_structure_handle_nv:
+    pub get_acceleration_structure_handle_nv:
         extern "system" fn(
             device: Device,
             acceleration_structure: AccelerationStructureNV,
             data_size: usize,
             p_data: *mut c_void,
         ) -> Result,
-    cmd_write_acceleration_structures_properties_nv:
+    pub cmd_write_acceleration_structures_properties_nv:
         extern "system" fn(
             command_buffer: CommandBuffer,
             acceleration_structure_count: u32,
@@ -45395,7 +48282,7 @@ pub struct NvRayTracingFn {
             query_pool: QueryPool,
             first_query: u32,
         ) -> c_void,
-    compile_deferred_nv:
+    pub compile_deferred_nv:
         extern "system" fn(device: Device, pipeline: Pipeline, shader: u32) -> Result,
 }
 unsafe impl Send for NvRayTracingFn {}
@@ -46076,7 +48963,7 @@ pub type PFN_vkCmdDrawIndexedIndirectCountKHR = extern "system" fn(
     stride: u32,
 ) -> c_void;
 pub struct KhrDrawIndirectCountFn {
-    cmd_draw_indirect_count_khr: extern "system" fn(
+    pub cmd_draw_indirect_count_khr: extern "system" fn(
         command_buffer: CommandBuffer,
         buffer: Buffer,
         offset: DeviceSize,
@@ -46085,7 +48972,7 @@ pub struct KhrDrawIndirectCountFn {
         max_draw_count: u32,
         stride: u32,
     ) -> c_void,
-    cmd_draw_indexed_indirect_count_khr: extern "system" fn(
+    pub cmd_draw_indexed_indirect_count_khr: extern "system" fn(
         command_buffer: CommandBuffer,
         buffer: Buffer,
         offset: DeviceSize,
@@ -46351,7 +49238,7 @@ pub type PFN_vkGetMemoryHostPointerPropertiesEXT =
         p_memory_host_pointer_properties: *mut MemoryHostPointerPropertiesEXT,
     ) -> Result;
 pub struct ExtExternalMemoryHostFn {
-    get_memory_host_pointer_properties_ext:
+    pub get_memory_host_pointer_properties_ext:
         extern "system" fn(
             device: Device,
             handle_type: ExternalMemoryHandleTypeFlags,
@@ -46443,7 +49330,7 @@ pub type PFN_vkCmdWriteBufferMarkerAMD = extern "system" fn(
     marker: u32,
 ) -> c_void;
 pub struct AmdBufferMarkerFn {
-    cmd_write_buffer_marker_amd: extern "system" fn(
+    pub cmd_write_buffer_marker_amd: extern "system" fn(
         command_buffer: CommandBuffer,
         pipeline_stage: PipelineStageFlags,
         dst_buffer: Buffer,
@@ -46592,13 +49479,13 @@ pub type PFN_vkGetCalibratedTimestampsEXT =
         p_max_deviation: *mut u64,
     ) -> Result;
 pub struct ExtCalibratedTimestampsFn {
-    get_physical_device_calibrateable_time_domains_ext:
+    pub get_physical_device_calibrateable_time_domains_ext:
         extern "system" fn(
             physical_device: PhysicalDevice,
             p_time_domain_count: *mut u32,
             p_time_domains: *mut TimeDomainEXT,
         ) -> Result,
-    get_calibrated_timestamps_ext:
+    pub get_calibrated_timestamps_ext:
         extern "system" fn(
             device: Device,
             timestamp_count: u32,
@@ -47031,17 +49918,17 @@ pub type PFN_vkCmdDrawMeshTasksIndirectCountNV =
         stride: u32,
     ) -> c_void;
 pub struct NvMeshShaderFn {
-    cmd_draw_mesh_tasks_nv:
+    pub cmd_draw_mesh_tasks_nv:
         extern "system" fn(command_buffer: CommandBuffer, task_count: u32, first_task: u32)
             -> c_void,
-    cmd_draw_mesh_tasks_indirect_nv: extern "system" fn(
+    pub cmd_draw_mesh_tasks_indirect_nv: extern "system" fn(
         command_buffer: CommandBuffer,
         buffer: Buffer,
         offset: DeviceSize,
         draw_count: u32,
         stride: u32,
     ) -> c_void,
-    cmd_draw_mesh_tasks_indirect_count_nv: extern "system" fn(
+    pub cmd_draw_mesh_tasks_indirect_count_nv: extern "system" fn(
         command_buffer: CommandBuffer,
         buffer: Buffer,
         offset: DeviceSize,
@@ -47248,7 +50135,7 @@ pub type PFN_vkCmdSetExclusiveScissorNV = extern "system" fn(
     p_exclusive_scissors: *const Rect2D,
 ) -> c_void;
 pub struct NvScissorExclusiveFn {
-    cmd_set_exclusive_scissor_nv: extern "system" fn(
+    pub cmd_set_exclusive_scissor_nv: extern "system" fn(
         command_buffer: CommandBuffer,
         first_exclusive_scissor: u32,
         exclusive_scissor_count: u32,
@@ -47332,10 +50219,10 @@ pub type PFN_vkGetQueueCheckpointDataNV =
         p_checkpoint_data: *mut CheckpointDataNV,
     ) -> c_void;
 pub struct NvDeviceDiagnosticCheckpointsFn {
-    cmd_set_checkpoint_nv:
+    pub cmd_set_checkpoint_nv:
         extern "system" fn(command_buffer: CommandBuffer, p_checkpoint_marker: *const c_void)
             -> c_void,
-    get_queue_checkpoint_data_nv: extern "system" fn(
+    pub get_queue_checkpoint_data_nv: extern "system" fn(
         queue: Queue,
         p_checkpoint_data_count: *mut u32,
         p_checkpoint_data: *mut CheckpointDataNV,
@@ -47551,7 +50438,7 @@ pub type PFN_vkCreateImagePipeSurfaceFUCHSIA =
         p_surface: *mut SurfaceKHR,
     ) -> Result;
 pub struct FuchsiaImagepipeSurfaceFn {
-    create_image_pipe_surface_fuchsia:
+    pub create_image_pipe_surface_fuchsia:
         extern "system" fn(
             instance: Instance,
             p_create_info: *const ImagePipeSurfaceCreateInfoFUCHSIA,
@@ -48729,49 +51616,12 @@ fn display_flags(
     }
     Ok(())
 }
-impl fmt::Display for CommandBufferResetFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(
-            CommandBufferResetFlags::RELEASE_RESOURCES.0,
-            "RELEASE_RESOURCES",
-        )];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for ExternalMemoryHandleTypeFlagsNV {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                ExternalMemoryHandleTypeFlagsNV::EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_NV.0,
-                "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_NV",
-            ),
-            (
-                ExternalMemoryHandleTypeFlagsNV::EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_NV.0,
-                "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_NV",
-            ),
-            (
-                ExternalMemoryHandleTypeFlagsNV::EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_NV.0,
-                "EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_NV",
-            ),
-            (
-                ExternalMemoryHandleTypeFlagsNV::EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_NV.0,
-                "EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_NV",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for ViewportCoordinateSwizzleNV {
+impl fmt::Display for ImageTiling {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::POSITIVE_X => Some("POSITIVE_X"),
-            Self::NEGATIVE_X => Some("NEGATIVE_X"),
-            Self::POSITIVE_Y => Some("POSITIVE_Y"),
-            Self::NEGATIVE_Y => Some("NEGATIVE_Y"),
-            Self::POSITIVE_Z => Some("POSITIVE_Z"),
-            Self::NEGATIVE_Z => Some("NEGATIVE_Z"),
-            Self::POSITIVE_W => Some("POSITIVE_W"),
-            Self::NEGATIVE_W => Some("NEGATIVE_W"),
+            Self::OPTIMAL => Some("OPTIMAL"),
+            Self::LINEAR => Some("LINEAR"),
+            Self::DRM_FORMAT_MODIFIER_EXT => Some("DRM_FORMAT_MODIFIER_EXT"),
             _ => None,
         };
         if let Some(x) = name {
@@ -48779,6 +51629,15 @@ impl fmt::Display for ViewportCoordinateSwizzleNV {
         } else {
             write!(f, "{}", self.0)
         }
+    }
+}
+impl fmt::Display for MemoryHeapFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (MemoryHeapFlags::DEVICE_LOCAL.0, "DEVICE_LOCAL"),
+            (MemoryHeapFlags::MULTI_INSTANCE.0, "MULTI_INSTANCE"),
+        ];
+        display_flags(f, KNOWN, self.0)
     }
 }
 impl fmt::Display for ImageUsageFlags {
@@ -48807,10 +51666,14 @@ impl fmt::Display for ImageUsageFlags {
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for DescriptorUpdateTemplateType {
+impl fmt::Display for PhysicalDeviceType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::DESCRIPTOR_SET => Some("DESCRIPTOR_SET"),
+            Self::OTHER => Some("OTHER"),
+            Self::INTEGRATED_GPU => Some("INTEGRATED_GPU"),
+            Self::DISCRETE_GPU => Some("DISCRETE_GPU"),
+            Self::VIRTUAL_GPU => Some("VIRTUAL_GPU"),
+            Self::CPU => Some("CPU"),
             _ => None,
         };
         if let Some(x) = name {
@@ -48820,51 +51683,69 @@ impl fmt::Display for DescriptorUpdateTemplateType {
         }
     }
 }
-impl fmt::Display for BorderColor {
+impl fmt::Display for QueueFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::FLOAT_TRANSPARENT_BLACK => Some("FLOAT_TRANSPARENT_BLACK"),
-            Self::INT_TRANSPARENT_BLACK => Some("INT_TRANSPARENT_BLACK"),
-            Self::FLOAT_OPAQUE_BLACK => Some("FLOAT_OPAQUE_BLACK"),
-            Self::INT_OPAQUE_BLACK => Some("INT_OPAQUE_BLACK"),
-            Self::FLOAT_OPAQUE_WHITE => Some("FLOAT_OPAQUE_WHITE"),
-            Self::INT_OPAQUE_WHITE => Some("INT_OPAQUE_WHITE"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
+        const KNOWN: &[(Flags, &str)] = &[
+            (QueueFlags::GRAPHICS.0, "GRAPHICS"),
+            (QueueFlags::COMPUTE.0, "COMPUTE"),
+            (QueueFlags::TRANSFER.0, "TRANSFER"),
+            (QueueFlags::SPARSE_BINDING.0, "SPARSE_BINDING"),
+            (QueueFlags::PROTECTED.0, "PROTECTED"),
+        ];
+        display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for DescriptorBindingFlagsEXT {
+impl fmt::Display for CommandBufferUsageFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (
-                DescriptorBindingFlagsEXT::UPDATE_AFTER_BIND.0,
-                "UPDATE_AFTER_BIND",
+                CommandBufferUsageFlags::ONE_TIME_SUBMIT.0,
+                "ONE_TIME_SUBMIT",
             ),
             (
-                DescriptorBindingFlagsEXT::UPDATE_UNUSED_WHILE_PENDING.0,
-                "UPDATE_UNUSED_WHILE_PENDING",
+                CommandBufferUsageFlags::RENDER_PASS_CONTINUE.0,
+                "RENDER_PASS_CONTINUE",
             ),
             (
-                DescriptorBindingFlagsEXT::PARTIALLY_BOUND.0,
-                "PARTIALLY_BOUND",
-            ),
-            (
-                DescriptorBindingFlagsEXT::VARIABLE_DESCRIPTOR_COUNT.0,
-                "VARIABLE_DESCRIPTOR_COUNT",
+                CommandBufferUsageFlags::SIMULTANEOUS_USE.0,
+                "SIMULTANEOUS_USE",
             ),
         ];
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for QueryControlFlags {
+impl fmt::Display for DriverIdKHR {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(QueryControlFlags::PRECISE.0, "PRECISE")];
-        display_flags(f, KNOWN, self.0)
+        let name = match *self {
+            Self::AMD_PROPRIETARY => Some("AMD_PROPRIETARY"),
+            Self::AMD_OPEN_SOURCE => Some("AMD_OPEN_SOURCE"),
+            Self::MESA_RADV => Some("MESA_RADV"),
+            Self::NVIDIA_PROPRIETARY => Some("NVIDIA_PROPRIETARY"),
+            Self::INTEL_PROPRIETARY_WINDOWS => Some("INTEL_PROPRIETARY_WINDOWS"),
+            Self::INTEL_OPEN_SOURCE_MESA => Some("INTEL_OPEN_SOURCE_MESA"),
+            Self::IMAGINATION_PROPRIETARY => Some("IMAGINATION_PROPRIETARY"),
+            Self::QUALCOMM_PROPRIETARY => Some("QUALCOMM_PROPRIETARY"),
+            Self::ARM_PROPRIETARY => Some("ARM_PROPRIETARY"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for ValidationCacheHeaderVersionEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::ONE => Some("ONE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
     }
 }
 impl fmt::Display for ShaderStageFlags {
@@ -48896,266 +51777,27 @@ impl fmt::Display for ShaderStageFlags {
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for ImageAspectFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (ImageAspectFlags::COLOR.0, "COLOR"),
-            (ImageAspectFlags::DEPTH.0, "DEPTH"),
-            (ImageAspectFlags::STENCIL.0, "STENCIL"),
-            (ImageAspectFlags::METADATA.0, "METADATA"),
-            (ImageAspectFlags::MEMORY_PLANE_0_EXT.0, "MEMORY_PLANE_0_EXT"),
-            (ImageAspectFlags::MEMORY_PLANE_1_EXT.0, "MEMORY_PLANE_1_EXT"),
-            (ImageAspectFlags::MEMORY_PLANE_2_EXT.0, "MEMORY_PLANE_2_EXT"),
-            (ImageAspectFlags::MEMORY_PLANE_3_EXT.0, "MEMORY_PLANE_3_EXT"),
-            (ImageAspectFlags::PLANE_0.0, "PLANE_0"),
-            (ImageAspectFlags::PLANE_1.0, "PLANE_1"),
-            (ImageAspectFlags::PLANE_2.0, "PLANE_2"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for ColorSpaceKHR {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::SRGB_NONLINEAR => Some("SRGB_NONLINEAR"),
-            Self::DISPLAY_P3_NONLINEAR_EXT => Some("DISPLAY_P3_NONLINEAR_EXT"),
-            Self::EXTENDED_SRGB_LINEAR_EXT => Some("EXTENDED_SRGB_LINEAR_EXT"),
-            Self::DCI_P3_LINEAR_EXT => Some("DCI_P3_LINEAR_EXT"),
-            Self::DCI_P3_NONLINEAR_EXT => Some("DCI_P3_NONLINEAR_EXT"),
-            Self::BT709_LINEAR_EXT => Some("BT709_LINEAR_EXT"),
-            Self::BT709_NONLINEAR_EXT => Some("BT709_NONLINEAR_EXT"),
-            Self::BT2020_LINEAR_EXT => Some("BT2020_LINEAR_EXT"),
-            Self::HDR10_ST2084_EXT => Some("HDR10_ST2084_EXT"),
-            Self::DOLBYVISION_EXT => Some("DOLBYVISION_EXT"),
-            Self::HDR10_HLG_EXT => Some("HDR10_HLG_EXT"),
-            Self::ADOBERGB_LINEAR_EXT => Some("ADOBERGB_LINEAR_EXT"),
-            Self::ADOBERGB_NONLINEAR_EXT => Some("ADOBERGB_NONLINEAR_EXT"),
-            Self::PASS_THROUGH_EXT => Some("PASS_THROUGH_EXT"),
-            Self::EXTENDED_SRGB_NONLINEAR_EXT => Some("EXTENDED_SRGB_NONLINEAR_EXT"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for MemoryPropertyFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (MemoryPropertyFlags::DEVICE_LOCAL.0, "DEVICE_LOCAL"),
-            (MemoryPropertyFlags::HOST_VISIBLE.0, "HOST_VISIBLE"),
-            (MemoryPropertyFlags::HOST_COHERENT.0, "HOST_COHERENT"),
-            (MemoryPropertyFlags::HOST_CACHED.0, "HOST_CACHED"),
-            (MemoryPropertyFlags::LAZILY_ALLOCATED.0, "LAZILY_ALLOCATED"),
-            (MemoryPropertyFlags::PROTECTED.0, "PROTECTED"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for GeometryTypeNV {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::TRIANGLES => Some("TRIANGLES"),
-            Self::AABBS => Some("AABBS"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ShaderInfoTypeAMD {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::STATISTICS => Some("STATISTICS"),
-            Self::BINARY => Some("BINARY"),
-            Self::DISASSEMBLY => Some("DISASSEMBLY"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for RayTracingShaderGroupTypeNV {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::GENERAL => Some("GENERAL"),
-            Self::TRIANGLES_HIT_GROUP => Some("TRIANGLES_HIT_GROUP"),
-            Self::PROCEDURAL_HIT_GROUP => Some("PROCEDURAL_HIT_GROUP"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ExternalFenceFeatureFlags {
+impl fmt::Display for DescriptorBindingFlagsEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (
-                ExternalFenceFeatureFlags::EXTERNAL_FENCE_FEATURE_EXPORTABLE.0,
-                "EXTERNAL_FENCE_FEATURE_EXPORTABLE",
+                DescriptorBindingFlagsEXT::UPDATE_AFTER_BIND.0,
+                "UPDATE_AFTER_BIND",
             ),
             (
-                ExternalFenceFeatureFlags::EXTERNAL_FENCE_FEATURE_IMPORTABLE.0,
-                "EXTERNAL_FENCE_FEATURE_IMPORTABLE",
+                DescriptorBindingFlagsEXT::UPDATE_UNUSED_WHILE_PENDING.0,
+                "UPDATE_UNUSED_WHILE_PENDING",
+            ),
+            (
+                DescriptorBindingFlagsEXT::PARTIALLY_BOUND.0,
+                "PARTIALLY_BOUND",
+            ),
+            (
+                DescriptorBindingFlagsEXT::VARIABLE_DESCRIPTOR_COUNT.0,
+                "VARIABLE_DESCRIPTOR_COUNT",
             ),
         ];
         display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for CommandBufferUsageFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                CommandBufferUsageFlags::ONE_TIME_SUBMIT.0,
-                "ONE_TIME_SUBMIT",
-            ),
-            (
-                CommandBufferUsageFlags::RENDER_PASS_CONTINUE.0,
-                "RENDER_PASS_CONTINUE",
-            ),
-            (
-                CommandBufferUsageFlags::SIMULTANEOUS_USE.0,
-                "SIMULTANEOUS_USE",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for AttachmentStoreOp {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::STORE => Some("STORE"),
-            Self::DONT_CARE => Some("DONT_CARE"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for VendorId {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::VIV => Some("VIV"),
-            Self::VSI => Some("VSI"),
-            Self::KAZAN => Some("KAZAN"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for SurfaceCounterFlagsEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(SurfaceCounterFlagsEXT::VBLANK.0, "VBLANK")];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for GeometryInstanceFlagsNV {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                GeometryInstanceFlagsNV::TRIANGLE_CULL_DISABLE.0,
-                "TRIANGLE_CULL_DISABLE",
-            ),
-            (
-                GeometryInstanceFlagsNV::TRIANGLE_FRONT_COUNTERCLOCKWISE.0,
-                "TRIANGLE_FRONT_COUNTERCLOCKWISE",
-            ),
-            (GeometryInstanceFlagsNV::FORCE_OPAQUE.0, "FORCE_OPAQUE"),
-            (
-                GeometryInstanceFlagsNV::FORCE_NO_OPAQUE.0,
-                "FORCE_NO_OPAQUE",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for CompareOp {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::NEVER => Some("NEVER"),
-            Self::LESS => Some("LESS"),
-            Self::EQUAL => Some("EQUAL"),
-            Self::LESS_OR_EQUAL => Some("LESS_OR_EQUAL"),
-            Self::GREATER => Some("GREATER"),
-            Self::NOT_EQUAL => Some("NOT_EQUAL"),
-            Self::GREATER_OR_EQUAL => Some("GREATER_OR_EQUAL"),
-            Self::ALWAYS => Some("ALWAYS"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for InternalAllocationType {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::EXECUTABLE => Some("EXECUTABLE"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for CommandPoolResetFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(
-            CommandPoolResetFlags::RELEASE_RESOURCES.0,
-            "RELEASE_RESOURCES",
-        )];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for PeerMemoryFeatureFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (PeerMemoryFeatureFlags::COPY_SRC.0, "COPY_SRC"),
-            (PeerMemoryFeatureFlags::COPY_DST.0, "COPY_DST"),
-            (PeerMemoryFeatureFlags::GENERIC_SRC.0, "GENERIC_SRC"),
-            (PeerMemoryFeatureFlags::GENERIC_DST.0, "GENERIC_DST"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for PresentModeKHR {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::IMMEDIATE => Some("IMMEDIATE"),
-            Self::MAILBOX => Some("MAILBOX"),
-            Self::FIFO => Some("FIFO"),
-            Self::FIFO_RELAXED => Some("FIFO_RELAXED"),
-            Self::SHARED_DEMAND_REFRESH => Some("SHARED_DEMAND_REFRESH"),
-            Self::SHARED_CONTINUOUS_REFRESH => Some("SHARED_CONTINUOUS_REFRESH"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
     }
 }
 impl fmt::Display for DescriptorType {
@@ -49183,12 +51825,25 @@ impl fmt::Display for DescriptorType {
         }
     }
 }
-impl fmt::Display for MemoryOverallocationBehaviorAMD {
+impl fmt::Display for LogicOp {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::DEFAULT => Some("DEFAULT"),
-            Self::ALLOWED => Some("ALLOWED"),
-            Self::DISALLOWED => Some("DISALLOWED"),
+            Self::CLEAR => Some("CLEAR"),
+            Self::AND => Some("AND"),
+            Self::AND_REVERSE => Some("AND_REVERSE"),
+            Self::COPY => Some("COPY"),
+            Self::AND_INVERTED => Some("AND_INVERTED"),
+            Self::NO_OP => Some("NO_OP"),
+            Self::XOR => Some("XOR"),
+            Self::OR => Some("OR"),
+            Self::NOR => Some("NOR"),
+            Self::EQUIVALENT => Some("EQUIVALENT"),
+            Self::INVERT => Some("INVERT"),
+            Self::OR_REVERSE => Some("OR_REVERSE"),
+            Self::COPY_INVERTED => Some("COPY_INVERTED"),
+            Self::OR_INVERTED => Some("OR_INVERTED"),
+            Self::NAND => Some("NAND"),
+            Self::SET => Some("SET"),
             _ => None,
         };
         if let Some(x) = name {
@@ -49198,16 +51853,156 @@ impl fmt::Display for MemoryOverallocationBehaviorAMD {
         }
     }
 }
-impl fmt::Display for DisplayPlaneAlphaFlagsKHR {
+impl fmt::Display for CullModeFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
-            (DisplayPlaneAlphaFlagsKHR::OPAQUE.0, "OPAQUE"),
-            (DisplayPlaneAlphaFlagsKHR::GLOBAL.0, "GLOBAL"),
-            (DisplayPlaneAlphaFlagsKHR::PER_PIXEL.0, "PER_PIXEL"),
+            (CullModeFlags::NONE.0, "NONE"),
+            (CullModeFlags::FRONT.0, "FRONT"),
+            (CullModeFlags::BACK.0, "BACK"),
+            (CullModeFlags::FRONT_AND_BACK.0, "FRONT_AND_BACK"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for TessellationDomainOrigin {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::UPPER_LEFT => Some("UPPER_LEFT"),
+            Self::LOWER_LEFT => Some("LOWER_LEFT"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for BlendOp {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::ADD => Some("ADD"),
+            Self::SUBTRACT => Some("SUBTRACT"),
+            Self::REVERSE_SUBTRACT => Some("REVERSE_SUBTRACT"),
+            Self::MIN => Some("MIN"),
+            Self::MAX => Some("MAX"),
+            Self::ZERO_EXT => Some("ZERO_EXT"),
+            Self::SRC_EXT => Some("SRC_EXT"),
+            Self::DST_EXT => Some("DST_EXT"),
+            Self::SRC_OVER_EXT => Some("SRC_OVER_EXT"),
+            Self::DST_OVER_EXT => Some("DST_OVER_EXT"),
+            Self::SRC_IN_EXT => Some("SRC_IN_EXT"),
+            Self::DST_IN_EXT => Some("DST_IN_EXT"),
+            Self::SRC_OUT_EXT => Some("SRC_OUT_EXT"),
+            Self::DST_OUT_EXT => Some("DST_OUT_EXT"),
+            Self::SRC_ATOP_EXT => Some("SRC_ATOP_EXT"),
+            Self::DST_ATOP_EXT => Some("DST_ATOP_EXT"),
+            Self::XOR_EXT => Some("XOR_EXT"),
+            Self::MULTIPLY_EXT => Some("MULTIPLY_EXT"),
+            Self::SCREEN_EXT => Some("SCREEN_EXT"),
+            Self::OVERLAY_EXT => Some("OVERLAY_EXT"),
+            Self::DARKEN_EXT => Some("DARKEN_EXT"),
+            Self::LIGHTEN_EXT => Some("LIGHTEN_EXT"),
+            Self::COLORDODGE_EXT => Some("COLORDODGE_EXT"),
+            Self::COLORBURN_EXT => Some("COLORBURN_EXT"),
+            Self::HARDLIGHT_EXT => Some("HARDLIGHT_EXT"),
+            Self::SOFTLIGHT_EXT => Some("SOFTLIGHT_EXT"),
+            Self::DIFFERENCE_EXT => Some("DIFFERENCE_EXT"),
+            Self::EXCLUSION_EXT => Some("EXCLUSION_EXT"),
+            Self::INVERT_EXT => Some("INVERT_EXT"),
+            Self::INVERT_RGB_EXT => Some("INVERT_RGB_EXT"),
+            Self::LINEARDODGE_EXT => Some("LINEARDODGE_EXT"),
+            Self::LINEARBURN_EXT => Some("LINEARBURN_EXT"),
+            Self::VIVIDLIGHT_EXT => Some("VIVIDLIGHT_EXT"),
+            Self::LINEARLIGHT_EXT => Some("LINEARLIGHT_EXT"),
+            Self::PINLIGHT_EXT => Some("PINLIGHT_EXT"),
+            Self::HARDMIX_EXT => Some("HARDMIX_EXT"),
+            Self::HSL_HUE_EXT => Some("HSL_HUE_EXT"),
+            Self::HSL_SATURATION_EXT => Some("HSL_SATURATION_EXT"),
+            Self::HSL_COLOR_EXT => Some("HSL_COLOR_EXT"),
+            Self::HSL_LUMINOSITY_EXT => Some("HSL_LUMINOSITY_EXT"),
+            Self::PLUS_EXT => Some("PLUS_EXT"),
+            Self::PLUS_CLAMPED_EXT => Some("PLUS_CLAMPED_EXT"),
+            Self::PLUS_CLAMPED_ALPHA_EXT => Some("PLUS_CLAMPED_ALPHA_EXT"),
+            Self::PLUS_DARKER_EXT => Some("PLUS_DARKER_EXT"),
+            Self::MINUS_EXT => Some("MINUS_EXT"),
+            Self::MINUS_CLAMPED_EXT => Some("MINUS_CLAMPED_EXT"),
+            Self::CONTRAST_EXT => Some("CONTRAST_EXT"),
+            Self::INVERT_OVG_EXT => Some("INVERT_OVG_EXT"),
+            Self::RED_EXT => Some("RED_EXT"),
+            Self::GREEN_EXT => Some("GREEN_EXT"),
+            Self::BLUE_EXT => Some("BLUE_EXT"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for PipelineStageFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (PipelineStageFlags::TOP_OF_PIPE.0, "TOP_OF_PIPE"),
+            (PipelineStageFlags::DRAW_INDIRECT.0, "DRAW_INDIRECT"),
+            (PipelineStageFlags::VERTEX_INPUT.0, "VERTEX_INPUT"),
+            (PipelineStageFlags::VERTEX_SHADER.0, "VERTEX_SHADER"),
             (
-                DisplayPlaneAlphaFlagsKHR::PER_PIXEL_PREMULTIPLIED.0,
-                "PER_PIXEL_PREMULTIPLIED",
+                PipelineStageFlags::TESSELLATION_CONTROL_SHADER.0,
+                "TESSELLATION_CONTROL_SHADER",
             ),
+            (
+                PipelineStageFlags::TESSELLATION_EVALUATION_SHADER.0,
+                "TESSELLATION_EVALUATION_SHADER",
+            ),
+            (PipelineStageFlags::GEOMETRY_SHADER.0, "GEOMETRY_SHADER"),
+            (PipelineStageFlags::FRAGMENT_SHADER.0, "FRAGMENT_SHADER"),
+            (
+                PipelineStageFlags::EARLY_FRAGMENT_TESTS.0,
+                "EARLY_FRAGMENT_TESTS",
+            ),
+            (
+                PipelineStageFlags::LATE_FRAGMENT_TESTS.0,
+                "LATE_FRAGMENT_TESTS",
+            ),
+            (
+                PipelineStageFlags::COLOR_ATTACHMENT_OUTPUT.0,
+                "COLOR_ATTACHMENT_OUTPUT",
+            ),
+            (PipelineStageFlags::COMPUTE_SHADER.0, "COMPUTE_SHADER"),
+            (PipelineStageFlags::TRANSFER.0, "TRANSFER"),
+            (PipelineStageFlags::BOTTOM_OF_PIPE.0, "BOTTOM_OF_PIPE"),
+            (PipelineStageFlags::HOST.0, "HOST"),
+            (PipelineStageFlags::ALL_GRAPHICS.0, "ALL_GRAPHICS"),
+            (PipelineStageFlags::ALL_COMMANDS.0, "ALL_COMMANDS"),
+            (
+                PipelineStageFlags::TRANSFORM_FEEDBACK_EXT.0,
+                "TRANSFORM_FEEDBACK_EXT",
+            ),
+            (
+                PipelineStageFlags::CONDITIONAL_RENDERING_EXT.0,
+                "CONDITIONAL_RENDERING_EXT",
+            ),
+            (
+                PipelineStageFlags::COMMAND_PROCESS_NVX.0,
+                "COMMAND_PROCESS_NVX",
+            ),
+            (
+                PipelineStageFlags::SHADING_RATE_IMAGE_NV.0,
+                "SHADING_RATE_IMAGE_NV",
+            ),
+            (
+                PipelineStageFlags::RAY_TRACING_SHADER_NV.0,
+                "RAY_TRACING_SHADER_NV",
+            ),
+            (
+                PipelineStageFlags::ACCELERATION_STRUCTURE_BUILD_NV.0,
+                "ACCELERATION_STRUCTURE_BUILD_NV",
+            ),
+            (PipelineStageFlags::TASK_SHADER_NV.0, "TASK_SHADER_NV"),
+            (PipelineStageFlags::MESH_SHADER_NV.0, "MESH_SHADER_NV"),
+            (PipelineStageFlags::RESERVED_23_EXT.0, "RESERVED_23_EXT"),
         ];
         display_flags(f, KNOWN, self.0)
     }
@@ -49262,6 +52057,146 @@ impl fmt::Display for ObjectType {
         }
     }
 }
+impl fmt::Display for ExternalFenceHandleTypeFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD.0,
+                "EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD",
+            ),
+            (
+                ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32.0,
+                "EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32",
+            ),
+            (
+                ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT.0,
+                "EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT",
+            ),
+            (
+                ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD.0,
+                "EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for SamplerYcbcrModelConversion {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::RGB_IDENTITY => Some("RGB_IDENTITY"),
+            Self::YCBCR_IDENTITY => Some("YCBCR_IDENTITY"),
+            Self::YCBCR_709 => Some("YCBCR_709"),
+            Self::YCBCR_601 => Some("YCBCR_601"),
+            Self::YCBCR_2020 => Some("YCBCR_2020"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for CommandBufferResetFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(
+            CommandBufferResetFlags::RELEASE_RESOURCES.0,
+            "RELEASE_RESOURCES",
+        )];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for IndirectCommandsLayoutUsageFlagsNVX {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                IndirectCommandsLayoutUsageFlagsNVX::UNORDERED_SEQUENCES.0,
+                "UNORDERED_SEQUENCES",
+            ),
+            (
+                IndirectCommandsLayoutUsageFlagsNVX::SPARSE_SEQUENCES.0,
+                "SPARSE_SEQUENCES",
+            ),
+            (
+                IndirectCommandsLayoutUsageFlagsNVX::EMPTY_EXECUTIONS.0,
+                "EMPTY_EXECUTIONS",
+            ),
+            (
+                IndirectCommandsLayoutUsageFlagsNVX::INDEXED_SEQUENCES.0,
+                "INDEXED_SEQUENCES",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for CoverageModulationModeNV {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::NONE => Some("NONE"),
+            Self::RGB => Some("RGB"),
+            Self::ALPHA => Some("ALPHA"),
+            Self::RGBA => Some("RGBA"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for ChromaLocation {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::COSITED_EVEN => Some("COSITED_EVEN"),
+            Self::MIDPOINT => Some("MIDPOINT"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for SubpassDescriptionFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                SubpassDescriptionFlags::PER_VIEW_ATTRIBUTES_NVX.0,
+                "PER_VIEW_ATTRIBUTES_NVX",
+            ),
+            (
+                SubpassDescriptionFlags::PER_VIEW_POSITION_X_ONLY_NVX.0,
+                "PER_VIEW_POSITION_X_ONLY_NVX",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for ObjectEntryTypeNVX {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::DESCRIPTOR_SET => Some("DESCRIPTOR_SET"),
+            Self::PIPELINE => Some("PIPELINE"),
+            Self::INDEX_BUFFER => Some("INDEX_BUFFER"),
+            Self::VERTEX_BUFFER => Some("VERTEX_BUFFER"),
+            Self::PUSH_CONSTANT => Some("PUSH_CONSTANT"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for FormatFeatureFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN : & [ ( Flags , & str ) ] = & [ ( FormatFeatureFlags :: SAMPLED_IMAGE . 0 , "SAMPLED_IMAGE" ) , ( FormatFeatureFlags :: STORAGE_IMAGE . 0 , "STORAGE_IMAGE" ) , ( FormatFeatureFlags :: STORAGE_IMAGE_ATOMIC . 0 , "STORAGE_IMAGE_ATOMIC" ) , ( FormatFeatureFlags :: UNIFORM_TEXEL_BUFFER . 0 , "UNIFORM_TEXEL_BUFFER" ) , ( FormatFeatureFlags :: STORAGE_TEXEL_BUFFER . 0 , "STORAGE_TEXEL_BUFFER" ) , ( FormatFeatureFlags :: STORAGE_TEXEL_BUFFER_ATOMIC . 0 , "STORAGE_TEXEL_BUFFER_ATOMIC" ) , ( FormatFeatureFlags :: VERTEX_BUFFER . 0 , "VERTEX_BUFFER" ) , ( FormatFeatureFlags :: COLOR_ATTACHMENT . 0 , "COLOR_ATTACHMENT" ) , ( FormatFeatureFlags :: COLOR_ATTACHMENT_BLEND . 0 , "COLOR_ATTACHMENT_BLEND" ) , ( FormatFeatureFlags :: DEPTH_STENCIL_ATTACHMENT . 0 , "DEPTH_STENCIL_ATTACHMENT" ) , ( FormatFeatureFlags :: BLIT_SRC . 0 , "BLIT_SRC" ) , ( FormatFeatureFlags :: BLIT_DST . 0 , "BLIT_DST" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_FILTER_LINEAR . 0 , "SAMPLED_IMAGE_FILTER_LINEAR" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_FILTER_CUBIC_IMG . 0 , "SAMPLED_IMAGE_FILTER_CUBIC_IMG" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_FILTER_MINMAX_EXT . 0 , "SAMPLED_IMAGE_FILTER_MINMAX_EXT" ) , ( FormatFeatureFlags :: RESERVED_24_EXT . 0 , "RESERVED_24_EXT" ) , ( FormatFeatureFlags :: TRANSFER_SRC . 0 , "TRANSFER_SRC" ) , ( FormatFeatureFlags :: TRANSFER_DST . 0 , "TRANSFER_DST" ) , ( FormatFeatureFlags :: MIDPOINT_CHROMA_SAMPLES . 0 , "MIDPOINT_CHROMA_SAMPLES" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE" ) , ( FormatFeatureFlags :: DISJOINT . 0 , "DISJOINT" ) , ( FormatFeatureFlags :: COSITED_CHROMA_SAMPLES . 0 , "COSITED_CHROMA_SAMPLES" ) ] ;
+        display_flags(f, KNOWN, self.0)
+    }
+}
 impl fmt::Display for BlendOverlapEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
@@ -49277,10 +52212,61 @@ impl fmt::Display for BlendOverlapEXT {
         }
     }
 }
-impl fmt::Display for DisplayEventTypeEXT {
+impl fmt::Display for SurfaceTransformFlagsKHR {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (SurfaceTransformFlagsKHR::IDENTITY.0, "IDENTITY"),
+            (SurfaceTransformFlagsKHR::ROTATE_90.0, "ROTATE_90"),
+            (SurfaceTransformFlagsKHR::ROTATE_180.0, "ROTATE_180"),
+            (SurfaceTransformFlagsKHR::ROTATE_270.0, "ROTATE_270"),
+            (
+                SurfaceTransformFlagsKHR::HORIZONTAL_MIRROR.0,
+                "HORIZONTAL_MIRROR",
+            ),
+            (
+                SurfaceTransformFlagsKHR::HORIZONTAL_MIRROR_ROTATE_90.0,
+                "HORIZONTAL_MIRROR_ROTATE_90",
+            ),
+            (
+                SurfaceTransformFlagsKHR::HORIZONTAL_MIRROR_ROTATE_180.0,
+                "HORIZONTAL_MIRROR_ROTATE_180",
+            ),
+            (
+                SurfaceTransformFlagsKHR::HORIZONTAL_MIRROR_ROTATE_270.0,
+                "HORIZONTAL_MIRROR_ROTATE_270",
+            ),
+            (SurfaceTransformFlagsKHR::INHERIT.0, "INHERIT"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for DisplayPlaneAlphaFlagsKHR {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (DisplayPlaneAlphaFlagsKHR::OPAQUE.0, "OPAQUE"),
+            (DisplayPlaneAlphaFlagsKHR::GLOBAL.0, "GLOBAL"),
+            (DisplayPlaneAlphaFlagsKHR::PER_PIXEL.0, "PER_PIXEL"),
+            (
+                DisplayPlaneAlphaFlagsKHR::PER_PIXEL_PREMULTIPLIED.0,
+                "PER_PIXEL_PREMULTIPLIED",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for DeviceQueueCreateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(DeviceQueueCreateFlags::PROTECTED.0, "PROTECTED")];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for SamplerAddressMode {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::FIRST_PIXEL_OUT => Some("FIRST_PIXEL_OUT"),
+            Self::REPEAT => Some("REPEAT"),
+            Self::MIRRORED_REPEAT => Some("MIRRORED_REPEAT"),
+            Self::CLAMP_TO_EDGE => Some("CLAMP_TO_EDGE"),
+            Self::CLAMP_TO_BORDER => Some("CLAMP_TO_BORDER"),
             _ => None,
         };
         if let Some(x) = name {
@@ -49290,96 +52276,141 @@ impl fmt::Display for DisplayEventTypeEXT {
         }
     }
 }
-impl fmt::Display for QueryPipelineStatisticFlags {
+impl fmt::Display for TimeDomainEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                QueryPipelineStatisticFlags::INPUT_ASSEMBLY_VERTICES.0,
-                "INPUT_ASSEMBLY_VERTICES",
-            ),
-            (
-                QueryPipelineStatisticFlags::INPUT_ASSEMBLY_PRIMITIVES.0,
-                "INPUT_ASSEMBLY_PRIMITIVES",
-            ),
-            (
-                QueryPipelineStatisticFlags::VERTEX_SHADER_INVOCATIONS.0,
-                "VERTEX_SHADER_INVOCATIONS",
-            ),
-            (
-                QueryPipelineStatisticFlags::GEOMETRY_SHADER_INVOCATIONS.0,
-                "GEOMETRY_SHADER_INVOCATIONS",
-            ),
-            (
-                QueryPipelineStatisticFlags::GEOMETRY_SHADER_PRIMITIVES.0,
-                "GEOMETRY_SHADER_PRIMITIVES",
-            ),
-            (
-                QueryPipelineStatisticFlags::CLIPPING_INVOCATIONS.0,
-                "CLIPPING_INVOCATIONS",
-            ),
-            (
-                QueryPipelineStatisticFlags::CLIPPING_PRIMITIVES.0,
-                "CLIPPING_PRIMITIVES",
-            ),
-            (
-                QueryPipelineStatisticFlags::FRAGMENT_SHADER_INVOCATIONS.0,
-                "FRAGMENT_SHADER_INVOCATIONS",
-            ),
-            (
-                QueryPipelineStatisticFlags::TESSELLATION_CONTROL_SHADER_PATCHES.0,
-                "TESSELLATION_CONTROL_SHADER_PATCHES",
-            ),
-            (
-                QueryPipelineStatisticFlags::TESSELLATION_EVALUATION_SHADER_INVOCATIONS.0,
-                "TESSELLATION_EVALUATION_SHADER_INVOCATIONS",
-            ),
-            (
-                QueryPipelineStatisticFlags::COMPUTE_SHADER_INVOCATIONS.0,
-                "COMPUTE_SHADER_INVOCATIONS",
-            ),
-        ];
+        let name = match *self {
+            Self::DEVICE => Some("DEVICE"),
+            Self::CLOCK_MONOTONIC => Some("CLOCK_MONOTONIC"),
+            Self::CLOCK_MONOTONIC_RAW => Some("CLOCK_MONOTONIC_RAW"),
+            Self::QUERY_PERFORMANCE_COUNTER => Some("QUERY_PERFORMANCE_COUNTER"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for ShaderInfoTypeAMD {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::STATISTICS => Some("STATISTICS"),
+            Self::BINARY => Some("BINARY"),
+            Self::DISASSEMBLY => Some("DISASSEMBLY"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for FenceCreateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(FenceCreateFlags::SIGNALED.0, "SIGNALED")];
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for BufferUsageFlags {
+impl fmt::Display for PointClippingBehavior {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (BufferUsageFlags::TRANSFER_SRC.0, "TRANSFER_SRC"),
-            (BufferUsageFlags::TRANSFER_DST.0, "TRANSFER_DST"),
-            (
-                BufferUsageFlags::UNIFORM_TEXEL_BUFFER.0,
-                "UNIFORM_TEXEL_BUFFER",
-            ),
-            (
-                BufferUsageFlags::STORAGE_TEXEL_BUFFER.0,
-                "STORAGE_TEXEL_BUFFER",
-            ),
-            (BufferUsageFlags::UNIFORM_BUFFER.0, "UNIFORM_BUFFER"),
-            (BufferUsageFlags::STORAGE_BUFFER.0, "STORAGE_BUFFER"),
-            (BufferUsageFlags::INDEX_BUFFER.0, "INDEX_BUFFER"),
-            (BufferUsageFlags::VERTEX_BUFFER.0, "VERTEX_BUFFER"),
-            (BufferUsageFlags::INDIRECT_BUFFER.0, "INDIRECT_BUFFER"),
-            (
-                BufferUsageFlags::TRANSFORM_FEEDBACK_BUFFER_EXT.0,
-                "TRANSFORM_FEEDBACK_BUFFER_EXT",
-            ),
-            (
-                BufferUsageFlags::TRANSFORM_FEEDBACK_COUNTER_BUFFER_EXT.0,
-                "TRANSFORM_FEEDBACK_COUNTER_BUFFER_EXT",
-            ),
-            (
-                BufferUsageFlags::CONDITIONAL_RENDERING_EXT.0,
-                "CONDITIONAL_RENDERING_EXT",
-            ),
-            (BufferUsageFlags::RAY_TRACING_NV.0, "RAY_TRACING_NV"),
-        ];
-        display_flags(f, KNOWN, self.0)
+        let name = match *self {
+            Self::ALL_CLIP_PLANES => Some("ALL_CLIP_PLANES"),
+            Self::USER_CLIP_PLANES_ONLY => Some("USER_CLIP_PLANES_ONLY"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
     }
 }
-impl fmt::Display for SemaphoreImportFlags {
+impl fmt::Display for SubpassContents {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(SemaphoreImportFlags::TEMPORARY.0, "TEMPORARY")];
-        display_flags(f, KNOWN, self.0)
+        let name = match *self {
+            Self::INLINE => Some("INLINE"),
+            Self::SECONDARY_COMMAND_BUFFERS => Some("SECONDARY_COMMAND_BUFFERS"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for VendorId {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::VIV => Some("VIV"),
+            Self::VSI => Some("VSI"),
+            Self::KAZAN => Some("KAZAN"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for SamplerReductionModeEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::WEIGHTED_AVERAGE => Some("WEIGHTED_AVERAGE"),
+            Self::MIN => Some("MIN"),
+            Self::MAX => Some("MAX"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for AccelerationStructureMemoryRequirementsTypeNV {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::OBJECT => Some("OBJECT"),
+            Self::BUILD_SCRATCH => Some("BUILD_SCRATCH"),
+            Self::UPDATE_SCRATCH => Some("UPDATE_SCRATCH"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for ColorSpaceKHR {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::SRGB_NONLINEAR => Some("SRGB_NONLINEAR"),
+            Self::DISPLAY_P3_NONLINEAR_EXT => Some("DISPLAY_P3_NONLINEAR_EXT"),
+            Self::EXTENDED_SRGB_LINEAR_EXT => Some("EXTENDED_SRGB_LINEAR_EXT"),
+            Self::DCI_P3_LINEAR_EXT => Some("DCI_P3_LINEAR_EXT"),
+            Self::DCI_P3_NONLINEAR_EXT => Some("DCI_P3_NONLINEAR_EXT"),
+            Self::BT709_LINEAR_EXT => Some("BT709_LINEAR_EXT"),
+            Self::BT709_NONLINEAR_EXT => Some("BT709_NONLINEAR_EXT"),
+            Self::BT2020_LINEAR_EXT => Some("BT2020_LINEAR_EXT"),
+            Self::HDR10_ST2084_EXT => Some("HDR10_ST2084_EXT"),
+            Self::DOLBYVISION_EXT => Some("DOLBYVISION_EXT"),
+            Self::HDR10_HLG_EXT => Some("HDR10_HLG_EXT"),
+            Self::ADOBERGB_LINEAR_EXT => Some("ADOBERGB_LINEAR_EXT"),
+            Self::ADOBERGB_NONLINEAR_EXT => Some("ADOBERGB_NONLINEAR_EXT"),
+            Self::PASS_THROUGH_EXT => Some("PASS_THROUGH_EXT"),
+            Self::EXTENDED_SRGB_NONLINEAR_EXT => Some("EXTENDED_SRGB_NONLINEAR_EXT"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
     }
 }
 impl fmt::Display for BuildAccelerationStructureFlagsNV {
@@ -49409,32 +52440,97 @@ impl fmt::Display for BuildAccelerationStructureFlagsNV {
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for DescriptorSetLayoutCreateFlags {
+impl fmt::Display for AccessFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (
-                DescriptorSetLayoutCreateFlags::PUSH_DESCRIPTOR_KHR.0,
-                "PUSH_DESCRIPTOR_KHR",
+                AccessFlags::INDIRECT_COMMAND_READ.0,
+                "INDIRECT_COMMAND_READ",
+            ),
+            (AccessFlags::INDEX_READ.0, "INDEX_READ"),
+            (
+                AccessFlags::VERTEX_ATTRIBUTE_READ.0,
+                "VERTEX_ATTRIBUTE_READ",
+            ),
+            (AccessFlags::UNIFORM_READ.0, "UNIFORM_READ"),
+            (
+                AccessFlags::INPUT_ATTACHMENT_READ.0,
+                "INPUT_ATTACHMENT_READ",
+            ),
+            (AccessFlags::SHADER_READ.0, "SHADER_READ"),
+            (AccessFlags::SHADER_WRITE.0, "SHADER_WRITE"),
+            (
+                AccessFlags::COLOR_ATTACHMENT_READ.0,
+                "COLOR_ATTACHMENT_READ",
             ),
             (
-                DescriptorSetLayoutCreateFlags::UPDATE_AFTER_BIND_POOL_EXT.0,
-                "UPDATE_AFTER_BIND_POOL_EXT",
+                AccessFlags::COLOR_ATTACHMENT_WRITE.0,
+                "COLOR_ATTACHMENT_WRITE",
             ),
+            (
+                AccessFlags::DEPTH_STENCIL_ATTACHMENT_READ.0,
+                "DEPTH_STENCIL_ATTACHMENT_READ",
+            ),
+            (
+                AccessFlags::DEPTH_STENCIL_ATTACHMENT_WRITE.0,
+                "DEPTH_STENCIL_ATTACHMENT_WRITE",
+            ),
+            (AccessFlags::TRANSFER_READ.0, "TRANSFER_READ"),
+            (AccessFlags::TRANSFER_WRITE.0, "TRANSFER_WRITE"),
+            (AccessFlags::HOST_READ.0, "HOST_READ"),
+            (AccessFlags::HOST_WRITE.0, "HOST_WRITE"),
+            (AccessFlags::MEMORY_READ.0, "MEMORY_READ"),
+            (AccessFlags::MEMORY_WRITE.0, "MEMORY_WRITE"),
+            (
+                AccessFlags::TRANSFORM_FEEDBACK_WRITE_EXT.0,
+                "TRANSFORM_FEEDBACK_WRITE_EXT",
+            ),
+            (
+                AccessFlags::TRANSFORM_FEEDBACK_COUNTER_READ_EXT.0,
+                "TRANSFORM_FEEDBACK_COUNTER_READ_EXT",
+            ),
+            (
+                AccessFlags::TRANSFORM_FEEDBACK_COUNTER_WRITE_EXT.0,
+                "TRANSFORM_FEEDBACK_COUNTER_WRITE_EXT",
+            ),
+            (
+                AccessFlags::CONDITIONAL_RENDERING_READ_EXT.0,
+                "CONDITIONAL_RENDERING_READ_EXT",
+            ),
+            (
+                AccessFlags::COMMAND_PROCESS_READ_NVX.0,
+                "COMMAND_PROCESS_READ_NVX",
+            ),
+            (
+                AccessFlags::COMMAND_PROCESS_WRITE_NVX.0,
+                "COMMAND_PROCESS_WRITE_NVX",
+            ),
+            (
+                AccessFlags::COLOR_ATTACHMENT_READ_NONCOHERENT_EXT.0,
+                "COLOR_ATTACHMENT_READ_NONCOHERENT_EXT",
+            ),
+            (
+                AccessFlags::SHADING_RATE_IMAGE_READ_NV.0,
+                "SHADING_RATE_IMAGE_READ_NV",
+            ),
+            (
+                AccessFlags::ACCELERATION_STRUCTURE_READ_NV.0,
+                "ACCELERATION_STRUCTURE_READ_NV",
+            ),
+            (
+                AccessFlags::ACCELERATION_STRUCTURE_WRITE_NV.0,
+                "ACCELERATION_STRUCTURE_WRITE_NV",
+            ),
+            (AccessFlags::RESERVED_24_EXT.0, "RESERVED_24_EXT"),
         ];
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for StencilOp {
+impl fmt::Display for AccelerationStructureTypeNV {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::KEEP => Some("KEEP"),
-            Self::ZERO => Some("ZERO"),
-            Self::REPLACE => Some("REPLACE"),
-            Self::INCREMENT_AND_CLAMP => Some("INCREMENT_AND_CLAMP"),
-            Self::DECREMENT_AND_CLAMP => Some("DECREMENT_AND_CLAMP"),
-            Self::INVERT => Some("INVERT"),
-            Self::INCREMENT_AND_WRAP => Some("INCREMENT_AND_WRAP"),
-            Self::DECREMENT_AND_WRAP => Some("DECREMENT_AND_WRAP"),
+            Self::TOP_LEVEL => Some("TOP_LEVEL"),
+            Self::BOTTOM_LEVEL => Some("BOTTOM_LEVEL"),
             _ => None,
         };
         if let Some(x) = name {
@@ -49444,34 +52540,49 @@ impl fmt::Display for StencilOp {
         }
     }
 }
-impl fmt::Display for IndirectCommandsLayoutUsageFlagsNVX {
+impl fmt::Display for RasterizationOrderAMD {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::STRICT => Some("STRICT"),
+            Self::RELAXED => Some("RELAXED"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for SurfaceCounterFlagsEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(SurfaceCounterFlagsEXT::VBLANK.0, "VBLANK")];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for ImageAspectFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
-            (
-                IndirectCommandsLayoutUsageFlagsNVX::UNORDERED_SEQUENCES.0,
-                "UNORDERED_SEQUENCES",
-            ),
-            (
-                IndirectCommandsLayoutUsageFlagsNVX::SPARSE_SEQUENCES.0,
-                "SPARSE_SEQUENCES",
-            ),
-            (
-                IndirectCommandsLayoutUsageFlagsNVX::EMPTY_EXECUTIONS.0,
-                "EMPTY_EXECUTIONS",
-            ),
-            (
-                IndirectCommandsLayoutUsageFlagsNVX::INDEXED_SEQUENCES.0,
-                "INDEXED_SEQUENCES",
-            ),
+            (ImageAspectFlags::COLOR.0, "COLOR"),
+            (ImageAspectFlags::DEPTH.0, "DEPTH"),
+            (ImageAspectFlags::STENCIL.0, "STENCIL"),
+            (ImageAspectFlags::METADATA.0, "METADATA"),
+            (ImageAspectFlags::MEMORY_PLANE_0_EXT.0, "MEMORY_PLANE_0_EXT"),
+            (ImageAspectFlags::MEMORY_PLANE_1_EXT.0, "MEMORY_PLANE_1_EXT"),
+            (ImageAspectFlags::MEMORY_PLANE_2_EXT.0, "MEMORY_PLANE_2_EXT"),
+            (ImageAspectFlags::MEMORY_PLANE_3_EXT.0, "MEMORY_PLANE_3_EXT"),
+            (ImageAspectFlags::PLANE_0.0, "PLANE_0"),
+            (ImageAspectFlags::PLANE_1.0, "PLANE_1"),
+            (ImageAspectFlags::PLANE_2.0, "PLANE_2"),
         ];
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for VertexInputRate {
+impl fmt::Display for FrontFace {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::VERTEX => Some("VERTEX"),
-            Self::INSTANCE => Some("INSTANCE"),
+            Self::COUNTER_CLOCKWISE => Some("COUNTER_CLOCKWISE"),
+            Self::CLOCKWISE => Some("CLOCKWISE"),
             _ => None,
         };
         if let Some(x) = name {
@@ -49481,264 +52592,14 @@ impl fmt::Display for VertexInputRate {
         }
     }
 }
-impl fmt::Display for DynamicState {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::VIEWPORT => Some("VIEWPORT"),
-            Self::SCISSOR => Some("SCISSOR"),
-            Self::LINE_WIDTH => Some("LINE_WIDTH"),
-            Self::DEPTH_BIAS => Some("DEPTH_BIAS"),
-            Self::BLEND_CONSTANTS => Some("BLEND_CONSTANTS"),
-            Self::DEPTH_BOUNDS => Some("DEPTH_BOUNDS"),
-            Self::STENCIL_COMPARE_MASK => Some("STENCIL_COMPARE_MASK"),
-            Self::STENCIL_WRITE_MASK => Some("STENCIL_WRITE_MASK"),
-            Self::STENCIL_REFERENCE => Some("STENCIL_REFERENCE"),
-            Self::VIEWPORT_W_SCALING_NV => Some("VIEWPORT_W_SCALING_NV"),
-            Self::DISCARD_RECTANGLE_EXT => Some("DISCARD_RECTANGLE_EXT"),
-            Self::SAMPLE_LOCATIONS_EXT => Some("SAMPLE_LOCATIONS_EXT"),
-            Self::VIEWPORT_SHADING_RATE_PALETTE_NV => Some("VIEWPORT_SHADING_RATE_PALETTE_NV"),
-            Self::VIEWPORT_COARSE_SAMPLE_ORDER_NV => Some("VIEWPORT_COARSE_SAMPLE_ORDER_NV"),
-            Self::EXCLUSIVE_SCISSOR_NV => Some("EXCLUSIVE_SCISSOR_NV"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for AttachmentLoadOp {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::LOAD => Some("LOAD"),
-            Self::CLEAR => Some("CLEAR"),
-            Self::DONT_CARE => Some("DONT_CARE"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ImageCreateFlags {
+impl fmt::Display for CompositeAlphaFlagsKHR {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
-            (ImageCreateFlags::SPARSE_BINDING.0, "SPARSE_BINDING"),
-            (ImageCreateFlags::SPARSE_RESIDENCY.0, "SPARSE_RESIDENCY"),
-            (ImageCreateFlags::SPARSE_ALIASED.0, "SPARSE_ALIASED"),
-            (ImageCreateFlags::MUTABLE_FORMAT.0, "MUTABLE_FORMAT"),
-            (ImageCreateFlags::CUBE_COMPATIBLE.0, "CUBE_COMPATIBLE"),
-            (ImageCreateFlags::CORNER_SAMPLED_NV.0, "CORNER_SAMPLED_NV"),
-            (
-                ImageCreateFlags::SAMPLE_LOCATIONS_COMPATIBLE_DEPTH_EXT.0,
-                "SAMPLE_LOCATIONS_COMPATIBLE_DEPTH_EXT",
-            ),
-            (ImageCreateFlags::RESERVED_14_EXT.0, "RESERVED_14_EXT"),
-            (ImageCreateFlags::ALIAS.0, "ALIAS"),
-            (
-                ImageCreateFlags::SPLIT_INSTANCE_BIND_REGIONS.0,
-                "SPLIT_INSTANCE_BIND_REGIONS",
-            ),
-            (
-                ImageCreateFlags::TYPE_2D_ARRAY_COMPATIBLE.0,
-                "TYPE_2D_ARRAY_COMPATIBLE",
-            ),
-            (
-                ImageCreateFlags::BLOCK_TEXEL_VIEW_COMPATIBLE.0,
-                "BLOCK_TEXEL_VIEW_COMPATIBLE",
-            ),
-            (ImageCreateFlags::EXTENDED_USAGE.0, "EXTENDED_USAGE"),
-            (ImageCreateFlags::PROTECTED.0, "PROTECTED"),
-            (ImageCreateFlags::DISJOINT.0, "DISJOINT"),
+            (CompositeAlphaFlagsKHR::OPAQUE.0, "OPAQUE"),
+            (CompositeAlphaFlagsKHR::PRE_MULTIPLIED.0, "PRE_MULTIPLIED"),
+            (CompositeAlphaFlagsKHR::POST_MULTIPLIED.0, "POST_MULTIPLIED"),
+            (CompositeAlphaFlagsKHR::INHERIT.0, "INHERIT"),
         ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for SampleCountFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (SampleCountFlags::TYPE_1.0, "TYPE_1"),
-            (SampleCountFlags::TYPE_2.0, "TYPE_2"),
-            (SampleCountFlags::TYPE_4.0, "TYPE_4"),
-            (SampleCountFlags::TYPE_8.0, "TYPE_8"),
-            (SampleCountFlags::TYPE_16.0, "TYPE_16"),
-            (SampleCountFlags::TYPE_32.0, "TYPE_32"),
-            (SampleCountFlags::TYPE_64.0, "TYPE_64"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for CoverageModulationModeNV {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::NONE => Some("NONE"),
-            Self::RGB => Some("RGB"),
-            Self::ALPHA => Some("ALPHA"),
-            Self::RGBA => Some("RGBA"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ValidationCacheHeaderVersionEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::ONE => Some("ONE"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for SwapchainCreateFlagsKHR {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                SwapchainCreateFlagsKHR::SPLIT_INSTANCE_BIND_REGIONS.0,
-                "SPLIT_INSTANCE_BIND_REGIONS",
-            ),
-            (SwapchainCreateFlagsKHR::PROTECTED.0, "PROTECTED"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for SubgroupFeatureFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (SubgroupFeatureFlags::BASIC.0, "BASIC"),
-            (SubgroupFeatureFlags::VOTE.0, "VOTE"),
-            (SubgroupFeatureFlags::ARITHMETIC.0, "ARITHMETIC"),
-            (SubgroupFeatureFlags::BALLOT.0, "BALLOT"),
-            (SubgroupFeatureFlags::SHUFFLE.0, "SHUFFLE"),
-            (SubgroupFeatureFlags::SHUFFLE_RELATIVE.0, "SHUFFLE_RELATIVE"),
-            (SubgroupFeatureFlags::CLUSTERED.0, "CLUSTERED"),
-            (SubgroupFeatureFlags::QUAD.0, "QUAD"),
-            (SubgroupFeatureFlags::PARTITIONED_NV.0, "PARTITIONED_NV"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for PipelineBindPoint {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::GRAPHICS => Some("GRAPHICS"),
-            Self::COMPUTE => Some("COMPUTE"),
-            Self::RAY_TRACING_NV => Some("RAY_TRACING_NV"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for SamplerAddressMode {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::REPEAT => Some("REPEAT"),
-            Self::MIRRORED_REPEAT => Some("MIRRORED_REPEAT"),
-            Self::CLAMP_TO_EDGE => Some("CLAMP_TO_EDGE"),
-            Self::CLAMP_TO_BORDER => Some("CLAMP_TO_BORDER"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ConservativeRasterizationModeEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::DISABLED => Some("DISABLED"),
-            Self::OVERESTIMATE => Some("OVERESTIMATE"),
-            Self::UNDERESTIMATE => Some("UNDERESTIMATE"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for BufferCreateFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (BufferCreateFlags::SPARSE_BINDING.0, "SPARSE_BINDING"),
-            (BufferCreateFlags::SPARSE_RESIDENCY.0, "SPARSE_RESIDENCY"),
-            (BufferCreateFlags::SPARSE_ALIASED.0, "SPARSE_ALIASED"),
-            (BufferCreateFlags::PROTECTED.0, "PROTECTED"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for ShadingRatePaletteEntryNV {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::NO_INVOCATIONS => Some("NO_INVOCATIONS"),
-            Self::TYPE_16_INVOCATIONS_PER_PIXEL => Some("TYPE_16_INVOCATIONS_PER_PIXEL"),
-            Self::TYPE_8_INVOCATIONS_PER_PIXEL => Some("TYPE_8_INVOCATIONS_PER_PIXEL"),
-            Self::TYPE_4_INVOCATIONS_PER_PIXEL => Some("TYPE_4_INVOCATIONS_PER_PIXEL"),
-            Self::TYPE_2_INVOCATIONS_PER_PIXEL => Some("TYPE_2_INVOCATIONS_PER_PIXEL"),
-            Self::TYPE_1_INVOCATION_PER_PIXEL => Some("TYPE_1_INVOCATION_PER_PIXEL"),
-            Self::TYPE_1_INVOCATION_PER_2X1_PIXELS => Some("TYPE_1_INVOCATION_PER_2X1_PIXELS"),
-            Self::TYPE_1_INVOCATION_PER_1X2_PIXELS => Some("TYPE_1_INVOCATION_PER_1X2_PIXELS"),
-            Self::TYPE_1_INVOCATION_PER_2X2_PIXELS => Some("TYPE_1_INVOCATION_PER_2X2_PIXELS"),
-            Self::TYPE_1_INVOCATION_PER_4X2_PIXELS => Some("TYPE_1_INVOCATION_PER_4X2_PIXELS"),
-            Self::TYPE_1_INVOCATION_PER_2X4_PIXELS => Some("TYPE_1_INVOCATION_PER_2X4_PIXELS"),
-            Self::TYPE_1_INVOCATION_PER_4X4_PIXELS => Some("TYPE_1_INVOCATION_PER_4X4_PIXELS"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ExternalSemaphoreHandleTypeFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD.0,
-                "EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD",
-            ),
-            (
-                ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32.0,
-                "EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32",
-            ),
-            (
-                ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT.0,
-                "EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT",
-            ),
-            (
-                ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE.0,
-                "EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE",
-            ),
-            (
-                ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD.0,
-                "EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for MemoryAllocateFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(MemoryAllocateFlags::DEVICE_MASK.0, "DEVICE_MASK")];
         display_flags(f, KNOWN, self.0)
     }
 }
@@ -49761,19 +52622,35 @@ impl fmt::Display for QueryType {
         }
     }
 }
-impl fmt::Display for DescriptorPoolCreateFlags {
+impl fmt::Display for BlendFactor {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                DescriptorPoolCreateFlags::FREE_DESCRIPTOR_SET.0,
-                "FREE_DESCRIPTOR_SET",
-            ),
-            (
-                DescriptorPoolCreateFlags::UPDATE_AFTER_BIND_EXT.0,
-                "UPDATE_AFTER_BIND_EXT",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
+        let name = match *self {
+            Self::ZERO => Some("ZERO"),
+            Self::ONE => Some("ONE"),
+            Self::SRC_COLOR => Some("SRC_COLOR"),
+            Self::ONE_MINUS_SRC_COLOR => Some("ONE_MINUS_SRC_COLOR"),
+            Self::DST_COLOR => Some("DST_COLOR"),
+            Self::ONE_MINUS_DST_COLOR => Some("ONE_MINUS_DST_COLOR"),
+            Self::SRC_ALPHA => Some("SRC_ALPHA"),
+            Self::ONE_MINUS_SRC_ALPHA => Some("ONE_MINUS_SRC_ALPHA"),
+            Self::DST_ALPHA => Some("DST_ALPHA"),
+            Self::ONE_MINUS_DST_ALPHA => Some("ONE_MINUS_DST_ALPHA"),
+            Self::CONSTANT_COLOR => Some("CONSTANT_COLOR"),
+            Self::ONE_MINUS_CONSTANT_COLOR => Some("ONE_MINUS_CONSTANT_COLOR"),
+            Self::CONSTANT_ALPHA => Some("CONSTANT_ALPHA"),
+            Self::ONE_MINUS_CONSTANT_ALPHA => Some("ONE_MINUS_CONSTANT_ALPHA"),
+            Self::SRC_ALPHA_SATURATE => Some("SRC_ALPHA_SATURATE"),
+            Self::SRC1_COLOR => Some("SRC1_COLOR"),
+            Self::ONE_MINUS_SRC1_COLOR => Some("ONE_MINUS_SRC1_COLOR"),
+            Self::SRC1_ALPHA => Some("SRC1_ALPHA"),
+            Self::ONE_MINUS_SRC1_ALPHA => Some("ONE_MINUS_SRC1_ALPHA"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
     }
 }
 impl fmt::Display for ImageViewType {
@@ -49795,13 +52672,18 @@ impl fmt::Display for ImageViewType {
         }
     }
 }
-impl fmt::Display for CoarseSampleOrderTypeNV {
+impl fmt::Display for MemoryAllocateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(MemoryAllocateFlags::DEVICE_MASK.0, "DEVICE_MASK")];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for MemoryOverallocationBehaviorAMD {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::DEFAULT => Some("DEFAULT"),
-            Self::CUSTOM => Some("CUSTOM"),
-            Self::PIXEL_MAJOR => Some("PIXEL_MAJOR"),
-            Self::SAMPLE_MAJOR => Some("SAMPLE_MAJOR"),
+            Self::ALLOWED => Some("ALLOWED"),
+            Self::DISALLOWED => Some("DISALLOWED"),
             _ => None,
         };
         if let Some(x) = name {
@@ -49811,14 +52693,204 @@ impl fmt::Display for CoarseSampleOrderTypeNV {
         }
     }
 }
-impl fmt::Display for SamplerYcbcrModelConversion {
+impl fmt::Display for DebugUtilsMessageSeverityFlagsEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (DebugUtilsMessageSeverityFlagsEXT::VERBOSE.0, "VERBOSE"),
+            (DebugUtilsMessageSeverityFlagsEXT::INFO.0, "INFO"),
+            (DebugUtilsMessageSeverityFlagsEXT::WARNING.0, "WARNING"),
+            (DebugUtilsMessageSeverityFlagsEXT::ERROR.0, "ERROR"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for ViewportCoordinateSwizzleNV {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::RGB_IDENTITY => Some("RGB_IDENTITY"),
-            Self::YCBCR_IDENTITY => Some("YCBCR_IDENTITY"),
-            Self::YCBCR_709 => Some("YCBCR_709"),
-            Self::YCBCR_601 => Some("YCBCR_601"),
-            Self::YCBCR_2020 => Some("YCBCR_2020"),
+            Self::POSITIVE_X => Some("POSITIVE_X"),
+            Self::NEGATIVE_X => Some("NEGATIVE_X"),
+            Self::POSITIVE_Y => Some("POSITIVE_Y"),
+            Self::NEGATIVE_Y => Some("NEGATIVE_Y"),
+            Self::POSITIVE_Z => Some("POSITIVE_Z"),
+            Self::NEGATIVE_Z => Some("NEGATIVE_Z"),
+            Self::POSITIVE_W => Some("POSITIVE_W"),
+            Self::NEGATIVE_W => Some("NEGATIVE_W"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for DescriptorUpdateTemplateType {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::DESCRIPTOR_SET => Some("DESCRIPTOR_SET"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for SparseImageFormatFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (SparseImageFormatFlags::SINGLE_MIPTAIL.0, "SINGLE_MIPTAIL"),
+            (
+                SparseImageFormatFlags::ALIGNED_MIP_SIZE.0,
+                "ALIGNED_MIP_SIZE",
+            ),
+            (
+                SparseImageFormatFlags::NONSTANDARD_BLOCK_SIZE.0,
+                "NONSTANDARD_BLOCK_SIZE",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for FenceImportFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(FenceImportFlags::TEMPORARY.0, "TEMPORARY")];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for AttachmentLoadOp {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::LOAD => Some("LOAD"),
+            Self::CLEAR => Some("CLEAR"),
+            Self::DONT_CARE => Some("DONT_CARE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for PipelineCacheHeaderVersion {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::ONE => Some("ONE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for CommandPoolCreateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (CommandPoolCreateFlags::TRANSIENT.0, "TRANSIENT"),
+            (
+                CommandPoolCreateFlags::RESET_COMMAND_BUFFER.0,
+                "RESET_COMMAND_BUFFER",
+            ),
+            (CommandPoolCreateFlags::PROTECTED.0, "PROTECTED"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for ExternalMemoryHandleTypeFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN : & [ ( Flags , & str ) ] = & [ ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32 . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_ANDROID_HARDWARE_BUFFER_ANDROID . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_ANDROID_HARDWARE_BUFFER_ANDROID" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_HOST_ALLOCATION . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_HOST_ALLOCATION" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_HOST_MAPPED_FOREIGN_MEMORY . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_HOST_MAPPED_FOREIGN_MEMORY" ) ] ;
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for SamplerMipmapMode {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::NEAREST => Some("NEAREST"),
+            Self::LINEAR => Some("LINEAR"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for PresentModeKHR {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::IMMEDIATE => Some("IMMEDIATE"),
+            Self::MAILBOX => Some("MAILBOX"),
+            Self::FIFO => Some("FIFO"),
+            Self::FIFO_RELAXED => Some("FIFO_RELAXED"),
+            Self::SHARED_DEMAND_REFRESH => Some("SHARED_DEMAND_REFRESH"),
+            Self::SHARED_CONTINUOUS_REFRESH => Some("SHARED_CONTINUOUS_REFRESH"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for MemoryPropertyFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (MemoryPropertyFlags::DEVICE_LOCAL.0, "DEVICE_LOCAL"),
+            (MemoryPropertyFlags::HOST_VISIBLE.0, "HOST_VISIBLE"),
+            (MemoryPropertyFlags::HOST_COHERENT.0, "HOST_COHERENT"),
+            (MemoryPropertyFlags::HOST_CACHED.0, "HOST_CACHED"),
+            (MemoryPropertyFlags::LAZILY_ALLOCATED.0, "LAZILY_ALLOCATED"),
+            (MemoryPropertyFlags::PROTECTED.0, "PROTECTED"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for ObjectEntryUsageFlagsNVX {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (ObjectEntryUsageFlagsNVX::GRAPHICS.0, "GRAPHICS"),
+            (ObjectEntryUsageFlagsNVX::COMPUTE.0, "COMPUTE"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for InternalAllocationType {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::EXECUTABLE => Some("EXECUTABLE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for AttachmentStoreOp {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::STORE => Some("STORE"),
+            Self::DONT_CARE => Some("DONT_CARE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for DeviceEventTypeEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::DISPLAY_HOTPLUG => Some("DISPLAY_HOTPLUG"),
             _ => None,
         };
         if let Some(x) = name {
@@ -50420,28 +53492,13 @@ impl fmt::Display for StructureType {
         }
     }
 }
-impl fmt::Display for BlendFactor {
+impl fmt::Display for CoarseSampleOrderTypeNV {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::ZERO => Some("ZERO"),
-            Self::ONE => Some("ONE"),
-            Self::SRC_COLOR => Some("SRC_COLOR"),
-            Self::ONE_MINUS_SRC_COLOR => Some("ONE_MINUS_SRC_COLOR"),
-            Self::DST_COLOR => Some("DST_COLOR"),
-            Self::ONE_MINUS_DST_COLOR => Some("ONE_MINUS_DST_COLOR"),
-            Self::SRC_ALPHA => Some("SRC_ALPHA"),
-            Self::ONE_MINUS_SRC_ALPHA => Some("ONE_MINUS_SRC_ALPHA"),
-            Self::DST_ALPHA => Some("DST_ALPHA"),
-            Self::ONE_MINUS_DST_ALPHA => Some("ONE_MINUS_DST_ALPHA"),
-            Self::CONSTANT_COLOR => Some("CONSTANT_COLOR"),
-            Self::ONE_MINUS_CONSTANT_COLOR => Some("ONE_MINUS_CONSTANT_COLOR"),
-            Self::CONSTANT_ALPHA => Some("CONSTANT_ALPHA"),
-            Self::ONE_MINUS_CONSTANT_ALPHA => Some("ONE_MINUS_CONSTANT_ALPHA"),
-            Self::SRC_ALPHA_SATURATE => Some("SRC_ALPHA_SATURATE"),
-            Self::SRC1_COLOR => Some("SRC1_COLOR"),
-            Self::ONE_MINUS_SRC1_COLOR => Some("ONE_MINUS_SRC1_COLOR"),
-            Self::SRC1_ALPHA => Some("SRC1_ALPHA"),
-            Self::ONE_MINUS_SRC1_ALPHA => Some("ONE_MINUS_SRC1_ALPHA"),
+            Self::DEFAULT => Some("DEFAULT"),
+            Self::CUSTOM => Some("CUSTOM"),
+            Self::PIXEL_MAJOR => Some("PIXEL_MAJOR"),
+            Self::SAMPLE_MAJOR => Some("SAMPLE_MAJOR"),
             _ => None,
         };
         if let Some(x) = name {
@@ -50451,36 +53508,19 @@ impl fmt::Display for BlendFactor {
         }
     }
 }
-impl fmt::Display for ImageType {
+impl fmt::Display for DebugReportFlagsEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::TYPE_1D => Some("TYPE_1D"),
-            Self::TYPE_2D => Some("TYPE_2D"),
-            Self::TYPE_3D => Some("TYPE_3D"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ObjectEntryTypeNVX {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::DESCRIPTOR_SET => Some("DESCRIPTOR_SET"),
-            Self::PIPELINE => Some("PIPELINE"),
-            Self::INDEX_BUFFER => Some("INDEX_BUFFER"),
-            Self::VERTEX_BUFFER => Some("VERTEX_BUFFER"),
-            Self::PUSH_CONSTANT => Some("PUSH_CONSTANT"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
+        const KNOWN: &[(Flags, &str)] = &[
+            (DebugReportFlagsEXT::INFORMATION.0, "INFORMATION"),
+            (DebugReportFlagsEXT::WARNING.0, "WARNING"),
+            (
+                DebugReportFlagsEXT::PERFORMANCE_WARNING.0,
+                "PERFORMANCE_WARNING",
+            ),
+            (DebugReportFlagsEXT::ERROR.0, "ERROR"),
+            (DebugReportFlagsEXT::DEBUG.0, "DEBUG"),
+        ];
+        display_flags(f, KNOWN, self.0)
     }
 }
 impl fmt::Display for StencilFaceFlags {
@@ -50494,6 +53534,147 @@ impl fmt::Display for StencilFaceFlags {
             ),
         ];
         display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for DependencyFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (DependencyFlags::BY_REGION.0, "BY_REGION"),
+            (DependencyFlags::DEVICE_GROUP.0, "DEVICE_GROUP"),
+            (DependencyFlags::VIEW_LOCAL.0, "VIEW_LOCAL"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for PipelineBindPoint {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::GRAPHICS => Some("GRAPHICS"),
+            Self::COMPUTE => Some("COMPUTE"),
+            Self::RAY_TRACING_NV => Some("RAY_TRACING_NV"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for ExternalMemoryHandleTypeFlagsNV {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                ExternalMemoryHandleTypeFlagsNV::EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_NV.0,
+                "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_NV",
+            ),
+            (
+                ExternalMemoryHandleTypeFlagsNV::EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_NV.0,
+                "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_NV",
+            ),
+            (
+                ExternalMemoryHandleTypeFlagsNV::EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_NV.0,
+                "EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_NV",
+            ),
+            (
+                ExternalMemoryHandleTypeFlagsNV::EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_NV.0,
+                "EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_NV",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for PipelineCreateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                PipelineCreateFlags::DISABLE_OPTIMIZATION.0,
+                "DISABLE_OPTIMIZATION",
+            ),
+            (
+                PipelineCreateFlags::ALLOW_DERIVATIVES.0,
+                "ALLOW_DERIVATIVES",
+            ),
+            (PipelineCreateFlags::DERIVATIVE.0, "DERIVATIVE"),
+            (PipelineCreateFlags::DEFER_COMPILE_NV.0, "DEFER_COMPILE_NV"),
+            (
+                PipelineCreateFlags::VIEW_INDEX_FROM_DEVICE_INDEX.0,
+                "VIEW_INDEX_FROM_DEVICE_INDEX",
+            ),
+            (PipelineCreateFlags::DISPATCH_BASE.0, "DISPATCH_BASE"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for SwapchainCreateFlagsKHR {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                SwapchainCreateFlagsKHR::SPLIT_INSTANCE_BIND_REGIONS.0,
+                "SPLIT_INSTANCE_BIND_REGIONS",
+            ),
+            (SwapchainCreateFlagsKHR::PROTECTED.0, "PROTECTED"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for VertexInputRate {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::VERTEX => Some("VERTEX"),
+            Self::INSTANCE => Some("INSTANCE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for ColorComponentFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (ColorComponentFlags::R.0, "R"),
+            (ColorComponentFlags::G.0, "G"),
+            (ColorComponentFlags::B.0, "B"),
+            (ColorComponentFlags::A.0, "A"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for SamplerYcbcrRange {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::ITU_FULL => Some("ITU_FULL"),
+            Self::ITU_NARROW => Some("ITU_NARROW"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for SparseMemoryBindFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(SparseMemoryBindFlags::METADATA.0, "METADATA")];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for SharingMode {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::EXCLUSIVE => Some("EXCLUSIVE"),
+            Self::CONCURRENT => Some("CONCURRENT"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
     }
 }
 impl fmt::Display for IndexType {
@@ -50511,17 +53692,65 @@ impl fmt::Display for IndexType {
         }
     }
 }
-impl fmt::Display for SparseMemoryBindFlags {
+impl fmt::Display for BufferUsageFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(SparseMemoryBindFlags::METADATA.0, "METADATA")];
+        const KNOWN: &[(Flags, &str)] = &[
+            (BufferUsageFlags::TRANSFER_SRC.0, "TRANSFER_SRC"),
+            (BufferUsageFlags::TRANSFER_DST.0, "TRANSFER_DST"),
+            (
+                BufferUsageFlags::UNIFORM_TEXEL_BUFFER.0,
+                "UNIFORM_TEXEL_BUFFER",
+            ),
+            (
+                BufferUsageFlags::STORAGE_TEXEL_BUFFER.0,
+                "STORAGE_TEXEL_BUFFER",
+            ),
+            (BufferUsageFlags::UNIFORM_BUFFER.0, "UNIFORM_BUFFER"),
+            (BufferUsageFlags::STORAGE_BUFFER.0, "STORAGE_BUFFER"),
+            (BufferUsageFlags::INDEX_BUFFER.0, "INDEX_BUFFER"),
+            (BufferUsageFlags::VERTEX_BUFFER.0, "VERTEX_BUFFER"),
+            (BufferUsageFlags::INDIRECT_BUFFER.0, "INDIRECT_BUFFER"),
+            (
+                BufferUsageFlags::TRANSFORM_FEEDBACK_BUFFER_EXT.0,
+                "TRANSFORM_FEEDBACK_BUFFER_EXT",
+            ),
+            (
+                BufferUsageFlags::TRANSFORM_FEEDBACK_COUNTER_BUFFER_EXT.0,
+                "TRANSFORM_FEEDBACK_COUNTER_BUFFER_EXT",
+            ),
+            (
+                BufferUsageFlags::CONDITIONAL_RENDERING_EXT.0,
+                "CONDITIONAL_RENDERING_EXT",
+            ),
+            (BufferUsageFlags::RAY_TRACING_NV.0, "RAY_TRACING_NV"),
+        ];
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for RasterizationOrderAMD {
+impl fmt::Display for ConditionalRenderingFlagsEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(ConditionalRenderingFlagsEXT::INVERTED.0, "INVERTED")];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for DynamicState {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::STRICT => Some("STRICT"),
-            Self::RELAXED => Some("RELAXED"),
+            Self::VIEWPORT => Some("VIEWPORT"),
+            Self::SCISSOR => Some("SCISSOR"),
+            Self::LINE_WIDTH => Some("LINE_WIDTH"),
+            Self::DEPTH_BIAS => Some("DEPTH_BIAS"),
+            Self::BLEND_CONSTANTS => Some("BLEND_CONSTANTS"),
+            Self::DEPTH_BOUNDS => Some("DEPTH_BOUNDS"),
+            Self::STENCIL_COMPARE_MASK => Some("STENCIL_COMPARE_MASK"),
+            Self::STENCIL_WRITE_MASK => Some("STENCIL_WRITE_MASK"),
+            Self::STENCIL_REFERENCE => Some("STENCIL_REFERENCE"),
+            Self::VIEWPORT_W_SCALING_NV => Some("VIEWPORT_W_SCALING_NV"),
+            Self::DISCARD_RECTANGLE_EXT => Some("DISCARD_RECTANGLE_EXT"),
+            Self::SAMPLE_LOCATIONS_EXT => Some("SAMPLE_LOCATIONS_EXT"),
+            Self::VIEWPORT_SHADING_RATE_PALETTE_NV => Some("VIEWPORT_SHADING_RATE_PALETTE_NV"),
+            Self::VIEWPORT_COARSE_SAMPLE_ORDER_NV => Some("VIEWPORT_COARSE_SAMPLE_ORDER_NV"),
+            Self::EXCLUSIVE_SCISSOR_NV => Some("EXCLUSIVE_SCISSOR_NV"),
             _ => None,
         };
         if let Some(x) = name {
@@ -50531,24 +53760,11 @@ impl fmt::Display for RasterizationOrderAMD {
         }
     }
 }
-impl fmt::Display for CommandPoolCreateFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (CommandPoolCreateFlags::TRANSIENT.0, "TRANSIENT"),
-            (
-                CommandPoolCreateFlags::RESET_COMMAND_BUFFER.0,
-                "RESET_COMMAND_BUFFER",
-            ),
-            (CommandPoolCreateFlags::PROTECTED.0, "PROTECTED"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for FrontFace {
+impl fmt::Display for ValidationCheckEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::COUNTER_CLOCKWISE => Some("COUNTER_CLOCKWISE"),
-            Self::CLOCKWISE => Some("CLOCKWISE"),
+            Self::ALL => Some("ALL"),
+            Self::SHADERS => Some("SHADERS"),
             _ => None,
         };
         if let Some(x) = name {
@@ -50558,12 +53774,46 @@ impl fmt::Display for FrontFace {
         }
     }
 }
-impl fmt::Display for ImageTiling {
+impl fmt::Display for QueryControlFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(QueryControlFlags::PRECISE.0, "PRECISE")];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for BufferCreateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (BufferCreateFlags::SPARSE_BINDING.0, "SPARSE_BINDING"),
+            (BufferCreateFlags::SPARSE_RESIDENCY.0, "SPARSE_RESIDENCY"),
+            (BufferCreateFlags::SPARSE_ALIASED.0, "SPARSE_ALIASED"),
+            (BufferCreateFlags::PROTECTED.0, "PROTECTED"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for ExternalMemoryFeatureFlagsNV {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                ExternalMemoryFeatureFlagsNV::EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_NV.0,
+                "EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_NV",
+            ),
+            (
+                ExternalMemoryFeatureFlagsNV::EXTERNAL_MEMORY_FEATURE_EXPORTABLE_NV.0,
+                "EXTERNAL_MEMORY_FEATURE_EXPORTABLE_NV",
+            ),
+            (
+                ExternalMemoryFeatureFlagsNV::EXTERNAL_MEMORY_FEATURE_IMPORTABLE_NV.0,
+                "EXTERNAL_MEMORY_FEATURE_IMPORTABLE_NV",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for DisplayEventTypeEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::OPTIMAL => Some("OPTIMAL"),
-            Self::LINEAR => Some("LINEAR"),
-            Self::DRM_FORMAT_MODIFIER_EXT => Some("DRM_FORMAT_MODIFIER_EXT"),
+            Self::FIRST_PIXEL_OUT => Some("FIRST_PIXEL_OUT"),
             _ => None,
         };
         if let Some(x) = name {
@@ -50573,56 +53823,13 @@ impl fmt::Display for ImageTiling {
         }
     }
 }
-impl fmt::Display for SubpassDescriptionFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                SubpassDescriptionFlags::PER_VIEW_ATTRIBUTES_NVX.0,
-                "PER_VIEW_ATTRIBUTES_NVX",
-            ),
-            (
-                SubpassDescriptionFlags::PER_VIEW_POSITION_X_ONLY_NVX.0,
-                "PER_VIEW_POSITION_X_ONLY_NVX",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for CompositeAlphaFlagsKHR {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (CompositeAlphaFlagsKHR::OPAQUE.0, "OPAQUE"),
-            (CompositeAlphaFlagsKHR::PRE_MULTIPLIED.0, "PRE_MULTIPLIED"),
-            (CompositeAlphaFlagsKHR::POST_MULTIPLIED.0, "POST_MULTIPLIED"),
-            (CompositeAlphaFlagsKHR::INHERIT.0, "INHERIT"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for QueueFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (QueueFlags::GRAPHICS.0, "GRAPHICS"),
-            (QueueFlags::COMPUTE.0, "COMPUTE"),
-            (QueueFlags::TRANSFER.0, "TRANSFER"),
-            (QueueFlags::SPARSE_BINDING.0, "SPARSE_BINDING"),
-            (QueueFlags::PROTECTED.0, "PROTECTED"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for DriverIdKHR {
+impl fmt::Display for QueueGlobalPriorityEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::AMD_PROPRIETARY => Some("AMD_PROPRIETARY"),
-            Self::AMD_OPEN_SOURCE => Some("AMD_OPEN_SOURCE"),
-            Self::MESA_RADV => Some("MESA_RADV"),
-            Self::NVIDIA_PROPRIETARY => Some("NVIDIA_PROPRIETARY"),
-            Self::INTEL_PROPRIETARY_WINDOWS => Some("INTEL_PROPRIETARY_WINDOWS"),
-            Self::INTEL_OPEN_SOURCE_MESA => Some("INTEL_OPEN_SOURCE_MESA"),
-            Self::IMAGINATION_PROPRIETARY => Some("IMAGINATION_PROPRIETARY"),
-            Self::QUALCOMM_PROPRIETARY => Some("QUALCOMM_PROPRIETARY"),
-            Self::ARM_PROPRIETARY => Some("ARM_PROPRIETARY"),
+            Self::LOW => Some("LOW"),
+            Self::MEDIUM => Some("MEDIUM"),
+            Self::HIGH => Some("HIGH"),
+            Self::REALTIME => Some("REALTIME"),
             _ => None,
         };
         if let Some(x) = name {
@@ -50632,11 +53839,17 @@ impl fmt::Display for DriverIdKHR {
         }
     }
 }
-impl fmt::Display for DiscardRectangleModeEXT {
+impl fmt::Display for CompareOp {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::INCLUSIVE => Some("INCLUSIVE"),
-            Self::EXCLUSIVE => Some("EXCLUSIVE"),
+            Self::NEVER => Some("NEVER"),
+            Self::LESS => Some("LESS"),
+            Self::EQUAL => Some("EQUAL"),
+            Self::LESS_OR_EQUAL => Some("LESS_OR_EQUAL"),
+            Self::GREATER => Some("GREATER"),
+            Self::NOT_EQUAL => Some("NOT_EQUAL"),
+            Self::GREATER_OR_EQUAL => Some("GREATER_OR_EQUAL"),
+            Self::ALWAYS => Some("ALWAYS"),
             _ => None,
         };
         if let Some(x) = name {
@@ -50646,44 +53859,120 @@ impl fmt::Display for DiscardRectangleModeEXT {
         }
     }
 }
-impl fmt::Display for SurfaceTransformFlagsKHR {
+impl fmt::Display for DebugUtilsMessageTypeFlagsEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
-            (SurfaceTransformFlagsKHR::IDENTITY.0, "IDENTITY"),
-            (SurfaceTransformFlagsKHR::ROTATE_90.0, "ROTATE_90"),
-            (SurfaceTransformFlagsKHR::ROTATE_180.0, "ROTATE_180"),
-            (SurfaceTransformFlagsKHR::ROTATE_270.0, "ROTATE_270"),
-            (
-                SurfaceTransformFlagsKHR::HORIZONTAL_MIRROR.0,
-                "HORIZONTAL_MIRROR",
-            ),
-            (
-                SurfaceTransformFlagsKHR::HORIZONTAL_MIRROR_ROTATE_90.0,
-                "HORIZONTAL_MIRROR_ROTATE_90",
-            ),
-            (
-                SurfaceTransformFlagsKHR::HORIZONTAL_MIRROR_ROTATE_180.0,
-                "HORIZONTAL_MIRROR_ROTATE_180",
-            ),
-            (
-                SurfaceTransformFlagsKHR::HORIZONTAL_MIRROR_ROTATE_270.0,
-                "HORIZONTAL_MIRROR_ROTATE_270",
-            ),
-            (SurfaceTransformFlagsKHR::INHERIT.0, "INHERIT"),
+            (DebugUtilsMessageTypeFlagsEXT::GENERAL.0, "GENERAL"),
+            (DebugUtilsMessageTypeFlagsEXT::VALIDATION.0, "VALIDATION"),
+            (DebugUtilsMessageTypeFlagsEXT::PERFORMANCE.0, "PERFORMANCE"),
         ];
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for DeviceGroupPresentModeFlagsKHR {
+impl fmt::Display for ExternalMemoryFeatureFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
-            (DeviceGroupPresentModeFlagsKHR::LOCAL.0, "LOCAL"),
-            (DeviceGroupPresentModeFlagsKHR::REMOTE.0, "REMOTE"),
-            (DeviceGroupPresentModeFlagsKHR::SUM.0, "SUM"),
             (
-                DeviceGroupPresentModeFlagsKHR::LOCAL_MULTI_DEVICE.0,
-                "LOCAL_MULTI_DEVICE",
+                ExternalMemoryFeatureFlags::EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY.0,
+                "EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY",
             ),
+            (
+                ExternalMemoryFeatureFlags::EXTERNAL_MEMORY_FEATURE_EXPORTABLE.0,
+                "EXTERNAL_MEMORY_FEATURE_EXPORTABLE",
+            ),
+            (
+                ExternalMemoryFeatureFlags::EXTERNAL_MEMORY_FEATURE_IMPORTABLE.0,
+                "EXTERNAL_MEMORY_FEATURE_IMPORTABLE",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for ComponentSwizzle {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::IDENTITY => Some("IDENTITY"),
+            Self::ZERO => Some("ZERO"),
+            Self::ONE => Some("ONE"),
+            Self::R => Some("R"),
+            Self::G => Some("G"),
+            Self::B => Some("B"),
+            Self::A => Some("A"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for PrimitiveTopology {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::POINT_LIST => Some("POINT_LIST"),
+            Self::LINE_LIST => Some("LINE_LIST"),
+            Self::LINE_STRIP => Some("LINE_STRIP"),
+            Self::TRIANGLE_LIST => Some("TRIANGLE_LIST"),
+            Self::TRIANGLE_STRIP => Some("TRIANGLE_STRIP"),
+            Self::TRIANGLE_FAN => Some("TRIANGLE_FAN"),
+            Self::LINE_LIST_WITH_ADJACENCY => Some("LINE_LIST_WITH_ADJACENCY"),
+            Self::LINE_STRIP_WITH_ADJACENCY => Some("LINE_STRIP_WITH_ADJACENCY"),
+            Self::TRIANGLE_LIST_WITH_ADJACENCY => Some("TRIANGLE_LIST_WITH_ADJACENCY"),
+            Self::TRIANGLE_STRIP_WITH_ADJACENCY => Some("TRIANGLE_STRIP_WITH_ADJACENCY"),
+            Self::PATCH_LIST => Some("PATCH_LIST"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for DescriptorSetLayoutCreateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                DescriptorSetLayoutCreateFlags::PUSH_DESCRIPTOR_KHR.0,
+                "PUSH_DESCRIPTOR_KHR",
+            ),
+            (
+                DescriptorSetLayoutCreateFlags::UPDATE_AFTER_BIND_POOL_EXT.0,
+                "UPDATE_AFTER_BIND_POOL_EXT",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for BorderColor {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::FLOAT_TRANSPARENT_BLACK => Some("FLOAT_TRANSPARENT_BLACK"),
+            Self::INT_TRANSPARENT_BLACK => Some("INT_TRANSPARENT_BLACK"),
+            Self::FLOAT_OPAQUE_BLACK => Some("FLOAT_OPAQUE_BLACK"),
+            Self::INT_OPAQUE_BLACK => Some("INT_OPAQUE_BLACK"),
+            Self::FLOAT_OPAQUE_WHITE => Some("FLOAT_OPAQUE_WHITE"),
+            Self::INT_OPAQUE_WHITE => Some("INT_OPAQUE_WHITE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for SampleCountFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (SampleCountFlags::TYPE_1.0, "TYPE_1"),
+            (SampleCountFlags::TYPE_2.0, "TYPE_2"),
+            (SampleCountFlags::TYPE_4.0, "TYPE_4"),
+            (SampleCountFlags::TYPE_8.0, "TYPE_8"),
+            (SampleCountFlags::TYPE_16.0, "TYPE_16"),
+            (SampleCountFlags::TYPE_32.0, "TYPE_32"),
+            (SampleCountFlags::TYPE_64.0, "TYPE_64"),
         ];
         display_flags(f, KNOWN, self.0)
     }
@@ -50718,134 +54007,96 @@ impl fmt::Display for ImageLayout {
         }
     }
 }
-impl fmt::Display for PolygonMode {
+impl fmt::Display for RenderPassCreateFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::FILL => Some("FILL"),
-            Self::LINE => Some("LINE"),
-            Self::POINT => Some("POINT"),
-            Self::FILL_RECTANGLE_NV => Some("FILL_RECTANGLE_NV"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for AccelerationStructureMemoryRequirementsTypeNV {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::OBJECT => Some("OBJECT"),
-            Self::BUILD_SCRATCH => Some("BUILD_SCRATCH"),
-            Self::UPDATE_SCRATCH => Some("UPDATE_SCRATCH"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for TimeDomainEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::DEVICE => Some("DEVICE"),
-            Self::CLOCK_MONOTONIC => Some("CLOCK_MONOTONIC"),
-            Self::CLOCK_MONOTONIC_RAW => Some("CLOCK_MONOTONIC_RAW"),
-            Self::QUERY_PERFORMANCE_COUNTER => Some("QUERY_PERFORMANCE_COUNTER"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for FenceCreateFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(FenceCreateFlags::SIGNALED.0, "SIGNALED")];
+        const KNOWN: &[(Flags, &str)] =
+            &[(RenderPassCreateFlags::RESERVED_0_KHR.0, "RESERVED_0_KHR")];
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for ExternalMemoryFeatureFlags {
+impl fmt::Display for ShadingRatePaletteEntryNV {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::NO_INVOCATIONS => Some("NO_INVOCATIONS"),
+            Self::TYPE_16_INVOCATIONS_PER_PIXEL => Some("TYPE_16_INVOCATIONS_PER_PIXEL"),
+            Self::TYPE_8_INVOCATIONS_PER_PIXEL => Some("TYPE_8_INVOCATIONS_PER_PIXEL"),
+            Self::TYPE_4_INVOCATIONS_PER_PIXEL => Some("TYPE_4_INVOCATIONS_PER_PIXEL"),
+            Self::TYPE_2_INVOCATIONS_PER_PIXEL => Some("TYPE_2_INVOCATIONS_PER_PIXEL"),
+            Self::TYPE_1_INVOCATION_PER_PIXEL => Some("TYPE_1_INVOCATION_PER_PIXEL"),
+            Self::TYPE_1_INVOCATION_PER_2X1_PIXELS => Some("TYPE_1_INVOCATION_PER_2X1_PIXELS"),
+            Self::TYPE_1_INVOCATION_PER_1X2_PIXELS => Some("TYPE_1_INVOCATION_PER_1X2_PIXELS"),
+            Self::TYPE_1_INVOCATION_PER_2X2_PIXELS => Some("TYPE_1_INVOCATION_PER_2X2_PIXELS"),
+            Self::TYPE_1_INVOCATION_PER_4X2_PIXELS => Some("TYPE_1_INVOCATION_PER_4X2_PIXELS"),
+            Self::TYPE_1_INVOCATION_PER_2X4_PIXELS => Some("TYPE_1_INVOCATION_PER_2X4_PIXELS"),
+            Self::TYPE_1_INVOCATION_PER_4X4_PIXELS => Some("TYPE_1_INVOCATION_PER_4X4_PIXELS"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for AttachmentDescriptionFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(AttachmentDescriptionFlags::MAY_ALIAS.0, "MAY_ALIAS")];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for CopyAccelerationStructureModeNV {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::CLONE => Some("CLONE"),
+            Self::COMPACT => Some("COMPACT"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for GeometryTypeNV {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::TRIANGLES => Some("TRIANGLES"),
+            Self::AABBS => Some("AABBS"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for ExternalSemaphoreHandleTypeFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (
-                ExternalMemoryFeatureFlags::EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY.0,
-                "EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY",
+                ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD.0,
+                "EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD",
             ),
             (
-                ExternalMemoryFeatureFlags::EXTERNAL_MEMORY_FEATURE_EXPORTABLE.0,
-                "EXTERNAL_MEMORY_FEATURE_EXPORTABLE",
+                ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32.0,
+                "EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32",
             ),
             (
-                ExternalMemoryFeatureFlags::EXTERNAL_MEMORY_FEATURE_IMPORTABLE.0,
-                "EXTERNAL_MEMORY_FEATURE_IMPORTABLE",
+                ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT.0,
+                "EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT",
+            ),
+            (
+                ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE.0,
+                "EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE",
+            ),
+            (
+                ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD.0,
+                "EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD",
             ),
         ];
         display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for LogicOp {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::CLEAR => Some("CLEAR"),
-            Self::AND => Some("AND"),
-            Self::AND_REVERSE => Some("AND_REVERSE"),
-            Self::COPY => Some("COPY"),
-            Self::AND_INVERTED => Some("AND_INVERTED"),
-            Self::NO_OP => Some("NO_OP"),
-            Self::XOR => Some("XOR"),
-            Self::OR => Some("OR"),
-            Self::NOR => Some("NOR"),
-            Self::EQUIVALENT => Some("EQUIVALENT"),
-            Self::INVERT => Some("INVERT"),
-            Self::OR_REVERSE => Some("OR_REVERSE"),
-            Self::COPY_INVERTED => Some("COPY_INVERTED"),
-            Self::OR_INVERTED => Some("OR_INVERTED"),
-            Self::NAND => Some("NAND"),
-            Self::SET => Some("SET"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ObjectEntryUsageFlagsNVX {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (ObjectEntryUsageFlagsNVX::GRAPHICS.0, "GRAPHICS"),
-            (ObjectEntryUsageFlagsNVX::COMPUTE.0, "COMPUTE"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for DeviceQueueCreateFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(DeviceQueueCreateFlags::PROTECTED.0, "PROTECTED")];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for SamplerReductionModeEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::WEIGHTED_AVERAGE => Some("WEIGHTED_AVERAGE"),
-            Self::MIN => Some("MIN"),
-            Self::MAX => Some("MAX"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
     }
 }
 impl fmt::Display for CommandBufferLevel {
@@ -50862,76 +54113,388 @@ impl fmt::Display for CommandBufferLevel {
         }
     }
 }
-impl fmt::Display for PipelineCreateFlags {
+impl fmt::Display for ImageType {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::TYPE_1D => Some("TYPE_1D"),
+            Self::TYPE_2D => Some("TYPE_2D"),
+            Self::TYPE_3D => Some("TYPE_3D"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for SubgroupFeatureFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
-            (
-                PipelineCreateFlags::DISABLE_OPTIMIZATION.0,
-                "DISABLE_OPTIMIZATION",
-            ),
-            (
-                PipelineCreateFlags::ALLOW_DERIVATIVES.0,
-                "ALLOW_DERIVATIVES",
-            ),
-            (PipelineCreateFlags::DERIVATIVE.0, "DERIVATIVE"),
-            (PipelineCreateFlags::DEFER_COMPILE_NV.0, "DEFER_COMPILE_NV"),
-            (
-                PipelineCreateFlags::VIEW_INDEX_FROM_DEVICE_INDEX.0,
-                "VIEW_INDEX_FROM_DEVICE_INDEX",
-            ),
-            (PipelineCreateFlags::DISPATCH_BASE.0, "DISPATCH_BASE"),
+            (SubgroupFeatureFlags::BASIC.0, "BASIC"),
+            (SubgroupFeatureFlags::VOTE.0, "VOTE"),
+            (SubgroupFeatureFlags::ARITHMETIC.0, "ARITHMETIC"),
+            (SubgroupFeatureFlags::BALLOT.0, "BALLOT"),
+            (SubgroupFeatureFlags::SHUFFLE.0, "SHUFFLE"),
+            (SubgroupFeatureFlags::SHUFFLE_RELATIVE.0, "SHUFFLE_RELATIVE"),
+            (SubgroupFeatureFlags::CLUSTERED.0, "CLUSTERED"),
+            (SubgroupFeatureFlags::QUAD.0, "QUAD"),
+            (SubgroupFeatureFlags::PARTITIONED_NV.0, "PARTITIONED_NV"),
         ];
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for AccelerationStructureTypeNV {
+impl fmt::Display for QueryPipelineStatisticFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::TOP_LEVEL => Some("TOP_LEVEL"),
-            Self::BOTTOM_LEVEL => Some("BOTTOM_LEVEL"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for PrimitiveTopology {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::POINT_LIST => Some("POINT_LIST"),
-            Self::LINE_LIST => Some("LINE_LIST"),
-            Self::LINE_STRIP => Some("LINE_STRIP"),
-            Self::TRIANGLE_LIST => Some("TRIANGLE_LIST"),
-            Self::TRIANGLE_STRIP => Some("TRIANGLE_STRIP"),
-            Self::TRIANGLE_FAN => Some("TRIANGLE_FAN"),
-            Self::LINE_LIST_WITH_ADJACENCY => Some("LINE_LIST_WITH_ADJACENCY"),
-            Self::LINE_STRIP_WITH_ADJACENCY => Some("LINE_STRIP_WITH_ADJACENCY"),
-            Self::TRIANGLE_LIST_WITH_ADJACENCY => Some("TRIANGLE_LIST_WITH_ADJACENCY"),
-            Self::TRIANGLE_STRIP_WITH_ADJACENCY => Some("TRIANGLE_STRIP_WITH_ADJACENCY"),
-            Self::PATCH_LIST => Some("PATCH_LIST"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for FenceImportFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(FenceImportFlags::TEMPORARY.0, "TEMPORARY")];
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                QueryPipelineStatisticFlags::INPUT_ASSEMBLY_VERTICES.0,
+                "INPUT_ASSEMBLY_VERTICES",
+            ),
+            (
+                QueryPipelineStatisticFlags::INPUT_ASSEMBLY_PRIMITIVES.0,
+                "INPUT_ASSEMBLY_PRIMITIVES",
+            ),
+            (
+                QueryPipelineStatisticFlags::VERTEX_SHADER_INVOCATIONS.0,
+                "VERTEX_SHADER_INVOCATIONS",
+            ),
+            (
+                QueryPipelineStatisticFlags::GEOMETRY_SHADER_INVOCATIONS.0,
+                "GEOMETRY_SHADER_INVOCATIONS",
+            ),
+            (
+                QueryPipelineStatisticFlags::GEOMETRY_SHADER_PRIMITIVES.0,
+                "GEOMETRY_SHADER_PRIMITIVES",
+            ),
+            (
+                QueryPipelineStatisticFlags::CLIPPING_INVOCATIONS.0,
+                "CLIPPING_INVOCATIONS",
+            ),
+            (
+                QueryPipelineStatisticFlags::CLIPPING_PRIMITIVES.0,
+                "CLIPPING_PRIMITIVES",
+            ),
+            (
+                QueryPipelineStatisticFlags::FRAGMENT_SHADER_INVOCATIONS.0,
+                "FRAGMENT_SHADER_INVOCATIONS",
+            ),
+            (
+                QueryPipelineStatisticFlags::TESSELLATION_CONTROL_SHADER_PATCHES.0,
+                "TESSELLATION_CONTROL_SHADER_PATCHES",
+            ),
+            (
+                QueryPipelineStatisticFlags::TESSELLATION_EVALUATION_SHADER_INVOCATIONS.0,
+                "TESSELLATION_EVALUATION_SHADER_INVOCATIONS",
+            ),
+            (
+                QueryPipelineStatisticFlags::COMPUTE_SHADER_INVOCATIONS.0,
+                "COMPUTE_SHADER_INVOCATIONS",
+            ),
+        ];
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for SharingMode {
+impl fmt::Display for SemaphoreImportFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(SemaphoreImportFlags::TEMPORARY.0, "TEMPORARY")];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for ConservativeRasterizationModeEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
+            Self::DISABLED => Some("DISABLED"),
+            Self::OVERESTIMATE => Some("OVERESTIMATE"),
+            Self::UNDERESTIMATE => Some("UNDERESTIMATE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for RayTracingShaderGroupTypeNV {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::GENERAL => Some("GENERAL"),
+            Self::TRIANGLES_HIT_GROUP => Some("TRIANGLES_HIT_GROUP"),
+            Self::PROCEDURAL_HIT_GROUP => Some("PROCEDURAL_HIT_GROUP"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for ExternalSemaphoreFeatureFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                ExternalSemaphoreFeatureFlags::EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE.0,
+                "EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE",
+            ),
+            (
+                ExternalSemaphoreFeatureFlags::EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE.0,
+                "EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for StencilOp {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::KEEP => Some("KEEP"),
+            Self::ZERO => Some("ZERO"),
+            Self::REPLACE => Some("REPLACE"),
+            Self::INCREMENT_AND_CLAMP => Some("INCREMENT_AND_CLAMP"),
+            Self::DECREMENT_AND_CLAMP => Some("DECREMENT_AND_CLAMP"),
+            Self::INVERT => Some("INVERT"),
+            Self::INCREMENT_AND_WRAP => Some("INCREMENT_AND_WRAP"),
+            Self::DECREMENT_AND_WRAP => Some("DECREMENT_AND_WRAP"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for DisplayPowerStateEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::OFF => Some("OFF"),
+            Self::SUSPEND => Some("SUSPEND"),
+            Self::ON => Some("ON"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for QueryResultFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (QueryResultFlags::TYPE_64.0, "TYPE_64"),
+            (QueryResultFlags::WAIT.0, "WAIT"),
+            (QueryResultFlags::WITH_AVAILABILITY.0, "WITH_AVAILABILITY"),
+            (QueryResultFlags::PARTIAL.0, "PARTIAL"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for GeometryFlagsNV {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (GeometryFlagsNV::OPAQUE.0, "OPAQUE"),
+            (
+                GeometryFlagsNV::NO_DUPLICATE_ANY_HIT_INVOCATION.0,
+                "NO_DUPLICATE_ANY_HIT_INVOCATION",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for IndirectCommandsTokenTypeNVX {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::PIPELINE => Some("PIPELINE"),
+            Self::DESCRIPTOR_SET => Some("DESCRIPTOR_SET"),
+            Self::INDEX_BUFFER => Some("INDEX_BUFFER"),
+            Self::VERTEX_BUFFER => Some("VERTEX_BUFFER"),
+            Self::PUSH_CONSTANT => Some("PUSH_CONSTANT"),
+            Self::DRAW_INDEXED => Some("DRAW_INDEXED"),
+            Self::DRAW => Some("DRAW"),
+            Self::DISPATCH => Some("DISPATCH"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for ExternalFenceFeatureFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                ExternalFenceFeatureFlags::EXTERNAL_FENCE_FEATURE_EXPORTABLE.0,
+                "EXTERNAL_FENCE_FEATURE_EXPORTABLE",
+            ),
+            (
+                ExternalFenceFeatureFlags::EXTERNAL_FENCE_FEATURE_IMPORTABLE.0,
+                "EXTERNAL_FENCE_FEATURE_IMPORTABLE",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for SystemAllocationScope {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::COMMAND => Some("COMMAND"),
+            Self::OBJECT => Some("OBJECT"),
+            Self::CACHE => Some("CACHE"),
+            Self::DEVICE => Some("DEVICE"),
+            Self::INSTANCE => Some("INSTANCE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for CommandPoolResetFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(
+            CommandPoolResetFlags::RELEASE_RESOURCES.0,
+            "RELEASE_RESOURCES",
+        )];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for GeometryInstanceFlagsNV {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                GeometryInstanceFlagsNV::TRIANGLE_CULL_DISABLE.0,
+                "TRIANGLE_CULL_DISABLE",
+            ),
+            (
+                GeometryInstanceFlagsNV::TRIANGLE_FRONT_COUNTERCLOCKWISE.0,
+                "TRIANGLE_FRONT_COUNTERCLOCKWISE",
+            ),
+            (GeometryInstanceFlagsNV::FORCE_OPAQUE.0, "FORCE_OPAQUE"),
+            (
+                GeometryInstanceFlagsNV::FORCE_NO_OPAQUE.0,
+                "FORCE_NO_OPAQUE",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for PolygonMode {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::FILL => Some("FILL"),
+            Self::LINE => Some("LINE"),
+            Self::POINT => Some("POINT"),
+            Self::FILL_RECTANGLE_NV => Some("FILL_RECTANGLE_NV"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for PeerMemoryFeatureFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (PeerMemoryFeatureFlags::COPY_SRC.0, "COPY_SRC"),
+            (PeerMemoryFeatureFlags::COPY_DST.0, "COPY_DST"),
+            (PeerMemoryFeatureFlags::GENERIC_SRC.0, "GENERIC_SRC"),
+            (PeerMemoryFeatureFlags::GENERIC_DST.0, "GENERIC_DST"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for DeviceGroupPresentModeFlagsKHR {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (DeviceGroupPresentModeFlagsKHR::LOCAL.0, "LOCAL"),
+            (DeviceGroupPresentModeFlagsKHR::REMOTE.0, "REMOTE"),
+            (DeviceGroupPresentModeFlagsKHR::SUM.0, "SUM"),
+            (
+                DeviceGroupPresentModeFlagsKHR::LOCAL_MULTI_DEVICE.0,
+                "LOCAL_MULTI_DEVICE",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for Filter {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::NEAREST => Some("NEAREST"),
+            Self::LINEAR => Some("LINEAR"),
+            Self::CUBIC_IMG => Some("CUBIC_IMG"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for DebugReportObjectTypeEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::UNKNOWN => Some("UNKNOWN"),
+            Self::INSTANCE => Some("INSTANCE"),
+            Self::PHYSICAL_DEVICE => Some("PHYSICAL_DEVICE"),
+            Self::DEVICE => Some("DEVICE"),
+            Self::QUEUE => Some("QUEUE"),
+            Self::SEMAPHORE => Some("SEMAPHORE"),
+            Self::COMMAND_BUFFER => Some("COMMAND_BUFFER"),
+            Self::FENCE => Some("FENCE"),
+            Self::DEVICE_MEMORY => Some("DEVICE_MEMORY"),
+            Self::BUFFER => Some("BUFFER"),
+            Self::IMAGE => Some("IMAGE"),
+            Self::EVENT => Some("EVENT"),
+            Self::QUERY_POOL => Some("QUERY_POOL"),
+            Self::BUFFER_VIEW => Some("BUFFER_VIEW"),
+            Self::IMAGE_VIEW => Some("IMAGE_VIEW"),
+            Self::SHADER_MODULE => Some("SHADER_MODULE"),
+            Self::PIPELINE_CACHE => Some("PIPELINE_CACHE"),
+            Self::PIPELINE_LAYOUT => Some("PIPELINE_LAYOUT"),
+            Self::RENDER_PASS => Some("RENDER_PASS"),
+            Self::PIPELINE => Some("PIPELINE"),
+            Self::DESCRIPTOR_SET_LAYOUT => Some("DESCRIPTOR_SET_LAYOUT"),
+            Self::SAMPLER => Some("SAMPLER"),
+            Self::DESCRIPTOR_POOL => Some("DESCRIPTOR_POOL"),
+            Self::DESCRIPTOR_SET => Some("DESCRIPTOR_SET"),
+            Self::FRAMEBUFFER => Some("FRAMEBUFFER"),
+            Self::COMMAND_POOL => Some("COMMAND_POOL"),
+            Self::SURFACE_KHR => Some("SURFACE_KHR"),
+            Self::SWAPCHAIN_KHR => Some("SWAPCHAIN_KHR"),
+            Self::DEBUG_REPORT_CALLBACK => Some("DEBUG_REPORT_CALLBACK"),
+            Self::DISPLAY_KHR => Some("DISPLAY_KHR"),
+            Self::DISPLAY_MODE_KHR => Some("DISPLAY_MODE_KHR"),
+            Self::OBJECT_TABLE_NVX => Some("OBJECT_TABLE_NVX"),
+            Self::INDIRECT_COMMANDS_LAYOUT_NVX => Some("INDIRECT_COMMANDS_LAYOUT_NVX"),
+            Self::VALIDATION_CACHE => Some("VALIDATION_CACHE"),
+            Self::SAMPLER_YCBCR_CONVERSION => Some("SAMPLER_YCBCR_CONVERSION"),
+            Self::DESCRIPTOR_UPDATE_TEMPLATE => Some("DESCRIPTOR_UPDATE_TEMPLATE"),
+            Self::ACCELERATION_STRUCTURE_NV => Some("ACCELERATION_STRUCTURE_NV"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for DiscardRectangleModeEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::INCLUSIVE => Some("INCLUSIVE"),
             Self::EXCLUSIVE => Some("EXCLUSIVE"),
-            Self::CONCURRENT => Some("CONCURRENT"),
             _ => None,
         };
         if let Some(x) = name {
@@ -50941,108 +54504,38 @@ impl fmt::Display for SharingMode {
         }
     }
 }
-impl fmt::Display for PipelineStageFlags {
+impl fmt::Display for ImageCreateFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
-            (PipelineStageFlags::TOP_OF_PIPE.0, "TOP_OF_PIPE"),
-            (PipelineStageFlags::DRAW_INDIRECT.0, "DRAW_INDIRECT"),
-            (PipelineStageFlags::VERTEX_INPUT.0, "VERTEX_INPUT"),
-            (PipelineStageFlags::VERTEX_SHADER.0, "VERTEX_SHADER"),
+            (ImageCreateFlags::SPARSE_BINDING.0, "SPARSE_BINDING"),
+            (ImageCreateFlags::SPARSE_RESIDENCY.0, "SPARSE_RESIDENCY"),
+            (ImageCreateFlags::SPARSE_ALIASED.0, "SPARSE_ALIASED"),
+            (ImageCreateFlags::MUTABLE_FORMAT.0, "MUTABLE_FORMAT"),
+            (ImageCreateFlags::CUBE_COMPATIBLE.0, "CUBE_COMPATIBLE"),
+            (ImageCreateFlags::CORNER_SAMPLED_NV.0, "CORNER_SAMPLED_NV"),
             (
-                PipelineStageFlags::TESSELLATION_CONTROL_SHADER.0,
-                "TESSELLATION_CONTROL_SHADER",
+                ImageCreateFlags::SAMPLE_LOCATIONS_COMPATIBLE_DEPTH_EXT.0,
+                "SAMPLE_LOCATIONS_COMPATIBLE_DEPTH_EXT",
+            ),
+            (ImageCreateFlags::RESERVED_14_EXT.0, "RESERVED_14_EXT"),
+            (ImageCreateFlags::ALIAS.0, "ALIAS"),
+            (
+                ImageCreateFlags::SPLIT_INSTANCE_BIND_REGIONS.0,
+                "SPLIT_INSTANCE_BIND_REGIONS",
             ),
             (
-                PipelineStageFlags::TESSELLATION_EVALUATION_SHADER.0,
-                "TESSELLATION_EVALUATION_SHADER",
-            ),
-            (PipelineStageFlags::GEOMETRY_SHADER.0, "GEOMETRY_SHADER"),
-            (PipelineStageFlags::FRAGMENT_SHADER.0, "FRAGMENT_SHADER"),
-            (
-                PipelineStageFlags::EARLY_FRAGMENT_TESTS.0,
-                "EARLY_FRAGMENT_TESTS",
+                ImageCreateFlags::TYPE_2D_ARRAY_COMPATIBLE.0,
+                "TYPE_2D_ARRAY_COMPATIBLE",
             ),
             (
-                PipelineStageFlags::LATE_FRAGMENT_TESTS.0,
-                "LATE_FRAGMENT_TESTS",
+                ImageCreateFlags::BLOCK_TEXEL_VIEW_COMPATIBLE.0,
+                "BLOCK_TEXEL_VIEW_COMPATIBLE",
             ),
-            (
-                PipelineStageFlags::COLOR_ATTACHMENT_OUTPUT.0,
-                "COLOR_ATTACHMENT_OUTPUT",
-            ),
-            (PipelineStageFlags::COMPUTE_SHADER.0, "COMPUTE_SHADER"),
-            (PipelineStageFlags::TRANSFER.0, "TRANSFER"),
-            (PipelineStageFlags::BOTTOM_OF_PIPE.0, "BOTTOM_OF_PIPE"),
-            (PipelineStageFlags::HOST.0, "HOST"),
-            (PipelineStageFlags::ALL_GRAPHICS.0, "ALL_GRAPHICS"),
-            (PipelineStageFlags::ALL_COMMANDS.0, "ALL_COMMANDS"),
-            (
-                PipelineStageFlags::TRANSFORM_FEEDBACK_EXT.0,
-                "TRANSFORM_FEEDBACK_EXT",
-            ),
-            (
-                PipelineStageFlags::CONDITIONAL_RENDERING_EXT.0,
-                "CONDITIONAL_RENDERING_EXT",
-            ),
-            (
-                PipelineStageFlags::COMMAND_PROCESS_NVX.0,
-                "COMMAND_PROCESS_NVX",
-            ),
-            (
-                PipelineStageFlags::SHADING_RATE_IMAGE_NV.0,
-                "SHADING_RATE_IMAGE_NV",
-            ),
-            (
-                PipelineStageFlags::RAY_TRACING_SHADER_NV.0,
-                "RAY_TRACING_SHADER_NV",
-            ),
-            (
-                PipelineStageFlags::ACCELERATION_STRUCTURE_BUILD_NV.0,
-                "ACCELERATION_STRUCTURE_BUILD_NV",
-            ),
-            (PipelineStageFlags::TASK_SHADER_NV.0, "TASK_SHADER_NV"),
-            (PipelineStageFlags::MESH_SHADER_NV.0, "MESH_SHADER_NV"),
-            (PipelineStageFlags::RESERVED_23_EXT.0, "RESERVED_23_EXT"),
+            (ImageCreateFlags::EXTENDED_USAGE.0, "EXTENDED_USAGE"),
+            (ImageCreateFlags::PROTECTED.0, "PROTECTED"),
+            (ImageCreateFlags::DISJOINT.0, "DISJOINT"),
         ];
         display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for DebugUtilsMessageTypeFlagsEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (DebugUtilsMessageTypeFlagsEXT::GENERAL.0, "GENERAL"),
-            (DebugUtilsMessageTypeFlagsEXT::VALIDATION.0, "VALIDATION"),
-            (DebugUtilsMessageTypeFlagsEXT::PERFORMANCE.0, "PERFORMANCE"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for SubpassContents {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::INLINE => Some("INLINE"),
-            Self::SECONDARY_COMMAND_BUFFERS => Some("SECONDARY_COMMAND_BUFFERS"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ChromaLocation {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::COSITED_EVEN => Some("COSITED_EVEN"),
-            Self::MIDPOINT => Some("MIDPOINT"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
     }
 }
 impl fmt::Display for Format {
@@ -51312,625 +54805,19 @@ impl fmt::Display for Format {
         }
     }
 }
-impl fmt::Display for MemoryHeapFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (MemoryHeapFlags::DEVICE_LOCAL.0, "DEVICE_LOCAL"),
-            (MemoryHeapFlags::MULTI_INSTANCE.0, "MULTI_INSTANCE"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for IndirectCommandsTokenTypeNVX {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::PIPELINE => Some("PIPELINE"),
-            Self::DESCRIPTOR_SET => Some("DESCRIPTOR_SET"),
-            Self::INDEX_BUFFER => Some("INDEX_BUFFER"),
-            Self::VERTEX_BUFFER => Some("VERTEX_BUFFER"),
-            Self::PUSH_CONSTANT => Some("PUSH_CONSTANT"),
-            Self::DRAW_INDEXED => Some("DRAW_INDEXED"),
-            Self::DRAW => Some("DRAW"),
-            Self::DISPATCH => Some("DISPATCH"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ExternalSemaphoreFeatureFlags {
+impl fmt::Display for DescriptorPoolCreateFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (
-                ExternalSemaphoreFeatureFlags::EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE.0,
-                "EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE",
+                DescriptorPoolCreateFlags::FREE_DESCRIPTOR_SET.0,
+                "FREE_DESCRIPTOR_SET",
             ),
             (
-                ExternalSemaphoreFeatureFlags::EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE.0,
-                "EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE",
+                DescriptorPoolCreateFlags::UPDATE_AFTER_BIND_EXT.0,
+                "UPDATE_AFTER_BIND_EXT",
             ),
         ];
         display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for DebugUtilsMessageSeverityFlagsEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (DebugUtilsMessageSeverityFlagsEXT::VERBOSE.0, "VERBOSE"),
-            (DebugUtilsMessageSeverityFlagsEXT::INFO.0, "INFO"),
-            (DebugUtilsMessageSeverityFlagsEXT::WARNING.0, "WARNING"),
-            (DebugUtilsMessageSeverityFlagsEXT::ERROR.0, "ERROR"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for ConditionalRenderingFlagsEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(ConditionalRenderingFlagsEXT::INVERTED.0, "INVERTED")];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for SparseImageFormatFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (SparseImageFormatFlags::SINGLE_MIPTAIL.0, "SINGLE_MIPTAIL"),
-            (
-                SparseImageFormatFlags::ALIGNED_MIP_SIZE.0,
-                "ALIGNED_MIP_SIZE",
-            ),
-            (
-                SparseImageFormatFlags::NONSTANDARD_BLOCK_SIZE.0,
-                "NONSTANDARD_BLOCK_SIZE",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for CullModeFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (CullModeFlags::NONE.0, "NONE"),
-            (CullModeFlags::FRONT.0, "FRONT"),
-            (CullModeFlags::BACK.0, "BACK"),
-            (CullModeFlags::FRONT_AND_BACK.0, "FRONT_AND_BACK"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for ComponentSwizzle {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::IDENTITY => Some("IDENTITY"),
-            Self::ZERO => Some("ZERO"),
-            Self::ONE => Some("ONE"),
-            Self::R => Some("R"),
-            Self::G => Some("G"),
-            Self::B => Some("B"),
-            Self::A => Some("A"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for BlendOp {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::ADD => Some("ADD"),
-            Self::SUBTRACT => Some("SUBTRACT"),
-            Self::REVERSE_SUBTRACT => Some("REVERSE_SUBTRACT"),
-            Self::MIN => Some("MIN"),
-            Self::MAX => Some("MAX"),
-            Self::ZERO_EXT => Some("ZERO_EXT"),
-            Self::SRC_EXT => Some("SRC_EXT"),
-            Self::DST_EXT => Some("DST_EXT"),
-            Self::SRC_OVER_EXT => Some("SRC_OVER_EXT"),
-            Self::DST_OVER_EXT => Some("DST_OVER_EXT"),
-            Self::SRC_IN_EXT => Some("SRC_IN_EXT"),
-            Self::DST_IN_EXT => Some("DST_IN_EXT"),
-            Self::SRC_OUT_EXT => Some("SRC_OUT_EXT"),
-            Self::DST_OUT_EXT => Some("DST_OUT_EXT"),
-            Self::SRC_ATOP_EXT => Some("SRC_ATOP_EXT"),
-            Self::DST_ATOP_EXT => Some("DST_ATOP_EXT"),
-            Self::XOR_EXT => Some("XOR_EXT"),
-            Self::MULTIPLY_EXT => Some("MULTIPLY_EXT"),
-            Self::SCREEN_EXT => Some("SCREEN_EXT"),
-            Self::OVERLAY_EXT => Some("OVERLAY_EXT"),
-            Self::DARKEN_EXT => Some("DARKEN_EXT"),
-            Self::LIGHTEN_EXT => Some("LIGHTEN_EXT"),
-            Self::COLORDODGE_EXT => Some("COLORDODGE_EXT"),
-            Self::COLORBURN_EXT => Some("COLORBURN_EXT"),
-            Self::HARDLIGHT_EXT => Some("HARDLIGHT_EXT"),
-            Self::SOFTLIGHT_EXT => Some("SOFTLIGHT_EXT"),
-            Self::DIFFERENCE_EXT => Some("DIFFERENCE_EXT"),
-            Self::EXCLUSION_EXT => Some("EXCLUSION_EXT"),
-            Self::INVERT_EXT => Some("INVERT_EXT"),
-            Self::INVERT_RGB_EXT => Some("INVERT_RGB_EXT"),
-            Self::LINEARDODGE_EXT => Some("LINEARDODGE_EXT"),
-            Self::LINEARBURN_EXT => Some("LINEARBURN_EXT"),
-            Self::VIVIDLIGHT_EXT => Some("VIVIDLIGHT_EXT"),
-            Self::LINEARLIGHT_EXT => Some("LINEARLIGHT_EXT"),
-            Self::PINLIGHT_EXT => Some("PINLIGHT_EXT"),
-            Self::HARDMIX_EXT => Some("HARDMIX_EXT"),
-            Self::HSL_HUE_EXT => Some("HSL_HUE_EXT"),
-            Self::HSL_SATURATION_EXT => Some("HSL_SATURATION_EXT"),
-            Self::HSL_COLOR_EXT => Some("HSL_COLOR_EXT"),
-            Self::HSL_LUMINOSITY_EXT => Some("HSL_LUMINOSITY_EXT"),
-            Self::PLUS_EXT => Some("PLUS_EXT"),
-            Self::PLUS_CLAMPED_EXT => Some("PLUS_CLAMPED_EXT"),
-            Self::PLUS_CLAMPED_ALPHA_EXT => Some("PLUS_CLAMPED_ALPHA_EXT"),
-            Self::PLUS_DARKER_EXT => Some("PLUS_DARKER_EXT"),
-            Self::MINUS_EXT => Some("MINUS_EXT"),
-            Self::MINUS_CLAMPED_EXT => Some("MINUS_CLAMPED_EXT"),
-            Self::CONTRAST_EXT => Some("CONTRAST_EXT"),
-            Self::INVERT_OVG_EXT => Some("INVERT_OVG_EXT"),
-            Self::RED_EXT => Some("RED_EXT"),
-            Self::GREEN_EXT => Some("GREEN_EXT"),
-            Self::BLUE_EXT => Some("BLUE_EXT"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ExternalFenceHandleTypeFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD.0,
-                "EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD",
-            ),
-            (
-                ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32.0,
-                "EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32",
-            ),
-            (
-                ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT.0,
-                "EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT",
-            ),
-            (
-                ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD.0,
-                "EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for Filter {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::NEAREST => Some("NEAREST"),
-            Self::LINEAR => Some("LINEAR"),
-            Self::CUBIC_IMG => Some("CUBIC_IMG"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for DependencyFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (DependencyFlags::BY_REGION.0, "BY_REGION"),
-            (DependencyFlags::DEVICE_GROUP.0, "DEVICE_GROUP"),
-            (DependencyFlags::VIEW_LOCAL.0, "VIEW_LOCAL"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for CopyAccelerationStructureModeNV {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::CLONE => Some("CLONE"),
-            Self::COMPACT => Some("COMPACT"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for AttachmentDescriptionFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(AttachmentDescriptionFlags::MAY_ALIAS.0, "MAY_ALIAS")];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for DebugReportObjectTypeEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::UNKNOWN => Some("UNKNOWN"),
-            Self::INSTANCE => Some("INSTANCE"),
-            Self::PHYSICAL_DEVICE => Some("PHYSICAL_DEVICE"),
-            Self::DEVICE => Some("DEVICE"),
-            Self::QUEUE => Some("QUEUE"),
-            Self::SEMAPHORE => Some("SEMAPHORE"),
-            Self::COMMAND_BUFFER => Some("COMMAND_BUFFER"),
-            Self::FENCE => Some("FENCE"),
-            Self::DEVICE_MEMORY => Some("DEVICE_MEMORY"),
-            Self::BUFFER => Some("BUFFER"),
-            Self::IMAGE => Some("IMAGE"),
-            Self::EVENT => Some("EVENT"),
-            Self::QUERY_POOL => Some("QUERY_POOL"),
-            Self::BUFFER_VIEW => Some("BUFFER_VIEW"),
-            Self::IMAGE_VIEW => Some("IMAGE_VIEW"),
-            Self::SHADER_MODULE => Some("SHADER_MODULE"),
-            Self::PIPELINE_CACHE => Some("PIPELINE_CACHE"),
-            Self::PIPELINE_LAYOUT => Some("PIPELINE_LAYOUT"),
-            Self::RENDER_PASS => Some("RENDER_PASS"),
-            Self::PIPELINE => Some("PIPELINE"),
-            Self::DESCRIPTOR_SET_LAYOUT => Some("DESCRIPTOR_SET_LAYOUT"),
-            Self::SAMPLER => Some("SAMPLER"),
-            Self::DESCRIPTOR_POOL => Some("DESCRIPTOR_POOL"),
-            Self::DESCRIPTOR_SET => Some("DESCRIPTOR_SET"),
-            Self::FRAMEBUFFER => Some("FRAMEBUFFER"),
-            Self::COMMAND_POOL => Some("COMMAND_POOL"),
-            Self::SURFACE_KHR => Some("SURFACE_KHR"),
-            Self::SWAPCHAIN_KHR => Some("SWAPCHAIN_KHR"),
-            Self::DEBUG_REPORT_CALLBACK => Some("DEBUG_REPORT_CALLBACK"),
-            Self::DISPLAY_KHR => Some("DISPLAY_KHR"),
-            Self::DISPLAY_MODE_KHR => Some("DISPLAY_MODE_KHR"),
-            Self::OBJECT_TABLE_NVX => Some("OBJECT_TABLE_NVX"),
-            Self::INDIRECT_COMMANDS_LAYOUT_NVX => Some("INDIRECT_COMMANDS_LAYOUT_NVX"),
-            Self::VALIDATION_CACHE => Some("VALIDATION_CACHE"),
-            Self::SAMPLER_YCBCR_CONVERSION => Some("SAMPLER_YCBCR_CONVERSION"),
-            Self::DESCRIPTOR_UPDATE_TEMPLATE => Some("DESCRIPTOR_UPDATE_TEMPLATE"),
-            Self::ACCELERATION_STRUCTURE_NV => Some("ACCELERATION_STRUCTURE_NV"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for DeviceEventTypeEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::DISPLAY_HOTPLUG => Some("DISPLAY_HOTPLUG"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for SystemAllocationScope {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::COMMAND => Some("COMMAND"),
-            Self::OBJECT => Some("OBJECT"),
-            Self::CACHE => Some("CACHE"),
-            Self::DEVICE => Some("DEVICE"),
-            Self::INSTANCE => Some("INSTANCE"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for QueryResultFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (QueryResultFlags::TYPE_64.0, "TYPE_64"),
-            (QueryResultFlags::WAIT.0, "WAIT"),
-            (QueryResultFlags::WITH_AVAILABILITY.0, "WITH_AVAILABILITY"),
-            (QueryResultFlags::PARTIAL.0, "PARTIAL"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for QueueGlobalPriorityEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::LOW => Some("LOW"),
-            Self::MEDIUM => Some("MEDIUM"),
-            Self::HIGH => Some("HIGH"),
-            Self::REALTIME => Some("REALTIME"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for TessellationDomainOrigin {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::UPPER_LEFT => Some("UPPER_LEFT"),
-            Self::LOWER_LEFT => Some("LOWER_LEFT"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for PipelineCacheHeaderVersion {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::ONE => Some("ONE"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ExternalMemoryHandleTypeFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN : & [ ( Flags , & str ) ] = & [ ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32 . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_ANDROID_HARDWARE_BUFFER_ANDROID . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_ANDROID_HARDWARE_BUFFER_ANDROID" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_HOST_ALLOCATION . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_HOST_ALLOCATION" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_HOST_MAPPED_FOREIGN_MEMORY . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_HOST_MAPPED_FOREIGN_MEMORY" ) ] ;
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for RenderPassCreateFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] =
-            &[(RenderPassCreateFlags::RESERVED_0_KHR.0, "RESERVED_0_KHR")];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for ColorComponentFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (ColorComponentFlags::R.0, "R"),
-            (ColorComponentFlags::G.0, "G"),
-            (ColorComponentFlags::B.0, "B"),
-            (ColorComponentFlags::A.0, "A"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for FormatFeatureFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN : & [ ( Flags , & str ) ] = & [ ( FormatFeatureFlags :: SAMPLED_IMAGE . 0 , "SAMPLED_IMAGE" ) , ( FormatFeatureFlags :: STORAGE_IMAGE . 0 , "STORAGE_IMAGE" ) , ( FormatFeatureFlags :: STORAGE_IMAGE_ATOMIC . 0 , "STORAGE_IMAGE_ATOMIC" ) , ( FormatFeatureFlags :: UNIFORM_TEXEL_BUFFER . 0 , "UNIFORM_TEXEL_BUFFER" ) , ( FormatFeatureFlags :: STORAGE_TEXEL_BUFFER . 0 , "STORAGE_TEXEL_BUFFER" ) , ( FormatFeatureFlags :: STORAGE_TEXEL_BUFFER_ATOMIC . 0 , "STORAGE_TEXEL_BUFFER_ATOMIC" ) , ( FormatFeatureFlags :: VERTEX_BUFFER . 0 , "VERTEX_BUFFER" ) , ( FormatFeatureFlags :: COLOR_ATTACHMENT . 0 , "COLOR_ATTACHMENT" ) , ( FormatFeatureFlags :: COLOR_ATTACHMENT_BLEND . 0 , "COLOR_ATTACHMENT_BLEND" ) , ( FormatFeatureFlags :: DEPTH_STENCIL_ATTACHMENT . 0 , "DEPTH_STENCIL_ATTACHMENT" ) , ( FormatFeatureFlags :: BLIT_SRC . 0 , "BLIT_SRC" ) , ( FormatFeatureFlags :: BLIT_DST . 0 , "BLIT_DST" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_FILTER_LINEAR . 0 , "SAMPLED_IMAGE_FILTER_LINEAR" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_FILTER_CUBIC_IMG . 0 , "SAMPLED_IMAGE_FILTER_CUBIC_IMG" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_FILTER_MINMAX_EXT . 0 , "SAMPLED_IMAGE_FILTER_MINMAX_EXT" ) , ( FormatFeatureFlags :: RESERVED_24_EXT . 0 , "RESERVED_24_EXT" ) , ( FormatFeatureFlags :: TRANSFER_SRC . 0 , "TRANSFER_SRC" ) , ( FormatFeatureFlags :: TRANSFER_DST . 0 , "TRANSFER_DST" ) , ( FormatFeatureFlags :: MIDPOINT_CHROMA_SAMPLES . 0 , "MIDPOINT_CHROMA_SAMPLES" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE" ) , ( FormatFeatureFlags :: DISJOINT . 0 , "DISJOINT" ) , ( FormatFeatureFlags :: COSITED_CHROMA_SAMPLES . 0 , "COSITED_CHROMA_SAMPLES" ) ] ;
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for DisplayPowerStateEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::OFF => Some("OFF"),
-            Self::SUSPEND => Some("SUSPEND"),
-            Self::ON => Some("ON"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for AccessFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                AccessFlags::INDIRECT_COMMAND_READ.0,
-                "INDIRECT_COMMAND_READ",
-            ),
-            (AccessFlags::INDEX_READ.0, "INDEX_READ"),
-            (
-                AccessFlags::VERTEX_ATTRIBUTE_READ.0,
-                "VERTEX_ATTRIBUTE_READ",
-            ),
-            (AccessFlags::UNIFORM_READ.0, "UNIFORM_READ"),
-            (
-                AccessFlags::INPUT_ATTACHMENT_READ.0,
-                "INPUT_ATTACHMENT_READ",
-            ),
-            (AccessFlags::SHADER_READ.0, "SHADER_READ"),
-            (AccessFlags::SHADER_WRITE.0, "SHADER_WRITE"),
-            (
-                AccessFlags::COLOR_ATTACHMENT_READ.0,
-                "COLOR_ATTACHMENT_READ",
-            ),
-            (
-                AccessFlags::COLOR_ATTACHMENT_WRITE.0,
-                "COLOR_ATTACHMENT_WRITE",
-            ),
-            (
-                AccessFlags::DEPTH_STENCIL_ATTACHMENT_READ.0,
-                "DEPTH_STENCIL_ATTACHMENT_READ",
-            ),
-            (
-                AccessFlags::DEPTH_STENCIL_ATTACHMENT_WRITE.0,
-                "DEPTH_STENCIL_ATTACHMENT_WRITE",
-            ),
-            (AccessFlags::TRANSFER_READ.0, "TRANSFER_READ"),
-            (AccessFlags::TRANSFER_WRITE.0, "TRANSFER_WRITE"),
-            (AccessFlags::HOST_READ.0, "HOST_READ"),
-            (AccessFlags::HOST_WRITE.0, "HOST_WRITE"),
-            (AccessFlags::MEMORY_READ.0, "MEMORY_READ"),
-            (AccessFlags::MEMORY_WRITE.0, "MEMORY_WRITE"),
-            (
-                AccessFlags::TRANSFORM_FEEDBACK_WRITE_EXT.0,
-                "TRANSFORM_FEEDBACK_WRITE_EXT",
-            ),
-            (
-                AccessFlags::TRANSFORM_FEEDBACK_COUNTER_READ_EXT.0,
-                "TRANSFORM_FEEDBACK_COUNTER_READ_EXT",
-            ),
-            (
-                AccessFlags::TRANSFORM_FEEDBACK_COUNTER_WRITE_EXT.0,
-                "TRANSFORM_FEEDBACK_COUNTER_WRITE_EXT",
-            ),
-            (
-                AccessFlags::CONDITIONAL_RENDERING_READ_EXT.0,
-                "CONDITIONAL_RENDERING_READ_EXT",
-            ),
-            (
-                AccessFlags::COMMAND_PROCESS_READ_NVX.0,
-                "COMMAND_PROCESS_READ_NVX",
-            ),
-            (
-                AccessFlags::COMMAND_PROCESS_WRITE_NVX.0,
-                "COMMAND_PROCESS_WRITE_NVX",
-            ),
-            (
-                AccessFlags::COLOR_ATTACHMENT_READ_NONCOHERENT_EXT.0,
-                "COLOR_ATTACHMENT_READ_NONCOHERENT_EXT",
-            ),
-            (
-                AccessFlags::SHADING_RATE_IMAGE_READ_NV.0,
-                "SHADING_RATE_IMAGE_READ_NV",
-            ),
-            (
-                AccessFlags::ACCELERATION_STRUCTURE_READ_NV.0,
-                "ACCELERATION_STRUCTURE_READ_NV",
-            ),
-            (
-                AccessFlags::ACCELERATION_STRUCTURE_WRITE_NV.0,
-                "ACCELERATION_STRUCTURE_WRITE_NV",
-            ),
-            (AccessFlags::RESERVED_24_EXT.0, "RESERVED_24_EXT"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for PhysicalDeviceType {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::OTHER => Some("OTHER"),
-            Self::INTEGRATED_GPU => Some("INTEGRATED_GPU"),
-            Self::DISCRETE_GPU => Some("DISCRETE_GPU"),
-            Self::VIRTUAL_GPU => Some("VIRTUAL_GPU"),
-            Self::CPU => Some("CPU"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for DebugReportFlagsEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (DebugReportFlagsEXT::INFORMATION.0, "INFORMATION"),
-            (DebugReportFlagsEXT::WARNING.0, "WARNING"),
-            (
-                DebugReportFlagsEXT::PERFORMANCE_WARNING.0,
-                "PERFORMANCE_WARNING",
-            ),
-            (DebugReportFlagsEXT::ERROR.0, "ERROR"),
-            (DebugReportFlagsEXT::DEBUG.0, "DEBUG"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for ExternalMemoryFeatureFlagsNV {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                ExternalMemoryFeatureFlagsNV::EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_NV.0,
-                "EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_NV",
-            ),
-            (
-                ExternalMemoryFeatureFlagsNV::EXTERNAL_MEMORY_FEATURE_EXPORTABLE_NV.0,
-                "EXTERNAL_MEMORY_FEATURE_EXPORTABLE_NV",
-            ),
-            (
-                ExternalMemoryFeatureFlagsNV::EXTERNAL_MEMORY_FEATURE_IMPORTABLE_NV.0,
-                "EXTERNAL_MEMORY_FEATURE_IMPORTABLE_NV",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for SamplerYcbcrRange {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::ITU_FULL => Some("ITU_FULL"),
-            Self::ITU_NARROW => Some("ITU_NARROW"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for PointClippingBehavior {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::ALL_CLIP_PLANES => Some("ALL_CLIP_PLANES"),
-            Self::USER_CLIP_PLANES_ONLY => Some("USER_CLIP_PLANES_ONLY"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for GeometryFlagsNV {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (GeometryFlagsNV::OPAQUE.0, "OPAQUE"),
-            (
-                GeometryFlagsNV::NO_DUPLICATE_ANY_HIT_INVOCATION.0,
-                "NO_DUPLICATE_ANY_HIT_INVOCATION",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for SamplerMipmapMode {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::NEAREST => Some("NEAREST"),
-            Self::LINEAR => Some("LINEAR"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ValidationCheckEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::ALL => Some("ALL"),
-            Self::SHADERS => Some("SHADERS"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
     }
 }
 pub type DescriptorUpdateTemplateCreateFlagsKHR = DescriptorUpdateTemplateCreateFlags;
