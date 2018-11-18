@@ -977,7 +977,10 @@ pub fn generate_typedef(typedef: &vkxml::Typedef) -> Tokens {
         pub type #typedef_name = #typedef_ty;
     }
 }
-pub fn generate_bitmask(bitmask: &vkxml::Bitmask) -> Option<Tokens> {
+pub fn generate_bitmask(
+    bitmask: &vkxml::Bitmask,
+    bitflags_cache: &mut HashSet<Ident>,
+) -> Option<Tokens> {
     // Workaround for empty bitmask
     if bitmask.name.is_empty() {
         return None;
@@ -989,6 +992,10 @@ pub fn generate_bitmask(bitmask: &vkxml::Bitmask) -> Option<Tokens> {
 
     let name = &bitmask.name[2..];
     let ident = Ident::from(name);
+    if bitflags_cache.contains(&ident) {
+        return None;
+    };
+    bitflags_cache.insert(ident.clone());
     Some(quote!{
         #[repr(transparent)]
         #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -1075,6 +1082,7 @@ pub fn generate_enum<'a>(
     _enum: &'a vkxml::Enumeration,
     const_cache: &mut HashSet<&'a str>,
     const_values: &mut HashMap<Ident, Vec<Ident>>,
+    bitflags_cache: &mut HashSet<Ident>,
 ) -> EnumType {
     let name = &_enum.name[2..];
     let _name = name.replace("FlagBits", "Flags");
@@ -1101,14 +1109,19 @@ pub fn generate_enum<'a>(
         let all_bits_term = Term::intern(&format!("0b{:b}", all_bits));
 
         let impl_bitflags = bitflags_impl_block(ident, &_enum.name, &constants);
-        let q = quote!{
-            #[repr(transparent)]
-            #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-            pub struct #ident(pub(crate) Flags);
-            vk_bitflags_wrapped!(#ident, #all_bits_term, Flags);
-            #impl_bitflags
-        };
-        EnumType::Bitflags(q)
+        if bitflags_cache.contains(&ident) {
+            EnumType::Bitflags(quote!{})
+        } else {
+            bitflags_cache.insert(ident.clone());
+            let q = quote!{
+                #[repr(transparent)]
+                #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+                pub struct #ident(pub(crate) Flags);
+                vk_bitflags_wrapped!(#ident, #all_bits_term, Flags);
+                #impl_bitflags
+            };
+            EnumType::Bitflags(q)
+        }
     } else {
         let impl_block = bitflags_impl_block(ident, &_enum.name, &constants);
         let enum_quote = quote!{
@@ -1665,13 +1678,14 @@ fn generate_union(union: &vkxml::Union) -> Tokens {
 pub fn generate_definition(
     definition: &vkxml::DefinitionsElement,
     union_types: &HashSet<&str>,
+    bitflags_cache: &mut HashSet<Ident>,
 ) -> Option<Tokens> {
     match *definition {
         vkxml::DefinitionsElement::Typedef(ref typedef) => Some(generate_typedef(typedef)),
         vkxml::DefinitionsElement::Struct(ref _struct) => {
             Some(generate_struct(_struct, union_types))
         }
-        vkxml::DefinitionsElement::Bitmask(ref mask) => generate_bitmask(mask),
+        vkxml::DefinitionsElement::Bitmask(ref mask) => generate_bitmask(mask, bitflags_cache),
         vkxml::DefinitionsElement::Handle(ref handle) => generate_handle(handle),
         vkxml::DefinitionsElement::FuncPtr(ref fp) => Some(generate_funcptr(fp)),
         vkxml::DefinitionsElement::Union(ref union) => Some(generate_union(union)),
@@ -1856,24 +1870,28 @@ pub fn generate_const_displays<'a>(const_values: &HashMap<Ident, Vec<Ident>>) ->
         #(#impls)*
     }
 }
-pub fn generate_aliases_of_types<'a>(types: &'a vk_parse::Types, ty_cache: &mut HashSet<Ident>) -> Tokens {
-    let aliases = types.children.iter().filter_map(|child|{
-        match child {
-            vk_parse::TypesChild::Type(ty) => {
-                Some((ty.name.as_ref()?, ty.alias.as_ref()?))
-            }
-            _ => None
-        }
-    }).filter_map(|(name, alias)|{
-        let name_ident = name_to_tokens(name);
-        if ty_cache.contains(&name_ident) {return None};
-        ty_cache.insert(name_ident.clone());
-        let alias_ident = name_to_tokens(alias);
-        let tokens = quote!{
-            pub type #name_ident = #alias_ident;
-        };
-        Some(tokens)
-    });
+pub fn generate_aliases_of_types<'a>(
+    types: &'a vk_parse::Types,
+    ty_cache: &mut HashSet<Ident>,
+) -> Tokens {
+    let aliases = types
+        .children
+        .iter()
+        .filter_map(|child| match child {
+            vk_parse::TypesChild::Type(ty) => Some((ty.name.as_ref()?, ty.alias.as_ref()?)),
+            _ => None,
+        }).filter_map(|(name, alias)| {
+            let name_ident = name_to_tokens(name);
+            if ty_cache.contains(&name_ident) {
+                return None;
+            };
+            ty_cache.insert(name_ident.clone());
+            let alias_ident = name_to_tokens(alias);
+            let tokens = quote!{
+                pub type #name_ident = #alias_ident;
+            };
+            Some(tokens)
+        });
     quote!{
         #(#aliases)*
     }
@@ -1895,7 +1913,9 @@ pub fn write_source_code(path: &Path) {
         .0
         .iter()
         .filter_map(|item| match item {
-            vk_parse::RegistryChild::Types(ref ty) => Some(generate_aliases_of_types(ty, &mut ty_cache)),
+            vk_parse::RegistryChild::Types(ref ty) => {
+                Some(generate_aliases_of_types(ty, &mut ty_cache))
+            }
             _ => None,
         }).collect();
 
@@ -1950,13 +1970,14 @@ pub fn write_source_code(path: &Path) {
         .collect();
 
     let mut fn_cache = HashSet::new();
+    let mut bitflags_cache = HashSet::new();
     let mut const_cache = HashSet::new();
 
     let mut const_values: HashMap<Ident, Vec<Ident>> = HashMap::new();
 
     let (enum_code, bitflags_code) = enums
         .into_iter()
-        .map(|e| generate_enum(e, &mut const_cache, &mut const_values))
+        .map(|e| generate_enum(e, &mut const_cache, &mut const_values, &mut bitflags_cache))
         .fold((Vec::new(), Vec::new()), |mut acc, elem| {
             match elem {
                 EnumType::Enum(token) => acc.0.push(token),
@@ -1990,7 +2011,7 @@ pub fn write_source_code(path: &Path) {
 
     let definition_code: Vec<_> = definitions
         .into_iter()
-        .filter_map(|def| generate_definition(def, &union_types))
+        .filter_map(|def| generate_definition(def, &union_types, &mut bitflags_cache))
         .collect();
 
     let feature_code: Vec<_> = features
