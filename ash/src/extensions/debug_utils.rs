@@ -12,10 +12,7 @@ pub struct DebugUtils {
 }
 
 impl DebugUtils {
-    pub fn new<E: EntryV1_0, I: InstanceV1_0>(
-        entry: &E,
-        instance: &I,
-    ) -> DebugUtils {
+    pub fn new<E: EntryV1_0, I: InstanceV1_0>(entry: &E, instance: &I) -> DebugUtils {
         let debug_utils_fn = vk::ExtDebugUtilsFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });
@@ -34,7 +31,9 @@ impl DebugUtils {
         device: vk::Device,
         name_info: &vk::DebugUtilsObjectNameInfoEXT,
     ) -> VkResult<()> {
-        let err_code = self.debug_utils_fn.set_debug_utils_object_name_ext(device, name_info);
+        let err_code = self
+            .debug_utils_fn
+            .set_debug_utils_object_name_ext(device, name_info);
         match err_code {
             vk::Result::SUCCESS => Ok(()),
             _ => Err(err_code),
@@ -46,7 +45,9 @@ impl DebugUtils {
         device: vk::Device,
         tag_info: &vk::DebugUtilsObjectTagInfoEXT,
     ) -> VkResult<()> {
-        let err_code = self.debug_utils_fn.set_debug_utils_object_tag_ext(device, tag_info);
+        let err_code = self
+            .debug_utils_fn
+            .set_debug_utils_object_tag_ext(device, tag_info);
         match err_code {
             vk::Result::SUCCESS => Ok(()),
             _ => Err(err_code),

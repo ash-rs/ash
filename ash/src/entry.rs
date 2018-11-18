@@ -15,18 +15,14 @@ use RawPtr;
 #[cfg(windows)]
 const LIB_PATH: &'static str = "vulkan-1.dll";
 
-#[cfg(
-    all(
-        unix,
-        not(
-            any(
-                target_os = "macos",
-                target_os = "ios",
-                target_os = "android"
-            )
-        )
-    )
-)]
+#[cfg(all(
+    unix,
+    not(any(
+        target_os = "macos",
+        target_os = "ios",
+        target_os = "android"
+    ))
+))]
 const LIB_PATH: &'static str = "libvulkan.so.1";
 
 #[cfg(target_os = "android")]
