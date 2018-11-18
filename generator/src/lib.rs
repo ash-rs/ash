@@ -1451,19 +1451,12 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
             if let Some(ref array_type) = field.array {
                 if let Some(ref array_size) = field.size {
                     if !array_size.starts_with("latexmath") {
-                        let length_type;
                         let array_size_ident = Ident::from(array_size.to_snake_case().as_str());
-                        if array_size_ident.to_string().contains("_count") {
-                            length_type = Term::intern("u32");
-                        } else {
-                            length_type = Term::intern("usize");
-                        }
-
                         if param_ty_string == "*const *const c_char" {
                             return Some(quote!{
                                     pub fn #param_ident_short(mut self, #param_ident_short: &'a [*const c_char]) -> #name_builder<'a> {
                                         self.inner.#param_ident = #param_ident_short.as_ptr();
-                                        self.inner.#array_size_ident = #param_ident_short.len() as #length_type;
+                                        self.inner.#array_size_ident = #param_ident_short.len() as _;
                                         self
                                     }
                             });
@@ -1488,7 +1481,7 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
                             vkxml::ArrayType::Dynamic => {
                                 return Some(quote!{
                                     pub fn #param_ident_short(mut self, #param_ident_short: #slice_param_ty_tokens) -> #name_builder<'a> {
-                                        self.inner.#array_size_ident = #param_ident_short.len() as #length_type;
+                                        self.inner.#array_size_ident = #param_ident_short.len() as _;
                                         self.inner.#param_ident = #param_ident_short#ptr_mutability;
                                         self
                                     }
