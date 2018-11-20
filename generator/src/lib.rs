@@ -354,7 +354,7 @@ pub fn platform_specific_types() -> Tokens {
         pub type DWORD = c_ulong;
         pub type LPCWSTR = *const u16;
 
-        // FIXME: Platform specific types that should come from a library
+        // FIXME: Platform specific types that should come from a library id:0
         // typedefs are only here so that the code compiles for now
         #[allow(non_camel_case_types)]
         pub type SECURITY_ATTRIBUTES = ();
@@ -1002,8 +1002,8 @@ pub enum EnumType {
 
 pub fn variant_ident(enum_name: &str, variant_name: &str) -> Ident {
     let _name = enum_name.replace("FlagBits", "");
-    // TODO: Should be read from vk.xml
-    // TODO: Also needs to be more robust, vendor names can be substrings from itself,
+    // TODO: Should be read from vk.xml id:2
+    // TODO: Also needs to be more robust, vendor names can be substrings from itself, id:4
     // like NVX and NV
     let vendors = ["_NVX", "_KHR", "_EXT", "_NV", "_AMD", "_ANDROID", "_GOOGLE"];
     let mut struct_name = _name.to_shouty_snake_case();
@@ -1422,7 +1422,7 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
             }
         }
 
-        // TODO: Improve in future when https://github.com/rust-lang/rust/issues/53667 is merged
+        // TODO: Improve in future when https://github.com/rust-lang/rust/issues/53667 is merged id:6
         if param_ident_string.starts_with("p_") || param_ident_string.starts_with("pp_") {
             if param_ty_string == "*const c_char" {
                 return Some(quote!{
