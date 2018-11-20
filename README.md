@@ -55,6 +55,12 @@ pub fn cmd_pipeline_barrier(&self,
                             image_memory_barriers: &[vk::ImageMemoryBarrier]);
 ```
 
+### Strongly typed handles
+
+Each Vulkan handle type is exposed as a newtyped struct for improved type safety. Null handles can be constructed with
+`T::null()`, and handles may be freely converted to and from `u64` with `Handle::from_raw` and `Handle::as_raw` for
+interop with non-Ash Vulkan code.
+
 ### Default implementation for all types
 ```Rust
 // No need to manually set the structure type
@@ -71,7 +77,11 @@ let pipeline_vertex_input_state_create_info = vk::PipelineVertexInputStateCreate
     .vertex_binding_descriptions(&Vertex::binding_descriptions())
     .vertex_attribute_descriptions(&Vertex::attribute_descriptions()).build();
 ```
-*Note*: No validation is done, the lifetimes only have to live as long as the builder object. It is the responsibility of the user to make sure that the pointers are valid.
+
+Builders implement `Deref` targeting their corresponding Vulkan struct, so references to builders can be passed directly
+to Vulkan functions. This is encouraged as doing so allows Rust to check the lifetimes of captured objects are valid,
+whereas calling `build` discards lifetime information, making inadvertent use-after-free errors more likely.
+
 ### Flags and constants as associated constants
 
 ```Rust
@@ -93,12 +103,6 @@ println!("Display: {}", flag);
 // Prints:
 // Debug: AccessFlags(110000000)
 // Display: COLOR_ATTACHMENT_READ | COLOR_ATTACHMENT_WRITE
-```
-
-### Interop
-Vulkan objects inside Ash can be constructed from raw values with `Object::from:raw`. Useful if you need to interact with a C library.
-```Rust
-PipelineBindPoint::from_raw(bindpoint);
 ```
 
 ### Function pointer loading
