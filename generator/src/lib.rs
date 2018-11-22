@@ -791,7 +791,7 @@ fn generate_function_pointers<'a>(
 
         pub struct #ident {
             #(
-                #names_ref: extern "system" fn(#expanded_params_ref) -> #return_types_ref,
+                pub #names_ref: extern "system" fn(#expanded_params_ref) -> #return_types_ref,
             )*
         }
 
