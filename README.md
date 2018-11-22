@@ -1,5 +1,3 @@
-[![TODO board](https://imdone.io/api/1.0/projects/5bf43c6528fa8f7a8bf2736d/badge)](https://imdone.io/app#/board/MaikKlein/ash)
-
 # Ash
 
 A very lightweight wrapper around Vulkan
