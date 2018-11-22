@@ -4,7 +4,7 @@ version = "0.1.0"
 authors = ["Maik Klein <maikklein@googlemail.com>"]
 
 [dependencies]
-vk-parse = "0.1"
+vk-parse = "0.2"
 vkxml = "0.3"
 nom = "4.0"
 heck = "0.3"

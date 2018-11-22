@@ -353,6 +353,8 @@ pub fn platform_specific_types() -> Tokens {
         pub type HANDLE = *mut c_void;
         pub type DWORD = c_ulong;
         pub type LPCWSTR = *const u16;
+        #[allow(non_camel_case_types)]
+        pub type zx_handle_t = u32;
 
         // FIXME: Platform specific types that should come from a library id:0
         // typedefs are only here so that the code compiles for now
@@ -856,14 +858,14 @@ impl<'a> ConstantExt for ExtensionConstant<'a> {
 pub fn generate_extension_constants<'a>(
     extension_name: &str,
     extension_number: i64,
-    extension_items: &'a [vk_parse::ExtensionItem],
+    extension_items: &'a [vk_parse::ExtensionChild],
     const_cache: &mut HashSet<&'a str>,
     const_values: &mut HashMap<Ident, Vec<Ident>>,
 ) -> quote::Tokens {
     let items = extension_items
         .iter()
         .filter_map(|item| match item {
-            vk_parse::ExtensionItem::Require { items, .. } => Some(items.iter()),
+            vk_parse::ExtensionChild::Require { items, .. } => Some(items.iter()),
             _ => None,
         }).flat_map(|iter| iter);
     let enum_tokens = items.filter_map(|item| match item {
@@ -873,8 +875,6 @@ pub fn generate_extension_constants<'a>(
                 return None;
             }
             let (constant, extends) = match &_enum.spec {
-                EnumSpec::Alias { .. } => None,
-                EnumSpec::Value { .. } => None,
                 EnumSpec::Bitpos { bitpos, extends } => {
                     Some((Constant::BitPos(*bitpos as u32), extends.clone()))
                 }
@@ -921,16 +921,18 @@ pub fn generate_extension_constants<'a>(
 }
 pub fn generate_extension_commands<'a>(
     extension_name: &str,
-    items: &[vk_parse::ExtensionItem],
+    items: &[vk_parse::ExtensionChild],
     cmd_map: &CommandMap<'a>,
     fn_cache: &mut HashSet<&'a str>,
 ) -> Tokens {
     let commands = items
         .iter()
         .filter_map(|ext_item| match ext_item {
-            vk_parse::ExtensionItem::Require { items, .. } => {
+            vk_parse::ExtensionChild::Require { items, .. } => {
                 Some(items.iter().filter_map(|item| match item {
-                    vk_parse::InterfaceItem::Command { name, .. } => cmd_map.get(name).map(|c| *c),
+                    vk_parse::InterfaceItem::Command { ref name, .. } => {
+                        cmd_map.get(name).map(|c| *c)
+                    }
                     _ => None,
                 }))
             }
@@ -957,11 +959,11 @@ pub fn generate_extension<'a>(
     let extension_tokens = generate_extension_constants(
         &extension.name,
         extension.number.unwrap_or(0),
-        &extension.items,
+        &extension.children,
         const_cache,
         const_values,
     );
-    let fp = generate_extension_commands(&extension.name, &extension.items, cmd_map, fn_cache);
+    let fp = generate_extension_commands(&extension.name, &extension.children, cmd_map, fn_cache);
     let q = quote!{
         #fp
         #extension_tokens
@@ -975,7 +977,10 @@ pub fn generate_typedef(typedef: &vkxml::Typedef) -> Tokens {
         pub type #typedef_name = #typedef_ty;
     }
 }
-pub fn generate_bitmask(bitmask: &vkxml::Bitmask) -> Option<Tokens> {
+pub fn generate_bitmask(
+    bitmask: &vkxml::Bitmask,
+    bitflags_cache: &mut HashSet<Ident>,
+) -> Option<Tokens> {
     // Workaround for empty bitmask
     if bitmask.name.is_empty() {
         return None;
@@ -987,6 +992,10 @@ pub fn generate_bitmask(bitmask: &vkxml::Bitmask) -> Option<Tokens> {
 
     let name = &bitmask.name[2..];
     let ident = Ident::from(name);
+    if bitflags_cache.contains(&ident) {
+        return None;
+    };
+    bitflags_cache.insert(ident.clone());
     Some(quote!{
         #[repr(transparent)]
         #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -1073,6 +1082,7 @@ pub fn generate_enum<'a>(
     _enum: &'a vkxml::Enumeration,
     const_cache: &mut HashSet<&'a str>,
     const_values: &mut HashMap<Ident, Vec<Ident>>,
+    bitflags_cache: &mut HashSet<Ident>,
 ) -> EnumType {
     let name = &_enum.name[2..];
     let _name = name.replace("FlagBits", "Flags");
@@ -1099,14 +1109,19 @@ pub fn generate_enum<'a>(
         let all_bits_term = Term::intern(&format!("0b{:b}", all_bits));
 
         let impl_bitflags = bitflags_impl_block(ident, &_enum.name, &constants);
-        let q = quote!{
-            #[repr(transparent)]
-            #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-            pub struct #ident(pub(crate) Flags);
-            vk_bitflags_wrapped!(#ident, #all_bits_term, Flags);
-            #impl_bitflags
-        };
-        EnumType::Bitflags(q)
+        if bitflags_cache.contains(&ident) {
+            EnumType::Bitflags(quote!{})
+        } else {
+            bitflags_cache.insert(ident.clone());
+            let q = quote!{
+                #[repr(transparent)]
+                #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+                pub struct #ident(pub(crate) Flags);
+                vk_bitflags_wrapped!(#ident, #all_bits_term, Flags);
+                #impl_bitflags
+            };
+            EnumType::Bitflags(q)
+        }
     } else {
         let impl_block = bitflags_impl_block(ident, &_enum.name, &constants);
         let enum_quote = quote!{
@@ -1436,19 +1451,12 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
             if let Some(ref array_type) = field.array {
                 if let Some(ref array_size) = field.size {
                     if !array_size.starts_with("latexmath") {
-                        let length_type;
                         let array_size_ident = Ident::from(array_size.to_snake_case().as_str());
-                        if array_size_ident.to_string().contains("_count") {
-                            length_type = Term::intern("u32");
-                        } else {
-                            length_type = Term::intern("usize");
-                        }
-
                         if param_ty_string == "*const *const c_char" {
                             return Some(quote!{
                                     pub fn #param_ident_short(mut self, #param_ident_short: &'a [*const c_char]) -> #name_builder<'a> {
                                         self.inner.#param_ident = #param_ident_short.as_ptr();
-                                        self.inner.#array_size_ident = #param_ident_short.len() as #length_type;
+                                        self.inner.#array_size_ident = #param_ident_short.len() as _;
                                         self
                                     }
                             });
@@ -1473,7 +1481,7 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
                             vkxml::ArrayType::Dynamic => {
                                 return Some(quote!{
                                     pub fn #param_ident_short(mut self, #param_ident_short: #slice_param_ty_tokens) -> #name_builder<'a> {
-                                        self.inner.#array_size_ident = #param_ident_short.len() as #length_type;
+                                        self.inner.#array_size_ident = #param_ident_short.len() as _;
                                         self.inner.#param_ident = #param_ident_short#ptr_mutability;
                                         self
                                     }
@@ -1663,13 +1671,14 @@ fn generate_union(union: &vkxml::Union) -> Tokens {
 pub fn generate_definition(
     definition: &vkxml::DefinitionsElement,
     union_types: &HashSet<&str>,
+    bitflags_cache: &mut HashSet<Ident>,
 ) -> Option<Tokens> {
     match *definition {
         vkxml::DefinitionsElement::Typedef(ref typedef) => Some(generate_typedef(typedef)),
         vkxml::DefinitionsElement::Struct(ref _struct) => {
             Some(generate_struct(_struct, union_types))
         }
-        vkxml::DefinitionsElement::Bitmask(ref mask) => generate_bitmask(mask),
+        vkxml::DefinitionsElement::Bitmask(ref mask) => generate_bitmask(mask, bitflags_cache),
         vkxml::DefinitionsElement::Handle(ref handle) => generate_handle(handle),
         vkxml::DefinitionsElement::FuncPtr(ref fp) => Some(generate_funcptr(fp)),
         vkxml::DefinitionsElement::Union(ref union) => Some(generate_union(union)),
@@ -1777,13 +1786,16 @@ pub fn generate_feature_extension<'a>(
     const_cache: &mut HashSet<&'a str>,
     const_values: &mut HashMap<Ident, Vec<Ident>>,
 ) -> Tokens {
-    let constants =
-        registry.0.iter().filter_map(|item| match item {
-            vk_parse::RegistryItem::Feature { name, items, .. } => Some(
-                generate_extension_constants(name, 0, items, const_cache, const_values),
-            ),
-            _ => None,
-        });
+    let constants = registry.0.iter().filter_map(|item| match item {
+        vk_parse::RegistryChild::Feature(feature) => Some(generate_extension_constants(
+            &feature.name,
+            0,
+            &feature.children,
+            const_cache,
+            const_values,
+        )),
+        _ => None,
+    });
     quote!{
         #(#constants)*
     }
@@ -1851,7 +1863,32 @@ pub fn generate_const_displays<'a>(const_values: &HashMap<Ident, Vec<Ident>>) ->
         #(#impls)*
     }
 }
-
+pub fn generate_aliases_of_types<'a>(
+    types: &'a vk_parse::Types,
+    ty_cache: &mut HashSet<Ident>,
+) -> Tokens {
+    let aliases = types
+        .children
+        .iter()
+        .filter_map(|child| match child {
+            vk_parse::TypesChild::Type(ty) => Some((ty.name.as_ref()?, ty.alias.as_ref()?)),
+            _ => None,
+        }).filter_map(|(name, alias)| {
+            let name_ident = name_to_tokens(name);
+            if ty_cache.contains(&name_ident) {
+                return None;
+            };
+            ty_cache.insert(name_ident.clone());
+            let alias_ident = name_to_tokens(alias);
+            let tokens = quote!{
+                pub type #name_ident = #alias_ident;
+            };
+            Some(tokens)
+        });
+    quote!{
+        #(#aliases)*
+    }
+}
 pub fn write_source_code(path: &Path) {
     use std::fs::File;
     use std::io::Write;
@@ -1860,10 +1897,20 @@ pub fn write_source_code(path: &Path) {
         .0
         .iter()
         .filter_map(|item| match item {
-            vk_parse::RegistryItem::Extensions { items: ext, .. } => Some(ext),
+            vk_parse::RegistryChild::Extensions(ref ext) => Some(&ext.children),
             _ => None,
         }).nth(0)
         .expect("extension");
+    let mut ty_cache = HashSet::new();
+    let aliases: Vec<_> = spec2
+        .0
+        .iter()
+        .filter_map(|item| match item {
+            vk_parse::RegistryChild::Types(ref ty) => {
+                Some(generate_aliases_of_types(ty, &mut ty_cache))
+            }
+            _ => None,
+        }).collect();
 
     let spec = vk_parse::parse_file_as_vkxml(path);
     let commands: HashMap<vkxml::Identifier, &vkxml::Command> = spec
@@ -1916,13 +1963,14 @@ pub fn write_source_code(path: &Path) {
         .collect();
 
     let mut fn_cache = HashSet::new();
+    let mut bitflags_cache = HashSet::new();
     let mut const_cache = HashSet::new();
 
     let mut const_values: HashMap<Ident, Vec<Ident>> = HashMap::new();
 
     let (enum_code, bitflags_code) = enums
         .into_iter()
-        .map(|e| generate_enum(e, &mut const_cache, &mut const_values))
+        .map(|e| generate_enum(e, &mut const_cache, &mut const_values, &mut bitflags_cache))
         .fold((Vec::new(), Vec::new()), |mut acc, elem| {
             match elem {
                 EnumType::Enum(token) => acc.0.push(token),
@@ -1956,7 +2004,7 @@ pub fn write_source_code(path: &Path) {
 
     let definition_code: Vec<_> = definitions
         .into_iter()
-        .filter_map(|def| generate_definition(def, &union_types))
+        .filter_map(|def| generate_definition(def, &union_types, &mut bitflags_cache))
         .collect();
 
     let feature_code: Vec<_> = features
@@ -1997,6 +2045,7 @@ pub fn write_source_code(path: &Path) {
         #(#extension_code)*
         #feature_extensions_code
         #const_displays
+        #(#aliases)*
     };
     write!(&mut file, "{}", source_code).expect("Unable to write to file");
 }
