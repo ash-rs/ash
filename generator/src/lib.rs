@@ -1539,12 +1539,12 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
     });
 
     let mut nexts = Vec::new();
-    let name_builder_next = name_to_tokens(&(_struct.name.clone() + "BuilderNext"));
+    let extends_name = name_to_tokens(&format!("Extends{}", name));
     if let Some(extends) = &_struct.extends {
         for target in extends.split(',') {
-            let target_ident = name_to_tokens(&(target.to_string() + "BuilderNext"));
+            let target_ident = name_to_tokens(&format!("Extends{}", name_to_tokens(target)));
             nexts.push(quote! {
-                unsafe impl #target_ident for #name_builder_next {}
+                unsafe impl #target_ident for #name {}
             });
         }
     }
@@ -1552,14 +1552,14 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
     let next_function = if has_next {
         if is_next_const {
             quote!{
-                pub fn next<T>(mut self, next: &'a T) -> #name_builder<'a> where T: #name_builder_next {
+                pub fn next<T>(mut self, next: &'a T) -> #name_builder<'a> where T: #extends_name {
                     self.inner.p_next = next as *const T as *const c_void;
                     self
                 }
             }
         } else {
             quote!{
-                pub fn next<T>(mut self, next: &'a mut T) -> #name_builder<'a> where T: #name_builder_next {
+                pub fn next<T>(mut self, next: &'a mut T) -> #name_builder<'a> where T: #extends_name {
                     self.inner.p_next = next as *mut T as *mut c_void;
                     self
                 }
@@ -1584,7 +1584,7 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
             marker: ::std::marker::PhantomData<&'a ()>,
         }
 
-        pub unsafe trait #name_builder_next {}
+        pub unsafe trait #extends_name {}
 
         #(#nexts)*
 
