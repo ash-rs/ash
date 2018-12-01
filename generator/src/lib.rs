@@ -1542,6 +1542,11 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
     let extends_name = name_to_tokens(&format!("Extends{}", name));
     if let Some(extends) = &_struct.extends {
         for target in extends.split(',') {
+            let target = match target {
+                // https://github.com/KhronosGroup/Vulkan-Docs/pull/870
+                "VkPhysicalDeviceProperties" => "VkPhysicalDeviceProperties2",
+                x => x,
+            };
             let target_ident = name_to_tokens(&format!("Extends{}", name_to_tokens(target)));
             nexts.push(quote! {
                 unsafe impl #target_ident for #name {}
@@ -1569,6 +1574,14 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
         quote!{}
     };
 
+    let next_trait = if has_next {
+        quote!{
+            pub unsafe trait #extends_name {}
+        }
+    } else {
+        quote!{}
+    };
+
     let q = quote!{
         impl #name {
             pub fn builder<'a>() -> #name_builder<'a> {
@@ -1584,7 +1597,7 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
             marker: ::std::marker::PhantomData<&'a ()>,
         }
 
-        pub unsafe trait #extends_name {}
+        #next_trait
 
         #(#nexts)*
 
