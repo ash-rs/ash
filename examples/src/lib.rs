@@ -21,13 +21,13 @@ use objc::runtime::YES;
 #[cfg(target_os = "macos")]
 use std::mem;
 
+#[cfg(all(unix, not(target_os = "android"), not(target_os = "macos")))]
+use ash::extensions::khr::XlibSurface;
+use ash::extensions::khr::{DebugReport, Surface, Swapchain};
 #[cfg(target_os = "macos")]
 use ash::extensions::MacOSSurface;
 #[cfg(target_os = "windows")]
 use ash::extensions::Win32Surface;
-#[cfg(all(unix, not(target_os = "android"), not(target_os = "macos")))]
-use ash::extensions::XlibSurface;
-use ash::extensions::{DebugReport, Surface, Swapchain};
 pub use ash::version::{DeviceV1_0, EntryV1_0, InstanceV1_0};
 use ash::vk;
 use ash::Device;
