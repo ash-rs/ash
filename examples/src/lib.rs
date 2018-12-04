@@ -28,10 +28,10 @@ use ash::extensions::{
     khr::{Surface, Swapchain},
 };
 
-#[cfg(target_os = "macos")]
-use ash::extensions::MacOSSurface;
 #[cfg(target_os = "windows")]
-use ash::extensions::Win32Surface;
+use ash::extensions::khr::Win32Surface;
+#[cfg(target_os = "macos")]
+use ash::extensions::mvk::MacOSSurface;
 pub use ash::version::{DeviceV1_0, EntryV1_0, InstanceV1_0};
 use ash::{vk, Device, Entry, Instance};
 use std::cell::RefCell;
