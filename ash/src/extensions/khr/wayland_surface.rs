@@ -27,7 +27,7 @@ impl WaylandSurface {
         CStr::from_bytes_with_nul(b"VK_KHR_wayland_surface\0").expect("Wrong extension string")
     }
 
-    pub unsafe fn create_wayland_surface_khr(
+    pub unsafe fn create_wayland_surface(
         &self,
         create_info: &vk::WaylandSurfaceCreateInfoKHR,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,

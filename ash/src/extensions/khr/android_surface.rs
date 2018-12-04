@@ -27,7 +27,7 @@ impl AndroidSurface {
         CStr::from_bytes_with_nul(b"VK_KHR_android_surface\0").expect("Wrong extension string")
     }
 
-    pub unsafe fn create_android_surface_khr(
+    pub unsafe fn create_android_surface(
         &self,
         create_info: &vk::AndroidSurfaceCreateInfoKHR,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,

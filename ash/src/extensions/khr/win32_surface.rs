@@ -27,7 +27,7 @@ impl Win32Surface {
         CStr::from_bytes_with_nul(b"VK_KHR_win32_surface\0").expect("Wrong extension string")
     }
 
-    pub unsafe fn create_win32_surface_khr(
+    pub unsafe fn create_win32_surface(
         &self,
         create_info: &vk::Win32SurfaceCreateInfoKHR,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,

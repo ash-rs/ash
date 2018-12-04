@@ -27,7 +27,7 @@ impl XcbSurface {
         CStr::from_bytes_with_nul(b"VK_KHR_xcb_surface\0").expect("Wrong extension string")
     }
 
-    pub unsafe fn create_xcb_surface_khr(
+    pub unsafe fn create_xcb_surface(
         &self,
         create_info: &vk::XcbSurfaceCreateInfoKHR,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
