@@ -1276,6 +1276,34 @@ pub trait DeviceV1_0 {
         }
     }
 
+    unsafe fn get_pipeline_cache_data(
+        &self,
+        pipeline_cache: vk::PipelineCache,
+    ) -> VkResult<Vec<u8>> {
+        let mut data_size: usize = 0;
+        let err_code = self.fp_v1_0().get_pipeline_cache_data(
+            self.handle(),
+            pipeline_cache,
+            &mut data_size,
+            ptr::null_mut(),
+        );
+        if err_code != vk::Result::SUCCESS {
+            return Err(err_code);
+        };
+        let mut data: Vec<u8> = Vec::with_capacity(data_size);
+        let err_code = self.fp_v1_0().get_pipeline_cache_data(
+            self.handle(),
+            pipeline_cache,
+            &mut data_size,
+            data.as_mut_ptr() as _,
+        );
+        data.set_len(data_size);
+        match err_code {
+            vk::Result::SUCCESS => Ok(data),
+            _ => Err(err_code),
+        }
+    }
+
     unsafe fn map_memory(
         &self,
         memory: vk::DeviceMemory,
