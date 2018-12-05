@@ -27,7 +27,7 @@ impl DebugReport {
         CStr::from_bytes_with_nul(b"VK_EXT_debug_report\0").expect("Wrong extension string")
     }
 
-    pub unsafe fn destroy_debug_report_callback_ext(
+    pub unsafe fn destroy_debug_report_callback(
         &self,
         debug: vk::DebugReportCallbackEXT,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
@@ -39,7 +39,7 @@ impl DebugReport {
         );
     }
 
-    pub unsafe fn create_debug_report_callback_ext(
+    pub unsafe fn create_debug_report_callback(
         &self,
         create_info: &vk::DebugReportCallbackCreateInfoEXT,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,

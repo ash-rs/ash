@@ -7,33 +7,33 @@ use vk;
 use RawPtr;
 
 #[derive(Clone)]
-pub struct AndroidSurface {
+pub struct XlibSurface {
     handle: vk::Instance,
-    android_surface_fn: vk::KhrAndroidSurfaceFn,
+    xlib_surface_fn: vk::KhrXlibSurfaceFn,
 }
 
-impl AndroidSurface {
-    pub fn new<E: EntryV1_0, I: InstanceV1_0>(entry: &E, instance: &I) -> AndroidSurface {
-        let surface_fn = vk::KhrAndroidSurfaceFn::load(|name| unsafe {
+impl XlibSurface {
+    pub fn new<E: EntryV1_0, I: InstanceV1_0>(entry: &E, instance: &I) -> XlibSurface {
+        let surface_fn = vk::KhrXlibSurfaceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });
-        AndroidSurface {
+        XlibSurface {
             handle: instance.handle(),
-            android_surface_fn: surface_fn,
+            xlib_surface_fn: surface_fn,
         }
     }
 
     pub fn name() -> &'static CStr {
-        CStr::from_bytes_with_nul(b"VK_KHR_android_surface\0").expect("Wrong extension string")
+        CStr::from_bytes_with_nul(b"VK_KHR_xlib_surface\0").expect("Wrong extension string")
     }
 
-    pub unsafe fn create_android_surface_khr(
+    pub unsafe fn create_xlib_surface(
         &self,
-        create_info: &vk::AndroidSurfaceCreateInfoKHR,
+        create_info: &vk::XlibSurfaceCreateInfoKHR,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::SurfaceKHR> {
         let mut surface = mem::uninitialized();
-        let err_code = self.android_surface_fn.create_android_surface_khr(
+        let err_code = self.xlib_surface_fn.create_xlib_surface_khr(
             self.handle,
             create_info,
             allocation_callbacks.as_raw_ptr(),

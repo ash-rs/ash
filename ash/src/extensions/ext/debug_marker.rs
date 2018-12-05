@@ -24,7 +24,7 @@ impl DebugMarker {
         CStr::from_bytes_with_nul(b"VK_EXT_debug_marker\0").expect("Wrong extension string")
     }
 
-    pub unsafe fn debug_marker_set_object_name_ext(
+    pub unsafe fn debug_marker_set_object_name(
         &self,
         device: vk::Device,
         name_info: &vk::DebugMarkerObjectNameInfoEXT,
@@ -38,7 +38,7 @@ impl DebugMarker {
         }
     }
 
-    pub unsafe fn cmd_debug_marker_begin_ext(
+    pub unsafe fn cmd_debug_marker_begin(
         &self,
         command_buffer: vk::CommandBuffer,
         marker_info: &vk::DebugMarkerMarkerInfoEXT,
@@ -47,12 +47,12 @@ impl DebugMarker {
             .cmd_debug_marker_begin_ext(command_buffer, marker_info);
     }
 
-    pub unsafe fn cmd_debug_marker_end_ext(&self, command_buffer: vk::CommandBuffer) {
+    pub unsafe fn cmd_debug_marker_end(&self, command_buffer: vk::CommandBuffer) {
         self.debug_marker_fn
             .cmd_debug_marker_end_ext(command_buffer);
     }
 
-    pub unsafe fn cmd_debug_marker_insert_ext(
+    pub unsafe fn cmd_debug_marker_insert(
         &self,
         command_buffer: vk::CommandBuffer,
         marker_info: &vk::DebugMarkerMarkerInfoEXT,

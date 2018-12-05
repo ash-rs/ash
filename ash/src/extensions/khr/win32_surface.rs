@@ -7,33 +7,33 @@ use vk;
 use RawPtr;
 
 #[derive(Clone)]
-pub struct XcbSurface {
+pub struct Win32Surface {
     handle: vk::Instance,
-    xcb_surface_fn: vk::KhrXcbSurfaceFn,
+    win32_surface_fn: vk::KhrWin32SurfaceFn,
 }
 
-impl XcbSurface {
-    pub fn new<E: EntryV1_0, I: InstanceV1_0>(entry: &E, instance: &I) -> XcbSurface {
-        let surface_fn = vk::KhrXcbSurfaceFn::load(|name| unsafe {
+impl Win32Surface {
+    pub fn new<E: EntryV1_0, I: InstanceV1_0>(entry: &E, instance: &I) -> Win32Surface {
+        let surface_fn = vk::KhrWin32SurfaceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });
-        XcbSurface {
+        Win32Surface {
             handle: instance.handle(),
-            xcb_surface_fn: surface_fn,
+            win32_surface_fn: surface_fn,
         }
     }
 
     pub fn name() -> &'static CStr {
-        CStr::from_bytes_with_nul(b"VK_KHR_xcb_surface\0").expect("Wrong extension string")
+        CStr::from_bytes_with_nul(b"VK_KHR_win32_surface\0").expect("Wrong extension string")
     }
 
-    pub unsafe fn create_xcb_surface_khr(
+    pub unsafe fn create_win32_surface(
         &self,
-        create_info: &vk::XcbSurfaceCreateInfoKHR,
+        create_info: &vk::Win32SurfaceCreateInfoKHR,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::SurfaceKHR> {
         let mut surface = mem::uninitialized();
-        let err_code = self.xcb_surface_fn.create_xcb_surface_khr(
+        let err_code = self.win32_surface_fn.create_win32_surface_khr(
             self.handle,
             create_info,
             allocation_callbacks.as_raw_ptr(),

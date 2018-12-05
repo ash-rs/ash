@@ -21,18 +21,19 @@ use objc::runtime::YES;
 #[cfg(target_os = "macos")]
 use std::mem;
 
-#[cfg(target_os = "macos")]
-use ash::extensions::MacOSSurface;
-#[cfg(target_os = "windows")]
-use ash::extensions::Win32Surface;
 #[cfg(all(unix, not(target_os = "android"), not(target_os = "macos")))]
-use ash::extensions::XlibSurface;
-use ash::extensions::{DebugReport, Surface, Swapchain};
+use ash::extensions::khr::XlibSurface;
+use ash::extensions::{
+    ext::DebugReport,
+    khr::{Surface, Swapchain},
+};
+
+#[cfg(target_os = "windows")]
+use ash::extensions::khr::Win32Surface;
+#[cfg(target_os = "macos")]
+use ash::extensions::mvk::MacOSSurface;
 pub use ash::version::{DeviceV1_0, EntryV1_0, InstanceV1_0};
-use ash::vk;
-use ash::Device;
-use ash::Entry;
-use ash::Instance;
+use ash::{vk, Device, Entry, Instance};
 use std::cell::RefCell;
 use std::default::Default;
 use std::ffi::{CStr, CString};
@@ -126,7 +127,7 @@ unsafe fn create_surface<E: EntryV1_0, I: InstanceV1_0>(
         dpy: x11_display as *mut vk::Display,
     };
     let xlib_surface_loader = XlibSurface::new(entry, instance);
-    xlib_surface_loader.create_xlib_surface_khr(&x11_create_info, None)
+    xlib_surface_loader.create_xlib_surface(&x11_create_info, None)
 }
 
 #[cfg(target_os = "macos")]
@@ -182,7 +183,7 @@ unsafe fn create_surface<E: EntryV1_0, I: InstanceV1_0>(
         hwnd: hwnd as *const c_void,
     };
     let win32_surface_loader = Win32Surface::new(entry, instance);
-    win32_surface_loader.create_win32_surface_khr(&win32_create_info, None)
+    win32_surface_loader.create_win32_surface(&win32_create_info, None)
 }
 
 #[cfg(all(unix, not(target_os = "android"), not(target_os = "macos")))]
@@ -375,7 +376,7 @@ impl ExampleBase {
             };
             let debug_report_loader = DebugReport::new(&entry, &instance);
             let debug_call_back = debug_report_loader
-                .create_debug_report_callback_ext(&debug_info, None)
+                .create_debug_report_callback(&debug_info, None)
                 .unwrap();
             let surface = create_surface(&entry, &instance, &window).unwrap();
             let pdevices = instance
@@ -392,7 +393,7 @@ impl ExampleBase {
                         .filter_map(|(index, ref info)| {
                             let supports_graphic_and_surface =
                                 info.queue_flags.contains(vk::QueueFlags::GRAPHICS)
-                                    && surface_loader.get_physical_device_surface_support_khr(
+                                    && surface_loader.get_physical_device_surface_support(
                                         *pdevice,
                                         index as u32,
                                         surface,
@@ -438,7 +439,7 @@ impl ExampleBase {
             let present_queue = device.get_device_queue(queue_family_index as u32, 0);
 
             let surface_formats = surface_loader
-                .get_physical_device_surface_formats_khr(pdevice, surface)
+                .get_physical_device_surface_formats(pdevice, surface)
                 .unwrap();
             let surface_format = surface_formats
                 .iter()
@@ -451,7 +452,7 @@ impl ExampleBase {
                 }).nth(0)
                 .expect("Unable to find suitable surface format.");
             let surface_capabilities = surface_loader
-                .get_physical_device_surface_capabilities_khr(pdevice, surface)
+                .get_physical_device_surface_capabilities(pdevice, surface)
                 .unwrap();
             let mut desired_image_count = surface_capabilities.min_image_count + 1;
             if surface_capabilities.max_image_count > 0
@@ -475,7 +476,7 @@ impl ExampleBase {
                 surface_capabilities.current_transform
             };
             let present_modes = surface_loader
-                .get_physical_device_surface_present_modes_khr(pdevice, surface)
+                .get_physical_device_surface_present_modes(pdevice, surface)
                 .unwrap();
             let present_mode = present_modes
                 .iter()
@@ -504,7 +505,7 @@ impl ExampleBase {
                 queue_family_index_count: 0,
             };
             let swapchain = swapchain_loader
-                .create_swapchain_khr(&swapchain_create_info, None)
+                .create_swapchain(&swapchain_create_info, None)
                 .unwrap();
             let pool_create_info = vk::CommandPoolCreateInfo {
                 s_type: vk::StructureType::COMMAND_POOL_CREATE_INFO,
@@ -526,9 +527,7 @@ impl ExampleBase {
             let setup_command_buffer = command_buffers[0];
             let draw_command_buffer = command_buffers[1];
 
-            let present_images = swapchain_loader
-                .get_swapchain_images_khr(swapchain)
-                .unwrap();
+            let present_images = swapchain_loader.get_swapchain_images(swapchain).unwrap();
             let present_image_views: Vec<vk::ImageView> = present_images
                 .iter()
                 .map(|&image| {
@@ -719,11 +718,11 @@ impl Drop for ExampleBase {
             }
             self.device.destroy_command_pool(self.pool, None);
             self.swapchain_loader
-                .destroy_swapchain_khr(self.swapchain, None);
+                .destroy_swapchain(self.swapchain, None);
             self.device.destroy_device(None);
-            self.surface_loader.destroy_surface_khr(self.surface, None);
+            self.surface_loader.destroy_surface(self.surface, None);
             self.debug_report_loader
-                .destroy_debug_report_callback_ext(self.debug_call_back, None);
+                .destroy_debug_report_callback(self.debug_call_back, None);
             self.instance.destroy_instance(None);
         }
     }
