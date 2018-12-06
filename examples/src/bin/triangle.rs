@@ -29,14 +29,14 @@ fn main() {
                 load_op: vk::AttachmentLoadOp::CLEAR,
                 store_op: vk::AttachmentStoreOp::STORE,
                 final_layout: vk::ImageLayout::PRESENT_SRC_KHR,
-                .. Default::default()
+                ..Default::default()
             },
             vk::AttachmentDescription {
                 format: vk::Format::D16_UNORM,
                 samples: vk::SampleCountFlags::TYPE_1,
                 load_op: vk::AttachmentLoadOp::CLEAR,
                 final_layout: vk::ImageLayout::DEPTH_STENCIL_ATTACHMENT_OPTIMAL,
-                .. Default::default()
+                ..Default::default()
             },
         ];
         let color_attachment_ref = vk::AttachmentReference {
@@ -53,11 +53,11 @@ fn main() {
             dst_access_mask: vk::AccessFlags::COLOR_ATTACHMENT_READ
                 | vk::AccessFlags::COLOR_ATTACHMENT_WRITE,
             dst_stage_mask: vk::PipelineStageFlags::COLOR_ATTACHMENT_OUTPUT,
-            .. Default::default()
+            ..Default::default()
         };
         let subpass = vk::SubpassDescription::builder()
-            .color_attachments( &[color_attachment_ref])
-            .depth_stencil_attachment( &depth_attachment_ref)
+            .color_attachments(&[color_attachment_ref])
+            .depth_stencil_attachment(&depth_attachment_ref)
             .pipeline_bind_point(vk::PipelineBindPoint::GRAPHICS)
             .build();
 
@@ -78,9 +78,9 @@ fn main() {
                 let frame_buffer_create_info = vk::FramebufferCreateInfo::builder()
                     .render_pass(renderpass)
                     .attachments(&framebuffer_attachments)
-                    .width( base.surface_resolution.width)
-                    .height( base.surface_resolution.height)
-                    .layers( 1)
+                    .width(base.surface_resolution.width)
+                    .height(base.surface_resolution.height)
+                    .layers(1)
                     .build();
                 base.device
                     .create_framebuffer(&frame_buffer_create_info, None)
@@ -91,7 +91,7 @@ fn main() {
             size: std::mem::size_of_val(&index_buffer_data) as u64,
             usage: vk::BufferUsageFlags::INDEX_BUFFER,
             sharing_mode: vk::SharingMode::EXCLUSIVE,
-            .. Default::default()
+            ..Default::default()
         };
         let index_buffer = base.device.create_buffer(&index_buffer_info, None).unwrap();
         let index_buffer_memory_req = base.device.get_buffer_memory_requirements(index_buffer);
@@ -103,7 +103,7 @@ fn main() {
         let index_allocate_info = vk::MemoryAllocateInfo {
             allocation_size: index_buffer_memory_req.size,
             memory_type_index: index_buffer_memory_index,
-            .. Default::default()
+            ..Default::default()
         };
         let index_buffer_memory = base
             .device
@@ -132,7 +132,7 @@ fn main() {
             size: 3 * std::mem::size_of::<Vertex>() as u64,
             usage: vk::BufferUsageFlags::VERTEX_BUFFER,
             sharing_mode: vk::SharingMode::EXCLUSIVE,
-            .. Default::default()
+            ..Default::default()
         };
         let vertex_input_buffer = base
             .device
@@ -150,7 +150,7 @@ fn main() {
         let vertex_buffer_allocate_info = vk::MemoryAllocateInfo {
             allocation_size: vertex_input_buffer_memory_req.size,
             memory_type_index: vertex_input_buffer_memory_index,
-            .. Default::default()
+            ..Default::default()
         };
         let vertex_input_buffer_memory = base
             .device
@@ -232,13 +232,13 @@ fn main() {
                 module: vertex_shader_module,
                 p_name: shader_entry_name.as_ptr(),
                 stage: vk::ShaderStageFlags::VERTEX,
-                .. Default::default()
+                ..Default::default()
             },
             vk::PipelineShaderStageCreateInfo {
                 module: fragment_shader_module,
                 p_name: shader_entry_name.as_ptr(),
                 stage: vk::ShaderStageFlags::FRAGMENT,
-                .. Default::default()
+                ..Default::default()
             },
         ];
         let vertex_input_binding_descriptions = [vk::VertexInputBindingDescription {
@@ -267,7 +267,7 @@ fn main() {
 
         let vertex_input_assembly_state_info = vk::PipelineInputAssemblyStateCreateInfo {
             topology: vk::PrimitiveTopology::TRIANGLE_LIST,
-            .. Default::default()
+            ..Default::default()
         };
         let viewports = [vk::Viewport {
             x: 0.0,
@@ -289,18 +289,18 @@ fn main() {
             front_face: vk::FrontFace::COUNTER_CLOCKWISE,
             line_width: 1.0,
             polygon_mode: vk::PolygonMode::FILL,
-            .. Default::default()
+            ..Default::default()
         };
         let multisample_state_info = vk::PipelineMultisampleStateCreateInfo {
             rasterization_samples: vk::SampleCountFlags::TYPE_1,
-            .. Default::default()
+            ..Default::default()
         };
         let noop_stencil_state = vk::StencilOpState {
             fail_op: vk::StencilOp::KEEP,
             pass_op: vk::StencilOp::KEEP,
             depth_fail_op: vk::StencilOp::KEEP,
             compare_op: vk::CompareOp::ALWAYS,
-            .. Default::default()
+            ..Default::default()
         };
         let depth_state_info = vk::PipelineDepthStencilStateCreateInfo {
             depth_test_enable: 1,
@@ -309,7 +309,7 @@ fn main() {
             front: noop_stencil_state.clone(),
             back: noop_stencil_state.clone(),
             max_depth_bounds: 1.0,
-            .. Default::default()
+            ..Default::default()
         };
         let color_blend_attachment_states = [vk::PipelineColorBlendAttachmentState {
             blend_enable: 0,
@@ -322,7 +322,7 @@ fn main() {
             color_write_mask: vk::ColorComponentFlags::all(),
         }];
         let color_blend_state = vk::PipelineColorBlendStateCreateInfo::builder()
-            .logic_op( vk::LogicOp::CLEAR)
+            .logic_op(vk::LogicOp::CLEAR)
             .attachments(&color_blend_attachment_states)
             .build();
 
@@ -333,16 +333,16 @@ fn main() {
 
         let graphic_pipeline_info = vk::GraphicsPipelineCreateInfo::builder()
             .stages(&shader_stage_create_infos)
-            .vertex_input_state( &vertex_input_state_info)
-            .input_assembly_state( &vertex_input_assembly_state_info)
-            .viewport_state( &viewport_state_info)
-            .rasterization_state( &rasterization_info)
-            .multisample_state( &multisample_state_info)
-            .depth_stencil_state( &depth_state_info)
-            .color_blend_state( &color_blend_state)
-            .dynamic_state( &dynamic_state_info)
-            .layout( pipeline_layout)
-            .render_pass( renderpass)
+            .vertex_input_state(&vertex_input_state_info)
+            .input_assembly_state(&vertex_input_assembly_state_info)
+            .viewport_state(&viewport_state_info)
+            .rasterization_state(&rasterization_info)
+            .multisample_state(&multisample_state_info)
+            .depth_stencil_state(&depth_state_info)
+            .color_blend_state(&color_blend_state)
+            .dynamic_state(&dynamic_state_info)
+            .layout(pipeline_layout)
+            .render_pass(renderpass)
             .build();
         let graphics_pipelines = base
             .device
@@ -433,9 +433,9 @@ fn main() {
             );
             //let mut present_info_err = mem::uninitialized();
             let present_info = vk::PresentInfoKHR::builder()
-                .wait_semaphores( &[base.rendering_complete_semaphore])
-                .swapchains( &[base.swapchain])
-                .image_indices( &[present_index])
+                .wait_semaphores(&[base.rendering_complete_semaphore])
+                .swapchains(&[base.swapchain])
+                .image_indices(&[present_index])
                 .build();
             base.swapchain_loader
                 .queue_present_khr(base.present_queue, &present_info)

@@ -41,7 +41,7 @@ fn main() {
                 load_op: vk::AttachmentLoadOp::CLEAR,
                 store_op: vk::AttachmentStoreOp::STORE,
                 final_layout: vk::ImageLayout::PRESENT_SRC_KHR,
-                .. Default::default()
+                ..Default::default()
             },
             vk::AttachmentDescription {
                 format: vk::Format::D16_UNORM,
@@ -49,10 +49,9 @@ fn main() {
                 load_op: vk::AttachmentLoadOp::CLEAR,
                 initial_layout: vk::ImageLayout::DEPTH_STENCIL_ATTACHMENT_OPTIMAL,
                 final_layout: vk::ImageLayout::DEPTH_STENCIL_ATTACHMENT_OPTIMAL,
-                .. Default::default()
+                ..Default::default()
             },
         ];
-
 
         let color_attachment_ref = vk::AttachmentReference {
             attachment: 0,
@@ -69,10 +68,8 @@ fn main() {
             dst_access_mask: vk::AccessFlags::COLOR_ATTACHMENT_READ
                 | vk::AccessFlags::COLOR_ATTACHMENT_WRITE,
             dst_stage_mask: vk::PipelineStageFlags::COLOR_ATTACHMENT_OUTPUT,
-            .. Default::default()
+            ..Default::default()
         };
-
-
 
         let subpass = vk::SubpassDescription::builder()
             .color_attachments(&[color_attachment_ref])
@@ -80,10 +77,9 @@ fn main() {
             .pipeline_bind_point(vk::PipelineBindPoint::GRAPHICS)
             .build();
 
-
         let renderpass_create_info = vk::RenderPassCreateInfo::builder()
             .attachments(&renderpass_attachments)
-            .subpasses( &[subpass])
+            .subpasses(&[subpass])
             .dependencies(&[dependency])
             .build();
 
@@ -100,9 +96,9 @@ fn main() {
                 let frame_buffer_create_info = vk::FramebufferCreateInfo::builder()
                     .render_pass(renderpass)
                     .attachments(&framebuffer_attachments)
-                    .width( base.surface_resolution.width)
-                    .height( base.surface_resolution.height)
-                    .layers( 1)
+                    .width(base.surface_resolution.width)
+                    .height(base.surface_resolution.height)
+                    .layers(1)
                     .build();
 
                 base.device
@@ -114,7 +110,7 @@ fn main() {
             size: std::mem::size_of_val(&index_buffer_data) as u64,
             usage: vk::BufferUsageFlags::INDEX_BUFFER,
             sharing_mode: vk::SharingMode::EXCLUSIVE,
-            .. Default::default()
+            ..Default::default()
         };
         let index_buffer = base.device.create_buffer(&index_buffer_info, None).unwrap();
         let index_buffer_memory_req = base.device.get_buffer_memory_requirements(index_buffer);
@@ -126,7 +122,7 @@ fn main() {
         let index_allocate_info = vk::MemoryAllocateInfo {
             allocation_size: index_buffer_memory_req.size,
             memory_type_index: index_buffer_memory_index,
-            .. Default::default()
+            ..Default::default()
         };
         let index_buffer_memory = base
             .device
@@ -173,7 +169,7 @@ fn main() {
             size: std::mem::size_of_val(&vertices) as u64,
             usage: vk::BufferUsageFlags::VERTEX_BUFFER,
             sharing_mode: vk::SharingMode::EXCLUSIVE,
-            .. Default::default()
+            ..Default::default()
         };
         let vertex_input_buffer = base
             .device
@@ -191,7 +187,7 @@ fn main() {
         let vertex_buffer_allocate_info = vk::MemoryAllocateInfo {
             allocation_size: vertex_input_buffer_memory_req.size,
             memory_type_index: vertex_input_buffer_memory_index,
-            .. Default::default()
+            ..Default::default()
         };
         let vertex_input_buffer_memory = base
             .device
@@ -227,7 +223,7 @@ fn main() {
             size: std::mem::size_of_val(&uniform_color_buffer_data) as u64,
             usage: vk::BufferUsageFlags::UNIFORM_BUFFER,
             sharing_mode: vk::SharingMode::EXCLUSIVE,
-            .. Default::default()
+            ..Default::default()
         };
         let uniform_color_buffer = base
             .device
@@ -245,7 +241,7 @@ fn main() {
         let uniform_color_buffer_allocate_info = vk::MemoryAllocateInfo {
             allocation_size: uniform_color_buffer_memory_req.size,
             memory_type_index: uniform_color_buffer_memory_index,
-            .. Default::default()
+            ..Default::default()
         };
         let uniform_color_buffer_memory = base
             .device
@@ -277,7 +273,7 @@ fn main() {
             size: (std::mem::size_of::<u8>() * image_data.len()) as u64,
             usage: vk::BufferUsageFlags::TRANSFER_SRC,
             sharing_mode: vk::SharingMode::EXCLUSIVE,
-            .. Default::default()
+            ..Default::default()
         };
         let image_buffer = base.device.create_buffer(&image_buffer_info, None).unwrap();
         let image_buffer_memory_req = base.device.get_buffer_memory_requirements(image_buffer);
@@ -290,7 +286,7 @@ fn main() {
         let image_buffer_allocate_info = vk::MemoryAllocateInfo {
             allocation_size: image_buffer_memory_req.size,
             memory_type_index: image_buffer_memory_index,
-            .. Default::default()
+            ..Default::default()
         };
         let image_buffer_memory = base
             .device
@@ -329,7 +325,7 @@ fn main() {
             tiling: vk::ImageTiling::OPTIMAL,
             usage: vk::ImageUsageFlags::TRANSFER_DST | vk::ImageUsageFlags::SAMPLED,
             sharing_mode: vk::SharingMode::EXCLUSIVE,
-            .. Default::default()
+            ..Default::default()
         };
         let texture_image = base
             .device
@@ -345,7 +341,7 @@ fn main() {
         let texture_allocate_info = vk::MemoryAllocateInfo {
             allocation_size: texture_memory_req.size,
             memory_type_index: texture_memory_index,
-            .. Default::default()
+            ..Default::default()
         };
         let texture_memory = base
             .device
@@ -371,9 +367,9 @@ fn main() {
                         aspect_mask: vk::ImageAspectFlags::COLOR,
                         level_count: 1,
                         layer_count: 1,
-                        .. Default::default()
+                        ..Default::default()
                     },
-                    .. Default::default()
+                    ..Default::default()
                 };
                 device.cmd_pipeline_barrier(
                     texture_command_buffer,
@@ -384,22 +380,17 @@ fn main() {
                     &[],
                     &[texture_barrier],
                 );
-                let buffer_copy_regions = [
-                    vk::BufferImageCopy::builder()
-                        .image_subresource(
-                            vk::ImageSubresourceLayers::builder()
-                                .aspect_mask( vk::ImageAspectFlags::COLOR)
-                                .layer_count(1)
-                                .build()
-                        )
-                        .image_extent(
-                            vk::Extent3D {
-                                width: image_dimensions.0,
-                                height: image_dimensions.1,
-                                depth: 1,
-                            })
-                        .build()
-                ];
+                let buffer_copy_regions = [vk::BufferImageCopy::builder()
+                    .image_subresource(
+                        vk::ImageSubresourceLayers::builder()
+                            .aspect_mask(vk::ImageAspectFlags::COLOR)
+                            .layer_count(1)
+                            .build(),
+                    ).image_extent(vk::Extent3D {
+                        width: image_dimensions.0,
+                        height: image_dimensions.1,
+                        depth: 1,
+                    }).build()];
                 device.cmd_copy_buffer_to_image(
                     texture_command_buffer,
                     image_buffer,
@@ -417,9 +408,9 @@ fn main() {
                         aspect_mask: vk::ImageAspectFlags::COLOR,
                         level_count: 1,
                         layer_count: 1,
-                        .. Default::default()
+                        ..Default::default()
                     },
-                    .. Default::default()
+                    ..Default::default()
                 };
                 device.cmd_pipeline_barrier(
                     texture_command_buffer,
@@ -441,7 +432,7 @@ fn main() {
             address_mode_v: vk::SamplerAddressMode::MIRRORED_REPEAT,
             address_mode_w: vk::SamplerAddressMode::MIRRORED_REPEAT,
             max_anisotropy: 1.0,
-            .. Default::default()
+            ..Default::default()
         };
 
         let sampler = base.device.create_sampler(&sampler_info, None).unwrap();
@@ -459,10 +450,10 @@ fn main() {
                 aspect_mask: vk::ImageAspectFlags::COLOR,
                 level_count: 1,
                 layer_count: 1,
-                .. Default::default()
+                ..Default::default()
             },
             image: texture_image,
-            .. Default::default()
+            ..Default::default()
         };
         let tex_image_view = base
             .device
@@ -491,14 +482,14 @@ fn main() {
                 descriptor_type: vk::DescriptorType::UNIFORM_BUFFER,
                 descriptor_count: 1,
                 stage_flags: vk::ShaderStageFlags::FRAGMENT,
-                .. Default::default()
+                ..Default::default()
             },
             vk::DescriptorSetLayoutBinding {
                 binding: 1,
                 descriptor_type: vk::DescriptorType::COMBINED_IMAGE_SAMPLER,
                 descriptor_count: 1,
                 stage_flags: vk::ShaderStageFlags::FRAGMENT,
-                .. Default::default()
+                ..Default::default()
             },
         ];
         let descriptor_info = vk::DescriptorSetLayoutCreateInfo::builder()
@@ -536,7 +527,7 @@ fn main() {
                 descriptor_count: 1,
                 descriptor_type: vk::DescriptorType::UNIFORM_BUFFER,
                 p_buffer_info: &uniform_color_buffer_descriptor,
-                .. Default::default()
+                ..Default::default()
             },
             vk::WriteDescriptorSet {
                 dst_set: descriptor_sets[0],
@@ -544,7 +535,7 @@ fn main() {
                 descriptor_count: 1,
                 descriptor_type: vk::DescriptorType::COMBINED_IMAGE_SAMPLER,
                 p_image_info: &tex_descriptor,
-                .. Default::default()
+                ..Default::default()
             },
         ];
         base.device.update_descriptor_sets(&write_desc_sets, &[]);
@@ -564,9 +555,7 @@ fn main() {
             .code(&vertex_bytes)
             .build();
 
-        let frag_bytes: Vec<u8> = frag_spv_file.bytes()
-            .filter_map(|byte| byte.ok())
-            .collect();
+        let frag_bytes: Vec<u8> = frag_spv_file.bytes().filter_map(|byte| byte.ok()).collect();
 
         let frag_bytes = examples::bytes_to_u32_vec(frag_bytes.iter().cloned());
 
@@ -599,13 +588,13 @@ fn main() {
                 module: vertex_shader_module,
                 p_name: shader_entry_name.as_ptr(),
                 stage: vk::ShaderStageFlags::VERTEX,
-                .. Default::default()
+                ..Default::default()
             },
             vk::PipelineShaderStageCreateInfo {
                 module: fragment_shader_module,
                 p_name: shader_entry_name.as_ptr(),
                 stage: vk::ShaderStageFlags::FRAGMENT,
-                .. Default::default()
+                ..Default::default()
             },
         ];
         let vertex_input_binding_descriptions = [vk::VertexInputBindingDescription {
@@ -658,11 +647,11 @@ fn main() {
             front_face: vk::FrontFace::COUNTER_CLOCKWISE,
             line_width: 1.0,
             polygon_mode: vk::PolygonMode::FILL,
-            .. Default::default()
+            ..Default::default()
         };
 
         let multisample_state_info = vk::PipelineMultisampleStateCreateInfo::builder()
-            .rasterization_samples( vk::SampleCountFlags::TYPE_1)
+            .rasterization_samples(vk::SampleCountFlags::TYPE_1)
             .build();
 
         let noop_stencil_state = vk::StencilOpState {
@@ -670,7 +659,7 @@ fn main() {
             pass_op: vk::StencilOp::KEEP,
             depth_fail_op: vk::StencilOp::KEEP,
             compare_op: vk::CompareOp::ALWAYS,
-            .. Default::default()
+            ..Default::default()
         };
         let depth_state_info = vk::PipelineDepthStencilStateCreateInfo {
             depth_test_enable: 1,
@@ -679,7 +668,7 @@ fn main() {
             front: noop_stencil_state.clone(),
             back: noop_stencil_state.clone(),
             max_depth_bounds: 1.0,
-            .. Default::default()
+            ..Default::default()
         };
 
         let color_blend_attachment_states = [vk::PipelineColorBlendAttachmentState {
@@ -752,8 +741,7 @@ fn main() {
                 .render_area(vk::Rect2D {
                     offset: vk::Offset2D { x: 0, y: 0 },
                     extent: base.surface_resolution.clone(),
-                })
-                .clear_values(&clear_values)
+                }).clear_values(&clear_values)
                 .build();
 
             record_submit_commandbuffer(
@@ -813,8 +801,8 @@ fn main() {
 
             let present_info = vk::PresentInfoKHR::builder()
                 .wait_semaphores(&[base.rendering_complete_semaphore])
-                .swapchains( &[base.swapchain])
-                .image_indices( &[present_index])
+                .swapchains(&[base.swapchain])
+                .image_indices(&[present_index])
                 .build();
 
             base.swapchain_loader

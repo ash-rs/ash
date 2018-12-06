@@ -54,32 +54,30 @@ macro_rules! offset_of {
 }
 
 fn u32_from_bytes(bytes: &[u8; 4]) -> u32 {
-    unsafe {
-        std::mem::transmute(*bytes)
-    }
+    unsafe { std::mem::transmute(*bytes) }
 }
 
-pub fn bytes_to_u32_vec<B>(bytes:B) -> Vec<u32>
-where B: Iterator<Item=u8>
+pub fn bytes_to_u32_vec<B>(bytes: B) -> Vec<u32>
+where
+    B: Iterator<Item = u8>,
 {
     let mut output = vec![];
-    let mut buffer: [u8;4] = [0,0,0,0];
-    for (i,b) in bytes.enumerate() {
+    let mut buffer: [u8; 4] = [0, 0, 0, 0];
+    for (i, b) in bytes.enumerate() {
         match i % 4 {
             3 => {
                 buffer[3] = b;
                 output.push(u32_from_bytes(&buffer));
-                buffer = [0,0,0,0];
-            },
-            idx => buffer[idx] = b
+                buffer = [0, 0, 0, 0];
+            }
+            idx => buffer[idx] = b,
         }
     }
-    if buffer != [0,0,0,0] {
+    if buffer != [0, 0, 0, 0] {
         output.push(u32_from_bytes(&buffer));
     }
     output
 }
-
 
 pub fn record_submit_commandbuffer<D: DeviceV1_0, F: FnOnce(&D, vk::CommandBuffer)>(
     device: &D,
@@ -361,17 +359,17 @@ impl ExampleBase {
             let extension_names_raw = extension_names();
 
             let appinfo = vk::ApplicationInfo::builder()
-                .application_name(&app_name )
+                .application_name(&app_name)
                 .application_version(0)
                 .engine_name(&app_name)
                 .engine_version(0)
-                .api_version(vk_make_version!(1,0,36))
+                .api_version(vk_make_version!(1, 0, 36))
                 .build();
 
             let create_info = vk::InstanceCreateInfo::builder()
                 .application_info(&appinfo)
                 .enabled_layer_names(&layers_names_raw)
-                .enabled_extension_names(&extension_names_raw )
+                .enabled_extension_names(&extension_names_raw)
                 .build();
 
             let instance: Instance = entry
@@ -383,9 +381,8 @@ impl ExampleBase {
                 .flags(
                     vk::DebugReportFlagsEXT::ERROR
                         | vk::DebugReportFlagsEXT::WARNING
-                        | vk::DebugReportFlagsEXT::PERFORMANCE_WARNING
-                )
-                .build();
+                        | vk::DebugReportFlagsEXT::PERFORMANCE_WARNING,
+                ).build();
 
             let debug_report_loader = DebugReport::new(&entry, &instance);
             let debug_call_back = debug_report_loader
@@ -428,7 +425,7 @@ impl ExampleBase {
             let priorities = [1.0];
 
             let queue_info = vk::DeviceQueueCreateInfo::builder()
-                .queue_family_index(queue_family_index as u32 )
+                .queue_family_index(queue_family_index as u32)
                 .queue_priorities(&priorities)
                 .build();
 
@@ -500,7 +497,7 @@ impl ExampleBase {
                 .pre_transform(pre_transform)
                 .composite_alpha(vk::CompositeAlphaFlagsKHR::OPAQUE)
                 .present_mode(present_mode)
-//                .clipped(true)
+                //                .clipped(true)
                 .image_array_layers(1)
                 .build();
             let swapchain = swapchain_loader
@@ -511,7 +508,6 @@ impl ExampleBase {
                 .queue_family_index(queue_family_index)
                 .flags(vk::CommandPoolCreateFlags::RESET_COMMAND_BUFFER)
                 .build();
-
 
             let pool = device.create_command_pool(&pool_create_info, None).unwrap();
 
@@ -539,9 +535,8 @@ impl ExampleBase {
                                 .aspect_mask(vk::ImageAspectFlags::COLOR)
                                 .level_count(1)
                                 .layer_count(1)
-                                .build()
-                        )
-                        .image(image)
+                                .build(),
+                        ).image(image)
                         .format(surface_format.format)
                         .view_type(vk::ImageViewType::TYPE_2D)
                         .build();
@@ -556,9 +551,8 @@ impl ExampleBase {
                 .extent(vk::Extent3D {
                     width: surface_resolution.width,
                     height: surface_resolution.height,
-                    depth: 1
-                })
-                .mip_levels(1)
+                    depth: 1,
+                }).mip_levels(1)
                 .array_layers(1)
                 .samples(vk::SampleCountFlags::TYPE_1)
                 .usage(vk::ImageUsageFlags::DEPTH_STENCIL_ATTACHMENT)
@@ -571,7 +565,6 @@ impl ExampleBase {
                 &device_memory_properties,
                 vk::MemoryPropertyFlags::DEVICE_LOCAL,
             ).expect("Unable to find suitable memory index for depth image.");
-
 
             let depth_image_allocate_info = vk::MemoryAllocateInfo::builder()
                 .allocation_size(depth_image_memory_req.size)
@@ -598,18 +591,16 @@ impl ExampleBase {
                         .image(depth_image)
                         .dst_access_mask(
                             vk::AccessFlags::DEPTH_STENCIL_ATTACHMENT_READ
-                                | vk::AccessFlags::DEPTH_STENCIL_ATTACHMENT_WRITE
-                        )
-                        .new_layout(vk::ImageLayout::DEPTH_STENCIL_ATTACHMENT_OPTIMAL)
+                                | vk::AccessFlags::DEPTH_STENCIL_ATTACHMENT_WRITE,
+                        ).new_layout(vk::ImageLayout::DEPTH_STENCIL_ATTACHMENT_OPTIMAL)
                         .old_layout(vk::ImageLayout::UNDEFINED)
                         .subresource_range(
                             vk::ImageSubresourceRange::builder()
                                 .aspect_mask(vk::ImageAspectFlags::DEPTH)
                                 .layer_count(1)
                                 .level_count(1)
-                                .build()
-                        )
-                        .build();
+                                .build(),
+                        ).build();
 
                     device.cmd_pipeline_barrier(
                         setup_command_buffer,
@@ -629,9 +620,8 @@ impl ExampleBase {
                         .aspect_mask(vk::ImageAspectFlags::DEPTH)
                         .level_count(1)
                         .layer_count(1)
-                        .build()
-                )
-                .image(depth_image)
+                        .build(),
+                ).image(depth_image)
                 .format(depth_image_create_info.format)
                 .view_type(vk::ImageViewType::TYPE_2D)
                 .build();
@@ -639,7 +629,6 @@ impl ExampleBase {
             let depth_image_view = device
                 .create_image_view(&depth_image_view_info, None)
                 .unwrap();
-
 
             let semaphore_create_info = vk::SemaphoreCreateInfo::default();
 
