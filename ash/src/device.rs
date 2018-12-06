@@ -1403,11 +1403,11 @@ pub trait DeviceV1_0 {
     unsafe fn begin_command_buffer(
         &self,
         command_buffer: vk::CommandBuffer,
-        create_info: &vk::CommandBufferBeginInfo,
+        begin_info: &vk::CommandBufferBeginInfo,
     ) -> VkResult<()> {
         let err_code = self
             .fp_v1_0()
-            .begin_command_buffer(command_buffer, create_info);
+            .begin_command_buffer(command_buffer, begin_info);
         match err_code {
             vk::Result::SUCCESS => Ok(()),
             _ => Err(err_code),
