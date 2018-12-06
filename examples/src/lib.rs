@@ -63,9 +63,9 @@ where
 {
     let mut output = vec![];
     let mut buffer: [u8; 4] = [0, 0, 0, 0];
-    let mut l: usize = 0;
+    let mut byte_len: usize = 0;
     for (i, b) in bytes.enumerate() {
-        l = i;
+        byte_len = i;
         match i % 4 {
             3 => {
                 buffer[3] = b;
@@ -75,7 +75,7 @@ where
             idx => buffer[idx] = b,
         }
     }
-    if (l+1) % 4 != 0 {
+    if (byte_len + 1) % 4 != 0 {
         output.push(u32_from_bytes(&buffer));
     }
     output
