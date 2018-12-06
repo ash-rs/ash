@@ -265,6 +265,15 @@ pub trait DeviceV1_0 {
             .destroy_fence(self.handle(), fence, allocation_callbacks.as_raw_ptr());
     }
 
+    unsafe fn destroy_event(
+        &self,
+        event: vk::Event,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+    ) {
+        self.fp_v1_0()
+            .destroy_event(self.handle(), event, allocation_callbacks.as_raw_ptr());
+    }
+
     unsafe fn destroy_image(
         &self,
         image: vk::Image,
