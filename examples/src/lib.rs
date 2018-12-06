@@ -39,7 +39,7 @@ use std::default::Default;
 use std::ffi::{CStr, CString};
 use std::ops::Drop;
 use std::os::raw::{c_char, c_void};
-
+use std::ptr;
 
 // Simple offset_of macro akin to C++ offsetof
 #[macro_export]
