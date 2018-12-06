@@ -1,5 +1,6 @@
 #[macro_use]
 extern crate ash;
+extern crate byteorder;
 #[cfg(target_os = "windows")]
 extern crate winapi;
 
@@ -35,12 +36,31 @@ use ash::extensions::khr::Win32Surface;
 use ash::extensions::mvk::MacOSSurface;
 pub use ash::version::{DeviceV1_0, EntryV1_0, InstanceV1_0};
 use ash::{vk, Device, Entry, Instance};
+use byteorder::{LittleEndian, ReadBytesExt};
 use std::cell::RefCell;
 use std::default::Default;
 use std::ffi::{CStr, CString};
+use std::io::Cursor;
 use std::ops::Drop;
 use std::os::raw::{c_char, c_void};
 use std::ptr;
+
+pub fn bytes_to_u32_vec(bytes: &[u8]) -> Vec<u32> {
+    let mut output = vec![];
+    let mut buffer: [u8; 4] = [0, 0, 0, 0];
+    for (i, b) in bytes.iter().enumerate() {
+        let idx = i % 4;
+        buffer[idx] = *b;
+        if idx == 3 {
+            output.push(Cursor::new(buffer).read_u32::<LittleEndian>().unwrap());
+            buffer = [0, 0, 0, 0];
+        }
+    }
+    if bytes.len() % 4 != 0 {
+        output.push(Cursor::new(buffer).read_u32::<LittleEndian>().unwrap());
+    }
+    output
+}
 
 // Simple offset_of macro akin to C++ offsetof
 #[macro_export]

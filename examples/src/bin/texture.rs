@@ -549,19 +549,12 @@ fn main() {
             .bytes()
             .filter_map(|byte| byte.ok())
             .collect();
-        let vertex_bytes = examples::bytes_to_u32_vec(vertex_bytes.iter().cloned());
-
-        let vertex_shader_info = vk::ShaderModuleCreateInfo::builder()
-            .code(&vertex_bytes)
-            .build();
+        let vertex_code = bytes_to_u32_vec(&vertex_bytes);
+        let vertex_shader_info = vk::ShaderModuleCreateInfo::builder().code(&vertex_code);
 
         let frag_bytes: Vec<u8> = frag_spv_file.bytes().filter_map(|byte| byte.ok()).collect();
-
-        let frag_bytes = examples::bytes_to_u32_vec(frag_bytes.iter().cloned());
-
-        let frag_shader_info = vk::ShaderModuleCreateInfo::builder()
-            .code(&frag_bytes)
-            .build();
+        let frag_code = bytes_to_u32_vec(&frag_bytes);
+        let frag_shader_info = vk::ShaderModuleCreateInfo::builder().code(&frag_code);
 
         let vertex_shader_module = base
             .device
