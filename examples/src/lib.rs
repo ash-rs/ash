@@ -36,7 +36,7 @@ use ash::extensions::khr::Win32Surface;
 use ash::extensions::mvk::MacOSSurface;
 pub use ash::version::{DeviceV1_0, EntryV1_0, InstanceV1_0};
 use ash::{vk, Device, Entry, Instance};
-use byteorder::{LittleEndian, ReadBytesExt};
+use byteorder::{LittleEndian, BigEndian, ReadBytesExt};
 use std::cell::RefCell;
 use std::default::Default;
 use std::ffi::{CStr, CString};
@@ -45,14 +45,29 @@ use std::ops::Drop;
 use std::os::raw::{c_char, c_void};
 use std::ptr;
 
+
+const MAGIC_NUMBER: u32 = 0x07230203;
+
+fn spirv_is_little_endian(bytes: &[u8] ) -> bool {
+    let buffer: [u8;4] = [bytes[0], bytes[1],bytes[2],bytes[3]];
+    let number : u32 = Cursor::new(buffer).read_u32::<LittleEndian>().unwrap();
+    number == MAGIC_NUMBER
+}
+
 pub fn bytes_to_u32_vec(bytes: &[u8]) -> Vec<u32> {
     let mut output = vec![];
     let mut buffer: [u8; 4] = [0, 0, 0, 0];
+    let is_little_endian = spirv_is_little_endian(bytes);
     for (i, b) in bytes.iter().enumerate() {
         let idx = i % 4;
         buffer[idx] = *b;
         if idx == 3 {
-            output.push(Cursor::new(buffer).read_u32::<LittleEndian>().unwrap());
+            let new_word =  if is_little_endian {
+                Cursor::new(buffer).read_u32::<LittleEndian>().unwrap()
+            } else {
+                Cursor::new(buffer).read_u32::<BigEndian>().unwrap()
+            };
+            output.push(new_word);
             buffer = [0, 0, 0, 0];
         }
     }
