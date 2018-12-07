@@ -28,7 +28,7 @@ impl Swapchain {
         CStr::from_bytes_with_nul(b"VK_KHR_swapchain\0").expect("Wrong extension string")
     }
 
-    pub unsafe fn destroy_swapchain_khr(
+    pub unsafe fn destroy_swapchain(
         &self,
         swapchain: vk::SwapchainKHR,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
@@ -41,7 +41,7 @@ impl Swapchain {
     }
 
     /// On success, returns the next image's index and whether the swapchain is suboptimal for the surface.
-    pub unsafe fn acquire_next_image_khr(
+    pub unsafe fn acquire_next_image(
         &self,
         swapchain: vk::SwapchainKHR,
         timeout: u64,
@@ -64,7 +64,7 @@ impl Swapchain {
         }
     }
 
-    pub unsafe fn create_swapchain_khr(
+    pub unsafe fn create_swapchain(
         &self,
         create_info: &vk::SwapchainCreateInfoKHR,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
@@ -83,7 +83,7 @@ impl Swapchain {
     }
 
     /// On success, returns whether the swapchain is suboptimal for the surface.
-    pub unsafe fn queue_present_khr(
+    pub unsafe fn queue_present(
         &self,
         queue: vk::Queue,
         create_info: &vk::PresentInfoKHR,
@@ -96,7 +96,7 @@ impl Swapchain {
         }
     }
 
-    pub unsafe fn get_swapchain_images_khr(
+    pub unsafe fn get_swapchain_images(
         &self,
         swapchain: vk::SwapchainKHR,
     ) -> VkResult<Vec<vk::Image>> {

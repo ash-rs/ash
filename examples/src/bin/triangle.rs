@@ -354,7 +354,7 @@ fn main() {
         base.render_loop(|| {
             let (present_index, _) = base
                 .swapchain_loader
-                .acquire_next_image_khr(
+                .acquire_next_image(
                     base.swapchain,
                     std::u64::MAX,
                     base.present_complete_semaphore,
@@ -438,7 +438,7 @@ fn main() {
                 .image_indices(&[present_index])
                 .build();
             base.swapchain_loader
-                .queue_present_khr(base.present_queue, &present_info)
+                .queue_present(base.present_queue, &present_info)
                 .unwrap();
         });
 

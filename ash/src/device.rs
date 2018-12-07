@@ -265,6 +265,15 @@ pub trait DeviceV1_0 {
             .destroy_fence(self.handle(), fence, allocation_callbacks.as_raw_ptr());
     }
 
+    unsafe fn destroy_event(
+        &self,
+        event: vk::Event,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+    ) {
+        self.fp_v1_0()
+            .destroy_event(self.handle(), event, allocation_callbacks.as_raw_ptr());
+    }
+
     unsafe fn destroy_image(
         &self,
         image: vk::Image,
@@ -1276,6 +1285,34 @@ pub trait DeviceV1_0 {
         }
     }
 
+    unsafe fn get_pipeline_cache_data(
+        &self,
+        pipeline_cache: vk::PipelineCache,
+    ) -> VkResult<Vec<u8>> {
+        let mut data_size: usize = 0;
+        let err_code = self.fp_v1_0().get_pipeline_cache_data(
+            self.handle(),
+            pipeline_cache,
+            &mut data_size,
+            ptr::null_mut(),
+        );
+        if err_code != vk::Result::SUCCESS {
+            return Err(err_code);
+        };
+        let mut data: Vec<u8> = Vec::with_capacity(data_size);
+        let err_code = self.fp_v1_0().get_pipeline_cache_data(
+            self.handle(),
+            pipeline_cache,
+            &mut data_size,
+            data.as_mut_ptr() as _,
+        );
+        data.set_len(data_size);
+        match err_code {
+            vk::Result::SUCCESS => Ok(data),
+            _ => Err(err_code),
+        }
+    }
+
     unsafe fn map_memory(
         &self,
         memory: vk::DeviceMemory,
@@ -1394,11 +1431,11 @@ pub trait DeviceV1_0 {
     unsafe fn begin_command_buffer(
         &self,
         command_buffer: vk::CommandBuffer,
-        create_info: &vk::CommandBufferBeginInfo,
+        begin_info: &vk::CommandBufferBeginInfo,
     ) -> VkResult<()> {
         let err_code = self
             .fp_v1_0()
-            .begin_command_buffer(command_buffer, create_info);
+            .begin_command_buffer(command_buffer, begin_info);
         match err_code {
             vk::Result::SUCCESS => Ok(()),
             _ => Err(err_code),

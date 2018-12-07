@@ -16,7 +16,7 @@ impl MeshShader {
         });
         MeshShader { mesh_shader_fn }
     }
-    pub unsafe fn cmd_draw_mesh_tasks_nv(
+    pub unsafe fn cmd_draw_mesh_tasks(
         &self,
         command_buffer: vk::CommandBuffer,
         task_count: u32,
@@ -25,7 +25,7 @@ impl MeshShader {
         self.mesh_shader_fn
             .cmd_draw_mesh_tasks_nv(command_buffer, task_count, first_task);
     }
-    pub unsafe fn cmd_draw_mesh_tasks_indirect_nv(
+    pub unsafe fn cmd_draw_mesh_tasks_indirect(
         &self,
         command_buffer: vk::CommandBuffer,
         buffer: vk::Buffer,
@@ -41,7 +41,7 @@ impl MeshShader {
             stride,
         );
     }
-    pub unsafe fn cmd_draw_mesh_tasks_indirect_count_nv(
+    pub unsafe fn cmd_draw_mesh_tasks_indirect_count(
         &self,
         command_buffer: vk::CommandBuffer,
         buffer: vk::Buffer,
