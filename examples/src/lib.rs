@@ -117,8 +117,8 @@ pub fn record_submit_commandbuffer<D: DeviceV1_0, F: FnOnce(&D, vk::CommandBuffe
                 command_buffer,
                 vk::CommandBufferResetFlags::RELEASE_RESOURCES,
             ).expect("Reset command buffer failed.");
-
-        let command_buffer_begin_info = vk::CommandBufferBeginInfo::default();
+        let command_buffer_begin_info = vk::CommandBufferBeginInfo::builder()
+            .flags(vk::CommandBufferUsageFlags::ONE_TIME_SUBMIT);
 
         device
             .begin_command_buffer(command_buffer, &command_buffer_begin_info)
@@ -134,11 +134,12 @@ pub fn record_submit_commandbuffer<D: DeviceV1_0, F: FnOnce(&D, vk::CommandBuffe
             .create_fence(&fence_create_info, None)
             .expect("Create fence failed.");
 
+        let command_buffers = vec![command_buffer];
         let submit_info = vk::SubmitInfo::builder()
             .wait_semaphores(wait_semaphores)
-            .command_buffers(&[command_buffer])
-            .signal_semaphores(signal_semaphores)
             .wait_dst_stage_mask(wait_mask)
+            .command_buffers(&command_buffers)
+            .signal_semaphores(signal_semaphores)
             .build();
 
         device
@@ -161,9 +162,9 @@ unsafe fn create_surface<E: EntryV1_0, I: InstanceV1_0>(
     let x11_display = window.get_xlib_display().unwrap();
     let x11_window = window.get_xlib_window().unwrap();
     let x11_create_info = vk::XlibSurfaceCreateInfoKHR::builder()
-        .window(x11_window as vk::Window)
-        .dpy(x11_display as *mut vk::Display)
-        .build();
+        .window(x11_window)
+        .dpy(x11_display as *mut vk::Display);
+
     let xlib_surface_loader = XlibSurface::new(entry, instance);
     xlib_surface_loader.create_xlib_surface(&x11_create_info, None)
 }
@@ -400,12 +401,11 @@ impl ExampleBase {
                 .expect("Instance creation error");
 
             let debug_info = vk::DebugReportCallbackCreateInfoEXT::builder()
-                .pfn_callback(Some(vulkan_debug_callback))
                 .flags(
                     vk::DebugReportFlagsEXT::ERROR
                         | vk::DebugReportFlagsEXT::WARNING
-                        | vk::DebugReportFlagsEXT::PERFORMANCE_WARNING,
-                ).build();
+                        | vk::DebugReportFlagsEXT::PERFORMANCE_WARNING)
+                .pfn_callback(Some(vulkan_debug_callback));
 
             let debug_report_loader = DebugReport::new(&entry, &instance);
             let debug_call_back = debug_report_loader
@@ -447,16 +447,15 @@ impl ExampleBase {
             };
             let priorities = [1.0];
 
-            let queue_info = vk::DeviceQueueCreateInfo::builder()
-                .queue_family_index(queue_family_index as u32)
-                .queue_priorities(&priorities)
-                .build();
+            let queue_info = [vk::DeviceQueueCreateInfo::builder()
+                              .queue_family_index(queue_family_index)
+                              .queue_priorities(&priorities)
+                              .build()];
 
             let device_create_info = vk::DeviceCreateInfo::builder()
-                .queue_create_infos(&[queue_info])
+                .queue_create_infos(&queue_info)
                 .enabled_extension_names(&device_extension_names_raw)
-                .enabled_features(&features)
-                .build();
+                .enabled_features(&features);
 
             let device: Device = instance
                 .create_device(pdevice, &device_create_info, None)
@@ -512,33 +511,32 @@ impl ExampleBase {
 
             let swapchain_create_info = vk::SwapchainCreateInfoKHR::builder()
                 .surface(surface)
-                .min_image_count(desired_image_count)
-                .image_color_space(surface_format.color_space)
-                .image_format(surface_format.format)
-                .image_extent(surface_resolution.clone())
-                .image_usage(vk::ImageUsageFlags::COLOR_ATTACHMENT)
-                .pre_transform(pre_transform)
-                .composite_alpha(vk::CompositeAlphaFlagsKHR::OPAQUE)
-                .present_mode(present_mode)
-                //                .clipped(true)
-                .image_array_layers(1)
-                .build();
+                .min_image_count( desired_image_count)
+                .image_color_space( surface_format.color_space)
+                .image_format( surface_format.format)
+                .image_extent( surface_resolution.clone())
+                .image_usage( vk::ImageUsageFlags::COLOR_ATTACHMENT)
+                .image_sharing_mode(vk::SharingMode::EXCLUSIVE)
+                .pre_transform( pre_transform)
+                .composite_alpha( vk::CompositeAlphaFlagsKHR::OPAQUE)
+                .present_mode( present_mode)
+                .clipped(true)
+                .image_array_layers( 1);
+
             let swapchain = swapchain_loader
                 .create_swapchain(&swapchain_create_info, None)
                 .unwrap();
 
             let pool_create_info = vk::CommandPoolCreateInfo::builder()
-                .queue_family_index(queue_family_index)
                 .flags(vk::CommandPoolCreateFlags::RESET_COMMAND_BUFFER)
-                .build();
+                .queue_family_index(queue_family_index);
 
             let pool = device.create_command_pool(&pool_create_info, None).unwrap();
 
             let command_buffer_allocate_info = vk::CommandBufferAllocateInfo::builder()
                 .command_buffer_count(2)
                 .command_pool(pool)
-                .level(vk::CommandBufferLevel::PRIMARY)
-                .build();
+                .level(vk::CommandBufferLevel::PRIMARY);
 
             let command_buffers = device
                 .allocate_command_buffers(&command_buffer_allocate_info)
@@ -551,33 +549,39 @@ impl ExampleBase {
                 .iter()
                 .map(|&image| {
                     let create_view_info = vk::ImageViewCreateInfo::builder()
-                        .subresource_range(
-                            vk::ImageSubresourceRange::builder()
-                                .aspect_mask(vk::ImageAspectFlags::COLOR)
-                                .level_count(1)
-                                .layer_count(1)
-                                .build(),
-                        ).image(image)
+                        .view_type( vk::ImageViewType::TYPE_2D)
                         .format(surface_format.format)
-                        .view_type(vk::ImageViewType::TYPE_2D)
-                        .build();
-
+                        .components( vk::ComponentMapping {
+                            r: vk::ComponentSwizzle::R,
+                            g: vk::ComponentSwizzle::G,
+                            b: vk::ComponentSwizzle::B,
+                            a: vk::ComponentSwizzle::A,
+                        })
+                        .subresource_range( vk::ImageSubresourceRange {
+                            aspect_mask: vk::ImageAspectFlags::COLOR,
+                            base_mip_level: 0,
+                            level_count: 1,
+                            base_array_layer: 0,
+                            layer_count: 1,
+                        })
+                        .image( image);
                     device.create_image_view(&create_view_info, None).unwrap()
                 }).collect();
             let device_memory_properties = instance.get_physical_device_memory_properties(pdevice);
-
             let depth_image_create_info = vk::ImageCreateInfo::builder()
-                .image_type(vk::ImageType::TYPE_2D)
-                .format(vk::Format::D16_UNORM)
-                .extent(vk::Extent3D {
+                .image_type( vk::ImageType::TYPE_2D)
+                .format( vk::Format::D16_UNORM)
+                .extent( vk::Extent3D {
                     width: surface_resolution.width,
                     height: surface_resolution.height,
                     depth: 1,
-                }).mip_levels(1)
-                .array_layers(1)
-                .samples(vk::SampleCountFlags::TYPE_1)
+                })
+                .mip_levels( 1)
+                .array_layers( 1)
+                .samples( vk::SampleCountFlags::TYPE_1)
+                .tiling( vk::ImageTiling::OPTIMAL)
                 .usage(vk::ImageUsageFlags::DEPTH_STENCIL_ATTACHMENT)
-                .build();
+                .sharing_mode( vk::SharingMode::EXCLUSIVE);
 
             let depth_image = device.create_image(&depth_image_create_info, None).unwrap();
             let depth_image_memory_req = device.get_image_memory_requirements(depth_image);
