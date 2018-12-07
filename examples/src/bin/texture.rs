@@ -49,39 +49,36 @@ fn main() {
                 load_op: vk::AttachmentLoadOp::CLEAR,
                 initial_layout: vk::ImageLayout::DEPTH_STENCIL_ATTACHMENT_OPTIMAL,
                 final_layout: vk::ImageLayout::DEPTH_STENCIL_ATTACHMENT_OPTIMAL,
-                ..Default::default()
+                .. Default::default()
             },
         ];
-
-        let color_attachment_ref = vk::AttachmentReference {
+        let color_attachment_refs = [vk::AttachmentReference {
             attachment: 0,
             layout: vk::ImageLayout::COLOR_ATTACHMENT_OPTIMAL,
-        };
+        }];
         let depth_attachment_ref = vk::AttachmentReference {
             attachment: 1,
             layout: vk::ImageLayout::DEPTH_STENCIL_ATTACHMENT_OPTIMAL,
         };
-
-        let dependency = vk::SubpassDependency {
+        let dependencies = [vk::SubpassDependency {
             src_subpass: vk::SUBPASS_EXTERNAL,
             src_stage_mask: vk::PipelineStageFlags::COLOR_ATTACHMENT_OUTPUT,
             dst_access_mask: vk::AccessFlags::COLOR_ATTACHMENT_READ
                 | vk::AccessFlags::COLOR_ATTACHMENT_WRITE,
             dst_stage_mask: vk::PipelineStageFlags::COLOR_ATTACHMENT_OUTPUT,
-            ..Default::default()
-        };
+            .. Default::default()
+        }];
 
-        let subpass = vk::SubpassDescription::builder()
-            .color_attachments(&[color_attachment_ref])
-            .depth_stencil_attachment(&depth_attachment_ref)
-            .pipeline_bind_point(vk::PipelineBindPoint::GRAPHICS)
-            .build();
+        let subpasses = [vk::SubpassDescription::builder()
+                        .color_attachments( &color_attachment_refs)
+                        .depth_stencil_attachment( &depth_attachment_ref)
+                        .pipeline_bind_point( vk::PipelineBindPoint::GRAPHICS)
+                        .build()];
 
         let renderpass_create_info = vk::RenderPassCreateInfo::builder()
             .attachments(&renderpass_attachments)
-            .subpasses(&[subpass])
-            .dependencies(&[dependency])
-            .build();
+            .subpasses( &subpasses)
+            .dependencies( &dependencies);
 
         let renderpass = base
             .device
@@ -94,12 +91,11 @@ fn main() {
             .map(|&present_image_view| {
                 let framebuffer_attachments = [present_image_view, base.depth_image_view];
                 let frame_buffer_create_info = vk::FramebufferCreateInfo::builder()
-                    .render_pass(renderpass)
+                    .render_pass( renderpass)
                     .attachments(&framebuffer_attachments)
                     .width(base.surface_resolution.width)
-                    .height(base.surface_resolution.height)
-                    .layers(1)
-                    .build();
+                    .height( base.surface_resolution.height)
+                    .layers(1);
 
                 base.device
                     .create_framebuffer(&frame_buffer_create_info, None)
@@ -110,7 +106,7 @@ fn main() {
             size: std::mem::size_of_val(&index_buffer_data) as u64,
             usage: vk::BufferUsageFlags::INDEX_BUFFER,
             sharing_mode: vk::SharingMode::EXCLUSIVE,
-            ..Default::default()
+            .. Default::default()
         };
         let index_buffer = base.device.create_buffer(&index_buffer_info, None).unwrap();
         let index_buffer_memory_req = base.device.get_buffer_memory_requirements(index_buffer);
@@ -223,7 +219,7 @@ fn main() {
             size: std::mem::size_of_val(&uniform_color_buffer_data) as u64,
             usage: vk::BufferUsageFlags::UNIFORM_BUFFER,
             sharing_mode: vk::SharingMode::EXCLUSIVE,
-            ..Default::default()
+            .. Default::default()
         };
         let uniform_color_buffer = base
             .device
@@ -390,7 +386,9 @@ fn main() {
                         width: image_dimensions.0,
                         height: image_dimensions.1,
                         depth: 1,
-                    }).build()];
+                    },
+                    .. Default::default()
+                }];
                 device.cmd_copy_buffer_to_image(
                     texture_command_buffer,
                     image_buffer,
@@ -432,7 +430,9 @@ fn main() {
             address_mode_v: vk::SamplerAddressMode::MIRRORED_REPEAT,
             address_mode_w: vk::SamplerAddressMode::MIRRORED_REPEAT,
             max_anisotropy: 1.0,
-            ..Default::default()
+            border_color: vk::BorderColor::FLOAT_OPAQUE_WHITE,
+            compare_op: vk::CompareOp::NEVER,
+            .. Default::default()
         };
 
         let sampler = base.device.create_sampler(&sampler_info, None).unwrap();
@@ -453,7 +453,7 @@ fn main() {
                 ..Default::default()
             },
             image: texture_image,
-            ..Default::default()
+            .. Default::default()
         };
         let tex_image_view = base
             .device
@@ -471,8 +471,8 @@ fn main() {
         ];
         let descriptor_pool_info = vk::DescriptorPoolCreateInfo::builder()
             .pool_sizes(&descriptor_sizes)
-            .max_sets(1)
-            .build();
+            .max_sets( 1);
+
         let descriptor_pool = base
             .device
             .create_descriptor_pool(&descriptor_pool_info, None)
@@ -493,17 +493,16 @@ fn main() {
             },
         ];
         let descriptor_info = vk::DescriptorSetLayoutCreateInfo::builder()
-            .bindings(&desc_layout_bindings)
-            .build();
+            .bindings(&desc_layout_bindings);
 
         let desc_set_layouts = [base
             .device
             .create_descriptor_set_layout(&descriptor_info, None)
             .unwrap()];
+
         let desc_alloc_info = vk::DescriptorSetAllocateInfo::builder()
-            .descriptor_pool(descriptor_pool)
-            .set_layouts(&desc_set_layouts)
-            .build();
+            .descriptor_pool( descriptor_pool)
+            .set_layouts(&desc_set_layouts);
         let descriptor_sets = base
             .device
             .allocate_descriptor_sets(&desc_alloc_info)
@@ -527,7 +526,7 @@ fn main() {
                 descriptor_count: 1,
                 descriptor_type: vk::DescriptorType::UNIFORM_BUFFER,
                 p_buffer_info: &uniform_color_buffer_descriptor,
-                ..Default::default()
+                .. Default::default()
             },
             vk::WriteDescriptorSet {
                 dst_set: descriptor_sets[0],
@@ -535,7 +534,7 @@ fn main() {
                 descriptor_count: 1,
                 descriptor_type: vk::DescriptorType::COMBINED_IMAGE_SAMPLER,
                 p_image_info: &tex_descriptor,
-                ..Default::default()
+                .. Default::default()
             },
         ];
         base.device.update_descriptor_sets(&write_desc_sets, &[]);
@@ -567,8 +566,7 @@ fn main() {
             .expect("Fragment shader module error");
 
         let layout_create_info = vk::PipelineLayoutCreateInfo::builder()
-            .set_layouts(&desc_set_layouts)
-            .build();
+            .set_layouts(&desc_set_layouts);
 
         let pipeline_layout = base
             .device
@@ -581,13 +579,13 @@ fn main() {
                 module: vertex_shader_module,
                 p_name: shader_entry_name.as_ptr(),
                 stage: vk::ShaderStageFlags::VERTEX,
-                ..Default::default()
+                .. Default::default()
             },
             vk::PipelineShaderStageCreateInfo {
                 module: fragment_shader_module,
                 p_name: shader_entry_name.as_ptr(),
                 stage: vk::ShaderStageFlags::FRAGMENT,
-                ..Default::default()
+                .. Default::default()
             },
         ];
         let vertex_input_binding_descriptions = [vk::VertexInputBindingDescription {
@@ -611,13 +609,12 @@ fn main() {
         ];
         let vertex_input_state_info = vk::PipelineVertexInputStateCreateInfo::builder()
             .vertex_attribute_descriptions(&vertex_input_attribute_descriptions)
-            .vertex_binding_descriptions(&vertex_input_binding_descriptions)
-            .build();
+            .vertex_binding_descriptions(&vertex_input_binding_descriptions);
 
-        let vertex_input_assembly_state_info = vk::PipelineInputAssemblyStateCreateInfo::builder()
-            .topology(vk::PrimitiveTopology::TRIANGLE_LIST)
-            .build();
-
+        let vertex_input_assembly_state_info = vk::PipelineInputAssemblyStateCreateInfo {
+            topology: vk::PrimitiveTopology::TRIANGLE_LIST,
+            .. Default::default()
+        };
         let viewports = [vk::Viewport {
             x: 0.0,
             y: 0.0,
@@ -627,20 +624,22 @@ fn main() {
             max_depth: 1.0,
         }];
         let scissors = [vk::Rect2D {
-            offset: vk::Offset2D { x: 0, y: 0 },
             extent: base.surface_resolution.clone(),
+            .. Default::default()
         }];
-
         let viewport_state_info = vk::PipelineViewportStateCreateInfo::builder()
             .scissors(&scissors)
-            .viewports(&viewports)
-            .build();
+            .viewports(&viewports);
 
         let rasterization_info = vk::PipelineRasterizationStateCreateInfo {
             front_face: vk::FrontFace::COUNTER_CLOCKWISE,
             line_width: 1.0,
             polygon_mode: vk::PolygonMode::FILL,
-            ..Default::default()
+            .. Default::default()
+        };
+        let multisample_state_info = vk::PipelineMultisampleStateCreateInfo {
+            rasterization_samples: vk::SampleCountFlags::TYPE_1,
+            .. Default::default()
         };
 
         let multisample_state_info = vk::PipelineMultisampleStateCreateInfo::builder()
@@ -652,7 +651,7 @@ fn main() {
             pass_op: vk::StencilOp::KEEP,
             depth_fail_op: vk::StencilOp::KEEP,
             compare_op: vk::CompareOp::ALWAYS,
-            ..Default::default()
+            .. Default::default()
         };
         let depth_state_info = vk::PipelineDepthStencilStateCreateInfo {
             depth_test_enable: 1,
@@ -661,7 +660,7 @@ fn main() {
             front: noop_stencil_state.clone(),
             back: noop_stencil_state.clone(),
             max_depth_bounds: 1.0,
-            ..Default::default()
+            .. Default::default()
         };
 
         let color_blend_attachment_states = [vk::PipelineColorBlendAttachmentState {
@@ -675,27 +674,25 @@ fn main() {
             color_write_mask: vk::ColorComponentFlags::all(),
         }];
         let color_blend_state = vk::PipelineColorBlendStateCreateInfo::builder()
-            .logic_op(vk::LogicOp::CLEAR)
-            .attachments(&color_blend_attachment_states)
-            .build();
+            .logic_op( vk::LogicOp::CLEAR)
+            .attachments( &color_blend_attachment_states);
 
         let dynamic_state = [vk::DynamicState::VIEWPORT, vk::DynamicState::SCISSOR];
         let dynamic_state_info = vk::PipelineDynamicStateCreateInfo::builder()
-            .dynamic_states(&dynamic_state)
-            .build();
+            .dynamic_states(&dynamic_state);
 
         let graphic_pipeline_info = vk::GraphicsPipelineCreateInfo::builder()
             .stages(&shader_stage_create_infos)
-            .vertex_input_state(&vertex_input_state_info)
-            .input_assembly_state(&vertex_input_assembly_state_info)
-            .viewport_state(&viewport_state_info)
-            .rasterization_state(&rasterization_info)
-            .multisample_state(&multisample_state_info)
-            .depth_stencil_state(&depth_state_info)
-            .color_blend_state(&color_blend_state)
-            .dynamic_state(&dynamic_state_info)
-            .layout(pipeline_layout)
-            .render_pass(renderpass)
+            .vertex_input_state( &vertex_input_state_info)
+            .input_assembly_state( &vertex_input_assembly_state_info)
+            .viewport_state( &viewport_state_info)
+            .rasterization_state( &rasterization_info)
+            .multisample_state( &multisample_state_info)
+            .depth_stencil_state( &depth_state_info)
+            .color_blend_state( &color_blend_state)
+            .dynamic_state( &dynamic_state_info)
+            .layout( pipeline_layout)
+            .render_pass( renderpass)
             .build();
 
         let graphics_pipelines = base
@@ -731,11 +728,11 @@ fn main() {
             let render_pass_begin_info = vk::RenderPassBeginInfo::builder()
                 .render_pass(renderpass)
                 .framebuffer(framebuffers[present_index as usize])
-                .render_area(vk::Rect2D {
+                .render_area( vk::Rect2D {
                     offset: vk::Offset2D { x: 0, y: 0 },
                     extent: base.surface_resolution.clone(),
-                }).clear_values(&clear_values)
-                .build();
+                })
+                .clear_values(&clear_values);
 
             record_submit_commandbuffer(
                 &base.device,
@@ -791,13 +788,14 @@ fn main() {
                 },
             );
             //let mut present_info_err = mem::uninitialized();
-
-            let present_info = vk::PresentInfoKHR::builder()
-                .wait_semaphores(&[base.rendering_complete_semaphore])
-                .swapchains(&[base.swapchain])
-                .image_indices(&[present_index])
-                .build();
-
+            let present_info = vk::PresentInfoKHR {
+                wait_semaphore_count: 1,
+                p_wait_semaphores: &base.rendering_complete_semaphore,
+                swapchain_count: 1,
+                p_swapchains: &base.swapchain,
+                p_image_indices: &present_index,
+                .. Default::default()
+            };
             base.swapchain_loader
                 .queue_present(base.present_queue, &present_info)
                 .unwrap();
