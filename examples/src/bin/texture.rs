@@ -396,9 +396,8 @@ fn main() {
                         width: image_dimensions.0,
                         height: image_dimensions.1,
                         depth: 1,
-                    },
-                    ..Default::default()
-                }];
+                    }).build()];
+
                 device.cmd_copy_buffer_to_image(
                     texture_command_buffer,
                     image_buffer,
@@ -645,10 +644,6 @@ fn main() {
             front_face: vk::FrontFace::COUNTER_CLOCKWISE,
             line_width: 1.0,
             polygon_mode: vk::PolygonMode::FILL,
-            ..Default::default()
-        };
-        let multisample_state_info = vk::PipelineMultisampleStateCreateInfo {
-            rasterization_samples: vk::SampleCountFlags::TYPE_1,
             ..Default::default()
         };
 

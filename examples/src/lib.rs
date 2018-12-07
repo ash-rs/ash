@@ -45,6 +45,7 @@ use std::ops::Drop;
 use std::os::raw::{c_char, c_void};
 use std::ptr;
 
+
 const MAGIC_NUMBER: u32 = 0x07230203;
 
 fn spirv_is_little_endian(bytes: &[u8]) -> bool {
@@ -86,34 +87,6 @@ macro_rules! offset_of {
             (&b.$field as *const _ as isize) - (&b as *const _ as isize)
         }
     }};
-}
-
-fn u32_from_bytes(bytes: &[u8; 4]) -> u32 {
-    unsafe { std::mem::transmute(*bytes) }
-}
-
-pub fn bytes_to_u32_vec<B>(bytes: B) -> Vec<u32>
-where
-    B: Iterator<Item = u8>,
-{
-    let mut output = vec![];
-    let mut buffer: [u8; 4] = [0, 0, 0, 0];
-    let mut byte_len: usize = 0;
-    for (i, b) in bytes.enumerate() {
-        byte_len = i;
-        match i % 4 {
-            3 => {
-                buffer[3] = b;
-                output.push(u32_from_bytes(&buffer));
-                buffer = [0, 0, 0, 0];
-            }
-            idx => buffer[idx] = b,
-        }
-    }
-    if (byte_len + 1) % 4 != 0 {
-        output.push(u32_from_bytes(&buffer));
-    }
-    output
 }
 
 pub fn record_submit_commandbuffer<D: DeviceV1_0, F: FnOnce(&D, vk::CommandBuffer)>(
