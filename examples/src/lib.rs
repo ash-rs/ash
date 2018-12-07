@@ -36,7 +36,7 @@ use ash::extensions::khr::Win32Surface;
 use ash::extensions::mvk::MacOSSurface;
 pub use ash::version::{DeviceV1_0, EntryV1_0, InstanceV1_0};
 use ash::{vk, Device, Entry, Instance};
-use byteorder::{LittleEndian, BigEndian, ReadBytesExt};
+use byteorder::{BigEndian, LittleEndian, ReadBytesExt};
 use std::cell::RefCell;
 use std::default::Default;
 use std::ffi::{CStr, CString};
@@ -45,12 +45,11 @@ use std::ops::Drop;
 use std::os::raw::{c_char, c_void};
 use std::ptr;
 
-
 const MAGIC_NUMBER: u32 = 0x07230203;
 
-fn spirv_is_little_endian(bytes: &[u8] ) -> bool {
-    let buffer: [u8;4] = [bytes[0], bytes[1],bytes[2],bytes[3]];
-    let number : u32 = Cursor::new(buffer).read_u32::<LittleEndian>().unwrap();
+fn spirv_is_little_endian(bytes: &[u8]) -> bool {
+    let buffer: [u8; 4] = [bytes[0], bytes[1], bytes[2], bytes[3]];
+    let number: u32 = Cursor::new(buffer).read_u32::<LittleEndian>().unwrap();
     number == MAGIC_NUMBER
 }
 
@@ -62,7 +61,7 @@ pub fn bytes_to_u32_vec(bytes: &[u8]) -> Vec<u32> {
         let idx = i % 4;
         buffer[idx] = *b;
         if idx == 3 {
-            let new_word =  if is_little_endian {
+            let new_word = if is_little_endian {
                 Cursor::new(buffer).read_u32::<LittleEndian>().unwrap()
             } else {
                 Cursor::new(buffer).read_u32::<BigEndian>().unwrap()
@@ -131,7 +130,8 @@ pub fn record_submit_commandbuffer<D: DeviceV1_0, F: FnOnce(&D, vk::CommandBuffe
             .reset_command_buffer(
                 command_buffer,
                 vk::CommandBufferResetFlags::RELEASE_RESOURCES,
-            ).expect("Reset command buffer failed.");
+            )
+            .expect("Reset command buffer failed.");
         let command_buffer_begin_info = vk::CommandBufferBeginInfo::builder()
             .flags(vk::CommandBufferUsageFlags::ONE_TIME_SUBMIT);
 
@@ -384,7 +384,8 @@ impl ExampleBase {
                 .with_dimensions(winit::dpi::LogicalSize::new(
                     window_width as f64,
                     window_height as f64,
-                )).build(&events_loop)
+                ))
+                .build(&events_loop)
                 .unwrap();
             let entry = Entry::new().unwrap();
             let app_name = CString::new("VulkanTriangle").unwrap();
@@ -419,7 +420,8 @@ impl ExampleBase {
                 .flags(
                     vk::DebugReportFlagsEXT::ERROR
                         | vk::DebugReportFlagsEXT::WARNING
-                        | vk::DebugReportFlagsEXT::PERFORMANCE_WARNING)
+                        | vk::DebugReportFlagsEXT::PERFORMANCE_WARNING,
+                )
                 .pfn_callback(Some(vulkan_debug_callback));
 
             let debug_report_loader = DebugReport::new(&entry, &instance);
@@ -450,8 +452,10 @@ impl ExampleBase {
                                 true => Some((*pdevice, index)),
                                 _ => None,
                             }
-                        }).nth(0)
-                }).filter_map(|v| v)
+                        })
+                        .nth(0)
+                })
+                .filter_map(|v| v)
                 .nth(0)
                 .expect("Couldn't find suitable device.");
             let queue_family_index = queue_family_index as u32;
@@ -463,9 +467,9 @@ impl ExampleBase {
             let priorities = [1.0];
 
             let queue_info = [vk::DeviceQueueCreateInfo::builder()
-                              .queue_family_index(queue_family_index)
-                              .queue_priorities(&priorities)
-                              .build()];
+                .queue_family_index(queue_family_index)
+                .queue_priorities(&priorities)
+                .build()];
 
             let device_create_info = vk::DeviceCreateInfo::builder()
                 .queue_create_infos(&queue_info)
@@ -488,7 +492,8 @@ impl ExampleBase {
                         color_space: sfmt.color_space,
                     },
                     _ => sfmt.clone(),
-                }).nth(0)
+                })
+                .nth(0)
                 .expect("Unable to find suitable surface format.");
             let surface_capabilities = surface_loader
                 .get_physical_device_surface_capabilities(pdevice, surface)
@@ -526,17 +531,17 @@ impl ExampleBase {
 
             let swapchain_create_info = vk::SwapchainCreateInfoKHR::builder()
                 .surface(surface)
-                .min_image_count( desired_image_count)
-                .image_color_space( surface_format.color_space)
-                .image_format( surface_format.format)
-                .image_extent( surface_resolution.clone())
-                .image_usage( vk::ImageUsageFlags::COLOR_ATTACHMENT)
+                .min_image_count(desired_image_count)
+                .image_color_space(surface_format.color_space)
+                .image_format(surface_format.format)
+                .image_extent(surface_resolution.clone())
+                .image_usage(vk::ImageUsageFlags::COLOR_ATTACHMENT)
                 .image_sharing_mode(vk::SharingMode::EXCLUSIVE)
-                .pre_transform( pre_transform)
-                .composite_alpha( vk::CompositeAlphaFlagsKHR::OPAQUE)
-                .present_mode( present_mode)
+                .pre_transform(pre_transform)
+                .composite_alpha(vk::CompositeAlphaFlagsKHR::OPAQUE)
+                .present_mode(present_mode)
                 .clipped(true)
-                .image_array_layers( 1);
+                .image_array_layers(1);
 
             let swapchain = swapchain_loader
                 .create_swapchain(&swapchain_create_info, None)
@@ -564,39 +569,40 @@ impl ExampleBase {
                 .iter()
                 .map(|&image| {
                     let create_view_info = vk::ImageViewCreateInfo::builder()
-                        .view_type( vk::ImageViewType::TYPE_2D)
+                        .view_type(vk::ImageViewType::TYPE_2D)
                         .format(surface_format.format)
-                        .components( vk::ComponentMapping {
+                        .components(vk::ComponentMapping {
                             r: vk::ComponentSwizzle::R,
                             g: vk::ComponentSwizzle::G,
                             b: vk::ComponentSwizzle::B,
                             a: vk::ComponentSwizzle::A,
                         })
-                        .subresource_range( vk::ImageSubresourceRange {
+                        .subresource_range(vk::ImageSubresourceRange {
                             aspect_mask: vk::ImageAspectFlags::COLOR,
                             base_mip_level: 0,
                             level_count: 1,
                             base_array_layer: 0,
                             layer_count: 1,
                         })
-                        .image( image);
+                        .image(image);
                     device.create_image_view(&create_view_info, None).unwrap()
-                }).collect();
+                })
+                .collect();
             let device_memory_properties = instance.get_physical_device_memory_properties(pdevice);
             let depth_image_create_info = vk::ImageCreateInfo::builder()
-                .image_type( vk::ImageType::TYPE_2D)
-                .format( vk::Format::D16_UNORM)
-                .extent( vk::Extent3D {
+                .image_type(vk::ImageType::TYPE_2D)
+                .format(vk::Format::D16_UNORM)
+                .extent(vk::Extent3D {
                     width: surface_resolution.width,
                     height: surface_resolution.height,
                     depth: 1,
                 })
-                .mip_levels( 1)
-                .array_layers( 1)
-                .samples( vk::SampleCountFlags::TYPE_1)
-                .tiling( vk::ImageTiling::OPTIMAL)
+                .mip_levels(1)
+                .array_layers(1)
+                .samples(vk::SampleCountFlags::TYPE_1)
+                .tiling(vk::ImageTiling::OPTIMAL)
                 .usage(vk::ImageUsageFlags::DEPTH_STENCIL_ATTACHMENT)
-                .sharing_mode( vk::SharingMode::EXCLUSIVE);
+                .sharing_mode(vk::SharingMode::EXCLUSIVE);
 
             let depth_image = device.create_image(&depth_image_create_info, None).unwrap();
             let depth_image_memory_req = device.get_image_memory_requirements(depth_image);
@@ -604,7 +610,8 @@ impl ExampleBase {
                 &depth_image_memory_req,
                 &device_memory_properties,
                 vk::MemoryPropertyFlags::DEVICE_LOCAL,
-            ).expect("Unable to find suitable memory index for depth image.");
+            )
+            .expect("Unable to find suitable memory index for depth image.");
 
             let depth_image_allocate_info = vk::MemoryAllocateInfo::builder()
                 .allocation_size(depth_image_memory_req.size)
@@ -624,6 +631,7 @@ impl ExampleBase {
                 setup_command_buffer,
                 present_queue,
                 &[],
+                //                &[vk::PipelineStageFlags::BOTTOM_OF_PIPE],
                 &[],
                 &[],
                 |device, setup_command_buffer| {
