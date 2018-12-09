@@ -67,7 +67,8 @@ pub fn record_submit_commandbuffer<D: DeviceV1_0, F: FnOnce(&D, vk::CommandBuffe
             .reset_command_buffer(
                 command_buffer,
                 vk::CommandBufferResetFlags::RELEASE_RESOURCES,
-            ).expect("Reset command buffer failed.");
+            )
+            .expect("Reset command buffer failed.");
         let command_buffer_begin_info = vk::CommandBufferBeginInfo {
             s_type: vk::StructureType::COMMAND_BUFFER_BEGIN_INFO,
             p_next: ptr::null(),
@@ -330,7 +331,8 @@ impl ExampleBase {
                 .with_dimensions(winit::dpi::LogicalSize::new(
                     window_width as f64,
                     window_height as f64,
-                )).build(&events_loop)
+                ))
+                .build(&events_loop)
                 .unwrap();
             let entry = Entry::new().unwrap();
             let app_name = CString::new("VulkanTriangle").unwrap();
@@ -402,8 +404,10 @@ impl ExampleBase {
                                 true => Some((*pdevice, index)),
                                 _ => None,
                             }
-                        }).nth(0)
-                }).filter_map(|v| v)
+                        })
+                        .nth(0)
+                })
+                .filter_map(|v| v)
                 .nth(0)
                 .expect("Couldn't find suitable device.");
             let queue_family_index = queue_family_index as u32;
@@ -449,7 +453,8 @@ impl ExampleBase {
                         color_space: sfmt.color_space,
                     },
                     _ => sfmt.clone(),
-                }).nth(0)
+                })
+                .nth(0)
                 .expect("Unable to find suitable surface format.");
             let surface_capabilities = surface_loader
                 .get_physical_device_surface_capabilities(pdevice, surface)
@@ -553,7 +558,8 @@ impl ExampleBase {
                         image: image,
                     };
                     device.create_image_view(&create_view_info, None).unwrap()
-                }).collect();
+                })
+                .collect();
             let device_memory_properties = instance.get_physical_device_memory_properties(pdevice);
             let depth_image_create_info = vk::ImageCreateInfo {
                 s_type: vk::StructureType::IMAGE_CREATE_INFO,
@@ -582,7 +588,8 @@ impl ExampleBase {
                 &depth_image_memory_req,
                 &device_memory_properties,
                 vk::MemoryPropertyFlags::DEVICE_LOCAL,
-            ).expect("Unable to find suitable memory index for depth image.");
+            )
+            .expect("Unable to find suitable memory index for depth image.");
 
             let depth_image_allocate_info = vk::MemoryAllocateInfo {
                 s_type: vk::StructureType::MEMORY_ALLOCATE_INFO,

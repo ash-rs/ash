@@ -121,7 +121,8 @@ fn main() {
                 base.device
                     .create_framebuffer(&frame_buffer_create_info, None)
                     .unwrap()
-            }).collect();
+            })
+            .collect();
         let index_buffer_data = [0u32, 1, 2, 2, 3, 0];
         let index_buffer_info = vk::BufferCreateInfo {
             s_type: vk::StructureType::BUFFER_CREATE_INFO,
@@ -139,7 +140,8 @@ fn main() {
             &index_buffer_memory_req,
             &base.device_memory_properties,
             vk::MemoryPropertyFlags::HOST_VISIBLE,
-        ).expect("Unable to find suitable memorytype for the index buffer.");
+        )
+        .expect("Unable to find suitable memorytype for the index buffer.");
         let index_allocate_info = vk::MemoryAllocateInfo {
             s_type: vk::StructureType::MEMORY_ALLOCATE_INFO,
             p_next: ptr::null(),
@@ -157,7 +159,8 @@ fn main() {
                 0,
                 index_buffer_memory_req.size,
                 vk::MemoryMapFlags::empty(),
-            ).unwrap();
+            )
+            .unwrap();
         let mut index_slice = Align::new(
             index_ptr,
             align_of::<u32>() as u64,
@@ -208,7 +211,8 @@ fn main() {
             &vertex_input_buffer_memory_req,
             &base.device_memory_properties,
             vk::MemoryPropertyFlags::HOST_VISIBLE,
-        ).expect("Unable to find suitable memorytype for the vertex buffer.");
+        )
+        .expect("Unable to find suitable memorytype for the vertex buffer.");
 
         let vertex_buffer_allocate_info = vk::MemoryAllocateInfo {
             s_type: vk::StructureType::MEMORY_ALLOCATE_INFO,
@@ -227,7 +231,8 @@ fn main() {
                 0,
                 vertex_input_buffer_memory_req.size,
                 vk::MemoryMapFlags::empty(),
-            ).unwrap();
+            )
+            .unwrap();
         let mut slice = Align::new(
             vert_ptr,
             align_of::<Vertex>() as u64,
@@ -266,7 +271,8 @@ fn main() {
             &uniform_color_buffer_memory_req,
             &base.device_memory_properties,
             vk::MemoryPropertyFlags::HOST_VISIBLE,
-        ).expect("Unable to find suitable memorytype for the vertex buffer.");
+        )
+        .expect("Unable to find suitable memorytype for the vertex buffer.");
 
         let uniform_color_buffer_allocate_info = vk::MemoryAllocateInfo {
             s_type: vk::StructureType::MEMORY_ALLOCATE_INFO,
@@ -285,7 +291,8 @@ fn main() {
                 0,
                 uniform_color_buffer_memory_req.size,
                 vk::MemoryMapFlags::empty(),
-            ).unwrap();
+            )
+            .unwrap();
         let mut uniform_aligned_slice = Align::new(
             uniform_ptr,
             align_of::<Vector3>() as u64,
@@ -316,7 +323,8 @@ fn main() {
             &image_buffer_memory_req,
             &base.device_memory_properties,
             vk::MemoryPropertyFlags::HOST_VISIBLE,
-        ).expect("Unable to find suitable memorytype for the vertex buffer.");
+        )
+        .expect("Unable to find suitable memorytype for the vertex buffer.");
 
         let image_buffer_allocate_info = vk::MemoryAllocateInfo {
             s_type: vk::StructureType::MEMORY_ALLOCATE_INFO,
@@ -335,7 +343,8 @@ fn main() {
                 0,
                 image_buffer_memory_req.size,
                 vk::MemoryMapFlags::empty(),
-            ).unwrap();
+            )
+            .unwrap();
         let mut image_slice = Align::new(
             image_ptr,
             std::mem::align_of::<u8>() as u64,
@@ -377,7 +386,8 @@ fn main() {
             &texture_memory_req,
             &base.device_memory_properties,
             vk::MemoryPropertyFlags::DEVICE_LOCAL,
-        ).expect("Unable to find suitable memory index for depth image.");
+        )
+        .expect("Unable to find suitable memory index for depth image.");
 
         let texture_allocate_info = vk::MemoryAllocateInfo {
             s_type: vk::StructureType::MEMORY_ALLOCATE_INFO,
@@ -872,7 +882,8 @@ fn main() {
                     std::u64::MAX,
                     base.present_complete_semaphore,
                     vk::Fence::null(),
-                ).unwrap();
+                )
+                .unwrap();
             let clear_values = [
                 vk::ClearValue {
                     color: vk::ClearColorValue {

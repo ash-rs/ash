@@ -17,11 +17,7 @@ const LIB_PATH: &'static str = "vulkan-1.dll";
 
 #[cfg(all(
     unix,
-    not(any(
-        target_os = "macos",
-        target_os = "ios",
-        target_os = "android"
-    ))
+    not(any(target_os = "macos", target_os = "ios", target_os = "android"))
 ))]
 const LIB_PATH: &'static str = "libvulkan.so.1";
 

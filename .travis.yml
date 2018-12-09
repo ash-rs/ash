@@ -5,7 +5,7 @@ os:
 language: rust
 
 before_script:
-- rustup component add rustfmt-preview
+- rustup component add rustfmt
 
 rust:
   - stable
