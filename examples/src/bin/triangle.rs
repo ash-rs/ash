@@ -339,23 +339,23 @@ fn main() {
         let dynamic_state_info =
             vk::PipelineDynamicStateCreateInfo::builder().dynamic_states(&dynamic_state);
 
-        let graphic_pipeline_info = vk::GraphicsPipelineCreateInfo::builder()
-            .stages(&shader_stage_create_infos)
-            .vertex_input_state(&vertex_input_state_info)
-            .input_assembly_state(&vertex_input_assembly_state_info)
-            .viewport_state(&viewport_state_info)
-            .rasterization_state(&rasterization_info)
-            .multisample_state(&multisample_state_info)
-            .depth_stencil_state(&depth_state_info)
-            .color_blend_state(&color_blend_state)
-            .dynamic_state(&dynamic_state_info)
-            .layout(pipeline_layout)
-            .render_pass(renderpass)
-            .build();
+        let graphic_pipeline_info = [vk::GraphicsPipelineCreateInfo::builder()
+                                     .stages(&shader_stage_create_infos)
+                                     .vertex_input_state(&vertex_input_state_info)
+                                     .input_assembly_state(&vertex_input_assembly_state_info)
+                                     .viewport_state(&viewport_state_info)
+                                     .rasterization_state(&rasterization_info)
+                                     .multisample_state(&multisample_state_info)
+                                     .depth_stencil_state(&depth_state_info)
+                                     .color_blend_state(&color_blend_state)
+                                     .dynamic_state(&dynamic_state_info)
+                                     .layout(pipeline_layout)
+                                     .render_pass(renderpass)
+                                     .build()];
 
         let graphics_pipelines = base
             .device
-            .create_graphics_pipelines(vk::PipelineCache::null(), &[graphic_pipeline_info], None)
+            .create_graphics_pipelines(vk::PipelineCache::null(), &graphic_pipeline_info, None)
             .expect("Unable to create graphics pipeline");
 
         let graphic_pipeline = graphics_pipelines[0];

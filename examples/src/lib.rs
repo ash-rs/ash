@@ -40,7 +40,6 @@ use std::default::Default;
 use std::ffi::{CStr, CString};
 use std::ops::Drop;
 use std::os::raw::{c_char, c_void};
-use std::ptr;
 
 // Simple offset_of macro akin to C++ offsetof
 #[macro_export]
@@ -82,22 +81,19 @@ pub fn record_submit_commandbuffer<D: DeviceV1_0, F: FnOnce(&D, vk::CommandBuffe
             .end_command_buffer(command_buffer)
             .expect("End commandbuffer");
 
-        let fence_create_info = vk::FenceCreateInfo::default();
-
         let submit_fence = device
-            .create_fence(&fence_create_info, None)
+            .create_fence(&vk::FenceCreateInfo::default(), None)
             .expect("Create fence failed.");
 
         let command_buffers = vec![command_buffer];
-        let submit_info = vk::SubmitInfo::builder()
-            .wait_semaphores(wait_semaphores)
-            .wait_dst_stage_mask(wait_mask)
-            .command_buffers(&command_buffers)
-            .signal_semaphores(signal_semaphores)
-            .build();
-
+        let submit_info = [vk::SubmitInfo::builder()
+                           .wait_semaphores(wait_semaphores)
+                           .wait_dst_stage_mask(wait_mask)
+                           .command_buffers(&command_buffers)
+                           .signal_semaphores(signal_semaphores)
+                           .build()];
         device
-            .queue_submit(submit_queue, &[submit_info], submit_fence)
+            .queue_submit(submit_queue, &submit_info, submit_fence)
             .expect("queue submit failed.");
         device
             .wait_for_fences(&[submit_fence], true, std::u64::MAX)
@@ -342,14 +338,12 @@ impl ExampleBase {
                 .application_version(0)
                 .engine_name(&app_name)
                 .engine_version(0)
-                .api_version(vk_make_version!(1, 0, 36))
-                .build();
+                .api_version(vk_make_version!(1, 0, 36));
 
             let create_info = vk::InstanceCreateInfo::builder()
                 .application_info(&appinfo)
                 .enabled_layer_names(&layers_names_raw)
-                .enabled_extension_names(&extension_names_raw)
-                .build();
+                .enabled_extension_names(&extension_names_raw);
 
             let instance: Instance = entry
                 .create_instance(&create_info, None)
@@ -554,8 +548,7 @@ impl ExampleBase {
 
             let depth_image_allocate_info = vk::MemoryAllocateInfo::builder()
                 .allocation_size(depth_image_memory_req.size)
-                .memory_type_index(depth_image_memory_index)
-                .build();
+                .memory_type_index(depth_image_memory_index);
 
             let depth_image_memory = device
                 .allocate_memory(&depth_image_allocate_info, None)
@@ -570,26 +563,25 @@ impl ExampleBase {
                 setup_command_buffer,
                 present_queue,
                 &[],
-                //                &[vk::PipelineStageFlags::BOTTOM_OF_PIPE],
                 &[],
                 &[],
                 |device, setup_command_buffer| {
-                    let layout_transition_barrier = vk::ImageMemoryBarrier::builder()
-                        .image(depth_image)
-                        .dst_access_mask(
-                            vk::AccessFlags::DEPTH_STENCIL_ATTACHMENT_READ
-                                | vk::AccessFlags::DEPTH_STENCIL_ATTACHMENT_WRITE,
-                        )
-                        .new_layout(vk::ImageLayout::DEPTH_STENCIL_ATTACHMENT_OPTIMAL)
-                        .old_layout(vk::ImageLayout::UNDEFINED)
-                        .subresource_range(
-                            vk::ImageSubresourceRange::builder()
-                                .aspect_mask(vk::ImageAspectFlags::DEPTH)
-                                .layer_count(1)
-                                .level_count(1)
-                                .build(),
-                        )
-                        .build();
+                    let layout_transition_barriers = [vk::ImageMemoryBarrier::builder()
+                                                      .image(depth_image)
+                                                      .dst_access_mask(
+                                                          vk::AccessFlags::DEPTH_STENCIL_ATTACHMENT_READ
+                                                              | vk::AccessFlags::DEPTH_STENCIL_ATTACHMENT_WRITE,
+                                                      )
+                                                      .new_layout(vk::ImageLayout::DEPTH_STENCIL_ATTACHMENT_OPTIMAL)
+                                                      .old_layout(vk::ImageLayout::UNDEFINED)
+                                                      .subresource_range(
+                                                          vk::ImageSubresourceRange::builder()
+                                                              .aspect_mask(vk::ImageAspectFlags::DEPTH)
+                                                              .layer_count(1)
+                                                              .level_count(1)
+                                                              .build(),
+                                                      )
+                                                      .build()];
 
                     device.cmd_pipeline_barrier(
                         setup_command_buffer,
@@ -598,7 +590,7 @@ impl ExampleBase {
                         vk::DependencyFlags::empty(),
                         &[],
                         &[],
-                        &[layout_transition_barrier],
+                        &layout_transition_barriers,
                     );
                 },
             );
@@ -613,8 +605,7 @@ impl ExampleBase {
                 )
                 .image(depth_image)
                 .format(depth_image_create_info.format)
-                .view_type(vk::ImageViewType::TYPE_2D)
-                .build();
+                .view_type(vk::ImageViewType::TYPE_2D);
 
             let depth_image_view = device
                 .create_image_view(&depth_image_view_info, None)
