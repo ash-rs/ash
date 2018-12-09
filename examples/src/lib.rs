@@ -40,7 +40,6 @@ use std::default::Default;
 use std::ffi::{CStr, CString};
 use std::ops::Drop;
 use std::os::raw::{c_char, c_void};
-use std::ptr;
 
 // Simple offset_of macro akin to C++ offsetof
 #[macro_export]
@@ -127,6 +126,7 @@ unsafe fn create_surface<E: EntryV1_0, I: InstanceV1_0>(
     instance: &I,
     window: &winit::Window,
 ) -> Result<vk::SurfaceKHR, vk::Result> {
+    use std::ptr;
     use winit::os::macos::WindowExt;
 
     let wnd: cocoa_id = mem::transmute(window.get_nswindow());
@@ -160,6 +160,7 @@ unsafe fn create_surface<E: EntryV1_0, I: InstanceV1_0>(
     instance: &I,
     window: &winit::Window,
 ) -> Result<vk::SurfaceKHR, vk::Result> {
+    use std::ptr;
     use winapi::shared::windef::HWND;
     use winapi::um::libloaderapi::GetModuleHandleW;
     use winit::os::windows::WindowExt;

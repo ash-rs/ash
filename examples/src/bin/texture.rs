@@ -523,7 +523,7 @@ fn main() {
         };
 
         let tex_descriptor = vk::DescriptorImageInfo {
-            image_layout: vk::ImageLayout::GENERAL,
+            image_layout: vk::ImageLayout::SHADER_READ_ONLY_OPTIMAL,
             image_view: tex_image_view,
             sampler: sampler,
         };
