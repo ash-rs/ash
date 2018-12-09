@@ -384,7 +384,7 @@ fn main() {
                     &[],
                     &[texture_barrier],
                 );
-                let buffer_copy_regions = [vk::BufferImageCopy::builder()
+                let buffer_copy_regions = vk::BufferImageCopy::builder()
                     .image_subresource(
                         vk::ImageSubresourceLayers::builder()
                             .aspect_mask(vk::ImageAspectFlags::COLOR)
@@ -395,15 +395,14 @@ fn main() {
                         width: image_dimensions.0,
                         height: image_dimensions.1,
                         depth: 1,
-                    })
-                    .build()];
+                    });
 
                 device.cmd_copy_buffer_to_image(
                     texture_command_buffer,
                     image_buffer,
                     texture_image,
                     vk::ImageLayout::TRANSFER_DST_OPTIMAL,
-                    &buffer_copy_regions,
+                    &[buffer_copy_regions.build()],
                 );
                 let texture_barrier_end = vk::ImageMemoryBarrier {
                     src_access_mask: vk::AccessFlags::TRANSFER_WRITE,
@@ -682,7 +681,7 @@ fn main() {
         let dynamic_state_info =
             vk::PipelineDynamicStateCreateInfo::builder().dynamic_states(&dynamic_state);
 
-        let graphic_pipeline_infos = [vk::GraphicsPipelineCreateInfo::builder()
+        let graphic_pipeline_infos = vk::GraphicsPipelineCreateInfo::builder()
             .stages(&shader_stage_create_infos)
             .vertex_input_state(&vertex_input_state_info)
             .input_assembly_state(&vertex_input_assembly_state_info)
@@ -693,12 +692,15 @@ fn main() {
             .color_blend_state(&color_blend_state)
             .dynamic_state(&dynamic_state_info)
             .layout(pipeline_layout)
-            .render_pass(renderpass)
-            .build()];
+            .render_pass(renderpass);
 
         let graphics_pipelines = base
             .device
-            .create_graphics_pipelines(vk::PipelineCache::null(), &graphic_pipeline_infos, None)
+            .create_graphics_pipelines(
+                vk::PipelineCache::null(),
+                &[graphic_pipeline_infos.build()],
+                None,
+            )
             .unwrap();
 
         let graphic_pipeline = graphics_pipelines[0];

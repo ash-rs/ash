@@ -87,14 +87,15 @@ pub fn record_submit_commandbuffer<D: DeviceV1_0, F: FnOnce(&D, vk::CommandBuffe
             .expect("Create fence failed.");
 
         let command_buffers = vec![command_buffer];
-        let submit_info = [vk::SubmitInfo::builder()
+
+        let submit_info = vk::SubmitInfo::builder()
             .wait_semaphores(wait_semaphores)
             .wait_dst_stage_mask(wait_mask)
             .command_buffers(&command_buffers)
-            .signal_semaphores(signal_semaphores)
-            .build()];
+            .signal_semaphores(signal_semaphores);
+
         device
-            .queue_submit(submit_queue, &submit_info, submit_fence)
+            .queue_submit(submit_queue, &[submit_info.build()], submit_fence)
             .expect("queue submit failed.");
         device
             .wait_for_fences(&[submit_fence], true, std::u64::MAX)
@@ -567,7 +568,7 @@ impl ExampleBase {
                 &[],
                 &[],
                 |device, setup_command_buffer| {
-                    let layout_transition_barriers = [vk::ImageMemoryBarrier::builder()
+                    let layout_transition_barriers = vk::ImageMemoryBarrier::builder()
                         .image(depth_image)
                         .dst_access_mask(
                             vk::AccessFlags::DEPTH_STENCIL_ATTACHMENT_READ
@@ -581,8 +582,7 @@ impl ExampleBase {
                                 .layer_count(1)
                                 .level_count(1)
                                 .build(),
-                        )
-                        .build()];
+                        );
 
                     device.cmd_pipeline_barrier(
                         setup_command_buffer,
@@ -591,7 +591,7 @@ impl ExampleBase {
                         vk::DependencyFlags::empty(),
                         &[],
                         &[],
-                        &layout_transition_barriers,
+                        &[layout_transition_barriers.build()],
                     );
                 },
             );
