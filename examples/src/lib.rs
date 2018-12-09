@@ -87,11 +87,11 @@ pub fn record_submit_commandbuffer<D: DeviceV1_0, F: FnOnce(&D, vk::CommandBuffe
 
         let command_buffers = vec![command_buffer];
         let submit_info = [vk::SubmitInfo::builder()
-                           .wait_semaphores(wait_semaphores)
-                           .wait_dst_stage_mask(wait_mask)
-                           .command_buffers(&command_buffers)
-                           .signal_semaphores(signal_semaphores)
-                           .build()];
+            .wait_semaphores(wait_semaphores)
+            .wait_dst_stage_mask(wait_mask)
+            .command_buffers(&command_buffers)
+            .signal_semaphores(signal_semaphores)
+            .build()];
         device
             .queue_submit(submit_queue, &submit_info, submit_fence)
             .expect("queue submit failed.");
@@ -567,21 +567,21 @@ impl ExampleBase {
                 &[],
                 |device, setup_command_buffer| {
                     let layout_transition_barriers = [vk::ImageMemoryBarrier::builder()
-                                                      .image(depth_image)
-                                                      .dst_access_mask(
-                                                          vk::AccessFlags::DEPTH_STENCIL_ATTACHMENT_READ
-                                                              | vk::AccessFlags::DEPTH_STENCIL_ATTACHMENT_WRITE,
-                                                      )
-                                                      .new_layout(vk::ImageLayout::DEPTH_STENCIL_ATTACHMENT_OPTIMAL)
-                                                      .old_layout(vk::ImageLayout::UNDEFINED)
-                                                      .subresource_range(
-                                                          vk::ImageSubresourceRange::builder()
-                                                              .aspect_mask(vk::ImageAspectFlags::DEPTH)
-                                                              .layer_count(1)
-                                                              .level_count(1)
-                                                              .build(),
-                                                      )
-                                                      .build()];
+                        .image(depth_image)
+                        .dst_access_mask(
+                            vk::AccessFlags::DEPTH_STENCIL_ATTACHMENT_READ
+                                | vk::AccessFlags::DEPTH_STENCIL_ATTACHMENT_WRITE,
+                        )
+                        .new_layout(vk::ImageLayout::DEPTH_STENCIL_ATTACHMENT_OPTIMAL)
+                        .old_layout(vk::ImageLayout::UNDEFINED)
+                        .subresource_range(
+                            vk::ImageSubresourceRange::builder()
+                                .aspect_mask(vk::ImageAspectFlags::DEPTH)
+                                .layer_count(1)
+                                .level_count(1)
+                                .build(),
+                        )
+                        .build()];
 
                     device.cmd_pipeline_barrier(
                         setup_command_buffer,
