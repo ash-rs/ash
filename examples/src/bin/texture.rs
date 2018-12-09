@@ -5,11 +5,9 @@ extern crate image;
 use std::default::Default;
 use std::ffi::CString;
 use std::fs::File;
-use std::io::Read;
 use std::mem::{self, align_of};
 use std::os::raw::c_void;
 use std::path::Path;
-use std::ptr;
 
 use ash::util::*;
 use ash::vk;
@@ -548,20 +546,15 @@ fn main() {
         ];
         base.device.update_descriptor_sets(&write_desc_sets, &[]);
 
-        let vertex_spv_file =
+        let mut vertex_spv_file =
             File::open(Path::new("shader/texture/vert.spv")).expect("Could not find vert.spv.");
-        let frag_spv_file =
+        let mut frag_spv_file =
             File::open(Path::new("shader/texture/frag.spv")).expect("Could not find frag.spv.");
 
-        let vertex_bytes: Vec<u8> = vertex_spv_file
-            .bytes()
-            .filter_map(|byte| byte.ok())
-            .collect();
-        let vertex_code = bytes_to_u32_vec(&vertex_bytes);
+        let vertex_code = read_spv(&mut vertex_spv_file).expect("Failed to read vertex shader spv file");
         let vertex_shader_info = vk::ShaderModuleCreateInfo::builder().code(&vertex_code);
 
-        let frag_bytes: Vec<u8> = frag_spv_file.bytes().filter_map(|byte| byte.ok()).collect();
-        let frag_code = bytes_to_u32_vec(&frag_bytes);
+        let frag_code = read_spv(&mut frag_spv_file).expect("Failed to read fragment shader spv file");
         let frag_shader_info = vk::ShaderModuleCreateInfo::builder().code(&frag_code);
 
         let vertex_shader_module = base

@@ -7,11 +7,9 @@ use examples::*;
 use std::default::Default;
 use std::ffi::CString;
 use std::fs::File;
-use std::io::Read;
 use std::mem;
 use std::mem::align_of;
 use std::path::Path;
-use std::ptr;
 
 #[derive(Clone, Debug, Copy)]
 struct Vertex {
@@ -204,23 +202,17 @@ fn main() {
         base.device
             .bind_buffer_memory(vertex_input_buffer, vertex_input_buffer_memory, 0)
             .unwrap();
-        let vertex_spv_file =
+        let mut vertex_spv_file =
             File::open(Path::new("shader/triangle/vert.spv")).expect("Could not find vert.spv.");
-        let frag_spv_file =
+        let mut frag_spv_file =
             File::open(Path::new("shader/triangle/frag.spv")).expect("Could not find frag.spv.");
 
-        let vertex_bytes: Vec<u8> = vertex_spv_file
-            .bytes()
-            .filter_map(|byte| byte.ok())
-            .collect();
-
-        let vertex_code = bytes_to_u32_vec(&vertex_bytes);
-
+        let vertex_code = read_spv(&mut vertex_spv_file).expect("Failed to read vertex shader spv file");
         let vertex_shader_info = vk::ShaderModuleCreateInfo::builder().code(&vertex_code);
 
-        let frag_bytes: Vec<u8> = frag_spv_file.bytes().filter_map(|byte| byte.ok()).collect();
-        let frag_code = bytes_to_u32_vec(&frag_bytes);
+        let frag_code = read_spv(&mut frag_spv_file).expect("Failed to read fragment shader spv file");
         let frag_shader_info = vk::ShaderModuleCreateInfo::builder().code(&frag_code);
+
         let vertex_shader_module = base
             .device
             .create_shader_module(&vertex_shader_info, None)

@@ -7,7 +7,6 @@ authors = ["maik klein <maikklein@googlemail.com>"]
 winit = "0.16"
 image = "0.10.4"
 ash = { path = "../ash" }
-byteorder = "1.2.7"
 
 [target.'cfg(windows)'.dependencies]
 winapi = { version = "0.3.4", features = ["windef", "winuser"] }
