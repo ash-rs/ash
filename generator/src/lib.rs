@@ -36,7 +36,7 @@ impl CType {
             CType::Float => Term::intern("f32"),
             CType::Bool32 => Term::intern("Bool32"),
         };
-        quote!{#term}
+        quote! {#term}
     }
 }
 
@@ -131,7 +131,7 @@ pub fn define_handle_macro() -> Tokens {
 }
 
 pub fn handle_nondispatchable_macro() -> Tokens {
-    quote!{
+    quote! {
         #[macro_export]
         macro_rules! handle_nondispatchable {
             ($name: ident, $ty: ident) => {
@@ -167,7 +167,7 @@ pub fn handle_nondispatchable_macro() -> Tokens {
     }
 }
 pub fn vk_version_macros() -> Tokens {
-    quote!{
+    quote! {
         #[macro_export]
         macro_rules! vk_make_version {
             ($major:expr, $minor:expr, $patch:expr) => {
@@ -198,7 +198,7 @@ pub fn vk_version_macros() -> Tokens {
     }
 }
 pub fn vk_bitflags_wrapped_macro() -> Tokens {
-    quote!{
+    quote! {
         #[macro_export]
         macro_rules! vk_bitflags_wrapped {
             ($name: ident, $all: expr, $flag_type: ty) => {
@@ -454,24 +454,24 @@ impl Constant {
         match *self {
             Constant::Number(n) => {
                 let term = Term::intern(&n.to_string());
-                quote!{#term}
+                quote! {#term}
             }
             Constant::Hex(ref s) => {
                 let term = Term::intern(&format!("0x{}", s));
-                quote!{#term}
+                quote! {#term}
             }
             Constant::Text(ref text) => {
-                quote!{#text}
+                quote! {#text}
             }
             Constant::CExpr(ref expr) => {
                 let (_, (_, rexpr)) = cexpr(expr).expect("Unable to parse cexpr");
                 let term = Term::intern(rexpr.as_str());
-                quote!{#term}
+                quote! {#term}
             }
             Constant::BitPos(pos) => {
                 let value = 1 << pos;
                 let term = Term::intern(&format!("0b{:b}", value));
-                quote!{#term}
+                quote! {#term}
             }
         }
     }
@@ -539,7 +539,8 @@ impl CommandExt for vkxml::Command {
             .map(|field| match field.basetype.as_str() {
                 "VkDevice" | "VkCommandBuffer" | "VkQueue" => true,
                 _ => false,
-            }).unwrap_or(false);
+            })
+            .unwrap_or(false);
         match self.name.as_str() {
             "vkGetInstanceProcAddr" => FunctionType::Static,
             "vkCreateInstance"
@@ -592,7 +593,7 @@ impl ToTokens for vkxml::ReferenceType {
             }
         };
         let ident = Term::intern(ptr_name);
-        quote!{
+        quote! {
             #ident
         }
     }
@@ -626,8 +627,8 @@ fn name_to_tokens(type_name: &str) -> Ident {
 }
 fn to_type_tokens(type_name: &str, reference: Option<&vkxml::ReferenceType>) -> Tokens {
     let new_name = name_to_tokens(type_name);
-    let ptr_name = reference.map(|r| r.to_tokens(false)).unwrap_or(quote!{});
-    quote!{#ptr_name #new_name}
+    let ptr_name = reference.map(|r| r.to_tokens(false)).unwrap_or(quote! {});
+    quote! {#ptr_name #new_name}
 }
 
 impl FieldExt for vkxml::Field {
@@ -649,8 +650,8 @@ impl FieldExt for vkxml::Field {
             .reference
             .as_ref()
             .map(|r| r.to_tokens(self.is_const))
-            .unwrap_or(quote!{});
-        let pointer_ty = quote!{
+            .unwrap_or(quote! {});
+        let pointer_ty = quote! {
             #pointer #ty
         };
         let array = self.array.as_ref().and_then(|arraytype| match arraytype {
@@ -664,7 +665,7 @@ impl FieldExt for vkxml::Field {
                 // used inside the static array
                 let size = constant_name(size);
                 let size = Term::intern(&size);
-                Some(quote!{
+                Some(quote! {
                     [#ty; #size]
                 })
             }
@@ -704,7 +705,8 @@ fn generate_function_pointers<'a>(
             } else {
                 return false;
             }
-        }).collect();
+        })
+        .collect();
 
     let params: Vec<Vec<(Ident, Tokens)>> = commands
         .iter()
@@ -716,9 +718,11 @@ fn generate_function_pointers<'a>(
                     let name = field.param_ident();
                     let ty = field.type_tokens();
                     (name, ty)
-                }).collect();
+                })
+                .collect();
             params
-        }).collect();
+        })
+        .collect();
 
     let params_names: Vec<Vec<_>> = params
         .iter()
@@ -727,29 +731,32 @@ fn generate_function_pointers<'a>(
                 .iter()
                 .map(|&(param_name, _)| param_name)
                 .collect()
-        }).collect();
+        })
+        .collect();
     let param_names_ref = &params_names;
     let expanded_params: Vec<_> = params
         .iter()
         .map(|inner_params| {
             let inner_params_iter = inner_params.iter().map(|&(ref param_name, ref param_ty)| {
-                quote!{#param_name: #param_ty}
+                quote! {#param_name: #param_ty}
             });
-            quote!{
+            quote! {
                 #(#inner_params_iter,)*
             }
-        }).collect();
+        })
+        .collect();
     let expanded_params_unused: Vec<_> = params
         .iter()
         .map(|inner_params| {
             let inner_params_iter = inner_params.iter().map(|&(ref param_name, ref param_ty)| {
                 let unused_name = Ident::from(format!("_{}", param_name).as_str());
-                quote!{#unused_name: #param_ty}
+                quote! {#unused_name: #param_ty}
             });
-            quote!{
+            quote! {
                 #(#inner_params_iter,)*
             }
-        }).collect();
+        })
+        .collect();
     let expanded_params_ref = &expanded_params;
 
     let return_types: Vec<_> = commands
@@ -774,9 +781,11 @@ fn generate_function_pointers<'a>(
                     let name = field.param_ident();
                     let ty = field.type_tokens();
                     quote! { #name: #ty }
-                }).collect();
+                })
+                .collect();
             params
-        }).collect();
+        })
+        .collect();
     let signature_params_ref = &signature_params;
 
     let pfn_return_types: Vec<_> = pfn_commands
@@ -785,7 +794,7 @@ fn generate_function_pointers<'a>(
         .collect();
     let pfn_return_types_ref = &pfn_return_types;
 
-    quote!{
+    quote! {
         #(
             #[allow(non_camel_case_types)]
             pub type #pfn_names_ref = extern "system" fn(#(#signature_params_ref),*) -> #pfn_return_types_ref;
@@ -867,7 +876,8 @@ pub fn generate_extension_constants<'a>(
         .filter_map(|item| match item {
             vk_parse::ExtensionChild::Require { items, .. } => Some(items.iter()),
             _ => None,
-        }).flat_map(|iter| iter);
+        })
+        .flat_map(|iter| iter);
     let enum_tokens = items.filter_map(|item| match item {
         vk_parse::InterfaceItem::Enum(_enum) => {
             use vk_parse::EnumSpec;
@@ -905,7 +915,7 @@ pub fn generate_extension_constants<'a>(
                 .push(ext_constant.variant_ident(&extends));
             let impl_block = bitflags_impl_block(ident, &extends, &[&ext_constant]);
             let doc_string = format!("Generated from '{}'", extension_name);
-            let q = quote!{
+            let q = quote! {
                 #[doc = #doc_string]
                 #impl_block
             };
@@ -915,7 +925,7 @@ pub fn generate_extension_constants<'a>(
         }
         _ => None,
     });
-    quote!{
+    quote! {
         #(#enum_tokens)*
     }
 }
@@ -937,7 +947,8 @@ pub fn generate_extension_commands<'a>(
                 }))
             }
             _ => None,
-        }).flat_map(|iter| iter)
+        })
+        .flat_map(|iter| iter)
         .collect_vec();
     let name = format!("{}Fn", extension_name.to_camel_case());
     let ident = Ident::from(&name[2..]);
@@ -964,7 +975,7 @@ pub fn generate_extension<'a>(
         const_values,
     );
     let fp = generate_extension_commands(&extension.name, &extension.children, cmd_map, fn_cache);
-    let q = quote!{
+    let q = quote! {
         #fp
         #extension_tokens
     };
@@ -973,7 +984,7 @@ pub fn generate_extension<'a>(
 pub fn generate_typedef(typedef: &vkxml::Typedef) -> Tokens {
     let typedef_name = to_type_tokens(&typedef.name, None);
     let typedef_ty = to_type_tokens(&typedef.basetype, None);
-    quote!{
+    quote! {
         pub type #typedef_name = #typedef_ty;
     }
 }
@@ -996,7 +1007,7 @@ pub fn generate_bitmask(
         return None;
     };
     bitflags_cache.insert(ident.clone());
-    Some(quote!{
+    Some(quote! {
         #[repr(transparent)]
         #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
         pub struct #ident(Flags);
@@ -1051,11 +1062,12 @@ pub fn bitflags_impl_block(
             let variant_ident = constant.variant_ident(enum_name);
             let tokens = constant.to_tokens();
             (variant_ident, tokens)
-        }).collect_vec();
+        })
+        .collect_vec();
 
     let notations = constants.iter().map(|constant| {
         constant.notation().map(|n| {
-            quote!{
+            quote! {
                 #[doc = #n]
             }
         })
@@ -1066,12 +1078,12 @@ pub fn bitflags_impl_block(
             .iter()
             .zip(notations.clone())
             .map(|((variant_ident, value), ref notation)| {
-                quote!{
+                quote! {
                     #notation
                     pub const #variant_ident: Self = #ident(#value);
                 }
             });
-    quote!{
+    quote! {
         impl #ident {
             #(#variants)*
         }
@@ -1093,7 +1105,8 @@ pub fn generate_enum<'a>(
         .filter_map(|elem| match *elem {
             vkxml::EnumerationElement::Enum(ref constant) => Some(constant),
             _ => None,
-        }).collect_vec();
+        })
+        .collect_vec();
     let values = const_values.entry(ident.clone()).or_insert_with(Vec::new);
     for constant in &constants {
         const_cache.insert(constant.name.as_str());
@@ -1110,10 +1123,10 @@ pub fn generate_enum<'a>(
 
         let impl_bitflags = bitflags_impl_block(ident, &_enum.name, &constants);
         if bitflags_cache.contains(&ident) {
-            EnumType::Bitflags(quote!{})
+            EnumType::Bitflags(quote! {})
         } else {
             bitflags_cache.insert(ident.clone());
-            let q = quote!{
+            let q = quote! {
                 #[repr(transparent)]
                 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
                 pub struct #ident(pub(crate) Flags);
@@ -1124,7 +1137,7 @@ pub fn generate_enum<'a>(
         }
     } else {
         let impl_block = bitflags_impl_block(ident, &_enum.name, &constants);
-        let enum_quote = quote!{
+        let enum_quote = quote! {
             #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
             #[repr(transparent)]
             pub struct #ident(pub(crate) i32);
@@ -1138,10 +1151,10 @@ pub fn generate_enum<'a>(
             //"StructureType" => generate_structure_type(&_name, _enum, create_info_constants),
             "Result" => generate_result(ident, _enum),
             _ => {
-                quote!{}
+                quote! {}
             }
         };
-        let q = quote!{
+        let q = quote! {
             #enum_quote
             #special_quote
 
@@ -1163,13 +1176,13 @@ pub fn generate_result(ident: Ident, _enum: &vkxml::Enumeration) -> Tokens {
         };
 
         let variant_ident = variant_ident(&_enum.name, variant_name);
-        Some(quote!{
+        Some(quote! {
             #ident::#variant_ident => Some(#notation)
         })
     });
 
     let notation2 = notation.clone();
-    quote!{
+    quote! {
         impl ::std::error::Error for #ident {
             fn description(&self) -> &str {
                 let name = match *self {
@@ -1202,7 +1215,8 @@ fn is_static_array(field: &vkxml::Field) -> bool {
         .map(|ty| match ty {
             vkxml::ArrayType::Static => true,
             _ => false,
-        }).unwrap_or(false)
+        })
+        .unwrap_or(false)
 }
 pub fn derive_default(_struct: &vkxml::Struct) -> Option<Tokens> {
     let name = name_to_tokens(&_struct.name);
@@ -1231,11 +1245,11 @@ pub fn derive_default(_struct: &vkxml::Struct) -> Option<Tokens> {
             if let Some(variant) = ty {
                 let variant_ident = variant_ident("VkStructureType", variant);
 
-                quote!{
+                quote! {
                     #param_ident: StructureType::#variant_ident
                 }
             } else {
-                quote!{
+                quote! {
                     #param_ident: unsafe { ::std::mem::zeroed() }
                 }
             }
@@ -1243,44 +1257,44 @@ pub fn derive_default(_struct: &vkxml::Struct) -> Option<Tokens> {
             match reference {
                 vkxml::ReferenceType::Pointer => {
                     if field.is_const {
-                        quote!{
+                        quote! {
                             #param_ident: ::std::ptr::null()
                         }
                     } else {
-                        quote!{
+                        quote! {
                             #param_ident: ::std::ptr::null_mut()
                         }
                     }
                 }
                 vkxml::ReferenceType::PointerToPointer => {
-                    quote!{
+                    quote! {
                         #param_ident: ::std::ptr::null_mut()
                     }
                 }
                 vkxml::ReferenceType::PointerToConstPointer => {
                     if field.is_const {
-                        quote!{
+                        quote! {
                             #param_ident: ::std::ptr::null()
                         }
                     } else {
-                        quote!{
+                        quote! {
                             #param_ident: ::std::ptr::null_mut()
                         }
                     }
                 }
             }
         } else if is_static_array(field) || handles.contains(&field.basetype.as_str()) {
-            quote!{
+            quote! {
                 #param_ident: unsafe { ::std::mem::zeroed() }
             }
         } else {
             let ty = field.type_tokens();
-            quote!{
+            quote! {
                 #param_ident: #ty::default()
             }
         }
     });
-    let q = quote!{
+    let q = quote! {
         impl ::std::default::Default for #name {
             fn default() -> #name {
                 #name {
@@ -1319,28 +1333,28 @@ pub fn derive_debug(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> Opt
         let param_ident = field.param_ident();
         let param_str = param_ident.as_ref();
         let debug_value = if is_static_array(field) && field.basetype == "char" {
-            quote!{
+            quote! {
                 &unsafe {
                     ::std::ffi::CStr::from_ptr(self.#param_ident.as_ptr() as *const i8)
                 }
             }
         } else if param_ident.as_ref().contains("pfn") {
-            quote!{
+            quote! {
                 &(self.#param_ident.map(|x| x as *const ()))
             }
         } else if union_types.contains(field.basetype.as_str()) {
             quote!(&"union")
         } else {
-            quote!{
+            quote! {
                 &self.#param_ident
             }
         };
-        quote!{
+        quote! {
             .field(#param_str, #debug_value)
         }
     });
     let name_str = name.as_ref();
-    let q = quote!{
+    let q = quote! {
         impl fmt::Debug for #name {
             fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
                 fmt.debug_struct(#name_str)
@@ -1369,11 +1383,13 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
         .clone()
         .find(|field| field.param_ident().to_string() == "p_next")
     {
-        Some(p_next) => if p_next.type_tokens().to_string().starts_with("*const") {
-            (true, true)
-        } else {
-            (true, false)
-        },
+        Some(p_next) => {
+            if p_next.type_tokens().to_string().starts_with("*const") {
+                (true, true)
+            } else {
+                (true, false)
+            }
+        }
         None => (false, false),
     };
 
@@ -1390,9 +1406,10 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
             // Associated _count members
             if field.array.is_some() {
                 if let Some(ref array_size) = field.size {
-                    if !array_size.starts_with("latexmath") && !nofilter_count_members
-                        .iter()
-                        .any(|n| *n == &(_struct.name.clone() + "." + field_name))
+                    if !array_size.starts_with("latexmath")
+                        && !nofilter_count_members
+                            .iter()
+                            .any(|n| *n == &(_struct.name.clone() + "." + field_name))
                     {
                         return Some((*array_size).clone());
                     }
@@ -1405,7 +1422,8 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
             }
 
             None
-        }).collect();
+        })
+        .collect();
 
     let setters = members.clone().filter_map(|field| {
         let param_ident = field.param_ident();
@@ -1479,26 +1497,36 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
                         }
 
                         let slice_param_ty_tokens;
-                        let ptr_mutability;
+                        let ptr;
                         if param_ty_string.starts_with("*const ") {
-                            slice_param_ty_tokens =
-                                "&'a [".to_string() + &param_ty_string[7..] + "]";
-                            ptr_mutability = ".as_ptr()";
+                            let slice_type = &param_ty_string[7..];
+                            if slice_type == "c_void" {
+                                slice_param_ty_tokens = "&'a [u8]".to_string();
+                                ptr = ".as_ptr() as *const c_void";
+                            } else {
+                                slice_param_ty_tokens = "&'a [".to_string() + slice_type + "]";
+                                ptr = ".as_ptr()";
+                            }
                         } else {
                             // *mut
-                            slice_param_ty_tokens =
-                                "&'a mut [".to_string() + &param_ty_string[5..] + "]";
-                            ptr_mutability = ".as_mut_ptr()";
+                            let slice_type = &param_ty_string[5..];
+                            if slice_type == "c_void" {
+                                slice_param_ty_tokens = "&mut 'a [u8]".to_string();
+                                ptr = ".as_mut_ptr() as *mut c_void";
+                            } else {
+                                slice_param_ty_tokens = "&'a mut [".to_string() + slice_type + "]";
+                                ptr = ".as_mut_ptr()";
+                            }
                         }
                         let slice_param_ty_tokens = Term::intern(&slice_param_ty_tokens);
-                        let ptr_mutability = Term::intern(ptr_mutability);
+                        let ptr = Term::intern(ptr);
 
                         match array_type {
                             vkxml::ArrayType::Dynamic => {
                                 return Some(quote!{
                                     pub fn #param_ident_short(mut self, #param_ident_short: #slice_param_ty_tokens) -> #name_builder<'a> {
                                         self.inner.#array_size_ident = #param_ident_short.len() as _;
-                                        self.inner.#param_ident = #param_ident_short#ptr_mutability;
+                                        self.inner.#param_ident = #param_ident_short#ptr;
                                         self
                                     }
                                 });
@@ -1556,14 +1584,14 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
 
     let next_function = if has_next {
         if is_next_const {
-            quote!{
+            quote! {
                 pub fn next<T>(mut self, next: &'a T) -> #name_builder<'a> where T: #extends_name {
                     self.inner.p_next = next as *const T as *const c_void;
                     self
                 }
             }
         } else {
-            quote!{
+            quote! {
                 pub fn next<T>(mut self, next: &'a mut T) -> #name_builder<'a> where T: #extends_name {
                     self.inner.p_next = next as *mut T as *mut c_void;
                     self
@@ -1571,18 +1599,18 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
             }
         }
     } else {
-        quote!{}
+        quote! {}
     };
 
     let next_trait = if has_next {
-        quote!{
+        quote! {
             pub unsafe trait #extends_name {}
         }
     } else {
-        quote!{}
+        quote! {}
     };
 
-    let q = quote!{
+    let q = quote! {
         impl #name {
             pub fn builder<'a>() -> #name_builder<'a> {
                 #name_builder {
@@ -1629,8 +1657,8 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
 /// require and add the missing derives yourself.
 pub fn manual_derives(_struct: &vkxml::Struct) -> Tokens {
     match _struct.name.as_str() {
-        "VkExtent3D" | "VKExtent2D" => quote!{PartialEq, Eq, Hash,},
-        _ => quote!{},
+        "VkExtent3D" | "VKExtent2D" => quote! {PartialEq, Eq, Hash,},
+        _ => quote! {},
     }
 }
 pub fn generate_struct(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> Tokens {
@@ -1643,7 +1671,7 @@ pub fn generate_struct(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> 
     let params = members.clone().map(|field| {
         let param_ident = field.param_ident();
         let param_ty_tokens = field.type_tokens();
-        quote!{pub #param_ident: #param_ty_tokens}
+        quote! {pub #param_ident: #param_ty_tokens}
     });
 
     let debug_tokens = derive_debug(_struct, union_types);
@@ -1660,7 +1688,7 @@ pub fn generate_struct(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> 
     } else {
         quote!()
     };
-    quote!{
+    quote! {
         #[repr(C)]
         #[derive(Copy, Clone, #default_str #dbg_str #manual_derive_tokens)]
         pub struct #name {
@@ -1702,11 +1730,11 @@ fn generate_funcptr(fnptr: &vkxml::FunctionPointer) -> Tokens {
     let params = fnptr.param.iter().map(|field| {
         let ident = field.param_ident();
         let type_tokens = field.type_tokens();
-        quote!{
+        quote! {
             #ident: #type_tokens
         }
     });
-    quote!{
+    quote! {
         #[allow(non_camel_case_types)]
         pub type #name = Option<unsafe extern "system" fn(#(#params),*) -> #ret_ty_tokens>;
     }
@@ -1717,11 +1745,11 @@ fn generate_union(union: &vkxml::Union) -> Tokens {
     let fields = union.elements.iter().map(|field| {
         let name = field.param_ident();
         let ty = field.type_tokens();
-        quote!{
+        quote! {
             pub #name: #ty
         }
     });
-    quote!{
+    quote! {
         #[repr(C)]
         #[derive(Copy, Clone)]
         pub union #name {
@@ -1770,11 +1798,13 @@ pub fn generate_feature<'a>(
                         } else {
                             None
                         }
-                    }).collect()
+                    })
+                    .collect()
             } else {
                 vec![]
             }
-        }).filter_map(|cmd_ref| commands.get(&cmd_ref.name))
+        })
+        .filter_map(|cmd_ref| commands.get(&cmd_ref.name))
         .fold(
             (Vec::new(), Vec::new(), Vec::new(), Vec::new()),
             |mut acc, &cmd_ref| {
@@ -1799,7 +1829,7 @@ pub fn generate_feature<'a>(
     let static_fn = if feature.version == 1.0 {
         generate_function_pointers(Ident::from("StaticFn"), &static_commands, fn_cache)
     } else {
-        quote!{}
+        quote! {}
     };
     let entry = generate_function_pointers(
         Ident::from(format!("EntryFnV{}", version).as_str()),
@@ -1842,7 +1872,7 @@ pub fn generate_constant<'a>(
         c.ty()
     };
     let ty = ty.to_tokens();
-    quote!{
+    quote! {
         pub const #ident: #ty = #value;
     }
 }
@@ -1862,7 +1892,7 @@ pub fn generate_feature_extension<'a>(
         )),
         _ => None,
     });
-    quote!{
+    quote! {
         #(#constants)*
     }
 }
@@ -1875,9 +1905,9 @@ pub fn generate_const_displays<'a>(const_values: &HashMap<Ident, Vec<Ident>>) ->
             if ty.to_string().contains("Flags") {
                 let cases = values.iter().map(|value| {
                     let name = value.to_string();
-                    quote!{ (#ty::#value.0, #name) }
+                    quote! { (#ty::#value.0, #name) }
                 });
-                quote!{
+                quote! {
                     impl fmt::Display for #ty {
                         fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
                             const KNOWN: &[(Flags, &str)] = &[#(#cases),*];
@@ -1888,9 +1918,9 @@ pub fn generate_const_displays<'a>(const_values: &HashMap<Ident, Vec<Ident>>) ->
             } else {
                 let cases = values.iter().map(|value| {
                     let name = value.to_string();
-                    quote!{ Self::#value => Some(#name), }
+                    quote! { Self::#value => Some(#name), }
                 });
-                quote!{
+                quote! {
                     impl fmt::Display for #ty {
                         fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
                             let name = match *self {
@@ -1907,7 +1937,7 @@ pub fn generate_const_displays<'a>(const_values: &HashMap<Ident, Vec<Ident>>) ->
                 }
             }
         });
-    quote!{
+    quote! {
         fn display_flags(f: &mut fmt::Formatter, known: &[(Flags, &'static str)], value: Flags) -> fmt::Result {
             let mut first = true;
             let mut accum = value;
@@ -1939,19 +1969,20 @@ pub fn generate_aliases_of_types<'a>(
         .filter_map(|child| match child {
             vk_parse::TypesChild::Type(ty) => Some((ty.name.as_ref()?, ty.alias.as_ref()?)),
             _ => None,
-        }).filter_map(|(name, alias)| {
+        })
+        .filter_map(|(name, alias)| {
             let name_ident = name_to_tokens(name);
             if ty_cache.contains(&name_ident) {
                 return None;
             };
             ty_cache.insert(name_ident.clone());
             let alias_ident = name_to_tokens(alias);
-            let tokens = quote!{
+            let tokens = quote! {
                 pub type #name_ident = #alias_ident;
             };
             Some(tokens)
         });
-    quote!{
+    quote! {
         #(#aliases)*
     }
 }
@@ -1965,7 +1996,8 @@ pub fn write_source_code(path: &Path) {
         .filter_map(|item| match item {
             vk_parse::RegistryChild::Extensions(ref ext) => Some(&ext.children),
             _ => None,
-        }).nth(0)
+        })
+        .nth(0)
         .expect("extension");
     let mut ty_cache = HashSet::new();
     let aliases: Vec<_> = spec2
@@ -1976,7 +2008,8 @@ pub fn write_source_code(path: &Path) {
                 Some(generate_aliases_of_types(ty, &mut ty_cache))
             }
             _ => None,
-        }).collect();
+        })
+        .collect();
 
     let spec = vk_parse::parse_file_as_vkxml(path);
     let commands: HashMap<vkxml::Identifier, &vkxml::Command> = spec
@@ -1985,7 +2018,8 @@ pub fn write_source_code(path: &Path) {
         .filter_map(|elem| match elem {
             vkxml::RegistryElement::Commands(ref cmds) => Some(cmds),
             _ => None,
-        }).flat_map(|cmds| cmds.elements.iter().map(|cmd| (cmd.name.clone(), cmd)))
+        })
+        .flat_map(|cmds| cmds.elements.iter().map(|cmd| (cmd.name.clone(), cmd)))
         .collect();
 
     let features: Vec<&vkxml::Feature> = spec
@@ -1994,7 +2028,8 @@ pub fn write_source_code(path: &Path) {
         .filter_map(|elem| match elem {
             vkxml::RegistryElement::Features(ref features) => Some(features),
             _ => None,
-        }).flat_map(|features| features.elements.iter())
+        })
+        .flat_map(|features| features.elements.iter())
         .collect();
 
     let definitions: Vec<&vkxml::DefinitionsElement> = spec
@@ -2003,7 +2038,8 @@ pub fn write_source_code(path: &Path) {
         .filter_map(|elem| match elem {
             vkxml::RegistryElement::Definitions(ref definitions) => Some(definitions),
             _ => None,
-        }).flat_map(|definitions| definitions.elements.iter())
+        })
+        .flat_map(|definitions| definitions.elements.iter())
         .collect();
 
     let enums: Vec<&vkxml::Enumeration> = spec
@@ -2012,12 +2048,14 @@ pub fn write_source_code(path: &Path) {
         .filter_map(|elem| match elem {
             vkxml::RegistryElement::Enums(ref enums) => Some(enums),
             _ => None,
-        }).flat_map(|enums| {
+        })
+        .flat_map(|enums| {
             enums.elements.iter().filter_map(|_enum| match *_enum {
                 vkxml::EnumsElement::Enumeration(ref e) => Some(e),
                 _ => None,
             })
-        }).collect();
+        })
+        .collect();
 
     let constants: Vec<&vkxml::Constant> = spec
         .elements
@@ -2025,7 +2063,8 @@ pub fn write_source_code(path: &Path) {
         .filter_map(|elem| match elem {
             vkxml::RegistryElement::Constants(ref constants) => Some(constants),
             _ => None,
-        }).flat_map(|constants| constants.elements.iter())
+        })
+        .flat_map(|constants| constants.elements.iter())
         .collect();
 
     let mut fn_cache = HashSet::new();
@@ -2059,14 +2098,16 @@ pub fn write_source_code(path: &Path) {
                 &mut const_values,
                 &mut fn_cache,
             )
-        }).collect_vec();
+        })
+        .collect_vec();
 
     let union_types = definitions
         .iter()
         .filter_map(|def| match def {
             vkxml::DefinitionsElement::Union(ref union) => Some(union.name.as_str()),
             _ => None,
-        }).collect::<HashSet<&str>>();
+        })
+        .collect::<HashSet<&str>>();
 
     let definition_code: Vec<_> = definitions
         .into_iter()
@@ -2088,7 +2129,7 @@ pub fn write_source_code(path: &Path) {
     let define_handle_macro = define_handle_macro();
     let version_macros = vk_version_macros();
     let platform_specific_types = platform_specific_types();
-    let source_code = quote!{
+    let source_code = quote! {
         use std::fmt;
         use std::os::raw::*;
 

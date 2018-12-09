@@ -105,6 +105,7 @@ pub fn record_submit_commandbuffer<D: DeviceV1_0, F: FnOnce(&D, vk::CommandBuffe
                 vk::CommandBufferResetFlags::RELEASE_RESOURCES,
             )
             .expect("Reset command buffer failed.");
+
         let command_buffer_begin_info = vk::CommandBufferBeginInfo::builder()
             .flags(vk::CommandBufferUsageFlags::ONE_TIME_SUBMIT);
 
