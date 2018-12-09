@@ -579,7 +579,8 @@ impl ExampleBase {
                         .dst_access_mask(
                             vk::AccessFlags::DEPTH_STENCIL_ATTACHMENT_READ
                                 | vk::AccessFlags::DEPTH_STENCIL_ATTACHMENT_WRITE,
-                        ).new_layout(vk::ImageLayout::DEPTH_STENCIL_ATTACHMENT_OPTIMAL)
+                        )
+                        .new_layout(vk::ImageLayout::DEPTH_STENCIL_ATTACHMENT_OPTIMAL)
                         .old_layout(vk::ImageLayout::UNDEFINED)
                         .subresource_range(
                             vk::ImageSubresourceRange::builder()
@@ -587,7 +588,8 @@ impl ExampleBase {
                                 .layer_count(1)
                                 .level_count(1)
                                 .build(),
-                        ).build();
+                        )
+                        .build();
 
                     device.cmd_pipeline_barrier(
                         setup_command_buffer,
@@ -608,7 +610,8 @@ impl ExampleBase {
                         .level_count(1)
                         .layer_count(1)
                         .build(),
-                ).image(depth_image)
+                )
+                .image(depth_image)
                 .format(depth_image_create_info.format)
                 .view_type(vk::ImageViewType::TYPE_2D)
                 .build();

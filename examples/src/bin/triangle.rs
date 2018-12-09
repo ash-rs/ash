@@ -207,10 +207,12 @@ fn main() {
         let mut frag_spv_file =
             File::open(Path::new("shader/triangle/frag.spv")).expect("Could not find frag.spv.");
 
-        let vertex_code = read_spv(&mut vertex_spv_file).expect("Failed to read vertex shader spv file");
+        let vertex_code =
+            read_spv(&mut vertex_spv_file).expect("Failed to read vertex shader spv file");
         let vertex_shader_info = vk::ShaderModuleCreateInfo::builder().code(&vertex_code);
 
-        let frag_code = read_spv(&mut frag_spv_file).expect("Failed to read fragment shader spv file");
+        let frag_code =
+            read_spv(&mut frag_spv_file).expect("Failed to read fragment shader spv file");
         let frag_shader_info = vk::ShaderModuleCreateInfo::builder().code(&frag_code);
 
         let vertex_shader_module = base
