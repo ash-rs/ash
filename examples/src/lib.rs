@@ -160,10 +160,10 @@ unsafe fn create_surface<E: EntryV1_0, I: InstanceV1_0>(
     instance: &I,
     window: &winit::Window,
 ) -> Result<vk::SurfaceKHR, vk::Result> {
+    use std::ptr;
     use winapi::shared::windef::HWND;
     use winapi::um::libloaderapi::GetModuleHandleW;
     use winit::os::windows::WindowExt;
-    use std::ptr;
 
     let hwnd = window.get_hwnd() as HWND;
     let hinstance = GetModuleHandleW(ptr::null()) as *const c_void;
