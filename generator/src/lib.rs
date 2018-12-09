@@ -1497,26 +1497,36 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
                         }
 
                         let slice_param_ty_tokens;
-                        let ptr_mutability;
+                        let ptr;
                         if param_ty_string.starts_with("*const ") {
-                            slice_param_ty_tokens =
-                                "&'a [".to_string() + &param_ty_string[7..] + "]";
-                            ptr_mutability = ".as_ptr()";
+                            let slice_type = &param_ty_string[7..];
+                            if slice_type == "c_void" {
+                                slice_param_ty_tokens = "&'a [u8]".to_string();
+                                ptr = ".as_ptr() as *const c_void";
+                            } else {
+                                slice_param_ty_tokens = "&'a [".to_string() + slice_type + "]";
+                                ptr = ".as_ptr()";
+                            }
                         } else {
                             // *mut
-                            slice_param_ty_tokens =
-                                "&'a mut [".to_string() + &param_ty_string[5..] + "]";
-                            ptr_mutability = ".as_mut_ptr()";
+                            let slice_type = &param_ty_string[5..];
+                            if slice_type == "c_void" {
+                                slice_param_ty_tokens = "&mut 'a [u8]".to_string();
+                                ptr = ".as_mut_ptr() as *mut c_void";
+                            } else {
+                                slice_param_ty_tokens = "&'a mut [".to_string() + slice_type + "]";
+                                ptr = ".as_mut_ptr()";
+                            }
                         }
                         let slice_param_ty_tokens = Term::intern(&slice_param_ty_tokens);
-                        let ptr_mutability = Term::intern(ptr_mutability);
+                        let ptr = Term::intern(ptr);
 
                         match array_type {
                             vkxml::ArrayType::Dynamic => {
                                 return Some(quote!{
                                     pub fn #param_ident_short(mut self, #param_ident_short: #slice_param_ty_tokens) -> #name_builder<'a> {
                                         self.inner.#array_size_ident = #param_ident_short.len() as _;
-                                        self.inner.#param_ident = #param_ident_short#ptr_mutability;
+                                        self.inner.#param_ident = #param_ident_short#ptr;
                                         self
                                     }
                                 });
