@@ -256,6 +256,51 @@ pub trait DeviceV1_0 {
         );
     }
 
+    unsafe fn create_event(
+        &self,
+        create_info: &vk::EventCreateInfo,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+    ) -> VkResult<vk::Event> {
+        let mut event = mem::uninitialized();
+        let err_code = self.fp_v1_0().create_event(
+            self.handle(),
+            create_info,
+            allocation_callbacks.as_raw_ptr(),
+            &mut event,
+        );
+        match err_code {
+            vk::Result::SUCCESS => Ok(event),
+            _ => Err(err_code),
+        }
+    }
+
+    /// Returns true if the event was set, and false if the event was reset, otherwise it will
+    /// return the error code.
+    unsafe fn get_event_status(&self, event: vk::Event) -> VkResult<bool> {
+        let err_code = self.fp_v1_0().get_event_status(self.handle(), event);
+        match err_code {
+            vk::Result::EVENT_SET => Ok(true),
+            vk::Result::EVENT_RESET => Ok(false),
+            _ => Err(err_code),
+        }
+    }
+
+    unsafe fn set_event(&self, event: vk::Event) -> VkResult<()> {
+        let err_code = self.fp_v1_0().set_event(self.handle(), event);
+        match err_code {
+            vk::Result::SUCCESS => Ok(()),
+            _ => Err(err_code),
+        }
+    }
+
+    unsafe fn reset_event(&self, event: vk::Event) -> VkResult<()> {
+        let err_code = self.fp_v1_0().reset_event(self.handle(), event);
+        match err_code {
+            vk::Result::SUCCESS => Ok(()),
+            _ => Err(err_code),
+        }
+    }
+
     unsafe fn destroy_fence(
         &self,
         fence: vk::Fence,
