@@ -300,6 +300,49 @@ pub trait DeviceV1_0 {
             _ => Err(err_code),
         }
     }
+    unsafe fn cmd_set_event(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        event: vk::Event,
+        stage_mask: vk::PipelineStageFlags,
+    ) {
+        self.fp_v1_0()
+            .cmd_set_event(command_buffer, event, stage_mask);
+    }
+    unsafe fn cmd_reset_event(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        event: vk::Event,
+        stage_mask: vk::PipelineStageFlags,
+    ) {
+        self.fp_v1_0()
+            .cmd_reset_event(command_buffer, event, stage_mask);
+    }
+
+    unsafe fn cmd_wait_events(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        events: &[vk::Event],
+        src_stage_mask: vk::PipelineStageFlags,
+        dst_stage_mask: vk::PipelineStageFlags,
+        memory_barriers: &[vk::MemoryBarrier],
+        buffer_memory_barriers: &[vk::BufferMemoryBarrier],
+        image_memory_barriers: &[vk::ImageMemoryBarrier],
+    ) {
+        self.fp_v1_0().cmd_wait_events(
+            command_buffer,
+            events.len() as _,
+            events.as_ptr(),
+            src_stage_mask,
+            dst_stage_mask,
+            memory_barriers.len() as _,
+            memory_barriers.as_ptr(),
+            buffer_memory_barriers.len() as _,
+            buffer_memory_barriers.as_ptr(),
+            image_memory_barriers.len() as _,
+            image_memory_barriers.as_ptr(),
+        );
+    }
 
     unsafe fn destroy_fence(
         &self,
