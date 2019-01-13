@@ -65,7 +65,7 @@ impl Error for InstanceError {
 
     fn cause(&self) -> Option<&Error> {
         if let &InstanceError::VkError(ref err) = self {
-            return err.cause();
+            return err.source();
         }
         None
     }
