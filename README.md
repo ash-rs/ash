@@ -36,9 +36,9 @@ let instance = entry.create_instance(&create_info, None)
 ### `Vec<T>` instead of mutable slices
 
 ```Rust
-pub fn get_swapchain_images_khr(&self,
-                                swapchain: vk::SwapchainKHR)
-                                -> VkResult<Vec<vk::Image>>;
+pub fn get_swapchain_images(&self,
+                            swapchain: vk::SwapchainKHR)
+                            -> VkResult<Vec<vk::Image>>;
 let present_images = swapchain_loader.get_swapchain_images_khr(swapchain).unwrap();
 ```
 *Note*: Functions don't return `Vec<T>` if this would limit the functionality. See `p_next`.
@@ -123,9 +123,9 @@ Custom loaders can be implemented.
 ### Extension loading
 Additionally, every Vulkan extension has to be loaded explicitly. You can find all extensions under [ash::extensions](https://github.com/MaikKlein/ash/tree/master/ash/src/extensions).
 ```Rust
-use ash::extensions::Swapchain;
+use ash::extensions::khr::Swapchain;
 let swapchain_loader = Swapchain::new(&instance, &device);
-let swapchain = swapchain_loader.create_swapchain_khr(&swapchain_create_info).unwrap();
+let swapchain = swapchain_loader.create_swapchain(&swapchain_create_info).unwrap();
 ```
 
 ### Raw function pointers
