@@ -1335,7 +1335,7 @@ pub fn derive_debug(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> Opt
         let debug_value = if is_static_array(field) && field.basetype == "char" {
             quote! {
                 &unsafe {
-                    ::std::ffi::CStr::from_ptr(self.#param_ident.as_ptr() as *const i8)
+                    ::std::ffi::CStr::from_ptr(self.#param_ident.as_ptr() as *const c_char)
                 }
             }
         } else if param_ident.as_ref().contains("pfn") {
