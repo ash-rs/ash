@@ -341,7 +341,7 @@ impl ExampleBase {
                 .application_version(0)
                 .engine_name(&app_name)
                 .engine_version(0)
-                .api_version(vk_make_version!(1, 0, 36));
+                .api_version(vk_make_version!(1, 0, 0));
 
             let create_info = vk::InstanceCreateInfo::builder()
                 .application_info(&appinfo)
@@ -407,14 +407,40 @@ impl ExampleBase {
                 .queue_priorities(&priorities)
                 .build()];
 
-            let device_create_info = vk::DeviceCreateInfo::builder()
+            let mut variable_pointers =
+                vk::PhysicalDeviceVariablePointerFeatures::builder().variable_pointers(true);
+            let mut corner = vk::PhysicalDeviceCornerSampledImageFeaturesNV::builder()
+                .corner_sampled_image(true);
+            let mut device_create_info = vk::DeviceCreateInfo::builder()
+                .next(&mut corner)
+                .next(&mut variable_pointers)
                 .queue_create_infos(&queue_info)
                 .enabled_extension_names(&device_extension_names_raw)
-                .enabled_features(&features);
+                .enabled_features(&features)
+                .build();
 
+            let mut chain =
+                vk::ExtensionChain::from_ptr(&mut device_create_info as *mut _ as *mut _);
+            println!("{}", (*chain).s_type);
+            println!("{:?}", (*chain).p_next);
+            unsafe {
+                loop {
+                    chain = vk::ExtensionChain::from_ptr((*chain).p_next as *mut _);
+                    println!("{}", (*chain).s_type);
+                    println!("{:?}", (*chain).p_next);
+                    if (*chain).p_next.is_null() {
+                        break;
+                    }
+                }
+            }
+            use std::ops::Deref;
+            println!("--");
+            println!("{:?}", corner.deref() as *const _);
+            println!("{:?}", variable_pointers.deref() as *const _);
             let device: Device = instance
                 .create_device(pdevice, &device_create_info, None)
                 .unwrap();
+
             let present_queue = device.get_device_queue(queue_family_index as u32, 0);
 
             let surface_formats = surface_loader
