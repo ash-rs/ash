@@ -36,9 +36,9 @@ let instance = entry.create_instance(&create_info, None)
 ### `Vec<T>` instead of mutable slices
 
 ```Rust
-pub fn get_swapchain_images_khr(&self,
-                                swapchain: vk::SwapchainKHR)
-                                -> VkResult<Vec<vk::Image>>;
+pub fn get_swapchain_images(&self,
+                            swapchain: vk::SwapchainKHR)
+                            -> VkResult<Vec<vk::Image>>;
 let present_images = swapchain_loader.get_swapchain_images_khr(swapchain).unwrap();
 ```
 *Note*: Functions don't return `Vec<T>` if this would limit the functionality. See `p_next`.
@@ -54,6 +54,12 @@ pub fn cmd_pipeline_barrier(&self,
                             buffer_memory_barriers: &[vk::BufferMemoryBarrier],
                             image_memory_barriers: &[vk::ImageMemoryBarrier]);
 ```
+
+### Strongly typed handles
+
+Each Vulkan handle type is exposed as a newtyped struct for improved type safety. Null handles can be constructed with
+`T::null()`, and handles may be freely converted to and from `u64` with `Handle::from_raw` and `Handle::as_raw` for
+interop with non-Ash Vulkan code.
 
 ### Default implementation for all types
 ```Rust
@@ -71,7 +77,11 @@ let pipeline_vertex_input_state_create_info = vk::PipelineVertexInputStateCreate
     .vertex_binding_descriptions(&Vertex::binding_descriptions())
     .vertex_attribute_descriptions(&Vertex::attribute_descriptions()).build();
 ```
-*Note*: No validation is done, the lifetimes only have to live as long as the builder object. It is the responsibility of the user to make sure that the pointers are valid.
+
+Builders implement `Deref` targeting their corresponding Vulkan struct, so references to builders can be passed directly
+to Vulkan functions. This is encouraged as doing so allows Rust to check the lifetimes of captured objects are valid,
+whereas calling `build` discards lifetime information, making inadvertent use-after-free errors more likely.
+
 ### Flags and constants as associated constants
 
 ```Rust
@@ -95,12 +105,6 @@ println!("Display: {}", flag);
 // Display: COLOR_ATTACHMENT_READ | COLOR_ATTACHMENT_WRITE
 ```
 
-### Interop
-Vulkan objects inside Ash can be constructed from raw values with `Object::from:raw`. Useful if you need to interact with a C library.
-```Rust
-PipelineBindPoint::from_raw(bindpoint);
-```
-
 ### Function pointer loading
 Ash also takes care of loading the function pointers. Function pointers are split into 3 categories.
 
@@ -119,9 +123,9 @@ Custom loaders can be implemented.
 ### Extension loading
 Additionally, every Vulkan extension has to be loaded explicitly. You can find all extensions under [ash::extensions](https://github.com/MaikKlein/ash/tree/master/ash/src/extensions).
 ```Rust
-use ash::extensions::Swapchain;
+use ash::extensions::khr::Swapchain;
 let swapchain_loader = Swapchain::new(&instance, &device);
-let swapchain = swapchain_loader.create_swapchain_khr(&swapchain_create_info).unwrap();
+let swapchain = swapchain_loader.create_swapchain(&swapchain_create_info).unwrap();
 ```
 
 ### Raw function pointers

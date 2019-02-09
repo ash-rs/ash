@@ -7,36 +7,33 @@ use vk;
 use RawPtr;
 
 #[derive(Clone)]
-pub struct XlibSurface {
+pub struct IOSSurface {
     handle: vk::Instance,
-    xlib_surface_fn: vk::KhrXlibSurfaceFn,
+    ios_surface_fn: vk::MvkIosSurfaceFn,
 }
 
-impl XlibSurface {
-    pub fn new<E: EntryV1_0, I: InstanceV1_0>(
-        entry: &E,
-        instance: &I,
-    ) -> XlibSurface {
-        let surface_fn = vk::KhrXlibSurfaceFn::load(|name| unsafe {
+impl IOSSurface {
+    pub fn new<E: EntryV1_0, I: InstanceV1_0>(entry: &E, instance: &I) -> IOSSurface {
+        let surface_fn = vk::MvkIosSurfaceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });
-        XlibSurface {
+        IOSSurface {
             handle: instance.handle(),
-            xlib_surface_fn: surface_fn,
+            ios_surface_fn: surface_fn,
         }
     }
 
     pub fn name() -> &'static CStr {
-        CStr::from_bytes_with_nul(b"VK_KHR_xlib_surface\0").expect("Wrong extension string")
+        CStr::from_bytes_with_nul(b"VK_MVK_IOS_surface\0").expect("Wrong extension string")
     }
 
-    pub unsafe fn create_xlib_surface_khr(
+    pub unsafe fn create_ios_surface_mvk(
         &self,
-        create_info: &vk::XlibSurfaceCreateInfoKHR,
+        create_info: &vk::IOSSurfaceCreateInfoMVK,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::SurfaceKHR> {
         let mut surface = mem::uninitialized();
-        let err_code = self.xlib_surface_fn.create_xlib_surface_khr(
+        let err_code = self.ios_surface_fn.create_ios_surface_mvk(
             self.handle,
             create_info,
             allocation_callbacks.as_raw_ptr(),

@@ -2,6 +2,7 @@ use std::iter::Iterator;
 use std::marker::PhantomData;
 use std::mem::size_of;
 use std::os::raw::c_void;
+use std::{io, slice};
 use vk;
 
 /// `Align` handles dynamic alignment. The is useful for dynamic uniform buffers where
@@ -46,11 +47,7 @@ fn calc_padding(adr: vk::DeviceSize, align: vk::DeviceSize) -> vk::DeviceSize {
 }
 
 impl<T> Align<T> {
-    pub unsafe fn new(
-        ptr: *mut c_void,
-        alignment: vk::DeviceSize,
-        size: vk::DeviceSize,
-    ) -> Self {
+    pub unsafe fn new(ptr: *mut c_void, alignment: vk::DeviceSize, size: vk::DeviceSize) -> Self {
         let padding = calc_padding(size_of::<T>() as vk::DeviceSize, alignment);
         let elem_size = size_of::<T>() as vk::DeviceSize + padding;
         assert!(calc_padding(size, alignment) == 0, "size must be aligned");
@@ -83,4 +80,59 @@ impl<'a, T: Copy + 'a> Iterator for AlignIter<'a, T> {
             Some(&mut *ptr)
         }
     }
+}
+
+/// Decode SPIR-V from bytes.
+///
+/// This function handles SPIR-V of arbitrary endianness gracefully, and returns correctly aligned
+/// storage.
+///
+/// # Examples
+/// ```no_run
+/// // Decode SPIR-V from a file
+/// let mut file = std::fs::File::open("/path/to/shader.spv").unwrap();
+/// let words = ash::util::read_spv(&mut file).unwrap();
+/// ```
+/// ```
+/// // Decode SPIR-V from memory
+/// const SPIRV: &[u8] = &[
+///     // ...
+/// #   0x03, 0x02, 0x23, 0x07,
+/// ];
+/// let words = ash::util::read_spv(&mut std::io::Cursor::new(&SPIRV[..])).unwrap();
+/// ```
+pub fn read_spv<R: io::Read + io::Seek>(x: &mut R) -> io::Result<Vec<u32>> {
+    let size = x.seek(io::SeekFrom::End(0))?;
+    if size % 4 != 0 {
+        return Err(io::Error::new(
+            io::ErrorKind::InvalidData,
+            "input length not divisible by 4",
+        ));
+    }
+    if size > usize::max_value() as u64 {
+        return Err(io::Error::new(io::ErrorKind::InvalidData, "input too long"));
+    }
+    let words = (size / 4) as usize;
+    let mut result = Vec::<u32>::with_capacity(words);
+    x.seek(io::SeekFrom::Start(0))?;
+    unsafe {
+        x.read_exact(slice::from_raw_parts_mut(
+            result.as_mut_ptr() as *mut u8,
+            words * 4,
+        ))?;
+        result.set_len(words);
+    }
+    const MAGIC_NUMBER: u32 = 0x07230203;
+    if result.len() > 0 && result[0] == MAGIC_NUMBER.swap_bytes() {
+        for word in &mut result {
+            *word = word.swap_bytes();
+        }
+    }
+    if result.len() == 0 || result[0] != MAGIC_NUMBER {
+        return Err(io::Error::new(
+            io::ErrorKind::InvalidData,
+            "input missing SPIR-V magic number",
+        ));
+    }
+    Ok(result)
 }

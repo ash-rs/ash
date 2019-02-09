@@ -51,11 +51,7 @@ pub trait DeviceV1_1: DeviceV1_0 {
         peer_memory_features
     }
 
-    unsafe fn cmd_set_device_mask(
-        &self,
-        command_buffer: vk::CommandBuffer,
-        device_mask: u32,
-    ) {
+    unsafe fn cmd_set_device_mask(&self, command_buffer: vk::CommandBuffer, device_mask: u32) {
         self.fp_v1_1()
             .cmd_set_device_mask(command_buffer, device_mask);
     }
@@ -86,11 +82,8 @@ pub trait DeviceV1_1: DeviceV1_0 {
         info: &vk::ImageMemoryRequirementsInfo2,
         out: &mut vk::MemoryRequirements2,
     ) {
-        self.fp_v1_1().get_image_memory_requirements2(
-            self.handle(),
-            info,
-            out,
-        );
+        self.fp_v1_1()
+            .get_image_memory_requirements2(self.handle(), info, out);
     }
 
     unsafe fn get_buffer_memory_requirements2(
@@ -98,11 +91,8 @@ pub trait DeviceV1_1: DeviceV1_0 {
         info: &vk::BufferMemoryRequirementsInfo2,
         out: &mut vk::MemoryRequirements2,
     ) {
-        self.fp_v1_1().get_buffer_memory_requirements2(
-            self.handle(),
-            info,
-            out,
-        );
+        self.fp_v1_1()
+            .get_buffer_memory_requirements2(self.handle(), info, out);
     }
 
     unsafe fn get_image_sparse_memory_requirements2_len(
@@ -221,11 +211,8 @@ pub trait DeviceV1_1: DeviceV1_0 {
         create_info: &vk::DescriptorSetLayoutCreateInfo,
         out: &mut vk::DescriptorSetLayoutSupport,
     ) {
-        self.fp_v1_1().get_descriptor_set_layout_support(
-            self.handle(),
-            create_info,
-            out,
-        );
+        self.fp_v1_1()
+            .get_descriptor_set_layout_support(self.handle(), create_info, out);
     }
 }
 
@@ -269,6 +256,94 @@ pub trait DeviceV1_0 {
         );
     }
 
+    unsafe fn create_event(
+        &self,
+        create_info: &vk::EventCreateInfo,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+    ) -> VkResult<vk::Event> {
+        let mut event = mem::uninitialized();
+        let err_code = self.fp_v1_0().create_event(
+            self.handle(),
+            create_info,
+            allocation_callbacks.as_raw_ptr(),
+            &mut event,
+        );
+        match err_code {
+            vk::Result::SUCCESS => Ok(event),
+            _ => Err(err_code),
+        }
+    }
+
+    /// Returns true if the event was set, and false if the event was reset, otherwise it will
+    /// return the error code.
+    unsafe fn get_event_status(&self, event: vk::Event) -> VkResult<bool> {
+        let err_code = self.fp_v1_0().get_event_status(self.handle(), event);
+        match err_code {
+            vk::Result::EVENT_SET => Ok(true),
+            vk::Result::EVENT_RESET => Ok(false),
+            _ => Err(err_code),
+        }
+    }
+
+    unsafe fn set_event(&self, event: vk::Event) -> VkResult<()> {
+        let err_code = self.fp_v1_0().set_event(self.handle(), event);
+        match err_code {
+            vk::Result::SUCCESS => Ok(()),
+            _ => Err(err_code),
+        }
+    }
+
+    unsafe fn reset_event(&self, event: vk::Event) -> VkResult<()> {
+        let err_code = self.fp_v1_0().reset_event(self.handle(), event);
+        match err_code {
+            vk::Result::SUCCESS => Ok(()),
+            _ => Err(err_code),
+        }
+    }
+    unsafe fn cmd_set_event(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        event: vk::Event,
+        stage_mask: vk::PipelineStageFlags,
+    ) {
+        self.fp_v1_0()
+            .cmd_set_event(command_buffer, event, stage_mask);
+    }
+    unsafe fn cmd_reset_event(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        event: vk::Event,
+        stage_mask: vk::PipelineStageFlags,
+    ) {
+        self.fp_v1_0()
+            .cmd_reset_event(command_buffer, event, stage_mask);
+    }
+
+    unsafe fn cmd_wait_events(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        events: &[vk::Event],
+        src_stage_mask: vk::PipelineStageFlags,
+        dst_stage_mask: vk::PipelineStageFlags,
+        memory_barriers: &[vk::MemoryBarrier],
+        buffer_memory_barriers: &[vk::BufferMemoryBarrier],
+        image_memory_barriers: &[vk::ImageMemoryBarrier],
+    ) {
+        self.fp_v1_0().cmd_wait_events(
+            command_buffer,
+            events.len() as _,
+            events.as_ptr(),
+            src_stage_mask,
+            dst_stage_mask,
+            memory_barriers.len() as _,
+            memory_barriers.as_ptr(),
+            buffer_memory_barriers.len() as _,
+            buffer_memory_barriers.as_ptr(),
+            image_memory_barriers.len() as _,
+            image_memory_barriers.as_ptr(),
+        );
+    }
+
     unsafe fn destroy_fence(
         &self,
         fence: vk::Fence,
@@ -276,6 +351,15 @@ pub trait DeviceV1_0 {
     ) {
         self.fp_v1_0()
             .destroy_fence(self.handle(), fence, allocation_callbacks.as_raw_ptr());
+    }
+
+    unsafe fn destroy_event(
+        &self,
+        event: vk::Event,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+    ) {
+        self.fp_v1_0()
+            .destroy_event(self.handle(), event, allocation_callbacks.as_raw_ptr());
     }
 
     unsafe fn destroy_image(
@@ -721,11 +805,9 @@ pub trait DeviceV1_0 {
     }
 
     unsafe fn reset_fences(&self, fences: &[vk::Fence]) -> VkResult<()> {
-        let err_code = self.fp_v1_0().reset_fences(
-            self.handle(),
-            fences.len() as u32,
-            fences.as_ptr(),
-        );
+        let err_code =
+            self.fp_v1_0()
+                .reset_fences(self.handle(), fences.len() as u32, fences.as_ptr());
         match err_code {
             vk::Result::SUCCESS => Ok(()),
             _ => Err(err_code),
@@ -1291,6 +1373,34 @@ pub trait DeviceV1_0 {
         }
     }
 
+    unsafe fn get_pipeline_cache_data(
+        &self,
+        pipeline_cache: vk::PipelineCache,
+    ) -> VkResult<Vec<u8>> {
+        let mut data_size: usize = 0;
+        let err_code = self.fp_v1_0().get_pipeline_cache_data(
+            self.handle(),
+            pipeline_cache,
+            &mut data_size,
+            ptr::null_mut(),
+        );
+        if err_code != vk::Result::SUCCESS {
+            return Err(err_code);
+        };
+        let mut data: Vec<u8> = Vec::with_capacity(data_size);
+        let err_code = self.fp_v1_0().get_pipeline_cache_data(
+            self.handle(),
+            pipeline_cache,
+            &mut data_size,
+            data.as_mut_ptr() as _,
+        );
+        data.set_len(data_size);
+        match err_code {
+            vk::Result::SUCCESS => Ok(data),
+            _ => Err(err_code),
+        }
+    }
+
     unsafe fn map_memory(
         &self,
         memory: vk::DeviceMemory,
@@ -1357,11 +1467,7 @@ pub trait DeviceV1_0 {
         }
     }
 
-    unsafe fn get_device_queue(
-        &self,
-        queue_family_index: u32,
-        queue_index: u32,
-    ) -> vk::Queue {
+    unsafe fn get_device_queue(&self, queue_family_index: u32, queue_index: u32) -> vk::Queue {
         let mut queue = mem::uninitialized();
         self.fp_v1_0()
             .get_device_queue(self.handle(), queue_family_index, queue_index, &mut queue);
@@ -1413,11 +1519,11 @@ pub trait DeviceV1_0 {
     unsafe fn begin_command_buffer(
         &self,
         command_buffer: vk::CommandBuffer,
-        create_info: &vk::CommandBufferBeginInfo,
+        begin_info: &vk::CommandBufferBeginInfo,
     ) -> VkResult<()> {
         let err_code = self
             .fp_v1_0()
-            .begin_command_buffer(command_buffer, create_info);
+            .begin_command_buffer(command_buffer, begin_info);
         match err_code {
             vk::Result::SUCCESS => Ok(()),
             _ => Err(err_code),
@@ -1473,12 +1579,9 @@ pub trait DeviceV1_0 {
         submits: &[vk::SubmitInfo],
         fence: vk::Fence,
     ) -> VkResult<()> {
-        let err_code = self.fp_v1_0().queue_submit(
-            queue,
-            submits.len() as u32,
-            submits.as_ptr(),
-            fence,
-        );
+        let err_code =
+            self.fp_v1_0()
+                .queue_submit(queue, submits.len() as u32, submits.as_ptr(), fence);
         match err_code {
             vk::Result::SUCCESS => Ok(()),
             _ => Err(err_code),
@@ -1725,10 +1828,7 @@ pub struct Device {
     device_fn_1_1: vk::DeviceFnV1_1,
 }
 impl Device {
-    pub unsafe fn load(
-        instance_fn: &vk::InstanceFnV1_0,
-        device: vk::Device,
-    ) -> Self {
+    pub unsafe fn load(instance_fn: &vk::InstanceFnV1_0, device: vk::Device) -> Self {
         let device_fn_1_0 = vk::DeviceFnV1_0::load(|name| {
             mem::transmute(instance_fn.get_device_proc_addr(device, name.as_ptr()))
         });

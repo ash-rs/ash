@@ -15,25 +15,17 @@ use RawPtr;
 #[cfg(windows)]
 const LIB_PATH: &'static str = "vulkan-1.dll";
 
-#[cfg(
-    all(
-        unix,
-        not(
-            any(
-                target_os = "macos",
-                target_os = "ios",
-                target_os = "android"
-            )
-        )
-    )
-)]
+#[cfg(all(
+    unix,
+    not(any(target_os = "macos", target_os = "ios", target_os = "android"))
+))]
 const LIB_PATH: &'static str = "libvulkan.so.1";
 
 #[cfg(target_os = "android")]
 const LIB_PATH: &'static str = "libvulkan.so";
 
 #[cfg(any(target_os = "macos", target_os = "ios"))]
-const LIB_PATH: &'static str = "libMoltenVK.dylib";
+const LIB_PATH: &'static str = "libvulkan.dylib";
 
 lazy_static! {
     static ref VK_LIB: Result<DynamicLibrary, String> =
@@ -73,7 +65,7 @@ impl Error for InstanceError {
 
     fn cause(&self) -> Option<&Error> {
         if let &InstanceError::VkError(ref err) = self {
-            return err.cause();
+            return err.source();
         }
         None
     }

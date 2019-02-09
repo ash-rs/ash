@@ -13,10 +13,7 @@ pub struct WaylandSurface {
 }
 
 impl WaylandSurface {
-    pub fn new<E: EntryV1_0, I: InstanceV1_0>(
-        entry: &E,
-        instance: &I,
-    ) -> WaylandSurface {
+    pub fn new<E: EntryV1_0, I: InstanceV1_0>(entry: &E, instance: &I) -> WaylandSurface {
         let surface_fn = vk::KhrWaylandSurfaceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });
@@ -30,7 +27,7 @@ impl WaylandSurface {
         CStr::from_bytes_with_nul(b"VK_KHR_wayland_surface\0").expect("Wrong extension string")
     }
 
-    pub unsafe fn create_wayland_surface_khr(
+    pub unsafe fn create_wayland_surface(
         &self,
         create_info: &vk::WaylandSurfaceCreateInfoKHR,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,

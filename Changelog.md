@@ -1,3 +1,19 @@
+# 0.27.0/1
+
+* Extensions are now namespaced. `ash::extensions::khr::Swapchain`
+* Removed vendor tags from extension methods
+* Added missing functions for VkEvent
+* The examples were updated to use the new builder pattern
+* A SPIR-V parsing function `ash::util::read_spv`
+* Added `get_pipeline_cache_data`
+
+# 0.26.0
+
+* Fix loader on MacOS.
+
+* Expose function pointers for easier interop with external libraries.
+
+* Builder now uses bool instead of Bool32.
 # 0.25.0
 
 * Adds support for Vulkan 1.1

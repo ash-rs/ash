@@ -13,10 +13,7 @@ pub struct DisplaySwapchain {
 }
 
 impl DisplaySwapchain {
-    pub fn new<I: InstanceV1_0, D: DeviceV1_0>(
-        instance: &I,
-        device: &D,
-    ) -> DisplaySwapchain {
+    pub fn new<I: InstanceV1_0, D: DeviceV1_0>(instance: &I, device: &D) -> DisplaySwapchain {
         let swapchain_fn = vk::KhrDisplaySwapchainFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
@@ -30,7 +27,7 @@ impl DisplaySwapchain {
         CStr::from_bytes_with_nul(b"VK_KHR_display_swapchain\0").expect("Wrong extension string")
     }
 
-    pub unsafe fn create_shared_swapchains_khr(
+    pub unsafe fn create_shared_swapchains(
         &self,
         create_infos: &[vk::SwapchainCreateInfoKHR],
         allocation_callbacks: Option<&vk::AllocationCallbacks>,

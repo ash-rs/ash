@@ -14,10 +14,7 @@ pub struct Surface {
 }
 
 impl Surface {
-    pub fn new<E: EntryV1_0, I: InstanceV1_0>(
-        entry: &E,
-        instance: &I,
-    ) -> Surface {
+    pub fn new<E: EntryV1_0, I: InstanceV1_0>(entry: &E, instance: &I) -> Surface {
         let surface_fn = vk::KhrSurfaceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });
@@ -31,7 +28,7 @@ impl Surface {
         CStr::from_bytes_with_nul(b"VK_KHR_surface\0").expect("Wrong extension string")
     }
 
-    pub unsafe fn get_physical_device_surface_support_khr(
+    pub unsafe fn get_physical_device_surface_support(
         &self,
         physical_device: vk::PhysicalDevice,
         queue_index: u32,
@@ -47,7 +44,7 @@ impl Surface {
         b > 0
     }
 
-    pub unsafe fn get_physical_device_surface_present_modes_khr(
+    pub unsafe fn get_physical_device_surface_present_modes(
         &self,
         physical_device: vk::PhysicalDevice,
         surface: vk::SurfaceKHR,
@@ -76,7 +73,7 @@ impl Surface {
         }
     }
 
-    pub unsafe fn get_physical_device_surface_capabilities_khr(
+    pub unsafe fn get_physical_device_surface_capabilities(
         &self,
         physical_device: vk::PhysicalDevice,
         surface: vk::SurfaceKHR,
@@ -95,7 +92,7 @@ impl Surface {
         }
     }
 
-    pub unsafe fn get_physical_device_surface_formats_khr(
+    pub unsafe fn get_physical_device_surface_formats(
         &self,
         physical_device: vk::PhysicalDevice,
         surface: vk::SurfaceKHR,
@@ -121,7 +118,7 @@ impl Surface {
         }
     }
 
-    pub unsafe fn destroy_surface_khr(
+    pub unsafe fn destroy_surface(
         &self,
         surface: vk::SurfaceKHR,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,

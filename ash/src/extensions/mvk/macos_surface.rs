@@ -7,36 +7,33 @@ use vk;
 use RawPtr;
 
 #[derive(Clone)]
-pub struct Win32Surface {
+pub struct MacOSSurface {
     handle: vk::Instance,
-    win32_surface_fn: vk::KhrWin32SurfaceFn,
+    macos_surface_fn: vk::MvkMacosSurfaceFn,
 }
 
-impl Win32Surface {
-    pub fn new<E: EntryV1_0, I: InstanceV1_0>(
-        entry: &E,
-        instance: &I,
-    ) -> Win32Surface {
-        let surface_fn = vk::KhrWin32SurfaceFn::load(|name| unsafe {
+impl MacOSSurface {
+    pub fn new<E: EntryV1_0, I: InstanceV1_0>(entry: &E, instance: &I) -> MacOSSurface {
+        let surface_fn = vk::MvkMacosSurfaceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });
-        Win32Surface {
+        MacOSSurface {
             handle: instance.handle(),
-            win32_surface_fn: surface_fn,
+            macos_surface_fn: surface_fn,
         }
     }
 
     pub fn name() -> &'static CStr {
-        CStr::from_bytes_with_nul(b"VK_KHR_win32_surface\0").expect("Wrong extension string")
+        CStr::from_bytes_with_nul(b"VK_MVK_macos_surface\0").expect("Wrong extension string")
     }
 
-    pub unsafe fn create_win32_surface_khr(
+    pub unsafe fn create_mac_os_surface_mvk(
         &self,
-        create_info: &vk::Win32SurfaceCreateInfoKHR,
+        create_info: &vk::MacOSSurfaceCreateInfoMVK,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::SurfaceKHR> {
         let mut surface = mem::uninitialized();
-        let err_code = self.win32_surface_fn.create_win32_surface_khr(
+        let err_code = self.macos_surface_fn.create_mac_os_surface_mvk(
             self.handle,
             create_info,
             allocation_callbacks.as_raw_ptr(),

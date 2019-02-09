@@ -12,10 +12,7 @@ pub struct DebugUtils {
 }
 
 impl DebugUtils {
-    pub fn new<E: EntryV1_0, I: InstanceV1_0>(
-        entry: &E,
-        instance: &I,
-    ) -> DebugUtils {
+    pub fn new<E: EntryV1_0, I: InstanceV1_0>(entry: &E, instance: &I) -> DebugUtils {
         let debug_utils_fn = vk::ExtDebugUtilsFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });
@@ -29,31 +26,35 @@ impl DebugUtils {
         CStr::from_bytes_with_nul(b"VK_EXT_debug_utils\0").expect("Wrong extension string")
     }
 
-    pub unsafe fn debug_utils_set_object_name_ext(
+    pub unsafe fn debug_utils_set_object_name(
         &self,
         device: vk::Device,
         name_info: &vk::DebugUtilsObjectNameInfoEXT,
     ) -> VkResult<()> {
-        let err_code = self.debug_utils_fn.set_debug_utils_object_name_ext(device, name_info);
+        let err_code = self
+            .debug_utils_fn
+            .set_debug_utils_object_name_ext(device, name_info);
         match err_code {
             vk::Result::SUCCESS => Ok(()),
             _ => Err(err_code),
         }
     }
 
-    pub unsafe fn debug_utils_set_object_tag_ext(
+    pub unsafe fn debug_utils_set_object_tag(
         &self,
         device: vk::Device,
         tag_info: &vk::DebugUtilsObjectTagInfoEXT,
     ) -> VkResult<()> {
-        let err_code = self.debug_utils_fn.set_debug_utils_object_tag_ext(device, tag_info);
+        let err_code = self
+            .debug_utils_fn
+            .set_debug_utils_object_tag_ext(device, tag_info);
         match err_code {
             vk::Result::SUCCESS => Ok(()),
             _ => Err(err_code),
         }
     }
 
-    pub unsafe fn cmd_begin_debug_utils_label_ext(
+    pub unsafe fn cmd_begin_debug_utils_label(
         &self,
         command_buffer: vk::CommandBuffer,
         label: &vk::DebugUtilsLabelEXT,
@@ -62,12 +63,12 @@ impl DebugUtils {
             .cmd_begin_debug_utils_label_ext(command_buffer, label);
     }
 
-    pub unsafe fn cmd_end_debug_utils_label_ext(&self, command_buffer: vk::CommandBuffer) {
+    pub unsafe fn cmd_end_debug_utils_label(&self, command_buffer: vk::CommandBuffer) {
         self.debug_utils_fn
             .cmd_end_debug_utils_label_ext(command_buffer);
     }
 
-    pub unsafe fn cmd_insert_debug_utils_label_ext(
+    pub unsafe fn cmd_insert_debug_utils_label(
         &self,
         command_buffer: vk::CommandBuffer,
         label: &vk::DebugUtilsLabelEXT,
@@ -76,7 +77,7 @@ impl DebugUtils {
             .cmd_insert_debug_utils_label_ext(command_buffer, label);
     }
 
-    pub unsafe fn queue_begin_debug_utils_label_ext(
+    pub unsafe fn queue_begin_debug_utils_label(
         &self,
         queue: vk::Queue,
         label: &vk::DebugUtilsLabelEXT,
@@ -85,11 +86,11 @@ impl DebugUtils {
             .queue_begin_debug_utils_label_ext(queue, label);
     }
 
-    pub unsafe fn queue_end_debug_utils_label_ext(&self, queue: vk::Queue) {
+    pub unsafe fn queue_end_debug_utils_label(&self, queue: vk::Queue) {
         self.debug_utils_fn.queue_end_debug_utils_label_ext(queue);
     }
 
-    pub unsafe fn queue_insert_debug_utils_label_ext(
+    pub unsafe fn queue_insert_debug_utils_label(
         &self,
         queue: vk::Queue,
         label: &vk::DebugUtilsLabelEXT,
@@ -98,7 +99,7 @@ impl DebugUtils {
             .queue_insert_debug_utils_label_ext(queue, label);
     }
 
-    pub unsafe fn create_debug_utils_messenger_ext(
+    pub unsafe fn create_debug_utils_messenger(
         &self,
         create_info: &vk::DebugUtilsMessengerCreateInfoEXT,
         allocator: Option<&vk::AllocationCallbacks>,
@@ -116,7 +117,7 @@ impl DebugUtils {
         }
     }
 
-    pub unsafe fn destroy_debug_utils_messenger_ext(
+    pub unsafe fn destroy_debug_utils_messenger(
         &self,
         messenger: vk::DebugUtilsMessengerEXT,
         allocator: Option<&vk::AllocationCallbacks>,
@@ -128,7 +129,7 @@ impl DebugUtils {
         );
     }
 
-    pub unsafe fn submit_debug_utils_message_ext(
+    pub unsafe fn submit_debug_utils_message(
         &self,
         instance: vk::Instance,
         message_severity: vk::DebugUtilsMessageSeverityFlagsEXT,
