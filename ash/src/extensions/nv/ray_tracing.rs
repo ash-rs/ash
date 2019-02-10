@@ -44,7 +44,11 @@ impl RayTracing {
         accel_struct: vk::AccelerationStructureNV,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) {
-        self.ray_tracing_fn.destroy_acceleration_structure_nv(device, accel_struct, allocation_callbacks.as_raw_ptr());
+        self.ray_tracing_fn.destroy_acceleration_structure_nv(
+            device,
+            accel_struct,
+            allocation_callbacks.as_raw_ptr(),
+        );
     }
 
     pub unsafe fn get_acceleration_structure_memory_requirements(
@@ -53,7 +57,8 @@ impl RayTracing {
         info: &vk::AccelerationStructureMemoryRequirementsInfoNV,
     ) -> vk::MemoryRequirements2KHR {
         let mut requirements = mem::uninitialized();
-        self.ray_tracing_fn.get_acceleration_structure_memory_requirements_nv(device, info, &mut requirements);
+        self.ray_tracing_fn
+            .get_acceleration_structure_memory_requirements_nv(device, info, &mut requirements);
         requirements
     }
 
