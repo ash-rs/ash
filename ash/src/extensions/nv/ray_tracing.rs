@@ -151,7 +151,27 @@ impl RayTracing {
         );
     }
 
-    // create_ray_tracing_pipelines_nv
+    pub unsafe fn create_ray_tracing_pipelines(
+        &self,
+        device: vk::Device,
+        pipeline_cache: vk::PipelineCache,
+        create_info: &[vk::RayTracingPipelineCreateInfoNV],
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+    ) -> VkResult<Vec<vk::Pipeline>> {
+        let mut pipelines = vec![mem::uninitialized(); create_info.len()];
+        let err_code = self.ray_tracing_fn.create_ray_tracing_pipelines_nv(
+            device,
+            pipeline_cache,
+            create_info.len() as u32,
+            create_info.as_ptr(),
+            allocation_callbacks.as_raw_ptr(),
+            pipelines.as_mut_ptr(),
+        );
+        match err_code {
+            vk::Result::SUCCESS => Ok(pipelines),
+            _ => Err(err_code),
+        }
+    }
 
     // get_ray_tracing_shader_group_handles_nv
 
