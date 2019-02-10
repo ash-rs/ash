@@ -195,7 +195,23 @@ impl RayTracing {
         }
     }
 
-    // get_acceleration_structure_handle_nv
+    pub unsafe fn get_acceleration_structure_handle(
+        &self,
+        device: vk::Device,
+        accel_struct: vk::AccelerationStructureNV,
+        data: &mut [u8],
+    ) -> VkResult<()> {
+        let err_code = self.ray_tracing_fn.get_acceleration_structure_handle_nv(
+            device,
+            accel_struct,
+            data.len(),
+            data.as_mut_ptr() as *mut std::ffi::c_void,
+        );
+        match err_code {
+            vk::Result::SUCCESS => Ok(()),
+            _ => Err(err_code),
+        }
+    }
 
     pub unsafe fn cmd_write_acceleration_structures_properties(
         &self,
