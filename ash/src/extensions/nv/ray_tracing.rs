@@ -38,6 +38,15 @@ impl RayTracing {
         }
     }
 
+    pub unsafe fn destroy_acceleration_structure(
+        &self,
+        device: vk::Device,
+        accel_struct: vk::AccelerationStructureNV,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+    ) {
+        self.ray_tracing_fn.destroy_acceleration_structure_nv(device, accel_struct, allocation_callbacks.as_raw_ptr());
+    }
+
     pub fn name() -> &'static CStr {
         CStr::from_bytes_with_nul(b"VK_NV_ray_tracing\0").expect("Wrong extension string")
     }
