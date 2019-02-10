@@ -78,7 +78,30 @@ impl RayTracing {
         }
     }
 
-    // cmd_build_acceleration_structure_nv
+    pub unsafe fn cmd_build_acceleration_structure(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        info: &vk::AccelerationStructureInfoNV,
+        instance_data: vk::Buffer,
+        instance_offset: vk::DeviceSize,
+        update: bool,
+        dst: vk::AccelerationStructureNV,
+        src: vk::AccelerationStructureNV,
+        scratch: vk::Buffer,
+        scratch_offset: vk::DeviceSize,
+    ) {
+        self.ray_tracing_fn.cmd_build_acceleration_structure_nv(
+            command_buffer,
+            info,
+            instance_data,
+            instance_offset,
+            if update { vk::TRUE } else { vk::FALSE },
+            dst,
+            src,
+            scratch,
+            scratch_offset,
+        );
+    }
 
     // cmd_copy_acceleration_structure_nv
 
