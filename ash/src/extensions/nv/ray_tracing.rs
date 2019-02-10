@@ -62,6 +62,22 @@ impl RayTracing {
         requirements
     }
 
+    pub unsafe fn bind_acceleration_structure_memory(
+        &self,
+        device: vk::Device,
+        bind_info: &[vk::BindAccelerationStructureMemoryInfoNV],
+    ) -> VkResult<()> {
+        let err_code = self.ray_tracing_fn.bind_acceleration_structure_memory_nv(
+            device,
+            bind_info.len() as u32,
+            bind_info.as_ptr(),
+        );
+        match err_code {
+            vk::Result::SUCCESS => Ok(()),
+            _ => Err(err_code),
+        }
+    }
+
     pub fn name() -> &'static CStr {
         CStr::from_bytes_with_nul(b"VK_NV_ray_tracing\0").expect("Wrong extension string")
     }
