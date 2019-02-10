@@ -157,7 +157,24 @@ impl RayTracing {
 
     // get_acceleration_structure_handle_nv
 
-    // cmd_write_acceleration_structures_properties_nv
+    pub unsafe fn cmd_write_acceleration_structures_properties(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        structures: &[vk::AccelerationStructureNV],
+        query_type: vk::QueryType,
+        query_pool: vk::QueryPool,
+        first_query: u32,
+    ) {
+        self.ray_tracing_fn
+            .cmd_write_acceleration_structures_properties_nv(
+                command_buffer,
+                structures.len() as u32,
+                structures.as_ptr(),
+                query_type,
+                query_pool,
+                first_query,
+            );
+    }
 
     pub unsafe fn compile_deferred(
         &self,
