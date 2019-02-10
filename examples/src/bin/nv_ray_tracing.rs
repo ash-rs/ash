@@ -1,6 +1,7 @@
 extern crate ash;
 extern crate examples;
 
+use ash::extensions::nv::RayTracing;
 use ash::util::*;
 use ash::vk;
 use examples::*;
@@ -17,9 +18,99 @@ struct Vertex {
     color: [f32; 4],
 }
 
+struct AccelerationStructure {
+    memory: vk::DeviceMemory,
+    accel_struct_info: vk::AccelerationStructureInfoNV,
+    accel_struct: vk::AccelerationStructureNV,
+    handle: u64,
+}
+
+fn create_acceleration_structure(
+    base: &ExampleBase,
+    ray_tracing: &RayTracing,
+    device: &ash::Device,
+    accel_type: vk::AccelerationStructureTypeNV,
+    geometry: &[vk::GeometryNV],
+    instance_count: u32,
+) -> AccelerationStructure {
+    unsafe {
+        let accel_struct_info = vk::AccelerationStructureInfoNV::builder()
+            .ty(accel_type)
+            .flags(vk::BuildAccelerationStructureFlagsNV::PREFER_FAST_TRACE)
+            .geometries(geometry)
+            .instance_count(instance_count)
+            .build();
+        let create_info = vk::AccelerationStructureCreateInfoNV::builder()
+            .info(accel_struct_info)
+            .compacted_size(0)
+            .build();
+        let accel_struct = ray_tracing
+            .create_acceleration_structure(&create_info, None)
+            .unwrap();
+
+        let requirements_info = vk::AccelerationStructureMemoryRequirementsInfoNV::builder()
+            .acceleration_structure(accel_struct)
+            .ty(vk::AccelerationStructureMemoryRequirementsTypeNV::OBJECT)
+            .build();
+        let requirements =
+            ray_tracing.get_acceleration_structure_memory_requirements(&requirements_info);
+
+        let memory_type_index = find_memorytype_index(
+            &requirements.memory_requirements,
+            &base.device_memory_properties,
+            vk::MemoryPropertyFlags::DEVICE_LOCAL,
+        )
+        .unwrap();
+
+        let allocate_info = vk::MemoryAllocateInfo {
+            allocation_size: requirements.memory_requirements.size,
+            memory_type_index,
+            ..Default::default()
+        };
+
+        let memory = device.allocate_memory(&allocate_info, None).unwrap();
+
+        ray_tracing
+            .bind_acceleration_structure_memory(&[
+                vk::BindAccelerationStructureMemoryInfoNV::builder()
+                    .acceleration_structure(accel_struct)
+                    .memory(memory)
+                    .memory_offset(0)
+                    .build(),
+            ])
+            .unwrap();
+
+        let handle = ray_tracing
+            .get_acceleration_structure_handle(accel_struct)
+            .unwrap();
+
+        AccelerationStructure {
+            memory,
+            accel_struct_info,
+            accel_struct,
+            handle,
+        }
+    }
+}
+
+/*
+
+
+
+    error = vkGetAccelerationStructureHandleNV(mDevice, _as.accelerationStructure, sizeof(uint64_t), &_as.handle);
+    if (VK_SUCCESS != error) {
+        CHECK_VK_ERROR(error, "vkGetAccelerationStructureHandleNVX");
+        return false;
+    }
+
+    return true;
+}
+*/
+
 fn main() {
     unsafe {
         let base = ExampleBase::new(1920, 1080);
+        let ray_tracing = RayTracing::new(&base.instance, &base.device);
         let renderpass_attachments = [
             vk::AttachmentDescription {
                 format: base.surface_format.format,
@@ -202,10 +293,10 @@ fn main() {
         base.device
             .bind_buffer_memory(vertex_input_buffer, vertex_input_buffer_memory, 0)
             .unwrap();
-        let mut vertex_spv_file =
-            File::open(Path::new("shader/nv_ray_tracing/vert.spv")).expect("Could not find vert.spv.");
-        let mut frag_spv_file =
-            File::open(Path::new("shader/nv_ray_tracing/frag.spv")).expect("Could not find frag.spv.");
+        let mut vertex_spv_file = File::open(Path::new("shader/nv_ray_tracing/vert.spv"))
+            .expect("Could not find vert.spv.");
+        let mut frag_spv_file = File::open(Path::new("shader/nv_ray_tracing/frag.spv"))
+            .expect("Could not find frag.spv.");
 
         let vertex_code =
             read_spv(&mut vertex_spv_file).expect("Failed to read vertex shader spv file");
