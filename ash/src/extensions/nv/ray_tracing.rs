@@ -47,6 +47,16 @@ impl RayTracing {
         self.ray_tracing_fn.destroy_acceleration_structure_nv(device, accel_struct, allocation_callbacks.as_raw_ptr());
     }
 
+    pub unsafe fn get_acceleration_structure_memory_requirements(
+        &self,
+        device: vk::Device,
+        info: &vk::AccelerationStructureMemoryRequirementsInfoNV,
+    ) -> vk::MemoryRequirements2KHR {
+        let mut requirements = mem::uninitialized();
+        self.ray_tracing_fn.get_acceleration_structure_memory_requirements_nv(device, info, &mut requirements);
+        requirements
+    }
+
     pub fn name() -> &'static CStr {
         CStr::from_bytes_with_nul(b"VK_NV_ray_tracing\0").expect("Wrong extension string")
     }
