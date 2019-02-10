@@ -173,7 +173,27 @@ impl RayTracing {
         }
     }
 
-    // get_ray_tracing_shader_group_handles_nv
+    pub unsafe fn get_ray_tracing_shader_group_handles(
+        &self,
+        device: vk::Device,
+        pipeline: vk::Pipeline,
+        first_group: u32,
+        group_count: u32,
+        data: &mut [u8],
+    ) -> VkResult<()> {
+        let err_code = self.ray_tracing_fn.get_ray_tracing_shader_group_handles_nv(
+            device,
+            pipeline,
+            first_group,
+            group_count,
+            data.len(),
+            data.as_mut_ptr() as *mut std::ffi::c_void,
+        );
+        match err_code {
+            vk::Result::SUCCESS => Ok(()),
+            _ => Err(err_code),
+        }
+    }
 
     // get_acceleration_structure_handle_nv
 
