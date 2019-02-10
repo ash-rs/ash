@@ -114,7 +114,42 @@ impl RayTracing {
             .cmd_copy_acceleration_structure_nv(command_buffer, dst, src, mode);
     }
 
-    // cmd_trace_rays_nv
+    pub unsafe fn cmd_trace_rays(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        raygen_shader_binding_table_buffer: vk::Buffer,
+        raygen_shader_binding_offset: vk::DeviceSize,
+        miss_shader_binding_table_buffer: vk::Buffer,
+        miss_shader_binding_offset: vk::DeviceSize,
+        miss_shader_binding_stride: vk::DeviceSize,
+        hit_shader_binding_table_buffer: vk::Buffer,
+        hit_shader_binding_offset: vk::DeviceSize,
+        hit_shader_binding_stride: vk::DeviceSize,
+        callable_shader_binding_table_buffer: vk::Buffer,
+        callable_shader_binding_offset: vk::DeviceSize,
+        callable_shader_binding_stride: vk::DeviceSize,
+        width: u32,
+        height: u32,
+        depth: u32,
+    ) {
+        self.ray_tracing_fn.cmd_trace_rays_nv(
+            command_buffer,
+            raygen_shader_binding_table_buffer,
+            raygen_shader_binding_offset,
+            miss_shader_binding_table_buffer,
+            miss_shader_binding_offset,
+            miss_shader_binding_stride,
+            hit_shader_binding_table_buffer,
+            hit_shader_binding_offset,
+            hit_shader_binding_stride,
+            callable_shader_binding_table_buffer,
+            callable_shader_binding_offset,
+            callable_shader_binding_stride,
+            width,
+            height,
+            depth,
+        );
+    }
 
     // create_ray_tracing_pipelines_nv
 
