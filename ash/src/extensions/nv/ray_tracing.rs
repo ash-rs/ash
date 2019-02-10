@@ -78,6 +78,35 @@ impl RayTracing {
         }
     }
 
+    // cmd_build_acceleration_structure_nv
+
+    // cmd_copy_acceleration_structure_nv
+
+    // cmd_trace_rays_nv
+
+    // create_ray_tracing_pipelines_nv
+
+    // get_ray_tracing_shader_group_handles_nv
+
+    // get_acceleration_structure_handle_nv
+
+    // cmd_write_acceleration_structures_properties_nv
+
+    pub unsafe fn compile_deferred(
+        &self,
+        device: vk::Device,
+        pipeline: vk::Pipeline,
+        shader: u32,
+    ) -> VkResult<()> {
+        let err_code = self
+            .ray_tracing_fn
+            .compile_deferred_nv(device, pipeline, shader);
+        match err_code {
+            vk::Result::SUCCESS => Ok(()),
+            _ => Err(err_code),
+        }
+    }
+
     pub fn name() -> &'static CStr {
         CStr::from_bytes_with_nul(b"VK_NV_ray_tracing\0").expect("Wrong extension string")
     }
