@@ -103,7 +103,16 @@ impl RayTracing {
         );
     }
 
-    // cmd_copy_acceleration_structure_nv
+    pub unsafe fn cmd_copy_acceleration_structure(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        dst: vk::AccelerationStructureNV,
+        src: vk::AccelerationStructureNV,
+        mode: vk::CopyAccelerationStructureModeNV,
+    ) {
+        self.ray_tracing_fn
+            .cmd_copy_acceleration_structure_nv(command_buffer, dst, src, mode);
+    }
 
     // cmd_trace_rays_nv
 
