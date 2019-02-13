@@ -33202,6 +33202,164 @@ impl<'a> SubpassDescriptionDepthStencilResolveKHRBuilder<'a> {
 }
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
+pub struct PhysicalDeviceDepthStencilResolvePropertiesKHR {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub supported_depth_resolve_modes: ResolveModeFlagsKHR,
+    pub supported_stencil_resolve_modes: ResolveModeFlagsKHR,
+    pub independent_resolve_none: Bool32,
+    pub independent_resolve: Bool32,
+}
+impl ::std::default::Default for PhysicalDeviceDepthStencilResolvePropertiesKHR {
+    fn default() -> PhysicalDeviceDepthStencilResolvePropertiesKHR {
+        PhysicalDeviceDepthStencilResolvePropertiesKHR {
+            s_type: StructureType::PHYSICAL_DEVICE_DEPTH_STENCIL_RESOLVE_PROPERTIES_KHR,
+            p_next: ::std::ptr::null_mut(),
+            supported_depth_resolve_modes: ResolveModeFlagsKHR::default(),
+            supported_stencil_resolve_modes: ResolveModeFlagsKHR::default(),
+            independent_resolve_none: Bool32::default(),
+            independent_resolve: Bool32::default(),
+        }
+    }
+}
+impl PhysicalDeviceDepthStencilResolvePropertiesKHR {
+    pub fn builder<'a>() -> PhysicalDeviceDepthStencilResolvePropertiesKHRBuilder<'a> {
+        PhysicalDeviceDepthStencilResolvePropertiesKHRBuilder {
+            inner: PhysicalDeviceDepthStencilResolvePropertiesKHR::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+pub struct PhysicalDeviceDepthStencilResolvePropertiesKHRBuilder<'a> {
+    inner: PhysicalDeviceDepthStencilResolvePropertiesKHR,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+pub unsafe trait ExtendsPhysicalDeviceDepthStencilResolvePropertiesKHR {}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceDepthStencilResolvePropertiesKHR {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceDepthStencilResolvePropertiesKHRBuilder<'a> {
+    type Target = PhysicalDeviceDepthStencilResolvePropertiesKHR;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> PhysicalDeviceDepthStencilResolvePropertiesKHRBuilder<'a> {
+    pub fn supported_depth_resolve_modes(
+        mut self,
+        supported_depth_resolve_modes: ResolveModeFlagsKHR,
+    ) -> PhysicalDeviceDepthStencilResolvePropertiesKHRBuilder<'a> {
+        self.inner.supported_depth_resolve_modes = supported_depth_resolve_modes;
+        self
+    }
+    pub fn supported_stencil_resolve_modes(
+        mut self,
+        supported_stencil_resolve_modes: ResolveModeFlagsKHR,
+    ) -> PhysicalDeviceDepthStencilResolvePropertiesKHRBuilder<'a> {
+        self.inner.supported_stencil_resolve_modes = supported_stencil_resolve_modes;
+        self
+    }
+    pub fn independent_resolve_none(
+        mut self,
+        independent_resolve_none: bool,
+    ) -> PhysicalDeviceDepthStencilResolvePropertiesKHRBuilder<'a> {
+        self.inner.independent_resolve_none = independent_resolve_none.into();
+        self
+    }
+    pub fn independent_resolve(
+        mut self,
+        independent_resolve: bool,
+    ) -> PhysicalDeviceDepthStencilResolvePropertiesKHRBuilder<'a> {
+        self.inner.independent_resolve = independent_resolve.into();
+        self
+    }
+    pub fn next<T>(
+        mut self,
+        next: &'a mut T,
+    ) -> PhysicalDeviceDepthStencilResolvePropertiesKHRBuilder<'a>
+    where
+        T: ExtendsPhysicalDeviceDepthStencilResolvePropertiesKHR,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
+        self
+    }
+    pub fn build(self) -> PhysicalDeviceDepthStencilResolvePropertiesKHR {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+pub struct SubpassDescriptionDepthStencilResolveKHR {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub depth_resolve_mode: ResolveModeFlagsKHR,
+    pub stencil_resolve_mode: ResolveModeFlagsKHR,
+    pub p_depth_stencil_resolve_attachment: *const AttachmentReference2KHR,
+}
+impl ::std::default::Default for SubpassDescriptionDepthStencilResolveKHR {
+    fn default() -> SubpassDescriptionDepthStencilResolveKHR {
+        SubpassDescriptionDepthStencilResolveKHR {
+            s_type: StructureType::SUBPASS_DESCRIPTION_DEPTH_STENCIL_RESOLVE_KHR,
+            p_next: ::std::ptr::null(),
+            depth_resolve_mode: ResolveModeFlagsKHR::default(),
+            stencil_resolve_mode: ResolveModeFlagsKHR::default(),
+            p_depth_stencil_resolve_attachment: ::std::ptr::null(),
+        }
+    }
+}
+impl SubpassDescriptionDepthStencilResolveKHR {
+    pub fn builder<'a>() -> SubpassDescriptionDepthStencilResolveKHRBuilder<'a> {
+        SubpassDescriptionDepthStencilResolveKHRBuilder {
+            inner: SubpassDescriptionDepthStencilResolveKHR::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+pub struct SubpassDescriptionDepthStencilResolveKHRBuilder<'a> {
+    inner: SubpassDescriptionDepthStencilResolveKHR,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+pub unsafe trait ExtendsSubpassDescriptionDepthStencilResolveKHR {}
+unsafe impl ExtendsSubpassDescription2KHR for SubpassDescriptionDepthStencilResolveKHR {}
+impl<'a> ::std::ops::Deref for SubpassDescriptionDepthStencilResolveKHRBuilder<'a> {
+    type Target = SubpassDescriptionDepthStencilResolveKHR;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> SubpassDescriptionDepthStencilResolveKHRBuilder<'a> {
+    pub fn depth_resolve_mode(
+        mut self,
+        depth_resolve_mode: ResolveModeFlagsKHR,
+    ) -> SubpassDescriptionDepthStencilResolveKHRBuilder<'a> {
+        self.inner.depth_resolve_mode = depth_resolve_mode;
+        self
+    }
+    pub fn stencil_resolve_mode(
+        mut self,
+        stencil_resolve_mode: ResolveModeFlagsKHR,
+    ) -> SubpassDescriptionDepthStencilResolveKHRBuilder<'a> {
+        self.inner.stencil_resolve_mode = stencil_resolve_mode;
+        self
+    }
+    pub fn depth_stencil_resolve_attachment(
+        mut self,
+        depth_stencil_resolve_attachment: &'a AttachmentReference2KHR,
+    ) -> SubpassDescriptionDepthStencilResolveKHRBuilder<'a> {
+        self.inner.p_depth_stencil_resolve_attachment = depth_stencil_resolve_attachment;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> SubpassDescriptionDepthStencilResolveKHRBuilder<'a>
+    where
+        T: ExtendsSubpassDescriptionDepthStencilResolveKHR,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
+        self
+    }
+    pub fn build(self) -> SubpassDescriptionDepthStencilResolveKHR {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
 pub struct ImageViewASTCDecodeModeEXT {
     pub s_type: StructureType,
     pub p_next: *const c_void,
@@ -36198,6 +36356,627 @@ impl<'a> DeviceMemoryOverallocationCreateInfoAMDBuilder<'a> {
         self
     }
     pub fn build(self) -> DeviceMemoryOverallocationCreateInfoAMD {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+pub struct PhysicalDeviceFragmentDensityMapFeaturesEXT {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub fragment_density_map: Bool32,
+    pub fragment_density_map_dynamic: Bool32,
+    pub fragment_density_map_non_subsampled_images: Bool32,
+}
+impl ::std::default::Default for PhysicalDeviceFragmentDensityMapFeaturesEXT {
+    fn default() -> PhysicalDeviceFragmentDensityMapFeaturesEXT {
+        PhysicalDeviceFragmentDensityMapFeaturesEXT {
+            s_type: StructureType::PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_FEATURES_EXT,
+            p_next: ::std::ptr::null_mut(),
+            fragment_density_map: Bool32::default(),
+            fragment_density_map_dynamic: Bool32::default(),
+            fragment_density_map_non_subsampled_images: Bool32::default(),
+        }
+    }
+}
+impl PhysicalDeviceFragmentDensityMapFeaturesEXT {
+    pub fn builder<'a>() -> PhysicalDeviceFragmentDensityMapFeaturesEXTBuilder<'a> {
+        PhysicalDeviceFragmentDensityMapFeaturesEXTBuilder {
+            inner: PhysicalDeviceFragmentDensityMapFeaturesEXT::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+pub struct PhysicalDeviceFragmentDensityMapFeaturesEXTBuilder<'a> {
+    inner: PhysicalDeviceFragmentDensityMapFeaturesEXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+pub unsafe trait ExtendsPhysicalDeviceFragmentDensityMapFeaturesEXT {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceFragmentDensityMapFeaturesEXT {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFragmentDensityMapFeaturesEXT {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceFragmentDensityMapFeaturesEXTBuilder<'a> {
+    type Target = PhysicalDeviceFragmentDensityMapFeaturesEXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> PhysicalDeviceFragmentDensityMapFeaturesEXTBuilder<'a> {
+    pub fn fragment_density_map(
+        mut self,
+        fragment_density_map: bool,
+    ) -> PhysicalDeviceFragmentDensityMapFeaturesEXTBuilder<'a> {
+        self.inner.fragment_density_map = fragment_density_map.into();
+        self
+    }
+    pub fn fragment_density_map_dynamic(
+        mut self,
+        fragment_density_map_dynamic: bool,
+    ) -> PhysicalDeviceFragmentDensityMapFeaturesEXTBuilder<'a> {
+        self.inner.fragment_density_map_dynamic = fragment_density_map_dynamic.into();
+        self
+    }
+    pub fn fragment_density_map_non_subsampled_images(
+        mut self,
+        fragment_density_map_non_subsampled_images: bool,
+    ) -> PhysicalDeviceFragmentDensityMapFeaturesEXTBuilder<'a> {
+        self.inner.fragment_density_map_non_subsampled_images =
+            fragment_density_map_non_subsampled_images.into();
+        self
+    }
+    pub fn next<T>(
+        mut self,
+        next: &'a mut T,
+    ) -> PhysicalDeviceFragmentDensityMapFeaturesEXTBuilder<'a>
+    where
+        T: ExtendsPhysicalDeviceFragmentDensityMapFeaturesEXT,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
+        self
+    }
+    pub fn build(self) -> PhysicalDeviceFragmentDensityMapFeaturesEXT {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+pub struct PhysicalDeviceFragmentDensityMapPropertiesEXT {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub min_fragment_density_texel_size: Extent2D,
+    pub max_fragment_density_texel_size: Extent2D,
+    pub fragment_density_invocations: Bool32,
+}
+impl ::std::default::Default for PhysicalDeviceFragmentDensityMapPropertiesEXT {
+    fn default() -> PhysicalDeviceFragmentDensityMapPropertiesEXT {
+        PhysicalDeviceFragmentDensityMapPropertiesEXT {
+            s_type: StructureType::PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_PROPERTIES_EXT,
+            p_next: ::std::ptr::null_mut(),
+            min_fragment_density_texel_size: Extent2D::default(),
+            max_fragment_density_texel_size: Extent2D::default(),
+            fragment_density_invocations: Bool32::default(),
+        }
+    }
+}
+impl PhysicalDeviceFragmentDensityMapPropertiesEXT {
+    pub fn builder<'a>() -> PhysicalDeviceFragmentDensityMapPropertiesEXTBuilder<'a> {
+        PhysicalDeviceFragmentDensityMapPropertiesEXTBuilder {
+            inner: PhysicalDeviceFragmentDensityMapPropertiesEXT::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+pub struct PhysicalDeviceFragmentDensityMapPropertiesEXTBuilder<'a> {
+    inner: PhysicalDeviceFragmentDensityMapPropertiesEXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+pub unsafe trait ExtendsPhysicalDeviceFragmentDensityMapPropertiesEXT {}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceFragmentDensityMapPropertiesEXT {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceFragmentDensityMapPropertiesEXTBuilder<'a> {
+    type Target = PhysicalDeviceFragmentDensityMapPropertiesEXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> PhysicalDeviceFragmentDensityMapPropertiesEXTBuilder<'a> {
+    pub fn min_fragment_density_texel_size(
+        mut self,
+        min_fragment_density_texel_size: Extent2D,
+    ) -> PhysicalDeviceFragmentDensityMapPropertiesEXTBuilder<'a> {
+        self.inner.min_fragment_density_texel_size = min_fragment_density_texel_size;
+        self
+    }
+    pub fn max_fragment_density_texel_size(
+        mut self,
+        max_fragment_density_texel_size: Extent2D,
+    ) -> PhysicalDeviceFragmentDensityMapPropertiesEXTBuilder<'a> {
+        self.inner.max_fragment_density_texel_size = max_fragment_density_texel_size;
+        self
+    }
+    pub fn fragment_density_invocations(
+        mut self,
+        fragment_density_invocations: bool,
+    ) -> PhysicalDeviceFragmentDensityMapPropertiesEXTBuilder<'a> {
+        self.inner.fragment_density_invocations = fragment_density_invocations.into();
+        self
+    }
+    pub fn next<T>(
+        mut self,
+        next: &'a mut T,
+    ) -> PhysicalDeviceFragmentDensityMapPropertiesEXTBuilder<'a>
+    where
+        T: ExtendsPhysicalDeviceFragmentDensityMapPropertiesEXT,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
+        self
+    }
+    pub fn build(self) -> PhysicalDeviceFragmentDensityMapPropertiesEXT {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+pub struct RenderPassFragmentDensityMapCreateInfoEXT {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub fragment_density_map_attachment: AttachmentReference,
+}
+impl ::std::default::Default for RenderPassFragmentDensityMapCreateInfoEXT {
+    fn default() -> RenderPassFragmentDensityMapCreateInfoEXT {
+        RenderPassFragmentDensityMapCreateInfoEXT {
+            s_type: StructureType::RENDER_PASS_FRAGMENT_DENSITY_MAP_CREATE_INFO_EXT,
+            p_next: ::std::ptr::null(),
+            fragment_density_map_attachment: AttachmentReference::default(),
+        }
+    }
+}
+impl RenderPassFragmentDensityMapCreateInfoEXT {
+    pub fn builder<'a>() -> RenderPassFragmentDensityMapCreateInfoEXTBuilder<'a> {
+        RenderPassFragmentDensityMapCreateInfoEXTBuilder {
+            inner: RenderPassFragmentDensityMapCreateInfoEXT::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+pub struct RenderPassFragmentDensityMapCreateInfoEXTBuilder<'a> {
+    inner: RenderPassFragmentDensityMapCreateInfoEXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+pub unsafe trait ExtendsRenderPassFragmentDensityMapCreateInfoEXT {}
+unsafe impl ExtendsRenderPassCreateInfo for RenderPassFragmentDensityMapCreateInfoEXT {}
+impl<'a> ::std::ops::Deref for RenderPassFragmentDensityMapCreateInfoEXTBuilder<'a> {
+    type Target = RenderPassFragmentDensityMapCreateInfoEXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> RenderPassFragmentDensityMapCreateInfoEXTBuilder<'a> {
+    pub fn fragment_density_map_attachment(
+        mut self,
+        fragment_density_map_attachment: AttachmentReference,
+    ) -> RenderPassFragmentDensityMapCreateInfoEXTBuilder<'a> {
+        self.inner.fragment_density_map_attachment = fragment_density_map_attachment;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> RenderPassFragmentDensityMapCreateInfoEXTBuilder<'a>
+    where
+        T: ExtendsRenderPassFragmentDensityMapCreateInfoEXT,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
+        self
+    }
+    pub fn build(self) -> RenderPassFragmentDensityMapCreateInfoEXT {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+pub struct PhysicalDeviceScalarBlockLayoutFeaturesEXT {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub scalar_block_layout: Bool32,
+}
+impl ::std::default::Default for PhysicalDeviceScalarBlockLayoutFeaturesEXT {
+    fn default() -> PhysicalDeviceScalarBlockLayoutFeaturesEXT {
+        PhysicalDeviceScalarBlockLayoutFeaturesEXT {
+            s_type: StructureType::PHYSICAL_DEVICE_SCALAR_BLOCK_LAYOUT_FEATURES_EXT,
+            p_next: ::std::ptr::null_mut(),
+            scalar_block_layout: Bool32::default(),
+        }
+    }
+}
+impl PhysicalDeviceScalarBlockLayoutFeaturesEXT {
+    pub fn builder<'a>() -> PhysicalDeviceScalarBlockLayoutFeaturesEXTBuilder<'a> {
+        PhysicalDeviceScalarBlockLayoutFeaturesEXTBuilder {
+            inner: PhysicalDeviceScalarBlockLayoutFeaturesEXT::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+pub struct PhysicalDeviceScalarBlockLayoutFeaturesEXTBuilder<'a> {
+    inner: PhysicalDeviceScalarBlockLayoutFeaturesEXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+pub unsafe trait ExtendsPhysicalDeviceScalarBlockLayoutFeaturesEXT {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceScalarBlockLayoutFeaturesEXT {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceScalarBlockLayoutFeaturesEXT {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceScalarBlockLayoutFeaturesEXTBuilder<'a> {
+    type Target = PhysicalDeviceScalarBlockLayoutFeaturesEXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> PhysicalDeviceScalarBlockLayoutFeaturesEXTBuilder<'a> {
+    pub fn scalar_block_layout(
+        mut self,
+        scalar_block_layout: bool,
+    ) -> PhysicalDeviceScalarBlockLayoutFeaturesEXTBuilder<'a> {
+        self.inner.scalar_block_layout = scalar_block_layout.into();
+        self
+    }
+    pub fn next<T>(
+        mut self,
+        next: &'a mut T,
+    ) -> PhysicalDeviceScalarBlockLayoutFeaturesEXTBuilder<'a>
+    where
+        T: ExtendsPhysicalDeviceScalarBlockLayoutFeaturesEXT,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
+        self
+    }
+    pub fn build(self) -> PhysicalDeviceScalarBlockLayoutFeaturesEXT {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+pub struct PhysicalDeviceMemoryBudgetPropertiesEXT {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub heap_budget: [DeviceSize; MAX_MEMORY_HEAPS],
+    pub heap_usage: [DeviceSize; MAX_MEMORY_HEAPS],
+}
+impl ::std::default::Default for PhysicalDeviceMemoryBudgetPropertiesEXT {
+    fn default() -> PhysicalDeviceMemoryBudgetPropertiesEXT {
+        PhysicalDeviceMemoryBudgetPropertiesEXT {
+            s_type: StructureType::PHYSICAL_DEVICE_MEMORY_BUDGET_PROPERTIES_EXT,
+            p_next: ::std::ptr::null_mut(),
+            heap_budget: unsafe { ::std::mem::zeroed() },
+            heap_usage: unsafe { ::std::mem::zeroed() },
+        }
+    }
+}
+impl PhysicalDeviceMemoryBudgetPropertiesEXT {
+    pub fn builder<'a>() -> PhysicalDeviceMemoryBudgetPropertiesEXTBuilder<'a> {
+        PhysicalDeviceMemoryBudgetPropertiesEXTBuilder {
+            inner: PhysicalDeviceMemoryBudgetPropertiesEXT::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+pub struct PhysicalDeviceMemoryBudgetPropertiesEXTBuilder<'a> {
+    inner: PhysicalDeviceMemoryBudgetPropertiesEXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+pub unsafe trait ExtendsPhysicalDeviceMemoryBudgetPropertiesEXT {}
+unsafe impl ExtendsPhysicalDeviceMemoryProperties2 for PhysicalDeviceMemoryBudgetPropertiesEXT {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceMemoryBudgetPropertiesEXTBuilder<'a> {
+    type Target = PhysicalDeviceMemoryBudgetPropertiesEXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> PhysicalDeviceMemoryBudgetPropertiesEXTBuilder<'a> {
+    pub fn heap_budget(
+        mut self,
+        heap_budget: [DeviceSize; MAX_MEMORY_HEAPS],
+    ) -> PhysicalDeviceMemoryBudgetPropertiesEXTBuilder<'a> {
+        self.inner.heap_budget = heap_budget;
+        self
+    }
+    pub fn heap_usage(
+        mut self,
+        heap_usage: [DeviceSize; MAX_MEMORY_HEAPS],
+    ) -> PhysicalDeviceMemoryBudgetPropertiesEXTBuilder<'a> {
+        self.inner.heap_usage = heap_usage;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceMemoryBudgetPropertiesEXTBuilder<'a>
+    where
+        T: ExtendsPhysicalDeviceMemoryBudgetPropertiesEXT,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
+        self
+    }
+    pub fn build(self) -> PhysicalDeviceMemoryBudgetPropertiesEXT {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+pub struct PhysicalDeviceMemoryPriorityFeaturesEXT {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub memory_priority: Bool32,
+}
+impl ::std::default::Default for PhysicalDeviceMemoryPriorityFeaturesEXT {
+    fn default() -> PhysicalDeviceMemoryPriorityFeaturesEXT {
+        PhysicalDeviceMemoryPriorityFeaturesEXT {
+            s_type: StructureType::PHYSICAL_DEVICE_MEMORY_PRIORITY_FEATURES_EXT,
+            p_next: ::std::ptr::null_mut(),
+            memory_priority: Bool32::default(),
+        }
+    }
+}
+impl PhysicalDeviceMemoryPriorityFeaturesEXT {
+    pub fn builder<'a>() -> PhysicalDeviceMemoryPriorityFeaturesEXTBuilder<'a> {
+        PhysicalDeviceMemoryPriorityFeaturesEXTBuilder {
+            inner: PhysicalDeviceMemoryPriorityFeaturesEXT::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+pub struct PhysicalDeviceMemoryPriorityFeaturesEXTBuilder<'a> {
+    inner: PhysicalDeviceMemoryPriorityFeaturesEXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+pub unsafe trait ExtendsPhysicalDeviceMemoryPriorityFeaturesEXT {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMemoryPriorityFeaturesEXT {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMemoryPriorityFeaturesEXT {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceMemoryPriorityFeaturesEXTBuilder<'a> {
+    type Target = PhysicalDeviceMemoryPriorityFeaturesEXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> PhysicalDeviceMemoryPriorityFeaturesEXTBuilder<'a> {
+    pub fn memory_priority(
+        mut self,
+        memory_priority: bool,
+    ) -> PhysicalDeviceMemoryPriorityFeaturesEXTBuilder<'a> {
+        self.inner.memory_priority = memory_priority.into();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceMemoryPriorityFeaturesEXTBuilder<'a>
+    where
+        T: ExtendsPhysicalDeviceMemoryPriorityFeaturesEXT,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
+        self
+    }
+    pub fn build(self) -> PhysicalDeviceMemoryPriorityFeaturesEXT {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+pub struct MemoryPriorityAllocateInfoEXT {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub priority: f32,
+}
+impl ::std::default::Default for MemoryPriorityAllocateInfoEXT {
+    fn default() -> MemoryPriorityAllocateInfoEXT {
+        MemoryPriorityAllocateInfoEXT {
+            s_type: StructureType::MEMORY_PRIORITY_ALLOCATE_INFO_EXT,
+            p_next: ::std::ptr::null(),
+            priority: f32::default(),
+        }
+    }
+}
+impl MemoryPriorityAllocateInfoEXT {
+    pub fn builder<'a>() -> MemoryPriorityAllocateInfoEXTBuilder<'a> {
+        MemoryPriorityAllocateInfoEXTBuilder {
+            inner: MemoryPriorityAllocateInfoEXT::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+pub struct MemoryPriorityAllocateInfoEXTBuilder<'a> {
+    inner: MemoryPriorityAllocateInfoEXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+pub unsafe trait ExtendsMemoryPriorityAllocateInfoEXT {}
+unsafe impl ExtendsMemoryAllocateInfo for MemoryPriorityAllocateInfoEXT {}
+impl<'a> ::std::ops::Deref for MemoryPriorityAllocateInfoEXTBuilder<'a> {
+    type Target = MemoryPriorityAllocateInfoEXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> MemoryPriorityAllocateInfoEXTBuilder<'a> {
+    pub fn priority(mut self, priority: f32) -> MemoryPriorityAllocateInfoEXTBuilder<'a> {
+        self.inner.priority = priority;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> MemoryPriorityAllocateInfoEXTBuilder<'a>
+    where
+        T: ExtendsMemoryPriorityAllocateInfoEXT,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
+        self
+    }
+    pub fn build(self) -> MemoryPriorityAllocateInfoEXT {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+pub struct PhysicalDeviceBufferAddressFeaturesEXT {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub buffer_device_address: Bool32,
+    pub buffer_device_address_capture_replay: Bool32,
+    pub buffer_device_address_multi_device: Bool32,
+}
+impl ::std::default::Default for PhysicalDeviceBufferAddressFeaturesEXT {
+    fn default() -> PhysicalDeviceBufferAddressFeaturesEXT {
+        PhysicalDeviceBufferAddressFeaturesEXT {
+            s_type: StructureType::PHYSICAL_DEVICE_BUFFER_ADDRESS_FEATURES_EXT,
+            p_next: ::std::ptr::null_mut(),
+            buffer_device_address: Bool32::default(),
+            buffer_device_address_capture_replay: Bool32::default(),
+            buffer_device_address_multi_device: Bool32::default(),
+        }
+    }
+}
+impl PhysicalDeviceBufferAddressFeaturesEXT {
+    pub fn builder<'a>() -> PhysicalDeviceBufferAddressFeaturesEXTBuilder<'a> {
+        PhysicalDeviceBufferAddressFeaturesEXTBuilder {
+            inner: PhysicalDeviceBufferAddressFeaturesEXT::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+pub struct PhysicalDeviceBufferAddressFeaturesEXTBuilder<'a> {
+    inner: PhysicalDeviceBufferAddressFeaturesEXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+pub unsafe trait ExtendsPhysicalDeviceBufferAddressFeaturesEXT {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceBufferAddressFeaturesEXT {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceBufferAddressFeaturesEXT {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceBufferAddressFeaturesEXTBuilder<'a> {
+    type Target = PhysicalDeviceBufferAddressFeaturesEXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> PhysicalDeviceBufferAddressFeaturesEXTBuilder<'a> {
+    pub fn buffer_device_address(
+        mut self,
+        buffer_device_address: bool,
+    ) -> PhysicalDeviceBufferAddressFeaturesEXTBuilder<'a> {
+        self.inner.buffer_device_address = buffer_device_address.into();
+        self
+    }
+    pub fn buffer_device_address_capture_replay(
+        mut self,
+        buffer_device_address_capture_replay: bool,
+    ) -> PhysicalDeviceBufferAddressFeaturesEXTBuilder<'a> {
+        self.inner.buffer_device_address_capture_replay =
+            buffer_device_address_capture_replay.into();
+        self
+    }
+    pub fn buffer_device_address_multi_device(
+        mut self,
+        buffer_device_address_multi_device: bool,
+    ) -> PhysicalDeviceBufferAddressFeaturesEXTBuilder<'a> {
+        self.inner.buffer_device_address_multi_device = buffer_device_address_multi_device.into();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceBufferAddressFeaturesEXTBuilder<'a>
+    where
+        T: ExtendsPhysicalDeviceBufferAddressFeaturesEXT,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
+        self
+    }
+    pub fn build(self) -> PhysicalDeviceBufferAddressFeaturesEXT {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+pub struct BufferDeviceAddressInfoEXT {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub buffer: Buffer,
+}
+impl ::std::default::Default for BufferDeviceAddressInfoEXT {
+    fn default() -> BufferDeviceAddressInfoEXT {
+        BufferDeviceAddressInfoEXT {
+            s_type: StructureType::BUFFER_DEVICE_ADDRESS_INFO_EXT,
+            p_next: ::std::ptr::null(),
+            buffer: Buffer::default(),
+        }
+    }
+}
+impl BufferDeviceAddressInfoEXT {
+    pub fn builder<'a>() -> BufferDeviceAddressInfoEXTBuilder<'a> {
+        BufferDeviceAddressInfoEXTBuilder {
+            inner: BufferDeviceAddressInfoEXT::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+pub struct BufferDeviceAddressInfoEXTBuilder<'a> {
+    inner: BufferDeviceAddressInfoEXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+pub unsafe trait ExtendsBufferDeviceAddressInfoEXT {}
+impl<'a> ::std::ops::Deref for BufferDeviceAddressInfoEXTBuilder<'a> {
+    type Target = BufferDeviceAddressInfoEXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> BufferDeviceAddressInfoEXTBuilder<'a> {
+    pub fn buffer(mut self, buffer: Buffer) -> BufferDeviceAddressInfoEXTBuilder<'a> {
+        self.inner.buffer = buffer;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> BufferDeviceAddressInfoEXTBuilder<'a>
+    where
+        T: ExtendsBufferDeviceAddressInfoEXT,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
+        self
+    }
+    pub fn build(self) -> BufferDeviceAddressInfoEXT {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+pub struct BufferDeviceAddressCreateInfoEXT {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub device_address: DeviceSize,
+}
+impl ::std::default::Default for BufferDeviceAddressCreateInfoEXT {
+    fn default() -> BufferDeviceAddressCreateInfoEXT {
+        BufferDeviceAddressCreateInfoEXT {
+            s_type: StructureType::BUFFER_DEVICE_ADDRESS_CREATE_INFO_EXT,
+            p_next: ::std::ptr::null(),
+            device_address: DeviceSize::default(),
+        }
+    }
+}
+impl BufferDeviceAddressCreateInfoEXT {
+    pub fn builder<'a>() -> BufferDeviceAddressCreateInfoEXTBuilder<'a> {
+        BufferDeviceAddressCreateInfoEXTBuilder {
+            inner: BufferDeviceAddressCreateInfoEXT::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+pub struct BufferDeviceAddressCreateInfoEXTBuilder<'a> {
+    inner: BufferDeviceAddressCreateInfoEXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+pub unsafe trait ExtendsBufferDeviceAddressCreateInfoEXT {}
+unsafe impl ExtendsBufferCreateInfo for BufferDeviceAddressCreateInfoEXT {}
+impl<'a> ::std::ops::Deref for BufferDeviceAddressCreateInfoEXTBuilder<'a> {
+    type Target = BufferDeviceAddressCreateInfoEXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> BufferDeviceAddressCreateInfoEXTBuilder<'a> {
+    pub fn device_address(
+        mut self,
+        device_address: DeviceSize,
+    ) -> BufferDeviceAddressCreateInfoEXTBuilder<'a> {
+        self.inner.device_address = device_address;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> BufferDeviceAddressCreateInfoEXTBuilder<'a>
+    where
+        T: ExtendsBufferDeviceAddressCreateInfoEXT,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
+        self
+    }
+    pub fn build(self) -> BufferDeviceAddressCreateInfoEXT {
         self.inner
     }
 }
