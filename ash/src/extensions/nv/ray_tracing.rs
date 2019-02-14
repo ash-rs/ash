@@ -258,6 +258,6 @@ impl RayTracing {
     }
 
     pub fn name() -> &'static CStr {
-        CStr::from_bytes_with_nul(b"VK_NV_ray_tracing\0").expect("Wrong extension string")
+        vk::NvRayTracingFn::name()
     }
 }

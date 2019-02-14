@@ -24,7 +24,7 @@ impl Win32Surface {
     }
 
     pub fn name() -> &'static CStr {
-        CStr::from_bytes_with_nul(b"VK_KHR_win32_surface\0").expect("Wrong extension string")
+        vk::KhrWin32SurfaceFn::name()
     }
 
     pub unsafe fn create_win32_surface(

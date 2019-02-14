@@ -24,7 +24,7 @@ impl DisplaySwapchain {
     }
 
     pub fn name() -> &'static CStr {
-        CStr::from_bytes_with_nul(b"VK_KHR_display_swapchain\0").expect("Wrong extension string")
+        vk::KhrDisplaySwapchainFn::name()
     }
 
     pub unsafe fn create_shared_swapchains(

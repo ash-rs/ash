@@ -24,7 +24,7 @@ impl DebugReport {
     }
 
     pub fn name() -> &'static CStr {
-        CStr::from_bytes_with_nul(b"VK_EXT_debug_report\0").expect("Wrong extension string")
+        vk::ExtDebugReportFn::name()
     }
 
     pub unsafe fn destroy_debug_report_callback(

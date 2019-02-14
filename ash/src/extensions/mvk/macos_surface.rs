@@ -24,7 +24,7 @@ impl MacOSSurface {
     }
 
     pub fn name() -> &'static CStr {
-        CStr::from_bytes_with_nul(b"VK_MVK_macos_surface\0").expect("Wrong extension string")
+        vk::MvkMacosSurfaceFn::name()
     }
 
     pub unsafe fn create_mac_os_surface_mvk(

@@ -24,7 +24,7 @@ impl AndroidSurface {
     }
 
     pub fn name() -> &'static CStr {
-        CStr::from_bytes_with_nul(b"VK_KHR_android_surface\0").expect("Wrong extension string")
+        vk::KhrAndroidSurfaceFn::name()
     }
 
     pub unsafe fn create_android_surface(

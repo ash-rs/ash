@@ -25,7 +25,7 @@ impl Surface {
     }
 
     pub fn name() -> &'static CStr {
-        CStr::from_bytes_with_nul(b"VK_KHR_surface\0").expect("Wrong extension string")
+        vk::KhrSurfaceFn::name()
     }
 
     pub unsafe fn get_physical_device_surface_support(

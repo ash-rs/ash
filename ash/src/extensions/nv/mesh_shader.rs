@@ -62,6 +62,6 @@ impl MeshShader {
         );
     }
     pub fn name() -> &'static CStr {
-        CStr::from_bytes_with_nul(b"VK_NV_mesh_shader\0").expect("Wrong extension string")
+        vk::NvMeshShaderFn::name()
     }
 }

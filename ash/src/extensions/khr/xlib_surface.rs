@@ -24,7 +24,7 @@ impl XlibSurface {
     }
 
     pub fn name() -> &'static CStr {
-        CStr::from_bytes_with_nul(b"VK_KHR_xlib_surface\0").expect("Wrong extension string")
+        vk::KhrXlibSurfaceFn::name()
     }
 
     pub unsafe fn create_xlib_surface(
