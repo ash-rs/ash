@@ -427,9 +427,6 @@ impl quote::ToTokens for ConstVal {
     }
 }
 impl Constant {
-    // pub fn type(&self) -> Type {
-
-    // }
     pub fn value(&self) -> Option<ConstVal> {
         match *self {
             Constant::Number(n) => Some(ConstVal::U64(n as u64)),
@@ -871,6 +868,7 @@ pub fn generate_extension_constants<'a>(
     const_cache: &mut HashSet<&'a str>,
     const_values: &mut HashMap<Ident, Vec<Ident>>,
 ) -> quote::Tokens {
+    use vk_parse::EnumSpec;
     let items = extension_items
         .iter()
         .filter_map(|item| match item {
@@ -880,7 +878,6 @@ pub fn generate_extension_constants<'a>(
         .flat_map(|iter| iter);
     let enum_tokens = items.filter_map(|item| match item {
         vk_parse::InterfaceItem::Enum(_enum) => {
-            use vk_parse::EnumSpec;
             if const_cache.contains(_enum.name.as_str()) {
                 return None;
             }
@@ -952,7 +949,22 @@ pub fn generate_extension_commands<'a>(
         .collect_vec();
     let name = format!("{}Fn", extension_name.to_camel_case());
     let ident = Ident::from(&name[2..]);
-    generate_function_pointers(ident, &commands, fn_cache)
+    let fp = generate_function_pointers(ident, &commands, fn_cache);
+    let byte_name = format!("{}\0", extension_name);
+
+    let byte_name_ident =
+        syn::LitByteStr::new(byte_name.as_bytes(), proc_macro2::Span::call_site());
+    let extension_cstr = quote! {
+        impl #ident {
+            pub fn name() -> &'static ::std::ffi::CStr {
+                ::std::ffi::CStr::from_bytes_with_nul(#byte_name_ident).expect("Wrong extension string")
+            }
+        }
+    };
+    quote! {
+        #extension_cstr
+        #fp
+    }
 }
 pub fn generate_extension<'a>(
     extension: &'a vk_parse::Extension,

@@ -7289,6 +7289,7 @@ pub type SampleMask = u32;
 pub type Bool32 = u32;
 pub type Flags = u32;
 pub type DeviceSize = u64;
+pub type DeviceAddress = u64;
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct FramebufferCreateFlags(Flags);
@@ -7297,10 +7298,6 @@ vk_bitflags_wrapped!(FramebufferCreateFlags, 0b0, Flags);
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct QueryPoolCreateFlags(Flags);
 vk_bitflags_wrapped!(QueryPoolCreateFlags, 0b0, Flags);
-#[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct SamplerCreateFlags(Flags);
-vk_bitflags_wrapped!(SamplerCreateFlags, 0b0, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct PipelineLayoutCreateFlags(Flags);
@@ -7361,10 +7358,6 @@ vk_bitflags_wrapped!(InstanceCreateFlags, 0b0, Flags);
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct DeviceCreateFlags(Flags);
 vk_bitflags_wrapped!(DeviceCreateFlags, 0b0, Flags);
-#[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-pub struct ImageViewCreateFlags(Flags);
-vk_bitflags_wrapped!(ImageViewCreateFlags, 0b0, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct SemaphoreCreateFlags(Flags);
@@ -7969,7 +7962,7 @@ impl fmt::Debug for PhysicalDeviceProperties {
             .field("device_id", &self.device_id)
             .field("device_type", &self.device_type)
             .field("device_name", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.device_name.as_ptr() as *const i8)
+                ::std::ffi::CStr::from_ptr(self.device_name.as_ptr() as *const c_char)
             })
             .field("pipeline_cache_uuid", &self.pipeline_cache_uuid)
             .field("limits", &self.limits)
@@ -8073,7 +8066,7 @@ impl fmt::Debug for ExtensionProperties {
     fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
         fmt.debug_struct("ExtensionProperties")
             .field("extension_name", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.extension_name.as_ptr() as *const i8)
+                ::std::ffi::CStr::from_ptr(self.extension_name.as_ptr() as *const c_char)
             })
             .field("spec_version", &self.spec_version)
             .finish()
@@ -8133,12 +8126,12 @@ impl fmt::Debug for LayerProperties {
     fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
         fmt.debug_struct("LayerProperties")
             .field("layer_name", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.layer_name.as_ptr() as *const i8)
+                ::std::ffi::CStr::from_ptr(self.layer_name.as_ptr() as *const c_char)
             })
             .field("spec_version", &self.spec_version)
             .field("implementation_version", &self.implementation_version)
             .field("description", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.description.as_ptr() as *const i8)
+                ::std::ffi::CStr::from_ptr(self.description.as_ptr() as *const c_char)
             })
             .finish()
     }
@@ -17621,6 +17614,76 @@ impl<'a> ValidationFlagsEXTBuilder<'a> {
 }
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
+pub struct ValidationFeaturesEXT {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub enabled_validation_feature_count: u32,
+    pub p_enabled_validation_features: *const ValidationFeatureEnableEXT,
+    pub disabled_validation_feature_count: u32,
+    pub p_disabled_validation_features: *const ValidationFeatureDisableEXT,
+}
+impl ::std::default::Default for ValidationFeaturesEXT {
+    fn default() -> ValidationFeaturesEXT {
+        ValidationFeaturesEXT {
+            s_type: StructureType::VALIDATION_FEATURES_EXT,
+            p_next: ::std::ptr::null(),
+            enabled_validation_feature_count: u32::default(),
+            p_enabled_validation_features: ::std::ptr::null(),
+            disabled_validation_feature_count: u32::default(),
+            p_disabled_validation_features: ::std::ptr::null(),
+        }
+    }
+}
+impl ValidationFeaturesEXT {
+    pub fn builder<'a>() -> ValidationFeaturesEXTBuilder<'a> {
+        ValidationFeaturesEXTBuilder {
+            inner: ValidationFeaturesEXT::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+pub struct ValidationFeaturesEXTBuilder<'a> {
+    inner: ValidationFeaturesEXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+pub unsafe trait ExtendsValidationFeaturesEXT {}
+unsafe impl ExtendsInstanceCreateInfo for ValidationFeaturesEXT {}
+impl<'a> ::std::ops::Deref for ValidationFeaturesEXTBuilder<'a> {
+    type Target = ValidationFeaturesEXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ValidationFeaturesEXTBuilder<'a> {
+    pub fn enabled_validation_features(
+        mut self,
+        enabled_validation_features: &'a [ValidationFeatureEnableEXT],
+    ) -> ValidationFeaturesEXTBuilder<'a> {
+        self.inner.enabled_validation_feature_count = enabled_validation_features.len() as _;
+        self.inner.p_enabled_validation_features = enabled_validation_features.as_ptr();
+        self
+    }
+    pub fn disabled_validation_features(
+        mut self,
+        disabled_validation_features: &'a [ValidationFeatureDisableEXT],
+    ) -> ValidationFeaturesEXTBuilder<'a> {
+        self.inner.disabled_validation_feature_count = disabled_validation_features.len() as _;
+        self.inner.p_disabled_validation_features = disabled_validation_features.as_ptr();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> ValidationFeaturesEXTBuilder<'a>
+    where
+        T: ExtendsValidationFeaturesEXT,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
+        self
+    }
+    pub fn build(self) -> ValidationFeaturesEXT {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
 pub struct PipelineRasterizationStateRasterizationOrderAMD {
     pub s_type: StructureType,
     pub p_next: *const c_void,
@@ -20039,10 +20102,10 @@ impl fmt::Debug for PhysicalDeviceDriverPropertiesKHR {
             .field("p_next", &self.p_next)
             .field("driver_id", &self.driver_id)
             .field("driver_name", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.driver_name.as_ptr() as *const i8)
+                ::std::ffi::CStr::from_ptr(self.driver_name.as_ptr() as *const c_char)
             })
             .field("driver_info", &unsafe {
-                ::std::ffi::CStr::from_ptr(self.driver_info.as_ptr() as *const i8)
+                ::std::ffi::CStr::from_ptr(self.driver_info.as_ptr() as *const c_char)
             })
             .field("conformance_version", &self.conformance_version)
             .finish()
@@ -24209,7 +24272,7 @@ impl<'a> DescriptorUpdateTemplateEntryBuilder<'a> {
 #[derive(Copy, Clone, Debug)]
 pub struct DescriptorUpdateTemplateCreateInfo {
     pub s_type: StructureType,
-    pub p_next: *mut c_void,
+    pub p_next: *const c_void,
     pub flags: DescriptorUpdateTemplateCreateFlags,
     pub descriptor_update_entry_count: u32,
     pub p_descriptor_update_entries: *const DescriptorUpdateTemplateEntry,
@@ -24223,7 +24286,7 @@ impl ::std::default::Default for DescriptorUpdateTemplateCreateInfo {
     fn default() -> DescriptorUpdateTemplateCreateInfo {
         DescriptorUpdateTemplateCreateInfo {
             s_type: StructureType::DESCRIPTOR_UPDATE_TEMPLATE_CREATE_INFO,
-            p_next: ::std::ptr::null_mut(),
+            p_next: ::std::ptr::null(),
             flags: DescriptorUpdateTemplateCreateFlags::default(),
             descriptor_update_entry_count: u32::default(),
             p_descriptor_update_entries: ::std::ptr::null(),
@@ -24302,11 +24365,11 @@ impl<'a> DescriptorUpdateTemplateCreateInfoBuilder<'a> {
         self.inner.set = set;
         self
     }
-    pub fn next<T>(mut self, next: &'a mut T) -> DescriptorUpdateTemplateCreateInfoBuilder<'a>
+    pub fn next<T>(mut self, next: &'a T) -> DescriptorUpdateTemplateCreateInfoBuilder<'a>
     where
         T: ExtendsDescriptorUpdateTemplateCreateInfo,
     {
-        self.inner.p_next = next as *mut T as *mut c_void;
+        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DescriptorUpdateTemplateCreateInfo {
@@ -28561,6 +28624,7 @@ pub struct ImageFormatListCreateInfoKHRBuilder<'a> {
 }
 pub unsafe trait ExtendsImageFormatListCreateInfoKHR {}
 unsafe impl ExtendsImageCreateInfo for ImageFormatListCreateInfoKHR {}
+unsafe impl ExtendsSwapchainCreateInfoKHR for ImageFormatListCreateInfoKHR {}
 unsafe impl ExtendsPhysicalDeviceImageFormatInfo2 for ImageFormatListCreateInfoKHR {}
 impl<'a> ::std::ops::Deref for ImageFormatListCreateInfoKHRBuilder<'a> {
     type Target = ImageFormatListCreateInfoKHR;
@@ -28880,6 +28944,273 @@ impl<'a> PhysicalDeviceShaderDrawParameterFeaturesBuilder<'a> {
         self
     }
     pub fn build(self) -> PhysicalDeviceShaderDrawParameterFeatures {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+pub struct PhysicalDeviceFloat16Int8FeaturesKHR {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub shader_float16: Bool32,
+    pub shader_int8: Bool32,
+}
+impl ::std::default::Default for PhysicalDeviceFloat16Int8FeaturesKHR {
+    fn default() -> PhysicalDeviceFloat16Int8FeaturesKHR {
+        PhysicalDeviceFloat16Int8FeaturesKHR {
+            s_type: StructureType::PHYSICAL_DEVICE_FLOAT16_INT8_FEATURES_KHR,
+            p_next: ::std::ptr::null_mut(),
+            shader_float16: Bool32::default(),
+            shader_int8: Bool32::default(),
+        }
+    }
+}
+impl PhysicalDeviceFloat16Int8FeaturesKHR {
+    pub fn builder<'a>() -> PhysicalDeviceFloat16Int8FeaturesKHRBuilder<'a> {
+        PhysicalDeviceFloat16Int8FeaturesKHRBuilder {
+            inner: PhysicalDeviceFloat16Int8FeaturesKHR::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+pub struct PhysicalDeviceFloat16Int8FeaturesKHRBuilder<'a> {
+    inner: PhysicalDeviceFloat16Int8FeaturesKHR,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+pub unsafe trait ExtendsPhysicalDeviceFloat16Int8FeaturesKHR {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceFloat16Int8FeaturesKHR {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFloat16Int8FeaturesKHR {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceFloat16Int8FeaturesKHRBuilder<'a> {
+    type Target = PhysicalDeviceFloat16Int8FeaturesKHR;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> PhysicalDeviceFloat16Int8FeaturesKHRBuilder<'a> {
+    pub fn shader_float16(
+        mut self,
+        shader_float16: bool,
+    ) -> PhysicalDeviceFloat16Int8FeaturesKHRBuilder<'a> {
+        self.inner.shader_float16 = shader_float16.into();
+        self
+    }
+    pub fn shader_int8(
+        mut self,
+        shader_int8: bool,
+    ) -> PhysicalDeviceFloat16Int8FeaturesKHRBuilder<'a> {
+        self.inner.shader_int8 = shader_int8.into();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceFloat16Int8FeaturesKHRBuilder<'a>
+    where
+        T: ExtendsPhysicalDeviceFloat16Int8FeaturesKHR,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
+        self
+    }
+    pub fn build(self) -> PhysicalDeviceFloat16Int8FeaturesKHR {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+pub struct PhysicalDeviceFloatControlsPropertiesKHR {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub separate_denorm_settings: Bool32,
+    pub separate_rounding_mode_settings: Bool32,
+    pub shader_signed_zero_inf_nan_preserve_float16: Bool32,
+    pub shader_signed_zero_inf_nan_preserve_float32: Bool32,
+    pub shader_signed_zero_inf_nan_preserve_float64: Bool32,
+    pub shader_denorm_preserve_float16: Bool32,
+    pub shader_denorm_preserve_float32: Bool32,
+    pub shader_denorm_preserve_float64: Bool32,
+    pub shader_denorm_flush_to_zero_float16: Bool32,
+    pub shader_denorm_flush_to_zero_float32: Bool32,
+    pub shader_denorm_flush_to_zero_float64: Bool32,
+    pub shader_rounding_mode_rte_float16: Bool32,
+    pub shader_rounding_mode_rte_float32: Bool32,
+    pub shader_rounding_mode_rte_float64: Bool32,
+    pub shader_rounding_mode_rtz_float16: Bool32,
+    pub shader_rounding_mode_rtz_float32: Bool32,
+    pub shader_rounding_mode_rtz_float64: Bool32,
+}
+impl ::std::default::Default for PhysicalDeviceFloatControlsPropertiesKHR {
+    fn default() -> PhysicalDeviceFloatControlsPropertiesKHR {
+        PhysicalDeviceFloatControlsPropertiesKHR {
+            s_type: StructureType::PHYSICAL_DEVICE_FLOAT_CONTROLS_PROPERTIES_KHR,
+            p_next: ::std::ptr::null_mut(),
+            separate_denorm_settings: Bool32::default(),
+            separate_rounding_mode_settings: Bool32::default(),
+            shader_signed_zero_inf_nan_preserve_float16: Bool32::default(),
+            shader_signed_zero_inf_nan_preserve_float32: Bool32::default(),
+            shader_signed_zero_inf_nan_preserve_float64: Bool32::default(),
+            shader_denorm_preserve_float16: Bool32::default(),
+            shader_denorm_preserve_float32: Bool32::default(),
+            shader_denorm_preserve_float64: Bool32::default(),
+            shader_denorm_flush_to_zero_float16: Bool32::default(),
+            shader_denorm_flush_to_zero_float32: Bool32::default(),
+            shader_denorm_flush_to_zero_float64: Bool32::default(),
+            shader_rounding_mode_rte_float16: Bool32::default(),
+            shader_rounding_mode_rte_float32: Bool32::default(),
+            shader_rounding_mode_rte_float64: Bool32::default(),
+            shader_rounding_mode_rtz_float16: Bool32::default(),
+            shader_rounding_mode_rtz_float32: Bool32::default(),
+            shader_rounding_mode_rtz_float64: Bool32::default(),
+        }
+    }
+}
+impl PhysicalDeviceFloatControlsPropertiesKHR {
+    pub fn builder<'a>() -> PhysicalDeviceFloatControlsPropertiesKHRBuilder<'a> {
+        PhysicalDeviceFloatControlsPropertiesKHRBuilder {
+            inner: PhysicalDeviceFloatControlsPropertiesKHR::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+pub struct PhysicalDeviceFloatControlsPropertiesKHRBuilder<'a> {
+    inner: PhysicalDeviceFloatControlsPropertiesKHR,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+pub unsafe trait ExtendsPhysicalDeviceFloatControlsPropertiesKHR {}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceFloatControlsPropertiesKHR {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceFloatControlsPropertiesKHRBuilder<'a> {
+    type Target = PhysicalDeviceFloatControlsPropertiesKHR;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> PhysicalDeviceFloatControlsPropertiesKHRBuilder<'a> {
+    pub fn separate_denorm_settings(
+        mut self,
+        separate_denorm_settings: bool,
+    ) -> PhysicalDeviceFloatControlsPropertiesKHRBuilder<'a> {
+        self.inner.separate_denorm_settings = separate_denorm_settings.into();
+        self
+    }
+    pub fn separate_rounding_mode_settings(
+        mut self,
+        separate_rounding_mode_settings: bool,
+    ) -> PhysicalDeviceFloatControlsPropertiesKHRBuilder<'a> {
+        self.inner.separate_rounding_mode_settings = separate_rounding_mode_settings.into();
+        self
+    }
+    pub fn shader_signed_zero_inf_nan_preserve_float16(
+        mut self,
+        shader_signed_zero_inf_nan_preserve_float16: bool,
+    ) -> PhysicalDeviceFloatControlsPropertiesKHRBuilder<'a> {
+        self.inner.shader_signed_zero_inf_nan_preserve_float16 =
+            shader_signed_zero_inf_nan_preserve_float16.into();
+        self
+    }
+    pub fn shader_signed_zero_inf_nan_preserve_float32(
+        mut self,
+        shader_signed_zero_inf_nan_preserve_float32: bool,
+    ) -> PhysicalDeviceFloatControlsPropertiesKHRBuilder<'a> {
+        self.inner.shader_signed_zero_inf_nan_preserve_float32 =
+            shader_signed_zero_inf_nan_preserve_float32.into();
+        self
+    }
+    pub fn shader_signed_zero_inf_nan_preserve_float64(
+        mut self,
+        shader_signed_zero_inf_nan_preserve_float64: bool,
+    ) -> PhysicalDeviceFloatControlsPropertiesKHRBuilder<'a> {
+        self.inner.shader_signed_zero_inf_nan_preserve_float64 =
+            shader_signed_zero_inf_nan_preserve_float64.into();
+        self
+    }
+    pub fn shader_denorm_preserve_float16(
+        mut self,
+        shader_denorm_preserve_float16: bool,
+    ) -> PhysicalDeviceFloatControlsPropertiesKHRBuilder<'a> {
+        self.inner.shader_denorm_preserve_float16 = shader_denorm_preserve_float16.into();
+        self
+    }
+    pub fn shader_denorm_preserve_float32(
+        mut self,
+        shader_denorm_preserve_float32: bool,
+    ) -> PhysicalDeviceFloatControlsPropertiesKHRBuilder<'a> {
+        self.inner.shader_denorm_preserve_float32 = shader_denorm_preserve_float32.into();
+        self
+    }
+    pub fn shader_denorm_preserve_float64(
+        mut self,
+        shader_denorm_preserve_float64: bool,
+    ) -> PhysicalDeviceFloatControlsPropertiesKHRBuilder<'a> {
+        self.inner.shader_denorm_preserve_float64 = shader_denorm_preserve_float64.into();
+        self
+    }
+    pub fn shader_denorm_flush_to_zero_float16(
+        mut self,
+        shader_denorm_flush_to_zero_float16: bool,
+    ) -> PhysicalDeviceFloatControlsPropertiesKHRBuilder<'a> {
+        self.inner.shader_denorm_flush_to_zero_float16 = shader_denorm_flush_to_zero_float16.into();
+        self
+    }
+    pub fn shader_denorm_flush_to_zero_float32(
+        mut self,
+        shader_denorm_flush_to_zero_float32: bool,
+    ) -> PhysicalDeviceFloatControlsPropertiesKHRBuilder<'a> {
+        self.inner.shader_denorm_flush_to_zero_float32 = shader_denorm_flush_to_zero_float32.into();
+        self
+    }
+    pub fn shader_denorm_flush_to_zero_float64(
+        mut self,
+        shader_denorm_flush_to_zero_float64: bool,
+    ) -> PhysicalDeviceFloatControlsPropertiesKHRBuilder<'a> {
+        self.inner.shader_denorm_flush_to_zero_float64 = shader_denorm_flush_to_zero_float64.into();
+        self
+    }
+    pub fn shader_rounding_mode_rte_float16(
+        mut self,
+        shader_rounding_mode_rte_float16: bool,
+    ) -> PhysicalDeviceFloatControlsPropertiesKHRBuilder<'a> {
+        self.inner.shader_rounding_mode_rte_float16 = shader_rounding_mode_rte_float16.into();
+        self
+    }
+    pub fn shader_rounding_mode_rte_float32(
+        mut self,
+        shader_rounding_mode_rte_float32: bool,
+    ) -> PhysicalDeviceFloatControlsPropertiesKHRBuilder<'a> {
+        self.inner.shader_rounding_mode_rte_float32 = shader_rounding_mode_rte_float32.into();
+        self
+    }
+    pub fn shader_rounding_mode_rte_float64(
+        mut self,
+        shader_rounding_mode_rte_float64: bool,
+    ) -> PhysicalDeviceFloatControlsPropertiesKHRBuilder<'a> {
+        self.inner.shader_rounding_mode_rte_float64 = shader_rounding_mode_rte_float64.into();
+        self
+    }
+    pub fn shader_rounding_mode_rtz_float16(
+        mut self,
+        shader_rounding_mode_rtz_float16: bool,
+    ) -> PhysicalDeviceFloatControlsPropertiesKHRBuilder<'a> {
+        self.inner.shader_rounding_mode_rtz_float16 = shader_rounding_mode_rtz_float16.into();
+        self
+    }
+    pub fn shader_rounding_mode_rtz_float32(
+        mut self,
+        shader_rounding_mode_rtz_float32: bool,
+    ) -> PhysicalDeviceFloatControlsPropertiesKHRBuilder<'a> {
+        self.inner.shader_rounding_mode_rtz_float32 = shader_rounding_mode_rtz_float32.into();
+        self
+    }
+    pub fn shader_rounding_mode_rtz_float64(
+        mut self,
+        shader_rounding_mode_rtz_float64: bool,
+    ) -> PhysicalDeviceFloatControlsPropertiesKHRBuilder<'a> {
+        self.inner.shader_rounding_mode_rtz_float64 = shader_rounding_mode_rtz_float64.into();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceFloatControlsPropertiesKHRBuilder<'a>
+    where
+        T: ExtendsPhysicalDeviceFloatControlsPropertiesKHR,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
+        self
+    }
+    pub fn build(self) -> PhysicalDeviceFloatControlsPropertiesKHR {
         self.inner
     }
 }
@@ -29479,11 +29810,11 @@ pub struct DebugUtilsMessengerCallbackDataEXT {
     pub message_id_number: i32,
     pub p_message: *const c_char,
     pub queue_label_count: u32,
-    pub p_queue_labels: *mut DebugUtilsLabelEXT,
+    pub p_queue_labels: *const DebugUtilsLabelEXT,
     pub cmd_buf_label_count: u32,
-    pub p_cmd_buf_labels: *mut DebugUtilsLabelEXT,
+    pub p_cmd_buf_labels: *const DebugUtilsLabelEXT,
     pub object_count: u32,
-    pub p_objects: *mut DebugUtilsObjectNameInfoEXT,
+    pub p_objects: *const DebugUtilsObjectNameInfoEXT,
 }
 impl ::std::default::Default for DebugUtilsMessengerCallbackDataEXT {
     fn default() -> DebugUtilsMessengerCallbackDataEXT {
@@ -29495,11 +29826,11 @@ impl ::std::default::Default for DebugUtilsMessengerCallbackDataEXT {
             message_id_number: i32::default(),
             p_message: ::std::ptr::null(),
             queue_label_count: u32::default(),
-            p_queue_labels: ::std::ptr::null_mut(),
+            p_queue_labels: ::std::ptr::null(),
             cmd_buf_label_count: u32::default(),
-            p_cmd_buf_labels: ::std::ptr::null_mut(),
+            p_cmd_buf_labels: ::std::ptr::null(),
             object_count: u32::default(),
-            p_objects: ::std::ptr::null_mut(),
+            p_objects: ::std::ptr::null(),
         }
     }
 }
@@ -29553,26 +29884,26 @@ impl<'a> DebugUtilsMessengerCallbackDataEXTBuilder<'a> {
     }
     pub fn queue_labels(
         mut self,
-        queue_labels: &'a mut [DebugUtilsLabelEXT],
+        queue_labels: &'a [DebugUtilsLabelEXT],
     ) -> DebugUtilsMessengerCallbackDataEXTBuilder<'a> {
         self.inner.queue_label_count = queue_labels.len() as _;
-        self.inner.p_queue_labels = queue_labels.as_mut_ptr();
+        self.inner.p_queue_labels = queue_labels.as_ptr();
         self
     }
     pub fn cmd_buf_labels(
         mut self,
-        cmd_buf_labels: &'a mut [DebugUtilsLabelEXT],
+        cmd_buf_labels: &'a [DebugUtilsLabelEXT],
     ) -> DebugUtilsMessengerCallbackDataEXTBuilder<'a> {
         self.inner.cmd_buf_label_count = cmd_buf_labels.len() as _;
-        self.inner.p_cmd_buf_labels = cmd_buf_labels.as_mut_ptr();
+        self.inner.p_cmd_buf_labels = cmd_buf_labels.as_ptr();
         self
     }
     pub fn objects(
         mut self,
-        objects: &'a mut [DebugUtilsObjectNameInfoEXT],
+        objects: &'a [DebugUtilsObjectNameInfoEXT],
     ) -> DebugUtilsMessengerCallbackDataEXTBuilder<'a> {
         self.inner.object_count = objects.len() as _;
-        self.inner.p_objects = objects.as_mut_ptr();
+        self.inner.p_objects = objects.as_ptr();
         self
     }
     pub fn next<T>(mut self, next: &'a T) -> DebugUtilsMessengerCallbackDataEXTBuilder<'a>
@@ -31708,20 +32039,20 @@ impl<'a> PhysicalDeviceVertexAttributeDivisorPropertiesEXTBuilder<'a> {
 pub struct PhysicalDevicePCIBusInfoPropertiesEXT {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
-    pub pci_domain: u16,
-    pub pci_bus: u8,
-    pub pci_device: u8,
-    pub pci_function: u8,
+    pub pci_domain: u32,
+    pub pci_bus: u32,
+    pub pci_device: u32,
+    pub pci_function: u32,
 }
 impl ::std::default::Default for PhysicalDevicePCIBusInfoPropertiesEXT {
     fn default() -> PhysicalDevicePCIBusInfoPropertiesEXT {
         PhysicalDevicePCIBusInfoPropertiesEXT {
             s_type: StructureType::PHYSICAL_DEVICE_PCI_BUS_INFO_PROPERTIES_EXT,
             p_next: ::std::ptr::null_mut(),
-            pci_domain: u16::default(),
-            pci_bus: u8::default(),
-            pci_device: u8::default(),
-            pci_function: u8::default(),
+            pci_domain: u32::default(),
+            pci_bus: u32::default(),
+            pci_device: u32::default(),
+            pci_function: u32::default(),
         }
     }
 }
@@ -31748,25 +32079,25 @@ impl<'a> ::std::ops::Deref for PhysicalDevicePCIBusInfoPropertiesEXTBuilder<'a> 
 impl<'a> PhysicalDevicePCIBusInfoPropertiesEXTBuilder<'a> {
     pub fn pci_domain(
         mut self,
-        pci_domain: u16,
+        pci_domain: u32,
     ) -> PhysicalDevicePCIBusInfoPropertiesEXTBuilder<'a> {
         self.inner.pci_domain = pci_domain;
         self
     }
-    pub fn pci_bus(mut self, pci_bus: u8) -> PhysicalDevicePCIBusInfoPropertiesEXTBuilder<'a> {
+    pub fn pci_bus(mut self, pci_bus: u32) -> PhysicalDevicePCIBusInfoPropertiesEXTBuilder<'a> {
         self.inner.pci_bus = pci_bus;
         self
     }
     pub fn pci_device(
         mut self,
-        pci_device: u8,
+        pci_device: u32,
     ) -> PhysicalDevicePCIBusInfoPropertiesEXTBuilder<'a> {
         self.inner.pci_device = pci_device;
         self
     }
     pub fn pci_function(
         mut self,
-        pci_function: u8,
+        pci_function: u32,
     ) -> PhysicalDevicePCIBusInfoPropertiesEXTBuilder<'a> {
         self.inner.pci_function = pci_function;
         self
@@ -32708,6 +33039,164 @@ impl<'a> CheckpointDataNVBuilder<'a> {
         self
     }
     pub fn build(self) -> CheckpointDataNV {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+pub struct PhysicalDeviceDepthStencilResolvePropertiesKHR {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub supported_depth_resolve_modes: ResolveModeFlagsKHR,
+    pub supported_stencil_resolve_modes: ResolveModeFlagsKHR,
+    pub independent_resolve_none: Bool32,
+    pub independent_resolve: Bool32,
+}
+impl ::std::default::Default for PhysicalDeviceDepthStencilResolvePropertiesKHR {
+    fn default() -> PhysicalDeviceDepthStencilResolvePropertiesKHR {
+        PhysicalDeviceDepthStencilResolvePropertiesKHR {
+            s_type: StructureType::PHYSICAL_DEVICE_DEPTH_STENCIL_RESOLVE_PROPERTIES_KHR,
+            p_next: ::std::ptr::null_mut(),
+            supported_depth_resolve_modes: ResolveModeFlagsKHR::default(),
+            supported_stencil_resolve_modes: ResolveModeFlagsKHR::default(),
+            independent_resolve_none: Bool32::default(),
+            independent_resolve: Bool32::default(),
+        }
+    }
+}
+impl PhysicalDeviceDepthStencilResolvePropertiesKHR {
+    pub fn builder<'a>() -> PhysicalDeviceDepthStencilResolvePropertiesKHRBuilder<'a> {
+        PhysicalDeviceDepthStencilResolvePropertiesKHRBuilder {
+            inner: PhysicalDeviceDepthStencilResolvePropertiesKHR::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+pub struct PhysicalDeviceDepthStencilResolvePropertiesKHRBuilder<'a> {
+    inner: PhysicalDeviceDepthStencilResolvePropertiesKHR,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+pub unsafe trait ExtendsPhysicalDeviceDepthStencilResolvePropertiesKHR {}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceDepthStencilResolvePropertiesKHR {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceDepthStencilResolvePropertiesKHRBuilder<'a> {
+    type Target = PhysicalDeviceDepthStencilResolvePropertiesKHR;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> PhysicalDeviceDepthStencilResolvePropertiesKHRBuilder<'a> {
+    pub fn supported_depth_resolve_modes(
+        mut self,
+        supported_depth_resolve_modes: ResolveModeFlagsKHR,
+    ) -> PhysicalDeviceDepthStencilResolvePropertiesKHRBuilder<'a> {
+        self.inner.supported_depth_resolve_modes = supported_depth_resolve_modes;
+        self
+    }
+    pub fn supported_stencil_resolve_modes(
+        mut self,
+        supported_stencil_resolve_modes: ResolveModeFlagsKHR,
+    ) -> PhysicalDeviceDepthStencilResolvePropertiesKHRBuilder<'a> {
+        self.inner.supported_stencil_resolve_modes = supported_stencil_resolve_modes;
+        self
+    }
+    pub fn independent_resolve_none(
+        mut self,
+        independent_resolve_none: bool,
+    ) -> PhysicalDeviceDepthStencilResolvePropertiesKHRBuilder<'a> {
+        self.inner.independent_resolve_none = independent_resolve_none.into();
+        self
+    }
+    pub fn independent_resolve(
+        mut self,
+        independent_resolve: bool,
+    ) -> PhysicalDeviceDepthStencilResolvePropertiesKHRBuilder<'a> {
+        self.inner.independent_resolve = independent_resolve.into();
+        self
+    }
+    pub fn next<T>(
+        mut self,
+        next: &'a mut T,
+    ) -> PhysicalDeviceDepthStencilResolvePropertiesKHRBuilder<'a>
+    where
+        T: ExtendsPhysicalDeviceDepthStencilResolvePropertiesKHR,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
+        self
+    }
+    pub fn build(self) -> PhysicalDeviceDepthStencilResolvePropertiesKHR {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+pub struct SubpassDescriptionDepthStencilResolveKHR {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub depth_resolve_mode: ResolveModeFlagsKHR,
+    pub stencil_resolve_mode: ResolveModeFlagsKHR,
+    pub p_depth_stencil_resolve_attachment: *const AttachmentReference2KHR,
+}
+impl ::std::default::Default for SubpassDescriptionDepthStencilResolveKHR {
+    fn default() -> SubpassDescriptionDepthStencilResolveKHR {
+        SubpassDescriptionDepthStencilResolveKHR {
+            s_type: StructureType::SUBPASS_DESCRIPTION_DEPTH_STENCIL_RESOLVE_KHR,
+            p_next: ::std::ptr::null(),
+            depth_resolve_mode: ResolveModeFlagsKHR::default(),
+            stencil_resolve_mode: ResolveModeFlagsKHR::default(),
+            p_depth_stencil_resolve_attachment: ::std::ptr::null(),
+        }
+    }
+}
+impl SubpassDescriptionDepthStencilResolveKHR {
+    pub fn builder<'a>() -> SubpassDescriptionDepthStencilResolveKHRBuilder<'a> {
+        SubpassDescriptionDepthStencilResolveKHRBuilder {
+            inner: SubpassDescriptionDepthStencilResolveKHR::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+pub struct SubpassDescriptionDepthStencilResolveKHRBuilder<'a> {
+    inner: SubpassDescriptionDepthStencilResolveKHR,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+pub unsafe trait ExtendsSubpassDescriptionDepthStencilResolveKHR {}
+unsafe impl ExtendsSubpassDescription2KHR for SubpassDescriptionDepthStencilResolveKHR {}
+impl<'a> ::std::ops::Deref for SubpassDescriptionDepthStencilResolveKHRBuilder<'a> {
+    type Target = SubpassDescriptionDepthStencilResolveKHR;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> SubpassDescriptionDepthStencilResolveKHRBuilder<'a> {
+    pub fn depth_resolve_mode(
+        mut self,
+        depth_resolve_mode: ResolveModeFlagsKHR,
+    ) -> SubpassDescriptionDepthStencilResolveKHRBuilder<'a> {
+        self.inner.depth_resolve_mode = depth_resolve_mode;
+        self
+    }
+    pub fn stencil_resolve_mode(
+        mut self,
+        stencil_resolve_mode: ResolveModeFlagsKHR,
+    ) -> SubpassDescriptionDepthStencilResolveKHRBuilder<'a> {
+        self.inner.stencil_resolve_mode = stencil_resolve_mode;
+        self
+    }
+    pub fn depth_stencil_resolve_attachment(
+        mut self,
+        depth_stencil_resolve_attachment: &'a AttachmentReference2KHR,
+    ) -> SubpassDescriptionDepthStencilResolveKHRBuilder<'a> {
+        self.inner.p_depth_stencil_resolve_attachment = depth_stencil_resolve_attachment;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> SubpassDescriptionDepthStencilResolveKHRBuilder<'a>
+    where
+        T: ExtendsSubpassDescriptionDepthStencilResolveKHR,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
+        self
+    }
+    pub fn build(self) -> SubpassDescriptionDepthStencilResolveKHR {
         self.inner
     }
 }
@@ -35603,6 +36092,62 @@ impl<'a> ImageDrmFormatModifierPropertiesEXTBuilder<'a> {
 }
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
+pub struct ImageStencilUsageCreateInfoEXT {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub stencil_usage: ImageUsageFlags,
+}
+impl ::std::default::Default for ImageStencilUsageCreateInfoEXT {
+    fn default() -> ImageStencilUsageCreateInfoEXT {
+        ImageStencilUsageCreateInfoEXT {
+            s_type: StructureType::IMAGE_STENCIL_USAGE_CREATE_INFO_EXT,
+            p_next: ::std::ptr::null(),
+            stencil_usage: ImageUsageFlags::default(),
+        }
+    }
+}
+impl ImageStencilUsageCreateInfoEXT {
+    pub fn builder<'a>() -> ImageStencilUsageCreateInfoEXTBuilder<'a> {
+        ImageStencilUsageCreateInfoEXTBuilder {
+            inner: ImageStencilUsageCreateInfoEXT::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+pub struct ImageStencilUsageCreateInfoEXTBuilder<'a> {
+    inner: ImageStencilUsageCreateInfoEXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+pub unsafe trait ExtendsImageStencilUsageCreateInfoEXT {}
+unsafe impl ExtendsImageCreateInfo for ImageStencilUsageCreateInfoEXT {}
+unsafe impl ExtendsPhysicalDeviceImageFormatInfo2 for ImageStencilUsageCreateInfoEXT {}
+impl<'a> ::std::ops::Deref for ImageStencilUsageCreateInfoEXTBuilder<'a> {
+    type Target = ImageStencilUsageCreateInfoEXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ImageStencilUsageCreateInfoEXTBuilder<'a> {
+    pub fn stencil_usage(
+        mut self,
+        stencil_usage: ImageUsageFlags,
+    ) -> ImageStencilUsageCreateInfoEXTBuilder<'a> {
+        self.inner.stencil_usage = stencil_usage;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> ImageStencilUsageCreateInfoEXTBuilder<'a>
+    where
+        T: ExtendsImageStencilUsageCreateInfoEXT,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
+        self
+    }
+    pub fn build(self) -> ImageStencilUsageCreateInfoEXT {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
 pub struct DeviceMemoryOverallocationCreateInfoAMD {
     pub s_type: StructureType,
     pub p_next: *const c_void,
@@ -35653,6 +36198,627 @@ impl<'a> DeviceMemoryOverallocationCreateInfoAMDBuilder<'a> {
         self
     }
     pub fn build(self) -> DeviceMemoryOverallocationCreateInfoAMD {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+pub struct PhysicalDeviceFragmentDensityMapFeaturesEXT {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub fragment_density_map: Bool32,
+    pub fragment_density_map_dynamic: Bool32,
+    pub fragment_density_map_non_subsampled_images: Bool32,
+}
+impl ::std::default::Default for PhysicalDeviceFragmentDensityMapFeaturesEXT {
+    fn default() -> PhysicalDeviceFragmentDensityMapFeaturesEXT {
+        PhysicalDeviceFragmentDensityMapFeaturesEXT {
+            s_type: StructureType::PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_FEATURES_EXT,
+            p_next: ::std::ptr::null_mut(),
+            fragment_density_map: Bool32::default(),
+            fragment_density_map_dynamic: Bool32::default(),
+            fragment_density_map_non_subsampled_images: Bool32::default(),
+        }
+    }
+}
+impl PhysicalDeviceFragmentDensityMapFeaturesEXT {
+    pub fn builder<'a>() -> PhysicalDeviceFragmentDensityMapFeaturesEXTBuilder<'a> {
+        PhysicalDeviceFragmentDensityMapFeaturesEXTBuilder {
+            inner: PhysicalDeviceFragmentDensityMapFeaturesEXT::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+pub struct PhysicalDeviceFragmentDensityMapFeaturesEXTBuilder<'a> {
+    inner: PhysicalDeviceFragmentDensityMapFeaturesEXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+pub unsafe trait ExtendsPhysicalDeviceFragmentDensityMapFeaturesEXT {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceFragmentDensityMapFeaturesEXT {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFragmentDensityMapFeaturesEXT {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceFragmentDensityMapFeaturesEXTBuilder<'a> {
+    type Target = PhysicalDeviceFragmentDensityMapFeaturesEXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> PhysicalDeviceFragmentDensityMapFeaturesEXTBuilder<'a> {
+    pub fn fragment_density_map(
+        mut self,
+        fragment_density_map: bool,
+    ) -> PhysicalDeviceFragmentDensityMapFeaturesEXTBuilder<'a> {
+        self.inner.fragment_density_map = fragment_density_map.into();
+        self
+    }
+    pub fn fragment_density_map_dynamic(
+        mut self,
+        fragment_density_map_dynamic: bool,
+    ) -> PhysicalDeviceFragmentDensityMapFeaturesEXTBuilder<'a> {
+        self.inner.fragment_density_map_dynamic = fragment_density_map_dynamic.into();
+        self
+    }
+    pub fn fragment_density_map_non_subsampled_images(
+        mut self,
+        fragment_density_map_non_subsampled_images: bool,
+    ) -> PhysicalDeviceFragmentDensityMapFeaturesEXTBuilder<'a> {
+        self.inner.fragment_density_map_non_subsampled_images =
+            fragment_density_map_non_subsampled_images.into();
+        self
+    }
+    pub fn next<T>(
+        mut self,
+        next: &'a mut T,
+    ) -> PhysicalDeviceFragmentDensityMapFeaturesEXTBuilder<'a>
+    where
+        T: ExtendsPhysicalDeviceFragmentDensityMapFeaturesEXT,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
+        self
+    }
+    pub fn build(self) -> PhysicalDeviceFragmentDensityMapFeaturesEXT {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+pub struct PhysicalDeviceFragmentDensityMapPropertiesEXT {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub min_fragment_density_texel_size: Extent2D,
+    pub max_fragment_density_texel_size: Extent2D,
+    pub fragment_density_invocations: Bool32,
+}
+impl ::std::default::Default for PhysicalDeviceFragmentDensityMapPropertiesEXT {
+    fn default() -> PhysicalDeviceFragmentDensityMapPropertiesEXT {
+        PhysicalDeviceFragmentDensityMapPropertiesEXT {
+            s_type: StructureType::PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_PROPERTIES_EXT,
+            p_next: ::std::ptr::null_mut(),
+            min_fragment_density_texel_size: Extent2D::default(),
+            max_fragment_density_texel_size: Extent2D::default(),
+            fragment_density_invocations: Bool32::default(),
+        }
+    }
+}
+impl PhysicalDeviceFragmentDensityMapPropertiesEXT {
+    pub fn builder<'a>() -> PhysicalDeviceFragmentDensityMapPropertiesEXTBuilder<'a> {
+        PhysicalDeviceFragmentDensityMapPropertiesEXTBuilder {
+            inner: PhysicalDeviceFragmentDensityMapPropertiesEXT::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+pub struct PhysicalDeviceFragmentDensityMapPropertiesEXTBuilder<'a> {
+    inner: PhysicalDeviceFragmentDensityMapPropertiesEXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+pub unsafe trait ExtendsPhysicalDeviceFragmentDensityMapPropertiesEXT {}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceFragmentDensityMapPropertiesEXT {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceFragmentDensityMapPropertiesEXTBuilder<'a> {
+    type Target = PhysicalDeviceFragmentDensityMapPropertiesEXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> PhysicalDeviceFragmentDensityMapPropertiesEXTBuilder<'a> {
+    pub fn min_fragment_density_texel_size(
+        mut self,
+        min_fragment_density_texel_size: Extent2D,
+    ) -> PhysicalDeviceFragmentDensityMapPropertiesEXTBuilder<'a> {
+        self.inner.min_fragment_density_texel_size = min_fragment_density_texel_size;
+        self
+    }
+    pub fn max_fragment_density_texel_size(
+        mut self,
+        max_fragment_density_texel_size: Extent2D,
+    ) -> PhysicalDeviceFragmentDensityMapPropertiesEXTBuilder<'a> {
+        self.inner.max_fragment_density_texel_size = max_fragment_density_texel_size;
+        self
+    }
+    pub fn fragment_density_invocations(
+        mut self,
+        fragment_density_invocations: bool,
+    ) -> PhysicalDeviceFragmentDensityMapPropertiesEXTBuilder<'a> {
+        self.inner.fragment_density_invocations = fragment_density_invocations.into();
+        self
+    }
+    pub fn next<T>(
+        mut self,
+        next: &'a mut T,
+    ) -> PhysicalDeviceFragmentDensityMapPropertiesEXTBuilder<'a>
+    where
+        T: ExtendsPhysicalDeviceFragmentDensityMapPropertiesEXT,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
+        self
+    }
+    pub fn build(self) -> PhysicalDeviceFragmentDensityMapPropertiesEXT {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+pub struct RenderPassFragmentDensityMapCreateInfoEXT {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub fragment_density_map_attachment: AttachmentReference,
+}
+impl ::std::default::Default for RenderPassFragmentDensityMapCreateInfoEXT {
+    fn default() -> RenderPassFragmentDensityMapCreateInfoEXT {
+        RenderPassFragmentDensityMapCreateInfoEXT {
+            s_type: StructureType::RENDER_PASS_FRAGMENT_DENSITY_MAP_CREATE_INFO_EXT,
+            p_next: ::std::ptr::null(),
+            fragment_density_map_attachment: AttachmentReference::default(),
+        }
+    }
+}
+impl RenderPassFragmentDensityMapCreateInfoEXT {
+    pub fn builder<'a>() -> RenderPassFragmentDensityMapCreateInfoEXTBuilder<'a> {
+        RenderPassFragmentDensityMapCreateInfoEXTBuilder {
+            inner: RenderPassFragmentDensityMapCreateInfoEXT::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+pub struct RenderPassFragmentDensityMapCreateInfoEXTBuilder<'a> {
+    inner: RenderPassFragmentDensityMapCreateInfoEXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+pub unsafe trait ExtendsRenderPassFragmentDensityMapCreateInfoEXT {}
+unsafe impl ExtendsRenderPassCreateInfo for RenderPassFragmentDensityMapCreateInfoEXT {}
+impl<'a> ::std::ops::Deref for RenderPassFragmentDensityMapCreateInfoEXTBuilder<'a> {
+    type Target = RenderPassFragmentDensityMapCreateInfoEXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> RenderPassFragmentDensityMapCreateInfoEXTBuilder<'a> {
+    pub fn fragment_density_map_attachment(
+        mut self,
+        fragment_density_map_attachment: AttachmentReference,
+    ) -> RenderPassFragmentDensityMapCreateInfoEXTBuilder<'a> {
+        self.inner.fragment_density_map_attachment = fragment_density_map_attachment;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> RenderPassFragmentDensityMapCreateInfoEXTBuilder<'a>
+    where
+        T: ExtendsRenderPassFragmentDensityMapCreateInfoEXT,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
+        self
+    }
+    pub fn build(self) -> RenderPassFragmentDensityMapCreateInfoEXT {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+pub struct PhysicalDeviceScalarBlockLayoutFeaturesEXT {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub scalar_block_layout: Bool32,
+}
+impl ::std::default::Default for PhysicalDeviceScalarBlockLayoutFeaturesEXT {
+    fn default() -> PhysicalDeviceScalarBlockLayoutFeaturesEXT {
+        PhysicalDeviceScalarBlockLayoutFeaturesEXT {
+            s_type: StructureType::PHYSICAL_DEVICE_SCALAR_BLOCK_LAYOUT_FEATURES_EXT,
+            p_next: ::std::ptr::null_mut(),
+            scalar_block_layout: Bool32::default(),
+        }
+    }
+}
+impl PhysicalDeviceScalarBlockLayoutFeaturesEXT {
+    pub fn builder<'a>() -> PhysicalDeviceScalarBlockLayoutFeaturesEXTBuilder<'a> {
+        PhysicalDeviceScalarBlockLayoutFeaturesEXTBuilder {
+            inner: PhysicalDeviceScalarBlockLayoutFeaturesEXT::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+pub struct PhysicalDeviceScalarBlockLayoutFeaturesEXTBuilder<'a> {
+    inner: PhysicalDeviceScalarBlockLayoutFeaturesEXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+pub unsafe trait ExtendsPhysicalDeviceScalarBlockLayoutFeaturesEXT {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceScalarBlockLayoutFeaturesEXT {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceScalarBlockLayoutFeaturesEXT {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceScalarBlockLayoutFeaturesEXTBuilder<'a> {
+    type Target = PhysicalDeviceScalarBlockLayoutFeaturesEXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> PhysicalDeviceScalarBlockLayoutFeaturesEXTBuilder<'a> {
+    pub fn scalar_block_layout(
+        mut self,
+        scalar_block_layout: bool,
+    ) -> PhysicalDeviceScalarBlockLayoutFeaturesEXTBuilder<'a> {
+        self.inner.scalar_block_layout = scalar_block_layout.into();
+        self
+    }
+    pub fn next<T>(
+        mut self,
+        next: &'a mut T,
+    ) -> PhysicalDeviceScalarBlockLayoutFeaturesEXTBuilder<'a>
+    where
+        T: ExtendsPhysicalDeviceScalarBlockLayoutFeaturesEXT,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
+        self
+    }
+    pub fn build(self) -> PhysicalDeviceScalarBlockLayoutFeaturesEXT {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+pub struct PhysicalDeviceMemoryBudgetPropertiesEXT {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub heap_budget: [DeviceSize; MAX_MEMORY_HEAPS],
+    pub heap_usage: [DeviceSize; MAX_MEMORY_HEAPS],
+}
+impl ::std::default::Default for PhysicalDeviceMemoryBudgetPropertiesEXT {
+    fn default() -> PhysicalDeviceMemoryBudgetPropertiesEXT {
+        PhysicalDeviceMemoryBudgetPropertiesEXT {
+            s_type: StructureType::PHYSICAL_DEVICE_MEMORY_BUDGET_PROPERTIES_EXT,
+            p_next: ::std::ptr::null_mut(),
+            heap_budget: unsafe { ::std::mem::zeroed() },
+            heap_usage: unsafe { ::std::mem::zeroed() },
+        }
+    }
+}
+impl PhysicalDeviceMemoryBudgetPropertiesEXT {
+    pub fn builder<'a>() -> PhysicalDeviceMemoryBudgetPropertiesEXTBuilder<'a> {
+        PhysicalDeviceMemoryBudgetPropertiesEXTBuilder {
+            inner: PhysicalDeviceMemoryBudgetPropertiesEXT::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+pub struct PhysicalDeviceMemoryBudgetPropertiesEXTBuilder<'a> {
+    inner: PhysicalDeviceMemoryBudgetPropertiesEXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+pub unsafe trait ExtendsPhysicalDeviceMemoryBudgetPropertiesEXT {}
+unsafe impl ExtendsPhysicalDeviceMemoryProperties2 for PhysicalDeviceMemoryBudgetPropertiesEXT {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceMemoryBudgetPropertiesEXTBuilder<'a> {
+    type Target = PhysicalDeviceMemoryBudgetPropertiesEXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> PhysicalDeviceMemoryBudgetPropertiesEXTBuilder<'a> {
+    pub fn heap_budget(
+        mut self,
+        heap_budget: [DeviceSize; MAX_MEMORY_HEAPS],
+    ) -> PhysicalDeviceMemoryBudgetPropertiesEXTBuilder<'a> {
+        self.inner.heap_budget = heap_budget;
+        self
+    }
+    pub fn heap_usage(
+        mut self,
+        heap_usage: [DeviceSize; MAX_MEMORY_HEAPS],
+    ) -> PhysicalDeviceMemoryBudgetPropertiesEXTBuilder<'a> {
+        self.inner.heap_usage = heap_usage;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceMemoryBudgetPropertiesEXTBuilder<'a>
+    where
+        T: ExtendsPhysicalDeviceMemoryBudgetPropertiesEXT,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
+        self
+    }
+    pub fn build(self) -> PhysicalDeviceMemoryBudgetPropertiesEXT {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+pub struct PhysicalDeviceMemoryPriorityFeaturesEXT {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub memory_priority: Bool32,
+}
+impl ::std::default::Default for PhysicalDeviceMemoryPriorityFeaturesEXT {
+    fn default() -> PhysicalDeviceMemoryPriorityFeaturesEXT {
+        PhysicalDeviceMemoryPriorityFeaturesEXT {
+            s_type: StructureType::PHYSICAL_DEVICE_MEMORY_PRIORITY_FEATURES_EXT,
+            p_next: ::std::ptr::null_mut(),
+            memory_priority: Bool32::default(),
+        }
+    }
+}
+impl PhysicalDeviceMemoryPriorityFeaturesEXT {
+    pub fn builder<'a>() -> PhysicalDeviceMemoryPriorityFeaturesEXTBuilder<'a> {
+        PhysicalDeviceMemoryPriorityFeaturesEXTBuilder {
+            inner: PhysicalDeviceMemoryPriorityFeaturesEXT::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+pub struct PhysicalDeviceMemoryPriorityFeaturesEXTBuilder<'a> {
+    inner: PhysicalDeviceMemoryPriorityFeaturesEXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+pub unsafe trait ExtendsPhysicalDeviceMemoryPriorityFeaturesEXT {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMemoryPriorityFeaturesEXT {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMemoryPriorityFeaturesEXT {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceMemoryPriorityFeaturesEXTBuilder<'a> {
+    type Target = PhysicalDeviceMemoryPriorityFeaturesEXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> PhysicalDeviceMemoryPriorityFeaturesEXTBuilder<'a> {
+    pub fn memory_priority(
+        mut self,
+        memory_priority: bool,
+    ) -> PhysicalDeviceMemoryPriorityFeaturesEXTBuilder<'a> {
+        self.inner.memory_priority = memory_priority.into();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceMemoryPriorityFeaturesEXTBuilder<'a>
+    where
+        T: ExtendsPhysicalDeviceMemoryPriorityFeaturesEXT,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
+        self
+    }
+    pub fn build(self) -> PhysicalDeviceMemoryPriorityFeaturesEXT {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+pub struct MemoryPriorityAllocateInfoEXT {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub priority: f32,
+}
+impl ::std::default::Default for MemoryPriorityAllocateInfoEXT {
+    fn default() -> MemoryPriorityAllocateInfoEXT {
+        MemoryPriorityAllocateInfoEXT {
+            s_type: StructureType::MEMORY_PRIORITY_ALLOCATE_INFO_EXT,
+            p_next: ::std::ptr::null(),
+            priority: f32::default(),
+        }
+    }
+}
+impl MemoryPriorityAllocateInfoEXT {
+    pub fn builder<'a>() -> MemoryPriorityAllocateInfoEXTBuilder<'a> {
+        MemoryPriorityAllocateInfoEXTBuilder {
+            inner: MemoryPriorityAllocateInfoEXT::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+pub struct MemoryPriorityAllocateInfoEXTBuilder<'a> {
+    inner: MemoryPriorityAllocateInfoEXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+pub unsafe trait ExtendsMemoryPriorityAllocateInfoEXT {}
+unsafe impl ExtendsMemoryAllocateInfo for MemoryPriorityAllocateInfoEXT {}
+impl<'a> ::std::ops::Deref for MemoryPriorityAllocateInfoEXTBuilder<'a> {
+    type Target = MemoryPriorityAllocateInfoEXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> MemoryPriorityAllocateInfoEXTBuilder<'a> {
+    pub fn priority(mut self, priority: f32) -> MemoryPriorityAllocateInfoEXTBuilder<'a> {
+        self.inner.priority = priority;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> MemoryPriorityAllocateInfoEXTBuilder<'a>
+    where
+        T: ExtendsMemoryPriorityAllocateInfoEXT,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
+        self
+    }
+    pub fn build(self) -> MemoryPriorityAllocateInfoEXT {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+pub struct PhysicalDeviceBufferAddressFeaturesEXT {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub buffer_device_address: Bool32,
+    pub buffer_device_address_capture_replay: Bool32,
+    pub buffer_device_address_multi_device: Bool32,
+}
+impl ::std::default::Default for PhysicalDeviceBufferAddressFeaturesEXT {
+    fn default() -> PhysicalDeviceBufferAddressFeaturesEXT {
+        PhysicalDeviceBufferAddressFeaturesEXT {
+            s_type: StructureType::PHYSICAL_DEVICE_BUFFER_ADDRESS_FEATURES_EXT,
+            p_next: ::std::ptr::null_mut(),
+            buffer_device_address: Bool32::default(),
+            buffer_device_address_capture_replay: Bool32::default(),
+            buffer_device_address_multi_device: Bool32::default(),
+        }
+    }
+}
+impl PhysicalDeviceBufferAddressFeaturesEXT {
+    pub fn builder<'a>() -> PhysicalDeviceBufferAddressFeaturesEXTBuilder<'a> {
+        PhysicalDeviceBufferAddressFeaturesEXTBuilder {
+            inner: PhysicalDeviceBufferAddressFeaturesEXT::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+pub struct PhysicalDeviceBufferAddressFeaturesEXTBuilder<'a> {
+    inner: PhysicalDeviceBufferAddressFeaturesEXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+pub unsafe trait ExtendsPhysicalDeviceBufferAddressFeaturesEXT {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceBufferAddressFeaturesEXT {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceBufferAddressFeaturesEXT {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceBufferAddressFeaturesEXTBuilder<'a> {
+    type Target = PhysicalDeviceBufferAddressFeaturesEXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> PhysicalDeviceBufferAddressFeaturesEXTBuilder<'a> {
+    pub fn buffer_device_address(
+        mut self,
+        buffer_device_address: bool,
+    ) -> PhysicalDeviceBufferAddressFeaturesEXTBuilder<'a> {
+        self.inner.buffer_device_address = buffer_device_address.into();
+        self
+    }
+    pub fn buffer_device_address_capture_replay(
+        mut self,
+        buffer_device_address_capture_replay: bool,
+    ) -> PhysicalDeviceBufferAddressFeaturesEXTBuilder<'a> {
+        self.inner.buffer_device_address_capture_replay =
+            buffer_device_address_capture_replay.into();
+        self
+    }
+    pub fn buffer_device_address_multi_device(
+        mut self,
+        buffer_device_address_multi_device: bool,
+    ) -> PhysicalDeviceBufferAddressFeaturesEXTBuilder<'a> {
+        self.inner.buffer_device_address_multi_device = buffer_device_address_multi_device.into();
+        self
+    }
+    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceBufferAddressFeaturesEXTBuilder<'a>
+    where
+        T: ExtendsPhysicalDeviceBufferAddressFeaturesEXT,
+    {
+        self.inner.p_next = next as *mut T as *mut c_void;
+        self
+    }
+    pub fn build(self) -> PhysicalDeviceBufferAddressFeaturesEXT {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+pub struct BufferDeviceAddressInfoEXT {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub buffer: Buffer,
+}
+impl ::std::default::Default for BufferDeviceAddressInfoEXT {
+    fn default() -> BufferDeviceAddressInfoEXT {
+        BufferDeviceAddressInfoEXT {
+            s_type: StructureType::BUFFER_DEVICE_ADDRESS_INFO_EXT,
+            p_next: ::std::ptr::null(),
+            buffer: Buffer::default(),
+        }
+    }
+}
+impl BufferDeviceAddressInfoEXT {
+    pub fn builder<'a>() -> BufferDeviceAddressInfoEXTBuilder<'a> {
+        BufferDeviceAddressInfoEXTBuilder {
+            inner: BufferDeviceAddressInfoEXT::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+pub struct BufferDeviceAddressInfoEXTBuilder<'a> {
+    inner: BufferDeviceAddressInfoEXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+pub unsafe trait ExtendsBufferDeviceAddressInfoEXT {}
+impl<'a> ::std::ops::Deref for BufferDeviceAddressInfoEXTBuilder<'a> {
+    type Target = BufferDeviceAddressInfoEXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> BufferDeviceAddressInfoEXTBuilder<'a> {
+    pub fn buffer(mut self, buffer: Buffer) -> BufferDeviceAddressInfoEXTBuilder<'a> {
+        self.inner.buffer = buffer;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> BufferDeviceAddressInfoEXTBuilder<'a>
+    where
+        T: ExtendsBufferDeviceAddressInfoEXT,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
+        self
+    }
+    pub fn build(self) -> BufferDeviceAddressInfoEXT {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+pub struct BufferDeviceAddressCreateInfoEXT {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub device_address: DeviceSize,
+}
+impl ::std::default::Default for BufferDeviceAddressCreateInfoEXT {
+    fn default() -> BufferDeviceAddressCreateInfoEXT {
+        BufferDeviceAddressCreateInfoEXT {
+            s_type: StructureType::BUFFER_DEVICE_ADDRESS_CREATE_INFO_EXT,
+            p_next: ::std::ptr::null(),
+            device_address: DeviceSize::default(),
+        }
+    }
+}
+impl BufferDeviceAddressCreateInfoEXT {
+    pub fn builder<'a>() -> BufferDeviceAddressCreateInfoEXTBuilder<'a> {
+        BufferDeviceAddressCreateInfoEXTBuilder {
+            inner: BufferDeviceAddressCreateInfoEXT::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+pub struct BufferDeviceAddressCreateInfoEXTBuilder<'a> {
+    inner: BufferDeviceAddressCreateInfoEXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+pub unsafe trait ExtendsBufferDeviceAddressCreateInfoEXT {}
+unsafe impl ExtendsBufferCreateInfo for BufferDeviceAddressCreateInfoEXT {}
+impl<'a> ::std::ops::Deref for BufferDeviceAddressCreateInfoEXTBuilder<'a> {
+    type Target = BufferDeviceAddressCreateInfoEXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> BufferDeviceAddressCreateInfoEXTBuilder<'a> {
+    pub fn device_address(
+        mut self,
+        device_address: DeviceSize,
+    ) -> BufferDeviceAddressCreateInfoEXTBuilder<'a> {
+        self.inner.device_address = device_address;
+        self
+    }
+    pub fn next<T>(mut self, next: &'a T) -> BufferDeviceAddressCreateInfoEXTBuilder<'a>
+    where
+        T: ExtendsBufferDeviceAddressCreateInfoEXT,
+    {
+        self.inner.p_next = next as *const T as *const c_void;
+        self
+    }
+    pub fn build(self) -> BufferDeviceAddressCreateInfoEXT {
         self.inner
     }
 }
@@ -36843,6 +38009,41 @@ impl ValidationCheckEXT {
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
+pub struct ValidationFeatureEnableEXT(pub(crate) i32);
+impl ValidationFeatureEnableEXT {
+    pub fn from_raw(x: i32) -> Self {
+        ValidationFeatureEnableEXT(x)
+    }
+    pub fn as_raw(self) -> i32 {
+        self.0
+    }
+}
+impl ValidationFeatureEnableEXT {
+    pub const GPU_ASSISTED: Self = ValidationFeatureEnableEXT(0);
+    pub const GPU_ASSISTED_RESERVE_BINDING_SLOT: Self = ValidationFeatureEnableEXT(1);
+}
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[repr(transparent)]
+pub struct ValidationFeatureDisableEXT(pub(crate) i32);
+impl ValidationFeatureDisableEXT {
+    pub fn from_raw(x: i32) -> Self {
+        ValidationFeatureDisableEXT(x)
+    }
+    pub fn as_raw(self) -> i32 {
+        self.0
+    }
+}
+impl ValidationFeatureDisableEXT {
+    pub const ALL: Self = ValidationFeatureDisableEXT(0);
+    pub const SHADERS: Self = ValidationFeatureDisableEXT(1);
+    pub const THREAD_SAFETY: Self = ValidationFeatureDisableEXT(2);
+    pub const API_PARAMETERS: Self = ValidationFeatureDisableEXT(3);
+    pub const OBJECT_LIFETIMES: Self = ValidationFeatureDisableEXT(4);
+    pub const CORE_CHECKS: Self = ValidationFeatureDisableEXT(5);
+    pub const UNIQUE_HANDLES: Self = ValidationFeatureDisableEXT(6);
+}
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[repr(transparent)]
 pub struct IndirectCommandsTokenTypeNVX(pub(crate) i32);
 impl IndirectCommandsTokenTypeNVX {
     pub fn from_raw(x: i32) -> Self {
@@ -37205,6 +38406,8 @@ impl DriverIdKHR {
     pub const QUALCOMM_PROPRIETARY: Self = DriverIdKHR(8);
     #[doc = "Arm Limited"]
     pub const ARM_PROPRIETARY: Self = DriverIdKHR(9);
+    #[doc = "Google LLC"]
+    pub const GOOGLE_PASTEL: Self = DriverIdKHR(10);
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
@@ -37527,6 +38730,16 @@ impl ImageCreateFlags {
     #[doc = "Allows creating image views with cube type from the created image"]
     pub const CUBE_COMPATIBLE: Self = ImageCreateFlags(0b10000);
 }
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct ImageViewCreateFlags(pub(crate) Flags);
+vk_bitflags_wrapped!(ImageViewCreateFlags, 0b0, Flags);
+impl ImageViewCreateFlags {}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct SamplerCreateFlags(pub(crate) Flags);
+vk_bitflags_wrapped!(SamplerCreateFlags, 0b0, Flags);
+impl SamplerCreateFlags {}
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct PipelineCreateFlags(pub(crate) Flags);
@@ -38087,6 +39300,17 @@ impl ConditionalRenderingFlagsEXT {
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct ResolveModeFlagsKHR(pub(crate) Flags);
+vk_bitflags_wrapped!(ResolveModeFlagsKHR, 0b1111, Flags);
+impl ResolveModeFlagsKHR {
+    pub const NONE: Self = ResolveModeFlagsKHR(0);
+    pub const SAMPLE_ZERO: Self = ResolveModeFlagsKHR(0b1);
+    pub const AVERAGE: Self = ResolveModeFlagsKHR(0b10);
+    pub const MIN: Self = ResolveModeFlagsKHR(0b100);
+    pub const MAX: Self = ResolveModeFlagsKHR(0b1000);
+}
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct GeometryInstanceFlagsNV(pub(crate) Flags);
 vk_bitflags_wrapped!(GeometryInstanceFlagsNV, 0b1111, Flags);
 impl GeometryInstanceFlagsNV {
@@ -38136,6 +39360,11 @@ pub const MAX_DEVICE_GROUP_SIZE: usize = 32;
 pub const MAX_DRIVER_NAME_SIZE_KHR: usize = 256;
 pub const MAX_DRIVER_INFO_SIZE_KHR: usize = 256;
 pub const SHADER_UNUSED_NV: u32 = !0;
+impl KhrSurfaceFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_surface\0").expect("Wrong extension string")
+    }
+}
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroySurfaceKHR = extern "system" fn(
     instance: Instance,
@@ -38396,6 +39625,12 @@ impl Result {
 #[doc = "Generated from \'VK_KHR_surface\'"]
 impl ObjectType {
     pub const SURFACE_KHR: Self = ObjectType(1000000000);
+}
+impl KhrSwapchainFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_swapchain\0")
+            .expect("Wrong extension string")
+    }
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateSwapchainKHR = extern "system" fn(
@@ -38854,6 +40089,11 @@ impl SwapchainCreateFlagsKHR {
 impl SwapchainCreateFlagsKHR {
     pub const PROTECTED: Self = SwapchainCreateFlagsKHR(0b10);
 }
+impl KhrDisplayFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_display\0").expect("Wrong extension string")
+    }
+}
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceDisplayPropertiesKHR = extern "system" fn(
     physical_device: PhysicalDevice,
@@ -39218,6 +40458,12 @@ impl ObjectType {
 impl ObjectType {
     pub const DISPLAY_MODE_KHR: Self = ObjectType(1000002001);
 }
+impl KhrDisplaySwapchainFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_display_swapchain\0")
+            .expect("Wrong extension string")
+    }
+}
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateSharedSwapchainsKHR = extern "system" fn(
     device: Device,
@@ -39298,6 +40544,12 @@ impl StructureType {
 #[doc = "Generated from \'VK_KHR_display_swapchain\'"]
 impl Result {
     pub const ERROR_INCOMPATIBLE_DISPLAY_KHR: Self = Result(-1000003001);
+}
+impl KhrXlibSurfaceFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_xlib_surface\0")
+            .expect("Wrong extension string")
+    }
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateXlibSurfaceKHR = extern "system" fn(
@@ -39416,6 +40668,12 @@ impl KhrXlibSurfaceFn {
 impl StructureType {
     pub const XLIB_SURFACE_CREATE_INFO_KHR: Self = StructureType(1000004000);
 }
+impl KhrXcbSurfaceFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_xcb_surface\0")
+            .expect("Wrong extension string")
+    }
+}
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateXcbSurfaceKHR = extern "system" fn(
     instance: Instance,
@@ -39533,6 +40791,12 @@ impl KhrXcbSurfaceFn {
 impl StructureType {
     pub const XCB_SURFACE_CREATE_INFO_KHR: Self = StructureType(1000005000);
 }
+impl KhrWaylandSurfaceFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_wayland_surface\0")
+            .expect("Wrong extension string")
+    }
+}
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateWaylandSurfaceKHR = extern "system" fn(
     instance: Instance,
@@ -39645,6 +40909,12 @@ impl KhrWaylandSurfaceFn {
 impl StructureType {
     pub const WAYLAND_SURFACE_CREATE_INFO_KHR: Self = StructureType(1000006000);
 }
+impl KhrMirSurfaceFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_mir_surface\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct KhrMirSurfaceFn {}
 unsafe impl Send for KhrMirSurfaceFn {}
 unsafe impl Sync for KhrMirSurfaceFn {}
@@ -39659,6 +40929,12 @@ impl KhrMirSurfaceFn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         KhrMirSurfaceFn {}
+    }
+}
+impl KhrAndroidSurfaceFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_android_surface\0")
+            .expect("Wrong extension string")
     }
 }
 #[allow(non_camel_case_types)]
@@ -39727,6 +41003,12 @@ impl KhrAndroidSurfaceFn {
 #[doc = "Generated from \'VK_KHR_android_surface\'"]
 impl StructureType {
     pub const ANDROID_SURFACE_CREATE_INFO_KHR: Self = StructureType(1000008000);
+}
+impl KhrWin32SurfaceFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_win32_surface\0")
+            .expect("Wrong extension string")
+    }
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateWin32SurfaceKHR = extern "system" fn(
@@ -39830,6 +41112,12 @@ impl KhrWin32SurfaceFn {
 #[doc = "Generated from \'VK_KHR_win32_surface\'"]
 impl StructureType {
     pub const WIN32_SURFACE_CREATE_INFO_KHR: Self = StructureType(1000009000);
+}
+impl AndroidNativeBufferFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_ANDROID_native_buffer\0")
+            .expect("Wrong extension string")
+    }
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetSwapchainGrallocUsageANDROID = extern "system" fn(
@@ -39999,6 +41287,12 @@ impl AndroidNativeBufferFn {
 #[doc = "Generated from \'VK_ANDROID_native_buffer\'"]
 impl StructureType {
     pub const NATIVE_BUFFER_ANDROID: Self = StructureType(1000010000);
+}
+impl ExtDebugReportFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_debug_report\0")
+            .expect("Wrong extension string")
+    }
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateDebugReportCallbackEXT = extern "system" fn(
@@ -40192,6 +41486,12 @@ impl DebugReportObjectTypeEXT {
 impl DebugReportObjectTypeEXT {
     pub const DESCRIPTOR_UPDATE_TEMPLATE: Self = DebugReportObjectTypeEXT(1000085000);
 }
+impl NvGlslShaderFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_glsl_shader\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct NvGlslShaderFn {}
 unsafe impl Send for NvGlslShaderFn {}
 unsafe impl Sync for NvGlslShaderFn {}
@@ -40212,6 +41512,12 @@ impl NvGlslShaderFn {
 impl Result {
     pub const ERROR_INVALID_SHADER_NV: Self = Result(-1000012000);
 }
+impl ExtDepthRangeUnrestrictedFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_depth_range_unrestricted\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct ExtDepthRangeUnrestrictedFn {}
 unsafe impl Send for ExtDepthRangeUnrestrictedFn {}
 unsafe impl Sync for ExtDepthRangeUnrestrictedFn {}
@@ -40228,6 +41534,12 @@ impl ExtDepthRangeUnrestrictedFn {
         ExtDepthRangeUnrestrictedFn {}
     }
 }
+impl KhrSamplerMirrorClampToEdgeFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_sampler_mirror_clamp_to_edge\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct KhrSamplerMirrorClampToEdgeFn {}
 unsafe impl Send for KhrSamplerMirrorClampToEdgeFn {}
 unsafe impl Sync for KhrSamplerMirrorClampToEdgeFn {}
@@ -40242,6 +41554,12 @@ impl KhrSamplerMirrorClampToEdgeFn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         KhrSamplerMirrorClampToEdgeFn {}
+    }
+}
+impl ImgFilterCubicFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_IMG_filter_cubic\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct ImgFilterCubicFn {}
@@ -40268,6 +41586,12 @@ impl Filter {
 impl FormatFeatureFlags {
     pub const SAMPLED_IMAGE_FILTER_CUBIC_IMG: Self = FormatFeatureFlags(0b10000000000000);
 }
+impl AmdExtension17Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_17\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct AmdExtension17Fn {}
 unsafe impl Send for AmdExtension17Fn {}
 unsafe impl Sync for AmdExtension17Fn {}
@@ -40284,6 +41608,12 @@ impl AmdExtension17Fn {
         AmdExtension17Fn {}
     }
 }
+impl AmdExtension18Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_18\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct AmdExtension18Fn {}
 unsafe impl Send for AmdExtension18Fn {}
 unsafe impl Sync for AmdExtension18Fn {}
@@ -40298,6 +41628,12 @@ impl AmdExtension18Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         AmdExtension18Fn {}
+    }
+}
+impl AmdRasterizationOrderFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_rasterization_order\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct AmdRasterizationOrderFn {}
@@ -40321,6 +41657,12 @@ impl StructureType {
     pub const PIPELINE_RASTERIZATION_STATE_RASTERIZATION_ORDER_AMD: Self =
         StructureType(1000018000);
 }
+impl AmdExtension20Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_20\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct AmdExtension20Fn {}
 unsafe impl Send for AmdExtension20Fn {}
 unsafe impl Sync for AmdExtension20Fn {}
@@ -40335,6 +41677,12 @@ impl AmdExtension20Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         AmdExtension20Fn {}
+    }
+}
+impl AmdShaderTrinaryMinmaxFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_shader_trinary_minmax\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct AmdShaderTrinaryMinmaxFn {}
@@ -40353,6 +41701,12 @@ impl AmdShaderTrinaryMinmaxFn {
         AmdShaderTrinaryMinmaxFn {}
     }
 }
+impl AmdShaderExplicitVertexParameterFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_shader_explicit_vertex_parameter\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct AmdShaderExplicitVertexParameterFn {}
 unsafe impl Send for AmdShaderExplicitVertexParameterFn {}
 unsafe impl Sync for AmdShaderExplicitVertexParameterFn {}
@@ -40367,6 +41721,12 @@ impl AmdShaderExplicitVertexParameterFn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         AmdShaderExplicitVertexParameterFn {}
+    }
+}
+impl ExtDebugMarkerFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_debug_marker\0")
+            .expect("Wrong extension string")
     }
 }
 #[allow(non_camel_case_types)]
@@ -40565,6 +41925,12 @@ impl StructureType {
 impl StructureType {
     pub const DEBUG_MARKER_MARKER_INFO_EXT: Self = StructureType(1000022002);
 }
+impl AmdExtension24Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_24\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct AmdExtension24Fn {}
 unsafe impl Send for AmdExtension24Fn {}
 unsafe impl Sync for AmdExtension24Fn {}
@@ -40579,6 +41945,60 @@ impl AmdExtension24Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         AmdExtension24Fn {}
+    }
+}
+#[doc = "Generated from \'VK_AMD_extension_24\'"]
+impl QueueFlags {
+    pub const RESERVED_6_KHR: Self = QueueFlags(0b1000000);
+}
+#[doc = "Generated from \'VK_AMD_extension_24\'"]
+impl PipelineStageFlags {
+    pub const RESERVED_27_KHR: Self = PipelineStageFlags(0b1000000000000000000000000000);
+}
+#[doc = "Generated from \'VK_AMD_extension_24\'"]
+impl AccessFlags {
+    pub const RESERVED_30_KHR: Self = AccessFlags(0b1000000000000000000000000000000);
+}
+#[doc = "Generated from \'VK_AMD_extension_24\'"]
+impl AccessFlags {
+    pub const RESERVED_31_KHR: Self = AccessFlags(0b10000000000000000000000000000000);
+}
+#[doc = "Generated from \'VK_AMD_extension_24\'"]
+impl BufferUsageFlags {
+    pub const RESERVED_15_KHR: Self = BufferUsageFlags(0b1000000000000000);
+}
+#[doc = "Generated from \'VK_AMD_extension_24\'"]
+impl BufferUsageFlags {
+    pub const RESERVED_16_KHR: Self = BufferUsageFlags(0b10000000000000000);
+}
+#[doc = "Generated from \'VK_AMD_extension_24\'"]
+impl ImageUsageFlags {
+    pub const RESERVED_13_KHR: Self = ImageUsageFlags(0b10000000000000);
+}
+#[doc = "Generated from \'VK_AMD_extension_24\'"]
+impl ImageUsageFlags {
+    pub const RESERVED_14_KHR: Self = ImageUsageFlags(0b100000000000000);
+}
+#[doc = "Generated from \'VK_AMD_extension_24\'"]
+impl ImageUsageFlags {
+    pub const RESERVED_15_KHR: Self = ImageUsageFlags(0b1000000000000000);
+}
+#[doc = "Generated from \'VK_AMD_extension_24\'"]
+impl FormatFeatureFlags {
+    pub const RESERVED_27_KHR: Self = FormatFeatureFlags(0b1000000000000000000000000000);
+}
+#[doc = "Generated from \'VK_AMD_extension_24\'"]
+impl FormatFeatureFlags {
+    pub const RESERVED_28_KHR: Self = FormatFeatureFlags(0b10000000000000000000000000000);
+}
+#[doc = "Generated from \'VK_AMD_extension_24\'"]
+impl QueryType {
+    pub const RESERVED_8: Self = QueryType(1000023008);
+}
+impl AmdExtension25Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_25\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct AmdExtension25Fn {}
@@ -40597,6 +42017,60 @@ impl AmdExtension25Fn {
         AmdExtension25Fn {}
     }
 }
+#[doc = "Generated from \'VK_AMD_extension_25\'"]
+impl QueueFlags {
+    pub const RESERVED_5_KHR: Self = QueueFlags(0b100000);
+}
+#[doc = "Generated from \'VK_AMD_extension_25\'"]
+impl PipelineStageFlags {
+    pub const RESERVED_26_KHR: Self = PipelineStageFlags(0b100000000000000000000000000);
+}
+#[doc = "Generated from \'VK_AMD_extension_25\'"]
+impl AccessFlags {
+    pub const RESERVED_28_KHR: Self = AccessFlags(0b10000000000000000000000000000);
+}
+#[doc = "Generated from \'VK_AMD_extension_25\'"]
+impl AccessFlags {
+    pub const RESERVED_29_KHR: Self = AccessFlags(0b100000000000000000000000000000);
+}
+#[doc = "Generated from \'VK_AMD_extension_25\'"]
+impl BufferUsageFlags {
+    pub const RESERVED_13_KHR: Self = BufferUsageFlags(0b10000000000000);
+}
+#[doc = "Generated from \'VK_AMD_extension_25\'"]
+impl BufferUsageFlags {
+    pub const RESERVED_14_KHR: Self = BufferUsageFlags(0b100000000000000);
+}
+#[doc = "Generated from \'VK_AMD_extension_25\'"]
+impl ImageUsageFlags {
+    pub const RESERVED_10_KHR: Self = ImageUsageFlags(0b10000000000);
+}
+#[doc = "Generated from \'VK_AMD_extension_25\'"]
+impl ImageUsageFlags {
+    pub const RESERVED_11_KHR: Self = ImageUsageFlags(0b100000000000);
+}
+#[doc = "Generated from \'VK_AMD_extension_25\'"]
+impl ImageUsageFlags {
+    pub const RESERVED_12_KHR: Self = ImageUsageFlags(0b1000000000000);
+}
+#[doc = "Generated from \'VK_AMD_extension_25\'"]
+impl FormatFeatureFlags {
+    pub const RESERVED_25_KHR: Self = FormatFeatureFlags(0b10000000000000000000000000);
+}
+#[doc = "Generated from \'VK_AMD_extension_25\'"]
+impl FormatFeatureFlags {
+    pub const RESERVED_26_KHR: Self = FormatFeatureFlags(0b100000000000000000000000000);
+}
+#[doc = "Generated from \'VK_AMD_extension_25\'"]
+impl QueryType {
+    pub const RESERVED_4: Self = QueryType(1000024004);
+}
+impl AmdGcnShaderFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_gcn_shader\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct AmdGcnShaderFn {}
 unsafe impl Send for AmdGcnShaderFn {}
 unsafe impl Sync for AmdGcnShaderFn {}
@@ -40611,6 +42085,12 @@ impl AmdGcnShaderFn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         AmdGcnShaderFn {}
+    }
+}
+impl NvDedicatedAllocationFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_dedicated_allocation\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct NvDedicatedAllocationFn {}
@@ -40641,6 +42121,12 @@ impl StructureType {
 impl StructureType {
     pub const DEDICATED_ALLOCATION_MEMORY_ALLOCATE_INFO_NV: Self = StructureType(1000026002);
 }
+impl ExtExtension28Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_28\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct ExtExtension28Fn {}
 unsafe impl Send for ExtExtension28Fn {}
 unsafe impl Sync for ExtExtension28Fn {}
@@ -40655,6 +42141,12 @@ impl ExtExtension28Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         ExtExtension28Fn {}
+    }
+}
+impl ExtTransformFeedbackFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_transform_feedback\0")
+            .expect("Wrong extension string")
     }
 }
 #[allow(non_camel_case_types)]
@@ -41041,6 +42533,12 @@ impl AccessFlags {
 impl PipelineStageFlags {
     pub const TRANSFORM_FEEDBACK_EXT: Self = PipelineStageFlags(0b1000000000000000000000000);
 }
+impl NvxExtension30Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NVX_extension_30\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct NvxExtension30Fn {}
 unsafe impl Send for NvxExtension30Fn {}
 unsafe impl Sync for NvxExtension30Fn {}
@@ -41055,6 +42553,12 @@ impl NvxExtension30Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         NvxExtension30Fn {}
+    }
+}
+impl NvxExtension31Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NVX_extension_31\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct NvxExtension31Fn {}
@@ -41073,6 +42577,12 @@ impl NvxExtension31Fn {
         NvxExtension31Fn {}
     }
 }
+impl AmdExtension32Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_32\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct AmdExtension32Fn {}
 unsafe impl Send for AmdExtension32Fn {}
 unsafe impl Sync for AmdExtension32Fn {}
@@ -41089,6 +42599,12 @@ impl AmdExtension32Fn {
         AmdExtension32Fn {}
     }
 }
+impl AmdExtension33Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_33\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct AmdExtension33Fn {}
 unsafe impl Send for AmdExtension33Fn {}
 unsafe impl Sync for AmdExtension33Fn {}
@@ -41103,6 +42619,12 @@ impl AmdExtension33Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         AmdExtension33Fn {}
+    }
+}
+impl AmdDrawIndirectCountFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_draw_indirect_count\0")
+            .expect("Wrong extension string")
     }
 }
 #[allow(non_camel_case_types)]
@@ -41252,6 +42774,12 @@ impl AmdDrawIndirectCountFn {
         )
     }
 }
+impl AmdExtension35Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_35\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct AmdExtension35Fn {}
 unsafe impl Send for AmdExtension35Fn {}
 unsafe impl Sync for AmdExtension35Fn {}
@@ -41266,6 +42794,12 @@ impl AmdExtension35Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         AmdExtension35Fn {}
+    }
+}
+impl AmdNegativeViewportHeightFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_negative_viewport_height\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct AmdNegativeViewportHeightFn {}
@@ -41284,6 +42818,12 @@ impl AmdNegativeViewportHeightFn {
         AmdNegativeViewportHeightFn {}
     }
 }
+impl AmdGpuShaderHalfFloatFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_gpu_shader_half_float\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct AmdGpuShaderHalfFloatFn {}
 unsafe impl Send for AmdGpuShaderHalfFloatFn {}
 unsafe impl Sync for AmdGpuShaderHalfFloatFn {}
@@ -41298,6 +42838,12 @@ impl AmdGpuShaderHalfFloatFn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         AmdGpuShaderHalfFloatFn {}
+    }
+}
+impl AmdShaderBallotFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_shader_ballot\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct AmdShaderBallotFn {}
@@ -41316,6 +42862,12 @@ impl AmdShaderBallotFn {
         AmdShaderBallotFn {}
     }
 }
+impl AmdExtension39Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_39\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct AmdExtension39Fn {}
 unsafe impl Send for AmdExtension39Fn {}
 unsafe impl Sync for AmdExtension39Fn {}
@@ -41330,6 +42882,12 @@ impl AmdExtension39Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         AmdExtension39Fn {}
+    }
+}
+impl AmdExtension40Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_40\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct AmdExtension40Fn {}
@@ -41348,6 +42906,12 @@ impl AmdExtension40Fn {
         AmdExtension40Fn {}
     }
 }
+impl AmdExtension41Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_41\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct AmdExtension41Fn {}
 unsafe impl Send for AmdExtension41Fn {}
 unsafe impl Sync for AmdExtension41Fn {}
@@ -41362,6 +42926,12 @@ impl AmdExtension41Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         AmdExtension41Fn {}
+    }
+}
+impl AmdTextureGatherBiasLodFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_texture_gather_bias_lod\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct AmdTextureGatherBiasLodFn {}
@@ -41383,6 +42953,12 @@ impl AmdTextureGatherBiasLodFn {
 #[doc = "Generated from \'VK_AMD_texture_gather_bias_lod\'"]
 impl StructureType {
     pub const TEXTURE_LOD_GATHER_FORMAT_PROPERTIES_AMD: Self = StructureType(1000041000);
+}
+impl AmdShaderInfoFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_shader_info\0")
+            .expect("Wrong extension string")
+    }
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetShaderInfoAMD = extern "system" fn(
@@ -41459,6 +43035,12 @@ impl AmdShaderInfoFn {
         )
     }
 }
+impl AmdExtension44Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_44\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct AmdExtension44Fn {}
 unsafe impl Send for AmdExtension44Fn {}
 unsafe impl Sync for AmdExtension44Fn {}
@@ -41473,6 +43055,12 @@ impl AmdExtension44Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         AmdExtension44Fn {}
+    }
+}
+impl AmdExtension45Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_45\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct AmdExtension45Fn {}
@@ -41491,6 +43079,12 @@ impl AmdExtension45Fn {
         AmdExtension45Fn {}
     }
 }
+impl AmdExtension46Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_46\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct AmdExtension46Fn {}
 unsafe impl Send for AmdExtension46Fn {}
 unsafe impl Sync for AmdExtension46Fn {}
@@ -41505,6 +43099,12 @@ impl AmdExtension46Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         AmdExtension46Fn {}
+    }
+}
+impl AmdShaderImageLoadStoreLodFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_shader_image_load_store_lod\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct AmdShaderImageLoadStoreLodFn {}
@@ -41523,6 +43123,12 @@ impl AmdShaderImageLoadStoreLodFn {
         AmdShaderImageLoadStoreLodFn {}
     }
 }
+impl NvxExtension48Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NVX_extension_48\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct NvxExtension48Fn {}
 unsafe impl Send for NvxExtension48Fn {}
 unsafe impl Sync for NvxExtension48Fn {}
@@ -41537,6 +43143,12 @@ impl NvxExtension48Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         NvxExtension48Fn {}
+    }
+}
+impl GoogleExtension49Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_GOOGLE_extension_49\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct GoogleExtension49Fn {}
@@ -41555,6 +43167,12 @@ impl GoogleExtension49Fn {
         GoogleExtension49Fn {}
     }
 }
+impl GoogleExtension50Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_GOOGLE_extension_50\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct GoogleExtension50Fn {}
 unsafe impl Send for GoogleExtension50Fn {}
 unsafe impl Sync for GoogleExtension50Fn {}
@@ -41569,6 +43187,12 @@ impl GoogleExtension50Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         GoogleExtension50Fn {}
+    }
+}
+impl NvCornerSampledImageFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_corner_sampled_image\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct NvCornerSampledImageFn {}
@@ -41595,6 +43219,12 @@ impl ImageCreateFlags {
 impl StructureType {
     pub const PHYSICAL_DEVICE_CORNER_SAMPLED_IMAGE_FEATURES_NV: Self = StructureType(1000050000);
 }
+impl NvxExtension52Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NVX_extension_52\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct NvxExtension52Fn {}
 unsafe impl Send for NvxExtension52Fn {}
 unsafe impl Sync for NvxExtension52Fn {}
@@ -41609,6 +43239,12 @@ impl NvxExtension52Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         NvxExtension52Fn {}
+    }
+}
+impl NvExtension53Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_53\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct NvExtension53Fn {}
@@ -41627,6 +43263,12 @@ impl NvExtension53Fn {
         NvExtension53Fn {}
     }
 }
+impl KhrMultiviewFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_multiview\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct KhrMultiviewFn {}
 unsafe impl Send for KhrMultiviewFn {}
 unsafe impl Sync for KhrMultiviewFn {}
@@ -41641,6 +43283,12 @@ impl KhrMultiviewFn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         KhrMultiviewFn {}
+    }
+}
+impl ImgFormatPvrtcFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_IMG_format_pvrtc\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct ImgFormatPvrtcFn {}
@@ -41690,6 +43338,12 @@ impl Format {
 #[doc = "Generated from \'VK_IMG_format_pvrtc\'"]
 impl Format {
     pub const PVRTC2_4BPP_SRGB_BLOCK_IMG: Self = Format(1000054007);
+}
+impl NvExternalMemoryCapabilitiesFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_external_memory_capabilities\0")
+            .expect("Wrong extension string")
+    }
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceExternalImageFormatPropertiesNV = extern "system" fn(
@@ -41780,6 +43434,12 @@ impl NvExternalMemoryCapabilitiesFn {
         )
     }
 }
+impl NvExternalMemoryFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_external_memory\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct NvExternalMemoryFn {}
 unsafe impl Send for NvExternalMemoryFn {}
 unsafe impl Sync for NvExternalMemoryFn {}
@@ -41803,6 +43463,12 @@ impl StructureType {
 #[doc = "Generated from \'VK_NV_external_memory\'"]
 impl StructureType {
     pub const EXPORT_MEMORY_ALLOCATE_INFO_NV: Self = StructureType(1000056001);
+}
+impl NvExternalMemoryWin32Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_external_memory_win32\0")
+            .expect("Wrong extension string")
+    }
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetMemoryWin32HandleNV = extern "system" fn(
@@ -41875,6 +43541,12 @@ impl StructureType {
 impl StructureType {
     pub const EXPORT_MEMORY_WIN32_HANDLE_INFO_NV: Self = StructureType(1000057001);
 }
+impl NvWin32KeyedMutexFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_win32_keyed_mutex\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct NvWin32KeyedMutexFn {}
 unsafe impl Send for NvWin32KeyedMutexFn {}
 unsafe impl Sync for NvWin32KeyedMutexFn {}
@@ -41895,6 +43567,12 @@ impl NvWin32KeyedMutexFn {
 impl StructureType {
     pub const WIN32_KEYED_MUTEX_ACQUIRE_RELEASE_INFO_NV: Self = StructureType(1000058000);
 }
+impl KhrGetPhysicalDeviceProperties2Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_get_physical_device_properties2\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct KhrGetPhysicalDeviceProperties2Fn {}
 unsafe impl Send for KhrGetPhysicalDeviceProperties2Fn {}
 unsafe impl Sync for KhrGetPhysicalDeviceProperties2Fn {}
@@ -41909,6 +43587,12 @@ impl KhrGetPhysicalDeviceProperties2Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         KhrGetPhysicalDeviceProperties2Fn {}
+    }
+}
+impl KhrDeviceGroupFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_device_group\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct KhrDeviceGroupFn {
@@ -42077,6 +43761,12 @@ impl KhrDeviceGroupFn {
         (self.acquire_next_image2_khr)(device, p_acquire_info, p_image_index)
     }
 }
+impl ExtValidationFlagsFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_validation_flags\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct ExtValidationFlagsFn {}
 unsafe impl Send for ExtValidationFlagsFn {}
 unsafe impl Sync for ExtValidationFlagsFn {}
@@ -42096,6 +43786,12 @@ impl ExtValidationFlagsFn {
 #[doc = "Generated from \'VK_EXT_validation_flags\'"]
 impl StructureType {
     pub const VALIDATION_FLAGS_EXT: Self = StructureType(1000061000);
+}
+impl NnViSurfaceFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NN_vi_surface\0")
+            .expect("Wrong extension string")
+    }
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateViSurfaceNN = extern "system" fn(
@@ -42161,6 +43857,12 @@ impl NnViSurfaceFn {
 impl StructureType {
     pub const VI_SURFACE_CREATE_INFO_NN: Self = StructureType(1000062000);
 }
+impl KhrShaderDrawParametersFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_shader_draw_parameters\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct KhrShaderDrawParametersFn {}
 unsafe impl Send for KhrShaderDrawParametersFn {}
 unsafe impl Sync for KhrShaderDrawParametersFn {}
@@ -42175,6 +43877,12 @@ impl KhrShaderDrawParametersFn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         KhrShaderDrawParametersFn {}
+    }
+}
+impl ExtShaderSubgroupBallotFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_shader_subgroup_ballot\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct ExtShaderSubgroupBallotFn {}
@@ -42193,6 +43901,12 @@ impl ExtShaderSubgroupBallotFn {
         ExtShaderSubgroupBallotFn {}
     }
 }
+impl ExtShaderSubgroupVoteFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_shader_subgroup_vote\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct ExtShaderSubgroupVoteFn {}
 unsafe impl Send for ExtShaderSubgroupVoteFn {}
 unsafe impl Sync for ExtShaderSubgroupVoteFn {}
@@ -42209,6 +43923,12 @@ impl ExtShaderSubgroupVoteFn {
         ExtShaderSubgroupVoteFn {}
     }
 }
+impl ArmExtension01Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_ARM_extension_01\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct ArmExtension01Fn {}
 unsafe impl Send for ArmExtension01Fn {}
 unsafe impl Sync for ArmExtension01Fn {}
@@ -42223,6 +43943,12 @@ impl ArmExtension01Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         ArmExtension01Fn {}
+    }
+}
+impl ExtAstcDecodeModeFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_astc_decode_mode\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct ExtAstcDecodeModeFn {}
@@ -42249,6 +43975,12 @@ impl StructureType {
 impl StructureType {
     pub const PHYSICAL_DEVICE_ASTC_DECODE_FEATURES_EXT: Self = StructureType(1000067001);
 }
+impl ImgExtension69Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_IMG_extension_69\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct ImgExtension69Fn {}
 unsafe impl Send for ImgExtension69Fn {}
 unsafe impl Sync for ImgExtension69Fn {}
@@ -42263,6 +43995,12 @@ impl ImgExtension69Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         ImgExtension69Fn {}
+    }
+}
+impl KhrMaintenance1Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_maintenance1\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct KhrMaintenance1Fn {}
@@ -42281,6 +44019,12 @@ impl KhrMaintenance1Fn {
         KhrMaintenance1Fn {}
     }
 }
+impl KhrDeviceGroupCreationFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_device_group_creation\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct KhrDeviceGroupCreationFn {}
 unsafe impl Send for KhrDeviceGroupCreationFn {}
 unsafe impl Sync for KhrDeviceGroupCreationFn {}
@@ -42295,6 +44039,12 @@ impl KhrDeviceGroupCreationFn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         KhrDeviceGroupCreationFn {}
+    }
+}
+impl KhrExternalMemoryCapabilitiesFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_external_memory_capabilities\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct KhrExternalMemoryCapabilitiesFn {}
@@ -42313,6 +44063,12 @@ impl KhrExternalMemoryCapabilitiesFn {
         KhrExternalMemoryCapabilitiesFn {}
     }
 }
+impl KhrExternalMemoryFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_external_memory\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct KhrExternalMemoryFn {}
 unsafe impl Send for KhrExternalMemoryFn {}
 unsafe impl Sync for KhrExternalMemoryFn {}
@@ -42327,6 +44083,12 @@ impl KhrExternalMemoryFn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         KhrExternalMemoryFn {}
+    }
+}
+impl KhrExternalMemoryWin32Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_external_memory_win32\0")
+            .expect("Wrong extension string")
     }
 }
 #[allow(non_camel_case_types)]
@@ -42453,6 +44215,12 @@ impl StructureType {
 impl StructureType {
     pub const MEMORY_GET_WIN32_HANDLE_INFO_KHR: Self = StructureType(1000073003);
 }
+impl KhrExternalMemoryFdFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_external_memory_fd\0")
+            .expect("Wrong extension string")
+    }
+}
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetMemoryFdKHR = extern "system" fn(
     device: Device,
@@ -42565,6 +44333,12 @@ impl StructureType {
 impl StructureType {
     pub const MEMORY_GET_FD_INFO_KHR: Self = StructureType(1000074002);
 }
+impl KhrWin32KeyedMutexFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_win32_keyed_mutex\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct KhrWin32KeyedMutexFn {}
 unsafe impl Send for KhrWin32KeyedMutexFn {}
 unsafe impl Sync for KhrWin32KeyedMutexFn {}
@@ -42585,6 +44359,12 @@ impl KhrWin32KeyedMutexFn {
 impl StructureType {
     pub const WIN32_KEYED_MUTEX_ACQUIRE_RELEASE_INFO_KHR: Self = StructureType(1000075000);
 }
+impl KhrExternalSemaphoreCapabilitiesFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_external_semaphore_capabilities\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct KhrExternalSemaphoreCapabilitiesFn {}
 unsafe impl Send for KhrExternalSemaphoreCapabilitiesFn {}
 unsafe impl Sync for KhrExternalSemaphoreCapabilitiesFn {}
@@ -42601,6 +44381,12 @@ impl KhrExternalSemaphoreCapabilitiesFn {
         KhrExternalSemaphoreCapabilitiesFn {}
     }
 }
+impl KhrExternalSemaphoreFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_external_semaphore\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct KhrExternalSemaphoreFn {}
 unsafe impl Send for KhrExternalSemaphoreFn {}
 unsafe impl Sync for KhrExternalSemaphoreFn {}
@@ -42615,6 +44401,12 @@ impl KhrExternalSemaphoreFn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         KhrExternalSemaphoreFn {}
+    }
+}
+impl KhrExternalSemaphoreWin32Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_external_semaphore_win32\0")
+            .expect("Wrong extension string")
     }
 }
 #[allow(non_camel_case_types)]
@@ -42728,6 +44520,12 @@ impl StructureType {
 impl StructureType {
     pub const SEMAPHORE_GET_WIN32_HANDLE_INFO_KHR: Self = StructureType(1000078003);
 }
+impl KhrExternalSemaphoreFdFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_external_semaphore_fd\0")
+            .expect("Wrong extension string")
+    }
+}
 #[allow(non_camel_case_types)]
 pub type PFN_vkImportSemaphoreFdKHR = extern "system" fn(
     device: Device,
@@ -42827,6 +44625,12 @@ impl StructureType {
 #[doc = "Generated from \'VK_KHR_external_semaphore_fd\'"]
 impl StructureType {
     pub const SEMAPHORE_GET_FD_INFO_KHR: Self = StructureType(1000079001);
+}
+impl KhrPushDescriptorFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_push_descriptor\0")
+            .expect("Wrong extension string")
+    }
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdPushDescriptorSetKHR = extern "system" fn(
@@ -42969,6 +44773,12 @@ impl StructureType {
 impl DescriptorSetLayoutCreateFlags {
     pub const PUSH_DESCRIPTOR_KHR: Self = DescriptorSetLayoutCreateFlags(0b1);
 }
+impl ExtConditionalRenderingFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_conditional_rendering\0")
+            .expect("Wrong extension string")
+    }
+}
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdBeginConditionalRenderingEXT = extern "system" fn(
     command_buffer: CommandBuffer,
@@ -43079,20 +44889,36 @@ impl BufferUsageFlags {
 impl PipelineStageFlags {
     pub const CONDITIONAL_RENDERING_EXT: Self = PipelineStageFlags(0b1000000000000000000);
 }
-pub struct KhrExtension83Fn {}
-unsafe impl Send for KhrExtension83Fn {}
-unsafe impl Sync for KhrExtension83Fn {}
-impl ::std::clone::Clone for KhrExtension83Fn {
-    fn clone(&self) -> Self {
-        KhrExtension83Fn {}
+impl KhrShaderFloat16Int8Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_shader_float16_int8\0")
+            .expect("Wrong extension string")
     }
 }
-impl KhrExtension83Fn {
+pub struct KhrShaderFloat16Int8Fn {}
+unsafe impl Send for KhrShaderFloat16Int8Fn {}
+unsafe impl Sync for KhrShaderFloat16Int8Fn {}
+impl ::std::clone::Clone for KhrShaderFloat16Int8Fn {
+    fn clone(&self) -> Self {
+        KhrShaderFloat16Int8Fn {}
+    }
+}
+impl KhrShaderFloat16Int8Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrExtension83Fn {}
+        KhrShaderFloat16Int8Fn {}
+    }
+}
+#[doc = "Generated from \'VK_KHR_shader_float16_int8\'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_FLOAT16_INT8_FEATURES_KHR: Self = StructureType(1000082000);
+}
+impl Khr16bitStorageFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_16bit_storage\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct Khr16bitStorageFn {}
@@ -43109,6 +44935,12 @@ impl Khr16bitStorageFn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         Khr16bitStorageFn {}
+    }
+}
+impl KhrIncrementalPresentFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_incremental_present\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct KhrIncrementalPresentFn {}
@@ -43130,6 +44962,12 @@ impl KhrIncrementalPresentFn {
 #[doc = "Generated from \'VK_KHR_incremental_present\'"]
 impl StructureType {
     pub const PRESENT_REGIONS_KHR: Self = StructureType(1000084000);
+}
+impl KhrDescriptorUpdateTemplateFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_descriptor_update_template\0")
+            .expect("Wrong extension string")
+    }
 }
 pub struct KhrDescriptorUpdateTemplateFn {
     pub cmd_push_descriptor_set_with_template_khr: extern "system" fn(
@@ -43195,6 +45033,12 @@ impl KhrDescriptorUpdateTemplateFn {
             set,
             p_data,
         )
+    }
+}
+impl NvxDeviceGeneratedCommandsFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NVX_device_generated_commands\0")
+            .expect("Wrong extension string")
     }
 }
 #[allow(non_camel_case_types)]
@@ -43655,6 +45499,12 @@ impl ObjectType {
 impl ObjectType {
     pub const INDIRECT_COMMANDS_LAYOUT_NVX: Self = ObjectType(1000086001);
 }
+impl NvClipSpaceWScalingFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_clip_space_w_scaling\0")
+            .expect("Wrong extension string")
+    }
+}
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetViewportWScalingNV = extern "system" fn(
     command_buffer: CommandBuffer,
@@ -43731,6 +45581,12 @@ impl StructureType {
 impl DynamicState {
     pub const VIEWPORT_W_SCALING_NV: Self = DynamicState(1000087000);
 }
+impl ExtDirectModeDisplayFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_direct_mode_display\0")
+            .expect("Wrong extension string")
+    }
+}
 #[allow(non_camel_case_types)]
 pub type PFN_vkReleaseDisplayEXT =
     extern "system" fn(physical_device: PhysicalDevice, display: DisplayKHR) -> Result;
@@ -43777,6 +45633,12 @@ impl ExtDirectModeDisplayFn {
         display: DisplayKHR,
     ) -> Result {
         (self.release_display_ext)(physical_device, display)
+    }
+}
+impl ExtAcquireXlibDisplayFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_acquire_xlib_display\0")
+            .expect("Wrong extension string")
     }
 }
 #[allow(non_camel_case_types)]
@@ -43882,6 +45744,12 @@ impl ExtAcquireXlibDisplayFn {
         (self.get_rand_r_output_display_ext)(physical_device, dpy, rr_output, p_display)
     }
 }
+impl ExtDisplaySurfaceCounterFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_display_surface_counter\0")
+            .expect("Wrong extension string")
+    }
+}
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceSurfaceCapabilities2EXT = extern "system" fn(
     physical_device: PhysicalDevice,
@@ -43949,6 +45817,12 @@ impl ExtDisplaySurfaceCounterFn {
 #[doc = "Generated from \'VK_EXT_display_surface_counter\'"]
 impl StructureType {
     pub const SURFACE_CAPABILITIES_2_EXT: Self = StructureType(1000090000);
+}
+impl ExtDisplayControlFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_display_control\0")
+            .expect("Wrong extension string")
+    }
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkDisplayPowerControlEXT = extern "system" fn(
@@ -44167,6 +46041,12 @@ impl StructureType {
 impl StructureType {
     pub const SWAPCHAIN_COUNTER_CREATE_INFO_EXT: Self = StructureType(1000091003);
 }
+impl GoogleDisplayTimingFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_GOOGLE_display_timing\0")
+            .expect("Wrong extension string")
+    }
+}
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetRefreshCycleDurationGOOGLE = extern "system" fn(
     device: Device,
@@ -44279,6 +46159,12 @@ impl GoogleDisplayTimingFn {
 impl StructureType {
     pub const PRESENT_TIMES_INFO_GOOGLE: Self = StructureType(1000092000);
 }
+impl NvSampleMaskOverrideCoverageFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_sample_mask_override_coverage\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct NvSampleMaskOverrideCoverageFn {}
 unsafe impl Send for NvSampleMaskOverrideCoverageFn {}
 unsafe impl Sync for NvSampleMaskOverrideCoverageFn {}
@@ -44293,6 +46179,12 @@ impl NvSampleMaskOverrideCoverageFn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         NvSampleMaskOverrideCoverageFn {}
+    }
+}
+impl NvGeometryShaderPassthroughFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_geometry_shader_passthrough\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct NvGeometryShaderPassthroughFn {}
@@ -44311,6 +46203,12 @@ impl NvGeometryShaderPassthroughFn {
         NvGeometryShaderPassthroughFn {}
     }
 }
+impl NvViewportArray2Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_viewport_array2\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct NvViewportArray2Fn {}
 unsafe impl Send for NvViewportArray2Fn {}
 unsafe impl Sync for NvViewportArray2Fn {}
@@ -44325,6 +46223,12 @@ impl NvViewportArray2Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         NvViewportArray2Fn {}
+    }
+}
+impl NvxMultiviewPerViewAttributesFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NVX_multiview_per_view_attributes\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct NvxMultiviewPerViewAttributesFn {}
@@ -44356,6 +46260,12 @@ impl SubpassDescriptionFlags {
 impl SubpassDescriptionFlags {
     pub const PER_VIEW_POSITION_X_ONLY_NVX: Self = SubpassDescriptionFlags(0b10);
 }
+impl NvViewportSwizzleFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_viewport_swizzle\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct NvViewportSwizzleFn {}
 unsafe impl Send for NvViewportSwizzleFn {}
 unsafe impl Sync for NvViewportSwizzleFn {}
@@ -44375,6 +46285,12 @@ impl NvViewportSwizzleFn {
 #[doc = "Generated from \'VK_NV_viewport_swizzle\'"]
 impl StructureType {
     pub const PIPELINE_VIEWPORT_SWIZZLE_STATE_CREATE_INFO_NV: Self = StructureType(1000098000);
+}
+impl ExtDiscardRectanglesFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_discard_rectangles\0")
+            .expect("Wrong extension string")
+    }
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetDiscardRectangleEXT = extern "system" fn(
@@ -44456,6 +46372,12 @@ impl StructureType {
 impl DynamicState {
     pub const DISCARD_RECTANGLE_EXT: Self = DynamicState(1000099000);
 }
+impl NvExtension101Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_101\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct NvExtension101Fn {}
 unsafe impl Send for NvExtension101Fn {}
 unsafe impl Sync for NvExtension101Fn {}
@@ -44470,6 +46392,12 @@ impl NvExtension101Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         NvExtension101Fn {}
+    }
+}
+impl ExtConservativeRasterizationFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_conservative_rasterization\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct ExtConservativeRasterizationFn {}
@@ -44498,6 +46426,12 @@ impl StructureType {
     pub const PIPELINE_RASTERIZATION_CONSERVATIVE_STATE_CREATE_INFO_EXT: Self =
         StructureType(1000101001);
 }
+impl NvExtension103Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_103\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct NvExtension103Fn {}
 unsafe impl Send for NvExtension103Fn {}
 unsafe impl Sync for NvExtension103Fn {}
@@ -44514,6 +46448,12 @@ impl NvExtension103Fn {
         NvExtension103Fn {}
     }
 }
+impl NvExtension104Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_104\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct NvExtension104Fn {}
 unsafe impl Send for NvExtension104Fn {}
 unsafe impl Sync for NvExtension104Fn {}
@@ -44528,6 +46468,12 @@ impl NvExtension104Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         NvExtension104Fn {}
+    }
+}
+impl ExtSwapchainColorspaceFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_swapchain_colorspace\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct ExtSwapchainColorspaceFn {}
@@ -44602,6 +46548,12 @@ impl ColorSpaceKHR {
 impl ColorSpaceKHR {
     pub const EXTENDED_SRGB_NONLINEAR_EXT: Self = ColorSpaceKHR(1000104014);
 }
+impl ExtHdrMetadataFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_hdr_metadata\0")
+            .expect("Wrong extension string")
+    }
+}
 #[allow(non_camel_case_types)]
 pub type PFN_vkSetHdrMetadataEXT = extern "system" fn(
     device: Device,
@@ -44666,6 +46618,12 @@ impl ExtHdrMetadataFn {
 impl StructureType {
     pub const HDR_METADATA_EXT: Self = StructureType(1000105000);
 }
+impl ImgExtension107Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_IMG_extension_107\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct ImgExtension107Fn {}
 unsafe impl Send for ImgExtension107Fn {}
 unsafe impl Sync for ImgExtension107Fn {}
@@ -44680,6 +46638,12 @@ impl ImgExtension107Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         ImgExtension107Fn {}
+    }
+}
+impl ImgExtension108Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_IMG_extension_108\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct ImgExtension108Fn {}
@@ -44698,6 +46662,12 @@ impl ImgExtension108Fn {
         ImgExtension108Fn {}
     }
 }
+impl ImgExtension109Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_IMG_extension_109\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct ImgExtension109Fn {}
 unsafe impl Send for ImgExtension109Fn {}
 unsafe impl Sync for ImgExtension109Fn {}
@@ -44712,6 +46682,12 @@ impl ImgExtension109Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         ImgExtension109Fn {}
+    }
+}
+impl KhrCreateRenderpass2Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_create_renderpass2\0")
+            .expect("Wrong extension string")
     }
 }
 #[allow(non_camel_case_types)]
@@ -44921,6 +46897,12 @@ impl StructureType {
 impl StructureType {
     pub const SUBPASS_END_INFO_KHR: Self = StructureType(1000109006);
 }
+impl ImgExtension111Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_IMG_extension_111\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct ImgExtension111Fn {}
 unsafe impl Send for ImgExtension111Fn {}
 unsafe impl Sync for ImgExtension111Fn {}
@@ -44935,6 +46917,12 @@ impl ImgExtension111Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         ImgExtension111Fn {}
+    }
+}
+impl KhrSharedPresentableImageFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_shared_presentable_image\0")
+            .expect("Wrong extension string")
     }
 }
 #[allow(non_camel_case_types)]
@@ -45004,6 +46992,12 @@ impl PresentModeKHR {
 impl ImageLayout {
     pub const SHARED_PRESENT_KHR: Self = ImageLayout(1000111000);
 }
+impl KhrExternalFenceCapabilitiesFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_external_fence_capabilities\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct KhrExternalFenceCapabilitiesFn {}
 unsafe impl Send for KhrExternalFenceCapabilitiesFn {}
 unsafe impl Sync for KhrExternalFenceCapabilitiesFn {}
@@ -45020,6 +47014,12 @@ impl KhrExternalFenceCapabilitiesFn {
         KhrExternalFenceCapabilitiesFn {}
     }
 }
+impl KhrExternalFenceFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_external_fence\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct KhrExternalFenceFn {}
 unsafe impl Send for KhrExternalFenceFn {}
 unsafe impl Sync for KhrExternalFenceFn {}
@@ -45034,6 +47034,12 @@ impl KhrExternalFenceFn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         KhrExternalFenceFn {}
+    }
+}
+impl KhrExternalFenceWin32Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_external_fence_win32\0")
+            .expect("Wrong extension string")
     }
 }
 #[allow(non_camel_case_types)]
@@ -45143,6 +47149,12 @@ impl StructureType {
 impl StructureType {
     pub const FENCE_GET_WIN32_HANDLE_INFO_KHR: Self = StructureType(1000114002);
 }
+impl KhrExternalFenceFdFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_external_fence_fd\0")
+            .expect("Wrong extension string")
+    }
+}
 #[allow(non_camel_case_types)]
 pub type PFN_vkImportFenceFdKHR = extern "system" fn(
     device: Device,
@@ -45240,6 +47252,12 @@ impl StructureType {
 impl StructureType {
     pub const FENCE_GET_FD_INFO_KHR: Self = StructureType(1000115001);
 }
+impl KhrExtension117Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_extension_117\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct KhrExtension117Fn {}
 unsafe impl Send for KhrExtension117Fn {}
 unsafe impl Sync for KhrExtension117Fn {}
@@ -45254,6 +47272,12 @@ impl KhrExtension117Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         KhrExtension117Fn {}
+    }
+}
+impl KhrMaintenance2Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_maintenance2\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct KhrMaintenance2Fn {}
@@ -45272,6 +47296,12 @@ impl KhrMaintenance2Fn {
         KhrMaintenance2Fn {}
     }
 }
+impl KhrExtension119Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_extension_119\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct KhrExtension119Fn {}
 unsafe impl Send for KhrExtension119Fn {}
 unsafe impl Sync for KhrExtension119Fn {}
@@ -45286,6 +47316,12 @@ impl KhrExtension119Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         KhrExtension119Fn {}
+    }
+}
+impl KhrGetSurfaceCapabilities2Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_get_surface_capabilities2\0")
+            .expect("Wrong extension string")
     }
 }
 #[allow(non_camel_case_types)]
@@ -45413,6 +47449,12 @@ impl StructureType {
 impl StructureType {
     pub const SURFACE_FORMAT_2_KHR: Self = StructureType(1000119002);
 }
+impl KhrVariablePointersFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_variable_pointers\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct KhrVariablePointersFn {}
 unsafe impl Send for KhrVariablePointersFn {}
 unsafe impl Sync for KhrVariablePointersFn {}
@@ -45427,6 +47469,12 @@ impl KhrVariablePointersFn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         KhrVariablePointersFn {}
+    }
+}
+impl KhrGetDisplayProperties2Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_get_display_properties2\0")
+            .expect("Wrong extension string")
     }
 }
 #[allow(non_camel_case_types)]
@@ -45651,6 +47699,12 @@ impl StructureType {
 impl StructureType {
     pub const DISPLAY_PLANE_CAPABILITIES_2_KHR: Self = StructureType(1000121004);
 }
+impl MvkIosSurfaceFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_MVK_ios_surface\0")
+            .expect("Wrong extension string")
+    }
+}
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateIOSSurfaceMVK = extern "system" fn(
     instance: Instance,
@@ -45717,6 +47771,12 @@ impl MvkIosSurfaceFn {
 #[doc = "Generated from \'VK_MVK_ios_surface\'"]
 impl StructureType {
     pub const IOS_SURFACE_CREATE_INFO_M: Self = StructureType(1000122000);
+}
+impl MvkMacosSurfaceFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_MVK_macos_surface\0")
+            .expect("Wrong extension string")
+    }
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateMacOSSurfaceMVK = extern "system" fn(
@@ -45785,6 +47845,11 @@ impl MvkMacosSurfaceFn {
 impl StructureType {
     pub const MACOS_SURFACE_CREATE_INFO_M: Self = StructureType(1000123000);
 }
+impl MvkMoltenvkFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_MVK_moltenvk\0").expect("Wrong extension string")
+    }
+}
 pub struct MvkMoltenvkFn {}
 unsafe impl Send for MvkMoltenvkFn {}
 unsafe impl Sync for MvkMoltenvkFn {}
@@ -45799,6 +47864,12 @@ impl MvkMoltenvkFn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         MvkMoltenvkFn {}
+    }
+}
+impl ExtExternalMemoryDmaBufFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_external_memory_dma_buf\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct ExtExternalMemoryDmaBufFn {}
@@ -45822,6 +47893,12 @@ impl ExternalMemoryHandleTypeFlags {
     pub const EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF: Self =
         ExternalMemoryHandleTypeFlags(0b1000000000);
 }
+impl ExtQueueFamilyForeignFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_queue_family_foreign\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct ExtQueueFamilyForeignFn {}
 unsafe impl Send for ExtQueueFamilyForeignFn {}
 unsafe impl Sync for ExtQueueFamilyForeignFn {}
@@ -45838,6 +47915,12 @@ impl ExtQueueFamilyForeignFn {
         ExtQueueFamilyForeignFn {}
     }
 }
+impl KhrDedicatedAllocationFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_dedicated_allocation\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct KhrDedicatedAllocationFn {}
 unsafe impl Send for KhrDedicatedAllocationFn {}
 unsafe impl Sync for KhrDedicatedAllocationFn {}
@@ -45852,6 +47935,12 @@ impl KhrDedicatedAllocationFn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         KhrDedicatedAllocationFn {}
+    }
+}
+impl ExtDebugUtilsFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_debug_utils\0")
+            .expect("Wrong extension string")
     }
 }
 #[allow(non_camel_case_types)]
@@ -46281,6 +48370,14 @@ impl StructureType {
 impl ObjectType {
     pub const DEBUG_UTILS_MESSENGER_EXT: Self = ObjectType(1000128000);
 }
+impl AndroidExternalMemoryAndroidHardwareBufferFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(
+            b"VK_ANDROID_external_memory_android_hardware_buffer\0",
+        )
+        .expect("Wrong extension string")
+    }
+}
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetAndroidHardwareBufferPropertiesANDROID = extern "system" fn(
     device: Device,
@@ -46411,6 +48508,12 @@ impl StructureType {
 impl StructureType {
     pub const EXTERNAL_FORMAT_ANDROID: Self = StructureType(1000129005);
 }
+impl ExtSamplerFilterMinmaxFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_sampler_filter_minmax\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct ExtSamplerFilterMinmaxFn {}
 unsafe impl Send for ExtSamplerFilterMinmaxFn {}
 unsafe impl Sync for ExtSamplerFilterMinmaxFn {}
@@ -46440,6 +48543,12 @@ impl StructureType {
 impl FormatFeatureFlags {
     pub const SAMPLED_IMAGE_FILTER_MINMAX_EXT: Self = FormatFeatureFlags(0b10000000000000000);
 }
+impl KhrStorageBufferStorageClassFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_storage_buffer_storage_class\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct KhrStorageBufferStorageClassFn {}
 unsafe impl Send for KhrStorageBufferStorageClassFn {}
 unsafe impl Sync for KhrStorageBufferStorageClassFn {}
@@ -46454,6 +48563,12 @@ impl KhrStorageBufferStorageClassFn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         KhrStorageBufferStorageClassFn {}
+    }
+}
+impl AmdGpuShaderInt16Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_gpu_shader_int16\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct AmdGpuShaderInt16Fn {}
@@ -46472,6 +48587,12 @@ impl AmdGpuShaderInt16Fn {
         AmdGpuShaderInt16Fn {}
     }
 }
+impl AmdExtension134Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_134\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct AmdExtension134Fn {}
 unsafe impl Send for AmdExtension134Fn {}
 unsafe impl Sync for AmdExtension134Fn {}
@@ -46486,6 +48607,12 @@ impl AmdExtension134Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         AmdExtension134Fn {}
+    }
+}
+impl AmdExtension135Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_135\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct AmdExtension135Fn {}
@@ -46504,6 +48631,12 @@ impl AmdExtension135Fn {
         AmdExtension135Fn {}
     }
 }
+impl AmdExtension136Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_136\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct AmdExtension136Fn {}
 unsafe impl Send for AmdExtension136Fn {}
 unsafe impl Sync for AmdExtension136Fn {}
@@ -46518,6 +48651,12 @@ impl AmdExtension136Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         AmdExtension136Fn {}
+    }
+}
+impl AmdMixedAttachmentSamplesFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_mixed_attachment_samples\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct AmdMixedAttachmentSamplesFn {}
@@ -46536,6 +48675,12 @@ impl AmdMixedAttachmentSamplesFn {
         AmdMixedAttachmentSamplesFn {}
     }
 }
+impl AmdShaderFragmentMaskFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_shader_fragment_mask\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct AmdShaderFragmentMaskFn {}
 unsafe impl Send for AmdShaderFragmentMaskFn {}
 unsafe impl Sync for AmdShaderFragmentMaskFn {}
@@ -46550,6 +48695,12 @@ impl AmdShaderFragmentMaskFn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         AmdShaderFragmentMaskFn {}
+    }
+}
+impl ExtInlineUniformBlockFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_inline_uniform_block\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct ExtInlineUniformBlockFn {}
@@ -46589,6 +48740,12 @@ impl StructureType {
     pub const DESCRIPTOR_POOL_INLINE_UNIFORM_BLOCK_CREATE_INFO_EXT: Self =
         StructureType(1000138003);
 }
+impl AmdExtension140Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_140\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct AmdExtension140Fn {}
 unsafe impl Send for AmdExtension140Fn {}
 unsafe impl Sync for AmdExtension140Fn {}
@@ -46603,6 +48760,12 @@ impl AmdExtension140Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         AmdExtension140Fn {}
+    }
+}
+impl ExtShaderStencilExportFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_shader_stencil_export\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct ExtShaderStencilExportFn {}
@@ -46621,6 +48784,12 @@ impl ExtShaderStencilExportFn {
         ExtShaderStencilExportFn {}
     }
 }
+impl AmdExtension142Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_142\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct AmdExtension142Fn {}
 unsafe impl Send for AmdExtension142Fn {}
 unsafe impl Sync for AmdExtension142Fn {}
@@ -46637,6 +48806,12 @@ impl AmdExtension142Fn {
         AmdExtension142Fn {}
     }
 }
+impl AmdExtension143Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_143\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct AmdExtension143Fn {}
 unsafe impl Send for AmdExtension143Fn {}
 unsafe impl Sync for AmdExtension143Fn {}
@@ -46651,6 +48826,12 @@ impl AmdExtension143Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         AmdExtension143Fn {}
+    }
+}
+impl ExtSampleLocationsFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_sample_locations\0")
+            .expect("Wrong extension string")
     }
 }
 #[allow(non_camel_case_types)]
@@ -46781,6 +48962,12 @@ impl StructureType {
 impl DynamicState {
     pub const SAMPLE_LOCATIONS_EXT: Self = DynamicState(1000143000);
 }
+impl KhrRelaxedBlockLayoutFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_relaxed_block_layout\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct KhrRelaxedBlockLayoutFn {}
 unsafe impl Send for KhrRelaxedBlockLayoutFn {}
 unsafe impl Sync for KhrRelaxedBlockLayoutFn {}
@@ -46797,6 +48984,12 @@ impl KhrRelaxedBlockLayoutFn {
         KhrRelaxedBlockLayoutFn {}
     }
 }
+impl KhrGetMemoryRequirements2Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_get_memory_requirements2\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct KhrGetMemoryRequirements2Fn {}
 unsafe impl Send for KhrGetMemoryRequirements2Fn {}
 unsafe impl Sync for KhrGetMemoryRequirements2Fn {}
@@ -46811,6 +49004,12 @@ impl KhrGetMemoryRequirements2Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         KhrGetMemoryRequirements2Fn {}
+    }
+}
+impl KhrImageFormatListFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_image_format_list\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct KhrImageFormatListFn {}
@@ -46832,6 +49031,12 @@ impl KhrImageFormatListFn {
 #[doc = "Generated from \'VK_KHR_image_format_list\'"]
 impl StructureType {
     pub const IMAGE_FORMAT_LIST_CREATE_INFO_KHR: Self = StructureType(1000147000);
+}
+impl ExtBlendOperationAdvancedFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_blend_operation_advanced\0")
+            .expect("Wrong extension string")
+    }
 }
 pub struct ExtBlendOperationAdvancedFn {}
 unsafe impl Send for ExtBlendOperationAdvancedFn {}
@@ -47051,6 +49256,12 @@ impl BlendOp {
 impl AccessFlags {
     pub const COLOR_ATTACHMENT_READ_NONCOHERENT_EXT: Self = AccessFlags(0b10000000000000000000);
 }
+impl NvFragmentCoverageToColorFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_fragment_coverage_to_color\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct NvFragmentCoverageToColorFn {}
 unsafe impl Send for NvFragmentCoverageToColorFn {}
 unsafe impl Sync for NvFragmentCoverageToColorFn {}
@@ -47071,6 +49282,12 @@ impl NvFragmentCoverageToColorFn {
 impl StructureType {
     pub const PIPELINE_COVERAGE_TO_COLOR_STATE_CREATE_INFO_NV: Self = StructureType(1000149000);
 }
+impl NvExtension151Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_151\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct NvExtension151Fn {}
 unsafe impl Send for NvExtension151Fn {}
 unsafe impl Sync for NvExtension151Fn {}
@@ -47087,6 +49304,12 @@ impl NvExtension151Fn {
         NvExtension151Fn {}
     }
 }
+impl NvExtension152Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_152\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct NvExtension152Fn {}
 unsafe impl Send for NvExtension152Fn {}
 unsafe impl Sync for NvExtension152Fn {}
@@ -47101,6 +49324,12 @@ impl NvExtension152Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         NvExtension152Fn {}
+    }
+}
+impl NvFramebufferMixedSamplesFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_framebuffer_mixed_samples\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct NvFramebufferMixedSamplesFn {}
@@ -47123,6 +49352,12 @@ impl NvFramebufferMixedSamplesFn {
 impl StructureType {
     pub const PIPELINE_COVERAGE_MODULATION_STATE_CREATE_INFO_NV: Self = StructureType(1000152000);
 }
+impl NvFillRectangleFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_fill_rectangle\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct NvFillRectangleFn {}
 unsafe impl Send for NvFillRectangleFn {}
 unsafe impl Sync for NvFillRectangleFn {}
@@ -47143,6 +49378,12 @@ impl NvFillRectangleFn {
 impl PolygonMode {
     pub const FILL_RECTANGLE_NV: Self = PolygonMode(1000153000);
 }
+impl NvExtension155Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_155\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct NvExtension155Fn {}
 unsafe impl Send for NvExtension155Fn {}
 unsafe impl Sync for NvExtension155Fn {}
@@ -47157,6 +49398,12 @@ impl NvExtension155Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         NvExtension155Fn {}
+    }
+}
+impl ExtPostDepthCoverageFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_post_depth_coverage\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct ExtPostDepthCoverageFn {}
@@ -47175,6 +49422,12 @@ impl ExtPostDepthCoverageFn {
         ExtPostDepthCoverageFn {}
     }
 }
+impl KhrSamplerYcbcrConversionFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_sampler_ycbcr_conversion\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct KhrSamplerYcbcrConversionFn {}
 unsafe impl Send for KhrSamplerYcbcrConversionFn {}
 unsafe impl Sync for KhrSamplerYcbcrConversionFn {}
@@ -47191,6 +49444,12 @@ impl KhrSamplerYcbcrConversionFn {
         KhrSamplerYcbcrConversionFn {}
     }
 }
+impl KhrBindMemory2Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_bind_memory2\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct KhrBindMemory2Fn {}
 unsafe impl Send for KhrBindMemory2Fn {}
 unsafe impl Sync for KhrBindMemory2Fn {}
@@ -47205,6 +49464,12 @@ impl KhrBindMemory2Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         KhrBindMemory2Fn {}
+    }
+}
+impl ExtImageDrmFormatModifierFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_image_drm_format_modifier\0")
+            .expect("Wrong extension string")
     }
 }
 #[allow(non_camel_case_types)]
@@ -47315,6 +49580,12 @@ impl ImageAspectFlags {
 impl ImageAspectFlags {
     pub const MEMORY_PLANE_3_EXT: Self = ImageAspectFlags(0b10000000000);
 }
+impl ExtExtension160Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_160\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct ExtExtension160Fn {}
 unsafe impl Send for ExtExtension160Fn {}
 unsafe impl Sync for ExtExtension160Fn {}
@@ -47329,6 +49600,12 @@ impl ExtExtension160Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         ExtExtension160Fn {}
+    }
+}
+impl ExtValidationCacheFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_validation_cache\0")
+            .expect("Wrong extension string")
     }
 }
 #[allow(non_camel_case_types)]
@@ -47534,6 +49811,12 @@ impl StructureType {
 impl ObjectType {
     pub const VALIDATION_CACHE_EXT: Self = ObjectType(1000160000);
 }
+impl ExtDescriptorIndexingFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_descriptor_indexing\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct ExtDescriptorIndexingFn {}
 unsafe impl Send for ExtDescriptorIndexingFn {}
 unsafe impl Sync for ExtDescriptorIndexingFn {}
@@ -47584,6 +49867,12 @@ impl DescriptorSetLayoutCreateFlags {
 impl Result {
     pub const ERROR_FRAGMENTATION_EXT: Self = Result(-1000161000);
 }
+impl ExtShaderViewportIndexLayerFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_shader_viewport_index_layer\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct ExtShaderViewportIndexLayerFn {}
 unsafe impl Send for ExtShaderViewportIndexLayerFn {}
 unsafe impl Sync for ExtShaderViewportIndexLayerFn {}
@@ -47600,6 +49889,12 @@ impl ExtShaderViewportIndexLayerFn {
         ExtShaderViewportIndexLayerFn {}
     }
 }
+impl NvExtension164Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_164\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct NvExtension164Fn {}
 unsafe impl Send for NvExtension164Fn {}
 unsafe impl Sync for NvExtension164Fn {}
@@ -47614,6 +49909,12 @@ impl NvExtension164Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         NvExtension164Fn {}
+    }
+}
+impl NvShadingRateImageFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_shading_rate_image\0")
+            .expect("Wrong extension string")
     }
 }
 #[allow(non_camel_case_types)]
@@ -47814,6 +50115,12 @@ impl StructureType {
 #[doc = "Generated from \'VK_NV_shading_rate_image\'"]
 impl DynamicState {
     pub const VIEWPORT_COARSE_SAMPLE_ORDER_NV: Self = DynamicState(1000164006);
+}
+impl NvRayTracingFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_ray_tracing\0")
+            .expect("Wrong extension string")
+    }
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateAccelerationStructureNV = extern "system" fn(
@@ -48602,6 +50909,12 @@ impl DebugReportObjectTypeEXT {
 impl IndexType {
     pub const NONE_NV: Self = IndexType(1000165000);
 }
+impl NvRepresentativeFragmentTestFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_representative_fragment_test\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct NvRepresentativeFragmentTestFn {}
 unsafe impl Send for NvRepresentativeFragmentTestFn {}
 unsafe impl Sync for NvRepresentativeFragmentTestFn {}
@@ -48628,6 +50941,12 @@ impl StructureType {
     pub const PIPELINE_REPRESENTATIVE_FRAGMENT_TEST_STATE_CREATE_INFO_NV: Self =
         StructureType(1000166001);
 }
+impl NvExtension168Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_168\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct NvExtension168Fn {}
 unsafe impl Send for NvExtension168Fn {}
 unsafe impl Sync for NvExtension168Fn {}
@@ -48644,6 +50963,12 @@ impl NvExtension168Fn {
         NvExtension168Fn {}
     }
 }
+impl KhrMaintenance3Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_maintenance3\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct KhrMaintenance3Fn {}
 unsafe impl Send for KhrMaintenance3Fn {}
 unsafe impl Sync for KhrMaintenance3Fn {}
@@ -48658,6 +50983,12 @@ impl KhrMaintenance3Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         KhrMaintenance3Fn {}
+    }
+}
+impl KhrDrawIndirectCountFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_draw_indirect_count\0")
+            .expect("Wrong extension string")
     }
 }
 #[allow(non_camel_case_types)]
@@ -48807,6 +51138,12 @@ impl KhrDrawIndirectCountFn {
         )
     }
 }
+impl QcomExtension171Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_QCOM_extension_171\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct QcomExtension171Fn {}
 unsafe impl Send for QcomExtension171Fn {}
 unsafe impl Sync for QcomExtension171Fn {}
@@ -48821,6 +51158,12 @@ impl QcomExtension171Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         QcomExtension171Fn {}
+    }
+}
+impl QcomExtension172Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_QCOM_extension_172\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct QcomExtension172Fn {}
@@ -48839,6 +51182,12 @@ impl QcomExtension172Fn {
         QcomExtension172Fn {}
     }
 }
+impl QcomExtension173Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_QCOM_extension_173\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct QcomExtension173Fn {}
 unsafe impl Send for QcomExtension173Fn {}
 unsafe impl Sync for QcomExtension173Fn {}
@@ -48855,6 +51204,12 @@ impl QcomExtension173Fn {
         QcomExtension173Fn {}
     }
 }
+impl QcomExtension174Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_QCOM_extension_174\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct QcomExtension174Fn {}
 unsafe impl Send for QcomExtension174Fn {}
 unsafe impl Sync for QcomExtension174Fn {}
@@ -48869,6 +51224,12 @@ impl QcomExtension174Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         QcomExtension174Fn {}
+    }
+}
+impl ExtGlobalPriorityFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_global_priority\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct ExtGlobalPriorityFn {}
@@ -48895,6 +51256,12 @@ impl StructureType {
 impl Result {
     pub const ERROR_NOT_PERMITTED_EXT: Self = Result(-1000174001);
 }
+impl ExtExtension176Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_176\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct ExtExtension176Fn {}
 unsafe impl Send for ExtExtension176Fn {}
 unsafe impl Sync for ExtExtension176Fn {}
@@ -48911,6 +51278,12 @@ impl ExtExtension176Fn {
         ExtExtension176Fn {}
     }
 }
+impl ExtExtension177Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_177\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct ExtExtension177Fn {}
 unsafe impl Send for ExtExtension177Fn {}
 unsafe impl Sync for ExtExtension177Fn {}
@@ -48925,6 +51298,12 @@ impl ExtExtension177Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         ExtExtension177Fn {}
+    }
+}
+impl Khr8bitStorageFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_8bit_storage\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct Khr8bitStorageFn {}
@@ -48946,6 +51325,12 @@ impl Khr8bitStorageFn {
 #[doc = "Generated from \'VK_KHR_8bit_storage\'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_8BIT_STORAGE_FEATURES_KHR: Self = StructureType(1000177000);
+}
+impl ExtExternalMemoryHostFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_external_memory_host\0")
+            .expect("Wrong extension string")
+    }
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetMemoryHostPointerPropertiesEXT = extern "system" fn(
@@ -49037,6 +51422,12 @@ impl ExternalMemoryHandleTypeFlags {
     pub const EXTERNAL_MEMORY_HANDLE_TYPE_HOST_MAPPED_FOREIGN_MEMORY: Self =
         ExternalMemoryHandleTypeFlags(0b100000000);
 }
+impl AmdBufferMarkerFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_buffer_marker\0")
+            .expect("Wrong extension string")
+    }
+}
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdWriteBufferMarkerAMD = extern "system" fn(
     command_buffer: CommandBuffer,
@@ -49110,6 +51501,12 @@ impl AmdBufferMarkerFn {
         )
     }
 }
+impl KhrShaderAtomicInt64Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_shader_atomic_int64\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct KhrShaderAtomicInt64Fn {}
 unsafe impl Send for KhrShaderAtomicInt64Fn {}
 unsafe impl Sync for KhrShaderAtomicInt64Fn {}
@@ -49130,6 +51527,12 @@ impl KhrShaderAtomicInt64Fn {
 impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_ATOMIC_INT64_FEATURES_KHR: Self = StructureType(1000180000);
 }
+impl AmdExtension182Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_182\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct AmdExtension182Fn {}
 unsafe impl Send for AmdExtension182Fn {}
 unsafe impl Sync for AmdExtension182Fn {}
@@ -49144,6 +51547,12 @@ impl AmdExtension182Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         AmdExtension182Fn {}
+    }
+}
+impl AmdExtension183Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_183\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct AmdExtension183Fn {}
@@ -49162,6 +51571,12 @@ impl AmdExtension183Fn {
         AmdExtension183Fn {}
     }
 }
+impl AmdExtension184Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_184\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct AmdExtension184Fn {}
 unsafe impl Send for AmdExtension184Fn {}
 unsafe impl Sync for AmdExtension184Fn {}
@@ -49176,6 +51591,12 @@ impl AmdExtension184Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         AmdExtension184Fn {}
+    }
+}
+impl ExtCalibratedTimestampsFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_calibrated_timestamps\0")
+            .expect("Wrong extension string")
     }
 }
 #[allow(non_camel_case_types)]
@@ -49300,6 +51721,12 @@ impl ExtCalibratedTimestampsFn {
 impl StructureType {
     pub const CALIBRATED_TIMESTAMP_INFO_EXT: Self = StructureType(1000184000);
 }
+impl AmdShaderCorePropertiesFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_shader_core_properties\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct AmdShaderCorePropertiesFn {}
 unsafe impl Send for AmdShaderCorePropertiesFn {}
 unsafe impl Sync for AmdShaderCorePropertiesFn {}
@@ -49320,6 +51747,12 @@ impl AmdShaderCorePropertiesFn {
 impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_AMD: Self = StructureType(1000185000);
 }
+impl AmdExtension187Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_187\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct AmdExtension187Fn {}
 unsafe impl Send for AmdExtension187Fn {}
 unsafe impl Sync for AmdExtension187Fn {}
@@ -49334,6 +51767,12 @@ impl AmdExtension187Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         AmdExtension187Fn {}
+    }
+}
+impl AmdExtension188Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_188\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct AmdExtension188Fn {}
@@ -49352,6 +51791,12 @@ impl AmdExtension188Fn {
         AmdExtension188Fn {}
     }
 }
+impl AmdExtension189Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_189\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct AmdExtension189Fn {}
 unsafe impl Send for AmdExtension189Fn {}
 unsafe impl Sync for AmdExtension189Fn {}
@@ -49366,6 +51811,12 @@ impl AmdExtension189Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         AmdExtension189Fn {}
+    }
+}
+impl AmdMemoryOverallocationBehaviorFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_memory_overallocation_behavior\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct AmdMemoryOverallocationBehaviorFn {}
@@ -49387,6 +51838,12 @@ impl AmdMemoryOverallocationBehaviorFn {
 #[doc = "Generated from \'VK_AMD_memory_overallocation_behavior\'"]
 impl StructureType {
     pub const DEVICE_MEMORY_OVERALLOCATION_CREATE_INFO_AMD: Self = StructureType(1000189000);
+}
+impl ExtVertexAttributeDivisorFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_vertex_attribute_divisor\0")
+            .expect("Wrong extension string")
+    }
 }
 pub struct ExtVertexAttributeDivisorFn {}
 unsafe impl Send for ExtVertexAttributeDivisorFn {}
@@ -49418,6 +51875,12 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_FEATURES_EXT: Self =
         StructureType(1000190002);
 }
+impl GoogleExtension192Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_GOOGLE_extension_192\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct GoogleExtension192Fn {}
 unsafe impl Send for GoogleExtension192Fn {}
 unsafe impl Sync for GoogleExtension192Fn {}
@@ -49432,6 +51895,12 @@ impl GoogleExtension192Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         GoogleExtension192Fn {}
+    }
+}
+impl GoogleExtension193Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_GOOGLE_extension_193\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct GoogleExtension193Fn {}
@@ -49450,6 +51919,12 @@ impl GoogleExtension193Fn {
         GoogleExtension193Fn {}
     }
 }
+impl GoogleExtension194Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_GOOGLE_extension_194\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct GoogleExtension194Fn {}
 unsafe impl Send for GoogleExtension194Fn {}
 unsafe impl Sync for GoogleExtension194Fn {}
@@ -49464,6 +51939,12 @@ impl GoogleExtension194Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         GoogleExtension194Fn {}
+    }
+}
+impl GoogleExtension195Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_GOOGLE_extension_195\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct GoogleExtension195Fn {}
@@ -49482,6 +51963,12 @@ impl GoogleExtension195Fn {
         GoogleExtension195Fn {}
     }
 }
+impl GoogleExtension196Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_GOOGLE_extension_196\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct GoogleExtension196Fn {}
 unsafe impl Send for GoogleExtension196Fn {}
 unsafe impl Sync for GoogleExtension196Fn {}
@@ -49496,6 +51983,12 @@ impl GoogleExtension196Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         GoogleExtension196Fn {}
+    }
+}
+impl KhrDriverPropertiesFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_driver_properties\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct KhrDriverPropertiesFn {}
@@ -49518,20 +52011,36 @@ impl KhrDriverPropertiesFn {
 impl StructureType {
     pub const PHYSICAL_DEVICE_DRIVER_PROPERTIES_KHR: Self = StructureType(1000196000);
 }
-pub struct ArmExtension198Fn {}
-unsafe impl Send for ArmExtension198Fn {}
-unsafe impl Sync for ArmExtension198Fn {}
-impl ::std::clone::Clone for ArmExtension198Fn {
-    fn clone(&self) -> Self {
-        ArmExtension198Fn {}
+impl KhrShaderFloatControlsFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_shader_float_controls\0")
+            .expect("Wrong extension string")
     }
 }
-impl ArmExtension198Fn {
+pub struct KhrShaderFloatControlsFn {}
+unsafe impl Send for KhrShaderFloatControlsFn {}
+unsafe impl Sync for KhrShaderFloatControlsFn {}
+impl ::std::clone::Clone for KhrShaderFloatControlsFn {
+    fn clone(&self) -> Self {
+        KhrShaderFloatControlsFn {}
+    }
+}
+impl KhrShaderFloatControlsFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ArmExtension198Fn {}
+        KhrShaderFloatControlsFn {}
+    }
+}
+#[doc = "Generated from \'VK_KHR_shader_float_controls\'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_FLOAT_CONTROLS_PROPERTIES_KHR: Self = StructureType(1000197000);
+}
+impl NvShaderSubgroupPartitionedFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_shader_subgroup_partitioned\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct NvShaderSubgroupPartitionedFn {}
@@ -49554,36 +52063,67 @@ impl NvShaderSubgroupPartitionedFn {
 impl SubgroupFeatureFlags {
     pub const PARTITIONED_NV: Self = SubgroupFeatureFlags(0b100000000);
 }
-pub struct KhrExtension200Fn {}
-unsafe impl Send for KhrExtension200Fn {}
-unsafe impl Sync for KhrExtension200Fn {}
-impl ::std::clone::Clone for KhrExtension200Fn {
-    fn clone(&self) -> Self {
-        KhrExtension200Fn {}
+impl KhrDepthStencilResolveFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_depth_stencil_resolve\0")
+            .expect("Wrong extension string")
     }
 }
-impl KhrExtension200Fn {
+pub struct KhrDepthStencilResolveFn {}
+unsafe impl Send for KhrDepthStencilResolveFn {}
+unsafe impl Sync for KhrDepthStencilResolveFn {}
+impl ::std::clone::Clone for KhrDepthStencilResolveFn {
+    fn clone(&self) -> Self {
+        KhrDepthStencilResolveFn {}
+    }
+}
+impl KhrDepthStencilResolveFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrExtension200Fn {}
+        KhrDepthStencilResolveFn {}
     }
 }
-pub struct KhrExtension201Fn {}
-unsafe impl Send for KhrExtension201Fn {}
-unsafe impl Sync for KhrExtension201Fn {}
-impl ::std::clone::Clone for KhrExtension201Fn {
+#[doc = "Generated from \'VK_KHR_depth_stencil_resolve\'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_DEPTH_STENCIL_RESOLVE_PROPERTIES_KHR: Self =
+        StructureType(1000199000);
+}
+#[doc = "Generated from \'VK_KHR_depth_stencil_resolve\'"]
+impl StructureType {
+    pub const SUBPASS_DESCRIPTION_DEPTH_STENCIL_RESOLVE_KHR: Self = StructureType(1000199001);
+}
+impl KhrSwapchainMutableFormatFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_swapchain_mutable_format\0")
+            .expect("Wrong extension string")
+    }
+}
+pub struct KhrSwapchainMutableFormatFn {}
+unsafe impl Send for KhrSwapchainMutableFormatFn {}
+unsafe impl Sync for KhrSwapchainMutableFormatFn {}
+impl ::std::clone::Clone for KhrSwapchainMutableFormatFn {
     fn clone(&self) -> Self {
-        KhrExtension201Fn {}
+        KhrSwapchainMutableFormatFn {}
     }
 }
-impl KhrExtension201Fn {
+impl KhrSwapchainMutableFormatFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrExtension201Fn {}
+        KhrSwapchainMutableFormatFn {}
+    }
+}
+#[doc = "Generated from \'VK_KHR_swapchain_mutable_format\'"]
+impl SwapchainCreateFlagsKHR {
+    pub const MUTABLE_FORMAT: Self = SwapchainCreateFlagsKHR(0b100);
+}
+impl NvComputeShaderDerivativesFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_compute_shader_derivatives\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct NvComputeShaderDerivativesFn {}
@@ -49606,6 +52146,12 @@ impl NvComputeShaderDerivativesFn {
 impl StructureType {
     pub const PHYSICAL_DEVICE_COMPUTE_SHADER_DERIVATIVES_FEATURES_NV: Self =
         StructureType(1000201000);
+}
+impl NvMeshShaderFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_mesh_shader\0")
+            .expect("Wrong extension string")
+    }
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdDrawMeshTasksNV =
@@ -49799,6 +52345,12 @@ impl PipelineStageFlags {
 impl PipelineStageFlags {
     pub const MESH_SHADER_NV: Self = PipelineStageFlags(0b100000000000000000000);
 }
+impl NvFragmentShaderBarycentricFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_fragment_shader_barycentric\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct NvFragmentShaderBarycentricFn {}
 unsafe impl Send for NvFragmentShaderBarycentricFn {}
 unsafe impl Sync for NvFragmentShaderBarycentricFn {}
@@ -49820,6 +52372,12 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_FRAGMENT_SHADER_BARYCENTRIC_FEATURES_NV: Self =
         StructureType(1000203000);
 }
+impl NvShaderImageFootprintFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_shader_image_footprint\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct NvShaderImageFootprintFn {}
 unsafe impl Send for NvShaderImageFootprintFn {}
 unsafe impl Sync for NvShaderImageFootprintFn {}
@@ -49839,6 +52397,12 @@ impl NvShaderImageFootprintFn {
 #[doc = "Generated from \'VK_NV_shader_image_footprint\'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_IMAGE_FOOTPRINT_FEATURES_NV: Self = StructureType(1000204000);
+}
+impl NvScissorExclusiveFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_scissor_exclusive\0")
+            .expect("Wrong extension string")
+    }
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetExclusiveScissorNV = extern "system" fn(
@@ -49920,6 +52484,12 @@ impl DynamicState {
 #[doc = "Generated from \'VK_NV_scissor_exclusive\'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_EXCLUSIVE_SCISSOR_FEATURES_NV: Self = StructureType(1000205002);
+}
+impl NvDeviceDiagnosticCheckpointsFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_device_diagnostic_checkpoints\0")
+            .expect("Wrong extension string")
+    }
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetCheckpointNV =
@@ -50022,6 +52592,12 @@ impl StructureType {
 impl StructureType {
     pub const QUEUE_FAMILY_CHECKPOINT_PROPERTIES_NV: Self = StructureType(1000206001);
 }
+impl KhrExtension208Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_extension_208\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct KhrExtension208Fn {}
 unsafe impl Send for KhrExtension208Fn {}
 unsafe impl Sync for KhrExtension208Fn {}
@@ -50036,6 +52612,12 @@ impl KhrExtension208Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         KhrExtension208Fn {}
+    }
+}
+impl KhrExtension209Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_extension_209\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct KhrExtension209Fn {}
@@ -50054,6 +52636,12 @@ impl KhrExtension209Fn {
         KhrExtension209Fn {}
     }
 }
+impl IntelExtension210Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_INTEL_extension_210\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct IntelExtension210Fn {}
 unsafe impl Send for IntelExtension210Fn {}
 unsafe impl Sync for IntelExtension210Fn {}
@@ -50070,6 +52658,12 @@ impl IntelExtension210Fn {
         IntelExtension210Fn {}
     }
 }
+impl IntelExtension211Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_INTEL_extension_211\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct IntelExtension211Fn {}
 unsafe impl Send for IntelExtension211Fn {}
 unsafe impl Sync for IntelExtension211Fn {}
@@ -50084,6 +52678,12 @@ impl IntelExtension211Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         IntelExtension211Fn {}
+    }
+}
+impl KhrVulkanMemoryModelFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_vulkan_memory_model\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct KhrVulkanMemoryModelFn {}
@@ -50106,6 +52706,12 @@ impl KhrVulkanMemoryModelFn {
 impl StructureType {
     pub const PHYSICAL_DEVICE_VULKAN_MEMORY_MODEL_FEATURES_KHR: Self = StructureType(1000211000);
 }
+impl ExtPciBusInfoFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_pci_bus_info\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct ExtPciBusInfoFn {}
 unsafe impl Send for ExtPciBusInfoFn {}
 unsafe impl Sync for ExtPciBusInfoFn {}
@@ -50126,6 +52732,12 @@ impl ExtPciBusInfoFn {
 impl StructureType {
     pub const PHYSICAL_DEVICE_PCI_BUS_INFO_PROPERTIES_EXT: Self = StructureType(1000212000);
 }
+impl AmdExtension214Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_214\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct AmdExtension214Fn {}
 unsafe impl Send for AmdExtension214Fn {}
 unsafe impl Sync for AmdExtension214Fn {}
@@ -50140,6 +52752,12 @@ impl AmdExtension214Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         AmdExtension214Fn {}
+    }
+}
+impl FuchsiaImagepipeSurfaceFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_FUCHSIA_imagepipe_surface\0")
+            .expect("Wrong extension string")
     }
 }
 #[allow(non_camel_case_types)]
@@ -50209,6 +52827,12 @@ impl FuchsiaImagepipeSurfaceFn {
 impl StructureType {
     pub const IMAGEPIPE_SURFACE_CREATE_INFO_FUCHSIA: Self = StructureType(1000214000);
 }
+impl GoogleExtension216Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_GOOGLE_extension_216\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct GoogleExtension216Fn {}
 unsafe impl Send for GoogleExtension216Fn {}
 unsafe impl Sync for GoogleExtension216Fn {}
@@ -50223,6 +52847,12 @@ impl GoogleExtension216Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         GoogleExtension216Fn {}
+    }
+}
+impl GoogleExtension217Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_GOOGLE_extension_217\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct GoogleExtension217Fn {}
@@ -50241,6 +52871,12 @@ impl GoogleExtension217Fn {
         GoogleExtension217Fn {}
     }
 }
+impl ExtMacosIosWindowFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_macos_ios_window\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct ExtMacosIosWindowFn {}
 unsafe impl Send for ExtMacosIosWindowFn {}
 unsafe impl Sync for ExtMacosIosWindowFn {}
@@ -50257,41 +52893,81 @@ impl ExtMacosIosWindowFn {
         ExtMacosIosWindowFn {}
     }
 }
-pub struct ExtExtension219Fn {}
-unsafe impl Send for ExtExtension219Fn {}
-unsafe impl Sync for ExtExtension219Fn {}
-impl ::std::clone::Clone for ExtExtension219Fn {
-    fn clone(&self) -> Self {
-        ExtExtension219Fn {}
+impl ExtFragmentDensityMapFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_fragment_density_map\0")
+            .expect("Wrong extension string")
     }
 }
-impl ExtExtension219Fn {
+pub struct ExtFragmentDensityMapFn {}
+unsafe impl Send for ExtFragmentDensityMapFn {}
+unsafe impl Sync for ExtFragmentDensityMapFn {}
+impl ::std::clone::Clone for ExtFragmentDensityMapFn {
+    fn clone(&self) -> Self {
+        ExtFragmentDensityMapFn {}
+    }
+}
+impl ExtFragmentDensityMapFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtExtension219Fn {}
+        ExtFragmentDensityMapFn {}
     }
 }
-#[doc = "Generated from \'VK_EXT_extension_219\'"]
+#[doc = "Generated from \'VK_EXT_fragment_density_map\'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_FEATURES_EXT: Self = StructureType(1000218000);
+}
+#[doc = "Generated from \'VK_EXT_fragment_density_map\'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_PROPERTIES_EXT: Self = StructureType(1000218001);
+}
+#[doc = "Generated from \'VK_EXT_fragment_density_map\'"]
+impl StructureType {
+    pub const RENDER_PASS_FRAGMENT_DENSITY_MAP_CREATE_INFO_EXT: Self = StructureType(1000218002);
+}
+#[doc = "Generated from \'VK_EXT_fragment_density_map\'"]
 impl ImageCreateFlags {
-    pub const RESERVED_14_EXT: Self = ImageCreateFlags(0b100000000000000);
+    pub const SUBSAMPLED_EXT: Self = ImageCreateFlags(0b100000000000000);
 }
-#[doc = "Generated from \'VK_EXT_extension_219\'"]
+#[doc = "Generated from \'VK_EXT_fragment_density_map\'"]
+impl ImageLayout {
+    pub const FRAGMENT_DENSITY_MAP_OPTIMAL_EXT: Self = ImageLayout(1000218000);
+}
+#[doc = "Generated from \'VK_EXT_fragment_density_map\'"]
 impl AccessFlags {
-    pub const RESERVED_24_EXT: Self = AccessFlags(0b1000000000000000000000000);
+    pub const FRAGMENT_DENSITY_MAP_READ_EXT: Self = AccessFlags(0b1000000000000000000000000);
 }
-#[doc = "Generated from \'VK_EXT_extension_219\'"]
+#[doc = "Generated from \'VK_EXT_fragment_density_map\'"]
 impl FormatFeatureFlags {
-    pub const RESERVED_24_EXT: Self = FormatFeatureFlags(0b1000000000000000000000000);
+    pub const FRAGMENT_DENSITY_MAP_EXT: Self = FormatFeatureFlags(0b1000000000000000000000000);
 }
-#[doc = "Generated from \'VK_EXT_extension_219\'"]
+#[doc = "Generated from \'VK_EXT_fragment_density_map\'"]
 impl ImageUsageFlags {
-    pub const RESERVED_9_EXT: Self = ImageUsageFlags(0b1000000000);
+    pub const FRAGMENT_DENSITY_MAP_EXT: Self = ImageUsageFlags(0b1000000000);
 }
-#[doc = "Generated from \'VK_EXT_extension_219\'"]
+#[doc = "Generated from \'VK_EXT_fragment_density_map\'"]
+impl ImageViewCreateFlags {
+    pub const FRAGMENT_DENSITY_MAP_DYNAMIC_EXT: Self = ImageViewCreateFlags(0b1);
+}
+#[doc = "Generated from \'VK_EXT_fragment_density_map\'"]
 impl PipelineStageFlags {
-    pub const RESERVED_23_EXT: Self = PipelineStageFlags(0b100000000000000000000000);
+    pub const FRAGMENT_DENSITY_PROCESS_EXT: Self = PipelineStageFlags(0b100000000000000000000000);
+}
+#[doc = "Generated from \'VK_EXT_fragment_density_map\'"]
+impl SamplerCreateFlags {
+    pub const SUBSAMPLED_EXT: Self = SamplerCreateFlags(0b1);
+}
+#[doc = "Generated from \'VK_EXT_fragment_density_map\'"]
+impl SamplerCreateFlags {
+    pub const SUBSAMPLED_COARSE_RECONSTRUCTION_EXT: Self = SamplerCreateFlags(0b10);
+}
+impl ExtExtension220Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_220\0")
+            .expect("Wrong extension string")
+    }
 }
 pub struct ExtExtension220Fn {}
 unsafe impl Send for ExtExtension220Fn {}
@@ -50307,6 +52983,12 @@ impl ExtExtension220Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         ExtExtension220Fn {}
+    }
+}
+impl KhrExtension221Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_extension_221\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct KhrExtension221Fn {}
@@ -50329,20 +53011,36 @@ impl KhrExtension221Fn {
 impl RenderPassCreateFlags {
     pub const RESERVED_0_KHR: Self = RenderPassCreateFlags(0b1);
 }
-pub struct ExtExtension222Fn {}
-unsafe impl Send for ExtExtension222Fn {}
-unsafe impl Sync for ExtExtension222Fn {}
-impl ::std::clone::Clone for ExtExtension222Fn {
-    fn clone(&self) -> Self {
-        ExtExtension222Fn {}
+impl ExtScalarBlockLayoutFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_scalar_block_layout\0")
+            .expect("Wrong extension string")
     }
 }
-impl ExtExtension222Fn {
+pub struct ExtScalarBlockLayoutFn {}
+unsafe impl Send for ExtScalarBlockLayoutFn {}
+unsafe impl Sync for ExtScalarBlockLayoutFn {}
+impl ::std::clone::Clone for ExtScalarBlockLayoutFn {
+    fn clone(&self) -> Self {
+        ExtScalarBlockLayoutFn {}
+    }
+}
+impl ExtScalarBlockLayoutFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtExtension222Fn {}
+        ExtScalarBlockLayoutFn {}
+    }
+}
+#[doc = "Generated from \'VK_EXT_scalar_block_layout\'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_SCALAR_BLOCK_LAYOUT_FEATURES_EXT: Self = StructureType(1000221000);
+}
+impl ExtExtension223Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_223\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct ExtExtension223Fn {}
@@ -50361,6 +53059,12 @@ impl ExtExtension223Fn {
         ExtExtension223Fn {}
     }
 }
+impl GoogleHlslFunctionality1Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_GOOGLE_hlsl_functionality1\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct GoogleHlslFunctionality1Fn {}
 unsafe impl Send for GoogleHlslFunctionality1Fn {}
 unsafe impl Sync for GoogleHlslFunctionality1Fn {}
@@ -50375,6 +53079,12 @@ impl GoogleHlslFunctionality1Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         GoogleHlslFunctionality1Fn {}
+    }
+}
+impl GoogleDecorateStringFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_GOOGLE_decorate_string\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct GoogleDecorateStringFn {}
@@ -50393,6 +53103,12 @@ impl GoogleDecorateStringFn {
         GoogleDecorateStringFn {}
     }
 }
+impl AmdExtension226Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_226\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct AmdExtension226Fn {}
 unsafe impl Send for AmdExtension226Fn {}
 unsafe impl Sync for AmdExtension226Fn {}
@@ -50407,6 +53123,12 @@ impl AmdExtension226Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         AmdExtension226Fn {}
+    }
+}
+impl AmdExtension227Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_227\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct AmdExtension227Fn {}
@@ -50425,6 +53147,12 @@ impl AmdExtension227Fn {
         AmdExtension227Fn {}
     }
 }
+impl AmdExtension228Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_228\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct AmdExtension228Fn {}
 unsafe impl Send for AmdExtension228Fn {}
 unsafe impl Sync for AmdExtension228Fn {}
@@ -50439,6 +53167,12 @@ impl AmdExtension228Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         AmdExtension228Fn {}
+    }
+}
+impl AmdExtension229Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_229\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct AmdExtension229Fn {}
@@ -50457,6 +53191,12 @@ impl AmdExtension229Fn {
         AmdExtension229Fn {}
     }
 }
+impl AmdExtension230Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_230\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct AmdExtension230Fn {}
 unsafe impl Send for AmdExtension230Fn {}
 unsafe impl Sync for AmdExtension230Fn {}
@@ -50471,6 +53211,12 @@ impl AmdExtension230Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         AmdExtension230Fn {}
+    }
+}
+impl AmdExtension231Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_231\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct AmdExtension231Fn {}
@@ -50489,6 +53235,12 @@ impl AmdExtension231Fn {
         AmdExtension231Fn {}
     }
 }
+impl AmdExtension232Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_232\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct AmdExtension232Fn {}
 unsafe impl Send for AmdExtension232Fn {}
 unsafe impl Sync for AmdExtension232Fn {}
@@ -50503,6 +53255,12 @@ impl AmdExtension232Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         AmdExtension232Fn {}
+    }
+}
+impl AmdExtension233Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_233\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct AmdExtension233Fn {}
@@ -50521,6 +53279,12 @@ impl AmdExtension233Fn {
         AmdExtension233Fn {}
     }
 }
+impl AmdExtension234Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_234\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct AmdExtension234Fn {}
 unsafe impl Send for AmdExtension234Fn {}
 unsafe impl Sync for AmdExtension234Fn {}
@@ -50535,6 +53299,12 @@ impl AmdExtension234Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         AmdExtension234Fn {}
+    }
+}
+impl AmdExtension235Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_235\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct AmdExtension235Fn {}
@@ -50553,6 +53323,12 @@ impl AmdExtension235Fn {
         AmdExtension235Fn {}
     }
 }
+impl AmdExtension236Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_236\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct AmdExtension236Fn {}
 unsafe impl Send for AmdExtension236Fn {}
 unsafe impl Sync for AmdExtension236Fn {}
@@ -50567,6 +53343,12 @@ impl AmdExtension236Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         AmdExtension236Fn {}
+    }
+}
+impl KhrExtension237Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_extension_237\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct KhrExtension237Fn {}
@@ -50585,36 +53367,66 @@ impl KhrExtension237Fn {
         KhrExtension237Fn {}
     }
 }
-pub struct KhrExtension238Fn {}
-unsafe impl Send for KhrExtension238Fn {}
-unsafe impl Sync for KhrExtension238Fn {}
-impl ::std::clone::Clone for KhrExtension238Fn {
-    fn clone(&self) -> Self {
-        KhrExtension238Fn {}
+impl ExtMemoryBudgetFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_memory_budget\0")
+            .expect("Wrong extension string")
     }
 }
-impl KhrExtension238Fn {
+pub struct ExtMemoryBudgetFn {}
+unsafe impl Send for ExtMemoryBudgetFn {}
+unsafe impl Sync for ExtMemoryBudgetFn {}
+impl ::std::clone::Clone for ExtMemoryBudgetFn {
+    fn clone(&self) -> Self {
+        ExtMemoryBudgetFn {}
+    }
+}
+impl ExtMemoryBudgetFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrExtension238Fn {}
+        ExtMemoryBudgetFn {}
     }
 }
-pub struct KhrExtension239Fn {}
-unsafe impl Send for KhrExtension239Fn {}
-unsafe impl Sync for KhrExtension239Fn {}
-impl ::std::clone::Clone for KhrExtension239Fn {
+#[doc = "Generated from \'VK_EXT_memory_budget\'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_MEMORY_BUDGET_PROPERTIES_EXT: Self = StructureType(1000237000);
+}
+impl ExtMemoryPriorityFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_memory_priority\0")
+            .expect("Wrong extension string")
+    }
+}
+pub struct ExtMemoryPriorityFn {}
+unsafe impl Send for ExtMemoryPriorityFn {}
+unsafe impl Sync for ExtMemoryPriorityFn {}
+impl ::std::clone::Clone for ExtMemoryPriorityFn {
     fn clone(&self) -> Self {
-        KhrExtension239Fn {}
+        ExtMemoryPriorityFn {}
     }
 }
-impl KhrExtension239Fn {
+impl ExtMemoryPriorityFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrExtension239Fn {}
+        ExtMemoryPriorityFn {}
+    }
+}
+#[doc = "Generated from \'VK_EXT_memory_priority\'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_MEMORY_PRIORITY_FEATURES_EXT: Self = StructureType(1000238000);
+}
+#[doc = "Generated from \'VK_EXT_memory_priority\'"]
+impl StructureType {
+    pub const MEMORY_PRIORITY_ALLOCATE_INFO_EXT: Self = StructureType(1000238001);
+}
+impl KhrExtension240Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_extension_240\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct KhrExtension240Fn {}
@@ -50633,6 +53445,12 @@ impl KhrExtension240Fn {
         KhrExtension240Fn {}
     }
 }
+impl NvExtension241Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_241\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct NvExtension241Fn {}
 unsafe impl Send for NvExtension241Fn {}
 unsafe impl Sync for NvExtension241Fn {}
@@ -50647,6 +53465,12 @@ impl NvExtension241Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         NvExtension241Fn {}
+    }
+}
+impl NvExtension242Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_242\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct NvExtension242Fn {}
@@ -50665,6 +53489,12 @@ impl NvExtension242Fn {
         NvExtension242Fn {}
     }
 }
+impl IntelExtension243Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_INTEL_extension_243\0")
+            .expect("Wrong extension string")
+    }
+}
 pub struct IntelExtension243Fn {}
 unsafe impl Send for IntelExtension243Fn {}
 unsafe impl Sync for IntelExtension243Fn {}
@@ -50679,6 +53509,12 @@ impl IntelExtension243Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         IntelExtension243Fn {}
+    }
+}
+impl MesaExtension244Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_MESA_extension_244\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct MesaExtension244Fn {}
@@ -50697,20 +53533,93 @@ impl MesaExtension244Fn {
         MesaExtension244Fn {}
     }
 }
-pub struct NvExtension245Fn {}
-unsafe impl Send for NvExtension245Fn {}
-unsafe impl Sync for NvExtension245Fn {}
-impl ::std::clone::Clone for NvExtension245Fn {
-    fn clone(&self) -> Self {
-        NvExtension245Fn {}
+impl ExtBufferDeviceAddressFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_buffer_device_address\0")
+            .expect("Wrong extension string")
     }
 }
-impl NvExtension245Fn {
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetBufferDeviceAddressEXT =
+    extern "system" fn(device: Device, p_info: *const BufferDeviceAddressInfoEXT) -> DeviceAddress;
+pub struct ExtBufferDeviceAddressFn {
+    pub get_buffer_device_address_ext: extern "system" fn(
+        device: Device,
+        p_info: *const BufferDeviceAddressInfoEXT,
+    ) -> DeviceAddress,
+}
+unsafe impl Send for ExtBufferDeviceAddressFn {}
+unsafe impl Sync for ExtBufferDeviceAddressFn {}
+impl ::std::clone::Clone for ExtBufferDeviceAddressFn {
+    fn clone(&self) -> Self {
+        ExtBufferDeviceAddressFn {
+            get_buffer_device_address_ext: self.get_buffer_device_address_ext,
+        }
+    }
+}
+impl ExtBufferDeviceAddressFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvExtension245Fn {}
+        ExtBufferDeviceAddressFn {
+            get_buffer_device_address_ext: unsafe {
+                extern "system" fn get_buffer_device_address_ext(
+                    _device: Device,
+                    _p_info: *const BufferDeviceAddressInfoEXT,
+                ) -> DeviceAddress {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_buffer_device_address_ext)
+                    ))
+                }
+                let raw_name = stringify!(vkGetBufferDeviceAddressEXT);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    get_buffer_device_address_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+    pub unsafe fn get_buffer_device_address_ext(
+        &self,
+        device: Device,
+        p_info: *const BufferDeviceAddressInfoEXT,
+    ) -> DeviceAddress {
+        (self.get_buffer_device_address_ext)(device, p_info)
+    }
+}
+#[doc = "Generated from \'VK_EXT_buffer_device_address\'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_BUFFER_ADDRESS_FEATURES_EXT: Self = StructureType(1000244000);
+}
+#[doc = "Generated from \'VK_EXT_buffer_device_address\'"]
+impl StructureType {
+    pub const BUFFER_DEVICE_ADDRESS_INFO_EXT: Self = StructureType(1000244001);
+}
+#[doc = "Generated from \'VK_EXT_buffer_device_address\'"]
+impl StructureType {
+    pub const BUFFER_DEVICE_ADDRESS_CREATE_INFO_EXT: Self = StructureType(1000244002);
+}
+#[doc = "Generated from \'VK_EXT_buffer_device_address\'"]
+impl BufferUsageFlags {
+    pub const SHADER_DEVICE_ADDRESS_EXT: Self = BufferUsageFlags(0b100000000000000000);
+}
+#[doc = "Generated from \'VK_EXT_buffer_device_address\'"]
+impl BufferCreateFlags {
+    pub const DEVICE_ADDRESS_CAPTURE_REPLAY_EXT: Self = BufferCreateFlags(0b10000);
+}
+#[doc = "Generated from \'VK_EXT_buffer_device_address\'"]
+impl Result {
+    pub const ERROR_INVALID_DEVICE_ADDRESS_EXT: Self = Result(-1000244000);
+}
+impl ExtExtension246Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_246\0")
+            .expect("Wrong extension string")
     }
 }
 pub struct ExtExtension246Fn {}
@@ -50729,36 +53638,100 @@ impl ExtExtension246Fn {
         ExtExtension246Fn {}
     }
 }
-pub struct ExtExtension247Fn {}
-unsafe impl Send for ExtExtension247Fn {}
-unsafe impl Sync for ExtExtension247Fn {}
-impl ::std::clone::Clone for ExtExtension247Fn {
-    fn clone(&self) -> Self {
-        ExtExtension247Fn {}
+impl ExtSeparateStencilUsageFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_separate_stencil_usage\0")
+            .expect("Wrong extension string")
     }
 }
-impl ExtExtension247Fn {
+pub struct ExtSeparateStencilUsageFn {}
+unsafe impl Send for ExtSeparateStencilUsageFn {}
+unsafe impl Sync for ExtSeparateStencilUsageFn {}
+impl ::std::clone::Clone for ExtSeparateStencilUsageFn {
+    fn clone(&self) -> Self {
+        ExtSeparateStencilUsageFn {}
+    }
+}
+impl ExtSeparateStencilUsageFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtExtension247Fn {}
+        ExtSeparateStencilUsageFn {}
     }
 }
-pub struct ExtExtension248Fn {}
-unsafe impl Send for ExtExtension248Fn {}
-unsafe impl Sync for ExtExtension248Fn {}
-impl ::std::clone::Clone for ExtExtension248Fn {
+#[doc = "Generated from \'VK_EXT_separate_stencil_usage\'"]
+impl StructureType {
+    pub const IMAGE_STENCIL_USAGE_CREATE_INFO_EXT: Self = StructureType(1000246000);
+}
+impl ExtValidationFeaturesFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_validation_features\0")
+            .expect("Wrong extension string")
+    }
+}
+pub struct ExtValidationFeaturesFn {}
+unsafe impl Send for ExtValidationFeaturesFn {}
+unsafe impl Sync for ExtValidationFeaturesFn {}
+impl ::std::clone::Clone for ExtValidationFeaturesFn {
     fn clone(&self) -> Self {
-        ExtExtension248Fn {}
+        ExtValidationFeaturesFn {}
     }
 }
-impl ExtExtension248Fn {
+impl ExtValidationFeaturesFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtExtension248Fn {}
+        ExtValidationFeaturesFn {}
+    }
+}
+#[doc = "Generated from \'VK_EXT_validation_features\'"]
+impl StructureType {
+    pub const VALIDATION_FEATURES_EXT: Self = StructureType(1000247000);
+}
+impl KhrExtension249Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_extension_249\0")
+            .expect("Wrong extension string")
+    }
+}
+pub struct KhrExtension249Fn {}
+unsafe impl Send for KhrExtension249Fn {}
+unsafe impl Sync for KhrExtension249Fn {}
+impl ::std::clone::Clone for KhrExtension249Fn {
+    fn clone(&self) -> Self {
+        KhrExtension249Fn {}
+    }
+}
+impl KhrExtension249Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        KhrExtension249Fn {}
+    }
+}
+impl NvExtension250Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_250\0")
+            .expect("Wrong extension string")
+    }
+}
+pub struct NvExtension250Fn {}
+unsafe impl Send for NvExtension250Fn {}
+unsafe impl Sync for NvExtension250Fn {}
+impl ::std::clone::Clone for NvExtension250Fn {
+    fn clone(&self) -> Self {
+        NvExtension250Fn {}
+    }
+}
+impl NvExtension250Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        NvExtension250Fn {}
     }
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
@@ -51327,27 +54300,11 @@ fn display_flags(
     }
     Ok(())
 }
-impl fmt::Display for ImageLayout {
+impl fmt::Display for CommandBufferLevel {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::UNDEFINED => Some("UNDEFINED"),
-            Self::GENERAL => Some("GENERAL"),
-            Self::COLOR_ATTACHMENT_OPTIMAL => Some("COLOR_ATTACHMENT_OPTIMAL"),
-            Self::DEPTH_STENCIL_ATTACHMENT_OPTIMAL => Some("DEPTH_STENCIL_ATTACHMENT_OPTIMAL"),
-            Self::DEPTH_STENCIL_READ_ONLY_OPTIMAL => Some("DEPTH_STENCIL_READ_ONLY_OPTIMAL"),
-            Self::SHADER_READ_ONLY_OPTIMAL => Some("SHADER_READ_ONLY_OPTIMAL"),
-            Self::TRANSFER_SRC_OPTIMAL => Some("TRANSFER_SRC_OPTIMAL"),
-            Self::TRANSFER_DST_OPTIMAL => Some("TRANSFER_DST_OPTIMAL"),
-            Self::PREINITIALIZED => Some("PREINITIALIZED"),
-            Self::PRESENT_SRC_KHR => Some("PRESENT_SRC_KHR"),
-            Self::SHARED_PRESENT_KHR => Some("SHARED_PRESENT_KHR"),
-            Self::SHADING_RATE_OPTIMAL_NV => Some("SHADING_RATE_OPTIMAL_NV"),
-            Self::DEPTH_READ_ONLY_STENCIL_ATTACHMENT_OPTIMAL => {
-                Some("DEPTH_READ_ONLY_STENCIL_ATTACHMENT_OPTIMAL")
-            }
-            Self::DEPTH_ATTACHMENT_STENCIL_READ_ONLY_OPTIMAL => {
-                Some("DEPTH_ATTACHMENT_STENCIL_READ_ONLY_OPTIMAL")
-            }
+            Self::PRIMARY => Some("PRIMARY"),
+            Self::SECONDARY => Some("SECONDARY"),
             _ => None,
         };
         if let Some(x) = name {
@@ -51357,11 +54314,315 @@ impl fmt::Display for ImageLayout {
         }
     }
 }
-impl fmt::Display for ValidationCheckEXT {
+impl fmt::Display for MemoryOverallocationBehaviorAMD {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::DEFAULT => Some("DEFAULT"),
+            Self::ALLOWED => Some("ALLOWED"),
+            Self::DISALLOWED => Some("DISALLOWED"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for SubpassContents {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::INLINE => Some("INLINE"),
+            Self::SECONDARY_COMMAND_BUFFERS => Some("SECONDARY_COMMAND_BUFFERS"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for QueryResultFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (QueryResultFlags::TYPE_64.0, "TYPE_64"),
+            (QueryResultFlags::WAIT.0, "WAIT"),
+            (QueryResultFlags::WITH_AVAILABILITY.0, "WITH_AVAILABILITY"),
+            (QueryResultFlags::PARTIAL.0, "PARTIAL"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for GeometryTypeNV {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::TRIANGLES => Some("TRIANGLES"),
+            Self::AABBS => Some("AABBS"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for DebugReportObjectTypeEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::UNKNOWN => Some("UNKNOWN"),
+            Self::INSTANCE => Some("INSTANCE"),
+            Self::PHYSICAL_DEVICE => Some("PHYSICAL_DEVICE"),
+            Self::DEVICE => Some("DEVICE"),
+            Self::QUEUE => Some("QUEUE"),
+            Self::SEMAPHORE => Some("SEMAPHORE"),
+            Self::COMMAND_BUFFER => Some("COMMAND_BUFFER"),
+            Self::FENCE => Some("FENCE"),
+            Self::DEVICE_MEMORY => Some("DEVICE_MEMORY"),
+            Self::BUFFER => Some("BUFFER"),
+            Self::IMAGE => Some("IMAGE"),
+            Self::EVENT => Some("EVENT"),
+            Self::QUERY_POOL => Some("QUERY_POOL"),
+            Self::BUFFER_VIEW => Some("BUFFER_VIEW"),
+            Self::IMAGE_VIEW => Some("IMAGE_VIEW"),
+            Self::SHADER_MODULE => Some("SHADER_MODULE"),
+            Self::PIPELINE_CACHE => Some("PIPELINE_CACHE"),
+            Self::PIPELINE_LAYOUT => Some("PIPELINE_LAYOUT"),
+            Self::RENDER_PASS => Some("RENDER_PASS"),
+            Self::PIPELINE => Some("PIPELINE"),
+            Self::DESCRIPTOR_SET_LAYOUT => Some("DESCRIPTOR_SET_LAYOUT"),
+            Self::SAMPLER => Some("SAMPLER"),
+            Self::DESCRIPTOR_POOL => Some("DESCRIPTOR_POOL"),
+            Self::DESCRIPTOR_SET => Some("DESCRIPTOR_SET"),
+            Self::FRAMEBUFFER => Some("FRAMEBUFFER"),
+            Self::COMMAND_POOL => Some("COMMAND_POOL"),
+            Self::SURFACE_KHR => Some("SURFACE_KHR"),
+            Self::SWAPCHAIN_KHR => Some("SWAPCHAIN_KHR"),
+            Self::DEBUG_REPORT_CALLBACK => Some("DEBUG_REPORT_CALLBACK"),
+            Self::DISPLAY_KHR => Some("DISPLAY_KHR"),
+            Self::DISPLAY_MODE_KHR => Some("DISPLAY_MODE_KHR"),
+            Self::OBJECT_TABLE_NVX => Some("OBJECT_TABLE_NVX"),
+            Self::INDIRECT_COMMANDS_LAYOUT_NVX => Some("INDIRECT_COMMANDS_LAYOUT_NVX"),
+            Self::VALIDATION_CACHE => Some("VALIDATION_CACHE"),
+            Self::SAMPLER_YCBCR_CONVERSION => Some("SAMPLER_YCBCR_CONVERSION"),
+            Self::DESCRIPTOR_UPDATE_TEMPLATE => Some("DESCRIPTOR_UPDATE_TEMPLATE"),
+            Self::ACCELERATION_STRUCTURE_NV => Some("ACCELERATION_STRUCTURE_NV"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for SamplerCreateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (SamplerCreateFlags::SUBSAMPLED_EXT.0, "SUBSAMPLED_EXT"),
+            (
+                SamplerCreateFlags::SUBSAMPLED_COARSE_RECONSTRUCTION_EXT.0,
+                "SUBSAMPLED_COARSE_RECONSTRUCTION_EXT",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for ResolveModeFlagsKHR {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (ResolveModeFlagsKHR::NONE.0, "NONE"),
+            (ResolveModeFlagsKHR::SAMPLE_ZERO.0, "SAMPLE_ZERO"),
+            (ResolveModeFlagsKHR::AVERAGE.0, "AVERAGE"),
+            (ResolveModeFlagsKHR::MIN.0, "MIN"),
+            (ResolveModeFlagsKHR::MAX.0, "MAX"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for DriverIdKHR {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::AMD_PROPRIETARY => Some("AMD_PROPRIETARY"),
+            Self::AMD_OPEN_SOURCE => Some("AMD_OPEN_SOURCE"),
+            Self::MESA_RADV => Some("MESA_RADV"),
+            Self::NVIDIA_PROPRIETARY => Some("NVIDIA_PROPRIETARY"),
+            Self::INTEL_PROPRIETARY_WINDOWS => Some("INTEL_PROPRIETARY_WINDOWS"),
+            Self::INTEL_OPEN_SOURCE_MESA => Some("INTEL_OPEN_SOURCE_MESA"),
+            Self::IMAGINATION_PROPRIETARY => Some("IMAGINATION_PROPRIETARY"),
+            Self::QUALCOMM_PROPRIETARY => Some("QUALCOMM_PROPRIETARY"),
+            Self::ARM_PROPRIETARY => Some("ARM_PROPRIETARY"),
+            Self::GOOGLE_PASTEL => Some("GOOGLE_PASTEL"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for PipelineStageFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (PipelineStageFlags::TOP_OF_PIPE.0, "TOP_OF_PIPE"),
+            (PipelineStageFlags::DRAW_INDIRECT.0, "DRAW_INDIRECT"),
+            (PipelineStageFlags::VERTEX_INPUT.0, "VERTEX_INPUT"),
+            (PipelineStageFlags::VERTEX_SHADER.0, "VERTEX_SHADER"),
+            (
+                PipelineStageFlags::TESSELLATION_CONTROL_SHADER.0,
+                "TESSELLATION_CONTROL_SHADER",
+            ),
+            (
+                PipelineStageFlags::TESSELLATION_EVALUATION_SHADER.0,
+                "TESSELLATION_EVALUATION_SHADER",
+            ),
+            (PipelineStageFlags::GEOMETRY_SHADER.0, "GEOMETRY_SHADER"),
+            (PipelineStageFlags::FRAGMENT_SHADER.0, "FRAGMENT_SHADER"),
+            (
+                PipelineStageFlags::EARLY_FRAGMENT_TESTS.0,
+                "EARLY_FRAGMENT_TESTS",
+            ),
+            (
+                PipelineStageFlags::LATE_FRAGMENT_TESTS.0,
+                "LATE_FRAGMENT_TESTS",
+            ),
+            (
+                PipelineStageFlags::COLOR_ATTACHMENT_OUTPUT.0,
+                "COLOR_ATTACHMENT_OUTPUT",
+            ),
+            (PipelineStageFlags::COMPUTE_SHADER.0, "COMPUTE_SHADER"),
+            (PipelineStageFlags::TRANSFER.0, "TRANSFER"),
+            (PipelineStageFlags::BOTTOM_OF_PIPE.0, "BOTTOM_OF_PIPE"),
+            (PipelineStageFlags::HOST.0, "HOST"),
+            (PipelineStageFlags::ALL_GRAPHICS.0, "ALL_GRAPHICS"),
+            (PipelineStageFlags::ALL_COMMANDS.0, "ALL_COMMANDS"),
+            (PipelineStageFlags::RESERVED_27_KHR.0, "RESERVED_27_KHR"),
+            (PipelineStageFlags::RESERVED_26_KHR.0, "RESERVED_26_KHR"),
+            (
+                PipelineStageFlags::TRANSFORM_FEEDBACK_EXT.0,
+                "TRANSFORM_FEEDBACK_EXT",
+            ),
+            (
+                PipelineStageFlags::CONDITIONAL_RENDERING_EXT.0,
+                "CONDITIONAL_RENDERING_EXT",
+            ),
+            (
+                PipelineStageFlags::COMMAND_PROCESS_NVX.0,
+                "COMMAND_PROCESS_NVX",
+            ),
+            (
+                PipelineStageFlags::SHADING_RATE_IMAGE_NV.0,
+                "SHADING_RATE_IMAGE_NV",
+            ),
+            (
+                PipelineStageFlags::RAY_TRACING_SHADER_NV.0,
+                "RAY_TRACING_SHADER_NV",
+            ),
+            (
+                PipelineStageFlags::ACCELERATION_STRUCTURE_BUILD_NV.0,
+                "ACCELERATION_STRUCTURE_BUILD_NV",
+            ),
+            (PipelineStageFlags::TASK_SHADER_NV.0, "TASK_SHADER_NV"),
+            (PipelineStageFlags::MESH_SHADER_NV.0, "MESH_SHADER_NV"),
+            (
+                PipelineStageFlags::FRAGMENT_DENSITY_PROCESS_EXT.0,
+                "FRAGMENT_DENSITY_PROCESS_EXT",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for SamplerMipmapMode {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::NEAREST => Some("NEAREST"),
+            Self::LINEAR => Some("LINEAR"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for DisplayEventTypeEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::FIRST_PIXEL_OUT => Some("FIRST_PIXEL_OUT"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for ColorComponentFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (ColorComponentFlags::R.0, "R"),
+            (ColorComponentFlags::G.0, "G"),
+            (ColorComponentFlags::B.0, "B"),
+            (ColorComponentFlags::A.0, "A"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for DeviceQueueCreateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(DeviceQueueCreateFlags::PROTECTED.0, "PROTECTED")];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for ImageViewCreateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(
+            ImageViewCreateFlags::FRAGMENT_DENSITY_MAP_DYNAMIC_EXT.0,
+            "FRAGMENT_DENSITY_MAP_DYNAMIC_EXT",
+        )];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for RayTracingShaderGroupTypeNV {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::GENERAL => Some("GENERAL"),
+            Self::TRIANGLES_HIT_GROUP => Some("TRIANGLES_HIT_GROUP"),
+            Self::PROCEDURAL_HIT_GROUP => Some("PROCEDURAL_HIT_GROUP"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for CullModeFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (CullModeFlags::NONE.0, "NONE"),
+            (CullModeFlags::FRONT.0, "FRONT"),
+            (CullModeFlags::BACK.0, "BACK"),
+            (CullModeFlags::FRONT_AND_BACK.0, "FRONT_AND_BACK"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for ValidationFeatureDisableEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::ALL => Some("ALL"),
             Self::SHADERS => Some("SHADERS"),
+            Self::THREAD_SAFETY => Some("THREAD_SAFETY"),
+            Self::API_PARAMETERS => Some("API_PARAMETERS"),
+            Self::OBJECT_LIFETIMES => Some("OBJECT_LIFETIMES"),
+            Self::CORE_CHECKS => Some("CORE_CHECKS"),
+            Self::UNIQUE_HANDLES => Some("UNIQUE_HANDLES"),
             _ => None,
         };
         if let Some(x) = name {
@@ -51371,52 +54632,531 @@ impl fmt::Display for ValidationCheckEXT {
         }
     }
 }
-impl fmt::Display for QueryPipelineStatisticFlags {
+impl fmt::Display for AttachmentDescriptionFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(AttachmentDescriptionFlags::MAY_ALIAS.0, "MAY_ALIAS")];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for DisplayPlaneAlphaFlagsKHR {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (DisplayPlaneAlphaFlagsKHR::OPAQUE.0, "OPAQUE"),
+            (DisplayPlaneAlphaFlagsKHR::GLOBAL.0, "GLOBAL"),
+            (DisplayPlaneAlphaFlagsKHR::PER_PIXEL.0, "PER_PIXEL"),
+            (
+                DisplayPlaneAlphaFlagsKHR::PER_PIXEL_PREMULTIPLIED.0,
+                "PER_PIXEL_PREMULTIPLIED",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for QueueGlobalPriorityEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::LOW => Some("LOW"),
+            Self::MEDIUM => Some("MEDIUM"),
+            Self::HIGH => Some("HIGH"),
+            Self::REALTIME => Some("REALTIME"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for GeometryInstanceFlagsNV {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (
-                QueryPipelineStatisticFlags::INPUT_ASSEMBLY_VERTICES.0,
-                "INPUT_ASSEMBLY_VERTICES",
+                GeometryInstanceFlagsNV::TRIANGLE_CULL_DISABLE.0,
+                "TRIANGLE_CULL_DISABLE",
             ),
             (
-                QueryPipelineStatisticFlags::INPUT_ASSEMBLY_PRIMITIVES.0,
-                "INPUT_ASSEMBLY_PRIMITIVES",
+                GeometryInstanceFlagsNV::TRIANGLE_FRONT_COUNTERCLOCKWISE.0,
+                "TRIANGLE_FRONT_COUNTERCLOCKWISE",
+            ),
+            (GeometryInstanceFlagsNV::FORCE_OPAQUE.0, "FORCE_OPAQUE"),
+            (
+                GeometryInstanceFlagsNV::FORCE_NO_OPAQUE.0,
+                "FORCE_NO_OPAQUE",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for ShadingRatePaletteEntryNV {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::NO_INVOCATIONS => Some("NO_INVOCATIONS"),
+            Self::TYPE_16_INVOCATIONS_PER_PIXEL => Some("TYPE_16_INVOCATIONS_PER_PIXEL"),
+            Self::TYPE_8_INVOCATIONS_PER_PIXEL => Some("TYPE_8_INVOCATIONS_PER_PIXEL"),
+            Self::TYPE_4_INVOCATIONS_PER_PIXEL => Some("TYPE_4_INVOCATIONS_PER_PIXEL"),
+            Self::TYPE_2_INVOCATIONS_PER_PIXEL => Some("TYPE_2_INVOCATIONS_PER_PIXEL"),
+            Self::TYPE_1_INVOCATION_PER_PIXEL => Some("TYPE_1_INVOCATION_PER_PIXEL"),
+            Self::TYPE_1_INVOCATION_PER_2X1_PIXELS => Some("TYPE_1_INVOCATION_PER_2X1_PIXELS"),
+            Self::TYPE_1_INVOCATION_PER_1X2_PIXELS => Some("TYPE_1_INVOCATION_PER_1X2_PIXELS"),
+            Self::TYPE_1_INVOCATION_PER_2X2_PIXELS => Some("TYPE_1_INVOCATION_PER_2X2_PIXELS"),
+            Self::TYPE_1_INVOCATION_PER_4X2_PIXELS => Some("TYPE_1_INVOCATION_PER_4X2_PIXELS"),
+            Self::TYPE_1_INVOCATION_PER_2X4_PIXELS => Some("TYPE_1_INVOCATION_PER_2X4_PIXELS"),
+            Self::TYPE_1_INVOCATION_PER_4X4_PIXELS => Some("TYPE_1_INVOCATION_PER_4X4_PIXELS"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for SparseMemoryBindFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(SparseMemoryBindFlags::METADATA.0, "METADATA")];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for PolygonMode {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::FILL => Some("FILL"),
+            Self::LINE => Some("LINE"),
+            Self::POINT => Some("POINT"),
+            Self::FILL_RECTANGLE_NV => Some("FILL_RECTANGLE_NV"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for SemaphoreImportFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(SemaphoreImportFlags::TEMPORARY.0, "TEMPORARY")];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for PipelineCacheHeaderVersion {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::ONE => Some("ONE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for SurfaceCounterFlagsEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(SurfaceCounterFlagsEXT::VBLANK.0, "VBLANK")];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for BlendOp {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::ADD => Some("ADD"),
+            Self::SUBTRACT => Some("SUBTRACT"),
+            Self::REVERSE_SUBTRACT => Some("REVERSE_SUBTRACT"),
+            Self::MIN => Some("MIN"),
+            Self::MAX => Some("MAX"),
+            Self::ZERO_EXT => Some("ZERO_EXT"),
+            Self::SRC_EXT => Some("SRC_EXT"),
+            Self::DST_EXT => Some("DST_EXT"),
+            Self::SRC_OVER_EXT => Some("SRC_OVER_EXT"),
+            Self::DST_OVER_EXT => Some("DST_OVER_EXT"),
+            Self::SRC_IN_EXT => Some("SRC_IN_EXT"),
+            Self::DST_IN_EXT => Some("DST_IN_EXT"),
+            Self::SRC_OUT_EXT => Some("SRC_OUT_EXT"),
+            Self::DST_OUT_EXT => Some("DST_OUT_EXT"),
+            Self::SRC_ATOP_EXT => Some("SRC_ATOP_EXT"),
+            Self::DST_ATOP_EXT => Some("DST_ATOP_EXT"),
+            Self::XOR_EXT => Some("XOR_EXT"),
+            Self::MULTIPLY_EXT => Some("MULTIPLY_EXT"),
+            Self::SCREEN_EXT => Some("SCREEN_EXT"),
+            Self::OVERLAY_EXT => Some("OVERLAY_EXT"),
+            Self::DARKEN_EXT => Some("DARKEN_EXT"),
+            Self::LIGHTEN_EXT => Some("LIGHTEN_EXT"),
+            Self::COLORDODGE_EXT => Some("COLORDODGE_EXT"),
+            Self::COLORBURN_EXT => Some("COLORBURN_EXT"),
+            Self::HARDLIGHT_EXT => Some("HARDLIGHT_EXT"),
+            Self::SOFTLIGHT_EXT => Some("SOFTLIGHT_EXT"),
+            Self::DIFFERENCE_EXT => Some("DIFFERENCE_EXT"),
+            Self::EXCLUSION_EXT => Some("EXCLUSION_EXT"),
+            Self::INVERT_EXT => Some("INVERT_EXT"),
+            Self::INVERT_RGB_EXT => Some("INVERT_RGB_EXT"),
+            Self::LINEARDODGE_EXT => Some("LINEARDODGE_EXT"),
+            Self::LINEARBURN_EXT => Some("LINEARBURN_EXT"),
+            Self::VIVIDLIGHT_EXT => Some("VIVIDLIGHT_EXT"),
+            Self::LINEARLIGHT_EXT => Some("LINEARLIGHT_EXT"),
+            Self::PINLIGHT_EXT => Some("PINLIGHT_EXT"),
+            Self::HARDMIX_EXT => Some("HARDMIX_EXT"),
+            Self::HSL_HUE_EXT => Some("HSL_HUE_EXT"),
+            Self::HSL_SATURATION_EXT => Some("HSL_SATURATION_EXT"),
+            Self::HSL_COLOR_EXT => Some("HSL_COLOR_EXT"),
+            Self::HSL_LUMINOSITY_EXT => Some("HSL_LUMINOSITY_EXT"),
+            Self::PLUS_EXT => Some("PLUS_EXT"),
+            Self::PLUS_CLAMPED_EXT => Some("PLUS_CLAMPED_EXT"),
+            Self::PLUS_CLAMPED_ALPHA_EXT => Some("PLUS_CLAMPED_ALPHA_EXT"),
+            Self::PLUS_DARKER_EXT => Some("PLUS_DARKER_EXT"),
+            Self::MINUS_EXT => Some("MINUS_EXT"),
+            Self::MINUS_CLAMPED_EXT => Some("MINUS_CLAMPED_EXT"),
+            Self::CONTRAST_EXT => Some("CONTRAST_EXT"),
+            Self::INVERT_OVG_EXT => Some("INVERT_OVG_EXT"),
+            Self::RED_EXT => Some("RED_EXT"),
+            Self::GREEN_EXT => Some("GREEN_EXT"),
+            Self::BLUE_EXT => Some("BLUE_EXT"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for CompareOp {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::NEVER => Some("NEVER"),
+            Self::LESS => Some("LESS"),
+            Self::EQUAL => Some("EQUAL"),
+            Self::LESS_OR_EQUAL => Some("LESS_OR_EQUAL"),
+            Self::GREATER => Some("GREATER"),
+            Self::NOT_EQUAL => Some("NOT_EQUAL"),
+            Self::GREATER_OR_EQUAL => Some("GREATER_OR_EQUAL"),
+            Self::ALWAYS => Some("ALWAYS"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for PipelineCreateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                PipelineCreateFlags::DISABLE_OPTIMIZATION.0,
+                "DISABLE_OPTIMIZATION",
             ),
             (
-                QueryPipelineStatisticFlags::VERTEX_SHADER_INVOCATIONS.0,
-                "VERTEX_SHADER_INVOCATIONS",
+                PipelineCreateFlags::ALLOW_DERIVATIVES.0,
+                "ALLOW_DERIVATIVES",
+            ),
+            (PipelineCreateFlags::DERIVATIVE.0, "DERIVATIVE"),
+            (PipelineCreateFlags::DEFER_COMPILE_NV.0, "DEFER_COMPILE_NV"),
+            (
+                PipelineCreateFlags::VIEW_INDEX_FROM_DEVICE_INDEX.0,
+                "VIEW_INDEX_FROM_DEVICE_INDEX",
+            ),
+            (PipelineCreateFlags::DISPATCH_BASE.0, "DISPATCH_BASE"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for MemoryAllocateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(MemoryAllocateFlags::DEVICE_MASK.0, "DEVICE_MASK")];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for DebugUtilsMessageTypeFlagsEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (DebugUtilsMessageTypeFlagsEXT::GENERAL.0, "GENERAL"),
+            (DebugUtilsMessageTypeFlagsEXT::VALIDATION.0, "VALIDATION"),
+            (DebugUtilsMessageTypeFlagsEXT::PERFORMANCE.0, "PERFORMANCE"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for BufferUsageFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (BufferUsageFlags::TRANSFER_SRC.0, "TRANSFER_SRC"),
+            (BufferUsageFlags::TRANSFER_DST.0, "TRANSFER_DST"),
+            (
+                BufferUsageFlags::UNIFORM_TEXEL_BUFFER.0,
+                "UNIFORM_TEXEL_BUFFER",
             ),
             (
-                QueryPipelineStatisticFlags::GEOMETRY_SHADER_INVOCATIONS.0,
-                "GEOMETRY_SHADER_INVOCATIONS",
+                BufferUsageFlags::STORAGE_TEXEL_BUFFER.0,
+                "STORAGE_TEXEL_BUFFER",
+            ),
+            (BufferUsageFlags::UNIFORM_BUFFER.0, "UNIFORM_BUFFER"),
+            (BufferUsageFlags::STORAGE_BUFFER.0, "STORAGE_BUFFER"),
+            (BufferUsageFlags::INDEX_BUFFER.0, "INDEX_BUFFER"),
+            (BufferUsageFlags::VERTEX_BUFFER.0, "VERTEX_BUFFER"),
+            (BufferUsageFlags::INDIRECT_BUFFER.0, "INDIRECT_BUFFER"),
+            (BufferUsageFlags::RESERVED_15_KHR.0, "RESERVED_15_KHR"),
+            (BufferUsageFlags::RESERVED_16_KHR.0, "RESERVED_16_KHR"),
+            (BufferUsageFlags::RESERVED_13_KHR.0, "RESERVED_13_KHR"),
+            (BufferUsageFlags::RESERVED_14_KHR.0, "RESERVED_14_KHR"),
+            (
+                BufferUsageFlags::TRANSFORM_FEEDBACK_BUFFER_EXT.0,
+                "TRANSFORM_FEEDBACK_BUFFER_EXT",
             ),
             (
-                QueryPipelineStatisticFlags::GEOMETRY_SHADER_PRIMITIVES.0,
-                "GEOMETRY_SHADER_PRIMITIVES",
+                BufferUsageFlags::TRANSFORM_FEEDBACK_COUNTER_BUFFER_EXT.0,
+                "TRANSFORM_FEEDBACK_COUNTER_BUFFER_EXT",
             ),
             (
-                QueryPipelineStatisticFlags::CLIPPING_INVOCATIONS.0,
-                "CLIPPING_INVOCATIONS",
+                BufferUsageFlags::CONDITIONAL_RENDERING_EXT.0,
+                "CONDITIONAL_RENDERING_EXT",
+            ),
+            (BufferUsageFlags::RAY_TRACING_NV.0, "RAY_TRACING_NV"),
+            (
+                BufferUsageFlags::SHADER_DEVICE_ADDRESS_EXT.0,
+                "SHADER_DEVICE_ADDRESS_EXT",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for StencilOp {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::KEEP => Some("KEEP"),
+            Self::ZERO => Some("ZERO"),
+            Self::REPLACE => Some("REPLACE"),
+            Self::INCREMENT_AND_CLAMP => Some("INCREMENT_AND_CLAMP"),
+            Self::DECREMENT_AND_CLAMP => Some("DECREMENT_AND_CLAMP"),
+            Self::INVERT => Some("INVERT"),
+            Self::INCREMENT_AND_WRAP => Some("INCREMENT_AND_WRAP"),
+            Self::DECREMENT_AND_WRAP => Some("DECREMENT_AND_WRAP"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for AttachmentStoreOp {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::STORE => Some("STORE"),
+            Self::DONT_CARE => Some("DONT_CARE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for CopyAccelerationStructureModeNV {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::CLONE => Some("CLONE"),
+            Self::COMPACT => Some("COMPACT"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for QueueFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (QueueFlags::GRAPHICS.0, "GRAPHICS"),
+            (QueueFlags::COMPUTE.0, "COMPUTE"),
+            (QueueFlags::TRANSFER.0, "TRANSFER"),
+            (QueueFlags::SPARSE_BINDING.0, "SPARSE_BINDING"),
+            (QueueFlags::RESERVED_6_KHR.0, "RESERVED_6_KHR"),
+            (QueueFlags::RESERVED_5_KHR.0, "RESERVED_5_KHR"),
+            (QueueFlags::PROTECTED.0, "PROTECTED"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for AccelerationStructureMemoryRequirementsTypeNV {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::OBJECT => Some("OBJECT"),
+            Self::BUILD_SCRATCH => Some("BUILD_SCRATCH"),
+            Self::UPDATE_SCRATCH => Some("UPDATE_SCRATCH"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for ConservativeRasterizationModeEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::DISABLED => Some("DISABLED"),
+            Self::OVERESTIMATE => Some("OVERESTIMATE"),
+            Self::UNDERESTIMATE => Some("UNDERESTIMATE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for PointClippingBehavior {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::ALL_CLIP_PLANES => Some("ALL_CLIP_PLANES"),
+            Self::USER_CLIP_PLANES_ONLY => Some("USER_CLIP_PLANES_ONLY"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for DiscardRectangleModeEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::INCLUSIVE => Some("INCLUSIVE"),
+            Self::EXCLUSIVE => Some("EXCLUSIVE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for DescriptorPoolCreateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                DescriptorPoolCreateFlags::FREE_DESCRIPTOR_SET.0,
+                "FREE_DESCRIPTOR_SET",
             ),
             (
-                QueryPipelineStatisticFlags::CLIPPING_PRIMITIVES.0,
-                "CLIPPING_PRIMITIVES",
+                DescriptorPoolCreateFlags::UPDATE_AFTER_BIND_EXT.0,
+                "UPDATE_AFTER_BIND_EXT",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for CompositeAlphaFlagsKHR {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (CompositeAlphaFlagsKHR::OPAQUE.0, "OPAQUE"),
+            (CompositeAlphaFlagsKHR::PRE_MULTIPLIED.0, "PRE_MULTIPLIED"),
+            (CompositeAlphaFlagsKHR::POST_MULTIPLIED.0, "POST_MULTIPLIED"),
+            (CompositeAlphaFlagsKHR::INHERIT.0, "INHERIT"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for ImageTiling {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::OPTIMAL => Some("OPTIMAL"),
+            Self::LINEAR => Some("LINEAR"),
+            Self::DRM_FORMAT_MODIFIER_EXT => Some("DRM_FORMAT_MODIFIER_EXT"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for CommandBufferUsageFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                CommandBufferUsageFlags::ONE_TIME_SUBMIT.0,
+                "ONE_TIME_SUBMIT",
             ),
             (
-                QueryPipelineStatisticFlags::FRAGMENT_SHADER_INVOCATIONS.0,
-                "FRAGMENT_SHADER_INVOCATIONS",
+                CommandBufferUsageFlags::RENDER_PASS_CONTINUE.0,
+                "RENDER_PASS_CONTINUE",
             ),
             (
-                QueryPipelineStatisticFlags::TESSELLATION_CONTROL_SHADER_PATCHES.0,
-                "TESSELLATION_CONTROL_SHADER_PATCHES",
+                CommandBufferUsageFlags::SIMULTANEOUS_USE.0,
+                "SIMULTANEOUS_USE",
             ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for PresentModeKHR {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::IMMEDIATE => Some("IMMEDIATE"),
+            Self::MAILBOX => Some("MAILBOX"),
+            Self::FIFO => Some("FIFO"),
+            Self::FIFO_RELAXED => Some("FIFO_RELAXED"),
+            Self::SHARED_DEMAND_REFRESH => Some("SHARED_DEMAND_REFRESH"),
+            Self::SHARED_CONTINUOUS_REFRESH => Some("SHARED_CONTINUOUS_REFRESH"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for ValidationCacheHeaderVersionEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::ONE => Some("ONE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for AccelerationStructureTypeNV {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::TOP_LEVEL => Some("TOP_LEVEL"),
+            Self::BOTTOM_LEVEL => Some("BOTTOM_LEVEL"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for DeviceGroupPresentModeFlagsKHR {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (DeviceGroupPresentModeFlagsKHR::LOCAL.0, "LOCAL"),
+            (DeviceGroupPresentModeFlagsKHR::REMOTE.0, "REMOTE"),
+            (DeviceGroupPresentModeFlagsKHR::SUM.0, "SUM"),
             (
-                QueryPipelineStatisticFlags::TESSELLATION_EVALUATION_SHADER_INVOCATIONS.0,
-                "TESSELLATION_EVALUATION_SHADER_INVOCATIONS",
-            ),
-            (
-                QueryPipelineStatisticFlags::COMPUTE_SHADER_INVOCATIONS.0,
-                "COMPUTE_SHADER_INVOCATIONS",
+                DeviceGroupPresentModeFlagsKHR::LOCAL_MULTI_DEVICE.0,
+                "LOCAL_MULTI_DEVICE",
             ),
         ];
         display_flags(f, KNOWN, self.0)
@@ -51450,350 +55190,34 @@ impl fmt::Display for SurfaceTransformFlagsKHR {
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for RenderPassCreateFlags {
+impl fmt::Display for RasterizationOrderAMD {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] =
-            &[(RenderPassCreateFlags::RESERVED_0_KHR.0, "RESERVED_0_KHR")];
-        display_flags(f, KNOWN, self.0)
+        let name = match *self {
+            Self::STRICT => Some("STRICT"),
+            Self::RELAXED => Some("RELAXED"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
     }
 }
-impl fmt::Display for MemoryPropertyFlags {
+impl fmt::Display for MemoryHeapFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
-            (MemoryPropertyFlags::DEVICE_LOCAL.0, "DEVICE_LOCAL"),
-            (MemoryPropertyFlags::HOST_VISIBLE.0, "HOST_VISIBLE"),
-            (MemoryPropertyFlags::HOST_COHERENT.0, "HOST_COHERENT"),
-            (MemoryPropertyFlags::HOST_CACHED.0, "HOST_CACHED"),
-            (MemoryPropertyFlags::LAZILY_ALLOCATED.0, "LAZILY_ALLOCATED"),
-            (MemoryPropertyFlags::PROTECTED.0, "PROTECTED"),
+            (MemoryHeapFlags::DEVICE_LOCAL.0, "DEVICE_LOCAL"),
+            (MemoryHeapFlags::MULTI_INSTANCE.0, "MULTI_INSTANCE"),
         ];
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for CommandPoolCreateFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (CommandPoolCreateFlags::TRANSIENT.0, "TRANSIENT"),
-            (
-                CommandPoolCreateFlags::RESET_COMMAND_BUFFER.0,
-                "RESET_COMMAND_BUFFER",
-            ),
-            (CommandPoolCreateFlags::PROTECTED.0, "PROTECTED"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for AccelerationStructureTypeNV {
+impl fmt::Display for ChromaLocation {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::TOP_LEVEL => Some("TOP_LEVEL"),
-            Self::BOTTOM_LEVEL => Some("BOTTOM_LEVEL"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ImageType {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::TYPE_1D => Some("TYPE_1D"),
-            Self::TYPE_2D => Some("TYPE_2D"),
-            Self::TYPE_3D => Some("TYPE_3D"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for QueryControlFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(QueryControlFlags::PRECISE.0, "PRECISE")];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for ImageCreateFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (ImageCreateFlags::SPARSE_BINDING.0, "SPARSE_BINDING"),
-            (ImageCreateFlags::SPARSE_RESIDENCY.0, "SPARSE_RESIDENCY"),
-            (ImageCreateFlags::SPARSE_ALIASED.0, "SPARSE_ALIASED"),
-            (ImageCreateFlags::MUTABLE_FORMAT.0, "MUTABLE_FORMAT"),
-            (ImageCreateFlags::CUBE_COMPATIBLE.0, "CUBE_COMPATIBLE"),
-            (ImageCreateFlags::CORNER_SAMPLED_NV.0, "CORNER_SAMPLED_NV"),
-            (
-                ImageCreateFlags::SAMPLE_LOCATIONS_COMPATIBLE_DEPTH_EXT.0,
-                "SAMPLE_LOCATIONS_COMPATIBLE_DEPTH_EXT",
-            ),
-            (ImageCreateFlags::RESERVED_14_EXT.0, "RESERVED_14_EXT"),
-            (ImageCreateFlags::ALIAS.0, "ALIAS"),
-            (
-                ImageCreateFlags::SPLIT_INSTANCE_BIND_REGIONS.0,
-                "SPLIT_INSTANCE_BIND_REGIONS",
-            ),
-            (
-                ImageCreateFlags::TYPE_2D_ARRAY_COMPATIBLE.0,
-                "TYPE_2D_ARRAY_COMPATIBLE",
-            ),
-            (
-                ImageCreateFlags::BLOCK_TEXEL_VIEW_COMPATIBLE.0,
-                "BLOCK_TEXEL_VIEW_COMPATIBLE",
-            ),
-            (ImageCreateFlags::EXTENDED_USAGE.0, "EXTENDED_USAGE"),
-            (ImageCreateFlags::PROTECTED.0, "PROTECTED"),
-            (ImageCreateFlags::DISJOINT.0, "DISJOINT"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for ObjectType {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::UNKNOWN => Some("UNKNOWN"),
-            Self::INSTANCE => Some("INSTANCE"),
-            Self::PHYSICAL_DEVICE => Some("PHYSICAL_DEVICE"),
-            Self::DEVICE => Some("DEVICE"),
-            Self::QUEUE => Some("QUEUE"),
-            Self::SEMAPHORE => Some("SEMAPHORE"),
-            Self::COMMAND_BUFFER => Some("COMMAND_BUFFER"),
-            Self::FENCE => Some("FENCE"),
-            Self::DEVICE_MEMORY => Some("DEVICE_MEMORY"),
-            Self::BUFFER => Some("BUFFER"),
-            Self::IMAGE => Some("IMAGE"),
-            Self::EVENT => Some("EVENT"),
-            Self::QUERY_POOL => Some("QUERY_POOL"),
-            Self::BUFFER_VIEW => Some("BUFFER_VIEW"),
-            Self::IMAGE_VIEW => Some("IMAGE_VIEW"),
-            Self::SHADER_MODULE => Some("SHADER_MODULE"),
-            Self::PIPELINE_CACHE => Some("PIPELINE_CACHE"),
-            Self::PIPELINE_LAYOUT => Some("PIPELINE_LAYOUT"),
-            Self::RENDER_PASS => Some("RENDER_PASS"),
-            Self::PIPELINE => Some("PIPELINE"),
-            Self::DESCRIPTOR_SET_LAYOUT => Some("DESCRIPTOR_SET_LAYOUT"),
-            Self::SAMPLER => Some("SAMPLER"),
-            Self::DESCRIPTOR_POOL => Some("DESCRIPTOR_POOL"),
-            Self::DESCRIPTOR_SET => Some("DESCRIPTOR_SET"),
-            Self::FRAMEBUFFER => Some("FRAMEBUFFER"),
-            Self::COMMAND_POOL => Some("COMMAND_POOL"),
-            Self::SURFACE_KHR => Some("SURFACE_KHR"),
-            Self::SWAPCHAIN_KHR => Some("SWAPCHAIN_KHR"),
-            Self::DISPLAY_KHR => Some("DISPLAY_KHR"),
-            Self::DISPLAY_MODE_KHR => Some("DISPLAY_MODE_KHR"),
-            Self::DEBUG_REPORT_CALLBACK_EXT => Some("DEBUG_REPORT_CALLBACK_EXT"),
-            Self::OBJECT_TABLE_NVX => Some("OBJECT_TABLE_NVX"),
-            Self::INDIRECT_COMMANDS_LAYOUT_NVX => Some("INDIRECT_COMMANDS_LAYOUT_NVX"),
-            Self::DEBUG_UTILS_MESSENGER_EXT => Some("DEBUG_UTILS_MESSENGER_EXT"),
-            Self::VALIDATION_CACHE_EXT => Some("VALIDATION_CACHE_EXT"),
-            Self::ACCELERATION_STRUCTURE_NV => Some("ACCELERATION_STRUCTURE_NV"),
-            Self::SAMPLER_YCBCR_CONVERSION => Some("SAMPLER_YCBCR_CONVERSION"),
-            Self::DESCRIPTOR_UPDATE_TEMPLATE => Some("DESCRIPTOR_UPDATE_TEMPLATE"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for QueryType {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::OCCLUSION => Some("OCCLUSION"),
-            Self::PIPELINE_STATISTICS => Some("PIPELINE_STATISTICS"),
-            Self::TIMESTAMP => Some("TIMESTAMP"),
-            Self::TRANSFORM_FEEDBACK_STREAM_EXT => Some("TRANSFORM_FEEDBACK_STREAM_EXT"),
-            Self::ACCELERATION_STRUCTURE_COMPACTED_SIZE_NV => {
-                Some("ACCELERATION_STRUCTURE_COMPACTED_SIZE_NV")
-            }
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for TessellationDomainOrigin {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::UPPER_LEFT => Some("UPPER_LEFT"),
-            Self::LOWER_LEFT => Some("LOWER_LEFT"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for DescriptorSetLayoutCreateFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                DescriptorSetLayoutCreateFlags::PUSH_DESCRIPTOR_KHR.0,
-                "PUSH_DESCRIPTOR_KHR",
-            ),
-            (
-                DescriptorSetLayoutCreateFlags::UPDATE_AFTER_BIND_POOL_EXT.0,
-                "UPDATE_AFTER_BIND_POOL_EXT",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for SamplerReductionModeEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::WEIGHTED_AVERAGE => Some("WEIGHTED_AVERAGE"),
-            Self::MIN => Some("MIN"),
-            Self::MAX => Some("MAX"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ValidationCacheHeaderVersionEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::ONE => Some("ONE"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ComponentSwizzle {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::IDENTITY => Some("IDENTITY"),
-            Self::ZERO => Some("ZERO"),
-            Self::ONE => Some("ONE"),
-            Self::R => Some("R"),
-            Self::G => Some("G"),
-            Self::B => Some("B"),
-            Self::A => Some("A"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for BlendOverlapEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::UNCORRELATED => Some("UNCORRELATED"),
-            Self::DISJOINT => Some("DISJOINT"),
-            Self::CONJOINT => Some("CONJOINT"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for VendorId {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::VIV => Some("VIV"),
-            Self::VSI => Some("VSI"),
-            Self::KAZAN => Some("KAZAN"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for PipelineCacheHeaderVersion {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::ONE => Some("ONE"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for MemoryOverallocationBehaviorAMD {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::DEFAULT => Some("DEFAULT"),
-            Self::ALLOWED => Some("ALLOWED"),
-            Self::DISALLOWED => Some("DISALLOWED"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for SamplerMipmapMode {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::NEAREST => Some("NEAREST"),
-            Self::LINEAR => Some("LINEAR"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for DisplayPlaneAlphaFlagsKHR {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (DisplayPlaneAlphaFlagsKHR::OPAQUE.0, "OPAQUE"),
-            (DisplayPlaneAlphaFlagsKHR::GLOBAL.0, "GLOBAL"),
-            (DisplayPlaneAlphaFlagsKHR::PER_PIXEL.0, "PER_PIXEL"),
-            (
-                DisplayPlaneAlphaFlagsKHR::PER_PIXEL_PREMULTIPLIED.0,
-                "PER_PIXEL_PREMULTIPLIED",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for ExternalMemoryHandleTypeFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN : & [ ( Flags , & str ) ] = & [ ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32 . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_ANDROID_HARDWARE_BUFFER_ANDROID . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_ANDROID_HARDWARE_BUFFER_ANDROID" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_HOST_ALLOCATION . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_HOST_ALLOCATION" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_HOST_MAPPED_FOREIGN_MEMORY . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_HOST_MAPPED_FOREIGN_MEMORY" ) ] ;
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for SubpassContents {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::INLINE => Some("INLINE"),
-            Self::SECONDARY_COMMAND_BUFFERS => Some("SECONDARY_COMMAND_BUFFERS"),
+            Self::COSITED_EVEN => Some("COSITED_EVEN"),
+            Self::MIDPOINT => Some("MIDPOINT"),
             _ => None,
         };
         if let Some(x) = name {
@@ -51817,179 +55241,29 @@ impl fmt::Display for SamplerYcbcrRange {
         }
     }
 }
-impl fmt::Display for ViewportCoordinateSwizzleNV {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::POSITIVE_X => Some("POSITIVE_X"),
-            Self::NEGATIVE_X => Some("NEGATIVE_X"),
-            Self::POSITIVE_Y => Some("POSITIVE_Y"),
-            Self::NEGATIVE_Y => Some("NEGATIVE_Y"),
-            Self::POSITIVE_Z => Some("POSITIVE_Z"),
-            Self::NEGATIVE_Z => Some("NEGATIVE_Z"),
-            Self::POSITIVE_W => Some("POSITIVE_W"),
-            Self::NEGATIVE_W => Some("NEGATIVE_W"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for DependencyFlags {
+impl fmt::Display for BufferCreateFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
-            (DependencyFlags::BY_REGION.0, "BY_REGION"),
-            (DependencyFlags::DEVICE_GROUP.0, "DEVICE_GROUP"),
-            (DependencyFlags::VIEW_LOCAL.0, "VIEW_LOCAL"),
+            (BufferCreateFlags::SPARSE_BINDING.0, "SPARSE_BINDING"),
+            (BufferCreateFlags::SPARSE_RESIDENCY.0, "SPARSE_RESIDENCY"),
+            (BufferCreateFlags::SPARSE_ALIASED.0, "SPARSE_ALIASED"),
+            (
+                BufferCreateFlags::DEVICE_ADDRESS_CAPTURE_REPLAY_EXT.0,
+                "DEVICE_ADDRESS_CAPTURE_REPLAY_EXT",
+            ),
+            (BufferCreateFlags::PROTECTED.0, "PROTECTED"),
         ];
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for SparseMemoryBindFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(SparseMemoryBindFlags::METADATA.0, "METADATA")];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for DeviceQueueCreateFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(DeviceQueueCreateFlags::PROTECTED.0, "PROTECTED")];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for PhysicalDeviceType {
+impl fmt::Display for SamplerYcbcrModelConversion {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::OTHER => Some("OTHER"),
-            Self::INTEGRATED_GPU => Some("INTEGRATED_GPU"),
-            Self::DISCRETE_GPU => Some("DISCRETE_GPU"),
-            Self::VIRTUAL_GPU => Some("VIRTUAL_GPU"),
-            Self::CPU => Some("CPU"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for BufferUsageFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (BufferUsageFlags::TRANSFER_SRC.0, "TRANSFER_SRC"),
-            (BufferUsageFlags::TRANSFER_DST.0, "TRANSFER_DST"),
-            (
-                BufferUsageFlags::UNIFORM_TEXEL_BUFFER.0,
-                "UNIFORM_TEXEL_BUFFER",
-            ),
-            (
-                BufferUsageFlags::STORAGE_TEXEL_BUFFER.0,
-                "STORAGE_TEXEL_BUFFER",
-            ),
-            (BufferUsageFlags::UNIFORM_BUFFER.0, "UNIFORM_BUFFER"),
-            (BufferUsageFlags::STORAGE_BUFFER.0, "STORAGE_BUFFER"),
-            (BufferUsageFlags::INDEX_BUFFER.0, "INDEX_BUFFER"),
-            (BufferUsageFlags::VERTEX_BUFFER.0, "VERTEX_BUFFER"),
-            (BufferUsageFlags::INDIRECT_BUFFER.0, "INDIRECT_BUFFER"),
-            (
-                BufferUsageFlags::TRANSFORM_FEEDBACK_BUFFER_EXT.0,
-                "TRANSFORM_FEEDBACK_BUFFER_EXT",
-            ),
-            (
-                BufferUsageFlags::TRANSFORM_FEEDBACK_COUNTER_BUFFER_EXT.0,
-                "TRANSFORM_FEEDBACK_COUNTER_BUFFER_EXT",
-            ),
-            (
-                BufferUsageFlags::CONDITIONAL_RENDERING_EXT.0,
-                "CONDITIONAL_RENDERING_EXT",
-            ),
-            (BufferUsageFlags::RAY_TRACING_NV.0, "RAY_TRACING_NV"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for ShaderInfoTypeAMD {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::STATISTICS => Some("STATISTICS"),
-            Self::BINARY => Some("BINARY"),
-            Self::DISASSEMBLY => Some("DISASSEMBLY"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for DriverIdKHR {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::AMD_PROPRIETARY => Some("AMD_PROPRIETARY"),
-            Self::AMD_OPEN_SOURCE => Some("AMD_OPEN_SOURCE"),
-            Self::MESA_RADV => Some("MESA_RADV"),
-            Self::NVIDIA_PROPRIETARY => Some("NVIDIA_PROPRIETARY"),
-            Self::INTEL_PROPRIETARY_WINDOWS => Some("INTEL_PROPRIETARY_WINDOWS"),
-            Self::INTEL_OPEN_SOURCE_MESA => Some("INTEL_OPEN_SOURCE_MESA"),
-            Self::IMAGINATION_PROPRIETARY => Some("IMAGINATION_PROPRIETARY"),
-            Self::QUALCOMM_PROPRIETARY => Some("QUALCOMM_PROPRIETARY"),
-            Self::ARM_PROPRIETARY => Some("ARM_PROPRIETARY"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for PeerMemoryFeatureFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (PeerMemoryFeatureFlags::COPY_SRC.0, "COPY_SRC"),
-            (PeerMemoryFeatureFlags::COPY_DST.0, "COPY_DST"),
-            (PeerMemoryFeatureFlags::GENERIC_SRC.0, "GENERIC_SRC"),
-            (PeerMemoryFeatureFlags::GENERIC_DST.0, "GENERIC_DST"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for CommandBufferResetFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(
-            CommandBufferResetFlags::RELEASE_RESOURCES.0,
-            "RELEASE_RESOURCES",
-        )];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for SurfaceCounterFlagsEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(SurfaceCounterFlagsEXT::VBLANK.0, "VBLANK")];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for DisplayEventTypeEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::FIRST_PIXEL_OUT => Some("FIRST_PIXEL_OUT"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for DescriptorUpdateTemplateType {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::DESCRIPTOR_SET => Some("DESCRIPTOR_SET"),
+            Self::RGB_IDENTITY => Some("RGB_IDENTITY"),
+            Self::YCBCR_IDENTITY => Some("YCBCR_IDENTITY"),
+            Self::YCBCR_709 => Some("YCBCR_709"),
+            Self::YCBCR_601 => Some("YCBCR_601"),
+            Self::YCBCR_2020 => Some("YCBCR_2020"),
             _ => None,
         };
         if let Some(x) = name {
@@ -52015,20 +55289,10 @@ impl fmt::Display for CoarseSampleOrderTypeNV {
         }
     }
 }
-impl fmt::Display for PrimitiveTopology {
+impl fmt::Display for InternalAllocationType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::POINT_LIST => Some("POINT_LIST"),
-            Self::LINE_LIST => Some("LINE_LIST"),
-            Self::LINE_STRIP => Some("LINE_STRIP"),
-            Self::TRIANGLE_LIST => Some("TRIANGLE_LIST"),
-            Self::TRIANGLE_STRIP => Some("TRIANGLE_STRIP"),
-            Self::TRIANGLE_FAN => Some("TRIANGLE_FAN"),
-            Self::LINE_LIST_WITH_ADJACENCY => Some("LINE_LIST_WITH_ADJACENCY"),
-            Self::LINE_STRIP_WITH_ADJACENCY => Some("LINE_STRIP_WITH_ADJACENCY"),
-            Self::TRIANGLE_LIST_WITH_ADJACENCY => Some("TRIANGLE_LIST_WITH_ADJACENCY"),
-            Self::TRIANGLE_STRIP_WITH_ADJACENCY => Some("TRIANGLE_STRIP_WITH_ADJACENCY"),
-            Self::PATCH_LIST => Some("PATCH_LIST"),
+            Self::EXECUTABLE => Some("EXECUTABLE"),
             _ => None,
         };
         if let Some(x) = name {
@@ -52038,11 +55302,12 @@ impl fmt::Display for PrimitiveTopology {
         }
     }
 }
-impl fmt::Display for RasterizationOrderAMD {
+impl fmt::Display for ImageType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::STRICT => Some("STRICT"),
-            Self::RELAXED => Some("RELAXED"),
+            Self::TYPE_1D => Some("TYPE_1D"),
+            Self::TYPE_2D => Some("TYPE_2D"),
+            Self::TYPE_3D => Some("TYPE_3D"),
             _ => None,
         };
         if let Some(x) = name {
@@ -52052,153 +55317,11 @@ impl fmt::Display for RasterizationOrderAMD {
         }
     }
 }
-impl fmt::Display for SwapchainCreateFlagsKHR {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                SwapchainCreateFlagsKHR::SPLIT_INSTANCE_BIND_REGIONS.0,
-                "SPLIT_INSTANCE_BIND_REGIONS",
-            ),
-            (SwapchainCreateFlagsKHR::PROTECTED.0, "PROTECTED"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for SystemAllocationScope {
+impl fmt::Display for TessellationDomainOrigin {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::COMMAND => Some("COMMAND"),
-            Self::OBJECT => Some("OBJECT"),
-            Self::CACHE => Some("CACHE"),
-            Self::DEVICE => Some("DEVICE"),
-            Self::INSTANCE => Some("INSTANCE"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for IndirectCommandsTokenTypeNVX {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::PIPELINE => Some("PIPELINE"),
-            Self::DESCRIPTOR_SET => Some("DESCRIPTOR_SET"),
-            Self::INDEX_BUFFER => Some("INDEX_BUFFER"),
-            Self::VERTEX_BUFFER => Some("VERTEX_BUFFER"),
-            Self::PUSH_CONSTANT => Some("PUSH_CONSTANT"),
-            Self::DRAW_INDEXED => Some("DRAW_INDEXED"),
-            Self::DRAW => Some("DRAW"),
-            Self::DISPATCH => Some("DISPATCH"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ObjectEntryTypeNVX {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::DESCRIPTOR_SET => Some("DESCRIPTOR_SET"),
-            Self::PIPELINE => Some("PIPELINE"),
-            Self::INDEX_BUFFER => Some("INDEX_BUFFER"),
-            Self::VERTEX_BUFFER => Some("VERTEX_BUFFER"),
-            Self::PUSH_CONSTANT => Some("PUSH_CONSTANT"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for PipelineBindPoint {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::GRAPHICS => Some("GRAPHICS"),
-            Self::COMPUTE => Some("COMPUTE"),
-            Self::RAY_TRACING_NV => Some("RAY_TRACING_NV"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ExternalMemoryFeatureFlagsNV {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                ExternalMemoryFeatureFlagsNV::EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_NV.0,
-                "EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_NV",
-            ),
-            (
-                ExternalMemoryFeatureFlagsNV::EXTERNAL_MEMORY_FEATURE_EXPORTABLE_NV.0,
-                "EXTERNAL_MEMORY_FEATURE_EXPORTABLE_NV",
-            ),
-            (
-                ExternalMemoryFeatureFlagsNV::EXTERNAL_MEMORY_FEATURE_IMPORTABLE_NV.0,
-                "EXTERNAL_MEMORY_FEATURE_IMPORTABLE_NV",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for RayTracingShaderGroupTypeNV {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::GENERAL => Some("GENERAL"),
-            Self::TRIANGLES_HIT_GROUP => Some("TRIANGLES_HIT_GROUP"),
-            Self::PROCEDURAL_HIT_GROUP => Some("PROCEDURAL_HIT_GROUP"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for CommandPoolResetFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(
-            CommandPoolResetFlags::RELEASE_RESOURCES.0,
-            "RELEASE_RESOURCES",
-        )];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for SampleCountFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (SampleCountFlags::TYPE_1.0, "TYPE_1"),
-            (SampleCountFlags::TYPE_2.0, "TYPE_2"),
-            (SampleCountFlags::TYPE_4.0, "TYPE_4"),
-            (SampleCountFlags::TYPE_8.0, "TYPE_8"),
-            (SampleCountFlags::TYPE_16.0, "TYPE_16"),
-            (SampleCountFlags::TYPE_32.0, "TYPE_32"),
-            (SampleCountFlags::TYPE_64.0, "TYPE_64"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for PresentModeKHR {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::IMMEDIATE => Some("IMMEDIATE"),
-            Self::MAILBOX => Some("MAILBOX"),
-            Self::FIFO => Some("FIFO"),
-            Self::FIFO_RELAXED => Some("FIFO_RELAXED"),
-            Self::SHARED_DEMAND_REFRESH => Some("SHARED_DEMAND_REFRESH"),
-            Self::SHARED_CONTINUOUS_REFRESH => Some("SHARED_CONTINUOUS_REFRESH"),
+            Self::UPPER_LEFT => Some("UPPER_LEFT"),
+            Self::LOWER_LEFT => Some("LOWER_LEFT"),
             _ => None,
         };
         if let Some(x) = name {
@@ -52223,11 +55346,14 @@ impl fmt::Display for ExternalSemaphoreFeatureFlags {
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for VertexInputRate {
+impl fmt::Display for ObjectEntryTypeNVX {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::VERTEX => Some("VERTEX"),
-            Self::INSTANCE => Some("INSTANCE"),
+            Self::DESCRIPTOR_SET => Some("DESCRIPTOR_SET"),
+            Self::PIPELINE => Some("PIPELINE"),
+            Self::INDEX_BUFFER => Some("INDEX_BUFFER"),
+            Self::VERTEX_BUFFER => Some("VERTEX_BUFFER"),
+            Self::PUSH_CONSTANT => Some("PUSH_CONSTANT"),
             _ => None,
         };
         if let Some(x) = name {
@@ -52237,158 +55363,50 @@ impl fmt::Display for VertexInputRate {
         }
     }
 }
-impl fmt::Display for SamplerYcbcrModelConversion {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::RGB_IDENTITY => Some("RGB_IDENTITY"),
-            Self::YCBCR_IDENTITY => Some("YCBCR_IDENTITY"),
-            Self::YCBCR_709 => Some("YCBCR_709"),
-            Self::YCBCR_601 => Some("YCBCR_601"),
-            Self::YCBCR_2020 => Some("YCBCR_2020"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for PipelineCreateFlags {
+impl fmt::Display for ImageUsageFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
+            (ImageUsageFlags::TRANSFER_SRC.0, "TRANSFER_SRC"),
+            (ImageUsageFlags::TRANSFER_DST.0, "TRANSFER_DST"),
+            (ImageUsageFlags::SAMPLED.0, "SAMPLED"),
+            (ImageUsageFlags::STORAGE.0, "STORAGE"),
+            (ImageUsageFlags::COLOR_ATTACHMENT.0, "COLOR_ATTACHMENT"),
             (
-                PipelineCreateFlags::DISABLE_OPTIMIZATION.0,
-                "DISABLE_OPTIMIZATION",
+                ImageUsageFlags::DEPTH_STENCIL_ATTACHMENT.0,
+                "DEPTH_STENCIL_ATTACHMENT",
             ),
             (
-                PipelineCreateFlags::ALLOW_DERIVATIVES.0,
-                "ALLOW_DERIVATIVES",
+                ImageUsageFlags::TRANSIENT_ATTACHMENT.0,
+                "TRANSIENT_ATTACHMENT",
             ),
-            (PipelineCreateFlags::DERIVATIVE.0, "DERIVATIVE"),
-            (PipelineCreateFlags::DEFER_COMPILE_NV.0, "DEFER_COMPILE_NV"),
+            (ImageUsageFlags::INPUT_ATTACHMENT.0, "INPUT_ATTACHMENT"),
+            (ImageUsageFlags::RESERVED_13_KHR.0, "RESERVED_13_KHR"),
+            (ImageUsageFlags::RESERVED_14_KHR.0, "RESERVED_14_KHR"),
+            (ImageUsageFlags::RESERVED_15_KHR.0, "RESERVED_15_KHR"),
+            (ImageUsageFlags::RESERVED_10_KHR.0, "RESERVED_10_KHR"),
+            (ImageUsageFlags::RESERVED_11_KHR.0, "RESERVED_11_KHR"),
+            (ImageUsageFlags::RESERVED_12_KHR.0, "RESERVED_12_KHR"),
             (
-                PipelineCreateFlags::VIEW_INDEX_FROM_DEVICE_INDEX.0,
-                "VIEW_INDEX_FROM_DEVICE_INDEX",
+                ImageUsageFlags::SHADING_RATE_IMAGE_NV.0,
+                "SHADING_RATE_IMAGE_NV",
             ),
-            (PipelineCreateFlags::DISPATCH_BASE.0, "DISPATCH_BASE"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for StencilFaceFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (StencilFaceFlags::FRONT.0, "FRONT"),
-            (StencilFaceFlags::BACK.0, "BACK"),
             (
-                StencilFaceFlags::STENCIL_FRONT_AND_BACK.0,
-                "STENCIL_FRONT_AND_BACK",
+                ImageUsageFlags::FRAGMENT_DENSITY_MAP_EXT.0,
+                "FRAGMENT_DENSITY_MAP_EXT",
             ),
         ];
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for IndirectCommandsLayoutUsageFlagsNVX {
+impl fmt::Display for SwapchainCreateFlagsKHR {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (
-                IndirectCommandsLayoutUsageFlagsNVX::UNORDERED_SEQUENCES.0,
-                "UNORDERED_SEQUENCES",
+                SwapchainCreateFlagsKHR::SPLIT_INSTANCE_BIND_REGIONS.0,
+                "SPLIT_INSTANCE_BIND_REGIONS",
             ),
-            (
-                IndirectCommandsLayoutUsageFlagsNVX::SPARSE_SEQUENCES.0,
-                "SPARSE_SEQUENCES",
-            ),
-            (
-                IndirectCommandsLayoutUsageFlagsNVX::EMPTY_EXECUTIONS.0,
-                "EMPTY_EXECUTIONS",
-            ),
-            (
-                IndirectCommandsLayoutUsageFlagsNVX::INDEXED_SEQUENCES.0,
-                "INDEXED_SEQUENCES",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for ExternalFenceHandleTypeFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD.0,
-                "EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD",
-            ),
-            (
-                ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32.0,
-                "EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32",
-            ),
-            (
-                ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT.0,
-                "EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT",
-            ),
-            (
-                ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD.0,
-                "EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for SparseImageFormatFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (SparseImageFormatFlags::SINGLE_MIPTAIL.0, "SINGLE_MIPTAIL"),
-            (
-                SparseImageFormatFlags::ALIGNED_MIP_SIZE.0,
-                "ALIGNED_MIP_SIZE",
-            ),
-            (
-                SparseImageFormatFlags::NONSTANDARD_BLOCK_SIZE.0,
-                "NONSTANDARD_BLOCK_SIZE",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for DescriptorPoolCreateFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                DescriptorPoolCreateFlags::FREE_DESCRIPTOR_SET.0,
-                "FREE_DESCRIPTOR_SET",
-            ),
-            (
-                DescriptorPoolCreateFlags::UPDATE_AFTER_BIND_EXT.0,
-                "UPDATE_AFTER_BIND_EXT",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for DebugUtilsMessageTypeFlagsEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (DebugUtilsMessageTypeFlagsEXT::GENERAL.0, "GENERAL"),
-            (DebugUtilsMessageTypeFlagsEXT::VALIDATION.0, "VALIDATION"),
-            (DebugUtilsMessageTypeFlagsEXT::PERFORMANCE.0, "PERFORMANCE"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for SemaphoreImportFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(SemaphoreImportFlags::TEMPORARY.0, "TEMPORARY")];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for ColorComponentFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (ColorComponentFlags::R.0, "R"),
-            (ColorComponentFlags::G.0, "G"),
-            (ColorComponentFlags::B.0, "B"),
-            (ColorComponentFlags::A.0, "A"),
+            (SwapchainCreateFlagsKHR::PROTECTED.0, "PROTECTED"),
+            (SwapchainCreateFlagsKHR::MUTABLE_FORMAT.0, "MUTABLE_FORMAT"),
         ];
         display_flags(f, KNOWN, self.0)
     }
@@ -52660,9 +55678,274 @@ impl fmt::Display for Format {
         }
     }
 }
-impl fmt::Display for ConditionalRenderingFlagsEXT {
+impl fmt::Display for VendorId {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(ConditionalRenderingFlagsEXT::INVERTED.0, "INVERTED")];
+        let name = match *self {
+            Self::VIV => Some("VIV"),
+            Self::VSI => Some("VSI"),
+            Self::KAZAN => Some("KAZAN"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for RenderPassCreateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] =
+            &[(RenderPassCreateFlags::RESERVED_0_KHR.0, "RESERVED_0_KHR")];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for FrontFace {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::COUNTER_CLOCKWISE => Some("COUNTER_CLOCKWISE"),
+            Self::CLOCKWISE => Some("CLOCKWISE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for BlendOverlapEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::UNCORRELATED => Some("UNCORRELATED"),
+            Self::DISJOINT => Some("DISJOINT"),
+            Self::CONJOINT => Some("CONJOINT"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for CommandBufferResetFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(
+            CommandBufferResetFlags::RELEASE_RESOURCES.0,
+            "RELEASE_RESOURCES",
+        )];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for IndirectCommandsTokenTypeNVX {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::PIPELINE => Some("PIPELINE"),
+            Self::DESCRIPTOR_SET => Some("DESCRIPTOR_SET"),
+            Self::INDEX_BUFFER => Some("INDEX_BUFFER"),
+            Self::VERTEX_BUFFER => Some("VERTEX_BUFFER"),
+            Self::PUSH_CONSTANT => Some("PUSH_CONSTANT"),
+            Self::DRAW_INDEXED => Some("DRAW_INDEXED"),
+            Self::DRAW => Some("DRAW"),
+            Self::DISPATCH => Some("DISPATCH"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for DescriptorUpdateTemplateType {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::DESCRIPTOR_SET => Some("DESCRIPTOR_SET"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for ObjectType {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::UNKNOWN => Some("UNKNOWN"),
+            Self::INSTANCE => Some("INSTANCE"),
+            Self::PHYSICAL_DEVICE => Some("PHYSICAL_DEVICE"),
+            Self::DEVICE => Some("DEVICE"),
+            Self::QUEUE => Some("QUEUE"),
+            Self::SEMAPHORE => Some("SEMAPHORE"),
+            Self::COMMAND_BUFFER => Some("COMMAND_BUFFER"),
+            Self::FENCE => Some("FENCE"),
+            Self::DEVICE_MEMORY => Some("DEVICE_MEMORY"),
+            Self::BUFFER => Some("BUFFER"),
+            Self::IMAGE => Some("IMAGE"),
+            Self::EVENT => Some("EVENT"),
+            Self::QUERY_POOL => Some("QUERY_POOL"),
+            Self::BUFFER_VIEW => Some("BUFFER_VIEW"),
+            Self::IMAGE_VIEW => Some("IMAGE_VIEW"),
+            Self::SHADER_MODULE => Some("SHADER_MODULE"),
+            Self::PIPELINE_CACHE => Some("PIPELINE_CACHE"),
+            Self::PIPELINE_LAYOUT => Some("PIPELINE_LAYOUT"),
+            Self::RENDER_PASS => Some("RENDER_PASS"),
+            Self::PIPELINE => Some("PIPELINE"),
+            Self::DESCRIPTOR_SET_LAYOUT => Some("DESCRIPTOR_SET_LAYOUT"),
+            Self::SAMPLER => Some("SAMPLER"),
+            Self::DESCRIPTOR_POOL => Some("DESCRIPTOR_POOL"),
+            Self::DESCRIPTOR_SET => Some("DESCRIPTOR_SET"),
+            Self::FRAMEBUFFER => Some("FRAMEBUFFER"),
+            Self::COMMAND_POOL => Some("COMMAND_POOL"),
+            Self::SURFACE_KHR => Some("SURFACE_KHR"),
+            Self::SWAPCHAIN_KHR => Some("SWAPCHAIN_KHR"),
+            Self::DISPLAY_KHR => Some("DISPLAY_KHR"),
+            Self::DISPLAY_MODE_KHR => Some("DISPLAY_MODE_KHR"),
+            Self::DEBUG_REPORT_CALLBACK_EXT => Some("DEBUG_REPORT_CALLBACK_EXT"),
+            Self::OBJECT_TABLE_NVX => Some("OBJECT_TABLE_NVX"),
+            Self::INDIRECT_COMMANDS_LAYOUT_NVX => Some("INDIRECT_COMMANDS_LAYOUT_NVX"),
+            Self::DEBUG_UTILS_MESSENGER_EXT => Some("DEBUG_UTILS_MESSENGER_EXT"),
+            Self::VALIDATION_CACHE_EXT => Some("VALIDATION_CACHE_EXT"),
+            Self::ACCELERATION_STRUCTURE_NV => Some("ACCELERATION_STRUCTURE_NV"),
+            Self::SAMPLER_YCBCR_CONVERSION => Some("SAMPLER_YCBCR_CONVERSION"),
+            Self::DESCRIPTOR_UPDATE_TEMPLATE => Some("DESCRIPTOR_UPDATE_TEMPLATE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for BorderColor {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::FLOAT_TRANSPARENT_BLACK => Some("FLOAT_TRANSPARENT_BLACK"),
+            Self::INT_TRANSPARENT_BLACK => Some("INT_TRANSPARENT_BLACK"),
+            Self::FLOAT_OPAQUE_BLACK => Some("FLOAT_OPAQUE_BLACK"),
+            Self::INT_OPAQUE_BLACK => Some("INT_OPAQUE_BLACK"),
+            Self::FLOAT_OPAQUE_WHITE => Some("FLOAT_OPAQUE_WHITE"),
+            Self::INT_OPAQUE_WHITE => Some("INT_OPAQUE_WHITE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for CoverageModulationModeNV {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::NONE => Some("NONE"),
+            Self::RGB => Some("RGB"),
+            Self::ALPHA => Some("ALPHA"),
+            Self::RGBA => Some("RGBA"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for ShaderInfoTypeAMD {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::STATISTICS => Some("STATISTICS"),
+            Self::BINARY => Some("BINARY"),
+            Self::DISASSEMBLY => Some("DISASSEMBLY"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for ShaderStageFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (ShaderStageFlags::VERTEX.0, "VERTEX"),
+            (
+                ShaderStageFlags::TESSELLATION_CONTROL.0,
+                "TESSELLATION_CONTROL",
+            ),
+            (
+                ShaderStageFlags::TESSELLATION_EVALUATION.0,
+                "TESSELLATION_EVALUATION",
+            ),
+            (ShaderStageFlags::GEOMETRY.0, "GEOMETRY"),
+            (ShaderStageFlags::FRAGMENT.0, "FRAGMENT"),
+            (ShaderStageFlags::COMPUTE.0, "COMPUTE"),
+            (ShaderStageFlags::ALL_GRAPHICS.0, "ALL_GRAPHICS"),
+            (ShaderStageFlags::ALL.0, "ALL"),
+            (ShaderStageFlags::RAYGEN_NV.0, "RAYGEN_NV"),
+            (ShaderStageFlags::ANY_HIT_NV.0, "ANY_HIT_NV"),
+            (ShaderStageFlags::CLOSEST_HIT_NV.0, "CLOSEST_HIT_NV"),
+            (ShaderStageFlags::MISS_NV.0, "MISS_NV"),
+            (ShaderStageFlags::INTERSECTION_NV.0, "INTERSECTION_NV"),
+            (ShaderStageFlags::CALLABLE_NV.0, "CALLABLE_NV"),
+            (ShaderStageFlags::TASK_NV.0, "TASK_NV"),
+            (ShaderStageFlags::MESH_NV.0, "MESH_NV"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for SharingMode {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::EXCLUSIVE => Some("EXCLUSIVE"),
+            Self::CONCURRENT => Some("CONCURRENT"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for SystemAllocationScope {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::COMMAND => Some("COMMAND"),
+            Self::OBJECT => Some("OBJECT"),
+            Self::CACHE => Some("CACHE"),
+            Self::DEVICE => Some("DEVICE"),
+            Self::INSTANCE => Some("INSTANCE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for ExternalMemoryFeatureFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                ExternalMemoryFeatureFlags::EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY.0,
+                "EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY",
+            ),
+            (
+                ExternalMemoryFeatureFlags::EXTERNAL_MEMORY_FEATURE_EXPORTABLE.0,
+                "EXTERNAL_MEMORY_FEATURE_EXPORTABLE",
+            ),
+            (
+                ExternalMemoryFeatureFlags::EXTERNAL_MEMORY_FEATURE_IMPORTABLE.0,
+                "EXTERNAL_MEMORY_FEATURE_IMPORTABLE",
+            ),
+        ];
         display_flags(f, KNOWN, self.0)
     }
 }
@@ -52707,6 +55990,10 @@ impl fmt::Display for AccessFlags {
             (AccessFlags::HOST_WRITE.0, "HOST_WRITE"),
             (AccessFlags::MEMORY_READ.0, "MEMORY_READ"),
             (AccessFlags::MEMORY_WRITE.0, "MEMORY_WRITE"),
+            (AccessFlags::RESERVED_30_KHR.0, "RESERVED_30_KHR"),
+            (AccessFlags::RESERVED_31_KHR.0, "RESERVED_31_KHR"),
+            (AccessFlags::RESERVED_28_KHR.0, "RESERVED_28_KHR"),
+            (AccessFlags::RESERVED_29_KHR.0, "RESERVED_29_KHR"),
             (
                 AccessFlags::TRANSFORM_FEEDBACK_WRITE_EXT.0,
                 "TRANSFORM_FEEDBACK_WRITE_EXT",
@@ -52747,16 +56034,36 @@ impl fmt::Display for AccessFlags {
                 AccessFlags::ACCELERATION_STRUCTURE_WRITE_NV.0,
                 "ACCELERATION_STRUCTURE_WRITE_NV",
             ),
-            (AccessFlags::RESERVED_24_EXT.0, "RESERVED_24_EXT"),
+            (
+                AccessFlags::FRAGMENT_DENSITY_MAP_READ_EXT.0,
+                "FRAGMENT_DENSITY_MAP_READ_EXT",
+            ),
         ];
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for DiscardRectangleModeEXT {
+impl fmt::Display for ImageLayout {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::INCLUSIVE => Some("INCLUSIVE"),
-            Self::EXCLUSIVE => Some("EXCLUSIVE"),
+            Self::UNDEFINED => Some("UNDEFINED"),
+            Self::GENERAL => Some("GENERAL"),
+            Self::COLOR_ATTACHMENT_OPTIMAL => Some("COLOR_ATTACHMENT_OPTIMAL"),
+            Self::DEPTH_STENCIL_ATTACHMENT_OPTIMAL => Some("DEPTH_STENCIL_ATTACHMENT_OPTIMAL"),
+            Self::DEPTH_STENCIL_READ_ONLY_OPTIMAL => Some("DEPTH_STENCIL_READ_ONLY_OPTIMAL"),
+            Self::SHADER_READ_ONLY_OPTIMAL => Some("SHADER_READ_ONLY_OPTIMAL"),
+            Self::TRANSFER_SRC_OPTIMAL => Some("TRANSFER_SRC_OPTIMAL"),
+            Self::TRANSFER_DST_OPTIMAL => Some("TRANSFER_DST_OPTIMAL"),
+            Self::PREINITIALIZED => Some("PREINITIALIZED"),
+            Self::PRESENT_SRC_KHR => Some("PRESENT_SRC_KHR"),
+            Self::SHARED_PRESENT_KHR => Some("SHARED_PRESENT_KHR"),
+            Self::SHADING_RATE_OPTIMAL_NV => Some("SHADING_RATE_OPTIMAL_NV"),
+            Self::FRAGMENT_DENSITY_MAP_OPTIMAL_EXT => Some("FRAGMENT_DENSITY_MAP_OPTIMAL_EXT"),
+            Self::DEPTH_READ_ONLY_STENCIL_ATTACHMENT_OPTIMAL => {
+                Some("DEPTH_READ_ONLY_STENCIL_ATTACHMENT_OPTIMAL")
+            }
+            Self::DEPTH_ATTACHMENT_STENCIL_READ_ONLY_OPTIMAL => {
+                Some("DEPTH_ATTACHMENT_STENCIL_READ_ONLY_OPTIMAL")
+            }
             _ => None,
         };
         if let Some(x) = name {
@@ -52766,38 +56073,12 @@ impl fmt::Display for DiscardRectangleModeEXT {
         }
     }
 }
-impl fmt::Display for SubgroupFeatureFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (SubgroupFeatureFlags::BASIC.0, "BASIC"),
-            (SubgroupFeatureFlags::VOTE.0, "VOTE"),
-            (SubgroupFeatureFlags::ARITHMETIC.0, "ARITHMETIC"),
-            (SubgroupFeatureFlags::BALLOT.0, "BALLOT"),
-            (SubgroupFeatureFlags::SHUFFLE.0, "SHUFFLE"),
-            (SubgroupFeatureFlags::SHUFFLE_RELATIVE.0, "SHUFFLE_RELATIVE"),
-            (SubgroupFeatureFlags::CLUSTERED.0, "CLUSTERED"),
-            (SubgroupFeatureFlags::QUAD.0, "QUAD"),
-            (SubgroupFeatureFlags::PARTITIONED_NV.0, "PARTITIONED_NV"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for CompositeAlphaFlagsKHR {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (CompositeAlphaFlagsKHR::OPAQUE.0, "OPAQUE"),
-            (CompositeAlphaFlagsKHR::PRE_MULTIPLIED.0, "PRE_MULTIPLIED"),
-            (CompositeAlphaFlagsKHR::POST_MULTIPLIED.0, "POST_MULTIPLIED"),
-            (CompositeAlphaFlagsKHR::INHERIT.0, "INHERIT"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for PointClippingBehavior {
+impl fmt::Display for Filter {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::ALL_CLIP_PLANES => Some("ALL_CLIP_PLANES"),
-            Self::USER_CLIP_PLANES_ONLY => Some("USER_CLIP_PLANES_ONLY"),
+            Self::NEAREST => Some("NEAREST"),
+            Self::LINEAR => Some("LINEAR"),
+            Self::CUBIC_IMG => Some("CUBIC_IMG"),
             _ => None,
         };
         if let Some(x) = name {
@@ -52807,57 +56088,79 @@ impl fmt::Display for PointClippingBehavior {
         }
     }
 }
-impl fmt::Display for CommandBufferUsageFlags {
+impl fmt::Display for DescriptorSetLayoutCreateFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (
-                CommandBufferUsageFlags::ONE_TIME_SUBMIT.0,
-                "ONE_TIME_SUBMIT",
+                DescriptorSetLayoutCreateFlags::PUSH_DESCRIPTOR_KHR.0,
+                "PUSH_DESCRIPTOR_KHR",
             ),
             (
-                CommandBufferUsageFlags::RENDER_PASS_CONTINUE.0,
-                "RENDER_PASS_CONTINUE",
-            ),
-            (
-                CommandBufferUsageFlags::SIMULTANEOUS_USE.0,
-                "SIMULTANEOUS_USE",
+                DescriptorSetLayoutCreateFlags::UPDATE_AFTER_BIND_POOL_EXT.0,
+                "UPDATE_AFTER_BIND_POOL_EXT",
             ),
         ];
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for ImageUsageFlags {
+impl fmt::Display for QueryPipelineStatisticFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
-            (ImageUsageFlags::TRANSFER_SRC.0, "TRANSFER_SRC"),
-            (ImageUsageFlags::TRANSFER_DST.0, "TRANSFER_DST"),
-            (ImageUsageFlags::SAMPLED.0, "SAMPLED"),
-            (ImageUsageFlags::STORAGE.0, "STORAGE"),
-            (ImageUsageFlags::COLOR_ATTACHMENT.0, "COLOR_ATTACHMENT"),
             (
-                ImageUsageFlags::DEPTH_STENCIL_ATTACHMENT.0,
-                "DEPTH_STENCIL_ATTACHMENT",
+                QueryPipelineStatisticFlags::INPUT_ASSEMBLY_VERTICES.0,
+                "INPUT_ASSEMBLY_VERTICES",
             ),
             (
-                ImageUsageFlags::TRANSIENT_ATTACHMENT.0,
-                "TRANSIENT_ATTACHMENT",
+                QueryPipelineStatisticFlags::INPUT_ASSEMBLY_PRIMITIVES.0,
+                "INPUT_ASSEMBLY_PRIMITIVES",
             ),
-            (ImageUsageFlags::INPUT_ATTACHMENT.0, "INPUT_ATTACHMENT"),
             (
-                ImageUsageFlags::SHADING_RATE_IMAGE_NV.0,
-                "SHADING_RATE_IMAGE_NV",
+                QueryPipelineStatisticFlags::VERTEX_SHADER_INVOCATIONS.0,
+                "VERTEX_SHADER_INVOCATIONS",
             ),
-            (ImageUsageFlags::RESERVED_9_EXT.0, "RESERVED_9_EXT"),
+            (
+                QueryPipelineStatisticFlags::GEOMETRY_SHADER_INVOCATIONS.0,
+                "GEOMETRY_SHADER_INVOCATIONS",
+            ),
+            (
+                QueryPipelineStatisticFlags::GEOMETRY_SHADER_PRIMITIVES.0,
+                "GEOMETRY_SHADER_PRIMITIVES",
+            ),
+            (
+                QueryPipelineStatisticFlags::CLIPPING_INVOCATIONS.0,
+                "CLIPPING_INVOCATIONS",
+            ),
+            (
+                QueryPipelineStatisticFlags::CLIPPING_PRIMITIVES.0,
+                "CLIPPING_PRIMITIVES",
+            ),
+            (
+                QueryPipelineStatisticFlags::FRAGMENT_SHADER_INVOCATIONS.0,
+                "FRAGMENT_SHADER_INVOCATIONS",
+            ),
+            (
+                QueryPipelineStatisticFlags::TESSELLATION_CONTROL_SHADER_PATCHES.0,
+                "TESSELLATION_CONTROL_SHADER_PATCHES",
+            ),
+            (
+                QueryPipelineStatisticFlags::TESSELLATION_EVALUATION_SHADER_INVOCATIONS.0,
+                "TESSELLATION_EVALUATION_SHADER_INVOCATIONS",
+            ),
+            (
+                QueryPipelineStatisticFlags::COMPUTE_SHADER_INVOCATIONS.0,
+                "COMPUTE_SHADER_INVOCATIONS",
+            ),
         ];
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for IndexType {
+impl fmt::Display for SamplerAddressMode {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::UINT16 => Some("UINT16"),
-            Self::UINT32 => Some("UINT32"),
-            Self::NONE_NV => Some("NONE_NV"),
+            Self::REPEAT => Some("REPEAT"),
+            Self::MIRRORED_REPEAT => Some("MIRRORED_REPEAT"),
+            Self::CLAMP_TO_EDGE => Some("CLAMP_TO_EDGE"),
+            Self::CLAMP_TO_BORDER => Some("CLAMP_TO_BORDER"),
             _ => None,
         };
         if let Some(x) = name {
@@ -52867,102 +56170,22 @@ impl fmt::Display for IndexType {
         }
     }
 }
-impl fmt::Display for DescriptorBindingFlagsEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                DescriptorBindingFlagsEXT::UPDATE_AFTER_BIND.0,
-                "UPDATE_AFTER_BIND",
-            ),
-            (
-                DescriptorBindingFlagsEXT::UPDATE_UNUSED_WHILE_PENDING.0,
-                "UPDATE_UNUSED_WHILE_PENDING",
-            ),
-            (
-                DescriptorBindingFlagsEXT::PARTIALLY_BOUND.0,
-                "PARTIALLY_BOUND",
-            ),
-            (
-                DescriptorBindingFlagsEXT::VARIABLE_DESCRIPTOR_COUNT.0,
-                "VARIABLE_DESCRIPTOR_COUNT",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for ExternalMemoryHandleTypeFlagsNV {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                ExternalMemoryHandleTypeFlagsNV::EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_NV.0,
-                "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_NV",
-            ),
-            (
-                ExternalMemoryHandleTypeFlagsNV::EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_NV.0,
-                "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_NV",
-            ),
-            (
-                ExternalMemoryHandleTypeFlagsNV::EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_NV.0,
-                "EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_NV",
-            ),
-            (
-                ExternalMemoryHandleTypeFlagsNV::EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_NV.0,
-                "EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_NV",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for ShaderStageFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (ShaderStageFlags::VERTEX.0, "VERTEX"),
-            (
-                ShaderStageFlags::TESSELLATION_CONTROL.0,
-                "TESSELLATION_CONTROL",
-            ),
-            (
-                ShaderStageFlags::TESSELLATION_EVALUATION.0,
-                "TESSELLATION_EVALUATION",
-            ),
-            (ShaderStageFlags::GEOMETRY.0, "GEOMETRY"),
-            (ShaderStageFlags::FRAGMENT.0, "FRAGMENT"),
-            (ShaderStageFlags::COMPUTE.0, "COMPUTE"),
-            (ShaderStageFlags::ALL_GRAPHICS.0, "ALL_GRAPHICS"),
-            (ShaderStageFlags::ALL.0, "ALL"),
-            (ShaderStageFlags::RAYGEN_NV.0, "RAYGEN_NV"),
-            (ShaderStageFlags::ANY_HIT_NV.0, "ANY_HIT_NV"),
-            (ShaderStageFlags::CLOSEST_HIT_NV.0, "CLOSEST_HIT_NV"),
-            (ShaderStageFlags::MISS_NV.0, "MISS_NV"),
-            (ShaderStageFlags::INTERSECTION_NV.0, "INTERSECTION_NV"),
-            (ShaderStageFlags::CALLABLE_NV.0, "CALLABLE_NV"),
-            (ShaderStageFlags::TASK_NV.0, "TASK_NV"),
-            (ShaderStageFlags::MESH_NV.0, "MESH_NV"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for ExternalFenceFeatureFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                ExternalFenceFeatureFlags::EXTERNAL_FENCE_FEATURE_EXPORTABLE.0,
-                "EXTERNAL_FENCE_FEATURE_EXPORTABLE",
-            ),
-            (
-                ExternalFenceFeatureFlags::EXTERNAL_FENCE_FEATURE_IMPORTABLE.0,
-                "EXTERNAL_FENCE_FEATURE_IMPORTABLE",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for DisplayPowerStateEXT {
+impl fmt::Display for DescriptorType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::OFF => Some("OFF"),
-            Self::SUSPEND => Some("SUSPEND"),
-            Self::ON => Some("ON"),
+            Self::SAMPLER => Some("SAMPLER"),
+            Self::COMBINED_IMAGE_SAMPLER => Some("COMBINED_IMAGE_SAMPLER"),
+            Self::SAMPLED_IMAGE => Some("SAMPLED_IMAGE"),
+            Self::STORAGE_IMAGE => Some("STORAGE_IMAGE"),
+            Self::UNIFORM_TEXEL_BUFFER => Some("UNIFORM_TEXEL_BUFFER"),
+            Self::STORAGE_TEXEL_BUFFER => Some("STORAGE_TEXEL_BUFFER"),
+            Self::UNIFORM_BUFFER => Some("UNIFORM_BUFFER"),
+            Self::STORAGE_BUFFER => Some("STORAGE_BUFFER"),
+            Self::UNIFORM_BUFFER_DYNAMIC => Some("UNIFORM_BUFFER_DYNAMIC"),
+            Self::STORAGE_BUFFER_DYNAMIC => Some("STORAGE_BUFFER_DYNAMIC"),
+            Self::INPUT_ATTACHMENT => Some("INPUT_ATTACHMENT"),
+            Self::INLINE_UNIFORM_BLOCK_EXT => Some("INLINE_UNIFORM_BLOCK_EXT"),
+            Self::ACCELERATION_STRUCTURE_NV => Some("ACCELERATION_STRUCTURE_NV"),
             _ => None,
         };
         if let Some(x) = name {
@@ -52972,25 +56195,55 @@ impl fmt::Display for DisplayPowerStateEXT {
         }
     }
 }
-impl fmt::Display for QueueFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (QueueFlags::GRAPHICS.0, "GRAPHICS"),
-            (QueueFlags::COMPUTE.0, "COMPUTE"),
-            (QueueFlags::TRANSFER.0, "TRANSFER"),
-            (QueueFlags::SPARSE_BINDING.0, "SPARSE_BINDING"),
-            (QueueFlags::PROTECTED.0, "PROTECTED"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for TimeDomainEXT {
+impl fmt::Display for ColorSpaceKHR {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::DEVICE => Some("DEVICE"),
-            Self::CLOCK_MONOTONIC => Some("CLOCK_MONOTONIC"),
-            Self::CLOCK_MONOTONIC_RAW => Some("CLOCK_MONOTONIC_RAW"),
-            Self::QUERY_PERFORMANCE_COUNTER => Some("QUERY_PERFORMANCE_COUNTER"),
+            Self::SRGB_NONLINEAR => Some("SRGB_NONLINEAR"),
+            Self::DISPLAY_P3_NONLINEAR_EXT => Some("DISPLAY_P3_NONLINEAR_EXT"),
+            Self::EXTENDED_SRGB_LINEAR_EXT => Some("EXTENDED_SRGB_LINEAR_EXT"),
+            Self::DCI_P3_LINEAR_EXT => Some("DCI_P3_LINEAR_EXT"),
+            Self::DCI_P3_NONLINEAR_EXT => Some("DCI_P3_NONLINEAR_EXT"),
+            Self::BT709_LINEAR_EXT => Some("BT709_LINEAR_EXT"),
+            Self::BT709_NONLINEAR_EXT => Some("BT709_NONLINEAR_EXT"),
+            Self::BT2020_LINEAR_EXT => Some("BT2020_LINEAR_EXT"),
+            Self::HDR10_ST2084_EXT => Some("HDR10_ST2084_EXT"),
+            Self::DOLBYVISION_EXT => Some("DOLBYVISION_EXT"),
+            Self::HDR10_HLG_EXT => Some("HDR10_HLG_EXT"),
+            Self::ADOBERGB_LINEAR_EXT => Some("ADOBERGB_LINEAR_EXT"),
+            Self::ADOBERGB_NONLINEAR_EXT => Some("ADOBERGB_NONLINEAR_EXT"),
+            Self::PASS_THROUGH_EXT => Some("PASS_THROUGH_EXT"),
+            Self::EXTENDED_SRGB_NONLINEAR_EXT => Some("EXTENDED_SRGB_NONLINEAR_EXT"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for BlendFactor {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::ZERO => Some("ZERO"),
+            Self::ONE => Some("ONE"),
+            Self::SRC_COLOR => Some("SRC_COLOR"),
+            Self::ONE_MINUS_SRC_COLOR => Some("ONE_MINUS_SRC_COLOR"),
+            Self::DST_COLOR => Some("DST_COLOR"),
+            Self::ONE_MINUS_DST_COLOR => Some("ONE_MINUS_DST_COLOR"),
+            Self::SRC_ALPHA => Some("SRC_ALPHA"),
+            Self::ONE_MINUS_SRC_ALPHA => Some("ONE_MINUS_SRC_ALPHA"),
+            Self::DST_ALPHA => Some("DST_ALPHA"),
+            Self::ONE_MINUS_DST_ALPHA => Some("ONE_MINUS_DST_ALPHA"),
+            Self::CONSTANT_COLOR => Some("CONSTANT_COLOR"),
+            Self::ONE_MINUS_CONSTANT_COLOR => Some("ONE_MINUS_CONSTANT_COLOR"),
+            Self::CONSTANT_ALPHA => Some("CONSTANT_ALPHA"),
+            Self::ONE_MINUS_CONSTANT_ALPHA => Some("ONE_MINUS_CONSTANT_ALPHA"),
+            Self::SRC_ALPHA_SATURATE => Some("SRC_ALPHA_SATURATE"),
+            Self::SRC1_COLOR => Some("SRC1_COLOR"),
+            Self::ONE_MINUS_SRC1_COLOR => Some("ONE_MINUS_SRC1_COLOR"),
+            Self::SRC1_ALPHA => Some("SRC1_ALPHA"),
+            Self::ONE_MINUS_SRC1_ALPHA => Some("ONE_MINUS_SRC1_ALPHA"),
             _ => None,
         };
         if let Some(x) = name {
@@ -53176,6 +56429,9 @@ impl fmt::Display for StructureType {
             }
             Self::CONDITIONAL_RENDERING_BEGIN_INFO_EXT => {
                 Some("CONDITIONAL_RENDERING_BEGIN_INFO_EXT")
+            }
+            Self::PHYSICAL_DEVICE_FLOAT16_INT8_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_FLOAT16_INT8_FEATURES_KHR")
             }
             Self::PRESENT_REGIONS_KHR => Some("PRESENT_REGIONS_KHR"),
             Self::OBJECT_TABLE_CREATE_INFO_NVX => Some("OBJECT_TABLE_CREATE_INFO_NVX"),
@@ -53428,6 +56684,15 @@ impl fmt::Display for StructureType {
             Self::PHYSICAL_DEVICE_DRIVER_PROPERTIES_KHR => {
                 Some("PHYSICAL_DEVICE_DRIVER_PROPERTIES_KHR")
             }
+            Self::PHYSICAL_DEVICE_FLOAT_CONTROLS_PROPERTIES_KHR => {
+                Some("PHYSICAL_DEVICE_FLOAT_CONTROLS_PROPERTIES_KHR")
+            }
+            Self::PHYSICAL_DEVICE_DEPTH_STENCIL_RESOLVE_PROPERTIES_KHR => {
+                Some("PHYSICAL_DEVICE_DEPTH_STENCIL_RESOLVE_PROPERTIES_KHR")
+            }
+            Self::SUBPASS_DESCRIPTION_DEPTH_STENCIL_RESOLVE_KHR => {
+                Some("SUBPASS_DESCRIPTION_DEPTH_STENCIL_RESOLVE_KHR")
+            }
             Self::PHYSICAL_DEVICE_COMPUTE_SHADER_DERIVATIVES_FEATURES_NV => {
                 Some("PHYSICAL_DEVICE_COMPUTE_SHADER_DERIVATIVES_FEATURES_NV")
             }
@@ -53462,6 +56727,36 @@ impl fmt::Display for StructureType {
             Self::IMAGEPIPE_SURFACE_CREATE_INFO_FUCHSIA => {
                 Some("IMAGEPIPE_SURFACE_CREATE_INFO_FUCHSIA")
             }
+            Self::PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_FEATURES_EXT")
+            }
+            Self::PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_PROPERTIES_EXT => {
+                Some("PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_PROPERTIES_EXT")
+            }
+            Self::RENDER_PASS_FRAGMENT_DENSITY_MAP_CREATE_INFO_EXT => {
+                Some("RENDER_PASS_FRAGMENT_DENSITY_MAP_CREATE_INFO_EXT")
+            }
+            Self::PHYSICAL_DEVICE_SCALAR_BLOCK_LAYOUT_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_SCALAR_BLOCK_LAYOUT_FEATURES_EXT")
+            }
+            Self::PHYSICAL_DEVICE_MEMORY_BUDGET_PROPERTIES_EXT => {
+                Some("PHYSICAL_DEVICE_MEMORY_BUDGET_PROPERTIES_EXT")
+            }
+            Self::PHYSICAL_DEVICE_MEMORY_PRIORITY_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_MEMORY_PRIORITY_FEATURES_EXT")
+            }
+            Self::MEMORY_PRIORITY_ALLOCATE_INFO_EXT => Some("MEMORY_PRIORITY_ALLOCATE_INFO_EXT"),
+            Self::PHYSICAL_DEVICE_BUFFER_ADDRESS_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_BUFFER_ADDRESS_FEATURES_EXT")
+            }
+            Self::BUFFER_DEVICE_ADDRESS_INFO_EXT => Some("BUFFER_DEVICE_ADDRESS_INFO_EXT"),
+            Self::BUFFER_DEVICE_ADDRESS_CREATE_INFO_EXT => {
+                Some("BUFFER_DEVICE_ADDRESS_CREATE_INFO_EXT")
+            }
+            Self::IMAGE_STENCIL_USAGE_CREATE_INFO_EXT => {
+                Some("IMAGE_STENCIL_USAGE_CREATE_INFO_EXT")
+            }
+            Self::VALIDATION_FEATURES_EXT => Some("VALIDATION_FEATURES_EXT"),
             Self::PHYSICAL_DEVICE_SUBGROUP_PROPERTIES => {
                 Some("PHYSICAL_DEVICE_SUBGROUP_PROPERTIES")
             }
@@ -53592,126 +56887,46 @@ impl fmt::Display for StructureType {
         }
     }
 }
-impl fmt::Display for FenceImportFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(FenceImportFlags::TEMPORARY.0, "TEMPORARY")];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for AttachmentLoadOp {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::LOAD => Some("LOAD"),
-            Self::CLEAR => Some("CLEAR"),
-            Self::DONT_CARE => Some("DONT_CARE"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for BufferCreateFlags {
+impl fmt::Display for GeometryFlagsNV {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
-            (BufferCreateFlags::SPARSE_BINDING.0, "SPARSE_BINDING"),
-            (BufferCreateFlags::SPARSE_RESIDENCY.0, "SPARSE_RESIDENCY"),
-            (BufferCreateFlags::SPARSE_ALIASED.0, "SPARSE_ALIASED"),
-            (BufferCreateFlags::PROTECTED.0, "PROTECTED"),
+            (GeometryFlagsNV::OPAQUE.0, "OPAQUE"),
+            (
+                GeometryFlagsNV::NO_DUPLICATE_ANY_HIT_INVOCATION.0,
+                "NO_DUPLICATE_ANY_HIT_INVOCATION",
+            ),
         ];
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for PolygonMode {
+impl fmt::Display for FenceCreateFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::FILL => Some("FILL"),
-            Self::LINE => Some("LINE"),
-            Self::POINT => Some("POINT"),
-            Self::FILL_RECTANGLE_NV => Some("FILL_RECTANGLE_NV"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
+        const KNOWN: &[(Flags, &str)] = &[(FenceCreateFlags::SIGNALED.0, "SIGNALED")];
+        display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for ConservativeRasterizationModeEXT {
+impl fmt::Display for SubgroupFeatureFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::DISABLED => Some("DISABLED"),
-            Self::OVERESTIMATE => Some("OVERESTIMATE"),
-            Self::UNDERESTIMATE => Some("UNDERESTIMATE"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
+        const KNOWN: &[(Flags, &str)] = &[
+            (SubgroupFeatureFlags::BASIC.0, "BASIC"),
+            (SubgroupFeatureFlags::VOTE.0, "VOTE"),
+            (SubgroupFeatureFlags::ARITHMETIC.0, "ARITHMETIC"),
+            (SubgroupFeatureFlags::BALLOT.0, "BALLOT"),
+            (SubgroupFeatureFlags::SHUFFLE.0, "SHUFFLE"),
+            (SubgroupFeatureFlags::SHUFFLE_RELATIVE.0, "SHUFFLE_RELATIVE"),
+            (SubgroupFeatureFlags::CLUSTERED.0, "CLUSTERED"),
+            (SubgroupFeatureFlags::QUAD.0, "QUAD"),
+            (SubgroupFeatureFlags::PARTITIONED_NV.0, "PARTITIONED_NV"),
+        ];
+        display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for StencilOp {
+impl fmt::Display for DisplayPowerStateEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::KEEP => Some("KEEP"),
-            Self::ZERO => Some("ZERO"),
-            Self::REPLACE => Some("REPLACE"),
-            Self::INCREMENT_AND_CLAMP => Some("INCREMENT_AND_CLAMP"),
-            Self::DECREMENT_AND_CLAMP => Some("DECREMENT_AND_CLAMP"),
-            Self::INVERT => Some("INVERT"),
-            Self::INCREMENT_AND_WRAP => Some("INCREMENT_AND_WRAP"),
-            Self::DECREMENT_AND_WRAP => Some("DECREMENT_AND_WRAP"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for BorderColor {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::FLOAT_TRANSPARENT_BLACK => Some("FLOAT_TRANSPARENT_BLACK"),
-            Self::INT_TRANSPARENT_BLACK => Some("INT_TRANSPARENT_BLACK"),
-            Self::FLOAT_OPAQUE_BLACK => Some("FLOAT_OPAQUE_BLACK"),
-            Self::INT_OPAQUE_BLACK => Some("INT_OPAQUE_BLACK"),
-            Self::FLOAT_OPAQUE_WHITE => Some("FLOAT_OPAQUE_WHITE"),
-            Self::INT_OPAQUE_WHITE => Some("INT_OPAQUE_WHITE"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for AccelerationStructureMemoryRequirementsTypeNV {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::OBJECT => Some("OBJECT"),
-            Self::BUILD_SCRATCH => Some("BUILD_SCRATCH"),
-            Self::UPDATE_SCRATCH => Some("UPDATE_SCRATCH"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for InternalAllocationType {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::EXECUTABLE => Some("EXECUTABLE"),
+            Self::OFF => Some("OFF"),
+            Self::SUSPEND => Some("SUSPEND"),
+            Self::ON => Some("ON"),
             _ => None,
         };
         if let Some(x) = name {
@@ -53728,93 +56943,6 @@ impl fmt::Display for ObjectEntryUsageFlagsNVX {
             (ObjectEntryUsageFlagsNVX::COMPUTE.0, "COMPUTE"),
         ];
         display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for DebugReportFlagsEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (DebugReportFlagsEXT::INFORMATION.0, "INFORMATION"),
-            (DebugReportFlagsEXT::WARNING.0, "WARNING"),
-            (
-                DebugReportFlagsEXT::PERFORMANCE_WARNING.0,
-                "PERFORMANCE_WARNING",
-            ),
-            (DebugReportFlagsEXT::ERROR.0, "ERROR"),
-            (DebugReportFlagsEXT::DEBUG.0, "DEBUG"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for CopyAccelerationStructureModeNV {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::CLONE => Some("CLONE"),
-            Self::COMPACT => Some("COMPACT"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ExternalMemoryFeatureFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                ExternalMemoryFeatureFlags::EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY.0,
-                "EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY",
-            ),
-            (
-                ExternalMemoryFeatureFlags::EXTERNAL_MEMORY_FEATURE_EXPORTABLE.0,
-                "EXTERNAL_MEMORY_FEATURE_EXPORTABLE",
-            ),
-            (
-                ExternalMemoryFeatureFlags::EXTERNAL_MEMORY_FEATURE_IMPORTABLE.0,
-                "EXTERNAL_MEMORY_FEATURE_IMPORTABLE",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for Filter {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::NEAREST => Some("NEAREST"),
-            Self::LINEAR => Some("LINEAR"),
-            Self::CUBIC_IMG => Some("CUBIC_IMG"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ShadingRatePaletteEntryNV {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::NO_INVOCATIONS => Some("NO_INVOCATIONS"),
-            Self::TYPE_16_INVOCATIONS_PER_PIXEL => Some("TYPE_16_INVOCATIONS_PER_PIXEL"),
-            Self::TYPE_8_INVOCATIONS_PER_PIXEL => Some("TYPE_8_INVOCATIONS_PER_PIXEL"),
-            Self::TYPE_4_INVOCATIONS_PER_PIXEL => Some("TYPE_4_INVOCATIONS_PER_PIXEL"),
-            Self::TYPE_2_INVOCATIONS_PER_PIXEL => Some("TYPE_2_INVOCATIONS_PER_PIXEL"),
-            Self::TYPE_1_INVOCATION_PER_PIXEL => Some("TYPE_1_INVOCATION_PER_PIXEL"),
-            Self::TYPE_1_INVOCATION_PER_2X1_PIXELS => Some("TYPE_1_INVOCATION_PER_2X1_PIXELS"),
-            Self::TYPE_1_INVOCATION_PER_1X2_PIXELS => Some("TYPE_1_INVOCATION_PER_1X2_PIXELS"),
-            Self::TYPE_1_INVOCATION_PER_2X2_PIXELS => Some("TYPE_1_INVOCATION_PER_2X2_PIXELS"),
-            Self::TYPE_1_INVOCATION_PER_4X2_PIXELS => Some("TYPE_1_INVOCATION_PER_4X2_PIXELS"),
-            Self::TYPE_1_INVOCATION_PER_2X4_PIXELS => Some("TYPE_1_INVOCATION_PER_2X4_PIXELS"),
-            Self::TYPE_1_INVOCATION_PER_4X4_PIXELS => Some("TYPE_1_INVOCATION_PER_4X4_PIXELS"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
     }
 }
 impl fmt::Display for ExternalSemaphoreHandleTypeFlags {
@@ -53844,30 +56972,131 @@ impl fmt::Display for ExternalSemaphoreHandleTypeFlags {
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for BuildAccelerationStructureFlagsNV {
+impl fmt::Display for DebugReportFlagsEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (DebugReportFlagsEXT::INFORMATION.0, "INFORMATION"),
+            (DebugReportFlagsEXT::WARNING.0, "WARNING"),
+            (
+                DebugReportFlagsEXT::PERFORMANCE_WARNING.0,
+                "PERFORMANCE_WARNING",
+            ),
+            (DebugReportFlagsEXT::ERROR.0, "ERROR"),
+            (DebugReportFlagsEXT::DEBUG.0, "DEBUG"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for ComponentSwizzle {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::IDENTITY => Some("IDENTITY"),
+            Self::ZERO => Some("ZERO"),
+            Self::ONE => Some("ONE"),
+            Self::R => Some("R"),
+            Self::G => Some("G"),
+            Self::B => Some("B"),
+            Self::A => Some("A"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for PhysicalDeviceType {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::OTHER => Some("OTHER"),
+            Self::INTEGRATED_GPU => Some("INTEGRATED_GPU"),
+            Self::DISCRETE_GPU => Some("DISCRETE_GPU"),
+            Self::VIRTUAL_GPU => Some("VIRTUAL_GPU"),
+            Self::CPU => Some("CPU"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for PipelineBindPoint {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::GRAPHICS => Some("GRAPHICS"),
+            Self::COMPUTE => Some("COMPUTE"),
+            Self::RAY_TRACING_NV => Some("RAY_TRACING_NV"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for FenceImportFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(FenceImportFlags::TEMPORARY.0, "TEMPORARY")];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for TimeDomainEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::DEVICE => Some("DEVICE"),
+            Self::CLOCK_MONOTONIC => Some("CLOCK_MONOTONIC"),
+            Self::CLOCK_MONOTONIC_RAW => Some("CLOCK_MONOTONIC_RAW"),
+            Self::QUERY_PERFORMANCE_COUNTER => Some("QUERY_PERFORMANCE_COUNTER"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for DescriptorBindingFlagsEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (
-                BuildAccelerationStructureFlagsNV::ALLOW_UPDATE.0,
-                "ALLOW_UPDATE",
+                DescriptorBindingFlagsEXT::UPDATE_AFTER_BIND.0,
+                "UPDATE_AFTER_BIND",
             ),
             (
-                BuildAccelerationStructureFlagsNV::ALLOW_COMPACTION.0,
-                "ALLOW_COMPACTION",
+                DescriptorBindingFlagsEXT::UPDATE_UNUSED_WHILE_PENDING.0,
+                "UPDATE_UNUSED_WHILE_PENDING",
             ),
             (
-                BuildAccelerationStructureFlagsNV::PREFER_FAST_TRACE.0,
-                "PREFER_FAST_TRACE",
+                DescriptorBindingFlagsEXT::PARTIALLY_BOUND.0,
+                "PARTIALLY_BOUND",
             ),
             (
-                BuildAccelerationStructureFlagsNV::PREFER_FAST_BUILD.0,
-                "PREFER_FAST_BUILD",
-            ),
-            (
-                BuildAccelerationStructureFlagsNV::LOW_MEMORY.0,
-                "LOW_MEMORY",
+                DescriptorBindingFlagsEXT::VARIABLE_DESCRIPTOR_COUNT.0,
+                "VARIABLE_DESCRIPTOR_COUNT",
             ),
         ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for PeerMemoryFeatureFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (PeerMemoryFeatureFlags::COPY_SRC.0, "COPY_SRC"),
+            (PeerMemoryFeatureFlags::COPY_DST.0, "COPY_DST"),
+            (PeerMemoryFeatureFlags::GENERIC_SRC.0, "GENERIC_SRC"),
+            (PeerMemoryFeatureFlags::GENERIC_DST.0, "GENERIC_DST"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for ConditionalRenderingFlagsEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(ConditionalRenderingFlagsEXT::INVERTED.0, "INVERTED")];
         display_flags(f, KNOWN, self.0)
     }
 }
@@ -53882,137 +57111,19 @@ impl fmt::Display for DebugUtilsMessageSeverityFlagsEXT {
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for CoverageModulationModeNV {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::NONE => Some("NONE"),
-            Self::RGB => Some("RGB"),
-            Self::ALPHA => Some("ALPHA"),
-            Self::RGBA => Some("RGBA"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for FenceCreateFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(FenceCreateFlags::SIGNALED.0, "SIGNALED")];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for DescriptorType {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::SAMPLER => Some("SAMPLER"),
-            Self::COMBINED_IMAGE_SAMPLER => Some("COMBINED_IMAGE_SAMPLER"),
-            Self::SAMPLED_IMAGE => Some("SAMPLED_IMAGE"),
-            Self::STORAGE_IMAGE => Some("STORAGE_IMAGE"),
-            Self::UNIFORM_TEXEL_BUFFER => Some("UNIFORM_TEXEL_BUFFER"),
-            Self::STORAGE_TEXEL_BUFFER => Some("STORAGE_TEXEL_BUFFER"),
-            Self::UNIFORM_BUFFER => Some("UNIFORM_BUFFER"),
-            Self::STORAGE_BUFFER => Some("STORAGE_BUFFER"),
-            Self::UNIFORM_BUFFER_DYNAMIC => Some("UNIFORM_BUFFER_DYNAMIC"),
-            Self::STORAGE_BUFFER_DYNAMIC => Some("STORAGE_BUFFER_DYNAMIC"),
-            Self::INPUT_ATTACHMENT => Some("INPUT_ATTACHMENT"),
-            Self::INLINE_UNIFORM_BLOCK_EXT => Some("INLINE_UNIFORM_BLOCK_EXT"),
-            Self::ACCELERATION_STRUCTURE_NV => Some("ACCELERATION_STRUCTURE_NV"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for FrontFace {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::COUNTER_CLOCKWISE => Some("COUNTER_CLOCKWISE"),
-            Self::CLOCKWISE => Some("CLOCKWISE"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for CommandBufferLevel {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::PRIMARY => Some("PRIMARY"),
-            Self::SECONDARY => Some("SECONDARY"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ImageAspectFlags {
+impl fmt::Display for ExternalFenceFeatureFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
-            (ImageAspectFlags::COLOR.0, "COLOR"),
-            (ImageAspectFlags::DEPTH.0, "DEPTH"),
-            (ImageAspectFlags::STENCIL.0, "STENCIL"),
-            (ImageAspectFlags::METADATA.0, "METADATA"),
-            (ImageAspectFlags::MEMORY_PLANE_0_EXT.0, "MEMORY_PLANE_0_EXT"),
-            (ImageAspectFlags::MEMORY_PLANE_1_EXT.0, "MEMORY_PLANE_1_EXT"),
-            (ImageAspectFlags::MEMORY_PLANE_2_EXT.0, "MEMORY_PLANE_2_EXT"),
-            (ImageAspectFlags::MEMORY_PLANE_3_EXT.0, "MEMORY_PLANE_3_EXT"),
-            (ImageAspectFlags::PLANE_0.0, "PLANE_0"),
-            (ImageAspectFlags::PLANE_1.0, "PLANE_1"),
-            (ImageAspectFlags::PLANE_2.0, "PLANE_2"),
+            (
+                ExternalFenceFeatureFlags::EXTERNAL_FENCE_FEATURE_EXPORTABLE.0,
+                "EXTERNAL_FENCE_FEATURE_EXPORTABLE",
+            ),
+            (
+                ExternalFenceFeatureFlags::EXTERNAL_FENCE_FEATURE_IMPORTABLE.0,
+                "EXTERNAL_FENCE_FEATURE_IMPORTABLE",
+            ),
         ];
         display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for CullModeFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (CullModeFlags::NONE.0, "NONE"),
-            (CullModeFlags::FRONT.0, "FRONT"),
-            (CullModeFlags::BACK.0, "BACK"),
-            (CullModeFlags::FRONT_AND_BACK.0, "FRONT_AND_BACK"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for AttachmentStoreOp {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::STORE => Some("STORE"),
-            Self::DONT_CARE => Some("DONT_CARE"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ImageTiling {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::OPTIMAL => Some("OPTIMAL"),
-            Self::LINEAR => Some("LINEAR"),
-            Self::DRM_FORMAT_MODIFIER_EXT => Some("DRM_FORMAT_MODIFIER_EXT"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
     }
 }
 impl fmt::Display for DynamicState {
@@ -54033,404 +57144,6 @@ impl fmt::Display for DynamicState {
             Self::VIEWPORT_SHADING_RATE_PALETTE_NV => Some("VIEWPORT_SHADING_RATE_PALETTE_NV"),
             Self::VIEWPORT_COARSE_SAMPLE_ORDER_NV => Some("VIEWPORT_COARSE_SAMPLE_ORDER_NV"),
             Self::EXCLUSIVE_SCISSOR_NV => Some("EXCLUSIVE_SCISSOR_NV"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for MemoryAllocateFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(MemoryAllocateFlags::DEVICE_MASK.0, "DEVICE_MASK")];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for QueueGlobalPriorityEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::LOW => Some("LOW"),
-            Self::MEDIUM => Some("MEDIUM"),
-            Self::HIGH => Some("HIGH"),
-            Self::REALTIME => Some("REALTIME"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for AttachmentDescriptionFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(AttachmentDescriptionFlags::MAY_ALIAS.0, "MAY_ALIAS")];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for CompareOp {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::NEVER => Some("NEVER"),
-            Self::LESS => Some("LESS"),
-            Self::EQUAL => Some("EQUAL"),
-            Self::LESS_OR_EQUAL => Some("LESS_OR_EQUAL"),
-            Self::GREATER => Some("GREATER"),
-            Self::NOT_EQUAL => Some("NOT_EQUAL"),
-            Self::GREATER_OR_EQUAL => Some("GREATER_OR_EQUAL"),
-            Self::ALWAYS => Some("ALWAYS"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for PipelineStageFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (PipelineStageFlags::TOP_OF_PIPE.0, "TOP_OF_PIPE"),
-            (PipelineStageFlags::DRAW_INDIRECT.0, "DRAW_INDIRECT"),
-            (PipelineStageFlags::VERTEX_INPUT.0, "VERTEX_INPUT"),
-            (PipelineStageFlags::VERTEX_SHADER.0, "VERTEX_SHADER"),
-            (
-                PipelineStageFlags::TESSELLATION_CONTROL_SHADER.0,
-                "TESSELLATION_CONTROL_SHADER",
-            ),
-            (
-                PipelineStageFlags::TESSELLATION_EVALUATION_SHADER.0,
-                "TESSELLATION_EVALUATION_SHADER",
-            ),
-            (PipelineStageFlags::GEOMETRY_SHADER.0, "GEOMETRY_SHADER"),
-            (PipelineStageFlags::FRAGMENT_SHADER.0, "FRAGMENT_SHADER"),
-            (
-                PipelineStageFlags::EARLY_FRAGMENT_TESTS.0,
-                "EARLY_FRAGMENT_TESTS",
-            ),
-            (
-                PipelineStageFlags::LATE_FRAGMENT_TESTS.0,
-                "LATE_FRAGMENT_TESTS",
-            ),
-            (
-                PipelineStageFlags::COLOR_ATTACHMENT_OUTPUT.0,
-                "COLOR_ATTACHMENT_OUTPUT",
-            ),
-            (PipelineStageFlags::COMPUTE_SHADER.0, "COMPUTE_SHADER"),
-            (PipelineStageFlags::TRANSFER.0, "TRANSFER"),
-            (PipelineStageFlags::BOTTOM_OF_PIPE.0, "BOTTOM_OF_PIPE"),
-            (PipelineStageFlags::HOST.0, "HOST"),
-            (PipelineStageFlags::ALL_GRAPHICS.0, "ALL_GRAPHICS"),
-            (PipelineStageFlags::ALL_COMMANDS.0, "ALL_COMMANDS"),
-            (
-                PipelineStageFlags::TRANSFORM_FEEDBACK_EXT.0,
-                "TRANSFORM_FEEDBACK_EXT",
-            ),
-            (
-                PipelineStageFlags::CONDITIONAL_RENDERING_EXT.0,
-                "CONDITIONAL_RENDERING_EXT",
-            ),
-            (
-                PipelineStageFlags::COMMAND_PROCESS_NVX.0,
-                "COMMAND_PROCESS_NVX",
-            ),
-            (
-                PipelineStageFlags::SHADING_RATE_IMAGE_NV.0,
-                "SHADING_RATE_IMAGE_NV",
-            ),
-            (
-                PipelineStageFlags::RAY_TRACING_SHADER_NV.0,
-                "RAY_TRACING_SHADER_NV",
-            ),
-            (
-                PipelineStageFlags::ACCELERATION_STRUCTURE_BUILD_NV.0,
-                "ACCELERATION_STRUCTURE_BUILD_NV",
-            ),
-            (PipelineStageFlags::TASK_SHADER_NV.0, "TASK_SHADER_NV"),
-            (PipelineStageFlags::MESH_SHADER_NV.0, "MESH_SHADER_NV"),
-            (PipelineStageFlags::RESERVED_23_EXT.0, "RESERVED_23_EXT"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for SubpassDescriptionFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                SubpassDescriptionFlags::PER_VIEW_ATTRIBUTES_NVX.0,
-                "PER_VIEW_ATTRIBUTES_NVX",
-            ),
-            (
-                SubpassDescriptionFlags::PER_VIEW_POSITION_X_ONLY_NVX.0,
-                "PER_VIEW_POSITION_X_ONLY_NVX",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for BlendFactor {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::ZERO => Some("ZERO"),
-            Self::ONE => Some("ONE"),
-            Self::SRC_COLOR => Some("SRC_COLOR"),
-            Self::ONE_MINUS_SRC_COLOR => Some("ONE_MINUS_SRC_COLOR"),
-            Self::DST_COLOR => Some("DST_COLOR"),
-            Self::ONE_MINUS_DST_COLOR => Some("ONE_MINUS_DST_COLOR"),
-            Self::SRC_ALPHA => Some("SRC_ALPHA"),
-            Self::ONE_MINUS_SRC_ALPHA => Some("ONE_MINUS_SRC_ALPHA"),
-            Self::DST_ALPHA => Some("DST_ALPHA"),
-            Self::ONE_MINUS_DST_ALPHA => Some("ONE_MINUS_DST_ALPHA"),
-            Self::CONSTANT_COLOR => Some("CONSTANT_COLOR"),
-            Self::ONE_MINUS_CONSTANT_COLOR => Some("ONE_MINUS_CONSTANT_COLOR"),
-            Self::CONSTANT_ALPHA => Some("CONSTANT_ALPHA"),
-            Self::ONE_MINUS_CONSTANT_ALPHA => Some("ONE_MINUS_CONSTANT_ALPHA"),
-            Self::SRC_ALPHA_SATURATE => Some("SRC_ALPHA_SATURATE"),
-            Self::SRC1_COLOR => Some("SRC1_COLOR"),
-            Self::ONE_MINUS_SRC1_COLOR => Some("ONE_MINUS_SRC1_COLOR"),
-            Self::SRC1_ALPHA => Some("SRC1_ALPHA"),
-            Self::ONE_MINUS_SRC1_ALPHA => Some("ONE_MINUS_SRC1_ALPHA"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ChromaLocation {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::COSITED_EVEN => Some("COSITED_EVEN"),
-            Self::MIDPOINT => Some("MIDPOINT"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for QueryResultFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (QueryResultFlags::TYPE_64.0, "TYPE_64"),
-            (QueryResultFlags::WAIT.0, "WAIT"),
-            (QueryResultFlags::WITH_AVAILABILITY.0, "WITH_AVAILABILITY"),
-            (QueryResultFlags::PARTIAL.0, "PARTIAL"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for GeometryInstanceFlagsNV {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                GeometryInstanceFlagsNV::TRIANGLE_CULL_DISABLE.0,
-                "TRIANGLE_CULL_DISABLE",
-            ),
-            (
-                GeometryInstanceFlagsNV::TRIANGLE_FRONT_COUNTERCLOCKWISE.0,
-                "TRIANGLE_FRONT_COUNTERCLOCKWISE",
-            ),
-            (GeometryInstanceFlagsNV::FORCE_OPAQUE.0, "FORCE_OPAQUE"),
-            (
-                GeometryInstanceFlagsNV::FORCE_NO_OPAQUE.0,
-                "FORCE_NO_OPAQUE",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for SamplerAddressMode {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::REPEAT => Some("REPEAT"),
-            Self::MIRRORED_REPEAT => Some("MIRRORED_REPEAT"),
-            Self::CLAMP_TO_EDGE => Some("CLAMP_TO_EDGE"),
-            Self::CLAMP_TO_BORDER => Some("CLAMP_TO_BORDER"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for MemoryHeapFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (MemoryHeapFlags::DEVICE_LOCAL.0, "DEVICE_LOCAL"),
-            (MemoryHeapFlags::MULTI_INSTANCE.0, "MULTI_INSTANCE"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for DeviceGroupPresentModeFlagsKHR {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (DeviceGroupPresentModeFlagsKHR::LOCAL.0, "LOCAL"),
-            (DeviceGroupPresentModeFlagsKHR::REMOTE.0, "REMOTE"),
-            (DeviceGroupPresentModeFlagsKHR::SUM.0, "SUM"),
-            (
-                DeviceGroupPresentModeFlagsKHR::LOCAL_MULTI_DEVICE.0,
-                "LOCAL_MULTI_DEVICE",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for ColorSpaceKHR {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::SRGB_NONLINEAR => Some("SRGB_NONLINEAR"),
-            Self::DISPLAY_P3_NONLINEAR_EXT => Some("DISPLAY_P3_NONLINEAR_EXT"),
-            Self::EXTENDED_SRGB_LINEAR_EXT => Some("EXTENDED_SRGB_LINEAR_EXT"),
-            Self::DCI_P3_LINEAR_EXT => Some("DCI_P3_LINEAR_EXT"),
-            Self::DCI_P3_NONLINEAR_EXT => Some("DCI_P3_NONLINEAR_EXT"),
-            Self::BT709_LINEAR_EXT => Some("BT709_LINEAR_EXT"),
-            Self::BT709_NONLINEAR_EXT => Some("BT709_NONLINEAR_EXT"),
-            Self::BT2020_LINEAR_EXT => Some("BT2020_LINEAR_EXT"),
-            Self::HDR10_ST2084_EXT => Some("HDR10_ST2084_EXT"),
-            Self::DOLBYVISION_EXT => Some("DOLBYVISION_EXT"),
-            Self::HDR10_HLG_EXT => Some("HDR10_HLG_EXT"),
-            Self::ADOBERGB_LINEAR_EXT => Some("ADOBERGB_LINEAR_EXT"),
-            Self::ADOBERGB_NONLINEAR_EXT => Some("ADOBERGB_NONLINEAR_EXT"),
-            Self::PASS_THROUGH_EXT => Some("PASS_THROUGH_EXT"),
-            Self::EXTENDED_SRGB_NONLINEAR_EXT => Some("EXTENDED_SRGB_NONLINEAR_EXT"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for GeometryTypeNV {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::TRIANGLES => Some("TRIANGLES"),
-            Self::AABBS => Some("AABBS"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for DebugReportObjectTypeEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::UNKNOWN => Some("UNKNOWN"),
-            Self::INSTANCE => Some("INSTANCE"),
-            Self::PHYSICAL_DEVICE => Some("PHYSICAL_DEVICE"),
-            Self::DEVICE => Some("DEVICE"),
-            Self::QUEUE => Some("QUEUE"),
-            Self::SEMAPHORE => Some("SEMAPHORE"),
-            Self::COMMAND_BUFFER => Some("COMMAND_BUFFER"),
-            Self::FENCE => Some("FENCE"),
-            Self::DEVICE_MEMORY => Some("DEVICE_MEMORY"),
-            Self::BUFFER => Some("BUFFER"),
-            Self::IMAGE => Some("IMAGE"),
-            Self::EVENT => Some("EVENT"),
-            Self::QUERY_POOL => Some("QUERY_POOL"),
-            Self::BUFFER_VIEW => Some("BUFFER_VIEW"),
-            Self::IMAGE_VIEW => Some("IMAGE_VIEW"),
-            Self::SHADER_MODULE => Some("SHADER_MODULE"),
-            Self::PIPELINE_CACHE => Some("PIPELINE_CACHE"),
-            Self::PIPELINE_LAYOUT => Some("PIPELINE_LAYOUT"),
-            Self::RENDER_PASS => Some("RENDER_PASS"),
-            Self::PIPELINE => Some("PIPELINE"),
-            Self::DESCRIPTOR_SET_LAYOUT => Some("DESCRIPTOR_SET_LAYOUT"),
-            Self::SAMPLER => Some("SAMPLER"),
-            Self::DESCRIPTOR_POOL => Some("DESCRIPTOR_POOL"),
-            Self::DESCRIPTOR_SET => Some("DESCRIPTOR_SET"),
-            Self::FRAMEBUFFER => Some("FRAMEBUFFER"),
-            Self::COMMAND_POOL => Some("COMMAND_POOL"),
-            Self::SURFACE_KHR => Some("SURFACE_KHR"),
-            Self::SWAPCHAIN_KHR => Some("SWAPCHAIN_KHR"),
-            Self::DEBUG_REPORT_CALLBACK => Some("DEBUG_REPORT_CALLBACK"),
-            Self::DISPLAY_KHR => Some("DISPLAY_KHR"),
-            Self::DISPLAY_MODE_KHR => Some("DISPLAY_MODE_KHR"),
-            Self::OBJECT_TABLE_NVX => Some("OBJECT_TABLE_NVX"),
-            Self::INDIRECT_COMMANDS_LAYOUT_NVX => Some("INDIRECT_COMMANDS_LAYOUT_NVX"),
-            Self::VALIDATION_CACHE => Some("VALIDATION_CACHE"),
-            Self::SAMPLER_YCBCR_CONVERSION => Some("SAMPLER_YCBCR_CONVERSION"),
-            Self::DESCRIPTOR_UPDATE_TEMPLATE => Some("DESCRIPTOR_UPDATE_TEMPLATE"),
-            Self::ACCELERATION_STRUCTURE_NV => Some("ACCELERATION_STRUCTURE_NV"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for GeometryFlagsNV {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (GeometryFlagsNV::OPAQUE.0, "OPAQUE"),
-            (
-                GeometryFlagsNV::NO_DUPLICATE_ANY_HIT_INVOCATION.0,
-                "NO_DUPLICATE_ANY_HIT_INVOCATION",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for ImageViewType {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::TYPE_1D => Some("TYPE_1D"),
-            Self::TYPE_2D => Some("TYPE_2D"),
-            Self::TYPE_3D => Some("TYPE_3D"),
-            Self::CUBE => Some("CUBE"),
-            Self::TYPE_1D_ARRAY => Some("TYPE_1D_ARRAY"),
-            Self::TYPE_2D_ARRAY => Some("TYPE_2D_ARRAY"),
-            Self::CUBE_ARRAY => Some("CUBE_ARRAY"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for FormatFeatureFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN : & [ ( Flags , & str ) ] = & [ ( FormatFeatureFlags :: SAMPLED_IMAGE . 0 , "SAMPLED_IMAGE" ) , ( FormatFeatureFlags :: STORAGE_IMAGE . 0 , "STORAGE_IMAGE" ) , ( FormatFeatureFlags :: STORAGE_IMAGE_ATOMIC . 0 , "STORAGE_IMAGE_ATOMIC" ) , ( FormatFeatureFlags :: UNIFORM_TEXEL_BUFFER . 0 , "UNIFORM_TEXEL_BUFFER" ) , ( FormatFeatureFlags :: STORAGE_TEXEL_BUFFER . 0 , "STORAGE_TEXEL_BUFFER" ) , ( FormatFeatureFlags :: STORAGE_TEXEL_BUFFER_ATOMIC . 0 , "STORAGE_TEXEL_BUFFER_ATOMIC" ) , ( FormatFeatureFlags :: VERTEX_BUFFER . 0 , "VERTEX_BUFFER" ) , ( FormatFeatureFlags :: COLOR_ATTACHMENT . 0 , "COLOR_ATTACHMENT" ) , ( FormatFeatureFlags :: COLOR_ATTACHMENT_BLEND . 0 , "COLOR_ATTACHMENT_BLEND" ) , ( FormatFeatureFlags :: DEPTH_STENCIL_ATTACHMENT . 0 , "DEPTH_STENCIL_ATTACHMENT" ) , ( FormatFeatureFlags :: BLIT_SRC . 0 , "BLIT_SRC" ) , ( FormatFeatureFlags :: BLIT_DST . 0 , "BLIT_DST" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_FILTER_LINEAR . 0 , "SAMPLED_IMAGE_FILTER_LINEAR" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_FILTER_CUBIC_IMG . 0 , "SAMPLED_IMAGE_FILTER_CUBIC_IMG" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_FILTER_MINMAX_EXT . 0 , "SAMPLED_IMAGE_FILTER_MINMAX_EXT" ) , ( FormatFeatureFlags :: RESERVED_24_EXT . 0 , "RESERVED_24_EXT" ) , ( FormatFeatureFlags :: TRANSFER_SRC . 0 , "TRANSFER_SRC" ) , ( FormatFeatureFlags :: TRANSFER_DST . 0 , "TRANSFER_DST" ) , ( FormatFeatureFlags :: MIDPOINT_CHROMA_SAMPLES . 0 , "MIDPOINT_CHROMA_SAMPLES" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE" ) , ( FormatFeatureFlags :: DISJOINT . 0 , "DISJOINT" ) , ( FormatFeatureFlags :: COSITED_CHROMA_SAMPLES . 0 , "COSITED_CHROMA_SAMPLES" ) ] ;
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for SharingMode {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::EXCLUSIVE => Some("EXCLUSIVE"),
-            Self::CONCURRENT => Some("CONCURRENT"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for DeviceEventTypeEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::DISPLAY_HOTPLUG => Some("DISPLAY_HOTPLUG"),
             _ => None,
         };
         if let Some(x) = name {
@@ -54468,60 +57181,25 @@ impl fmt::Display for LogicOp {
         }
     }
 }
-impl fmt::Display for BlendOp {
+impl fmt::Display for MemoryPropertyFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (MemoryPropertyFlags::DEVICE_LOCAL.0, "DEVICE_LOCAL"),
+            (MemoryPropertyFlags::HOST_VISIBLE.0, "HOST_VISIBLE"),
+            (MemoryPropertyFlags::HOST_COHERENT.0, "HOST_COHERENT"),
+            (MemoryPropertyFlags::HOST_CACHED.0, "HOST_CACHED"),
+            (MemoryPropertyFlags::LAZILY_ALLOCATED.0, "LAZILY_ALLOCATED"),
+            (MemoryPropertyFlags::PROTECTED.0, "PROTECTED"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for IndexType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::ADD => Some("ADD"),
-            Self::SUBTRACT => Some("SUBTRACT"),
-            Self::REVERSE_SUBTRACT => Some("REVERSE_SUBTRACT"),
-            Self::MIN => Some("MIN"),
-            Self::MAX => Some("MAX"),
-            Self::ZERO_EXT => Some("ZERO_EXT"),
-            Self::SRC_EXT => Some("SRC_EXT"),
-            Self::DST_EXT => Some("DST_EXT"),
-            Self::SRC_OVER_EXT => Some("SRC_OVER_EXT"),
-            Self::DST_OVER_EXT => Some("DST_OVER_EXT"),
-            Self::SRC_IN_EXT => Some("SRC_IN_EXT"),
-            Self::DST_IN_EXT => Some("DST_IN_EXT"),
-            Self::SRC_OUT_EXT => Some("SRC_OUT_EXT"),
-            Self::DST_OUT_EXT => Some("DST_OUT_EXT"),
-            Self::SRC_ATOP_EXT => Some("SRC_ATOP_EXT"),
-            Self::DST_ATOP_EXT => Some("DST_ATOP_EXT"),
-            Self::XOR_EXT => Some("XOR_EXT"),
-            Self::MULTIPLY_EXT => Some("MULTIPLY_EXT"),
-            Self::SCREEN_EXT => Some("SCREEN_EXT"),
-            Self::OVERLAY_EXT => Some("OVERLAY_EXT"),
-            Self::DARKEN_EXT => Some("DARKEN_EXT"),
-            Self::LIGHTEN_EXT => Some("LIGHTEN_EXT"),
-            Self::COLORDODGE_EXT => Some("COLORDODGE_EXT"),
-            Self::COLORBURN_EXT => Some("COLORBURN_EXT"),
-            Self::HARDLIGHT_EXT => Some("HARDLIGHT_EXT"),
-            Self::SOFTLIGHT_EXT => Some("SOFTLIGHT_EXT"),
-            Self::DIFFERENCE_EXT => Some("DIFFERENCE_EXT"),
-            Self::EXCLUSION_EXT => Some("EXCLUSION_EXT"),
-            Self::INVERT_EXT => Some("INVERT_EXT"),
-            Self::INVERT_RGB_EXT => Some("INVERT_RGB_EXT"),
-            Self::LINEARDODGE_EXT => Some("LINEARDODGE_EXT"),
-            Self::LINEARBURN_EXT => Some("LINEARBURN_EXT"),
-            Self::VIVIDLIGHT_EXT => Some("VIVIDLIGHT_EXT"),
-            Self::LINEARLIGHT_EXT => Some("LINEARLIGHT_EXT"),
-            Self::PINLIGHT_EXT => Some("PINLIGHT_EXT"),
-            Self::HARDMIX_EXT => Some("HARDMIX_EXT"),
-            Self::HSL_HUE_EXT => Some("HSL_HUE_EXT"),
-            Self::HSL_SATURATION_EXT => Some("HSL_SATURATION_EXT"),
-            Self::HSL_COLOR_EXT => Some("HSL_COLOR_EXT"),
-            Self::HSL_LUMINOSITY_EXT => Some("HSL_LUMINOSITY_EXT"),
-            Self::PLUS_EXT => Some("PLUS_EXT"),
-            Self::PLUS_CLAMPED_EXT => Some("PLUS_CLAMPED_EXT"),
-            Self::PLUS_CLAMPED_ALPHA_EXT => Some("PLUS_CLAMPED_ALPHA_EXT"),
-            Self::PLUS_DARKER_EXT => Some("PLUS_DARKER_EXT"),
-            Self::MINUS_EXT => Some("MINUS_EXT"),
-            Self::MINUS_CLAMPED_EXT => Some("MINUS_CLAMPED_EXT"),
-            Self::CONTRAST_EXT => Some("CONTRAST_EXT"),
-            Self::INVERT_OVG_EXT => Some("INVERT_OVG_EXT"),
-            Self::RED_EXT => Some("RED_EXT"),
-            Self::GREEN_EXT => Some("GREEN_EXT"),
-            Self::BLUE_EXT => Some("BLUE_EXT"),
+            Self::UINT16 => Some("UINT16"),
+            Self::UINT32 => Some("UINT32"),
+            Self::NONE_NV => Some("NONE_NV"),
             _ => None,
         };
         if let Some(x) = name {
@@ -54529,6 +57207,449 @@ impl fmt::Display for BlendOp {
         } else {
             write!(f, "{}", self.0)
         }
+    }
+}
+impl fmt::Display for ValidationFeatureEnableEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::GPU_ASSISTED => Some("GPU_ASSISTED"),
+            Self::GPU_ASSISTED_RESERVE_BINDING_SLOT => Some("GPU_ASSISTED_RESERVE_BINDING_SLOT"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for ExternalMemoryFeatureFlagsNV {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                ExternalMemoryFeatureFlagsNV::EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_NV.0,
+                "EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_NV",
+            ),
+            (
+                ExternalMemoryFeatureFlagsNV::EXTERNAL_MEMORY_FEATURE_EXPORTABLE_NV.0,
+                "EXTERNAL_MEMORY_FEATURE_EXPORTABLE_NV",
+            ),
+            (
+                ExternalMemoryFeatureFlagsNV::EXTERNAL_MEMORY_FEATURE_IMPORTABLE_NV.0,
+                "EXTERNAL_MEMORY_FEATURE_IMPORTABLE_NV",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for BuildAccelerationStructureFlagsNV {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                BuildAccelerationStructureFlagsNV::ALLOW_UPDATE.0,
+                "ALLOW_UPDATE",
+            ),
+            (
+                BuildAccelerationStructureFlagsNV::ALLOW_COMPACTION.0,
+                "ALLOW_COMPACTION",
+            ),
+            (
+                BuildAccelerationStructureFlagsNV::PREFER_FAST_TRACE.0,
+                "PREFER_FAST_TRACE",
+            ),
+            (
+                BuildAccelerationStructureFlagsNV::PREFER_FAST_BUILD.0,
+                "PREFER_FAST_BUILD",
+            ),
+            (
+                BuildAccelerationStructureFlagsNV::LOW_MEMORY.0,
+                "LOW_MEMORY",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for PrimitiveTopology {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::POINT_LIST => Some("POINT_LIST"),
+            Self::LINE_LIST => Some("LINE_LIST"),
+            Self::LINE_STRIP => Some("LINE_STRIP"),
+            Self::TRIANGLE_LIST => Some("TRIANGLE_LIST"),
+            Self::TRIANGLE_STRIP => Some("TRIANGLE_STRIP"),
+            Self::TRIANGLE_FAN => Some("TRIANGLE_FAN"),
+            Self::LINE_LIST_WITH_ADJACENCY => Some("LINE_LIST_WITH_ADJACENCY"),
+            Self::LINE_STRIP_WITH_ADJACENCY => Some("LINE_STRIP_WITH_ADJACENCY"),
+            Self::TRIANGLE_LIST_WITH_ADJACENCY => Some("TRIANGLE_LIST_WITH_ADJACENCY"),
+            Self::TRIANGLE_STRIP_WITH_ADJACENCY => Some("TRIANGLE_STRIP_WITH_ADJACENCY"),
+            Self::PATCH_LIST => Some("PATCH_LIST"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for VertexInputRate {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::VERTEX => Some("VERTEX"),
+            Self::INSTANCE => Some("INSTANCE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for IndirectCommandsLayoutUsageFlagsNVX {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                IndirectCommandsLayoutUsageFlagsNVX::UNORDERED_SEQUENCES.0,
+                "UNORDERED_SEQUENCES",
+            ),
+            (
+                IndirectCommandsLayoutUsageFlagsNVX::SPARSE_SEQUENCES.0,
+                "SPARSE_SEQUENCES",
+            ),
+            (
+                IndirectCommandsLayoutUsageFlagsNVX::EMPTY_EXECUTIONS.0,
+                "EMPTY_EXECUTIONS",
+            ),
+            (
+                IndirectCommandsLayoutUsageFlagsNVX::INDEXED_SEQUENCES.0,
+                "INDEXED_SEQUENCES",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for SparseImageFormatFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (SparseImageFormatFlags::SINGLE_MIPTAIL.0, "SINGLE_MIPTAIL"),
+            (
+                SparseImageFormatFlags::ALIGNED_MIP_SIZE.0,
+                "ALIGNED_MIP_SIZE",
+            ),
+            (
+                SparseImageFormatFlags::NONSTANDARD_BLOCK_SIZE.0,
+                "NONSTANDARD_BLOCK_SIZE",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for ImageCreateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (ImageCreateFlags::SPARSE_BINDING.0, "SPARSE_BINDING"),
+            (ImageCreateFlags::SPARSE_RESIDENCY.0, "SPARSE_RESIDENCY"),
+            (ImageCreateFlags::SPARSE_ALIASED.0, "SPARSE_ALIASED"),
+            (ImageCreateFlags::MUTABLE_FORMAT.0, "MUTABLE_FORMAT"),
+            (ImageCreateFlags::CUBE_COMPATIBLE.0, "CUBE_COMPATIBLE"),
+            (ImageCreateFlags::CORNER_SAMPLED_NV.0, "CORNER_SAMPLED_NV"),
+            (
+                ImageCreateFlags::SAMPLE_LOCATIONS_COMPATIBLE_DEPTH_EXT.0,
+                "SAMPLE_LOCATIONS_COMPATIBLE_DEPTH_EXT",
+            ),
+            (ImageCreateFlags::SUBSAMPLED_EXT.0, "SUBSAMPLED_EXT"),
+            (ImageCreateFlags::ALIAS.0, "ALIAS"),
+            (
+                ImageCreateFlags::SPLIT_INSTANCE_BIND_REGIONS.0,
+                "SPLIT_INSTANCE_BIND_REGIONS",
+            ),
+            (
+                ImageCreateFlags::TYPE_2D_ARRAY_COMPATIBLE.0,
+                "TYPE_2D_ARRAY_COMPATIBLE",
+            ),
+            (
+                ImageCreateFlags::BLOCK_TEXEL_VIEW_COMPATIBLE.0,
+                "BLOCK_TEXEL_VIEW_COMPATIBLE",
+            ),
+            (ImageCreateFlags::EXTENDED_USAGE.0, "EXTENDED_USAGE"),
+            (ImageCreateFlags::PROTECTED.0, "PROTECTED"),
+            (ImageCreateFlags::DISJOINT.0, "DISJOINT"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for SampleCountFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (SampleCountFlags::TYPE_1.0, "TYPE_1"),
+            (SampleCountFlags::TYPE_2.0, "TYPE_2"),
+            (SampleCountFlags::TYPE_4.0, "TYPE_4"),
+            (SampleCountFlags::TYPE_8.0, "TYPE_8"),
+            (SampleCountFlags::TYPE_16.0, "TYPE_16"),
+            (SampleCountFlags::TYPE_32.0, "TYPE_32"),
+            (SampleCountFlags::TYPE_64.0, "TYPE_64"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for QueryType {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::OCCLUSION => Some("OCCLUSION"),
+            Self::PIPELINE_STATISTICS => Some("PIPELINE_STATISTICS"),
+            Self::TIMESTAMP => Some("TIMESTAMP"),
+            Self::RESERVED_8 => Some("RESERVED_8"),
+            Self::RESERVED_4 => Some("RESERVED_4"),
+            Self::TRANSFORM_FEEDBACK_STREAM_EXT => Some("TRANSFORM_FEEDBACK_STREAM_EXT"),
+            Self::ACCELERATION_STRUCTURE_COMPACTED_SIZE_NV => {
+                Some("ACCELERATION_STRUCTURE_COMPACTED_SIZE_NV")
+            }
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for FormatFeatureFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN : & [ ( Flags , & str ) ] = & [ ( FormatFeatureFlags :: SAMPLED_IMAGE . 0 , "SAMPLED_IMAGE" ) , ( FormatFeatureFlags :: STORAGE_IMAGE . 0 , "STORAGE_IMAGE" ) , ( FormatFeatureFlags :: STORAGE_IMAGE_ATOMIC . 0 , "STORAGE_IMAGE_ATOMIC" ) , ( FormatFeatureFlags :: UNIFORM_TEXEL_BUFFER . 0 , "UNIFORM_TEXEL_BUFFER" ) , ( FormatFeatureFlags :: STORAGE_TEXEL_BUFFER . 0 , "STORAGE_TEXEL_BUFFER" ) , ( FormatFeatureFlags :: STORAGE_TEXEL_BUFFER_ATOMIC . 0 , "STORAGE_TEXEL_BUFFER_ATOMIC" ) , ( FormatFeatureFlags :: VERTEX_BUFFER . 0 , "VERTEX_BUFFER" ) , ( FormatFeatureFlags :: COLOR_ATTACHMENT . 0 , "COLOR_ATTACHMENT" ) , ( FormatFeatureFlags :: COLOR_ATTACHMENT_BLEND . 0 , "COLOR_ATTACHMENT_BLEND" ) , ( FormatFeatureFlags :: DEPTH_STENCIL_ATTACHMENT . 0 , "DEPTH_STENCIL_ATTACHMENT" ) , ( FormatFeatureFlags :: BLIT_SRC . 0 , "BLIT_SRC" ) , ( FormatFeatureFlags :: BLIT_DST . 0 , "BLIT_DST" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_FILTER_LINEAR . 0 , "SAMPLED_IMAGE_FILTER_LINEAR" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_FILTER_CUBIC_IMG . 0 , "SAMPLED_IMAGE_FILTER_CUBIC_IMG" ) , ( FormatFeatureFlags :: RESERVED_27_KHR . 0 , "RESERVED_27_KHR" ) , ( FormatFeatureFlags :: RESERVED_28_KHR . 0 , "RESERVED_28_KHR" ) , ( FormatFeatureFlags :: RESERVED_25_KHR . 0 , "RESERVED_25_KHR" ) , ( FormatFeatureFlags :: RESERVED_26_KHR . 0 , "RESERVED_26_KHR" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_FILTER_MINMAX_EXT . 0 , "SAMPLED_IMAGE_FILTER_MINMAX_EXT" ) , ( FormatFeatureFlags :: FRAGMENT_DENSITY_MAP_EXT . 0 , "FRAGMENT_DENSITY_MAP_EXT" ) , ( FormatFeatureFlags :: TRANSFER_SRC . 0 , "TRANSFER_SRC" ) , ( FormatFeatureFlags :: TRANSFER_DST . 0 , "TRANSFER_DST" ) , ( FormatFeatureFlags :: MIDPOINT_CHROMA_SAMPLES . 0 , "MIDPOINT_CHROMA_SAMPLES" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE" ) , ( FormatFeatureFlags :: DISJOINT . 0 , "DISJOINT" ) , ( FormatFeatureFlags :: COSITED_CHROMA_SAMPLES . 0 , "COSITED_CHROMA_SAMPLES" ) ] ;
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for ImageAspectFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (ImageAspectFlags::COLOR.0, "COLOR"),
+            (ImageAspectFlags::DEPTH.0, "DEPTH"),
+            (ImageAspectFlags::STENCIL.0, "STENCIL"),
+            (ImageAspectFlags::METADATA.0, "METADATA"),
+            (ImageAspectFlags::MEMORY_PLANE_0_EXT.0, "MEMORY_PLANE_0_EXT"),
+            (ImageAspectFlags::MEMORY_PLANE_1_EXT.0, "MEMORY_PLANE_1_EXT"),
+            (ImageAspectFlags::MEMORY_PLANE_2_EXT.0, "MEMORY_PLANE_2_EXT"),
+            (ImageAspectFlags::MEMORY_PLANE_3_EXT.0, "MEMORY_PLANE_3_EXT"),
+            (ImageAspectFlags::PLANE_0.0, "PLANE_0"),
+            (ImageAspectFlags::PLANE_1.0, "PLANE_1"),
+            (ImageAspectFlags::PLANE_2.0, "PLANE_2"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for StencilFaceFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (StencilFaceFlags::FRONT.0, "FRONT"),
+            (StencilFaceFlags::BACK.0, "BACK"),
+            (
+                StencilFaceFlags::STENCIL_FRONT_AND_BACK.0,
+                "STENCIL_FRONT_AND_BACK",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for ExternalFenceHandleTypeFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD.0,
+                "EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD",
+            ),
+            (
+                ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32.0,
+                "EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32",
+            ),
+            (
+                ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT.0,
+                "EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT",
+            ),
+            (
+                ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD.0,
+                "EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for DeviceEventTypeEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::DISPLAY_HOTPLUG => Some("DISPLAY_HOTPLUG"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for ViewportCoordinateSwizzleNV {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::POSITIVE_X => Some("POSITIVE_X"),
+            Self::NEGATIVE_X => Some("NEGATIVE_X"),
+            Self::POSITIVE_Y => Some("POSITIVE_Y"),
+            Self::NEGATIVE_Y => Some("NEGATIVE_Y"),
+            Self::POSITIVE_Z => Some("POSITIVE_Z"),
+            Self::NEGATIVE_Z => Some("NEGATIVE_Z"),
+            Self::POSITIVE_W => Some("POSITIVE_W"),
+            Self::NEGATIVE_W => Some("NEGATIVE_W"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for AttachmentLoadOp {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::LOAD => Some("LOAD"),
+            Self::CLEAR => Some("CLEAR"),
+            Self::DONT_CARE => Some("DONT_CARE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for CommandPoolCreateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (CommandPoolCreateFlags::TRANSIENT.0, "TRANSIENT"),
+            (
+                CommandPoolCreateFlags::RESET_COMMAND_BUFFER.0,
+                "RESET_COMMAND_BUFFER",
+            ),
+            (CommandPoolCreateFlags::PROTECTED.0, "PROTECTED"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for ValidationCheckEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::ALL => Some("ALL"),
+            Self::SHADERS => Some("SHADERS"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for ExternalMemoryHandleTypeFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN : & [ ( Flags , & str ) ] = & [ ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32 . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_ANDROID_HARDWARE_BUFFER_ANDROID . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_ANDROID_HARDWARE_BUFFER_ANDROID" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_HOST_ALLOCATION . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_HOST_ALLOCATION" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_HOST_MAPPED_FOREIGN_MEMORY . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_HOST_MAPPED_FOREIGN_MEMORY" ) ] ;
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for DependencyFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (DependencyFlags::BY_REGION.0, "BY_REGION"),
+            (DependencyFlags::DEVICE_GROUP.0, "DEVICE_GROUP"),
+            (DependencyFlags::VIEW_LOCAL.0, "VIEW_LOCAL"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for CommandPoolResetFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(
+            CommandPoolResetFlags::RELEASE_RESOURCES.0,
+            "RELEASE_RESOURCES",
+        )];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for QueryControlFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(QueryControlFlags::PRECISE.0, "PRECISE")];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for ImageViewType {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::TYPE_1D => Some("TYPE_1D"),
+            Self::TYPE_2D => Some("TYPE_2D"),
+            Self::TYPE_3D => Some("TYPE_3D"),
+            Self::CUBE => Some("CUBE"),
+            Self::TYPE_1D_ARRAY => Some("TYPE_1D_ARRAY"),
+            Self::TYPE_2D_ARRAY => Some("TYPE_2D_ARRAY"),
+            Self::CUBE_ARRAY => Some("CUBE_ARRAY"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for SamplerReductionModeEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::WEIGHTED_AVERAGE => Some("WEIGHTED_AVERAGE"),
+            Self::MIN => Some("MIN"),
+            Self::MAX => Some("MAX"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for SubpassDescriptionFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                SubpassDescriptionFlags::PER_VIEW_ATTRIBUTES_NVX.0,
+                "PER_VIEW_ATTRIBUTES_NVX",
+            ),
+            (
+                SubpassDescriptionFlags::PER_VIEW_POSITION_X_ONLY_NVX.0,
+                "PER_VIEW_POSITION_X_ONLY_NVX",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for ExternalMemoryHandleTypeFlagsNV {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                ExternalMemoryHandleTypeFlagsNV::EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_NV.0,
+                "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_NV",
+            ),
+            (
+                ExternalMemoryHandleTypeFlagsNV::EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_NV.0,
+                "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_NV",
+            ),
+            (
+                ExternalMemoryHandleTypeFlagsNV::EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_NV.0,
+                "EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_NV",
+            ),
+            (
+                ExternalMemoryHandleTypeFlagsNV::EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_NV.0,
+                "EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_NV",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
     }
 }
 pub type DescriptorUpdateTemplateCreateFlagsKHR = DescriptorUpdateTemplateCreateFlags;
