@@ -219,7 +219,7 @@ impl RayTracing {
         let err_code = self.ray_tracing_fn.get_acceleration_structure_handle_nv(
             self.handle,
             accel_struct,
-            8, // sizeof(u64)
+            std::mem::size_of::<u64>(),
             handle_ptr as *mut std::ffi::c_void,
         );
         match err_code {
