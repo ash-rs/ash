@@ -2,7 +2,7 @@
 use prelude::*;
 use std::ffi::CStr;
 use std::mem;
-use version::{DeviceV1_1, InstanceV1_1};
+use version::{DeviceV1_0, InstanceV1_0, InstanceV1_1};
 use vk;
 use RawPtr;
 
@@ -13,7 +13,7 @@ pub struct RayTracing {
 }
 
 impl RayTracing {
-    pub fn new<I: InstanceV1_1, D: DeviceV1_1>(instance: &I, device: &D) -> RayTracing {
+    pub fn new<I: InstanceV1_0, D: DeviceV1_0>(instance: &I, device: &D) -> RayTracing {
         let ray_tracing_fn = vk::NvRayTracingFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
