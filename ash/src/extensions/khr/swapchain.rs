@@ -25,7 +25,7 @@ impl Swapchain {
     }
 
     pub fn name() -> &'static CStr {
-        CStr::from_bytes_with_nul(b"VK_KHR_swapchain\0").expect("Wrong extension string")
+        vk::KhrSwapchainFn::name()
     }
 
     pub unsafe fn destroy_swapchain(

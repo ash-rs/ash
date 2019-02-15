@@ -21,7 +21,7 @@ impl DebugMarker {
     }
 
     pub fn name() -> &'static CStr {
-        CStr::from_bytes_with_nul(b"VK_EXT_debug_marker\0").expect("Wrong extension string")
+        vk::ExtDebugMarkerFn::name()
     }
 
     pub unsafe fn debug_marker_set_object_name(

@@ -23,7 +23,7 @@ impl DebugUtils {
     }
 
     pub fn name() -> &'static CStr {
-        CStr::from_bytes_with_nul(b"VK_EXT_debug_utils\0").expect("Wrong extension string")
+        vk::ExtDebugUtilsFn::name()
     }
 
     pub unsafe fn debug_utils_set_object_name(

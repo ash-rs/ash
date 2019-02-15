@@ -24,7 +24,7 @@ impl IOSSurface {
     }
 
     pub fn name() -> &'static CStr {
-        CStr::from_bytes_with_nul(b"VK_MVK_IOS_surface\0").expect("Wrong extension string")
+        vk::MvkIosSurfaceFn::name()
     }
 
     pub unsafe fn create_ios_surface_mvk(

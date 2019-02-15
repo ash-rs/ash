@@ -24,7 +24,7 @@ impl WaylandSurface {
     }
 
     pub fn name() -> &'static CStr {
-        CStr::from_bytes_with_nul(b"VK_KHR_wayland_surface\0").expect("Wrong extension string")
+        vk::KhrWaylandSurfaceFn::name()
     }
 
     pub unsafe fn create_wayland_surface(

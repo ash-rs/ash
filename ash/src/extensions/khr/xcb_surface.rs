@@ -24,7 +24,7 @@ impl XcbSurface {
     }
 
     pub fn name() -> &'static CStr {
-        CStr::from_bytes_with_nul(b"VK_KHR_xcb_surface\0").expect("Wrong extension string")
+        vk::KhrXcbSurfaceFn::name()
     }
 
     pub unsafe fn create_xcb_surface(
