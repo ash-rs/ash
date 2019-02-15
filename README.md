@@ -189,6 +189,22 @@ cargo run --bin texture
 ```
 ![texture](http://i.imgur.com/trow00H.png)
 
+## Useful resources
+
+### Examples
+
+* [vulkan-tutorial-rust](https://github.com/Usami-Renko/vulkan-tutorial-rust) - A port of [vulkan-tutorial.com](vulkan-tutorial.com).
+* [ash-sample-progression](https://github.com/bzm3r/ash-sample-progression) - A port of the LunarG examples.
+* [ash-nv-rt](https://github.com/gwihlidal/ash-nv-rt) A raytracing example for ash.
+
+### Utility libraries
+* [vk-sync](https://github.com/gwihlidal/vk-sync-rs) - Simplified Vulkan synchronization logic, written in rust.
+* [vk-mem-rs](https://github.com/gwihlidal/vk-mem-rs) - This crate provides an FFI layer and idiomatic rust wrappers for the excellent AMD Vulkan Memory Allocator (VMA) C/C++ library.
+* [lahar](https://github.com/Ralith/lahar) - Tools for asynchronously uploading data to a Vulkan device.
+
+### Libraries that use ash
+[gfx-rs](https://github.com/gfx-rs/gfx) - gfx-rs is a low-level, cross-platform graphics abstraction library in Rust.
+
 ## A thanks to
 
 * [Api with no secrets](https://software.intel.com/en-us/articles/api-without-secrets-introduction-to-vulkan-part-1)
