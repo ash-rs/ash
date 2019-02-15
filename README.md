@@ -203,7 +203,7 @@ cargo run --bin texture
 * [lahar](https://github.com/Ralith/lahar) - Tools for asynchronously uploading data to a Vulkan device.
 
 ### Libraries that use ash
-[gfx-rs](https://github.com/gfx-rs/gfx) - gfx-rs is a low-level, cross-platform graphics abstraction library in Rust.
+* [gfx-rs](https://github.com/gfx-rs/gfx) - gfx-rs is a low-level, cross-platform graphics abstraction library in Rust.
 
 ## A thanks to
 
