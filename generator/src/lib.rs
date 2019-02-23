@@ -1596,11 +1596,13 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
 
     let next_function = if has_next {
         quote! {
-            pub fn next<T: #extends_name>(mut self, next: &'a mut impl ::std::ops::DerefMut<Target = T>) -> #name_builder<'a> {
+            pub fn next<T: #extends_name>(mut self, next: &'a mut T) -> #name_builder<'a> {
                 unsafe{
-                    let ptr = &mut self.inner as *mut _ as *mut c_void;
-                    let last_extension = ExtensionChain::last_chain(ptr);
-                    (*last_extension).p_next = next.deref_mut() as *mut T as *mut c_void;
+                    let last_extension = ptr_chain_iter(&mut self.inner)
+                        .last()
+                        .expect("Initial ptr was null");
+                    // Append the extension at the end
+                    (*last_extension).p_next = next as *mut T as *mut _;
                 }
                 self
             }
@@ -2145,33 +2147,23 @@ pub fn write_source_code(path: &Path) {
     let source_code = quote! {
         use std::fmt;
         use std::os::raw::*;
-
-        #[repr(C)]
-        #[derive(Debug, Copy, Clone)]
-        pub struct ExtensionChain {
-            pub s_type: StructureType,
-            pub p_next: *mut c_void
-        }
-
-        impl ExtensionChain {
-            pub unsafe fn from_ptr(ptr: *mut c_void) -> *mut Self {
-                ::std::mem::transmute(ptr)
-            }
-            pub unsafe fn last_chain(ptr: *mut c_void) -> *mut Self {
-                assert!(!ptr.is_null());
-                let mut extension = ExtensionChain::from_ptr(ptr);
-                while !(*extension).p_next.is_null() {
-                    extension = ExtensionChain::from_ptr((*extension).p_next);
+        /// `T` has to be a valid xxx_create_info struct. Addtionally all the pointer chains in
+        /// this iterator are mutable. Make sure that all the objects in this pointer chain have an
+        /// active `&mut` borrow if you want to update those objects.
+        pub unsafe fn ptr_chain_iter<T>(ptr: &mut T) -> impl Iterator<Item = *mut BaseOutStructure> {
+            use std::ptr::null_mut;
+            let ptr: *mut BaseOutStructure = ::std::mem::transmute(ptr);
+            (0..).scan(ptr, |p_ptr, _|{
+                if *p_ptr == null_mut() {
+                    return None;
                 }
-                extension
-            }
+                let n_ptr = (**p_ptr).p_next as *mut BaseOutStructure;
+                let old = *p_ptr;
+                *p_ptr = n_ptr;
+                Some(old)
+            })
         }
-        #[repr(C)]
-        #[derive(Debug, Copy, Clone)]
-        pub struct ExtensionChainMut {
-            pub s_type: StructureType,
-            pub p_next: *mut c_void
-        }
+
         pub trait Handle {
             const TYPE: ObjectType;
             fn as_raw(self) -> u64;

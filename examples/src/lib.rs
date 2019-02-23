@@ -4,7 +4,6 @@ extern crate ash;
 extern crate winapi;
 
 extern crate winit;
-
 #[cfg(target_os = "macos")]
 extern crate cocoa;
 #[cfg(target_os = "macos")]
@@ -408,9 +407,9 @@ impl ExampleBase {
                 .build()];
 
             let mut variable_pointers =
-                vk::PhysicalDeviceVariablePointerFeatures::builder().variable_pointers(true);
+                vk::PhysicalDeviceVariablePointerFeatures::builder().variable_pointers(true).build();
             let mut corner = vk::PhysicalDeviceCornerSampledImageFeaturesNV::builder()
-                .corner_sampled_image(true);
+                .corner_sampled_image(true).build();
             let mut device_create_info = vk::DeviceCreateInfo::builder()
                 .next(&mut corner)
                 .next(&mut variable_pointers)
@@ -419,24 +418,12 @@ impl ExampleBase {
                 .enabled_features(&features)
                 .build();
 
-            let mut chain =
-                vk::ExtensionChain::from_ptr(&mut device_create_info as *mut _ as *mut _);
-            println!("{}", (*chain).s_type);
-            println!("{:?}", (*chain).p_next);
-            unsafe {
-                loop {
-                    chain = vk::ExtensionChain::from_ptr((*chain).p_next as *mut _);
-                    println!("{}", (*chain).s_type);
-                    println!("{:?}", (*chain).p_next);
-                    if (*chain).p_next.is_null() {
-                        break;
-                    }
-                }
+            for ptr in vk::ptr_chain_iter(&mut device_create_info){
+                println!("{:?}", ptr);
             }
-            use std::ops::Deref;
             println!("--");
-            println!("{:?}", corner.deref() as *const _);
-            println!("{:?}", variable_pointers.deref() as *const _);
+            println!("{:?}", &corner as *const _);
+            println!("{:?}", &variable_pointers as *const _);
             let device: Device = instance
                 .create_device(pdevice, &device_create_info, None)
                 .unwrap();
