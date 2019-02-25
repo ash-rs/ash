@@ -8,12 +8,16 @@ pub use instance::Instance;
 
 mod device;
 mod entry;
-pub mod extensions;
 mod instance;
 pub mod prelude;
 pub mod util;
 pub mod version;
+#[macro_use]
 pub mod vk;
+
+// macros of vk need to be defined beforehand
+pub mod extensions;
+
 pub trait RawPtr<T> {
     fn as_raw_ptr(&self) -> *const T;
 }
