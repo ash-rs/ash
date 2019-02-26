@@ -3,13 +3,13 @@ extern crate ash;
 #[cfg(target_os = "windows")]
 extern crate winapi;
 
-extern crate winit;
 #[cfg(target_os = "macos")]
 extern crate cocoa;
 #[cfg(target_os = "macos")]
 extern crate metal_rs as metal;
 #[cfg(target_os = "macos")]
 extern crate objc;
+extern crate winit;
 #[cfg(target_os = "macos")]
 use cocoa::appkit::{NSView, NSWindow};
 #[cfg(target_os = "macos")]
@@ -406,19 +406,21 @@ impl ExampleBase {
                 .queue_priorities(&priorities)
                 .build()];
 
-            let mut variable_pointers =
-                vk::PhysicalDeviceVariablePointerFeatures::builder().variable_pointers(true).build();
+            let mut variable_pointers = vk::PhysicalDeviceVariablePointerFeatures::builder()
+                .variable_pointers(true)
+                .build();
             let mut corner = vk::PhysicalDeviceCornerSampledImageFeaturesNV::builder()
-                .corner_sampled_image(true).build();
+                .corner_sampled_image(true)
+                .build();
             let mut device_create_info = vk::DeviceCreateInfo::builder()
-                .next(&mut corner)
-                .next(&mut variable_pointers)
+                .push_next(&mut corner)
+                .push_next(&mut variable_pointers)
                 .queue_create_infos(&queue_info)
                 .enabled_extension_names(&device_extension_names_raw)
                 .enabled_features(&features)
                 .build();
 
-            for ptr in vk::ptr_chain_iter(&mut device_create_info){
+            for ptr in vk::ptr_chain_iter(&mut device_create_info) {
                 println!("{:?}", ptr);
             }
             println!("--");

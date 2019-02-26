@@ -28,11 +28,10 @@ impl RayTracing {
         pdevice: vk::PhysicalDevice,
     ) -> vk::PhysicalDeviceRayTracingPropertiesNV {
         let mut props_rt = vk::PhysicalDeviceRayTracingPropertiesNV::default();
-        let mut props = vk::PhysicalDeviceProperties2::builder()
-            .next(&mut props_rt)
-            .build();
-
-        instance.get_physical_device_properties2(pdevice, &mut props);
+        {
+            let mut props = vk::PhysicalDeviceProperties2::builder().push_next(&mut props_rt);
+            instance.get_physical_device_properties2(pdevice, &mut props);
+        }
         props_rt
     }
 

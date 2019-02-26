@@ -1378,7 +1378,10 @@ pub fn derive_debug(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> Opt
     Some(q)
 }
 
-pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
+pub fn derive_setters(
+    _struct: &vkxml::Struct,
+    root_create_info_names: &HashSet<String>,
+) -> Option<Tokens> {
     if &_struct.name == "VkBaseInStructure" || &_struct.name == "VkBaseOutStructure" {
         return None;
     }
@@ -1578,31 +1581,26 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
         })
     });
 
-    let mut nexts = Vec::new();
     let extends_name = name_to_tokens(&format!("Extends{}", name));
-    if let Some(extends) = &_struct.extends {
-        for target in extends.split(',') {
-            let target = match target {
-                // https://github.com/KhronosGroup/Vulkan-Docs/pull/870
-                "VkPhysicalDeviceProperties" => "VkPhysicalDeviceProperties2",
-                x => x,
-            };
-            let target_ident = name_to_tokens(&format!("Extends{}", name_to_tokens(target)));
-            nexts.push(quote! {
-                unsafe impl #target_ident for #name {}
-            });
-        }
-    }
 
-    let next_function = if has_next {
+    let next_extends = _struct.extends.as_ref().map(|extends| {
+        let extends = extends
+            .split(',')
+            .find(|extend| root_create_info_names.contains(&extend.to_string()))
+            .expect("Should have a root create info");
+        name_to_tokens(&format!("Extends{}", name_to_tokens(&extends)))
+    });
+
+
+    // We only implement a next methods for root create infos
+    let next_function = if has_next && next_extends.is_none() {
         quote! {
-            pub fn next<T: #extends_name>(mut self, next: &'a mut T) -> #name_builder<'a> {
+            /// Prepend
+            pub fn push_next<T: #extends_name>(mut self, next: &'a mut T) -> #name_builder<'a> {
                 unsafe{
-                    let last_extension = ptr_chain_iter(&mut self.inner)
-                        .last()
-                        .expect("Initial ptr was null");
-                    // Append the extension at the end
-                    (*last_extension).p_next = next as *mut T as *mut _;
+                    let next_ptr: *mut BaseOutStructure = ::std::mem::transmute(next);
+                    (*next_ptr).p_next = self.inner.p_next as _;
+                    self.inner.p_next = next_ptr as _;
                 }
                 self
             }
@@ -1611,9 +1609,20 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
         quote! {}
     };
 
-    let next_trait = if has_next {
+    // Root create infos come with their own trait that structs that extends this create info will
+    // implement
+    let next_trait = if has_next && _struct.extends.is_none() {
         quote! {
             pub unsafe trait #extends_name {}
+        }
+    } else {
+        quote! {}
+    };
+
+    // If the struct extends something we need to implement the root create info trait.
+    let impl_extend_trait = if let Some(next_extends) = next_extends {
+        quote! {
+            unsafe impl #next_extends for #name {}
         }
     } else {
         quote! {}
@@ -1634,10 +1643,9 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
             marker: ::std::marker::PhantomData<&'a ()>,
         }
 
+        #impl_extend_trait
         #next_trait
 
-
-        #(#nexts)*
 
         impl<'a> ::std::ops::Deref for #name_builder<'a> {
             type Target = #name;
@@ -1646,6 +1654,7 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
                 &self.inner
             }
         }
+
         impl<'a> ::std::ops::DerefMut for #name_builder<'a> {
             fn deref_mut(&mut self) -> &mut Self::Target {
                 &mut self.inner
@@ -1676,7 +1685,11 @@ pub fn manual_derives(_struct: &vkxml::Struct) -> Tokens {
         _ => quote! {},
     }
 }
-pub fn generate_struct(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> Tokens {
+pub fn generate_struct(
+    _struct: &vkxml::Struct,
+    root_create_info_names: &HashSet<String>,
+    union_types: &HashSet<&str>,
+) -> Tokens {
     let name = name_to_tokens(&_struct.name);
     let members = _struct.elements.iter().filter_map(|elem| match *elem {
         vkxml::StructElement::Member(ref field) => Some(field),
@@ -1691,7 +1704,7 @@ pub fn generate_struct(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> 
 
     let debug_tokens = derive_debug(_struct, union_types);
     let default_tokens = derive_default(_struct);
-    let setter_tokens = derive_setters(_struct);
+    let setter_tokens = derive_setters(_struct, root_create_info_names);
     let manual_derive_tokens = manual_derives(_struct);
     let dbg_str = if debug_tokens.is_none() {
         quote!(Debug,)
@@ -1777,16 +1790,35 @@ fn generate_union(union: &vkxml::Union) -> Tokens {
         }
     }
 }
+pub fn root_create_info_names(definitions: &[&vkxml::DefinitionsElement]) -> HashSet<String> {
+    definitions
+        .iter()
+        .filter_map(|definition| match *definition {
+            vkxml::DefinitionsElement::Struct(ref _struct) => {
+                let is_root_create_info = _struct.extends.is_none();
+                if is_root_create_info {
+                    Some(_struct.name.clone())
+                } else {
+                    None
+                }
+            }
+            _ => None,
+        })
+        .collect()
+}
 pub fn generate_definition(
     definition: &vkxml::DefinitionsElement,
     union_types: &HashSet<&str>,
+    root_create_info_names: &HashSet<String>,
     bitflags_cache: &mut HashSet<Ident>,
 ) -> Option<Tokens> {
     match *definition {
         vkxml::DefinitionsElement::Typedef(ref typedef) => Some(generate_typedef(typedef)),
-        vkxml::DefinitionsElement::Struct(ref _struct) => {
-            Some(generate_struct(_struct, union_types))
-        }
+        vkxml::DefinitionsElement::Struct(ref _struct) => Some(generate_struct(
+            _struct,
+            root_create_info_names,
+            union_types,
+        )),
         vkxml::DefinitionsElement::Bitmask(ref mask) => generate_bitmask(mask, bitflags_cache),
         vkxml::DefinitionsElement::Handle(ref handle) => generate_handle(handle),
         vkxml::DefinitionsElement::FuncPtr(ref fp) => Some(generate_funcptr(fp)),
@@ -2124,9 +2156,17 @@ pub fn write_source_code(path: &Path) {
         })
         .collect::<HashSet<&str>>();
 
+    let root_create_info_names = root_create_info_names(&definitions);
     let definition_code: Vec<_> = definitions
         .into_iter()
-        .filter_map(|def| generate_definition(def, &union_types, &mut bitflags_cache))
+        .filter_map(|def| {
+            generate_definition(
+                def,
+                &union_types,
+                &root_create_info_names,
+                &mut bitflags_cache,
+            )
+        })
         .collect();
 
     let feature_code: Vec<_> = features
