@@ -1594,7 +1594,11 @@ pub fn derive_setters(
     // We only implement a next methods for root create infos
     let next_function = if has_next && next_extends.is_none() {
         quote! {
-            /// Prepend
+            /// Prepends the given extension struct between the root and the first pointer. This
+            /// method only exists on create infos that can be passed to a function directly. Only
+            /// valid extension structs can be pushed into the chain.
+            /// If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the
+            /// chain will look like `A -> D -> B -> C`.
             pub fn push_next<T: #extends_name>(mut self, next: &'a mut T) -> #name_builder<'a> {
                 unsafe{
                     let next_ptr = next.as_ptr_mut();

@@ -1,5 +1,21 @@
 use std::fmt;
 use std::os::raw::*;
+#[doc = r" `T` has to be a valid xxx_create_info struct. Addtionally all the pointer chains in"]
+#[doc = r" this iterator are mutable. Make sure that all the objects in this pointer chain have an"]
+#[doc = r" active `&mut` borrow if you want to update those objects."]
+pub unsafe fn ptr_chain_iter<T>(ptr: &mut T) -> impl Iterator<Item = *mut BaseOutStructure> {
+    use std::ptr::null_mut;
+    let ptr: *mut BaseOutStructure = ::std::mem::transmute(ptr);
+    (0..).scan(ptr, |p_ptr, _| {
+        if *p_ptr == null_mut() {
+            return None;
+        }
+        let n_ptr = (**p_ptr).p_next as *mut BaseOutStructure;
+        let old = *p_ptr;
+        *p_ptr = n_ptr;
+        Some(old)
+    })
+}
 pub trait Handle {
     const TYPE: ObjectType;
     fn as_raw(self) -> u64;
@@ -7623,6 +7639,11 @@ impl<'a> ::std::ops::Deref for Offset2DBuilder<'a> {
         &self.inner
     }
 }
+impl<'a> ::std::ops::DerefMut for Offset2DBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
 impl<'a> Offset2DBuilder<'a> {
     pub fn x(mut self, x: i32) -> Offset2DBuilder<'a> {
         self.inner.x = x;
@@ -7659,6 +7680,11 @@ impl<'a> ::std::ops::Deref for Offset3DBuilder<'a> {
     type Target = Offset3D;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for Offset3DBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> Offset3DBuilder<'a> {
@@ -7702,6 +7728,11 @@ impl<'a> ::std::ops::Deref for Extent2DBuilder<'a> {
         &self.inner
     }
 }
+impl<'a> ::std::ops::DerefMut for Extent2DBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
 impl<'a> Extent2DBuilder<'a> {
     pub fn width(mut self, width: u32) -> Extent2DBuilder<'a> {
         self.inner.width = width;
@@ -7738,6 +7769,11 @@ impl<'a> ::std::ops::Deref for Extent3DBuilder<'a> {
     type Target = Extent3D;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for Extent3DBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> Extent3DBuilder<'a> {
@@ -7783,6 +7819,11 @@ impl<'a> ::std::ops::Deref for ViewportBuilder<'a> {
     type Target = Viewport;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ViewportBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ViewportBuilder<'a> {
@@ -7838,6 +7879,11 @@ impl<'a> ::std::ops::Deref for Rect2DBuilder<'a> {
         &self.inner
     }
 }
+impl<'a> ::std::ops::DerefMut for Rect2DBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
 impl<'a> Rect2DBuilder<'a> {
     pub fn offset(mut self, offset: Offset2D) -> Rect2DBuilder<'a> {
         self.inner.offset = offset;
@@ -7874,6 +7920,11 @@ impl<'a> ::std::ops::Deref for ClearRectBuilder<'a> {
     type Target = ClearRect;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ClearRectBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ClearRectBuilder<'a> {
@@ -7917,6 +7968,11 @@ impl<'a> ::std::ops::Deref for ComponentMappingBuilder<'a> {
     type Target = ComponentMapping;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ComponentMappingBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ComponentMappingBuilder<'a> {
@@ -8001,6 +8057,11 @@ impl<'a> ::std::ops::Deref for PhysicalDevicePropertiesBuilder<'a> {
     type Target = PhysicalDeviceProperties;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDevicePropertiesBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDevicePropertiesBuilder<'a> {
@@ -8098,6 +8159,11 @@ impl<'a> ::std::ops::Deref for ExtensionPropertiesBuilder<'a> {
         &self.inner
     }
 }
+impl<'a> ::std::ops::DerefMut for ExtensionPropertiesBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
 impl<'a> ExtensionPropertiesBuilder<'a> {
     pub fn extension_name(
         mut self,
@@ -8162,6 +8228,11 @@ impl<'a> ::std::ops::Deref for LayerPropertiesBuilder<'a> {
     type Target = LayerProperties;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for LayerPropertiesBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> LayerPropertiesBuilder<'a> {
@@ -8230,11 +8301,18 @@ pub struct ApplicationInfoBuilder<'a> {
     inner: ApplicationInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsApplicationInfo {}
+pub unsafe trait ExtendsApplicationInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for ApplicationInfoBuilder<'a> {
     type Target = ApplicationInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ApplicationInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ApplicationInfoBuilder<'a> {
@@ -8261,11 +8339,20 @@ impl<'a> ApplicationInfoBuilder<'a> {
         self.inner.api_version = api_version;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> ApplicationInfoBuilder<'a>
-    where
-        T: ExtendsApplicationInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsApplicationInfo>(
+        mut self,
+        next: &'a mut T,
+    ) -> ApplicationInfoBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> ApplicationInfo {
@@ -8334,6 +8421,11 @@ impl<'a> ::std::ops::Deref for AllocationCallbacksBuilder<'a> {
     type Target = AllocationCallbacks;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for AllocationCallbacksBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> AllocationCallbacksBuilder<'a> {
@@ -8411,11 +8503,18 @@ pub struct DeviceQueueCreateInfoBuilder<'a> {
     inner: DeviceQueueCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDeviceQueueCreateInfo {}
+pub unsafe trait ExtendsDeviceQueueCreateInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for DeviceQueueCreateInfoBuilder<'a> {
     type Target = DeviceQueueCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DeviceQueueCreateInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DeviceQueueCreateInfoBuilder<'a> {
@@ -8438,11 +8537,20 @@ impl<'a> DeviceQueueCreateInfoBuilder<'a> {
         self.inner.p_queue_priorities = queue_priorities.as_ptr();
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> DeviceQueueCreateInfoBuilder<'a>
-    where
-        T: ExtendsDeviceQueueCreateInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsDeviceQueueCreateInfo>(
+        mut self,
+        next: &'a mut T,
+    ) -> DeviceQueueCreateInfoBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> DeviceQueueCreateInfo {
@@ -8491,11 +8599,18 @@ pub struct DeviceCreateInfoBuilder<'a> {
     inner: DeviceCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDeviceCreateInfo {}
+pub unsafe trait ExtendsDeviceCreateInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for DeviceCreateInfoBuilder<'a> {
     type Target = DeviceCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DeviceCreateInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DeviceCreateInfoBuilder<'a> {
@@ -8534,11 +8649,20 @@ impl<'a> DeviceCreateInfoBuilder<'a> {
         self.inner.p_enabled_features = enabled_features;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> DeviceCreateInfoBuilder<'a>
-    where
-        T: ExtendsDeviceCreateInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsDeviceCreateInfo>(
+        mut self,
+        next: &'a mut T,
+    ) -> DeviceCreateInfoBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> DeviceCreateInfo {
@@ -8583,11 +8707,18 @@ pub struct InstanceCreateInfoBuilder<'a> {
     inner: InstanceCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsInstanceCreateInfo {}
+pub unsafe trait ExtendsInstanceCreateInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for InstanceCreateInfoBuilder<'a> {
     type Target = InstanceCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for InstanceCreateInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> InstanceCreateInfoBuilder<'a> {
@@ -8618,11 +8749,20 @@ impl<'a> InstanceCreateInfoBuilder<'a> {
         self.inner.enabled_extension_count = enabled_extension_names.len() as _;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> InstanceCreateInfoBuilder<'a>
-    where
-        T: ExtendsInstanceCreateInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsInstanceCreateInfo>(
+        mut self,
+        next: &'a mut T,
+    ) -> InstanceCreateInfoBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> InstanceCreateInfo {
@@ -8653,6 +8793,11 @@ impl<'a> ::std::ops::Deref for QueueFamilyPropertiesBuilder<'a> {
     type Target = QueueFamilyProperties;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for QueueFamilyPropertiesBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> QueueFamilyPropertiesBuilder<'a> {
@@ -8718,6 +8863,11 @@ impl<'a> ::std::ops::Deref for PhysicalDeviceMemoryPropertiesBuilder<'a> {
         &self.inner
     }
 }
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceMemoryPropertiesBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
 impl<'a> PhysicalDeviceMemoryPropertiesBuilder<'a> {
     pub fn memory_type_count(
         mut self,
@@ -8781,11 +8931,18 @@ pub struct MemoryAllocateInfoBuilder<'a> {
     inner: MemoryAllocateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsMemoryAllocateInfo {}
+pub unsafe trait ExtendsMemoryAllocateInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for MemoryAllocateInfoBuilder<'a> {
     type Target = MemoryAllocateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for MemoryAllocateInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> MemoryAllocateInfoBuilder<'a> {
@@ -8797,11 +8954,20 @@ impl<'a> MemoryAllocateInfoBuilder<'a> {
         self.inner.memory_type_index = memory_type_index;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> MemoryAllocateInfoBuilder<'a>
-    where
-        T: ExtendsMemoryAllocateInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsMemoryAllocateInfo>(
+        mut self,
+        next: &'a mut T,
+    ) -> MemoryAllocateInfoBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> MemoryAllocateInfo {
@@ -8831,6 +8997,11 @@ impl<'a> ::std::ops::Deref for MemoryRequirementsBuilder<'a> {
     type Target = MemoryRequirements;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for MemoryRequirementsBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> MemoryRequirementsBuilder<'a> {
@@ -8873,6 +9044,11 @@ impl<'a> ::std::ops::Deref for SparseImageFormatPropertiesBuilder<'a> {
     type Target = SparseImageFormatProperties;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for SparseImageFormatPropertiesBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> SparseImageFormatPropertiesBuilder<'a> {
@@ -8926,6 +9102,11 @@ impl<'a> ::std::ops::Deref for SparseImageMemoryRequirementsBuilder<'a> {
     type Target = SparseImageMemoryRequirements;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for SparseImageMemoryRequirementsBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> SparseImageMemoryRequirementsBuilder<'a> {
@@ -8992,6 +9173,11 @@ impl<'a> ::std::ops::Deref for MemoryTypeBuilder<'a> {
         &self.inner
     }
 }
+impl<'a> ::std::ops::DerefMut for MemoryTypeBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
 impl<'a> MemoryTypeBuilder<'a> {
     pub fn property_flags(mut self, property_flags: MemoryPropertyFlags) -> MemoryTypeBuilder<'a> {
         self.inner.property_flags = property_flags;
@@ -9027,6 +9213,11 @@ impl<'a> ::std::ops::Deref for MemoryHeapBuilder<'a> {
     type Target = MemoryHeap;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for MemoryHeapBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> MemoryHeapBuilder<'a> {
@@ -9074,11 +9265,18 @@ pub struct MappedMemoryRangeBuilder<'a> {
     inner: MappedMemoryRange,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsMappedMemoryRange {}
+pub unsafe trait ExtendsMappedMemoryRange {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for MappedMemoryRangeBuilder<'a> {
     type Target = MappedMemoryRange;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for MappedMemoryRangeBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> MappedMemoryRangeBuilder<'a> {
@@ -9094,11 +9292,20 @@ impl<'a> MappedMemoryRangeBuilder<'a> {
         self.inner.size = size;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> MappedMemoryRangeBuilder<'a>
-    where
-        T: ExtendsMappedMemoryRange,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsMappedMemoryRange>(
+        mut self,
+        next: &'a mut T,
+    ) -> MappedMemoryRangeBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> MappedMemoryRange {
@@ -9128,6 +9335,11 @@ impl<'a> ::std::ops::Deref for FormatPropertiesBuilder<'a> {
     type Target = FormatProperties;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for FormatPropertiesBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> FormatPropertiesBuilder<'a> {
@@ -9181,6 +9393,11 @@ impl<'a> ::std::ops::Deref for ImageFormatPropertiesBuilder<'a> {
     type Target = ImageFormatProperties;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ImageFormatPropertiesBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ImageFormatPropertiesBuilder<'a> {
@@ -9239,6 +9456,11 @@ impl<'a> ::std::ops::Deref for DescriptorBufferInfoBuilder<'a> {
         &self.inner
     }
 }
+impl<'a> ::std::ops::DerefMut for DescriptorBufferInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
 impl<'a> DescriptorBufferInfoBuilder<'a> {
     pub fn buffer(mut self, buffer: Buffer) -> DescriptorBufferInfoBuilder<'a> {
         self.inner.buffer = buffer;
@@ -9279,6 +9501,11 @@ impl<'a> ::std::ops::Deref for DescriptorImageInfoBuilder<'a> {
     type Target = DescriptorImageInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DescriptorImageInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DescriptorImageInfoBuilder<'a> {
@@ -9340,11 +9567,18 @@ pub struct WriteDescriptorSetBuilder<'a> {
     inner: WriteDescriptorSet,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsWriteDescriptorSet {}
+pub unsafe trait ExtendsWriteDescriptorSet {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for WriteDescriptorSetBuilder<'a> {
     type Target = WriteDescriptorSet;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for WriteDescriptorSetBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> WriteDescriptorSetBuilder<'a> {
@@ -9391,11 +9625,20 @@ impl<'a> WriteDescriptorSetBuilder<'a> {
         self.inner.p_texel_buffer_view = texel_buffer_view.as_ptr();
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> WriteDescriptorSetBuilder<'a>
-    where
-        T: ExtendsWriteDescriptorSet,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsWriteDescriptorSet>(
+        mut self,
+        next: &'a mut T,
+    ) -> WriteDescriptorSetBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> WriteDescriptorSet {
@@ -9442,11 +9685,18 @@ pub struct CopyDescriptorSetBuilder<'a> {
     inner: CopyDescriptorSet,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsCopyDescriptorSet {}
+pub unsafe trait ExtendsCopyDescriptorSet {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for CopyDescriptorSetBuilder<'a> {
     type Target = CopyDescriptorSet;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for CopyDescriptorSetBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> CopyDescriptorSetBuilder<'a> {
@@ -9478,11 +9728,20 @@ impl<'a> CopyDescriptorSetBuilder<'a> {
         self.inner.descriptor_count = descriptor_count;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> CopyDescriptorSetBuilder<'a>
-    where
-        T: ExtendsCopyDescriptorSet,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsCopyDescriptorSet>(
+        mut self,
+        next: &'a mut T,
+    ) -> CopyDescriptorSetBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> CopyDescriptorSet {
@@ -9527,11 +9786,18 @@ pub struct BufferCreateInfoBuilder<'a> {
     inner: BufferCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsBufferCreateInfo {}
+pub unsafe trait ExtendsBufferCreateInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for BufferCreateInfoBuilder<'a> {
     type Target = BufferCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for BufferCreateInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> BufferCreateInfoBuilder<'a> {
@@ -9559,11 +9825,20 @@ impl<'a> BufferCreateInfoBuilder<'a> {
         self.inner.p_queue_family_indices = queue_family_indices.as_ptr();
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> BufferCreateInfoBuilder<'a>
-    where
-        T: ExtendsBufferCreateInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsBufferCreateInfo>(
+        mut self,
+        next: &'a mut T,
+    ) -> BufferCreateInfoBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> BufferCreateInfo {
@@ -9606,11 +9881,18 @@ pub struct BufferViewCreateInfoBuilder<'a> {
     inner: BufferViewCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsBufferViewCreateInfo {}
+pub unsafe trait ExtendsBufferViewCreateInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for BufferViewCreateInfoBuilder<'a> {
     type Target = BufferViewCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for BufferViewCreateInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> BufferViewCreateInfoBuilder<'a> {
@@ -9634,11 +9916,20 @@ impl<'a> BufferViewCreateInfoBuilder<'a> {
         self.inner.range = range;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> BufferViewCreateInfoBuilder<'a>
-    where
-        T: ExtendsBufferViewCreateInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsBufferViewCreateInfo>(
+        mut self,
+        next: &'a mut T,
+    ) -> BufferViewCreateInfoBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> BufferViewCreateInfo {
@@ -9668,6 +9959,11 @@ impl<'a> ::std::ops::Deref for ImageSubresourceBuilder<'a> {
     type Target = ImageSubresource;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ImageSubresourceBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ImageSubresourceBuilder<'a> {
@@ -9711,6 +10007,11 @@ impl<'a> ::std::ops::Deref for ImageSubresourceLayersBuilder<'a> {
     type Target = ImageSubresourceLayers;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ImageSubresourceLayersBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ImageSubresourceLayersBuilder<'a> {
@@ -9762,6 +10063,11 @@ impl<'a> ::std::ops::Deref for ImageSubresourceRangeBuilder<'a> {
     type Target = ImageSubresourceRange;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ImageSubresourceRangeBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ImageSubresourceRangeBuilder<'a> {
@@ -9822,11 +10128,18 @@ pub struct MemoryBarrierBuilder<'a> {
     inner: MemoryBarrier,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsMemoryBarrier {}
+pub unsafe trait ExtendsMemoryBarrier {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for MemoryBarrierBuilder<'a> {
     type Target = MemoryBarrier;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for MemoryBarrierBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> MemoryBarrierBuilder<'a> {
@@ -9838,11 +10151,20 @@ impl<'a> MemoryBarrierBuilder<'a> {
         self.inner.dst_access_mask = dst_access_mask;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> MemoryBarrierBuilder<'a>
-    where
-        T: ExtendsMemoryBarrier,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsMemoryBarrier>(
+        mut self,
+        next: &'a mut T,
+    ) -> MemoryBarrierBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> MemoryBarrier {
@@ -9889,11 +10211,18 @@ pub struct BufferMemoryBarrierBuilder<'a> {
     inner: BufferMemoryBarrier,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsBufferMemoryBarrier {}
+pub unsafe trait ExtendsBufferMemoryBarrier {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for BufferMemoryBarrierBuilder<'a> {
     type Target = BufferMemoryBarrier;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for BufferMemoryBarrierBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> BufferMemoryBarrierBuilder<'a> {
@@ -9937,11 +10266,20 @@ impl<'a> BufferMemoryBarrierBuilder<'a> {
         self.inner.size = size;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> BufferMemoryBarrierBuilder<'a>
-    where
-        T: ExtendsBufferMemoryBarrier,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsBufferMemoryBarrier>(
+        mut self,
+        next: &'a mut T,
+    ) -> BufferMemoryBarrierBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> BufferMemoryBarrier {
@@ -9990,11 +10328,18 @@ pub struct ImageMemoryBarrierBuilder<'a> {
     inner: ImageMemoryBarrier,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsImageMemoryBarrier {}
+pub unsafe trait ExtendsImageMemoryBarrier {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for ImageMemoryBarrierBuilder<'a> {
     type Target = ImageMemoryBarrier;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ImageMemoryBarrierBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ImageMemoryBarrierBuilder<'a> {
@@ -10045,11 +10390,20 @@ impl<'a> ImageMemoryBarrierBuilder<'a> {
         self.inner.subresource_range = subresource_range;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> ImageMemoryBarrierBuilder<'a>
-    where
-        T: ExtendsImageMemoryBarrier,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsImageMemoryBarrier>(
+        mut self,
+        next: &'a mut T,
+    ) -> ImageMemoryBarrierBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> ImageMemoryBarrier {
@@ -10108,11 +10462,18 @@ pub struct ImageCreateInfoBuilder<'a> {
     inner: ImageCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsImageCreateInfo {}
+pub unsafe trait ExtendsImageCreateInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for ImageCreateInfoBuilder<'a> {
     type Target = ImageCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ImageCreateInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ImageCreateInfoBuilder<'a> {
@@ -10168,11 +10529,20 @@ impl<'a> ImageCreateInfoBuilder<'a> {
         self.inner.initial_layout = initial_layout;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> ImageCreateInfoBuilder<'a>
-    where
-        T: ExtendsImageCreateInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsImageCreateInfo>(
+        mut self,
+        next: &'a mut T,
+    ) -> ImageCreateInfoBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> ImageCreateInfo {
@@ -10204,6 +10574,11 @@ impl<'a> ::std::ops::Deref for SubresourceLayoutBuilder<'a> {
     type Target = SubresourceLayout;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for SubresourceLayoutBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> SubresourceLayoutBuilder<'a> {
@@ -10269,11 +10644,18 @@ pub struct ImageViewCreateInfoBuilder<'a> {
     inner: ImageViewCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsImageViewCreateInfo {}
+pub unsafe trait ExtendsImageViewCreateInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for ImageViewCreateInfoBuilder<'a> {
     type Target = ImageViewCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ImageViewCreateInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ImageViewCreateInfoBuilder<'a> {
@@ -10304,11 +10686,20 @@ impl<'a> ImageViewCreateInfoBuilder<'a> {
         self.inner.subresource_range = subresource_range;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> ImageViewCreateInfoBuilder<'a>
-    where
-        T: ExtendsImageViewCreateInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsImageViewCreateInfo>(
+        mut self,
+        next: &'a mut T,
+    ) -> ImageViewCreateInfoBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> ImageViewCreateInfo {
@@ -10338,6 +10729,11 @@ impl<'a> ::std::ops::Deref for BufferCopyBuilder<'a> {
     type Target = BufferCopy;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for BufferCopyBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> BufferCopyBuilder<'a> {
@@ -10382,6 +10778,11 @@ impl<'a> ::std::ops::Deref for SparseMemoryBindBuilder<'a> {
     type Target = SparseMemoryBind;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for SparseMemoryBindBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> SparseMemoryBindBuilder<'a> {
@@ -10435,6 +10836,11 @@ impl<'a> ::std::ops::Deref for SparseImageMemoryBindBuilder<'a> {
     type Target = SparseImageMemoryBind;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for SparseImageMemoryBindBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> SparseImageMemoryBindBuilder<'a> {
@@ -10503,6 +10909,11 @@ impl<'a> ::std::ops::Deref for SparseBufferMemoryBindInfoBuilder<'a> {
         &self.inner
     }
 }
+impl<'a> ::std::ops::DerefMut for SparseBufferMemoryBindInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
 impl<'a> SparseBufferMemoryBindInfoBuilder<'a> {
     pub fn buffer(mut self, buffer: Buffer) -> SparseBufferMemoryBindInfoBuilder<'a> {
         self.inner.buffer = buffer;
@@ -10549,6 +10960,11 @@ impl<'a> ::std::ops::Deref for SparseImageOpaqueMemoryBindInfoBuilder<'a> {
     type Target = SparseImageOpaqueMemoryBindInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for SparseImageOpaqueMemoryBindInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> SparseImageOpaqueMemoryBindInfoBuilder<'a> {
@@ -10600,6 +11016,11 @@ impl<'a> ::std::ops::Deref for SparseImageMemoryBindInfoBuilder<'a> {
     type Target = SparseImageMemoryBindInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for SparseImageMemoryBindInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> SparseImageMemoryBindInfoBuilder<'a> {
@@ -10665,11 +11086,18 @@ pub struct BindSparseInfoBuilder<'a> {
     inner: BindSparseInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsBindSparseInfo {}
+pub unsafe trait ExtendsBindSparseInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for BindSparseInfoBuilder<'a> {
     type Target = BindSparseInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for BindSparseInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> BindSparseInfoBuilder<'a> {
@@ -10713,11 +11141,20 @@ impl<'a> BindSparseInfoBuilder<'a> {
         self.inner.p_signal_semaphores = signal_semaphores.as_ptr();
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> BindSparseInfoBuilder<'a>
-    where
-        T: ExtendsBindSparseInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsBindSparseInfo>(
+        mut self,
+        next: &'a mut T,
+    ) -> BindSparseInfoBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> BindSparseInfo {
@@ -10749,6 +11186,11 @@ impl<'a> ::std::ops::Deref for ImageCopyBuilder<'a> {
     type Target = ImageCopy;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ImageCopyBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ImageCopyBuilder<'a> {
@@ -10818,6 +11260,11 @@ impl<'a> ::std::ops::Deref for ImageBlitBuilder<'a> {
         &self.inner
     }
 }
+impl<'a> ::std::ops::DerefMut for ImageBlitBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
 impl<'a> ImageBlitBuilder<'a> {
     pub fn src_subresource(
         mut self,
@@ -10871,6 +11318,11 @@ impl<'a> ::std::ops::Deref for BufferImageCopyBuilder<'a> {
     type Target = BufferImageCopy;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for BufferImageCopyBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> BufferImageCopyBuilder<'a> {
@@ -10930,6 +11382,11 @@ impl<'a> ::std::ops::Deref for ImageResolveBuilder<'a> {
     type Target = ImageResolve;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ImageResolveBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ImageResolveBuilder<'a> {
@@ -10995,11 +11452,18 @@ pub struct ShaderModuleCreateInfoBuilder<'a> {
     inner: ShaderModuleCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsShaderModuleCreateInfo {}
+pub unsafe trait ExtendsShaderModuleCreateInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for ShaderModuleCreateInfoBuilder<'a> {
     type Target = ShaderModuleCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ShaderModuleCreateInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ShaderModuleCreateInfoBuilder<'a> {
@@ -11012,11 +11476,20 @@ impl<'a> ShaderModuleCreateInfoBuilder<'a> {
         self.inner.p_code = code.as_ptr() as *const u32;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> ShaderModuleCreateInfoBuilder<'a>
-    where
-        T: ExtendsShaderModuleCreateInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsShaderModuleCreateInfo>(
+        mut self,
+        next: &'a mut T,
+    ) -> ShaderModuleCreateInfoBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> ShaderModuleCreateInfo {
@@ -11059,6 +11532,11 @@ impl<'a> ::std::ops::Deref for DescriptorSetLayoutBindingBuilder<'a> {
     type Target = DescriptorSetLayoutBinding;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DescriptorSetLayoutBindingBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DescriptorSetLayoutBindingBuilder<'a> {
@@ -11131,11 +11609,18 @@ pub struct DescriptorSetLayoutCreateInfoBuilder<'a> {
     inner: DescriptorSetLayoutCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDescriptorSetLayoutCreateInfo {}
+pub unsafe trait ExtendsDescriptorSetLayoutCreateInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for DescriptorSetLayoutCreateInfoBuilder<'a> {
     type Target = DescriptorSetLayoutCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DescriptorSetLayoutCreateInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DescriptorSetLayoutCreateInfoBuilder<'a> {
@@ -11154,11 +11639,20 @@ impl<'a> DescriptorSetLayoutCreateInfoBuilder<'a> {
         self.inner.p_bindings = bindings.as_ptr();
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> DescriptorSetLayoutCreateInfoBuilder<'a>
-    where
-        T: ExtendsDescriptorSetLayoutCreateInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsDescriptorSetLayoutCreateInfo>(
+        mut self,
+        next: &'a mut T,
+    ) -> DescriptorSetLayoutCreateInfoBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> DescriptorSetLayoutCreateInfo {
@@ -11187,6 +11681,11 @@ impl<'a> ::std::ops::Deref for DescriptorPoolSizeBuilder<'a> {
     type Target = DescriptorPoolSize;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DescriptorPoolSizeBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DescriptorPoolSizeBuilder<'a> {
@@ -11236,11 +11735,18 @@ pub struct DescriptorPoolCreateInfoBuilder<'a> {
     inner: DescriptorPoolCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDescriptorPoolCreateInfo {}
+pub unsafe trait ExtendsDescriptorPoolCreateInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for DescriptorPoolCreateInfoBuilder<'a> {
     type Target = DescriptorPoolCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DescriptorPoolCreateInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DescriptorPoolCreateInfoBuilder<'a> {
@@ -11263,11 +11769,20 @@ impl<'a> DescriptorPoolCreateInfoBuilder<'a> {
         self.inner.p_pool_sizes = pool_sizes.as_ptr();
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> DescriptorPoolCreateInfoBuilder<'a>
-    where
-        T: ExtendsDescriptorPoolCreateInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsDescriptorPoolCreateInfo>(
+        mut self,
+        next: &'a mut T,
+    ) -> DescriptorPoolCreateInfoBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> DescriptorPoolCreateInfo {
@@ -11306,11 +11821,18 @@ pub struct DescriptorSetAllocateInfoBuilder<'a> {
     inner: DescriptorSetAllocateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDescriptorSetAllocateInfo {}
+pub unsafe trait ExtendsDescriptorSetAllocateInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for DescriptorSetAllocateInfoBuilder<'a> {
     type Target = DescriptorSetAllocateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DescriptorSetAllocateInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DescriptorSetAllocateInfoBuilder<'a> {
@@ -11329,11 +11851,20 @@ impl<'a> DescriptorSetAllocateInfoBuilder<'a> {
         self.inner.p_set_layouts = set_layouts.as_ptr();
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> DescriptorSetAllocateInfoBuilder<'a>
-    where
-        T: ExtendsDescriptorSetAllocateInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsDescriptorSetAllocateInfo>(
+        mut self,
+        next: &'a mut T,
+    ) -> DescriptorSetAllocateInfoBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> DescriptorSetAllocateInfo {
@@ -11363,6 +11894,11 @@ impl<'a> ::std::ops::Deref for SpecializationMapEntryBuilder<'a> {
     type Target = SpecializationMapEntry;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for SpecializationMapEntryBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> SpecializationMapEntryBuilder<'a> {
@@ -11416,6 +11952,11 @@ impl<'a> ::std::ops::Deref for SpecializationInfoBuilder<'a> {
     type Target = SpecializationInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for SpecializationInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> SpecializationInfoBuilder<'a> {
@@ -11472,11 +12013,18 @@ pub struct PipelineShaderStageCreateInfoBuilder<'a> {
     inner: PipelineShaderStageCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPipelineShaderStageCreateInfo {}
+pub unsafe trait ExtendsPipelineShaderStageCreateInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for PipelineShaderStageCreateInfoBuilder<'a> {
     type Target = PipelineShaderStageCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PipelineShaderStageCreateInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PipelineShaderStageCreateInfoBuilder<'a> {
@@ -11506,11 +12054,20 @@ impl<'a> PipelineShaderStageCreateInfoBuilder<'a> {
         self.inner.p_specialization_info = specialization_info;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> PipelineShaderStageCreateInfoBuilder<'a>
-    where
-        T: ExtendsPipelineShaderStageCreateInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsPipelineShaderStageCreateInfo>(
+        mut self,
+        next: &'a mut T,
+    ) -> PipelineShaderStageCreateInfoBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> PipelineShaderStageCreateInfo {
@@ -11553,11 +12110,18 @@ pub struct ComputePipelineCreateInfoBuilder<'a> {
     inner: ComputePipelineCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsComputePipelineCreateInfo {}
+pub unsafe trait ExtendsComputePipelineCreateInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for ComputePipelineCreateInfoBuilder<'a> {
     type Target = ComputePipelineCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ComputePipelineCreateInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ComputePipelineCreateInfoBuilder<'a> {
@@ -11590,11 +12154,20 @@ impl<'a> ComputePipelineCreateInfoBuilder<'a> {
         self.inner.base_pipeline_index = base_pipeline_index;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> ComputePipelineCreateInfoBuilder<'a>
-    where
-        T: ExtendsComputePipelineCreateInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsComputePipelineCreateInfo>(
+        mut self,
+        next: &'a mut T,
+    ) -> ComputePipelineCreateInfoBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> ComputePipelineCreateInfo {
@@ -11624,6 +12197,11 @@ impl<'a> ::std::ops::Deref for VertexInputBindingDescriptionBuilder<'a> {
     type Target = VertexInputBindingDescription;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for VertexInputBindingDescriptionBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> VertexInputBindingDescriptionBuilder<'a> {
@@ -11670,6 +12248,11 @@ impl<'a> ::std::ops::Deref for VertexInputAttributeDescriptionBuilder<'a> {
     type Target = VertexInputAttributeDescription;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for VertexInputAttributeDescriptionBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> VertexInputAttributeDescriptionBuilder<'a> {
@@ -11729,11 +12312,18 @@ pub struct PipelineVertexInputStateCreateInfoBuilder<'a> {
     inner: PipelineVertexInputStateCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPipelineVertexInputStateCreateInfo {}
+pub unsafe trait ExtendsPipelineVertexInputStateCreateInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for PipelineVertexInputStateCreateInfoBuilder<'a> {
     type Target = PipelineVertexInputStateCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PipelineVertexInputStateCreateInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PipelineVertexInputStateCreateInfoBuilder<'a> {
@@ -11760,11 +12350,20 @@ impl<'a> PipelineVertexInputStateCreateInfoBuilder<'a> {
         self.inner.p_vertex_attribute_descriptions = vertex_attribute_descriptions.as_ptr();
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> PipelineVertexInputStateCreateInfoBuilder<'a>
-    where
-        T: ExtendsPipelineVertexInputStateCreateInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsPipelineVertexInputStateCreateInfo>(
+        mut self,
+        next: &'a mut T,
+    ) -> PipelineVertexInputStateCreateInfoBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> PipelineVertexInputStateCreateInfo {
@@ -11803,11 +12402,18 @@ pub struct PipelineInputAssemblyStateCreateInfoBuilder<'a> {
     inner: PipelineInputAssemblyStateCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPipelineInputAssemblyStateCreateInfo {}
+pub unsafe trait ExtendsPipelineInputAssemblyStateCreateInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for PipelineInputAssemblyStateCreateInfoBuilder<'a> {
     type Target = PipelineInputAssemblyStateCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PipelineInputAssemblyStateCreateInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PipelineInputAssemblyStateCreateInfoBuilder<'a> {
@@ -11832,11 +12438,20 @@ impl<'a> PipelineInputAssemblyStateCreateInfoBuilder<'a> {
         self.inner.primitive_restart_enable = primitive_restart_enable.into();
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> PipelineInputAssemblyStateCreateInfoBuilder<'a>
-    where
-        T: ExtendsPipelineInputAssemblyStateCreateInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsPipelineInputAssemblyStateCreateInfo>(
+        mut self,
+        next: &'a mut T,
+    ) -> PipelineInputAssemblyStateCreateInfoBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> PipelineInputAssemblyStateCreateInfo {
@@ -11873,11 +12488,18 @@ pub struct PipelineTessellationStateCreateInfoBuilder<'a> {
     inner: PipelineTessellationStateCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPipelineTessellationStateCreateInfo {}
+pub unsafe trait ExtendsPipelineTessellationStateCreateInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for PipelineTessellationStateCreateInfoBuilder<'a> {
     type Target = PipelineTessellationStateCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PipelineTessellationStateCreateInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PipelineTessellationStateCreateInfoBuilder<'a> {
@@ -11895,11 +12517,20 @@ impl<'a> PipelineTessellationStateCreateInfoBuilder<'a> {
         self.inner.patch_control_points = patch_control_points;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> PipelineTessellationStateCreateInfoBuilder<'a>
-    where
-        T: ExtendsPipelineTessellationStateCreateInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsPipelineTessellationStateCreateInfo>(
+        mut self,
+        next: &'a mut T,
+    ) -> PipelineTessellationStateCreateInfoBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> PipelineTessellationStateCreateInfo {
@@ -11942,11 +12573,18 @@ pub struct PipelineViewportStateCreateInfoBuilder<'a> {
     inner: PipelineViewportStateCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPipelineViewportStateCreateInfo {}
+pub unsafe trait ExtendsPipelineViewportStateCreateInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for PipelineViewportStateCreateInfoBuilder<'a> {
     type Target = PipelineViewportStateCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PipelineViewportStateCreateInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PipelineViewportStateCreateInfoBuilder<'a> {
@@ -11987,11 +12625,20 @@ impl<'a> PipelineViewportStateCreateInfoBuilder<'a> {
         self.inner.p_scissors = scissors.as_ptr();
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> PipelineViewportStateCreateInfoBuilder<'a>
-    where
-        T: ExtendsPipelineViewportStateCreateInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsPipelineViewportStateCreateInfo>(
+        mut self,
+        next: &'a mut T,
+    ) -> PipelineViewportStateCreateInfoBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> PipelineViewportStateCreateInfo {
@@ -12046,11 +12693,18 @@ pub struct PipelineRasterizationStateCreateInfoBuilder<'a> {
     inner: PipelineRasterizationStateCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPipelineRasterizationStateCreateInfo {}
+pub unsafe trait ExtendsPipelineRasterizationStateCreateInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for PipelineRasterizationStateCreateInfoBuilder<'a> {
     type Target = PipelineRasterizationStateCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PipelineRasterizationStateCreateInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PipelineRasterizationStateCreateInfoBuilder<'a> {
@@ -12131,11 +12785,20 @@ impl<'a> PipelineRasterizationStateCreateInfoBuilder<'a> {
         self.inner.line_width = line_width;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> PipelineRasterizationStateCreateInfoBuilder<'a>
-    where
-        T: ExtendsPipelineRasterizationStateCreateInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsPipelineRasterizationStateCreateInfo>(
+        mut self,
+        next: &'a mut T,
+    ) -> PipelineRasterizationStateCreateInfoBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> PipelineRasterizationStateCreateInfo {
@@ -12182,11 +12845,18 @@ pub struct PipelineMultisampleStateCreateInfoBuilder<'a> {
     inner: PipelineMultisampleStateCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPipelineMultisampleStateCreateInfo {}
+pub unsafe trait ExtendsPipelineMultisampleStateCreateInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for PipelineMultisampleStateCreateInfoBuilder<'a> {
     type Target = PipelineMultisampleStateCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PipelineMultisampleStateCreateInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PipelineMultisampleStateCreateInfoBuilder<'a> {
@@ -12239,11 +12909,20 @@ impl<'a> PipelineMultisampleStateCreateInfoBuilder<'a> {
         self.inner.alpha_to_one_enable = alpha_to_one_enable.into();
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> PipelineMultisampleStateCreateInfoBuilder<'a>
-    where
-        T: ExtendsPipelineMultisampleStateCreateInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsPipelineMultisampleStateCreateInfo>(
+        mut self,
+        next: &'a mut T,
+    ) -> PipelineMultisampleStateCreateInfoBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> PipelineMultisampleStateCreateInfo {
@@ -12278,6 +12957,11 @@ impl<'a> ::std::ops::Deref for PipelineColorBlendAttachmentStateBuilder<'a> {
     type Target = PipelineColorBlendAttachmentState;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PipelineColorBlendAttachmentStateBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PipelineColorBlendAttachmentStateBuilder<'a> {
@@ -12379,11 +13063,18 @@ pub struct PipelineColorBlendStateCreateInfoBuilder<'a> {
     inner: PipelineColorBlendStateCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPipelineColorBlendStateCreateInfo {}
+pub unsafe trait ExtendsPipelineColorBlendStateCreateInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for PipelineColorBlendStateCreateInfoBuilder<'a> {
     type Target = PipelineColorBlendStateCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PipelineColorBlendStateCreateInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PipelineColorBlendStateCreateInfoBuilder<'a> {
@@ -12420,11 +13111,20 @@ impl<'a> PipelineColorBlendStateCreateInfoBuilder<'a> {
         self.inner.blend_constants = blend_constants;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> PipelineColorBlendStateCreateInfoBuilder<'a>
-    where
-        T: ExtendsPipelineColorBlendStateCreateInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsPipelineColorBlendStateCreateInfo>(
+        mut self,
+        next: &'a mut T,
+    ) -> PipelineColorBlendStateCreateInfoBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> PipelineColorBlendStateCreateInfo {
@@ -12463,11 +13163,18 @@ pub struct PipelineDynamicStateCreateInfoBuilder<'a> {
     inner: PipelineDynamicStateCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPipelineDynamicStateCreateInfo {}
+pub unsafe trait ExtendsPipelineDynamicStateCreateInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for PipelineDynamicStateCreateInfoBuilder<'a> {
     type Target = PipelineDynamicStateCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PipelineDynamicStateCreateInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PipelineDynamicStateCreateInfoBuilder<'a> {
@@ -12486,11 +13193,20 @@ impl<'a> PipelineDynamicStateCreateInfoBuilder<'a> {
         self.inner.p_dynamic_states = dynamic_states.as_ptr();
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> PipelineDynamicStateCreateInfoBuilder<'a>
-    where
-        T: ExtendsPipelineDynamicStateCreateInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsPipelineDynamicStateCreateInfo>(
+        mut self,
+        next: &'a mut T,
+    ) -> PipelineDynamicStateCreateInfoBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> PipelineDynamicStateCreateInfo {
@@ -12524,6 +13240,11 @@ impl<'a> ::std::ops::Deref for StencilOpStateBuilder<'a> {
     type Target = StencilOpState;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for StencilOpStateBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> StencilOpStateBuilder<'a> {
@@ -12605,11 +13326,18 @@ pub struct PipelineDepthStencilStateCreateInfoBuilder<'a> {
     inner: PipelineDepthStencilStateCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPipelineDepthStencilStateCreateInfo {}
+pub unsafe trait ExtendsPipelineDepthStencilStateCreateInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for PipelineDepthStencilStateCreateInfoBuilder<'a> {
     type Target = PipelineDepthStencilStateCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PipelineDepthStencilStateCreateInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PipelineDepthStencilStateCreateInfoBuilder<'a> {
@@ -12680,11 +13408,20 @@ impl<'a> PipelineDepthStencilStateCreateInfoBuilder<'a> {
         self.inner.max_depth_bounds = max_depth_bounds;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> PipelineDepthStencilStateCreateInfoBuilder<'a>
-    where
-        T: ExtendsPipelineDepthStencilStateCreateInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsPipelineDepthStencilStateCreateInfo>(
+        mut self,
+        next: &'a mut T,
+    ) -> PipelineDepthStencilStateCreateInfoBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> PipelineDepthStencilStateCreateInfo {
@@ -12751,11 +13488,18 @@ pub struct GraphicsPipelineCreateInfoBuilder<'a> {
     inner: GraphicsPipelineCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsGraphicsPipelineCreateInfo {}
+pub unsafe trait ExtendsGraphicsPipelineCreateInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for GraphicsPipelineCreateInfoBuilder<'a> {
     type Target = GraphicsPipelineCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for GraphicsPipelineCreateInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> GraphicsPipelineCreateInfoBuilder<'a> {
@@ -12860,11 +13604,20 @@ impl<'a> GraphicsPipelineCreateInfoBuilder<'a> {
         self.inner.base_pipeline_index = base_pipeline_index;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> GraphicsPipelineCreateInfoBuilder<'a>
-    where
-        T: ExtendsGraphicsPipelineCreateInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsGraphicsPipelineCreateInfo>(
+        mut self,
+        next: &'a mut T,
+    ) -> GraphicsPipelineCreateInfoBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> GraphicsPipelineCreateInfo {
@@ -12903,11 +13656,18 @@ pub struct PipelineCacheCreateInfoBuilder<'a> {
     inner: PipelineCacheCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPipelineCacheCreateInfo {}
+pub unsafe trait ExtendsPipelineCacheCreateInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for PipelineCacheCreateInfoBuilder<'a> {
     type Target = PipelineCacheCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PipelineCacheCreateInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PipelineCacheCreateInfoBuilder<'a> {
@@ -12920,11 +13680,20 @@ impl<'a> PipelineCacheCreateInfoBuilder<'a> {
         self.inner.p_initial_data = initial_data.as_ptr() as *const c_void;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> PipelineCacheCreateInfoBuilder<'a>
-    where
-        T: ExtendsPipelineCacheCreateInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsPipelineCacheCreateInfo>(
+        mut self,
+        next: &'a mut T,
+    ) -> PipelineCacheCreateInfoBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> PipelineCacheCreateInfo {
@@ -12954,6 +13723,11 @@ impl<'a> ::std::ops::Deref for PushConstantRangeBuilder<'a> {
     type Target = PushConstantRange;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PushConstantRangeBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PushConstantRangeBuilder<'a> {
@@ -13009,11 +13783,18 @@ pub struct PipelineLayoutCreateInfoBuilder<'a> {
     inner: PipelineLayoutCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPipelineLayoutCreateInfo {}
+pub unsafe trait ExtendsPipelineLayoutCreateInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for PipelineLayoutCreateInfoBuilder<'a> {
     type Target = PipelineLayoutCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PipelineLayoutCreateInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PipelineLayoutCreateInfoBuilder<'a> {
@@ -13040,11 +13821,20 @@ impl<'a> PipelineLayoutCreateInfoBuilder<'a> {
         self.inner.p_push_constant_ranges = push_constant_ranges.as_ptr();
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> PipelineLayoutCreateInfoBuilder<'a>
-    where
-        T: ExtendsPipelineLayoutCreateInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsPipelineLayoutCreateInfo>(
+        mut self,
+        next: &'a mut T,
+    ) -> PipelineLayoutCreateInfoBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> PipelineLayoutCreateInfo {
@@ -13109,11 +13899,18 @@ pub struct SamplerCreateInfoBuilder<'a> {
     inner: SamplerCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsSamplerCreateInfo {}
+pub unsafe trait ExtendsSamplerCreateInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for SamplerCreateInfoBuilder<'a> {
     type Target = SamplerCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for SamplerCreateInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> SamplerCreateInfoBuilder<'a> {
@@ -13193,11 +13990,20 @@ impl<'a> SamplerCreateInfoBuilder<'a> {
         self.inner.unnormalized_coordinates = unnormalized_coordinates.into();
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> SamplerCreateInfoBuilder<'a>
-    where
-        T: ExtendsSamplerCreateInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsSamplerCreateInfo>(
+        mut self,
+        next: &'a mut T,
+    ) -> SamplerCreateInfoBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> SamplerCreateInfo {
@@ -13234,11 +14040,18 @@ pub struct CommandPoolCreateInfoBuilder<'a> {
     inner: CommandPoolCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsCommandPoolCreateInfo {}
+pub unsafe trait ExtendsCommandPoolCreateInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for CommandPoolCreateInfoBuilder<'a> {
     type Target = CommandPoolCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for CommandPoolCreateInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> CommandPoolCreateInfoBuilder<'a> {
@@ -13253,11 +14066,20 @@ impl<'a> CommandPoolCreateInfoBuilder<'a> {
         self.inner.queue_family_index = queue_family_index;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> CommandPoolCreateInfoBuilder<'a>
-    where
-        T: ExtendsCommandPoolCreateInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsCommandPoolCreateInfo>(
+        mut self,
+        next: &'a mut T,
+    ) -> CommandPoolCreateInfoBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> CommandPoolCreateInfo {
@@ -13296,11 +14118,18 @@ pub struct CommandBufferAllocateInfoBuilder<'a> {
     inner: CommandBufferAllocateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsCommandBufferAllocateInfo {}
+pub unsafe trait ExtendsCommandBufferAllocateInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for CommandBufferAllocateInfoBuilder<'a> {
     type Target = CommandBufferAllocateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for CommandBufferAllocateInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> CommandBufferAllocateInfoBuilder<'a> {
@@ -13322,11 +14151,20 @@ impl<'a> CommandBufferAllocateInfoBuilder<'a> {
         self.inner.command_buffer_count = command_buffer_count;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> CommandBufferAllocateInfoBuilder<'a>
-    where
-        T: ExtendsCommandBufferAllocateInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsCommandBufferAllocateInfo>(
+        mut self,
+        next: &'a mut T,
+    ) -> CommandBufferAllocateInfoBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> CommandBufferAllocateInfo {
@@ -13371,11 +14209,18 @@ pub struct CommandBufferInheritanceInfoBuilder<'a> {
     inner: CommandBufferInheritanceInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsCommandBufferInheritanceInfo {}
+pub unsafe trait ExtendsCommandBufferInheritanceInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for CommandBufferInheritanceInfoBuilder<'a> {
     type Target = CommandBufferInheritanceInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for CommandBufferInheritanceInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> CommandBufferInheritanceInfoBuilder<'a> {
@@ -13418,11 +14263,20 @@ impl<'a> CommandBufferInheritanceInfoBuilder<'a> {
         self.inner.pipeline_statistics = pipeline_statistics;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> CommandBufferInheritanceInfoBuilder<'a>
-    where
-        T: ExtendsCommandBufferInheritanceInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsCommandBufferInheritanceInfo>(
+        mut self,
+        next: &'a mut T,
+    ) -> CommandBufferInheritanceInfoBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> CommandBufferInheritanceInfo {
@@ -13459,11 +14313,18 @@ pub struct CommandBufferBeginInfoBuilder<'a> {
     inner: CommandBufferBeginInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsCommandBufferBeginInfo {}
+pub unsafe trait ExtendsCommandBufferBeginInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for CommandBufferBeginInfoBuilder<'a> {
     type Target = CommandBufferBeginInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for CommandBufferBeginInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> CommandBufferBeginInfoBuilder<'a> {
@@ -13478,11 +14339,20 @@ impl<'a> CommandBufferBeginInfoBuilder<'a> {
         self.inner.p_inheritance_info = inheritance_info;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> CommandBufferBeginInfoBuilder<'a>
-    where
-        T: ExtendsCommandBufferBeginInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsCommandBufferBeginInfo>(
+        mut self,
+        next: &'a mut T,
+    ) -> CommandBufferBeginInfoBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> CommandBufferBeginInfo {
@@ -13538,11 +14408,18 @@ pub struct RenderPassBeginInfoBuilder<'a> {
     inner: RenderPassBeginInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsRenderPassBeginInfo {}
+pub unsafe trait ExtendsRenderPassBeginInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for RenderPassBeginInfoBuilder<'a> {
     type Target = RenderPassBeginInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for RenderPassBeginInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> RenderPassBeginInfoBuilder<'a> {
@@ -13566,11 +14443,20 @@ impl<'a> RenderPassBeginInfoBuilder<'a> {
         self.inner.p_clear_values = clear_values.as_ptr();
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> RenderPassBeginInfoBuilder<'a>
-    where
-        T: ExtendsRenderPassBeginInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsRenderPassBeginInfo>(
+        mut self,
+        next: &'a mut T,
+    ) -> RenderPassBeginInfoBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> RenderPassBeginInfo {
@@ -13611,6 +14497,11 @@ impl<'a> ::std::ops::Deref for ClearDepthStencilValueBuilder<'a> {
     type Target = ClearDepthStencilValue;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ClearDepthStencilValueBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ClearDepthStencilValueBuilder<'a> {
@@ -13671,6 +14562,11 @@ impl<'a> ::std::ops::Deref for ClearAttachmentBuilder<'a> {
         &self.inner
     }
 }
+impl<'a> ::std::ops::DerefMut for ClearAttachmentBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
 impl<'a> ClearAttachmentBuilder<'a> {
     pub fn aspect_mask(mut self, aspect_mask: ImageAspectFlags) -> ClearAttachmentBuilder<'a> {
         self.inner.aspect_mask = aspect_mask;
@@ -13717,6 +14613,11 @@ impl<'a> ::std::ops::Deref for AttachmentDescriptionBuilder<'a> {
     type Target = AttachmentDescription;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for AttachmentDescriptionBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> AttachmentDescriptionBuilder<'a> {
@@ -13793,6 +14694,11 @@ impl<'a> ::std::ops::Deref for AttachmentReferenceBuilder<'a> {
         &self.inner
     }
 }
+impl<'a> ::std::ops::DerefMut for AttachmentReferenceBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
 impl<'a> AttachmentReferenceBuilder<'a> {
     pub fn attachment(mut self, attachment: u32) -> AttachmentReferenceBuilder<'a> {
         self.inner.attachment = attachment;
@@ -13852,6 +14758,11 @@ impl<'a> ::std::ops::Deref for SubpassDescriptionBuilder<'a> {
     type Target = SubpassDescription;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for SubpassDescriptionBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> SubpassDescriptionBuilder<'a> {
@@ -13938,6 +14849,11 @@ impl<'a> ::std::ops::Deref for SubpassDependencyBuilder<'a> {
         &self.inner
     }
 }
+impl<'a> ::std::ops::DerefMut for SubpassDependencyBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
 impl<'a> SubpassDependencyBuilder<'a> {
     pub fn src_subpass(mut self, src_subpass: u32) -> SubpassDependencyBuilder<'a> {
         self.inner.src_subpass = src_subpass;
@@ -14020,11 +14936,18 @@ pub struct RenderPassCreateInfoBuilder<'a> {
     inner: RenderPassCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsRenderPassCreateInfo {}
+pub unsafe trait ExtendsRenderPassCreateInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for RenderPassCreateInfoBuilder<'a> {
     type Target = RenderPassCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for RenderPassCreateInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> RenderPassCreateInfoBuilder<'a> {
@@ -14056,11 +14979,20 @@ impl<'a> RenderPassCreateInfoBuilder<'a> {
         self.inner.p_dependencies = dependencies.as_ptr();
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> RenderPassCreateInfoBuilder<'a>
-    where
-        T: ExtendsRenderPassCreateInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsRenderPassCreateInfo>(
+        mut self,
+        next: &'a mut T,
+    ) -> RenderPassCreateInfoBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> RenderPassCreateInfo {
@@ -14095,11 +15027,18 @@ pub struct EventCreateInfoBuilder<'a> {
     inner: EventCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsEventCreateInfo {}
+pub unsafe trait ExtendsEventCreateInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for EventCreateInfoBuilder<'a> {
     type Target = EventCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for EventCreateInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> EventCreateInfoBuilder<'a> {
@@ -14107,11 +15046,20 @@ impl<'a> EventCreateInfoBuilder<'a> {
         self.inner.flags = flags;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> EventCreateInfoBuilder<'a>
-    where
-        T: ExtendsEventCreateInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsEventCreateInfo>(
+        mut self,
+        next: &'a mut T,
+    ) -> EventCreateInfoBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> EventCreateInfo {
@@ -14146,11 +15094,18 @@ pub struct FenceCreateInfoBuilder<'a> {
     inner: FenceCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsFenceCreateInfo {}
+pub unsafe trait ExtendsFenceCreateInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for FenceCreateInfoBuilder<'a> {
     type Target = FenceCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for FenceCreateInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> FenceCreateInfoBuilder<'a> {
@@ -14158,11 +15113,20 @@ impl<'a> FenceCreateInfoBuilder<'a> {
         self.inner.flags = flags;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> FenceCreateInfoBuilder<'a>
-    where
-        T: ExtendsFenceCreateInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsFenceCreateInfo>(
+        mut self,
+        next: &'a mut T,
+    ) -> FenceCreateInfoBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> FenceCreateInfo {
@@ -14244,6 +15208,11 @@ impl<'a> ::std::ops::Deref for PhysicalDeviceFeaturesBuilder<'a> {
     type Target = PhysicalDeviceFeatures;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceFeaturesBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceFeaturesBuilder<'a> {
@@ -14626,6 +15595,11 @@ impl<'a> ::std::ops::Deref for PhysicalDeviceSparsePropertiesBuilder<'a> {
         &self.inner
     }
 }
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceSparsePropertiesBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
 impl<'a> PhysicalDeviceSparsePropertiesBuilder<'a> {
     pub fn residency_standard2_d_block_shape(
         mut self,
@@ -14905,6 +15879,11 @@ impl<'a> ::std::ops::Deref for PhysicalDeviceLimitsBuilder<'a> {
     type Target = PhysicalDeviceLimits;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceLimitsBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceLimitsBuilder<'a> {
@@ -15685,11 +16664,18 @@ pub struct SemaphoreCreateInfoBuilder<'a> {
     inner: SemaphoreCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsSemaphoreCreateInfo {}
+pub unsafe trait ExtendsSemaphoreCreateInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for SemaphoreCreateInfoBuilder<'a> {
     type Target = SemaphoreCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for SemaphoreCreateInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> SemaphoreCreateInfoBuilder<'a> {
@@ -15697,11 +16683,20 @@ impl<'a> SemaphoreCreateInfoBuilder<'a> {
         self.inner.flags = flags;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> SemaphoreCreateInfoBuilder<'a>
-    where
-        T: ExtendsSemaphoreCreateInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsSemaphoreCreateInfo>(
+        mut self,
+        next: &'a mut T,
+    ) -> SemaphoreCreateInfoBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> SemaphoreCreateInfo {
@@ -15742,11 +16737,18 @@ pub struct QueryPoolCreateInfoBuilder<'a> {
     inner: QueryPoolCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsQueryPoolCreateInfo {}
+pub unsafe trait ExtendsQueryPoolCreateInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for QueryPoolCreateInfoBuilder<'a> {
     type Target = QueryPoolCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for QueryPoolCreateInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> QueryPoolCreateInfoBuilder<'a> {
@@ -15769,11 +16771,20 @@ impl<'a> QueryPoolCreateInfoBuilder<'a> {
         self.inner.pipeline_statistics = pipeline_statistics;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> QueryPoolCreateInfoBuilder<'a>
-    where
-        T: ExtendsQueryPoolCreateInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsQueryPoolCreateInfo>(
+        mut self,
+        next: &'a mut T,
+    ) -> QueryPoolCreateInfoBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> QueryPoolCreateInfo {
@@ -15820,11 +16831,18 @@ pub struct FramebufferCreateInfoBuilder<'a> {
     inner: FramebufferCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsFramebufferCreateInfo {}
+pub unsafe trait ExtendsFramebufferCreateInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for FramebufferCreateInfoBuilder<'a> {
     type Target = FramebufferCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for FramebufferCreateInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> FramebufferCreateInfoBuilder<'a> {
@@ -15853,11 +16871,20 @@ impl<'a> FramebufferCreateInfoBuilder<'a> {
         self.inner.layers = layers;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> FramebufferCreateInfoBuilder<'a>
-    where
-        T: ExtendsFramebufferCreateInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsFramebufferCreateInfo>(
+        mut self,
+        next: &'a mut T,
+    ) -> FramebufferCreateInfoBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> FramebufferCreateInfo {
@@ -15888,6 +16915,11 @@ impl<'a> ::std::ops::Deref for DrawIndirectCommandBuilder<'a> {
     type Target = DrawIndirectCommand;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DrawIndirectCommandBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DrawIndirectCommandBuilder<'a> {
@@ -15938,6 +16970,11 @@ impl<'a> ::std::ops::Deref for DrawIndexedIndirectCommandBuilder<'a> {
         &self.inner
     }
 }
+impl<'a> ::std::ops::DerefMut for DrawIndexedIndirectCommandBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
 impl<'a> DrawIndexedIndirectCommandBuilder<'a> {
     pub fn index_count(mut self, index_count: u32) -> DrawIndexedIndirectCommandBuilder<'a> {
         self.inner.index_count = index_count;
@@ -15986,6 +17023,11 @@ impl<'a> ::std::ops::Deref for DispatchIndirectCommandBuilder<'a> {
     type Target = DispatchIndirectCommand;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DispatchIndirectCommandBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DispatchIndirectCommandBuilder<'a> {
@@ -16045,11 +17087,18 @@ pub struct SubmitInfoBuilder<'a> {
     inner: SubmitInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsSubmitInfo {}
+pub unsafe trait ExtendsSubmitInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for SubmitInfoBuilder<'a> {
     type Target = SubmitInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for SubmitInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> SubmitInfoBuilder<'a> {
@@ -16082,11 +17131,17 @@ impl<'a> SubmitInfoBuilder<'a> {
         self.inner.p_signal_semaphores = signal_semaphores.as_ptr();
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> SubmitInfoBuilder<'a>
-    where
-        T: ExtendsSubmitInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsSubmitInfo>(mut self, next: &'a mut T) -> SubmitInfoBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> SubmitInfo {
@@ -16133,6 +17188,11 @@ impl<'a> ::std::ops::Deref for DisplayPropertiesKHRBuilder<'a> {
     type Target = DisplayPropertiesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DisplayPropertiesKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DisplayPropertiesKHRBuilder<'a> {
@@ -16207,6 +17267,11 @@ impl<'a> ::std::ops::Deref for DisplayPlanePropertiesKHRBuilder<'a> {
         &self.inner
     }
 }
+impl<'a> ::std::ops::DerefMut for DisplayPlanePropertiesKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
 impl<'a> DisplayPlanePropertiesKHRBuilder<'a> {
     pub fn current_display(
         mut self,
@@ -16250,6 +17315,11 @@ impl<'a> ::std::ops::Deref for DisplayModeParametersKHRBuilder<'a> {
         &self.inner
     }
 }
+impl<'a> ::std::ops::DerefMut for DisplayModeParametersKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
 impl<'a> DisplayModeParametersKHRBuilder<'a> {
     pub fn visible_region(
         mut self,
@@ -16288,6 +17358,11 @@ impl<'a> ::std::ops::Deref for DisplayModePropertiesKHRBuilder<'a> {
     type Target = DisplayModePropertiesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DisplayModePropertiesKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DisplayModePropertiesKHRBuilder<'a> {
@@ -16339,11 +17414,18 @@ pub struct DisplayModeCreateInfoKHRBuilder<'a> {
     inner: DisplayModeCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDisplayModeCreateInfoKHR {}
+pub unsafe trait ExtendsDisplayModeCreateInfoKHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for DisplayModeCreateInfoKHRBuilder<'a> {
     type Target = DisplayModeCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DisplayModeCreateInfoKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DisplayModeCreateInfoKHRBuilder<'a> {
@@ -16361,11 +17443,20 @@ impl<'a> DisplayModeCreateInfoKHRBuilder<'a> {
         self.inner.parameters = parameters;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> DisplayModeCreateInfoKHRBuilder<'a>
-    where
-        T: ExtendsDisplayModeCreateInfoKHR,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsDisplayModeCreateInfoKHR>(
+        mut self,
+        next: &'a mut T,
+    ) -> DisplayModeCreateInfoKHRBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> DisplayModeCreateInfoKHR {
@@ -16401,6 +17492,11 @@ impl<'a> ::std::ops::Deref for DisplayPlaneCapabilitiesKHRBuilder<'a> {
     type Target = DisplayPlaneCapabilitiesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DisplayPlaneCapabilitiesKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DisplayPlaneCapabilitiesKHRBuilder<'a> {
@@ -16513,11 +17609,18 @@ pub struct DisplaySurfaceCreateInfoKHRBuilder<'a> {
     inner: DisplaySurfaceCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDisplaySurfaceCreateInfoKHR {}
+pub unsafe trait ExtendsDisplaySurfaceCreateInfoKHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for DisplaySurfaceCreateInfoKHRBuilder<'a> {
     type Target = DisplaySurfaceCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DisplaySurfaceCreateInfoKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DisplaySurfaceCreateInfoKHRBuilder<'a> {
@@ -16571,11 +17674,20 @@ impl<'a> DisplaySurfaceCreateInfoKHRBuilder<'a> {
         self.inner.image_extent = image_extent;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> DisplaySurfaceCreateInfoKHRBuilder<'a>
-    where
-        T: ExtendsDisplaySurfaceCreateInfoKHR,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsDisplaySurfaceCreateInfoKHR>(
+        mut self,
+        next: &'a mut T,
+    ) -> DisplaySurfaceCreateInfoKHRBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> DisplaySurfaceCreateInfoKHR {
@@ -16614,12 +17726,25 @@ pub struct DisplayPresentInfoKHRBuilder<'a> {
     inner: DisplayPresentInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDisplayPresentInfoKHR {}
-unsafe impl ExtendsPresentInfoKHR for DisplayPresentInfoKHR {}
+unsafe impl ExtendsPresentInfoKHR for DisplayPresentInfoKHRBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsPresentInfoKHR for DisplayPresentInfoKHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for DisplayPresentInfoKHRBuilder<'a> {
     type Target = DisplayPresentInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DisplayPresentInfoKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DisplayPresentInfoKHRBuilder<'a> {
@@ -16633,13 +17758,6 @@ impl<'a> DisplayPresentInfoKHRBuilder<'a> {
     }
     pub fn persistent(mut self, persistent: bool) -> DisplayPresentInfoKHRBuilder<'a> {
         self.inner.persistent = persistent.into();
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> DisplayPresentInfoKHRBuilder<'a>
-    where
-        T: ExtendsDisplayPresentInfoKHR,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DisplayPresentInfoKHR {
@@ -16676,6 +17794,11 @@ impl<'a> ::std::ops::Deref for SurfaceCapabilitiesKHRBuilder<'a> {
     type Target = SurfaceCapabilitiesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for SurfaceCapabilitiesKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> SurfaceCapabilitiesKHRBuilder<'a> {
@@ -16774,11 +17897,18 @@ pub struct AndroidSurfaceCreateInfoKHRBuilder<'a> {
     inner: AndroidSurfaceCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsAndroidSurfaceCreateInfoKHR {}
+pub unsafe trait ExtendsAndroidSurfaceCreateInfoKHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for AndroidSurfaceCreateInfoKHRBuilder<'a> {
     type Target = AndroidSurfaceCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for AndroidSurfaceCreateInfoKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> AndroidSurfaceCreateInfoKHRBuilder<'a> {
@@ -16793,11 +17923,20 @@ impl<'a> AndroidSurfaceCreateInfoKHRBuilder<'a> {
         self.inner.window = window;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> AndroidSurfaceCreateInfoKHRBuilder<'a>
-    where
-        T: ExtendsAndroidSurfaceCreateInfoKHR,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsAndroidSurfaceCreateInfoKHR>(
+        mut self,
+        next: &'a mut T,
+    ) -> AndroidSurfaceCreateInfoKHRBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> AndroidSurfaceCreateInfoKHR {
@@ -16834,11 +17973,18 @@ pub struct ViSurfaceCreateInfoNNBuilder<'a> {
     inner: ViSurfaceCreateInfoNN,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsViSurfaceCreateInfoNN {}
+pub unsafe trait ExtendsViSurfaceCreateInfoNN {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for ViSurfaceCreateInfoNNBuilder<'a> {
     type Target = ViSurfaceCreateInfoNN;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ViSurfaceCreateInfoNNBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ViSurfaceCreateInfoNNBuilder<'a> {
@@ -16850,11 +17996,20 @@ impl<'a> ViSurfaceCreateInfoNNBuilder<'a> {
         self.inner.window = window;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> ViSurfaceCreateInfoNNBuilder<'a>
-    where
-        T: ExtendsViSurfaceCreateInfoNN,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsViSurfaceCreateInfoNN>(
+        mut self,
+        next: &'a mut T,
+    ) -> ViSurfaceCreateInfoNNBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> ViSurfaceCreateInfoNN {
@@ -16893,11 +18048,18 @@ pub struct WaylandSurfaceCreateInfoKHRBuilder<'a> {
     inner: WaylandSurfaceCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsWaylandSurfaceCreateInfoKHR {}
+pub unsafe trait ExtendsWaylandSurfaceCreateInfoKHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for WaylandSurfaceCreateInfoKHRBuilder<'a> {
     type Target = WaylandSurfaceCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for WaylandSurfaceCreateInfoKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> WaylandSurfaceCreateInfoKHRBuilder<'a> {
@@ -16916,11 +18078,20 @@ impl<'a> WaylandSurfaceCreateInfoKHRBuilder<'a> {
         self.inner.surface = surface;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> WaylandSurfaceCreateInfoKHRBuilder<'a>
-    where
-        T: ExtendsWaylandSurfaceCreateInfoKHR,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsWaylandSurfaceCreateInfoKHR>(
+        mut self,
+        next: &'a mut T,
+    ) -> WaylandSurfaceCreateInfoKHRBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> WaylandSurfaceCreateInfoKHR {
@@ -16959,11 +18130,18 @@ pub struct Win32SurfaceCreateInfoKHRBuilder<'a> {
     inner: Win32SurfaceCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsWin32SurfaceCreateInfoKHR {}
+pub unsafe trait ExtendsWin32SurfaceCreateInfoKHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for Win32SurfaceCreateInfoKHRBuilder<'a> {
     type Target = Win32SurfaceCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for Win32SurfaceCreateInfoKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> Win32SurfaceCreateInfoKHRBuilder<'a> {
@@ -16982,11 +18160,20 @@ impl<'a> Win32SurfaceCreateInfoKHRBuilder<'a> {
         self.inner.hwnd = hwnd;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> Win32SurfaceCreateInfoKHRBuilder<'a>
-    where
-        T: ExtendsWin32SurfaceCreateInfoKHR,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsWin32SurfaceCreateInfoKHR>(
+        mut self,
+        next: &'a mut T,
+    ) -> Win32SurfaceCreateInfoKHRBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> Win32SurfaceCreateInfoKHR {
@@ -17025,11 +18212,18 @@ pub struct XlibSurfaceCreateInfoKHRBuilder<'a> {
     inner: XlibSurfaceCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsXlibSurfaceCreateInfoKHR {}
+pub unsafe trait ExtendsXlibSurfaceCreateInfoKHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for XlibSurfaceCreateInfoKHRBuilder<'a> {
     type Target = XlibSurfaceCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for XlibSurfaceCreateInfoKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> XlibSurfaceCreateInfoKHRBuilder<'a> {
@@ -17048,11 +18242,20 @@ impl<'a> XlibSurfaceCreateInfoKHRBuilder<'a> {
         self.inner.window = window;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> XlibSurfaceCreateInfoKHRBuilder<'a>
-    where
-        T: ExtendsXlibSurfaceCreateInfoKHR,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsXlibSurfaceCreateInfoKHR>(
+        mut self,
+        next: &'a mut T,
+    ) -> XlibSurfaceCreateInfoKHRBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> XlibSurfaceCreateInfoKHR {
@@ -17091,11 +18294,18 @@ pub struct XcbSurfaceCreateInfoKHRBuilder<'a> {
     inner: XcbSurfaceCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsXcbSurfaceCreateInfoKHR {}
+pub unsafe trait ExtendsXcbSurfaceCreateInfoKHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for XcbSurfaceCreateInfoKHRBuilder<'a> {
     type Target = XcbSurfaceCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for XcbSurfaceCreateInfoKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> XcbSurfaceCreateInfoKHRBuilder<'a> {
@@ -17114,11 +18324,20 @@ impl<'a> XcbSurfaceCreateInfoKHRBuilder<'a> {
         self.inner.window = window;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> XcbSurfaceCreateInfoKHRBuilder<'a>
-    where
-        T: ExtendsXcbSurfaceCreateInfoKHR,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsXcbSurfaceCreateInfoKHR>(
+        mut self,
+        next: &'a mut T,
+    ) -> XcbSurfaceCreateInfoKHRBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> XcbSurfaceCreateInfoKHR {
@@ -17155,11 +18374,18 @@ pub struct ImagePipeSurfaceCreateInfoFUCHSIABuilder<'a> {
     inner: ImagePipeSurfaceCreateInfoFUCHSIA,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsImagePipeSurfaceCreateInfoFUCHSIA {}
+pub unsafe trait ExtendsImagePipeSurfaceCreateInfoFUCHSIA {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for ImagePipeSurfaceCreateInfoFUCHSIABuilder<'a> {
     type Target = ImagePipeSurfaceCreateInfoFUCHSIA;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ImagePipeSurfaceCreateInfoFUCHSIABuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ImagePipeSurfaceCreateInfoFUCHSIABuilder<'a> {
@@ -17177,11 +18403,20 @@ impl<'a> ImagePipeSurfaceCreateInfoFUCHSIABuilder<'a> {
         self.inner.image_pipe_handle = image_pipe_handle;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> ImagePipeSurfaceCreateInfoFUCHSIABuilder<'a>
-    where
-        T: ExtendsImagePipeSurfaceCreateInfoFUCHSIA,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsImagePipeSurfaceCreateInfoFUCHSIA>(
+        mut self,
+        next: &'a mut T,
+    ) -> ImagePipeSurfaceCreateInfoFUCHSIABuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> ImagePipeSurfaceCreateInfoFUCHSIA {
@@ -17210,6 +18445,11 @@ impl<'a> ::std::ops::Deref for SurfaceFormatKHRBuilder<'a> {
     type Target = SurfaceFormatKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for SurfaceFormatKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> SurfaceFormatKHRBuilder<'a> {
@@ -17283,11 +18523,18 @@ pub struct SwapchainCreateInfoKHRBuilder<'a> {
     inner: SwapchainCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsSwapchainCreateInfoKHR {}
+pub unsafe trait ExtendsSwapchainCreateInfoKHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for SwapchainCreateInfoKHRBuilder<'a> {
     type Target = SwapchainCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for SwapchainCreateInfoKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> SwapchainCreateInfoKHRBuilder<'a> {
@@ -17379,11 +18626,20 @@ impl<'a> SwapchainCreateInfoKHRBuilder<'a> {
         self.inner.old_swapchain = old_swapchain;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> SwapchainCreateInfoKHRBuilder<'a>
-    where
-        T: ExtendsSwapchainCreateInfoKHR,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsSwapchainCreateInfoKHR>(
+        mut self,
+        next: &'a mut T,
+    ) -> SwapchainCreateInfoKHRBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> SwapchainCreateInfoKHR {
@@ -17428,11 +18684,18 @@ pub struct PresentInfoKHRBuilder<'a> {
     inner: PresentInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPresentInfoKHR {}
+pub unsafe trait ExtendsPresentInfoKHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for PresentInfoKHRBuilder<'a> {
     type Target = PresentInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PresentInfoKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PresentInfoKHRBuilder<'a> {
@@ -17459,11 +18722,20 @@ impl<'a> PresentInfoKHRBuilder<'a> {
         self.inner.p_results = results.as_mut_ptr();
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> PresentInfoKHRBuilder<'a>
-    where
-        T: ExtendsPresentInfoKHR,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsPresentInfoKHR>(
+        mut self,
+        next: &'a mut T,
+    ) -> PresentInfoKHRBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> PresentInfoKHR {
@@ -17513,12 +18785,25 @@ pub struct DebugReportCallbackCreateInfoEXTBuilder<'a> {
     inner: DebugReportCallbackCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDebugReportCallbackCreateInfoEXT {}
-unsafe impl ExtendsInstanceCreateInfo for DebugReportCallbackCreateInfoEXT {}
+unsafe impl ExtendsInstanceCreateInfo for DebugReportCallbackCreateInfoEXTBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsInstanceCreateInfo for DebugReportCallbackCreateInfoEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for DebugReportCallbackCreateInfoEXTBuilder<'a> {
     type Target = DebugReportCallbackCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DebugReportCallbackCreateInfoEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DebugReportCallbackCreateInfoEXTBuilder<'a> {
@@ -17541,13 +18826,6 @@ impl<'a> DebugReportCallbackCreateInfoEXTBuilder<'a> {
         user_data: *mut c_void,
     ) -> DebugReportCallbackCreateInfoEXTBuilder<'a> {
         self.inner.p_user_data = user_data;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> DebugReportCallbackCreateInfoEXTBuilder<'a>
-    where
-        T: ExtendsDebugReportCallbackCreateInfoEXT,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DebugReportCallbackCreateInfoEXT {
@@ -17584,12 +18862,25 @@ pub struct ValidationFlagsEXTBuilder<'a> {
     inner: ValidationFlagsEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsValidationFlagsEXT {}
-unsafe impl ExtendsInstanceCreateInfo for ValidationFlagsEXT {}
+unsafe impl ExtendsInstanceCreateInfo for ValidationFlagsEXTBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsInstanceCreateInfo for ValidationFlagsEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for ValidationFlagsEXTBuilder<'a> {
     type Target = ValidationFlagsEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ValidationFlagsEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ValidationFlagsEXTBuilder<'a> {
@@ -17599,13 +18890,6 @@ impl<'a> ValidationFlagsEXTBuilder<'a> {
     ) -> ValidationFlagsEXTBuilder<'a> {
         self.inner.disabled_validation_check_count = disabled_validation_checks.len() as _;
         self.inner.p_disabled_validation_checks = disabled_validation_checks.as_ptr();
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> ValidationFlagsEXTBuilder<'a>
-    where
-        T: ExtendsValidationFlagsEXT,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ValidationFlagsEXT {
@@ -17646,12 +18930,25 @@ pub struct ValidationFeaturesEXTBuilder<'a> {
     inner: ValidationFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsValidationFeaturesEXT {}
-unsafe impl ExtendsInstanceCreateInfo for ValidationFeaturesEXT {}
+unsafe impl ExtendsInstanceCreateInfo for ValidationFeaturesEXTBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsInstanceCreateInfo for ValidationFeaturesEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for ValidationFeaturesEXTBuilder<'a> {
     type Target = ValidationFeaturesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ValidationFeaturesEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ValidationFeaturesEXTBuilder<'a> {
@@ -17669,13 +18966,6 @@ impl<'a> ValidationFeaturesEXTBuilder<'a> {
     ) -> ValidationFeaturesEXTBuilder<'a> {
         self.inner.disabled_validation_feature_count = disabled_validation_features.len() as _;
         self.inner.p_disabled_validation_features = disabled_validation_features.as_ptr();
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> ValidationFeaturesEXTBuilder<'a>
-    where
-        T: ExtendsValidationFeaturesEXT,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ValidationFeaturesEXT {
@@ -17710,15 +19000,29 @@ pub struct PipelineRasterizationStateRasterizationOrderAMDBuilder<'a> {
     inner: PipelineRasterizationStateRasterizationOrderAMD,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPipelineRasterizationStateRasterizationOrderAMD {}
+unsafe impl ExtendsPipelineRasterizationStateCreateInfo
+    for PipelineRasterizationStateRasterizationOrderAMDBuilder<'_>
+{
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
 unsafe impl ExtendsPipelineRasterizationStateCreateInfo
     for PipelineRasterizationStateRasterizationOrderAMD
 {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
 }
 impl<'a> ::std::ops::Deref for PipelineRasterizationStateRasterizationOrderAMDBuilder<'a> {
     type Target = PipelineRasterizationStateRasterizationOrderAMD;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PipelineRasterizationStateRasterizationOrderAMDBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PipelineRasterizationStateRasterizationOrderAMDBuilder<'a> {
@@ -17727,16 +19031,6 @@ impl<'a> PipelineRasterizationStateRasterizationOrderAMDBuilder<'a> {
         rasterization_order: RasterizationOrderAMD,
     ) -> PipelineRasterizationStateRasterizationOrderAMDBuilder<'a> {
         self.inner.rasterization_order = rasterization_order;
-        self
-    }
-    pub fn next<T>(
-        mut self,
-        next: &'a T,
-    ) -> PipelineRasterizationStateRasterizationOrderAMDBuilder<'a>
-    where
-        T: ExtendsPipelineRasterizationStateRasterizationOrderAMD,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> PipelineRasterizationStateRasterizationOrderAMD {
@@ -17775,11 +19069,18 @@ pub struct DebugMarkerObjectNameInfoEXTBuilder<'a> {
     inner: DebugMarkerObjectNameInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDebugMarkerObjectNameInfoEXT {}
+pub unsafe trait ExtendsDebugMarkerObjectNameInfoEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for DebugMarkerObjectNameInfoEXTBuilder<'a> {
     type Target = DebugMarkerObjectNameInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DebugMarkerObjectNameInfoEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DebugMarkerObjectNameInfoEXTBuilder<'a> {
@@ -17801,11 +19102,20 @@ impl<'a> DebugMarkerObjectNameInfoEXTBuilder<'a> {
         self.inner.p_object_name = object_name.as_ptr();
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> DebugMarkerObjectNameInfoEXTBuilder<'a>
-    where
-        T: ExtendsDebugMarkerObjectNameInfoEXT,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsDebugMarkerObjectNameInfoEXT>(
+        mut self,
+        next: &'a mut T,
+    ) -> DebugMarkerObjectNameInfoEXTBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> DebugMarkerObjectNameInfoEXT {
@@ -17848,11 +19158,18 @@ pub struct DebugMarkerObjectTagInfoEXTBuilder<'a> {
     inner: DebugMarkerObjectTagInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDebugMarkerObjectTagInfoEXT {}
+pub unsafe trait ExtendsDebugMarkerObjectTagInfoEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for DebugMarkerObjectTagInfoEXTBuilder<'a> {
     type Target = DebugMarkerObjectTagInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DebugMarkerObjectTagInfoEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DebugMarkerObjectTagInfoEXTBuilder<'a> {
@@ -17876,11 +19193,20 @@ impl<'a> DebugMarkerObjectTagInfoEXTBuilder<'a> {
         self.inner.p_tag = tag.as_ptr() as *const c_void;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> DebugMarkerObjectTagInfoEXTBuilder<'a>
-    where
-        T: ExtendsDebugMarkerObjectTagInfoEXT,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsDebugMarkerObjectTagInfoEXT>(
+        mut self,
+        next: &'a mut T,
+    ) -> DebugMarkerObjectTagInfoEXTBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> DebugMarkerObjectTagInfoEXT {
@@ -17917,11 +19243,18 @@ pub struct DebugMarkerMarkerInfoEXTBuilder<'a> {
     inner: DebugMarkerMarkerInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDebugMarkerMarkerInfoEXT {}
+pub unsafe trait ExtendsDebugMarkerMarkerInfoEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for DebugMarkerMarkerInfoEXTBuilder<'a> {
     type Target = DebugMarkerMarkerInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DebugMarkerMarkerInfoEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DebugMarkerMarkerInfoEXTBuilder<'a> {
@@ -17936,11 +19269,20 @@ impl<'a> DebugMarkerMarkerInfoEXTBuilder<'a> {
         self.inner.color = color;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> DebugMarkerMarkerInfoEXTBuilder<'a>
-    where
-        T: ExtendsDebugMarkerMarkerInfoEXT,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsDebugMarkerMarkerInfoEXT>(
+        mut self,
+        next: &'a mut T,
+    ) -> DebugMarkerMarkerInfoEXTBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> DebugMarkerMarkerInfoEXT {
@@ -17975,12 +19317,25 @@ pub struct DedicatedAllocationImageCreateInfoNVBuilder<'a> {
     inner: DedicatedAllocationImageCreateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDedicatedAllocationImageCreateInfoNV {}
-unsafe impl ExtendsImageCreateInfo for DedicatedAllocationImageCreateInfoNV {}
+unsafe impl ExtendsImageCreateInfo for DedicatedAllocationImageCreateInfoNVBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsImageCreateInfo for DedicatedAllocationImageCreateInfoNV {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for DedicatedAllocationImageCreateInfoNVBuilder<'a> {
     type Target = DedicatedAllocationImageCreateInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DedicatedAllocationImageCreateInfoNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DedicatedAllocationImageCreateInfoNVBuilder<'a> {
@@ -17989,13 +19344,6 @@ impl<'a> DedicatedAllocationImageCreateInfoNVBuilder<'a> {
         dedicated_allocation: bool,
     ) -> DedicatedAllocationImageCreateInfoNVBuilder<'a> {
         self.inner.dedicated_allocation = dedicated_allocation.into();
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> DedicatedAllocationImageCreateInfoNVBuilder<'a>
-    where
-        T: ExtendsDedicatedAllocationImageCreateInfoNV,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DedicatedAllocationImageCreateInfoNV {
@@ -18030,12 +19378,25 @@ pub struct DedicatedAllocationBufferCreateInfoNVBuilder<'a> {
     inner: DedicatedAllocationBufferCreateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDedicatedAllocationBufferCreateInfoNV {}
-unsafe impl ExtendsBufferCreateInfo for DedicatedAllocationBufferCreateInfoNV {}
+unsafe impl ExtendsBufferCreateInfo for DedicatedAllocationBufferCreateInfoNVBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsBufferCreateInfo for DedicatedAllocationBufferCreateInfoNV {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for DedicatedAllocationBufferCreateInfoNVBuilder<'a> {
     type Target = DedicatedAllocationBufferCreateInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DedicatedAllocationBufferCreateInfoNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DedicatedAllocationBufferCreateInfoNVBuilder<'a> {
@@ -18044,13 +19405,6 @@ impl<'a> DedicatedAllocationBufferCreateInfoNVBuilder<'a> {
         dedicated_allocation: bool,
     ) -> DedicatedAllocationBufferCreateInfoNVBuilder<'a> {
         self.inner.dedicated_allocation = dedicated_allocation.into();
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> DedicatedAllocationBufferCreateInfoNVBuilder<'a>
-    where
-        T: ExtendsDedicatedAllocationBufferCreateInfoNV,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DedicatedAllocationBufferCreateInfoNV {
@@ -18087,12 +19441,25 @@ pub struct DedicatedAllocationMemoryAllocateInfoNVBuilder<'a> {
     inner: DedicatedAllocationMemoryAllocateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDedicatedAllocationMemoryAllocateInfoNV {}
-unsafe impl ExtendsMemoryAllocateInfo for DedicatedAllocationMemoryAllocateInfoNV {}
+unsafe impl ExtendsMemoryAllocateInfo for DedicatedAllocationMemoryAllocateInfoNVBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsMemoryAllocateInfo for DedicatedAllocationMemoryAllocateInfoNV {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for DedicatedAllocationMemoryAllocateInfoNVBuilder<'a> {
     type Target = DedicatedAllocationMemoryAllocateInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DedicatedAllocationMemoryAllocateInfoNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DedicatedAllocationMemoryAllocateInfoNVBuilder<'a> {
@@ -18102,13 +19469,6 @@ impl<'a> DedicatedAllocationMemoryAllocateInfoNVBuilder<'a> {
     }
     pub fn buffer(mut self, buffer: Buffer) -> DedicatedAllocationMemoryAllocateInfoNVBuilder<'a> {
         self.inner.buffer = buffer;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> DedicatedAllocationMemoryAllocateInfoNVBuilder<'a>
-    where
-        T: ExtendsDedicatedAllocationMemoryAllocateInfoNV,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DedicatedAllocationMemoryAllocateInfoNV {
@@ -18139,6 +19499,11 @@ impl<'a> ::std::ops::Deref for ExternalImageFormatPropertiesNVBuilder<'a> {
     type Target = ExternalImageFormatPropertiesNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ExternalImageFormatPropertiesNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ExternalImageFormatPropertiesNVBuilder<'a> {
@@ -18202,12 +19567,25 @@ pub struct ExternalMemoryImageCreateInfoNVBuilder<'a> {
     inner: ExternalMemoryImageCreateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsExternalMemoryImageCreateInfoNV {}
-unsafe impl ExtendsImageCreateInfo for ExternalMemoryImageCreateInfoNV {}
+unsafe impl ExtendsImageCreateInfo for ExternalMemoryImageCreateInfoNVBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsImageCreateInfo for ExternalMemoryImageCreateInfoNV {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for ExternalMemoryImageCreateInfoNVBuilder<'a> {
     type Target = ExternalMemoryImageCreateInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ExternalMemoryImageCreateInfoNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ExternalMemoryImageCreateInfoNVBuilder<'a> {
@@ -18216,13 +19594,6 @@ impl<'a> ExternalMemoryImageCreateInfoNVBuilder<'a> {
         handle_types: ExternalMemoryHandleTypeFlagsNV,
     ) -> ExternalMemoryImageCreateInfoNVBuilder<'a> {
         self.inner.handle_types = handle_types;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> ExternalMemoryImageCreateInfoNVBuilder<'a>
-    where
-        T: ExtendsExternalMemoryImageCreateInfoNV,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ExternalMemoryImageCreateInfoNV {
@@ -18257,12 +19628,25 @@ pub struct ExportMemoryAllocateInfoNVBuilder<'a> {
     inner: ExportMemoryAllocateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsExportMemoryAllocateInfoNV {}
-unsafe impl ExtendsMemoryAllocateInfo for ExportMemoryAllocateInfoNV {}
+unsafe impl ExtendsMemoryAllocateInfo for ExportMemoryAllocateInfoNVBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsMemoryAllocateInfo for ExportMemoryAllocateInfoNV {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for ExportMemoryAllocateInfoNVBuilder<'a> {
     type Target = ExportMemoryAllocateInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ExportMemoryAllocateInfoNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ExportMemoryAllocateInfoNVBuilder<'a> {
@@ -18271,13 +19655,6 @@ impl<'a> ExportMemoryAllocateInfoNVBuilder<'a> {
         handle_types: ExternalMemoryHandleTypeFlagsNV,
     ) -> ExportMemoryAllocateInfoNVBuilder<'a> {
         self.inner.handle_types = handle_types;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> ExportMemoryAllocateInfoNVBuilder<'a>
-    where
-        T: ExtendsExportMemoryAllocateInfoNV,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ExportMemoryAllocateInfoNV {
@@ -18314,12 +19691,25 @@ pub struct ImportMemoryWin32HandleInfoNVBuilder<'a> {
     inner: ImportMemoryWin32HandleInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsImportMemoryWin32HandleInfoNV {}
-unsafe impl ExtendsMemoryAllocateInfo for ImportMemoryWin32HandleInfoNV {}
+unsafe impl ExtendsMemoryAllocateInfo for ImportMemoryWin32HandleInfoNVBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsMemoryAllocateInfo for ImportMemoryWin32HandleInfoNV {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for ImportMemoryWin32HandleInfoNVBuilder<'a> {
     type Target = ImportMemoryWin32HandleInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ImportMemoryWin32HandleInfoNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ImportMemoryWin32HandleInfoNVBuilder<'a> {
@@ -18332,13 +19722,6 @@ impl<'a> ImportMemoryWin32HandleInfoNVBuilder<'a> {
     }
     pub fn handle(mut self, handle: HANDLE) -> ImportMemoryWin32HandleInfoNVBuilder<'a> {
         self.inner.handle = handle;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> ImportMemoryWin32HandleInfoNVBuilder<'a>
-    where
-        T: ExtendsImportMemoryWin32HandleInfoNV,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ImportMemoryWin32HandleInfoNV {
@@ -18375,12 +19758,25 @@ pub struct ExportMemoryWin32HandleInfoNVBuilder<'a> {
     inner: ExportMemoryWin32HandleInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsExportMemoryWin32HandleInfoNV {}
-unsafe impl ExtendsMemoryAllocateInfo for ExportMemoryWin32HandleInfoNV {}
+unsafe impl ExtendsMemoryAllocateInfo for ExportMemoryWin32HandleInfoNVBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsMemoryAllocateInfo for ExportMemoryWin32HandleInfoNV {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for ExportMemoryWin32HandleInfoNVBuilder<'a> {
     type Target = ExportMemoryWin32HandleInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ExportMemoryWin32HandleInfoNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ExportMemoryWin32HandleInfoNVBuilder<'a> {
@@ -18393,13 +19789,6 @@ impl<'a> ExportMemoryWin32HandleInfoNVBuilder<'a> {
     }
     pub fn dw_access(mut self, dw_access: DWORD) -> ExportMemoryWin32HandleInfoNVBuilder<'a> {
         self.inner.dw_access = dw_access;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> ExportMemoryWin32HandleInfoNVBuilder<'a>
-    where
-        T: ExtendsExportMemoryWin32HandleInfoNV,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ExportMemoryWin32HandleInfoNV {
@@ -18446,12 +19835,25 @@ pub struct Win32KeyedMutexAcquireReleaseInfoNVBuilder<'a> {
     inner: Win32KeyedMutexAcquireReleaseInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsWin32KeyedMutexAcquireReleaseInfoNV {}
-unsafe impl ExtendsSubmitInfo for Win32KeyedMutexAcquireReleaseInfoNV {}
+unsafe impl ExtendsSubmitInfo for Win32KeyedMutexAcquireReleaseInfoNVBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsSubmitInfo for Win32KeyedMutexAcquireReleaseInfoNV {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for Win32KeyedMutexAcquireReleaseInfoNVBuilder<'a> {
     type Target = Win32KeyedMutexAcquireReleaseInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for Win32KeyedMutexAcquireReleaseInfoNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> Win32KeyedMutexAcquireReleaseInfoNVBuilder<'a> {
@@ -18495,13 +19897,6 @@ impl<'a> Win32KeyedMutexAcquireReleaseInfoNVBuilder<'a> {
         self.inner.p_release_keys = release_keys.as_ptr();
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> Win32KeyedMutexAcquireReleaseInfoNVBuilder<'a>
-    where
-        T: ExtendsWin32KeyedMutexAcquireReleaseInfoNV,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
-        self
-    }
     pub fn build(self) -> Win32KeyedMutexAcquireReleaseInfoNV {
         self.inner
     }
@@ -18534,11 +19929,18 @@ pub struct DeviceGeneratedCommandsFeaturesNVXBuilder<'a> {
     inner: DeviceGeneratedCommandsFeaturesNVX,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDeviceGeneratedCommandsFeaturesNVX {}
+pub unsafe trait ExtendsDeviceGeneratedCommandsFeaturesNVX {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for DeviceGeneratedCommandsFeaturesNVXBuilder<'a> {
     type Target = DeviceGeneratedCommandsFeaturesNVX;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DeviceGeneratedCommandsFeaturesNVXBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DeviceGeneratedCommandsFeaturesNVXBuilder<'a> {
@@ -18549,11 +19951,20 @@ impl<'a> DeviceGeneratedCommandsFeaturesNVXBuilder<'a> {
         self.inner.compute_binding_point_support = compute_binding_point_support.into();
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> DeviceGeneratedCommandsFeaturesNVXBuilder<'a>
-    where
-        T: ExtendsDeviceGeneratedCommandsFeaturesNVX,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsDeviceGeneratedCommandsFeaturesNVX>(
+        mut self,
+        next: &'a mut T,
+    ) -> DeviceGeneratedCommandsFeaturesNVXBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> DeviceGeneratedCommandsFeaturesNVX {
@@ -18596,11 +20007,18 @@ pub struct DeviceGeneratedCommandsLimitsNVXBuilder<'a> {
     inner: DeviceGeneratedCommandsLimitsNVX,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDeviceGeneratedCommandsLimitsNVX {}
+pub unsafe trait ExtendsDeviceGeneratedCommandsLimitsNVX {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for DeviceGeneratedCommandsLimitsNVXBuilder<'a> {
     type Target = DeviceGeneratedCommandsLimitsNVX;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DeviceGeneratedCommandsLimitsNVXBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DeviceGeneratedCommandsLimitsNVXBuilder<'a> {
@@ -18643,11 +20061,20 @@ impl<'a> DeviceGeneratedCommandsLimitsNVXBuilder<'a> {
             min_commands_token_buffer_offset_alignment;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> DeviceGeneratedCommandsLimitsNVXBuilder<'a>
-    where
-        T: ExtendsDeviceGeneratedCommandsLimitsNVX,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsDeviceGeneratedCommandsLimitsNVX>(
+        mut self,
+        next: &'a mut T,
+    ) -> DeviceGeneratedCommandsLimitsNVXBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> DeviceGeneratedCommandsLimitsNVX {
@@ -18677,6 +20104,11 @@ impl<'a> ::std::ops::Deref for IndirectCommandsTokenNVXBuilder<'a> {
     type Target = IndirectCommandsTokenNVX;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for IndirectCommandsTokenNVXBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> IndirectCommandsTokenNVXBuilder<'a> {
@@ -18723,6 +20155,11 @@ impl<'a> ::std::ops::Deref for IndirectCommandsLayoutTokenNVXBuilder<'a> {
     type Target = IndirectCommandsLayoutTokenNVX;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for IndirectCommandsLayoutTokenNVXBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> IndirectCommandsLayoutTokenNVXBuilder<'a> {
@@ -18786,11 +20223,18 @@ pub struct IndirectCommandsLayoutCreateInfoNVXBuilder<'a> {
     inner: IndirectCommandsLayoutCreateInfoNVX,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsIndirectCommandsLayoutCreateInfoNVX {}
+pub unsafe trait ExtendsIndirectCommandsLayoutCreateInfoNVX {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for IndirectCommandsLayoutCreateInfoNVXBuilder<'a> {
     type Target = IndirectCommandsLayoutCreateInfoNVX;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for IndirectCommandsLayoutCreateInfoNVXBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> IndirectCommandsLayoutCreateInfoNVXBuilder<'a> {
@@ -18816,11 +20260,20 @@ impl<'a> IndirectCommandsLayoutCreateInfoNVXBuilder<'a> {
         self.inner.p_tokens = tokens.as_ptr();
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> IndirectCommandsLayoutCreateInfoNVXBuilder<'a>
-    where
-        T: ExtendsIndirectCommandsLayoutCreateInfoNVX,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsIndirectCommandsLayoutCreateInfoNVX>(
+        mut self,
+        next: &'a mut T,
+    ) -> IndirectCommandsLayoutCreateInfoNVXBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> IndirectCommandsLayoutCreateInfoNVX {
@@ -18873,11 +20326,18 @@ pub struct CmdProcessCommandsInfoNVXBuilder<'a> {
     inner: CmdProcessCommandsInfoNVX,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsCmdProcessCommandsInfoNVX {}
+pub unsafe trait ExtendsCmdProcessCommandsInfoNVX {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for CmdProcessCommandsInfoNVXBuilder<'a> {
     type Target = CmdProcessCommandsInfoNVX;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for CmdProcessCommandsInfoNVXBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> CmdProcessCommandsInfoNVXBuilder<'a> {
@@ -18945,11 +20405,20 @@ impl<'a> CmdProcessCommandsInfoNVXBuilder<'a> {
         self.inner.sequences_index_offset = sequences_index_offset;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> CmdProcessCommandsInfoNVXBuilder<'a>
-    where
-        T: ExtendsCmdProcessCommandsInfoNVX,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsCmdProcessCommandsInfoNVX>(
+        mut self,
+        next: &'a mut T,
+    ) -> CmdProcessCommandsInfoNVXBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> CmdProcessCommandsInfoNVX {
@@ -18988,11 +20457,18 @@ pub struct CmdReserveSpaceForCommandsInfoNVXBuilder<'a> {
     inner: CmdReserveSpaceForCommandsInfoNVX,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsCmdReserveSpaceForCommandsInfoNVX {}
+pub unsafe trait ExtendsCmdReserveSpaceForCommandsInfoNVX {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for CmdReserveSpaceForCommandsInfoNVXBuilder<'a> {
     type Target = CmdReserveSpaceForCommandsInfoNVX;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for CmdReserveSpaceForCommandsInfoNVXBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> CmdReserveSpaceForCommandsInfoNVXBuilder<'a> {
@@ -19017,11 +20493,20 @@ impl<'a> CmdReserveSpaceForCommandsInfoNVXBuilder<'a> {
         self.inner.max_sequences_count = max_sequences_count;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> CmdReserveSpaceForCommandsInfoNVXBuilder<'a>
-    where
-        T: ExtendsCmdReserveSpaceForCommandsInfoNVX,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsCmdReserveSpaceForCommandsInfoNVX>(
+        mut self,
+        next: &'a mut T,
+    ) -> CmdReserveSpaceForCommandsInfoNVXBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> CmdReserveSpaceForCommandsInfoNVX {
@@ -19072,11 +20557,18 @@ pub struct ObjectTableCreateInfoNVXBuilder<'a> {
     inner: ObjectTableCreateInfoNVX,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsObjectTableCreateInfoNVX {}
+pub unsafe trait ExtendsObjectTableCreateInfoNVX {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for ObjectTableCreateInfoNVXBuilder<'a> {
     type Target = ObjectTableCreateInfoNVX;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ObjectTableCreateInfoNVXBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ObjectTableCreateInfoNVXBuilder<'a> {
@@ -19139,11 +20631,20 @@ impl<'a> ObjectTableCreateInfoNVXBuilder<'a> {
         self.inner.max_pipeline_layouts = max_pipeline_layouts;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> ObjectTableCreateInfoNVXBuilder<'a>
-    where
-        T: ExtendsObjectTableCreateInfoNVX,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsObjectTableCreateInfoNVX>(
+        mut self,
+        next: &'a mut T,
+    ) -> ObjectTableCreateInfoNVXBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> ObjectTableCreateInfoNVX {
@@ -19172,6 +20673,11 @@ impl<'a> ::std::ops::Deref for ObjectTableEntryNVXBuilder<'a> {
     type Target = ObjectTableEntryNVX;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ObjectTableEntryNVXBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ObjectTableEntryNVXBuilder<'a> {
@@ -19210,6 +20716,11 @@ impl<'a> ::std::ops::Deref for ObjectTablePipelineEntryNVXBuilder<'a> {
     type Target = ObjectTablePipelineEntryNVX;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ObjectTablePipelineEntryNVXBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ObjectTablePipelineEntryNVXBuilder<'a> {
@@ -19256,6 +20767,11 @@ impl<'a> ::std::ops::Deref for ObjectTableDescriptorSetEntryNVXBuilder<'a> {
     type Target = ObjectTableDescriptorSetEntryNVX;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ObjectTableDescriptorSetEntryNVXBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ObjectTableDescriptorSetEntryNVXBuilder<'a> {
@@ -19313,6 +20829,11 @@ impl<'a> ::std::ops::Deref for ObjectTableVertexBufferEntryNVXBuilder<'a> {
         &self.inner
     }
 }
+impl<'a> ::std::ops::DerefMut for ObjectTableVertexBufferEntryNVXBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
 impl<'a> ObjectTableVertexBufferEntryNVXBuilder<'a> {
     pub fn ty(mut self, ty: ObjectEntryTypeNVX) -> ObjectTableVertexBufferEntryNVXBuilder<'a> {
         self.inner.ty = ty;
@@ -19357,6 +20878,11 @@ impl<'a> ::std::ops::Deref for ObjectTableIndexBufferEntryNVXBuilder<'a> {
     type Target = ObjectTableIndexBufferEntryNVX;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ObjectTableIndexBufferEntryNVXBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ObjectTableIndexBufferEntryNVXBuilder<'a> {
@@ -19410,6 +20936,11 @@ impl<'a> ::std::ops::Deref for ObjectTablePushConstantEntryNVXBuilder<'a> {
     type Target = ObjectTablePushConstantEntryNVX;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ObjectTablePushConstantEntryNVXBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ObjectTablePushConstantEntryNVXBuilder<'a> {
@@ -19470,12 +21001,25 @@ pub struct PhysicalDeviceFeatures2Builder<'a> {
     inner: PhysicalDeviceFeatures2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceFeatures2 {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFeatures2 {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFeatures2Builder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFeatures2 {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceFeatures2Builder<'a> {
     type Target = PhysicalDeviceFeatures2;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceFeatures2Builder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceFeatures2Builder<'a> {
@@ -19484,13 +21028,6 @@ impl<'a> PhysicalDeviceFeatures2Builder<'a> {
         features: PhysicalDeviceFeatures,
     ) -> PhysicalDeviceFeatures2Builder<'a> {
         self.inner.features = features;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceFeatures2Builder<'a>
-    where
-        T: ExtendsPhysicalDeviceFeatures2,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceFeatures2 {
@@ -19525,11 +21062,18 @@ pub struct PhysicalDeviceProperties2Builder<'a> {
     inner: PhysicalDeviceProperties2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceProperties2 {}
+pub unsafe trait ExtendsPhysicalDeviceProperties2 {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceProperties2Builder<'a> {
     type Target = PhysicalDeviceProperties2;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceProperties2Builder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceProperties2Builder<'a> {
@@ -19540,11 +21084,20 @@ impl<'a> PhysicalDeviceProperties2Builder<'a> {
         self.inner.properties = properties;
         self
     }
-    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceProperties2Builder<'a>
-    where
-        T: ExtendsPhysicalDeviceProperties2,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsPhysicalDeviceProperties2>(
+        mut self,
+        next: &'a mut T,
+    ) -> PhysicalDeviceProperties2Builder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> PhysicalDeviceProperties2 {
@@ -19579,11 +21132,18 @@ pub struct FormatProperties2Builder<'a> {
     inner: FormatProperties2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsFormatProperties2 {}
+pub unsafe trait ExtendsFormatProperties2 {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for FormatProperties2Builder<'a> {
     type Target = FormatProperties2;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for FormatProperties2Builder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> FormatProperties2Builder<'a> {
@@ -19594,11 +21154,20 @@ impl<'a> FormatProperties2Builder<'a> {
         self.inner.format_properties = format_properties;
         self
     }
-    pub fn next<T>(mut self, next: &'a mut T) -> FormatProperties2Builder<'a>
-    where
-        T: ExtendsFormatProperties2,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsFormatProperties2>(
+        mut self,
+        next: &'a mut T,
+    ) -> FormatProperties2Builder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> FormatProperties2 {
@@ -19633,11 +21202,18 @@ pub struct ImageFormatProperties2Builder<'a> {
     inner: ImageFormatProperties2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsImageFormatProperties2 {}
+pub unsafe trait ExtendsImageFormatProperties2 {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for ImageFormatProperties2Builder<'a> {
     type Target = ImageFormatProperties2;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ImageFormatProperties2Builder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ImageFormatProperties2Builder<'a> {
@@ -19648,11 +21224,20 @@ impl<'a> ImageFormatProperties2Builder<'a> {
         self.inner.image_format_properties = image_format_properties;
         self
     }
-    pub fn next<T>(mut self, next: &'a mut T) -> ImageFormatProperties2Builder<'a>
-    where
-        T: ExtendsImageFormatProperties2,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsImageFormatProperties2>(
+        mut self,
+        next: &'a mut T,
+    ) -> ImageFormatProperties2Builder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> ImageFormatProperties2 {
@@ -19695,11 +21280,18 @@ pub struct PhysicalDeviceImageFormatInfo2Builder<'a> {
     inner: PhysicalDeviceImageFormatInfo2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceImageFormatInfo2 {}
+pub unsafe trait ExtendsPhysicalDeviceImageFormatInfo2 {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceImageFormatInfo2Builder<'a> {
     type Target = PhysicalDeviceImageFormatInfo2;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceImageFormatInfo2Builder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceImageFormatInfo2Builder<'a> {
@@ -19723,11 +21315,20 @@ impl<'a> PhysicalDeviceImageFormatInfo2Builder<'a> {
         self.inner.flags = flags;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> PhysicalDeviceImageFormatInfo2Builder<'a>
-    where
-        T: ExtendsPhysicalDeviceImageFormatInfo2,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsPhysicalDeviceImageFormatInfo2>(
+        mut self,
+        next: &'a mut T,
+    ) -> PhysicalDeviceImageFormatInfo2Builder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> PhysicalDeviceImageFormatInfo2 {
@@ -19762,11 +21363,18 @@ pub struct QueueFamilyProperties2Builder<'a> {
     inner: QueueFamilyProperties2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsQueueFamilyProperties2 {}
+pub unsafe trait ExtendsQueueFamilyProperties2 {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for QueueFamilyProperties2Builder<'a> {
     type Target = QueueFamilyProperties2;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for QueueFamilyProperties2Builder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> QueueFamilyProperties2Builder<'a> {
@@ -19777,11 +21385,20 @@ impl<'a> QueueFamilyProperties2Builder<'a> {
         self.inner.queue_family_properties = queue_family_properties;
         self
     }
-    pub fn next<T>(mut self, next: &'a mut T) -> QueueFamilyProperties2Builder<'a>
-    where
-        T: ExtendsQueueFamilyProperties2,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsQueueFamilyProperties2>(
+        mut self,
+        next: &'a mut T,
+    ) -> QueueFamilyProperties2Builder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> QueueFamilyProperties2 {
@@ -19816,11 +21433,18 @@ pub struct PhysicalDeviceMemoryProperties2Builder<'a> {
     inner: PhysicalDeviceMemoryProperties2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceMemoryProperties2 {}
+pub unsafe trait ExtendsPhysicalDeviceMemoryProperties2 {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceMemoryProperties2Builder<'a> {
     type Target = PhysicalDeviceMemoryProperties2;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceMemoryProperties2Builder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceMemoryProperties2Builder<'a> {
@@ -19831,11 +21455,20 @@ impl<'a> PhysicalDeviceMemoryProperties2Builder<'a> {
         self.inner.memory_properties = memory_properties;
         self
     }
-    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceMemoryProperties2Builder<'a>
-    where
-        T: ExtendsPhysicalDeviceMemoryProperties2,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsPhysicalDeviceMemoryProperties2>(
+        mut self,
+        next: &'a mut T,
+    ) -> PhysicalDeviceMemoryProperties2Builder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> PhysicalDeviceMemoryProperties2 {
@@ -19870,11 +21503,18 @@ pub struct SparseImageFormatProperties2Builder<'a> {
     inner: SparseImageFormatProperties2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsSparseImageFormatProperties2 {}
+pub unsafe trait ExtendsSparseImageFormatProperties2 {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for SparseImageFormatProperties2Builder<'a> {
     type Target = SparseImageFormatProperties2;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for SparseImageFormatProperties2Builder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> SparseImageFormatProperties2Builder<'a> {
@@ -19885,11 +21525,20 @@ impl<'a> SparseImageFormatProperties2Builder<'a> {
         self.inner.properties = properties;
         self
     }
-    pub fn next<T>(mut self, next: &'a mut T) -> SparseImageFormatProperties2Builder<'a>
-    where
-        T: ExtendsSparseImageFormatProperties2,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsSparseImageFormatProperties2>(
+        mut self,
+        next: &'a mut T,
+    ) -> SparseImageFormatProperties2Builder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> SparseImageFormatProperties2 {
@@ -19932,11 +21581,18 @@ pub struct PhysicalDeviceSparseImageFormatInfo2Builder<'a> {
     inner: PhysicalDeviceSparseImageFormatInfo2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceSparseImageFormatInfo2 {}
+pub unsafe trait ExtendsPhysicalDeviceSparseImageFormatInfo2 {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceSparseImageFormatInfo2Builder<'a> {
     type Target = PhysicalDeviceSparseImageFormatInfo2;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceSparseImageFormatInfo2Builder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceSparseImageFormatInfo2Builder<'a> {
@@ -19969,11 +21625,20 @@ impl<'a> PhysicalDeviceSparseImageFormatInfo2Builder<'a> {
         self.inner.tiling = tiling;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> PhysicalDeviceSparseImageFormatInfo2Builder<'a>
-    where
-        T: ExtendsPhysicalDeviceSparseImageFormatInfo2,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsPhysicalDeviceSparseImageFormatInfo2>(
+        mut self,
+        next: &'a mut T,
+    ) -> PhysicalDeviceSparseImageFormatInfo2Builder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> PhysicalDeviceSparseImageFormatInfo2 {
@@ -20008,12 +21673,27 @@ pub struct PhysicalDevicePushDescriptorPropertiesKHRBuilder<'a> {
     inner: PhysicalDevicePushDescriptorPropertiesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDevicePushDescriptorPropertiesKHR {}
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDevicePushDescriptorPropertiesKHR {}
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDevicePushDescriptorPropertiesKHRBuilder<'_>
+{
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDevicePushDescriptorPropertiesKHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDevicePushDescriptorPropertiesKHRBuilder<'a> {
     type Target = PhysicalDevicePushDescriptorPropertiesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDevicePushDescriptorPropertiesKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDevicePushDescriptorPropertiesKHRBuilder<'a> {
@@ -20022,16 +21702,6 @@ impl<'a> PhysicalDevicePushDescriptorPropertiesKHRBuilder<'a> {
         max_push_descriptors: u32,
     ) -> PhysicalDevicePushDescriptorPropertiesKHRBuilder<'a> {
         self.inner.max_push_descriptors = max_push_descriptors;
-        self
-    }
-    pub fn next<T>(
-        mut self,
-        next: &'a mut T,
-    ) -> PhysicalDevicePushDescriptorPropertiesKHRBuilder<'a>
-    where
-        T: ExtendsPhysicalDevicePushDescriptorPropertiesKHR,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDevicePushDescriptorPropertiesKHR {
@@ -20062,6 +21732,11 @@ impl<'a> ::std::ops::Deref for ConformanceVersionKHRBuilder<'a> {
     type Target = ConformanceVersionKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ConformanceVersionKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ConformanceVersionKHRBuilder<'a> {
@@ -20135,12 +21810,25 @@ pub struct PhysicalDeviceDriverPropertiesKHRBuilder<'a> {
     inner: PhysicalDeviceDriverPropertiesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceDriverPropertiesKHR {}
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceDriverPropertiesKHR {}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceDriverPropertiesKHRBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceDriverPropertiesKHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceDriverPropertiesKHRBuilder<'a> {
     type Target = PhysicalDeviceDriverPropertiesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceDriverPropertiesKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceDriverPropertiesKHRBuilder<'a> {
@@ -20170,13 +21858,6 @@ impl<'a> PhysicalDeviceDriverPropertiesKHRBuilder<'a> {
         conformance_version: ConformanceVersionKHR,
     ) -> PhysicalDeviceDriverPropertiesKHRBuilder<'a> {
         self.inner.conformance_version = conformance_version;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceDriverPropertiesKHRBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceDriverPropertiesKHR,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceDriverPropertiesKHR {
@@ -20213,25 +21894,31 @@ pub struct PresentRegionsKHRBuilder<'a> {
     inner: PresentRegionsKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPresentRegionsKHR {}
-unsafe impl ExtendsPresentInfoKHR for PresentRegionsKHR {}
+unsafe impl ExtendsPresentInfoKHR for PresentRegionsKHRBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsPresentInfoKHR for PresentRegionsKHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PresentRegionsKHRBuilder<'a> {
     type Target = PresentRegionsKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+impl<'a> ::std::ops::DerefMut for PresentRegionsKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
 impl<'a> PresentRegionsKHRBuilder<'a> {
     pub fn regions(mut self, regions: &'a [PresentRegionKHR]) -> PresentRegionsKHRBuilder<'a> {
         self.inner.swapchain_count = regions.len() as _;
         self.inner.p_regions = regions.as_ptr();
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> PresentRegionsKHRBuilder<'a>
-    where
-        T: ExtendsPresentRegionsKHR,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> PresentRegionsKHR {
@@ -20270,6 +21957,11 @@ impl<'a> ::std::ops::Deref for PresentRegionKHRBuilder<'a> {
         &self.inner
     }
 }
+impl<'a> ::std::ops::DerefMut for PresentRegionKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
 impl<'a> PresentRegionKHRBuilder<'a> {
     pub fn rectangles(mut self, rectangles: &'a [RectLayerKHR]) -> PresentRegionKHRBuilder<'a> {
         self.inner.rectangle_count = rectangles.len() as _;
@@ -20303,6 +21995,11 @@ impl<'a> ::std::ops::Deref for RectLayerKHRBuilder<'a> {
     type Target = RectLayerKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for RectLayerKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> RectLayerKHRBuilder<'a> {
@@ -20352,13 +22049,25 @@ pub struct PhysicalDeviceVariablePointerFeaturesBuilder<'a> {
     inner: PhysicalDeviceVariablePointerFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceVariablePointerFeatures {}
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceVariablePointerFeatures {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceVariablePointerFeatures {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceVariablePointerFeaturesBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceVariablePointerFeatures {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceVariablePointerFeaturesBuilder<'a> {
     type Target = PhysicalDeviceVariablePointerFeatures;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceVariablePointerFeaturesBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceVariablePointerFeaturesBuilder<'a> {
@@ -20374,13 +22083,6 @@ impl<'a> PhysicalDeviceVariablePointerFeaturesBuilder<'a> {
         variable_pointers: bool,
     ) -> PhysicalDeviceVariablePointerFeaturesBuilder<'a> {
         self.inner.variable_pointers = variable_pointers.into();
-        self
-    }
-    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceVariablePointerFeaturesBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceVariablePointerFeatures,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceVariablePointerFeatures {
@@ -20410,6 +22112,11 @@ impl<'a> ::std::ops::Deref for ExternalMemoryPropertiesBuilder<'a> {
     type Target = ExternalMemoryProperties;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ExternalMemoryPropertiesBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ExternalMemoryPropertiesBuilder<'a> {
@@ -20466,12 +22173,27 @@ pub struct PhysicalDeviceExternalImageFormatInfoBuilder<'a> {
     inner: PhysicalDeviceExternalImageFormatInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceExternalImageFormatInfo {}
-unsafe impl ExtendsPhysicalDeviceImageFormatInfo2 for PhysicalDeviceExternalImageFormatInfo {}
+unsafe impl ExtendsPhysicalDeviceImageFormatInfo2
+    for PhysicalDeviceExternalImageFormatInfoBuilder<'_>
+{
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsPhysicalDeviceImageFormatInfo2 for PhysicalDeviceExternalImageFormatInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceExternalImageFormatInfoBuilder<'a> {
     type Target = PhysicalDeviceExternalImageFormatInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceExternalImageFormatInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceExternalImageFormatInfoBuilder<'a> {
@@ -20480,13 +22202,6 @@ impl<'a> PhysicalDeviceExternalImageFormatInfoBuilder<'a> {
         handle_type: ExternalMemoryHandleTypeFlags,
     ) -> PhysicalDeviceExternalImageFormatInfoBuilder<'a> {
         self.inner.handle_type = handle_type;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> PhysicalDeviceExternalImageFormatInfoBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceExternalImageFormatInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceExternalImageFormatInfo {
@@ -20521,12 +22236,25 @@ pub struct ExternalImageFormatPropertiesBuilder<'a> {
     inner: ExternalImageFormatProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsExternalImageFormatProperties {}
-unsafe impl ExtendsImageFormatProperties2 for ExternalImageFormatProperties {}
+unsafe impl ExtendsImageFormatProperties2 for ExternalImageFormatPropertiesBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsImageFormatProperties2 for ExternalImageFormatProperties {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for ExternalImageFormatPropertiesBuilder<'a> {
     type Target = ExternalImageFormatProperties;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ExternalImageFormatPropertiesBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ExternalImageFormatPropertiesBuilder<'a> {
@@ -20535,13 +22263,6 @@ impl<'a> ExternalImageFormatPropertiesBuilder<'a> {
         external_memory_properties: ExternalMemoryProperties,
     ) -> ExternalImageFormatPropertiesBuilder<'a> {
         self.inner.external_memory_properties = external_memory_properties;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a mut T) -> ExternalImageFormatPropertiesBuilder<'a>
-    where
-        T: ExtendsExternalImageFormatProperties,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> ExternalImageFormatProperties {
@@ -20580,11 +22301,18 @@ pub struct PhysicalDeviceExternalBufferInfoBuilder<'a> {
     inner: PhysicalDeviceExternalBufferInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceExternalBufferInfo {}
+pub unsafe trait ExtendsPhysicalDeviceExternalBufferInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceExternalBufferInfoBuilder<'a> {
     type Target = PhysicalDeviceExternalBufferInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceExternalBufferInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceExternalBufferInfoBuilder<'a> {
@@ -20606,11 +22334,20 @@ impl<'a> PhysicalDeviceExternalBufferInfoBuilder<'a> {
         self.inner.handle_type = handle_type;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> PhysicalDeviceExternalBufferInfoBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceExternalBufferInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsPhysicalDeviceExternalBufferInfo>(
+        mut self,
+        next: &'a mut T,
+    ) -> PhysicalDeviceExternalBufferInfoBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> PhysicalDeviceExternalBufferInfo {
@@ -20645,11 +22382,18 @@ pub struct ExternalBufferPropertiesBuilder<'a> {
     inner: ExternalBufferProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsExternalBufferProperties {}
+pub unsafe trait ExtendsExternalBufferProperties {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for ExternalBufferPropertiesBuilder<'a> {
     type Target = ExternalBufferProperties;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ExternalBufferPropertiesBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ExternalBufferPropertiesBuilder<'a> {
@@ -20660,11 +22404,20 @@ impl<'a> ExternalBufferPropertiesBuilder<'a> {
         self.inner.external_memory_properties = external_memory_properties;
         self
     }
-    pub fn next<T>(mut self, next: &'a mut T) -> ExternalBufferPropertiesBuilder<'a>
-    where
-        T: ExtendsExternalBufferProperties,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsExternalBufferProperties>(
+        mut self,
+        next: &'a mut T,
+    ) -> ExternalBufferPropertiesBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> ExternalBufferProperties {
@@ -20707,12 +22460,25 @@ pub struct PhysicalDeviceIDPropertiesBuilder<'a> {
     inner: PhysicalDeviceIDProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceIDProperties {}
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceIDProperties {}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceIDPropertiesBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceIDProperties {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceIDPropertiesBuilder<'a> {
     type Target = PhysicalDeviceIDProperties;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceIDPropertiesBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceIDPropertiesBuilder<'a> {
@@ -20751,13 +22517,6 @@ impl<'a> PhysicalDeviceIDPropertiesBuilder<'a> {
         self.inner.device_luid_valid = device_luid_valid.into();
         self
     }
-    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceIDPropertiesBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceIDProperties,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
-        self
-    }
     pub fn build(self) -> PhysicalDeviceIDProperties {
         self.inner
     }
@@ -20790,12 +22549,25 @@ pub struct ExternalMemoryImageCreateInfoBuilder<'a> {
     inner: ExternalMemoryImageCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsExternalMemoryImageCreateInfo {}
-unsafe impl ExtendsImageCreateInfo for ExternalMemoryImageCreateInfo {}
+unsafe impl ExtendsImageCreateInfo for ExternalMemoryImageCreateInfoBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsImageCreateInfo for ExternalMemoryImageCreateInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for ExternalMemoryImageCreateInfoBuilder<'a> {
     type Target = ExternalMemoryImageCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ExternalMemoryImageCreateInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ExternalMemoryImageCreateInfoBuilder<'a> {
@@ -20804,13 +22576,6 @@ impl<'a> ExternalMemoryImageCreateInfoBuilder<'a> {
         handle_types: ExternalMemoryHandleTypeFlags,
     ) -> ExternalMemoryImageCreateInfoBuilder<'a> {
         self.inner.handle_types = handle_types;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> ExternalMemoryImageCreateInfoBuilder<'a>
-    where
-        T: ExtendsExternalMemoryImageCreateInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ExternalMemoryImageCreateInfo {
@@ -20845,12 +22610,25 @@ pub struct ExternalMemoryBufferCreateInfoBuilder<'a> {
     inner: ExternalMemoryBufferCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsExternalMemoryBufferCreateInfo {}
-unsafe impl ExtendsBufferCreateInfo for ExternalMemoryBufferCreateInfo {}
+unsafe impl ExtendsBufferCreateInfo for ExternalMemoryBufferCreateInfoBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsBufferCreateInfo for ExternalMemoryBufferCreateInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for ExternalMemoryBufferCreateInfoBuilder<'a> {
     type Target = ExternalMemoryBufferCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ExternalMemoryBufferCreateInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ExternalMemoryBufferCreateInfoBuilder<'a> {
@@ -20859,13 +22637,6 @@ impl<'a> ExternalMemoryBufferCreateInfoBuilder<'a> {
         handle_types: ExternalMemoryHandleTypeFlags,
     ) -> ExternalMemoryBufferCreateInfoBuilder<'a> {
         self.inner.handle_types = handle_types;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> ExternalMemoryBufferCreateInfoBuilder<'a>
-    where
-        T: ExtendsExternalMemoryBufferCreateInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ExternalMemoryBufferCreateInfo {
@@ -20900,12 +22671,25 @@ pub struct ExportMemoryAllocateInfoBuilder<'a> {
     inner: ExportMemoryAllocateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsExportMemoryAllocateInfo {}
-unsafe impl ExtendsMemoryAllocateInfo for ExportMemoryAllocateInfo {}
+unsafe impl ExtendsMemoryAllocateInfo for ExportMemoryAllocateInfoBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsMemoryAllocateInfo for ExportMemoryAllocateInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for ExportMemoryAllocateInfoBuilder<'a> {
     type Target = ExportMemoryAllocateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ExportMemoryAllocateInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ExportMemoryAllocateInfoBuilder<'a> {
@@ -20914,13 +22698,6 @@ impl<'a> ExportMemoryAllocateInfoBuilder<'a> {
         handle_types: ExternalMemoryHandleTypeFlags,
     ) -> ExportMemoryAllocateInfoBuilder<'a> {
         self.inner.handle_types = handle_types;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> ExportMemoryAllocateInfoBuilder<'a>
-    where
-        T: ExtendsExportMemoryAllocateInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ExportMemoryAllocateInfo {
@@ -20959,12 +22736,25 @@ pub struct ImportMemoryWin32HandleInfoKHRBuilder<'a> {
     inner: ImportMemoryWin32HandleInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsImportMemoryWin32HandleInfoKHR {}
-unsafe impl ExtendsMemoryAllocateInfo for ImportMemoryWin32HandleInfoKHR {}
+unsafe impl ExtendsMemoryAllocateInfo for ImportMemoryWin32HandleInfoKHRBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsMemoryAllocateInfo for ImportMemoryWin32HandleInfoKHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for ImportMemoryWin32HandleInfoKHRBuilder<'a> {
     type Target = ImportMemoryWin32HandleInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ImportMemoryWin32HandleInfoKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ImportMemoryWin32HandleInfoKHRBuilder<'a> {
@@ -20981,13 +22771,6 @@ impl<'a> ImportMemoryWin32HandleInfoKHRBuilder<'a> {
     }
     pub fn name(mut self, name: LPCWSTR) -> ImportMemoryWin32HandleInfoKHRBuilder<'a> {
         self.inner.name = name;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> ImportMemoryWin32HandleInfoKHRBuilder<'a>
-    where
-        T: ExtendsImportMemoryWin32HandleInfoKHR,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ImportMemoryWin32HandleInfoKHR {
@@ -21026,12 +22809,25 @@ pub struct ExportMemoryWin32HandleInfoKHRBuilder<'a> {
     inner: ExportMemoryWin32HandleInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsExportMemoryWin32HandleInfoKHR {}
-unsafe impl ExtendsMemoryAllocateInfo for ExportMemoryWin32HandleInfoKHR {}
+unsafe impl ExtendsMemoryAllocateInfo for ExportMemoryWin32HandleInfoKHRBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsMemoryAllocateInfo for ExportMemoryWin32HandleInfoKHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for ExportMemoryWin32HandleInfoKHRBuilder<'a> {
     type Target = ExportMemoryWin32HandleInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ExportMemoryWin32HandleInfoKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ExportMemoryWin32HandleInfoKHRBuilder<'a> {
@@ -21048,13 +22844,6 @@ impl<'a> ExportMemoryWin32HandleInfoKHRBuilder<'a> {
     }
     pub fn name(mut self, name: LPCWSTR) -> ExportMemoryWin32HandleInfoKHRBuilder<'a> {
         self.inner.name = name;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> ExportMemoryWin32HandleInfoKHRBuilder<'a>
-    where
-        T: ExtendsExportMemoryWin32HandleInfoKHR,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ExportMemoryWin32HandleInfoKHR {
@@ -21089,11 +22878,18 @@ pub struct MemoryWin32HandlePropertiesKHRBuilder<'a> {
     inner: MemoryWin32HandlePropertiesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsMemoryWin32HandlePropertiesKHR {}
+pub unsafe trait ExtendsMemoryWin32HandlePropertiesKHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for MemoryWin32HandlePropertiesKHRBuilder<'a> {
     type Target = MemoryWin32HandlePropertiesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for MemoryWin32HandlePropertiesKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> MemoryWin32HandlePropertiesKHRBuilder<'a> {
@@ -21104,11 +22900,20 @@ impl<'a> MemoryWin32HandlePropertiesKHRBuilder<'a> {
         self.inner.memory_type_bits = memory_type_bits;
         self
     }
-    pub fn next<T>(mut self, next: &'a mut T) -> MemoryWin32HandlePropertiesKHRBuilder<'a>
-    where
-        T: ExtendsMemoryWin32HandlePropertiesKHR,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsMemoryWin32HandlePropertiesKHR>(
+        mut self,
+        next: &'a mut T,
+    ) -> MemoryWin32HandlePropertiesKHRBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> MemoryWin32HandlePropertiesKHR {
@@ -21145,11 +22950,18 @@ pub struct MemoryGetWin32HandleInfoKHRBuilder<'a> {
     inner: MemoryGetWin32HandleInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsMemoryGetWin32HandleInfoKHR {}
+pub unsafe trait ExtendsMemoryGetWin32HandleInfoKHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for MemoryGetWin32HandleInfoKHRBuilder<'a> {
     type Target = MemoryGetWin32HandleInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for MemoryGetWin32HandleInfoKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> MemoryGetWin32HandleInfoKHRBuilder<'a> {
@@ -21164,11 +22976,20 @@ impl<'a> MemoryGetWin32HandleInfoKHRBuilder<'a> {
         self.inner.handle_type = handle_type;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> MemoryGetWin32HandleInfoKHRBuilder<'a>
-    where
-        T: ExtendsMemoryGetWin32HandleInfoKHR,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsMemoryGetWin32HandleInfoKHR>(
+        mut self,
+        next: &'a mut T,
+    ) -> MemoryGetWin32HandleInfoKHRBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> MemoryGetWin32HandleInfoKHR {
@@ -21205,12 +23026,25 @@ pub struct ImportMemoryFdInfoKHRBuilder<'a> {
     inner: ImportMemoryFdInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsImportMemoryFdInfoKHR {}
-unsafe impl ExtendsMemoryAllocateInfo for ImportMemoryFdInfoKHR {}
+unsafe impl ExtendsMemoryAllocateInfo for ImportMemoryFdInfoKHRBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsMemoryAllocateInfo for ImportMemoryFdInfoKHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for ImportMemoryFdInfoKHRBuilder<'a> {
     type Target = ImportMemoryFdInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ImportMemoryFdInfoKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ImportMemoryFdInfoKHRBuilder<'a> {
@@ -21223,13 +23057,6 @@ impl<'a> ImportMemoryFdInfoKHRBuilder<'a> {
     }
     pub fn fd(mut self, fd: c_int) -> ImportMemoryFdInfoKHRBuilder<'a> {
         self.inner.fd = fd;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> ImportMemoryFdInfoKHRBuilder<'a>
-    where
-        T: ExtendsImportMemoryFdInfoKHR,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ImportMemoryFdInfoKHR {
@@ -21264,11 +23091,18 @@ pub struct MemoryFdPropertiesKHRBuilder<'a> {
     inner: MemoryFdPropertiesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsMemoryFdPropertiesKHR {}
+pub unsafe trait ExtendsMemoryFdPropertiesKHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for MemoryFdPropertiesKHRBuilder<'a> {
     type Target = MemoryFdPropertiesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for MemoryFdPropertiesKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> MemoryFdPropertiesKHRBuilder<'a> {
@@ -21276,11 +23110,20 @@ impl<'a> MemoryFdPropertiesKHRBuilder<'a> {
         self.inner.memory_type_bits = memory_type_bits;
         self
     }
-    pub fn next<T>(mut self, next: &'a mut T) -> MemoryFdPropertiesKHRBuilder<'a>
-    where
-        T: ExtendsMemoryFdPropertiesKHR,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsMemoryFdPropertiesKHR>(
+        mut self,
+        next: &'a mut T,
+    ) -> MemoryFdPropertiesKHRBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> MemoryFdPropertiesKHR {
@@ -21317,11 +23160,18 @@ pub struct MemoryGetFdInfoKHRBuilder<'a> {
     inner: MemoryGetFdInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsMemoryGetFdInfoKHR {}
+pub unsafe trait ExtendsMemoryGetFdInfoKHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for MemoryGetFdInfoKHRBuilder<'a> {
     type Target = MemoryGetFdInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for MemoryGetFdInfoKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> MemoryGetFdInfoKHRBuilder<'a> {
@@ -21336,11 +23186,20 @@ impl<'a> MemoryGetFdInfoKHRBuilder<'a> {
         self.inner.handle_type = handle_type;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> MemoryGetFdInfoKHRBuilder<'a>
-    where
-        T: ExtendsMemoryGetFdInfoKHR,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsMemoryGetFdInfoKHR>(
+        mut self,
+        next: &'a mut T,
+    ) -> MemoryGetFdInfoKHRBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> MemoryGetFdInfoKHR {
@@ -21387,12 +23246,25 @@ pub struct Win32KeyedMutexAcquireReleaseInfoKHRBuilder<'a> {
     inner: Win32KeyedMutexAcquireReleaseInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsWin32KeyedMutexAcquireReleaseInfoKHR {}
-unsafe impl ExtendsSubmitInfo for Win32KeyedMutexAcquireReleaseInfoKHR {}
+unsafe impl ExtendsSubmitInfo for Win32KeyedMutexAcquireReleaseInfoKHRBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsSubmitInfo for Win32KeyedMutexAcquireReleaseInfoKHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for Win32KeyedMutexAcquireReleaseInfoKHRBuilder<'a> {
     type Target = Win32KeyedMutexAcquireReleaseInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for Win32KeyedMutexAcquireReleaseInfoKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> Win32KeyedMutexAcquireReleaseInfoKHRBuilder<'a> {
@@ -21436,13 +23308,6 @@ impl<'a> Win32KeyedMutexAcquireReleaseInfoKHRBuilder<'a> {
         self.inner.p_release_keys = release_keys.as_ptr();
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> Win32KeyedMutexAcquireReleaseInfoKHRBuilder<'a>
-    where
-        T: ExtendsWin32KeyedMutexAcquireReleaseInfoKHR,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
-        self
-    }
     pub fn build(self) -> Win32KeyedMutexAcquireReleaseInfoKHR {
         self.inner
     }
@@ -21475,11 +23340,18 @@ pub struct PhysicalDeviceExternalSemaphoreInfoBuilder<'a> {
     inner: PhysicalDeviceExternalSemaphoreInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceExternalSemaphoreInfo {}
+pub unsafe trait ExtendsPhysicalDeviceExternalSemaphoreInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceExternalSemaphoreInfoBuilder<'a> {
     type Target = PhysicalDeviceExternalSemaphoreInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceExternalSemaphoreInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceExternalSemaphoreInfoBuilder<'a> {
@@ -21490,11 +23362,20 @@ impl<'a> PhysicalDeviceExternalSemaphoreInfoBuilder<'a> {
         self.inner.handle_type = handle_type;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> PhysicalDeviceExternalSemaphoreInfoBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceExternalSemaphoreInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsPhysicalDeviceExternalSemaphoreInfo>(
+        mut self,
+        next: &'a mut T,
+    ) -> PhysicalDeviceExternalSemaphoreInfoBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> PhysicalDeviceExternalSemaphoreInfo {
@@ -21533,11 +23414,18 @@ pub struct ExternalSemaphorePropertiesBuilder<'a> {
     inner: ExternalSemaphoreProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsExternalSemaphoreProperties {}
+pub unsafe trait ExtendsExternalSemaphoreProperties {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for ExternalSemaphorePropertiesBuilder<'a> {
     type Target = ExternalSemaphoreProperties;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ExternalSemaphorePropertiesBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ExternalSemaphorePropertiesBuilder<'a> {
@@ -21562,11 +23450,20 @@ impl<'a> ExternalSemaphorePropertiesBuilder<'a> {
         self.inner.external_semaphore_features = external_semaphore_features;
         self
     }
-    pub fn next<T>(mut self, next: &'a mut T) -> ExternalSemaphorePropertiesBuilder<'a>
-    where
-        T: ExtendsExternalSemaphoreProperties,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsExternalSemaphoreProperties>(
+        mut self,
+        next: &'a mut T,
+    ) -> ExternalSemaphorePropertiesBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> ExternalSemaphoreProperties {
@@ -21601,12 +23498,25 @@ pub struct ExportSemaphoreCreateInfoBuilder<'a> {
     inner: ExportSemaphoreCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsExportSemaphoreCreateInfo {}
-unsafe impl ExtendsSemaphoreCreateInfo for ExportSemaphoreCreateInfo {}
+unsafe impl ExtendsSemaphoreCreateInfo for ExportSemaphoreCreateInfoBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsSemaphoreCreateInfo for ExportSemaphoreCreateInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for ExportSemaphoreCreateInfoBuilder<'a> {
     type Target = ExportSemaphoreCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ExportSemaphoreCreateInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ExportSemaphoreCreateInfoBuilder<'a> {
@@ -21615,13 +23525,6 @@ impl<'a> ExportSemaphoreCreateInfoBuilder<'a> {
         handle_types: ExternalSemaphoreHandleTypeFlags,
     ) -> ExportSemaphoreCreateInfoBuilder<'a> {
         self.inner.handle_types = handle_types;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> ExportSemaphoreCreateInfoBuilder<'a>
-    where
-        T: ExtendsExportSemaphoreCreateInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ExportSemaphoreCreateInfo {
@@ -21664,11 +23567,18 @@ pub struct ImportSemaphoreWin32HandleInfoKHRBuilder<'a> {
     inner: ImportSemaphoreWin32HandleInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsImportSemaphoreWin32HandleInfoKHR {}
+pub unsafe trait ExtendsImportSemaphoreWin32HandleInfoKHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for ImportSemaphoreWin32HandleInfoKHRBuilder<'a> {
     type Target = ImportSemaphoreWin32HandleInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ImportSemaphoreWin32HandleInfoKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ImportSemaphoreWin32HandleInfoKHRBuilder<'a> {
@@ -21701,11 +23611,20 @@ impl<'a> ImportSemaphoreWin32HandleInfoKHRBuilder<'a> {
         self.inner.name = name;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> ImportSemaphoreWin32HandleInfoKHRBuilder<'a>
-    where
-        T: ExtendsImportSemaphoreWin32HandleInfoKHR,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsImportSemaphoreWin32HandleInfoKHR>(
+        mut self,
+        next: &'a mut T,
+    ) -> ImportSemaphoreWin32HandleInfoKHRBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> ImportSemaphoreWin32HandleInfoKHR {
@@ -21744,12 +23663,25 @@ pub struct ExportSemaphoreWin32HandleInfoKHRBuilder<'a> {
     inner: ExportSemaphoreWin32HandleInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsExportSemaphoreWin32HandleInfoKHR {}
-unsafe impl ExtendsSemaphoreCreateInfo for ExportSemaphoreWin32HandleInfoKHR {}
+unsafe impl ExtendsSemaphoreCreateInfo for ExportSemaphoreWin32HandleInfoKHRBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsSemaphoreCreateInfo for ExportSemaphoreWin32HandleInfoKHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for ExportSemaphoreWin32HandleInfoKHRBuilder<'a> {
     type Target = ExportSemaphoreWin32HandleInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ExportSemaphoreWin32HandleInfoKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ExportSemaphoreWin32HandleInfoKHRBuilder<'a> {
@@ -21766,13 +23698,6 @@ impl<'a> ExportSemaphoreWin32HandleInfoKHRBuilder<'a> {
     }
     pub fn name(mut self, name: LPCWSTR) -> ExportSemaphoreWin32HandleInfoKHRBuilder<'a> {
         self.inner.name = name;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> ExportSemaphoreWin32HandleInfoKHRBuilder<'a>
-    where
-        T: ExtendsExportSemaphoreWin32HandleInfoKHR,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ExportSemaphoreWin32HandleInfoKHR {
@@ -21813,12 +23738,25 @@ pub struct D3D12FenceSubmitInfoKHRBuilder<'a> {
     inner: D3D12FenceSubmitInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsD3D12FenceSubmitInfoKHR {}
-unsafe impl ExtendsSubmitInfo for D3D12FenceSubmitInfoKHR {}
+unsafe impl ExtendsSubmitInfo for D3D12FenceSubmitInfoKHRBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsSubmitInfo for D3D12FenceSubmitInfoKHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for D3D12FenceSubmitInfoKHRBuilder<'a> {
     type Target = D3D12FenceSubmitInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for D3D12FenceSubmitInfoKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> D3D12FenceSubmitInfoKHRBuilder<'a> {
@@ -21836,13 +23774,6 @@ impl<'a> D3D12FenceSubmitInfoKHRBuilder<'a> {
     ) -> D3D12FenceSubmitInfoKHRBuilder<'a> {
         self.inner.signal_semaphore_values_count = signal_semaphore_values.len() as _;
         self.inner.p_signal_semaphore_values = signal_semaphore_values.as_ptr();
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> D3D12FenceSubmitInfoKHRBuilder<'a>
-    where
-        T: ExtendsD3D12FenceSubmitInfoKHR,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> D3D12FenceSubmitInfoKHR {
@@ -21879,11 +23810,18 @@ pub struct SemaphoreGetWin32HandleInfoKHRBuilder<'a> {
     inner: SemaphoreGetWin32HandleInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsSemaphoreGetWin32HandleInfoKHR {}
+pub unsafe trait ExtendsSemaphoreGetWin32HandleInfoKHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for SemaphoreGetWin32HandleInfoKHRBuilder<'a> {
     type Target = SemaphoreGetWin32HandleInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for SemaphoreGetWin32HandleInfoKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> SemaphoreGetWin32HandleInfoKHRBuilder<'a> {
@@ -21898,11 +23836,20 @@ impl<'a> SemaphoreGetWin32HandleInfoKHRBuilder<'a> {
         self.inner.handle_type = handle_type;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> SemaphoreGetWin32HandleInfoKHRBuilder<'a>
-    where
-        T: ExtendsSemaphoreGetWin32HandleInfoKHR,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsSemaphoreGetWin32HandleInfoKHR>(
+        mut self,
+        next: &'a mut T,
+    ) -> SemaphoreGetWin32HandleInfoKHRBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> SemaphoreGetWin32HandleInfoKHR {
@@ -21943,11 +23890,18 @@ pub struct ImportSemaphoreFdInfoKHRBuilder<'a> {
     inner: ImportSemaphoreFdInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsImportSemaphoreFdInfoKHR {}
+pub unsafe trait ExtendsImportSemaphoreFdInfoKHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for ImportSemaphoreFdInfoKHRBuilder<'a> {
     type Target = ImportSemaphoreFdInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ImportSemaphoreFdInfoKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ImportSemaphoreFdInfoKHRBuilder<'a> {
@@ -21970,11 +23924,20 @@ impl<'a> ImportSemaphoreFdInfoKHRBuilder<'a> {
         self.inner.fd = fd;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> ImportSemaphoreFdInfoKHRBuilder<'a>
-    where
-        T: ExtendsImportSemaphoreFdInfoKHR,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsImportSemaphoreFdInfoKHR>(
+        mut self,
+        next: &'a mut T,
+    ) -> ImportSemaphoreFdInfoKHRBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> ImportSemaphoreFdInfoKHR {
@@ -22011,11 +23974,18 @@ pub struct SemaphoreGetFdInfoKHRBuilder<'a> {
     inner: SemaphoreGetFdInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsSemaphoreGetFdInfoKHR {}
+pub unsafe trait ExtendsSemaphoreGetFdInfoKHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for SemaphoreGetFdInfoKHRBuilder<'a> {
     type Target = SemaphoreGetFdInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for SemaphoreGetFdInfoKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> SemaphoreGetFdInfoKHRBuilder<'a> {
@@ -22030,11 +24000,20 @@ impl<'a> SemaphoreGetFdInfoKHRBuilder<'a> {
         self.inner.handle_type = handle_type;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> SemaphoreGetFdInfoKHRBuilder<'a>
-    where
-        T: ExtendsSemaphoreGetFdInfoKHR,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsSemaphoreGetFdInfoKHR>(
+        mut self,
+        next: &'a mut T,
+    ) -> SemaphoreGetFdInfoKHRBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> SemaphoreGetFdInfoKHR {
@@ -22069,11 +24048,18 @@ pub struct PhysicalDeviceExternalFenceInfoBuilder<'a> {
     inner: PhysicalDeviceExternalFenceInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceExternalFenceInfo {}
+pub unsafe trait ExtendsPhysicalDeviceExternalFenceInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceExternalFenceInfoBuilder<'a> {
     type Target = PhysicalDeviceExternalFenceInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceExternalFenceInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceExternalFenceInfoBuilder<'a> {
@@ -22084,11 +24070,20 @@ impl<'a> PhysicalDeviceExternalFenceInfoBuilder<'a> {
         self.inner.handle_type = handle_type;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> PhysicalDeviceExternalFenceInfoBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceExternalFenceInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsPhysicalDeviceExternalFenceInfo>(
+        mut self,
+        next: &'a mut T,
+    ) -> PhysicalDeviceExternalFenceInfoBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> PhysicalDeviceExternalFenceInfo {
@@ -22127,11 +24122,18 @@ pub struct ExternalFencePropertiesBuilder<'a> {
     inner: ExternalFenceProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsExternalFenceProperties {}
+pub unsafe trait ExtendsExternalFenceProperties {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for ExternalFencePropertiesBuilder<'a> {
     type Target = ExternalFenceProperties;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ExternalFencePropertiesBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ExternalFencePropertiesBuilder<'a> {
@@ -22156,11 +24158,20 @@ impl<'a> ExternalFencePropertiesBuilder<'a> {
         self.inner.external_fence_features = external_fence_features;
         self
     }
-    pub fn next<T>(mut self, next: &'a mut T) -> ExternalFencePropertiesBuilder<'a>
-    where
-        T: ExtendsExternalFenceProperties,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsExternalFenceProperties>(
+        mut self,
+        next: &'a mut T,
+    ) -> ExternalFencePropertiesBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> ExternalFenceProperties {
@@ -22195,12 +24206,25 @@ pub struct ExportFenceCreateInfoBuilder<'a> {
     inner: ExportFenceCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsExportFenceCreateInfo {}
-unsafe impl ExtendsFenceCreateInfo for ExportFenceCreateInfo {}
+unsafe impl ExtendsFenceCreateInfo for ExportFenceCreateInfoBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsFenceCreateInfo for ExportFenceCreateInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for ExportFenceCreateInfoBuilder<'a> {
     type Target = ExportFenceCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ExportFenceCreateInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ExportFenceCreateInfoBuilder<'a> {
@@ -22209,13 +24233,6 @@ impl<'a> ExportFenceCreateInfoBuilder<'a> {
         handle_types: ExternalFenceHandleTypeFlags,
     ) -> ExportFenceCreateInfoBuilder<'a> {
         self.inner.handle_types = handle_types;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> ExportFenceCreateInfoBuilder<'a>
-    where
-        T: ExtendsExportFenceCreateInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ExportFenceCreateInfo {
@@ -22258,11 +24275,18 @@ pub struct ImportFenceWin32HandleInfoKHRBuilder<'a> {
     inner: ImportFenceWin32HandleInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsImportFenceWin32HandleInfoKHR {}
+pub unsafe trait ExtendsImportFenceWin32HandleInfoKHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for ImportFenceWin32HandleInfoKHRBuilder<'a> {
     type Target = ImportFenceWin32HandleInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ImportFenceWin32HandleInfoKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ImportFenceWin32HandleInfoKHRBuilder<'a> {
@@ -22289,11 +24313,20 @@ impl<'a> ImportFenceWin32HandleInfoKHRBuilder<'a> {
         self.inner.name = name;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> ImportFenceWin32HandleInfoKHRBuilder<'a>
-    where
-        T: ExtendsImportFenceWin32HandleInfoKHR,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsImportFenceWin32HandleInfoKHR>(
+        mut self,
+        next: &'a mut T,
+    ) -> ImportFenceWin32HandleInfoKHRBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> ImportFenceWin32HandleInfoKHR {
@@ -22332,12 +24365,25 @@ pub struct ExportFenceWin32HandleInfoKHRBuilder<'a> {
     inner: ExportFenceWin32HandleInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsExportFenceWin32HandleInfoKHR {}
-unsafe impl ExtendsFenceCreateInfo for ExportFenceWin32HandleInfoKHR {}
+unsafe impl ExtendsFenceCreateInfo for ExportFenceWin32HandleInfoKHRBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsFenceCreateInfo for ExportFenceWin32HandleInfoKHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for ExportFenceWin32HandleInfoKHRBuilder<'a> {
     type Target = ExportFenceWin32HandleInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ExportFenceWin32HandleInfoKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ExportFenceWin32HandleInfoKHRBuilder<'a> {
@@ -22354,13 +24400,6 @@ impl<'a> ExportFenceWin32HandleInfoKHRBuilder<'a> {
     }
     pub fn name(mut self, name: LPCWSTR) -> ExportFenceWin32HandleInfoKHRBuilder<'a> {
         self.inner.name = name;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> ExportFenceWin32HandleInfoKHRBuilder<'a>
-    where
-        T: ExtendsExportFenceWin32HandleInfoKHR,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ExportFenceWin32HandleInfoKHR {
@@ -22397,11 +24436,18 @@ pub struct FenceGetWin32HandleInfoKHRBuilder<'a> {
     inner: FenceGetWin32HandleInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsFenceGetWin32HandleInfoKHR {}
+pub unsafe trait ExtendsFenceGetWin32HandleInfoKHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for FenceGetWin32HandleInfoKHRBuilder<'a> {
     type Target = FenceGetWin32HandleInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for FenceGetWin32HandleInfoKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> FenceGetWin32HandleInfoKHRBuilder<'a> {
@@ -22416,11 +24462,20 @@ impl<'a> FenceGetWin32HandleInfoKHRBuilder<'a> {
         self.inner.handle_type = handle_type;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> FenceGetWin32HandleInfoKHRBuilder<'a>
-    where
-        T: ExtendsFenceGetWin32HandleInfoKHR,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsFenceGetWin32HandleInfoKHR>(
+        mut self,
+        next: &'a mut T,
+    ) -> FenceGetWin32HandleInfoKHRBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> FenceGetWin32HandleInfoKHR {
@@ -22461,11 +24516,18 @@ pub struct ImportFenceFdInfoKHRBuilder<'a> {
     inner: ImportFenceFdInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsImportFenceFdInfoKHR {}
+pub unsafe trait ExtendsImportFenceFdInfoKHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for ImportFenceFdInfoKHRBuilder<'a> {
     type Target = ImportFenceFdInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ImportFenceFdInfoKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ImportFenceFdInfoKHRBuilder<'a> {
@@ -22488,11 +24550,20 @@ impl<'a> ImportFenceFdInfoKHRBuilder<'a> {
         self.inner.fd = fd;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> ImportFenceFdInfoKHRBuilder<'a>
-    where
-        T: ExtendsImportFenceFdInfoKHR,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsImportFenceFdInfoKHR>(
+        mut self,
+        next: &'a mut T,
+    ) -> ImportFenceFdInfoKHRBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> ImportFenceFdInfoKHR {
@@ -22529,11 +24600,18 @@ pub struct FenceGetFdInfoKHRBuilder<'a> {
     inner: FenceGetFdInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsFenceGetFdInfoKHR {}
+pub unsafe trait ExtendsFenceGetFdInfoKHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for FenceGetFdInfoKHRBuilder<'a> {
     type Target = FenceGetFdInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for FenceGetFdInfoKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> FenceGetFdInfoKHRBuilder<'a> {
@@ -22548,11 +24626,20 @@ impl<'a> FenceGetFdInfoKHRBuilder<'a> {
         self.inner.handle_type = handle_type;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> FenceGetFdInfoKHRBuilder<'a>
-    where
-        T: ExtendsFenceGetFdInfoKHR,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsFenceGetFdInfoKHR>(
+        mut self,
+        next: &'a mut T,
+    ) -> FenceGetFdInfoKHRBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> FenceGetFdInfoKHR {
@@ -22591,13 +24678,25 @@ pub struct PhysicalDeviceMultiviewFeaturesBuilder<'a> {
     inner: PhysicalDeviceMultiviewFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceMultiviewFeatures {}
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMultiviewFeatures {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMultiviewFeatures {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMultiviewFeaturesBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMultiviewFeatures {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceMultiviewFeaturesBuilder<'a> {
     type Target = PhysicalDeviceMultiviewFeatures;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceMultiviewFeaturesBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceMultiviewFeaturesBuilder<'a> {
@@ -22617,13 +24716,6 @@ impl<'a> PhysicalDeviceMultiviewFeaturesBuilder<'a> {
         multiview_tessellation_shader: bool,
     ) -> PhysicalDeviceMultiviewFeaturesBuilder<'a> {
         self.inner.multiview_tessellation_shader = multiview_tessellation_shader.into();
-        self
-    }
-    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceMultiviewFeaturesBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceMultiviewFeatures,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceMultiviewFeatures {
@@ -22660,12 +24752,25 @@ pub struct PhysicalDeviceMultiviewPropertiesBuilder<'a> {
     inner: PhysicalDeviceMultiviewProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceMultiviewProperties {}
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMultiviewProperties {}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMultiviewPropertiesBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMultiviewProperties {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceMultiviewPropertiesBuilder<'a> {
     type Target = PhysicalDeviceMultiviewProperties;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceMultiviewPropertiesBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceMultiviewPropertiesBuilder<'a> {
@@ -22681,13 +24786,6 @@ impl<'a> PhysicalDeviceMultiviewPropertiesBuilder<'a> {
         max_multiview_instance_index: u32,
     ) -> PhysicalDeviceMultiviewPropertiesBuilder<'a> {
         self.inner.max_multiview_instance_index = max_multiview_instance_index;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceMultiviewPropertiesBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceMultiviewProperties,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceMultiviewProperties {
@@ -22732,12 +24830,25 @@ pub struct RenderPassMultiviewCreateInfoBuilder<'a> {
     inner: RenderPassMultiviewCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsRenderPassMultiviewCreateInfo {}
-unsafe impl ExtendsRenderPassCreateInfo for RenderPassMultiviewCreateInfo {}
+unsafe impl ExtendsRenderPassCreateInfo for RenderPassMultiviewCreateInfoBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsRenderPassCreateInfo for RenderPassMultiviewCreateInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for RenderPassMultiviewCreateInfoBuilder<'a> {
     type Target = RenderPassMultiviewCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for RenderPassMultiviewCreateInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> RenderPassMultiviewCreateInfoBuilder<'a> {
@@ -22760,13 +24871,6 @@ impl<'a> RenderPassMultiviewCreateInfoBuilder<'a> {
     ) -> RenderPassMultiviewCreateInfoBuilder<'a> {
         self.inner.correlation_mask_count = correlation_masks.len() as _;
         self.inner.p_correlation_masks = correlation_masks.as_ptr();
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> RenderPassMultiviewCreateInfoBuilder<'a>
-    where
-        T: ExtendsRenderPassMultiviewCreateInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> RenderPassMultiviewCreateInfo {
@@ -22821,11 +24925,18 @@ pub struct SurfaceCapabilities2EXTBuilder<'a> {
     inner: SurfaceCapabilities2EXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsSurfaceCapabilities2EXT {}
+pub unsafe trait ExtendsSurfaceCapabilities2EXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for SurfaceCapabilities2EXTBuilder<'a> {
     type Target = SurfaceCapabilities2EXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for SurfaceCapabilities2EXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> SurfaceCapabilities2EXTBuilder<'a> {
@@ -22900,11 +25011,20 @@ impl<'a> SurfaceCapabilities2EXTBuilder<'a> {
         self.inner.supported_surface_counters = supported_surface_counters;
         self
     }
-    pub fn next<T>(mut self, next: &'a mut T) -> SurfaceCapabilities2EXTBuilder<'a>
-    where
-        T: ExtendsSurfaceCapabilities2EXT,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsSurfaceCapabilities2EXT>(
+        mut self,
+        next: &'a mut T,
+    ) -> SurfaceCapabilities2EXTBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> SurfaceCapabilities2EXT {
@@ -22939,11 +25059,18 @@ pub struct DisplayPowerInfoEXTBuilder<'a> {
     inner: DisplayPowerInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDisplayPowerInfoEXT {}
+pub unsafe trait ExtendsDisplayPowerInfoEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for DisplayPowerInfoEXTBuilder<'a> {
     type Target = DisplayPowerInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DisplayPowerInfoEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DisplayPowerInfoEXTBuilder<'a> {
@@ -22954,11 +25081,20 @@ impl<'a> DisplayPowerInfoEXTBuilder<'a> {
         self.inner.power_state = power_state;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> DisplayPowerInfoEXTBuilder<'a>
-    where
-        T: ExtendsDisplayPowerInfoEXT,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsDisplayPowerInfoEXT>(
+        mut self,
+        next: &'a mut T,
+    ) -> DisplayPowerInfoEXTBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> DisplayPowerInfoEXT {
@@ -22993,11 +25129,18 @@ pub struct DeviceEventInfoEXTBuilder<'a> {
     inner: DeviceEventInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDeviceEventInfoEXT {}
+pub unsafe trait ExtendsDeviceEventInfoEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for DeviceEventInfoEXTBuilder<'a> {
     type Target = DeviceEventInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DeviceEventInfoEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DeviceEventInfoEXTBuilder<'a> {
@@ -23008,11 +25151,20 @@ impl<'a> DeviceEventInfoEXTBuilder<'a> {
         self.inner.device_event = device_event;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> DeviceEventInfoEXTBuilder<'a>
-    where
-        T: ExtendsDeviceEventInfoEXT,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsDeviceEventInfoEXT>(
+        mut self,
+        next: &'a mut T,
+    ) -> DeviceEventInfoEXTBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> DeviceEventInfoEXT {
@@ -23047,11 +25199,18 @@ pub struct DisplayEventInfoEXTBuilder<'a> {
     inner: DisplayEventInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDisplayEventInfoEXT {}
+pub unsafe trait ExtendsDisplayEventInfoEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for DisplayEventInfoEXTBuilder<'a> {
     type Target = DisplayEventInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DisplayEventInfoEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DisplayEventInfoEXTBuilder<'a> {
@@ -23062,11 +25221,20 @@ impl<'a> DisplayEventInfoEXTBuilder<'a> {
         self.inner.display_event = display_event;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> DisplayEventInfoEXTBuilder<'a>
-    where
-        T: ExtendsDisplayEventInfoEXT,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsDisplayEventInfoEXT>(
+        mut self,
+        next: &'a mut T,
+    ) -> DisplayEventInfoEXTBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> DisplayEventInfoEXT {
@@ -23101,12 +25269,25 @@ pub struct SwapchainCounterCreateInfoEXTBuilder<'a> {
     inner: SwapchainCounterCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsSwapchainCounterCreateInfoEXT {}
-unsafe impl ExtendsSwapchainCreateInfoKHR for SwapchainCounterCreateInfoEXT {}
+unsafe impl ExtendsSwapchainCreateInfoKHR for SwapchainCounterCreateInfoEXTBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsSwapchainCreateInfoKHR for SwapchainCounterCreateInfoEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for SwapchainCounterCreateInfoEXTBuilder<'a> {
     type Target = SwapchainCounterCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for SwapchainCounterCreateInfoEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> SwapchainCounterCreateInfoEXTBuilder<'a> {
@@ -23115,13 +25296,6 @@ impl<'a> SwapchainCounterCreateInfoEXTBuilder<'a> {
         surface_counters: SurfaceCounterFlagsEXT,
     ) -> SwapchainCounterCreateInfoEXTBuilder<'a> {
         self.inner.surface_counters = surface_counters;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> SwapchainCounterCreateInfoEXTBuilder<'a>
-    where
-        T: ExtendsSwapchainCounterCreateInfoEXT,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> SwapchainCounterCreateInfoEXT {
@@ -23160,11 +25334,18 @@ pub struct PhysicalDeviceGroupPropertiesBuilder<'a> {
     inner: PhysicalDeviceGroupProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceGroupProperties {}
+pub unsafe trait ExtendsPhysicalDeviceGroupProperties {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceGroupPropertiesBuilder<'a> {
     type Target = PhysicalDeviceGroupProperties;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceGroupPropertiesBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceGroupPropertiesBuilder<'a> {
@@ -23189,11 +25370,20 @@ impl<'a> PhysicalDeviceGroupPropertiesBuilder<'a> {
         self.inner.subset_allocation = subset_allocation.into();
         self
     }
-    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceGroupPropertiesBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceGroupProperties,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsPhysicalDeviceGroupProperties>(
+        mut self,
+        next: &'a mut T,
+    ) -> PhysicalDeviceGroupPropertiesBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> PhysicalDeviceGroupProperties {
@@ -23230,12 +25420,25 @@ pub struct MemoryAllocateFlagsInfoBuilder<'a> {
     inner: MemoryAllocateFlagsInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsMemoryAllocateFlagsInfo {}
-unsafe impl ExtendsMemoryAllocateInfo for MemoryAllocateFlagsInfo {}
+unsafe impl ExtendsMemoryAllocateInfo for MemoryAllocateFlagsInfoBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsMemoryAllocateInfo for MemoryAllocateFlagsInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for MemoryAllocateFlagsInfoBuilder<'a> {
     type Target = MemoryAllocateFlagsInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for MemoryAllocateFlagsInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> MemoryAllocateFlagsInfoBuilder<'a> {
@@ -23245,13 +25448,6 @@ impl<'a> MemoryAllocateFlagsInfoBuilder<'a> {
     }
     pub fn device_mask(mut self, device_mask: u32) -> MemoryAllocateFlagsInfoBuilder<'a> {
         self.inner.device_mask = device_mask;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> MemoryAllocateFlagsInfoBuilder<'a>
-    where
-        T: ExtendsMemoryAllocateFlagsInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> MemoryAllocateFlagsInfo {
@@ -23290,11 +25486,18 @@ pub struct BindBufferMemoryInfoBuilder<'a> {
     inner: BindBufferMemoryInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsBindBufferMemoryInfo {}
+pub unsafe trait ExtendsBindBufferMemoryInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for BindBufferMemoryInfoBuilder<'a> {
     type Target = BindBufferMemoryInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for BindBufferMemoryInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> BindBufferMemoryInfoBuilder<'a> {
@@ -23310,11 +25513,20 @@ impl<'a> BindBufferMemoryInfoBuilder<'a> {
         self.inner.memory_offset = memory_offset;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> BindBufferMemoryInfoBuilder<'a>
-    where
-        T: ExtendsBindBufferMemoryInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsBindBufferMemoryInfo>(
+        mut self,
+        next: &'a mut T,
+    ) -> BindBufferMemoryInfoBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> BindBufferMemoryInfo {
@@ -23351,12 +25563,25 @@ pub struct BindBufferMemoryDeviceGroupInfoBuilder<'a> {
     inner: BindBufferMemoryDeviceGroupInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsBindBufferMemoryDeviceGroupInfo {}
-unsafe impl ExtendsBindBufferMemoryInfo for BindBufferMemoryDeviceGroupInfo {}
+unsafe impl ExtendsBindBufferMemoryInfo for BindBufferMemoryDeviceGroupInfoBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsBindBufferMemoryInfo for BindBufferMemoryDeviceGroupInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for BindBufferMemoryDeviceGroupInfoBuilder<'a> {
     type Target = BindBufferMemoryDeviceGroupInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for BindBufferMemoryDeviceGroupInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> BindBufferMemoryDeviceGroupInfoBuilder<'a> {
@@ -23366,13 +25591,6 @@ impl<'a> BindBufferMemoryDeviceGroupInfoBuilder<'a> {
     ) -> BindBufferMemoryDeviceGroupInfoBuilder<'a> {
         self.inner.device_index_count = device_indices.len() as _;
         self.inner.p_device_indices = device_indices.as_ptr();
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> BindBufferMemoryDeviceGroupInfoBuilder<'a>
-    where
-        T: ExtendsBindBufferMemoryDeviceGroupInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> BindBufferMemoryDeviceGroupInfo {
@@ -23411,11 +25629,18 @@ pub struct BindImageMemoryInfoBuilder<'a> {
     inner: BindImageMemoryInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsBindImageMemoryInfo {}
+pub unsafe trait ExtendsBindImageMemoryInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for BindImageMemoryInfoBuilder<'a> {
     type Target = BindImageMemoryInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for BindImageMemoryInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> BindImageMemoryInfoBuilder<'a> {
@@ -23431,11 +25656,20 @@ impl<'a> BindImageMemoryInfoBuilder<'a> {
         self.inner.memory_offset = memory_offset;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> BindImageMemoryInfoBuilder<'a>
-    where
-        T: ExtendsBindImageMemoryInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsBindImageMemoryInfo>(
+        mut self,
+        next: &'a mut T,
+    ) -> BindImageMemoryInfoBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> BindImageMemoryInfo {
@@ -23476,12 +25710,25 @@ pub struct BindImageMemoryDeviceGroupInfoBuilder<'a> {
     inner: BindImageMemoryDeviceGroupInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsBindImageMemoryDeviceGroupInfo {}
-unsafe impl ExtendsBindImageMemoryInfo for BindImageMemoryDeviceGroupInfo {}
+unsafe impl ExtendsBindImageMemoryInfo for BindImageMemoryDeviceGroupInfoBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsBindImageMemoryInfo for BindImageMemoryDeviceGroupInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for BindImageMemoryDeviceGroupInfoBuilder<'a> {
     type Target = BindImageMemoryDeviceGroupInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for BindImageMemoryDeviceGroupInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> BindImageMemoryDeviceGroupInfoBuilder<'a> {
@@ -23499,13 +25746,6 @@ impl<'a> BindImageMemoryDeviceGroupInfoBuilder<'a> {
     ) -> BindImageMemoryDeviceGroupInfoBuilder<'a> {
         self.inner.split_instance_bind_region_count = split_instance_bind_regions.len() as _;
         self.inner.p_split_instance_bind_regions = split_instance_bind_regions.as_ptr();
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> BindImageMemoryDeviceGroupInfoBuilder<'a>
-    where
-        T: ExtendsBindImageMemoryDeviceGroupInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> BindImageMemoryDeviceGroupInfo {
@@ -23544,12 +25784,25 @@ pub struct DeviceGroupRenderPassBeginInfoBuilder<'a> {
     inner: DeviceGroupRenderPassBeginInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDeviceGroupRenderPassBeginInfo {}
-unsafe impl ExtendsRenderPassBeginInfo for DeviceGroupRenderPassBeginInfo {}
+unsafe impl ExtendsRenderPassBeginInfo for DeviceGroupRenderPassBeginInfoBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsRenderPassBeginInfo for DeviceGroupRenderPassBeginInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for DeviceGroupRenderPassBeginInfoBuilder<'a> {
     type Target = DeviceGroupRenderPassBeginInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DeviceGroupRenderPassBeginInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DeviceGroupRenderPassBeginInfoBuilder<'a> {
@@ -23563,13 +25816,6 @@ impl<'a> DeviceGroupRenderPassBeginInfoBuilder<'a> {
     ) -> DeviceGroupRenderPassBeginInfoBuilder<'a> {
         self.inner.device_render_area_count = device_render_areas.len() as _;
         self.inner.p_device_render_areas = device_render_areas.as_ptr();
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> DeviceGroupRenderPassBeginInfoBuilder<'a>
-    where
-        T: ExtendsDeviceGroupRenderPassBeginInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DeviceGroupRenderPassBeginInfo {
@@ -23604,24 +25850,30 @@ pub struct DeviceGroupCommandBufferBeginInfoBuilder<'a> {
     inner: DeviceGroupCommandBufferBeginInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDeviceGroupCommandBufferBeginInfo {}
-unsafe impl ExtendsCommandBufferBeginInfo for DeviceGroupCommandBufferBeginInfo {}
+unsafe impl ExtendsCommandBufferBeginInfo for DeviceGroupCommandBufferBeginInfoBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsCommandBufferBeginInfo for DeviceGroupCommandBufferBeginInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for DeviceGroupCommandBufferBeginInfoBuilder<'a> {
     type Target = DeviceGroupCommandBufferBeginInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+impl<'a> ::std::ops::DerefMut for DeviceGroupCommandBufferBeginInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
 impl<'a> DeviceGroupCommandBufferBeginInfoBuilder<'a> {
     pub fn device_mask(mut self, device_mask: u32) -> DeviceGroupCommandBufferBeginInfoBuilder<'a> {
         self.inner.device_mask = device_mask;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> DeviceGroupCommandBufferBeginInfoBuilder<'a>
-    where
-        T: ExtendsDeviceGroupCommandBufferBeginInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DeviceGroupCommandBufferBeginInfo {
@@ -23666,12 +25918,25 @@ pub struct DeviceGroupSubmitInfoBuilder<'a> {
     inner: DeviceGroupSubmitInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDeviceGroupSubmitInfo {}
-unsafe impl ExtendsSubmitInfo for DeviceGroupSubmitInfo {}
+unsafe impl ExtendsSubmitInfo for DeviceGroupSubmitInfoBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsSubmitInfo for DeviceGroupSubmitInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for DeviceGroupSubmitInfoBuilder<'a> {
     type Target = DeviceGroupSubmitInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DeviceGroupSubmitInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DeviceGroupSubmitInfoBuilder<'a> {
@@ -23697,13 +25962,6 @@ impl<'a> DeviceGroupSubmitInfoBuilder<'a> {
     ) -> DeviceGroupSubmitInfoBuilder<'a> {
         self.inner.signal_semaphore_count = signal_semaphore_device_indices.len() as _;
         self.inner.p_signal_semaphore_device_indices = signal_semaphore_device_indices.as_ptr();
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> DeviceGroupSubmitInfoBuilder<'a>
-    where
-        T: ExtendsDeviceGroupSubmitInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DeviceGroupSubmitInfo {
@@ -23740,12 +25998,25 @@ pub struct DeviceGroupBindSparseInfoBuilder<'a> {
     inner: DeviceGroupBindSparseInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDeviceGroupBindSparseInfo {}
-unsafe impl ExtendsBindSparseInfo for DeviceGroupBindSparseInfo {}
+unsafe impl ExtendsBindSparseInfo for DeviceGroupBindSparseInfoBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsBindSparseInfo for DeviceGroupBindSparseInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for DeviceGroupBindSparseInfoBuilder<'a> {
     type Target = DeviceGroupBindSparseInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DeviceGroupBindSparseInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DeviceGroupBindSparseInfoBuilder<'a> {
@@ -23761,13 +26032,6 @@ impl<'a> DeviceGroupBindSparseInfoBuilder<'a> {
         memory_device_index: u32,
     ) -> DeviceGroupBindSparseInfoBuilder<'a> {
         self.inner.memory_device_index = memory_device_index;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> DeviceGroupBindSparseInfoBuilder<'a>
-    where
-        T: ExtendsDeviceGroupBindSparseInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DeviceGroupBindSparseInfo {
@@ -23804,11 +26068,18 @@ pub struct DeviceGroupPresentCapabilitiesKHRBuilder<'a> {
     inner: DeviceGroupPresentCapabilitiesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDeviceGroupPresentCapabilitiesKHR {}
+pub unsafe trait ExtendsDeviceGroupPresentCapabilitiesKHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for DeviceGroupPresentCapabilitiesKHRBuilder<'a> {
     type Target = DeviceGroupPresentCapabilitiesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DeviceGroupPresentCapabilitiesKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DeviceGroupPresentCapabilitiesKHRBuilder<'a> {
@@ -23826,11 +26097,20 @@ impl<'a> DeviceGroupPresentCapabilitiesKHRBuilder<'a> {
         self.inner.modes = modes;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> DeviceGroupPresentCapabilitiesKHRBuilder<'a>
-    where
-        T: ExtendsDeviceGroupPresentCapabilitiesKHR,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsDeviceGroupPresentCapabilitiesKHR>(
+        mut self,
+        next: &'a mut T,
+    ) -> DeviceGroupPresentCapabilitiesKHRBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> DeviceGroupPresentCapabilitiesKHR {
@@ -23865,24 +26145,30 @@ pub struct ImageSwapchainCreateInfoKHRBuilder<'a> {
     inner: ImageSwapchainCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsImageSwapchainCreateInfoKHR {}
-unsafe impl ExtendsImageCreateInfo for ImageSwapchainCreateInfoKHR {}
+unsafe impl ExtendsImageCreateInfo for ImageSwapchainCreateInfoKHRBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsImageCreateInfo for ImageSwapchainCreateInfoKHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for ImageSwapchainCreateInfoKHRBuilder<'a> {
     type Target = ImageSwapchainCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+impl<'a> ::std::ops::DerefMut for ImageSwapchainCreateInfoKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
 impl<'a> ImageSwapchainCreateInfoKHRBuilder<'a> {
     pub fn swapchain(mut self, swapchain: SwapchainKHR) -> ImageSwapchainCreateInfoKHRBuilder<'a> {
         self.inner.swapchain = swapchain;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> ImageSwapchainCreateInfoKHRBuilder<'a>
-    where
-        T: ExtendsImageSwapchainCreateInfoKHR,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ImageSwapchainCreateInfoKHR {
@@ -23919,12 +26205,25 @@ pub struct BindImageMemorySwapchainInfoKHRBuilder<'a> {
     inner: BindImageMemorySwapchainInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsBindImageMemorySwapchainInfoKHR {}
-unsafe impl ExtendsBindImageMemoryInfo for BindImageMemorySwapchainInfoKHR {}
+unsafe impl ExtendsBindImageMemoryInfo for BindImageMemorySwapchainInfoKHRBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsBindImageMemoryInfo for BindImageMemorySwapchainInfoKHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for BindImageMemorySwapchainInfoKHRBuilder<'a> {
     type Target = BindImageMemorySwapchainInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for BindImageMemorySwapchainInfoKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> BindImageMemorySwapchainInfoKHRBuilder<'a> {
@@ -23937,13 +26236,6 @@ impl<'a> BindImageMemorySwapchainInfoKHRBuilder<'a> {
     }
     pub fn image_index(mut self, image_index: u32) -> BindImageMemorySwapchainInfoKHRBuilder<'a> {
         self.inner.image_index = image_index;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> BindImageMemorySwapchainInfoKHRBuilder<'a>
-    where
-        T: ExtendsBindImageMemorySwapchainInfoKHR,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> BindImageMemorySwapchainInfoKHR {
@@ -23986,11 +26278,18 @@ pub struct AcquireNextImageInfoKHRBuilder<'a> {
     inner: AcquireNextImageInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsAcquireNextImageInfoKHR {}
+pub unsafe trait ExtendsAcquireNextImageInfoKHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for AcquireNextImageInfoKHRBuilder<'a> {
     type Target = AcquireNextImageInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for AcquireNextImageInfoKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> AcquireNextImageInfoKHRBuilder<'a> {
@@ -24014,11 +26313,20 @@ impl<'a> AcquireNextImageInfoKHRBuilder<'a> {
         self.inner.device_mask = device_mask;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> AcquireNextImageInfoKHRBuilder<'a>
-    where
-        T: ExtendsAcquireNextImageInfoKHR,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsAcquireNextImageInfoKHR>(
+        mut self,
+        next: &'a mut T,
+    ) -> AcquireNextImageInfoKHRBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> AcquireNextImageInfoKHR {
@@ -24057,12 +26365,25 @@ pub struct DeviceGroupPresentInfoKHRBuilder<'a> {
     inner: DeviceGroupPresentInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDeviceGroupPresentInfoKHR {}
-unsafe impl ExtendsPresentInfoKHR for DeviceGroupPresentInfoKHR {}
+unsafe impl ExtendsPresentInfoKHR for DeviceGroupPresentInfoKHRBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsPresentInfoKHR for DeviceGroupPresentInfoKHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for DeviceGroupPresentInfoKHRBuilder<'a> {
     type Target = DeviceGroupPresentInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DeviceGroupPresentInfoKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DeviceGroupPresentInfoKHRBuilder<'a> {
@@ -24076,13 +26397,6 @@ impl<'a> DeviceGroupPresentInfoKHRBuilder<'a> {
         mode: DeviceGroupPresentModeFlagsKHR,
     ) -> DeviceGroupPresentInfoKHRBuilder<'a> {
         self.inner.mode = mode;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> DeviceGroupPresentInfoKHRBuilder<'a>
-    where
-        T: ExtendsDeviceGroupPresentInfoKHR,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DeviceGroupPresentInfoKHR {
@@ -24119,12 +26433,25 @@ pub struct DeviceGroupDeviceCreateInfoBuilder<'a> {
     inner: DeviceGroupDeviceCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDeviceGroupDeviceCreateInfo {}
-unsafe impl ExtendsDeviceCreateInfo for DeviceGroupDeviceCreateInfo {}
+unsafe impl ExtendsDeviceCreateInfo for DeviceGroupDeviceCreateInfoBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsDeviceCreateInfo for DeviceGroupDeviceCreateInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for DeviceGroupDeviceCreateInfoBuilder<'a> {
     type Target = DeviceGroupDeviceCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DeviceGroupDeviceCreateInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DeviceGroupDeviceCreateInfoBuilder<'a> {
@@ -24134,13 +26461,6 @@ impl<'a> DeviceGroupDeviceCreateInfoBuilder<'a> {
     ) -> DeviceGroupDeviceCreateInfoBuilder<'a> {
         self.inner.physical_device_count = physical_devices.len() as _;
         self.inner.p_physical_devices = physical_devices.as_ptr();
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> DeviceGroupDeviceCreateInfoBuilder<'a>
-    where
-        T: ExtendsDeviceGroupDeviceCreateInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DeviceGroupDeviceCreateInfo {
@@ -24175,12 +26495,25 @@ pub struct DeviceGroupSwapchainCreateInfoKHRBuilder<'a> {
     inner: DeviceGroupSwapchainCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDeviceGroupSwapchainCreateInfoKHR {}
-unsafe impl ExtendsSwapchainCreateInfoKHR for DeviceGroupSwapchainCreateInfoKHR {}
+unsafe impl ExtendsSwapchainCreateInfoKHR for DeviceGroupSwapchainCreateInfoKHRBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsSwapchainCreateInfoKHR for DeviceGroupSwapchainCreateInfoKHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for DeviceGroupSwapchainCreateInfoKHRBuilder<'a> {
     type Target = DeviceGroupSwapchainCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DeviceGroupSwapchainCreateInfoKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DeviceGroupSwapchainCreateInfoKHRBuilder<'a> {
@@ -24189,13 +26522,6 @@ impl<'a> DeviceGroupSwapchainCreateInfoKHRBuilder<'a> {
         modes: DeviceGroupPresentModeFlagsKHR,
     ) -> DeviceGroupSwapchainCreateInfoKHRBuilder<'a> {
         self.inner.modes = modes;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> DeviceGroupSwapchainCreateInfoKHRBuilder<'a>
-    where
-        T: ExtendsDeviceGroupSwapchainCreateInfoKHR,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DeviceGroupSwapchainCreateInfoKHR {
@@ -24228,6 +26554,11 @@ impl<'a> ::std::ops::Deref for DescriptorUpdateTemplateEntryBuilder<'a> {
     type Target = DescriptorUpdateTemplateEntry;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DescriptorUpdateTemplateEntryBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DescriptorUpdateTemplateEntryBuilder<'a> {
@@ -24310,11 +26641,18 @@ pub struct DescriptorUpdateTemplateCreateInfoBuilder<'a> {
     inner: DescriptorUpdateTemplateCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDescriptorUpdateTemplateCreateInfo {}
+pub unsafe trait ExtendsDescriptorUpdateTemplateCreateInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for DescriptorUpdateTemplateCreateInfoBuilder<'a> {
     type Target = DescriptorUpdateTemplateCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DescriptorUpdateTemplateCreateInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DescriptorUpdateTemplateCreateInfoBuilder<'a> {
@@ -24365,23 +26703,20 @@ impl<'a> DescriptorUpdateTemplateCreateInfoBuilder<'a> {
         self.inner.set = set;
         self
     }
-<<<<<<< HEAD
-    pub fn next<T>(mut self, next: &'a T) -> DescriptorUpdateTemplateCreateInfoBuilder<'a>
-    where
-        T: ExtendsDescriptorUpdateTemplateCreateInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
-=======
-    pub fn next<T: ExtendsDescriptorUpdateTemplateCreateInfo>(
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsDescriptorUpdateTemplateCreateInfo>(
         mut self,
-        next: &'a mut impl ::std::ops::DerefMut<Target = T>,
+        next: &'a mut T,
     ) -> DescriptorUpdateTemplateCreateInfoBuilder<'a> {
         unsafe {
-            let ptr = &mut self.inner as *mut _ as *mut c_void;
-            let last_extension = ExtensionChain::last_chain(ptr);
-            (*last_extension).p_next = next.deref_mut() as *mut T as *mut c_void;
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
         }
->>>>>>> Implement extension chaining
         self
     }
     pub fn build(self) -> DescriptorUpdateTemplateCreateInfo {
@@ -24410,6 +26745,11 @@ impl<'a> ::std::ops::Deref for XYColorEXTBuilder<'a> {
     type Target = XYColorEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for XYColorEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> XYColorEXTBuilder<'a> {
@@ -24467,11 +26807,18 @@ pub struct HdrMetadataEXTBuilder<'a> {
     inner: HdrMetadataEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsHdrMetadataEXT {}
+pub unsafe trait ExtendsHdrMetadataEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for HdrMetadataEXTBuilder<'a> {
     type Target = HdrMetadataEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for HdrMetadataEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> HdrMetadataEXTBuilder<'a> {
@@ -24522,11 +26869,20 @@ impl<'a> HdrMetadataEXTBuilder<'a> {
         self.inner.max_frame_average_light_level = max_frame_average_light_level;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> HdrMetadataEXTBuilder<'a>
-    where
-        T: ExtendsHdrMetadataEXT,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsHdrMetadataEXT>(
+        mut self,
+        next: &'a mut T,
+    ) -> HdrMetadataEXTBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> HdrMetadataEXT {
@@ -24554,6 +26910,11 @@ impl<'a> ::std::ops::Deref for RefreshCycleDurationGOOGLEBuilder<'a> {
     type Target = RefreshCycleDurationGOOGLE;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for RefreshCycleDurationGOOGLEBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> RefreshCycleDurationGOOGLEBuilder<'a> {
@@ -24593,6 +26954,11 @@ impl<'a> ::std::ops::Deref for PastPresentationTimingGOOGLEBuilder<'a> {
     type Target = PastPresentationTimingGOOGLE;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PastPresentationTimingGOOGLEBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PastPresentationTimingGOOGLEBuilder<'a> {
@@ -24662,25 +27028,31 @@ pub struct PresentTimesInfoGOOGLEBuilder<'a> {
     inner: PresentTimesInfoGOOGLE,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPresentTimesInfoGOOGLE {}
-unsafe impl ExtendsPresentInfoKHR for PresentTimesInfoGOOGLE {}
+unsafe impl ExtendsPresentInfoKHR for PresentTimesInfoGOOGLEBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsPresentInfoKHR for PresentTimesInfoGOOGLE {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PresentTimesInfoGOOGLEBuilder<'a> {
     type Target = PresentTimesInfoGOOGLE;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+impl<'a> ::std::ops::DerefMut for PresentTimesInfoGOOGLEBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
 impl<'a> PresentTimesInfoGOOGLEBuilder<'a> {
     pub fn times(mut self, times: &'a [PresentTimeGOOGLE]) -> PresentTimesInfoGOOGLEBuilder<'a> {
         self.inner.swapchain_count = times.len() as _;
         self.inner.p_times = times.as_ptr();
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> PresentTimesInfoGOOGLEBuilder<'a>
-    where
-        T: ExtendsPresentTimesInfoGOOGLE,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> PresentTimesInfoGOOGLE {
@@ -24709,6 +27081,11 @@ impl<'a> ::std::ops::Deref for PresentTimeGOOGLEBuilder<'a> {
     type Target = PresentTimeGOOGLE;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PresentTimeGOOGLEBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PresentTimeGOOGLEBuilder<'a> {
@@ -24757,11 +27134,18 @@ pub struct IOSSurfaceCreateInfoMVKBuilder<'a> {
     inner: IOSSurfaceCreateInfoMVK,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsIOSSurfaceCreateInfoMVK {}
+pub unsafe trait ExtendsIOSSurfaceCreateInfoMVK {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for IOSSurfaceCreateInfoMVKBuilder<'a> {
     type Target = IOSSurfaceCreateInfoMVK;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for IOSSurfaceCreateInfoMVKBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> IOSSurfaceCreateInfoMVKBuilder<'a> {
@@ -24773,11 +27157,20 @@ impl<'a> IOSSurfaceCreateInfoMVKBuilder<'a> {
         self.inner.p_view = view;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> IOSSurfaceCreateInfoMVKBuilder<'a>
-    where
-        T: ExtendsIOSSurfaceCreateInfoMVK,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsIOSSurfaceCreateInfoMVK>(
+        mut self,
+        next: &'a mut T,
+    ) -> IOSSurfaceCreateInfoMVKBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> IOSSurfaceCreateInfoMVK {
@@ -24814,11 +27207,18 @@ pub struct MacOSSurfaceCreateInfoMVKBuilder<'a> {
     inner: MacOSSurfaceCreateInfoMVK,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsMacOSSurfaceCreateInfoMVK {}
+pub unsafe trait ExtendsMacOSSurfaceCreateInfoMVK {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for MacOSSurfaceCreateInfoMVKBuilder<'a> {
     type Target = MacOSSurfaceCreateInfoMVK;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for MacOSSurfaceCreateInfoMVKBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> MacOSSurfaceCreateInfoMVKBuilder<'a> {
@@ -24833,11 +27233,20 @@ impl<'a> MacOSSurfaceCreateInfoMVKBuilder<'a> {
         self.inner.p_view = view;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> MacOSSurfaceCreateInfoMVKBuilder<'a>
-    where
-        T: ExtendsMacOSSurfaceCreateInfoMVK,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsMacOSSurfaceCreateInfoMVK>(
+        mut self,
+        next: &'a mut T,
+    ) -> MacOSSurfaceCreateInfoMVKBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> MacOSSurfaceCreateInfoMVK {
@@ -24866,6 +27275,11 @@ impl<'a> ::std::ops::Deref for ViewportWScalingNVBuilder<'a> {
     type Target = ViewportWScalingNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ViewportWScalingNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ViewportWScalingNVBuilder<'a> {
@@ -24913,12 +27327,27 @@ pub struct PipelineViewportWScalingStateCreateInfoNVBuilder<'a> {
     inner: PipelineViewportWScalingStateCreateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPipelineViewportWScalingStateCreateInfoNV {}
-unsafe impl ExtendsPipelineViewportStateCreateInfo for PipelineViewportWScalingStateCreateInfoNV {}
+unsafe impl ExtendsPipelineViewportStateCreateInfo
+    for PipelineViewportWScalingStateCreateInfoNVBuilder<'_>
+{
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsPipelineViewportStateCreateInfo for PipelineViewportWScalingStateCreateInfoNV {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PipelineViewportWScalingStateCreateInfoNVBuilder<'a> {
     type Target = PipelineViewportWScalingStateCreateInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PipelineViewportWScalingStateCreateInfoNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PipelineViewportWScalingStateCreateInfoNVBuilder<'a> {
@@ -24935,13 +27364,6 @@ impl<'a> PipelineViewportWScalingStateCreateInfoNVBuilder<'a> {
     ) -> PipelineViewportWScalingStateCreateInfoNVBuilder<'a> {
         self.inner.viewport_count = viewport_w_scalings.len() as _;
         self.inner.p_viewport_w_scalings = viewport_w_scalings.as_ptr();
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> PipelineViewportWScalingStateCreateInfoNVBuilder<'a>
-    where
-        T: ExtendsPipelineViewportWScalingStateCreateInfoNV,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> PipelineViewportWScalingStateCreateInfoNV {
@@ -24972,6 +27394,11 @@ impl<'a> ::std::ops::Deref for ViewportSwizzleNVBuilder<'a> {
     type Target = ViewportSwizzleNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ViewportSwizzleNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ViewportSwizzleNVBuilder<'a> {
@@ -25027,12 +27454,27 @@ pub struct PipelineViewportSwizzleStateCreateInfoNVBuilder<'a> {
     inner: PipelineViewportSwizzleStateCreateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPipelineViewportSwizzleStateCreateInfoNV {}
-unsafe impl ExtendsPipelineViewportStateCreateInfo for PipelineViewportSwizzleStateCreateInfoNV {}
+unsafe impl ExtendsPipelineViewportStateCreateInfo
+    for PipelineViewportSwizzleStateCreateInfoNVBuilder<'_>
+{
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsPipelineViewportStateCreateInfo for PipelineViewportSwizzleStateCreateInfoNV {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PipelineViewportSwizzleStateCreateInfoNVBuilder<'a> {
     type Target = PipelineViewportSwizzleStateCreateInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PipelineViewportSwizzleStateCreateInfoNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PipelineViewportSwizzleStateCreateInfoNVBuilder<'a> {
@@ -25049,13 +27491,6 @@ impl<'a> PipelineViewportSwizzleStateCreateInfoNVBuilder<'a> {
     ) -> PipelineViewportSwizzleStateCreateInfoNVBuilder<'a> {
         self.inner.viewport_count = viewport_swizzles.len() as _;
         self.inner.p_viewport_swizzles = viewport_swizzles.as_ptr();
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> PipelineViewportSwizzleStateCreateInfoNVBuilder<'a>
-    where
-        T: ExtendsPipelineViewportSwizzleStateCreateInfoNV,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> PipelineViewportSwizzleStateCreateInfoNV {
@@ -25090,12 +27525,27 @@ pub struct PhysicalDeviceDiscardRectanglePropertiesEXTBuilder<'a> {
     inner: PhysicalDeviceDiscardRectanglePropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceDiscardRectanglePropertiesEXT {}
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceDiscardRectanglePropertiesEXT {}
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDeviceDiscardRectanglePropertiesEXTBuilder<'_>
+{
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceDiscardRectanglePropertiesEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceDiscardRectanglePropertiesEXTBuilder<'a> {
     type Target = PhysicalDeviceDiscardRectanglePropertiesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceDiscardRectanglePropertiesEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceDiscardRectanglePropertiesEXTBuilder<'a> {
@@ -25104,16 +27554,6 @@ impl<'a> PhysicalDeviceDiscardRectanglePropertiesEXTBuilder<'a> {
         max_discard_rectangles: u32,
     ) -> PhysicalDeviceDiscardRectanglePropertiesEXTBuilder<'a> {
         self.inner.max_discard_rectangles = max_discard_rectangles;
-        self
-    }
-    pub fn next<T>(
-        mut self,
-        next: &'a mut T,
-    ) -> PhysicalDeviceDiscardRectanglePropertiesEXTBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceDiscardRectanglePropertiesEXT,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceDiscardRectanglePropertiesEXT {
@@ -25154,12 +27594,27 @@ pub struct PipelineDiscardRectangleStateCreateInfoEXTBuilder<'a> {
     inner: PipelineDiscardRectangleStateCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPipelineDiscardRectangleStateCreateInfoEXT {}
-unsafe impl ExtendsGraphicsPipelineCreateInfo for PipelineDiscardRectangleStateCreateInfoEXT {}
+unsafe impl ExtendsGraphicsPipelineCreateInfo
+    for PipelineDiscardRectangleStateCreateInfoEXTBuilder<'_>
+{
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsGraphicsPipelineCreateInfo for PipelineDiscardRectangleStateCreateInfoEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PipelineDiscardRectangleStateCreateInfoEXTBuilder<'a> {
     type Target = PipelineDiscardRectangleStateCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PipelineDiscardRectangleStateCreateInfoEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PipelineDiscardRectangleStateCreateInfoEXTBuilder<'a> {
@@ -25183,13 +27638,6 @@ impl<'a> PipelineDiscardRectangleStateCreateInfoEXTBuilder<'a> {
     ) -> PipelineDiscardRectangleStateCreateInfoEXTBuilder<'a> {
         self.inner.discard_rectangle_count = discard_rectangles.len() as _;
         self.inner.p_discard_rectangles = discard_rectangles.as_ptr();
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> PipelineDiscardRectangleStateCreateInfoEXTBuilder<'a>
-    where
-        T: ExtendsPipelineDiscardRectangleStateCreateInfoEXT,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> PipelineDiscardRectangleStateCreateInfoEXT {
@@ -25224,15 +27672,29 @@ pub struct PhysicalDeviceMultiviewPerViewAttributesPropertiesNVXBuilder<'a> {
     inner: PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX {}
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDeviceMultiviewPerViewAttributesPropertiesNVXBuilder<'_>
+{
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
 unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX
 {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
 }
 impl<'a> ::std::ops::Deref for PhysicalDeviceMultiviewPerViewAttributesPropertiesNVXBuilder<'a> {
     type Target = PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceMultiviewPerViewAttributesPropertiesNVXBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceMultiviewPerViewAttributesPropertiesNVXBuilder<'a> {
@@ -25241,16 +27703,6 @@ impl<'a> PhysicalDeviceMultiviewPerViewAttributesPropertiesNVXBuilder<'a> {
         per_view_position_all_components: bool,
     ) -> PhysicalDeviceMultiviewPerViewAttributesPropertiesNVXBuilder<'a> {
         self.inner.per_view_position_all_components = per_view_position_all_components.into();
-        self
-    }
-    pub fn next<T>(
-        mut self,
-        next: &'a mut T,
-    ) -> PhysicalDeviceMultiviewPerViewAttributesPropertiesNVXBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceMultiviewPerViewAttributesPropertiesNVX,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX {
@@ -25280,6 +27732,11 @@ impl<'a> ::std::ops::Deref for InputAttachmentAspectReferenceBuilder<'a> {
     type Target = InputAttachmentAspectReference;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for InputAttachmentAspectReferenceBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> InputAttachmentAspectReferenceBuilder<'a> {
@@ -25335,12 +27792,25 @@ pub struct RenderPassInputAttachmentAspectCreateInfoBuilder<'a> {
     inner: RenderPassInputAttachmentAspectCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsRenderPassInputAttachmentAspectCreateInfo {}
-unsafe impl ExtendsRenderPassCreateInfo for RenderPassInputAttachmentAspectCreateInfo {}
+unsafe impl ExtendsRenderPassCreateInfo for RenderPassInputAttachmentAspectCreateInfoBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsRenderPassCreateInfo for RenderPassInputAttachmentAspectCreateInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for RenderPassInputAttachmentAspectCreateInfoBuilder<'a> {
     type Target = RenderPassInputAttachmentAspectCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for RenderPassInputAttachmentAspectCreateInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> RenderPassInputAttachmentAspectCreateInfoBuilder<'a> {
@@ -25350,13 +27820,6 @@ impl<'a> RenderPassInputAttachmentAspectCreateInfoBuilder<'a> {
     ) -> RenderPassInputAttachmentAspectCreateInfoBuilder<'a> {
         self.inner.aspect_reference_count = aspect_references.len() as _;
         self.inner.p_aspect_references = aspect_references.as_ptr();
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> RenderPassInputAttachmentAspectCreateInfoBuilder<'a>
-    where
-        T: ExtendsRenderPassInputAttachmentAspectCreateInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> RenderPassInputAttachmentAspectCreateInfo {
@@ -25391,11 +27854,18 @@ pub struct PhysicalDeviceSurfaceInfo2KHRBuilder<'a> {
     inner: PhysicalDeviceSurfaceInfo2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceSurfaceInfo2KHR {}
+pub unsafe trait ExtendsPhysicalDeviceSurfaceInfo2KHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceSurfaceInfo2KHRBuilder<'a> {
     type Target = PhysicalDeviceSurfaceInfo2KHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceSurfaceInfo2KHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceSurfaceInfo2KHRBuilder<'a> {
@@ -25403,11 +27873,20 @@ impl<'a> PhysicalDeviceSurfaceInfo2KHRBuilder<'a> {
         self.inner.surface = surface;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> PhysicalDeviceSurfaceInfo2KHRBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceSurfaceInfo2KHR,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsPhysicalDeviceSurfaceInfo2KHR>(
+        mut self,
+        next: &'a mut T,
+    ) -> PhysicalDeviceSurfaceInfo2KHRBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> PhysicalDeviceSurfaceInfo2KHR {
@@ -25442,11 +27921,18 @@ pub struct SurfaceCapabilities2KHRBuilder<'a> {
     inner: SurfaceCapabilities2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsSurfaceCapabilities2KHR {}
+pub unsafe trait ExtendsSurfaceCapabilities2KHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for SurfaceCapabilities2KHRBuilder<'a> {
     type Target = SurfaceCapabilities2KHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for SurfaceCapabilities2KHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> SurfaceCapabilities2KHRBuilder<'a> {
@@ -25457,11 +27943,20 @@ impl<'a> SurfaceCapabilities2KHRBuilder<'a> {
         self.inner.surface_capabilities = surface_capabilities;
         self
     }
-    pub fn next<T>(mut self, next: &'a mut T) -> SurfaceCapabilities2KHRBuilder<'a>
-    where
-        T: ExtendsSurfaceCapabilities2KHR,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsSurfaceCapabilities2KHR>(
+        mut self,
+        next: &'a mut T,
+    ) -> SurfaceCapabilities2KHRBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> SurfaceCapabilities2KHR {
@@ -25496,11 +27991,18 @@ pub struct SurfaceFormat2KHRBuilder<'a> {
     inner: SurfaceFormat2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsSurfaceFormat2KHR {}
+pub unsafe trait ExtendsSurfaceFormat2KHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for SurfaceFormat2KHRBuilder<'a> {
     type Target = SurfaceFormat2KHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for SurfaceFormat2KHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> SurfaceFormat2KHRBuilder<'a> {
@@ -25511,11 +28013,20 @@ impl<'a> SurfaceFormat2KHRBuilder<'a> {
         self.inner.surface_format = surface_format;
         self
     }
-    pub fn next<T>(mut self, next: &'a mut T) -> SurfaceFormat2KHRBuilder<'a>
-    where
-        T: ExtendsSurfaceFormat2KHR,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsSurfaceFormat2KHR>(
+        mut self,
+        next: &'a mut T,
+    ) -> SurfaceFormat2KHRBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> SurfaceFormat2KHR {
@@ -25550,11 +28061,18 @@ pub struct DisplayProperties2KHRBuilder<'a> {
     inner: DisplayProperties2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDisplayProperties2KHR {}
+pub unsafe trait ExtendsDisplayProperties2KHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for DisplayProperties2KHRBuilder<'a> {
     type Target = DisplayProperties2KHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DisplayProperties2KHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DisplayProperties2KHRBuilder<'a> {
@@ -25565,11 +28083,20 @@ impl<'a> DisplayProperties2KHRBuilder<'a> {
         self.inner.display_properties = display_properties;
         self
     }
-    pub fn next<T>(mut self, next: &'a mut T) -> DisplayProperties2KHRBuilder<'a>
-    where
-        T: ExtendsDisplayProperties2KHR,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsDisplayProperties2KHR>(
+        mut self,
+        next: &'a mut T,
+    ) -> DisplayProperties2KHRBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> DisplayProperties2KHR {
@@ -25604,11 +28131,18 @@ pub struct DisplayPlaneProperties2KHRBuilder<'a> {
     inner: DisplayPlaneProperties2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDisplayPlaneProperties2KHR {}
+pub unsafe trait ExtendsDisplayPlaneProperties2KHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for DisplayPlaneProperties2KHRBuilder<'a> {
     type Target = DisplayPlaneProperties2KHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DisplayPlaneProperties2KHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DisplayPlaneProperties2KHRBuilder<'a> {
@@ -25619,11 +28153,20 @@ impl<'a> DisplayPlaneProperties2KHRBuilder<'a> {
         self.inner.display_plane_properties = display_plane_properties;
         self
     }
-    pub fn next<T>(mut self, next: &'a mut T) -> DisplayPlaneProperties2KHRBuilder<'a>
-    where
-        T: ExtendsDisplayPlaneProperties2KHR,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsDisplayPlaneProperties2KHR>(
+        mut self,
+        next: &'a mut T,
+    ) -> DisplayPlaneProperties2KHRBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> DisplayPlaneProperties2KHR {
@@ -25658,11 +28201,18 @@ pub struct DisplayModeProperties2KHRBuilder<'a> {
     inner: DisplayModeProperties2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDisplayModeProperties2KHR {}
+pub unsafe trait ExtendsDisplayModeProperties2KHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for DisplayModeProperties2KHRBuilder<'a> {
     type Target = DisplayModeProperties2KHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DisplayModeProperties2KHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DisplayModeProperties2KHRBuilder<'a> {
@@ -25673,11 +28223,20 @@ impl<'a> DisplayModeProperties2KHRBuilder<'a> {
         self.inner.display_mode_properties = display_mode_properties;
         self
     }
-    pub fn next<T>(mut self, next: &'a mut T) -> DisplayModeProperties2KHRBuilder<'a>
-    where
-        T: ExtendsDisplayModeProperties2KHR,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsDisplayModeProperties2KHR>(
+        mut self,
+        next: &'a mut T,
+    ) -> DisplayModeProperties2KHRBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> DisplayModeProperties2KHR {
@@ -25714,11 +28273,18 @@ pub struct DisplayPlaneInfo2KHRBuilder<'a> {
     inner: DisplayPlaneInfo2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDisplayPlaneInfo2KHR {}
+pub unsafe trait ExtendsDisplayPlaneInfo2KHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for DisplayPlaneInfo2KHRBuilder<'a> {
     type Target = DisplayPlaneInfo2KHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DisplayPlaneInfo2KHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DisplayPlaneInfo2KHRBuilder<'a> {
@@ -25730,11 +28296,20 @@ impl<'a> DisplayPlaneInfo2KHRBuilder<'a> {
         self.inner.plane_index = plane_index;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> DisplayPlaneInfo2KHRBuilder<'a>
-    where
-        T: ExtendsDisplayPlaneInfo2KHR,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsDisplayPlaneInfo2KHR>(
+        mut self,
+        next: &'a mut T,
+    ) -> DisplayPlaneInfo2KHRBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> DisplayPlaneInfo2KHR {
@@ -25769,11 +28344,18 @@ pub struct DisplayPlaneCapabilities2KHRBuilder<'a> {
     inner: DisplayPlaneCapabilities2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDisplayPlaneCapabilities2KHR {}
+pub unsafe trait ExtendsDisplayPlaneCapabilities2KHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for DisplayPlaneCapabilities2KHRBuilder<'a> {
     type Target = DisplayPlaneCapabilities2KHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DisplayPlaneCapabilities2KHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DisplayPlaneCapabilities2KHRBuilder<'a> {
@@ -25784,11 +28366,20 @@ impl<'a> DisplayPlaneCapabilities2KHRBuilder<'a> {
         self.inner.capabilities = capabilities;
         self
     }
-    pub fn next<T>(mut self, next: &'a mut T) -> DisplayPlaneCapabilities2KHRBuilder<'a>
-    where
-        T: ExtendsDisplayPlaneCapabilities2KHR,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsDisplayPlaneCapabilities2KHR>(
+        mut self,
+        next: &'a mut T,
+    ) -> DisplayPlaneCapabilities2KHRBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> DisplayPlaneCapabilities2KHR {
@@ -25823,12 +28414,25 @@ pub struct SharedPresentSurfaceCapabilitiesKHRBuilder<'a> {
     inner: SharedPresentSurfaceCapabilitiesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsSharedPresentSurfaceCapabilitiesKHR {}
-unsafe impl ExtendsSurfaceCapabilities2KHR for SharedPresentSurfaceCapabilitiesKHR {}
+unsafe impl ExtendsSurfaceCapabilities2KHR for SharedPresentSurfaceCapabilitiesKHRBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsSurfaceCapabilities2KHR for SharedPresentSurfaceCapabilitiesKHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for SharedPresentSurfaceCapabilitiesKHRBuilder<'a> {
     type Target = SharedPresentSurfaceCapabilitiesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for SharedPresentSurfaceCapabilitiesKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> SharedPresentSurfaceCapabilitiesKHRBuilder<'a> {
@@ -25837,13 +28441,6 @@ impl<'a> SharedPresentSurfaceCapabilitiesKHRBuilder<'a> {
         shared_present_supported_usage_flags: ImageUsageFlags,
     ) -> SharedPresentSurfaceCapabilitiesKHRBuilder<'a> {
         self.inner.shared_present_supported_usage_flags = shared_present_supported_usage_flags;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a mut T) -> SharedPresentSurfaceCapabilitiesKHRBuilder<'a>
-    where
-        T: ExtendsSharedPresentSurfaceCapabilitiesKHR,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> SharedPresentSurfaceCapabilitiesKHR {
@@ -25884,13 +28481,25 @@ pub struct PhysicalDevice16BitStorageFeaturesBuilder<'a> {
     inner: PhysicalDevice16BitStorageFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDevice16BitStorageFeatures {}
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevice16BitStorageFeatures {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDevice16BitStorageFeatures {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDevice16BitStorageFeaturesBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDevice16BitStorageFeatures {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDevice16BitStorageFeaturesBuilder<'a> {
     type Target = PhysicalDevice16BitStorageFeatures;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDevice16BitStorageFeaturesBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDevice16BitStorageFeaturesBuilder<'a> {
@@ -25921,13 +28530,6 @@ impl<'a> PhysicalDevice16BitStorageFeaturesBuilder<'a> {
         storage_input_output16: bool,
     ) -> PhysicalDevice16BitStorageFeaturesBuilder<'a> {
         self.inner.storage_input_output16 = storage_input_output16.into();
-        self
-    }
-    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDevice16BitStorageFeaturesBuilder<'a>
-    where
-        T: ExtendsPhysicalDevice16BitStorageFeatures,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDevice16BitStorageFeatures {
@@ -25968,12 +28570,25 @@ pub struct PhysicalDeviceSubgroupPropertiesBuilder<'a> {
     inner: PhysicalDeviceSubgroupProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceSubgroupProperties {}
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceSubgroupProperties {}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceSubgroupPropertiesBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceSubgroupProperties {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceSubgroupPropertiesBuilder<'a> {
     type Target = PhysicalDeviceSubgroupProperties;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceSubgroupPropertiesBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceSubgroupPropertiesBuilder<'a> {
@@ -26003,13 +28618,6 @@ impl<'a> PhysicalDeviceSubgroupPropertiesBuilder<'a> {
         quad_operations_in_all_stages: bool,
     ) -> PhysicalDeviceSubgroupPropertiesBuilder<'a> {
         self.inner.quad_operations_in_all_stages = quad_operations_in_all_stages.into();
-        self
-    }
-    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceSubgroupPropertiesBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceSubgroupProperties,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceSubgroupProperties {
@@ -26044,11 +28652,18 @@ pub struct BufferMemoryRequirementsInfo2Builder<'a> {
     inner: BufferMemoryRequirementsInfo2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsBufferMemoryRequirementsInfo2 {}
+pub unsafe trait ExtendsBufferMemoryRequirementsInfo2 {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for BufferMemoryRequirementsInfo2Builder<'a> {
     type Target = BufferMemoryRequirementsInfo2;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for BufferMemoryRequirementsInfo2Builder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> BufferMemoryRequirementsInfo2Builder<'a> {
@@ -26056,11 +28671,20 @@ impl<'a> BufferMemoryRequirementsInfo2Builder<'a> {
         self.inner.buffer = buffer;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> BufferMemoryRequirementsInfo2Builder<'a>
-    where
-        T: ExtendsBufferMemoryRequirementsInfo2,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsBufferMemoryRequirementsInfo2>(
+        mut self,
+        next: &'a mut T,
+    ) -> BufferMemoryRequirementsInfo2Builder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> BufferMemoryRequirementsInfo2 {
@@ -26095,11 +28719,18 @@ pub struct ImageMemoryRequirementsInfo2Builder<'a> {
     inner: ImageMemoryRequirementsInfo2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsImageMemoryRequirementsInfo2 {}
+pub unsafe trait ExtendsImageMemoryRequirementsInfo2 {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for ImageMemoryRequirementsInfo2Builder<'a> {
     type Target = ImageMemoryRequirementsInfo2;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ImageMemoryRequirementsInfo2Builder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ImageMemoryRequirementsInfo2Builder<'a> {
@@ -26107,11 +28738,20 @@ impl<'a> ImageMemoryRequirementsInfo2Builder<'a> {
         self.inner.image = image;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> ImageMemoryRequirementsInfo2Builder<'a>
-    where
-        T: ExtendsImageMemoryRequirementsInfo2,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsImageMemoryRequirementsInfo2>(
+        mut self,
+        next: &'a mut T,
+    ) -> ImageMemoryRequirementsInfo2Builder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> ImageMemoryRequirementsInfo2 {
@@ -26146,11 +28786,18 @@ pub struct ImageSparseMemoryRequirementsInfo2Builder<'a> {
     inner: ImageSparseMemoryRequirementsInfo2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsImageSparseMemoryRequirementsInfo2 {}
+pub unsafe trait ExtendsImageSparseMemoryRequirementsInfo2 {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for ImageSparseMemoryRequirementsInfo2Builder<'a> {
     type Target = ImageSparseMemoryRequirementsInfo2;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ImageSparseMemoryRequirementsInfo2Builder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ImageSparseMemoryRequirementsInfo2Builder<'a> {
@@ -26158,11 +28805,20 @@ impl<'a> ImageSparseMemoryRequirementsInfo2Builder<'a> {
         self.inner.image = image;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> ImageSparseMemoryRequirementsInfo2Builder<'a>
-    where
-        T: ExtendsImageSparseMemoryRequirementsInfo2,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsImageSparseMemoryRequirementsInfo2>(
+        mut self,
+        next: &'a mut T,
+    ) -> ImageSparseMemoryRequirementsInfo2Builder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> ImageSparseMemoryRequirementsInfo2 {
@@ -26197,11 +28853,18 @@ pub struct MemoryRequirements2Builder<'a> {
     inner: MemoryRequirements2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsMemoryRequirements2 {}
+pub unsafe trait ExtendsMemoryRequirements2 {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for MemoryRequirements2Builder<'a> {
     type Target = MemoryRequirements2;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for MemoryRequirements2Builder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> MemoryRequirements2Builder<'a> {
@@ -26212,11 +28875,20 @@ impl<'a> MemoryRequirements2Builder<'a> {
         self.inner.memory_requirements = memory_requirements;
         self
     }
-    pub fn next<T>(mut self, next: &'a mut T) -> MemoryRequirements2Builder<'a>
-    where
-        T: ExtendsMemoryRequirements2,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsMemoryRequirements2>(
+        mut self,
+        next: &'a mut T,
+    ) -> MemoryRequirements2Builder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> MemoryRequirements2 {
@@ -26251,11 +28923,18 @@ pub struct SparseImageMemoryRequirements2Builder<'a> {
     inner: SparseImageMemoryRequirements2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsSparseImageMemoryRequirements2 {}
+pub unsafe trait ExtendsSparseImageMemoryRequirements2 {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for SparseImageMemoryRequirements2Builder<'a> {
     type Target = SparseImageMemoryRequirements2;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for SparseImageMemoryRequirements2Builder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> SparseImageMemoryRequirements2Builder<'a> {
@@ -26266,11 +28945,20 @@ impl<'a> SparseImageMemoryRequirements2Builder<'a> {
         self.inner.memory_requirements = memory_requirements;
         self
     }
-    pub fn next<T>(mut self, next: &'a mut T) -> SparseImageMemoryRequirements2Builder<'a>
-    where
-        T: ExtendsSparseImageMemoryRequirements2,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsSparseImageMemoryRequirements2>(
+        mut self,
+        next: &'a mut T,
+    ) -> SparseImageMemoryRequirements2Builder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> SparseImageMemoryRequirements2 {
@@ -26305,12 +28993,25 @@ pub struct PhysicalDevicePointClippingPropertiesBuilder<'a> {
     inner: PhysicalDevicePointClippingProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDevicePointClippingProperties {}
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDevicePointClippingProperties {}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDevicePointClippingPropertiesBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDevicePointClippingProperties {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDevicePointClippingPropertiesBuilder<'a> {
     type Target = PhysicalDevicePointClippingProperties;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDevicePointClippingPropertiesBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDevicePointClippingPropertiesBuilder<'a> {
@@ -26319,13 +29020,6 @@ impl<'a> PhysicalDevicePointClippingPropertiesBuilder<'a> {
         point_clipping_behavior: PointClippingBehavior,
     ) -> PhysicalDevicePointClippingPropertiesBuilder<'a> {
         self.inner.point_clipping_behavior = point_clipping_behavior;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDevicePointClippingPropertiesBuilder<'a>
-    where
-        T: ExtendsPhysicalDevicePointClippingProperties,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDevicePointClippingProperties {
@@ -26362,12 +29056,25 @@ pub struct MemoryDedicatedRequirementsBuilder<'a> {
     inner: MemoryDedicatedRequirements,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsMemoryDedicatedRequirements {}
-unsafe impl ExtendsMemoryRequirements2 for MemoryDedicatedRequirements {}
+unsafe impl ExtendsMemoryRequirements2 for MemoryDedicatedRequirementsBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsMemoryRequirements2 for MemoryDedicatedRequirements {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for MemoryDedicatedRequirementsBuilder<'a> {
     type Target = MemoryDedicatedRequirements;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for MemoryDedicatedRequirementsBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> MemoryDedicatedRequirementsBuilder<'a> {
@@ -26383,13 +29090,6 @@ impl<'a> MemoryDedicatedRequirementsBuilder<'a> {
         requires_dedicated_allocation: bool,
     ) -> MemoryDedicatedRequirementsBuilder<'a> {
         self.inner.requires_dedicated_allocation = requires_dedicated_allocation.into();
-        self
-    }
-    pub fn next<T>(mut self, next: &'a mut T) -> MemoryDedicatedRequirementsBuilder<'a>
-    where
-        T: ExtendsMemoryDedicatedRequirements,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> MemoryDedicatedRequirements {
@@ -26426,12 +29126,25 @@ pub struct MemoryDedicatedAllocateInfoBuilder<'a> {
     inner: MemoryDedicatedAllocateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsMemoryDedicatedAllocateInfo {}
-unsafe impl ExtendsMemoryAllocateInfo for MemoryDedicatedAllocateInfo {}
+unsafe impl ExtendsMemoryAllocateInfo for MemoryDedicatedAllocateInfoBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsMemoryAllocateInfo for MemoryDedicatedAllocateInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for MemoryDedicatedAllocateInfoBuilder<'a> {
     type Target = MemoryDedicatedAllocateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for MemoryDedicatedAllocateInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> MemoryDedicatedAllocateInfoBuilder<'a> {
@@ -26441,13 +29154,6 @@ impl<'a> MemoryDedicatedAllocateInfoBuilder<'a> {
     }
     pub fn buffer(mut self, buffer: Buffer) -> MemoryDedicatedAllocateInfoBuilder<'a> {
         self.inner.buffer = buffer;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> MemoryDedicatedAllocateInfoBuilder<'a>
-    where
-        T: ExtendsMemoryDedicatedAllocateInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> MemoryDedicatedAllocateInfo {
@@ -26482,24 +29188,30 @@ pub struct ImageViewUsageCreateInfoBuilder<'a> {
     inner: ImageViewUsageCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsImageViewUsageCreateInfo {}
-unsafe impl ExtendsImageViewCreateInfo for ImageViewUsageCreateInfo {}
+unsafe impl ExtendsImageViewCreateInfo for ImageViewUsageCreateInfoBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsImageViewCreateInfo for ImageViewUsageCreateInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for ImageViewUsageCreateInfoBuilder<'a> {
     type Target = ImageViewUsageCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+impl<'a> ::std::ops::DerefMut for ImageViewUsageCreateInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
 impl<'a> ImageViewUsageCreateInfoBuilder<'a> {
     pub fn usage(mut self, usage: ImageUsageFlags) -> ImageViewUsageCreateInfoBuilder<'a> {
         self.inner.usage = usage;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> ImageViewUsageCreateInfoBuilder<'a>
-    where
-        T: ExtendsImageViewUsageCreateInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ImageViewUsageCreateInfo {
@@ -26534,15 +29246,29 @@ pub struct PipelineTessellationDomainOriginStateCreateInfoBuilder<'a> {
     inner: PipelineTessellationDomainOriginStateCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPipelineTessellationDomainOriginStateCreateInfo {}
+unsafe impl ExtendsPipelineTessellationStateCreateInfo
+    for PipelineTessellationDomainOriginStateCreateInfoBuilder<'_>
+{
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
 unsafe impl ExtendsPipelineTessellationStateCreateInfo
     for PipelineTessellationDomainOriginStateCreateInfo
 {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
 }
 impl<'a> ::std::ops::Deref for PipelineTessellationDomainOriginStateCreateInfoBuilder<'a> {
     type Target = PipelineTessellationDomainOriginStateCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PipelineTessellationDomainOriginStateCreateInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PipelineTessellationDomainOriginStateCreateInfoBuilder<'a> {
@@ -26551,16 +29277,6 @@ impl<'a> PipelineTessellationDomainOriginStateCreateInfoBuilder<'a> {
         domain_origin: TessellationDomainOrigin,
     ) -> PipelineTessellationDomainOriginStateCreateInfoBuilder<'a> {
         self.inner.domain_origin = domain_origin;
-        self
-    }
-    pub fn next<T>(
-        mut self,
-        next: &'a T,
-    ) -> PipelineTessellationDomainOriginStateCreateInfoBuilder<'a>
-    where
-        T: ExtendsPipelineTessellationDomainOriginStateCreateInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> PipelineTessellationDomainOriginStateCreateInfo {
@@ -26595,13 +29311,25 @@ pub struct SamplerYcbcrConversionInfoBuilder<'a> {
     inner: SamplerYcbcrConversionInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsSamplerYcbcrConversionInfo {}
-unsafe impl ExtendsSamplerCreateInfo for SamplerYcbcrConversionInfo {}
-unsafe impl ExtendsImageViewCreateInfo for SamplerYcbcrConversionInfo {}
+unsafe impl ExtendsSamplerCreateInfo for SamplerYcbcrConversionInfoBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsSamplerCreateInfo for SamplerYcbcrConversionInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for SamplerYcbcrConversionInfoBuilder<'a> {
     type Target = SamplerYcbcrConversionInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for SamplerYcbcrConversionInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> SamplerYcbcrConversionInfoBuilder<'a> {
@@ -26610,13 +29338,6 @@ impl<'a> SamplerYcbcrConversionInfoBuilder<'a> {
         conversion: SamplerYcbcrConversion,
     ) -> SamplerYcbcrConversionInfoBuilder<'a> {
         self.inner.conversion = conversion;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> SamplerYcbcrConversionInfoBuilder<'a>
-    where
-        T: ExtendsSamplerYcbcrConversionInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> SamplerYcbcrConversionInfo {
@@ -26665,11 +29386,18 @@ pub struct SamplerYcbcrConversionCreateInfoBuilder<'a> {
     inner: SamplerYcbcrConversionCreateInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsSamplerYcbcrConversionCreateInfo {}
+pub unsafe trait ExtendsSamplerYcbcrConversionCreateInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for SamplerYcbcrConversionCreateInfoBuilder<'a> {
     type Target = SamplerYcbcrConversionCreateInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for SamplerYcbcrConversionCreateInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> SamplerYcbcrConversionCreateInfoBuilder<'a> {
@@ -26726,11 +29454,20 @@ impl<'a> SamplerYcbcrConversionCreateInfoBuilder<'a> {
         self.inner.force_explicit_reconstruction = force_explicit_reconstruction.into();
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> SamplerYcbcrConversionCreateInfoBuilder<'a>
-    where
-        T: ExtendsSamplerYcbcrConversionCreateInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsSamplerYcbcrConversionCreateInfo>(
+        mut self,
+        next: &'a mut T,
+    ) -> SamplerYcbcrConversionCreateInfoBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> SamplerYcbcrConversionCreateInfo {
@@ -26765,12 +29502,25 @@ pub struct BindImagePlaneMemoryInfoBuilder<'a> {
     inner: BindImagePlaneMemoryInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsBindImagePlaneMemoryInfo {}
-unsafe impl ExtendsBindImageMemoryInfo for BindImagePlaneMemoryInfo {}
+unsafe impl ExtendsBindImageMemoryInfo for BindImagePlaneMemoryInfoBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsBindImageMemoryInfo for BindImagePlaneMemoryInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for BindImagePlaneMemoryInfoBuilder<'a> {
     type Target = BindImagePlaneMemoryInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for BindImagePlaneMemoryInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> BindImagePlaneMemoryInfoBuilder<'a> {
@@ -26779,13 +29529,6 @@ impl<'a> BindImagePlaneMemoryInfoBuilder<'a> {
         plane_aspect: ImageAspectFlags,
     ) -> BindImagePlaneMemoryInfoBuilder<'a> {
         self.inner.plane_aspect = plane_aspect;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> BindImagePlaneMemoryInfoBuilder<'a>
-    where
-        T: ExtendsBindImagePlaneMemoryInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> BindImagePlaneMemoryInfo {
@@ -26820,12 +29563,25 @@ pub struct ImagePlaneMemoryRequirementsInfoBuilder<'a> {
     inner: ImagePlaneMemoryRequirementsInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsImagePlaneMemoryRequirementsInfo {}
-unsafe impl ExtendsImageMemoryRequirementsInfo2 for ImagePlaneMemoryRequirementsInfo {}
+unsafe impl ExtendsImageMemoryRequirementsInfo2 for ImagePlaneMemoryRequirementsInfoBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsImageMemoryRequirementsInfo2 for ImagePlaneMemoryRequirementsInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for ImagePlaneMemoryRequirementsInfoBuilder<'a> {
     type Target = ImagePlaneMemoryRequirementsInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ImagePlaneMemoryRequirementsInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ImagePlaneMemoryRequirementsInfoBuilder<'a> {
@@ -26834,13 +29590,6 @@ impl<'a> ImagePlaneMemoryRequirementsInfoBuilder<'a> {
         plane_aspect: ImageAspectFlags,
     ) -> ImagePlaneMemoryRequirementsInfoBuilder<'a> {
         self.inner.plane_aspect = plane_aspect;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> ImagePlaneMemoryRequirementsInfoBuilder<'a>
-    where
-        T: ExtendsImagePlaneMemoryRequirementsInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ImagePlaneMemoryRequirementsInfo {
@@ -26875,13 +29624,25 @@ pub struct PhysicalDeviceSamplerYcbcrConversionFeaturesBuilder<'a> {
     inner: PhysicalDeviceSamplerYcbcrConversionFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceSamplerYcbcrConversionFeatures {}
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceSamplerYcbcrConversionFeatures {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceSamplerYcbcrConversionFeatures {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceSamplerYcbcrConversionFeaturesBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceSamplerYcbcrConversionFeatures {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceSamplerYcbcrConversionFeaturesBuilder<'a> {
     type Target = PhysicalDeviceSamplerYcbcrConversionFeatures;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceSamplerYcbcrConversionFeaturesBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceSamplerYcbcrConversionFeaturesBuilder<'a> {
@@ -26890,16 +29651,6 @@ impl<'a> PhysicalDeviceSamplerYcbcrConversionFeaturesBuilder<'a> {
         sampler_ycbcr_conversion: bool,
     ) -> PhysicalDeviceSamplerYcbcrConversionFeaturesBuilder<'a> {
         self.inner.sampler_ycbcr_conversion = sampler_ycbcr_conversion.into();
-        self
-    }
-    pub fn next<T>(
-        mut self,
-        next: &'a mut T,
-    ) -> PhysicalDeviceSamplerYcbcrConversionFeaturesBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceSamplerYcbcrConversionFeatures,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceSamplerYcbcrConversionFeatures {
@@ -26934,12 +29685,27 @@ pub struct SamplerYcbcrConversionImageFormatPropertiesBuilder<'a> {
     inner: SamplerYcbcrConversionImageFormatProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsSamplerYcbcrConversionImageFormatProperties {}
-unsafe impl ExtendsImageFormatProperties2 for SamplerYcbcrConversionImageFormatProperties {}
+unsafe impl ExtendsImageFormatProperties2
+    for SamplerYcbcrConversionImageFormatPropertiesBuilder<'_>
+{
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsImageFormatProperties2 for SamplerYcbcrConversionImageFormatProperties {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for SamplerYcbcrConversionImageFormatPropertiesBuilder<'a> {
     type Target = SamplerYcbcrConversionImageFormatProperties;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for SamplerYcbcrConversionImageFormatPropertiesBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> SamplerYcbcrConversionImageFormatPropertiesBuilder<'a> {
@@ -26949,16 +29715,6 @@ impl<'a> SamplerYcbcrConversionImageFormatPropertiesBuilder<'a> {
     ) -> SamplerYcbcrConversionImageFormatPropertiesBuilder<'a> {
         self.inner.combined_image_sampler_descriptor_count =
             combined_image_sampler_descriptor_count;
-        self
-    }
-    pub fn next<T>(
-        mut self,
-        next: &'a mut T,
-    ) -> SamplerYcbcrConversionImageFormatPropertiesBuilder<'a>
-    where
-        T: ExtendsSamplerYcbcrConversionImageFormatProperties,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> SamplerYcbcrConversionImageFormatProperties {
@@ -26993,12 +29749,25 @@ pub struct TextureLODGatherFormatPropertiesAMDBuilder<'a> {
     inner: TextureLODGatherFormatPropertiesAMD,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsTextureLODGatherFormatPropertiesAMD {}
-unsafe impl ExtendsImageFormatProperties2 for TextureLODGatherFormatPropertiesAMD {}
+unsafe impl ExtendsImageFormatProperties2 for TextureLODGatherFormatPropertiesAMDBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsImageFormatProperties2 for TextureLODGatherFormatPropertiesAMD {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for TextureLODGatherFormatPropertiesAMDBuilder<'a> {
     type Target = TextureLODGatherFormatPropertiesAMD;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for TextureLODGatherFormatPropertiesAMDBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> TextureLODGatherFormatPropertiesAMDBuilder<'a> {
@@ -27008,13 +29777,6 @@ impl<'a> TextureLODGatherFormatPropertiesAMDBuilder<'a> {
     ) -> TextureLODGatherFormatPropertiesAMDBuilder<'a> {
         self.inner.supports_texture_gather_lod_bias_amd =
             supports_texture_gather_lod_bias_amd.into();
-        self
-    }
-    pub fn next<T>(mut self, next: &'a mut T) -> TextureLODGatherFormatPropertiesAMDBuilder<'a>
-    where
-        T: ExtendsTextureLODGatherFormatPropertiesAMD,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> TextureLODGatherFormatPropertiesAMD {
@@ -27053,11 +29815,18 @@ pub struct ConditionalRenderingBeginInfoEXTBuilder<'a> {
     inner: ConditionalRenderingBeginInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsConditionalRenderingBeginInfoEXT {}
+pub unsafe trait ExtendsConditionalRenderingBeginInfoEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for ConditionalRenderingBeginInfoEXTBuilder<'a> {
     type Target = ConditionalRenderingBeginInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ConditionalRenderingBeginInfoEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ConditionalRenderingBeginInfoEXTBuilder<'a> {
@@ -27076,11 +29845,20 @@ impl<'a> ConditionalRenderingBeginInfoEXTBuilder<'a> {
         self.inner.flags = flags;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> ConditionalRenderingBeginInfoEXTBuilder<'a>
-    where
-        T: ExtendsConditionalRenderingBeginInfoEXT,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsConditionalRenderingBeginInfoEXT>(
+        mut self,
+        next: &'a mut T,
+    ) -> ConditionalRenderingBeginInfoEXTBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> ConditionalRenderingBeginInfoEXT {
@@ -27115,24 +29893,30 @@ pub struct ProtectedSubmitInfoBuilder<'a> {
     inner: ProtectedSubmitInfo,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsProtectedSubmitInfo {}
-unsafe impl ExtendsSubmitInfo for ProtectedSubmitInfo {}
+unsafe impl ExtendsSubmitInfo for ProtectedSubmitInfoBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsSubmitInfo for ProtectedSubmitInfo {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for ProtectedSubmitInfoBuilder<'a> {
     type Target = ProtectedSubmitInfo;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+impl<'a> ::std::ops::DerefMut for ProtectedSubmitInfoBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
 impl<'a> ProtectedSubmitInfoBuilder<'a> {
     pub fn protected_submit(mut self, protected_submit: bool) -> ProtectedSubmitInfoBuilder<'a> {
         self.inner.protected_submit = protected_submit.into();
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> ProtectedSubmitInfoBuilder<'a>
-    where
-        T: ExtendsProtectedSubmitInfo,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ProtectedSubmitInfo {
@@ -27167,13 +29951,25 @@ pub struct PhysicalDeviceProtectedMemoryFeaturesBuilder<'a> {
     inner: PhysicalDeviceProtectedMemoryFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceProtectedMemoryFeatures {}
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceProtectedMemoryFeatures {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceProtectedMemoryFeatures {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceProtectedMemoryFeaturesBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceProtectedMemoryFeatures {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceProtectedMemoryFeaturesBuilder<'a> {
     type Target = PhysicalDeviceProtectedMemoryFeatures;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceProtectedMemoryFeaturesBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceProtectedMemoryFeaturesBuilder<'a> {
@@ -27182,13 +29978,6 @@ impl<'a> PhysicalDeviceProtectedMemoryFeaturesBuilder<'a> {
         protected_memory: bool,
     ) -> PhysicalDeviceProtectedMemoryFeaturesBuilder<'a> {
         self.inner.protected_memory = protected_memory.into();
-        self
-    }
-    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceProtectedMemoryFeaturesBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceProtectedMemoryFeatures,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceProtectedMemoryFeatures {
@@ -27223,12 +30012,27 @@ pub struct PhysicalDeviceProtectedMemoryPropertiesBuilder<'a> {
     inner: PhysicalDeviceProtectedMemoryProperties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceProtectedMemoryProperties {}
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceProtectedMemoryProperties {}
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDeviceProtectedMemoryPropertiesBuilder<'_>
+{
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceProtectedMemoryProperties {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceProtectedMemoryPropertiesBuilder<'a> {
     type Target = PhysicalDeviceProtectedMemoryProperties;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceProtectedMemoryPropertiesBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceProtectedMemoryPropertiesBuilder<'a> {
@@ -27237,13 +30041,6 @@ impl<'a> PhysicalDeviceProtectedMemoryPropertiesBuilder<'a> {
         protected_no_fault: bool,
     ) -> PhysicalDeviceProtectedMemoryPropertiesBuilder<'a> {
         self.inner.protected_no_fault = protected_no_fault.into();
-        self
-    }
-    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceProtectedMemoryPropertiesBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceProtectedMemoryProperties,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceProtectedMemoryProperties {
@@ -27282,11 +30079,18 @@ pub struct DeviceQueueInfo2Builder<'a> {
     inner: DeviceQueueInfo2,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDeviceQueueInfo2 {}
+pub unsafe trait ExtendsDeviceQueueInfo2 {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for DeviceQueueInfo2Builder<'a> {
     type Target = DeviceQueueInfo2;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DeviceQueueInfo2Builder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DeviceQueueInfo2Builder<'a> {
@@ -27302,11 +30106,20 @@ impl<'a> DeviceQueueInfo2Builder<'a> {
         self.inner.queue_index = queue_index;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> DeviceQueueInfo2Builder<'a>
-    where
-        T: ExtendsDeviceQueueInfo2,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsDeviceQueueInfo2>(
+        mut self,
+        next: &'a mut T,
+    ) -> DeviceQueueInfo2Builder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> DeviceQueueInfo2 {
@@ -27345,12 +30158,27 @@ pub struct PipelineCoverageToColorStateCreateInfoNVBuilder<'a> {
     inner: PipelineCoverageToColorStateCreateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPipelineCoverageToColorStateCreateInfoNV {}
-unsafe impl ExtendsPipelineMultisampleStateCreateInfo for PipelineCoverageToColorStateCreateInfoNV {}
+unsafe impl ExtendsPipelineMultisampleStateCreateInfo
+    for PipelineCoverageToColorStateCreateInfoNVBuilder<'_>
+{
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsPipelineMultisampleStateCreateInfo for PipelineCoverageToColorStateCreateInfoNV {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PipelineCoverageToColorStateCreateInfoNVBuilder<'a> {
     type Target = PipelineCoverageToColorStateCreateInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PipelineCoverageToColorStateCreateInfoNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PipelineCoverageToColorStateCreateInfoNVBuilder<'a> {
@@ -27373,13 +30201,6 @@ impl<'a> PipelineCoverageToColorStateCreateInfoNVBuilder<'a> {
         coverage_to_color_location: u32,
     ) -> PipelineCoverageToColorStateCreateInfoNVBuilder<'a> {
         self.inner.coverage_to_color_location = coverage_to_color_location;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> PipelineCoverageToColorStateCreateInfoNVBuilder<'a>
-    where
-        T: ExtendsPipelineCoverageToColorStateCreateInfoNV,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> PipelineCoverageToColorStateCreateInfoNV {
@@ -27416,12 +30237,27 @@ pub struct PhysicalDeviceSamplerFilterMinmaxPropertiesEXTBuilder<'a> {
     inner: PhysicalDeviceSamplerFilterMinmaxPropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceSamplerFilterMinmaxPropertiesEXT {}
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceSamplerFilterMinmaxPropertiesEXT {}
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDeviceSamplerFilterMinmaxPropertiesEXTBuilder<'_>
+{
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceSamplerFilterMinmaxPropertiesEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceSamplerFilterMinmaxPropertiesEXTBuilder<'a> {
     type Target = PhysicalDeviceSamplerFilterMinmaxPropertiesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceSamplerFilterMinmaxPropertiesEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceSamplerFilterMinmaxPropertiesEXTBuilder<'a> {
@@ -27439,16 +30275,6 @@ impl<'a> PhysicalDeviceSamplerFilterMinmaxPropertiesEXTBuilder<'a> {
     ) -> PhysicalDeviceSamplerFilterMinmaxPropertiesEXTBuilder<'a> {
         self.inner.filter_minmax_image_component_mapping =
             filter_minmax_image_component_mapping.into();
-        self
-    }
-    pub fn next<T>(
-        mut self,
-        next: &'a mut T,
-    ) -> PhysicalDeviceSamplerFilterMinmaxPropertiesEXTBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceSamplerFilterMinmaxPropertiesEXT,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceSamplerFilterMinmaxPropertiesEXT {
@@ -27477,6 +30303,11 @@ impl<'a> ::std::ops::Deref for SampleLocationEXTBuilder<'a> {
     type Target = SampleLocationEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for SampleLocationEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> SampleLocationEXTBuilder<'a> {
@@ -27526,12 +30357,25 @@ pub struct SampleLocationsInfoEXTBuilder<'a> {
     inner: SampleLocationsInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsSampleLocationsInfoEXT {}
-unsafe impl ExtendsImageMemoryBarrier for SampleLocationsInfoEXT {}
+unsafe impl ExtendsImageMemoryBarrier for SampleLocationsInfoEXTBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsImageMemoryBarrier for SampleLocationsInfoEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for SampleLocationsInfoEXTBuilder<'a> {
     type Target = SampleLocationsInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for SampleLocationsInfoEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> SampleLocationsInfoEXTBuilder<'a> {
@@ -27555,13 +30399,6 @@ impl<'a> SampleLocationsInfoEXTBuilder<'a> {
     ) -> SampleLocationsInfoEXTBuilder<'a> {
         self.inner.sample_locations_count = sample_locations.len() as _;
         self.inner.p_sample_locations = sample_locations.as_ptr();
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> SampleLocationsInfoEXTBuilder<'a>
-    where
-        T: ExtendsSampleLocationsInfoEXT,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> SampleLocationsInfoEXT {
@@ -27590,6 +30427,11 @@ impl<'a> ::std::ops::Deref for AttachmentSampleLocationsEXTBuilder<'a> {
     type Target = AttachmentSampleLocationsEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for AttachmentSampleLocationsEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> AttachmentSampleLocationsEXTBuilder<'a> {
@@ -27633,6 +30475,11 @@ impl<'a> ::std::ops::Deref for SubpassSampleLocationsEXTBuilder<'a> {
     type Target = SubpassSampleLocationsEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for SubpassSampleLocationsEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> SubpassSampleLocationsEXTBuilder<'a> {
@@ -27685,12 +30532,25 @@ pub struct RenderPassSampleLocationsBeginInfoEXTBuilder<'a> {
     inner: RenderPassSampleLocationsBeginInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsRenderPassSampleLocationsBeginInfoEXT {}
-unsafe impl ExtendsRenderPassBeginInfo for RenderPassSampleLocationsBeginInfoEXT {}
+unsafe impl ExtendsRenderPassBeginInfo for RenderPassSampleLocationsBeginInfoEXTBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsRenderPassBeginInfo for RenderPassSampleLocationsBeginInfoEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for RenderPassSampleLocationsBeginInfoEXTBuilder<'a> {
     type Target = RenderPassSampleLocationsBeginInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for RenderPassSampleLocationsBeginInfoEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> RenderPassSampleLocationsBeginInfoEXTBuilder<'a> {
@@ -27710,13 +30570,6 @@ impl<'a> RenderPassSampleLocationsBeginInfoEXTBuilder<'a> {
     ) -> RenderPassSampleLocationsBeginInfoEXTBuilder<'a> {
         self.inner.post_subpass_sample_locations_count = post_subpass_sample_locations.len() as _;
         self.inner.p_post_subpass_sample_locations = post_subpass_sample_locations.as_ptr();
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> RenderPassSampleLocationsBeginInfoEXTBuilder<'a>
-    where
-        T: ExtendsRenderPassSampleLocationsBeginInfoEXT,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> RenderPassSampleLocationsBeginInfoEXT {
@@ -27753,15 +30606,29 @@ pub struct PipelineSampleLocationsStateCreateInfoEXTBuilder<'a> {
     inner: PipelineSampleLocationsStateCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPipelineSampleLocationsStateCreateInfoEXT {}
+unsafe impl ExtendsPipelineMultisampleStateCreateInfo
+    for PipelineSampleLocationsStateCreateInfoEXTBuilder<'_>
+{
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
 unsafe impl ExtendsPipelineMultisampleStateCreateInfo
     for PipelineSampleLocationsStateCreateInfoEXT
 {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
 }
 impl<'a> ::std::ops::Deref for PipelineSampleLocationsStateCreateInfoEXTBuilder<'a> {
     type Target = PipelineSampleLocationsStateCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PipelineSampleLocationsStateCreateInfoEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PipelineSampleLocationsStateCreateInfoEXTBuilder<'a> {
@@ -27777,13 +30644,6 @@ impl<'a> PipelineSampleLocationsStateCreateInfoEXTBuilder<'a> {
         sample_locations_info: SampleLocationsInfoEXT,
     ) -> PipelineSampleLocationsStateCreateInfoEXTBuilder<'a> {
         self.inner.sample_locations_info = sample_locations_info;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> PipelineSampleLocationsStateCreateInfoEXTBuilder<'a>
-    where
-        T: ExtendsPipelineSampleLocationsStateCreateInfoEXT,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> PipelineSampleLocationsStateCreateInfoEXT {
@@ -27826,12 +30686,27 @@ pub struct PhysicalDeviceSampleLocationsPropertiesEXTBuilder<'a> {
     inner: PhysicalDeviceSampleLocationsPropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceSampleLocationsPropertiesEXT {}
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceSampleLocationsPropertiesEXT {}
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDeviceSampleLocationsPropertiesEXTBuilder<'_>
+{
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceSampleLocationsPropertiesEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceSampleLocationsPropertiesEXTBuilder<'a> {
     type Target = PhysicalDeviceSampleLocationsPropertiesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceSampleLocationsPropertiesEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceSampleLocationsPropertiesEXTBuilder<'a> {
@@ -27870,16 +30745,6 @@ impl<'a> PhysicalDeviceSampleLocationsPropertiesEXTBuilder<'a> {
         self.inner.variable_sample_locations = variable_sample_locations.into();
         self
     }
-    pub fn next<T>(
-        mut self,
-        next: &'a mut T,
-    ) -> PhysicalDeviceSampleLocationsPropertiesEXTBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceSampleLocationsPropertiesEXT,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
-        self
-    }
     pub fn build(self) -> PhysicalDeviceSampleLocationsPropertiesEXT {
         self.inner
     }
@@ -27912,11 +30777,18 @@ pub struct MultisamplePropertiesEXTBuilder<'a> {
     inner: MultisamplePropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsMultisamplePropertiesEXT {}
+pub unsafe trait ExtendsMultisamplePropertiesEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for MultisamplePropertiesEXTBuilder<'a> {
     type Target = MultisamplePropertiesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for MultisamplePropertiesEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> MultisamplePropertiesEXTBuilder<'a> {
@@ -27927,11 +30799,20 @@ impl<'a> MultisamplePropertiesEXTBuilder<'a> {
         self.inner.max_sample_location_grid_size = max_sample_location_grid_size;
         self
     }
-    pub fn next<T>(mut self, next: &'a mut T) -> MultisamplePropertiesEXTBuilder<'a>
-    where
-        T: ExtendsMultisamplePropertiesEXT,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsMultisamplePropertiesEXT>(
+        mut self,
+        next: &'a mut T,
+    ) -> MultisamplePropertiesEXTBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> MultisamplePropertiesEXT {
@@ -27966,12 +30847,25 @@ pub struct SamplerReductionModeCreateInfoEXTBuilder<'a> {
     inner: SamplerReductionModeCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsSamplerReductionModeCreateInfoEXT {}
-unsafe impl ExtendsSamplerCreateInfo for SamplerReductionModeCreateInfoEXT {}
+unsafe impl ExtendsSamplerCreateInfo for SamplerReductionModeCreateInfoEXTBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsSamplerCreateInfo for SamplerReductionModeCreateInfoEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for SamplerReductionModeCreateInfoEXTBuilder<'a> {
     type Target = SamplerReductionModeCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for SamplerReductionModeCreateInfoEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> SamplerReductionModeCreateInfoEXTBuilder<'a> {
@@ -27980,13 +30874,6 @@ impl<'a> SamplerReductionModeCreateInfoEXTBuilder<'a> {
         reduction_mode: SamplerReductionModeEXT,
     ) -> SamplerReductionModeCreateInfoEXTBuilder<'a> {
         self.inner.reduction_mode = reduction_mode;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> SamplerReductionModeCreateInfoEXTBuilder<'a>
-    where
-        T: ExtendsSamplerReductionModeCreateInfoEXT,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> SamplerReductionModeCreateInfoEXT {
@@ -28021,13 +30908,25 @@ pub struct PhysicalDeviceBlendOperationAdvancedFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceBlendOperationAdvancedFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceBlendOperationAdvancedFeaturesEXT {}
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceBlendOperationAdvancedFeaturesEXT {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceBlendOperationAdvancedFeaturesEXT {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceBlendOperationAdvancedFeaturesEXTBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceBlendOperationAdvancedFeaturesEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceBlendOperationAdvancedFeaturesEXTBuilder<'a> {
     type Target = PhysicalDeviceBlendOperationAdvancedFeaturesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceBlendOperationAdvancedFeaturesEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceBlendOperationAdvancedFeaturesEXTBuilder<'a> {
@@ -28036,16 +30935,6 @@ impl<'a> PhysicalDeviceBlendOperationAdvancedFeaturesEXTBuilder<'a> {
         advanced_blend_coherent_operations: bool,
     ) -> PhysicalDeviceBlendOperationAdvancedFeaturesEXTBuilder<'a> {
         self.inner.advanced_blend_coherent_operations = advanced_blend_coherent_operations.into();
-        self
-    }
-    pub fn next<T>(
-        mut self,
-        next: &'a mut T,
-    ) -> PhysicalDeviceBlendOperationAdvancedFeaturesEXTBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceBlendOperationAdvancedFeaturesEXT,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceBlendOperationAdvancedFeaturesEXT {
@@ -28090,12 +30979,27 @@ pub struct PhysicalDeviceBlendOperationAdvancedPropertiesEXTBuilder<'a> {
     inner: PhysicalDeviceBlendOperationAdvancedPropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceBlendOperationAdvancedPropertiesEXT {}
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceBlendOperationAdvancedPropertiesEXT {}
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDeviceBlendOperationAdvancedPropertiesEXTBuilder<'_>
+{
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceBlendOperationAdvancedPropertiesEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceBlendOperationAdvancedPropertiesEXTBuilder<'a> {
     type Target = PhysicalDeviceBlendOperationAdvancedPropertiesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceBlendOperationAdvancedPropertiesEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceBlendOperationAdvancedPropertiesEXTBuilder<'a> {
@@ -28143,16 +31047,6 @@ impl<'a> PhysicalDeviceBlendOperationAdvancedPropertiesEXTBuilder<'a> {
         self.inner.advanced_blend_all_operations = advanced_blend_all_operations.into();
         self
     }
-    pub fn next<T>(
-        mut self,
-        next: &'a mut T,
-    ) -> PhysicalDeviceBlendOperationAdvancedPropertiesEXTBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceBlendOperationAdvancedPropertiesEXT,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
-        self
-    }
     pub fn build(self) -> PhysicalDeviceBlendOperationAdvancedPropertiesEXT {
         self.inner
     }
@@ -28189,15 +31083,29 @@ pub struct PipelineColorBlendAdvancedStateCreateInfoEXTBuilder<'a> {
     inner: PipelineColorBlendAdvancedStateCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPipelineColorBlendAdvancedStateCreateInfoEXT {}
+unsafe impl ExtendsPipelineColorBlendStateCreateInfo
+    for PipelineColorBlendAdvancedStateCreateInfoEXTBuilder<'_>
+{
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
 unsafe impl ExtendsPipelineColorBlendStateCreateInfo
     for PipelineColorBlendAdvancedStateCreateInfoEXT
 {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
 }
 impl<'a> ::std::ops::Deref for PipelineColorBlendAdvancedStateCreateInfoEXTBuilder<'a> {
     type Target = PipelineColorBlendAdvancedStateCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PipelineColorBlendAdvancedStateCreateInfoEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PipelineColorBlendAdvancedStateCreateInfoEXTBuilder<'a> {
@@ -28220,13 +31128,6 @@ impl<'a> PipelineColorBlendAdvancedStateCreateInfoEXTBuilder<'a> {
         blend_overlap: BlendOverlapEXT,
     ) -> PipelineColorBlendAdvancedStateCreateInfoEXTBuilder<'a> {
         self.inner.blend_overlap = blend_overlap;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> PipelineColorBlendAdvancedStateCreateInfoEXTBuilder<'a>
-    where
-        T: ExtendsPipelineColorBlendAdvancedStateCreateInfoEXT,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> PipelineColorBlendAdvancedStateCreateInfoEXT {
@@ -28263,13 +31164,25 @@ pub struct PhysicalDeviceInlineUniformBlockFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceInlineUniformBlockFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceInlineUniformBlockFeaturesEXT {}
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceInlineUniformBlockFeaturesEXT {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceInlineUniformBlockFeaturesEXT {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceInlineUniformBlockFeaturesEXTBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceInlineUniformBlockFeaturesEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceInlineUniformBlockFeaturesEXTBuilder<'a> {
     type Target = PhysicalDeviceInlineUniformBlockFeaturesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceInlineUniformBlockFeaturesEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceInlineUniformBlockFeaturesEXTBuilder<'a> {
@@ -28287,16 +31200,6 @@ impl<'a> PhysicalDeviceInlineUniformBlockFeaturesEXTBuilder<'a> {
         self.inner
             .descriptor_binding_inline_uniform_block_update_after_bind =
             descriptor_binding_inline_uniform_block_update_after_bind.into();
-        self
-    }
-    pub fn next<T>(
-        mut self,
-        next: &'a mut T,
-    ) -> PhysicalDeviceInlineUniformBlockFeaturesEXTBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceInlineUniformBlockFeaturesEXT,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceInlineUniformBlockFeaturesEXT {
@@ -28339,12 +31242,27 @@ pub struct PhysicalDeviceInlineUniformBlockPropertiesEXTBuilder<'a> {
     inner: PhysicalDeviceInlineUniformBlockPropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceInlineUniformBlockPropertiesEXT {}
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceInlineUniformBlockPropertiesEXT {}
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDeviceInlineUniformBlockPropertiesEXTBuilder<'_>
+{
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceInlineUniformBlockPropertiesEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceInlineUniformBlockPropertiesEXTBuilder<'a> {
     type Target = PhysicalDeviceInlineUniformBlockPropertiesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceInlineUniformBlockPropertiesEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceInlineUniformBlockPropertiesEXTBuilder<'a> {
@@ -28389,16 +31307,6 @@ impl<'a> PhysicalDeviceInlineUniformBlockPropertiesEXTBuilder<'a> {
             max_descriptor_set_update_after_bind_inline_uniform_blocks;
         self
     }
-    pub fn next<T>(
-        mut self,
-        next: &'a mut T,
-    ) -> PhysicalDeviceInlineUniformBlockPropertiesEXTBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceInlineUniformBlockPropertiesEXT,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
-        self
-    }
     pub fn build(self) -> PhysicalDeviceInlineUniformBlockPropertiesEXT {
         self.inner
     }
@@ -28433,25 +31341,31 @@ pub struct WriteDescriptorSetInlineUniformBlockEXTBuilder<'a> {
     inner: WriteDescriptorSetInlineUniformBlockEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsWriteDescriptorSetInlineUniformBlockEXT {}
-unsafe impl ExtendsWriteDescriptorSet for WriteDescriptorSetInlineUniformBlockEXT {}
+unsafe impl ExtendsWriteDescriptorSet for WriteDescriptorSetInlineUniformBlockEXTBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsWriteDescriptorSet for WriteDescriptorSetInlineUniformBlockEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for WriteDescriptorSetInlineUniformBlockEXTBuilder<'a> {
     type Target = WriteDescriptorSetInlineUniformBlockEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+impl<'a> ::std::ops::DerefMut for WriteDescriptorSetInlineUniformBlockEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
 impl<'a> WriteDescriptorSetInlineUniformBlockEXTBuilder<'a> {
     pub fn data(mut self, data: &'a [u8]) -> WriteDescriptorSetInlineUniformBlockEXTBuilder<'a> {
         self.inner.data_size = data.len() as _;
         self.inner.p_data = data.as_ptr() as *const c_void;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> WriteDescriptorSetInlineUniformBlockEXTBuilder<'a>
-    where
-        T: ExtendsWriteDescriptorSetInlineUniformBlockEXT,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> WriteDescriptorSetInlineUniformBlockEXT {
@@ -28486,12 +31400,27 @@ pub struct DescriptorPoolInlineUniformBlockCreateInfoEXTBuilder<'a> {
     inner: DescriptorPoolInlineUniformBlockCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDescriptorPoolInlineUniformBlockCreateInfoEXT {}
-unsafe impl ExtendsDescriptorPoolCreateInfo for DescriptorPoolInlineUniformBlockCreateInfoEXT {}
+unsafe impl ExtendsDescriptorPoolCreateInfo
+    for DescriptorPoolInlineUniformBlockCreateInfoEXTBuilder<'_>
+{
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsDescriptorPoolCreateInfo for DescriptorPoolInlineUniformBlockCreateInfoEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for DescriptorPoolInlineUniformBlockCreateInfoEXTBuilder<'a> {
     type Target = DescriptorPoolInlineUniformBlockCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DescriptorPoolInlineUniformBlockCreateInfoEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DescriptorPoolInlineUniformBlockCreateInfoEXTBuilder<'a> {
@@ -28500,16 +31429,6 @@ impl<'a> DescriptorPoolInlineUniformBlockCreateInfoEXTBuilder<'a> {
         max_inline_uniform_block_bindings: u32,
     ) -> DescriptorPoolInlineUniformBlockCreateInfoEXTBuilder<'a> {
         self.inner.max_inline_uniform_block_bindings = max_inline_uniform_block_bindings;
-        self
-    }
-    pub fn next<T>(
-        mut self,
-        next: &'a T,
-    ) -> DescriptorPoolInlineUniformBlockCreateInfoEXTBuilder<'a>
-    where
-        T: ExtendsDescriptorPoolInlineUniformBlockCreateInfoEXT,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DescriptorPoolInlineUniformBlockCreateInfoEXT {
@@ -28552,15 +31471,29 @@ pub struct PipelineCoverageModulationStateCreateInfoNVBuilder<'a> {
     inner: PipelineCoverageModulationStateCreateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPipelineCoverageModulationStateCreateInfoNV {}
+unsafe impl ExtendsPipelineMultisampleStateCreateInfo
+    for PipelineCoverageModulationStateCreateInfoNVBuilder<'_>
+{
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
 unsafe impl ExtendsPipelineMultisampleStateCreateInfo
     for PipelineCoverageModulationStateCreateInfoNV
 {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
 }
 impl<'a> ::std::ops::Deref for PipelineCoverageModulationStateCreateInfoNVBuilder<'a> {
     type Target = PipelineCoverageModulationStateCreateInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PipelineCoverageModulationStateCreateInfoNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PipelineCoverageModulationStateCreateInfoNVBuilder<'a> {
@@ -28591,13 +31524,6 @@ impl<'a> PipelineCoverageModulationStateCreateInfoNVBuilder<'a> {
     ) -> PipelineCoverageModulationStateCreateInfoNVBuilder<'a> {
         self.inner.coverage_modulation_table_count = coverage_modulation_table.len() as _;
         self.inner.p_coverage_modulation_table = coverage_modulation_table.as_ptr();
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> PipelineCoverageModulationStateCreateInfoNVBuilder<'a>
-    where
-        T: ExtendsPipelineCoverageModulationStateCreateInfoNV,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> PipelineCoverageModulationStateCreateInfoNV {
@@ -28634,14 +31560,25 @@ pub struct ImageFormatListCreateInfoKHRBuilder<'a> {
     inner: ImageFormatListCreateInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsImageFormatListCreateInfoKHR {}
-unsafe impl ExtendsImageCreateInfo for ImageFormatListCreateInfoKHR {}
-unsafe impl ExtendsSwapchainCreateInfoKHR for ImageFormatListCreateInfoKHR {}
-unsafe impl ExtendsPhysicalDeviceImageFormatInfo2 for ImageFormatListCreateInfoKHR {}
+unsafe impl ExtendsImageCreateInfo for ImageFormatListCreateInfoKHRBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsImageCreateInfo for ImageFormatListCreateInfoKHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for ImageFormatListCreateInfoKHRBuilder<'a> {
     type Target = ImageFormatListCreateInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ImageFormatListCreateInfoKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ImageFormatListCreateInfoKHRBuilder<'a> {
@@ -28651,13 +31588,6 @@ impl<'a> ImageFormatListCreateInfoKHRBuilder<'a> {
     ) -> ImageFormatListCreateInfoKHRBuilder<'a> {
         self.inner.view_format_count = view_formats.len() as _;
         self.inner.p_view_formats = view_formats.as_ptr();
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> ImageFormatListCreateInfoKHRBuilder<'a>
-    where
-        T: ExtendsImageFormatListCreateInfoKHR,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ImageFormatListCreateInfoKHR {
@@ -28696,11 +31626,18 @@ pub struct ValidationCacheCreateInfoEXTBuilder<'a> {
     inner: ValidationCacheCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsValidationCacheCreateInfoEXT {}
+pub unsafe trait ExtendsValidationCacheCreateInfoEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for ValidationCacheCreateInfoEXTBuilder<'a> {
     type Target = ValidationCacheCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ValidationCacheCreateInfoEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ValidationCacheCreateInfoEXTBuilder<'a> {
@@ -28719,11 +31656,20 @@ impl<'a> ValidationCacheCreateInfoEXTBuilder<'a> {
         self.inner.p_initial_data = initial_data.as_ptr() as *const c_void;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> ValidationCacheCreateInfoEXTBuilder<'a>
-    where
-        T: ExtendsValidationCacheCreateInfoEXT,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsValidationCacheCreateInfoEXT>(
+        mut self,
+        next: &'a mut T,
+    ) -> ValidationCacheCreateInfoEXTBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> ValidationCacheCreateInfoEXT {
@@ -28758,12 +31704,25 @@ pub struct ShaderModuleValidationCacheCreateInfoEXTBuilder<'a> {
     inner: ShaderModuleValidationCacheCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsShaderModuleValidationCacheCreateInfoEXT {}
-unsafe impl ExtendsShaderModuleCreateInfo for ShaderModuleValidationCacheCreateInfoEXT {}
+unsafe impl ExtendsShaderModuleCreateInfo for ShaderModuleValidationCacheCreateInfoEXTBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsShaderModuleCreateInfo for ShaderModuleValidationCacheCreateInfoEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for ShaderModuleValidationCacheCreateInfoEXTBuilder<'a> {
     type Target = ShaderModuleValidationCacheCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ShaderModuleValidationCacheCreateInfoEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ShaderModuleValidationCacheCreateInfoEXTBuilder<'a> {
@@ -28772,13 +31731,6 @@ impl<'a> ShaderModuleValidationCacheCreateInfoEXTBuilder<'a> {
         validation_cache: ValidationCacheEXT,
     ) -> ShaderModuleValidationCacheCreateInfoEXTBuilder<'a> {
         self.inner.validation_cache = validation_cache;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> ShaderModuleValidationCacheCreateInfoEXTBuilder<'a>
-    where
-        T: ExtendsShaderModuleValidationCacheCreateInfoEXT,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ShaderModuleValidationCacheCreateInfoEXT {
@@ -28815,12 +31767,25 @@ pub struct PhysicalDeviceMaintenance3PropertiesBuilder<'a> {
     inner: PhysicalDeviceMaintenance3Properties,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceMaintenance3Properties {}
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMaintenance3Properties {}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMaintenance3PropertiesBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMaintenance3Properties {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceMaintenance3PropertiesBuilder<'a> {
     type Target = PhysicalDeviceMaintenance3Properties;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceMaintenance3PropertiesBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceMaintenance3PropertiesBuilder<'a> {
@@ -28836,13 +31801,6 @@ impl<'a> PhysicalDeviceMaintenance3PropertiesBuilder<'a> {
         max_memory_allocation_size: DeviceSize,
     ) -> PhysicalDeviceMaintenance3PropertiesBuilder<'a> {
         self.inner.max_memory_allocation_size = max_memory_allocation_size;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceMaintenance3PropertiesBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceMaintenance3Properties,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceMaintenance3Properties {
@@ -28877,11 +31835,18 @@ pub struct DescriptorSetLayoutSupportBuilder<'a> {
     inner: DescriptorSetLayoutSupport,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDescriptorSetLayoutSupport {}
+pub unsafe trait ExtendsDescriptorSetLayoutSupport {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for DescriptorSetLayoutSupportBuilder<'a> {
     type Target = DescriptorSetLayoutSupport;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DescriptorSetLayoutSupportBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DescriptorSetLayoutSupportBuilder<'a> {
@@ -28889,11 +31854,20 @@ impl<'a> DescriptorSetLayoutSupportBuilder<'a> {
         self.inner.supported = supported.into();
         self
     }
-    pub fn next<T>(mut self, next: &'a mut T) -> DescriptorSetLayoutSupportBuilder<'a>
-    where
-        T: ExtendsDescriptorSetLayoutSupport,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsDescriptorSetLayoutSupport>(
+        mut self,
+        next: &'a mut T,
+    ) -> DescriptorSetLayoutSupportBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> DescriptorSetLayoutSupport {
@@ -28928,13 +31902,25 @@ pub struct PhysicalDeviceShaderDrawParameterFeaturesBuilder<'a> {
     inner: PhysicalDeviceShaderDrawParameterFeatures,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceShaderDrawParameterFeatures {}
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderDrawParameterFeatures {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderDrawParameterFeatures {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderDrawParameterFeaturesBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderDrawParameterFeatures {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceShaderDrawParameterFeaturesBuilder<'a> {
     type Target = PhysicalDeviceShaderDrawParameterFeatures;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceShaderDrawParameterFeaturesBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceShaderDrawParameterFeaturesBuilder<'a> {
@@ -28943,16 +31929,6 @@ impl<'a> PhysicalDeviceShaderDrawParameterFeaturesBuilder<'a> {
         shader_draw_parameters: bool,
     ) -> PhysicalDeviceShaderDrawParameterFeaturesBuilder<'a> {
         self.inner.shader_draw_parameters = shader_draw_parameters.into();
-        self
-    }
-    pub fn next<T>(
-        mut self,
-        next: &'a mut T,
-    ) -> PhysicalDeviceShaderDrawParameterFeaturesBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceShaderDrawParameterFeatures,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceShaderDrawParameterFeatures {
@@ -28989,13 +31965,25 @@ pub struct PhysicalDeviceFloat16Int8FeaturesKHRBuilder<'a> {
     inner: PhysicalDeviceFloat16Int8FeaturesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceFloat16Int8FeaturesKHR {}
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceFloat16Int8FeaturesKHR {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFloat16Int8FeaturesKHR {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFloat16Int8FeaturesKHRBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFloat16Int8FeaturesKHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceFloat16Int8FeaturesKHRBuilder<'a> {
     type Target = PhysicalDeviceFloat16Int8FeaturesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceFloat16Int8FeaturesKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceFloat16Int8FeaturesKHRBuilder<'a> {
@@ -29011,13 +31999,6 @@ impl<'a> PhysicalDeviceFloat16Int8FeaturesKHRBuilder<'a> {
         shader_int8: bool,
     ) -> PhysicalDeviceFloat16Int8FeaturesKHRBuilder<'a> {
         self.inner.shader_int8 = shader_int8.into();
-        self
-    }
-    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceFloat16Int8FeaturesKHRBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceFloat16Int8FeaturesKHR,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceFloat16Int8FeaturesKHR {
@@ -29084,12 +32065,27 @@ pub struct PhysicalDeviceFloatControlsPropertiesKHRBuilder<'a> {
     inner: PhysicalDeviceFloatControlsPropertiesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceFloatControlsPropertiesKHR {}
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceFloatControlsPropertiesKHR {}
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDeviceFloatControlsPropertiesKHRBuilder<'_>
+{
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceFloatControlsPropertiesKHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceFloatControlsPropertiesKHRBuilder<'a> {
     type Target = PhysicalDeviceFloatControlsPropertiesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceFloatControlsPropertiesKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceFloatControlsPropertiesKHRBuilder<'a> {
@@ -29215,13 +32211,6 @@ impl<'a> PhysicalDeviceFloatControlsPropertiesKHRBuilder<'a> {
         self.inner.shader_rounding_mode_rtz_float64 = shader_rounding_mode_rtz_float64.into();
         self
     }
-    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceFloatControlsPropertiesKHRBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceFloatControlsPropertiesKHR,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
-        self
-    }
     pub fn build(self) -> PhysicalDeviceFloatControlsPropertiesKHR {
         self.inner
     }
@@ -29260,11 +32249,18 @@ pub struct NativeBufferANDROIDBuilder<'a> {
     inner: NativeBufferANDROID,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsNativeBufferANDROID {}
+pub unsafe trait ExtendsNativeBufferANDROID {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for NativeBufferANDROIDBuilder<'a> {
     type Target = NativeBufferANDROID;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for NativeBufferANDROIDBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> NativeBufferANDROIDBuilder<'a> {
@@ -29284,11 +32280,20 @@ impl<'a> NativeBufferANDROIDBuilder<'a> {
         self.inner.usage = usage;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> NativeBufferANDROIDBuilder<'a>
-    where
-        T: ExtendsNativeBufferANDROID,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsNativeBufferANDROID>(
+        mut self,
+        next: &'a mut T,
+    ) -> NativeBufferANDROIDBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> NativeBufferANDROID {
@@ -29320,6 +32325,11 @@ impl<'a> ::std::ops::Deref for ShaderResourceUsageAMDBuilder<'a> {
     type Target = ShaderResourceUsageAMD;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ShaderResourceUsageAMDBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ShaderResourceUsageAMDBuilder<'a> {
@@ -29396,6 +32406,11 @@ impl<'a> ::std::ops::Deref for ShaderStatisticsInfoAMDBuilder<'a> {
     type Target = ShaderStatisticsInfoAMD;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ShaderStatisticsInfoAMDBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ShaderStatisticsInfoAMDBuilder<'a> {
@@ -29480,12 +32495,25 @@ pub struct DeviceQueueGlobalPriorityCreateInfoEXTBuilder<'a> {
     inner: DeviceQueueGlobalPriorityCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDeviceQueueGlobalPriorityCreateInfoEXT {}
-unsafe impl ExtendsDeviceQueueCreateInfo for DeviceQueueGlobalPriorityCreateInfoEXT {}
+unsafe impl ExtendsDeviceQueueCreateInfo for DeviceQueueGlobalPriorityCreateInfoEXTBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsDeviceQueueCreateInfo for DeviceQueueGlobalPriorityCreateInfoEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for DeviceQueueGlobalPriorityCreateInfoEXTBuilder<'a> {
     type Target = DeviceQueueGlobalPriorityCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DeviceQueueGlobalPriorityCreateInfoEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DeviceQueueGlobalPriorityCreateInfoEXTBuilder<'a> {
@@ -29494,13 +32522,6 @@ impl<'a> DeviceQueueGlobalPriorityCreateInfoEXTBuilder<'a> {
         global_priority: QueueGlobalPriorityEXT,
     ) -> DeviceQueueGlobalPriorityCreateInfoEXTBuilder<'a> {
         self.inner.global_priority = global_priority;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> DeviceQueueGlobalPriorityCreateInfoEXTBuilder<'a>
-    where
-        T: ExtendsDeviceQueueGlobalPriorityCreateInfoEXT,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DeviceQueueGlobalPriorityCreateInfoEXT {
@@ -29539,11 +32560,18 @@ pub struct DebugUtilsObjectNameInfoEXTBuilder<'a> {
     inner: DebugUtilsObjectNameInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDebugUtilsObjectNameInfoEXT {}
+pub unsafe trait ExtendsDebugUtilsObjectNameInfoEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for DebugUtilsObjectNameInfoEXTBuilder<'a> {
     type Target = DebugUtilsObjectNameInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DebugUtilsObjectNameInfoEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DebugUtilsObjectNameInfoEXTBuilder<'a> {
@@ -29565,11 +32593,20 @@ impl<'a> DebugUtilsObjectNameInfoEXTBuilder<'a> {
         self.inner.p_object_name = object_name.as_ptr();
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> DebugUtilsObjectNameInfoEXTBuilder<'a>
-    where
-        T: ExtendsDebugUtilsObjectNameInfoEXT,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsDebugUtilsObjectNameInfoEXT>(
+        mut self,
+        next: &'a mut T,
+    ) -> DebugUtilsObjectNameInfoEXTBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> DebugUtilsObjectNameInfoEXT {
@@ -29612,11 +32649,18 @@ pub struct DebugUtilsObjectTagInfoEXTBuilder<'a> {
     inner: DebugUtilsObjectTagInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDebugUtilsObjectTagInfoEXT {}
+pub unsafe trait ExtendsDebugUtilsObjectTagInfoEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for DebugUtilsObjectTagInfoEXTBuilder<'a> {
     type Target = DebugUtilsObjectTagInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DebugUtilsObjectTagInfoEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DebugUtilsObjectTagInfoEXTBuilder<'a> {
@@ -29637,11 +32681,20 @@ impl<'a> DebugUtilsObjectTagInfoEXTBuilder<'a> {
         self.inner.p_tag = tag.as_ptr() as *const c_void;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> DebugUtilsObjectTagInfoEXTBuilder<'a>
-    where
-        T: ExtendsDebugUtilsObjectTagInfoEXT,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsDebugUtilsObjectTagInfoEXT>(
+        mut self,
+        next: &'a mut T,
+    ) -> DebugUtilsObjectTagInfoEXTBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> DebugUtilsObjectTagInfoEXT {
@@ -29678,11 +32731,18 @@ pub struct DebugUtilsLabelEXTBuilder<'a> {
     inner: DebugUtilsLabelEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDebugUtilsLabelEXT {}
+pub unsafe trait ExtendsDebugUtilsLabelEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for DebugUtilsLabelEXTBuilder<'a> {
     type Target = DebugUtilsLabelEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DebugUtilsLabelEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DebugUtilsLabelEXTBuilder<'a> {
@@ -29694,11 +32754,20 @@ impl<'a> DebugUtilsLabelEXTBuilder<'a> {
         self.inner.color = color;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> DebugUtilsLabelEXTBuilder<'a>
-    where
-        T: ExtendsDebugUtilsLabelEXT,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsDebugUtilsLabelEXT>(
+        mut self,
+        next: &'a mut T,
+    ) -> DebugUtilsLabelEXTBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> DebugUtilsLabelEXT {
@@ -29757,12 +32826,25 @@ pub struct DebugUtilsMessengerCreateInfoEXTBuilder<'a> {
     inner: DebugUtilsMessengerCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDebugUtilsMessengerCreateInfoEXT {}
-unsafe impl ExtendsInstanceCreateInfo for DebugUtilsMessengerCreateInfoEXT {}
+unsafe impl ExtendsInstanceCreateInfo for DebugUtilsMessengerCreateInfoEXTBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsInstanceCreateInfo for DebugUtilsMessengerCreateInfoEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for DebugUtilsMessengerCreateInfoEXTBuilder<'a> {
     type Target = DebugUtilsMessengerCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DebugUtilsMessengerCreateInfoEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DebugUtilsMessengerCreateInfoEXTBuilder<'a> {
@@ -29799,13 +32881,6 @@ impl<'a> DebugUtilsMessengerCreateInfoEXTBuilder<'a> {
         user_data: *mut c_void,
     ) -> DebugUtilsMessengerCreateInfoEXTBuilder<'a> {
         self.inner.p_user_data = user_data;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> DebugUtilsMessengerCreateInfoEXTBuilder<'a>
-    where
-        T: ExtendsDebugUtilsMessengerCreateInfoEXT,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DebugUtilsMessengerCreateInfoEXT {
@@ -29858,11 +32933,18 @@ pub struct DebugUtilsMessengerCallbackDataEXTBuilder<'a> {
     inner: DebugUtilsMessengerCallbackDataEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDebugUtilsMessengerCallbackDataEXT {}
+pub unsafe trait ExtendsDebugUtilsMessengerCallbackDataEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for DebugUtilsMessengerCallbackDataEXTBuilder<'a> {
     type Target = DebugUtilsMessengerCallbackDataEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DebugUtilsMessengerCallbackDataEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DebugUtilsMessengerCallbackDataEXTBuilder<'a> {
@@ -29918,11 +33000,20 @@ impl<'a> DebugUtilsMessengerCallbackDataEXTBuilder<'a> {
         self.inner.p_objects = objects.as_ptr();
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> DebugUtilsMessengerCallbackDataEXTBuilder<'a>
-    where
-        T: ExtendsDebugUtilsMessengerCallbackDataEXT,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsDebugUtilsMessengerCallbackDataEXT>(
+        mut self,
+        next: &'a mut T,
+    ) -> DebugUtilsMessengerCallbackDataEXTBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> DebugUtilsMessengerCallbackDataEXT {
@@ -29959,12 +33050,25 @@ pub struct ImportMemoryHostPointerInfoEXTBuilder<'a> {
     inner: ImportMemoryHostPointerInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsImportMemoryHostPointerInfoEXT {}
-unsafe impl ExtendsMemoryAllocateInfo for ImportMemoryHostPointerInfoEXT {}
+unsafe impl ExtendsMemoryAllocateInfo for ImportMemoryHostPointerInfoEXTBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsMemoryAllocateInfo for ImportMemoryHostPointerInfoEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for ImportMemoryHostPointerInfoEXTBuilder<'a> {
     type Target = ImportMemoryHostPointerInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ImportMemoryHostPointerInfoEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ImportMemoryHostPointerInfoEXTBuilder<'a> {
@@ -29980,13 +33084,6 @@ impl<'a> ImportMemoryHostPointerInfoEXTBuilder<'a> {
         host_pointer: *mut c_void,
     ) -> ImportMemoryHostPointerInfoEXTBuilder<'a> {
         self.inner.p_host_pointer = host_pointer;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> ImportMemoryHostPointerInfoEXTBuilder<'a>
-    where
-        T: ExtendsImportMemoryHostPointerInfoEXT,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ImportMemoryHostPointerInfoEXT {
@@ -30021,11 +33118,18 @@ pub struct MemoryHostPointerPropertiesEXTBuilder<'a> {
     inner: MemoryHostPointerPropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsMemoryHostPointerPropertiesEXT {}
+pub unsafe trait ExtendsMemoryHostPointerPropertiesEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for MemoryHostPointerPropertiesEXTBuilder<'a> {
     type Target = MemoryHostPointerPropertiesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for MemoryHostPointerPropertiesEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> MemoryHostPointerPropertiesEXTBuilder<'a> {
@@ -30036,11 +33140,20 @@ impl<'a> MemoryHostPointerPropertiesEXTBuilder<'a> {
         self.inner.memory_type_bits = memory_type_bits;
         self
     }
-    pub fn next<T>(mut self, next: &'a mut T) -> MemoryHostPointerPropertiesEXTBuilder<'a>
-    where
-        T: ExtendsMemoryHostPointerPropertiesEXT,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsMemoryHostPointerPropertiesEXT>(
+        mut self,
+        next: &'a mut T,
+    ) -> MemoryHostPointerPropertiesEXTBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> MemoryHostPointerPropertiesEXT {
@@ -30075,12 +33188,27 @@ pub struct PhysicalDeviceExternalMemoryHostPropertiesEXTBuilder<'a> {
     inner: PhysicalDeviceExternalMemoryHostPropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceExternalMemoryHostPropertiesEXT {}
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceExternalMemoryHostPropertiesEXT {}
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDeviceExternalMemoryHostPropertiesEXTBuilder<'_>
+{
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceExternalMemoryHostPropertiesEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceExternalMemoryHostPropertiesEXTBuilder<'a> {
     type Target = PhysicalDeviceExternalMemoryHostPropertiesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceExternalMemoryHostPropertiesEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceExternalMemoryHostPropertiesEXTBuilder<'a> {
@@ -30089,16 +33217,6 @@ impl<'a> PhysicalDeviceExternalMemoryHostPropertiesEXTBuilder<'a> {
         min_imported_host_pointer_alignment: DeviceSize,
     ) -> PhysicalDeviceExternalMemoryHostPropertiesEXTBuilder<'a> {
         self.inner.min_imported_host_pointer_alignment = min_imported_host_pointer_alignment;
-        self
-    }
-    pub fn next<T>(
-        mut self,
-        next: &'a mut T,
-    ) -> PhysicalDeviceExternalMemoryHostPropertiesEXTBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceExternalMemoryHostPropertiesEXT,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceExternalMemoryHostPropertiesEXT {
@@ -30149,15 +33267,29 @@ pub struct PhysicalDeviceConservativeRasterizationPropertiesEXTBuilder<'a> {
     inner: PhysicalDeviceConservativeRasterizationPropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceConservativeRasterizationPropertiesEXT {}
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDeviceConservativeRasterizationPropertiesEXTBuilder<'_>
+{
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
 unsafe impl ExtendsPhysicalDeviceProperties2
     for PhysicalDeviceConservativeRasterizationPropertiesEXT
 {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
 }
 impl<'a> ::std::ops::Deref for PhysicalDeviceConservativeRasterizationPropertiesEXTBuilder<'a> {
     type Target = PhysicalDeviceConservativeRasterizationPropertiesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceConservativeRasterizationPropertiesEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceConservativeRasterizationPropertiesEXTBuilder<'a> {
@@ -30229,16 +33361,6 @@ impl<'a> PhysicalDeviceConservativeRasterizationPropertiesEXTBuilder<'a> {
             conservative_rasterization_post_depth_coverage.into();
         self
     }
-    pub fn next<T>(
-        mut self,
-        next: &'a mut T,
-    ) -> PhysicalDeviceConservativeRasterizationPropertiesEXTBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceConservativeRasterizationPropertiesEXT,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
-        self
-    }
     pub fn build(self) -> PhysicalDeviceConservativeRasterizationPropertiesEXT {
         self.inner
     }
@@ -30271,11 +33393,18 @@ pub struct CalibratedTimestampInfoEXTBuilder<'a> {
     inner: CalibratedTimestampInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsCalibratedTimestampInfoEXT {}
+pub unsafe trait ExtendsCalibratedTimestampInfoEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for CalibratedTimestampInfoEXTBuilder<'a> {
     type Target = CalibratedTimestampInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for CalibratedTimestampInfoEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> CalibratedTimestampInfoEXTBuilder<'a> {
@@ -30286,11 +33415,20 @@ impl<'a> CalibratedTimestampInfoEXTBuilder<'a> {
         self.inner.time_domain = time_domain;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> CalibratedTimestampInfoEXTBuilder<'a>
-    where
-        T: ExtendsCalibratedTimestampInfoEXT,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsCalibratedTimestampInfoEXT>(
+        mut self,
+        next: &'a mut T,
+    ) -> CalibratedTimestampInfoEXTBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> CalibratedTimestampInfoEXT {
@@ -30351,12 +33489,25 @@ pub struct PhysicalDeviceShaderCorePropertiesAMDBuilder<'a> {
     inner: PhysicalDeviceShaderCorePropertiesAMD,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceShaderCorePropertiesAMD {}
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceShaderCorePropertiesAMD {}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceShaderCorePropertiesAMDBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceShaderCorePropertiesAMD {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceShaderCorePropertiesAMDBuilder<'a> {
     type Target = PhysicalDeviceShaderCorePropertiesAMD;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceShaderCorePropertiesAMDBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceShaderCorePropertiesAMDBuilder<'a> {
@@ -30458,13 +33609,6 @@ impl<'a> PhysicalDeviceShaderCorePropertiesAMDBuilder<'a> {
         self.inner.vgpr_allocation_granularity = vgpr_allocation_granularity;
         self
     }
-    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceShaderCorePropertiesAMDBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceShaderCorePropertiesAMD,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
-        self
-    }
     pub fn build(self) -> PhysicalDeviceShaderCorePropertiesAMD {
         self.inner
     }
@@ -30501,15 +33645,29 @@ pub struct PipelineRasterizationConservativeStateCreateInfoEXTBuilder<'a> {
     inner: PipelineRasterizationConservativeStateCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPipelineRasterizationConservativeStateCreateInfoEXT {}
+unsafe impl ExtendsPipelineRasterizationStateCreateInfo
+    for PipelineRasterizationConservativeStateCreateInfoEXTBuilder<'_>
+{
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
 unsafe impl ExtendsPipelineRasterizationStateCreateInfo
     for PipelineRasterizationConservativeStateCreateInfoEXT
 {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
 }
 impl<'a> ::std::ops::Deref for PipelineRasterizationConservativeStateCreateInfoEXTBuilder<'a> {
     type Target = PipelineRasterizationConservativeStateCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PipelineRasterizationConservativeStateCreateInfoEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PipelineRasterizationConservativeStateCreateInfoEXTBuilder<'a> {
@@ -30532,16 +33690,6 @@ impl<'a> PipelineRasterizationConservativeStateCreateInfoEXTBuilder<'a> {
         extra_primitive_overestimation_size: f32,
     ) -> PipelineRasterizationConservativeStateCreateInfoEXTBuilder<'a> {
         self.inner.extra_primitive_overestimation_size = extra_primitive_overestimation_size;
-        self
-    }
-    pub fn next<T>(
-        mut self,
-        next: &'a T,
-    ) -> PipelineRasterizationConservativeStateCreateInfoEXTBuilder<'a>
-    where
-        T: ExtendsPipelineRasterizationConservativeStateCreateInfoEXT,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> PipelineRasterizationConservativeStateCreateInfoEXT {
@@ -30614,13 +33762,25 @@ pub struct PhysicalDeviceDescriptorIndexingFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceDescriptorIndexingFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceDescriptorIndexingFeaturesEXT {}
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceDescriptorIndexingFeaturesEXT {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDescriptorIndexingFeaturesEXT {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDescriptorIndexingFeaturesEXTBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceDescriptorIndexingFeaturesEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceDescriptorIndexingFeaturesEXTBuilder<'a> {
     type Target = PhysicalDeviceDescriptorIndexingFeaturesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceDescriptorIndexingFeaturesEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceDescriptorIndexingFeaturesEXTBuilder<'a> {
@@ -30793,16 +33953,6 @@ impl<'a> PhysicalDeviceDescriptorIndexingFeaturesEXTBuilder<'a> {
         self.inner.runtime_descriptor_array = runtime_descriptor_array.into();
         self
     }
-    pub fn next<T>(
-        mut self,
-        next: &'a mut T,
-    ) -> PhysicalDeviceDescriptorIndexingFeaturesEXTBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceDescriptorIndexingFeaturesEXT,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
-        self
-    }
     pub fn build(self) -> PhysicalDeviceDescriptorIndexingFeaturesEXT {
         self.inner
     }
@@ -30879,12 +34029,27 @@ pub struct PhysicalDeviceDescriptorIndexingPropertiesEXTBuilder<'a> {
     inner: PhysicalDeviceDescriptorIndexingPropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceDescriptorIndexingPropertiesEXT {}
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceDescriptorIndexingPropertiesEXT {}
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDeviceDescriptorIndexingPropertiesEXTBuilder<'_>
+{
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceDescriptorIndexingPropertiesEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceDescriptorIndexingPropertiesEXTBuilder<'a> {
     type Target = PhysicalDeviceDescriptorIndexingPropertiesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceDescriptorIndexingPropertiesEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceDescriptorIndexingPropertiesEXTBuilder<'a> {
@@ -31089,16 +34254,6 @@ impl<'a> PhysicalDeviceDescriptorIndexingPropertiesEXTBuilder<'a> {
             max_descriptor_set_update_after_bind_input_attachments;
         self
     }
-    pub fn next<T>(
-        mut self,
-        next: &'a mut T,
-    ) -> PhysicalDeviceDescriptorIndexingPropertiesEXTBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceDescriptorIndexingPropertiesEXT,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
-        self
-    }
     pub fn build(self) -> PhysicalDeviceDescriptorIndexingPropertiesEXT {
         self.inner
     }
@@ -31133,12 +34288,27 @@ pub struct DescriptorSetLayoutBindingFlagsCreateInfoEXTBuilder<'a> {
     inner: DescriptorSetLayoutBindingFlagsCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDescriptorSetLayoutBindingFlagsCreateInfoEXT {}
-unsafe impl ExtendsDescriptorSetLayoutCreateInfo for DescriptorSetLayoutBindingFlagsCreateInfoEXT {}
+unsafe impl ExtendsDescriptorSetLayoutCreateInfo
+    for DescriptorSetLayoutBindingFlagsCreateInfoEXTBuilder<'_>
+{
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsDescriptorSetLayoutCreateInfo for DescriptorSetLayoutBindingFlagsCreateInfoEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for DescriptorSetLayoutBindingFlagsCreateInfoEXTBuilder<'a> {
     type Target = DescriptorSetLayoutBindingFlagsCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DescriptorSetLayoutBindingFlagsCreateInfoEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DescriptorSetLayoutBindingFlagsCreateInfoEXTBuilder<'a> {
@@ -31148,13 +34318,6 @@ impl<'a> DescriptorSetLayoutBindingFlagsCreateInfoEXTBuilder<'a> {
     ) -> DescriptorSetLayoutBindingFlagsCreateInfoEXTBuilder<'a> {
         self.inner.binding_count = binding_flags.len() as _;
         self.inner.p_binding_flags = binding_flags.as_ptr();
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> DescriptorSetLayoutBindingFlagsCreateInfoEXTBuilder<'a>
-    where
-        T: ExtendsDescriptorSetLayoutBindingFlagsCreateInfoEXT,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DescriptorSetLayoutBindingFlagsCreateInfoEXT {
@@ -31191,15 +34354,29 @@ pub struct DescriptorSetVariableDescriptorCountAllocateInfoEXTBuilder<'a> {
     inner: DescriptorSetVariableDescriptorCountAllocateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDescriptorSetVariableDescriptorCountAllocateInfoEXT {}
+unsafe impl ExtendsDescriptorSetAllocateInfo
+    for DescriptorSetVariableDescriptorCountAllocateInfoEXTBuilder<'_>
+{
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
 unsafe impl ExtendsDescriptorSetAllocateInfo
     for DescriptorSetVariableDescriptorCountAllocateInfoEXT
 {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
 }
 impl<'a> ::std::ops::Deref for DescriptorSetVariableDescriptorCountAllocateInfoEXTBuilder<'a> {
     type Target = DescriptorSetVariableDescriptorCountAllocateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DescriptorSetVariableDescriptorCountAllocateInfoEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DescriptorSetVariableDescriptorCountAllocateInfoEXTBuilder<'a> {
@@ -31209,16 +34386,6 @@ impl<'a> DescriptorSetVariableDescriptorCountAllocateInfoEXTBuilder<'a> {
     ) -> DescriptorSetVariableDescriptorCountAllocateInfoEXTBuilder<'a> {
         self.inner.descriptor_set_count = descriptor_counts.len() as _;
         self.inner.p_descriptor_counts = descriptor_counts.as_ptr();
-        self
-    }
-    pub fn next<T>(
-        mut self,
-        next: &'a T,
-    ) -> DescriptorSetVariableDescriptorCountAllocateInfoEXTBuilder<'a>
-    where
-        T: ExtendsDescriptorSetVariableDescriptorCountAllocateInfoEXT,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DescriptorSetVariableDescriptorCountAllocateInfoEXT {
@@ -31253,15 +34420,29 @@ pub struct DescriptorSetVariableDescriptorCountLayoutSupportEXTBuilder<'a> {
     inner: DescriptorSetVariableDescriptorCountLayoutSupportEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDescriptorSetVariableDescriptorCountLayoutSupportEXT {}
+unsafe impl ExtendsDescriptorSetLayoutSupport
+    for DescriptorSetVariableDescriptorCountLayoutSupportEXTBuilder<'_>
+{
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
 unsafe impl ExtendsDescriptorSetLayoutSupport
     for DescriptorSetVariableDescriptorCountLayoutSupportEXT
 {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
 }
 impl<'a> ::std::ops::Deref for DescriptorSetVariableDescriptorCountLayoutSupportEXTBuilder<'a> {
     type Target = DescriptorSetVariableDescriptorCountLayoutSupportEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DescriptorSetVariableDescriptorCountLayoutSupportEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DescriptorSetVariableDescriptorCountLayoutSupportEXTBuilder<'a> {
@@ -31270,16 +34451,6 @@ impl<'a> DescriptorSetVariableDescriptorCountLayoutSupportEXTBuilder<'a> {
         max_variable_descriptor_count: u32,
     ) -> DescriptorSetVariableDescriptorCountLayoutSupportEXTBuilder<'a> {
         self.inner.max_variable_descriptor_count = max_variable_descriptor_count;
-        self
-    }
-    pub fn next<T>(
-        mut self,
-        next: &'a mut T,
-    ) -> DescriptorSetVariableDescriptorCountLayoutSupportEXTBuilder<'a>
-    where
-        T: ExtendsDescriptorSetVariableDescriptorCountLayoutSupportEXT,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> DescriptorSetVariableDescriptorCountLayoutSupportEXT {
@@ -31330,11 +34501,18 @@ pub struct AttachmentDescription2KHRBuilder<'a> {
     inner: AttachmentDescription2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsAttachmentDescription2KHR {}
+pub unsafe trait ExtendsAttachmentDescription2KHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for AttachmentDescription2KHRBuilder<'a> {
     type Target = AttachmentDescription2KHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for AttachmentDescription2KHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> AttachmentDescription2KHRBuilder<'a> {
@@ -31389,11 +34567,20 @@ impl<'a> AttachmentDescription2KHRBuilder<'a> {
         self.inner.final_layout = final_layout;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> AttachmentDescription2KHRBuilder<'a>
-    where
-        T: ExtendsAttachmentDescription2KHR,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsAttachmentDescription2KHR>(
+        mut self,
+        next: &'a mut T,
+    ) -> AttachmentDescription2KHRBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> AttachmentDescription2KHR {
@@ -31432,11 +34619,18 @@ pub struct AttachmentReference2KHRBuilder<'a> {
     inner: AttachmentReference2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsAttachmentReference2KHR {}
+pub unsafe trait ExtendsAttachmentReference2KHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for AttachmentReference2KHRBuilder<'a> {
     type Target = AttachmentReference2KHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for AttachmentReference2KHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> AttachmentReference2KHRBuilder<'a> {
@@ -31455,11 +34649,20 @@ impl<'a> AttachmentReference2KHRBuilder<'a> {
         self.inner.aspect_mask = aspect_mask;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> AttachmentReference2KHRBuilder<'a>
-    where
-        T: ExtendsAttachmentReference2KHR,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsAttachmentReference2KHR>(
+        mut self,
+        next: &'a mut T,
+    ) -> AttachmentReference2KHRBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> AttachmentReference2KHR {
@@ -31514,11 +34717,18 @@ pub struct SubpassDescription2KHRBuilder<'a> {
     inner: SubpassDescription2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsSubpassDescription2KHR {}
+pub unsafe trait ExtendsSubpassDescription2KHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for SubpassDescription2KHRBuilder<'a> {
     type Target = SubpassDescription2KHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for SubpassDescription2KHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> SubpassDescription2KHRBuilder<'a> {
@@ -31576,11 +34786,20 @@ impl<'a> SubpassDescription2KHRBuilder<'a> {
         self.inner.p_preserve_attachments = preserve_attachments.as_ptr();
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> SubpassDescription2KHRBuilder<'a>
-    where
-        T: ExtendsSubpassDescription2KHR,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsSubpassDescription2KHR>(
+        mut self,
+        next: &'a mut T,
+    ) -> SubpassDescription2KHRBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> SubpassDescription2KHR {
@@ -31629,11 +34848,18 @@ pub struct SubpassDependency2KHRBuilder<'a> {
     inner: SubpassDependency2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsSubpassDependency2KHR {}
+pub unsafe trait ExtendsSubpassDependency2KHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for SubpassDependency2KHRBuilder<'a> {
     type Target = SubpassDependency2KHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for SubpassDependency2KHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> SubpassDependency2KHRBuilder<'a> {
@@ -31684,11 +34910,20 @@ impl<'a> SubpassDependency2KHRBuilder<'a> {
         self.inner.view_offset = view_offset;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> SubpassDependency2KHRBuilder<'a>
-    where
-        T: ExtendsSubpassDependency2KHR,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsSubpassDependency2KHR>(
+        mut self,
+        next: &'a mut T,
+    ) -> SubpassDependency2KHRBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> SubpassDependency2KHR {
@@ -31739,11 +34974,18 @@ pub struct RenderPassCreateInfo2KHRBuilder<'a> {
     inner: RenderPassCreateInfo2KHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsRenderPassCreateInfo2KHR {}
+pub unsafe trait ExtendsRenderPassCreateInfo2KHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for RenderPassCreateInfo2KHRBuilder<'a> {
     type Target = RenderPassCreateInfo2KHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for RenderPassCreateInfo2KHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> RenderPassCreateInfo2KHRBuilder<'a> {
@@ -31783,11 +35025,20 @@ impl<'a> RenderPassCreateInfo2KHRBuilder<'a> {
         self.inner.p_correlated_view_masks = correlated_view_masks.as_ptr();
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> RenderPassCreateInfo2KHRBuilder<'a>
-    where
-        T: ExtendsRenderPassCreateInfo2KHR,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsRenderPassCreateInfo2KHR>(
+        mut self,
+        next: &'a mut T,
+    ) -> RenderPassCreateInfo2KHRBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> RenderPassCreateInfo2KHR {
@@ -31822,11 +35073,18 @@ pub struct SubpassBeginInfoKHRBuilder<'a> {
     inner: SubpassBeginInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsSubpassBeginInfoKHR {}
+pub unsafe trait ExtendsSubpassBeginInfoKHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for SubpassBeginInfoKHRBuilder<'a> {
     type Target = SubpassBeginInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for SubpassBeginInfoKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> SubpassBeginInfoKHRBuilder<'a> {
@@ -31834,11 +35092,20 @@ impl<'a> SubpassBeginInfoKHRBuilder<'a> {
         self.inner.contents = contents;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> SubpassBeginInfoKHRBuilder<'a>
-    where
-        T: ExtendsSubpassBeginInfoKHR,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsSubpassBeginInfoKHR>(
+        mut self,
+        next: &'a mut T,
+    ) -> SubpassBeginInfoKHRBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> SubpassBeginInfoKHR {
@@ -31871,19 +35138,35 @@ pub struct SubpassEndInfoKHRBuilder<'a> {
     inner: SubpassEndInfoKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsSubpassEndInfoKHR {}
+pub unsafe trait ExtendsSubpassEndInfoKHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for SubpassEndInfoKHRBuilder<'a> {
     type Target = SubpassEndInfoKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+impl<'a> ::std::ops::DerefMut for SubpassEndInfoKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
 impl<'a> SubpassEndInfoKHRBuilder<'a> {
-    pub fn next<T>(mut self, next: &'a T) -> SubpassEndInfoKHRBuilder<'a>
-    where
-        T: ExtendsSubpassEndInfoKHR,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsSubpassEndInfoKHR>(
+        mut self,
+        next: &'a mut T,
+    ) -> SubpassEndInfoKHRBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> SubpassEndInfoKHR {
@@ -31912,6 +35195,11 @@ impl<'a> ::std::ops::Deref for VertexInputBindingDivisorDescriptionEXTBuilder<'a
     type Target = VertexInputBindingDivisorDescriptionEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for VertexInputBindingDivisorDescriptionEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> VertexInputBindingDivisorDescriptionEXTBuilder<'a> {
@@ -31957,15 +35245,29 @@ pub struct PipelineVertexInputDivisorStateCreateInfoEXTBuilder<'a> {
     inner: PipelineVertexInputDivisorStateCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPipelineVertexInputDivisorStateCreateInfoEXT {}
+unsafe impl ExtendsPipelineVertexInputStateCreateInfo
+    for PipelineVertexInputDivisorStateCreateInfoEXTBuilder<'_>
+{
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
 unsafe impl ExtendsPipelineVertexInputStateCreateInfo
     for PipelineVertexInputDivisorStateCreateInfoEXT
 {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
 }
 impl<'a> ::std::ops::Deref for PipelineVertexInputDivisorStateCreateInfoEXTBuilder<'a> {
     type Target = PipelineVertexInputDivisorStateCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PipelineVertexInputDivisorStateCreateInfoEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PipelineVertexInputDivisorStateCreateInfoEXTBuilder<'a> {
@@ -31975,13 +35277,6 @@ impl<'a> PipelineVertexInputDivisorStateCreateInfoEXTBuilder<'a> {
     ) -> PipelineVertexInputDivisorStateCreateInfoEXTBuilder<'a> {
         self.inner.vertex_binding_divisor_count = vertex_binding_divisors.len() as _;
         self.inner.p_vertex_binding_divisors = vertex_binding_divisors.as_ptr();
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> PipelineVertexInputDivisorStateCreateInfoEXTBuilder<'a>
-    where
-        T: ExtendsPipelineVertexInputDivisorStateCreateInfoEXT,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> PipelineVertexInputDivisorStateCreateInfoEXT {
@@ -32016,12 +35311,27 @@ pub struct PhysicalDeviceVertexAttributeDivisorPropertiesEXTBuilder<'a> {
     inner: PhysicalDeviceVertexAttributeDivisorPropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceVertexAttributeDivisorPropertiesEXT {}
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceVertexAttributeDivisorPropertiesEXT {}
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDeviceVertexAttributeDivisorPropertiesEXTBuilder<'_>
+{
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceVertexAttributeDivisorPropertiesEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceVertexAttributeDivisorPropertiesEXTBuilder<'a> {
     type Target = PhysicalDeviceVertexAttributeDivisorPropertiesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceVertexAttributeDivisorPropertiesEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceVertexAttributeDivisorPropertiesEXTBuilder<'a> {
@@ -32030,16 +35340,6 @@ impl<'a> PhysicalDeviceVertexAttributeDivisorPropertiesEXTBuilder<'a> {
         max_vertex_attrib_divisor: u32,
     ) -> PhysicalDeviceVertexAttributeDivisorPropertiesEXTBuilder<'a> {
         self.inner.max_vertex_attrib_divisor = max_vertex_attrib_divisor;
-        self
-    }
-    pub fn next<T>(
-        mut self,
-        next: &'a mut T,
-    ) -> PhysicalDeviceVertexAttributeDivisorPropertiesEXTBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceVertexAttributeDivisorPropertiesEXT,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceVertexAttributeDivisorPropertiesEXT {
@@ -32080,12 +35380,25 @@ pub struct PhysicalDevicePCIBusInfoPropertiesEXTBuilder<'a> {
     inner: PhysicalDevicePCIBusInfoPropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDevicePCIBusInfoPropertiesEXT {}
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDevicePCIBusInfoPropertiesEXT {}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDevicePCIBusInfoPropertiesEXTBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDevicePCIBusInfoPropertiesEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDevicePCIBusInfoPropertiesEXTBuilder<'a> {
     type Target = PhysicalDevicePCIBusInfoPropertiesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDevicePCIBusInfoPropertiesEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDevicePCIBusInfoPropertiesEXTBuilder<'a> {
@@ -32112,13 +35425,6 @@ impl<'a> PhysicalDevicePCIBusInfoPropertiesEXTBuilder<'a> {
         pci_function: u32,
     ) -> PhysicalDevicePCIBusInfoPropertiesEXTBuilder<'a> {
         self.inner.pci_function = pci_function;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDevicePCIBusInfoPropertiesEXTBuilder<'a>
-    where
-        T: ExtendsPhysicalDevicePCIBusInfoPropertiesEXT,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDevicePCIBusInfoPropertiesEXT {
@@ -32153,12 +35459,25 @@ pub struct ImportAndroidHardwareBufferInfoANDROIDBuilder<'a> {
     inner: ImportAndroidHardwareBufferInfoANDROID,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsImportAndroidHardwareBufferInfoANDROID {}
-unsafe impl ExtendsMemoryAllocateInfo for ImportAndroidHardwareBufferInfoANDROID {}
+unsafe impl ExtendsMemoryAllocateInfo for ImportAndroidHardwareBufferInfoANDROIDBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsMemoryAllocateInfo for ImportAndroidHardwareBufferInfoANDROID {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for ImportAndroidHardwareBufferInfoANDROIDBuilder<'a> {
     type Target = ImportAndroidHardwareBufferInfoANDROID;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ImportAndroidHardwareBufferInfoANDROIDBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ImportAndroidHardwareBufferInfoANDROIDBuilder<'a> {
@@ -32167,13 +35486,6 @@ impl<'a> ImportAndroidHardwareBufferInfoANDROIDBuilder<'a> {
         buffer: *mut AHardwareBuffer,
     ) -> ImportAndroidHardwareBufferInfoANDROIDBuilder<'a> {
         self.inner.buffer = buffer;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> ImportAndroidHardwareBufferInfoANDROIDBuilder<'a>
-    where
-        T: ExtendsImportAndroidHardwareBufferInfoANDROID,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ImportAndroidHardwareBufferInfoANDROID {
@@ -32208,12 +35520,25 @@ pub struct AndroidHardwareBufferUsageANDROIDBuilder<'a> {
     inner: AndroidHardwareBufferUsageANDROID,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsAndroidHardwareBufferUsageANDROID {}
-unsafe impl ExtendsImageFormatProperties2 for AndroidHardwareBufferUsageANDROID {}
+unsafe impl ExtendsImageFormatProperties2 for AndroidHardwareBufferUsageANDROIDBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsImageFormatProperties2 for AndroidHardwareBufferUsageANDROID {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for AndroidHardwareBufferUsageANDROIDBuilder<'a> {
     type Target = AndroidHardwareBufferUsageANDROID;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for AndroidHardwareBufferUsageANDROIDBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> AndroidHardwareBufferUsageANDROIDBuilder<'a> {
@@ -32222,13 +35547,6 @@ impl<'a> AndroidHardwareBufferUsageANDROIDBuilder<'a> {
         android_hardware_buffer_usage: u64,
     ) -> AndroidHardwareBufferUsageANDROIDBuilder<'a> {
         self.inner.android_hardware_buffer_usage = android_hardware_buffer_usage;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a mut T) -> AndroidHardwareBufferUsageANDROIDBuilder<'a>
-    where
-        T: ExtendsAndroidHardwareBufferUsageANDROID,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> AndroidHardwareBufferUsageANDROID {
@@ -32265,11 +35583,18 @@ pub struct AndroidHardwareBufferPropertiesANDROIDBuilder<'a> {
     inner: AndroidHardwareBufferPropertiesANDROID,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsAndroidHardwareBufferPropertiesANDROID {}
+pub unsafe trait ExtendsAndroidHardwareBufferPropertiesANDROID {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for AndroidHardwareBufferPropertiesANDROIDBuilder<'a> {
     type Target = AndroidHardwareBufferPropertiesANDROID;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for AndroidHardwareBufferPropertiesANDROIDBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> AndroidHardwareBufferPropertiesANDROIDBuilder<'a> {
@@ -32287,11 +35612,20 @@ impl<'a> AndroidHardwareBufferPropertiesANDROIDBuilder<'a> {
         self.inner.memory_type_bits = memory_type_bits;
         self
     }
-    pub fn next<T>(mut self, next: &'a mut T) -> AndroidHardwareBufferPropertiesANDROIDBuilder<'a>
-    where
-        T: ExtendsAndroidHardwareBufferPropertiesANDROID,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsAndroidHardwareBufferPropertiesANDROID>(
+        mut self,
+        next: &'a mut T,
+    ) -> AndroidHardwareBufferPropertiesANDROIDBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> AndroidHardwareBufferPropertiesANDROID {
@@ -32326,11 +35660,18 @@ pub struct MemoryGetAndroidHardwareBufferInfoANDROIDBuilder<'a> {
     inner: MemoryGetAndroidHardwareBufferInfoANDROID,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsMemoryGetAndroidHardwareBufferInfoANDROID {}
+pub unsafe trait ExtendsMemoryGetAndroidHardwareBufferInfoANDROID {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for MemoryGetAndroidHardwareBufferInfoANDROIDBuilder<'a> {
     type Target = MemoryGetAndroidHardwareBufferInfoANDROID;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for MemoryGetAndroidHardwareBufferInfoANDROIDBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> MemoryGetAndroidHardwareBufferInfoANDROIDBuilder<'a> {
@@ -32341,11 +35682,20 @@ impl<'a> MemoryGetAndroidHardwareBufferInfoANDROIDBuilder<'a> {
         self.inner.memory = memory;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> MemoryGetAndroidHardwareBufferInfoANDROIDBuilder<'a>
-    where
-        T: ExtendsMemoryGetAndroidHardwareBufferInfoANDROID,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsMemoryGetAndroidHardwareBufferInfoANDROID>(
+        mut self,
+        next: &'a mut T,
+    ) -> MemoryGetAndroidHardwareBufferInfoANDROIDBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> MemoryGetAndroidHardwareBufferInfoANDROID {
@@ -32394,15 +35744,29 @@ pub struct AndroidHardwareBufferFormatPropertiesANDROIDBuilder<'a> {
     inner: AndroidHardwareBufferFormatPropertiesANDROID,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsAndroidHardwareBufferFormatPropertiesANDROID {}
+unsafe impl ExtendsAndroidHardwareBufferPropertiesANDROID
+    for AndroidHardwareBufferFormatPropertiesANDROIDBuilder<'_>
+{
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
 unsafe impl ExtendsAndroidHardwareBufferPropertiesANDROID
     for AndroidHardwareBufferFormatPropertiesANDROID
 {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
 }
 impl<'a> ::std::ops::Deref for AndroidHardwareBufferFormatPropertiesANDROIDBuilder<'a> {
     type Target = AndroidHardwareBufferFormatPropertiesANDROID;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for AndroidHardwareBufferFormatPropertiesANDROIDBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> AndroidHardwareBufferFormatPropertiesANDROIDBuilder<'a> {
@@ -32462,16 +35826,6 @@ impl<'a> AndroidHardwareBufferFormatPropertiesANDROIDBuilder<'a> {
         self.inner.suggested_y_chroma_offset = suggested_y_chroma_offset;
         self
     }
-    pub fn next<T>(
-        mut self,
-        next: &'a mut T,
-    ) -> AndroidHardwareBufferFormatPropertiesANDROIDBuilder<'a>
-    where
-        T: ExtendsAndroidHardwareBufferFormatPropertiesANDROID,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
-        self
-    }
     pub fn build(self) -> AndroidHardwareBufferFormatPropertiesANDROID {
         self.inner
     }
@@ -32504,15 +35858,29 @@ pub struct CommandBufferInheritanceConditionalRenderingInfoEXTBuilder<'a> {
     inner: CommandBufferInheritanceConditionalRenderingInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsCommandBufferInheritanceConditionalRenderingInfoEXT {}
+unsafe impl ExtendsCommandBufferInheritanceInfo
+    for CommandBufferInheritanceConditionalRenderingInfoEXTBuilder<'_>
+{
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
 unsafe impl ExtendsCommandBufferInheritanceInfo
     for CommandBufferInheritanceConditionalRenderingInfoEXT
 {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
 }
 impl<'a> ::std::ops::Deref for CommandBufferInheritanceConditionalRenderingInfoEXTBuilder<'a> {
     type Target = CommandBufferInheritanceConditionalRenderingInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for CommandBufferInheritanceConditionalRenderingInfoEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> CommandBufferInheritanceConditionalRenderingInfoEXTBuilder<'a> {
@@ -32521,16 +35889,6 @@ impl<'a> CommandBufferInheritanceConditionalRenderingInfoEXTBuilder<'a> {
         conditional_rendering_enable: bool,
     ) -> CommandBufferInheritanceConditionalRenderingInfoEXTBuilder<'a> {
         self.inner.conditional_rendering_enable = conditional_rendering_enable.into();
-        self
-    }
-    pub fn next<T>(
-        mut self,
-        next: &'a T,
-    ) -> CommandBufferInheritanceConditionalRenderingInfoEXTBuilder<'a>
-    where
-        T: ExtendsCommandBufferInheritanceConditionalRenderingInfoEXT,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> CommandBufferInheritanceConditionalRenderingInfoEXT {
@@ -32565,25 +35923,30 @@ pub struct ExternalFormatANDROIDBuilder<'a> {
     inner: ExternalFormatANDROID,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsExternalFormatANDROID {}
-unsafe impl ExtendsImageCreateInfo for ExternalFormatANDROID {}
-unsafe impl ExtendsSamplerYcbcrConversionCreateInfo for ExternalFormatANDROID {}
+unsafe impl ExtendsImageCreateInfo for ExternalFormatANDROIDBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsImageCreateInfo for ExternalFormatANDROID {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for ExternalFormatANDROIDBuilder<'a> {
     type Target = ExternalFormatANDROID;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+impl<'a> ::std::ops::DerefMut for ExternalFormatANDROIDBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
 impl<'a> ExternalFormatANDROIDBuilder<'a> {
     pub fn external_format(mut self, external_format: u64) -> ExternalFormatANDROIDBuilder<'a> {
         self.inner.external_format = external_format;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a mut T) -> ExternalFormatANDROIDBuilder<'a>
-    where
-        T: ExtendsExternalFormatANDROID,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> ExternalFormatANDROID {
@@ -32622,13 +35985,25 @@ pub struct PhysicalDevice8BitStorageFeaturesKHRBuilder<'a> {
     inner: PhysicalDevice8BitStorageFeaturesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDevice8BitStorageFeaturesKHR {}
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDevice8BitStorageFeaturesKHR {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDevice8BitStorageFeaturesKHR {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDevice8BitStorageFeaturesKHRBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDevice8BitStorageFeaturesKHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDevice8BitStorageFeaturesKHRBuilder<'a> {
     type Target = PhysicalDevice8BitStorageFeaturesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDevice8BitStorageFeaturesKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDevice8BitStorageFeaturesKHRBuilder<'a> {
@@ -32652,13 +36027,6 @@ impl<'a> PhysicalDevice8BitStorageFeaturesKHRBuilder<'a> {
         storage_push_constant8: bool,
     ) -> PhysicalDevice8BitStorageFeaturesKHRBuilder<'a> {
         self.inner.storage_push_constant8 = storage_push_constant8.into();
-        self
-    }
-    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDevice8BitStorageFeaturesKHRBuilder<'a>
-    where
-        T: ExtendsPhysicalDevice8BitStorageFeaturesKHR,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDevice8BitStorageFeaturesKHR {
@@ -32695,13 +36063,25 @@ pub struct PhysicalDeviceConditionalRenderingFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceConditionalRenderingFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceConditionalRenderingFeaturesEXT {}
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceConditionalRenderingFeaturesEXT {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceConditionalRenderingFeaturesEXT {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceConditionalRenderingFeaturesEXTBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceConditionalRenderingFeaturesEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceConditionalRenderingFeaturesEXTBuilder<'a> {
     type Target = PhysicalDeviceConditionalRenderingFeaturesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceConditionalRenderingFeaturesEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceConditionalRenderingFeaturesEXTBuilder<'a> {
@@ -32717,16 +36097,6 @@ impl<'a> PhysicalDeviceConditionalRenderingFeaturesEXTBuilder<'a> {
         inherited_conditional_rendering: bool,
     ) -> PhysicalDeviceConditionalRenderingFeaturesEXTBuilder<'a> {
         self.inner.inherited_conditional_rendering = inherited_conditional_rendering.into();
-        self
-    }
-    pub fn next<T>(
-        mut self,
-        next: &'a mut T,
-    ) -> PhysicalDeviceConditionalRenderingFeaturesEXTBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceConditionalRenderingFeaturesEXT,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceConditionalRenderingFeaturesEXT {
@@ -32763,13 +36133,25 @@ pub struct PhysicalDeviceVulkanMemoryModelFeaturesKHRBuilder<'a> {
     inner: PhysicalDeviceVulkanMemoryModelFeaturesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceVulkanMemoryModelFeaturesKHR {}
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceVulkanMemoryModelFeaturesKHR {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceVulkanMemoryModelFeaturesKHR {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceVulkanMemoryModelFeaturesKHRBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceVulkanMemoryModelFeaturesKHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceVulkanMemoryModelFeaturesKHRBuilder<'a> {
     type Target = PhysicalDeviceVulkanMemoryModelFeaturesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceVulkanMemoryModelFeaturesKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceVulkanMemoryModelFeaturesKHRBuilder<'a> {
@@ -32785,16 +36167,6 @@ impl<'a> PhysicalDeviceVulkanMemoryModelFeaturesKHRBuilder<'a> {
         vulkan_memory_model_device_scope: bool,
     ) -> PhysicalDeviceVulkanMemoryModelFeaturesKHRBuilder<'a> {
         self.inner.vulkan_memory_model_device_scope = vulkan_memory_model_device_scope.into();
-        self
-    }
-    pub fn next<T>(
-        mut self,
-        next: &'a mut T,
-    ) -> PhysicalDeviceVulkanMemoryModelFeaturesKHRBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceVulkanMemoryModelFeaturesKHR,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceVulkanMemoryModelFeaturesKHR {
@@ -32831,13 +36203,25 @@ pub struct PhysicalDeviceShaderAtomicInt64FeaturesKHRBuilder<'a> {
     inner: PhysicalDeviceShaderAtomicInt64FeaturesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceShaderAtomicInt64FeaturesKHR {}
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderAtomicInt64FeaturesKHR {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderAtomicInt64FeaturesKHR {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderAtomicInt64FeaturesKHRBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderAtomicInt64FeaturesKHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceShaderAtomicInt64FeaturesKHRBuilder<'a> {
     type Target = PhysicalDeviceShaderAtomicInt64FeaturesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceShaderAtomicInt64FeaturesKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceShaderAtomicInt64FeaturesKHRBuilder<'a> {
@@ -32853,16 +36237,6 @@ impl<'a> PhysicalDeviceShaderAtomicInt64FeaturesKHRBuilder<'a> {
         shader_shared_int64_atomics: bool,
     ) -> PhysicalDeviceShaderAtomicInt64FeaturesKHRBuilder<'a> {
         self.inner.shader_shared_int64_atomics = shader_shared_int64_atomics.into();
-        self
-    }
-    pub fn next<T>(
-        mut self,
-        next: &'a mut T,
-    ) -> PhysicalDeviceShaderAtomicInt64FeaturesKHRBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceShaderAtomicInt64FeaturesKHR,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceShaderAtomicInt64FeaturesKHR {
@@ -32899,13 +36273,25 @@ pub struct PhysicalDeviceVertexAttributeDivisorFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceVertexAttributeDivisorFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceVertexAttributeDivisorFeaturesEXT {}
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceVertexAttributeDivisorFeaturesEXT {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceVertexAttributeDivisorFeaturesEXT {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceVertexAttributeDivisorFeaturesEXTBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceVertexAttributeDivisorFeaturesEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceVertexAttributeDivisorFeaturesEXTBuilder<'a> {
     type Target = PhysicalDeviceVertexAttributeDivisorFeaturesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceVertexAttributeDivisorFeaturesEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceVertexAttributeDivisorFeaturesEXTBuilder<'a> {
@@ -32923,16 +36309,6 @@ impl<'a> PhysicalDeviceVertexAttributeDivisorFeaturesEXTBuilder<'a> {
     ) -> PhysicalDeviceVertexAttributeDivisorFeaturesEXTBuilder<'a> {
         self.inner.vertex_attribute_instance_rate_zero_divisor =
             vertex_attribute_instance_rate_zero_divisor.into();
-        self
-    }
-    pub fn next<T>(
-        mut self,
-        next: &'a mut T,
-    ) -> PhysicalDeviceVertexAttributeDivisorFeaturesEXTBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceVertexAttributeDivisorFeaturesEXT,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceVertexAttributeDivisorFeaturesEXT {
@@ -32967,12 +36343,25 @@ pub struct QueueFamilyCheckpointPropertiesNVBuilder<'a> {
     inner: QueueFamilyCheckpointPropertiesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsQueueFamilyCheckpointPropertiesNV {}
-unsafe impl ExtendsQueueFamilyProperties2 for QueueFamilyCheckpointPropertiesNV {}
+unsafe impl ExtendsQueueFamilyProperties2 for QueueFamilyCheckpointPropertiesNVBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsQueueFamilyProperties2 for QueueFamilyCheckpointPropertiesNV {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for QueueFamilyCheckpointPropertiesNVBuilder<'a> {
     type Target = QueueFamilyCheckpointPropertiesNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for QueueFamilyCheckpointPropertiesNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> QueueFamilyCheckpointPropertiesNVBuilder<'a> {
@@ -32981,13 +36370,6 @@ impl<'a> QueueFamilyCheckpointPropertiesNVBuilder<'a> {
         checkpoint_execution_stage_mask: PipelineStageFlags,
     ) -> QueueFamilyCheckpointPropertiesNVBuilder<'a> {
         self.inner.checkpoint_execution_stage_mask = checkpoint_execution_stage_mask;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a mut T) -> QueueFamilyCheckpointPropertiesNVBuilder<'a>
-    where
-        T: ExtendsQueueFamilyCheckpointPropertiesNV,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> QueueFamilyCheckpointPropertiesNV {
@@ -33024,11 +36406,18 @@ pub struct CheckpointDataNVBuilder<'a> {
     inner: CheckpointDataNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsCheckpointDataNV {}
+pub unsafe trait ExtendsCheckpointDataNV {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for CheckpointDataNVBuilder<'a> {
     type Target = CheckpointDataNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for CheckpointDataNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> CheckpointDataNVBuilder<'a> {
@@ -33043,11 +36432,20 @@ impl<'a> CheckpointDataNVBuilder<'a> {
         self.inner.p_checkpoint_marker = checkpoint_marker;
         self
     }
-    pub fn next<T>(mut self, next: &'a mut T) -> CheckpointDataNVBuilder<'a>
-    where
-        T: ExtendsCheckpointDataNV,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsCheckpointDataNV>(
+        mut self,
+        next: &'a mut T,
+    ) -> CheckpointDataNVBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> CheckpointDataNV {
@@ -33088,12 +36486,27 @@ pub struct PhysicalDeviceDepthStencilResolvePropertiesKHRBuilder<'a> {
     inner: PhysicalDeviceDepthStencilResolvePropertiesKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceDepthStencilResolvePropertiesKHR {}
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceDepthStencilResolvePropertiesKHR {}
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDeviceDepthStencilResolvePropertiesKHRBuilder<'_>
+{
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceDepthStencilResolvePropertiesKHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceDepthStencilResolvePropertiesKHRBuilder<'a> {
     type Target = PhysicalDeviceDepthStencilResolvePropertiesKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceDepthStencilResolvePropertiesKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceDepthStencilResolvePropertiesKHRBuilder<'a> {
@@ -33123,16 +36536,6 @@ impl<'a> PhysicalDeviceDepthStencilResolvePropertiesKHRBuilder<'a> {
         independent_resolve: bool,
     ) -> PhysicalDeviceDepthStencilResolvePropertiesKHRBuilder<'a> {
         self.inner.independent_resolve = independent_resolve.into();
-        self
-    }
-    pub fn next<T>(
-        mut self,
-        next: &'a mut T,
-    ) -> PhysicalDeviceDepthStencilResolvePropertiesKHRBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceDepthStencilResolvePropertiesKHR,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceDepthStencilResolvePropertiesKHR {
@@ -33171,12 +36574,25 @@ pub struct SubpassDescriptionDepthStencilResolveKHRBuilder<'a> {
     inner: SubpassDescriptionDepthStencilResolveKHR,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsSubpassDescriptionDepthStencilResolveKHR {}
-unsafe impl ExtendsSubpassDescription2KHR for SubpassDescriptionDepthStencilResolveKHR {}
+unsafe impl ExtendsSubpassDescription2KHR for SubpassDescriptionDepthStencilResolveKHRBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsSubpassDescription2KHR for SubpassDescriptionDepthStencilResolveKHR {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for SubpassDescriptionDepthStencilResolveKHRBuilder<'a> {
     type Target = SubpassDescriptionDepthStencilResolveKHR;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for SubpassDescriptionDepthStencilResolveKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> SubpassDescriptionDepthStencilResolveKHRBuilder<'a> {
@@ -33199,171 +36615,6 @@ impl<'a> SubpassDescriptionDepthStencilResolveKHRBuilder<'a> {
         depth_stencil_resolve_attachment: &'a AttachmentReference2KHR,
     ) -> SubpassDescriptionDepthStencilResolveKHRBuilder<'a> {
         self.inner.p_depth_stencil_resolve_attachment = depth_stencil_resolve_attachment;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> SubpassDescriptionDepthStencilResolveKHRBuilder<'a>
-    where
-        T: ExtendsSubpassDescriptionDepthStencilResolveKHR,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
-        self
-    }
-    pub fn build(self) -> SubpassDescriptionDepthStencilResolveKHR {
-        self.inner
-    }
-}
-#[repr(C)]
-#[derive(Copy, Clone, Debug)]
-pub struct PhysicalDeviceDepthStencilResolvePropertiesKHR {
-    pub s_type: StructureType,
-    pub p_next: *mut c_void,
-    pub supported_depth_resolve_modes: ResolveModeFlagsKHR,
-    pub supported_stencil_resolve_modes: ResolveModeFlagsKHR,
-    pub independent_resolve_none: Bool32,
-    pub independent_resolve: Bool32,
-}
-impl ::std::default::Default for PhysicalDeviceDepthStencilResolvePropertiesKHR {
-    fn default() -> PhysicalDeviceDepthStencilResolvePropertiesKHR {
-        PhysicalDeviceDepthStencilResolvePropertiesKHR {
-            s_type: StructureType::PHYSICAL_DEVICE_DEPTH_STENCIL_RESOLVE_PROPERTIES_KHR,
-            p_next: ::std::ptr::null_mut(),
-            supported_depth_resolve_modes: ResolveModeFlagsKHR::default(),
-            supported_stencil_resolve_modes: ResolveModeFlagsKHR::default(),
-            independent_resolve_none: Bool32::default(),
-            independent_resolve: Bool32::default(),
-        }
-    }
-}
-impl PhysicalDeviceDepthStencilResolvePropertiesKHR {
-    pub fn builder<'a>() -> PhysicalDeviceDepthStencilResolvePropertiesKHRBuilder<'a> {
-        PhysicalDeviceDepthStencilResolvePropertiesKHRBuilder {
-            inner: PhysicalDeviceDepthStencilResolvePropertiesKHR::default(),
-            marker: ::std::marker::PhantomData,
-        }
-    }
-}
-pub struct PhysicalDeviceDepthStencilResolvePropertiesKHRBuilder<'a> {
-    inner: PhysicalDeviceDepthStencilResolvePropertiesKHR,
-    marker: ::std::marker::PhantomData<&'a ()>,
-}
-pub unsafe trait ExtendsPhysicalDeviceDepthStencilResolvePropertiesKHR {}
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceDepthStencilResolvePropertiesKHR {}
-impl<'a> ::std::ops::Deref for PhysicalDeviceDepthStencilResolvePropertiesKHRBuilder<'a> {
-    type Target = PhysicalDeviceDepthStencilResolvePropertiesKHR;
-    fn deref(&self) -> &Self::Target {
-        &self.inner
-    }
-}
-impl<'a> PhysicalDeviceDepthStencilResolvePropertiesKHRBuilder<'a> {
-    pub fn supported_depth_resolve_modes(
-        mut self,
-        supported_depth_resolve_modes: ResolveModeFlagsKHR,
-    ) -> PhysicalDeviceDepthStencilResolvePropertiesKHRBuilder<'a> {
-        self.inner.supported_depth_resolve_modes = supported_depth_resolve_modes;
-        self
-    }
-    pub fn supported_stencil_resolve_modes(
-        mut self,
-        supported_stencil_resolve_modes: ResolveModeFlagsKHR,
-    ) -> PhysicalDeviceDepthStencilResolvePropertiesKHRBuilder<'a> {
-        self.inner.supported_stencil_resolve_modes = supported_stencil_resolve_modes;
-        self
-    }
-    pub fn independent_resolve_none(
-        mut self,
-        independent_resolve_none: bool,
-    ) -> PhysicalDeviceDepthStencilResolvePropertiesKHRBuilder<'a> {
-        self.inner.independent_resolve_none = independent_resolve_none.into();
-        self
-    }
-    pub fn independent_resolve(
-        mut self,
-        independent_resolve: bool,
-    ) -> PhysicalDeviceDepthStencilResolvePropertiesKHRBuilder<'a> {
-        self.inner.independent_resolve = independent_resolve.into();
-        self
-    }
-    pub fn next<T>(
-        mut self,
-        next: &'a mut T,
-    ) -> PhysicalDeviceDepthStencilResolvePropertiesKHRBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceDepthStencilResolvePropertiesKHR,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
-        self
-    }
-    pub fn build(self) -> PhysicalDeviceDepthStencilResolvePropertiesKHR {
-        self.inner
-    }
-}
-#[repr(C)]
-#[derive(Copy, Clone, Debug)]
-pub struct SubpassDescriptionDepthStencilResolveKHR {
-    pub s_type: StructureType,
-    pub p_next: *const c_void,
-    pub depth_resolve_mode: ResolveModeFlagsKHR,
-    pub stencil_resolve_mode: ResolveModeFlagsKHR,
-    pub p_depth_stencil_resolve_attachment: *const AttachmentReference2KHR,
-}
-impl ::std::default::Default for SubpassDescriptionDepthStencilResolveKHR {
-    fn default() -> SubpassDescriptionDepthStencilResolveKHR {
-        SubpassDescriptionDepthStencilResolveKHR {
-            s_type: StructureType::SUBPASS_DESCRIPTION_DEPTH_STENCIL_RESOLVE_KHR,
-            p_next: ::std::ptr::null(),
-            depth_resolve_mode: ResolveModeFlagsKHR::default(),
-            stencil_resolve_mode: ResolveModeFlagsKHR::default(),
-            p_depth_stencil_resolve_attachment: ::std::ptr::null(),
-        }
-    }
-}
-impl SubpassDescriptionDepthStencilResolveKHR {
-    pub fn builder<'a>() -> SubpassDescriptionDepthStencilResolveKHRBuilder<'a> {
-        SubpassDescriptionDepthStencilResolveKHRBuilder {
-            inner: SubpassDescriptionDepthStencilResolveKHR::default(),
-            marker: ::std::marker::PhantomData,
-        }
-    }
-}
-pub struct SubpassDescriptionDepthStencilResolveKHRBuilder<'a> {
-    inner: SubpassDescriptionDepthStencilResolveKHR,
-    marker: ::std::marker::PhantomData<&'a ()>,
-}
-pub unsafe trait ExtendsSubpassDescriptionDepthStencilResolveKHR {}
-unsafe impl ExtendsSubpassDescription2KHR for SubpassDescriptionDepthStencilResolveKHR {}
-impl<'a> ::std::ops::Deref for SubpassDescriptionDepthStencilResolveKHRBuilder<'a> {
-    type Target = SubpassDescriptionDepthStencilResolveKHR;
-    fn deref(&self) -> &Self::Target {
-        &self.inner
-    }
-}
-impl<'a> SubpassDescriptionDepthStencilResolveKHRBuilder<'a> {
-    pub fn depth_resolve_mode(
-        mut self,
-        depth_resolve_mode: ResolveModeFlagsKHR,
-    ) -> SubpassDescriptionDepthStencilResolveKHRBuilder<'a> {
-        self.inner.depth_resolve_mode = depth_resolve_mode;
-        self
-    }
-    pub fn stencil_resolve_mode(
-        mut self,
-        stencil_resolve_mode: ResolveModeFlagsKHR,
-    ) -> SubpassDescriptionDepthStencilResolveKHRBuilder<'a> {
-        self.inner.stencil_resolve_mode = stencil_resolve_mode;
-        self
-    }
-    pub fn depth_stencil_resolve_attachment(
-        mut self,
-        depth_stencil_resolve_attachment: &'a AttachmentReference2KHR,
-    ) -> SubpassDescriptionDepthStencilResolveKHRBuilder<'a> {
-        self.inner.p_depth_stencil_resolve_attachment = depth_stencil_resolve_attachment;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> SubpassDescriptionDepthStencilResolveKHRBuilder<'a>
-    where
-        T: ExtendsSubpassDescriptionDepthStencilResolveKHR,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> SubpassDescriptionDepthStencilResolveKHR {
@@ -33398,24 +36649,30 @@ pub struct ImageViewASTCDecodeModeEXTBuilder<'a> {
     inner: ImageViewASTCDecodeModeEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsImageViewASTCDecodeModeEXT {}
-unsafe impl ExtendsImageViewCreateInfo for ImageViewASTCDecodeModeEXT {}
+unsafe impl ExtendsImageViewCreateInfo for ImageViewASTCDecodeModeEXTBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsImageViewCreateInfo for ImageViewASTCDecodeModeEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for ImageViewASTCDecodeModeEXTBuilder<'a> {
     type Target = ImageViewASTCDecodeModeEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+impl<'a> ::std::ops::DerefMut for ImageViewASTCDecodeModeEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
 impl<'a> ImageViewASTCDecodeModeEXTBuilder<'a> {
     pub fn decode_mode(mut self, decode_mode: Format) -> ImageViewASTCDecodeModeEXTBuilder<'a> {
         self.inner.decode_mode = decode_mode;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> ImageViewASTCDecodeModeEXTBuilder<'a>
-    where
-        T: ExtendsImageViewASTCDecodeModeEXT,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ImageViewASTCDecodeModeEXT {
@@ -33450,13 +36707,25 @@ pub struct PhysicalDeviceASTCDecodeFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceASTCDecodeFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceASTCDecodeFeaturesEXT {}
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceASTCDecodeFeaturesEXT {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceASTCDecodeFeaturesEXT {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceASTCDecodeFeaturesEXTBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceASTCDecodeFeaturesEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceASTCDecodeFeaturesEXTBuilder<'a> {
     type Target = PhysicalDeviceASTCDecodeFeaturesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceASTCDecodeFeaturesEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceASTCDecodeFeaturesEXTBuilder<'a> {
@@ -33465,13 +36734,6 @@ impl<'a> PhysicalDeviceASTCDecodeFeaturesEXTBuilder<'a> {
         decode_mode_shared_exponent: bool,
     ) -> PhysicalDeviceASTCDecodeFeaturesEXTBuilder<'a> {
         self.inner.decode_mode_shared_exponent = decode_mode_shared_exponent.into();
-        self
-    }
-    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceASTCDecodeFeaturesEXTBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceASTCDecodeFeaturesEXT,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceASTCDecodeFeaturesEXT {
@@ -33508,13 +36770,25 @@ pub struct PhysicalDeviceTransformFeedbackFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceTransformFeedbackFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceTransformFeedbackFeaturesEXT {}
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceTransformFeedbackFeaturesEXT {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceTransformFeedbackFeaturesEXT {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceTransformFeedbackFeaturesEXTBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceTransformFeedbackFeaturesEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceTransformFeedbackFeaturesEXTBuilder<'a> {
     type Target = PhysicalDeviceTransformFeedbackFeaturesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceTransformFeedbackFeaturesEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceTransformFeedbackFeaturesEXTBuilder<'a> {
@@ -33530,16 +36804,6 @@ impl<'a> PhysicalDeviceTransformFeedbackFeaturesEXTBuilder<'a> {
         geometry_streams: bool,
     ) -> PhysicalDeviceTransformFeedbackFeaturesEXTBuilder<'a> {
         self.inner.geometry_streams = geometry_streams.into();
-        self
-    }
-    pub fn next<T>(
-        mut self,
-        next: &'a mut T,
-    ) -> PhysicalDeviceTransformFeedbackFeaturesEXTBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceTransformFeedbackFeaturesEXT,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceTransformFeedbackFeaturesEXT {
@@ -33592,12 +36856,27 @@ pub struct PhysicalDeviceTransformFeedbackPropertiesEXTBuilder<'a> {
     inner: PhysicalDeviceTransformFeedbackPropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceTransformFeedbackPropertiesEXT {}
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceTransformFeedbackPropertiesEXT {}
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDeviceTransformFeedbackPropertiesEXTBuilder<'_>
+{
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceTransformFeedbackPropertiesEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceTransformFeedbackPropertiesEXTBuilder<'a> {
     type Target = PhysicalDeviceTransformFeedbackPropertiesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceTransformFeedbackPropertiesEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceTransformFeedbackPropertiesEXTBuilder<'a> {
@@ -33676,16 +36955,6 @@ impl<'a> PhysicalDeviceTransformFeedbackPropertiesEXTBuilder<'a> {
         self.inner.transform_feedback_draw = transform_feedback_draw.into();
         self
     }
-    pub fn next<T>(
-        mut self,
-        next: &'a mut T,
-    ) -> PhysicalDeviceTransformFeedbackPropertiesEXTBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceTransformFeedbackPropertiesEXT,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
-        self
-    }
     pub fn build(self) -> PhysicalDeviceTransformFeedbackPropertiesEXT {
         self.inner
     }
@@ -33720,15 +36989,29 @@ pub struct PipelineRasterizationStateStreamCreateInfoEXTBuilder<'a> {
     inner: PipelineRasterizationStateStreamCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPipelineRasterizationStateStreamCreateInfoEXT {}
+unsafe impl ExtendsPipelineRasterizationStateCreateInfo
+    for PipelineRasterizationStateStreamCreateInfoEXTBuilder<'_>
+{
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
 unsafe impl ExtendsPipelineRasterizationStateCreateInfo
     for PipelineRasterizationStateStreamCreateInfoEXT
 {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
 }
 impl<'a> ::std::ops::Deref for PipelineRasterizationStateStreamCreateInfoEXTBuilder<'a> {
     type Target = PipelineRasterizationStateStreamCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PipelineRasterizationStateStreamCreateInfoEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PipelineRasterizationStateStreamCreateInfoEXTBuilder<'a> {
@@ -33744,16 +37027,6 @@ impl<'a> PipelineRasterizationStateStreamCreateInfoEXTBuilder<'a> {
         rasterization_stream: u32,
     ) -> PipelineRasterizationStateStreamCreateInfoEXTBuilder<'a> {
         self.inner.rasterization_stream = rasterization_stream;
-        self
-    }
-    pub fn next<T>(
-        mut self,
-        next: &'a T,
-    ) -> PipelineRasterizationStateStreamCreateInfoEXTBuilder<'a>
-    where
-        T: ExtendsPipelineRasterizationStateStreamCreateInfoEXT,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> PipelineRasterizationStateStreamCreateInfoEXT {
@@ -33788,13 +37061,27 @@ pub struct PhysicalDeviceRepresentativeFragmentTestFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceRepresentativeFragmentTestFeaturesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceRepresentativeFragmentTestFeaturesNV {}
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceRepresentativeFragmentTestFeaturesNV {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceRepresentativeFragmentTestFeaturesNV {}
+unsafe impl ExtendsDeviceCreateInfo
+    for PhysicalDeviceRepresentativeFragmentTestFeaturesNVBuilder<'_>
+{
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceRepresentativeFragmentTestFeaturesNV {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceRepresentativeFragmentTestFeaturesNVBuilder<'a> {
     type Target = PhysicalDeviceRepresentativeFragmentTestFeaturesNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceRepresentativeFragmentTestFeaturesNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceRepresentativeFragmentTestFeaturesNVBuilder<'a> {
@@ -33803,16 +37090,6 @@ impl<'a> PhysicalDeviceRepresentativeFragmentTestFeaturesNVBuilder<'a> {
         representative_fragment_test: bool,
     ) -> PhysicalDeviceRepresentativeFragmentTestFeaturesNVBuilder<'a> {
         self.inner.representative_fragment_test = representative_fragment_test.into();
-        self
-    }
-    pub fn next<T>(
-        mut self,
-        next: &'a mut T,
-    ) -> PhysicalDeviceRepresentativeFragmentTestFeaturesNVBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceRepresentativeFragmentTestFeaturesNV,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceRepresentativeFragmentTestFeaturesNV {
@@ -33847,15 +37124,29 @@ pub struct PipelineRepresentativeFragmentTestStateCreateInfoNVBuilder<'a> {
     inner: PipelineRepresentativeFragmentTestStateCreateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPipelineRepresentativeFragmentTestStateCreateInfoNV {}
+unsafe impl ExtendsGraphicsPipelineCreateInfo
+    for PipelineRepresentativeFragmentTestStateCreateInfoNVBuilder<'_>
+{
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
 unsafe impl ExtendsGraphicsPipelineCreateInfo
     for PipelineRepresentativeFragmentTestStateCreateInfoNV
 {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
 }
 impl<'a> ::std::ops::Deref for PipelineRepresentativeFragmentTestStateCreateInfoNVBuilder<'a> {
     type Target = PipelineRepresentativeFragmentTestStateCreateInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PipelineRepresentativeFragmentTestStateCreateInfoNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PipelineRepresentativeFragmentTestStateCreateInfoNVBuilder<'a> {
@@ -33864,16 +37155,6 @@ impl<'a> PipelineRepresentativeFragmentTestStateCreateInfoNVBuilder<'a> {
         representative_fragment_test_enable: bool,
     ) -> PipelineRepresentativeFragmentTestStateCreateInfoNVBuilder<'a> {
         self.inner.representative_fragment_test_enable = representative_fragment_test_enable.into();
-        self
-    }
-    pub fn next<T>(
-        mut self,
-        next: &'a T,
-    ) -> PipelineRepresentativeFragmentTestStateCreateInfoNVBuilder<'a>
-    where
-        T: ExtendsPipelineRepresentativeFragmentTestStateCreateInfoNV,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> PipelineRepresentativeFragmentTestStateCreateInfoNV {
@@ -33908,13 +37189,25 @@ pub struct PhysicalDeviceExclusiveScissorFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceExclusiveScissorFeaturesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceExclusiveScissorFeaturesNV {}
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceExclusiveScissorFeaturesNV {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceExclusiveScissorFeaturesNV {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceExclusiveScissorFeaturesNVBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceExclusiveScissorFeaturesNV {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceExclusiveScissorFeaturesNVBuilder<'a> {
     type Target = PhysicalDeviceExclusiveScissorFeaturesNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceExclusiveScissorFeaturesNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceExclusiveScissorFeaturesNVBuilder<'a> {
@@ -33923,13 +37216,6 @@ impl<'a> PhysicalDeviceExclusiveScissorFeaturesNVBuilder<'a> {
         exclusive_scissor: bool,
     ) -> PhysicalDeviceExclusiveScissorFeaturesNVBuilder<'a> {
         self.inner.exclusive_scissor = exclusive_scissor.into();
-        self
-    }
-    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceExclusiveScissorFeaturesNVBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceExclusiveScissorFeaturesNV,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceExclusiveScissorFeaturesNV {
@@ -33966,15 +37252,29 @@ pub struct PipelineViewportExclusiveScissorStateCreateInfoNVBuilder<'a> {
     inner: PipelineViewportExclusiveScissorStateCreateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPipelineViewportExclusiveScissorStateCreateInfoNV {}
+unsafe impl ExtendsPipelineViewportStateCreateInfo
+    for PipelineViewportExclusiveScissorStateCreateInfoNVBuilder<'_>
+{
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
 unsafe impl ExtendsPipelineViewportStateCreateInfo
     for PipelineViewportExclusiveScissorStateCreateInfoNV
 {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
 }
 impl<'a> ::std::ops::Deref for PipelineViewportExclusiveScissorStateCreateInfoNVBuilder<'a> {
     type Target = PipelineViewportExclusiveScissorStateCreateInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PipelineViewportExclusiveScissorStateCreateInfoNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PipelineViewportExclusiveScissorStateCreateInfoNVBuilder<'a> {
@@ -33984,16 +37284,6 @@ impl<'a> PipelineViewportExclusiveScissorStateCreateInfoNVBuilder<'a> {
     ) -> PipelineViewportExclusiveScissorStateCreateInfoNVBuilder<'a> {
         self.inner.exclusive_scissor_count = exclusive_scissors.len() as _;
         self.inner.p_exclusive_scissors = exclusive_scissors.as_ptr();
-        self
-    }
-    pub fn next<T>(
-        mut self,
-        next: &'a T,
-    ) -> PipelineViewportExclusiveScissorStateCreateInfoNVBuilder<'a>
-    where
-        T: ExtendsPipelineViewportExclusiveScissorStateCreateInfoNV,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> PipelineViewportExclusiveScissorStateCreateInfoNV {
@@ -34028,13 +37318,25 @@ pub struct PhysicalDeviceCornerSampledImageFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceCornerSampledImageFeaturesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceCornerSampledImageFeaturesNV {}
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceCornerSampledImageFeaturesNV {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceCornerSampledImageFeaturesNV {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceCornerSampledImageFeaturesNVBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceCornerSampledImageFeaturesNV {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceCornerSampledImageFeaturesNVBuilder<'a> {
     type Target = PhysicalDeviceCornerSampledImageFeaturesNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceCornerSampledImageFeaturesNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceCornerSampledImageFeaturesNVBuilder<'a> {
@@ -34043,16 +37345,6 @@ impl<'a> PhysicalDeviceCornerSampledImageFeaturesNVBuilder<'a> {
         corner_sampled_image: bool,
     ) -> PhysicalDeviceCornerSampledImageFeaturesNVBuilder<'a> {
         self.inner.corner_sampled_image = corner_sampled_image.into();
-        self
-    }
-    pub fn next<T>(
-        mut self,
-        next: &'a mut T,
-    ) -> PhysicalDeviceCornerSampledImageFeaturesNVBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceCornerSampledImageFeaturesNV,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceCornerSampledImageFeaturesNV {
@@ -34089,13 +37381,27 @@ pub struct PhysicalDeviceComputeShaderDerivativesFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceComputeShaderDerivativesFeaturesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceComputeShaderDerivativesFeaturesNV {}
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceComputeShaderDerivativesFeaturesNV {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceComputeShaderDerivativesFeaturesNV {}
+unsafe impl ExtendsDeviceCreateInfo
+    for PhysicalDeviceComputeShaderDerivativesFeaturesNVBuilder<'_>
+{
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceComputeShaderDerivativesFeaturesNV {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceComputeShaderDerivativesFeaturesNVBuilder<'a> {
     type Target = PhysicalDeviceComputeShaderDerivativesFeaturesNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceComputeShaderDerivativesFeaturesNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceComputeShaderDerivativesFeaturesNVBuilder<'a> {
@@ -34111,16 +37417,6 @@ impl<'a> PhysicalDeviceComputeShaderDerivativesFeaturesNVBuilder<'a> {
         compute_derivative_group_linear: bool,
     ) -> PhysicalDeviceComputeShaderDerivativesFeaturesNVBuilder<'a> {
         self.inner.compute_derivative_group_linear = compute_derivative_group_linear.into();
-        self
-    }
-    pub fn next<T>(
-        mut self,
-        next: &'a mut T,
-    ) -> PhysicalDeviceComputeShaderDerivativesFeaturesNVBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceComputeShaderDerivativesFeaturesNV,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceComputeShaderDerivativesFeaturesNV {
@@ -34155,13 +37451,27 @@ pub struct PhysicalDeviceFragmentShaderBarycentricFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceFragmentShaderBarycentricFeaturesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceFragmentShaderBarycentricFeaturesNV {}
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceFragmentShaderBarycentricFeaturesNV {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFragmentShaderBarycentricFeaturesNV {}
+unsafe impl ExtendsDeviceCreateInfo
+    for PhysicalDeviceFragmentShaderBarycentricFeaturesNVBuilder<'_>
+{
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFragmentShaderBarycentricFeaturesNV {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceFragmentShaderBarycentricFeaturesNVBuilder<'a> {
     type Target = PhysicalDeviceFragmentShaderBarycentricFeaturesNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceFragmentShaderBarycentricFeaturesNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceFragmentShaderBarycentricFeaturesNVBuilder<'a> {
@@ -34170,16 +37480,6 @@ impl<'a> PhysicalDeviceFragmentShaderBarycentricFeaturesNVBuilder<'a> {
         fragment_shader_barycentric: bool,
     ) -> PhysicalDeviceFragmentShaderBarycentricFeaturesNVBuilder<'a> {
         self.inner.fragment_shader_barycentric = fragment_shader_barycentric.into();
-        self
-    }
-    pub fn next<T>(
-        mut self,
-        next: &'a mut T,
-    ) -> PhysicalDeviceFragmentShaderBarycentricFeaturesNVBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceFragmentShaderBarycentricFeaturesNV,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceFragmentShaderBarycentricFeaturesNV {
@@ -34214,13 +37514,25 @@ pub struct PhysicalDeviceShaderImageFootprintFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceShaderImageFootprintFeaturesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceShaderImageFootprintFeaturesNV {}
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShaderImageFootprintFeaturesNV {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderImageFootprintFeaturesNV {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderImageFootprintFeaturesNVBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShaderImageFootprintFeaturesNV {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceShaderImageFootprintFeaturesNVBuilder<'a> {
     type Target = PhysicalDeviceShaderImageFootprintFeaturesNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceShaderImageFootprintFeaturesNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceShaderImageFootprintFeaturesNVBuilder<'a> {
@@ -34229,16 +37541,6 @@ impl<'a> PhysicalDeviceShaderImageFootprintFeaturesNVBuilder<'a> {
         image_footprint: bool,
     ) -> PhysicalDeviceShaderImageFootprintFeaturesNVBuilder<'a> {
         self.inner.image_footprint = image_footprint.into();
-        self
-    }
-    pub fn next<T>(
-        mut self,
-        next: &'a mut T,
-    ) -> PhysicalDeviceShaderImageFootprintFeaturesNVBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceShaderImageFootprintFeaturesNV,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceShaderImageFootprintFeaturesNV {
@@ -34275,6 +37577,11 @@ impl<'a> ::std::ops::Deref for ShadingRatePaletteNVBuilder<'a> {
     type Target = ShadingRatePaletteNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ShadingRatePaletteNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ShadingRatePaletteNVBuilder<'a> {
@@ -34322,15 +37629,29 @@ pub struct PipelineViewportShadingRateImageStateCreateInfoNVBuilder<'a> {
     inner: PipelineViewportShadingRateImageStateCreateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPipelineViewportShadingRateImageStateCreateInfoNV {}
+unsafe impl ExtendsPipelineViewportStateCreateInfo
+    for PipelineViewportShadingRateImageStateCreateInfoNVBuilder<'_>
+{
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
 unsafe impl ExtendsPipelineViewportStateCreateInfo
     for PipelineViewportShadingRateImageStateCreateInfoNV
 {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
 }
 impl<'a> ::std::ops::Deref for PipelineViewportShadingRateImageStateCreateInfoNVBuilder<'a> {
     type Target = PipelineViewportShadingRateImageStateCreateInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PipelineViewportShadingRateImageStateCreateInfoNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PipelineViewportShadingRateImageStateCreateInfoNVBuilder<'a> {
@@ -34347,16 +37668,6 @@ impl<'a> PipelineViewportShadingRateImageStateCreateInfoNVBuilder<'a> {
     ) -> PipelineViewportShadingRateImageStateCreateInfoNVBuilder<'a> {
         self.inner.viewport_count = shading_rate_palettes.len() as _;
         self.inner.p_shading_rate_palettes = shading_rate_palettes.as_ptr();
-        self
-    }
-    pub fn next<T>(
-        mut self,
-        next: &'a T,
-    ) -> PipelineViewportShadingRateImageStateCreateInfoNVBuilder<'a>
-    where
-        T: ExtendsPipelineViewportShadingRateImageStateCreateInfoNV,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> PipelineViewportShadingRateImageStateCreateInfoNV {
@@ -34393,13 +37704,25 @@ pub struct PhysicalDeviceShadingRateImageFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceShadingRateImageFeaturesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceShadingRateImageFeaturesNV {}
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceShadingRateImageFeaturesNV {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShadingRateImageFeaturesNV {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShadingRateImageFeaturesNVBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceShadingRateImageFeaturesNV {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceShadingRateImageFeaturesNVBuilder<'a> {
     type Target = PhysicalDeviceShadingRateImageFeaturesNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceShadingRateImageFeaturesNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceShadingRateImageFeaturesNVBuilder<'a> {
@@ -34415,13 +37738,6 @@ impl<'a> PhysicalDeviceShadingRateImageFeaturesNVBuilder<'a> {
         shading_rate_coarse_sample_order: bool,
     ) -> PhysicalDeviceShadingRateImageFeaturesNVBuilder<'a> {
         self.inner.shading_rate_coarse_sample_order = shading_rate_coarse_sample_order.into();
-        self
-    }
-    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceShadingRateImageFeaturesNVBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceShadingRateImageFeaturesNV,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceShadingRateImageFeaturesNV {
@@ -34460,12 +37776,27 @@ pub struct PhysicalDeviceShadingRateImagePropertiesNVBuilder<'a> {
     inner: PhysicalDeviceShadingRateImagePropertiesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceShadingRateImagePropertiesNV {}
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceShadingRateImagePropertiesNV {}
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDeviceShadingRateImagePropertiesNVBuilder<'_>
+{
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceShadingRateImagePropertiesNV {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceShadingRateImagePropertiesNVBuilder<'a> {
     type Target = PhysicalDeviceShadingRateImagePropertiesNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceShadingRateImagePropertiesNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceShadingRateImagePropertiesNVBuilder<'a> {
@@ -34488,16 +37819,6 @@ impl<'a> PhysicalDeviceShadingRateImagePropertiesNVBuilder<'a> {
         shading_rate_max_coarse_samples: u32,
     ) -> PhysicalDeviceShadingRateImagePropertiesNVBuilder<'a> {
         self.inner.shading_rate_max_coarse_samples = shading_rate_max_coarse_samples;
-        self
-    }
-    pub fn next<T>(
-        mut self,
-        next: &'a mut T,
-    ) -> PhysicalDeviceShadingRateImagePropertiesNVBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceShadingRateImagePropertiesNV,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceShadingRateImagePropertiesNV {
@@ -34527,6 +37848,11 @@ impl<'a> ::std::ops::Deref for CoarseSampleLocationNVBuilder<'a> {
     type Target = CoarseSampleLocationNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for CoarseSampleLocationNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> CoarseSampleLocationNVBuilder<'a> {
@@ -34580,6 +37906,11 @@ impl<'a> ::std::ops::Deref for CoarseSampleOrderCustomNVBuilder<'a> {
     type Target = CoarseSampleOrderCustomNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for CoarseSampleOrderCustomNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> CoarseSampleOrderCustomNVBuilder<'a> {
@@ -34638,15 +37969,29 @@ pub struct PipelineViewportCoarseSampleOrderStateCreateInfoNVBuilder<'a> {
     inner: PipelineViewportCoarseSampleOrderStateCreateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPipelineViewportCoarseSampleOrderStateCreateInfoNV {}
+unsafe impl ExtendsPipelineViewportStateCreateInfo
+    for PipelineViewportCoarseSampleOrderStateCreateInfoNVBuilder<'_>
+{
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
 unsafe impl ExtendsPipelineViewportStateCreateInfo
     for PipelineViewportCoarseSampleOrderStateCreateInfoNV
 {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
 }
 impl<'a> ::std::ops::Deref for PipelineViewportCoarseSampleOrderStateCreateInfoNVBuilder<'a> {
     type Target = PipelineViewportCoarseSampleOrderStateCreateInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PipelineViewportCoarseSampleOrderStateCreateInfoNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PipelineViewportCoarseSampleOrderStateCreateInfoNVBuilder<'a> {
@@ -34663,16 +38008,6 @@ impl<'a> PipelineViewportCoarseSampleOrderStateCreateInfoNVBuilder<'a> {
     ) -> PipelineViewportCoarseSampleOrderStateCreateInfoNVBuilder<'a> {
         self.inner.custom_sample_order_count = custom_sample_orders.len() as _;
         self.inner.p_custom_sample_orders = custom_sample_orders.as_ptr();
-        self
-    }
-    pub fn next<T>(
-        mut self,
-        next: &'a T,
-    ) -> PipelineViewportCoarseSampleOrderStateCreateInfoNVBuilder<'a>
-    where
-        T: ExtendsPipelineViewportCoarseSampleOrderStateCreateInfoNV,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> PipelineViewportCoarseSampleOrderStateCreateInfoNV {
@@ -34709,13 +38044,25 @@ pub struct PhysicalDeviceMeshShaderFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceMeshShaderFeaturesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceMeshShaderFeaturesNV {}
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMeshShaderFeaturesNV {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMeshShaderFeaturesNV {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMeshShaderFeaturesNVBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMeshShaderFeaturesNV {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceMeshShaderFeaturesNVBuilder<'a> {
     type Target = PhysicalDeviceMeshShaderFeaturesNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceMeshShaderFeaturesNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceMeshShaderFeaturesNVBuilder<'a> {
@@ -34731,13 +38078,6 @@ impl<'a> PhysicalDeviceMeshShaderFeaturesNVBuilder<'a> {
         mesh_shader: bool,
     ) -> PhysicalDeviceMeshShaderFeaturesNVBuilder<'a> {
         self.inner.mesh_shader = mesh_shader.into();
-        self
-    }
-    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceMeshShaderFeaturesNVBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceMeshShaderFeaturesNV,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceMeshShaderFeaturesNV {
@@ -34796,12 +38136,25 @@ pub struct PhysicalDeviceMeshShaderPropertiesNVBuilder<'a> {
     inner: PhysicalDeviceMeshShaderPropertiesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceMeshShaderPropertiesNV {}
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMeshShaderPropertiesNV {}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMeshShaderPropertiesNVBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceMeshShaderPropertiesNV {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceMeshShaderPropertiesNVBuilder<'a> {
     type Target = PhysicalDeviceMeshShaderPropertiesNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceMeshShaderPropertiesNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceMeshShaderPropertiesNVBuilder<'a> {
@@ -34896,13 +38249,6 @@ impl<'a> PhysicalDeviceMeshShaderPropertiesNVBuilder<'a> {
         self.inner.mesh_output_per_primitive_granularity = mesh_output_per_primitive_granularity;
         self
     }
-    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceMeshShaderPropertiesNVBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceMeshShaderPropertiesNV,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
-        self
-    }
     pub fn build(self) -> PhysicalDeviceMeshShaderPropertiesNV {
         self.inner
     }
@@ -34929,6 +38275,11 @@ impl<'a> ::std::ops::Deref for DrawMeshTasksIndirectCommandNVBuilder<'a> {
     type Target = DrawMeshTasksIndirectCommandNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DrawMeshTasksIndirectCommandNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DrawMeshTasksIndirectCommandNVBuilder<'a> {
@@ -34980,11 +38331,18 @@ pub struct RayTracingShaderGroupCreateInfoNVBuilder<'a> {
     inner: RayTracingShaderGroupCreateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsRayTracingShaderGroupCreateInfoNV {}
+pub unsafe trait ExtendsRayTracingShaderGroupCreateInfoNV {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for RayTracingShaderGroupCreateInfoNVBuilder<'a> {
     type Target = RayTracingShaderGroupCreateInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for RayTracingShaderGroupCreateInfoNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> RayTracingShaderGroupCreateInfoNVBuilder<'a> {
@@ -35023,11 +38381,20 @@ impl<'a> RayTracingShaderGroupCreateInfoNVBuilder<'a> {
         self.inner.intersection_shader = intersection_shader;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> RayTracingShaderGroupCreateInfoNVBuilder<'a>
-    where
-        T: ExtendsRayTracingShaderGroupCreateInfoNV,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsRayTracingShaderGroupCreateInfoNV>(
+        mut self,
+        next: &'a mut T,
+    ) -> RayTracingShaderGroupCreateInfoNVBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> RayTracingShaderGroupCreateInfoNV {
@@ -35078,11 +38445,18 @@ pub struct RayTracingPipelineCreateInfoNVBuilder<'a> {
     inner: RayTracingPipelineCreateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsRayTracingPipelineCreateInfoNV {}
+pub unsafe trait ExtendsRayTracingPipelineCreateInfoNV {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for RayTracingPipelineCreateInfoNVBuilder<'a> {
     type Target = RayTracingPipelineCreateInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for RayTracingPipelineCreateInfoNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> RayTracingPipelineCreateInfoNVBuilder<'a> {
@@ -35134,11 +38508,20 @@ impl<'a> RayTracingPipelineCreateInfoNVBuilder<'a> {
         self.inner.base_pipeline_index = base_pipeline_index;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> RayTracingPipelineCreateInfoNVBuilder<'a>
-    where
-        T: ExtendsRayTracingPipelineCreateInfoNV,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsRayTracingPipelineCreateInfoNV>(
+        mut self,
+        next: &'a mut T,
+    ) -> RayTracingPipelineCreateInfoNVBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> RayTracingPipelineCreateInfoNV {
@@ -35193,11 +38576,18 @@ pub struct GeometryTrianglesNVBuilder<'a> {
     inner: GeometryTrianglesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsGeometryTrianglesNV {}
+pub unsafe trait ExtendsGeometryTrianglesNV {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for GeometryTrianglesNVBuilder<'a> {
     type Target = GeometryTrianglesNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for GeometryTrianglesNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> GeometryTrianglesNVBuilder<'a> {
@@ -35248,11 +38638,20 @@ impl<'a> GeometryTrianglesNVBuilder<'a> {
         self.inner.transform_offset = transform_offset;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> GeometryTrianglesNVBuilder<'a>
-    where
-        T: ExtendsGeometryTrianglesNV,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsGeometryTrianglesNV>(
+        mut self,
+        next: &'a mut T,
+    ) -> GeometryTrianglesNVBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> GeometryTrianglesNV {
@@ -35293,11 +38692,18 @@ pub struct GeometryAABBNVBuilder<'a> {
     inner: GeometryAABBNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsGeometryAABBNV {}
+pub unsafe trait ExtendsGeometryAABBNV {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for GeometryAABBNVBuilder<'a> {
     type Target = GeometryAABBNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for GeometryAABBNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> GeometryAABBNVBuilder<'a> {
@@ -35317,11 +38723,20 @@ impl<'a> GeometryAABBNVBuilder<'a> {
         self.inner.offset = offset;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> GeometryAABBNVBuilder<'a>
-    where
-        T: ExtendsGeometryAABBNV,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsGeometryAABBNV>(
+        mut self,
+        next: &'a mut T,
+    ) -> GeometryAABBNVBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> GeometryAABBNV {
@@ -35350,6 +38765,11 @@ impl<'a> ::std::ops::Deref for GeometryDataNVBuilder<'a> {
     type Target = GeometryDataNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for GeometryDataNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> GeometryDataNVBuilder<'a> {
@@ -35397,11 +38817,18 @@ pub struct GeometryNVBuilder<'a> {
     inner: GeometryNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsGeometryNV {}
+pub unsafe trait ExtendsGeometryNV {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for GeometryNVBuilder<'a> {
     type Target = GeometryNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for GeometryNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> GeometryNVBuilder<'a> {
@@ -35417,11 +38844,17 @@ impl<'a> GeometryNVBuilder<'a> {
         self.inner.flags = flags;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> GeometryNVBuilder<'a>
-    where
-        T: ExtendsGeometryNV,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsGeometryNV>(mut self, next: &'a mut T) -> GeometryNVBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> GeometryNV {
@@ -35464,11 +38897,18 @@ pub struct AccelerationStructureInfoNVBuilder<'a> {
     inner: AccelerationStructureInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsAccelerationStructureInfoNV {}
+pub unsafe trait ExtendsAccelerationStructureInfoNV {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for AccelerationStructureInfoNVBuilder<'a> {
     type Target = AccelerationStructureInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for AccelerationStructureInfoNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> AccelerationStructureInfoNVBuilder<'a> {
@@ -35495,11 +38935,20 @@ impl<'a> AccelerationStructureInfoNVBuilder<'a> {
         self.inner.p_geometries = geometries.as_ptr();
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> AccelerationStructureInfoNVBuilder<'a>
-    where
-        T: ExtendsAccelerationStructureInfoNV,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsAccelerationStructureInfoNV>(
+        mut self,
+        next: &'a mut T,
+    ) -> AccelerationStructureInfoNVBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> AccelerationStructureInfoNV {
@@ -35536,11 +38985,18 @@ pub struct AccelerationStructureCreateInfoNVBuilder<'a> {
     inner: AccelerationStructureCreateInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsAccelerationStructureCreateInfoNV {}
+pub unsafe trait ExtendsAccelerationStructureCreateInfoNV {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for AccelerationStructureCreateInfoNVBuilder<'a> {
     type Target = AccelerationStructureCreateInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for AccelerationStructureCreateInfoNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> AccelerationStructureCreateInfoNVBuilder<'a> {
@@ -35558,11 +39014,20 @@ impl<'a> AccelerationStructureCreateInfoNVBuilder<'a> {
         self.inner.info = info;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> AccelerationStructureCreateInfoNVBuilder<'a>
-    where
-        T: ExtendsAccelerationStructureCreateInfoNV,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsAccelerationStructureCreateInfoNV>(
+        mut self,
+        next: &'a mut T,
+    ) -> AccelerationStructureCreateInfoNVBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> AccelerationStructureCreateInfoNV {
@@ -35605,11 +39070,18 @@ pub struct BindAccelerationStructureMemoryInfoNVBuilder<'a> {
     inner: BindAccelerationStructureMemoryInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsBindAccelerationStructureMemoryInfoNV {}
+pub unsafe trait ExtendsBindAccelerationStructureMemoryInfoNV {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for BindAccelerationStructureMemoryInfoNVBuilder<'a> {
     type Target = BindAccelerationStructureMemoryInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for BindAccelerationStructureMemoryInfoNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> BindAccelerationStructureMemoryInfoNVBuilder<'a> {
@@ -35642,11 +39114,20 @@ impl<'a> BindAccelerationStructureMemoryInfoNVBuilder<'a> {
         self.inner.p_device_indices = device_indices.as_ptr();
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> BindAccelerationStructureMemoryInfoNVBuilder<'a>
-    where
-        T: ExtendsBindAccelerationStructureMemoryInfoNV,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsBindAccelerationStructureMemoryInfoNV>(
+        mut self,
+        next: &'a mut T,
+    ) -> BindAccelerationStructureMemoryInfoNVBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> BindAccelerationStructureMemoryInfoNV {
@@ -35683,12 +39164,25 @@ pub struct WriteDescriptorSetAccelerationStructureNVBuilder<'a> {
     inner: WriteDescriptorSetAccelerationStructureNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsWriteDescriptorSetAccelerationStructureNV {}
-unsafe impl ExtendsWriteDescriptorSet for WriteDescriptorSetAccelerationStructureNV {}
+unsafe impl ExtendsWriteDescriptorSet for WriteDescriptorSetAccelerationStructureNVBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsWriteDescriptorSet for WriteDescriptorSetAccelerationStructureNV {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for WriteDescriptorSetAccelerationStructureNVBuilder<'a> {
     type Target = WriteDescriptorSetAccelerationStructureNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for WriteDescriptorSetAccelerationStructureNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> WriteDescriptorSetAccelerationStructureNVBuilder<'a> {
@@ -35698,13 +39192,6 @@ impl<'a> WriteDescriptorSetAccelerationStructureNVBuilder<'a> {
     ) -> WriteDescriptorSetAccelerationStructureNVBuilder<'a> {
         self.inner.acceleration_structure_count = acceleration_structures.len() as _;
         self.inner.p_acceleration_structures = acceleration_structures.as_ptr();
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> WriteDescriptorSetAccelerationStructureNVBuilder<'a>
-    where
-        T: ExtendsWriteDescriptorSetAccelerationStructureNV,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> WriteDescriptorSetAccelerationStructureNV {
@@ -35741,11 +39228,18 @@ pub struct AccelerationStructureMemoryRequirementsInfoNVBuilder<'a> {
     inner: AccelerationStructureMemoryRequirementsInfoNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsAccelerationStructureMemoryRequirementsInfoNV {}
+pub unsafe trait ExtendsAccelerationStructureMemoryRequirementsInfoNV {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for AccelerationStructureMemoryRequirementsInfoNVBuilder<'a> {
     type Target = AccelerationStructureMemoryRequirementsInfoNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for AccelerationStructureMemoryRequirementsInfoNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> AccelerationStructureMemoryRequirementsInfoNVBuilder<'a> {
@@ -35763,14 +39257,20 @@ impl<'a> AccelerationStructureMemoryRequirementsInfoNVBuilder<'a> {
         self.inner.acceleration_structure = acceleration_structure;
         self
     }
-    pub fn next<T>(
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsAccelerationStructureMemoryRequirementsInfoNV>(
         mut self,
-        next: &'a T,
-    ) -> AccelerationStructureMemoryRequirementsInfoNVBuilder<'a>
-    where
-        T: ExtendsAccelerationStructureMemoryRequirementsInfoNV,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+        next: &'a mut T,
+    ) -> AccelerationStructureMemoryRequirementsInfoNVBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> AccelerationStructureMemoryRequirementsInfoNV {
@@ -35819,12 +39319,25 @@ pub struct PhysicalDeviceRayTracingPropertiesNVBuilder<'a> {
     inner: PhysicalDeviceRayTracingPropertiesNV,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceRayTracingPropertiesNV {}
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceRayTracingPropertiesNV {}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceRayTracingPropertiesNVBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceRayTracingPropertiesNV {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceRayTracingPropertiesNVBuilder<'a> {
     type Target = PhysicalDeviceRayTracingPropertiesNV;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceRayTracingPropertiesNVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceRayTracingPropertiesNVBuilder<'a> {
@@ -35885,13 +39398,6 @@ impl<'a> PhysicalDeviceRayTracingPropertiesNVBuilder<'a> {
             max_descriptor_set_acceleration_structures;
         self
     }
-    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceRayTracingPropertiesNVBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceRayTracingPropertiesNV,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
-        self
-    }
     pub fn build(self) -> PhysicalDeviceRayTracingPropertiesNV {
         self.inner
     }
@@ -35926,12 +39432,25 @@ pub struct DrmFormatModifierPropertiesListEXTBuilder<'a> {
     inner: DrmFormatModifierPropertiesListEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDrmFormatModifierPropertiesListEXT {}
-unsafe impl ExtendsFormatProperties2 for DrmFormatModifierPropertiesListEXT {}
+unsafe impl ExtendsFormatProperties2 for DrmFormatModifierPropertiesListEXTBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsFormatProperties2 for DrmFormatModifierPropertiesListEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for DrmFormatModifierPropertiesListEXTBuilder<'a> {
     type Target = DrmFormatModifierPropertiesListEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DrmFormatModifierPropertiesListEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DrmFormatModifierPropertiesListEXTBuilder<'a> {
@@ -35941,13 +39460,6 @@ impl<'a> DrmFormatModifierPropertiesListEXTBuilder<'a> {
     ) -> DrmFormatModifierPropertiesListEXTBuilder<'a> {
         self.inner.drm_format_modifier_count = drm_format_modifier_properties.len() as _;
         self.inner.p_drm_format_modifier_properties = drm_format_modifier_properties.as_mut_ptr();
-        self
-    }
-    pub fn next<T>(mut self, next: &'a mut T) -> DrmFormatModifierPropertiesListEXTBuilder<'a>
-    where
-        T: ExtendsDrmFormatModifierPropertiesListEXT,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> DrmFormatModifierPropertiesListEXT {
@@ -35977,6 +39489,11 @@ impl<'a> ::std::ops::Deref for DrmFormatModifierPropertiesEXTBuilder<'a> {
     type Target = DrmFormatModifierPropertiesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DrmFormatModifierPropertiesEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DrmFormatModifierPropertiesEXTBuilder<'a> {
@@ -36039,12 +39556,27 @@ pub struct PhysicalDeviceImageDrmFormatModifierInfoEXTBuilder<'a> {
     inner: PhysicalDeviceImageDrmFormatModifierInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceImageDrmFormatModifierInfoEXT {}
-unsafe impl ExtendsPhysicalDeviceImageFormatInfo2 for PhysicalDeviceImageDrmFormatModifierInfoEXT {}
+unsafe impl ExtendsPhysicalDeviceImageFormatInfo2
+    for PhysicalDeviceImageDrmFormatModifierInfoEXTBuilder<'_>
+{
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsPhysicalDeviceImageFormatInfo2 for PhysicalDeviceImageDrmFormatModifierInfoEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceImageDrmFormatModifierInfoEXTBuilder<'a> {
     type Target = PhysicalDeviceImageDrmFormatModifierInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceImageDrmFormatModifierInfoEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceImageDrmFormatModifierInfoEXTBuilder<'a> {
@@ -36068,13 +39600,6 @@ impl<'a> PhysicalDeviceImageDrmFormatModifierInfoEXTBuilder<'a> {
     ) -> PhysicalDeviceImageDrmFormatModifierInfoEXTBuilder<'a> {
         self.inner.queue_family_index_count = queue_family_indices.len() as _;
         self.inner.p_queue_family_indices = queue_family_indices.as_ptr();
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> PhysicalDeviceImageDrmFormatModifierInfoEXTBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceImageDrmFormatModifierInfoEXT,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceImageDrmFormatModifierInfoEXT {
@@ -36111,12 +39636,25 @@ pub struct ImageDrmFormatModifierListCreateInfoEXTBuilder<'a> {
     inner: ImageDrmFormatModifierListCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsImageDrmFormatModifierListCreateInfoEXT {}
-unsafe impl ExtendsImageCreateInfo for ImageDrmFormatModifierListCreateInfoEXT {}
+unsafe impl ExtendsImageCreateInfo for ImageDrmFormatModifierListCreateInfoEXTBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsImageCreateInfo for ImageDrmFormatModifierListCreateInfoEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for ImageDrmFormatModifierListCreateInfoEXTBuilder<'a> {
     type Target = ImageDrmFormatModifierListCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ImageDrmFormatModifierListCreateInfoEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ImageDrmFormatModifierListCreateInfoEXTBuilder<'a> {
@@ -36126,13 +39664,6 @@ impl<'a> ImageDrmFormatModifierListCreateInfoEXTBuilder<'a> {
     ) -> ImageDrmFormatModifierListCreateInfoEXTBuilder<'a> {
         self.inner.drm_format_modifier_count = drm_format_modifiers.len() as _;
         self.inner.p_drm_format_modifiers = drm_format_modifiers.as_ptr();
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> ImageDrmFormatModifierListCreateInfoEXTBuilder<'a>
-    where
-        T: ExtendsImageDrmFormatModifierListCreateInfoEXT,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ImageDrmFormatModifierListCreateInfoEXT {
@@ -36171,12 +39702,25 @@ pub struct ImageDrmFormatModifierExplicitCreateInfoEXTBuilder<'a> {
     inner: ImageDrmFormatModifierExplicitCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsImageDrmFormatModifierExplicitCreateInfoEXT {}
-unsafe impl ExtendsImageCreateInfo for ImageDrmFormatModifierExplicitCreateInfoEXT {}
+unsafe impl ExtendsImageCreateInfo for ImageDrmFormatModifierExplicitCreateInfoEXTBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsImageCreateInfo for ImageDrmFormatModifierExplicitCreateInfoEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for ImageDrmFormatModifierExplicitCreateInfoEXTBuilder<'a> {
     type Target = ImageDrmFormatModifierExplicitCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ImageDrmFormatModifierExplicitCreateInfoEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ImageDrmFormatModifierExplicitCreateInfoEXTBuilder<'a> {
@@ -36193,13 +39737,6 @@ impl<'a> ImageDrmFormatModifierExplicitCreateInfoEXTBuilder<'a> {
     ) -> ImageDrmFormatModifierExplicitCreateInfoEXTBuilder<'a> {
         self.inner.drm_format_modifier_plane_count = plane_layouts.len() as _;
         self.inner.p_plane_layouts = plane_layouts.as_ptr();
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> ImageDrmFormatModifierExplicitCreateInfoEXTBuilder<'a>
-    where
-        T: ExtendsImageDrmFormatModifierExplicitCreateInfoEXT,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ImageDrmFormatModifierExplicitCreateInfoEXT {
@@ -36234,11 +39771,18 @@ pub struct ImageDrmFormatModifierPropertiesEXTBuilder<'a> {
     inner: ImageDrmFormatModifierPropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsImageDrmFormatModifierPropertiesEXT {}
+pub unsafe trait ExtendsImageDrmFormatModifierPropertiesEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for ImageDrmFormatModifierPropertiesEXTBuilder<'a> {
     type Target = ImageDrmFormatModifierPropertiesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ImageDrmFormatModifierPropertiesEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ImageDrmFormatModifierPropertiesEXTBuilder<'a> {
@@ -36249,11 +39793,20 @@ impl<'a> ImageDrmFormatModifierPropertiesEXTBuilder<'a> {
         self.inner.drm_format_modifier = drm_format_modifier;
         self
     }
-    pub fn next<T>(mut self, next: &'a mut T) -> ImageDrmFormatModifierPropertiesEXTBuilder<'a>
-    where
-        T: ExtendsImageDrmFormatModifierPropertiesEXT,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsImageDrmFormatModifierPropertiesEXT>(
+        mut self,
+        next: &'a mut T,
+    ) -> ImageDrmFormatModifierPropertiesEXTBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> ImageDrmFormatModifierPropertiesEXT {
@@ -36288,13 +39841,25 @@ pub struct ImageStencilUsageCreateInfoEXTBuilder<'a> {
     inner: ImageStencilUsageCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsImageStencilUsageCreateInfoEXT {}
-unsafe impl ExtendsImageCreateInfo for ImageStencilUsageCreateInfoEXT {}
-unsafe impl ExtendsPhysicalDeviceImageFormatInfo2 for ImageStencilUsageCreateInfoEXT {}
+unsafe impl ExtendsImageCreateInfo for ImageStencilUsageCreateInfoEXTBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsImageCreateInfo for ImageStencilUsageCreateInfoEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for ImageStencilUsageCreateInfoEXTBuilder<'a> {
     type Target = ImageStencilUsageCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ImageStencilUsageCreateInfoEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> ImageStencilUsageCreateInfoEXTBuilder<'a> {
@@ -36303,13 +39868,6 @@ impl<'a> ImageStencilUsageCreateInfoEXTBuilder<'a> {
         stencil_usage: ImageUsageFlags,
     ) -> ImageStencilUsageCreateInfoEXTBuilder<'a> {
         self.inner.stencil_usage = stencil_usage;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> ImageStencilUsageCreateInfoEXTBuilder<'a>
-    where
-        T: ExtendsImageStencilUsageCreateInfoEXT,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> ImageStencilUsageCreateInfoEXT {
@@ -36344,12 +39902,25 @@ pub struct DeviceMemoryOverallocationCreateInfoAMDBuilder<'a> {
     inner: DeviceMemoryOverallocationCreateInfoAMD,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsDeviceMemoryOverallocationCreateInfoAMD {}
-unsafe impl ExtendsDeviceCreateInfo for DeviceMemoryOverallocationCreateInfoAMD {}
+unsafe impl ExtendsDeviceCreateInfo for DeviceMemoryOverallocationCreateInfoAMDBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsDeviceCreateInfo for DeviceMemoryOverallocationCreateInfoAMD {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for DeviceMemoryOverallocationCreateInfoAMDBuilder<'a> {
     type Target = DeviceMemoryOverallocationCreateInfoAMD;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DeviceMemoryOverallocationCreateInfoAMDBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> DeviceMemoryOverallocationCreateInfoAMDBuilder<'a> {
@@ -36358,13 +39929,6 @@ impl<'a> DeviceMemoryOverallocationCreateInfoAMDBuilder<'a> {
         overallocation_behavior: MemoryOverallocationBehaviorAMD,
     ) -> DeviceMemoryOverallocationCreateInfoAMDBuilder<'a> {
         self.inner.overallocation_behavior = overallocation_behavior;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> DeviceMemoryOverallocationCreateInfoAMDBuilder<'a>
-    where
-        T: ExtendsDeviceMemoryOverallocationCreateInfoAMD,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> DeviceMemoryOverallocationCreateInfoAMD {
@@ -36403,13 +39967,25 @@ pub struct PhysicalDeviceFragmentDensityMapFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceFragmentDensityMapFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceFragmentDensityMapFeaturesEXT {}
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceFragmentDensityMapFeaturesEXT {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFragmentDensityMapFeaturesEXT {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFragmentDensityMapFeaturesEXTBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFragmentDensityMapFeaturesEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceFragmentDensityMapFeaturesEXTBuilder<'a> {
     type Target = PhysicalDeviceFragmentDensityMapFeaturesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceFragmentDensityMapFeaturesEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceFragmentDensityMapFeaturesEXTBuilder<'a> {
@@ -36433,16 +40009,6 @@ impl<'a> PhysicalDeviceFragmentDensityMapFeaturesEXTBuilder<'a> {
     ) -> PhysicalDeviceFragmentDensityMapFeaturesEXTBuilder<'a> {
         self.inner.fragment_density_map_non_subsampled_images =
             fragment_density_map_non_subsampled_images.into();
-        self
-    }
-    pub fn next<T>(
-        mut self,
-        next: &'a mut T,
-    ) -> PhysicalDeviceFragmentDensityMapFeaturesEXTBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceFragmentDensityMapFeaturesEXT,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceFragmentDensityMapFeaturesEXT {
@@ -36481,12 +40047,27 @@ pub struct PhysicalDeviceFragmentDensityMapPropertiesEXTBuilder<'a> {
     inner: PhysicalDeviceFragmentDensityMapPropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceFragmentDensityMapPropertiesEXT {}
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceFragmentDensityMapPropertiesEXT {}
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDeviceFragmentDensityMapPropertiesEXTBuilder<'_>
+{
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceFragmentDensityMapPropertiesEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceFragmentDensityMapPropertiesEXTBuilder<'a> {
     type Target = PhysicalDeviceFragmentDensityMapPropertiesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceFragmentDensityMapPropertiesEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceFragmentDensityMapPropertiesEXTBuilder<'a> {
@@ -36509,16 +40090,6 @@ impl<'a> PhysicalDeviceFragmentDensityMapPropertiesEXTBuilder<'a> {
         fragment_density_invocations: bool,
     ) -> PhysicalDeviceFragmentDensityMapPropertiesEXTBuilder<'a> {
         self.inner.fragment_density_invocations = fragment_density_invocations.into();
-        self
-    }
-    pub fn next<T>(
-        mut self,
-        next: &'a mut T,
-    ) -> PhysicalDeviceFragmentDensityMapPropertiesEXTBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceFragmentDensityMapPropertiesEXT,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceFragmentDensityMapPropertiesEXT {
@@ -36553,12 +40124,25 @@ pub struct RenderPassFragmentDensityMapCreateInfoEXTBuilder<'a> {
     inner: RenderPassFragmentDensityMapCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsRenderPassFragmentDensityMapCreateInfoEXT {}
-unsafe impl ExtendsRenderPassCreateInfo for RenderPassFragmentDensityMapCreateInfoEXT {}
+unsafe impl ExtendsRenderPassCreateInfo for RenderPassFragmentDensityMapCreateInfoEXTBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsRenderPassCreateInfo for RenderPassFragmentDensityMapCreateInfoEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for RenderPassFragmentDensityMapCreateInfoEXTBuilder<'a> {
     type Target = RenderPassFragmentDensityMapCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for RenderPassFragmentDensityMapCreateInfoEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> RenderPassFragmentDensityMapCreateInfoEXTBuilder<'a> {
@@ -36567,13 +40151,6 @@ impl<'a> RenderPassFragmentDensityMapCreateInfoEXTBuilder<'a> {
         fragment_density_map_attachment: AttachmentReference,
     ) -> RenderPassFragmentDensityMapCreateInfoEXTBuilder<'a> {
         self.inner.fragment_density_map_attachment = fragment_density_map_attachment;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> RenderPassFragmentDensityMapCreateInfoEXTBuilder<'a>
-    where
-        T: ExtendsRenderPassFragmentDensityMapCreateInfoEXT,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> RenderPassFragmentDensityMapCreateInfoEXT {
@@ -36608,13 +40185,25 @@ pub struct PhysicalDeviceScalarBlockLayoutFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceScalarBlockLayoutFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceScalarBlockLayoutFeaturesEXT {}
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceScalarBlockLayoutFeaturesEXT {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceScalarBlockLayoutFeaturesEXT {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceScalarBlockLayoutFeaturesEXTBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceScalarBlockLayoutFeaturesEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceScalarBlockLayoutFeaturesEXTBuilder<'a> {
     type Target = PhysicalDeviceScalarBlockLayoutFeaturesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceScalarBlockLayoutFeaturesEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceScalarBlockLayoutFeaturesEXTBuilder<'a> {
@@ -36623,16 +40212,6 @@ impl<'a> PhysicalDeviceScalarBlockLayoutFeaturesEXTBuilder<'a> {
         scalar_block_layout: bool,
     ) -> PhysicalDeviceScalarBlockLayoutFeaturesEXTBuilder<'a> {
         self.inner.scalar_block_layout = scalar_block_layout.into();
-        self
-    }
-    pub fn next<T>(
-        mut self,
-        next: &'a mut T,
-    ) -> PhysicalDeviceScalarBlockLayoutFeaturesEXTBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceScalarBlockLayoutFeaturesEXT,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceScalarBlockLayoutFeaturesEXT {
@@ -36669,12 +40248,27 @@ pub struct PhysicalDeviceMemoryBudgetPropertiesEXTBuilder<'a> {
     inner: PhysicalDeviceMemoryBudgetPropertiesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceMemoryBudgetPropertiesEXT {}
-unsafe impl ExtendsPhysicalDeviceMemoryProperties2 for PhysicalDeviceMemoryBudgetPropertiesEXT {}
+unsafe impl ExtendsPhysicalDeviceMemoryProperties2
+    for PhysicalDeviceMemoryBudgetPropertiesEXTBuilder<'_>
+{
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsPhysicalDeviceMemoryProperties2 for PhysicalDeviceMemoryBudgetPropertiesEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceMemoryBudgetPropertiesEXTBuilder<'a> {
     type Target = PhysicalDeviceMemoryBudgetPropertiesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceMemoryBudgetPropertiesEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceMemoryBudgetPropertiesEXTBuilder<'a> {
@@ -36690,13 +40284,6 @@ impl<'a> PhysicalDeviceMemoryBudgetPropertiesEXTBuilder<'a> {
         heap_usage: [DeviceSize; MAX_MEMORY_HEAPS],
     ) -> PhysicalDeviceMemoryBudgetPropertiesEXTBuilder<'a> {
         self.inner.heap_usage = heap_usage;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceMemoryBudgetPropertiesEXTBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceMemoryBudgetPropertiesEXT,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceMemoryBudgetPropertiesEXT {
@@ -36731,13 +40318,25 @@ pub struct PhysicalDeviceMemoryPriorityFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceMemoryPriorityFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceMemoryPriorityFeaturesEXT {}
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMemoryPriorityFeaturesEXT {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMemoryPriorityFeaturesEXT {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMemoryPriorityFeaturesEXTBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMemoryPriorityFeaturesEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceMemoryPriorityFeaturesEXTBuilder<'a> {
     type Target = PhysicalDeviceMemoryPriorityFeaturesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceMemoryPriorityFeaturesEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceMemoryPriorityFeaturesEXTBuilder<'a> {
@@ -36746,13 +40345,6 @@ impl<'a> PhysicalDeviceMemoryPriorityFeaturesEXTBuilder<'a> {
         memory_priority: bool,
     ) -> PhysicalDeviceMemoryPriorityFeaturesEXTBuilder<'a> {
         self.inner.memory_priority = memory_priority.into();
-        self
-    }
-    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceMemoryPriorityFeaturesEXTBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceMemoryPriorityFeaturesEXT,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceMemoryPriorityFeaturesEXT {
@@ -36787,24 +40379,30 @@ pub struct MemoryPriorityAllocateInfoEXTBuilder<'a> {
     inner: MemoryPriorityAllocateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsMemoryPriorityAllocateInfoEXT {}
-unsafe impl ExtendsMemoryAllocateInfo for MemoryPriorityAllocateInfoEXT {}
+unsafe impl ExtendsMemoryAllocateInfo for MemoryPriorityAllocateInfoEXTBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsMemoryAllocateInfo for MemoryPriorityAllocateInfoEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for MemoryPriorityAllocateInfoEXTBuilder<'a> {
     type Target = MemoryPriorityAllocateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
     }
 }
+impl<'a> ::std::ops::DerefMut for MemoryPriorityAllocateInfoEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
 impl<'a> MemoryPriorityAllocateInfoEXTBuilder<'a> {
     pub fn priority(mut self, priority: f32) -> MemoryPriorityAllocateInfoEXTBuilder<'a> {
         self.inner.priority = priority;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> MemoryPriorityAllocateInfoEXTBuilder<'a>
-    where
-        T: ExtendsMemoryPriorityAllocateInfoEXT,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> MemoryPriorityAllocateInfoEXT {
@@ -36843,13 +40441,25 @@ pub struct PhysicalDeviceBufferAddressFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceBufferAddressFeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceBufferAddressFeaturesEXT {}
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceBufferAddressFeaturesEXT {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceBufferAddressFeaturesEXT {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceBufferAddressFeaturesEXTBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceBufferAddressFeaturesEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceBufferAddressFeaturesEXTBuilder<'a> {
     type Target = PhysicalDeviceBufferAddressFeaturesEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceBufferAddressFeaturesEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> PhysicalDeviceBufferAddressFeaturesEXTBuilder<'a> {
@@ -36873,13 +40483,6 @@ impl<'a> PhysicalDeviceBufferAddressFeaturesEXTBuilder<'a> {
         buffer_device_address_multi_device: bool,
     ) -> PhysicalDeviceBufferAddressFeaturesEXTBuilder<'a> {
         self.inner.buffer_device_address_multi_device = buffer_device_address_multi_device.into();
-        self
-    }
-    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceBufferAddressFeaturesEXTBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceBufferAddressFeaturesEXT,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
         self
     }
     pub fn build(self) -> PhysicalDeviceBufferAddressFeaturesEXT {
@@ -36914,11 +40517,18 @@ pub struct BufferDeviceAddressInfoEXTBuilder<'a> {
     inner: BufferDeviceAddressInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsBufferDeviceAddressInfoEXT {}
+pub unsafe trait ExtendsBufferDeviceAddressInfoEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
 impl<'a> ::std::ops::Deref for BufferDeviceAddressInfoEXTBuilder<'a> {
     type Target = BufferDeviceAddressInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for BufferDeviceAddressInfoEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> BufferDeviceAddressInfoEXTBuilder<'a> {
@@ -36926,11 +40536,20 @@ impl<'a> BufferDeviceAddressInfoEXTBuilder<'a> {
         self.inner.buffer = buffer;
         self
     }
-    pub fn next<T>(mut self, next: &'a T) -> BufferDeviceAddressInfoEXTBuilder<'a>
-    where
-        T: ExtendsBufferDeviceAddressInfoEXT,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on create infos that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsBufferDeviceAddressInfoEXT>(
+        mut self,
+        next: &'a mut T,
+    ) -> BufferDeviceAddressInfoEXTBuilder<'a> {
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> BufferDeviceAddressInfoEXT {
@@ -36965,12 +40584,25 @@ pub struct BufferDeviceAddressCreateInfoEXTBuilder<'a> {
     inner: BufferDeviceAddressCreateInfoEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsBufferDeviceAddressCreateInfoEXT {}
-unsafe impl ExtendsBufferCreateInfo for BufferDeviceAddressCreateInfoEXT {}
+unsafe impl ExtendsBufferCreateInfo for BufferDeviceAddressCreateInfoEXTBuilder<'_> {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(&mut self.inner)
+    }
+}
+unsafe impl ExtendsBufferCreateInfo for BufferDeviceAddressCreateInfoEXT {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for BufferDeviceAddressCreateInfoEXTBuilder<'a> {
     type Target = BufferDeviceAddressCreateInfoEXT;
     fn deref(&self) -> &Self::Target {
         &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for BufferDeviceAddressCreateInfoEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
     }
 }
 impl<'a> BufferDeviceAddressCreateInfoEXTBuilder<'a> {
@@ -36979,634 +40611,6 @@ impl<'a> BufferDeviceAddressCreateInfoEXTBuilder<'a> {
         device_address: DeviceSize,
     ) -> BufferDeviceAddressCreateInfoEXTBuilder<'a> {
         self.inner.device_address = device_address;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> BufferDeviceAddressCreateInfoEXTBuilder<'a>
-    where
-        T: ExtendsBufferDeviceAddressCreateInfoEXT,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
-        self
-    }
-    pub fn build(self) -> BufferDeviceAddressCreateInfoEXT {
-        self.inner
-    }
-}
-#[repr(C)]
-#[derive(Copy, Clone, Debug)]
-pub struct PhysicalDeviceFragmentDensityMapFeaturesEXT {
-    pub s_type: StructureType,
-    pub p_next: *mut c_void,
-    pub fragment_density_map: Bool32,
-    pub fragment_density_map_dynamic: Bool32,
-    pub fragment_density_map_non_subsampled_images: Bool32,
-}
-impl ::std::default::Default for PhysicalDeviceFragmentDensityMapFeaturesEXT {
-    fn default() -> PhysicalDeviceFragmentDensityMapFeaturesEXT {
-        PhysicalDeviceFragmentDensityMapFeaturesEXT {
-            s_type: StructureType::PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_FEATURES_EXT,
-            p_next: ::std::ptr::null_mut(),
-            fragment_density_map: Bool32::default(),
-            fragment_density_map_dynamic: Bool32::default(),
-            fragment_density_map_non_subsampled_images: Bool32::default(),
-        }
-    }
-}
-impl PhysicalDeviceFragmentDensityMapFeaturesEXT {
-    pub fn builder<'a>() -> PhysicalDeviceFragmentDensityMapFeaturesEXTBuilder<'a> {
-        PhysicalDeviceFragmentDensityMapFeaturesEXTBuilder {
-            inner: PhysicalDeviceFragmentDensityMapFeaturesEXT::default(),
-            marker: ::std::marker::PhantomData,
-        }
-    }
-}
-pub struct PhysicalDeviceFragmentDensityMapFeaturesEXTBuilder<'a> {
-    inner: PhysicalDeviceFragmentDensityMapFeaturesEXT,
-    marker: ::std::marker::PhantomData<&'a ()>,
-}
-pub unsafe trait ExtendsPhysicalDeviceFragmentDensityMapFeaturesEXT {}
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceFragmentDensityMapFeaturesEXT {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceFragmentDensityMapFeaturesEXT {}
-impl<'a> ::std::ops::Deref for PhysicalDeviceFragmentDensityMapFeaturesEXTBuilder<'a> {
-    type Target = PhysicalDeviceFragmentDensityMapFeaturesEXT;
-    fn deref(&self) -> &Self::Target {
-        &self.inner
-    }
-}
-impl<'a> PhysicalDeviceFragmentDensityMapFeaturesEXTBuilder<'a> {
-    pub fn fragment_density_map(
-        mut self,
-        fragment_density_map: bool,
-    ) -> PhysicalDeviceFragmentDensityMapFeaturesEXTBuilder<'a> {
-        self.inner.fragment_density_map = fragment_density_map.into();
-        self
-    }
-    pub fn fragment_density_map_dynamic(
-        mut self,
-        fragment_density_map_dynamic: bool,
-    ) -> PhysicalDeviceFragmentDensityMapFeaturesEXTBuilder<'a> {
-        self.inner.fragment_density_map_dynamic = fragment_density_map_dynamic.into();
-        self
-    }
-    pub fn fragment_density_map_non_subsampled_images(
-        mut self,
-        fragment_density_map_non_subsampled_images: bool,
-    ) -> PhysicalDeviceFragmentDensityMapFeaturesEXTBuilder<'a> {
-        self.inner.fragment_density_map_non_subsampled_images =
-            fragment_density_map_non_subsampled_images.into();
-        self
-    }
-    pub fn next<T>(
-        mut self,
-        next: &'a mut T,
-    ) -> PhysicalDeviceFragmentDensityMapFeaturesEXTBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceFragmentDensityMapFeaturesEXT,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
-        self
-    }
-    pub fn build(self) -> PhysicalDeviceFragmentDensityMapFeaturesEXT {
-        self.inner
-    }
-}
-#[repr(C)]
-#[derive(Copy, Clone, Debug)]
-pub struct PhysicalDeviceFragmentDensityMapPropertiesEXT {
-    pub s_type: StructureType,
-    pub p_next: *mut c_void,
-    pub min_fragment_density_texel_size: Extent2D,
-    pub max_fragment_density_texel_size: Extent2D,
-    pub fragment_density_invocations: Bool32,
-}
-impl ::std::default::Default for PhysicalDeviceFragmentDensityMapPropertiesEXT {
-    fn default() -> PhysicalDeviceFragmentDensityMapPropertiesEXT {
-        PhysicalDeviceFragmentDensityMapPropertiesEXT {
-            s_type: StructureType::PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_PROPERTIES_EXT,
-            p_next: ::std::ptr::null_mut(),
-            min_fragment_density_texel_size: Extent2D::default(),
-            max_fragment_density_texel_size: Extent2D::default(),
-            fragment_density_invocations: Bool32::default(),
-        }
-    }
-}
-impl PhysicalDeviceFragmentDensityMapPropertiesEXT {
-    pub fn builder<'a>() -> PhysicalDeviceFragmentDensityMapPropertiesEXTBuilder<'a> {
-        PhysicalDeviceFragmentDensityMapPropertiesEXTBuilder {
-            inner: PhysicalDeviceFragmentDensityMapPropertiesEXT::default(),
-            marker: ::std::marker::PhantomData,
-        }
-    }
-}
-pub struct PhysicalDeviceFragmentDensityMapPropertiesEXTBuilder<'a> {
-    inner: PhysicalDeviceFragmentDensityMapPropertiesEXT,
-    marker: ::std::marker::PhantomData<&'a ()>,
-}
-pub unsafe trait ExtendsPhysicalDeviceFragmentDensityMapPropertiesEXT {}
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceFragmentDensityMapPropertiesEXT {}
-impl<'a> ::std::ops::Deref for PhysicalDeviceFragmentDensityMapPropertiesEXTBuilder<'a> {
-    type Target = PhysicalDeviceFragmentDensityMapPropertiesEXT;
-    fn deref(&self) -> &Self::Target {
-        &self.inner
-    }
-}
-impl<'a> PhysicalDeviceFragmentDensityMapPropertiesEXTBuilder<'a> {
-    pub fn min_fragment_density_texel_size(
-        mut self,
-        min_fragment_density_texel_size: Extent2D,
-    ) -> PhysicalDeviceFragmentDensityMapPropertiesEXTBuilder<'a> {
-        self.inner.min_fragment_density_texel_size = min_fragment_density_texel_size;
-        self
-    }
-    pub fn max_fragment_density_texel_size(
-        mut self,
-        max_fragment_density_texel_size: Extent2D,
-    ) -> PhysicalDeviceFragmentDensityMapPropertiesEXTBuilder<'a> {
-        self.inner.max_fragment_density_texel_size = max_fragment_density_texel_size;
-        self
-    }
-    pub fn fragment_density_invocations(
-        mut self,
-        fragment_density_invocations: bool,
-    ) -> PhysicalDeviceFragmentDensityMapPropertiesEXTBuilder<'a> {
-        self.inner.fragment_density_invocations = fragment_density_invocations.into();
-        self
-    }
-    pub fn next<T>(
-        mut self,
-        next: &'a mut T,
-    ) -> PhysicalDeviceFragmentDensityMapPropertiesEXTBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceFragmentDensityMapPropertiesEXT,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
-        self
-    }
-    pub fn build(self) -> PhysicalDeviceFragmentDensityMapPropertiesEXT {
-        self.inner
-    }
-}
-#[repr(C)]
-#[derive(Copy, Clone, Debug)]
-pub struct RenderPassFragmentDensityMapCreateInfoEXT {
-    pub s_type: StructureType,
-    pub p_next: *const c_void,
-    pub fragment_density_map_attachment: AttachmentReference,
-}
-impl ::std::default::Default for RenderPassFragmentDensityMapCreateInfoEXT {
-    fn default() -> RenderPassFragmentDensityMapCreateInfoEXT {
-        RenderPassFragmentDensityMapCreateInfoEXT {
-            s_type: StructureType::RENDER_PASS_FRAGMENT_DENSITY_MAP_CREATE_INFO_EXT,
-            p_next: ::std::ptr::null(),
-            fragment_density_map_attachment: AttachmentReference::default(),
-        }
-    }
-}
-impl RenderPassFragmentDensityMapCreateInfoEXT {
-    pub fn builder<'a>() -> RenderPassFragmentDensityMapCreateInfoEXTBuilder<'a> {
-        RenderPassFragmentDensityMapCreateInfoEXTBuilder {
-            inner: RenderPassFragmentDensityMapCreateInfoEXT::default(),
-            marker: ::std::marker::PhantomData,
-        }
-    }
-}
-pub struct RenderPassFragmentDensityMapCreateInfoEXTBuilder<'a> {
-    inner: RenderPassFragmentDensityMapCreateInfoEXT,
-    marker: ::std::marker::PhantomData<&'a ()>,
-}
-pub unsafe trait ExtendsRenderPassFragmentDensityMapCreateInfoEXT {}
-unsafe impl ExtendsRenderPassCreateInfo for RenderPassFragmentDensityMapCreateInfoEXT {}
-impl<'a> ::std::ops::Deref for RenderPassFragmentDensityMapCreateInfoEXTBuilder<'a> {
-    type Target = RenderPassFragmentDensityMapCreateInfoEXT;
-    fn deref(&self) -> &Self::Target {
-        &self.inner
-    }
-}
-impl<'a> RenderPassFragmentDensityMapCreateInfoEXTBuilder<'a> {
-    pub fn fragment_density_map_attachment(
-        mut self,
-        fragment_density_map_attachment: AttachmentReference,
-    ) -> RenderPassFragmentDensityMapCreateInfoEXTBuilder<'a> {
-        self.inner.fragment_density_map_attachment = fragment_density_map_attachment;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> RenderPassFragmentDensityMapCreateInfoEXTBuilder<'a>
-    where
-        T: ExtendsRenderPassFragmentDensityMapCreateInfoEXT,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
-        self
-    }
-    pub fn build(self) -> RenderPassFragmentDensityMapCreateInfoEXT {
-        self.inner
-    }
-}
-#[repr(C)]
-#[derive(Copy, Clone, Debug)]
-pub struct PhysicalDeviceScalarBlockLayoutFeaturesEXT {
-    pub s_type: StructureType,
-    pub p_next: *mut c_void,
-    pub scalar_block_layout: Bool32,
-}
-impl ::std::default::Default for PhysicalDeviceScalarBlockLayoutFeaturesEXT {
-    fn default() -> PhysicalDeviceScalarBlockLayoutFeaturesEXT {
-        PhysicalDeviceScalarBlockLayoutFeaturesEXT {
-            s_type: StructureType::PHYSICAL_DEVICE_SCALAR_BLOCK_LAYOUT_FEATURES_EXT,
-            p_next: ::std::ptr::null_mut(),
-            scalar_block_layout: Bool32::default(),
-        }
-    }
-}
-impl PhysicalDeviceScalarBlockLayoutFeaturesEXT {
-    pub fn builder<'a>() -> PhysicalDeviceScalarBlockLayoutFeaturesEXTBuilder<'a> {
-        PhysicalDeviceScalarBlockLayoutFeaturesEXTBuilder {
-            inner: PhysicalDeviceScalarBlockLayoutFeaturesEXT::default(),
-            marker: ::std::marker::PhantomData,
-        }
-    }
-}
-pub struct PhysicalDeviceScalarBlockLayoutFeaturesEXTBuilder<'a> {
-    inner: PhysicalDeviceScalarBlockLayoutFeaturesEXT,
-    marker: ::std::marker::PhantomData<&'a ()>,
-}
-pub unsafe trait ExtendsPhysicalDeviceScalarBlockLayoutFeaturesEXT {}
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceScalarBlockLayoutFeaturesEXT {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceScalarBlockLayoutFeaturesEXT {}
-impl<'a> ::std::ops::Deref for PhysicalDeviceScalarBlockLayoutFeaturesEXTBuilder<'a> {
-    type Target = PhysicalDeviceScalarBlockLayoutFeaturesEXT;
-    fn deref(&self) -> &Self::Target {
-        &self.inner
-    }
-}
-impl<'a> PhysicalDeviceScalarBlockLayoutFeaturesEXTBuilder<'a> {
-    pub fn scalar_block_layout(
-        mut self,
-        scalar_block_layout: bool,
-    ) -> PhysicalDeviceScalarBlockLayoutFeaturesEXTBuilder<'a> {
-        self.inner.scalar_block_layout = scalar_block_layout.into();
-        self
-    }
-    pub fn next<T>(
-        mut self,
-        next: &'a mut T,
-    ) -> PhysicalDeviceScalarBlockLayoutFeaturesEXTBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceScalarBlockLayoutFeaturesEXT,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
-        self
-    }
-    pub fn build(self) -> PhysicalDeviceScalarBlockLayoutFeaturesEXT {
-        self.inner
-    }
-}
-#[repr(C)]
-#[derive(Copy, Clone, Debug)]
-pub struct PhysicalDeviceMemoryBudgetPropertiesEXT {
-    pub s_type: StructureType,
-    pub p_next: *mut c_void,
-    pub heap_budget: [DeviceSize; MAX_MEMORY_HEAPS],
-    pub heap_usage: [DeviceSize; MAX_MEMORY_HEAPS],
-}
-impl ::std::default::Default for PhysicalDeviceMemoryBudgetPropertiesEXT {
-    fn default() -> PhysicalDeviceMemoryBudgetPropertiesEXT {
-        PhysicalDeviceMemoryBudgetPropertiesEXT {
-            s_type: StructureType::PHYSICAL_DEVICE_MEMORY_BUDGET_PROPERTIES_EXT,
-            p_next: ::std::ptr::null_mut(),
-            heap_budget: unsafe { ::std::mem::zeroed() },
-            heap_usage: unsafe { ::std::mem::zeroed() },
-        }
-    }
-}
-impl PhysicalDeviceMemoryBudgetPropertiesEXT {
-    pub fn builder<'a>() -> PhysicalDeviceMemoryBudgetPropertiesEXTBuilder<'a> {
-        PhysicalDeviceMemoryBudgetPropertiesEXTBuilder {
-            inner: PhysicalDeviceMemoryBudgetPropertiesEXT::default(),
-            marker: ::std::marker::PhantomData,
-        }
-    }
-}
-pub struct PhysicalDeviceMemoryBudgetPropertiesEXTBuilder<'a> {
-    inner: PhysicalDeviceMemoryBudgetPropertiesEXT,
-    marker: ::std::marker::PhantomData<&'a ()>,
-}
-pub unsafe trait ExtendsPhysicalDeviceMemoryBudgetPropertiesEXT {}
-unsafe impl ExtendsPhysicalDeviceMemoryProperties2 for PhysicalDeviceMemoryBudgetPropertiesEXT {}
-impl<'a> ::std::ops::Deref for PhysicalDeviceMemoryBudgetPropertiesEXTBuilder<'a> {
-    type Target = PhysicalDeviceMemoryBudgetPropertiesEXT;
-    fn deref(&self) -> &Self::Target {
-        &self.inner
-    }
-}
-impl<'a> PhysicalDeviceMemoryBudgetPropertiesEXTBuilder<'a> {
-    pub fn heap_budget(
-        mut self,
-        heap_budget: [DeviceSize; MAX_MEMORY_HEAPS],
-    ) -> PhysicalDeviceMemoryBudgetPropertiesEXTBuilder<'a> {
-        self.inner.heap_budget = heap_budget;
-        self
-    }
-    pub fn heap_usage(
-        mut self,
-        heap_usage: [DeviceSize; MAX_MEMORY_HEAPS],
-    ) -> PhysicalDeviceMemoryBudgetPropertiesEXTBuilder<'a> {
-        self.inner.heap_usage = heap_usage;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceMemoryBudgetPropertiesEXTBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceMemoryBudgetPropertiesEXT,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
-        self
-    }
-    pub fn build(self) -> PhysicalDeviceMemoryBudgetPropertiesEXT {
-        self.inner
-    }
-}
-#[repr(C)]
-#[derive(Copy, Clone, Debug)]
-pub struct PhysicalDeviceMemoryPriorityFeaturesEXT {
-    pub s_type: StructureType,
-    pub p_next: *mut c_void,
-    pub memory_priority: Bool32,
-}
-impl ::std::default::Default for PhysicalDeviceMemoryPriorityFeaturesEXT {
-    fn default() -> PhysicalDeviceMemoryPriorityFeaturesEXT {
-        PhysicalDeviceMemoryPriorityFeaturesEXT {
-            s_type: StructureType::PHYSICAL_DEVICE_MEMORY_PRIORITY_FEATURES_EXT,
-            p_next: ::std::ptr::null_mut(),
-            memory_priority: Bool32::default(),
-        }
-    }
-}
-impl PhysicalDeviceMemoryPriorityFeaturesEXT {
-    pub fn builder<'a>() -> PhysicalDeviceMemoryPriorityFeaturesEXTBuilder<'a> {
-        PhysicalDeviceMemoryPriorityFeaturesEXTBuilder {
-            inner: PhysicalDeviceMemoryPriorityFeaturesEXT::default(),
-            marker: ::std::marker::PhantomData,
-        }
-    }
-}
-pub struct PhysicalDeviceMemoryPriorityFeaturesEXTBuilder<'a> {
-    inner: PhysicalDeviceMemoryPriorityFeaturesEXT,
-    marker: ::std::marker::PhantomData<&'a ()>,
-}
-pub unsafe trait ExtendsPhysicalDeviceMemoryPriorityFeaturesEXT {}
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceMemoryPriorityFeaturesEXT {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMemoryPriorityFeaturesEXT {}
-impl<'a> ::std::ops::Deref for PhysicalDeviceMemoryPriorityFeaturesEXTBuilder<'a> {
-    type Target = PhysicalDeviceMemoryPriorityFeaturesEXT;
-    fn deref(&self) -> &Self::Target {
-        &self.inner
-    }
-}
-impl<'a> PhysicalDeviceMemoryPriorityFeaturesEXTBuilder<'a> {
-    pub fn memory_priority(
-        mut self,
-        memory_priority: bool,
-    ) -> PhysicalDeviceMemoryPriorityFeaturesEXTBuilder<'a> {
-        self.inner.memory_priority = memory_priority.into();
-        self
-    }
-    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceMemoryPriorityFeaturesEXTBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceMemoryPriorityFeaturesEXT,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
-        self
-    }
-    pub fn build(self) -> PhysicalDeviceMemoryPriorityFeaturesEXT {
-        self.inner
-    }
-}
-#[repr(C)]
-#[derive(Copy, Clone, Debug)]
-pub struct MemoryPriorityAllocateInfoEXT {
-    pub s_type: StructureType,
-    pub p_next: *const c_void,
-    pub priority: f32,
-}
-impl ::std::default::Default for MemoryPriorityAllocateInfoEXT {
-    fn default() -> MemoryPriorityAllocateInfoEXT {
-        MemoryPriorityAllocateInfoEXT {
-            s_type: StructureType::MEMORY_PRIORITY_ALLOCATE_INFO_EXT,
-            p_next: ::std::ptr::null(),
-            priority: f32::default(),
-        }
-    }
-}
-impl MemoryPriorityAllocateInfoEXT {
-    pub fn builder<'a>() -> MemoryPriorityAllocateInfoEXTBuilder<'a> {
-        MemoryPriorityAllocateInfoEXTBuilder {
-            inner: MemoryPriorityAllocateInfoEXT::default(),
-            marker: ::std::marker::PhantomData,
-        }
-    }
-}
-pub struct MemoryPriorityAllocateInfoEXTBuilder<'a> {
-    inner: MemoryPriorityAllocateInfoEXT,
-    marker: ::std::marker::PhantomData<&'a ()>,
-}
-pub unsafe trait ExtendsMemoryPriorityAllocateInfoEXT {}
-unsafe impl ExtendsMemoryAllocateInfo for MemoryPriorityAllocateInfoEXT {}
-impl<'a> ::std::ops::Deref for MemoryPriorityAllocateInfoEXTBuilder<'a> {
-    type Target = MemoryPriorityAllocateInfoEXT;
-    fn deref(&self) -> &Self::Target {
-        &self.inner
-    }
-}
-impl<'a> MemoryPriorityAllocateInfoEXTBuilder<'a> {
-    pub fn priority(mut self, priority: f32) -> MemoryPriorityAllocateInfoEXTBuilder<'a> {
-        self.inner.priority = priority;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> MemoryPriorityAllocateInfoEXTBuilder<'a>
-    where
-        T: ExtendsMemoryPriorityAllocateInfoEXT,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
-        self
-    }
-    pub fn build(self) -> MemoryPriorityAllocateInfoEXT {
-        self.inner
-    }
-}
-#[repr(C)]
-#[derive(Copy, Clone, Debug)]
-pub struct PhysicalDeviceBufferAddressFeaturesEXT {
-    pub s_type: StructureType,
-    pub p_next: *mut c_void,
-    pub buffer_device_address: Bool32,
-    pub buffer_device_address_capture_replay: Bool32,
-    pub buffer_device_address_multi_device: Bool32,
-}
-impl ::std::default::Default for PhysicalDeviceBufferAddressFeaturesEXT {
-    fn default() -> PhysicalDeviceBufferAddressFeaturesEXT {
-        PhysicalDeviceBufferAddressFeaturesEXT {
-            s_type: StructureType::PHYSICAL_DEVICE_BUFFER_ADDRESS_FEATURES_EXT,
-            p_next: ::std::ptr::null_mut(),
-            buffer_device_address: Bool32::default(),
-            buffer_device_address_capture_replay: Bool32::default(),
-            buffer_device_address_multi_device: Bool32::default(),
-        }
-    }
-}
-impl PhysicalDeviceBufferAddressFeaturesEXT {
-    pub fn builder<'a>() -> PhysicalDeviceBufferAddressFeaturesEXTBuilder<'a> {
-        PhysicalDeviceBufferAddressFeaturesEXTBuilder {
-            inner: PhysicalDeviceBufferAddressFeaturesEXT::default(),
-            marker: ::std::marker::PhantomData,
-        }
-    }
-}
-pub struct PhysicalDeviceBufferAddressFeaturesEXTBuilder<'a> {
-    inner: PhysicalDeviceBufferAddressFeaturesEXT,
-    marker: ::std::marker::PhantomData<&'a ()>,
-}
-pub unsafe trait ExtendsPhysicalDeviceBufferAddressFeaturesEXT {}
-unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceBufferAddressFeaturesEXT {}
-unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceBufferAddressFeaturesEXT {}
-impl<'a> ::std::ops::Deref for PhysicalDeviceBufferAddressFeaturesEXTBuilder<'a> {
-    type Target = PhysicalDeviceBufferAddressFeaturesEXT;
-    fn deref(&self) -> &Self::Target {
-        &self.inner
-    }
-}
-impl<'a> PhysicalDeviceBufferAddressFeaturesEXTBuilder<'a> {
-    pub fn buffer_device_address(
-        mut self,
-        buffer_device_address: bool,
-    ) -> PhysicalDeviceBufferAddressFeaturesEXTBuilder<'a> {
-        self.inner.buffer_device_address = buffer_device_address.into();
-        self
-    }
-    pub fn buffer_device_address_capture_replay(
-        mut self,
-        buffer_device_address_capture_replay: bool,
-    ) -> PhysicalDeviceBufferAddressFeaturesEXTBuilder<'a> {
-        self.inner.buffer_device_address_capture_replay =
-            buffer_device_address_capture_replay.into();
-        self
-    }
-    pub fn buffer_device_address_multi_device(
-        mut self,
-        buffer_device_address_multi_device: bool,
-    ) -> PhysicalDeviceBufferAddressFeaturesEXTBuilder<'a> {
-        self.inner.buffer_device_address_multi_device = buffer_device_address_multi_device.into();
-        self
-    }
-    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceBufferAddressFeaturesEXTBuilder<'a>
-    where
-        T: ExtendsPhysicalDeviceBufferAddressFeaturesEXT,
-    {
-        self.inner.p_next = next as *mut T as *mut c_void;
-        self
-    }
-    pub fn build(self) -> PhysicalDeviceBufferAddressFeaturesEXT {
-        self.inner
-    }
-}
-#[repr(C)]
-#[derive(Copy, Clone, Debug)]
-pub struct BufferDeviceAddressInfoEXT {
-    pub s_type: StructureType,
-    pub p_next: *const c_void,
-    pub buffer: Buffer,
-}
-impl ::std::default::Default for BufferDeviceAddressInfoEXT {
-    fn default() -> BufferDeviceAddressInfoEXT {
-        BufferDeviceAddressInfoEXT {
-            s_type: StructureType::BUFFER_DEVICE_ADDRESS_INFO_EXT,
-            p_next: ::std::ptr::null(),
-            buffer: Buffer::default(),
-        }
-    }
-}
-impl BufferDeviceAddressInfoEXT {
-    pub fn builder<'a>() -> BufferDeviceAddressInfoEXTBuilder<'a> {
-        BufferDeviceAddressInfoEXTBuilder {
-            inner: BufferDeviceAddressInfoEXT::default(),
-            marker: ::std::marker::PhantomData,
-        }
-    }
-}
-pub struct BufferDeviceAddressInfoEXTBuilder<'a> {
-    inner: BufferDeviceAddressInfoEXT,
-    marker: ::std::marker::PhantomData<&'a ()>,
-}
-pub unsafe trait ExtendsBufferDeviceAddressInfoEXT {}
-impl<'a> ::std::ops::Deref for BufferDeviceAddressInfoEXTBuilder<'a> {
-    type Target = BufferDeviceAddressInfoEXT;
-    fn deref(&self) -> &Self::Target {
-        &self.inner
-    }
-}
-impl<'a> BufferDeviceAddressInfoEXTBuilder<'a> {
-    pub fn buffer(mut self, buffer: Buffer) -> BufferDeviceAddressInfoEXTBuilder<'a> {
-        self.inner.buffer = buffer;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> BufferDeviceAddressInfoEXTBuilder<'a>
-    where
-        T: ExtendsBufferDeviceAddressInfoEXT,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
-        self
-    }
-    pub fn build(self) -> BufferDeviceAddressInfoEXT {
-        self.inner
-    }
-}
-#[repr(C)]
-#[derive(Copy, Clone, Debug)]
-pub struct BufferDeviceAddressCreateInfoEXT {
-    pub s_type: StructureType,
-    pub p_next: *const c_void,
-    pub device_address: DeviceSize,
-}
-impl ::std::default::Default for BufferDeviceAddressCreateInfoEXT {
-    fn default() -> BufferDeviceAddressCreateInfoEXT {
-        BufferDeviceAddressCreateInfoEXT {
-            s_type: StructureType::BUFFER_DEVICE_ADDRESS_CREATE_INFO_EXT,
-            p_next: ::std::ptr::null(),
-            device_address: DeviceSize::default(),
-        }
-    }
-}
-impl BufferDeviceAddressCreateInfoEXT {
-    pub fn builder<'a>() -> BufferDeviceAddressCreateInfoEXTBuilder<'a> {
-        BufferDeviceAddressCreateInfoEXTBuilder {
-            inner: BufferDeviceAddressCreateInfoEXT::default(),
-            marker: ::std::marker::PhantomData,
-        }
-    }
-}
-pub struct BufferDeviceAddressCreateInfoEXTBuilder<'a> {
-    inner: BufferDeviceAddressCreateInfoEXT,
-    marker: ::std::marker::PhantomData<&'a ()>,
-}
-pub unsafe trait ExtendsBufferDeviceAddressCreateInfoEXT {}
-unsafe impl ExtendsBufferCreateInfo for BufferDeviceAddressCreateInfoEXT {}
-impl<'a> ::std::ops::Deref for BufferDeviceAddressCreateInfoEXTBuilder<'a> {
-    type Target = BufferDeviceAddressCreateInfoEXT;
-    fn deref(&self) -> &Self::Target {
-        &self.inner
-    }
-}
-impl<'a> BufferDeviceAddressCreateInfoEXTBuilder<'a> {
-    pub fn device_address(
-        mut self,
-        device_address: DeviceSize,
-    ) -> BufferDeviceAddressCreateInfoEXTBuilder<'a> {
-        self.inner.device_address = device_address;
-        self
-    }
-    pub fn next<T>(mut self, next: &'a T) -> BufferDeviceAddressCreateInfoEXTBuilder<'a>
-    where
-        T: ExtendsBufferDeviceAddressCreateInfoEXT,
-    {
-        self.inner.p_next = next as *const T as *const c_void;
         self
     }
     pub fn build(self) -> BufferDeviceAddressCreateInfoEXT {
@@ -55091,23 +58095,49 @@ fn display_flags(
     }
     Ok(())
 }
-<<<<<<< HEAD
-impl fmt::Display for CommandBufferLevel {
+impl fmt::Display for PhysicalDeviceType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::PRIMARY => Some("PRIMARY"),
-            Self::SECONDARY => Some("SECONDARY"),
-=======
-impl fmt::Display for DescriptorSetLayoutCreateFlags {
+            Self::OTHER => Some("OTHER"),
+            Self::INTEGRATED_GPU => Some("INTEGRATED_GPU"),
+            Self::DISCRETE_GPU => Some("DISCRETE_GPU"),
+            Self::VIRTUAL_GPU => Some("VIRTUAL_GPU"),
+            Self::CPU => Some("CPU"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for CoverageModulationModeNV {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::NONE => Some("NONE"),
+            Self::RGB => Some("RGB"),
+            Self::ALPHA => Some("ALPHA"),
+            Self::RGBA => Some("RGBA"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for SubpassDescriptionFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (
-                DescriptorSetLayoutCreateFlags::PUSH_DESCRIPTOR_KHR.0,
-                "PUSH_DESCRIPTOR_KHR",
+                SubpassDescriptionFlags::PER_VIEW_ATTRIBUTES_NVX.0,
+                "PER_VIEW_ATTRIBUTES_NVX",
             ),
             (
-                DescriptorSetLayoutCreateFlags::UPDATE_AFTER_BIND_POOL_EXT.0,
-                "UPDATE_AFTER_BIND_POOL_EXT",
+                SubpassDescriptionFlags::PER_VIEW_POSITION_X_ONLY_NVX.0,
+                "PER_VIEW_POSITION_X_ONLY_NVX",
             ),
         ];
         display_flags(f, KNOWN, self.0)
@@ -55119,7 +58149,6 @@ impl fmt::Display for AccelerationStructureMemoryRequirementsTypeNV {
             Self::OBJECT => Some("OBJECT"),
             Self::BUILD_SCRATCH => Some("BUILD_SCRATCH"),
             Self::UPDATE_SCRATCH => Some("UPDATE_SCRATCH"),
->>>>>>> Implement extension chaining
             _ => None,
         };
         if let Some(x) = name {
@@ -55129,302 +58158,22 @@ impl fmt::Display for AccelerationStructureMemoryRequirementsTypeNV {
         }
     }
 }
-<<<<<<< HEAD
-impl fmt::Display for MemoryOverallocationBehaviorAMD {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::DEFAULT => Some("DEFAULT"),
-            Self::ALLOWED => Some("ALLOWED"),
-            Self::DISALLOWED => Some("DISALLOWED"),
-=======
-impl fmt::Display for CopyAccelerationStructureModeNV {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::CLONE => Some("CLONE"),
-            Self::COMPACT => Some("COMPACT"),
->>>>>>> Implement extension chaining
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-<<<<<<< HEAD
-impl fmt::Display for SubpassContents {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::INLINE => Some("INLINE"),
-            Self::SECONDARY_COMMAND_BUFFERS => Some("SECONDARY_COMMAND_BUFFERS"),
-=======
-impl fmt::Display for AccelerationStructureTypeNV {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::TOP_LEVEL => Some("TOP_LEVEL"),
-            Self::BOTTOM_LEVEL => Some("BOTTOM_LEVEL"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ColorSpaceKHR {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::SRGB_NONLINEAR => Some("SRGB_NONLINEAR"),
-            Self::DISPLAY_P3_NONLINEAR_EXT => Some("DISPLAY_P3_NONLINEAR_EXT"),
-            Self::EXTENDED_SRGB_LINEAR_EXT => Some("EXTENDED_SRGB_LINEAR_EXT"),
-            Self::DCI_P3_LINEAR_EXT => Some("DCI_P3_LINEAR_EXT"),
-            Self::DCI_P3_NONLINEAR_EXT => Some("DCI_P3_NONLINEAR_EXT"),
-            Self::BT709_LINEAR_EXT => Some("BT709_LINEAR_EXT"),
-            Self::BT709_NONLINEAR_EXT => Some("BT709_NONLINEAR_EXT"),
-            Self::BT2020_LINEAR_EXT => Some("BT2020_LINEAR_EXT"),
-            Self::HDR10_ST2084_EXT => Some("HDR10_ST2084_EXT"),
-            Self::DOLBYVISION_EXT => Some("DOLBYVISION_EXT"),
-            Self::HDR10_HLG_EXT => Some("HDR10_HLG_EXT"),
-            Self::ADOBERGB_LINEAR_EXT => Some("ADOBERGB_LINEAR_EXT"),
-            Self::ADOBERGB_NONLINEAR_EXT => Some("ADOBERGB_NONLINEAR_EXT"),
-            Self::PASS_THROUGH_EXT => Some("PASS_THROUGH_EXT"),
-            Self::EXTENDED_SRGB_NONLINEAR_EXT => Some("EXTENDED_SRGB_NONLINEAR_EXT"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ObjectEntryTypeNVX {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::DESCRIPTOR_SET => Some("DESCRIPTOR_SET"),
-            Self::PIPELINE => Some("PIPELINE"),
-            Self::INDEX_BUFFER => Some("INDEX_BUFFER"),
-            Self::VERTEX_BUFFER => Some("VERTEX_BUFFER"),
-            Self::PUSH_CONSTANT => Some("PUSH_CONSTANT"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for StencilOp {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::KEEP => Some("KEEP"),
-            Self::ZERO => Some("ZERO"),
-            Self::REPLACE => Some("REPLACE"),
-            Self::INCREMENT_AND_CLAMP => Some("INCREMENT_AND_CLAMP"),
-            Self::DECREMENT_AND_CLAMP => Some("DECREMENT_AND_CLAMP"),
-            Self::INVERT => Some("INVERT"),
-            Self::INCREMENT_AND_WRAP => Some("INCREMENT_AND_WRAP"),
-            Self::DECREMENT_AND_WRAP => Some("DECREMENT_AND_WRAP"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for QueryControlFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(QueryControlFlags::PRECISE.0, "PRECISE")];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for SurfaceTransformFlagsKHR {
+impl fmt::Display for SparseImageFormatFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
-            (SurfaceTransformFlagsKHR::IDENTITY.0, "IDENTITY"),
-            (SurfaceTransformFlagsKHR::ROTATE_90.0, "ROTATE_90"),
-            (SurfaceTransformFlagsKHR::ROTATE_180.0, "ROTATE_180"),
-            (SurfaceTransformFlagsKHR::ROTATE_270.0, "ROTATE_270"),
+            (SparseImageFormatFlags::SINGLE_MIPTAIL.0, "SINGLE_MIPTAIL"),
             (
-                SurfaceTransformFlagsKHR::HORIZONTAL_MIRROR.0,
-                "HORIZONTAL_MIRROR",
+                SparseImageFormatFlags::ALIGNED_MIP_SIZE.0,
+                "ALIGNED_MIP_SIZE",
             ),
             (
-                SurfaceTransformFlagsKHR::HORIZONTAL_MIRROR_ROTATE_90.0,
-                "HORIZONTAL_MIRROR_ROTATE_90",
-            ),
-            (
-                SurfaceTransformFlagsKHR::HORIZONTAL_MIRROR_ROTATE_180.0,
-                "HORIZONTAL_MIRROR_ROTATE_180",
-            ),
-            (
-                SurfaceTransformFlagsKHR::HORIZONTAL_MIRROR_ROTATE_270.0,
-                "HORIZONTAL_MIRROR_ROTATE_270",
-            ),
-            (SurfaceTransformFlagsKHR::INHERIT.0, "INHERIT"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for CommandPoolCreateFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (CommandPoolCreateFlags::TRANSIENT.0, "TRANSIENT"),
-            (
-                CommandPoolCreateFlags::RESET_COMMAND_BUFFER.0,
-                "RESET_COMMAND_BUFFER",
-            ),
-            (CommandPoolCreateFlags::PROTECTED.0, "PROTECTED"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for ExternalSemaphoreHandleTypeFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD.0,
-                "EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD",
-            ),
-            (
-                ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32.0,
-                "EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32",
-            ),
-            (
-                ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT.0,
-                "EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT",
-            ),
-            (
-                ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE.0,
-                "EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE",
-            ),
-            (
-                ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD.0,
-                "EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD",
+                SparseImageFormatFlags::NONSTANDARD_BLOCK_SIZE.0,
+                "NONSTANDARD_BLOCK_SIZE",
             ),
         ];
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for ExternalSemaphoreFeatureFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                ExternalSemaphoreFeatureFlags::EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE.0,
-                "EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE",
-            ),
-            (
-                ExternalSemaphoreFeatureFlags::EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE.0,
-                "EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for GeometryFlagsNV {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (GeometryFlagsNV::OPAQUE.0, "OPAQUE"),
-            (
-                GeometryFlagsNV::NO_DUPLICATE_ANY_HIT_INVOCATION.0,
-                "NO_DUPLICATE_ANY_HIT_INVOCATION",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for PipelineBindPoint {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::GRAPHICS => Some("GRAPHICS"),
-            Self::COMPUTE => Some("COMPUTE"),
-            Self::RAY_TRACING_NV => Some("RAY_TRACING_NV"),
->>>>>>> Implement extension chaining
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-<<<<<<< HEAD
-impl fmt::Display for QueryResultFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (QueryResultFlags::TYPE_64.0, "TYPE_64"),
-            (QueryResultFlags::WAIT.0, "WAIT"),
-            (QueryResultFlags::WITH_AVAILABILITY.0, "WITH_AVAILABILITY"),
-            (QueryResultFlags::PARTIAL.0, "PARTIAL"),
-=======
-impl fmt::Display for BufferUsageFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (BufferUsageFlags::TRANSFER_SRC.0, "TRANSFER_SRC"),
-            (BufferUsageFlags::TRANSFER_DST.0, "TRANSFER_DST"),
-            (
-                BufferUsageFlags::UNIFORM_TEXEL_BUFFER.0,
-                "UNIFORM_TEXEL_BUFFER",
-            ),
-            (
-                BufferUsageFlags::STORAGE_TEXEL_BUFFER.0,
-                "STORAGE_TEXEL_BUFFER",
-            ),
-            (BufferUsageFlags::UNIFORM_BUFFER.0, "UNIFORM_BUFFER"),
-            (BufferUsageFlags::STORAGE_BUFFER.0, "STORAGE_BUFFER"),
-            (BufferUsageFlags::INDEX_BUFFER.0, "INDEX_BUFFER"),
-            (BufferUsageFlags::VERTEX_BUFFER.0, "VERTEX_BUFFER"),
-            (BufferUsageFlags::INDIRECT_BUFFER.0, "INDIRECT_BUFFER"),
-            (
-                BufferUsageFlags::TRANSFORM_FEEDBACK_BUFFER_EXT.0,
-                "TRANSFORM_FEEDBACK_BUFFER_EXT",
-            ),
-            (
-                BufferUsageFlags::TRANSFORM_FEEDBACK_COUNTER_BUFFER_EXT.0,
-                "TRANSFORM_FEEDBACK_COUNTER_BUFFER_EXT",
-            ),
-            (
-                BufferUsageFlags::CONDITIONAL_RENDERING_EXT.0,
-                "CONDITIONAL_RENDERING_EXT",
-            ),
-            (BufferUsageFlags::RAY_TRACING_NV.0, "RAY_TRACING_NV"),
->>>>>>> Implement extension chaining
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-<<<<<<< HEAD
-impl fmt::Display for GeometryTypeNV {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::TRIANGLES => Some("TRIANGLES"),
-            Self::AABBS => Some("AABBS"),
-=======
-impl fmt::Display for ImageTiling {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::OPTIMAL => Some("OPTIMAL"),
-            Self::LINEAR => Some("LINEAR"),
-            Self::DRM_FORMAT_MODIFIER_EXT => Some("DRM_FORMAT_MODIFIER_EXT"),
->>>>>>> Implement extension chaining
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-<<<<<<< HEAD
-impl fmt::Display for DebugReportObjectTypeEXT {
-=======
 impl fmt::Display for CommandBufferUsageFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
@@ -55444,47 +58193,13 @@ impl fmt::Display for CommandBufferUsageFlags {
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for ObjectType {
->>>>>>> Implement extension chaining
+impl fmt::Display for SamplerAddressMode {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::UNKNOWN => Some("UNKNOWN"),
-            Self::INSTANCE => Some("INSTANCE"),
-            Self::PHYSICAL_DEVICE => Some("PHYSICAL_DEVICE"),
-            Self::DEVICE => Some("DEVICE"),
-            Self::QUEUE => Some("QUEUE"),
-            Self::SEMAPHORE => Some("SEMAPHORE"),
-            Self::COMMAND_BUFFER => Some("COMMAND_BUFFER"),
-            Self::FENCE => Some("FENCE"),
-            Self::DEVICE_MEMORY => Some("DEVICE_MEMORY"),
-            Self::BUFFER => Some("BUFFER"),
-            Self::IMAGE => Some("IMAGE"),
-            Self::EVENT => Some("EVENT"),
-            Self::QUERY_POOL => Some("QUERY_POOL"),
-            Self::BUFFER_VIEW => Some("BUFFER_VIEW"),
-            Self::IMAGE_VIEW => Some("IMAGE_VIEW"),
-            Self::SHADER_MODULE => Some("SHADER_MODULE"),
-            Self::PIPELINE_CACHE => Some("PIPELINE_CACHE"),
-            Self::PIPELINE_LAYOUT => Some("PIPELINE_LAYOUT"),
-            Self::RENDER_PASS => Some("RENDER_PASS"),
-            Self::PIPELINE => Some("PIPELINE"),
-            Self::DESCRIPTOR_SET_LAYOUT => Some("DESCRIPTOR_SET_LAYOUT"),
-            Self::SAMPLER => Some("SAMPLER"),
-            Self::DESCRIPTOR_POOL => Some("DESCRIPTOR_POOL"),
-            Self::DESCRIPTOR_SET => Some("DESCRIPTOR_SET"),
-            Self::FRAMEBUFFER => Some("FRAMEBUFFER"),
-            Self::COMMAND_POOL => Some("COMMAND_POOL"),
-            Self::SURFACE_KHR => Some("SURFACE_KHR"),
-            Self::SWAPCHAIN_KHR => Some("SWAPCHAIN_KHR"),
-            Self::DEBUG_REPORT_CALLBACK => Some("DEBUG_REPORT_CALLBACK"),
-            Self::DISPLAY_KHR => Some("DISPLAY_KHR"),
-            Self::DISPLAY_MODE_KHR => Some("DISPLAY_MODE_KHR"),
-            Self::OBJECT_TABLE_NVX => Some("OBJECT_TABLE_NVX"),
-            Self::INDIRECT_COMMANDS_LAYOUT_NVX => Some("INDIRECT_COMMANDS_LAYOUT_NVX"),
-            Self::VALIDATION_CACHE => Some("VALIDATION_CACHE"),
-            Self::SAMPLER_YCBCR_CONVERSION => Some("SAMPLER_YCBCR_CONVERSION"),
-            Self::DESCRIPTOR_UPDATE_TEMPLATE => Some("DESCRIPTOR_UPDATE_TEMPLATE"),
-            Self::ACCELERATION_STRUCTURE_NV => Some("ACCELERATION_STRUCTURE_NV"),
+            Self::REPEAT => Some("REPEAT"),
+            Self::MIRRORED_REPEAT => Some("MIRRORED_REPEAT"),
+            Self::CLAMP_TO_EDGE => Some("CLAMP_TO_EDGE"),
+            Self::CLAMP_TO_BORDER => Some("CLAMP_TO_BORDER"),
             _ => None,
         };
         if let Some(x) = name {
@@ -55494,402 +58209,38 @@ impl fmt::Display for ObjectType {
         }
     }
 }
-<<<<<<< HEAD
-impl fmt::Display for SamplerCreateFlags {
+impl fmt::Display for ShaderStageFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
-            (SamplerCreateFlags::SUBSAMPLED_EXT.0, "SUBSAMPLED_EXT"),
+            (ShaderStageFlags::VERTEX.0, "VERTEX"),
             (
-                SamplerCreateFlags::SUBSAMPLED_COARSE_RECONSTRUCTION_EXT.0,
-                "SUBSAMPLED_COARSE_RECONSTRUCTION_EXT",
+                ShaderStageFlags::TESSELLATION_CONTROL.0,
+                "TESSELLATION_CONTROL",
             ),
+            (
+                ShaderStageFlags::TESSELLATION_EVALUATION.0,
+                "TESSELLATION_EVALUATION",
+            ),
+            (ShaderStageFlags::GEOMETRY.0, "GEOMETRY"),
+            (ShaderStageFlags::FRAGMENT.0, "FRAGMENT"),
+            (ShaderStageFlags::COMPUTE.0, "COMPUTE"),
+            (ShaderStageFlags::ALL_GRAPHICS.0, "ALL_GRAPHICS"),
+            (ShaderStageFlags::ALL.0, "ALL"),
+            (ShaderStageFlags::RAYGEN_NV.0, "RAYGEN_NV"),
+            (ShaderStageFlags::ANY_HIT_NV.0, "ANY_HIT_NV"),
+            (ShaderStageFlags::CLOSEST_HIT_NV.0, "CLOSEST_HIT_NV"),
+            (ShaderStageFlags::MISS_NV.0, "MISS_NV"),
+            (ShaderStageFlags::INTERSECTION_NV.0, "INTERSECTION_NV"),
+            (ShaderStageFlags::CALLABLE_NV.0, "CALLABLE_NV"),
+            (ShaderStageFlags::TASK_NV.0, "TASK_NV"),
+            (ShaderStageFlags::MESH_NV.0, "MESH_NV"),
         ];
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for ResolveModeFlagsKHR {
+impl fmt::Display for FenceImportFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (ResolveModeFlagsKHR::NONE.0, "NONE"),
-            (ResolveModeFlagsKHR::SAMPLE_ZERO.0, "SAMPLE_ZERO"),
-            (ResolveModeFlagsKHR::AVERAGE.0, "AVERAGE"),
-            (ResolveModeFlagsKHR::MIN.0, "MIN"),
-            (ResolveModeFlagsKHR::MAX.0, "MAX"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for DriverIdKHR {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::AMD_PROPRIETARY => Some("AMD_PROPRIETARY"),
-            Self::AMD_OPEN_SOURCE => Some("AMD_OPEN_SOURCE"),
-            Self::MESA_RADV => Some("MESA_RADV"),
-            Self::NVIDIA_PROPRIETARY => Some("NVIDIA_PROPRIETARY"),
-            Self::INTEL_PROPRIETARY_WINDOWS => Some("INTEL_PROPRIETARY_WINDOWS"),
-            Self::INTEL_OPEN_SOURCE_MESA => Some("INTEL_OPEN_SOURCE_MESA"),
-            Self::IMAGINATION_PROPRIETARY => Some("IMAGINATION_PROPRIETARY"),
-            Self::QUALCOMM_PROPRIETARY => Some("QUALCOMM_PROPRIETARY"),
-            Self::ARM_PROPRIETARY => Some("ARM_PROPRIETARY"),
-            Self::GOOGLE_PASTEL => Some("GOOGLE_PASTEL"),
-=======
-impl fmt::Display for BorderColor {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::FLOAT_TRANSPARENT_BLACK => Some("FLOAT_TRANSPARENT_BLACK"),
-            Self::INT_TRANSPARENT_BLACK => Some("INT_TRANSPARENT_BLACK"),
-            Self::FLOAT_OPAQUE_BLACK => Some("FLOAT_OPAQUE_BLACK"),
-            Self::INT_OPAQUE_BLACK => Some("INT_OPAQUE_BLACK"),
-            Self::FLOAT_OPAQUE_WHITE => Some("FLOAT_OPAQUE_WHITE"),
-            Self::INT_OPAQUE_WHITE => Some("INT_OPAQUE_WHITE"),
->>>>>>> Implement extension chaining
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-<<<<<<< HEAD
-impl fmt::Display for PipelineStageFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (PipelineStageFlags::TOP_OF_PIPE.0, "TOP_OF_PIPE"),
-            (PipelineStageFlags::DRAW_INDIRECT.0, "DRAW_INDIRECT"),
-            (PipelineStageFlags::VERTEX_INPUT.0, "VERTEX_INPUT"),
-            (PipelineStageFlags::VERTEX_SHADER.0, "VERTEX_SHADER"),
-            (
-                PipelineStageFlags::TESSELLATION_CONTROL_SHADER.0,
-                "TESSELLATION_CONTROL_SHADER",
-            ),
-            (
-                PipelineStageFlags::TESSELLATION_EVALUATION_SHADER.0,
-                "TESSELLATION_EVALUATION_SHADER",
-            ),
-            (PipelineStageFlags::GEOMETRY_SHADER.0, "GEOMETRY_SHADER"),
-            (PipelineStageFlags::FRAGMENT_SHADER.0, "FRAGMENT_SHADER"),
-            (
-                PipelineStageFlags::EARLY_FRAGMENT_TESTS.0,
-                "EARLY_FRAGMENT_TESTS",
-            ),
-            (
-                PipelineStageFlags::LATE_FRAGMENT_TESTS.0,
-                "LATE_FRAGMENT_TESTS",
-            ),
-            (
-                PipelineStageFlags::COLOR_ATTACHMENT_OUTPUT.0,
-                "COLOR_ATTACHMENT_OUTPUT",
-            ),
-            (PipelineStageFlags::COMPUTE_SHADER.0, "COMPUTE_SHADER"),
-            (PipelineStageFlags::TRANSFER.0, "TRANSFER"),
-            (PipelineStageFlags::BOTTOM_OF_PIPE.0, "BOTTOM_OF_PIPE"),
-            (PipelineStageFlags::HOST.0, "HOST"),
-            (PipelineStageFlags::ALL_GRAPHICS.0, "ALL_GRAPHICS"),
-            (PipelineStageFlags::ALL_COMMANDS.0, "ALL_COMMANDS"),
-            (PipelineStageFlags::RESERVED_27_KHR.0, "RESERVED_27_KHR"),
-            (PipelineStageFlags::RESERVED_26_KHR.0, "RESERVED_26_KHR"),
-            (
-                PipelineStageFlags::TRANSFORM_FEEDBACK_EXT.0,
-                "TRANSFORM_FEEDBACK_EXT",
-            ),
-            (
-                PipelineStageFlags::CONDITIONAL_RENDERING_EXT.0,
-                "CONDITIONAL_RENDERING_EXT",
-            ),
-            (
-                PipelineStageFlags::COMMAND_PROCESS_NVX.0,
-                "COMMAND_PROCESS_NVX",
-            ),
-            (
-                PipelineStageFlags::SHADING_RATE_IMAGE_NV.0,
-                "SHADING_RATE_IMAGE_NV",
-            ),
-            (
-                PipelineStageFlags::RAY_TRACING_SHADER_NV.0,
-                "RAY_TRACING_SHADER_NV",
-            ),
-            (
-                PipelineStageFlags::ACCELERATION_STRUCTURE_BUILD_NV.0,
-                "ACCELERATION_STRUCTURE_BUILD_NV",
-            ),
-            (PipelineStageFlags::TASK_SHADER_NV.0, "TASK_SHADER_NV"),
-            (PipelineStageFlags::MESH_SHADER_NV.0, "MESH_SHADER_NV"),
-            (
-                PipelineStageFlags::FRAGMENT_DENSITY_PROCESS_EXT.0,
-                "FRAGMENT_DENSITY_PROCESS_EXT",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for SamplerMipmapMode {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::NEAREST => Some("NEAREST"),
-            Self::LINEAR => Some("LINEAR"),
-=======
-impl fmt::Display for AttachmentStoreOp {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::STORE => Some("STORE"),
-            Self::DONT_CARE => Some("DONT_CARE"),
->>>>>>> Implement extension chaining
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-<<<<<<< HEAD
-impl fmt::Display for DisplayEventTypeEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::FIRST_PIXEL_OUT => Some("FIRST_PIXEL_OUT"),
-=======
-impl fmt::Display for SharingMode {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::EXCLUSIVE => Some("EXCLUSIVE"),
-            Self::CONCURRENT => Some("CONCURRENT"),
->>>>>>> Implement extension chaining
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-<<<<<<< HEAD
-impl fmt::Display for ColorComponentFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (ColorComponentFlags::R.0, "R"),
-            (ColorComponentFlags::G.0, "G"),
-            (ColorComponentFlags::B.0, "B"),
-            (ColorComponentFlags::A.0, "A"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for DeviceQueueCreateFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(DeviceQueueCreateFlags::PROTECTED.0, "PROTECTED")];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for ImageViewCreateFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(
-            ImageViewCreateFlags::FRAGMENT_DENSITY_MAP_DYNAMIC_EXT.0,
-            "FRAGMENT_DENSITY_MAP_DYNAMIC_EXT",
-        )];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for RayTracingShaderGroupTypeNV {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::GENERAL => Some("GENERAL"),
-            Self::TRIANGLES_HIT_GROUP => Some("TRIANGLES_HIT_GROUP"),
-            Self::PROCEDURAL_HIT_GROUP => Some("PROCEDURAL_HIT_GROUP"),
-=======
-impl fmt::Display for BlendFactor {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::ZERO => Some("ZERO"),
-            Self::ONE => Some("ONE"),
-            Self::SRC_COLOR => Some("SRC_COLOR"),
-            Self::ONE_MINUS_SRC_COLOR => Some("ONE_MINUS_SRC_COLOR"),
-            Self::DST_COLOR => Some("DST_COLOR"),
-            Self::ONE_MINUS_DST_COLOR => Some("ONE_MINUS_DST_COLOR"),
-            Self::SRC_ALPHA => Some("SRC_ALPHA"),
-            Self::ONE_MINUS_SRC_ALPHA => Some("ONE_MINUS_SRC_ALPHA"),
-            Self::DST_ALPHA => Some("DST_ALPHA"),
-            Self::ONE_MINUS_DST_ALPHA => Some("ONE_MINUS_DST_ALPHA"),
-            Self::CONSTANT_COLOR => Some("CONSTANT_COLOR"),
-            Self::ONE_MINUS_CONSTANT_COLOR => Some("ONE_MINUS_CONSTANT_COLOR"),
-            Self::CONSTANT_ALPHA => Some("CONSTANT_ALPHA"),
-            Self::ONE_MINUS_CONSTANT_ALPHA => Some("ONE_MINUS_CONSTANT_ALPHA"),
-            Self::SRC_ALPHA_SATURATE => Some("SRC_ALPHA_SATURATE"),
-            Self::SRC1_COLOR => Some("SRC1_COLOR"),
-            Self::ONE_MINUS_SRC1_COLOR => Some("ONE_MINUS_SRC1_COLOR"),
-            Self::SRC1_ALPHA => Some("SRC1_ALPHA"),
-            Self::ONE_MINUS_SRC1_ALPHA => Some("ONE_MINUS_SRC1_ALPHA"),
->>>>>>> Implement extension chaining
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-<<<<<<< HEAD
-    }
-}
-impl fmt::Display for CullModeFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (CullModeFlags::NONE.0, "NONE"),
-            (CullModeFlags::FRONT.0, "FRONT"),
-            (CullModeFlags::BACK.0, "BACK"),
-            (CullModeFlags::FRONT_AND_BACK.0, "FRONT_AND_BACK"),
-        ];
-        display_flags(f, KNOWN, self.0)
-=======
->>>>>>> Implement extension chaining
-    }
-}
-impl fmt::Display for ValidationFeatureDisableEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::ALL => Some("ALL"),
-            Self::SHADERS => Some("SHADERS"),
-            Self::THREAD_SAFETY => Some("THREAD_SAFETY"),
-            Self::API_PARAMETERS => Some("API_PARAMETERS"),
-            Self::OBJECT_LIFETIMES => Some("OBJECT_LIFETIMES"),
-            Self::CORE_CHECKS => Some("CORE_CHECKS"),
-            Self::UNIQUE_HANDLES => Some("UNIQUE_HANDLES"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-<<<<<<< HEAD
-impl fmt::Display for AttachmentDescriptionFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(AttachmentDescriptionFlags::MAY_ALIAS.0, "MAY_ALIAS")];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for DisplayPlaneAlphaFlagsKHR {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (DisplayPlaneAlphaFlagsKHR::OPAQUE.0, "OPAQUE"),
-            (DisplayPlaneAlphaFlagsKHR::GLOBAL.0, "GLOBAL"),
-            (DisplayPlaneAlphaFlagsKHR::PER_PIXEL.0, "PER_PIXEL"),
-            (
-                DisplayPlaneAlphaFlagsKHR::PER_PIXEL_PREMULTIPLIED.0,
-                "PER_PIXEL_PREMULTIPLIED",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for QueueGlobalPriorityEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::LOW => Some("LOW"),
-            Self::MEDIUM => Some("MEDIUM"),
-            Self::HIGH => Some("HIGH"),
-            Self::REALTIME => Some("REALTIME"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for GeometryInstanceFlagsNV {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                GeometryInstanceFlagsNV::TRIANGLE_CULL_DISABLE.0,
-                "TRIANGLE_CULL_DISABLE",
-            ),
-            (
-                GeometryInstanceFlagsNV::TRIANGLE_FRONT_COUNTERCLOCKWISE.0,
-                "TRIANGLE_FRONT_COUNTERCLOCKWISE",
-            ),
-            (GeometryInstanceFlagsNV::FORCE_OPAQUE.0, "FORCE_OPAQUE"),
-            (
-                GeometryInstanceFlagsNV::FORCE_NO_OPAQUE.0,
-                "FORCE_NO_OPAQUE",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for ShadingRatePaletteEntryNV {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::NO_INVOCATIONS => Some("NO_INVOCATIONS"),
-            Self::TYPE_16_INVOCATIONS_PER_PIXEL => Some("TYPE_16_INVOCATIONS_PER_PIXEL"),
-            Self::TYPE_8_INVOCATIONS_PER_PIXEL => Some("TYPE_8_INVOCATIONS_PER_PIXEL"),
-            Self::TYPE_4_INVOCATIONS_PER_PIXEL => Some("TYPE_4_INVOCATIONS_PER_PIXEL"),
-            Self::TYPE_2_INVOCATIONS_PER_PIXEL => Some("TYPE_2_INVOCATIONS_PER_PIXEL"),
-            Self::TYPE_1_INVOCATION_PER_PIXEL => Some("TYPE_1_INVOCATION_PER_PIXEL"),
-            Self::TYPE_1_INVOCATION_PER_2X1_PIXELS => Some("TYPE_1_INVOCATION_PER_2X1_PIXELS"),
-            Self::TYPE_1_INVOCATION_PER_1X2_PIXELS => Some("TYPE_1_INVOCATION_PER_1X2_PIXELS"),
-            Self::TYPE_1_INVOCATION_PER_2X2_PIXELS => Some("TYPE_1_INVOCATION_PER_2X2_PIXELS"),
-            Self::TYPE_1_INVOCATION_PER_4X2_PIXELS => Some("TYPE_1_INVOCATION_PER_4X2_PIXELS"),
-            Self::TYPE_1_INVOCATION_PER_2X4_PIXELS => Some("TYPE_1_INVOCATION_PER_2X4_PIXELS"),
-            Self::TYPE_1_INVOCATION_PER_4X4_PIXELS => Some("TYPE_1_INVOCATION_PER_4X4_PIXELS"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for SparseMemoryBindFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(SparseMemoryBindFlags::METADATA.0, "METADATA")];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for PolygonMode {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::FILL => Some("FILL"),
-            Self::LINE => Some("LINE"),
-            Self::POINT => Some("POINT"),
-            Self::FILL_RECTANGLE_NV => Some("FILL_RECTANGLE_NV"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for SemaphoreImportFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(SemaphoreImportFlags::TEMPORARY.0, "TEMPORARY")];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for PipelineCacheHeaderVersion {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::ONE => Some("ONE"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for SurfaceCounterFlagsEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(SurfaceCounterFlagsEXT::VBLANK.0, "VBLANK")];
+        const KNOWN: &[(Flags, &str)] = &[(FenceImportFlags::TEMPORARY.0, "TEMPORARY")];
         display_flags(f, KNOWN, self.0)
     }
 }
@@ -55956,17 +58307,366 @@ impl fmt::Display for BlendOp {
         }
     }
 }
-impl fmt::Display for CompareOp {
+impl fmt::Display for ValidationFeatureDisableEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::NEVER => Some("NEVER"),
-            Self::LESS => Some("LESS"),
-            Self::EQUAL => Some("EQUAL"),
-            Self::LESS_OR_EQUAL => Some("LESS_OR_EQUAL"),
-            Self::GREATER => Some("GREATER"),
-            Self::NOT_EQUAL => Some("NOT_EQUAL"),
-            Self::GREATER_OR_EQUAL => Some("GREATER_OR_EQUAL"),
-            Self::ALWAYS => Some("ALWAYS"),
+            Self::ALL => Some("ALL"),
+            Self::SHADERS => Some("SHADERS"),
+            Self::THREAD_SAFETY => Some("THREAD_SAFETY"),
+            Self::API_PARAMETERS => Some("API_PARAMETERS"),
+            Self::OBJECT_LIFETIMES => Some("OBJECT_LIFETIMES"),
+            Self::CORE_CHECKS => Some("CORE_CHECKS"),
+            Self::UNIQUE_HANDLES => Some("UNIQUE_HANDLES"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for QueueFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (QueueFlags::GRAPHICS.0, "GRAPHICS"),
+            (QueueFlags::COMPUTE.0, "COMPUTE"),
+            (QueueFlags::TRANSFER.0, "TRANSFER"),
+            (QueueFlags::SPARSE_BINDING.0, "SPARSE_BINDING"),
+            (QueueFlags::RESERVED_6_KHR.0, "RESERVED_6_KHR"),
+            (QueueFlags::RESERVED_5_KHR.0, "RESERVED_5_KHR"),
+            (QueueFlags::PROTECTED.0, "PROTECTED"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for LogicOp {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::CLEAR => Some("CLEAR"),
+            Self::AND => Some("AND"),
+            Self::AND_REVERSE => Some("AND_REVERSE"),
+            Self::COPY => Some("COPY"),
+            Self::AND_INVERTED => Some("AND_INVERTED"),
+            Self::NO_OP => Some("NO_OP"),
+            Self::XOR => Some("XOR"),
+            Self::OR => Some("OR"),
+            Self::NOR => Some("NOR"),
+            Self::EQUIVALENT => Some("EQUIVALENT"),
+            Self::INVERT => Some("INVERT"),
+            Self::OR_REVERSE => Some("OR_REVERSE"),
+            Self::COPY_INVERTED => Some("COPY_INVERTED"),
+            Self::OR_INVERTED => Some("OR_INVERTED"),
+            Self::NAND => Some("NAND"),
+            Self::SET => Some("SET"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for ResolveModeFlagsKHR {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (ResolveModeFlagsKHR::NONE.0, "NONE"),
+            (ResolveModeFlagsKHR::SAMPLE_ZERO.0, "SAMPLE_ZERO"),
+            (ResolveModeFlagsKHR::AVERAGE.0, "AVERAGE"),
+            (ResolveModeFlagsKHR::MIN.0, "MIN"),
+            (ResolveModeFlagsKHR::MAX.0, "MAX"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for DebugReportFlagsEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (DebugReportFlagsEXT::INFORMATION.0, "INFORMATION"),
+            (DebugReportFlagsEXT::WARNING.0, "WARNING"),
+            (
+                DebugReportFlagsEXT::PERFORMANCE_WARNING.0,
+                "PERFORMANCE_WARNING",
+            ),
+            (DebugReportFlagsEXT::ERROR.0, "ERROR"),
+            (DebugReportFlagsEXT::DEBUG.0, "DEBUG"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for ImageTiling {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::OPTIMAL => Some("OPTIMAL"),
+            Self::LINEAR => Some("LINEAR"),
+            Self::DRM_FORMAT_MODIFIER_EXT => Some("DRM_FORMAT_MODIFIER_EXT"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for TessellationDomainOrigin {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::UPPER_LEFT => Some("UPPER_LEFT"),
+            Self::LOWER_LEFT => Some("LOWER_LEFT"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for ExternalFenceFeatureFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                ExternalFenceFeatureFlags::EXTERNAL_FENCE_FEATURE_EXPORTABLE.0,
+                "EXTERNAL_FENCE_FEATURE_EXPORTABLE",
+            ),
+            (
+                ExternalFenceFeatureFlags::EXTERNAL_FENCE_FEATURE_IMPORTABLE.0,
+                "EXTERNAL_FENCE_FEATURE_IMPORTABLE",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for GeometryFlagsNV {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (GeometryFlagsNV::OPAQUE.0, "OPAQUE"),
+            (
+                GeometryFlagsNV::NO_DUPLICATE_ANY_HIT_INVOCATION.0,
+                "NO_DUPLICATE_ANY_HIT_INVOCATION",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for MemoryOverallocationBehaviorAMD {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::DEFAULT => Some("DEFAULT"),
+            Self::ALLOWED => Some("ALLOWED"),
+            Self::DISALLOWED => Some("DISALLOWED"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for ExternalFenceHandleTypeFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD.0,
+                "EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD",
+            ),
+            (
+                ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32.0,
+                "EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32",
+            ),
+            (
+                ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT.0,
+                "EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT",
+            ),
+            (
+                ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD.0,
+                "EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for SamplerYcbcrModelConversion {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::RGB_IDENTITY => Some("RGB_IDENTITY"),
+            Self::YCBCR_IDENTITY => Some("YCBCR_IDENTITY"),
+            Self::YCBCR_709 => Some("YCBCR_709"),
+            Self::YCBCR_601 => Some("YCBCR_601"),
+            Self::YCBCR_2020 => Some("YCBCR_2020"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for DescriptorSetLayoutCreateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                DescriptorSetLayoutCreateFlags::PUSH_DESCRIPTOR_KHR.0,
+                "PUSH_DESCRIPTOR_KHR",
+            ),
+            (
+                DescriptorSetLayoutCreateFlags::UPDATE_AFTER_BIND_POOL_EXT.0,
+                "UPDATE_AFTER_BIND_POOL_EXT",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for PeerMemoryFeatureFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (PeerMemoryFeatureFlags::COPY_SRC.0, "COPY_SRC"),
+            (PeerMemoryFeatureFlags::COPY_DST.0, "COPY_DST"),
+            (PeerMemoryFeatureFlags::GENERIC_SRC.0, "GENERIC_SRC"),
+            (PeerMemoryFeatureFlags::GENERIC_DST.0, "GENERIC_DST"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for DeviceEventTypeEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::DISPLAY_HOTPLUG => Some("DISPLAY_HOTPLUG"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for QueryPipelineStatisticFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                QueryPipelineStatisticFlags::INPUT_ASSEMBLY_VERTICES.0,
+                "INPUT_ASSEMBLY_VERTICES",
+            ),
+            (
+                QueryPipelineStatisticFlags::INPUT_ASSEMBLY_PRIMITIVES.0,
+                "INPUT_ASSEMBLY_PRIMITIVES",
+            ),
+            (
+                QueryPipelineStatisticFlags::VERTEX_SHADER_INVOCATIONS.0,
+                "VERTEX_SHADER_INVOCATIONS",
+            ),
+            (
+                QueryPipelineStatisticFlags::GEOMETRY_SHADER_INVOCATIONS.0,
+                "GEOMETRY_SHADER_INVOCATIONS",
+            ),
+            (
+                QueryPipelineStatisticFlags::GEOMETRY_SHADER_PRIMITIVES.0,
+                "GEOMETRY_SHADER_PRIMITIVES",
+            ),
+            (
+                QueryPipelineStatisticFlags::CLIPPING_INVOCATIONS.0,
+                "CLIPPING_INVOCATIONS",
+            ),
+            (
+                QueryPipelineStatisticFlags::CLIPPING_PRIMITIVES.0,
+                "CLIPPING_PRIMITIVES",
+            ),
+            (
+                QueryPipelineStatisticFlags::FRAGMENT_SHADER_INVOCATIONS.0,
+                "FRAGMENT_SHADER_INVOCATIONS",
+            ),
+            (
+                QueryPipelineStatisticFlags::TESSELLATION_CONTROL_SHADER_PATCHES.0,
+                "TESSELLATION_CONTROL_SHADER_PATCHES",
+            ),
+            (
+                QueryPipelineStatisticFlags::TESSELLATION_EVALUATION_SHADER_INVOCATIONS.0,
+                "TESSELLATION_EVALUATION_SHADER_INVOCATIONS",
+            ),
+            (
+                QueryPipelineStatisticFlags::COMPUTE_SHADER_INVOCATIONS.0,
+                "COMPUTE_SHADER_INVOCATIONS",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for ConditionalRenderingFlagsEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(ConditionalRenderingFlagsEXT::INVERTED.0, "INVERTED")];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for BlendOverlapEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::UNCORRELATED => Some("UNCORRELATED"),
+            Self::DISJOINT => Some("DISJOINT"),
+            Self::CONJOINT => Some("CONJOINT"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for GeometryInstanceFlagsNV {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                GeometryInstanceFlagsNV::TRIANGLE_CULL_DISABLE.0,
+                "TRIANGLE_CULL_DISABLE",
+            ),
+            (
+                GeometryInstanceFlagsNV::TRIANGLE_FRONT_COUNTERCLOCKWISE.0,
+                "TRIANGLE_FRONT_COUNTERCLOCKWISE",
+            ),
+            (GeometryInstanceFlagsNV::FORCE_OPAQUE.0, "FORCE_OPAQUE"),
+            (
+                GeometryInstanceFlagsNV::FORCE_NO_OPAQUE.0,
+                "FORCE_NO_OPAQUE",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for PointClippingBehavior {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::ALL_CLIP_PLANES => Some("ALL_CLIP_PLANES"),
+            Self::USER_CLIP_PLANES_ONLY => Some("USER_CLIP_PLANES_ONLY"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for CommandBufferResetFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(
+            CommandBufferResetFlags::RELEASE_RESOURCES.0,
+            "RELEASE_RESOURCES",
+        )];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for CoarseSampleOrderTypeNV {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::DEFAULT => Some("DEFAULT"),
+            Self::CUSTOM => Some("CUSTOM"),
+            Self::PIXEL_MAJOR => Some("PIXEL_MAJOR"),
+            Self::SAMPLE_MAJOR => Some("SAMPLE_MAJOR"),
             _ => None,
         };
         if let Some(x) = name {
@@ -55998,176 +58698,11 @@ impl fmt::Display for PipelineCreateFlags {
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for MemoryAllocateFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(MemoryAllocateFlags::DEVICE_MASK.0, "DEVICE_MASK")];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for DebugUtilsMessageTypeFlagsEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (DebugUtilsMessageTypeFlagsEXT::GENERAL.0, "GENERAL"),
-            (DebugUtilsMessageTypeFlagsEXT::VALIDATION.0, "VALIDATION"),
-            (DebugUtilsMessageTypeFlagsEXT::PERFORMANCE.0, "PERFORMANCE"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for BufferUsageFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (BufferUsageFlags::TRANSFER_SRC.0, "TRANSFER_SRC"),
-            (BufferUsageFlags::TRANSFER_DST.0, "TRANSFER_DST"),
-            (
-                BufferUsageFlags::UNIFORM_TEXEL_BUFFER.0,
-                "UNIFORM_TEXEL_BUFFER",
-            ),
-            (
-                BufferUsageFlags::STORAGE_TEXEL_BUFFER.0,
-                "STORAGE_TEXEL_BUFFER",
-            ),
-            (BufferUsageFlags::UNIFORM_BUFFER.0, "UNIFORM_BUFFER"),
-            (BufferUsageFlags::STORAGE_BUFFER.0, "STORAGE_BUFFER"),
-            (BufferUsageFlags::INDEX_BUFFER.0, "INDEX_BUFFER"),
-            (BufferUsageFlags::VERTEX_BUFFER.0, "VERTEX_BUFFER"),
-            (BufferUsageFlags::INDIRECT_BUFFER.0, "INDIRECT_BUFFER"),
-            (BufferUsageFlags::RESERVED_15_KHR.0, "RESERVED_15_KHR"),
-            (BufferUsageFlags::RESERVED_16_KHR.0, "RESERVED_16_KHR"),
-            (BufferUsageFlags::RESERVED_13_KHR.0, "RESERVED_13_KHR"),
-            (BufferUsageFlags::RESERVED_14_KHR.0, "RESERVED_14_KHR"),
-            (
-                BufferUsageFlags::TRANSFORM_FEEDBACK_BUFFER_EXT.0,
-                "TRANSFORM_FEEDBACK_BUFFER_EXT",
-            ),
-            (
-                BufferUsageFlags::TRANSFORM_FEEDBACK_COUNTER_BUFFER_EXT.0,
-                "TRANSFORM_FEEDBACK_COUNTER_BUFFER_EXT",
-            ),
-            (
-                BufferUsageFlags::CONDITIONAL_RENDERING_EXT.0,
-                "CONDITIONAL_RENDERING_EXT",
-            ),
-            (BufferUsageFlags::RAY_TRACING_NV.0, "RAY_TRACING_NV"),
-            (
-                BufferUsageFlags::SHADER_DEVICE_ADDRESS_EXT.0,
-                "SHADER_DEVICE_ADDRESS_EXT",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for StencilOp {
+impl fmt::Display for ValidationCheckEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::KEEP => Some("KEEP"),
-            Self::ZERO => Some("ZERO"),
-            Self::REPLACE => Some("REPLACE"),
-            Self::INCREMENT_AND_CLAMP => Some("INCREMENT_AND_CLAMP"),
-            Self::DECREMENT_AND_CLAMP => Some("DECREMENT_AND_CLAMP"),
-            Self::INVERT => Some("INVERT"),
-            Self::INCREMENT_AND_WRAP => Some("INCREMENT_AND_WRAP"),
-            Self::DECREMENT_AND_WRAP => Some("DECREMENT_AND_WRAP"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for AttachmentStoreOp {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::STORE => Some("STORE"),
-            Self::DONT_CARE => Some("DONT_CARE"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for CopyAccelerationStructureModeNV {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::CLONE => Some("CLONE"),
-            Self::COMPACT => Some("COMPACT"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for QueueFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (QueueFlags::GRAPHICS.0, "GRAPHICS"),
-            (QueueFlags::COMPUTE.0, "COMPUTE"),
-            (QueueFlags::TRANSFER.0, "TRANSFER"),
-            (QueueFlags::SPARSE_BINDING.0, "SPARSE_BINDING"),
-            (QueueFlags::RESERVED_6_KHR.0, "RESERVED_6_KHR"),
-            (QueueFlags::RESERVED_5_KHR.0, "RESERVED_5_KHR"),
-            (QueueFlags::PROTECTED.0, "PROTECTED"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for AccelerationStructureMemoryRequirementsTypeNV {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::OBJECT => Some("OBJECT"),
-            Self::BUILD_SCRATCH => Some("BUILD_SCRATCH"),
-            Self::UPDATE_SCRATCH => Some("UPDATE_SCRATCH"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ConservativeRasterizationModeEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::DISABLED => Some("DISABLED"),
-            Self::OVERESTIMATE => Some("OVERESTIMATE"),
-            Self::UNDERESTIMATE => Some("UNDERESTIMATE"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for PointClippingBehavior {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::ALL_CLIP_PLANES => Some("ALL_CLIP_PLANES"),
-            Self::USER_CLIP_PLANES_ONLY => Some("USER_CLIP_PLANES_ONLY"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for DiscardRectangleModeEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::INCLUSIVE => Some("INCLUSIVE"),
-            Self::EXCLUSIVE => Some("EXCLUSIVE"),
+            Self::ALL => Some("ALL"),
+            Self::SHADERS => Some("SHADERS"),
             _ => None,
         };
         if let Some(x) = name {
@@ -56192,888 +58727,17 @@ impl fmt::Display for DescriptorPoolCreateFlags {
         display_flags(f, KNOWN, self.0)
     }
 }
-=======
-impl fmt::Display for FormatFeatureFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN : & [ ( Flags , & str ) ] = & [ ( FormatFeatureFlags :: SAMPLED_IMAGE . 0 , "SAMPLED_IMAGE" ) , ( FormatFeatureFlags :: STORAGE_IMAGE . 0 , "STORAGE_IMAGE" ) , ( FormatFeatureFlags :: STORAGE_IMAGE_ATOMIC . 0 , "STORAGE_IMAGE_ATOMIC" ) , ( FormatFeatureFlags :: UNIFORM_TEXEL_BUFFER . 0 , "UNIFORM_TEXEL_BUFFER" ) , ( FormatFeatureFlags :: STORAGE_TEXEL_BUFFER . 0 , "STORAGE_TEXEL_BUFFER" ) , ( FormatFeatureFlags :: STORAGE_TEXEL_BUFFER_ATOMIC . 0 , "STORAGE_TEXEL_BUFFER_ATOMIC" ) , ( FormatFeatureFlags :: VERTEX_BUFFER . 0 , "VERTEX_BUFFER" ) , ( FormatFeatureFlags :: COLOR_ATTACHMENT . 0 , "COLOR_ATTACHMENT" ) , ( FormatFeatureFlags :: COLOR_ATTACHMENT_BLEND . 0 , "COLOR_ATTACHMENT_BLEND" ) , ( FormatFeatureFlags :: DEPTH_STENCIL_ATTACHMENT . 0 , "DEPTH_STENCIL_ATTACHMENT" ) , ( FormatFeatureFlags :: BLIT_SRC . 0 , "BLIT_SRC" ) , ( FormatFeatureFlags :: BLIT_DST . 0 , "BLIT_DST" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_FILTER_LINEAR . 0 , "SAMPLED_IMAGE_FILTER_LINEAR" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_FILTER_CUBIC_IMG . 0 , "SAMPLED_IMAGE_FILTER_CUBIC_IMG" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_FILTER_MINMAX_EXT . 0 , "SAMPLED_IMAGE_FILTER_MINMAX_EXT" ) , ( FormatFeatureFlags :: RESERVED_24_EXT . 0 , "RESERVED_24_EXT" ) , ( FormatFeatureFlags :: TRANSFER_SRC . 0 , "TRANSFER_SRC" ) , ( FormatFeatureFlags :: TRANSFER_DST . 0 , "TRANSFER_DST" ) , ( FormatFeatureFlags :: MIDPOINT_CHROMA_SAMPLES . 0 , "MIDPOINT_CHROMA_SAMPLES" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE" ) , ( FormatFeatureFlags :: DISJOINT . 0 , "DISJOINT" ) , ( FormatFeatureFlags :: COSITED_CHROMA_SAMPLES . 0 , "COSITED_CHROMA_SAMPLES" ) ] ;
-        display_flags(f, KNOWN, self.0)
-    }
-}
->>>>>>> Implement extension chaining
-impl fmt::Display for CompositeAlphaFlagsKHR {
+impl fmt::Display for StencilFaceFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
-            (CompositeAlphaFlagsKHR::OPAQUE.0, "OPAQUE"),
-            (CompositeAlphaFlagsKHR::PRE_MULTIPLIED.0, "PRE_MULTIPLIED"),
-            (CompositeAlphaFlagsKHR::POST_MULTIPLIED.0, "POST_MULTIPLIED"),
-            (CompositeAlphaFlagsKHR::INHERIT.0, "INHERIT"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-<<<<<<< HEAD
-impl fmt::Display for ImageTiling {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::OPTIMAL => Some("OPTIMAL"),
-            Self::LINEAR => Some("LINEAR"),
-            Self::DRM_FORMAT_MODIFIER_EXT => Some("DRM_FORMAT_MODIFIER_EXT"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for CommandBufferUsageFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
+            (StencilFaceFlags::FRONT.0, "FRONT"),
+            (StencilFaceFlags::BACK.0, "BACK"),
             (
-                CommandBufferUsageFlags::ONE_TIME_SUBMIT.0,
-                "ONE_TIME_SUBMIT",
-            ),
-            (
-                CommandBufferUsageFlags::RENDER_PASS_CONTINUE.0,
-                "RENDER_PASS_CONTINUE",
-            ),
-            (
-                CommandBufferUsageFlags::SIMULTANEOUS_USE.0,
-                "SIMULTANEOUS_USE",
+                StencilFaceFlags::STENCIL_FRONT_AND_BACK.0,
+                "STENCIL_FRONT_AND_BACK",
             ),
         ];
         display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for PresentModeKHR {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::IMMEDIATE => Some("IMMEDIATE"),
-            Self::MAILBOX => Some("MAILBOX"),
-            Self::FIFO => Some("FIFO"),
-            Self::FIFO_RELAXED => Some("FIFO_RELAXED"),
-            Self::SHARED_DEMAND_REFRESH => Some("SHARED_DEMAND_REFRESH"),
-            Self::SHARED_CONTINUOUS_REFRESH => Some("SHARED_CONTINUOUS_REFRESH"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ValidationCacheHeaderVersionEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::ONE => Some("ONE"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for AccelerationStructureTypeNV {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::TOP_LEVEL => Some("TOP_LEVEL"),
-            Self::BOTTOM_LEVEL => Some("BOTTOM_LEVEL"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for DeviceGroupPresentModeFlagsKHR {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (DeviceGroupPresentModeFlagsKHR::LOCAL.0, "LOCAL"),
-            (DeviceGroupPresentModeFlagsKHR::REMOTE.0, "REMOTE"),
-            (DeviceGroupPresentModeFlagsKHR::SUM.0, "SUM"),
-            (
-                DeviceGroupPresentModeFlagsKHR::LOCAL_MULTI_DEVICE.0,
-                "LOCAL_MULTI_DEVICE",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for SurfaceTransformFlagsKHR {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (SurfaceTransformFlagsKHR::IDENTITY.0, "IDENTITY"),
-            (SurfaceTransformFlagsKHR::ROTATE_90.0, "ROTATE_90"),
-            (SurfaceTransformFlagsKHR::ROTATE_180.0, "ROTATE_180"),
-            (SurfaceTransformFlagsKHR::ROTATE_270.0, "ROTATE_270"),
-            (
-                SurfaceTransformFlagsKHR::HORIZONTAL_MIRROR.0,
-                "HORIZONTAL_MIRROR",
-            ),
-            (
-                SurfaceTransformFlagsKHR::HORIZONTAL_MIRROR_ROTATE_90.0,
-                "HORIZONTAL_MIRROR_ROTATE_90",
-            ),
-            (
-                SurfaceTransformFlagsKHR::HORIZONTAL_MIRROR_ROTATE_180.0,
-                "HORIZONTAL_MIRROR_ROTATE_180",
-            ),
-            (
-                SurfaceTransformFlagsKHR::HORIZONTAL_MIRROR_ROTATE_270.0,
-                "HORIZONTAL_MIRROR_ROTATE_270",
-            ),
-            (SurfaceTransformFlagsKHR::INHERIT.0, "INHERIT"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for RasterizationOrderAMD {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::STRICT => Some("STRICT"),
-            Self::RELAXED => Some("RELAXED"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for MemoryHeapFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (MemoryHeapFlags::DEVICE_LOCAL.0, "DEVICE_LOCAL"),
-            (MemoryHeapFlags::MULTI_INSTANCE.0, "MULTI_INSTANCE"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for ChromaLocation {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::COSITED_EVEN => Some("COSITED_EVEN"),
-            Self::MIDPOINT => Some("MIDPOINT"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for SamplerYcbcrRange {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::ITU_FULL => Some("ITU_FULL"),
-            Self::ITU_NARROW => Some("ITU_NARROW"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for BufferCreateFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (BufferCreateFlags::SPARSE_BINDING.0, "SPARSE_BINDING"),
-            (BufferCreateFlags::SPARSE_RESIDENCY.0, "SPARSE_RESIDENCY"),
-            (BufferCreateFlags::SPARSE_ALIASED.0, "SPARSE_ALIASED"),
-            (
-                BufferCreateFlags::DEVICE_ADDRESS_CAPTURE_REPLAY_EXT.0,
-                "DEVICE_ADDRESS_CAPTURE_REPLAY_EXT",
-            ),
-            (BufferCreateFlags::PROTECTED.0, "PROTECTED"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for SamplerYcbcrModelConversion {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::RGB_IDENTITY => Some("RGB_IDENTITY"),
-            Self::YCBCR_IDENTITY => Some("YCBCR_IDENTITY"),
-            Self::YCBCR_709 => Some("YCBCR_709"),
-            Self::YCBCR_601 => Some("YCBCR_601"),
-            Self::YCBCR_2020 => Some("YCBCR_2020"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for CoarseSampleOrderTypeNV {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::DEFAULT => Some("DEFAULT"),
-            Self::CUSTOM => Some("CUSTOM"),
-            Self::PIXEL_MAJOR => Some("PIXEL_MAJOR"),
-            Self::SAMPLE_MAJOR => Some("SAMPLE_MAJOR"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for InternalAllocationType {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::EXECUTABLE => Some("EXECUTABLE"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ImageType {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::TYPE_1D => Some("TYPE_1D"),
-            Self::TYPE_2D => Some("TYPE_2D"),
-            Self::TYPE_3D => Some("TYPE_3D"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for TessellationDomainOrigin {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::UPPER_LEFT => Some("UPPER_LEFT"),
-            Self::LOWER_LEFT => Some("LOWER_LEFT"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ExternalSemaphoreFeatureFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                ExternalSemaphoreFeatureFlags::EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE.0,
-                "EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE",
-            ),
-            (
-                ExternalSemaphoreFeatureFlags::EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE.0,
-                "EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for ObjectEntryTypeNVX {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::DESCRIPTOR_SET => Some("DESCRIPTOR_SET"),
-            Self::PIPELINE => Some("PIPELINE"),
-            Self::INDEX_BUFFER => Some("INDEX_BUFFER"),
-            Self::VERTEX_BUFFER => Some("VERTEX_BUFFER"),
-            Self::PUSH_CONSTANT => Some("PUSH_CONSTANT"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ImageUsageFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (ImageUsageFlags::TRANSFER_SRC.0, "TRANSFER_SRC"),
-            (ImageUsageFlags::TRANSFER_DST.0, "TRANSFER_DST"),
-            (ImageUsageFlags::SAMPLED.0, "SAMPLED"),
-            (ImageUsageFlags::STORAGE.0, "STORAGE"),
-            (ImageUsageFlags::COLOR_ATTACHMENT.0, "COLOR_ATTACHMENT"),
-            (
-                ImageUsageFlags::DEPTH_STENCIL_ATTACHMENT.0,
-                "DEPTH_STENCIL_ATTACHMENT",
-            ),
-            (
-                ImageUsageFlags::TRANSIENT_ATTACHMENT.0,
-                "TRANSIENT_ATTACHMENT",
-            ),
-            (ImageUsageFlags::INPUT_ATTACHMENT.0, "INPUT_ATTACHMENT"),
-            (ImageUsageFlags::RESERVED_13_KHR.0, "RESERVED_13_KHR"),
-            (ImageUsageFlags::RESERVED_14_KHR.0, "RESERVED_14_KHR"),
-            (ImageUsageFlags::RESERVED_15_KHR.0, "RESERVED_15_KHR"),
-            (ImageUsageFlags::RESERVED_10_KHR.0, "RESERVED_10_KHR"),
-            (ImageUsageFlags::RESERVED_11_KHR.0, "RESERVED_11_KHR"),
-            (ImageUsageFlags::RESERVED_12_KHR.0, "RESERVED_12_KHR"),
-            (
-                ImageUsageFlags::SHADING_RATE_IMAGE_NV.0,
-                "SHADING_RATE_IMAGE_NV",
-            ),
-            (
-                ImageUsageFlags::FRAGMENT_DENSITY_MAP_EXT.0,
-                "FRAGMENT_DENSITY_MAP_EXT",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for SwapchainCreateFlagsKHR {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                SwapchainCreateFlagsKHR::SPLIT_INSTANCE_BIND_REGIONS.0,
-                "SPLIT_INSTANCE_BIND_REGIONS",
-            ),
-            (SwapchainCreateFlagsKHR::PROTECTED.0, "PROTECTED"),
-            (SwapchainCreateFlagsKHR::MUTABLE_FORMAT.0, "MUTABLE_FORMAT"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for Format {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::UNDEFINED => Some("UNDEFINED"),
-            Self::R4G4_UNORM_PACK8 => Some("R4G4_UNORM_PACK8"),
-            Self::R4G4B4A4_UNORM_PACK16 => Some("R4G4B4A4_UNORM_PACK16"),
-            Self::B4G4R4A4_UNORM_PACK16 => Some("B4G4R4A4_UNORM_PACK16"),
-            Self::R5G6B5_UNORM_PACK16 => Some("R5G6B5_UNORM_PACK16"),
-            Self::B5G6R5_UNORM_PACK16 => Some("B5G6R5_UNORM_PACK16"),
-            Self::R5G5B5A1_UNORM_PACK16 => Some("R5G5B5A1_UNORM_PACK16"),
-            Self::B5G5R5A1_UNORM_PACK16 => Some("B5G5R5A1_UNORM_PACK16"),
-            Self::A1R5G5B5_UNORM_PACK16 => Some("A1R5G5B5_UNORM_PACK16"),
-            Self::R8_UNORM => Some("R8_UNORM"),
-            Self::R8_SNORM => Some("R8_SNORM"),
-            Self::R8_USCALED => Some("R8_USCALED"),
-            Self::R8_SSCALED => Some("R8_SSCALED"),
-            Self::R8_UINT => Some("R8_UINT"),
-            Self::R8_SINT => Some("R8_SINT"),
-            Self::R8_SRGB => Some("R8_SRGB"),
-            Self::R8G8_UNORM => Some("R8G8_UNORM"),
-            Self::R8G8_SNORM => Some("R8G8_SNORM"),
-            Self::R8G8_USCALED => Some("R8G8_USCALED"),
-            Self::R8G8_SSCALED => Some("R8G8_SSCALED"),
-            Self::R8G8_UINT => Some("R8G8_UINT"),
-            Self::R8G8_SINT => Some("R8G8_SINT"),
-            Self::R8G8_SRGB => Some("R8G8_SRGB"),
-            Self::R8G8B8_UNORM => Some("R8G8B8_UNORM"),
-            Self::R8G8B8_SNORM => Some("R8G8B8_SNORM"),
-            Self::R8G8B8_USCALED => Some("R8G8B8_USCALED"),
-            Self::R8G8B8_SSCALED => Some("R8G8B8_SSCALED"),
-            Self::R8G8B8_UINT => Some("R8G8B8_UINT"),
-            Self::R8G8B8_SINT => Some("R8G8B8_SINT"),
-            Self::R8G8B8_SRGB => Some("R8G8B8_SRGB"),
-            Self::B8G8R8_UNORM => Some("B8G8R8_UNORM"),
-            Self::B8G8R8_SNORM => Some("B8G8R8_SNORM"),
-            Self::B8G8R8_USCALED => Some("B8G8R8_USCALED"),
-            Self::B8G8R8_SSCALED => Some("B8G8R8_SSCALED"),
-            Self::B8G8R8_UINT => Some("B8G8R8_UINT"),
-            Self::B8G8R8_SINT => Some("B8G8R8_SINT"),
-            Self::B8G8R8_SRGB => Some("B8G8R8_SRGB"),
-            Self::R8G8B8A8_UNORM => Some("R8G8B8A8_UNORM"),
-            Self::R8G8B8A8_SNORM => Some("R8G8B8A8_SNORM"),
-            Self::R8G8B8A8_USCALED => Some("R8G8B8A8_USCALED"),
-            Self::R8G8B8A8_SSCALED => Some("R8G8B8A8_SSCALED"),
-            Self::R8G8B8A8_UINT => Some("R8G8B8A8_UINT"),
-            Self::R8G8B8A8_SINT => Some("R8G8B8A8_SINT"),
-            Self::R8G8B8A8_SRGB => Some("R8G8B8A8_SRGB"),
-            Self::B8G8R8A8_UNORM => Some("B8G8R8A8_UNORM"),
-            Self::B8G8R8A8_SNORM => Some("B8G8R8A8_SNORM"),
-            Self::B8G8R8A8_USCALED => Some("B8G8R8A8_USCALED"),
-            Self::B8G8R8A8_SSCALED => Some("B8G8R8A8_SSCALED"),
-            Self::B8G8R8A8_UINT => Some("B8G8R8A8_UINT"),
-            Self::B8G8R8A8_SINT => Some("B8G8R8A8_SINT"),
-            Self::B8G8R8A8_SRGB => Some("B8G8R8A8_SRGB"),
-            Self::A8B8G8R8_UNORM_PACK32 => Some("A8B8G8R8_UNORM_PACK32"),
-            Self::A8B8G8R8_SNORM_PACK32 => Some("A8B8G8R8_SNORM_PACK32"),
-            Self::A8B8G8R8_USCALED_PACK32 => Some("A8B8G8R8_USCALED_PACK32"),
-            Self::A8B8G8R8_SSCALED_PACK32 => Some("A8B8G8R8_SSCALED_PACK32"),
-            Self::A8B8G8R8_UINT_PACK32 => Some("A8B8G8R8_UINT_PACK32"),
-            Self::A8B8G8R8_SINT_PACK32 => Some("A8B8G8R8_SINT_PACK32"),
-            Self::A8B8G8R8_SRGB_PACK32 => Some("A8B8G8R8_SRGB_PACK32"),
-            Self::A2R10G10B10_UNORM_PACK32 => Some("A2R10G10B10_UNORM_PACK32"),
-            Self::A2R10G10B10_SNORM_PACK32 => Some("A2R10G10B10_SNORM_PACK32"),
-            Self::A2R10G10B10_USCALED_PACK32 => Some("A2R10G10B10_USCALED_PACK32"),
-            Self::A2R10G10B10_SSCALED_PACK32 => Some("A2R10G10B10_SSCALED_PACK32"),
-            Self::A2R10G10B10_UINT_PACK32 => Some("A2R10G10B10_UINT_PACK32"),
-            Self::A2R10G10B10_SINT_PACK32 => Some("A2R10G10B10_SINT_PACK32"),
-            Self::A2B10G10R10_UNORM_PACK32 => Some("A2B10G10R10_UNORM_PACK32"),
-            Self::A2B10G10R10_SNORM_PACK32 => Some("A2B10G10R10_SNORM_PACK32"),
-            Self::A2B10G10R10_USCALED_PACK32 => Some("A2B10G10R10_USCALED_PACK32"),
-            Self::A2B10G10R10_SSCALED_PACK32 => Some("A2B10G10R10_SSCALED_PACK32"),
-            Self::A2B10G10R10_UINT_PACK32 => Some("A2B10G10R10_UINT_PACK32"),
-            Self::A2B10G10R10_SINT_PACK32 => Some("A2B10G10R10_SINT_PACK32"),
-            Self::R16_UNORM => Some("R16_UNORM"),
-            Self::R16_SNORM => Some("R16_SNORM"),
-            Self::R16_USCALED => Some("R16_USCALED"),
-            Self::R16_SSCALED => Some("R16_SSCALED"),
-            Self::R16_UINT => Some("R16_UINT"),
-            Self::R16_SINT => Some("R16_SINT"),
-            Self::R16_SFLOAT => Some("R16_SFLOAT"),
-            Self::R16G16_UNORM => Some("R16G16_UNORM"),
-            Self::R16G16_SNORM => Some("R16G16_SNORM"),
-            Self::R16G16_USCALED => Some("R16G16_USCALED"),
-            Self::R16G16_SSCALED => Some("R16G16_SSCALED"),
-            Self::R16G16_UINT => Some("R16G16_UINT"),
-            Self::R16G16_SINT => Some("R16G16_SINT"),
-            Self::R16G16_SFLOAT => Some("R16G16_SFLOAT"),
-            Self::R16G16B16_UNORM => Some("R16G16B16_UNORM"),
-            Self::R16G16B16_SNORM => Some("R16G16B16_SNORM"),
-            Self::R16G16B16_USCALED => Some("R16G16B16_USCALED"),
-            Self::R16G16B16_SSCALED => Some("R16G16B16_SSCALED"),
-            Self::R16G16B16_UINT => Some("R16G16B16_UINT"),
-            Self::R16G16B16_SINT => Some("R16G16B16_SINT"),
-            Self::R16G16B16_SFLOAT => Some("R16G16B16_SFLOAT"),
-            Self::R16G16B16A16_UNORM => Some("R16G16B16A16_UNORM"),
-            Self::R16G16B16A16_SNORM => Some("R16G16B16A16_SNORM"),
-            Self::R16G16B16A16_USCALED => Some("R16G16B16A16_USCALED"),
-            Self::R16G16B16A16_SSCALED => Some("R16G16B16A16_SSCALED"),
-            Self::R16G16B16A16_UINT => Some("R16G16B16A16_UINT"),
-            Self::R16G16B16A16_SINT => Some("R16G16B16A16_SINT"),
-            Self::R16G16B16A16_SFLOAT => Some("R16G16B16A16_SFLOAT"),
-            Self::R32_UINT => Some("R32_UINT"),
-            Self::R32_SINT => Some("R32_SINT"),
-            Self::R32_SFLOAT => Some("R32_SFLOAT"),
-            Self::R32G32_UINT => Some("R32G32_UINT"),
-            Self::R32G32_SINT => Some("R32G32_SINT"),
-            Self::R32G32_SFLOAT => Some("R32G32_SFLOAT"),
-            Self::R32G32B32_UINT => Some("R32G32B32_UINT"),
-            Self::R32G32B32_SINT => Some("R32G32B32_SINT"),
-            Self::R32G32B32_SFLOAT => Some("R32G32B32_SFLOAT"),
-            Self::R32G32B32A32_UINT => Some("R32G32B32A32_UINT"),
-            Self::R32G32B32A32_SINT => Some("R32G32B32A32_SINT"),
-            Self::R32G32B32A32_SFLOAT => Some("R32G32B32A32_SFLOAT"),
-            Self::R64_UINT => Some("R64_UINT"),
-            Self::R64_SINT => Some("R64_SINT"),
-            Self::R64_SFLOAT => Some("R64_SFLOAT"),
-            Self::R64G64_UINT => Some("R64G64_UINT"),
-            Self::R64G64_SINT => Some("R64G64_SINT"),
-            Self::R64G64_SFLOAT => Some("R64G64_SFLOAT"),
-            Self::R64G64B64_UINT => Some("R64G64B64_UINT"),
-            Self::R64G64B64_SINT => Some("R64G64B64_SINT"),
-            Self::R64G64B64_SFLOAT => Some("R64G64B64_SFLOAT"),
-            Self::R64G64B64A64_UINT => Some("R64G64B64A64_UINT"),
-            Self::R64G64B64A64_SINT => Some("R64G64B64A64_SINT"),
-            Self::R64G64B64A64_SFLOAT => Some("R64G64B64A64_SFLOAT"),
-            Self::B10G11R11_UFLOAT_PACK32 => Some("B10G11R11_UFLOAT_PACK32"),
-            Self::E5B9G9R9_UFLOAT_PACK32 => Some("E5B9G9R9_UFLOAT_PACK32"),
-            Self::D16_UNORM => Some("D16_UNORM"),
-            Self::X8_D24_UNORM_PACK32 => Some("X8_D24_UNORM_PACK32"),
-            Self::D32_SFLOAT => Some("D32_SFLOAT"),
-            Self::S8_UINT => Some("S8_UINT"),
-            Self::D16_UNORM_S8_UINT => Some("D16_UNORM_S8_UINT"),
-            Self::D24_UNORM_S8_UINT => Some("D24_UNORM_S8_UINT"),
-            Self::D32_SFLOAT_S8_UINT => Some("D32_SFLOAT_S8_UINT"),
-            Self::BC1_RGB_UNORM_BLOCK => Some("BC1_RGB_UNORM_BLOCK"),
-            Self::BC1_RGB_SRGB_BLOCK => Some("BC1_RGB_SRGB_BLOCK"),
-            Self::BC1_RGBA_UNORM_BLOCK => Some("BC1_RGBA_UNORM_BLOCK"),
-            Self::BC1_RGBA_SRGB_BLOCK => Some("BC1_RGBA_SRGB_BLOCK"),
-            Self::BC2_UNORM_BLOCK => Some("BC2_UNORM_BLOCK"),
-            Self::BC2_SRGB_BLOCK => Some("BC2_SRGB_BLOCK"),
-            Self::BC3_UNORM_BLOCK => Some("BC3_UNORM_BLOCK"),
-            Self::BC3_SRGB_BLOCK => Some("BC3_SRGB_BLOCK"),
-            Self::BC4_UNORM_BLOCK => Some("BC4_UNORM_BLOCK"),
-            Self::BC4_SNORM_BLOCK => Some("BC4_SNORM_BLOCK"),
-            Self::BC5_UNORM_BLOCK => Some("BC5_UNORM_BLOCK"),
-            Self::BC5_SNORM_BLOCK => Some("BC5_SNORM_BLOCK"),
-            Self::BC6H_UFLOAT_BLOCK => Some("BC6H_UFLOAT_BLOCK"),
-            Self::BC6H_SFLOAT_BLOCK => Some("BC6H_SFLOAT_BLOCK"),
-            Self::BC7_UNORM_BLOCK => Some("BC7_UNORM_BLOCK"),
-            Self::BC7_SRGB_BLOCK => Some("BC7_SRGB_BLOCK"),
-            Self::ETC2_R8G8B8_UNORM_BLOCK => Some("ETC2_R8G8B8_UNORM_BLOCK"),
-            Self::ETC2_R8G8B8_SRGB_BLOCK => Some("ETC2_R8G8B8_SRGB_BLOCK"),
-            Self::ETC2_R8G8B8A1_UNORM_BLOCK => Some("ETC2_R8G8B8A1_UNORM_BLOCK"),
-            Self::ETC2_R8G8B8A1_SRGB_BLOCK => Some("ETC2_R8G8B8A1_SRGB_BLOCK"),
-            Self::ETC2_R8G8B8A8_UNORM_BLOCK => Some("ETC2_R8G8B8A8_UNORM_BLOCK"),
-            Self::ETC2_R8G8B8A8_SRGB_BLOCK => Some("ETC2_R8G8B8A8_SRGB_BLOCK"),
-            Self::EAC_R11_UNORM_BLOCK => Some("EAC_R11_UNORM_BLOCK"),
-            Self::EAC_R11_SNORM_BLOCK => Some("EAC_R11_SNORM_BLOCK"),
-            Self::EAC_R11G11_UNORM_BLOCK => Some("EAC_R11G11_UNORM_BLOCK"),
-            Self::EAC_R11G11_SNORM_BLOCK => Some("EAC_R11G11_SNORM_BLOCK"),
-            Self::ASTC_4X4_UNORM_BLOCK => Some("ASTC_4X4_UNORM_BLOCK"),
-            Self::ASTC_4X4_SRGB_BLOCK => Some("ASTC_4X4_SRGB_BLOCK"),
-            Self::ASTC_5X4_UNORM_BLOCK => Some("ASTC_5X4_UNORM_BLOCK"),
-            Self::ASTC_5X4_SRGB_BLOCK => Some("ASTC_5X4_SRGB_BLOCK"),
-            Self::ASTC_5X5_UNORM_BLOCK => Some("ASTC_5X5_UNORM_BLOCK"),
-            Self::ASTC_5X5_SRGB_BLOCK => Some("ASTC_5X5_SRGB_BLOCK"),
-            Self::ASTC_6X5_UNORM_BLOCK => Some("ASTC_6X5_UNORM_BLOCK"),
-            Self::ASTC_6X5_SRGB_BLOCK => Some("ASTC_6X5_SRGB_BLOCK"),
-            Self::ASTC_6X6_UNORM_BLOCK => Some("ASTC_6X6_UNORM_BLOCK"),
-            Self::ASTC_6X6_SRGB_BLOCK => Some("ASTC_6X6_SRGB_BLOCK"),
-            Self::ASTC_8X5_UNORM_BLOCK => Some("ASTC_8X5_UNORM_BLOCK"),
-            Self::ASTC_8X5_SRGB_BLOCK => Some("ASTC_8X5_SRGB_BLOCK"),
-            Self::ASTC_8X6_UNORM_BLOCK => Some("ASTC_8X6_UNORM_BLOCK"),
-            Self::ASTC_8X6_SRGB_BLOCK => Some("ASTC_8X6_SRGB_BLOCK"),
-            Self::ASTC_8X8_UNORM_BLOCK => Some("ASTC_8X8_UNORM_BLOCK"),
-            Self::ASTC_8X8_SRGB_BLOCK => Some("ASTC_8X8_SRGB_BLOCK"),
-            Self::ASTC_10X5_UNORM_BLOCK => Some("ASTC_10X5_UNORM_BLOCK"),
-            Self::ASTC_10X5_SRGB_BLOCK => Some("ASTC_10X5_SRGB_BLOCK"),
-            Self::ASTC_10X6_UNORM_BLOCK => Some("ASTC_10X6_UNORM_BLOCK"),
-            Self::ASTC_10X6_SRGB_BLOCK => Some("ASTC_10X6_SRGB_BLOCK"),
-            Self::ASTC_10X8_UNORM_BLOCK => Some("ASTC_10X8_UNORM_BLOCK"),
-            Self::ASTC_10X8_SRGB_BLOCK => Some("ASTC_10X8_SRGB_BLOCK"),
-            Self::ASTC_10X10_UNORM_BLOCK => Some("ASTC_10X10_UNORM_BLOCK"),
-            Self::ASTC_10X10_SRGB_BLOCK => Some("ASTC_10X10_SRGB_BLOCK"),
-            Self::ASTC_12X10_UNORM_BLOCK => Some("ASTC_12X10_UNORM_BLOCK"),
-            Self::ASTC_12X10_SRGB_BLOCK => Some("ASTC_12X10_SRGB_BLOCK"),
-            Self::ASTC_12X12_UNORM_BLOCK => Some("ASTC_12X12_UNORM_BLOCK"),
-            Self::ASTC_12X12_SRGB_BLOCK => Some("ASTC_12X12_SRGB_BLOCK"),
-            Self::PVRTC1_2BPP_UNORM_BLOCK_IMG => Some("PVRTC1_2BPP_UNORM_BLOCK_IMG"),
-            Self::PVRTC1_4BPP_UNORM_BLOCK_IMG => Some("PVRTC1_4BPP_UNORM_BLOCK_IMG"),
-            Self::PVRTC2_2BPP_UNORM_BLOCK_IMG => Some("PVRTC2_2BPP_UNORM_BLOCK_IMG"),
-            Self::PVRTC2_4BPP_UNORM_BLOCK_IMG => Some("PVRTC2_4BPP_UNORM_BLOCK_IMG"),
-            Self::PVRTC1_2BPP_SRGB_BLOCK_IMG => Some("PVRTC1_2BPP_SRGB_BLOCK_IMG"),
-            Self::PVRTC1_4BPP_SRGB_BLOCK_IMG => Some("PVRTC1_4BPP_SRGB_BLOCK_IMG"),
-            Self::PVRTC2_2BPP_SRGB_BLOCK_IMG => Some("PVRTC2_2BPP_SRGB_BLOCK_IMG"),
-            Self::PVRTC2_4BPP_SRGB_BLOCK_IMG => Some("PVRTC2_4BPP_SRGB_BLOCK_IMG"),
-            Self::G8B8G8R8_422_UNORM => Some("G8B8G8R8_422_UNORM"),
-            Self::B8G8R8G8_422_UNORM => Some("B8G8R8G8_422_UNORM"),
-            Self::G8_B8_R8_3PLANE_420_UNORM => Some("G8_B8_R8_3PLANE_420_UNORM"),
-            Self::G8_B8R8_2PLANE_420_UNORM => Some("G8_B8R8_2PLANE_420_UNORM"),
-            Self::G8_B8_R8_3PLANE_422_UNORM => Some("G8_B8_R8_3PLANE_422_UNORM"),
-            Self::G8_B8R8_2PLANE_422_UNORM => Some("G8_B8R8_2PLANE_422_UNORM"),
-            Self::G8_B8_R8_3PLANE_444_UNORM => Some("G8_B8_R8_3PLANE_444_UNORM"),
-            Self::R10X6_UNORM_PACK16 => Some("R10X6_UNORM_PACK16"),
-            Self::R10X6G10X6_UNORM_2PACK16 => Some("R10X6G10X6_UNORM_2PACK16"),
-            Self::R10X6G10X6B10X6A10X6_UNORM_4PACK16 => Some("R10X6G10X6B10X6A10X6_UNORM_4PACK16"),
-            Self::G10X6B10X6G10X6R10X6_422_UNORM_4PACK16 => {
-                Some("G10X6B10X6G10X6R10X6_422_UNORM_4PACK16")
-            }
-            Self::B10X6G10X6R10X6G10X6_422_UNORM_4PACK16 => {
-                Some("B10X6G10X6R10X6G10X6_422_UNORM_4PACK16")
-            }
-            Self::G10X6_B10X6_R10X6_3PLANE_420_UNORM_3PACK16 => {
-                Some("G10X6_B10X6_R10X6_3PLANE_420_UNORM_3PACK16")
-            }
-            Self::G10X6_B10X6R10X6_2PLANE_420_UNORM_3PACK16 => {
-                Some("G10X6_B10X6R10X6_2PLANE_420_UNORM_3PACK16")
-            }
-            Self::G10X6_B10X6_R10X6_3PLANE_422_UNORM_3PACK16 => {
-                Some("G10X6_B10X6_R10X6_3PLANE_422_UNORM_3PACK16")
-            }
-            Self::G10X6_B10X6R10X6_2PLANE_422_UNORM_3PACK16 => {
-                Some("G10X6_B10X6R10X6_2PLANE_422_UNORM_3PACK16")
-            }
-            Self::G10X6_B10X6_R10X6_3PLANE_444_UNORM_3PACK16 => {
-                Some("G10X6_B10X6_R10X6_3PLANE_444_UNORM_3PACK16")
-            }
-            Self::R12X4_UNORM_PACK16 => Some("R12X4_UNORM_PACK16"),
-            Self::R12X4G12X4_UNORM_2PACK16 => Some("R12X4G12X4_UNORM_2PACK16"),
-            Self::R12X4G12X4B12X4A12X4_UNORM_4PACK16 => Some("R12X4G12X4B12X4A12X4_UNORM_4PACK16"),
-            Self::G12X4B12X4G12X4R12X4_422_UNORM_4PACK16 => {
-                Some("G12X4B12X4G12X4R12X4_422_UNORM_4PACK16")
-            }
-            Self::B12X4G12X4R12X4G12X4_422_UNORM_4PACK16 => {
-                Some("B12X4G12X4R12X4G12X4_422_UNORM_4PACK16")
-            }
-            Self::G12X4_B12X4_R12X4_3PLANE_420_UNORM_3PACK16 => {
-                Some("G12X4_B12X4_R12X4_3PLANE_420_UNORM_3PACK16")
-            }
-            Self::G12X4_B12X4R12X4_2PLANE_420_UNORM_3PACK16 => {
-                Some("G12X4_B12X4R12X4_2PLANE_420_UNORM_3PACK16")
-            }
-            Self::G12X4_B12X4_R12X4_3PLANE_422_UNORM_3PACK16 => {
-                Some("G12X4_B12X4_R12X4_3PLANE_422_UNORM_3PACK16")
-            }
-            Self::G12X4_B12X4R12X4_2PLANE_422_UNORM_3PACK16 => {
-                Some("G12X4_B12X4R12X4_2PLANE_422_UNORM_3PACK16")
-            }
-            Self::G12X4_B12X4_R12X4_3PLANE_444_UNORM_3PACK16 => {
-                Some("G12X4_B12X4_R12X4_3PLANE_444_UNORM_3PACK16")
-            }
-            Self::G16B16G16R16_422_UNORM => Some("G16B16G16R16_422_UNORM"),
-            Self::B16G16R16G16_422_UNORM => Some("B16G16R16G16_422_UNORM"),
-            Self::G16_B16_R16_3PLANE_420_UNORM => Some("G16_B16_R16_3PLANE_420_UNORM"),
-            Self::G16_B16R16_2PLANE_420_UNORM => Some("G16_B16R16_2PLANE_420_UNORM"),
-            Self::G16_B16_R16_3PLANE_422_UNORM => Some("G16_B16_R16_3PLANE_422_UNORM"),
-            Self::G16_B16R16_2PLANE_422_UNORM => Some("G16_B16R16_2PLANE_422_UNORM"),
-            Self::G16_B16_R16_3PLANE_444_UNORM => Some("G16_B16_R16_3PLANE_444_UNORM"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for VendorId {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::VIV => Some("VIV"),
-            Self::VSI => Some("VSI"),
-            Self::KAZAN => Some("KAZAN"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for RenderPassCreateFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] =
-            &[(RenderPassCreateFlags::RESERVED_0_KHR.0, "RESERVED_0_KHR")];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for FrontFace {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::COUNTER_CLOCKWISE => Some("COUNTER_CLOCKWISE"),
-            Self::CLOCKWISE => Some("CLOCKWISE"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for BlendOverlapEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::UNCORRELATED => Some("UNCORRELATED"),
-            Self::DISJOINT => Some("DISJOINT"),
-            Self::CONJOINT => Some("CONJOINT"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-=======
->>>>>>> Implement extension chaining
-impl fmt::Display for CommandBufferResetFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(
-            CommandBufferResetFlags::RELEASE_RESOURCES.0,
-            "RELEASE_RESOURCES",
-        )];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-<<<<<<< HEAD
-impl fmt::Display for IndirectCommandsTokenTypeNVX {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::PIPELINE => Some("PIPELINE"),
-            Self::DESCRIPTOR_SET => Some("DESCRIPTOR_SET"),
-            Self::INDEX_BUFFER => Some("INDEX_BUFFER"),
-            Self::VERTEX_BUFFER => Some("VERTEX_BUFFER"),
-            Self::PUSH_CONSTANT => Some("PUSH_CONSTANT"),
-            Self::DRAW_INDEXED => Some("DRAW_INDEXED"),
-            Self::DRAW => Some("DRAW"),
-            Self::DISPATCH => Some("DISPATCH"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for DescriptorUpdateTemplateType {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::DESCRIPTOR_SET => Some("DESCRIPTOR_SET"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ObjectType {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::UNKNOWN => Some("UNKNOWN"),
-            Self::INSTANCE => Some("INSTANCE"),
-            Self::PHYSICAL_DEVICE => Some("PHYSICAL_DEVICE"),
-            Self::DEVICE => Some("DEVICE"),
-            Self::QUEUE => Some("QUEUE"),
-            Self::SEMAPHORE => Some("SEMAPHORE"),
-            Self::COMMAND_BUFFER => Some("COMMAND_BUFFER"),
-            Self::FENCE => Some("FENCE"),
-            Self::DEVICE_MEMORY => Some("DEVICE_MEMORY"),
-            Self::BUFFER => Some("BUFFER"),
-            Self::IMAGE => Some("IMAGE"),
-            Self::EVENT => Some("EVENT"),
-            Self::QUERY_POOL => Some("QUERY_POOL"),
-            Self::BUFFER_VIEW => Some("BUFFER_VIEW"),
-            Self::IMAGE_VIEW => Some("IMAGE_VIEW"),
-            Self::SHADER_MODULE => Some("SHADER_MODULE"),
-            Self::PIPELINE_CACHE => Some("PIPELINE_CACHE"),
-            Self::PIPELINE_LAYOUT => Some("PIPELINE_LAYOUT"),
-            Self::RENDER_PASS => Some("RENDER_PASS"),
-            Self::PIPELINE => Some("PIPELINE"),
-            Self::DESCRIPTOR_SET_LAYOUT => Some("DESCRIPTOR_SET_LAYOUT"),
-            Self::SAMPLER => Some("SAMPLER"),
-            Self::DESCRIPTOR_POOL => Some("DESCRIPTOR_POOL"),
-            Self::DESCRIPTOR_SET => Some("DESCRIPTOR_SET"),
-            Self::FRAMEBUFFER => Some("FRAMEBUFFER"),
-            Self::COMMAND_POOL => Some("COMMAND_POOL"),
-            Self::SURFACE_KHR => Some("SURFACE_KHR"),
-            Self::SWAPCHAIN_KHR => Some("SWAPCHAIN_KHR"),
-            Self::DISPLAY_KHR => Some("DISPLAY_KHR"),
-            Self::DISPLAY_MODE_KHR => Some("DISPLAY_MODE_KHR"),
-            Self::DEBUG_REPORT_CALLBACK_EXT => Some("DEBUG_REPORT_CALLBACK_EXT"),
-            Self::OBJECT_TABLE_NVX => Some("OBJECT_TABLE_NVX"),
-            Self::INDIRECT_COMMANDS_LAYOUT_NVX => Some("INDIRECT_COMMANDS_LAYOUT_NVX"),
-            Self::DEBUG_UTILS_MESSENGER_EXT => Some("DEBUG_UTILS_MESSENGER_EXT"),
-            Self::VALIDATION_CACHE_EXT => Some("VALIDATION_CACHE_EXT"),
-            Self::ACCELERATION_STRUCTURE_NV => Some("ACCELERATION_STRUCTURE_NV"),
-            Self::SAMPLER_YCBCR_CONVERSION => Some("SAMPLER_YCBCR_CONVERSION"),
-            Self::DESCRIPTOR_UPDATE_TEMPLATE => Some("DESCRIPTOR_UPDATE_TEMPLATE"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for BorderColor {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::FLOAT_TRANSPARENT_BLACK => Some("FLOAT_TRANSPARENT_BLACK"),
-            Self::INT_TRANSPARENT_BLACK => Some("INT_TRANSPARENT_BLACK"),
-            Self::FLOAT_OPAQUE_BLACK => Some("FLOAT_OPAQUE_BLACK"),
-            Self::INT_OPAQUE_BLACK => Some("INT_OPAQUE_BLACK"),
-            Self::FLOAT_OPAQUE_WHITE => Some("FLOAT_OPAQUE_WHITE"),
-            Self::INT_OPAQUE_WHITE => Some("INT_OPAQUE_WHITE"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for CoverageModulationModeNV {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::NONE => Some("NONE"),
-            Self::RGB => Some("RGB"),
-            Self::ALPHA => Some("ALPHA"),
-            Self::RGBA => Some("RGBA"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ShaderInfoTypeAMD {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::STATISTICS => Some("STATISTICS"),
-            Self::BINARY => Some("BINARY"),
-            Self::DISASSEMBLY => Some("DISASSEMBLY"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ShaderStageFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (ShaderStageFlags::VERTEX.0, "VERTEX"),
-            (
-                ShaderStageFlags::TESSELLATION_CONTROL.0,
-                "TESSELLATION_CONTROL",
-            ),
-            (
-                ShaderStageFlags::TESSELLATION_EVALUATION.0,
-                "TESSELLATION_EVALUATION",
-            ),
-            (ShaderStageFlags::GEOMETRY.0, "GEOMETRY"),
-            (ShaderStageFlags::FRAGMENT.0, "FRAGMENT"),
-            (ShaderStageFlags::COMPUTE.0, "COMPUTE"),
-            (ShaderStageFlags::ALL_GRAPHICS.0, "ALL_GRAPHICS"),
-            (ShaderStageFlags::ALL.0, "ALL"),
-            (ShaderStageFlags::RAYGEN_NV.0, "RAYGEN_NV"),
-            (ShaderStageFlags::ANY_HIT_NV.0, "ANY_HIT_NV"),
-            (ShaderStageFlags::CLOSEST_HIT_NV.0, "CLOSEST_HIT_NV"),
-            (ShaderStageFlags::MISS_NV.0, "MISS_NV"),
-            (ShaderStageFlags::INTERSECTION_NV.0, "INTERSECTION_NV"),
-            (ShaderStageFlags::CALLABLE_NV.0, "CALLABLE_NV"),
-            (ShaderStageFlags::TASK_NV.0, "TASK_NV"),
-            (ShaderStageFlags::MESH_NV.0, "MESH_NV"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for SharingMode {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::EXCLUSIVE => Some("EXCLUSIVE"),
-            Self::CONCURRENT => Some("CONCURRENT"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for SystemAllocationScope {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::COMMAND => Some("COMMAND"),
-            Self::OBJECT => Some("OBJECT"),
-            Self::CACHE => Some("CACHE"),
-            Self::DEVICE => Some("DEVICE"),
-            Self::INSTANCE => Some("INSTANCE"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
     }
 }
 impl fmt::Display for ExternalMemoryFeatureFlags {
@@ -57092,6 +58756,100 @@ impl fmt::Display for ExternalMemoryFeatureFlags {
                 "EXTERNAL_MEMORY_FEATURE_IMPORTABLE",
             ),
         ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for ImageType {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::TYPE_1D => Some("TYPE_1D"),
+            Self::TYPE_2D => Some("TYPE_2D"),
+            Self::TYPE_3D => Some("TYPE_3D"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for MemoryPropertyFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (MemoryPropertyFlags::DEVICE_LOCAL.0, "DEVICE_LOCAL"),
+            (MemoryPropertyFlags::HOST_VISIBLE.0, "HOST_VISIBLE"),
+            (MemoryPropertyFlags::HOST_COHERENT.0, "HOST_COHERENT"),
+            (MemoryPropertyFlags::HOST_CACHED.0, "HOST_CACHED"),
+            (MemoryPropertyFlags::LAZILY_ALLOCATED.0, "LAZILY_ALLOCATED"),
+            (MemoryPropertyFlags::PROTECTED.0, "PROTECTED"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for ExternalMemoryFeatureFlagsNV {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                ExternalMemoryFeatureFlagsNV::EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_NV.0,
+                "EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_NV",
+            ),
+            (
+                ExternalMemoryFeatureFlagsNV::EXTERNAL_MEMORY_FEATURE_EXPORTABLE_NV.0,
+                "EXTERNAL_MEMORY_FEATURE_EXPORTABLE_NV",
+            ),
+            (
+                ExternalMemoryFeatureFlagsNV::EXTERNAL_MEMORY_FEATURE_IMPORTABLE_NV.0,
+                "EXTERNAL_MEMORY_FEATURE_IMPORTABLE_NV",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for IndirectCommandsLayoutUsageFlagsNVX {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                IndirectCommandsLayoutUsageFlagsNVX::UNORDERED_SEQUENCES.0,
+                "UNORDERED_SEQUENCES",
+            ),
+            (
+                IndirectCommandsLayoutUsageFlagsNVX::SPARSE_SEQUENCES.0,
+                "SPARSE_SEQUENCES",
+            ),
+            (
+                IndirectCommandsLayoutUsageFlagsNVX::EMPTY_EXECUTIONS.0,
+                "EMPTY_EXECUTIONS",
+            ),
+            (
+                IndirectCommandsLayoutUsageFlagsNVX::INDEXED_SEQUENCES.0,
+                "INDEXED_SEQUENCES",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for BufferCreateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (BufferCreateFlags::SPARSE_BINDING.0, "SPARSE_BINDING"),
+            (BufferCreateFlags::SPARSE_RESIDENCY.0, "SPARSE_RESIDENCY"),
+            (BufferCreateFlags::SPARSE_ALIASED.0, "SPARSE_ALIASED"),
+            (
+                BufferCreateFlags::DEVICE_ADDRESS_CAPTURE_REPLAY_EXT.0,
+                "DEVICE_ADDRESS_CAPTURE_REPLAY_EXT",
+            ),
+            (BufferCreateFlags::PROTECTED.0, "PROTECTED"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for CommandPoolResetFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(
+            CommandPoolResetFlags::RELEASE_RESOURCES.0,
+            "RELEASE_RESOURCES",
+        )];
         display_flags(f, KNOWN, self.0)
     }
 }
@@ -57188,146 +58946,32 @@ impl fmt::Display for AccessFlags {
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for ImageLayout {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::UNDEFINED => Some("UNDEFINED"),
-            Self::GENERAL => Some("GENERAL"),
-            Self::COLOR_ATTACHMENT_OPTIMAL => Some("COLOR_ATTACHMENT_OPTIMAL"),
-            Self::DEPTH_STENCIL_ATTACHMENT_OPTIMAL => Some("DEPTH_STENCIL_ATTACHMENT_OPTIMAL"),
-            Self::DEPTH_STENCIL_READ_ONLY_OPTIMAL => Some("DEPTH_STENCIL_READ_ONLY_OPTIMAL"),
-            Self::SHADER_READ_ONLY_OPTIMAL => Some("SHADER_READ_ONLY_OPTIMAL"),
-            Self::TRANSFER_SRC_OPTIMAL => Some("TRANSFER_SRC_OPTIMAL"),
-            Self::TRANSFER_DST_OPTIMAL => Some("TRANSFER_DST_OPTIMAL"),
-            Self::PREINITIALIZED => Some("PREINITIALIZED"),
-            Self::PRESENT_SRC_KHR => Some("PRESENT_SRC_KHR"),
-            Self::SHARED_PRESENT_KHR => Some("SHARED_PRESENT_KHR"),
-            Self::SHADING_RATE_OPTIMAL_NV => Some("SHADING_RATE_OPTIMAL_NV"),
-            Self::FRAGMENT_DENSITY_MAP_OPTIMAL_EXT => Some("FRAGMENT_DENSITY_MAP_OPTIMAL_EXT"),
-            Self::DEPTH_READ_ONLY_STENCIL_ATTACHMENT_OPTIMAL => {
-                Some("DEPTH_READ_ONLY_STENCIL_ATTACHMENT_OPTIMAL")
-            }
-            Self::DEPTH_ATTACHMENT_STENCIL_READ_ONLY_OPTIMAL => {
-                Some("DEPTH_ATTACHMENT_STENCIL_READ_ONLY_OPTIMAL")
-            }
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for Filter {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::NEAREST => Some("NEAREST"),
-            Self::LINEAR => Some("LINEAR"),
-            Self::CUBIC_IMG => Some("CUBIC_IMG"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for DescriptorSetLayoutCreateFlags {
+impl fmt::Display for DisplayPlaneAlphaFlagsKHR {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
+            (DisplayPlaneAlphaFlagsKHR::OPAQUE.0, "OPAQUE"),
+            (DisplayPlaneAlphaFlagsKHR::GLOBAL.0, "GLOBAL"),
+            (DisplayPlaneAlphaFlagsKHR::PER_PIXEL.0, "PER_PIXEL"),
             (
-                DescriptorSetLayoutCreateFlags::PUSH_DESCRIPTOR_KHR.0,
-                "PUSH_DESCRIPTOR_KHR",
-            ),
-            (
-                DescriptorSetLayoutCreateFlags::UPDATE_AFTER_BIND_POOL_EXT.0,
-                "UPDATE_AFTER_BIND_POOL_EXT",
-            ),
-=======
-impl fmt::Display for DebugReportFlagsEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (DebugReportFlagsEXT::INFORMATION.0, "INFORMATION"),
-            (DebugReportFlagsEXT::WARNING.0, "WARNING"),
-            (
-                DebugReportFlagsEXT::PERFORMANCE_WARNING.0,
-                "PERFORMANCE_WARNING",
-            ),
-            (DebugReportFlagsEXT::ERROR.0, "ERROR"),
-            (DebugReportFlagsEXT::DEBUG.0, "DEBUG"),
->>>>>>> Implement extension chaining
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-<<<<<<< HEAD
-impl fmt::Display for QueryPipelineStatisticFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                QueryPipelineStatisticFlags::INPUT_ASSEMBLY_VERTICES.0,
-                "INPUT_ASSEMBLY_VERTICES",
-            ),
-            (
-                QueryPipelineStatisticFlags::INPUT_ASSEMBLY_PRIMITIVES.0,
-                "INPUT_ASSEMBLY_PRIMITIVES",
-            ),
-            (
-                QueryPipelineStatisticFlags::VERTEX_SHADER_INVOCATIONS.0,
-                "VERTEX_SHADER_INVOCATIONS",
-            ),
-            (
-                QueryPipelineStatisticFlags::GEOMETRY_SHADER_INVOCATIONS.0,
-                "GEOMETRY_SHADER_INVOCATIONS",
-            ),
-            (
-                QueryPipelineStatisticFlags::GEOMETRY_SHADER_PRIMITIVES.0,
-                "GEOMETRY_SHADER_PRIMITIVES",
-            ),
-            (
-                QueryPipelineStatisticFlags::CLIPPING_INVOCATIONS.0,
-                "CLIPPING_INVOCATIONS",
-            ),
-            (
-                QueryPipelineStatisticFlags::CLIPPING_PRIMITIVES.0,
-                "CLIPPING_PRIMITIVES",
-            ),
-            (
-                QueryPipelineStatisticFlags::FRAGMENT_SHADER_INVOCATIONS.0,
-                "FRAGMENT_SHADER_INVOCATIONS",
-            ),
-            (
-                QueryPipelineStatisticFlags::TESSELLATION_CONTROL_SHADER_PATCHES.0,
-                "TESSELLATION_CONTROL_SHADER_PATCHES",
-            ),
-            (
-                QueryPipelineStatisticFlags::TESSELLATION_EVALUATION_SHADER_INVOCATIONS.0,
-                "TESSELLATION_EVALUATION_SHADER_INVOCATIONS",
-            ),
-            (
-                QueryPipelineStatisticFlags::COMPUTE_SHADER_INVOCATIONS.0,
-                "COMPUTE_SHADER_INVOCATIONS",
+                DisplayPlaneAlphaFlagsKHR::PER_PIXEL_PREMULTIPLIED.0,
+                "PER_PIXEL_PREMULTIPLIED",
             ),
         ];
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for SamplerAddressMode {
+impl fmt::Display for SampleCountFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::REPEAT => Some("REPEAT"),
-            Self::MIRRORED_REPEAT => Some("MIRRORED_REPEAT"),
-            Self::CLAMP_TO_EDGE => Some("CLAMP_TO_EDGE"),
-            Self::CLAMP_TO_BORDER => Some("CLAMP_TO_BORDER"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
+        const KNOWN: &[(Flags, &str)] = &[
+            (SampleCountFlags::TYPE_1.0, "TYPE_1"),
+            (SampleCountFlags::TYPE_2.0, "TYPE_2"),
+            (SampleCountFlags::TYPE_4.0, "TYPE_4"),
+            (SampleCountFlags::TYPE_8.0, "TYPE_8"),
+            (SampleCountFlags::TYPE_16.0, "TYPE_16"),
+            (SampleCountFlags::TYPE_32.0, "TYPE_32"),
+            (SampleCountFlags::TYPE_64.0, "TYPE_64"),
+        ];
+        display_flags(f, KNOWN, self.0)
     }
 }
 impl fmt::Display for DescriptorType {
@@ -57355,24 +58999,11 @@ impl fmt::Display for DescriptorType {
         }
     }
 }
-impl fmt::Display for ColorSpaceKHR {
+impl fmt::Display for SamplerYcbcrRange {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::SRGB_NONLINEAR => Some("SRGB_NONLINEAR"),
-            Self::DISPLAY_P3_NONLINEAR_EXT => Some("DISPLAY_P3_NONLINEAR_EXT"),
-            Self::EXTENDED_SRGB_LINEAR_EXT => Some("EXTENDED_SRGB_LINEAR_EXT"),
-            Self::DCI_P3_LINEAR_EXT => Some("DCI_P3_LINEAR_EXT"),
-            Self::DCI_P3_NONLINEAR_EXT => Some("DCI_P3_NONLINEAR_EXT"),
-            Self::BT709_LINEAR_EXT => Some("BT709_LINEAR_EXT"),
-            Self::BT709_NONLINEAR_EXT => Some("BT709_NONLINEAR_EXT"),
-            Self::BT2020_LINEAR_EXT => Some("BT2020_LINEAR_EXT"),
-            Self::HDR10_ST2084_EXT => Some("HDR10_ST2084_EXT"),
-            Self::DOLBYVISION_EXT => Some("DOLBYVISION_EXT"),
-            Self::HDR10_HLG_EXT => Some("HDR10_HLG_EXT"),
-            Self::ADOBERGB_LINEAR_EXT => Some("ADOBERGB_LINEAR_EXT"),
-            Self::ADOBERGB_NONLINEAR_EXT => Some("ADOBERGB_NONLINEAR_EXT"),
-            Self::PASS_THROUGH_EXT => Some("PASS_THROUGH_EXT"),
-            Self::EXTENDED_SRGB_NONLINEAR_EXT => Some("EXTENDED_SRGB_NONLINEAR_EXT"),
+            Self::ITU_FULL => Some("ITU_FULL"),
+            Self::ITU_NARROW => Some("ITU_NARROW"),
             _ => None,
         };
         if let Some(x) = name {
@@ -57382,28 +59013,99 @@ impl fmt::Display for ColorSpaceKHR {
         }
     }
 }
-impl fmt::Display for BlendFactor {
+impl fmt::Display for ImageUsageFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (ImageUsageFlags::TRANSFER_SRC.0, "TRANSFER_SRC"),
+            (ImageUsageFlags::TRANSFER_DST.0, "TRANSFER_DST"),
+            (ImageUsageFlags::SAMPLED.0, "SAMPLED"),
+            (ImageUsageFlags::STORAGE.0, "STORAGE"),
+            (ImageUsageFlags::COLOR_ATTACHMENT.0, "COLOR_ATTACHMENT"),
+            (
+                ImageUsageFlags::DEPTH_STENCIL_ATTACHMENT.0,
+                "DEPTH_STENCIL_ATTACHMENT",
+            ),
+            (
+                ImageUsageFlags::TRANSIENT_ATTACHMENT.0,
+                "TRANSIENT_ATTACHMENT",
+            ),
+            (ImageUsageFlags::INPUT_ATTACHMENT.0, "INPUT_ATTACHMENT"),
+            (ImageUsageFlags::RESERVED_13_KHR.0, "RESERVED_13_KHR"),
+            (ImageUsageFlags::RESERVED_14_KHR.0, "RESERVED_14_KHR"),
+            (ImageUsageFlags::RESERVED_15_KHR.0, "RESERVED_15_KHR"),
+            (ImageUsageFlags::RESERVED_10_KHR.0, "RESERVED_10_KHR"),
+            (ImageUsageFlags::RESERVED_11_KHR.0, "RESERVED_11_KHR"),
+            (ImageUsageFlags::RESERVED_12_KHR.0, "RESERVED_12_KHR"),
+            (
+                ImageUsageFlags::SHADING_RATE_IMAGE_NV.0,
+                "SHADING_RATE_IMAGE_NV",
+            ),
+            (
+                ImageUsageFlags::FRAGMENT_DENSITY_MAP_EXT.0,
+                "FRAGMENT_DENSITY_MAP_EXT",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for SamplerMipmapMode {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::ZERO => Some("ZERO"),
+            Self::NEAREST => Some("NEAREST"),
+            Self::LINEAR => Some("LINEAR"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for SystemAllocationScope {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::COMMAND => Some("COMMAND"),
+            Self::OBJECT => Some("OBJECT"),
+            Self::CACHE => Some("CACHE"),
+            Self::DEVICE => Some("DEVICE"),
+            Self::INSTANCE => Some("INSTANCE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for PrimitiveTopology {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::POINT_LIST => Some("POINT_LIST"),
+            Self::LINE_LIST => Some("LINE_LIST"),
+            Self::LINE_STRIP => Some("LINE_STRIP"),
+            Self::TRIANGLE_LIST => Some("TRIANGLE_LIST"),
+            Self::TRIANGLE_STRIP => Some("TRIANGLE_STRIP"),
+            Self::TRIANGLE_FAN => Some("TRIANGLE_FAN"),
+            Self::LINE_LIST_WITH_ADJACENCY => Some("LINE_LIST_WITH_ADJACENCY"),
+            Self::LINE_STRIP_WITH_ADJACENCY => Some("LINE_STRIP_WITH_ADJACENCY"),
+            Self::TRIANGLE_LIST_WITH_ADJACENCY => Some("TRIANGLE_LIST_WITH_ADJACENCY"),
+            Self::TRIANGLE_STRIP_WITH_ADJACENCY => Some("TRIANGLE_STRIP_WITH_ADJACENCY"),
+            Self::PATCH_LIST => Some("PATCH_LIST"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for ValidationCacheHeaderVersionEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
             Self::ONE => Some("ONE"),
-            Self::SRC_COLOR => Some("SRC_COLOR"),
-            Self::ONE_MINUS_SRC_COLOR => Some("ONE_MINUS_SRC_COLOR"),
-            Self::DST_COLOR => Some("DST_COLOR"),
-            Self::ONE_MINUS_DST_COLOR => Some("ONE_MINUS_DST_COLOR"),
-            Self::SRC_ALPHA => Some("SRC_ALPHA"),
-            Self::ONE_MINUS_SRC_ALPHA => Some("ONE_MINUS_SRC_ALPHA"),
-            Self::DST_ALPHA => Some("DST_ALPHA"),
-            Self::ONE_MINUS_DST_ALPHA => Some("ONE_MINUS_DST_ALPHA"),
-            Self::CONSTANT_COLOR => Some("CONSTANT_COLOR"),
-            Self::ONE_MINUS_CONSTANT_COLOR => Some("ONE_MINUS_CONSTANT_COLOR"),
-            Self::CONSTANT_ALPHA => Some("CONSTANT_ALPHA"),
-            Self::ONE_MINUS_CONSTANT_ALPHA => Some("ONE_MINUS_CONSTANT_ALPHA"),
-            Self::SRC_ALPHA_SATURATE => Some("SRC_ALPHA_SATURATE"),
-            Self::SRC1_COLOR => Some("SRC1_COLOR"),
-            Self::ONE_MINUS_SRC1_COLOR => Some("ONE_MINUS_SRC1_COLOR"),
-            Self::SRC1_ALPHA => Some("SRC1_ALPHA"),
-            Self::ONE_MINUS_SRC1_ALPHA => Some("ONE_MINUS_SRC1_ALPHA"),
             _ => None,
         };
         if let Some(x) = name {
@@ -57413,8 +59115,160 @@ impl fmt::Display for BlendFactor {
         }
     }
 }
-=======
->>>>>>> Implement extension chaining
+impl fmt::Display for AttachmentDescriptionFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(AttachmentDescriptionFlags::MAY_ALIAS.0, "MAY_ALIAS")];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for DiscardRectangleModeEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::INCLUSIVE => Some("INCLUSIVE"),
+            Self::EXCLUSIVE => Some("EXCLUSIVE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for MemoryHeapFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (MemoryHeapFlags::DEVICE_LOCAL.0, "DEVICE_LOCAL"),
+            (MemoryHeapFlags::MULTI_INSTANCE.0, "MULTI_INSTANCE"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for ExternalMemoryHandleTypeFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN : & [ ( Flags , & str ) ] = & [ ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32 . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_ANDROID_HARDWARE_BUFFER_ANDROID . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_ANDROID_HARDWARE_BUFFER_ANDROID" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_HOST_ALLOCATION . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_HOST_ALLOCATION" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_HOST_MAPPED_FOREIGN_MEMORY . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_HOST_MAPPED_FOREIGN_MEMORY" ) ] ;
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for BuildAccelerationStructureFlagsNV {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                BuildAccelerationStructureFlagsNV::ALLOW_UPDATE.0,
+                "ALLOW_UPDATE",
+            ),
+            (
+                BuildAccelerationStructureFlagsNV::ALLOW_COMPACTION.0,
+                "ALLOW_COMPACTION",
+            ),
+            (
+                BuildAccelerationStructureFlagsNV::PREFER_FAST_TRACE.0,
+                "PREFER_FAST_TRACE",
+            ),
+            (
+                BuildAccelerationStructureFlagsNV::PREFER_FAST_BUILD.0,
+                "PREFER_FAST_BUILD",
+            ),
+            (
+                BuildAccelerationStructureFlagsNV::LOW_MEMORY.0,
+                "LOW_MEMORY",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for ImageViewType {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::TYPE_1D => Some("TYPE_1D"),
+            Self::TYPE_2D => Some("TYPE_2D"),
+            Self::TYPE_3D => Some("TYPE_3D"),
+            Self::CUBE => Some("CUBE"),
+            Self::TYPE_1D_ARRAY => Some("TYPE_1D_ARRAY"),
+            Self::TYPE_2D_ARRAY => Some("TYPE_2D_ARRAY"),
+            Self::CUBE_ARRAY => Some("CUBE_ARRAY"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for QueueGlobalPriorityEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::LOW => Some("LOW"),
+            Self::MEDIUM => Some("MEDIUM"),
+            Self::HIGH => Some("HIGH"),
+            Self::REALTIME => Some("REALTIME"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for SubpassContents {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::INLINE => Some("INLINE"),
+            Self::SECONDARY_COMMAND_BUFFERS => Some("SECONDARY_COMMAND_BUFFERS"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for BufferUsageFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (BufferUsageFlags::TRANSFER_SRC.0, "TRANSFER_SRC"),
+            (BufferUsageFlags::TRANSFER_DST.0, "TRANSFER_DST"),
+            (
+                BufferUsageFlags::UNIFORM_TEXEL_BUFFER.0,
+                "UNIFORM_TEXEL_BUFFER",
+            ),
+            (
+                BufferUsageFlags::STORAGE_TEXEL_BUFFER.0,
+                "STORAGE_TEXEL_BUFFER",
+            ),
+            (BufferUsageFlags::UNIFORM_BUFFER.0, "UNIFORM_BUFFER"),
+            (BufferUsageFlags::STORAGE_BUFFER.0, "STORAGE_BUFFER"),
+            (BufferUsageFlags::INDEX_BUFFER.0, "INDEX_BUFFER"),
+            (BufferUsageFlags::VERTEX_BUFFER.0, "VERTEX_BUFFER"),
+            (BufferUsageFlags::INDIRECT_BUFFER.0, "INDIRECT_BUFFER"),
+            (BufferUsageFlags::RESERVED_15_KHR.0, "RESERVED_15_KHR"),
+            (BufferUsageFlags::RESERVED_16_KHR.0, "RESERVED_16_KHR"),
+            (BufferUsageFlags::RESERVED_13_KHR.0, "RESERVED_13_KHR"),
+            (BufferUsageFlags::RESERVED_14_KHR.0, "RESERVED_14_KHR"),
+            (
+                BufferUsageFlags::TRANSFORM_FEEDBACK_BUFFER_EXT.0,
+                "TRANSFORM_FEEDBACK_BUFFER_EXT",
+            ),
+            (
+                BufferUsageFlags::TRANSFORM_FEEDBACK_COUNTER_BUFFER_EXT.0,
+                "TRANSFORM_FEEDBACK_COUNTER_BUFFER_EXT",
+            ),
+            (
+                BufferUsageFlags::CONDITIONAL_RENDERING_EXT.0,
+                "CONDITIONAL_RENDERING_EXT",
+            ),
+            (BufferUsageFlags::RAY_TRACING_NV.0, "RAY_TRACING_NV"),
+            (
+                BufferUsageFlags::SHADER_DEVICE_ADDRESS_EXT.0,
+                "SHADER_DEVICE_ADDRESS_EXT",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
 impl fmt::Display for StructureType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
@@ -58049,56 +59903,12 @@ impl fmt::Display for StructureType {
         }
     }
 }
-<<<<<<< HEAD
-impl fmt::Display for GeometryFlagsNV {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (GeometryFlagsNV::OPAQUE.0, "OPAQUE"),
-            (
-                GeometryFlagsNV::NO_DUPLICATE_ANY_HIT_INVOCATION.0,
-                "NO_DUPLICATE_ANY_HIT_INVOCATION",
-            ),
-=======
-impl fmt::Display for StencilFaceFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (StencilFaceFlags::FRONT.0, "FRONT"),
-            (StencilFaceFlags::BACK.0, "BACK"),
-            (
-                StencilFaceFlags::STENCIL_FRONT_AND_BACK.0,
-                "STENCIL_FRONT_AND_BACK",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for SwapchainCreateFlagsKHR {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                SwapchainCreateFlagsKHR::SPLIT_INSTANCE_BIND_REGIONS.0,
-                "SPLIT_INSTANCE_BIND_REGIONS",
-            ),
-            (SwapchainCreateFlagsKHR::PROTECTED.0, "PROTECTED"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for ShadingRatePaletteEntryNV {
+impl fmt::Display for RayTracingShaderGroupTypeNV {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::NO_INVOCATIONS => Some("NO_INVOCATIONS"),
-            Self::TYPE_16_INVOCATIONS_PER_PIXEL => Some("TYPE_16_INVOCATIONS_PER_PIXEL"),
-            Self::TYPE_8_INVOCATIONS_PER_PIXEL => Some("TYPE_8_INVOCATIONS_PER_PIXEL"),
-            Self::TYPE_4_INVOCATIONS_PER_PIXEL => Some("TYPE_4_INVOCATIONS_PER_PIXEL"),
-            Self::TYPE_2_INVOCATIONS_PER_PIXEL => Some("TYPE_2_INVOCATIONS_PER_PIXEL"),
-            Self::TYPE_1_INVOCATION_PER_PIXEL => Some("TYPE_1_INVOCATION_PER_PIXEL"),
-            Self::TYPE_1_INVOCATION_PER_2X1_PIXELS => Some("TYPE_1_INVOCATION_PER_2X1_PIXELS"),
-            Self::TYPE_1_INVOCATION_PER_1X2_PIXELS => Some("TYPE_1_INVOCATION_PER_1X2_PIXELS"),
-            Self::TYPE_1_INVOCATION_PER_2X2_PIXELS => Some("TYPE_1_INVOCATION_PER_2X2_PIXELS"),
-            Self::TYPE_1_INVOCATION_PER_4X2_PIXELS => Some("TYPE_1_INVOCATION_PER_4X2_PIXELS"),
-            Self::TYPE_1_INVOCATION_PER_2X4_PIXELS => Some("TYPE_1_INVOCATION_PER_2X4_PIXELS"),
-            Self::TYPE_1_INVOCATION_PER_4X4_PIXELS => Some("TYPE_1_INVOCATION_PER_4X4_PIXELS"),
+            Self::GENERAL => Some("GENERAL"),
+            Self::TRIANGLES_HIT_GROUP => Some("TRIANGLES_HIT_GROUP"),
+            Self::PROCEDURAL_HIT_GROUP => Some("PROCEDURAL_HIT_GROUP"),
             _ => None,
         };
         if let Some(x) = name {
@@ -58108,170 +59918,18 @@ impl fmt::Display for ShadingRatePaletteEntryNV {
         }
     }
 }
-impl fmt::Display for ExternalFenceHandleTypeFlags {
+impl fmt::Display for RenderPassCreateFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD.0,
-                "EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD",
-            ),
-            (
-                ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32.0,
-                "EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32",
-            ),
-            (
-                ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT.0,
-                "EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT",
-            ),
-            (
-                ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD.0,
-                "EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD",
-            ),
-        ];
+        const KNOWN: &[(Flags, &str)] =
+            &[(RenderPassCreateFlags::RESERVED_0_KHR.0, "RESERVED_0_KHR")];
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for PeerMemoryFeatureFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (PeerMemoryFeatureFlags::COPY_SRC.0, "COPY_SRC"),
-            (PeerMemoryFeatureFlags::COPY_DST.0, "COPY_DST"),
-            (PeerMemoryFeatureFlags::GENERIC_SRC.0, "GENERIC_SRC"),
-            (PeerMemoryFeatureFlags::GENERIC_DST.0, "GENERIC_DST"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for AccessFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                AccessFlags::INDIRECT_COMMAND_READ.0,
-                "INDIRECT_COMMAND_READ",
-            ),
-            (AccessFlags::INDEX_READ.0, "INDEX_READ"),
-            (
-                AccessFlags::VERTEX_ATTRIBUTE_READ.0,
-                "VERTEX_ATTRIBUTE_READ",
-            ),
-            (AccessFlags::UNIFORM_READ.0, "UNIFORM_READ"),
-            (
-                AccessFlags::INPUT_ATTACHMENT_READ.0,
-                "INPUT_ATTACHMENT_READ",
-            ),
-            (AccessFlags::SHADER_READ.0, "SHADER_READ"),
-            (AccessFlags::SHADER_WRITE.0, "SHADER_WRITE"),
-            (
-                AccessFlags::COLOR_ATTACHMENT_READ.0,
-                "COLOR_ATTACHMENT_READ",
-            ),
-            (
-                AccessFlags::COLOR_ATTACHMENT_WRITE.0,
-                "COLOR_ATTACHMENT_WRITE",
-            ),
-            (
-                AccessFlags::DEPTH_STENCIL_ATTACHMENT_READ.0,
-                "DEPTH_STENCIL_ATTACHMENT_READ",
-            ),
-            (
-                AccessFlags::DEPTH_STENCIL_ATTACHMENT_WRITE.0,
-                "DEPTH_STENCIL_ATTACHMENT_WRITE",
-            ),
-            (AccessFlags::TRANSFER_READ.0, "TRANSFER_READ"),
-            (AccessFlags::TRANSFER_WRITE.0, "TRANSFER_WRITE"),
-            (AccessFlags::HOST_READ.0, "HOST_READ"),
-            (AccessFlags::HOST_WRITE.0, "HOST_WRITE"),
-            (AccessFlags::MEMORY_READ.0, "MEMORY_READ"),
-            (AccessFlags::MEMORY_WRITE.0, "MEMORY_WRITE"),
-            (
-                AccessFlags::TRANSFORM_FEEDBACK_WRITE_EXT.0,
-                "TRANSFORM_FEEDBACK_WRITE_EXT",
-            ),
-            (
-                AccessFlags::TRANSFORM_FEEDBACK_COUNTER_READ_EXT.0,
-                "TRANSFORM_FEEDBACK_COUNTER_READ_EXT",
-            ),
-            (
-                AccessFlags::TRANSFORM_FEEDBACK_COUNTER_WRITE_EXT.0,
-                "TRANSFORM_FEEDBACK_COUNTER_WRITE_EXT",
-            ),
-            (
-                AccessFlags::CONDITIONAL_RENDERING_READ_EXT.0,
-                "CONDITIONAL_RENDERING_READ_EXT",
-            ),
-            (
-                AccessFlags::COMMAND_PROCESS_READ_NVX.0,
-                "COMMAND_PROCESS_READ_NVX",
-            ),
-            (
-                AccessFlags::COMMAND_PROCESS_WRITE_NVX.0,
-                "COMMAND_PROCESS_WRITE_NVX",
-            ),
-            (
-                AccessFlags::COLOR_ATTACHMENT_READ_NONCOHERENT_EXT.0,
-                "COLOR_ATTACHMENT_READ_NONCOHERENT_EXT",
-            ),
-            (
-                AccessFlags::SHADING_RATE_IMAGE_READ_NV.0,
-                "SHADING_RATE_IMAGE_READ_NV",
-            ),
-            (
-                AccessFlags::ACCELERATION_STRUCTURE_READ_NV.0,
-                "ACCELERATION_STRUCTURE_READ_NV",
-            ),
-            (
-                AccessFlags::ACCELERATION_STRUCTURE_WRITE_NV.0,
-                "ACCELERATION_STRUCTURE_WRITE_NV",
-            ),
-            (AccessFlags::RESERVED_24_EXT.0, "RESERVED_24_EXT"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for ImageCreateFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (ImageCreateFlags::SPARSE_BINDING.0, "SPARSE_BINDING"),
-            (ImageCreateFlags::SPARSE_RESIDENCY.0, "SPARSE_RESIDENCY"),
-            (ImageCreateFlags::SPARSE_ALIASED.0, "SPARSE_ALIASED"),
-            (ImageCreateFlags::MUTABLE_FORMAT.0, "MUTABLE_FORMAT"),
-            (ImageCreateFlags::CUBE_COMPATIBLE.0, "CUBE_COMPATIBLE"),
-            (ImageCreateFlags::CORNER_SAMPLED_NV.0, "CORNER_SAMPLED_NV"),
-            (
-                ImageCreateFlags::SAMPLE_LOCATIONS_COMPATIBLE_DEPTH_EXT.0,
-                "SAMPLE_LOCATIONS_COMPATIBLE_DEPTH_EXT",
-            ),
-            (ImageCreateFlags::RESERVED_14_EXT.0, "RESERVED_14_EXT"),
-            (ImageCreateFlags::ALIAS.0, "ALIAS"),
-            (
-                ImageCreateFlags::SPLIT_INSTANCE_BIND_REGIONS.0,
-                "SPLIT_INSTANCE_BIND_REGIONS",
-            ),
-            (
-                ImageCreateFlags::TYPE_2D_ARRAY_COMPATIBLE.0,
-                "TYPE_2D_ARRAY_COMPATIBLE",
-            ),
-            (
-                ImageCreateFlags::BLOCK_TEXEL_VIEW_COMPATIBLE.0,
-                "BLOCK_TEXEL_VIEW_COMPATIBLE",
-            ),
-            (ImageCreateFlags::EXTENDED_USAGE.0, "EXTENDED_USAGE"),
-            (ImageCreateFlags::PROTECTED.0, "PROTECTED"),
-            (ImageCreateFlags::DISJOINT.0, "DISJOINT"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for ImageViewType {
+impl fmt::Display for ChromaLocation {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::TYPE_1D => Some("TYPE_1D"),
-            Self::TYPE_2D => Some("TYPE_2D"),
-            Self::TYPE_3D => Some("TYPE_3D"),
-            Self::CUBE => Some("CUBE"),
-            Self::TYPE_1D_ARRAY => Some("TYPE_1D_ARRAY"),
-            Self::TYPE_2D_ARRAY => Some("TYPE_2D_ARRAY"),
-            Self::CUBE_ARRAY => Some("CUBE_ARRAY"),
+            Self::COSITED_EVEN => Some("COSITED_EVEN"),
+            Self::MIDPOINT => Some("MIDPOINT"),
             _ => None,
         };
         if let Some(x) = name {
@@ -58281,109 +59939,30 @@ impl fmt::Display for ImageViewType {
         }
     }
 }
-impl fmt::Display for FenceCreateFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(FenceCreateFlags::SIGNALED.0, "SIGNALED")];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for PrimitiveTopology {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::POINT_LIST => Some("POINT_LIST"),
-            Self::LINE_LIST => Some("LINE_LIST"),
-            Self::LINE_STRIP => Some("LINE_STRIP"),
-            Self::TRIANGLE_LIST => Some("TRIANGLE_LIST"),
-            Self::TRIANGLE_STRIP => Some("TRIANGLE_STRIP"),
-            Self::TRIANGLE_FAN => Some("TRIANGLE_FAN"),
-            Self::LINE_LIST_WITH_ADJACENCY => Some("LINE_LIST_WITH_ADJACENCY"),
-            Self::LINE_STRIP_WITH_ADJACENCY => Some("LINE_STRIP_WITH_ADJACENCY"),
-            Self::TRIANGLE_LIST_WITH_ADJACENCY => Some("TRIANGLE_LIST_WITH_ADJACENCY"),
-            Self::TRIANGLE_STRIP_WITH_ADJACENCY => Some("TRIANGLE_STRIP_WITH_ADJACENCY"),
-            Self::PATCH_LIST => Some("PATCH_LIST"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for DisplayEventTypeEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::FIRST_PIXEL_OUT => Some("FIRST_PIXEL_OUT"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for SamplerYcbcrModelConversion {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::RGB_IDENTITY => Some("RGB_IDENTITY"),
-            Self::YCBCR_IDENTITY => Some("YCBCR_IDENTITY"),
-            Self::YCBCR_709 => Some("YCBCR_709"),
-            Self::YCBCR_601 => Some("YCBCR_601"),
-            Self::YCBCR_2020 => Some("YCBCR_2020"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ShaderInfoTypeAMD {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::STATISTICS => Some("STATISTICS"),
-            Self::BINARY => Some("BINARY"),
-            Self::DISASSEMBLY => Some("DISASSEMBLY"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ExternalMemoryFeatureFlagsNV {
+impl fmt::Display for ObjectEntryUsageFlagsNVX {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
-            (
-                ExternalMemoryFeatureFlagsNV::EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_NV.0,
-                "EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_NV",
-            ),
-            (
-                ExternalMemoryFeatureFlagsNV::EXTERNAL_MEMORY_FEATURE_EXPORTABLE_NV.0,
-                "EXTERNAL_MEMORY_FEATURE_EXPORTABLE_NV",
-            ),
-            (
-                ExternalMemoryFeatureFlagsNV::EXTERNAL_MEMORY_FEATURE_IMPORTABLE_NV.0,
-                "EXTERNAL_MEMORY_FEATURE_IMPORTABLE_NV",
-            ),
+            (ObjectEntryUsageFlagsNVX::GRAPHICS.0, "GRAPHICS"),
+            (ObjectEntryUsageFlagsNVX::COMPUTE.0, "COMPUTE"),
         ];
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for ComponentSwizzle {
+impl fmt::Display for CompositeAlphaFlagsKHR {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (CompositeAlphaFlagsKHR::OPAQUE.0, "OPAQUE"),
+            (CompositeAlphaFlagsKHR::PRE_MULTIPLIED.0, "PRE_MULTIPLIED"),
+            (CompositeAlphaFlagsKHR::POST_MULTIPLIED.0, "POST_MULTIPLIED"),
+            (CompositeAlphaFlagsKHR::INHERIT.0, "INHERIT"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for PipelineCacheHeaderVersion {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::IDENTITY => Some("IDENTITY"),
-            Self::ZERO => Some("ZERO"),
             Self::ONE => Some("ONE"),
-            Self::R => Some("R"),
-            Self::G => Some("G"),
-            Self::B => Some("B"),
-            Self::A => Some("A"),
             _ => None,
         };
         if let Some(x) = name {
@@ -58393,92 +59972,77 @@ impl fmt::Display for ComponentSwizzle {
         }
     }
 }
-impl fmt::Display for IndexType {
+impl fmt::Display for SurfaceCounterFlagsEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::UINT16 => Some("UINT16"),
-            Self::UINT32 => Some("UINT32"),
-            Self::NONE_NV => Some("NONE_NV"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for SamplerAddressMode {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::REPEAT => Some("REPEAT"),
-            Self::MIRRORED_REPEAT => Some("MIRRORED_REPEAT"),
-            Self::CLAMP_TO_EDGE => Some("CLAMP_TO_EDGE"),
-            Self::CLAMP_TO_BORDER => Some("CLAMP_TO_BORDER"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for PhysicalDeviceType {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::OTHER => Some("OTHER"),
-            Self::INTEGRATED_GPU => Some("INTEGRATED_GPU"),
-            Self::DISCRETE_GPU => Some("DISCRETE_GPU"),
-            Self::VIRTUAL_GPU => Some("VIRTUAL_GPU"),
-            Self::CPU => Some("CPU"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for BlendOverlapEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::UNCORRELATED => Some("UNCORRELATED"),
-            Self::DISJOINT => Some("DISJOINT"),
-            Self::CONJOINT => Some("CONJOINT"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for Filter {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::NEAREST => Some("NEAREST"),
-            Self::LINEAR => Some("LINEAR"),
-            Self::CUBIC_IMG => Some("CUBIC_IMG"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for DebugUtilsMessageTypeFlagsEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (DebugUtilsMessageTypeFlagsEXT::GENERAL.0, "GENERAL"),
-            (DebugUtilsMessageTypeFlagsEXT::VALIDATION.0, "VALIDATION"),
-            (DebugUtilsMessageTypeFlagsEXT::PERFORMANCE.0, "PERFORMANCE"),
-        ];
+        const KNOWN: &[(Flags, &str)] = &[(SurfaceCounterFlagsEXT::VBLANK.0, "VBLANK")];
         display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for ObjectType {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::UNKNOWN => Some("UNKNOWN"),
+            Self::INSTANCE => Some("INSTANCE"),
+            Self::PHYSICAL_DEVICE => Some("PHYSICAL_DEVICE"),
+            Self::DEVICE => Some("DEVICE"),
+            Self::QUEUE => Some("QUEUE"),
+            Self::SEMAPHORE => Some("SEMAPHORE"),
+            Self::COMMAND_BUFFER => Some("COMMAND_BUFFER"),
+            Self::FENCE => Some("FENCE"),
+            Self::DEVICE_MEMORY => Some("DEVICE_MEMORY"),
+            Self::BUFFER => Some("BUFFER"),
+            Self::IMAGE => Some("IMAGE"),
+            Self::EVENT => Some("EVENT"),
+            Self::QUERY_POOL => Some("QUERY_POOL"),
+            Self::BUFFER_VIEW => Some("BUFFER_VIEW"),
+            Self::IMAGE_VIEW => Some("IMAGE_VIEW"),
+            Self::SHADER_MODULE => Some("SHADER_MODULE"),
+            Self::PIPELINE_CACHE => Some("PIPELINE_CACHE"),
+            Self::PIPELINE_LAYOUT => Some("PIPELINE_LAYOUT"),
+            Self::RENDER_PASS => Some("RENDER_PASS"),
+            Self::PIPELINE => Some("PIPELINE"),
+            Self::DESCRIPTOR_SET_LAYOUT => Some("DESCRIPTOR_SET_LAYOUT"),
+            Self::SAMPLER => Some("SAMPLER"),
+            Self::DESCRIPTOR_POOL => Some("DESCRIPTOR_POOL"),
+            Self::DESCRIPTOR_SET => Some("DESCRIPTOR_SET"),
+            Self::FRAMEBUFFER => Some("FRAMEBUFFER"),
+            Self::COMMAND_POOL => Some("COMMAND_POOL"),
+            Self::SURFACE_KHR => Some("SURFACE_KHR"),
+            Self::SWAPCHAIN_KHR => Some("SWAPCHAIN_KHR"),
+            Self::DISPLAY_KHR => Some("DISPLAY_KHR"),
+            Self::DISPLAY_MODE_KHR => Some("DISPLAY_MODE_KHR"),
+            Self::DEBUG_REPORT_CALLBACK_EXT => Some("DEBUG_REPORT_CALLBACK_EXT"),
+            Self::OBJECT_TABLE_NVX => Some("OBJECT_TABLE_NVX"),
+            Self::INDIRECT_COMMANDS_LAYOUT_NVX => Some("INDIRECT_COMMANDS_LAYOUT_NVX"),
+            Self::DEBUG_UTILS_MESSENGER_EXT => Some("DEBUG_UTILS_MESSENGER_EXT"),
+            Self::VALIDATION_CACHE_EXT => Some("VALIDATION_CACHE_EXT"),
+            Self::ACCELERATION_STRUCTURE_NV => Some("ACCELERATION_STRUCTURE_NV"),
+            Self::SAMPLER_YCBCR_CONVERSION => Some("SAMPLER_YCBCR_CONVERSION"),
+            Self::DESCRIPTOR_UPDATE_TEMPLATE => Some("DESCRIPTOR_UPDATE_TEMPLATE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for ObjectEntryTypeNVX {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::DESCRIPTOR_SET => Some("DESCRIPTOR_SET"),
+            Self::PIPELINE => Some("PIPELINE"),
+            Self::INDEX_BUFFER => Some("INDEX_BUFFER"),
+            Self::VERTEX_BUFFER => Some("VERTEX_BUFFER"),
+            Self::PUSH_CONSTANT => Some("PUSH_CONSTANT"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
     }
 }
 impl fmt::Display for QueryResultFlags {
@@ -58492,13 +60056,13 @@ impl fmt::Display for QueryResultFlags {
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for CoarseSampleOrderTypeNV {
+impl fmt::Display for PolygonMode {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::DEFAULT => Some("DEFAULT"),
-            Self::CUSTOM => Some("CUSTOM"),
-            Self::PIXEL_MAJOR => Some("PIXEL_MAJOR"),
-            Self::SAMPLE_MAJOR => Some("SAMPLE_MAJOR"),
+            Self::FILL => Some("FILL"),
+            Self::LINE => Some("LINE"),
+            Self::POINT => Some("POINT"),
+            Self::FILL_RECTANGLE_NV => Some("FILL_RECTANGLE_NV"),
             _ => None,
         };
         if let Some(x) = name {
@@ -58508,25 +60072,20 @@ impl fmt::Display for CoarseSampleOrderTypeNV {
         }
     }
 }
-impl fmt::Display for LogicOp {
+impl fmt::Display for ImageViewCreateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(
+            ImageViewCreateFlags::FRAGMENT_DENSITY_MAP_DYNAMIC_EXT.0,
+            "FRAGMENT_DENSITY_MAP_DYNAMIC_EXT",
+        )];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for ValidationFeatureEnableEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::CLEAR => Some("CLEAR"),
-            Self::AND => Some("AND"),
-            Self::AND_REVERSE => Some("AND_REVERSE"),
-            Self::COPY => Some("COPY"),
-            Self::AND_INVERTED => Some("AND_INVERTED"),
-            Self::NO_OP => Some("NO_OP"),
-            Self::XOR => Some("XOR"),
-            Self::OR => Some("OR"),
-            Self::NOR => Some("NOR"),
-            Self::EQUIVALENT => Some("EQUIVALENT"),
-            Self::INVERT => Some("INVERT"),
-            Self::OR_REVERSE => Some("OR_REVERSE"),
-            Self::COPY_INVERTED => Some("COPY_INVERTED"),
-            Self::OR_INVERTED => Some("OR_INVERTED"),
-            Self::NAND => Some("NAND"),
-            Self::SET => Some("SET"),
+            Self::GPU_ASSISTED => Some("GPU_ASSISTED"),
+            Self::GPU_ASSISTED_RESERVE_BINDING_SLOT => Some("GPU_ASSISTED_RESERVE_BINDING_SLOT"),
             _ => None,
         };
         if let Some(x) = name {
@@ -58536,115 +60095,38 @@ impl fmt::Display for LogicOp {
         }
     }
 }
-impl fmt::Display for SamplerReductionModeEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::WEIGHTED_AVERAGE => Some("WEIGHTED_AVERAGE"),
-            Self::MIN => Some("MIN"),
-            Self::MAX => Some("MAX"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for VertexInputRate {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::VERTEX => Some("VERTEX"),
-            Self::INSTANCE => Some("INSTANCE"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for PipelineCreateFlags {
+impl fmt::Display for ExternalMemoryHandleTypeFlagsNV {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (
-                PipelineCreateFlags::DISABLE_OPTIMIZATION.0,
-                "DISABLE_OPTIMIZATION",
+                ExternalMemoryHandleTypeFlagsNV::EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_NV.0,
+                "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_NV",
             ),
             (
-                PipelineCreateFlags::ALLOW_DERIVATIVES.0,
-                "ALLOW_DERIVATIVES",
+                ExternalMemoryHandleTypeFlagsNV::EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_NV.0,
+                "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_NV",
             ),
-            (PipelineCreateFlags::DERIVATIVE.0, "DERIVATIVE"),
-            (PipelineCreateFlags::DEFER_COMPILE_NV.0, "DEFER_COMPILE_NV"),
             (
-                PipelineCreateFlags::VIEW_INDEX_FROM_DEVICE_INDEX.0,
-                "VIEW_INDEX_FROM_DEVICE_INDEX",
+                ExternalMemoryHandleTypeFlagsNV::EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_NV.0,
+                "EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_NV",
             ),
-            (PipelineCreateFlags::DISPATCH_BASE.0, "DISPATCH_BASE"),
->>>>>>> Implement extension chaining
+            (
+                ExternalMemoryHandleTypeFlagsNV::EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_NV.0,
+                "EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_NV",
+            ),
         ];
         display_flags(f, KNOWN, self.0)
     }
 }
-<<<<<<< HEAD
-impl fmt::Display for FenceCreateFlags {
-=======
-impl fmt::Display for MemoryOverallocationBehaviorAMD {
+impl fmt::Display for BorderColor {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::DEFAULT => Some("DEFAULT"),
-            Self::ALLOWED => Some("ALLOWED"),
-            Self::DISALLOWED => Some("DISALLOWED"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for DynamicState {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::VIEWPORT => Some("VIEWPORT"),
-            Self::SCISSOR => Some("SCISSOR"),
-            Self::LINE_WIDTH => Some("LINE_WIDTH"),
-            Self::DEPTH_BIAS => Some("DEPTH_BIAS"),
-            Self::BLEND_CONSTANTS => Some("BLEND_CONSTANTS"),
-            Self::DEPTH_BOUNDS => Some("DEPTH_BOUNDS"),
-            Self::STENCIL_COMPARE_MASK => Some("STENCIL_COMPARE_MASK"),
-            Self::STENCIL_WRITE_MASK => Some("STENCIL_WRITE_MASK"),
-            Self::STENCIL_REFERENCE => Some("STENCIL_REFERENCE"),
-            Self::VIEWPORT_W_SCALING_NV => Some("VIEWPORT_W_SCALING_NV"),
-            Self::DISCARD_RECTANGLE_EXT => Some("DISCARD_RECTANGLE_EXT"),
-            Self::SAMPLE_LOCATIONS_EXT => Some("SAMPLE_LOCATIONS_EXT"),
-            Self::VIEWPORT_SHADING_RATE_PALETTE_NV => Some("VIEWPORT_SHADING_RATE_PALETTE_NV"),
-            Self::VIEWPORT_COARSE_SAMPLE_ORDER_NV => Some("VIEWPORT_COARSE_SAMPLE_ORDER_NV"),
-            Self::EXCLUSIVE_SCISSOR_NV => Some("EXCLUSIVE_SCISSOR_NV"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for DriverIdKHR {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::AMD_PROPRIETARY => Some("AMD_PROPRIETARY"),
-            Self::AMD_OPEN_SOURCE => Some("AMD_OPEN_SOURCE"),
-            Self::MESA_RADV => Some("MESA_RADV"),
-            Self::NVIDIA_PROPRIETARY => Some("NVIDIA_PROPRIETARY"),
-            Self::INTEL_PROPRIETARY_WINDOWS => Some("INTEL_PROPRIETARY_WINDOWS"),
-            Self::INTEL_OPEN_SOURCE_MESA => Some("INTEL_OPEN_SOURCE_MESA"),
-            Self::IMAGINATION_PROPRIETARY => Some("IMAGINATION_PROPRIETARY"),
-            Self::QUALCOMM_PROPRIETARY => Some("QUALCOMM_PROPRIETARY"),
-            Self::ARM_PROPRIETARY => Some("ARM_PROPRIETARY"),
+            Self::FLOAT_TRANSPARENT_BLACK => Some("FLOAT_TRANSPARENT_BLACK"),
+            Self::INT_TRANSPARENT_BLACK => Some("INT_TRANSPARENT_BLACK"),
+            Self::FLOAT_OPAQUE_BLACK => Some("FLOAT_OPAQUE_BLACK"),
+            Self::INT_OPAQUE_BLACK => Some("INT_OPAQUE_BLACK"),
+            Self::FLOAT_OPAQUE_WHITE => Some("FLOAT_OPAQUE_WHITE"),
+            Self::INT_OPAQUE_WHITE => Some("INT_OPAQUE_WHITE"),
             _ => None,
         };
         if let Some(x) = name {
@@ -58667,10 +60149,19 @@ impl fmt::Display for InternalAllocationType {
         }
     }
 }
-impl fmt::Display for PipelineCacheHeaderVersion {
+impl fmt::Display for DriverIdKHR {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::ONE => Some("ONE"),
+            Self::AMD_PROPRIETARY => Some("AMD_PROPRIETARY"),
+            Self::AMD_OPEN_SOURCE => Some("AMD_OPEN_SOURCE"),
+            Self::MESA_RADV => Some("MESA_RADV"),
+            Self::NVIDIA_PROPRIETARY => Some("NVIDIA_PROPRIETARY"),
+            Self::INTEL_PROPRIETARY_WINDOWS => Some("INTEL_PROPRIETARY_WINDOWS"),
+            Self::INTEL_OPEN_SOURCE_MESA => Some("INTEL_OPEN_SOURCE_MESA"),
+            Self::IMAGINATION_PROPRIETARY => Some("IMAGINATION_PROPRIETARY"),
+            Self::QUALCOMM_PROPRIETARY => Some("QUALCOMM_PROPRIETARY"),
+            Self::ARM_PROPRIETARY => Some("ARM_PROPRIETARY"),
+            Self::GOOGLE_PASTEL => Some("GOOGLE_PASTEL"),
             _ => None,
         };
         if let Some(x) = name {
@@ -58680,56 +60171,35 @@ impl fmt::Display for PipelineCacheHeaderVersion {
         }
     }
 }
-impl fmt::Display for MemoryHeapFlags {
+impl fmt::Display for DescriptorBindingFlagsEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
-            (MemoryHeapFlags::DEVICE_LOCAL.0, "DEVICE_LOCAL"),
-            (MemoryHeapFlags::MULTI_INSTANCE.0, "MULTI_INSTANCE"),
+            (
+                DescriptorBindingFlagsEXT::UPDATE_AFTER_BIND.0,
+                "UPDATE_AFTER_BIND",
+            ),
+            (
+                DescriptorBindingFlagsEXT::UPDATE_UNUSED_WHILE_PENDING.0,
+                "UPDATE_UNUSED_WHILE_PENDING",
+            ),
+            (
+                DescriptorBindingFlagsEXT::PARTIALLY_BOUND.0,
+                "PARTIALLY_BOUND",
+            ),
+            (
+                DescriptorBindingFlagsEXT::VARIABLE_DESCRIPTOR_COUNT.0,
+                "VARIABLE_DESCRIPTOR_COUNT",
+            ),
         ];
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for ImageAspectFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (ImageAspectFlags::COLOR.0, "COLOR"),
-            (ImageAspectFlags::DEPTH.0, "DEPTH"),
-            (ImageAspectFlags::STENCIL.0, "STENCIL"),
-            (ImageAspectFlags::METADATA.0, "METADATA"),
-            (ImageAspectFlags::MEMORY_PLANE_0_EXT.0, "MEMORY_PLANE_0_EXT"),
-            (ImageAspectFlags::MEMORY_PLANE_1_EXT.0, "MEMORY_PLANE_1_EXT"),
-            (ImageAspectFlags::MEMORY_PLANE_2_EXT.0, "MEMORY_PLANE_2_EXT"),
-            (ImageAspectFlags::MEMORY_PLANE_3_EXT.0, "MEMORY_PLANE_3_EXT"),
-            (ImageAspectFlags::PLANE_0.0, "PLANE_0"),
-            (ImageAspectFlags::PLANE_1.0, "PLANE_1"),
-            (ImageAspectFlags::PLANE_2.0, "PLANE_2"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for QueueFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (QueueFlags::GRAPHICS.0, "GRAPHICS"),
-            (QueueFlags::COMPUTE.0, "COMPUTE"),
-            (QueueFlags::TRANSFER.0, "TRANSFER"),
-            (QueueFlags::SPARSE_BINDING.0, "SPARSE_BINDING"),
-            (QueueFlags::PROTECTED.0, "PROTECTED"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for MemoryAllocateFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(MemoryAllocateFlags::DEVICE_MASK.0, "DEVICE_MASK")];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for CommandBufferLevel {
+impl fmt::Display for SamplerReductionModeEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::PRIMARY => Some("PRIMARY"),
-            Self::SECONDARY => Some("SECONDARY"),
+            Self::WEIGHTED_AVERAGE => Some("WEIGHTED_AVERAGE"),
+            Self::MIN => Some("MIN"),
+            Self::MAX => Some("MAX"),
             _ => None,
         };
         if let Some(x) = name {
@@ -58739,152 +60209,52 @@ impl fmt::Display for CommandBufferLevel {
         }
     }
 }
-impl fmt::Display for ConditionalRenderingFlagsEXT {
+impl fmt::Display for SemaphoreImportFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(ConditionalRenderingFlagsEXT::INVERTED.0, "INVERTED")];
+        const KNOWN: &[(Flags, &str)] = &[(SemaphoreImportFlags::TEMPORARY.0, "TEMPORARY")];
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for DeviceQueueCreateFlags {
+impl fmt::Display for DebugUtilsMessageSeverityFlagsEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(DeviceQueueCreateFlags::PROTECTED.0, "PROTECTED")];
+        const KNOWN: &[(Flags, &str)] = &[
+            (DebugUtilsMessageSeverityFlagsEXT::VERBOSE.0, "VERBOSE"),
+            (DebugUtilsMessageSeverityFlagsEXT::INFO.0, "INFO"),
+            (DebugUtilsMessageSeverityFlagsEXT::WARNING.0, "WARNING"),
+            (DebugUtilsMessageSeverityFlagsEXT::ERROR.0, "ERROR"),
+        ];
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for ObjectEntryUsageFlagsNVX {
->>>>>>> Implement extension chaining
+impl fmt::Display for AccelerationStructureTypeNV {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::TOP_LEVEL => Some("TOP_LEVEL"),
+            Self::BOTTOM_LEVEL => Some("BOTTOM_LEVEL"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for FenceCreateFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[(FenceCreateFlags::SIGNALED.0, "SIGNALED")];
         display_flags(f, KNOWN, self.0)
     }
 }
-<<<<<<< HEAD
-impl fmt::Display for SubgroupFeatureFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (SubgroupFeatureFlags::BASIC.0, "BASIC"),
-            (SubgroupFeatureFlags::VOTE.0, "VOTE"),
-            (SubgroupFeatureFlags::ARITHMETIC.0, "ARITHMETIC"),
-            (SubgroupFeatureFlags::BALLOT.0, "BALLOT"),
-            (SubgroupFeatureFlags::SHUFFLE.0, "SHUFFLE"),
-            (SubgroupFeatureFlags::SHUFFLE_RELATIVE.0, "SHUFFLE_RELATIVE"),
-            (SubgroupFeatureFlags::CLUSTERED.0, "CLUSTERED"),
-            (SubgroupFeatureFlags::QUAD.0, "QUAD"),
-            (SubgroupFeatureFlags::PARTITIONED_NV.0, "PARTITIONED_NV"),
-=======
-impl fmt::Display for TessellationDomainOrigin {
+impl fmt::Display for PresentModeKHR {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::UPPER_LEFT => Some("UPPER_LEFT"),
-            Self::LOWER_LEFT => Some("LOWER_LEFT"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for CoverageModulationModeNV {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::NONE => Some("NONE"),
-            Self::RGB => Some("RGB"),
-            Self::ALPHA => Some("ALPHA"),
-            Self::RGBA => Some("RGBA"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for QueryType {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::OCCLUSION => Some("OCCLUSION"),
-            Self::PIPELINE_STATISTICS => Some("PIPELINE_STATISTICS"),
-            Self::TIMESTAMP => Some("TIMESTAMP"),
-            Self::TRANSFORM_FEEDBACK_STREAM_EXT => Some("TRANSFORM_FEEDBACK_STREAM_EXT"),
-            Self::ACCELERATION_STRUCTURE_COMPACTED_SIZE_NV => {
-                Some("ACCELERATION_STRUCTURE_COMPACTED_SIZE_NV")
-            }
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for GeometryInstanceFlagsNV {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                GeometryInstanceFlagsNV::TRIANGLE_CULL_DISABLE.0,
-                "TRIANGLE_CULL_DISABLE",
-            ),
-            (
-                GeometryInstanceFlagsNV::TRIANGLE_FRONT_COUNTERCLOCKWISE.0,
-                "TRIANGLE_FRONT_COUNTERCLOCKWISE",
-            ),
-            (GeometryInstanceFlagsNV::FORCE_OPAQUE.0, "FORCE_OPAQUE"),
-            (
-                GeometryInstanceFlagsNV::FORCE_NO_OPAQUE.0,
-                "FORCE_NO_OPAQUE",
-            ),
->>>>>>> Implement extension chaining
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-<<<<<<< HEAD
-impl fmt::Display for DisplayPowerStateEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::OFF => Some("OFF"),
-            Self::SUSPEND => Some("SUSPEND"),
-            Self::ON => Some("ON"),
-=======
-impl fmt::Display for DiscardRectangleModeEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::INCLUSIVE => Some("INCLUSIVE"),
-            Self::EXCLUSIVE => Some("EXCLUSIVE"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ChromaLocation {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::COSITED_EVEN => Some("COSITED_EVEN"),
-            Self::MIDPOINT => Some("MIDPOINT"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for PolygonMode {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::FILL => Some("FILL"),
-            Self::LINE => Some("LINE"),
-            Self::POINT => Some("POINT"),
-            Self::FILL_RECTANGLE_NV => Some("FILL_RECTANGLE_NV"),
+            Self::IMMEDIATE => Some("IMMEDIATE"),
+            Self::MAILBOX => Some("MAILBOX"),
+            Self::FIFO => Some("FIFO"),
+            Self::FIFO_RELAXED => Some("FIFO_RELAXED"),
+            Self::SHARED_DEMAND_REFRESH => Some("SHARED_DEMAND_REFRESH"),
+            Self::SHARED_CONTINUOUS_REFRESH => Some("SHARED_CONTINUOUS_REFRESH"),
             _ => None,
         };
         if let Some(x) = name {
@@ -58934,7 +60304,6 @@ impl fmt::Display for DebugReportObjectTypeEXT {
             Self::SAMPLER_YCBCR_CONVERSION => Some("SAMPLER_YCBCR_CONVERSION"),
             Self::DESCRIPTOR_UPDATE_TEMPLATE => Some("DESCRIPTOR_UPDATE_TEMPLATE"),
             Self::ACCELERATION_STRUCTURE_NV => Some("ACCELERATION_STRUCTURE_NV"),
->>>>>>> Implement extension chaining
             _ => None,
         };
         if let Some(x) = name {
@@ -58944,386 +60313,6 @@ impl fmt::Display for DebugReportObjectTypeEXT {
         }
     }
 }
-impl fmt::Display for ObjectEntryUsageFlagsNVX {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (ObjectEntryUsageFlagsNVX::GRAPHICS.0, "GRAPHICS"),
-            (ObjectEntryUsageFlagsNVX::COMPUTE.0, "COMPUTE"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-<<<<<<< HEAD
-impl fmt::Display for ExternalSemaphoreHandleTypeFlags {
-=======
-impl fmt::Display for FrontFace {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::COUNTER_CLOCKWISE => Some("COUNTER_CLOCKWISE"),
-            Self::CLOCKWISE => Some("CLOCKWISE"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for CompareOp {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::NEVER => Some("NEVER"),
-            Self::LESS => Some("LESS"),
-            Self::EQUAL => Some("EQUAL"),
-            Self::LESS_OR_EQUAL => Some("LESS_OR_EQUAL"),
-            Self::GREATER => Some("GREATER"),
-            Self::NOT_EQUAL => Some("NOT_EQUAL"),
-            Self::GREATER_OR_EQUAL => Some("GREATER_OR_EQUAL"),
-            Self::ALWAYS => Some("ALWAYS"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ColorComponentFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (ColorComponentFlags::R.0, "R"),
-            (ColorComponentFlags::G.0, "G"),
-            (ColorComponentFlags::B.0, "B"),
-            (ColorComponentFlags::A.0, "A"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for ExternalMemoryHandleTypeFlagsNV {
->>>>>>> Implement extension chaining
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                ExternalMemoryHandleTypeFlagsNV::EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_NV.0,
-                "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_NV",
-            ),
-            (
-                ExternalMemoryHandleTypeFlagsNV::EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_NV.0,
-                "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_NV",
-            ),
-            (
-                ExternalMemoryHandleTypeFlagsNV::EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_NV.0,
-                "EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_NV",
-            ),
-            (
-                ExternalMemoryHandleTypeFlagsNV::EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_NV.0,
-                "EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_NV",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for DisplayPowerStateEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::OFF => Some("OFF"),
-            Self::SUSPEND => Some("SUSPEND"),
-            Self::ON => Some("ON"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for SubpassDescriptionFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                SubpassDescriptionFlags::PER_VIEW_ATTRIBUTES_NVX.0,
-                "PER_VIEW_ATTRIBUTES_NVX",
-            ),
-            (
-                SubpassDescriptionFlags::PER_VIEW_POSITION_X_ONLY_NVX.0,
-                "PER_VIEW_POSITION_X_ONLY_NVX",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for IndirectCommandsLayoutUsageFlagsNVX {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                IndirectCommandsLayoutUsageFlagsNVX::UNORDERED_SEQUENCES.0,
-                "UNORDERED_SEQUENCES",
-            ),
-            (
-                IndirectCommandsLayoutUsageFlagsNVX::SPARSE_SEQUENCES.0,
-                "SPARSE_SEQUENCES",
-            ),
-            (
-                IndirectCommandsLayoutUsageFlagsNVX::EMPTY_EXECUTIONS.0,
-                "EMPTY_EXECUTIONS",
-            ),
-            (
-                IndirectCommandsLayoutUsageFlagsNVX::INDEXED_SEQUENCES.0,
-                "INDEXED_SEQUENCES",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for DeviceEventTypeEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::DISPLAY_HOTPLUG => Some("DISPLAY_HOTPLUG"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for DeviceGroupPresentModeFlagsKHR {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (DeviceGroupPresentModeFlagsKHR::LOCAL.0, "LOCAL"),
-            (DeviceGroupPresentModeFlagsKHR::REMOTE.0, "REMOTE"),
-            (DeviceGroupPresentModeFlagsKHR::SUM.0, "SUM"),
-            (
-                DeviceGroupPresentModeFlagsKHR::LOCAL_MULTI_DEVICE.0,
-                "LOCAL_MULTI_DEVICE",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-<<<<<<< HEAD
-impl fmt::Display for DebugReportFlagsEXT {
-=======
-impl fmt::Display for BufferCreateFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (BufferCreateFlags::SPARSE_BINDING.0, "SPARSE_BINDING"),
-            (BufferCreateFlags::SPARSE_RESIDENCY.0, "SPARSE_RESIDENCY"),
-            (BufferCreateFlags::SPARSE_ALIASED.0, "SPARSE_ALIASED"),
-            (BufferCreateFlags::PROTECTED.0, "PROTECTED"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for SamplerYcbcrRange {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::ITU_FULL => Some("ITU_FULL"),
-            Self::ITU_NARROW => Some("ITU_NARROW"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for GeometryTypeNV {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::TRIANGLES => Some("TRIANGLES"),
-            Self::AABBS => Some("AABBS"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for BuildAccelerationStructureFlagsNV {
->>>>>>> Implement extension chaining
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (DebugReportFlagsEXT::INFORMATION.0, "INFORMATION"),
-            (DebugReportFlagsEXT::WARNING.0, "WARNING"),
-            (
-                DebugReportFlagsEXT::PERFORMANCE_WARNING.0,
-                "PERFORMANCE_WARNING",
-            ),
-            (DebugReportFlagsEXT::ERROR.0, "ERROR"),
-            (DebugReportFlagsEXT::DEBUG.0, "DEBUG"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-<<<<<<< HEAD
-impl fmt::Display for ComponentSwizzle {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::IDENTITY => Some("IDENTITY"),
-            Self::ZERO => Some("ZERO"),
-            Self::ONE => Some("ONE"),
-            Self::R => Some("R"),
-            Self::G => Some("G"),
-            Self::B => Some("B"),
-            Self::A => Some("A"),
-=======
-impl fmt::Display for ConservativeRasterizationModeEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::DISABLED => Some("DISABLED"),
-            Self::OVERESTIMATE => Some("OVERESTIMATE"),
-            Self::UNDERESTIMATE => Some("UNDERESTIMATE"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for AttachmentLoadOp {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::LOAD => Some("LOAD"),
-            Self::CLEAR => Some("CLEAR"),
-            Self::DONT_CARE => Some("DONT_CARE"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for SubgroupFeatureFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (SubgroupFeatureFlags::BASIC.0, "BASIC"),
-            (SubgroupFeatureFlags::VOTE.0, "VOTE"),
-            (SubgroupFeatureFlags::ARITHMETIC.0, "ARITHMETIC"),
-            (SubgroupFeatureFlags::BALLOT.0, "BALLOT"),
-            (SubgroupFeatureFlags::SHUFFLE.0, "SHUFFLE"),
-            (SubgroupFeatureFlags::SHUFFLE_RELATIVE.0, "SHUFFLE_RELATIVE"),
-            (SubgroupFeatureFlags::CLUSTERED.0, "CLUSTERED"),
-            (SubgroupFeatureFlags::QUAD.0, "QUAD"),
-            (SubgroupFeatureFlags::PARTITIONED_NV.0, "PARTITIONED_NV"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for DisplayPlaneAlphaFlagsKHR {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (DisplayPlaneAlphaFlagsKHR::OPAQUE.0, "OPAQUE"),
-            (DisplayPlaneAlphaFlagsKHR::GLOBAL.0, "GLOBAL"),
-            (DisplayPlaneAlphaFlagsKHR::PER_PIXEL.0, "PER_PIXEL"),
-            (
-                DisplayPlaneAlphaFlagsKHR::PER_PIXEL_PREMULTIPLIED.0,
-                "PER_PIXEL_PREMULTIPLIED",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for DescriptorUpdateTemplateType {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::DESCRIPTOR_SET => Some("DESCRIPTOR_SET"),
->>>>>>> Implement extension chaining
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-<<<<<<< HEAD
-impl fmt::Display for PhysicalDeviceType {
-=======
-impl fmt::Display for DescriptorType {
->>>>>>> Implement extension chaining
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::OTHER => Some("OTHER"),
-            Self::INTEGRATED_GPU => Some("INTEGRATED_GPU"),
-            Self::DISCRETE_GPU => Some("DISCRETE_GPU"),
-            Self::VIRTUAL_GPU => Some("VIRTUAL_GPU"),
-            Self::CPU => Some("CPU"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-<<<<<<< HEAD
-impl fmt::Display for PipelineBindPoint {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::GRAPHICS => Some("GRAPHICS"),
-            Self::COMPUTE => Some("COMPUTE"),
-            Self::RAY_TRACING_NV => Some("RAY_TRACING_NV"),
-=======
-impl fmt::Display for ExternalFenceFeatureFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                ExternalFenceFeatureFlags::EXTERNAL_FENCE_FEATURE_EXPORTABLE.0,
-                "EXTERNAL_FENCE_FEATURE_EXPORTABLE",
-            ),
-            (
-                ExternalFenceFeatureFlags::EXTERNAL_FENCE_FEATURE_IMPORTABLE.0,
-                "EXTERNAL_FENCE_FEATURE_IMPORTABLE",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for VendorId {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::VIV => Some("VIV"),
-            Self::VSI => Some("VSI"),
-            Self::KAZAN => Some("KAZAN"),
->>>>>>> Implement extension chaining
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-<<<<<<< HEAD
-impl fmt::Display for FenceImportFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(FenceImportFlags::TEMPORARY.0, "TEMPORARY")];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for TimeDomainEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::DEVICE => Some("DEVICE"),
-            Self::CLOCK_MONOTONIC => Some("CLOCK_MONOTONIC"),
-            Self::CLOCK_MONOTONIC_RAW => Some("CLOCK_MONOTONIC_RAW"),
-            Self::QUERY_PERFORMANCE_COUNTER => Some("QUERY_PERFORMANCE_COUNTER"),
-=======
 impl fmt::Display for PipelineStageFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
@@ -59359,6 +60348,8 @@ impl fmt::Display for PipelineStageFlags {
             (PipelineStageFlags::HOST.0, "HOST"),
             (PipelineStageFlags::ALL_GRAPHICS.0, "ALL_GRAPHICS"),
             (PipelineStageFlags::ALL_COMMANDS.0, "ALL_COMMANDS"),
+            (PipelineStageFlags::RESERVED_27_KHR.0, "RESERVED_27_KHR"),
+            (PipelineStageFlags::RESERVED_26_KHR.0, "RESERVED_26_KHR"),
             (
                 PipelineStageFlags::TRANSFORM_FEEDBACK_EXT.0,
                 "TRANSFORM_FEEDBACK_EXT",
@@ -59385,33 +60376,32 @@ impl fmt::Display for PipelineStageFlags {
             ),
             (PipelineStageFlags::TASK_SHADER_NV.0, "TASK_SHADER_NV"),
             (PipelineStageFlags::MESH_SHADER_NV.0, "MESH_SHADER_NV"),
-            (PipelineStageFlags::RESERVED_23_EXT.0, "RESERVED_23_EXT"),
+            (
+                PipelineStageFlags::FRAGMENT_DENSITY_PROCESS_EXT.0,
+                "FRAGMENT_DENSITY_PROCESS_EXT",
+            ),
         ];
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for ImageLayout {
+impl fmt::Display for DynamicState {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::UNDEFINED => Some("UNDEFINED"),
-            Self::GENERAL => Some("GENERAL"),
-            Self::COLOR_ATTACHMENT_OPTIMAL => Some("COLOR_ATTACHMENT_OPTIMAL"),
-            Self::DEPTH_STENCIL_ATTACHMENT_OPTIMAL => Some("DEPTH_STENCIL_ATTACHMENT_OPTIMAL"),
-            Self::DEPTH_STENCIL_READ_ONLY_OPTIMAL => Some("DEPTH_STENCIL_READ_ONLY_OPTIMAL"),
-            Self::SHADER_READ_ONLY_OPTIMAL => Some("SHADER_READ_ONLY_OPTIMAL"),
-            Self::TRANSFER_SRC_OPTIMAL => Some("TRANSFER_SRC_OPTIMAL"),
-            Self::TRANSFER_DST_OPTIMAL => Some("TRANSFER_DST_OPTIMAL"),
-            Self::PREINITIALIZED => Some("PREINITIALIZED"),
-            Self::PRESENT_SRC_KHR => Some("PRESENT_SRC_KHR"),
-            Self::SHARED_PRESENT_KHR => Some("SHARED_PRESENT_KHR"),
-            Self::SHADING_RATE_OPTIMAL_NV => Some("SHADING_RATE_OPTIMAL_NV"),
-            Self::DEPTH_READ_ONLY_STENCIL_ATTACHMENT_OPTIMAL => {
-                Some("DEPTH_READ_ONLY_STENCIL_ATTACHMENT_OPTIMAL")
-            }
-            Self::DEPTH_ATTACHMENT_STENCIL_READ_ONLY_OPTIMAL => {
-                Some("DEPTH_ATTACHMENT_STENCIL_READ_ONLY_OPTIMAL")
-            }
->>>>>>> Implement extension chaining
+            Self::VIEWPORT => Some("VIEWPORT"),
+            Self::SCISSOR => Some("SCISSOR"),
+            Self::LINE_WIDTH => Some("LINE_WIDTH"),
+            Self::DEPTH_BIAS => Some("DEPTH_BIAS"),
+            Self::BLEND_CONSTANTS => Some("BLEND_CONSTANTS"),
+            Self::DEPTH_BOUNDS => Some("DEPTH_BOUNDS"),
+            Self::STENCIL_COMPARE_MASK => Some("STENCIL_COMPARE_MASK"),
+            Self::STENCIL_WRITE_MASK => Some("STENCIL_WRITE_MASK"),
+            Self::STENCIL_REFERENCE => Some("STENCIL_REFERENCE"),
+            Self::VIEWPORT_W_SCALING_NV => Some("VIEWPORT_W_SCALING_NV"),
+            Self::DISCARD_RECTANGLE_EXT => Some("DISCARD_RECTANGLE_EXT"),
+            Self::SAMPLE_LOCATIONS_EXT => Some("SAMPLE_LOCATIONS_EXT"),
+            Self::VIEWPORT_SHADING_RATE_PALETTE_NV => Some("VIEWPORT_SHADING_RATE_PALETTE_NV"),
+            Self::VIEWPORT_COARSE_SAMPLE_ORDER_NV => Some("VIEWPORT_COARSE_SAMPLE_ORDER_NV"),
+            Self::EXCLUSIVE_SCISSOR_NV => Some("EXCLUSIVE_SCISSOR_NV"),
             _ => None,
         };
         if let Some(x) = name {
@@ -59421,15 +60411,38 @@ impl fmt::Display for ImageLayout {
         }
     }
 }
-<<<<<<< HEAD
-impl fmt::Display for DescriptorBindingFlagsEXT {
+impl fmt::Display for ExternalSemaphoreHandleTypeFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
-=======
-impl fmt::Display for ValidationCacheHeaderVersionEXT {
+            (
+                ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD.0,
+                "EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD",
+            ),
+            (
+                ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32.0,
+                "EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32",
+            ),
+            (
+                ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT.0,
+                "EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT",
+            ),
+            (
+                ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE.0,
+                "EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE",
+            ),
+            (
+                ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD.0,
+                "EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD",
+            ),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for SharingMode {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::ONE => Some("ONE"),
+            Self::EXCLUSIVE => Some("EXCLUSIVE"),
+            Self::CONCURRENT => Some("CONCURRENT"),
             _ => None,
         };
         if let Some(x) = name {
@@ -59439,50 +60452,190 @@ impl fmt::Display for ValidationCacheHeaderVersionEXT {
         }
     }
 }
-impl fmt::Display for ExternalMemoryHandleTypeFlags {
+impl fmt::Display for ShadingRatePaletteEntryNV {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN : & [ ( Flags , & str ) ] = & [ ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32 . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_ANDROID_HARDWARE_BUFFER_ANDROID . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_ANDROID_HARDWARE_BUFFER_ANDROID" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_HOST_ALLOCATION . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_HOST_ALLOCATION" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_HOST_MAPPED_FOREIGN_MEMORY . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_HOST_MAPPED_FOREIGN_MEMORY" ) ] ;
-        display_flags(f, KNOWN, self.0)
+        let name = match *self {
+            Self::NO_INVOCATIONS => Some("NO_INVOCATIONS"),
+            Self::TYPE_16_INVOCATIONS_PER_PIXEL => Some("TYPE_16_INVOCATIONS_PER_PIXEL"),
+            Self::TYPE_8_INVOCATIONS_PER_PIXEL => Some("TYPE_8_INVOCATIONS_PER_PIXEL"),
+            Self::TYPE_4_INVOCATIONS_PER_PIXEL => Some("TYPE_4_INVOCATIONS_PER_PIXEL"),
+            Self::TYPE_2_INVOCATIONS_PER_PIXEL => Some("TYPE_2_INVOCATIONS_PER_PIXEL"),
+            Self::TYPE_1_INVOCATION_PER_PIXEL => Some("TYPE_1_INVOCATION_PER_PIXEL"),
+            Self::TYPE_1_INVOCATION_PER_2X1_PIXELS => Some("TYPE_1_INVOCATION_PER_2X1_PIXELS"),
+            Self::TYPE_1_INVOCATION_PER_1X2_PIXELS => Some("TYPE_1_INVOCATION_PER_1X2_PIXELS"),
+            Self::TYPE_1_INVOCATION_PER_2X2_PIXELS => Some("TYPE_1_INVOCATION_PER_2X2_PIXELS"),
+            Self::TYPE_1_INVOCATION_PER_4X2_PIXELS => Some("TYPE_1_INVOCATION_PER_4X2_PIXELS"),
+            Self::TYPE_1_INVOCATION_PER_2X4_PIXELS => Some("TYPE_1_INVOCATION_PER_2X4_PIXELS"),
+            Self::TYPE_1_INVOCATION_PER_4X4_PIXELS => Some("TYPE_1_INVOCATION_PER_4X4_PIXELS"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
     }
 }
-impl fmt::Display for ShaderStageFlags {
+impl fmt::Display for DisplayEventTypeEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::FIRST_PIXEL_OUT => Some("FIRST_PIXEL_OUT"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for SurfaceTransformFlagsKHR {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
-            (ShaderStageFlags::VERTEX.0, "VERTEX"),
+            (SurfaceTransformFlagsKHR::IDENTITY.0, "IDENTITY"),
+            (SurfaceTransformFlagsKHR::ROTATE_90.0, "ROTATE_90"),
+            (SurfaceTransformFlagsKHR::ROTATE_180.0, "ROTATE_180"),
+            (SurfaceTransformFlagsKHR::ROTATE_270.0, "ROTATE_270"),
             (
-                ShaderStageFlags::TESSELLATION_CONTROL.0,
-                "TESSELLATION_CONTROL",
+                SurfaceTransformFlagsKHR::HORIZONTAL_MIRROR.0,
+                "HORIZONTAL_MIRROR",
             ),
             (
-                ShaderStageFlags::TESSELLATION_EVALUATION.0,
-                "TESSELLATION_EVALUATION",
+                SurfaceTransformFlagsKHR::HORIZONTAL_MIRROR_ROTATE_90.0,
+                "HORIZONTAL_MIRROR_ROTATE_90",
             ),
-            (ShaderStageFlags::GEOMETRY.0, "GEOMETRY"),
-            (ShaderStageFlags::FRAGMENT.0, "FRAGMENT"),
-            (ShaderStageFlags::COMPUTE.0, "COMPUTE"),
-            (ShaderStageFlags::ALL_GRAPHICS.0, "ALL_GRAPHICS"),
-            (ShaderStageFlags::ALL.0, "ALL"),
-            (ShaderStageFlags::RAYGEN_NV.0, "RAYGEN_NV"),
-            (ShaderStageFlags::ANY_HIT_NV.0, "ANY_HIT_NV"),
-            (ShaderStageFlags::CLOSEST_HIT_NV.0, "CLOSEST_HIT_NV"),
-            (ShaderStageFlags::MISS_NV.0, "MISS_NV"),
-            (ShaderStageFlags::INTERSECTION_NV.0, "INTERSECTION_NV"),
-            (ShaderStageFlags::CALLABLE_NV.0, "CALLABLE_NV"),
-            (ShaderStageFlags::TASK_NV.0, "TASK_NV"),
-            (ShaderStageFlags::MESH_NV.0, "MESH_NV"),
+            (
+                SurfaceTransformFlagsKHR::HORIZONTAL_MIRROR_ROTATE_180.0,
+                "HORIZONTAL_MIRROR_ROTATE_180",
+            ),
+            (
+                SurfaceTransformFlagsKHR::HORIZONTAL_MIRROR_ROTATE_270.0,
+                "HORIZONTAL_MIRROR_ROTATE_270",
+            ),
+            (SurfaceTransformFlagsKHR::INHERIT.0, "INHERIT"),
         ];
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for SemaphoreImportFlags {
+impl fmt::Display for StencilOp {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(SemaphoreImportFlags::TEMPORARY.0, "TEMPORARY")];
+        let name = match *self {
+            Self::KEEP => Some("KEEP"),
+            Self::ZERO => Some("ZERO"),
+            Self::REPLACE => Some("REPLACE"),
+            Self::INCREMENT_AND_CLAMP => Some("INCREMENT_AND_CLAMP"),
+            Self::DECREMENT_AND_CLAMP => Some("DECREMENT_AND_CLAMP"),
+            Self::INVERT => Some("INVERT"),
+            Self::INCREMENT_AND_WRAP => Some("INCREMENT_AND_WRAP"),
+            Self::DECREMENT_AND_WRAP => Some("DECREMENT_AND_WRAP"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for SamplerCreateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (SamplerCreateFlags::SUBSAMPLED_EXT.0, "SUBSAMPLED_EXT"),
+            (
+                SamplerCreateFlags::SUBSAMPLED_COARSE_RECONSTRUCTION_EXT.0,
+                "SUBSAMPLED_COARSE_RECONSTRUCTION_EXT",
+            ),
+        ];
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for SurfaceCounterFlagsEXT {
+impl fmt::Display for VendorId {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(SurfaceCounterFlagsEXT::VBLANK.0, "VBLANK")];
+        let name = match *self {
+            Self::VIV => Some("VIV"),
+            Self::VSI => Some("VSI"),
+            Self::KAZAN => Some("KAZAN"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for CommandBufferLevel {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::PRIMARY => Some("PRIMARY"),
+            Self::SECONDARY => Some("SECONDARY"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for MemoryAllocateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(MemoryAllocateFlags::DEVICE_MASK.0, "DEVICE_MASK")];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for ConservativeRasterizationModeEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::DISABLED => Some("DISABLED"),
+            Self::OVERESTIMATE => Some("OVERESTIMATE"),
+            Self::UNDERESTIMATE => Some("UNDERESTIMATE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for DescriptorUpdateTemplateType {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::DESCRIPTOR_SET => Some("DESCRIPTOR_SET"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for CullModeFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (CullModeFlags::NONE.0, "NONE"),
+            (CullModeFlags::FRONT.0, "FRONT"),
+            (CullModeFlags::BACK.0, "BACK"),
+            (CullModeFlags::FRONT_AND_BACK.0, "FRONT_AND_BACK"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for SubgroupFeatureFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (SubgroupFeatureFlags::BASIC.0, "BASIC"),
+            (SubgroupFeatureFlags::VOTE.0, "VOTE"),
+            (SubgroupFeatureFlags::ARITHMETIC.0, "ARITHMETIC"),
+            (SubgroupFeatureFlags::BALLOT.0, "BALLOT"),
+            (SubgroupFeatureFlags::SHUFFLE.0, "SHUFFLE"),
+            (SubgroupFeatureFlags::SHUFFLE_RELATIVE.0, "SHUFFLE_RELATIVE"),
+            (SubgroupFeatureFlags::CLUSTERED.0, "CLUSTERED"),
+            (SubgroupFeatureFlags::QUAD.0, "QUAD"),
+            (SubgroupFeatureFlags::PARTITIONED_NV.0, "PARTITIONED_NV"),
+        ];
         display_flags(f, KNOWN, self.0)
     }
 }
@@ -59492,39 +60645,200 @@ impl fmt::Display for SparseMemoryBindFlags {
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for DescriptorBindingFlagsEXT {
+impl fmt::Display for ColorSpaceKHR {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::SRGB_NONLINEAR => Some("SRGB_NONLINEAR"),
+            Self::DISPLAY_P3_NONLINEAR_EXT => Some("DISPLAY_P3_NONLINEAR_EXT"),
+            Self::EXTENDED_SRGB_LINEAR_EXT => Some("EXTENDED_SRGB_LINEAR_EXT"),
+            Self::DCI_P3_LINEAR_EXT => Some("DCI_P3_LINEAR_EXT"),
+            Self::DCI_P3_NONLINEAR_EXT => Some("DCI_P3_NONLINEAR_EXT"),
+            Self::BT709_LINEAR_EXT => Some("BT709_LINEAR_EXT"),
+            Self::BT709_NONLINEAR_EXT => Some("BT709_NONLINEAR_EXT"),
+            Self::BT2020_LINEAR_EXT => Some("BT2020_LINEAR_EXT"),
+            Self::HDR10_ST2084_EXT => Some("HDR10_ST2084_EXT"),
+            Self::DOLBYVISION_EXT => Some("DOLBYVISION_EXT"),
+            Self::HDR10_HLG_EXT => Some("HDR10_HLG_EXT"),
+            Self::ADOBERGB_LINEAR_EXT => Some("ADOBERGB_LINEAR_EXT"),
+            Self::ADOBERGB_NONLINEAR_EXT => Some("ADOBERGB_NONLINEAR_EXT"),
+            Self::PASS_THROUGH_EXT => Some("PASS_THROUGH_EXT"),
+            Self::EXTENDED_SRGB_NONLINEAR_EXT => Some("EXTENDED_SRGB_NONLINEAR_EXT"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for QueryType {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::OCCLUSION => Some("OCCLUSION"),
+            Self::PIPELINE_STATISTICS => Some("PIPELINE_STATISTICS"),
+            Self::TIMESTAMP => Some("TIMESTAMP"),
+            Self::RESERVED_8 => Some("RESERVED_8"),
+            Self::RESERVED_4 => Some("RESERVED_4"),
+            Self::TRANSFORM_FEEDBACK_STREAM_EXT => Some("TRANSFORM_FEEDBACK_STREAM_EXT"),
+            Self::ACCELERATION_STRUCTURE_COMPACTED_SIZE_NV => {
+                Some("ACCELERATION_STRUCTURE_COMPACTED_SIZE_NV")
+            }
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for ExternalSemaphoreFeatureFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
->>>>>>> Implement extension chaining
             (
-                DescriptorBindingFlagsEXT::UPDATE_AFTER_BIND.0,
-                "UPDATE_AFTER_BIND",
+                ExternalSemaphoreFeatureFlags::EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE.0,
+                "EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE",
             ),
             (
-                DescriptorBindingFlagsEXT::UPDATE_UNUSED_WHILE_PENDING.0,
-                "UPDATE_UNUSED_WHILE_PENDING",
-            ),
-            (
-                DescriptorBindingFlagsEXT::PARTIALLY_BOUND.0,
-                "PARTIALLY_BOUND",
-            ),
-            (
-                DescriptorBindingFlagsEXT::VARIABLE_DESCRIPTOR_COUNT.0,
-                "VARIABLE_DESCRIPTOR_COUNT",
+                ExternalSemaphoreFeatureFlags::EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE.0,
+                "EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE",
             ),
         ];
         display_flags(f, KNOWN, self.0)
     }
 }
-<<<<<<< HEAD
-impl fmt::Display for PeerMemoryFeatureFlags {
+impl fmt::Display for ShaderInfoTypeAMD {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::STATISTICS => Some("STATISTICS"),
+            Self::BINARY => Some("BINARY"),
+            Self::DISASSEMBLY => Some("DISASSEMBLY"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for DeviceQueueCreateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(DeviceQueueCreateFlags::PROTECTED.0, "PROTECTED")];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for IndirectCommandsTokenTypeNVX {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::PIPELINE => Some("PIPELINE"),
+            Self::DESCRIPTOR_SET => Some("DESCRIPTOR_SET"),
+            Self::INDEX_BUFFER => Some("INDEX_BUFFER"),
+            Self::VERTEX_BUFFER => Some("VERTEX_BUFFER"),
+            Self::PUSH_CONSTANT => Some("PUSH_CONSTANT"),
+            Self::DRAW_INDEXED => Some("DRAW_INDEXED"),
+            Self::DRAW => Some("DRAW"),
+            Self::DISPATCH => Some("DISPATCH"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for CopyAccelerationStructureModeNV {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::CLONE => Some("CLONE"),
+            Self::COMPACT => Some("COMPACT"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for IndexType {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::UINT16 => Some("UINT16"),
+            Self::UINT32 => Some("UINT32"),
+            Self::NONE_NV => Some("NONE_NV"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for VertexInputRate {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::VERTEX => Some("VERTEX"),
+            Self::INSTANCE => Some("INSTANCE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for ComponentSwizzle {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::IDENTITY => Some("IDENTITY"),
+            Self::ZERO => Some("ZERO"),
+            Self::ONE => Some("ONE"),
+            Self::R => Some("R"),
+            Self::G => Some("G"),
+            Self::B => Some("B"),
+            Self::A => Some("A"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for DebugUtilsMessageTypeFlagsEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
-            (PeerMemoryFeatureFlags::COPY_SRC.0, "COPY_SRC"),
-            (PeerMemoryFeatureFlags::COPY_DST.0, "COPY_DST"),
-            (PeerMemoryFeatureFlags::GENERIC_SRC.0, "GENERIC_SRC"),
-            (PeerMemoryFeatureFlags::GENERIC_DST.0, "GENERIC_DST"),
-=======
+            (DebugUtilsMessageTypeFlagsEXT::GENERAL.0, "GENERAL"),
+            (DebugUtilsMessageTypeFlagsEXT::VALIDATION.0, "VALIDATION"),
+            (DebugUtilsMessageTypeFlagsEXT::PERFORMANCE.0, "PERFORMANCE"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for ImageAspectFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (ImageAspectFlags::COLOR.0, "COLOR"),
+            (ImageAspectFlags::DEPTH.0, "DEPTH"),
+            (ImageAspectFlags::STENCIL.0, "STENCIL"),
+            (ImageAspectFlags::METADATA.0, "METADATA"),
+            (ImageAspectFlags::MEMORY_PLANE_0_EXT.0, "MEMORY_PLANE_0_EXT"),
+            (ImageAspectFlags::MEMORY_PLANE_1_EXT.0, "MEMORY_PLANE_1_EXT"),
+            (ImageAspectFlags::MEMORY_PLANE_2_EXT.0, "MEMORY_PLANE_2_EXT"),
+            (ImageAspectFlags::MEMORY_PLANE_3_EXT.0, "MEMORY_PLANE_3_EXT"),
+            (ImageAspectFlags::PLANE_0.0, "PLANE_0"),
+            (ImageAspectFlags::PLANE_1.0, "PLANE_1"),
+            (ImageAspectFlags::PLANE_2.0, "PLANE_2"),
+        ];
+        display_flags(f, KNOWN, self.0)
+    }
+}
 impl fmt::Display for Format {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
@@ -59792,55 +61106,18 @@ impl fmt::Display for Format {
         }
     }
 }
-impl fmt::Display for SampleCountFlags {
+impl fmt::Display for FormatFeatureFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (SampleCountFlags::TYPE_1.0, "TYPE_1"),
-            (SampleCountFlags::TYPE_2.0, "TYPE_2"),
-            (SampleCountFlags::TYPE_4.0, "TYPE_4"),
-            (SampleCountFlags::TYPE_8.0, "TYPE_8"),
-            (SampleCountFlags::TYPE_16.0, "TYPE_16"),
-            (SampleCountFlags::TYPE_32.0, "TYPE_32"),
-            (SampleCountFlags::TYPE_64.0, "TYPE_64"),
->>>>>>> Implement extension chaining
-        ];
+        const KNOWN : & [ ( Flags , & str ) ] = & [ ( FormatFeatureFlags :: SAMPLED_IMAGE . 0 , "SAMPLED_IMAGE" ) , ( FormatFeatureFlags :: STORAGE_IMAGE . 0 , "STORAGE_IMAGE" ) , ( FormatFeatureFlags :: STORAGE_IMAGE_ATOMIC . 0 , "STORAGE_IMAGE_ATOMIC" ) , ( FormatFeatureFlags :: UNIFORM_TEXEL_BUFFER . 0 , "UNIFORM_TEXEL_BUFFER" ) , ( FormatFeatureFlags :: STORAGE_TEXEL_BUFFER . 0 , "STORAGE_TEXEL_BUFFER" ) , ( FormatFeatureFlags :: STORAGE_TEXEL_BUFFER_ATOMIC . 0 , "STORAGE_TEXEL_BUFFER_ATOMIC" ) , ( FormatFeatureFlags :: VERTEX_BUFFER . 0 , "VERTEX_BUFFER" ) , ( FormatFeatureFlags :: COLOR_ATTACHMENT . 0 , "COLOR_ATTACHMENT" ) , ( FormatFeatureFlags :: COLOR_ATTACHMENT_BLEND . 0 , "COLOR_ATTACHMENT_BLEND" ) , ( FormatFeatureFlags :: DEPTH_STENCIL_ATTACHMENT . 0 , "DEPTH_STENCIL_ATTACHMENT" ) , ( FormatFeatureFlags :: BLIT_SRC . 0 , "BLIT_SRC" ) , ( FormatFeatureFlags :: BLIT_DST . 0 , "BLIT_DST" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_FILTER_LINEAR . 0 , "SAMPLED_IMAGE_FILTER_LINEAR" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_FILTER_CUBIC_IMG . 0 , "SAMPLED_IMAGE_FILTER_CUBIC_IMG" ) , ( FormatFeatureFlags :: RESERVED_27_KHR . 0 , "RESERVED_27_KHR" ) , ( FormatFeatureFlags :: RESERVED_28_KHR . 0 , "RESERVED_28_KHR" ) , ( FormatFeatureFlags :: RESERVED_25_KHR . 0 , "RESERVED_25_KHR" ) , ( FormatFeatureFlags :: RESERVED_26_KHR . 0 , "RESERVED_26_KHR" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_FILTER_MINMAX_EXT . 0 , "SAMPLED_IMAGE_FILTER_MINMAX_EXT" ) , ( FormatFeatureFlags :: FRAGMENT_DENSITY_MAP_EXT . 0 , "FRAGMENT_DENSITY_MAP_EXT" ) , ( FormatFeatureFlags :: TRANSFER_SRC . 0 , "TRANSFER_SRC" ) , ( FormatFeatureFlags :: TRANSFER_DST . 0 , "TRANSFER_DST" ) , ( FormatFeatureFlags :: MIDPOINT_CHROMA_SAMPLES . 0 , "MIDPOINT_CHROMA_SAMPLES" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE" ) , ( FormatFeatureFlags :: DISJOINT . 0 , "DISJOINT" ) , ( FormatFeatureFlags :: COSITED_CHROMA_SAMPLES . 0 , "COSITED_CHROMA_SAMPLES" ) ] ;
         display_flags(f, KNOWN, self.0)
     }
 }
-<<<<<<< HEAD
-impl fmt::Display for ConditionalRenderingFlagsEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(ConditionalRenderingFlagsEXT::INVERTED.0, "INVERTED")];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for DebugUtilsMessageSeverityFlagsEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (DebugUtilsMessageSeverityFlagsEXT::VERBOSE.0, "VERBOSE"),
-            (DebugUtilsMessageSeverityFlagsEXT::INFO.0, "INFO"),
-            (DebugUtilsMessageSeverityFlagsEXT::WARNING.0, "WARNING"),
-            (DebugUtilsMessageSeverityFlagsEXT::ERROR.0, "ERROR"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for ExternalFenceFeatureFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                ExternalFenceFeatureFlags::EXTERNAL_FENCE_FEATURE_EXPORTABLE.0,
-                "EXTERNAL_FENCE_FEATURE_EXPORTABLE",
-            ),
-            (
-                ExternalFenceFeatureFlags::EXTERNAL_FENCE_FEATURE_IMPORTABLE.0,
-                "EXTERNAL_FENCE_FEATURE_IMPORTABLE",
-=======
-impl fmt::Display for RasterizationOrderAMD {
+impl fmt::Display for PipelineBindPoint {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::STRICT => Some("STRICT"),
-            Self::RELAXED => Some("RELAXED"),
+            Self::GRAPHICS => Some("GRAPHICS"),
+            Self::COMPUTE => Some("COMPUTE"),
+            Self::RAY_TRACING_NV => Some("RAY_TRACING_NV"),
             _ => None,
         };
         if let Some(x) = name {
@@ -59850,31 +61127,17 @@ impl fmt::Display for RasterizationOrderAMD {
         }
     }
 }
-impl fmt::Display for DescriptorPoolCreateFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                DescriptorPoolCreateFlags::FREE_DESCRIPTOR_SET.0,
-                "FREE_DESCRIPTOR_SET",
-            ),
-            (
-                DescriptorPoolCreateFlags::UPDATE_AFTER_BIND_EXT.0,
-                "UPDATE_AFTER_BIND_EXT",
->>>>>>> Implement extension chaining
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for PresentModeKHR {
+impl fmt::Display for ViewportCoordinateSwizzleNV {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::IMMEDIATE => Some("IMMEDIATE"),
-            Self::MAILBOX => Some("MAILBOX"),
-            Self::FIFO => Some("FIFO"),
-            Self::FIFO_RELAXED => Some("FIFO_RELAXED"),
-            Self::SHARED_DEMAND_REFRESH => Some("SHARED_DEMAND_REFRESH"),
-            Self::SHARED_CONTINUOUS_REFRESH => Some("SHARED_CONTINUOUS_REFRESH"),
+            Self::POSITIVE_X => Some("POSITIVE_X"),
+            Self::NEGATIVE_X => Some("NEGATIVE_X"),
+            Self::POSITIVE_Y => Some("POSITIVE_Y"),
+            Self::NEGATIVE_Y => Some("NEGATIVE_Y"),
+            Self::POSITIVE_Z => Some("POSITIVE_Z"),
+            Self::NEGATIVE_Z => Some("NEGATIVE_Z"),
+            Self::POSITIVE_W => Some("POSITIVE_W"),
+            Self::NEGATIVE_W => Some("NEGATIVE_W"),
             _ => None,
         };
         if let Some(x) = name {
@@ -59884,26 +61147,11 @@ impl fmt::Display for PresentModeKHR {
         }
     }
 }
-<<<<<<< HEAD
-impl fmt::Display for LogicOp {
+impl fmt::Display for AttachmentStoreOp {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::CLEAR => Some("CLEAR"),
-            Self::AND => Some("AND"),
-            Self::AND_REVERSE => Some("AND_REVERSE"),
-            Self::COPY => Some("COPY"),
-            Self::AND_INVERTED => Some("AND_INVERTED"),
-            Self::NO_OP => Some("NO_OP"),
-            Self::XOR => Some("XOR"),
-            Self::OR => Some("OR"),
-            Self::NOR => Some("NOR"),
-            Self::EQUIVALENT => Some("EQUIVALENT"),
-            Self::INVERT => Some("INVERT"),
-            Self::OR_REVERSE => Some("OR_REVERSE"),
-            Self::COPY_INVERTED => Some("COPY_INVERTED"),
-            Self::OR_INVERTED => Some("OR_INVERTED"),
-            Self::NAND => Some("NAND"),
-            Self::SET => Some("SET"),
+            Self::STORE => Some("STORE"),
+            Self::DONT_CARE => Some("DONT_CARE"),
             _ => None,
         };
         if let Some(x) = name {
@@ -59913,188 +61161,19 @@ impl fmt::Display for LogicOp {
         }
     }
 }
-impl fmt::Display for MemoryPropertyFlags {
+impl fmt::Display for CommandPoolCreateFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
-            (MemoryPropertyFlags::DEVICE_LOCAL.0, "DEVICE_LOCAL"),
-            (MemoryPropertyFlags::HOST_VISIBLE.0, "HOST_VISIBLE"),
-            (MemoryPropertyFlags::HOST_COHERENT.0, "HOST_COHERENT"),
-            (MemoryPropertyFlags::HOST_CACHED.0, "HOST_CACHED"),
-            (MemoryPropertyFlags::LAZILY_ALLOCATED.0, "LAZILY_ALLOCATED"),
-            (MemoryPropertyFlags::PROTECTED.0, "PROTECTED"),
+            (CommandPoolCreateFlags::TRANSIENT.0, "TRANSIENT"),
+            (
+                CommandPoolCreateFlags::RESET_COMMAND_BUFFER.0,
+                "RESET_COMMAND_BUFFER",
+            ),
+            (CommandPoolCreateFlags::PROTECTED.0, "PROTECTED"),
         ];
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for IndexType {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::UINT16 => Some("UINT16"),
-            Self::UINT32 => Some("UINT32"),
-            Self::NONE_NV => Some("NONE_NV"),
-=======
-impl fmt::Display for MemoryPropertyFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (MemoryPropertyFlags::DEVICE_LOCAL.0, "DEVICE_LOCAL"),
-            (MemoryPropertyFlags::HOST_VISIBLE.0, "HOST_VISIBLE"),
-            (MemoryPropertyFlags::HOST_COHERENT.0, "HOST_COHERENT"),
-            (MemoryPropertyFlags::HOST_CACHED.0, "HOST_CACHED"),
-            (MemoryPropertyFlags::LAZILY_ALLOCATED.0, "LAZILY_ALLOCATED"),
-            (MemoryPropertyFlags::PROTECTED.0, "PROTECTED"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for CullModeFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (CullModeFlags::NONE.0, "NONE"),
-            (CullModeFlags::FRONT.0, "FRONT"),
-            (CullModeFlags::BACK.0, "BACK"),
-            (CullModeFlags::FRONT_AND_BACK.0, "FRONT_AND_BACK"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for RenderPassCreateFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] =
-            &[(RenderPassCreateFlags::RESERVED_0_KHR.0, "RESERVED_0_KHR")];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for RayTracingShaderGroupTypeNV {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::GENERAL => Some("GENERAL"),
-            Self::TRIANGLES_HIT_GROUP => Some("TRIANGLES_HIT_GROUP"),
-            Self::PROCEDURAL_HIT_GROUP => Some("PROCEDURAL_HIT_GROUP"),
->>>>>>> Implement extension chaining
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-<<<<<<< HEAD
-impl fmt::Display for ValidationFeatureEnableEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::GPU_ASSISTED => Some("GPU_ASSISTED"),
-            Self::GPU_ASSISTED_RESERVE_BINDING_SLOT => Some("GPU_ASSISTED_RESERVE_BINDING_SLOT"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for ExternalMemoryFeatureFlagsNV {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                ExternalMemoryFeatureFlagsNV::EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_NV.0,
-                "EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_NV",
-            ),
-            (
-                ExternalMemoryFeatureFlagsNV::EXTERNAL_MEMORY_FEATURE_EXPORTABLE_NV.0,
-                "EXTERNAL_MEMORY_FEATURE_EXPORTABLE_NV",
-            ),
-            (
-                ExternalMemoryFeatureFlagsNV::EXTERNAL_MEMORY_FEATURE_IMPORTABLE_NV.0,
-                "EXTERNAL_MEMORY_FEATURE_IMPORTABLE_NV",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for BuildAccelerationStructureFlagsNV {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                BuildAccelerationStructureFlagsNV::ALLOW_UPDATE.0,
-                "ALLOW_UPDATE",
-            ),
-            (
-                BuildAccelerationStructureFlagsNV::ALLOW_COMPACTION.0,
-                "ALLOW_COMPACTION",
-            ),
-            (
-                BuildAccelerationStructureFlagsNV::PREFER_FAST_TRACE.0,
-                "PREFER_FAST_TRACE",
-            ),
-            (
-                BuildAccelerationStructureFlagsNV::PREFER_FAST_BUILD.0,
-                "PREFER_FAST_BUILD",
-            ),
-            (
-                BuildAccelerationStructureFlagsNV::LOW_MEMORY.0,
-                "LOW_MEMORY",
-            ),
-=======
-impl fmt::Display for ImageUsageFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (ImageUsageFlags::TRANSFER_SRC.0, "TRANSFER_SRC"),
-            (ImageUsageFlags::TRANSFER_DST.0, "TRANSFER_DST"),
-            (ImageUsageFlags::SAMPLED.0, "SAMPLED"),
-            (ImageUsageFlags::STORAGE.0, "STORAGE"),
-            (ImageUsageFlags::COLOR_ATTACHMENT.0, "COLOR_ATTACHMENT"),
-            (
-                ImageUsageFlags::DEPTH_STENCIL_ATTACHMENT.0,
-                "DEPTH_STENCIL_ATTACHMENT",
-            ),
-            (
-                ImageUsageFlags::TRANSIENT_ATTACHMENT.0,
-                "TRANSIENT_ATTACHMENT",
-            ),
-            (ImageUsageFlags::INPUT_ATTACHMENT.0, "INPUT_ATTACHMENT"),
-            (
-                ImageUsageFlags::SHADING_RATE_IMAGE_NV.0,
-                "SHADING_RATE_IMAGE_NV",
-            ),
-            (ImageUsageFlags::RESERVED_9_EXT.0, "RESERVED_9_EXT"),
->>>>>>> Implement extension chaining
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-<<<<<<< HEAD
-impl fmt::Display for PrimitiveTopology {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::POINT_LIST => Some("POINT_LIST"),
-            Self::LINE_LIST => Some("LINE_LIST"),
-            Self::LINE_STRIP => Some("LINE_STRIP"),
-            Self::TRIANGLE_LIST => Some("TRIANGLE_LIST"),
-            Self::TRIANGLE_STRIP => Some("TRIANGLE_STRIP"),
-            Self::TRIANGLE_FAN => Some("TRIANGLE_FAN"),
-            Self::LINE_LIST_WITH_ADJACENCY => Some("LINE_LIST_WITH_ADJACENCY"),
-            Self::LINE_STRIP_WITH_ADJACENCY => Some("LINE_STRIP_WITH_ADJACENCY"),
-            Self::TRIANGLE_LIST_WITH_ADJACENCY => Some("TRIANGLE_LIST_WITH_ADJACENCY"),
-            Self::TRIANGLE_STRIP_WITH_ADJACENCY => Some("TRIANGLE_STRIP_WITH_ADJACENCY"),
-            Self::PATCH_LIST => Some("PATCH_LIST"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for VertexInputRate {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::VERTEX => Some("VERTEX"),
-            Self::INSTANCE => Some("INSTANCE"),
-=======
 impl fmt::Display for TimeDomainEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
@@ -60102,7 +61181,6 @@ impl fmt::Display for TimeDomainEXT {
             Self::CLOCK_MONOTONIC => Some("CLOCK_MONOTONIC"),
             Self::CLOCK_MONOTONIC_RAW => Some("CLOCK_MONOTONIC_RAW"),
             Self::QUERY_PERFORMANCE_COUNTER => Some("QUERY_PERFORMANCE_COUNTER"),
->>>>>>> Implement extension chaining
             _ => None,
         };
         if let Some(x) = name {
@@ -60112,45 +61190,126 @@ impl fmt::Display for TimeDomainEXT {
         }
     }
 }
-<<<<<<< HEAD
-impl fmt::Display for IndirectCommandsLayoutUsageFlagsNVX {
+impl fmt::Display for DisplayPowerStateEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::OFF => Some("OFF"),
+            Self::SUSPEND => Some("SUSPEND"),
+            Self::ON => Some("ON"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for SwapchainCreateFlagsKHR {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (
-                IndirectCommandsLayoutUsageFlagsNVX::UNORDERED_SEQUENCES.0,
-                "UNORDERED_SEQUENCES",
+                SwapchainCreateFlagsKHR::SPLIT_INSTANCE_BIND_REGIONS.0,
+                "SPLIT_INSTANCE_BIND_REGIONS",
             ),
-            (
-                IndirectCommandsLayoutUsageFlagsNVX::SPARSE_SEQUENCES.0,
-                "SPARSE_SEQUENCES",
-            ),
-            (
-                IndirectCommandsLayoutUsageFlagsNVX::EMPTY_EXECUTIONS.0,
-                "EMPTY_EXECUTIONS",
-            ),
-            (
-                IndirectCommandsLayoutUsageFlagsNVX::INDEXED_SEQUENCES.0,
-                "INDEXED_SEQUENCES",
-            ),
+            (SwapchainCreateFlagsKHR::PROTECTED.0, "PROTECTED"),
+            (SwapchainCreateFlagsKHR::MUTABLE_FORMAT.0, "MUTABLE_FORMAT"),
         ];
         display_flags(f, KNOWN, self.0)
     }
 }
-=======
->>>>>>> Implement extension chaining
-impl fmt::Display for SparseImageFormatFlags {
+impl fmt::Display for CompareOp {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::NEVER => Some("NEVER"),
+            Self::LESS => Some("LESS"),
+            Self::EQUAL => Some("EQUAL"),
+            Self::LESS_OR_EQUAL => Some("LESS_OR_EQUAL"),
+            Self::GREATER => Some("GREATER"),
+            Self::NOT_EQUAL => Some("NOT_EQUAL"),
+            Self::GREATER_OR_EQUAL => Some("GREATER_OR_EQUAL"),
+            Self::ALWAYS => Some("ALWAYS"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for FrontFace {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::COUNTER_CLOCKWISE => Some("COUNTER_CLOCKWISE"),
+            Self::CLOCKWISE => Some("CLOCKWISE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for BlendFactor {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::ZERO => Some("ZERO"),
+            Self::ONE => Some("ONE"),
+            Self::SRC_COLOR => Some("SRC_COLOR"),
+            Self::ONE_MINUS_SRC_COLOR => Some("ONE_MINUS_SRC_COLOR"),
+            Self::DST_COLOR => Some("DST_COLOR"),
+            Self::ONE_MINUS_DST_COLOR => Some("ONE_MINUS_DST_COLOR"),
+            Self::SRC_ALPHA => Some("SRC_ALPHA"),
+            Self::ONE_MINUS_SRC_ALPHA => Some("ONE_MINUS_SRC_ALPHA"),
+            Self::DST_ALPHA => Some("DST_ALPHA"),
+            Self::ONE_MINUS_DST_ALPHA => Some("ONE_MINUS_DST_ALPHA"),
+            Self::CONSTANT_COLOR => Some("CONSTANT_COLOR"),
+            Self::ONE_MINUS_CONSTANT_COLOR => Some("ONE_MINUS_CONSTANT_COLOR"),
+            Self::CONSTANT_ALPHA => Some("CONSTANT_ALPHA"),
+            Self::ONE_MINUS_CONSTANT_ALPHA => Some("ONE_MINUS_CONSTANT_ALPHA"),
+            Self::SRC_ALPHA_SATURATE => Some("SRC_ALPHA_SATURATE"),
+            Self::SRC1_COLOR => Some("SRC1_COLOR"),
+            Self::ONE_MINUS_SRC1_COLOR => Some("ONE_MINUS_SRC1_COLOR"),
+            Self::SRC1_ALPHA => Some("SRC1_ALPHA"),
+            Self::ONE_MINUS_SRC1_ALPHA => Some("ONE_MINUS_SRC1_ALPHA"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for AttachmentLoadOp {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::LOAD => Some("LOAD"),
+            Self::CLEAR => Some("CLEAR"),
+            Self::DONT_CARE => Some("DONT_CARE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for QueryControlFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(QueryControlFlags::PRECISE.0, "PRECISE")];
+        display_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Display for DependencyFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
-            (SparseImageFormatFlags::SINGLE_MIPTAIL.0, "SINGLE_MIPTAIL"),
-            (
-                SparseImageFormatFlags::ALIGNED_MIP_SIZE.0,
-                "ALIGNED_MIP_SIZE",
-<<<<<<< HEAD
-            ),
-            (
-                SparseImageFormatFlags::NONSTANDARD_BLOCK_SIZE.0,
-                "NONSTANDARD_BLOCK_SIZE",
-            ),
+            (DependencyFlags::BY_REGION.0, "BY_REGION"),
+            (DependencyFlags::DEVICE_GROUP.0, "DEVICE_GROUP"),
+            (DependencyFlags::VIEW_LOCAL.0, "VIEW_LOCAL"),
         ];
         display_flags(f, KNOWN, self.0)
     }
@@ -60181,12 +61340,6 @@ impl fmt::Display for ImageCreateFlags {
             (
                 ImageCreateFlags::BLOCK_TEXEL_VIEW_COMPATIBLE.0,
                 "BLOCK_TEXEL_VIEW_COMPATIBLE",
-=======
-            ),
-            (
-                SparseImageFormatFlags::NONSTANDARD_BLOCK_SIZE.0,
-                "NONSTANDARD_BLOCK_SIZE",
->>>>>>> Implement extension chaining
             ),
             (ImageCreateFlags::EXTENDED_USAGE.0, "EXTENDED_USAGE"),
             (ImageCreateFlags::PROTECTED.0, "PROTECTED"),
@@ -60195,46 +61348,53 @@ impl fmt::Display for ImageCreateFlags {
         display_flags(f, KNOWN, self.0)
     }
 }
-<<<<<<< HEAD
-impl fmt::Display for SampleCountFlags {
+impl fmt::Display for ColorComponentFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
-            (SampleCountFlags::TYPE_1.0, "TYPE_1"),
-            (SampleCountFlags::TYPE_2.0, "TYPE_2"),
-            (SampleCountFlags::TYPE_4.0, "TYPE_4"),
-            (SampleCountFlags::TYPE_8.0, "TYPE_8"),
-            (SampleCountFlags::TYPE_16.0, "TYPE_16"),
-            (SampleCountFlags::TYPE_32.0, "TYPE_32"),
-            (SampleCountFlags::TYPE_64.0, "TYPE_64"),
+            (ColorComponentFlags::R.0, "R"),
+            (ColorComponentFlags::G.0, "G"),
+            (ColorComponentFlags::B.0, "B"),
+            (ColorComponentFlags::A.0, "A"),
         ];
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for QueryType {
+impl fmt::Display for RasterizationOrderAMD {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::OCCLUSION => Some("OCCLUSION"),
-            Self::PIPELINE_STATISTICS => Some("PIPELINE_STATISTICS"),
-            Self::TIMESTAMP => Some("TIMESTAMP"),
-            Self::RESERVED_8 => Some("RESERVED_8"),
-            Self::RESERVED_4 => Some("RESERVED_4"),
-            Self::TRANSFORM_FEEDBACK_STREAM_EXT => Some("TRANSFORM_FEEDBACK_STREAM_EXT"),
-            Self::ACCELERATION_STRUCTURE_COMPACTED_SIZE_NV => {
-                Some("ACCELERATION_STRUCTURE_COMPACTED_SIZE_NV")
+            Self::STRICT => Some("STRICT"),
+            Self::RELAXED => Some("RELAXED"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            write!(f, "{}", self.0)
+        }
+    }
+}
+impl fmt::Display for ImageLayout {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::UNDEFINED => Some("UNDEFINED"),
+            Self::GENERAL => Some("GENERAL"),
+            Self::COLOR_ATTACHMENT_OPTIMAL => Some("COLOR_ATTACHMENT_OPTIMAL"),
+            Self::DEPTH_STENCIL_ATTACHMENT_OPTIMAL => Some("DEPTH_STENCIL_ATTACHMENT_OPTIMAL"),
+            Self::DEPTH_STENCIL_READ_ONLY_OPTIMAL => Some("DEPTH_STENCIL_READ_ONLY_OPTIMAL"),
+            Self::SHADER_READ_ONLY_OPTIMAL => Some("SHADER_READ_ONLY_OPTIMAL"),
+            Self::TRANSFER_SRC_OPTIMAL => Some("TRANSFER_SRC_OPTIMAL"),
+            Self::TRANSFER_DST_OPTIMAL => Some("TRANSFER_DST_OPTIMAL"),
+            Self::PREINITIALIZED => Some("PREINITIALIZED"),
+            Self::PRESENT_SRC_KHR => Some("PRESENT_SRC_KHR"),
+            Self::SHARED_PRESENT_KHR => Some("SHARED_PRESENT_KHR"),
+            Self::SHADING_RATE_OPTIMAL_NV => Some("SHADING_RATE_OPTIMAL_NV"),
+            Self::FRAGMENT_DENSITY_MAP_OPTIMAL_EXT => Some("FRAGMENT_DENSITY_MAP_OPTIMAL_EXT"),
+            Self::DEPTH_READ_ONLY_STENCIL_ATTACHMENT_OPTIMAL => {
+                Some("DEPTH_READ_ONLY_STENCIL_ATTACHMENT_OPTIMAL")
             }
-=======
-impl fmt::Display for FenceImportFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(FenceImportFlags::TEMPORARY.0, "TEMPORARY")];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for ValidationCheckEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::ALL => Some("ALL"),
-            Self::SHADERS => Some("SHADERS"),
->>>>>>> Implement extension chaining
+            Self::DEPTH_ATTACHMENT_STENCIL_READ_ONLY_OPTIMAL => {
+                Some("DEPTH_ATTACHMENT_STENCIL_READ_ONLY_OPTIMAL")
+            }
             _ => None,
         };
         if let Some(x) = name {
@@ -60244,81 +61404,25 @@ impl fmt::Display for ValidationCheckEXT {
         }
     }
 }
-<<<<<<< HEAD
-impl fmt::Display for FormatFeatureFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN : & [ ( Flags , & str ) ] = & [ ( FormatFeatureFlags :: SAMPLED_IMAGE . 0 , "SAMPLED_IMAGE" ) , ( FormatFeatureFlags :: STORAGE_IMAGE . 0 , "STORAGE_IMAGE" ) , ( FormatFeatureFlags :: STORAGE_IMAGE_ATOMIC . 0 , "STORAGE_IMAGE_ATOMIC" ) , ( FormatFeatureFlags :: UNIFORM_TEXEL_BUFFER . 0 , "UNIFORM_TEXEL_BUFFER" ) , ( FormatFeatureFlags :: STORAGE_TEXEL_BUFFER . 0 , "STORAGE_TEXEL_BUFFER" ) , ( FormatFeatureFlags :: STORAGE_TEXEL_BUFFER_ATOMIC . 0 , "STORAGE_TEXEL_BUFFER_ATOMIC" ) , ( FormatFeatureFlags :: VERTEX_BUFFER . 0 , "VERTEX_BUFFER" ) , ( FormatFeatureFlags :: COLOR_ATTACHMENT . 0 , "COLOR_ATTACHMENT" ) , ( FormatFeatureFlags :: COLOR_ATTACHMENT_BLEND . 0 , "COLOR_ATTACHMENT_BLEND" ) , ( FormatFeatureFlags :: DEPTH_STENCIL_ATTACHMENT . 0 , "DEPTH_STENCIL_ATTACHMENT" ) , ( FormatFeatureFlags :: BLIT_SRC . 0 , "BLIT_SRC" ) , ( FormatFeatureFlags :: BLIT_DST . 0 , "BLIT_DST" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_FILTER_LINEAR . 0 , "SAMPLED_IMAGE_FILTER_LINEAR" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_FILTER_CUBIC_IMG . 0 , "SAMPLED_IMAGE_FILTER_CUBIC_IMG" ) , ( FormatFeatureFlags :: RESERVED_27_KHR . 0 , "RESERVED_27_KHR" ) , ( FormatFeatureFlags :: RESERVED_28_KHR . 0 , "RESERVED_28_KHR" ) , ( FormatFeatureFlags :: RESERVED_25_KHR . 0 , "RESERVED_25_KHR" ) , ( FormatFeatureFlags :: RESERVED_26_KHR . 0 , "RESERVED_26_KHR" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_FILTER_MINMAX_EXT . 0 , "SAMPLED_IMAGE_FILTER_MINMAX_EXT" ) , ( FormatFeatureFlags :: FRAGMENT_DENSITY_MAP_EXT . 0 , "FRAGMENT_DENSITY_MAP_EXT" ) , ( FormatFeatureFlags :: TRANSFER_SRC . 0 , "TRANSFER_SRC" ) , ( FormatFeatureFlags :: TRANSFER_DST . 0 , "TRANSFER_DST" ) , ( FormatFeatureFlags :: MIDPOINT_CHROMA_SAMPLES . 0 , "MIDPOINT_CHROMA_SAMPLES" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE" ) , ( FormatFeatureFlags :: DISJOINT . 0 , "DISJOINT" ) , ( FormatFeatureFlags :: COSITED_CHROMA_SAMPLES . 0 , "COSITED_CHROMA_SAMPLES" ) ] ;
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for ImageAspectFlags {
+impl fmt::Display for DeviceGroupPresentModeFlagsKHR {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
-            (ImageAspectFlags::COLOR.0, "COLOR"),
-            (ImageAspectFlags::DEPTH.0, "DEPTH"),
-            (ImageAspectFlags::STENCIL.0, "STENCIL"),
-            (ImageAspectFlags::METADATA.0, "METADATA"),
-            (ImageAspectFlags::MEMORY_PLANE_0_EXT.0, "MEMORY_PLANE_0_EXT"),
-            (ImageAspectFlags::MEMORY_PLANE_1_EXT.0, "MEMORY_PLANE_1_EXT"),
-            (ImageAspectFlags::MEMORY_PLANE_2_EXT.0, "MEMORY_PLANE_2_EXT"),
-            (ImageAspectFlags::MEMORY_PLANE_3_EXT.0, "MEMORY_PLANE_3_EXT"),
-            (ImageAspectFlags::PLANE_0.0, "PLANE_0"),
-            (ImageAspectFlags::PLANE_1.0, "PLANE_1"),
-            (ImageAspectFlags::PLANE_2.0, "PLANE_2"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for StencilFaceFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (StencilFaceFlags::FRONT.0, "FRONT"),
-            (StencilFaceFlags::BACK.0, "BACK"),
+            (DeviceGroupPresentModeFlagsKHR::LOCAL.0, "LOCAL"),
+            (DeviceGroupPresentModeFlagsKHR::REMOTE.0, "REMOTE"),
+            (DeviceGroupPresentModeFlagsKHR::SUM.0, "SUM"),
             (
-                StencilFaceFlags::STENCIL_FRONT_AND_BACK.0,
-                "STENCIL_FRONT_AND_BACK",
+                DeviceGroupPresentModeFlagsKHR::LOCAL_MULTI_DEVICE.0,
+                "LOCAL_MULTI_DEVICE",
             ),
         ];
         display_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for ExternalFenceHandleTypeFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD.0,
-                "EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD",
-            ),
-            (
-                ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32.0,
-                "EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32",
-            ),
-            (
-                ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT.0,
-                "EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT",
-            ),
-            (
-                ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD.0,
-                "EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for DeviceEventTypeEXT {
+impl fmt::Display for GeometryTypeNV {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::DISPLAY_HOTPLUG => Some("DISPLAY_HOTPLUG"),
-=======
-impl fmt::Display for SystemAllocationScope {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::COMMAND => Some("COMMAND"),
-            Self::OBJECT => Some("OBJECT"),
-            Self::CACHE => Some("CACHE"),
-            Self::DEVICE => Some("DEVICE"),
-            Self::INSTANCE => Some("INSTANCE"),
->>>>>>> Implement extension chaining
+            Self::TRIANGLES => Some("TRIANGLES"),
+            Self::AABBS => Some("AABBS"),
             _ => None,
         };
         if let Some(x) = name {
@@ -60328,17 +61432,12 @@ impl fmt::Display for SystemAllocationScope {
         }
     }
 }
-impl fmt::Display for ViewportCoordinateSwizzleNV {
+impl fmt::Display for Filter {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::POSITIVE_X => Some("POSITIVE_X"),
-            Self::NEGATIVE_X => Some("NEGATIVE_X"),
-            Self::POSITIVE_Y => Some("POSITIVE_Y"),
-            Self::NEGATIVE_Y => Some("NEGATIVE_Y"),
-            Self::POSITIVE_Z => Some("POSITIVE_Z"),
-            Self::NEGATIVE_Z => Some("NEGATIVE_Z"),
-            Self::POSITIVE_W => Some("POSITIVE_W"),
-            Self::NEGATIVE_W => Some("NEGATIVE_W"),
+            Self::NEAREST => Some("NEAREST"),
+            Self::LINEAR => Some("LINEAR"),
+            Self::CUBIC_IMG => Some("CUBIC_IMG"),
             _ => None,
         };
         if let Some(x) = name {
@@ -60346,297 +61445,6 @@ impl fmt::Display for ViewportCoordinateSwizzleNV {
         } else {
             write!(f, "{}", self.0)
         }
-    }
-}
-<<<<<<< HEAD
-impl fmt::Display for AttachmentLoadOp {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::LOAD => Some("LOAD"),
-            Self::CLEAR => Some("CLEAR"),
-            Self::DONT_CARE => Some("DONT_CARE"),
-=======
-impl fmt::Display for ImageType {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::TYPE_1D => Some("TYPE_1D"),
-            Self::TYPE_2D => Some("TYPE_2D"),
-            Self::TYPE_3D => Some("TYPE_3D"),
->>>>>>> Implement extension chaining
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-<<<<<<< HEAD
-impl fmt::Display for CommandPoolCreateFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (CommandPoolCreateFlags::TRANSIENT.0, "TRANSIENT"),
-            (
-                CommandPoolCreateFlags::RESET_COMMAND_BUFFER.0,
-                "RESET_COMMAND_BUFFER",
-            ),
-            (CommandPoolCreateFlags::PROTECTED.0, "PROTECTED"),
-=======
-impl fmt::Display for DebugUtilsMessageSeverityFlagsEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (DebugUtilsMessageSeverityFlagsEXT::VERBOSE.0, "VERBOSE"),
-            (DebugUtilsMessageSeverityFlagsEXT::INFO.0, "INFO"),
-            (DebugUtilsMessageSeverityFlagsEXT::WARNING.0, "WARNING"),
-            (DebugUtilsMessageSeverityFlagsEXT::ERROR.0, "ERROR"),
->>>>>>> Implement extension chaining
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-<<<<<<< HEAD
-impl fmt::Display for ValidationCheckEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::ALL => Some("ALL"),
-            Self::SHADERS => Some("SHADERS"),
-=======
-impl fmt::Display for IndirectCommandsTokenTypeNVX {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::PIPELINE => Some("PIPELINE"),
-            Self::DESCRIPTOR_SET => Some("DESCRIPTOR_SET"),
-            Self::INDEX_BUFFER => Some("INDEX_BUFFER"),
-            Self::VERTEX_BUFFER => Some("VERTEX_BUFFER"),
-            Self::PUSH_CONSTANT => Some("PUSH_CONSTANT"),
-            Self::DRAW_INDEXED => Some("DRAW_INDEXED"),
-            Self::DRAW => Some("DRAW"),
-            Self::DISPATCH => Some("DISPATCH"),
->>>>>>> Implement extension chaining
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-<<<<<<< HEAD
-impl fmt::Display for ExternalMemoryHandleTypeFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN : & [ ( Flags , & str ) ] = & [ ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32 . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_ANDROID_HARDWARE_BUFFER_ANDROID . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_ANDROID_HARDWARE_BUFFER_ANDROID" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_HOST_ALLOCATION . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_HOST_ALLOCATION" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_HOST_MAPPED_FOREIGN_MEMORY . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_HOST_MAPPED_FOREIGN_MEMORY" ) ] ;
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for DependencyFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (DependencyFlags::BY_REGION.0, "BY_REGION"),
-            (DependencyFlags::DEVICE_GROUP.0, "DEVICE_GROUP"),
-            (DependencyFlags::VIEW_LOCAL.0, "VIEW_LOCAL"),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for CommandPoolResetFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(
-            CommandPoolResetFlags::RELEASE_RESOURCES.0,
-            "RELEASE_RESOURCES",
-        )];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for QueryControlFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(QueryControlFlags::PRECISE.0, "PRECISE")];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for ImageViewType {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::TYPE_1D => Some("TYPE_1D"),
-            Self::TYPE_2D => Some("TYPE_2D"),
-            Self::TYPE_3D => Some("TYPE_3D"),
-            Self::CUBE => Some("CUBE"),
-            Self::TYPE_1D_ARRAY => Some("TYPE_1D_ARRAY"),
-            Self::TYPE_2D_ARRAY => Some("TYPE_2D_ARRAY"),
-            Self::CUBE_ARRAY => Some("CUBE_ARRAY"),
-=======
-impl fmt::Display for QueryPipelineStatisticFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                QueryPipelineStatisticFlags::INPUT_ASSEMBLY_VERTICES.0,
-                "INPUT_ASSEMBLY_VERTICES",
-            ),
-            (
-                QueryPipelineStatisticFlags::INPUT_ASSEMBLY_PRIMITIVES.0,
-                "INPUT_ASSEMBLY_PRIMITIVES",
-            ),
-            (
-                QueryPipelineStatisticFlags::VERTEX_SHADER_INVOCATIONS.0,
-                "VERTEX_SHADER_INVOCATIONS",
-            ),
-            (
-                QueryPipelineStatisticFlags::GEOMETRY_SHADER_INVOCATIONS.0,
-                "GEOMETRY_SHADER_INVOCATIONS",
-            ),
-            (
-                QueryPipelineStatisticFlags::GEOMETRY_SHADER_PRIMITIVES.0,
-                "GEOMETRY_SHADER_PRIMITIVES",
-            ),
-            (
-                QueryPipelineStatisticFlags::CLIPPING_INVOCATIONS.0,
-                "CLIPPING_INVOCATIONS",
-            ),
-            (
-                QueryPipelineStatisticFlags::CLIPPING_PRIMITIVES.0,
-                "CLIPPING_PRIMITIVES",
-            ),
-            (
-                QueryPipelineStatisticFlags::FRAGMENT_SHADER_INVOCATIONS.0,
-                "FRAGMENT_SHADER_INVOCATIONS",
-            ),
-            (
-                QueryPipelineStatisticFlags::TESSELLATION_CONTROL_SHADER_PATCHES.0,
-                "TESSELLATION_CONTROL_SHADER_PATCHES",
-            ),
-            (
-                QueryPipelineStatisticFlags::TESSELLATION_EVALUATION_SHADER_INVOCATIONS.0,
-                "TESSELLATION_EVALUATION_SHADER_INVOCATIONS",
-            ),
-            (
-                QueryPipelineStatisticFlags::COMPUTE_SHADER_INVOCATIONS.0,
-                "COMPUTE_SHADER_INVOCATIONS",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for QueueGlobalPriorityEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::LOW => Some("LOW"),
-            Self::MEDIUM => Some("MEDIUM"),
-            Self::HIGH => Some("HIGH"),
-            Self::REALTIME => Some("REALTIME"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for SubpassContents {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::INLINE => Some("INLINE"),
-            Self::SECONDARY_COMMAND_BUFFERS => Some("SECONDARY_COMMAND_BUFFERS"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for CommandPoolResetFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(
-            CommandPoolResetFlags::RELEASE_RESOURCES.0,
-            "RELEASE_RESOURCES",
-        )];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for PointClippingBehavior {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::ALL_CLIP_PLANES => Some("ALL_CLIP_PLANES"),
-            Self::USER_CLIP_PLANES_ONLY => Some("USER_CLIP_PLANES_ONLY"),
->>>>>>> Implement extension chaining
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-impl fmt::Display for SamplerReductionModeEXT {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match *self {
-            Self::WEIGHTED_AVERAGE => Some("WEIGHTED_AVERAGE"),
-            Self::MIN => Some("MIN"),
-            Self::MAX => Some("MAX"),
-            _ => None,
-        };
-        if let Some(x) = name {
-            f.write_str(x)
-        } else {
-            write!(f, "{}", self.0)
-        }
-    }
-}
-<<<<<<< HEAD
-impl fmt::Display for SubpassDescriptionFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                SubpassDescriptionFlags::PER_VIEW_ATTRIBUTES_NVX.0,
-                "PER_VIEW_ATTRIBUTES_NVX",
-            ),
-            (
-                SubpassDescriptionFlags::PER_VIEW_POSITION_X_ONLY_NVX.0,
-                "PER_VIEW_POSITION_X_ONLY_NVX",
-            ),
-        ];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for ExternalMemoryHandleTypeFlagsNV {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (
-                ExternalMemoryHandleTypeFlagsNV::EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_NV.0,
-                "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_NV",
-            ),
-            (
-                ExternalMemoryHandleTypeFlagsNV::EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_NV.0,
-                "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_NV",
-            ),
-            (
-                ExternalMemoryHandleTypeFlagsNV::EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_NV.0,
-                "EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_NV",
-            ),
-            (
-                ExternalMemoryHandleTypeFlagsNV::EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_NV.0,
-                "EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_NV",
-            ),
-=======
-impl fmt::Display for AttachmentDescriptionFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(AttachmentDescriptionFlags::MAY_ALIAS.0, "MAY_ALIAS")];
-        display_flags(f, KNOWN, self.0)
-    }
-}
-impl fmt::Display for DependencyFlags {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (DependencyFlags::BY_REGION.0, "BY_REGION"),
-            (DependencyFlags::DEVICE_GROUP.0, "DEVICE_GROUP"),
-            (DependencyFlags::VIEW_LOCAL.0, "VIEW_LOCAL"),
->>>>>>> Implement extension chaining
-        ];
-        display_flags(f, KNOWN, self.0)
     }
 }
 pub type DescriptorUpdateTemplateCreateFlagsKHR = DescriptorUpdateTemplateCreateFlags;
