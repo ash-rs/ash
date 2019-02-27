@@ -1595,7 +1595,7 @@ pub fn derive_setters(
     let next_function = if has_next && next_extends.is_none() {
         quote! {
             /// Prepend
-            pub fn push_next<T: #extends_name>(mut self, next: &mut T) -> #name_builder<'a> {
+            pub fn push_next<T: #extends_name>(mut self, next: &'a mut T) -> #name_builder<'a> {
                 unsafe{
                     let next_ptr = next.as_ptr_mut();
                     (*next_ptr).p_next = self.inner.p_next as _;
