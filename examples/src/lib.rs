@@ -410,8 +410,7 @@ impl ExampleBase {
                 .variable_pointers(true)
                 .build();
             let mut corner = vk::PhysicalDeviceCornerSampledImageFeaturesNV::builder()
-                .corner_sampled_image(true)
-                .build();
+                .corner_sampled_image(true);
             let mut device_create_info = vk::DeviceCreateInfo::builder()
                 .push_next(&mut corner)
                 .push_next(&mut variable_pointers)

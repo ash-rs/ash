@@ -1591,14 +1591,13 @@ pub fn derive_setters(
         name_to_tokens(&format!("Extends{}", name_to_tokens(&extends)))
     });
 
-
     // We only implement a next methods for root create infos
     let next_function = if has_next && next_extends.is_none() {
         quote! {
             /// Prepend
-            pub fn push_next<T: #extends_name>(mut self, next: &'a mut T) -> #name_builder<'a> {
+            pub fn push_next<T: #extends_name>(mut self, next: &mut T) -> #name_builder<'a> {
                 unsafe{
-                    let next_ptr: *mut BaseOutStructure = ::std::mem::transmute(next);
+                    let next_ptr = next.as_ptr_mut();
                     (*next_ptr).p_next = self.inner.p_next as _;
                     self.inner.p_next = next_ptr as _;
                 }
@@ -1613,7 +1612,9 @@ pub fn derive_setters(
     // implement
     let next_trait = if has_next && _struct.extends.is_none() {
         quote! {
-            pub unsafe trait #extends_name {}
+            pub unsafe trait #extends_name {
+                unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+            }
         }
     } else {
         quote! {}
@@ -1622,7 +1623,16 @@ pub fn derive_setters(
     // If the struct extends something we need to implement the root create info trait.
     let impl_extend_trait = if let Some(next_extends) = next_extends {
         quote! {
-            unsafe impl #next_extends for #name {}
+            unsafe impl #next_extends for #name_builder<'_> {
+                unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure{
+                    ::std::mem::transmute(&mut self.inner)
+                }
+            }
+            unsafe impl #next_extends for #name {
+                unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure{
+                    ::std::mem::transmute(self)
+                }
+            }
         }
     } else {
         quote! {}
