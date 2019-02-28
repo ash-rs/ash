@@ -208,8 +208,14 @@ pub struct PhysicalDeviceGpaPropertiesAmdBuilder<'a> {
     inner: PhysicalDeviceGpaPropertiesAmd,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceGpaPropertiesAmd {}
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceGpaPropertiesAmd {}
+pub unsafe trait ExtendsPhysicalDeviceGpaPropertiesAmd {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceGpaPropertiesAmd {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceGpaPropertiesAmdBuilder<'a> {
     type Target = PhysicalDeviceGpaPropertiesAmd;
     fn deref(&self) -> &Self::Target {
@@ -648,8 +654,14 @@ pub struct PhysicalDeviceWaveLimitPropertiesAmdBuilder<'a> {
     inner: PhysicalDeviceWaveLimitPropertiesAmd,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceWaveLimitPropertiesAmd {}
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceWaveLimitPropertiesAmd {}
+pub unsafe trait ExtendsPhysicalDeviceWaveLimitPropertiesAmd {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceWaveLimitPropertiesAmd {
+    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
+        ::std::mem::transmute(self)
+    }
+}
 impl<'a> ::std::ops::Deref for PhysicalDeviceWaveLimitPropertiesAmdBuilder<'a> {
     type Target = PhysicalDeviceWaveLimitPropertiesAmd;
     fn deref(&self) -> &Self::Target {
@@ -657,11 +669,18 @@ impl<'a> ::std::ops::Deref for PhysicalDeviceWaveLimitPropertiesAmdBuilder<'a> {
     }
 }
 impl<'a> PhysicalDeviceWaveLimitPropertiesAmdBuilder<'a> {
-    pub fn next<T>(mut self, next: &'a mut T) -> PhysicalDeviceWaveLimitPropertiesAmdBuilder<'a>
+    pub fn push_next<T>(
+        mut self,
+        next: &'a mut T,
+    ) -> PhysicalDeviceWaveLimitPropertiesAmdBuilder<'a>
     where
         T: ExtendsPhysicalDeviceWaveLimitPropertiesAmd,
     {
-        self.inner.p_next = next as *mut T as *mut c_void;
+        unsafe {
+            let next_ptr = next.as_ptr_mut();
+            (*next_ptr).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     pub fn build(self) -> PhysicalDeviceWaveLimitPropertiesAmd {
