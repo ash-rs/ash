@@ -1583,16 +1583,20 @@ pub fn derive_setters(
 
     let extends_name = name_to_tokens(&format!("Extends{}", name));
 
-    let next_extends = _struct.extends.as_ref().map(|extends| {
-        let extends = extends
-            .split(',')
-            .find(|extend| root_create_info_names.contains(&extend.to_string()))
-            .expect("Should have a root create info");
-        name_to_tokens(&format!("Extends{}", name_to_tokens(&extends)))
-    });
+    let root_extends: Vec<Ident> = _struct
+        .extends
+        .as_ref()
+        .map(|extends| {
+            extends
+                .split(',')
+                .filter(|extend| root_create_info_names.contains(&extend.to_string()))
+                .map(|extends| name_to_tokens(&format!("Extends{}", name_to_tokens(&extends))))
+                .collect()
+        })
+        .unwrap_or(vec![]);
 
     // We only implement a next methods for root create infos
-    let next_function = if has_next && next_extends.is_none() {
+    let next_function = if has_next && root_extends.is_empty() {
         quote! {
             /// Prepends the given extension struct between the root and the first pointer. This
             /// method only exists on create infos that can be passed to a function directly. Only
@@ -1624,16 +1628,14 @@ pub fn derive_setters(
     };
 
     // If the struct extends something we need to implement the root create info trait.
-    let impl_extend_trait = if let Some(next_extends) = next_extends {
+    let impl_extend_trait = root_extends.iter().map(|extends| {
         quote! {
-            unsafe impl #next_extends for #name_builder<'_> {
+            unsafe impl #extends for #name_builder<'_> {
             }
-            unsafe impl #next_extends for #name {
+            unsafe impl #extends for #name {
             }
         }
-    } else {
-        quote! {}
-    };
+    });
 
     let q = quote! {
         impl #name {
@@ -1651,7 +1653,7 @@ pub fn derive_setters(
             marker: ::std::marker::PhantomData<&'a ()>,
         }
 
-        #impl_extend_trait
+        #(#impl_extend_trait)*
         #next_trait
 
 
