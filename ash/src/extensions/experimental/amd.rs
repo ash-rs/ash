@@ -209,12 +209,8 @@ pub struct PhysicalDeviceGpaPropertiesAmdBuilder<'a> {
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsPhysicalDeviceGpaPropertiesAmd {
-    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceGpaPropertiesAmd {
-    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
-        ::std::mem::transmute(self)
-    }
 }
 impl<'a> ::std::ops::Deref for PhysicalDeviceGpaPropertiesAmdBuilder<'a> {
     type Target = PhysicalDeviceGpaPropertiesAmd;
@@ -655,12 +651,8 @@ pub struct PhysicalDeviceWaveLimitPropertiesAmdBuilder<'a> {
     marker: ::std::marker::PhantomData<&'a ()>,
 }
 pub unsafe trait ExtendsPhysicalDeviceWaveLimitPropertiesAmd {
-    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
 }
 unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceWaveLimitPropertiesAmd {
-    unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure {
-        ::std::mem::transmute(self)
-    }
 }
 impl<'a> ::std::ops::Deref for PhysicalDeviceWaveLimitPropertiesAmdBuilder<'a> {
     type Target = PhysicalDeviceWaveLimitPropertiesAmd;
@@ -677,7 +669,7 @@ impl<'a> PhysicalDeviceWaveLimitPropertiesAmdBuilder<'a> {
         T: ExtendsPhysicalDeviceWaveLimitPropertiesAmd,
     {
         unsafe {
-            let next_ptr = next.as_ptr_mut();
+            let next_ptr = next as *mut _ as *mut BaseOutStructure;
             (*next_ptr).p_next = self.inner.p_next as _;
             self.inner.p_next = next_ptr as _;
         }

@@ -1601,7 +1601,7 @@ pub fn derive_setters(
             /// chain will look like `A -> D -> B -> C`.
             pub fn push_next<T: #extends_name>(mut self, next: &'a mut T) -> #name_builder<'a> {
                 unsafe{
-                    let next_ptr = next.as_ptr_mut();
+                    let next_ptr = next as *mut T as *mut BaseOutStructure;
                     (*next_ptr).p_next = self.inner.p_next as _;
                     self.inner.p_next = next_ptr as _;
                 }
@@ -1617,7 +1617,6 @@ pub fn derive_setters(
     let next_trait = if has_next && _struct.extends.is_none() {
         quote! {
             pub unsafe trait #extends_name {
-                unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure;
             }
         }
     } else {
@@ -1628,14 +1627,8 @@ pub fn derive_setters(
     let impl_extend_trait = if let Some(next_extends) = next_extends {
         quote! {
             unsafe impl #next_extends for #name_builder<'_> {
-                unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure{
-                    ::std::mem::transmute(&mut self.inner)
-                }
             }
             unsafe impl #next_extends for #name {
-                unsafe fn as_ptr_mut(&mut self) -> *mut BaseOutStructure{
-                    ::std::mem::transmute(self)
-                }
             }
         }
     } else {
@@ -1652,6 +1645,7 @@ pub fn derive_setters(
             }
         }
 
+        #[repr(transparent)]
         pub struct #name_builder<'a> {
             inner: #name,
             marker: ::std::marker::PhantomData<&'a ()>,
