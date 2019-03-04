@@ -208,10 +208,8 @@ pub struct PhysicalDeviceGpaPropertiesAmdBuilder<'a> {
     inner: PhysicalDeviceGpaPropertiesAmd,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceGpaPropertiesAmd {
-}
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceGpaPropertiesAmd {
-}
+pub unsafe trait ExtendsPhysicalDeviceGpaPropertiesAmd {}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceGpaPropertiesAmd {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceGpaPropertiesAmdBuilder<'a> {
     type Target = PhysicalDeviceGpaPropertiesAmd;
     fn deref(&self) -> &Self::Target {
@@ -650,10 +648,8 @@ pub struct PhysicalDeviceWaveLimitPropertiesAmdBuilder<'a> {
     inner: PhysicalDeviceWaveLimitPropertiesAmd,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
-pub unsafe trait ExtendsPhysicalDeviceWaveLimitPropertiesAmd {
-}
-unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceWaveLimitPropertiesAmd {
-}
+pub unsafe trait ExtendsPhysicalDeviceWaveLimitPropertiesAmd {}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceWaveLimitPropertiesAmd {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceWaveLimitPropertiesAmdBuilder<'a> {
     type Target = PhysicalDeviceWaveLimitPropertiesAmd;
     fn deref(&self) -> &Self::Target {
