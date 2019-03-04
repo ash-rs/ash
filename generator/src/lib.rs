@@ -1626,7 +1626,7 @@ pub fn derive_setters(
 
     let extends_name = name_to_tokens(&format!("Extends{}", name));
 
-    let root_extends: Vec<Ident> = _struct
+    let root_extensions: Vec<Ident> = _struct
         .extends
         .as_ref()
         .map(|extends| {
@@ -1639,7 +1639,7 @@ pub fn derive_setters(
         .unwrap_or(vec![]);
 
     // We only implement a next methods for root create infos
-    let next_function = if has_next && root_extends.is_empty() {
+    let next_function = if has_next && root_extensions.is_empty() {
         quote! {
             /// Prepends the given extension struct between the root and the first pointer. This
             /// method only exists on create infos that can be passed to a function directly. Only
@@ -1671,7 +1671,7 @@ pub fn derive_setters(
     };
 
     // If the struct extends something we need to implement the root create info trait.
-    let impl_extend_trait = root_extends.iter().map(|extends| {
+    let impl_extend_trait = root_extensions.iter().map(|extends| {
         quote! {
             unsafe impl #extends for #name_builder<'_> {
             }
