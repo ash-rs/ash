@@ -406,25 +406,12 @@ impl ExampleBase {
                 .queue_priorities(&priorities)
                 .build()];
 
-            let mut variable_pointers = vk::PhysicalDeviceVariablePointerFeatures::builder()
-                .variable_pointers(true)
-                .build();
-            let mut corner = vk::PhysicalDeviceCornerSampledImageFeaturesNV::builder()
-                .corner_sampled_image(true);
             let mut device_create_info = vk::DeviceCreateInfo::builder()
-                .push_next(&mut corner)
-                .push_next(&mut variable_pointers)
                 .queue_create_infos(&queue_info)
                 .enabled_extension_names(&device_extension_names_raw)
                 .enabled_features(&features)
                 .build();
 
-            for ptr in vk::ptr_chain_iter(&mut device_create_info) {
-                println!("{:?}", ptr);
-            }
-            println!("--");
-            println!("{:?}", &corner as *const _);
-            println!("{:?}", &variable_pointers as *const _);
             let device: Device = instance
                 .create_device(pdevice, &device_create_info, None)
                 .unwrap();

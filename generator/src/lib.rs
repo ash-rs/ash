@@ -85,6 +85,49 @@ named!(cfloat<&str, f32>,
     terminated!(nom::float_s, char!('f'))
 );
 
+pub fn define_test() -> Tokens {
+    quote! {
+        #[cfg(test)]
+        mod tests {
+            use vk;
+            #[test]
+            fn test_ptr_chains() {
+                unsafe fn ptr_chain_iter<T>(
+                    ptr: &mut T,
+                ) -> impl Iterator<Item = *mut vk::BaseOutStructure> {
+                    use std::ptr::null_mut;
+                    let ptr: *mut vk::BaseOutStructure = ptr as *mut T as _;
+                    let ptr: *mut vk::BaseOutStructure = (*ptr).p_next;
+                    (0..).scan(ptr, |p_ptr, _| {
+                        if *p_ptr == null_mut() {
+                            return None;
+                        }
+                        let n_ptr = (**p_ptr).p_next as *mut vk::BaseOutStructure;
+                        let old = *p_ptr;
+                        *p_ptr = n_ptr;
+                        Some(old)
+                    })
+                }
+                let mut variable_pointers = vk::PhysicalDeviceVariablePointerFeatures::builder();
+                let mut corner =
+                    vk::PhysicalDeviceCornerSampledImageFeaturesNV::builder();
+                let chain = vec![
+                    &variable_pointers as *const _ as usize,
+                    &corner as *const _ as usize,
+                ];
+                let mut device_create_info = vk::DeviceCreateInfo::builder()
+                    .push_next(&mut corner)
+                    .push_next(&mut variable_pointers);
+                let chain2: Vec<usize> = unsafe {
+                    ptr_chain_iter(&mut device_create_info)
+                        .map(|ptr| ptr as usize)
+                        .collect()
+                };
+                assert_eq!(chain, chain2);
+            }
+        }
+    }
+}
 pub fn define_handle_macro() -> Tokens {
     quote! {
         #[macro_export]
@@ -2194,25 +2237,10 @@ pub fn write_source_code(path: &Path) {
     let define_handle_macro = define_handle_macro();
     let version_macros = vk_version_macros();
     let platform_specific_types = platform_specific_types();
+    let define_test = define_test();
     let source_code = quote! {
         use std::fmt;
         use std::os::raw::*;
-        /// `T` has to be a valid xxx_create_info struct. Addtionally all the pointer chains in
-        /// this iterator are mutable. Make sure that all the objects in this pointer chain have an
-        /// active `&mut` borrow if you want to update those objects.
-        pub unsafe fn ptr_chain_iter<T>(ptr: &mut T) -> impl Iterator<Item = *mut BaseOutStructure> {
-            use std::ptr::null_mut;
-            let ptr: *mut BaseOutStructure = ::std::mem::transmute(ptr);
-            (0..).scan(ptr, |p_ptr, _|{
-                if *p_ptr == null_mut() {
-                    return None;
-                }
-                let n_ptr = (**p_ptr).p_next as *mut BaseOutStructure;
-                let old = *p_ptr;
-                *p_ptr = n_ptr;
-                Some(old)
-            })
-        }
 
         pub trait Handle {
             const TYPE: ObjectType;
@@ -2234,6 +2262,7 @@ pub fn write_source_code(path: &Path) {
         #feature_extensions_code
         #const_displays
         #(#aliases)*
+        #define_test
     };
     write!(&mut file, "{}", source_code).expect("Unable to write to file");
 }
