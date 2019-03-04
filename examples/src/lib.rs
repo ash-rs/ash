@@ -406,11 +406,10 @@ impl ExampleBase {
                 .queue_priorities(&priorities)
                 .build()];
 
-            let mut device_create_info = vk::DeviceCreateInfo::builder()
+            let device_create_info = vk::DeviceCreateInfo::builder()
                 .queue_create_infos(&queue_info)
                 .enabled_extension_names(&device_extension_names_raw)
-                .enabled_features(&features)
-                .build();
+                .enabled_features(&features);
 
             let device: Device = instance
                 .create_device(pdevice, &device_create_info, None)
