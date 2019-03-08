@@ -663,7 +663,7 @@ impl FieldExt for vkxml::Field {
                 let size = constant_name(size);
                 let size = Term::intern(&size);
                 Some(quote! {
-                    [#ty; #size]
+                    &[#ty; #size]
                 })
             }
             _ => None,

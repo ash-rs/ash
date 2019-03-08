@@ -1132,7 +1132,7 @@ pub trait DeviceV1_0 {
     unsafe fn cmd_set_blend_constants(
         &self,
         command_buffer: vk::CommandBuffer,
-        blend_constants: [f32; 4],
+        blend_constants: &[f32; 4],
     ) {
         self.fp_v1_0()
             .cmd_set_blend_constants(command_buffer, blend_constants);
