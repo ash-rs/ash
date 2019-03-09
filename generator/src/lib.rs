@@ -92,22 +92,6 @@ pub fn define_test() -> Tokens {
             use vk;
             #[test]
             fn test_ptr_chains() {
-                unsafe fn ptr_chain_iter<T>(
-                    ptr: &mut T,
-                ) -> impl Iterator<Item = *mut vk::BaseOutStructure> {
-                    use std::ptr::null_mut;
-                    let ptr: *mut vk::BaseOutStructure = ptr as *mut T as _;
-                    let ptr: *mut vk::BaseOutStructure = (*ptr).p_next;
-                    (0..).scan(ptr, |p_ptr, _| {
-                        if *p_ptr == null_mut() {
-                            return None;
-                        }
-                        let n_ptr = (**p_ptr).p_next as *mut vk::BaseOutStructure;
-                        let old = *p_ptr;
-                        *p_ptr = n_ptr;
-                        Some(old)
-                    })
-                }
                 let mut variable_pointers = vk::PhysicalDeviceVariablePointerFeatures::builder();
                 let mut corner =
                     vk::PhysicalDeviceCornerSampledImageFeaturesNV::builder();
@@ -119,7 +103,7 @@ pub fn define_test() -> Tokens {
                     .push_next(&mut corner)
                     .push_next(&mut variable_pointers);
                 let chain2: Vec<usize> = unsafe {
-                    ptr_chain_iter(&mut device_create_info)
+                    vk::ptr_chain_iter(&mut device_create_info).skip(1)
                         .map(|ptr| ptr as usize)
                         .collect()
                 };
@@ -1649,7 +1633,17 @@ pub fn derive_setters(
             pub fn push_next<T: #extends_name>(mut self, next: &'a mut T) -> #name_builder<'a> {
                 unsafe{
                     let next_ptr = next as *mut T as *mut BaseOutStructure;
-                    (*next_ptr).p_next = self.inner.p_next as _;
+                    // `next` here can contain a pointer chain. This means that we must correctly
+                    // attach he head to the root and the tail to the rest of the chain
+                    // For example:
+                    //
+                    // next = A -> B
+                    // Before: `Root -> C -> D -> E`
+                    // After: `Root -> A -> B -> C -> D -> E`
+                    //                 ^^^^^^
+                    //                 next chain
+                    let last_next = ptr_chain_iter(next).last().unwrap();
+                    (*last_next).p_next = self.inner.p_next as _;
                     self.inner.p_next = next_ptr as _;
                 }
                 self
@@ -1867,11 +1861,9 @@ pub fn generate_definition(
 ) -> Option<Tokens> {
     match *definition {
         vkxml::DefinitionsElement::Typedef(ref typedef) => Some(generate_typedef(typedef)),
-        vkxml::DefinitionsElement::Struct(ref _struct) => Some(generate_struct(
-            _struct,
-            root_structs,
-            union_types,
-        )),
+        vkxml::DefinitionsElement::Struct(ref _struct) => {
+            Some(generate_struct(_struct, root_structs, union_types))
+        }
         vkxml::DefinitionsElement::Bitmask(ref mask) => generate_bitmask(mask, bitflags_cache),
         vkxml::DefinitionsElement::Handle(ref handle) => generate_handle(handle),
         vkxml::DefinitionsElement::FuncPtr(ref fp) => Some(generate_funcptr(fp)),
@@ -2212,14 +2204,7 @@ pub fn write_source_code(path: &Path) {
     let root_names = root_struct_names(&definitions);
     let definition_code: Vec<_> = definitions
         .into_iter()
-        .filter_map(|def| {
-            generate_definition(
-                def,
-                &union_types,
-                &root_names,
-                &mut bitflags_cache,
-            )
-        })
+        .filter_map(|def| generate_definition(def, &union_types, &root_names, &mut bitflags_cache))
         .collect();
 
     let feature_code: Vec<_> = features
@@ -2241,6 +2226,23 @@ pub fn write_source_code(path: &Path) {
     let source_code = quote! {
         use std::fmt;
         use std::os::raw::*;
+        // Iterates through the pointer chain. Includes the item that is passed into the function.
+        // Stops at the last `BaseOutStructure` that has a null `p_next` field.
+        pub(crate) unsafe fn ptr_chain_iter<T>(
+            ptr: &mut T,
+        ) -> impl Iterator<Item = *mut BaseOutStructure> {
+            use std::ptr::null_mut;
+            let ptr: *mut BaseOutStructure = ptr as *mut T as _;
+            (0..).scan(ptr, |p_ptr, _| {
+                if *p_ptr == null_mut() {
+                    return None;
+                }
+                let n_ptr = (**p_ptr).p_next as *mut BaseOutStructure;
+                let old = *p_ptr;
+                *p_ptr = n_ptr;
+                Some(old)
+            })
+        }
 
         pub trait Handle {
             const TYPE: ObjectType;
