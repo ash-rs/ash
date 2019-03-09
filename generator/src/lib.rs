@@ -85,33 +85,6 @@ named!(cfloat<&str, f32>,
     terminated!(nom::float_s, char!('f'))
 );
 
-pub fn define_test() -> Tokens {
-    quote! {
-        #[cfg(test)]
-        mod tests {
-            use vk;
-            #[test]
-            fn test_ptr_chains() {
-                let mut variable_pointers = vk::PhysicalDeviceVariablePointerFeatures::builder();
-                let mut corner =
-                    vk::PhysicalDeviceCornerSampledImageFeaturesNV::builder();
-                let chain = vec![
-                    &variable_pointers as *const _ as usize,
-                    &corner as *const _ as usize,
-                ];
-                let mut device_create_info = vk::DeviceCreateInfo::builder()
-                    .push_next(&mut corner)
-                    .push_next(&mut variable_pointers);
-                let chain2: Vec<usize> = unsafe {
-                    vk::ptr_chain_iter(&mut device_create_info).skip(1)
-                        .map(|ptr| ptr as usize)
-                        .collect()
-                };
-                assert_eq!(chain, chain2);
-            }
-        }
-    }
-}
 pub fn define_handle_macro() -> Tokens {
     quote! {
         #[macro_export]
@@ -2222,13 +2195,12 @@ pub fn write_source_code(path: &Path) {
     let define_handle_macro = define_handle_macro();
     let version_macros = vk_version_macros();
     let platform_specific_types = platform_specific_types();
-    let define_test = define_test();
     let source_code = quote! {
         use std::fmt;
         use std::os::raw::*;
-        // Iterates through the pointer chain. Includes the item that is passed into the function.
-        // Stops at the last `BaseOutStructure` that has a null `p_next` field.
-        pub(crate) unsafe fn ptr_chain_iter<T>(
+        /// Iterates through the pointer chain. Includes the item that is passed into the function.
+        /// Stops at the last `BaseOutStructure` that has a null `p_next` field.
+        pub unsafe fn ptr_chain_iter<T>(
             ptr: &mut T,
         ) -> impl Iterator<Item = *mut BaseOutStructure> {
             use std::ptr::null_mut;
@@ -2264,7 +2236,6 @@ pub fn write_source_code(path: &Path) {
         #feature_extensions_code
         #const_displays
         #(#aliases)*
-        #define_test
     };
     write!(&mut file, "{}", source_code).expect("Unable to write to file");
 }
