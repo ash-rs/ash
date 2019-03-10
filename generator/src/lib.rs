@@ -2200,7 +2200,7 @@ pub fn write_source_code(path: &Path) {
         use std::os::raw::*;
         /// Iterates through the pointer chain. Includes the item that is passed into the function.
         /// Stops at the last `BaseOutStructure` that has a null `p_next` field.
-        pub unsafe fn ptr_chain_iter<T>(
+        pub(crate) unsafe fn ptr_chain_iter<T>(
             ptr: &mut T,
         ) -> impl Iterator<Item = *mut BaseOutStructure> {
             use std::ptr::null_mut;
