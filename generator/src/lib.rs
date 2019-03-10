@@ -1378,7 +1378,10 @@ pub fn derive_debug(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> Opt
     Some(q)
 }
 
-pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
+pub fn derive_setters(
+    _struct: &vkxml::Struct,
+    root_struct_names: &HashSet<String>,
+) -> Option<Tokens> {
     if &_struct.name == "VkBaseInStructure" || &_struct.name == "VkBaseOutStructure" {
         return None;
     }
@@ -1578,49 +1581,71 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
         })
     });
 
-    let mut nexts = Vec::new();
     let extends_name = name_to_tokens(&format!("Extends{}", name));
-    if let Some(extends) = &_struct.extends {
-        for target in extends.split(',') {
-            let target = match target {
-                // https://github.com/KhronosGroup/Vulkan-Docs/pull/870
-                "VkPhysicalDeviceProperties" => "VkPhysicalDeviceProperties2",
-                x => x,
-            };
-            let target_ident = name_to_tokens(&format!("Extends{}", name_to_tokens(target)));
-            nexts.push(quote! {
-                unsafe impl #target_ident for #name {}
-            });
-        }
-    }
 
-    let next_function = if has_next {
-        if is_next_const {
-            quote! {
-                pub fn next<T>(mut self, next: &'a T) -> #name_builder<'a> where T: #extends_name {
-                    self.inner.p_next = next as *const T as *const c_void;
-                    self
-                }
-            }
-        } else {
-            quote! {
-                pub fn next<T>(mut self, next: &'a mut T) -> #name_builder<'a> where T: #extends_name {
-                    self.inner.p_next = next as *mut T as *mut c_void;
-                    self
-                }
-            }
-        }
-    } else {
-        quote! {}
-    };
+    let root_structs: Vec<Ident> = _struct
+        .extends
+        .as_ref()
+        .map(|extends| {
+            extends
+                .split(',')
+                .filter(|extend| root_struct_names.contains(&extend.to_string()))
+                .map(|extends| name_to_tokens(&format!("Extends{}", name_to_tokens(&extends))))
+                .collect()
+        })
+        .unwrap_or(vec![]);
 
-    let next_trait = if has_next {
+    // We only implement a next methods for root structs with a `pnext` field.
+    let next_function = if has_next && root_structs.is_empty() {
         quote! {
-            pub unsafe trait #extends_name {}
+            /// Prepends the given extension struct between the root and the first pointer. This
+            /// method only exists on structs that can be passed to a function directly. Only
+            /// valid extension structs can be pushed into the chain.
+            /// If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the
+            /// chain will look like `A -> D -> B -> C`.
+            pub fn push_next<T: #extends_name>(mut self, next: &'a mut T) -> #name_builder<'a> {
+                unsafe{
+                    let next_ptr = next as *mut T as *mut BaseOutStructure;
+                    // `next` here can contain a pointer chain. This means that we must correctly
+                    // attach he head to the root and the tail to the rest of the chain
+                    // For example:
+                    //
+                    // next = A -> B
+                    // Before: `Root -> C -> D -> E`
+                    // After: `Root -> A -> B -> C -> D -> E`
+                    //                 ^^^^^^
+                    //                 next chain
+                    let last_next = ptr_chain_iter(next).last().unwrap();
+                    (*last_next).p_next = self.inner.p_next as _;
+                    self.inner.p_next = next_ptr as _;
+                }
+                self
+            }
         }
     } else {
         quote! {}
     };
+
+    // Root structs come with their own trait that structs that extends this struct will
+    // implement
+    let next_trait = if has_next && _struct.extends.is_none() {
+        quote! {
+            pub unsafe trait #extends_name {
+            }
+        }
+    } else {
+        quote! {}
+    };
+
+    // If the struct extends something we need to implement the trait.
+    let impl_extend_trait = root_structs.iter().map(|extends| {
+        quote! {
+            unsafe impl #extends for #name_builder<'_> {
+            }
+            unsafe impl #extends for #name {
+            }
+        }
+    });
 
     let q = quote! {
         impl #name {
@@ -1632,20 +1657,27 @@ pub fn derive_setters(_struct: &vkxml::Struct) -> Option<Tokens> {
             }
         }
 
+        #[repr(transparent)]
         pub struct #name_builder<'a> {
             inner: #name,
             marker: ::std::marker::PhantomData<&'a ()>,
         }
 
+        #(#impl_extend_trait)*
         #next_trait
 
-        #(#nexts)*
 
         impl<'a> ::std::ops::Deref for #name_builder<'a> {
             type Target = #name;
 
             fn deref(&self) -> &Self::Target {
                 &self.inner
+            }
+        }
+
+        impl<'a> ::std::ops::DerefMut for #name_builder<'a> {
+            fn deref_mut(&mut self) -> &mut Self::Target {
+                &mut self.inner
             }
         }
 
@@ -1673,7 +1705,11 @@ pub fn manual_derives(_struct: &vkxml::Struct) -> Tokens {
         _ => quote! {},
     }
 }
-pub fn generate_struct(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> Tokens {
+pub fn generate_struct(
+    _struct: &vkxml::Struct,
+    root_struct_names: &HashSet<String>,
+    union_types: &HashSet<&str>,
+) -> Tokens {
     let name = name_to_tokens(&_struct.name);
     let members = _struct.elements.iter().filter_map(|elem| match *elem {
         vkxml::StructElement::Member(ref field) => Some(field),
@@ -1688,7 +1724,7 @@ pub fn generate_struct(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> 
 
     let debug_tokens = derive_debug(_struct, union_types);
     let default_tokens = derive_default(_struct);
-    let setter_tokens = derive_setters(_struct);
+    let setter_tokens = derive_setters(_struct, root_struct_names);
     let manual_derive_tokens = manual_derives(_struct);
     let dbg_str = if debug_tokens.is_none() {
         quote!(Debug,)
@@ -1774,15 +1810,32 @@ fn generate_union(union: &vkxml::Union) -> Tokens {
         }
     }
 }
+pub fn root_struct_names(definitions: &[&vkxml::DefinitionsElement]) -> HashSet<String> {
+    definitions
+        .iter()
+        .filter_map(|definition| match *definition {
+            vkxml::DefinitionsElement::Struct(ref _struct) => {
+                let is_root_struct = _struct.extends.is_none();
+                if is_root_struct {
+                    Some(_struct.name.clone())
+                } else {
+                    None
+                }
+            }
+            _ => None,
+        })
+        .collect()
+}
 pub fn generate_definition(
     definition: &vkxml::DefinitionsElement,
     union_types: &HashSet<&str>,
+    root_structs: &HashSet<String>,
     bitflags_cache: &mut HashSet<Ident>,
 ) -> Option<Tokens> {
     match *definition {
         vkxml::DefinitionsElement::Typedef(ref typedef) => Some(generate_typedef(typedef)),
         vkxml::DefinitionsElement::Struct(ref _struct) => {
-            Some(generate_struct(_struct, union_types))
+            Some(generate_struct(_struct, root_structs, union_types))
         }
         vkxml::DefinitionsElement::Bitmask(ref mask) => generate_bitmask(mask, bitflags_cache),
         vkxml::DefinitionsElement::Handle(ref handle) => generate_handle(handle),
@@ -2121,9 +2174,10 @@ pub fn write_source_code(path: &Path) {
         })
         .collect::<HashSet<&str>>();
 
+    let root_names = root_struct_names(&definitions);
     let definition_code: Vec<_> = definitions
         .into_iter()
-        .filter_map(|def| generate_definition(def, &union_types, &mut bitflags_cache))
+        .filter_map(|def| generate_definition(def, &union_types, &root_names, &mut bitflags_cache))
         .collect();
 
     let feature_code: Vec<_> = features
@@ -2144,6 +2198,23 @@ pub fn write_source_code(path: &Path) {
     let source_code = quote! {
         use std::fmt;
         use std::os::raw::*;
+        /// Iterates through the pointer chain. Includes the item that is passed into the function.
+        /// Stops at the last `BaseOutStructure` that has a null `p_next` field.
+        pub(crate) unsafe fn ptr_chain_iter<T>(
+            ptr: &mut T,
+        ) -> impl Iterator<Item = *mut BaseOutStructure> {
+            use std::ptr::null_mut;
+            let ptr: *mut BaseOutStructure = ptr as *mut T as _;
+            (0..).scan(ptr, |p_ptr, _| {
+                if *p_ptr == null_mut() {
+                    return None;
+                }
+                let n_ptr = (**p_ptr).p_next as *mut BaseOutStructure;
+                let old = *p_ptr;
+                *p_ptr = n_ptr;
+                Some(old)
+            })
+        }
 
         pub trait Handle {
             const TYPE: ObjectType;

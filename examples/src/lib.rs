@@ -3,14 +3,13 @@ extern crate ash;
 #[cfg(target_os = "windows")]
 extern crate winapi;
 
-extern crate winit;
-
 #[cfg(target_os = "macos")]
 extern crate cocoa;
 #[cfg(target_os = "macos")]
 extern crate metal_rs as metal;
 #[cfg(target_os = "macos")]
 extern crate objc;
+extern crate winit;
 #[cfg(target_os = "macos")]
 use cocoa::appkit::{NSView, NSWindow};
 #[cfg(target_os = "macos")]
@@ -341,7 +340,7 @@ impl ExampleBase {
                 .application_version(0)
                 .engine_name(&app_name)
                 .engine_version(0)
-                .api_version(vk_make_version!(1, 0, 36));
+                .api_version(vk_make_version!(1, 0, 0));
 
             let create_info = vk::InstanceCreateInfo::builder()
                 .application_info(&appinfo)
@@ -415,6 +414,7 @@ impl ExampleBase {
             let device: Device = instance
                 .create_device(pdevice, &device_create_info, None)
                 .unwrap();
+
             let present_queue = device.get_device_queue(queue_family_index as u32, 0);
 
             let surface_formats = surface_loader
