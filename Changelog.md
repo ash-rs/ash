@@ -1,3 +1,11 @@
+# 0.28.0
+* Fixed a build issue on ARM.
+* *Breaking* Arrays are now passed by reference.
+* Builders are now marked as `#[transparent]`.
+* *Breaking*  Renamed `.next(..)` to `push_next`. `push_next` is only available on structs that are passed directly. Addtionally `push_next` only accepts structs that can be inserted into the pointer chain. Read the readme for more information.
+* New *experimental* extensions. Those do not follow the semver rules and can be removed at any time.
+* Added `AmdGpaInterface` extension.
+
 # 0.27.0/1
 
 * Extensions are now namespaced. `ash::extensions::khr::Swapchain`
