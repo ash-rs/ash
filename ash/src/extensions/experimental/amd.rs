@@ -665,8 +665,9 @@ impl<'a> PhysicalDeviceWaveLimitPropertiesAmdBuilder<'a> {
         T: ExtendsPhysicalDeviceWaveLimitPropertiesAmd,
     {
         unsafe {
-            let next_ptr = next as *mut _ as *mut BaseOutStructure;
-            (*next_ptr).p_next = self.inner.p_next as _;
+            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.inner.p_next as _;
             self.inner.p_next = next_ptr as _;
         }
         self
