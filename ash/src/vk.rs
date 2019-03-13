@@ -8011,8 +8011,8 @@ pub struct PhysicalDeviceProperties {
     pub vendor_id: u32,
     pub device_id: u32,
     pub device_type: PhysicalDeviceType,
-    pub device_name: &[c_char; MAX_PHYSICAL_DEVICE_NAME_SIZE],
-    pub pipeline_cache_uuid: &[u8; UUID_SIZE],
+    pub device_name: [c_char; MAX_PHYSICAL_DEVICE_NAME_SIZE],
+    pub pipeline_cache_uuid: [u8; UUID_SIZE],
     pub limits: PhysicalDeviceLimits,
     pub sparse_properties: PhysicalDeviceSparseProperties,
 }
@@ -8098,14 +8098,14 @@ impl<'a> PhysicalDevicePropertiesBuilder<'a> {
     }
     pub fn device_name(
         mut self,
-        device_name: &[c_char; MAX_PHYSICAL_DEVICE_NAME_SIZE],
+        device_name: [c_char; MAX_PHYSICAL_DEVICE_NAME_SIZE],
     ) -> PhysicalDevicePropertiesBuilder<'a> {
         self.inner.device_name = device_name;
         self
     }
     pub fn pipeline_cache_uuid(
         mut self,
-        pipeline_cache_uuid: &[u8; UUID_SIZE],
+        pipeline_cache_uuid: [u8; UUID_SIZE],
     ) -> PhysicalDevicePropertiesBuilder<'a> {
         self.inner.pipeline_cache_uuid = pipeline_cache_uuid;
         self
@@ -8128,7 +8128,7 @@ impl<'a> PhysicalDevicePropertiesBuilder<'a> {
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct ExtensionProperties {
-    pub extension_name: &[c_char; MAX_EXTENSION_NAME_SIZE],
+    pub extension_name: [c_char; MAX_EXTENSION_NAME_SIZE],
     pub spec_version: u32,
 }
 impl fmt::Debug for ExtensionProperties {
@@ -8176,7 +8176,7 @@ impl<'a> ::std::ops::DerefMut for ExtensionPropertiesBuilder<'a> {
 impl<'a> ExtensionPropertiesBuilder<'a> {
     pub fn extension_name(
         mut self,
-        extension_name: &[c_char; MAX_EXTENSION_NAME_SIZE],
+        extension_name: [c_char; MAX_EXTENSION_NAME_SIZE],
     ) -> ExtensionPropertiesBuilder<'a> {
         self.inner.extension_name = extension_name;
         self
@@ -8192,10 +8192,10 @@ impl<'a> ExtensionPropertiesBuilder<'a> {
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct LayerProperties {
-    pub layer_name: &[c_char; MAX_EXTENSION_NAME_SIZE],
+    pub layer_name: [c_char; MAX_EXTENSION_NAME_SIZE],
     pub spec_version: u32,
     pub implementation_version: u32,
-    pub description: &[c_char; MAX_DESCRIPTION_SIZE],
+    pub description: [c_char; MAX_DESCRIPTION_SIZE],
 }
 impl fmt::Debug for LayerProperties {
     fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
@@ -8248,7 +8248,7 @@ impl<'a> ::std::ops::DerefMut for LayerPropertiesBuilder<'a> {
 impl<'a> LayerPropertiesBuilder<'a> {
     pub fn layer_name(
         mut self,
-        layer_name: &[c_char; MAX_EXTENSION_NAME_SIZE],
+        layer_name: [c_char; MAX_EXTENSION_NAME_SIZE],
     ) -> LayerPropertiesBuilder<'a> {
         self.inner.layer_name = layer_name;
         self
@@ -8266,7 +8266,7 @@ impl<'a> LayerPropertiesBuilder<'a> {
     }
     pub fn description(
         mut self,
-        description: &[c_char; MAX_DESCRIPTION_SIZE],
+        description: [c_char; MAX_DESCRIPTION_SIZE],
     ) -> LayerPropertiesBuilder<'a> {
         self.inner.description = description;
         self
@@ -8843,9 +8843,9 @@ impl<'a> QueueFamilyPropertiesBuilder<'a> {
 #[derive(Copy, Clone, Debug)]
 pub struct PhysicalDeviceMemoryProperties {
     pub memory_type_count: u32,
-    pub memory_types: &[MemoryType; MAX_MEMORY_TYPES],
+    pub memory_types: [MemoryType; MAX_MEMORY_TYPES],
     pub memory_heap_count: u32,
-    pub memory_heaps: &[MemoryHeap; MAX_MEMORY_HEAPS],
+    pub memory_heaps: [MemoryHeap; MAX_MEMORY_HEAPS],
 }
 impl ::std::default::Default for PhysicalDeviceMemoryProperties {
     fn default() -> PhysicalDeviceMemoryProperties {
@@ -8891,7 +8891,7 @@ impl<'a> PhysicalDeviceMemoryPropertiesBuilder<'a> {
     }
     pub fn memory_types(
         mut self,
-        memory_types: &[MemoryType; MAX_MEMORY_TYPES],
+        memory_types: [MemoryType; MAX_MEMORY_TYPES],
     ) -> PhysicalDeviceMemoryPropertiesBuilder<'a> {
         self.inner.memory_types = memory_types;
         self
@@ -8905,7 +8905,7 @@ impl<'a> PhysicalDeviceMemoryPropertiesBuilder<'a> {
     }
     pub fn memory_heaps(
         mut self,
-        memory_heaps: &[MemoryHeap; MAX_MEMORY_HEAPS],
+        memory_heaps: [MemoryHeap; MAX_MEMORY_HEAPS],
     ) -> PhysicalDeviceMemoryPropertiesBuilder<'a> {
         self.inner.memory_heaps = memory_heaps;
         self
@@ -11261,9 +11261,9 @@ impl<'a> ImageCopyBuilder<'a> {
 #[derive(Copy, Clone, Debug)]
 pub struct ImageBlit {
     pub src_subresource: ImageSubresourceLayers,
-    pub src_offsets: &[Offset3D; 2],
+    pub src_offsets: [Offset3D; 2],
     pub dst_subresource: ImageSubresourceLayers,
-    pub dst_offsets: &[Offset3D; 2],
+    pub dst_offsets: [Offset3D; 2],
 }
 impl ::std::default::Default for ImageBlit {
     fn default() -> ImageBlit {
@@ -11307,7 +11307,7 @@ impl<'a> ImageBlitBuilder<'a> {
         self.inner.src_subresource = src_subresource;
         self
     }
-    pub fn src_offsets(mut self, src_offsets: &[Offset3D; 2]) -> ImageBlitBuilder<'a> {
+    pub fn src_offsets(mut self, src_offsets: [Offset3D; 2]) -> ImageBlitBuilder<'a> {
         self.inner.src_offsets = src_offsets;
         self
     }
@@ -11318,7 +11318,7 @@ impl<'a> ImageBlitBuilder<'a> {
         self.inner.dst_subresource = dst_subresource;
         self
     }
-    pub fn dst_offsets(mut self, dst_offsets: &[Offset3D; 2]) -> ImageBlitBuilder<'a> {
+    pub fn dst_offsets(mut self, dst_offsets: [Offset3D; 2]) -> ImageBlitBuilder<'a> {
         self.inner.dst_offsets = dst_offsets;
         self
     }
@@ -13078,7 +13078,7 @@ pub struct PipelineColorBlendStateCreateInfo {
     pub logic_op: LogicOp,
     pub attachment_count: u32,
     pub p_attachments: *const PipelineColorBlendAttachmentState,
-    pub blend_constants: &[f32; 4],
+    pub blend_constants: [f32; 4],
 }
 impl ::std::default::Default for PipelineColorBlendStateCreateInfo {
     fn default() -> PipelineColorBlendStateCreateInfo {
@@ -13148,7 +13148,7 @@ impl<'a> PipelineColorBlendStateCreateInfoBuilder<'a> {
     }
     pub fn blend_constants(
         mut self,
-        blend_constants: &[f32; 4],
+        blend_constants: [f32; 4],
     ) -> PipelineColorBlendStateCreateInfoBuilder<'a> {
         self.inner.blend_constants = blend_constants;
         self
@@ -14511,9 +14511,9 @@ impl<'a> RenderPassBeginInfoBuilder<'a> {
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub union ClearColorValue {
-    pub float32: &[f32; 4],
-    pub int32: &[i32; 4],
-    pub uint32: &[u32; 4],
+    pub float32: [f32; 4],
+    pub int32: [i32; 4],
+    pub uint32: [u32; 4],
 }
 impl ::std::default::Default for ClearColorValue {
     fn default() -> ClearColorValue {
@@ -15749,9 +15749,9 @@ pub struct PhysicalDeviceLimits {
     pub max_fragment_dual_src_attachments: u32,
     pub max_fragment_combined_output_resources: u32,
     pub max_compute_shared_memory_size: u32,
-    pub max_compute_work_group_count: &[u32; 3],
+    pub max_compute_work_group_count: [u32; 3],
     pub max_compute_work_group_invocations: u32,
-    pub max_compute_work_group_size: &[u32; 3],
+    pub max_compute_work_group_size: [u32; 3],
     pub sub_pixel_precision_bits: u32,
     pub sub_texel_precision_bits: u32,
     pub mipmap_precision_bits: u32,
@@ -15760,8 +15760,8 @@ pub struct PhysicalDeviceLimits {
     pub max_sampler_lod_bias: f32,
     pub max_sampler_anisotropy: f32,
     pub max_viewports: u32,
-    pub max_viewport_dimensions: &[u32; 2],
-    pub viewport_bounds_range: &[f32; 2],
+    pub max_viewport_dimensions: [u32; 2],
+    pub viewport_bounds_range: [f32; 2],
     pub viewport_sub_pixel_bits: u32,
     pub min_memory_map_alignment: usize,
     pub min_texel_buffer_offset_alignment: DeviceSize,
@@ -15794,8 +15794,8 @@ pub struct PhysicalDeviceLimits {
     pub max_cull_distances: u32,
     pub max_combined_clip_and_cull_distances: u32,
     pub discrete_queue_priorities: u32,
-    pub point_size_range: &[f32; 2],
-    pub line_width_range: &[f32; 2],
+    pub point_size_range: [f32; 2],
+    pub line_width_range: [f32; 2],
     pub point_size_granularity: f32,
     pub line_width_granularity: f32,
     pub strict_lines: Bool32,
@@ -16323,7 +16323,7 @@ impl<'a> PhysicalDeviceLimitsBuilder<'a> {
     }
     pub fn max_compute_work_group_count(
         mut self,
-        max_compute_work_group_count: &[u32; 3],
+        max_compute_work_group_count: [u32; 3],
     ) -> PhysicalDeviceLimitsBuilder<'a> {
         self.inner.max_compute_work_group_count = max_compute_work_group_count;
         self
@@ -16337,7 +16337,7 @@ impl<'a> PhysicalDeviceLimitsBuilder<'a> {
     }
     pub fn max_compute_work_group_size(
         mut self,
-        max_compute_work_group_size: &[u32; 3],
+        max_compute_work_group_size: [u32; 3],
     ) -> PhysicalDeviceLimitsBuilder<'a> {
         self.inner.max_compute_work_group_size = max_compute_work_group_size;
         self
@@ -16397,14 +16397,14 @@ impl<'a> PhysicalDeviceLimitsBuilder<'a> {
     }
     pub fn max_viewport_dimensions(
         mut self,
-        max_viewport_dimensions: &[u32; 2],
+        max_viewport_dimensions: [u32; 2],
     ) -> PhysicalDeviceLimitsBuilder<'a> {
         self.inner.max_viewport_dimensions = max_viewport_dimensions;
         self
     }
     pub fn viewport_bounds_range(
         mut self,
-        viewport_bounds_range: &[f32; 2],
+        viewport_bounds_range: [f32; 2],
     ) -> PhysicalDeviceLimitsBuilder<'a> {
         self.inner.viewport_bounds_range = viewport_bounds_range;
         self
@@ -16627,14 +16627,14 @@ impl<'a> PhysicalDeviceLimitsBuilder<'a> {
     }
     pub fn point_size_range(
         mut self,
-        point_size_range: &[f32; 2],
+        point_size_range: [f32; 2],
     ) -> PhysicalDeviceLimitsBuilder<'a> {
         self.inner.point_size_range = point_size_range;
         self
     }
     pub fn line_width_range(
         mut self,
-        line_width_range: &[f32; 2],
+        line_width_range: [f32; 2],
     ) -> PhysicalDeviceLimitsBuilder<'a> {
         self.inner.line_width_range = line_width_range;
         self
@@ -19250,7 +19250,7 @@ pub struct DebugMarkerMarkerInfoEXT {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub p_marker_name: *const c_char,
-    pub color: &[f32; 4],
+    pub color: [f32; 4],
 }
 impl ::std::default::Default for DebugMarkerMarkerInfoEXT {
     fn default() -> DebugMarkerMarkerInfoEXT {
@@ -19295,7 +19295,7 @@ impl<'a> DebugMarkerMarkerInfoEXTBuilder<'a> {
         self.inner.p_marker_name = marker_name.as_ptr();
         self
     }
-    pub fn color(mut self, color: &[f32; 4]) -> DebugMarkerMarkerInfoEXTBuilder<'a> {
+    pub fn color(mut self, color: [f32; 4]) -> DebugMarkerMarkerInfoEXTBuilder<'a> {
         self.inner.color = color;
         self
     }
@@ -21738,8 +21738,8 @@ pub struct PhysicalDeviceDriverPropertiesKHR {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub driver_id: DriverIdKHR,
-    pub driver_name: &[c_char; MAX_DRIVER_NAME_SIZE_KHR],
-    pub driver_info: &[c_char; MAX_DRIVER_INFO_SIZE_KHR],
+    pub driver_name: [c_char; MAX_DRIVER_NAME_SIZE_KHR],
+    pub driver_info: [c_char; MAX_DRIVER_INFO_SIZE_KHR],
     pub conformance_version: ConformanceVersionKHR,
 }
 impl fmt::Debug for PhysicalDeviceDriverPropertiesKHR {
@@ -21806,14 +21806,14 @@ impl<'a> PhysicalDeviceDriverPropertiesKHRBuilder<'a> {
     }
     pub fn driver_name(
         mut self,
-        driver_name: &[c_char; MAX_DRIVER_NAME_SIZE_KHR],
+        driver_name: [c_char; MAX_DRIVER_NAME_SIZE_KHR],
     ) -> PhysicalDeviceDriverPropertiesKHRBuilder<'a> {
         self.inner.driver_name = driver_name;
         self
     }
     pub fn driver_info(
         mut self,
-        driver_info: &[c_char; MAX_DRIVER_INFO_SIZE_KHR],
+        driver_info: [c_char; MAX_DRIVER_INFO_SIZE_KHR],
     ) -> PhysicalDeviceDriverPropertiesKHRBuilder<'a> {
         self.inner.driver_info = driver_info;
         self
@@ -22370,9 +22370,9 @@ impl<'a> ExternalBufferPropertiesBuilder<'a> {
 pub struct PhysicalDeviceIDProperties {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
-    pub device_uuid: &[u8; UUID_SIZE],
-    pub driver_uuid: &[u8; UUID_SIZE],
-    pub device_luid: &[u8; LUID_SIZE],
+    pub device_uuid: [u8; UUID_SIZE],
+    pub driver_uuid: [u8; UUID_SIZE],
+    pub device_luid: [u8; LUID_SIZE],
     pub device_node_mask: u32,
     pub device_luid_valid: Bool32,
 }
@@ -22418,21 +22418,21 @@ impl<'a> ::std::ops::DerefMut for PhysicalDeviceIDPropertiesBuilder<'a> {
 impl<'a> PhysicalDeviceIDPropertiesBuilder<'a> {
     pub fn device_uuid(
         mut self,
-        device_uuid: &[u8; UUID_SIZE],
+        device_uuid: [u8; UUID_SIZE],
     ) -> PhysicalDeviceIDPropertiesBuilder<'a> {
         self.inner.device_uuid = device_uuid;
         self
     }
     pub fn driver_uuid(
         mut self,
-        driver_uuid: &[u8; UUID_SIZE],
+        driver_uuid: [u8; UUID_SIZE],
     ) -> PhysicalDeviceIDPropertiesBuilder<'a> {
         self.inner.driver_uuid = driver_uuid;
         self
     }
     pub fn device_luid(
         mut self,
-        device_luid: &[u8; LUID_SIZE],
+        device_luid: [u8; LUID_SIZE],
     ) -> PhysicalDeviceIDPropertiesBuilder<'a> {
         self.inner.device_luid = device_luid;
         self
@@ -25130,7 +25130,7 @@ pub struct PhysicalDeviceGroupProperties {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
     pub physical_device_count: u32,
-    pub physical_devices: &[PhysicalDevice; MAX_DEVICE_GROUP_SIZE],
+    pub physical_devices: [PhysicalDevice; MAX_DEVICE_GROUP_SIZE],
     pub subset_allocation: Bool32,
 }
 impl ::std::default::Default for PhysicalDeviceGroupProperties {
@@ -25179,7 +25179,7 @@ impl<'a> PhysicalDeviceGroupPropertiesBuilder<'a> {
     }
     pub fn physical_devices(
         mut self,
-        physical_devices: &[PhysicalDevice; MAX_DEVICE_GROUP_SIZE],
+        physical_devices: [PhysicalDevice; MAX_DEVICE_GROUP_SIZE],
     ) -> PhysicalDeviceGroupPropertiesBuilder<'a> {
         self.inner.physical_devices = physical_devices;
         self
@@ -25816,7 +25816,7 @@ impl<'a> DeviceGroupBindSparseInfoBuilder<'a> {
 pub struct DeviceGroupPresentCapabilitiesKHR {
     pub s_type: StructureType,
     pub p_next: *const c_void,
-    pub present_mask: &[u32; MAX_DEVICE_GROUP_SIZE],
+    pub present_mask: [u32; MAX_DEVICE_GROUP_SIZE],
     pub modes: DeviceGroupPresentModeFlagsKHR,
 }
 impl ::std::default::Default for DeviceGroupPresentCapabilitiesKHR {
@@ -25857,7 +25857,7 @@ impl<'a> ::std::ops::DerefMut for DeviceGroupPresentCapabilitiesKHRBuilder<'a> {
 impl<'a> DeviceGroupPresentCapabilitiesKHRBuilder<'a> {
     pub fn present_mask(
         mut self,
-        present_mask: &[u32; MAX_DEVICE_GROUP_SIZE],
+        present_mask: [u32; MAX_DEVICE_GROUP_SIZE],
     ) -> DeviceGroupPresentCapabilitiesKHRBuilder<'a> {
         self.inner.present_mask = present_mask;
         self
@@ -30219,7 +30219,7 @@ pub struct PhysicalDeviceSampleLocationsPropertiesEXT {
     pub p_next: *mut c_void,
     pub sample_location_sample_counts: SampleCountFlags,
     pub max_sample_location_grid_size: Extent2D,
-    pub sample_location_coordinate_range: &[f32; 2],
+    pub sample_location_coordinate_range: [f32; 2],
     pub sample_location_sub_pixel_bits: u32,
     pub variable_sample_locations: Bool32,
 }
@@ -30282,7 +30282,7 @@ impl<'a> PhysicalDeviceSampleLocationsPropertiesEXTBuilder<'a> {
     }
     pub fn sample_location_coordinate_range(
         mut self,
-        sample_location_coordinate_range: &[f32; 2],
+        sample_location_coordinate_range: [f32; 2],
     ) -> PhysicalDeviceSampleLocationsPropertiesEXTBuilder<'a> {
         self.inner.sample_location_coordinate_range = sample_location_coordinate_range;
         self
@@ -31839,7 +31839,7 @@ pub struct ShaderStatisticsInfoAMD {
     pub num_physical_sgprs: u32,
     pub num_available_vgprs: u32,
     pub num_available_sgprs: u32,
-    pub compute_work_group_size: &[u32; 3],
+    pub compute_work_group_size: [u32; 3],
 }
 impl ::std::default::Default for ShaderStatisticsInfoAMD {
     fn default() -> ShaderStatisticsInfoAMD {
@@ -31923,7 +31923,7 @@ impl<'a> ShaderStatisticsInfoAMDBuilder<'a> {
     }
     pub fn compute_work_group_size(
         mut self,
-        compute_work_group_size: &[u32; 3],
+        compute_work_group_size: [u32; 3],
     ) -> ShaderStatisticsInfoAMDBuilder<'a> {
         self.inner.compute_work_group_size = compute_work_group_size;
         self
@@ -32165,7 +32165,7 @@ pub struct DebugUtilsLabelEXT {
     pub s_type: StructureType,
     pub p_next: *const c_void,
     pub p_label_name: *const c_char,
-    pub color: &[f32; 4],
+    pub color: [f32; 4],
 }
 impl ::std::default::Default for DebugUtilsLabelEXT {
     fn default() -> DebugUtilsLabelEXT {
@@ -32207,7 +32207,7 @@ impl<'a> DebugUtilsLabelEXTBuilder<'a> {
         self.inner.p_label_name = label_name.as_ptr();
         self
     }
-    pub fn color(mut self, color: &[f32; 4]) -> DebugUtilsLabelEXTBuilder<'a> {
+    pub fn color(mut self, color: [f32; 4]) -> DebugUtilsLabelEXTBuilder<'a> {
         self.inner.color = color;
         self
     }
@@ -37274,11 +37274,11 @@ pub struct PhysicalDeviceMeshShaderPropertiesNV {
     pub p_next: *mut c_void,
     pub max_draw_mesh_tasks_count: u32,
     pub max_task_work_group_invocations: u32,
-    pub max_task_work_group_size: &[u32; 3],
+    pub max_task_work_group_size: [u32; 3],
     pub max_task_total_memory_size: u32,
     pub max_task_output_count: u32,
     pub max_mesh_work_group_invocations: u32,
-    pub max_mesh_work_group_size: &[u32; 3],
+    pub max_mesh_work_group_size: [u32; 3],
     pub max_mesh_total_memory_size: u32,
     pub max_mesh_output_vertices: u32,
     pub max_mesh_output_primitives: u32,
@@ -37350,7 +37350,7 @@ impl<'a> PhysicalDeviceMeshShaderPropertiesNVBuilder<'a> {
     }
     pub fn max_task_work_group_size(
         mut self,
-        max_task_work_group_size: &[u32; 3],
+        max_task_work_group_size: [u32; 3],
     ) -> PhysicalDeviceMeshShaderPropertiesNVBuilder<'a> {
         self.inner.max_task_work_group_size = max_task_work_group_size;
         self
@@ -37378,7 +37378,7 @@ impl<'a> PhysicalDeviceMeshShaderPropertiesNVBuilder<'a> {
     }
     pub fn max_mesh_work_group_size(
         mut self,
-        max_mesh_work_group_size: &[u32; 3],
+        max_mesh_work_group_size: [u32; 3],
     ) -> PhysicalDeviceMeshShaderPropertiesNVBuilder<'a> {
         self.inner.max_mesh_work_group_size = max_mesh_work_group_size;
         self
@@ -39322,8 +39322,8 @@ impl<'a> PhysicalDeviceScalarBlockLayoutFeaturesEXTBuilder<'a> {
 pub struct PhysicalDeviceMemoryBudgetPropertiesEXT {
     pub s_type: StructureType,
     pub p_next: *mut c_void,
-    pub heap_budget: &[DeviceSize; MAX_MEMORY_HEAPS],
-    pub heap_usage: &[DeviceSize; MAX_MEMORY_HEAPS],
+    pub heap_budget: [DeviceSize; MAX_MEMORY_HEAPS],
+    pub heap_usage: [DeviceSize; MAX_MEMORY_HEAPS],
 }
 impl ::std::default::Default for PhysicalDeviceMemoryBudgetPropertiesEXT {
     fn default() -> PhysicalDeviceMemoryBudgetPropertiesEXT {
@@ -39367,14 +39367,14 @@ impl<'a> ::std::ops::DerefMut for PhysicalDeviceMemoryBudgetPropertiesEXTBuilder
 impl<'a> PhysicalDeviceMemoryBudgetPropertiesEXTBuilder<'a> {
     pub fn heap_budget(
         mut self,
-        heap_budget: &[DeviceSize; MAX_MEMORY_HEAPS],
+        heap_budget: [DeviceSize; MAX_MEMORY_HEAPS],
     ) -> PhysicalDeviceMemoryBudgetPropertiesEXTBuilder<'a> {
         self.inner.heap_budget = heap_budget;
         self
     }
     pub fn heap_usage(
         mut self,
-        heap_usage: &[DeviceSize; MAX_MEMORY_HEAPS],
+        heap_usage: [DeviceSize; MAX_MEMORY_HEAPS],
     ) -> PhysicalDeviceMemoryBudgetPropertiesEXTBuilder<'a> {
         self.inner.heap_usage = heap_usage;
         self

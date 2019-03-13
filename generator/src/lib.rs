@@ -562,8 +562,10 @@ pub trait FieldExt {
     /// keywords
     fn param_ident(&self) -> Ident;
 
-    /// Returns the basetype ident and removes the 'Vk' prefix
-    fn type_tokens(&self) -> Tokens;
+    /// Returns the basetype ident and removes the 'Vk' prefix. When `is_ffi_param` is `true`
+    /// array types (e.g. `[f32; 3]`) will be converted to pointer types (e.g. `&[f32; 3]`),
+    /// which is needed for `C` function parameters. Set to `false` for struct definitions.
+    fn type_tokens(&self, is_ffi_param: bool) -> Tokens;
     fn is_clone(&self) -> bool;
 }
 
@@ -641,7 +643,7 @@ impl FieldExt for vkxml::Field {
         Ident::from(name_corrected.to_snake_case().as_str())
     }
 
-    fn type_tokens(&self) -> Tokens {
+    fn type_tokens(&self, is_ffi_param: bool) -> Tokens {
         let ty = name_to_tokens(&self.basetype);
         let pointer = self
             .reference
@@ -662,9 +664,16 @@ impl FieldExt for vkxml::Field {
                 // used inside the static array
                 let size = constant_name(size);
                 let size = Term::intern(&size);
-                Some(quote! {
-                    &[#ty; #size]
-                })
+                // arrays in c are always passed as a pointer
+                if is_ffi_param {
+                    Some(quote! {
+                        &[#ty; #size]
+                    })
+                } else {
+                    Some(quote! {
+                        [#ty; #size]
+                    })
+                }
             }
             _ => None,
         });
@@ -713,7 +722,7 @@ fn generate_function_pointers<'a>(
                 .iter()
                 .map(|field| {
                     let name = field.param_ident();
-                    let ty = field.type_tokens();
+                    let ty = field.type_tokens(true);
                     (name, ty)
                 })
                 .collect();
@@ -758,7 +767,7 @@ fn generate_function_pointers<'a>(
 
     let return_types: Vec<_> = commands
         .iter()
-        .map(|cmd| cmd.return_type.type_tokens())
+        .map(|cmd| cmd.return_type.type_tokens(true))
         .collect();
     let return_types_ref = &return_types;
 
@@ -776,7 +785,7 @@ fn generate_function_pointers<'a>(
                 .iter()
                 .map(|field| {
                     let name = field.param_ident();
-                    let ty = field.type_tokens();
+                    let ty = field.type_tokens(true);
                     quote! { #name: #ty }
                 })
                 .collect();
@@ -787,7 +796,7 @@ fn generate_function_pointers<'a>(
 
     let pfn_return_types: Vec<_> = pfn_commands
         .iter()
-        .map(|cmd| cmd.return_type.type_tokens())
+        .map(|cmd| cmd.return_type.type_tokens(true))
         .collect();
     let pfn_return_types_ref = &pfn_return_types;
 
@@ -1300,7 +1309,7 @@ pub fn derive_default(_struct: &vkxml::Struct) -> Option<Tokens> {
                 #param_ident: unsafe { ::std::mem::zeroed() }
             }
         } else {
-            let ty = field.type_tokens();
+            let ty = field.type_tokens(false);
             quote! {
                 #param_ident: #ty::default()
             }
@@ -1399,7 +1408,7 @@ pub fn derive_setters(
         .find(|field| field.param_ident().to_string() == "p_next")
     {
         Some(p_next) => {
-            if p_next.type_tokens().to_string().starts_with("*const") {
+            if p_next.type_tokens(false).to_string().starts_with("*const") {
                 (true, true)
             } else {
                 (true, false)
@@ -1442,7 +1451,7 @@ pub fn derive_setters(
 
     let setters = members.clone().filter_map(|field| {
         let param_ident = field.param_ident();
-        let param_ty_tokens = field.type_tokens();
+        let param_ty_tokens = field.type_tokens(false);
         let param_ty_string = param_ty_tokens.to_string();
 
         let param_ident_string = param_ident.to_string();
@@ -1718,7 +1727,7 @@ pub fn generate_struct(
 
     let params = members.clone().map(|field| {
         let param_ident = field.param_ident();
-        let param_ty_tokens = field.type_tokens();
+        let param_ty_tokens = field.type_tokens(false);
         quote! {pub #param_ident: #param_ty_tokens}
     });
 
@@ -1774,10 +1783,10 @@ pub fn generate_handle(handle: &vkxml::Handle) -> Option<Tokens> {
 }
 fn generate_funcptr(fnptr: &vkxml::FunctionPointer) -> Tokens {
     let name = Ident::from(fnptr.name.as_str());
-    let ret_ty_tokens = fnptr.return_type.type_tokens();
+    let ret_ty_tokens = fnptr.return_type.type_tokens(true);
     let params = fnptr.param.iter().map(|field| {
         let ident = field.param_ident();
-        let type_tokens = field.type_tokens();
+        let type_tokens = field.type_tokens(true);
         quote! {
             #ident: #type_tokens
         }
@@ -1792,7 +1801,7 @@ fn generate_union(union: &vkxml::Union) -> Tokens {
     let name = to_type_tokens(&union.name, None);
     let fields = union.elements.iter().map(|field| {
         let name = field.param_ident();
-        let ty = field.type_tokens();
+        let ty = field.type_tokens(false);
         quote! {
             pub #name: #ty
         }
