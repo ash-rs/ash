@@ -14,7 +14,7 @@ use heck::{CamelCase, ShoutySnakeCase, SnakeCase};
 use itertools::Itertools;
 use proc_macro2::Term;
 use quote::Tokens;
-use std::collections::{HashMap, HashSet};
+use std::collections::{BTreeMap, BTreeSet};
 use std::path::Path;
 use syn::Ident;
 pub trait ExtensionExt {}
@@ -672,12 +672,12 @@ impl FieldExt for vkxml::Field {
     }
 }
 
-pub type CommandMap<'a> = HashMap<vkxml::Identifier, &'a vkxml::Command>;
+pub type CommandMap<'a> = BTreeMap<vkxml::Identifier, &'a vkxml::Command>;
 
 fn generate_function_pointers<'a>(
     ident: Ident,
     commands: &[&'a vkxml::Command],
-    fn_cache: &mut HashSet<&'a str>,
+    fn_cache: &mut BTreeSet<&'a str>,
 ) -> quote::Tokens {
     let names: Vec<_> = commands.iter().map(|cmd| cmd.command_ident()).collect();
     let names_ref = &names;
@@ -865,8 +865,8 @@ pub fn generate_extension_constants<'a>(
     extension_name: &str,
     extension_number: i64,
     extension_items: &'a [vk_parse::ExtensionChild],
-    const_cache: &mut HashSet<&'a str>,
-    const_values: &mut HashMap<Ident, Vec<Ident>>,
+    const_cache: &mut BTreeSet<&'a str>,
+    const_values: &mut BTreeMap<Ident, Vec<Ident>>,
 ) -> quote::Tokens {
     use vk_parse::EnumSpec;
     let items = extension_items
@@ -930,7 +930,7 @@ pub fn generate_extension_commands<'a>(
     extension_name: &str,
     items: &[vk_parse::ExtensionChild],
     cmd_map: &CommandMap<'a>,
-    fn_cache: &mut HashSet<&'a str>,
+    fn_cache: &mut BTreeSet<&'a str>,
 ) -> Tokens {
     let commands = items
         .iter()
@@ -969,9 +969,9 @@ pub fn generate_extension_commands<'a>(
 pub fn generate_extension<'a>(
     extension: &'a vk_parse::Extension,
     cmd_map: &CommandMap<'a>,
-    const_cache: &mut HashSet<&'a str>,
-    const_values: &mut HashMap<Ident, Vec<Ident>>,
-    fn_cache: &mut HashSet<&'a str>,
+    const_cache: &mut BTreeSet<&'a str>,
+    const_values: &mut BTreeMap<Ident, Vec<Ident>>,
+    fn_cache: &mut BTreeSet<&'a str>,
 ) -> Option<quote::Tokens> {
     // Okay this is a little bit odd. We need to generate all extensions, even disabled ones,
     // because otherwise some StructureTypes won't get generated. But we don't generate extensions
@@ -1002,7 +1002,7 @@ pub fn generate_typedef(typedef: &vkxml::Typedef) -> Tokens {
 }
 pub fn generate_bitmask(
     bitmask: &vkxml::Bitmask,
-    bitflags_cache: &mut HashSet<Ident>,
+    bitflags_cache: &mut BTreeSet<Ident>,
 ) -> Option<Tokens> {
     // Workaround for empty bitmask
     if bitmask.name.is_empty() {
@@ -1104,9 +1104,9 @@ pub fn bitflags_impl_block(
 
 pub fn generate_enum<'a>(
     _enum: &'a vkxml::Enumeration,
-    const_cache: &mut HashSet<&'a str>,
-    const_values: &mut HashMap<Ident, Vec<Ident>>,
-    bitflags_cache: &mut HashSet<Ident>,
+    const_cache: &mut BTreeSet<&'a str>,
+    const_values: &mut BTreeMap<Ident, Vec<Ident>>,
+    bitflags_cache: &mut BTreeSet<Ident>,
 ) -> EnumType {
     let name = &_enum.name[2..];
     let _name = name.replace("FlagBits", "Flags");
@@ -1319,7 +1319,7 @@ pub fn derive_default(_struct: &vkxml::Struct) -> Option<Tokens> {
     };
     Some(q)
 }
-pub fn derive_debug(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> Option<Tokens> {
+pub fn derive_debug(_struct: &vkxml::Struct, union_types: &BTreeSet<&str>) -> Option<Tokens> {
     let name = name_to_tokens(&_struct.name);
     let members = _struct.elements.iter().filter_map(|elem| match *elem {
         vkxml::StructElement::Member(ref field) => Some(field),
@@ -1380,7 +1380,7 @@ pub fn derive_debug(_struct: &vkxml::Struct, union_types: &HashSet<&str>) -> Opt
 
 pub fn derive_setters(
     _struct: &vkxml::Struct,
-    root_struct_names: &HashSet<String>,
+    root_struct_names: &BTreeSet<String>,
 ) -> Option<Tokens> {
     if &_struct.name == "VkBaseInStructure" || &_struct.name == "VkBaseOutStructure" {
         return None;
@@ -1707,8 +1707,8 @@ pub fn manual_derives(_struct: &vkxml::Struct) -> Tokens {
 }
 pub fn generate_struct(
     _struct: &vkxml::Struct,
-    root_struct_names: &HashSet<String>,
-    union_types: &HashSet<&str>,
+    root_struct_names: &BTreeSet<String>,
+    union_types: &BTreeSet<&str>,
 ) -> Tokens {
     let name = name_to_tokens(&_struct.name);
     let members = _struct.elements.iter().filter_map(|elem| match *elem {
@@ -1810,7 +1810,7 @@ fn generate_union(union: &vkxml::Union) -> Tokens {
         }
     }
 }
-pub fn root_struct_names(definitions: &[&vkxml::DefinitionsElement]) -> HashSet<String> {
+pub fn root_struct_names(definitions: &[&vkxml::DefinitionsElement]) -> BTreeSet<String> {
     definitions
         .iter()
         .filter_map(|definition| match *definition {
@@ -1828,9 +1828,9 @@ pub fn root_struct_names(definitions: &[&vkxml::DefinitionsElement]) -> HashSet<
 }
 pub fn generate_definition(
     definition: &vkxml::DefinitionsElement,
-    union_types: &HashSet<&str>,
-    root_structs: &HashSet<String>,
-    bitflags_cache: &mut HashSet<Ident>,
+    union_types: &BTreeSet<&str>,
+    root_structs: &BTreeSet<String>,
+    bitflags_cache: &mut BTreeSet<Ident>,
 ) -> Option<Tokens> {
     match *definition {
         vkxml::DefinitionsElement::Typedef(ref typedef) => Some(generate_typedef(typedef)),
@@ -1847,7 +1847,7 @@ pub fn generate_definition(
 pub fn generate_feature<'a>(
     feature: &vkxml::Feature,
     commands: &CommandMap<'a>,
-    fn_cache: &mut HashSet<&'a str>,
+    fn_cache: &mut BTreeSet<&'a str>,
 ) -> quote::Tokens {
     let (static_commands, entry_commands, device_commands, instance_commands) = feature
         .elements
@@ -1924,7 +1924,7 @@ pub fn constant_name(name: &str) -> String {
 
 pub fn generate_constant<'a>(
     constant: &'a vkxml::Constant,
-    cache: &mut HashSet<&'a str>,
+    cache: &mut BTreeSet<&'a str>,
 ) -> Tokens {
     cache.insert(constant.name.as_str());
     let c = Constant::from_constant(constant);
@@ -1944,8 +1944,8 @@ pub fn generate_constant<'a>(
 
 pub fn generate_feature_extension<'a>(
     registry: &'a vk_parse::Registry,
-    const_cache: &mut HashSet<&'a str>,
-    const_values: &mut HashMap<Ident, Vec<Ident>>,
+    const_cache: &mut BTreeSet<&'a str>,
+    const_values: &mut BTreeMap<Ident, Vec<Ident>>,
 ) -> Tokens {
     let constants = registry.0.iter().filter_map(|item| match item {
         vk_parse::RegistryChild::Feature(feature) => Some(generate_extension_constants(
@@ -1962,7 +1962,7 @@ pub fn generate_feature_extension<'a>(
     }
 }
 
-pub fn generate_const_displays<'a>(const_values: &HashMap<Ident, Vec<Ident>>) -> Tokens {
+pub fn generate_const_displays<'a>(const_values: &BTreeMap<Ident, Vec<Ident>>) -> Tokens {
     let impls = const_values
         .iter()
         .filter(|(ty, _)| *ty != "Result")
@@ -2026,7 +2026,7 @@ pub fn generate_const_displays<'a>(const_values: &HashMap<Ident, Vec<Ident>>) ->
 }
 pub fn generate_aliases_of_types<'a>(
     types: &'a vk_parse::Types,
-    ty_cache: &mut HashSet<Ident>,
+    ty_cache: &mut BTreeSet<Ident>,
 ) -> Tokens {
     let aliases = types
         .children
@@ -2064,7 +2064,7 @@ pub fn write_source_code(path: &Path) {
         })
         .nth(0)
         .expect("extension");
-    let mut ty_cache = HashSet::new();
+    let mut ty_cache = BTreeSet::new();
     let aliases: Vec<_> = spec2
         .0
         .iter()
@@ -2077,7 +2077,7 @@ pub fn write_source_code(path: &Path) {
         .collect();
 
     let spec = vk_parse::parse_file_as_vkxml(path);
-    let commands: HashMap<vkxml::Identifier, &vkxml::Command> = spec
+    let commands: BTreeMap<vkxml::Identifier, &vkxml::Command> = spec
         .elements
         .iter()
         .filter_map(|elem| match elem {
@@ -2132,11 +2132,11 @@ pub fn write_source_code(path: &Path) {
         .flat_map(|constants| constants.elements.iter())
         .collect();
 
-    let mut fn_cache = HashSet::new();
-    let mut bitflags_cache = HashSet::new();
-    let mut const_cache = HashSet::new();
+    let mut fn_cache = BTreeSet::new();
+    let mut bitflags_cache = BTreeSet::new();
+    let mut const_cache = BTreeSet::new();
 
-    let mut const_values: HashMap<Ident, Vec<Ident>> = HashMap::new();
+    let mut const_values: BTreeMap<Ident, Vec<Ident>> = BTreeMap::new();
 
     let (enum_code, bitflags_code) = enums
         .into_iter()
@@ -2172,7 +2172,7 @@ pub fn write_source_code(path: &Path) {
             vkxml::DefinitionsElement::Union(ref union) => Some(union.name.as_str()),
             _ => None,
         })
-        .collect::<HashSet<&str>>();
+        .collect::<BTreeSet<&str>>();
 
     let root_names = root_struct_names(&definitions);
     let definition_code: Vec<_> = definitions
