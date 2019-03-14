@@ -91,16 +91,6 @@ macro_rules! khronos_link (
     }
 );
 
-pub fn define_khronos_link_macro() -> Tokens {
-    quote! {
-        macro_rules! khronos_link (
-            ($name:expr) => {
-                Literal::string(&format!("<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/{name}.html>", name=$name))
-            }
-        );
-    }
-}
-
 pub fn define_handle_macro() -> Tokens {
     quote! {
         #[macro_export]
@@ -722,10 +712,6 @@ fn generate_function_pointers<'a>(
     let names_left = &names;
     let names_right = &names;
     let khronos_links: Vec<_> = raw_names.iter().map(|name| khronos_link!(name)).collect();
-
-    for (name, link) in names.iter().zip(khronos_links.iter()) {
-        println!("{} {}", name, link);
-    }
 
     let pfn_commands: Vec<_> = commands
         .iter()

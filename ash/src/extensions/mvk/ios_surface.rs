@@ -27,6 +27,7 @@ impl IOSSurface {
         vk::MvkIosSurfaceFn::name()
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateIOSSurfaceMVK.html>"]
     pub unsafe fn create_ios_surface_mvk(
         &self,
         create_info: &vk::IOSSurfaceCreateInfoMVK,

@@ -27,6 +27,7 @@ impl AndroidSurface {
         vk::KhrAndroidSurfaceFn::name()
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateAndroidSurfaceKHR.html>"]
     pub unsafe fn create_android_surface(
         &self,
         create_info: &vk::AndroidSurfaceCreateInfoKHR,

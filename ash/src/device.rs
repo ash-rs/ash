@@ -10,6 +10,7 @@ use RawPtr;
 pub trait DeviceV1_1: DeviceV1_0 {
     fn fp_v1_1(&self) -> &vk::DeviceFnV1_1;
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkBindBufferMemory2.html>"]
     unsafe fn bind_buffer_memory2(&self, bind_infos: &[vk::BindBufferMemoryInfo]) -> VkResult<()> {
         let err_code = self.fp_v1_1().bind_buffer_memory2(
             self.handle(),
@@ -22,6 +23,7 @@ pub trait DeviceV1_1: DeviceV1_0 {
         }
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkBindImageMemory2.html>"]
     unsafe fn bind_image_memory2(&self, bind_infos: &[vk::BindImageMemoryInfo]) -> VkResult<()> {
         let err_code = self.fp_v1_1().bind_image_memory2(
             self.handle(),
@@ -34,6 +36,7 @@ pub trait DeviceV1_1: DeviceV1_0 {
         }
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetDeviceGroupPeerMemoryFeatures.html>"]
     unsafe fn get_device_group_peer_memory_features(
         &self,
         heap_index: u32,
@@ -51,11 +54,13 @@ pub trait DeviceV1_1: DeviceV1_0 {
         peer_memory_features
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetDeviceMask.html>"]
     unsafe fn cmd_set_device_mask(&self, command_buffer: vk::CommandBuffer, device_mask: u32) {
         self.fp_v1_1()
             .cmd_set_device_mask(command_buffer, device_mask);
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdDispatchBase.html>"]
     unsafe fn cmd_dispatch_base(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -77,6 +82,7 @@ pub trait DeviceV1_1: DeviceV1_0 {
         );
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetImageMemoryRequirements2.html>"]
     unsafe fn get_image_memory_requirements2(
         &self,
         info: &vk::ImageMemoryRequirementsInfo2,
@@ -86,6 +92,7 @@ pub trait DeviceV1_1: DeviceV1_0 {
             .get_image_memory_requirements2(self.handle(), info, out);
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetBufferMemoryRequirements2.html>"]
     unsafe fn get_buffer_memory_requirements2(
         &self,
         info: &vk::BufferMemoryRequirementsInfo2,
@@ -109,6 +116,7 @@ pub trait DeviceV1_1: DeviceV1_0 {
         count as usize
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetImageSparseMemoryRequirements2.html>"]
     unsafe fn get_image_sparse_memory_requirements2(
         &self,
         info: &vk::ImageSparseMemoryRequirementsInfo2,
@@ -123,6 +131,7 @@ pub trait DeviceV1_1: DeviceV1_0 {
         );
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkTrimCommandPool.html>"]
     unsafe fn trim_command_pool(
         &self,
         command_pool: vk::CommandPool,
@@ -132,6 +141,7 @@ pub trait DeviceV1_1: DeviceV1_0 {
             .trim_command_pool(self.handle(), command_pool, flags);
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateSamplerYcbcrConversion.html>"]
     unsafe fn create_sampler_ycbcr_conversion(
         &self,
         create_info: &vk::SamplerYcbcrConversionCreateInfo,
@@ -150,6 +160,7 @@ pub trait DeviceV1_1: DeviceV1_0 {
         }
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroySamplerYcbcrConversion.html>"]
     unsafe fn destroy_sampler_ycbcr_conversion(
         &self,
         ycbcr_conversion: vk::SamplerYcbcrConversion,
@@ -162,6 +173,7 @@ pub trait DeviceV1_1: DeviceV1_0 {
         );
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateDescriptorUpdateTemplate.html>"]
     unsafe fn create_descriptor_update_template(
         &self,
         create_info: &vk::DescriptorUpdateTemplateCreateInfo,
@@ -180,6 +192,7 @@ pub trait DeviceV1_1: DeviceV1_0 {
         }
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyDescriptorUpdateTemplate.html>"]
     unsafe fn destroy_descriptor_update_template(
         &self,
         descriptor_update_template: vk::DescriptorUpdateTemplate,
@@ -192,6 +205,7 @@ pub trait DeviceV1_1: DeviceV1_0 {
         );
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkUpdateDescriptorSetWithTemplate.html>"]
     unsafe fn update_descriptor_set_with_template(
         &self,
         descriptor_set: vk::DescriptorSet,
@@ -206,6 +220,7 @@ pub trait DeviceV1_1: DeviceV1_0 {
         );
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetDescriptorSetLayoutSupport.html>"]
     unsafe fn get_descriptor_set_layout_support(
         &self,
         create_info: &vk::DescriptorSetLayoutCreateInfo,
@@ -220,11 +235,13 @@ pub trait DeviceV1_1: DeviceV1_0 {
 pub trait DeviceV1_0 {
     fn handle(&self) -> vk::Device;
     fn fp_v1_0(&self) -> &vk::DeviceFnV1_0;
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyDevice.html>"]
     unsafe fn destroy_device(&self, allocation_callbacks: Option<&vk::AllocationCallbacks>) {
         self.fp_v1_0()
             .destroy_device(self.handle(), allocation_callbacks.as_raw_ptr());
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroySampler.html>"]
     unsafe fn destroy_sampler(
         &self,
         sampler: vk::Sampler,
@@ -234,6 +251,7 @@ pub trait DeviceV1_0 {
             .destroy_sampler(self.handle(), sampler, allocation_callbacks.as_raw_ptr());
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkFreeMemory.html>"]
     unsafe fn free_memory(
         &self,
         memory: vk::DeviceMemory,
@@ -243,6 +261,7 @@ pub trait DeviceV1_0 {
             .free_memory(self.handle(), memory, allocation_callbacks.as_raw_ptr());
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkFreeCommandBuffers.html>"]
     unsafe fn free_command_buffers(
         &self,
         command_pool: vk::CommandPool,
@@ -256,6 +275,7 @@ pub trait DeviceV1_0 {
         );
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateEvent.html>"]
     unsafe fn create_event(
         &self,
         create_info: &vk::EventCreateInfo,
@@ -276,6 +296,7 @@ pub trait DeviceV1_0 {
 
     /// Returns true if the event was set, and false if the event was reset, otherwise it will
     /// return the error code.
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetEventStatus.html>"]
     unsafe fn get_event_status(&self, event: vk::Event) -> VkResult<bool> {
         let err_code = self.fp_v1_0().get_event_status(self.handle(), event);
         match err_code {
@@ -285,6 +306,7 @@ pub trait DeviceV1_0 {
         }
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkSetEvent.html>"]
     unsafe fn set_event(&self, event: vk::Event) -> VkResult<()> {
         let err_code = self.fp_v1_0().set_event(self.handle(), event);
         match err_code {
@@ -293,6 +315,7 @@ pub trait DeviceV1_0 {
         }
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkResetEvent.html>"]
     unsafe fn reset_event(&self, event: vk::Event) -> VkResult<()> {
         let err_code = self.fp_v1_0().reset_event(self.handle(), event);
         match err_code {
@@ -300,6 +323,7 @@ pub trait DeviceV1_0 {
             _ => Err(err_code),
         }
     }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetEvent.html>"]
     unsafe fn cmd_set_event(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -309,6 +333,7 @@ pub trait DeviceV1_0 {
         self.fp_v1_0()
             .cmd_set_event(command_buffer, event, stage_mask);
     }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdResetEvent.html>"]
     unsafe fn cmd_reset_event(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -319,6 +344,7 @@ pub trait DeviceV1_0 {
             .cmd_reset_event(command_buffer, event, stage_mask);
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdWaitEvents.html>"]
     unsafe fn cmd_wait_events(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -344,6 +370,7 @@ pub trait DeviceV1_0 {
         );
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyFence.html>"]
     unsafe fn destroy_fence(
         &self,
         fence: vk::Fence,
@@ -353,6 +380,7 @@ pub trait DeviceV1_0 {
             .destroy_fence(self.handle(), fence, allocation_callbacks.as_raw_ptr());
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyEvent.html>"]
     unsafe fn destroy_event(
         &self,
         event: vk::Event,
@@ -362,6 +390,7 @@ pub trait DeviceV1_0 {
             .destroy_event(self.handle(), event, allocation_callbacks.as_raw_ptr());
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyImage.html>"]
     unsafe fn destroy_image(
         &self,
         image: vk::Image,
@@ -371,6 +400,7 @@ pub trait DeviceV1_0 {
             .destroy_image(self.handle(), image, allocation_callbacks.as_raw_ptr());
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyCommandPool.html>"]
     unsafe fn destroy_command_pool(
         &self,
         pool: vk::CommandPool,
@@ -380,6 +410,7 @@ pub trait DeviceV1_0 {
             .destroy_command_pool(self.handle(), pool, allocation_callbacks.as_raw_ptr());
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyImageView.html>"]
     unsafe fn destroy_image_view(
         &self,
         image_view: vk::ImageView,
@@ -392,6 +423,7 @@ pub trait DeviceV1_0 {
         );
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyRenderPass.html>"]
     unsafe fn destroy_render_pass(
         &self,
         renderpass: vk::RenderPass,
@@ -404,6 +436,7 @@ pub trait DeviceV1_0 {
         );
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyFramebuffer.html>"]
     unsafe fn destroy_framebuffer(
         &self,
         framebuffer: vk::Framebuffer,
@@ -416,6 +449,7 @@ pub trait DeviceV1_0 {
         );
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyPipelineLayout.html>"]
     unsafe fn destroy_pipeline_layout(
         &self,
         pipeline_layout: vk::PipelineLayout,
@@ -428,6 +462,7 @@ pub trait DeviceV1_0 {
         );
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyPipelineCache.html>"]
     unsafe fn destroy_pipeline_cache(
         &self,
         pipeline_cache: vk::PipelineCache,
@@ -440,6 +475,7 @@ pub trait DeviceV1_0 {
         );
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyBuffer.html>"]
     unsafe fn destroy_buffer(
         &self,
         buffer: vk::Buffer,
@@ -449,6 +485,7 @@ pub trait DeviceV1_0 {
             .destroy_buffer(self.handle(), buffer, allocation_callbacks.as_raw_ptr());
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyShaderModule.html>"]
     unsafe fn destroy_shader_module(
         &self,
         shader: vk::ShaderModule,
@@ -461,6 +498,7 @@ pub trait DeviceV1_0 {
         );
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyPipeline.html>"]
     unsafe fn destroy_pipeline(
         &self,
         pipeline: vk::Pipeline,
@@ -470,6 +508,7 @@ pub trait DeviceV1_0 {
             .destroy_pipeline(self.handle(), pipeline, allocation_callbacks.as_raw_ptr());
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroySemaphore.html>"]
     unsafe fn destroy_semaphore(
         &self,
         semaphore: vk::Semaphore,
@@ -482,6 +521,7 @@ pub trait DeviceV1_0 {
         );
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyDescriptorPool.html>"]
     unsafe fn destroy_descriptor_pool(
         &self,
         pool: vk::DescriptorPool,
@@ -494,6 +534,7 @@ pub trait DeviceV1_0 {
         );
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyQueryPool.html>"]
     unsafe fn destroy_query_pool(
         &self,
         pool: vk::QueryPool,
@@ -503,6 +544,7 @@ pub trait DeviceV1_0 {
             .destroy_query_pool(self.handle(), pool, allocation_callbacks.as_raw_ptr());
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyDescriptorSetLayout.html>"]
     unsafe fn destroy_descriptor_set_layout(
         &self,
         layout: vk::DescriptorSetLayout,
@@ -515,6 +557,7 @@ pub trait DeviceV1_0 {
         );
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkFreeDescriptorSets.html>"]
     unsafe fn free_descriptor_sets(
         &self,
         pool: vk::DescriptorPool,
@@ -528,6 +571,7 @@ pub trait DeviceV1_0 {
         );
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkUpdateDescriptorSets.html>"]
     unsafe fn update_descriptor_sets(
         &self,
         descriptor_writes: &[vk::WriteDescriptorSet],
@@ -542,6 +586,7 @@ pub trait DeviceV1_0 {
         );
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateSampler.html>"]
     unsafe fn create_sampler(
         &self,
         create_info: &vk::SamplerCreateInfo,
@@ -560,6 +605,7 @@ pub trait DeviceV1_0 {
         }
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdBlitImage.html>"]
     unsafe fn cmd_blit_image(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -582,6 +628,7 @@ pub trait DeviceV1_0 {
         );
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdResolveImage.html>"]
     unsafe fn cmd_resolve_image(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -602,6 +649,7 @@ pub trait DeviceV1_0 {
         );
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdFillBuffer.html>"]
     unsafe fn cmd_fill_buffer(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -614,6 +662,7 @@ pub trait DeviceV1_0 {
             .cmd_fill_buffer(command_buffer, buffer, offset, size, data);
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdUpdateBuffer.html>"]
     unsafe fn cmd_update_buffer(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -630,6 +679,7 @@ pub trait DeviceV1_0 {
         );
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdCopyBuffer.html>"]
     unsafe fn cmd_copy_buffer(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -646,6 +696,7 @@ pub trait DeviceV1_0 {
         );
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdCopyImageToBuffer.html>"]
     unsafe fn cmd_copy_image_to_buffer(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -664,6 +715,7 @@ pub trait DeviceV1_0 {
         );
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdCopyBufferToImage.html>"]
     unsafe fn cmd_copy_buffer_to_image(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -682,6 +734,7 @@ pub trait DeviceV1_0 {
         );
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdCopyImage.html>"]
     unsafe fn cmd_copy_image(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -702,6 +755,7 @@ pub trait DeviceV1_0 {
         );
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkAllocateDescriptorSets.html>"]
     unsafe fn allocate_descriptor_sets(
         &self,
         create_info: &vk::DescriptorSetAllocateInfo,
@@ -720,6 +774,7 @@ pub trait DeviceV1_0 {
         }
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateDescriptorSetLayout.html>"]
     unsafe fn create_descriptor_set_layout(
         &self,
         create_info: &vk::DescriptorSetLayoutCreateInfo,
@@ -738,6 +793,7 @@ pub trait DeviceV1_0 {
         }
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDeviceWaitIdle.html>"]
     unsafe fn device_wait_idle(&self) -> VkResult<()> {
         let err_code = self.fp_v1_0().device_wait_idle(self.handle());
         match err_code {
@@ -746,6 +802,7 @@ pub trait DeviceV1_0 {
         }
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateDescriptorPool.html>"]
     unsafe fn create_descriptor_pool(
         &self,
         create_info: &vk::DescriptorPoolCreateInfo,
@@ -764,6 +821,7 @@ pub trait DeviceV1_0 {
         }
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkResetDescriptorPool.html>"]
     unsafe fn reset_descriptor_pool(
         &self,
         pool: vk::DescriptorPool,
@@ -778,6 +836,7 @@ pub trait DeviceV1_0 {
         }
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkResetCommandPool.html>"]
     unsafe fn reset_command_pool(
         &self,
         command_pool: vk::CommandPool,
@@ -792,6 +851,7 @@ pub trait DeviceV1_0 {
         }
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkResetCommandBuffer.html>"]
     unsafe fn reset_command_buffer(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -804,6 +864,7 @@ pub trait DeviceV1_0 {
         }
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkResetFences.html>"]
     unsafe fn reset_fences(&self, fences: &[vk::Fence]) -> VkResult<()> {
         let err_code =
             self.fp_v1_0()
@@ -814,6 +875,7 @@ pub trait DeviceV1_0 {
         }
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdBindIndexBuffer.html>"]
     unsafe fn cmd_bind_index_buffer(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -825,6 +887,7 @@ pub trait DeviceV1_0 {
             .cmd_bind_index_buffer(command_buffer, buffer, offset, index_type);
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdClearColorImage.html>"]
     unsafe fn cmd_clear_color_image(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -843,6 +906,7 @@ pub trait DeviceV1_0 {
         );
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdClearDepthStencilImage.html>"]
     unsafe fn cmd_clear_depth_stencil_image(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -861,6 +925,7 @@ pub trait DeviceV1_0 {
         );
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdClearAttachments.html>"]
     unsafe fn cmd_clear_attachments(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -876,6 +941,7 @@ pub trait DeviceV1_0 {
         );
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdDrawIndexed.html>"]
     unsafe fn cmd_draw_indexed(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -895,6 +961,7 @@ pub trait DeviceV1_0 {
         );
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdDrawIndexedIndirect.html>"]
     unsafe fn cmd_draw_indexed_indirect(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -912,6 +979,7 @@ pub trait DeviceV1_0 {
         );
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdExecuteCommands.html>"]
     unsafe fn cmd_execute_commands(
         &self,
         primary_command_buffer: vk::CommandBuffer,
@@ -924,6 +992,7 @@ pub trait DeviceV1_0 {
         );
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdBindDescriptorSets.html>"]
     unsafe fn cmd_bind_descriptor_sets(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -945,6 +1014,7 @@ pub trait DeviceV1_0 {
         );
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdCopyQueryPoolResults.html>"]
     unsafe fn cmd_copy_query_pool_results(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -968,6 +1038,7 @@ pub trait DeviceV1_0 {
         );
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdPushConstants.html>"]
     unsafe fn cmd_push_constants(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -986,6 +1057,7 @@ pub trait DeviceV1_0 {
         );
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdBeginRenderPass.html>"]
     unsafe fn cmd_begin_render_pass(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -996,6 +1068,7 @@ pub trait DeviceV1_0 {
             .cmd_begin_render_pass(command_buffer, create_info, contents);
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdNextSubpass.html>"]
     unsafe fn cmd_next_subpass(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -1004,6 +1077,7 @@ pub trait DeviceV1_0 {
         self.fp_v1_0().cmd_next_subpass(command_buffer, contents);
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdBindPipeline.html>"]
     unsafe fn cmd_bind_pipeline(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -1014,6 +1088,7 @@ pub trait DeviceV1_0 {
             .cmd_bind_pipeline(command_buffer, pipeline_bind_point, pipeline);
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetScissor.html>"]
     unsafe fn cmd_set_scissor(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -1028,11 +1103,13 @@ pub trait DeviceV1_0 {
         );
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetLineWidth.html>"]
     unsafe fn cmd_set_line_width(&self, command_buffer: vk::CommandBuffer, line_width: f32) {
         self.fp_v1_0()
             .cmd_set_line_width(command_buffer, line_width);
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdBindVertexBuffers.html>"]
     unsafe fn cmd_bind_vertex_buffers(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -1050,10 +1127,12 @@ pub trait DeviceV1_0 {
         );
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdEndRenderPass.html>"]
     unsafe fn cmd_end_render_pass(&self, command_buffer: vk::CommandBuffer) {
         self.fp_v1_0().cmd_end_render_pass(command_buffer);
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdDraw.html>"]
     unsafe fn cmd_draw(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -1071,6 +1150,7 @@ pub trait DeviceV1_0 {
         );
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdDrawIndirect.html>"]
     unsafe fn cmd_draw_indirect(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -1083,6 +1163,7 @@ pub trait DeviceV1_0 {
             .cmd_draw_indirect(command_buffer, buffer, offset, draw_count, stride);
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdDispatch.html>"]
     unsafe fn cmd_dispatch(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -1094,6 +1175,7 @@ pub trait DeviceV1_0 {
             .cmd_dispatch(command_buffer, group_count_x, group_count_y, group_count_z);
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdDispatchIndirect.html>"]
     unsafe fn cmd_dispatch_indirect(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -1104,6 +1186,7 @@ pub trait DeviceV1_0 {
             .cmd_dispatch_indirect(command_buffer, buffer, offset);
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetViewport.html>"]
     unsafe fn cmd_set_viewport(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -1118,6 +1201,7 @@ pub trait DeviceV1_0 {
         );
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetDepthBias.html>"]
     unsafe fn cmd_set_depth_bias(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -1129,6 +1213,7 @@ pub trait DeviceV1_0 {
             .cmd_set_depth_bias(command_buffer, constant_factor, clamp, slope_factor);
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetBlendConstants.html>"]
     unsafe fn cmd_set_blend_constants(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -1138,6 +1223,7 @@ pub trait DeviceV1_0 {
             .cmd_set_blend_constants(command_buffer, blend_constants);
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetDepthBounds.html>"]
     unsafe fn cmd_set_depth_bounds(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -1148,6 +1234,7 @@ pub trait DeviceV1_0 {
             .cmd_set_depth_bounds(command_buffer, min_depth_bounds, max_depth_bounds);
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetStencilCompareMask.html>"]
     unsafe fn cmd_set_stencil_compare_mask(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -1158,6 +1245,7 @@ pub trait DeviceV1_0 {
             .cmd_set_stencil_compare_mask(command_buffer, face_mask, compare_mask);
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetStencilWriteMask.html>"]
     unsafe fn cmd_set_stencil_write_mask(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -1168,6 +1256,7 @@ pub trait DeviceV1_0 {
             .cmd_set_stencil_write_mask(command_buffer, face_mask, write_mask);
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdSetStencilReference.html>"]
     unsafe fn cmd_set_stencil_reference(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -1178,6 +1267,7 @@ pub trait DeviceV1_0 {
             .cmd_set_stencil_reference(command_buffer, face_mask, reference);
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetQueryPoolResults.html>"]
     unsafe fn get_query_pool_results<T>(
         &self,
         query_pool: vk::QueryPool,
@@ -1213,6 +1303,7 @@ pub trait DeviceV1_0 {
         }
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdBeginQuery.html>"]
     unsafe fn cmd_begin_query(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -1224,6 +1315,7 @@ pub trait DeviceV1_0 {
             .cmd_begin_query(command_buffer, query_pool, query, flags);
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdEndQuery.html>"]
     unsafe fn cmd_end_query(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -1234,6 +1326,7 @@ pub trait DeviceV1_0 {
             .cmd_end_query(command_buffer, query_pool, query);
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdResetQueryPool.html>"]
     unsafe fn cmd_reset_query_pool(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -1245,6 +1338,7 @@ pub trait DeviceV1_0 {
             .cmd_reset_query_pool(command_buffer, pool, first_query, query_count);
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdWriteTimestamp.html>"]
     unsafe fn cmd_write_timestamp(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -1256,6 +1350,7 @@ pub trait DeviceV1_0 {
             .cmd_write_timestamp(command_buffer, pipeline_stage, query_pool, query);
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateSemaphore.html>"]
     unsafe fn create_semaphore(
         &self,
         create_info: &vk::SemaphoreCreateInfo,
@@ -1274,6 +1369,7 @@ pub trait DeviceV1_0 {
         }
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateGraphicsPipelines.html>"]
     unsafe fn create_graphics_pipelines(
         &self,
         pipeline_cache: vk::PipelineCache,
@@ -1296,6 +1392,7 @@ pub trait DeviceV1_0 {
         }
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateComputePipelines.html>"]
     unsafe fn create_compute_pipelines(
         &self,
         pipeline_cache: vk::PipelineCache,
@@ -1318,6 +1415,7 @@ pub trait DeviceV1_0 {
         }
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateBuffer.html>"]
     unsafe fn create_buffer(
         &self,
         create_info: &vk::BufferCreateInfo,
@@ -1336,6 +1434,7 @@ pub trait DeviceV1_0 {
         }
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreatePipelineLayout.html>"]
     unsafe fn create_pipeline_layout(
         &self,
         create_info: &vk::PipelineLayoutCreateInfo,
@@ -1354,6 +1453,7 @@ pub trait DeviceV1_0 {
         }
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreatePipelineCache.html>"]
     unsafe fn create_pipeline_cache(
         &self,
         create_info: &vk::PipelineCacheCreateInfo,
@@ -1373,6 +1473,7 @@ pub trait DeviceV1_0 {
         }
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPipelineCacheData.html>"]
     unsafe fn get_pipeline_cache_data(
         &self,
         pipeline_cache: vk::PipelineCache,
@@ -1401,6 +1502,7 @@ pub trait DeviceV1_0 {
         }
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkMapMemory.html>"]
     unsafe fn map_memory(
         &self,
         memory: vk::DeviceMemory,
@@ -1418,10 +1520,12 @@ pub trait DeviceV1_0 {
         }
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkUnmapMemory.html>"]
     unsafe fn unmap_memory(&self, memory: vk::DeviceMemory) {
         self.fp_v1_0().unmap_memory(self.handle(), memory);
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkInvalidateMappedMemoryRanges.html>"]
     unsafe fn invalidate_mapped_memory_ranges(
         &self,
         ranges: &[vk::MappedMemoryRange],
@@ -1437,6 +1541,7 @@ pub trait DeviceV1_0 {
         }
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkFlushMappedMemoryRanges.html>"]
     unsafe fn flush_mapped_memory_ranges(&self, ranges: &[vk::MappedMemoryRange]) -> VkResult<()> {
         let err_code = self.fp_v1_0().flush_mapped_memory_ranges(
             self.handle(),
@@ -1449,6 +1554,7 @@ pub trait DeviceV1_0 {
         }
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateFramebuffer.html>"]
     unsafe fn create_framebuffer(
         &self,
         create_info: &vk::FramebufferCreateInfo,
@@ -1467,6 +1573,7 @@ pub trait DeviceV1_0 {
         }
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetDeviceQueue.html>"]
     unsafe fn get_device_queue(&self, queue_family_index: u32, queue_index: u32) -> vk::Queue {
         let mut queue = mem::uninitialized();
         self.fp_v1_0()
@@ -1474,6 +1581,7 @@ pub trait DeviceV1_0 {
         queue
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdPipelineBarrier.html>"]
     unsafe fn cmd_pipeline_barrier(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -1498,6 +1606,7 @@ pub trait DeviceV1_0 {
         );
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateRenderPass.html>"]
     unsafe fn create_render_pass(
         &self,
         create_info: &vk::RenderPassCreateInfo,
@@ -1516,6 +1625,7 @@ pub trait DeviceV1_0 {
         }
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkBeginCommandBuffer.html>"]
     unsafe fn begin_command_buffer(
         &self,
         command_buffer: vk::CommandBuffer,
@@ -1530,6 +1640,7 @@ pub trait DeviceV1_0 {
         }
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkEndCommandBuffer.html>"]
     unsafe fn end_command_buffer(&self, command_buffer: vk::CommandBuffer) -> VkResult<()> {
         let err_code = self.fp_v1_0().end_command_buffer(command_buffer);
         match err_code {
@@ -1538,6 +1649,7 @@ pub trait DeviceV1_0 {
         }
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkWaitForFences.html>"]
     unsafe fn wait_for_fences(
         &self,
         fences: &[vk::Fence],
@@ -1557,6 +1669,7 @@ pub trait DeviceV1_0 {
         }
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetFenceStatus.html>"]
     unsafe fn get_fence_status(&self, fence: vk::Fence) -> VkResult<()> {
         let err_code = self.fp_v1_0().get_fence_status(self.handle(), fence);
         match err_code {
@@ -1565,6 +1678,7 @@ pub trait DeviceV1_0 {
         }
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkQueueWaitIdle.html>"]
     unsafe fn queue_wait_idle(&self, queue: vk::Queue) -> VkResult<()> {
         let err_code = self.fp_v1_0().queue_wait_idle(queue);
         match err_code {
@@ -1573,6 +1687,7 @@ pub trait DeviceV1_0 {
         }
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkQueueSubmit.html>"]
     unsafe fn queue_submit(
         &self,
         queue: vk::Queue,
@@ -1588,6 +1703,7 @@ pub trait DeviceV1_0 {
         }
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateBufferView.html>"]
     unsafe fn create_buffer_view(
         &self,
         create_info: &vk::BufferViewCreateInfo,
@@ -1606,6 +1722,7 @@ pub trait DeviceV1_0 {
         }
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyBufferView.html>"]
     unsafe fn destroy_buffer_view(
         &self,
         buffer_view: vk::BufferView,
@@ -1618,6 +1735,7 @@ pub trait DeviceV1_0 {
         );
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateImageView.html>"]
     unsafe fn create_image_view(
         &self,
         create_info: &vk::ImageViewCreateInfo,
@@ -1636,6 +1754,7 @@ pub trait DeviceV1_0 {
         }
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkAllocateCommandBuffers.html>"]
     unsafe fn allocate_command_buffers(
         &self,
         create_info: &vk::CommandBufferAllocateInfo,
@@ -1653,6 +1772,7 @@ pub trait DeviceV1_0 {
         }
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateCommandPool.html>"]
     unsafe fn create_command_pool(
         &self,
         create_info: &vk::CommandPoolCreateInfo,
@@ -1671,6 +1791,7 @@ pub trait DeviceV1_0 {
         }
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateQueryPool.html>"]
     unsafe fn create_query_pool(
         &self,
         create_info: &vk::QueryPoolCreateInfo,
@@ -1689,6 +1810,7 @@ pub trait DeviceV1_0 {
         }
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateImage.html>"]
     unsafe fn create_image(
         &self,
         create_info: &vk::ImageCreateInfo,
@@ -1707,6 +1829,7 @@ pub trait DeviceV1_0 {
         }
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetImageSubresourceLayout.html>"]
     unsafe fn get_image_subresource_layout(
         &self,
         image: vk::Image,
@@ -1722,6 +1845,7 @@ pub trait DeviceV1_0 {
         layout
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetImageMemoryRequirements.html>"]
     unsafe fn get_image_memory_requirements(&self, image: vk::Image) -> vk::MemoryRequirements {
         let mut mem_req = mem::uninitialized();
         self.fp_v1_0()
@@ -1729,6 +1853,7 @@ pub trait DeviceV1_0 {
         mem_req
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetBufferMemoryRequirements.html>"]
     unsafe fn get_buffer_memory_requirements(&self, buffer: vk::Buffer) -> vk::MemoryRequirements {
         let mut mem_req = mem::uninitialized();
         self.fp_v1_0()
@@ -1736,6 +1861,7 @@ pub trait DeviceV1_0 {
         mem_req
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkAllocateMemory.html>"]
     unsafe fn allocate_memory(
         &self,
         create_info: &vk::MemoryAllocateInfo,
@@ -1754,6 +1880,7 @@ pub trait DeviceV1_0 {
         }
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateShaderModule.html>"]
     unsafe fn create_shader_module(
         &self,
         create_info: &vk::ShaderModuleCreateInfo,
@@ -1772,6 +1899,7 @@ pub trait DeviceV1_0 {
         }
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateFence.html>"]
     unsafe fn create_fence(
         &self,
         create_info: &vk::FenceCreateInfo,
@@ -1790,6 +1918,7 @@ pub trait DeviceV1_0 {
         }
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkBindBufferMemory.html>"]
     unsafe fn bind_buffer_memory(
         &self,
         buffer: vk::Buffer,
@@ -1805,6 +1934,7 @@ pub trait DeviceV1_0 {
         }
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkBindImageMemory.html>"]
     unsafe fn bind_image_memory(
         &self,
         image: vk::Image,
@@ -1821,6 +1951,7 @@ pub trait DeviceV1_0 {
     }
 }
 
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkDevice.html>"]
 #[derive(Clone)]
 pub struct Device {
     handle: vk::Device,
