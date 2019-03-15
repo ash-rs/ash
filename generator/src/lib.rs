@@ -179,6 +179,7 @@ pub fn handle_nondispatchable_macro() -> Tokens {
 }
 pub fn vk_version_macros() -> Tokens {
     quote! {
+        #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VK_MAKE_VERSION.html>"]
         #[macro_export]
         macro_rules! vk_make_version {
             ($major:expr, $minor:expr, $patch:expr) => {
@@ -186,6 +187,7 @@ pub fn vk_version_macros() -> Tokens {
             };
         }
 
+        #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VK_VERSION_MAJOR.html>"]
         #[macro_export]
         macro_rules! vk_version_major {
             ($major:expr) => {
@@ -193,6 +195,7 @@ pub fn vk_version_macros() -> Tokens {
             };
         }
 
+        #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VK_VERSION_MINOR.html>"]
         #[macro_export]
         macro_rules! vk_version_minor {
             ($minor:expr) => {
@@ -200,6 +203,7 @@ pub fn vk_version_macros() -> Tokens {
             };
         }
 
+        #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VK_VERSION_PATCH.html>"]
         #[macro_export]
         macro_rules! vk_version_patch {
             ($minor:expr) => {
@@ -1206,7 +1210,7 @@ pub fn generate_enum<'a>(
 }
 
 pub fn generate_result(ident: Ident, _enum: &vkxml::Enumeration) -> Tokens {
-    let notation = _enum.elements.iter().filter_map(|elem| {
+    let description_notation = _enum.elements.iter().filter_map(|elem| {
         let (variant_name, notation) = match *elem {
             vkxml::EnumerationElement::Enum(ref constant) => (
                 constant.name.as_str(),
@@ -1223,12 +1227,25 @@ pub fn generate_result(ident: Ident, _enum: &vkxml::Enumeration) -> Tokens {
         })
     });
 
-    let notation2 = notation.clone();
+    let display_notation = _enum.elements.iter().filter_map(|elem| {
+        let variant_name = match *elem {
+            vkxml::EnumerationElement::Enum(ref constant) => constant.name.as_str(),
+            _ => {
+                return None;
+            }
+        };
+
+        let variant_ident = variant_ident(&_enum.name, variant_name);
+        Some(quote! {
+            #ident::#variant_ident => Some(stringify!(#variant_ident))
+        })
+    });
+
     quote! {
         impl ::std::error::Error for #ident {
             fn description(&self) -> &str {
                 let name = match *self {
-                    #(#notation),*,
+                    #(#description_notation),*,
                     _ => None,
                 };
                 name.unwrap_or("unknown error")
@@ -1237,7 +1254,7 @@ pub fn generate_result(ident: Ident, _enum: &vkxml::Enumeration) -> Tokens {
         impl fmt::Display for #ident {
             fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
                 let name = match *self {
-                    #(#notation2),*,
+                    #(#display_notation),*,
                     _ => None,
                 };
                 if let Some(x) = name {

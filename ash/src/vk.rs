@@ -20,24 +20,28 @@ pub trait Handle {
     fn as_raw(self) -> u64;
     fn from_raw(u64) -> Self;
 }
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VK_MAKE_VERSION.html>"]
 #[macro_export]
 macro_rules! vk_make_version {
     ( $ major : expr , $ minor : expr , $ patch : expr ) => {
         (($major as u32) << 22) | (($minor as u32) << 12) | $patch as u32
     };
 }
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VK_VERSION_MAJOR.html>"]
 #[macro_export]
 macro_rules! vk_version_major {
     ( $ major : expr ) => {
         ($major as u32) >> 22
     };
 }
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VK_VERSION_MINOR.html>"]
 #[macro_export]
 macro_rules! vk_version_minor {
     ( $ minor : expr ) => {
         (($minor as u32) >> 12) & 0x3ff
     };
 }
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VK_VERSION_PATCH.html>"]
 #[macro_export]
 macro_rules! vk_version_patch {
     ( $ minor : expr ) => {
@@ -41349,34 +41353,24 @@ impl ::std::error::Error for Result {
 impl fmt::Display for Result {
     fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Result::SUCCESS => Some("Command completed successfully"),
-            Result::NOT_READY => Some("A fence or query has not yet completed"),
-            Result::TIMEOUT => Some("A wait operation has not completed in the specified time"),
-            Result::EVENT_SET => Some("An event is signaled"),
-            Result::EVENT_RESET => Some("An event is unsignaled"),
-            Result::INCOMPLETE => Some("A return array was too small for the result"),
-            Result::ERROR_OUT_OF_HOST_MEMORY => Some("A host memory allocation has failed"),
-            Result::ERROR_OUT_OF_DEVICE_MEMORY => Some("A device memory allocation has failed"),
-            Result::ERROR_INITIALIZATION_FAILED => Some("Initialization of a object has failed"),
-            Result::ERROR_DEVICE_LOST => {
-                Some("The logical device has been lost. See <<devsandqueues-lost-device>>")
-            }
-            Result::ERROR_MEMORY_MAP_FAILED => Some("Mapping of a memory object has failed"),
-            Result::ERROR_LAYER_NOT_PRESENT => Some("Layer specified does not exist"),
-            Result::ERROR_EXTENSION_NOT_PRESENT => Some("Extension specified does not exist"),
-            Result::ERROR_FEATURE_NOT_PRESENT => {
-                Some("Requested feature is not available on this device")
-            }
-            Result::ERROR_INCOMPATIBLE_DRIVER => Some("Unable to find a Vulkan driver"),
-            Result::ERROR_TOO_MANY_OBJECTS => {
-                Some("Too many objects of the type have already been created")
-            }
-            Result::ERROR_FORMAT_NOT_SUPPORTED => {
-                Some("Requested format is not supported on this device")
-            }
-            Result::ERROR_FRAGMENTED_POOL => Some(
-                "A requested pool allocation has failed due to fragmentation of the pool\'s memory",
-            ),
+            Result::SUCCESS => Some(stringify!(SUCCESS)),
+            Result::NOT_READY => Some(stringify!(NOT_READY)),
+            Result::TIMEOUT => Some(stringify!(TIMEOUT)),
+            Result::EVENT_SET => Some(stringify!(EVENT_SET)),
+            Result::EVENT_RESET => Some(stringify!(EVENT_RESET)),
+            Result::INCOMPLETE => Some(stringify!(INCOMPLETE)),
+            Result::ERROR_OUT_OF_HOST_MEMORY => Some(stringify!(ERROR_OUT_OF_HOST_MEMORY)),
+            Result::ERROR_OUT_OF_DEVICE_MEMORY => Some(stringify!(ERROR_OUT_OF_DEVICE_MEMORY)),
+            Result::ERROR_INITIALIZATION_FAILED => Some(stringify!(ERROR_INITIALIZATION_FAILED)),
+            Result::ERROR_DEVICE_LOST => Some(stringify!(ERROR_DEVICE_LOST)),
+            Result::ERROR_MEMORY_MAP_FAILED => Some(stringify!(ERROR_MEMORY_MAP_FAILED)),
+            Result::ERROR_LAYER_NOT_PRESENT => Some(stringify!(ERROR_LAYER_NOT_PRESENT)),
+            Result::ERROR_EXTENSION_NOT_PRESENT => Some(stringify!(ERROR_EXTENSION_NOT_PRESENT)),
+            Result::ERROR_FEATURE_NOT_PRESENT => Some(stringify!(ERROR_FEATURE_NOT_PRESENT)),
+            Result::ERROR_INCOMPATIBLE_DRIVER => Some(stringify!(ERROR_INCOMPATIBLE_DRIVER)),
+            Result::ERROR_TOO_MANY_OBJECTS => Some(stringify!(ERROR_TOO_MANY_OBJECTS)),
+            Result::ERROR_FORMAT_NOT_SUPPORTED => Some(stringify!(ERROR_FORMAT_NOT_SUPPORTED)),
+            Result::ERROR_FRAGMENTED_POOL => Some(stringify!(ERROR_FRAGMENTED_POOL)),
             _ => None,
         };
         if let Some(x) = name {
