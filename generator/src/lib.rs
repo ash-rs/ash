@@ -14,7 +14,7 @@ use heck::{CamelCase, ShoutySnakeCase, SnakeCase};
 use itertools::Itertools;
 use proc_macro2::Term;
 use quote::Tokens;
-use std::collections::{HashMap, HashSet};
+use std::collections::{BTreeMap, HashMap, HashSet};
 use std::path::Path;
 use syn::Ident;
 pub trait ExtensionExt {}
@@ -562,8 +562,10 @@ pub trait FieldExt {
     /// keywords
     fn param_ident(&self) -> Ident;
 
-    /// Returns the basetype ident and removes the 'Vk' prefix
-    fn type_tokens(&self) -> Tokens;
+    /// Returns the basetype ident and removes the 'Vk' prefix. When `is_ffi_param` is `true`
+    /// array types (e.g. `[f32; 3]`) will be converted to pointer types (e.g. `&[f32; 3]`),
+    /// which is needed for `C` function parameters. Set to `false` for struct definitions.
+    fn type_tokens(&self, is_ffi_param: bool) -> Tokens;
     fn is_clone(&self) -> bool;
 }
 
@@ -641,7 +643,7 @@ impl FieldExt for vkxml::Field {
         Ident::from(name_corrected.to_snake_case().as_str())
     }
 
-    fn type_tokens(&self) -> Tokens {
+    fn type_tokens(&self, is_ffi_param: bool) -> Tokens {
         let ty = name_to_tokens(&self.basetype);
         let pointer = self
             .reference
@@ -662,9 +664,16 @@ impl FieldExt for vkxml::Field {
                 // used inside the static array
                 let size = constant_name(size);
                 let size = Term::intern(&size);
-                Some(quote! {
-                    &[#ty; #size]
-                })
+                // arrays in c are always passed as a pointer
+                if is_ffi_param {
+                    Some(quote! {
+                        &[#ty; #size]
+                    })
+                } else {
+                    Some(quote! {
+                        [#ty; #size]
+                    })
+                }
             }
             _ => None,
         });
@@ -713,7 +722,7 @@ fn generate_function_pointers<'a>(
                 .iter()
                 .map(|field| {
                     let name = field.param_ident();
-                    let ty = field.type_tokens();
+                    let ty = field.type_tokens(true);
                     (name, ty)
                 })
                 .collect();
@@ -758,7 +767,7 @@ fn generate_function_pointers<'a>(
 
     let return_types: Vec<_> = commands
         .iter()
-        .map(|cmd| cmd.return_type.type_tokens())
+        .map(|cmd| cmd.return_type.type_tokens(true))
         .collect();
     let return_types_ref = &return_types;
 
@@ -776,7 +785,7 @@ fn generate_function_pointers<'a>(
                 .iter()
                 .map(|field| {
                     let name = field.param_ident();
-                    let ty = field.type_tokens();
+                    let ty = field.type_tokens(true);
                     quote! { #name: #ty }
                 })
                 .collect();
@@ -787,7 +796,7 @@ fn generate_function_pointers<'a>(
 
     let pfn_return_types: Vec<_> = pfn_commands
         .iter()
-        .map(|cmd| cmd.return_type.type_tokens())
+        .map(|cmd| cmd.return_type.type_tokens(true))
         .collect();
     let pfn_return_types_ref = &pfn_return_types;
 
@@ -866,7 +875,7 @@ pub fn generate_extension_constants<'a>(
     extension_number: i64,
     extension_items: &'a [vk_parse::ExtensionChild],
     const_cache: &mut HashSet<&'a str>,
-    const_values: &mut HashMap<Ident, Vec<Ident>>,
+    const_values: &mut BTreeMap<Ident, Vec<Ident>>,
 ) -> quote::Tokens {
     use vk_parse::EnumSpec;
     let items = extension_items
@@ -970,7 +979,7 @@ pub fn generate_extension<'a>(
     extension: &'a vk_parse::Extension,
     cmd_map: &CommandMap<'a>,
     const_cache: &mut HashSet<&'a str>,
-    const_values: &mut HashMap<Ident, Vec<Ident>>,
+    const_values: &mut BTreeMap<Ident, Vec<Ident>>,
     fn_cache: &mut HashSet<&'a str>,
 ) -> Option<quote::Tokens> {
     // Okay this is a little bit odd. We need to generate all extensions, even disabled ones,
@@ -1105,7 +1114,7 @@ pub fn bitflags_impl_block(
 pub fn generate_enum<'a>(
     _enum: &'a vkxml::Enumeration,
     const_cache: &mut HashSet<&'a str>,
-    const_values: &mut HashMap<Ident, Vec<Ident>>,
+    const_values: &mut BTreeMap<Ident, Vec<Ident>>,
     bitflags_cache: &mut HashSet<Ident>,
 ) -> EnumType {
     let name = &_enum.name[2..];
@@ -1300,7 +1309,7 @@ pub fn derive_default(_struct: &vkxml::Struct) -> Option<Tokens> {
                 #param_ident: unsafe { ::std::mem::zeroed() }
             }
         } else {
-            let ty = field.type_tokens();
+            let ty = field.type_tokens(false);
             quote! {
                 #param_ident: #ty::default()
             }
@@ -1399,7 +1408,7 @@ pub fn derive_setters(
         .find(|field| field.param_ident().to_string() == "p_next")
     {
         Some(p_next) => {
-            if p_next.type_tokens().to_string().starts_with("*const") {
+            if p_next.type_tokens(false).to_string().starts_with("*const") {
                 (true, true)
             } else {
                 (true, false)
@@ -1442,7 +1451,7 @@ pub fn derive_setters(
 
     let setters = members.clone().filter_map(|field| {
         let param_ident = field.param_ident();
-        let param_ty_tokens = field.type_tokens();
+        let param_ty_tokens = field.type_tokens(false);
         let param_ty_string = param_ty_tokens.to_string();
 
         let param_ident_string = param_ident.to_string();
@@ -1718,7 +1727,7 @@ pub fn generate_struct(
 
     let params = members.clone().map(|field| {
         let param_ident = field.param_ident();
-        let param_ty_tokens = field.type_tokens();
+        let param_ty_tokens = field.type_tokens(false);
         quote! {pub #param_ident: #param_ty_tokens}
     });
 
@@ -1774,10 +1783,10 @@ pub fn generate_handle(handle: &vkxml::Handle) -> Option<Tokens> {
 }
 fn generate_funcptr(fnptr: &vkxml::FunctionPointer) -> Tokens {
     let name = Ident::from(fnptr.name.as_str());
-    let ret_ty_tokens = fnptr.return_type.type_tokens();
+    let ret_ty_tokens = fnptr.return_type.type_tokens(true);
     let params = fnptr.param.iter().map(|field| {
         let ident = field.param_ident();
-        let type_tokens = field.type_tokens();
+        let type_tokens = field.type_tokens(true);
         quote! {
             #ident: #type_tokens
         }
@@ -1792,7 +1801,7 @@ fn generate_union(union: &vkxml::Union) -> Tokens {
     let name = to_type_tokens(&union.name, None);
     let fields = union.elements.iter().map(|field| {
         let name = field.param_ident();
-        let ty = field.type_tokens();
+        let ty = field.type_tokens(false);
         quote! {
             pub #name: #ty
         }
@@ -1945,7 +1954,7 @@ pub fn generate_constant<'a>(
 pub fn generate_feature_extension<'a>(
     registry: &'a vk_parse::Registry,
     const_cache: &mut HashSet<&'a str>,
-    const_values: &mut HashMap<Ident, Vec<Ident>>,
+    const_values: &mut BTreeMap<Ident, Vec<Ident>>,
 ) -> Tokens {
     let constants = registry.0.iter().filter_map(|item| match item {
         vk_parse::RegistryChild::Feature(feature) => Some(generate_extension_constants(
@@ -1962,7 +1971,7 @@ pub fn generate_feature_extension<'a>(
     }
 }
 
-pub fn generate_const_displays<'a>(const_values: &HashMap<Ident, Vec<Ident>>) -> Tokens {
+pub fn generate_const_displays<'a>(const_values: &BTreeMap<Ident, Vec<Ident>>) -> Tokens {
     let impls = const_values
         .iter()
         .filter(|(ty, _)| *ty != "Result")
@@ -2136,7 +2145,7 @@ pub fn write_source_code(path: &Path) {
     let mut bitflags_cache = HashSet::new();
     let mut const_cache = HashSet::new();
 
-    let mut const_values: HashMap<Ident, Vec<Ident>> = HashMap::new();
+    let mut const_values: BTreeMap<Ident, Vec<Ident>> = BTreeMap::new();
 
     let (enum_code, bitflags_code) = enums
         .into_iter()
