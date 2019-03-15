@@ -4,7 +4,7 @@
 //!
 //! ## Examples
 //!
-//! ```rust
+//! ```rust,no_run
 //! # #[macro_use]
 //! # extern crate ash;
 //! use ash::{vk, Entry, version::EntryV1_0};

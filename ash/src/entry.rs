@@ -194,7 +194,7 @@ pub trait EntryV1_1: EntryV1_0 {
 }
 
 impl EntryCustom<Arc<DynamicLibrary>> {
-    /// ```rust
+    /// ```rust,no_run
     /// # #[macro_use]
     /// # extern crate ash;
     /// use ash::{vk, Entry, version::EntryV1_0};
@@ -253,7 +253,7 @@ impl<L> EntryCustom<L> {
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkEnumerateInstanceVersion.html>"]
-    /// ```rust
+    /// ```rust,no_run
     /// # #[macro_use]
     /// # extern crate ash;
     /// # use ash::Entry;
