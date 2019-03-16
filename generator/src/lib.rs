@@ -17,6 +17,8 @@ use quote::Tokens;
 use std::collections::{BTreeMap, HashMap, HashSet};
 use std::path::Path;
 use syn::Ident;
+use std::fmt::Display;
+
 pub trait ExtensionExt {}
 #[derive(Copy, Clone, Debug)]
 pub enum CType {
@@ -85,11 +87,9 @@ named!(cfloat<&str, f32>,
     terminated!(nom::float_s, char!('f'))
 );
 
-macro_rules! khronos_link (
-    ($name:expr) => {
-        Literal::string(&format!("<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/{name}.html>", name=$name))
-    }
-);
+fn khronos_link<S: Display>(name: &S) -> Literal {
+    Literal::string(&format!("<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/{name}.html>", name=name))
+}
 
 pub fn define_handle_macro() -> Tokens {
     quote! {
@@ -715,7 +715,7 @@ fn generate_function_pointers<'a>(
     let raw_names_ref = &raw_names;
     let names_left = &names;
     let names_right = &names;
-    let khronos_links: Vec<_> = raw_names.iter().map(|name| khronos_link!(name)).collect();
+    let khronos_links: Vec<_> = raw_names.iter().map(|name| khronos_link(name)).collect();
 
     let pfn_commands: Vec<_> = commands
         .iter()
@@ -1022,7 +1022,7 @@ pub fn generate_extension<'a>(
 pub fn generate_typedef(typedef: &vkxml::Typedef) -> Tokens {
     let typedef_name = to_type_tokens(&typedef.name, None);
     let typedef_ty = to_type_tokens(&typedef.basetype, None);
-    let khronos_link = khronos_link!(typedef.name);
+    let khronos_link = khronos_link(&typedef.name);
     quote! {
         #[doc = #khronos_link]
         pub type #typedef_name = #typedef_ty;
@@ -1047,7 +1047,7 @@ pub fn generate_bitmask(
         return None;
     };
     bitflags_cache.insert(ident.clone());
-    let khronos_link = khronos_link!(bitmask.name);
+    let khronos_link = khronos_link(&bitmask.name);
     Some(quote! {
         #[repr(transparent)]
         #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -1155,7 +1155,7 @@ pub fn generate_enum<'a>(
         values.push(constant.variant_ident(&_enum.name));
     }
 
-    let khronos_link = khronos_link!(_enum.name);
+    let khronos_link = khronos_link(&_enum.name);
 
     if name.contains("Bit") {
         let ident = Ident::from(_name.as_str());
@@ -1783,7 +1783,7 @@ pub fn generate_struct(
     } else {
         quote!()
     };
-    let khronos_link = khronos_link!(_struct.name);
+    let khronos_link = khronos_link(&_struct.name);
     quote! {
         #[repr(C)]
         #[derive(Copy, Clone, #default_str #dbg_str #manual_derive_tokens)]
@@ -1801,7 +1801,7 @@ pub fn generate_handle(handle: &vkxml::Handle) -> Option<Tokens> {
     if handle.name == "" {
         return None;
     }
-    let khronos_link = khronos_link!(handle.name);
+    let khronos_link = khronos_link(&handle.name);
     let tokens = match handle.ty {
         vkxml::HandleType::Dispatch => {
             let name = &handle.name[2..];
@@ -1832,7 +1832,7 @@ fn generate_funcptr(fnptr: &vkxml::FunctionPointer) -> Tokens {
             #ident: #type_tokens
         }
     });
-    let khronos_link = khronos_link!(fnptr.name);
+    let khronos_link = khronos_link(&fnptr.name);
     quote! {
         #[allow(non_camel_case_types)]
         #[doc = #khronos_link]
@@ -1849,7 +1849,7 @@ fn generate_union(union: &vkxml::Union) -> Tokens {
             pub #name: #ty
         }
     });
-    let khronos_link = khronos_link!(union.name);
+    let khronos_link = khronos_link(&union.name);
     quote! {
         #[repr(C)]
         #[derive(Copy, Clone)]
