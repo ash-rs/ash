@@ -19,12 +19,3 @@ fn display_enum() {
 fn display_result() {
     assert_eq!(vk::Result::SUCCESS.to_string(), "SUCCESS");
 }
-
-#[test]
-fn error_result_description() {
-    use std::error::Error;
-    assert_eq!(
-        vk::Result::SUCCESS.description(),
-        "Command completed successfully"
-    );
-}

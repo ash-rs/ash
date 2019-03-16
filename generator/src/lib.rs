@@ -15,9 +15,9 @@ use itertools::Itertools;
 use proc_macro2::{Literal, Term};
 use quote::Tokens;
 use std::collections::{BTreeMap, HashMap, HashSet};
+use std::fmt::Display;
 use std::path::Path;
 use syn::Ident;
-use std::fmt::Display;
 
 pub trait ExtensionExt {}
 #[derive(Copy, Clone, Debug)]
@@ -88,7 +88,10 @@ named!(cfloat<&str, f32>,
 );
 
 fn khronos_link<S: Display>(name: &S) -> Literal {
-    Literal::string(&format!("<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/{name}.html>", name=name))
+    Literal::string(&format!(
+        "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/{name}.html>",
+        name = name
+    ))
 }
 
 pub fn define_handle_macro() -> Tokens {
@@ -1210,23 +1213,6 @@ pub fn generate_enum<'a>(
 }
 
 pub fn generate_result(ident: Ident, _enum: &vkxml::Enumeration) -> Tokens {
-    let description_notation = _enum.elements.iter().filter_map(|elem| {
-        let (variant_name, notation) = match *elem {
-            vkxml::EnumerationElement::Enum(ref constant) => (
-                constant.name.as_str(),
-                constant.notation.as_ref().map(|s| s.as_str()).unwrap_or(""),
-            ),
-            _ => {
-                return None;
-            }
-        };
-
-        let variant_ident = variant_ident(&_enum.name, variant_name);
-        Some(quote! {
-            #ident::#variant_ident => Some(#notation)
-        })
-    });
-
     let display_notation = _enum.elements.iter().filter_map(|elem| {
         let variant_name = match *elem {
             vkxml::EnumerationElement::Enum(ref constant) => constant.name.as_str(),
@@ -1242,15 +1228,8 @@ pub fn generate_result(ident: Ident, _enum: &vkxml::Enumeration) -> Tokens {
     });
 
     quote! {
-        impl ::std::error::Error for #ident {
-            fn description(&self) -> &str {
-                let name = match *self {
-                    #(#description_notation),*,
-                    _ => None,
-                };
-                name.unwrap_or("unknown error")
-            }
-        }
+        impl std::error::Error for #ident {}
+
         impl fmt::Display for #ident {
             fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
                 let name = match *self {

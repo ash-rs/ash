@@ -50,15 +50,7 @@ impl fmt::Display for LoadingError {
     }
 }
 
-impl Error for LoadingError {
-    fn description(&self) -> &str {
-        "LoadingError"
-    }
-
-    fn cause(&self) -> Option<&Error> {
-        None
-    }
-}
+impl Error for LoadingError {}
 
 #[derive(Debug)]
 pub enum InstanceError {
@@ -72,18 +64,7 @@ impl fmt::Display for InstanceError {
     }
 }
 
-impl Error for InstanceError {
-    fn description(&self) -> &str {
-        "InstanceError"
-    }
-
-    fn cause(&self) -> Option<&Error> {
-        if let &InstanceError::VkError(ref err) = self {
-            return err.source();
-        }
-        None
-    }
-}
+impl Error for InstanceError {}
 
 #[allow(non_camel_case_types)]
 pub trait EntryV1_0 {
