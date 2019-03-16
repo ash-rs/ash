@@ -46,7 +46,9 @@ pub enum LoadingError {
 
 impl fmt::Display for LoadingError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "LoadingError::{:?}", self)
+        match self {
+            LoadingError::LibraryLoadError(e) => write!(f, "{}", e),
+        }
     }
 }
 
@@ -60,7 +62,10 @@ pub enum InstanceError {
 
 impl fmt::Display for InstanceError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "InstanceError::{:?}", self)
+        match self {
+            InstanceError::LoadError(e) => write!(f, "{}", e.join("; ")),
+            InstanceError::VkError(e) => write!(f, "{}", e),
+        }
     }
 }
 
