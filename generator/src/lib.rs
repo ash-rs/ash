@@ -98,6 +98,9 @@ pub fn define_handle_macro() -> Tokens {
     quote! {
         #[macro_export]
         macro_rules! define_handle{
+            ($name: ident, $ty: ident) => {
+                define_handle!($name, $ty, doc = "");
+            };
             ($name: ident, $ty: ident, $doc_link: meta) => {
                 #[repr(transparent)]
                 #[derive(Eq, PartialEq, Ord, PartialOrd, Clone, Copy, Hash)]
