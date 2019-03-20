@@ -7653,6 +7653,9 @@ impl<'a> Offset2DBuilder<'a> {
         self.inner.y = y;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> Offset2D {
         self.inner
     }
@@ -7701,6 +7704,9 @@ impl<'a> Offset3DBuilder<'a> {
         self.inner.z = z;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> Offset3D {
         self.inner
     }
@@ -7744,6 +7750,9 @@ impl<'a> Extent2DBuilder<'a> {
         self.inner.height = height;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> Extent2D {
         self.inner
     }
@@ -7792,6 +7801,9 @@ impl<'a> Extent3DBuilder<'a> {
         self.inner.depth = depth;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> Extent3D {
         self.inner
     }
@@ -7855,6 +7867,9 @@ impl<'a> ViewportBuilder<'a> {
         self.inner.max_depth = max_depth;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> Viewport {
         self.inner
     }
@@ -7898,6 +7913,9 @@ impl<'a> Rect2DBuilder<'a> {
         self.inner.extent = extent;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> Rect2D {
         self.inner
     }
@@ -7946,6 +7964,9 @@ impl<'a> ClearRectBuilder<'a> {
         self.inner.layer_count = layer_count;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ClearRect {
         self.inner
     }
@@ -7999,6 +8020,9 @@ impl<'a> ComponentMappingBuilder<'a> {
         self.inner.a = a;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ComponentMapping {
         self.inner
     }
@@ -8121,6 +8145,9 @@ impl<'a> PhysicalDevicePropertiesBuilder<'a> {
         self.inner.sparse_properties = sparse_properties;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceProperties {
         self.inner
     }
@@ -8185,6 +8212,9 @@ impl<'a> ExtensionPropertiesBuilder<'a> {
         self.inner.spec_version = spec_version;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ExtensionProperties {
         self.inner
     }
@@ -8271,6 +8301,9 @@ impl<'a> LayerPropertiesBuilder<'a> {
         self.inner.description = description;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> LayerProperties {
         self.inner
     }
@@ -8365,6 +8398,9 @@ impl<'a> ApplicationInfoBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ApplicationInfo {
         self.inner
     }
@@ -8476,6 +8512,9 @@ impl<'a> AllocationCallbacksBuilder<'a> {
         self.inner.pfn_internal_free = pfn_internal_free;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> AllocationCallbacks {
         self.inner
     }
@@ -8564,6 +8603,9 @@ impl<'a> DeviceQueueCreateInfoBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DeviceQueueCreateInfo {
         self.inner
     }
@@ -8676,6 +8718,9 @@ impl<'a> DeviceCreateInfoBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DeviceCreateInfo {
         self.inner
     }
@@ -8776,6 +8821,9 @@ impl<'a> InstanceCreateInfoBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> InstanceCreateInfo {
         self.inner
     }
@@ -8835,6 +8883,9 @@ impl<'a> QueueFamilyPropertiesBuilder<'a> {
         self.inner.min_image_transfer_granularity = min_image_transfer_granularity;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> QueueFamilyProperties {
         self.inner
     }
@@ -8910,6 +8961,9 @@ impl<'a> PhysicalDeviceMemoryPropertiesBuilder<'a> {
         self.inner.memory_heaps = memory_heaps;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceMemoryProperties {
         self.inner
     }
@@ -8983,6 +9037,9 @@ impl<'a> MemoryAllocateInfoBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> MemoryAllocateInfo {
         self.inner
     }
@@ -9031,6 +9088,9 @@ impl<'a> MemoryRequirementsBuilder<'a> {
         self.inner.memory_type_bits = memory_type_bits;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> MemoryRequirements {
         self.inner
     }
@@ -9088,6 +9148,9 @@ impl<'a> SparseImageFormatPropertiesBuilder<'a> {
         self.inner.flags = flags;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> SparseImageFormatProperties {
         self.inner
     }
@@ -9161,6 +9224,9 @@ impl<'a> SparseImageMemoryRequirementsBuilder<'a> {
         self.inner.image_mip_tail_stride = image_mip_tail_stride;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> SparseImageMemoryRequirements {
         self.inner
     }
@@ -9204,6 +9270,9 @@ impl<'a> MemoryTypeBuilder<'a> {
         self.inner.heap_index = heap_index;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> MemoryType {
         self.inner
     }
@@ -9247,6 +9316,9 @@ impl<'a> MemoryHeapBuilder<'a> {
         self.inner.flags = flags;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> MemoryHeap {
         self.inner
     }
@@ -9326,6 +9398,9 @@ impl<'a> MappedMemoryRangeBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> MappedMemoryRange {
         self.inner
     }
@@ -9383,6 +9458,9 @@ impl<'a> FormatPropertiesBuilder<'a> {
         self.inner.buffer_features = buffer_features;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> FormatProperties {
         self.inner
     }
@@ -9447,6 +9525,9 @@ impl<'a> ImageFormatPropertiesBuilder<'a> {
         self.inner.max_resource_size = max_resource_size;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ImageFormatProperties {
         self.inner
     }
@@ -9495,6 +9576,9 @@ impl<'a> DescriptorBufferInfoBuilder<'a> {
         self.inner.range = range;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DescriptorBufferInfo {
         self.inner
     }
@@ -9543,6 +9627,9 @@ impl<'a> DescriptorImageInfoBuilder<'a> {
         self.inner.image_layout = image_layout;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DescriptorImageInfo {
         self.inner
     }
@@ -9663,6 +9750,9 @@ impl<'a> WriteDescriptorSetBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> WriteDescriptorSet {
         self.inner
     }
@@ -9766,6 +9856,9 @@ impl<'a> CopyDescriptorSetBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> CopyDescriptorSet {
         self.inner
     }
@@ -9863,6 +9956,9 @@ impl<'a> BufferCreateInfoBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> BufferCreateInfo {
         self.inner
     }
@@ -9954,6 +10050,9 @@ impl<'a> BufferViewCreateInfoBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> BufferViewCreateInfo {
         self.inner
     }
@@ -10002,6 +10101,9 @@ impl<'a> ImageSubresourceBuilder<'a> {
         self.inner.array_layer = array_layer;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ImageSubresource {
         self.inner
     }
@@ -10058,6 +10160,9 @@ impl<'a> ImageSubresourceLayersBuilder<'a> {
         self.inner.layer_count = layer_count;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ImageSubresourceLayers {
         self.inner
     }
@@ -10119,6 +10224,9 @@ impl<'a> ImageSubresourceRangeBuilder<'a> {
         self.inner.layer_count = layer_count;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ImageSubresourceRange {
         self.inner
     }
@@ -10192,6 +10300,9 @@ impl<'a> MemoryBarrierBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> MemoryBarrier {
         self.inner
     }
@@ -10307,6 +10418,9 @@ impl<'a> BufferMemoryBarrierBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> BufferMemoryBarrier {
         self.inner
     }
@@ -10431,6 +10545,9 @@ impl<'a> ImageMemoryBarrierBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ImageMemoryBarrier {
         self.inner
     }
@@ -10570,6 +10687,9 @@ impl<'a> ImageCreateInfoBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ImageCreateInfo {
         self.inner
     }
@@ -10628,6 +10748,9 @@ impl<'a> SubresourceLayoutBuilder<'a> {
         self.inner.depth_pitch = depth_pitch;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> SubresourceLayout {
         self.inner
     }
@@ -10728,6 +10851,9 @@ impl<'a> ImageViewCreateInfoBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ImageViewCreateInfo {
         self.inner
     }
@@ -10776,6 +10902,9 @@ impl<'a> BufferCopyBuilder<'a> {
         self.inner.size = size;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> BufferCopy {
         self.inner
     }
@@ -10834,6 +10963,9 @@ impl<'a> SparseMemoryBindBuilder<'a> {
         self.inner.flags = flags;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> SparseMemoryBind {
         self.inner
     }
@@ -10900,6 +11032,9 @@ impl<'a> SparseImageMemoryBindBuilder<'a> {
         self.inner.flags = flags;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> SparseImageMemoryBind {
         self.inner
     }
@@ -10954,6 +11089,9 @@ impl<'a> SparseBufferMemoryBindInfoBuilder<'a> {
         self.inner.p_binds = binds.as_ptr();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> SparseBufferMemoryBindInfo {
         self.inner
     }
@@ -11011,6 +11149,9 @@ impl<'a> SparseImageOpaqueMemoryBindInfoBuilder<'a> {
         self.inner.p_binds = binds.as_ptr();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> SparseImageOpaqueMemoryBindInfo {
         self.inner
     }
@@ -11068,6 +11209,9 @@ impl<'a> SparseImageMemoryBindInfoBuilder<'a> {
         self.inner.p_binds = binds.as_ptr();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> SparseImageMemoryBindInfo {
         self.inner
     }
@@ -11189,6 +11333,9 @@ impl<'a> BindSparseInfoBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> BindSparseInfo {
         self.inner
     }
@@ -11253,6 +11400,9 @@ impl<'a> ImageCopyBuilder<'a> {
         self.inner.extent = extent;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ImageCopy {
         self.inner
     }
@@ -11322,6 +11472,9 @@ impl<'a> ImageBlitBuilder<'a> {
         self.inner.dst_offsets = dst_offsets;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ImageBlit {
         self.inner
     }
@@ -11388,6 +11541,9 @@ impl<'a> BufferImageCopyBuilder<'a> {
         self.inner.image_extent = image_extent;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> BufferImageCopy {
         self.inner
     }
@@ -11452,6 +11608,9 @@ impl<'a> ImageResolveBuilder<'a> {
         self.inner.extent = extent;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ImageResolve {
         self.inner
     }
@@ -11528,6 +11687,9 @@ impl<'a> ShaderModuleCreateInfoBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ShaderModuleCreateInfo {
         self.inner
     }
@@ -11610,6 +11772,9 @@ impl<'a> DescriptorSetLayoutBindingBuilder<'a> {
         self.inner.p_immutable_samplers = immutable_samplers.as_ptr();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DescriptorSetLayoutBinding {
         self.inner
     }
@@ -11692,6 +11857,9 @@ impl<'a> DescriptorSetLayoutCreateInfoBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DescriptorSetLayoutCreateInfo {
         self.inner
     }
@@ -11735,6 +11903,9 @@ impl<'a> DescriptorPoolSizeBuilder<'a> {
         self.inner.descriptor_count = descriptor_count;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DescriptorPoolSize {
         self.inner
     }
@@ -11823,6 +11994,9 @@ impl<'a> DescriptorPoolCreateInfoBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DescriptorPoolCreateInfo {
         self.inner
     }
@@ -11905,6 +12079,9 @@ impl<'a> DescriptorSetAllocateInfoBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DescriptorSetAllocateInfo {
         self.inner
     }
@@ -11953,6 +12130,9 @@ impl<'a> SpecializationMapEntryBuilder<'a> {
         self.inner.size = size;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> SpecializationMapEntry {
         self.inner
     }
@@ -12013,6 +12193,9 @@ impl<'a> SpecializationInfoBuilder<'a> {
         self.inner.p_data = data.as_ptr() as *const c_void;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> SpecializationInfo {
         self.inner
     }
@@ -12110,6 +12293,9 @@ impl<'a> PipelineShaderStageCreateInfoBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PipelineShaderStageCreateInfo {
         self.inner
     }
@@ -12210,6 +12396,9 @@ impl<'a> ComputePipelineCreateInfoBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ComputePipelineCreateInfo {
         self.inner
     }
@@ -12261,6 +12450,9 @@ impl<'a> VertexInputBindingDescriptionBuilder<'a> {
         self.inner.input_rate = input_rate;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> VertexInputBindingDescription {
         self.inner
     }
@@ -12314,6 +12506,9 @@ impl<'a> VertexInputAttributeDescriptionBuilder<'a> {
         self.inner.offset = offset;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> VertexInputAttributeDescription {
         self.inner
     }
@@ -12408,6 +12603,9 @@ impl<'a> PipelineVertexInputStateCreateInfoBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PipelineVertexInputStateCreateInfo {
         self.inner
     }
@@ -12496,6 +12694,9 @@ impl<'a> PipelineInputAssemblyStateCreateInfoBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PipelineInputAssemblyStateCreateInfo {
         self.inner
     }
@@ -12575,6 +12776,9 @@ impl<'a> PipelineTessellationStateCreateInfoBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PipelineTessellationStateCreateInfo {
         self.inner
     }
@@ -12683,6 +12887,9 @@ impl<'a> PipelineViewportStateCreateInfoBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PipelineViewportStateCreateInfo {
         self.inner
     }
@@ -12843,6 +13050,9 @@ impl<'a> PipelineRasterizationStateCreateInfoBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PipelineRasterizationStateCreateInfo {
         self.inner
     }
@@ -12967,6 +13177,9 @@ impl<'a> PipelineMultisampleStateCreateInfoBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PipelineMultisampleStateCreateInfo {
         self.inner
     }
@@ -13064,6 +13277,9 @@ impl<'a> PipelineColorBlendAttachmentStateBuilder<'a> {
         self.inner.color_write_mask = color_write_mask;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PipelineColorBlendAttachmentState {
         self.inner
     }
@@ -13170,6 +13386,9 @@ impl<'a> PipelineColorBlendStateCreateInfoBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PipelineColorBlendStateCreateInfo {
         self.inner
     }
@@ -13252,6 +13471,9 @@ impl<'a> PipelineDynamicStateCreateInfoBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PipelineDynamicStateCreateInfo {
         self.inner
     }
@@ -13320,6 +13542,9 @@ impl<'a> StencilOpStateBuilder<'a> {
         self.inner.reference = reference;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> StencilOpState {
         self.inner
     }
@@ -13468,6 +13693,9 @@ impl<'a> PipelineDepthStencilStateCreateInfoBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PipelineDepthStencilStateCreateInfo {
         self.inner
     }
@@ -13664,6 +13892,9 @@ impl<'a> GraphicsPipelineCreateInfoBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> GraphicsPipelineCreateInfo {
         self.inner
     }
@@ -13740,6 +13971,9 @@ impl<'a> PipelineCacheCreateInfoBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PipelineCacheCreateInfo {
         self.inner
     }
@@ -13788,6 +14022,9 @@ impl<'a> PushConstantRangeBuilder<'a> {
         self.inner.size = size;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PushConstantRange {
         self.inner
     }
@@ -13882,6 +14119,9 @@ impl<'a> PipelineLayoutCreateInfoBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PipelineLayoutCreateInfo {
         self.inner
     }
@@ -14051,6 +14291,9 @@ impl<'a> SamplerCreateInfoBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> SamplerCreateInfo {
         self.inner
     }
@@ -14127,6 +14370,9 @@ impl<'a> CommandPoolCreateInfoBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> CommandPoolCreateInfo {
         self.inner
     }
@@ -14212,6 +14458,9 @@ impl<'a> CommandBufferAllocateInfoBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> CommandBufferAllocateInfo {
         self.inner
     }
@@ -14324,6 +14573,9 @@ impl<'a> CommandBufferInheritanceInfoBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> CommandBufferInheritanceInfo {
         self.inner
     }
@@ -14400,6 +14652,9 @@ impl<'a> CommandBufferBeginInfoBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> CommandBufferBeginInfo {
         self.inner
     }
@@ -14504,6 +14759,9 @@ impl<'a> RenderPassBeginInfoBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> RenderPassBeginInfo {
         self.inner
     }
@@ -14559,6 +14817,9 @@ impl<'a> ClearDepthStencilValueBuilder<'a> {
         self.inner.stencil = stencil;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ClearDepthStencilValue {
         self.inner
     }
@@ -14627,6 +14888,9 @@ impl<'a> ClearAttachmentBuilder<'a> {
         self.inner.clear_value = clear_value;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ClearAttachment {
         self.inner
     }
@@ -14714,6 +14978,9 @@ impl<'a> AttachmentDescriptionBuilder<'a> {
         self.inner.final_layout = final_layout;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> AttachmentDescription {
         self.inner
     }
@@ -14757,6 +15024,9 @@ impl<'a> AttachmentReferenceBuilder<'a> {
         self.inner.layout = layout;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> AttachmentReference {
         self.inner
     }
@@ -14866,6 +15136,9 @@ impl<'a> SubpassDescriptionBuilder<'a> {
         self.inner.p_preserve_attachments = preserve_attachments.as_ptr();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> SubpassDescription {
         self.inner
     }
@@ -14943,6 +15216,9 @@ impl<'a> SubpassDependencyBuilder<'a> {
         self.inner.dependency_flags = dependency_flags;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> SubpassDependency {
         self.inner
     }
@@ -15046,6 +15322,9 @@ impl<'a> RenderPassCreateInfoBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> RenderPassCreateInfo {
         self.inner
     }
@@ -15113,6 +15392,9 @@ impl<'a> EventCreateInfoBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> EventCreateInfo {
         self.inner
     }
@@ -15180,6 +15462,9 @@ impl<'a> FenceCreateInfoBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> FenceCreateInfo {
         self.inner
     }
@@ -15616,6 +15901,9 @@ impl<'a> PhysicalDeviceFeaturesBuilder<'a> {
         self.inner.inherited_queries = inherited_queries.into();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceFeatures {
         self.inner
     }
@@ -15690,6 +15978,9 @@ impl<'a> PhysicalDeviceSparsePropertiesBuilder<'a> {
         self.inner.residency_non_resident_strict = residency_non_resident_strict.into();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceSparseProperties {
         self.inner
     }
@@ -16686,6 +16977,9 @@ impl<'a> PhysicalDeviceLimitsBuilder<'a> {
         self.inner.non_coherent_atom_size = non_coherent_atom_size;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceLimits {
         self.inner
     }
@@ -16753,6 +17047,9 @@ impl<'a> SemaphoreCreateInfoBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> SemaphoreCreateInfo {
         self.inner
     }
@@ -16841,6 +17138,9 @@ impl<'a> QueryPoolCreateInfoBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> QueryPoolCreateInfo {
         self.inner
     }
@@ -16941,6 +17241,9 @@ impl<'a> FramebufferCreateInfoBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> FramebufferCreateInfo {
         self.inner
     }
@@ -16994,6 +17297,9 @@ impl<'a> DrawIndirectCommandBuilder<'a> {
         self.inner.first_instance = first_instance;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DrawIndirectCommand {
         self.inner
     }
@@ -17052,6 +17358,9 @@ impl<'a> DrawIndexedIndirectCommandBuilder<'a> {
         self.inner.first_instance = first_instance;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DrawIndexedIndirectCommand {
         self.inner
     }
@@ -17100,6 +17409,9 @@ impl<'a> DispatchIndirectCommandBuilder<'a> {
         self.inner.z = z;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DispatchIndirectCommand {
         self.inner
     }
@@ -17201,6 +17513,9 @@ impl<'a> SubmitInfoBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> SubmitInfo {
         self.inner
     }
@@ -17297,6 +17612,9 @@ impl<'a> DisplayPropertiesKHRBuilder<'a> {
         self.inner.persistent_content = persistent_content.into();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DisplayPropertiesKHR {
         self.inner
     }
@@ -17346,6 +17664,9 @@ impl<'a> DisplayPlanePropertiesKHRBuilder<'a> {
         self.inner.current_stack_index = current_stack_index;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DisplayPlanePropertiesKHR {
         self.inner
     }
@@ -17392,6 +17713,9 @@ impl<'a> DisplayModeParametersKHRBuilder<'a> {
         self.inner.refresh_rate = refresh_rate;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DisplayModeParametersKHR {
         self.inner
     }
@@ -17441,6 +17765,9 @@ impl<'a> DisplayModePropertiesKHRBuilder<'a> {
         self.inner.parameters = parameters;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DisplayModePropertiesKHR {
         self.inner
     }
@@ -17520,6 +17847,9 @@ impl<'a> DisplayModeCreateInfoKHRBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DisplayModeCreateInfoKHR {
         self.inner
     }
@@ -17625,6 +17955,9 @@ impl<'a> DisplayPlaneCapabilitiesKHRBuilder<'a> {
         self.inner.max_dst_extent = max_dst_extent;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DisplayPlaneCapabilitiesKHR {
         self.inner
     }
@@ -17752,6 +18085,9 @@ impl<'a> DisplaySurfaceCreateInfoKHRBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DisplaySurfaceCreateInfoKHR {
         self.inner
     }
@@ -17815,6 +18151,9 @@ impl<'a> DisplayPresentInfoKHRBuilder<'a> {
         self.inner.persistent = persistent.into();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DisplayPresentInfoKHR {
         self.inner
     }
@@ -17919,6 +18258,9 @@ impl<'a> SurfaceCapabilitiesKHRBuilder<'a> {
         self.inner.supported_usage_flags = supported_usage_flags;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> SurfaceCapabilitiesKHR {
         self.inner
     }
@@ -17995,6 +18337,9 @@ impl<'a> AndroidSurfaceCreateInfoKHRBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> AndroidSurfaceCreateInfoKHR {
         self.inner
     }
@@ -18068,6 +18413,9 @@ impl<'a> ViSurfaceCreateInfoNNBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ViSurfaceCreateInfoNN {
         self.inner
     }
@@ -18150,6 +18498,9 @@ impl<'a> WaylandSurfaceCreateInfoKHRBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> WaylandSurfaceCreateInfoKHR {
         self.inner
     }
@@ -18232,6 +18583,9 @@ impl<'a> Win32SurfaceCreateInfoKHRBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> Win32SurfaceCreateInfoKHR {
         self.inner
     }
@@ -18314,6 +18668,9 @@ impl<'a> XlibSurfaceCreateInfoKHRBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> XlibSurfaceCreateInfoKHR {
         self.inner
     }
@@ -18396,6 +18753,9 @@ impl<'a> XcbSurfaceCreateInfoKHRBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> XcbSurfaceCreateInfoKHR {
         self.inner
     }
@@ -18475,6 +18835,9 @@ impl<'a> ImagePipeSurfaceCreateInfoFUCHSIABuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ImagePipeSurfaceCreateInfoFUCHSIA {
         self.inner
     }
@@ -18518,6 +18881,9 @@ impl<'a> SurfaceFormatKHRBuilder<'a> {
         self.inner.color_space = color_space;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> SurfaceFormatKHR {
         self.inner
     }
@@ -18699,6 +19065,9 @@ impl<'a> SwapchainCreateInfoKHRBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> SwapchainCreateInfoKHR {
         self.inner
     }
@@ -18795,6 +19164,9 @@ impl<'a> PresentInfoKHRBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PresentInfoKHR {
         self.inner
     }
@@ -18878,6 +19250,9 @@ impl<'a> DebugReportCallbackCreateInfoEXTBuilder<'a> {
         self.inner.p_user_data = user_data;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DebugReportCallbackCreateInfoEXT {
         self.inner
     }
@@ -18935,6 +19310,9 @@ impl<'a> ValidationFlagsEXTBuilder<'a> {
         self.inner.p_disabled_validation_checks = disabled_validation_checks.as_ptr();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ValidationFlagsEXT {
         self.inner
     }
@@ -19004,6 +19382,9 @@ impl<'a> ValidationFeaturesEXTBuilder<'a> {
         self.inner.p_disabled_validation_features = disabled_validation_features.as_ptr();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ValidationFeaturesEXT {
         self.inner
     }
@@ -19064,6 +19445,9 @@ impl<'a> PipelineRasterizationStateRasterizationOrderAMDBuilder<'a> {
         self.inner.rasterization_order = rasterization_order;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PipelineRasterizationStateRasterizationOrderAMD {
         self.inner
     }
@@ -19149,6 +19533,9 @@ impl<'a> DebugMarkerObjectNameInfoEXTBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DebugMarkerObjectNameInfoEXT {
         self.inner
     }
@@ -19240,6 +19627,9 @@ impl<'a> DebugMarkerObjectTagInfoEXTBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DebugMarkerObjectTagInfoEXT {
         self.inner
     }
@@ -19316,6 +19706,9 @@ impl<'a> DebugMarkerMarkerInfoEXTBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DebugMarkerMarkerInfoEXT {
         self.inner
     }
@@ -19370,6 +19763,9 @@ impl<'a> DedicatedAllocationImageCreateInfoNVBuilder<'a> {
         self.inner.dedicated_allocation = dedicated_allocation.into();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DedicatedAllocationImageCreateInfoNV {
         self.inner
     }
@@ -19424,6 +19820,9 @@ impl<'a> DedicatedAllocationBufferCreateInfoNVBuilder<'a> {
         self.inner.dedicated_allocation = dedicated_allocation.into();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DedicatedAllocationBufferCreateInfoNV {
         self.inner
     }
@@ -19481,6 +19880,9 @@ impl<'a> DedicatedAllocationMemoryAllocateInfoNVBuilder<'a> {
         self.inner.buffer = buffer;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DedicatedAllocationMemoryAllocateInfoNV {
         self.inner
     }
@@ -19546,6 +19948,9 @@ impl<'a> ExternalImageFormatPropertiesNVBuilder<'a> {
         self.inner.compatible_handle_types = compatible_handle_types;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ExternalImageFormatPropertiesNV {
         self.inner
     }
@@ -19600,6 +20005,9 @@ impl<'a> ExternalMemoryImageCreateInfoNVBuilder<'a> {
         self.inner.handle_types = handle_types;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ExternalMemoryImageCreateInfoNV {
         self.inner
     }
@@ -19654,6 +20062,9 @@ impl<'a> ExportMemoryAllocateInfoNVBuilder<'a> {
         self.inner.handle_types = handle_types;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ExportMemoryAllocateInfoNV {
         self.inner
     }
@@ -19714,6 +20125,9 @@ impl<'a> ImportMemoryWin32HandleInfoNVBuilder<'a> {
         self.inner.handle = handle;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ImportMemoryWin32HandleInfoNV {
         self.inner
     }
@@ -19774,6 +20188,9 @@ impl<'a> ExportMemoryWin32HandleInfoNVBuilder<'a> {
         self.inner.dw_access = dw_access;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ExportMemoryWin32HandleInfoNV {
         self.inner
     }
@@ -19873,6 +20290,9 @@ impl<'a> Win32KeyedMutexAcquireReleaseInfoNVBuilder<'a> {
         self.inner.p_release_keys = release_keys.as_ptr();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> Win32KeyedMutexAcquireReleaseInfoNV {
         self.inner
     }
@@ -19943,6 +20363,9 @@ impl<'a> DeviceGeneratedCommandsFeaturesNVXBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DeviceGeneratedCommandsFeaturesNVX {
         self.inner
     }
@@ -20053,6 +20476,9 @@ impl<'a> DeviceGeneratedCommandsLimitsNVXBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DeviceGeneratedCommandsLimitsNVX {
         self.inner
     }
@@ -20104,6 +20530,9 @@ impl<'a> IndirectCommandsTokenNVXBuilder<'a> {
         self.inner.offset = offset;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> IndirectCommandsTokenNVX {
         self.inner
     }
@@ -20163,6 +20592,9 @@ impl<'a> IndirectCommandsLayoutTokenNVXBuilder<'a> {
         self.inner.divisor = divisor;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> IndirectCommandsLayoutTokenNVX {
         self.inner
     }
@@ -20254,6 +20686,9 @@ impl<'a> IndirectCommandsLayoutCreateInfoNVXBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> IndirectCommandsLayoutCreateInfoNVX {
         self.inner
     }
@@ -20399,6 +20834,9 @@ impl<'a> CmdProcessCommandsInfoNVXBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> CmdProcessCommandsInfoNVX {
         self.inner
     }
@@ -20487,6 +20925,9 @@ impl<'a> CmdReserveSpaceForCommandsInfoNVXBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> CmdReserveSpaceForCommandsInfoNVX {
         self.inner
     }
@@ -20625,6 +21066,9 @@ impl<'a> ObjectTableCreateInfoNVXBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ObjectTableCreateInfoNVX {
         self.inner
     }
@@ -20668,6 +21112,9 @@ impl<'a> ObjectTableEntryNVXBuilder<'a> {
         self.inner.flags = flags;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ObjectTableEntryNVX {
         self.inner
     }
@@ -20719,6 +21166,9 @@ impl<'a> ObjectTablePipelineEntryNVXBuilder<'a> {
         self.inner.pipeline = pipeline;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ObjectTablePipelineEntryNVX {
         self.inner
     }
@@ -20781,6 +21231,9 @@ impl<'a> ObjectTableDescriptorSetEntryNVXBuilder<'a> {
         self.inner.descriptor_set = descriptor_set;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ObjectTableDescriptorSetEntryNVX {
         self.inner
     }
@@ -20832,6 +21285,9 @@ impl<'a> ObjectTableVertexBufferEntryNVXBuilder<'a> {
         self.inner.buffer = buffer;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ObjectTableVertexBufferEntryNVX {
         self.inner
     }
@@ -20891,6 +21347,9 @@ impl<'a> ObjectTableIndexBufferEntryNVXBuilder<'a> {
         self.inner.index_type = index_type;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ObjectTableIndexBufferEntryNVX {
         self.inner
     }
@@ -20953,6 +21412,9 @@ impl<'a> ObjectTablePushConstantEntryNVXBuilder<'a> {
         self.inner.stage_flags = stage_flags;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ObjectTablePushConstantEntryNVX {
         self.inner
     }
@@ -21007,6 +21469,9 @@ impl<'a> PhysicalDeviceFeatures2Builder<'a> {
         self.inner.features = features;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceFeatures2 {
         self.inner
     }
@@ -21077,6 +21542,9 @@ impl<'a> PhysicalDeviceProperties2Builder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceProperties2 {
         self.inner
     }
@@ -21147,6 +21615,9 @@ impl<'a> FormatProperties2Builder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> FormatProperties2 {
         self.inner
     }
@@ -21217,6 +21688,9 @@ impl<'a> ImageFormatProperties2Builder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ImageFormatProperties2 {
         self.inner
     }
@@ -21308,6 +21782,9 @@ impl<'a> PhysicalDeviceImageFormatInfo2Builder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceImageFormatInfo2 {
         self.inner
     }
@@ -21378,6 +21855,9 @@ impl<'a> QueueFamilyProperties2Builder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> QueueFamilyProperties2 {
         self.inner
     }
@@ -21448,6 +21928,9 @@ impl<'a> PhysicalDeviceMemoryProperties2Builder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceMemoryProperties2 {
         self.inner
     }
@@ -21518,6 +22001,9 @@ impl<'a> SparseImageFormatProperties2Builder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> SparseImageFormatProperties2 {
         self.inner
     }
@@ -21618,6 +22104,9 @@ impl<'a> PhysicalDeviceSparseImageFormatInfo2Builder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceSparseImageFormatInfo2 {
         self.inner
     }
@@ -21675,6 +22164,9 @@ impl<'a> PhysicalDevicePushDescriptorPropertiesKHRBuilder<'a> {
         self.inner.max_push_descriptors = max_push_descriptors;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDevicePushDescriptorPropertiesKHR {
         self.inner
     }
@@ -21728,6 +22220,9 @@ impl<'a> ConformanceVersionKHRBuilder<'a> {
         self.inner.patch = patch;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ConformanceVersionKHR {
         self.inner
     }
@@ -21825,6 +22320,9 @@ impl<'a> PhysicalDeviceDriverPropertiesKHRBuilder<'a> {
         self.inner.conformance_version = conformance_version;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceDriverPropertiesKHR {
         self.inner
     }
@@ -21879,6 +22377,9 @@ impl<'a> PresentRegionsKHRBuilder<'a> {
         self.inner.p_regions = regions.as_ptr();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PresentRegionsKHR {
         self.inner
     }
@@ -21927,6 +22428,9 @@ impl<'a> PresentRegionKHRBuilder<'a> {
         self.inner.p_rectangles = rectangles.as_ptr();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PresentRegionKHR {
         self.inner
     }
@@ -21975,6 +22479,9 @@ impl<'a> RectLayerKHRBuilder<'a> {
         self.inner.layer = layer;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> RectLayerKHR {
         self.inner
     }
@@ -22038,6 +22545,9 @@ impl<'a> PhysicalDeviceVariablePointerFeaturesBuilder<'a> {
         self.inner.variable_pointers = variable_pointers.into();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceVariablePointerFeatures {
         self.inner
     }
@@ -22095,6 +22605,9 @@ impl<'a> ExternalMemoryPropertiesBuilder<'a> {
         self.inner.compatible_handle_types = compatible_handle_types;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ExternalMemoryProperties {
         self.inner
     }
@@ -22152,6 +22665,9 @@ impl<'a> PhysicalDeviceExternalImageFormatInfoBuilder<'a> {
         self.inner.handle_type = handle_type;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceExternalImageFormatInfo {
         self.inner
     }
@@ -22206,6 +22722,9 @@ impl<'a> ExternalImageFormatPropertiesBuilder<'a> {
         self.inner.external_memory_properties = external_memory_properties;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ExternalImageFormatProperties {
         self.inner
     }
@@ -22291,6 +22810,9 @@ impl<'a> PhysicalDeviceExternalBufferInfoBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceExternalBufferInfo {
         self.inner
     }
@@ -22361,6 +22883,9 @@ impl<'a> ExternalBufferPropertiesBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ExternalBufferProperties {
         self.inner
     }
@@ -22451,6 +22976,9 @@ impl<'a> PhysicalDeviceIDPropertiesBuilder<'a> {
         self.inner.device_luid_valid = device_luid_valid.into();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceIDProperties {
         self.inner
     }
@@ -22505,6 +23033,9 @@ impl<'a> ExternalMemoryImageCreateInfoBuilder<'a> {
         self.inner.handle_types = handle_types;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ExternalMemoryImageCreateInfo {
         self.inner
     }
@@ -22559,6 +23090,9 @@ impl<'a> ExternalMemoryBufferCreateInfoBuilder<'a> {
         self.inner.handle_types = handle_types;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ExternalMemoryBufferCreateInfo {
         self.inner
     }
@@ -22613,6 +23147,9 @@ impl<'a> ExportMemoryAllocateInfoBuilder<'a> {
         self.inner.handle_types = handle_types;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ExportMemoryAllocateInfo {
         self.inner
     }
@@ -22679,6 +23216,9 @@ impl<'a> ImportMemoryWin32HandleInfoKHRBuilder<'a> {
         self.inner.name = name;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ImportMemoryWin32HandleInfoKHR {
         self.inner
     }
@@ -22745,6 +23285,9 @@ impl<'a> ExportMemoryWin32HandleInfoKHRBuilder<'a> {
         self.inner.name = name;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ExportMemoryWin32HandleInfoKHR {
         self.inner
     }
@@ -22815,6 +23358,9 @@ impl<'a> MemoryWin32HandlePropertiesKHRBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> MemoryWin32HandlePropertiesKHR {
         self.inner
     }
@@ -22891,6 +23437,9 @@ impl<'a> MemoryGetWin32HandleInfoKHRBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> MemoryGetWin32HandleInfoKHR {
         self.inner
     }
@@ -22951,6 +23500,9 @@ impl<'a> ImportMemoryFdInfoKHRBuilder<'a> {
         self.inner.fd = fd;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ImportMemoryFdInfoKHR {
         self.inner
     }
@@ -23018,6 +23570,9 @@ impl<'a> MemoryFdPropertiesKHRBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> MemoryFdPropertiesKHR {
         self.inner
     }
@@ -23094,6 +23649,9 @@ impl<'a> MemoryGetFdInfoKHRBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> MemoryGetFdInfoKHR {
         self.inner
     }
@@ -23193,6 +23751,9 @@ impl<'a> Win32KeyedMutexAcquireReleaseInfoKHRBuilder<'a> {
         self.inner.p_release_keys = release_keys.as_ptr();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> Win32KeyedMutexAcquireReleaseInfoKHR {
         self.inner
     }
@@ -23263,6 +23824,9 @@ impl<'a> PhysicalDeviceExternalSemaphoreInfoBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceExternalSemaphoreInfo {
         self.inner
     }
@@ -23351,6 +23915,9 @@ impl<'a> ExternalSemaphorePropertiesBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ExternalSemaphoreProperties {
         self.inner
     }
@@ -23405,6 +23972,9 @@ impl<'a> ExportSemaphoreCreateInfoBuilder<'a> {
         self.inner.handle_types = handle_types;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ExportSemaphoreCreateInfo {
         self.inner
     }
@@ -23505,6 +24075,9 @@ impl<'a> ImportSemaphoreWin32HandleInfoKHRBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ImportSemaphoreWin32HandleInfoKHR {
         self.inner
     }
@@ -23571,6 +24144,9 @@ impl<'a> ExportSemaphoreWin32HandleInfoKHRBuilder<'a> {
         self.inner.name = name;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ExportSemaphoreWin32HandleInfoKHR {
         self.inner
     }
@@ -23640,6 +24216,9 @@ impl<'a> D3D12FenceSubmitInfoKHRBuilder<'a> {
         self.inner.p_signal_semaphore_values = signal_semaphore_values.as_ptr();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> D3D12FenceSubmitInfoKHR {
         self.inner
     }
@@ -23716,6 +24295,9 @@ impl<'a> SemaphoreGetWin32HandleInfoKHRBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> SemaphoreGetWin32HandleInfoKHR {
         self.inner
     }
@@ -23804,6 +24386,9 @@ impl<'a> ImportSemaphoreFdInfoKHRBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ImportSemaphoreFdInfoKHR {
         self.inner
     }
@@ -23880,6 +24465,9 @@ impl<'a> SemaphoreGetFdInfoKHRBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> SemaphoreGetFdInfoKHR {
         self.inner
     }
@@ -23950,6 +24538,9 @@ impl<'a> PhysicalDeviceExternalFenceInfoBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceExternalFenceInfo {
         self.inner
     }
@@ -24038,6 +24629,9 @@ impl<'a> ExternalFencePropertiesBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ExternalFenceProperties {
         self.inner
     }
@@ -24092,6 +24686,9 @@ impl<'a> ExportFenceCreateInfoBuilder<'a> {
         self.inner.handle_types = handle_types;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ExportFenceCreateInfo {
         self.inner
     }
@@ -24186,6 +24783,9 @@ impl<'a> ImportFenceWin32HandleInfoKHRBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ImportFenceWin32HandleInfoKHR {
         self.inner
     }
@@ -24252,6 +24852,9 @@ impl<'a> ExportFenceWin32HandleInfoKHRBuilder<'a> {
         self.inner.name = name;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ExportFenceWin32HandleInfoKHR {
         self.inner
     }
@@ -24328,6 +24931,9 @@ impl<'a> FenceGetWin32HandleInfoKHRBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> FenceGetWin32HandleInfoKHR {
         self.inner
     }
@@ -24416,6 +25022,9 @@ impl<'a> ImportFenceFdInfoKHRBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ImportFenceFdInfoKHR {
         self.inner
     }
@@ -24492,6 +25101,9 @@ impl<'a> FenceGetFdInfoKHRBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> FenceGetFdInfoKHR {
         self.inner
     }
@@ -24561,6 +25173,9 @@ impl<'a> PhysicalDeviceMultiviewFeaturesBuilder<'a> {
         self.inner.multiview_tessellation_shader = multiview_tessellation_shader.into();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceMultiviewFeatures {
         self.inner
     }
@@ -24624,6 +25239,9 @@ impl<'a> PhysicalDeviceMultiviewPropertiesBuilder<'a> {
         self.inner.max_multiview_instance_index = max_multiview_instance_index;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceMultiviewProperties {
         self.inner
     }
@@ -24702,6 +25320,9 @@ impl<'a> RenderPassMultiviewCreateInfoBuilder<'a> {
         self.inner.p_correlation_masks = correlation_masks.as_ptr();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> RenderPassMultiviewCreateInfo {
         self.inner
     }
@@ -24856,6 +25477,9 @@ impl<'a> SurfaceCapabilities2EXTBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> SurfaceCapabilities2EXT {
         self.inner
     }
@@ -24926,6 +25550,9 @@ impl<'a> DisplayPowerInfoEXTBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DisplayPowerInfoEXT {
         self.inner
     }
@@ -24996,6 +25623,9 @@ impl<'a> DeviceEventInfoEXTBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DeviceEventInfoEXT {
         self.inner
     }
@@ -25066,6 +25696,9 @@ impl<'a> DisplayEventInfoEXTBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DisplayEventInfoEXT {
         self.inner
     }
@@ -25120,6 +25753,9 @@ impl<'a> SwapchainCounterCreateInfoEXTBuilder<'a> {
         self.inner.surface_counters = surface_counters;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> SwapchainCounterCreateInfoEXT {
         self.inner
     }
@@ -25208,6 +25844,9 @@ impl<'a> PhysicalDeviceGroupPropertiesBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceGroupProperties {
         self.inner
     }
@@ -25265,6 +25904,9 @@ impl<'a> MemoryAllocateFlagsInfoBuilder<'a> {
         self.inner.device_mask = device_mask;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> MemoryAllocateFlagsInfo {
         self.inner
     }
@@ -25344,6 +25986,9 @@ impl<'a> BindBufferMemoryInfoBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> BindBufferMemoryInfo {
         self.inner
     }
@@ -25401,6 +26046,9 @@ impl<'a> BindBufferMemoryDeviceGroupInfoBuilder<'a> {
         self.inner.p_device_indices = device_indices.as_ptr();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> BindBufferMemoryDeviceGroupInfo {
         self.inner
     }
@@ -25480,6 +26128,9 @@ impl<'a> BindImageMemoryInfoBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> BindImageMemoryInfo {
         self.inner
     }
@@ -25549,6 +26200,9 @@ impl<'a> BindImageMemoryDeviceGroupInfoBuilder<'a> {
         self.inner.p_split_instance_bind_regions = split_instance_bind_regions.as_ptr();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> BindImageMemoryDeviceGroupInfo {
         self.inner
     }
@@ -25612,6 +26266,9 @@ impl<'a> DeviceGroupRenderPassBeginInfoBuilder<'a> {
         self.inner.p_device_render_areas = device_render_areas.as_ptr();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DeviceGroupRenderPassBeginInfo {
         self.inner
     }
@@ -25663,6 +26320,9 @@ impl<'a> DeviceGroupCommandBufferBeginInfoBuilder<'a> {
         self.inner.device_mask = device_mask;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DeviceGroupCommandBufferBeginInfo {
         self.inner
     }
@@ -25744,6 +26404,9 @@ impl<'a> DeviceGroupSubmitInfoBuilder<'a> {
         self.inner.p_signal_semaphore_device_indices = signal_semaphore_device_indices.as_ptr();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DeviceGroupSubmitInfo {
         self.inner
     }
@@ -25807,6 +26470,9 @@ impl<'a> DeviceGroupBindSparseInfoBuilder<'a> {
         self.inner.memory_device_index = memory_device_index;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DeviceGroupBindSparseInfo {
         self.inner
     }
@@ -25886,6 +26552,9 @@ impl<'a> DeviceGroupPresentCapabilitiesKHRBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DeviceGroupPresentCapabilitiesKHR {
         self.inner
     }
@@ -25937,6 +26606,9 @@ impl<'a> ImageSwapchainCreateInfoKHRBuilder<'a> {
         self.inner.swapchain = swapchain;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ImageSwapchainCreateInfoKHR {
         self.inner
     }
@@ -25997,6 +26669,9 @@ impl<'a> BindImageMemorySwapchainInfoKHRBuilder<'a> {
         self.inner.image_index = image_index;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> BindImageMemorySwapchainInfoKHR {
         self.inner
     }
@@ -26088,6 +26763,9 @@ impl<'a> AcquireNextImageInfoKHRBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> AcquireNextImageInfoKHR {
         self.inner
     }
@@ -26151,6 +26829,9 @@ impl<'a> DeviceGroupPresentInfoKHRBuilder<'a> {
         self.inner.mode = mode;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DeviceGroupPresentInfoKHR {
         self.inner
     }
@@ -26208,6 +26889,9 @@ impl<'a> DeviceGroupDeviceCreateInfoBuilder<'a> {
         self.inner.p_physical_devices = physical_devices.as_ptr();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DeviceGroupDeviceCreateInfo {
         self.inner
     }
@@ -26262,6 +26946,9 @@ impl<'a> DeviceGroupSwapchainCreateInfoKHRBuilder<'a> {
         self.inner.modes = modes;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DeviceGroupSwapchainCreateInfoKHR {
         self.inner
     }
@@ -26334,6 +27021,9 @@ impl<'a> DescriptorUpdateTemplateEntryBuilder<'a> {
         self.inner.stride = stride;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DescriptorUpdateTemplateEntry {
         self.inner
     }
@@ -26458,6 +27148,9 @@ impl<'a> DescriptorUpdateTemplateCreateInfoBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DescriptorUpdateTemplateCreateInfo {
         self.inner
     }
@@ -26501,6 +27194,9 @@ impl<'a> XYColorEXTBuilder<'a> {
         self.inner.y = y;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> XYColorEXT {
         self.inner
     }
@@ -26625,6 +27321,9 @@ impl<'a> HdrMetadataEXTBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> HdrMetadataEXT {
         self.inner
     }
@@ -26666,6 +27365,9 @@ impl<'a> RefreshCycleDurationGOOGLEBuilder<'a> {
         self.inner.refresh_duration = refresh_duration;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> RefreshCycleDurationGOOGLE {
         self.inner
     }
@@ -26736,6 +27438,9 @@ impl<'a> PastPresentationTimingGOOGLEBuilder<'a> {
         self.inner.present_margin = present_margin;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PastPresentationTimingGOOGLE {
         self.inner
     }
@@ -26790,6 +27495,9 @@ impl<'a> PresentTimesInfoGOOGLEBuilder<'a> {
         self.inner.p_times = times.as_ptr();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PresentTimesInfoGOOGLE {
         self.inner
     }
@@ -26836,6 +27544,9 @@ impl<'a> PresentTimeGOOGLEBuilder<'a> {
         self.inner.desired_present_time = desired_present_time;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PresentTimeGOOGLE {
         self.inner
     }
@@ -26909,6 +27620,9 @@ impl<'a> IOSSurfaceCreateInfoMVKBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> IOSSurfaceCreateInfoMVK {
         self.inner
     }
@@ -26985,6 +27699,9 @@ impl<'a> MacOSSurfaceCreateInfoMVKBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> MacOSSurfaceCreateInfoMVK {
         self.inner
     }
@@ -27028,6 +27745,9 @@ impl<'a> ViewportWScalingNVBuilder<'a> {
         self.inner.ycoeff = ycoeff;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ViewportWScalingNV {
         self.inner
     }
@@ -27097,6 +27817,9 @@ impl<'a> PipelineViewportWScalingStateCreateInfoNVBuilder<'a> {
         self.inner.p_viewport_w_scalings = viewport_w_scalings.as_ptr();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PipelineViewportWScalingStateCreateInfoNV {
         self.inner
     }
@@ -27150,6 +27873,9 @@ impl<'a> ViewportSwizzleNVBuilder<'a> {
         self.inner.w = w;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ViewportSwizzleNV {
         self.inner
     }
@@ -27219,6 +27945,9 @@ impl<'a> PipelineViewportSwizzleStateCreateInfoNVBuilder<'a> {
         self.inner.p_viewport_swizzles = viewport_swizzles.as_ptr();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PipelineViewportSwizzleStateCreateInfoNV {
         self.inner
     }
@@ -27276,6 +28005,9 @@ impl<'a> PhysicalDeviceDiscardRectanglePropertiesEXTBuilder<'a> {
         self.inner.max_discard_rectangles = max_discard_rectangles;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceDiscardRectanglePropertiesEXT {
         self.inner
     }
@@ -27354,6 +28086,9 @@ impl<'a> PipelineDiscardRectangleStateCreateInfoEXTBuilder<'a> {
         self.inner.p_discard_rectangles = discard_rectangles.as_ptr();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PipelineDiscardRectangleStateCreateInfoEXT {
         self.inner
     }
@@ -27414,6 +28149,9 @@ impl<'a> PhysicalDeviceMultiviewPerViewAttributesPropertiesNVXBuilder<'a> {
         self.inner.per_view_position_all_components = per_view_position_all_components.into();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX {
         self.inner
     }
@@ -27468,6 +28206,9 @@ impl<'a> InputAttachmentAspectReferenceBuilder<'a> {
         self.inner.aspect_mask = aspect_mask;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> InputAttachmentAspectReference {
         self.inner
     }
@@ -27525,6 +28266,9 @@ impl<'a> RenderPassInputAttachmentAspectCreateInfoBuilder<'a> {
         self.inner.p_aspect_references = aspect_references.as_ptr();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> RenderPassInputAttachmentAspectCreateInfo {
         self.inner
     }
@@ -27592,6 +28336,9 @@ impl<'a> PhysicalDeviceSurfaceInfo2KHRBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceSurfaceInfo2KHR {
         self.inner
     }
@@ -27662,6 +28409,9 @@ impl<'a> SurfaceCapabilities2KHRBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> SurfaceCapabilities2KHR {
         self.inner
     }
@@ -27732,6 +28482,9 @@ impl<'a> SurfaceFormat2KHRBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> SurfaceFormat2KHR {
         self.inner
     }
@@ -27802,6 +28555,9 @@ impl<'a> DisplayProperties2KHRBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DisplayProperties2KHR {
         self.inner
     }
@@ -27872,6 +28628,9 @@ impl<'a> DisplayPlaneProperties2KHRBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DisplayPlaneProperties2KHR {
         self.inner
     }
@@ -27942,6 +28701,9 @@ impl<'a> DisplayModeProperties2KHRBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DisplayModeProperties2KHR {
         self.inner
     }
@@ -28015,6 +28777,9 @@ impl<'a> DisplayPlaneInfo2KHRBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DisplayPlaneInfo2KHR {
         self.inner
     }
@@ -28085,6 +28850,9 @@ impl<'a> DisplayPlaneCapabilities2KHRBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DisplayPlaneCapabilities2KHR {
         self.inner
     }
@@ -28139,6 +28907,9 @@ impl<'a> SharedPresentSurfaceCapabilitiesKHRBuilder<'a> {
         self.inner.shared_present_supported_usage_flags = shared_present_supported_usage_flags;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> SharedPresentSurfaceCapabilitiesKHR {
         self.inner
     }
@@ -28221,6 +28992,9 @@ impl<'a> PhysicalDevice16BitStorageFeaturesBuilder<'a> {
         self.inner.storage_input_output16 = storage_input_output16.into();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDevice16BitStorageFeatures {
         self.inner
     }
@@ -28302,6 +29076,9 @@ impl<'a> PhysicalDeviceSubgroupPropertiesBuilder<'a> {
         self.inner.quad_operations_in_all_stages = quad_operations_in_all_stages.into();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceSubgroupProperties {
         self.inner
     }
@@ -28369,6 +29146,9 @@ impl<'a> BufferMemoryRequirementsInfo2Builder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> BufferMemoryRequirementsInfo2 {
         self.inner
     }
@@ -28436,6 +29216,9 @@ impl<'a> ImageMemoryRequirementsInfo2Builder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ImageMemoryRequirementsInfo2 {
         self.inner
     }
@@ -28503,6 +29286,9 @@ impl<'a> ImageSparseMemoryRequirementsInfo2Builder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ImageSparseMemoryRequirementsInfo2 {
         self.inner
     }
@@ -28573,6 +29359,9 @@ impl<'a> MemoryRequirements2Builder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> MemoryRequirements2 {
         self.inner
     }
@@ -28643,6 +29432,9 @@ impl<'a> SparseImageMemoryRequirements2Builder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> SparseImageMemoryRequirements2 {
         self.inner
     }
@@ -28697,6 +29489,9 @@ impl<'a> PhysicalDevicePointClippingPropertiesBuilder<'a> {
         self.inner.point_clipping_behavior = point_clipping_behavior;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDevicePointClippingProperties {
         self.inner
     }
@@ -28760,6 +29555,9 @@ impl<'a> MemoryDedicatedRequirementsBuilder<'a> {
         self.inner.requires_dedicated_allocation = requires_dedicated_allocation.into();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> MemoryDedicatedRequirements {
         self.inner
     }
@@ -28817,6 +29615,9 @@ impl<'a> MemoryDedicatedAllocateInfoBuilder<'a> {
         self.inner.buffer = buffer;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> MemoryDedicatedAllocateInfo {
         self.inner
     }
@@ -28868,6 +29669,9 @@ impl<'a> ImageViewUsageCreateInfoBuilder<'a> {
         self.inner.usage = usage;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ImageViewUsageCreateInfo {
         self.inner
     }
@@ -28928,6 +29732,9 @@ impl<'a> PipelineTessellationDomainOriginStateCreateInfoBuilder<'a> {
         self.inner.domain_origin = domain_origin;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PipelineTessellationDomainOriginStateCreateInfo {
         self.inner
     }
@@ -28984,6 +29791,9 @@ impl<'a> SamplerYcbcrConversionInfoBuilder<'a> {
         self.inner.conversion = conversion;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> SamplerYcbcrConversionInfo {
         self.inner
     }
@@ -29114,6 +29924,9 @@ impl<'a> SamplerYcbcrConversionCreateInfoBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> SamplerYcbcrConversionCreateInfo {
         self.inner
     }
@@ -29168,6 +29981,9 @@ impl<'a> BindImagePlaneMemoryInfoBuilder<'a> {
         self.inner.plane_aspect = plane_aspect;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> BindImagePlaneMemoryInfo {
         self.inner
     }
@@ -29222,6 +30038,9 @@ impl<'a> ImagePlaneMemoryRequirementsInfoBuilder<'a> {
         self.inner.plane_aspect = plane_aspect;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ImagePlaneMemoryRequirementsInfo {
         self.inner
     }
@@ -29276,6 +30095,9 @@ impl<'a> PhysicalDeviceSamplerYcbcrConversionFeaturesBuilder<'a> {
         self.inner.sampler_ycbcr_conversion = sampler_ycbcr_conversion.into();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceSamplerYcbcrConversionFeatures {
         self.inner
     }
@@ -29334,6 +30156,9 @@ impl<'a> SamplerYcbcrConversionImageFormatPropertiesBuilder<'a> {
             combined_image_sampler_descriptor_count;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> SamplerYcbcrConversionImageFormatProperties {
         self.inner
     }
@@ -29389,6 +30214,9 @@ impl<'a> TextureLODGatherFormatPropertiesAMDBuilder<'a> {
             supports_texture_gather_lod_bias_amd.into();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> TextureLODGatherFormatPropertiesAMD {
         self.inner
     }
@@ -29471,6 +30299,9 @@ impl<'a> ConditionalRenderingBeginInfoEXTBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ConditionalRenderingBeginInfoEXT {
         self.inner
     }
@@ -29522,6 +30353,9 @@ impl<'a> ProtectedSubmitInfoBuilder<'a> {
         self.inner.protected_submit = protected_submit.into();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ProtectedSubmitInfo {
         self.inner
     }
@@ -29576,6 +30410,9 @@ impl<'a> PhysicalDeviceProtectedMemoryFeaturesBuilder<'a> {
         self.inner.protected_memory = protected_memory.into();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceProtectedMemoryFeatures {
         self.inner
     }
@@ -29633,6 +30470,9 @@ impl<'a> PhysicalDeviceProtectedMemoryPropertiesBuilder<'a> {
         self.inner.protected_no_fault = protected_no_fault.into();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceProtectedMemoryProperties {
         self.inner
     }
@@ -29712,6 +30552,9 @@ impl<'a> DeviceQueueInfo2Builder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DeviceQueueInfo2 {
         self.inner
     }
@@ -29787,6 +30630,9 @@ impl<'a> PipelineCoverageToColorStateCreateInfoNVBuilder<'a> {
         self.inner.coverage_to_color_location = coverage_to_color_location;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PipelineCoverageToColorStateCreateInfoNV {
         self.inner
     }
@@ -29855,6 +30701,9 @@ impl<'a> PhysicalDeviceSamplerFilterMinmaxPropertiesEXTBuilder<'a> {
             filter_minmax_image_component_mapping.into();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceSamplerFilterMinmaxPropertiesEXT {
         self.inner
     }
@@ -29898,6 +30747,9 @@ impl<'a> SampleLocationEXTBuilder<'a> {
         self.inner.y = y;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> SampleLocationEXT {
         self.inner
     }
@@ -29973,6 +30825,9 @@ impl<'a> SampleLocationsInfoEXTBuilder<'a> {
         self.inner.p_sample_locations = sample_locations.as_ptr();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> SampleLocationsInfoEXT {
         self.inner
     }
@@ -30022,6 +30877,9 @@ impl<'a> AttachmentSampleLocationsEXTBuilder<'a> {
         self.inner.sample_locations_info = sample_locations_info;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> AttachmentSampleLocationsEXT {
         self.inner
     }
@@ -30068,6 +30926,9 @@ impl<'a> SubpassSampleLocationsEXTBuilder<'a> {
         self.inner.sample_locations_info = sample_locations_info;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> SubpassSampleLocationsEXT {
         self.inner
     }
@@ -30139,6 +31000,9 @@ impl<'a> RenderPassSampleLocationsBeginInfoEXTBuilder<'a> {
         self.inner.p_post_subpass_sample_locations = post_subpass_sample_locations.as_ptr();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> RenderPassSampleLocationsBeginInfoEXT {
         self.inner
     }
@@ -30208,6 +31072,9 @@ impl<'a> PipelineSampleLocationsStateCreateInfoEXTBuilder<'a> {
         self.inner.sample_locations_info = sample_locations_info;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PipelineSampleLocationsStateCreateInfoEXT {
         self.inner
     }
@@ -30301,6 +31168,9 @@ impl<'a> PhysicalDeviceSampleLocationsPropertiesEXTBuilder<'a> {
         self.inner.variable_sample_locations = variable_sample_locations.into();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceSampleLocationsPropertiesEXT {
         self.inner
     }
@@ -30371,6 +31241,9 @@ impl<'a> MultisamplePropertiesEXTBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> MultisamplePropertiesEXT {
         self.inner
     }
@@ -30425,6 +31298,9 @@ impl<'a> SamplerReductionModeCreateInfoEXTBuilder<'a> {
         self.inner.reduction_mode = reduction_mode;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> SamplerReductionModeCreateInfoEXT {
         self.inner
     }
@@ -30479,6 +31355,9 @@ impl<'a> PhysicalDeviceBlendOperationAdvancedFeaturesEXTBuilder<'a> {
         self.inner.advanced_blend_coherent_operations = advanced_blend_coherent_operations.into();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceBlendOperationAdvancedFeaturesEXT {
         self.inner
     }
@@ -30583,6 +31462,9 @@ impl<'a> PhysicalDeviceBlendOperationAdvancedPropertiesEXTBuilder<'a> {
         self.inner.advanced_blend_all_operations = advanced_blend_all_operations.into();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceBlendOperationAdvancedPropertiesEXT {
         self.inner
     }
@@ -30661,6 +31543,9 @@ impl<'a> PipelineColorBlendAdvancedStateCreateInfoEXTBuilder<'a> {
         self.inner.blend_overlap = blend_overlap;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PipelineColorBlendAdvancedStateCreateInfoEXT {
         self.inner
     }
@@ -30726,6 +31611,9 @@ impl<'a> PhysicalDeviceInlineUniformBlockFeaturesEXTBuilder<'a> {
             descriptor_binding_inline_uniform_block_update_after_bind.into();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceInlineUniformBlockFeaturesEXT {
         self.inner
     }
@@ -30825,6 +31713,9 @@ impl<'a> PhysicalDeviceInlineUniformBlockPropertiesEXTBuilder<'a> {
             max_descriptor_set_update_after_bind_inline_uniform_blocks;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceInlineUniformBlockPropertiesEXT {
         self.inner
     }
@@ -30879,6 +31770,9 @@ impl<'a> WriteDescriptorSetInlineUniformBlockEXTBuilder<'a> {
         self.inner.p_data = data.as_ptr() as *const c_void;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> WriteDescriptorSetInlineUniformBlockEXT {
         self.inner
     }
@@ -30936,6 +31830,9 @@ impl<'a> DescriptorPoolInlineUniformBlockCreateInfoEXTBuilder<'a> {
         self.inner.max_inline_uniform_block_bindings = max_inline_uniform_block_bindings;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DescriptorPoolInlineUniformBlockCreateInfoEXT {
         self.inner
     }
@@ -31026,6 +31923,9 @@ impl<'a> PipelineCoverageModulationStateCreateInfoNVBuilder<'a> {
         self.inner.p_coverage_modulation_table = coverage_modulation_table.as_ptr();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PipelineCoverageModulationStateCreateInfoNV {
         self.inner
     }
@@ -31087,6 +31987,9 @@ impl<'a> ImageFormatListCreateInfoKHRBuilder<'a> {
         self.inner.p_view_formats = view_formats.as_ptr();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ImageFormatListCreateInfoKHR {
         self.inner
     }
@@ -31169,6 +32072,9 @@ impl<'a> ValidationCacheCreateInfoEXTBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ValidationCacheCreateInfoEXT {
         self.inner
     }
@@ -31223,6 +32129,9 @@ impl<'a> ShaderModuleValidationCacheCreateInfoEXTBuilder<'a> {
         self.inner.validation_cache = validation_cache;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ShaderModuleValidationCacheCreateInfoEXT {
         self.inner
     }
@@ -31286,6 +32195,9 @@ impl<'a> PhysicalDeviceMaintenance3PropertiesBuilder<'a> {
         self.inner.max_memory_allocation_size = max_memory_allocation_size;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceMaintenance3Properties {
         self.inner
     }
@@ -31353,6 +32265,9 @@ impl<'a> DescriptorSetLayoutSupportBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DescriptorSetLayoutSupport {
         self.inner
     }
@@ -31407,6 +32322,9 @@ impl<'a> PhysicalDeviceShaderDrawParameterFeaturesBuilder<'a> {
         self.inner.shader_draw_parameters = shader_draw_parameters.into();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceShaderDrawParameterFeatures {
         self.inner
     }
@@ -31470,6 +32388,9 @@ impl<'a> PhysicalDeviceFloat16Int8FeaturesKHRBuilder<'a> {
         self.inner.shader_int8 = shader_int8.into();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceFloat16Int8FeaturesKHR {
         self.inner
     }
@@ -31674,6 +32595,9 @@ impl<'a> PhysicalDeviceFloatControlsPropertiesKHRBuilder<'a> {
         self.inner.shader_rounding_mode_rtz_float64 = shader_rounding_mode_rtz_float64.into();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceFloatControlsPropertiesKHR {
         self.inner
     }
@@ -31759,6 +32683,9 @@ impl<'a> NativeBufferANDROIDBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> NativeBufferANDROID {
         self.inner
     }
@@ -31826,6 +32753,9 @@ impl<'a> ShaderResourceUsageAMDBuilder<'a> {
         self.inner.scratch_mem_usage_in_bytes = scratch_mem_usage_in_bytes;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ShaderResourceUsageAMD {
         self.inner
     }
@@ -31928,6 +32858,9 @@ impl<'a> ShaderStatisticsInfoAMDBuilder<'a> {
         self.inner.compute_work_group_size = compute_work_group_size;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ShaderStatisticsInfoAMD {
         self.inner
     }
@@ -31982,6 +32915,9 @@ impl<'a> DeviceQueueGlobalPriorityCreateInfoEXTBuilder<'a> {
         self.inner.global_priority = global_priority;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DeviceQueueGlobalPriorityCreateInfoEXT {
         self.inner
     }
@@ -32067,6 +33003,9 @@ impl<'a> DebugUtilsObjectNameInfoEXTBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DebugUtilsObjectNameInfoEXT {
         self.inner
     }
@@ -32155,6 +33094,9 @@ impl<'a> DebugUtilsObjectTagInfoEXTBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DebugUtilsObjectTagInfoEXT {
         self.inner
     }
@@ -32228,6 +33170,9 @@ impl<'a> DebugUtilsLabelEXTBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DebugUtilsLabelEXT {
         self.inner
     }
@@ -32334,6 +33279,9 @@ impl<'a> DebugUtilsMessengerCreateInfoEXTBuilder<'a> {
         self.inner.p_user_data = user_data;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DebugUtilsMessengerCreateInfoEXT {
         self.inner
     }
@@ -32467,6 +33415,9 @@ impl<'a> DebugUtilsMessengerCallbackDataEXTBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DebugUtilsMessengerCallbackDataEXT {
         self.inner
     }
@@ -32530,6 +33481,9 @@ impl<'a> ImportMemoryHostPointerInfoEXTBuilder<'a> {
         self.inner.p_host_pointer = host_pointer;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ImportMemoryHostPointerInfoEXT {
         self.inner
     }
@@ -32600,6 +33554,9 @@ impl<'a> MemoryHostPointerPropertiesEXTBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> MemoryHostPointerPropertiesEXT {
         self.inner
     }
@@ -32657,6 +33614,9 @@ impl<'a> PhysicalDeviceExternalMemoryHostPropertiesEXTBuilder<'a> {
         self.inner.min_imported_host_pointer_alignment = min_imported_host_pointer_alignment;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceExternalMemoryHostPropertiesEXT {
         self.inner
     }
@@ -32794,6 +33754,9 @@ impl<'a> PhysicalDeviceConservativeRasterizationPropertiesEXTBuilder<'a> {
             conservative_rasterization_post_depth_coverage.into();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceConservativeRasterizationPropertiesEXT {
         self.inner
     }
@@ -32864,6 +33827,9 @@ impl<'a> CalibratedTimestampInfoEXTBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> CalibratedTimestampInfoEXT {
         self.inner
     }
@@ -33035,6 +34001,9 @@ impl<'a> PhysicalDeviceShaderCorePropertiesAMDBuilder<'a> {
         self.inner.vgpr_allocation_granularity = vgpr_allocation_granularity;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceShaderCorePropertiesAMD {
         self.inner
     }
@@ -33113,6 +34082,9 @@ impl<'a> PipelineRasterizationConservativeStateCreateInfoEXTBuilder<'a> {
         self.inner.extra_primitive_overestimation_size = extra_primitive_overestimation_size;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PipelineRasterizationConservativeStateCreateInfoEXT {
         self.inner
     }
@@ -33367,6 +34339,9 @@ impl<'a> PhysicalDeviceDescriptorIndexingFeaturesEXTBuilder<'a> {
         self.inner.runtime_descriptor_array = runtime_descriptor_array.into();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceDescriptorIndexingFeaturesEXT {
         self.inner
     }
@@ -33662,6 +34637,9 @@ impl<'a> PhysicalDeviceDescriptorIndexingPropertiesEXTBuilder<'a> {
             max_descriptor_set_update_after_bind_input_attachments;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceDescriptorIndexingPropertiesEXT {
         self.inner
     }
@@ -33722,6 +34700,9 @@ impl<'a> DescriptorSetLayoutBindingFlagsCreateInfoEXTBuilder<'a> {
         self.inner.p_binding_flags = binding_flags.as_ptr();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DescriptorSetLayoutBindingFlagsCreateInfoEXT {
         self.inner
     }
@@ -33785,6 +34766,9 @@ impl<'a> DescriptorSetVariableDescriptorCountAllocateInfoEXTBuilder<'a> {
         self.inner.p_descriptor_counts = descriptor_counts.as_ptr();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DescriptorSetVariableDescriptorCountAllocateInfoEXT {
         self.inner
     }
@@ -33845,6 +34829,9 @@ impl<'a> DescriptorSetVariableDescriptorCountLayoutSupportEXTBuilder<'a> {
         self.inner.max_variable_descriptor_count = max_variable_descriptor_count;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DescriptorSetVariableDescriptorCountLayoutSupportEXT {
         self.inner
     }
@@ -33975,6 +34962,9 @@ impl<'a> AttachmentDescription2KHRBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> AttachmentDescription2KHR {
         self.inner
     }
@@ -34057,6 +35047,9 @@ impl<'a> AttachmentReference2KHRBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> AttachmentReference2KHR {
         self.inner
     }
@@ -34194,6 +35187,9 @@ impl<'a> SubpassDescription2KHRBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> SubpassDescription2KHR {
         self.inner
     }
@@ -34318,6 +35314,9 @@ impl<'a> SubpassDependency2KHRBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> SubpassDependency2KHR {
         self.inner
     }
@@ -34433,6 +35432,9 @@ impl<'a> RenderPassCreateInfo2KHRBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> RenderPassCreateInfo2KHR {
         self.inner
     }
@@ -34500,6 +35502,9 @@ impl<'a> SubpassBeginInfoKHRBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> SubpassBeginInfoKHR {
         self.inner
     }
@@ -34561,6 +35566,9 @@ impl<'a> SubpassEndInfoKHRBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> SubpassEndInfoKHR {
         self.inner
     }
@@ -34604,6 +35612,9 @@ impl<'a> VertexInputBindingDivisorDescriptionEXTBuilder<'a> {
         self.inner.divisor = divisor;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> VertexInputBindingDivisorDescriptionEXT {
         self.inner
     }
@@ -34667,6 +35678,9 @@ impl<'a> PipelineVertexInputDivisorStateCreateInfoEXTBuilder<'a> {
         self.inner.p_vertex_binding_divisors = vertex_binding_divisors.as_ptr();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PipelineVertexInputDivisorStateCreateInfoEXT {
         self.inner
     }
@@ -34724,6 +35738,9 @@ impl<'a> PhysicalDeviceVertexAttributeDivisorPropertiesEXTBuilder<'a> {
         self.inner.max_vertex_attrib_divisor = max_vertex_attrib_divisor;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceVertexAttributeDivisorPropertiesEXT {
         self.inner
     }
@@ -34802,6 +35819,9 @@ impl<'a> PhysicalDevicePCIBusInfoPropertiesEXTBuilder<'a> {
         self.inner.pci_function = pci_function;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDevicePCIBusInfoPropertiesEXT {
         self.inner
     }
@@ -34856,6 +35876,9 @@ impl<'a> ImportAndroidHardwareBufferInfoANDROIDBuilder<'a> {
         self.inner.buffer = buffer;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ImportAndroidHardwareBufferInfoANDROID {
         self.inner
     }
@@ -34910,6 +35933,9 @@ impl<'a> AndroidHardwareBufferUsageANDROIDBuilder<'a> {
         self.inner.android_hardware_buffer_usage = android_hardware_buffer_usage;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> AndroidHardwareBufferUsageANDROID {
         self.inner
     }
@@ -34989,6 +36015,9 @@ impl<'a> AndroidHardwareBufferPropertiesANDROIDBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> AndroidHardwareBufferPropertiesANDROID {
         self.inner
     }
@@ -35059,6 +36088,9 @@ impl<'a> MemoryGetAndroidHardwareBufferInfoANDROIDBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> MemoryGetAndroidHardwareBufferInfoANDROID {
         self.inner
     }
@@ -35182,6 +36214,9 @@ impl<'a> AndroidHardwareBufferFormatPropertiesANDROIDBuilder<'a> {
         self.inner.suggested_y_chroma_offset = suggested_y_chroma_offset;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> AndroidHardwareBufferFormatPropertiesANDROID {
         self.inner
     }
@@ -35242,6 +36277,9 @@ impl<'a> CommandBufferInheritanceConditionalRenderingInfoEXTBuilder<'a> {
         self.inner.conditional_rendering_enable = conditional_rendering_enable.into();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> CommandBufferInheritanceConditionalRenderingInfoEXT {
         self.inner
     }
@@ -35295,6 +36333,9 @@ impl<'a> ExternalFormatANDROIDBuilder<'a> {
         self.inner.external_format = external_format;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ExternalFormatANDROID {
         self.inner
     }
@@ -35368,6 +36409,9 @@ impl<'a> PhysicalDevice8BitStorageFeaturesKHRBuilder<'a> {
         self.inner.storage_push_constant8 = storage_push_constant8.into();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDevice8BitStorageFeaturesKHR {
         self.inner
     }
@@ -35431,6 +36475,9 @@ impl<'a> PhysicalDeviceConditionalRenderingFeaturesEXTBuilder<'a> {
         self.inner.inherited_conditional_rendering = inherited_conditional_rendering.into();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceConditionalRenderingFeaturesEXT {
         self.inner
     }
@@ -35494,6 +36541,9 @@ impl<'a> PhysicalDeviceVulkanMemoryModelFeaturesKHRBuilder<'a> {
         self.inner.vulkan_memory_model_device_scope = vulkan_memory_model_device_scope.into();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceVulkanMemoryModelFeaturesKHR {
         self.inner
     }
@@ -35557,6 +36607,9 @@ impl<'a> PhysicalDeviceShaderAtomicInt64FeaturesKHRBuilder<'a> {
         self.inner.shader_shared_int64_atomics = shader_shared_int64_atomics.into();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceShaderAtomicInt64FeaturesKHR {
         self.inner
     }
@@ -35622,6 +36675,9 @@ impl<'a> PhysicalDeviceVertexAttributeDivisorFeaturesEXTBuilder<'a> {
             vertex_attribute_instance_rate_zero_divisor.into();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceVertexAttributeDivisorFeaturesEXT {
         self.inner
     }
@@ -35676,6 +36732,9 @@ impl<'a> QueueFamilyCheckpointPropertiesNVBuilder<'a> {
         self.inner.checkpoint_execution_stage_mask = checkpoint_execution_stage_mask;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> QueueFamilyCheckpointPropertiesNV {
         self.inner
     }
@@ -35752,6 +36811,9 @@ impl<'a> CheckpointDataNVBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> CheckpointDataNV {
         self.inner
     }
@@ -35836,6 +36898,9 @@ impl<'a> PhysicalDeviceDepthStencilResolvePropertiesKHRBuilder<'a> {
         self.inner.independent_resolve = independent_resolve.into();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceDepthStencilResolvePropertiesKHR {
         self.inner
     }
@@ -35908,6 +36973,9 @@ impl<'a> SubpassDescriptionDepthStencilResolveKHRBuilder<'a> {
         self.inner.p_depth_stencil_resolve_attachment = depth_stencil_resolve_attachment;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> SubpassDescriptionDepthStencilResolveKHR {
         self.inner
     }
@@ -35959,6 +37027,9 @@ impl<'a> ImageViewASTCDecodeModeEXTBuilder<'a> {
         self.inner.decode_mode = decode_mode;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ImageViewASTCDecodeModeEXT {
         self.inner
     }
@@ -36013,6 +37084,9 @@ impl<'a> PhysicalDeviceASTCDecodeFeaturesEXTBuilder<'a> {
         self.inner.decode_mode_shared_exponent = decode_mode_shared_exponent.into();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceASTCDecodeFeaturesEXT {
         self.inner
     }
@@ -36076,6 +37150,9 @@ impl<'a> PhysicalDeviceTransformFeedbackFeaturesEXTBuilder<'a> {
         self.inner.geometry_streams = geometry_streams.into();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceTransformFeedbackFeaturesEXT {
         self.inner
     }
@@ -36219,6 +37296,9 @@ impl<'a> PhysicalDeviceTransformFeedbackPropertiesEXTBuilder<'a> {
         self.inner.transform_feedback_draw = transform_feedback_draw.into();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceTransformFeedbackPropertiesEXT {
         self.inner
     }
@@ -36288,6 +37368,9 @@ impl<'a> PipelineRasterizationStateStreamCreateInfoEXTBuilder<'a> {
         self.inner.rasterization_stream = rasterization_stream;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PipelineRasterizationStateStreamCreateInfoEXT {
         self.inner
     }
@@ -36345,6 +37428,9 @@ impl<'a> PhysicalDeviceRepresentativeFragmentTestFeaturesNVBuilder<'a> {
         self.inner.representative_fragment_test = representative_fragment_test.into();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceRepresentativeFragmentTestFeaturesNV {
         self.inner
     }
@@ -36405,6 +37491,9 @@ impl<'a> PipelineRepresentativeFragmentTestStateCreateInfoNVBuilder<'a> {
         self.inner.representative_fragment_test_enable = representative_fragment_test_enable.into();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PipelineRepresentativeFragmentTestStateCreateInfoNV {
         self.inner
     }
@@ -36459,6 +37548,9 @@ impl<'a> PhysicalDeviceExclusiveScissorFeaturesNVBuilder<'a> {
         self.inner.exclusive_scissor = exclusive_scissor.into();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceExclusiveScissorFeaturesNV {
         self.inner
     }
@@ -36522,6 +37614,9 @@ impl<'a> PipelineViewportExclusiveScissorStateCreateInfoNVBuilder<'a> {
         self.inner.p_exclusive_scissors = exclusive_scissors.as_ptr();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PipelineViewportExclusiveScissorStateCreateInfoNV {
         self.inner
     }
@@ -36576,6 +37671,9 @@ impl<'a> PhysicalDeviceCornerSampledImageFeaturesNVBuilder<'a> {
         self.inner.corner_sampled_image = corner_sampled_image.into();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceCornerSampledImageFeaturesNV {
         self.inner
     }
@@ -36642,6 +37740,9 @@ impl<'a> PhysicalDeviceComputeShaderDerivativesFeaturesNVBuilder<'a> {
         self.inner.compute_derivative_group_linear = compute_derivative_group_linear.into();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceComputeShaderDerivativesFeaturesNV {
         self.inner
     }
@@ -36699,6 +37800,9 @@ impl<'a> PhysicalDeviceFragmentShaderBarycentricFeaturesNVBuilder<'a> {
         self.inner.fragment_shader_barycentric = fragment_shader_barycentric.into();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceFragmentShaderBarycentricFeaturesNV {
         self.inner
     }
@@ -36753,6 +37857,9 @@ impl<'a> PhysicalDeviceShaderImageFootprintFeaturesNVBuilder<'a> {
         self.inner.image_footprint = image_footprint.into();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceShaderImageFootprintFeaturesNV {
         self.inner
     }
@@ -36804,6 +37911,9 @@ impl<'a> ShadingRatePaletteNVBuilder<'a> {
         self.inner.p_shading_rate_palette_entries = shading_rate_palette_entries.as_ptr();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ShadingRatePaletteNV {
         self.inner
     }
@@ -36876,6 +37986,9 @@ impl<'a> PipelineViewportShadingRateImageStateCreateInfoNVBuilder<'a> {
         self.inner.p_shading_rate_palettes = shading_rate_palettes.as_ptr();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PipelineViewportShadingRateImageStateCreateInfoNV {
         self.inner
     }
@@ -36939,6 +38052,9 @@ impl<'a> PhysicalDeviceShadingRateImageFeaturesNVBuilder<'a> {
         self.inner.shading_rate_coarse_sample_order = shading_rate_coarse_sample_order.into();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceShadingRateImageFeaturesNV {
         self.inner
     }
@@ -37014,6 +38130,9 @@ impl<'a> PhysicalDeviceShadingRateImagePropertiesNVBuilder<'a> {
         self.inner.shading_rate_max_coarse_samples = shading_rate_max_coarse_samples;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceShadingRateImagePropertiesNV {
         self.inner
     }
@@ -37062,6 +38181,9 @@ impl<'a> CoarseSampleLocationNVBuilder<'a> {
         self.inner.sample = sample;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> CoarseSampleLocationNV {
         self.inner
     }
@@ -37128,6 +38250,9 @@ impl<'a> CoarseSampleOrderCustomNVBuilder<'a> {
         self.inner.p_sample_locations = sample_locations.as_ptr();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> CoarseSampleOrderCustomNV {
         self.inner
     }
@@ -37200,6 +38325,9 @@ impl<'a> PipelineViewportCoarseSampleOrderStateCreateInfoNVBuilder<'a> {
         self.inner.p_custom_sample_orders = custom_sample_orders.as_ptr();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PipelineViewportCoarseSampleOrderStateCreateInfoNV {
         self.inner
     }
@@ -37263,6 +38391,9 @@ impl<'a> PhysicalDeviceMeshShaderFeaturesNVBuilder<'a> {
         self.inner.mesh_shader = mesh_shader.into();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceMeshShaderFeaturesNV {
         self.inner
     }
@@ -37425,6 +38556,9 @@ impl<'a> PhysicalDeviceMeshShaderPropertiesNVBuilder<'a> {
         self.inner.mesh_output_per_primitive_granularity = mesh_output_per_primitive_granularity;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceMeshShaderPropertiesNV {
         self.inner
     }
@@ -37468,6 +38602,9 @@ impl<'a> DrawMeshTasksIndirectCommandNVBuilder<'a> {
         self.inner.first_task = first_task;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DrawMeshTasksIndirectCommandNV {
         self.inner
     }
@@ -37574,6 +38711,9 @@ impl<'a> RayTracingShaderGroupCreateInfoNVBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> RayTracingShaderGroupCreateInfoNV {
         self.inner
     }
@@ -37701,6 +38841,9 @@ impl<'a> RayTracingPipelineCreateInfoNVBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> RayTracingPipelineCreateInfoNV {
         self.inner
     }
@@ -37831,6 +38974,9 @@ impl<'a> GeometryTrianglesNVBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> GeometryTrianglesNV {
         self.inner
     }
@@ -37916,6 +39062,9 @@ impl<'a> GeometryAABBNVBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> GeometryAABBNV {
         self.inner
     }
@@ -37959,6 +39108,9 @@ impl<'a> GeometryDataNVBuilder<'a> {
         self.inner.aabbs = aabbs;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> GeometryDataNV {
         self.inner
     }
@@ -38035,6 +39187,9 @@ impl<'a> GeometryNVBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> GeometryNV {
         self.inner
     }
@@ -38129,6 +39284,9 @@ impl<'a> AccelerationStructureInfoNVBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> AccelerationStructureInfoNV {
         self.inner
     }
@@ -38208,6 +39366,9 @@ impl<'a> AccelerationStructureCreateInfoNVBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> AccelerationStructureCreateInfoNV {
         self.inner
     }
@@ -38308,6 +39469,9 @@ impl<'a> BindAccelerationStructureMemoryInfoNVBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> BindAccelerationStructureMemoryInfoNV {
         self.inner
     }
@@ -38365,6 +39529,9 @@ impl<'a> WriteDescriptorSetAccelerationStructureNVBuilder<'a> {
         self.inner.p_acceleration_structures = acceleration_structures.as_ptr();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> WriteDescriptorSetAccelerationStructureNV {
         self.inner
     }
@@ -38444,6 +39611,9 @@ impl<'a> AccelerationStructureMemoryRequirementsInfoNVBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> AccelerationStructureMemoryRequirementsInfoNV {
         self.inner
     }
@@ -38562,6 +39732,9 @@ impl<'a> PhysicalDeviceRayTracingPropertiesNVBuilder<'a> {
             max_descriptor_set_acceleration_structures;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceRayTracingPropertiesNV {
         self.inner
     }
@@ -38619,6 +39792,9 @@ impl<'a> DrmFormatModifierPropertiesListEXTBuilder<'a> {
         self.inner.p_drm_format_modifier_properties = drm_format_modifier_properties.as_mut_ptr();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DrmFormatModifierPropertiesListEXT {
         self.inner
     }
@@ -38676,6 +39852,9 @@ impl<'a> DrmFormatModifierPropertiesEXTBuilder<'a> {
         self.inner.drm_format_modifier_tiling_features = drm_format_modifier_tiling_features;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DrmFormatModifierPropertiesEXT {
         self.inner
     }
@@ -38754,6 +39933,9 @@ impl<'a> PhysicalDeviceImageDrmFormatModifierInfoEXTBuilder<'a> {
         self.inner.p_queue_family_indices = queue_family_indices.as_ptr();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceImageDrmFormatModifierInfoEXT {
         self.inner
     }
@@ -38811,6 +39993,9 @@ impl<'a> ImageDrmFormatModifierListCreateInfoEXTBuilder<'a> {
         self.inner.p_drm_format_modifiers = drm_format_modifiers.as_ptr();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ImageDrmFormatModifierListCreateInfoEXT {
         self.inner
     }
@@ -38877,6 +40062,9 @@ impl<'a> ImageDrmFormatModifierExplicitCreateInfoEXTBuilder<'a> {
         self.inner.p_plane_layouts = plane_layouts.as_ptr();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ImageDrmFormatModifierExplicitCreateInfoEXT {
         self.inner
     }
@@ -38947,6 +40135,9 @@ impl<'a> ImageDrmFormatModifierPropertiesEXTBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ImageDrmFormatModifierPropertiesEXT {
         self.inner
     }
@@ -39003,6 +40194,9 @@ impl<'a> ImageStencilUsageCreateInfoEXTBuilder<'a> {
         self.inner.stencil_usage = stencil_usage;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> ImageStencilUsageCreateInfoEXT {
         self.inner
     }
@@ -39057,6 +40251,9 @@ impl<'a> DeviceMemoryOverallocationCreateInfoAMDBuilder<'a> {
         self.inner.overallocation_behavior = overallocation_behavior;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> DeviceMemoryOverallocationCreateInfoAMD {
         self.inner
     }
@@ -39130,6 +40327,9 @@ impl<'a> PhysicalDeviceFragmentDensityMapFeaturesEXTBuilder<'a> {
             fragment_density_map_non_subsampled_images.into();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceFragmentDensityMapFeaturesEXT {
         self.inner
     }
@@ -39205,6 +40405,9 @@ impl<'a> PhysicalDeviceFragmentDensityMapPropertiesEXTBuilder<'a> {
         self.inner.fragment_density_invocations = fragment_density_invocations.into();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceFragmentDensityMapPropertiesEXT {
         self.inner
     }
@@ -39259,6 +40462,9 @@ impl<'a> RenderPassFragmentDensityMapCreateInfoEXTBuilder<'a> {
         self.inner.fragment_density_map_attachment = fragment_density_map_attachment;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> RenderPassFragmentDensityMapCreateInfoEXT {
         self.inner
     }
@@ -39313,6 +40519,9 @@ impl<'a> PhysicalDeviceScalarBlockLayoutFeaturesEXTBuilder<'a> {
         self.inner.scalar_block_layout = scalar_block_layout.into();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceScalarBlockLayoutFeaturesEXT {
         self.inner
     }
@@ -39379,6 +40588,9 @@ impl<'a> PhysicalDeviceMemoryBudgetPropertiesEXTBuilder<'a> {
         self.inner.heap_usage = heap_usage;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceMemoryBudgetPropertiesEXT {
         self.inner
     }
@@ -39433,6 +40645,9 @@ impl<'a> PhysicalDeviceMemoryPriorityFeaturesEXTBuilder<'a> {
         self.inner.memory_priority = memory_priority.into();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceMemoryPriorityFeaturesEXT {
         self.inner
     }
@@ -39484,6 +40699,9 @@ impl<'a> MemoryPriorityAllocateInfoEXTBuilder<'a> {
         self.inner.priority = priority;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> MemoryPriorityAllocateInfoEXT {
         self.inner
     }
@@ -39557,6 +40775,9 @@ impl<'a> PhysicalDeviceBufferAddressFeaturesEXTBuilder<'a> {
         self.inner.buffer_device_address_multi_device = buffer_device_address_multi_device.into();
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceBufferAddressFeaturesEXT {
         self.inner
     }
@@ -39624,6 +40845,9 @@ impl<'a> BufferDeviceAddressInfoEXTBuilder<'a> {
         }
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> BufferDeviceAddressInfoEXT {
         self.inner
     }
@@ -39678,6 +40902,9 @@ impl<'a> BufferDeviceAddressCreateInfoEXTBuilder<'a> {
         self.inner.device_address = device_address;
         self
     }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> BufferDeviceAddressCreateInfoEXT {
         self.inner
     }
