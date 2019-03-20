@@ -110,7 +110,7 @@ impl<'a> DeviceCreateInfoBuilder<'a> {
 Every reference has to live as long as the builder itself. Builders implement `Deref` targeting their corresponding Vulkan struct, so references to builders can be passed directly
 to Vulkan functions.
 
-Calling `.build()` will **discard** that lifetime because Vulkan structs use raw pointers internally. This should be avoided as much as possible because this can easily lead to dangling pointers.
+Calling `.build()` will **discard** that lifetime because Vulkan structs use raw pointers internally. This should be avoided as much as possible because this can easily lead to dangling pointers. If `.build()` has to be called, it should be called as late as possible. The reason for this is that the lifetime of [temporaries](https://doc.rust-lang.org/reference/expressions.html#temporary-lifetimes) will be extended to the enclosing block.
 
 
 ### Pointer chains
