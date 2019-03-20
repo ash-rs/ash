@@ -1695,6 +1695,9 @@ pub fn derive_setters(
 
             #next_function
 
+            /// Calling build will **discard** all the lifetime information. Only call this if
+            /// necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,
+            /// so references to builders can be passed directly to Vulkan functions.
             pub fn build(self) -> #name {
                 self.inner
             }
