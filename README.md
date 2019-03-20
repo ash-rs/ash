@@ -72,15 +72,50 @@ let desc_alloc_info = vk::DescriptorSetAllocateInfo {
 };
 ```
 ### Builder pattern
+
 ```Rust
-let pipeline_vertex_input_state_create_info = vk::PipelineVertexInputStateCreateInfo::builder()
-    .vertex_binding_descriptions(&Vertex::binding_descriptions())
-    .vertex_attribute_descriptions(&Vertex::attribute_descriptions()).build();
+// We lose all lifetime information when we call `.build()`. Be carefull!
+let queue_info = [vk::DeviceQueueCreateInfo::builder()
+    .queue_family_index(queue_family_index)
+    .queue_priorities(&priorities)
+    .build()];
+
+// We don't need to call build here because builders implement `Deref`.
+let device_create_info = vk::DeviceCreateInfo::builder()
+    .queue_create_infos(&queue_info)
+    .enabled_extension_names(&device_extension_names_raw)
+    .enabled_features(&features);
+
+let device: Device = instance
+    .create_device(pdevice, &device_create_info, None)
+    .unwrap();
 ```
 
-Builders implement `Deref` targeting their corresponding Vulkan struct, so references to builders can be passed directly
-to Vulkan functions. This is encouraged as doing so allows Rust to check the lifetimes of captured objects are valid,
-whereas calling `build` discards lifetime information, making inadvertent use-after-free errors more likely.
+Builders have an explicit lifetime, and are marked as `#[repr(transparent)]`.
+```Rust
+#[repr(transparent)]
+pub struct DeviceCreateInfoBuilder<'a> {
+    inner: DeviceCreateInfo,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+impl<'a> DeviceCreateInfoBuilder<'a> {
+    //...
+    pub fn queue_create_infos(
+        mut self,
+        queue_create_infos: &'a [DeviceQueueCreateInfo],
+    ) -> DeviceCreateInfoBuilder<'a> {
+        self.inner.queue_create_info_count = queue_create_infos.len() as _;
+        self.inner.p_queue_create_infos = queue_create_infos.as_ptr();
+        self
+    }
+    //...
+```
+
+Every reference has to live as long as the builder itself. Builders implement `Deref` targeting their corresponding Vulkan struct, so references to builders can be passed directly
+to Vulkan functions.
+
+Calling `.build()` will **discard** that lifetime because Vulkan structs use raw pointers internally. This should be avoided as much as possible because this can easily lead to dangling pointers.
+
 
 ### Pointer chains
 
