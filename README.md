@@ -103,11 +103,7 @@ impl<'a> DeviceCreateInfoBuilder<'a> {
     pub fn queue_create_infos(
         mut self,
         queue_create_infos: &'a [DeviceQueueCreateInfo],
-    ) -> DeviceCreateInfoBuilder<'a> {
-        self.inner.queue_create_info_count = queue_create_infos.len() as _;
-        self.inner.p_queue_create_infos = queue_create_infos.as_ptr();
-        self
-    }
+    ) -> DeviceCreateInfoBuilder<'a> {...}
     //...
 ```
 
