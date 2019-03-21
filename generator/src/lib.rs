@@ -1216,9 +1216,12 @@ pub fn generate_enum<'a>(
 }
 
 pub fn generate_result(ident: Ident, _enum: &vkxml::Enumeration) -> Tokens {
-    let display_notation = _enum.elements.iter().filter_map(|elem| {
-        let variant_name = match *elem {
-            vkxml::EnumerationElement::Enum(ref constant) => constant.name.as_str(),
+    let notation = _enum.elements.iter().filter_map(|elem| {
+        let (variant_name, notation) = match *elem {
+            vkxml::EnumerationElement::Enum(ref constant) => (
+                constant.name.as_str(),
+                constant.notation.as_ref().map(|s| s.as_str()).unwrap_or(""),
+            ),
             _ => {
                 return None;
             }
@@ -1226,17 +1229,25 @@ pub fn generate_result(ident: Ident, _enum: &vkxml::Enumeration) -> Tokens {
 
         let variant_ident = variant_ident(&_enum.name, variant_name);
         Some(quote! {
-            #ident::#variant_ident => Some(stringify!(#variant_ident))
+            #ident::#variant_ident => Some(#notation)
         })
     });
 
+    let notation2 = notation.clone();
     quote! {
-        impl std::error::Error for #ident {}
-
+        impl ::std::error::Error for #ident {
+            fn description(&self) -> &str {
+                let name = match *self {
+                    #(#notation),*,
+                    _ => None,
+                };
+                name.unwrap_or("unknown error")
+            }
+        }
         impl fmt::Display for #ident {
             fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
                 let name = match *self {
-                    #(#display_notation),*,
+                    #(#notation2),*,
                     _ => None,
                 };
                 if let Some(x) = name {

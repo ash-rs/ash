@@ -14,8 +14,3 @@ fn display_flags() {
 fn display_enum() {
     assert_eq!(vk::ChromaLocation::MIDPOINT.to_string(), "MIDPOINT");
 }
-
-#[test]
-fn display_result() {
-    assert_eq!(vk::Result::SUCCESS.to_string(), "SUCCESS");
-}
