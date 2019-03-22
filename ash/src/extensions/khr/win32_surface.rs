@@ -27,6 +27,7 @@ impl Win32Surface {
         vk::KhrWin32SurfaceFn::name()
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateWin32SurfaceKHR.html>"]
     pub unsafe fn create_win32_surface(
         &self,
         create_info: &vk::Win32SurfaceCreateInfoKHR,

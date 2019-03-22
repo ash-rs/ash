@@ -28,6 +28,7 @@ impl Swapchain {
         vk::KhrSwapchainFn::name()
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroySwapchainKHR.html>"]
     pub unsafe fn destroy_swapchain(
         &self,
         swapchain: vk::SwapchainKHR,
@@ -41,6 +42,7 @@ impl Swapchain {
     }
 
     /// On success, returns the next image's index and whether the swapchain is suboptimal for the surface.
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkAcquireNextImageKHR.html>"]
     pub unsafe fn acquire_next_image(
         &self,
         swapchain: vk::SwapchainKHR,
@@ -64,6 +66,7 @@ impl Swapchain {
         }
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateSwapchainKHR.html>"]
     pub unsafe fn create_swapchain(
         &self,
         create_info: &vk::SwapchainCreateInfoKHR,
@@ -83,6 +86,7 @@ impl Swapchain {
     }
 
     /// On success, returns whether the swapchain is suboptimal for the surface.
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkQueuePresentKHR.html>"]
     pub unsafe fn queue_present(
         &self,
         queue: vk::Queue,
@@ -96,6 +100,7 @@ impl Swapchain {
         }
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetSwapchainImagesKHR.html>"]
     pub unsafe fn get_swapchain_images(
         &self,
         swapchain: vk::SwapchainKHR,

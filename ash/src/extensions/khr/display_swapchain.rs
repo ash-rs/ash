@@ -27,6 +27,7 @@ impl DisplaySwapchain {
         vk::KhrDisplaySwapchainFn::name()
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateSharedSwapchainsKHR.html>"]
     pub unsafe fn create_shared_swapchains(
         &self,
         create_infos: &[vk::SwapchainCreateInfoKHR],

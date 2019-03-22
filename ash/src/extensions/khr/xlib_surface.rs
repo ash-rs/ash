@@ -27,6 +27,7 @@ impl XlibSurface {
         vk::KhrXlibSurfaceFn::name()
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateXlibSurfaceKHR.html>"]
     pub unsafe fn create_xlib_surface(
         &self,
         create_info: &vk::XlibSurfaceCreateInfoKHR,

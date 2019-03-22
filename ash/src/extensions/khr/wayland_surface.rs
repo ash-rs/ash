@@ -27,6 +27,7 @@ impl WaylandSurface {
         vk::KhrWaylandSurfaceFn::name()
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateWaylandSurfaceKHR.html>"]
     pub unsafe fn create_wayland_surface(
         &self,
         create_info: &vk::WaylandSurfaceCreateInfoKHR,

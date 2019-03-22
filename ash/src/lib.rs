@@ -1,9 +1,32 @@
-#[macro_use]
-extern crate lazy_static;
+//! # Vulkan API
+//!
+//! <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/index.html>
+//!
+//! ## Examples
+//!
+//! ```rust,no_run
+//! # #[macro_use]
+//! # extern crate ash;
+//! use ash::{vk, Entry, version::EntryV1_0};
+//! # fn main() -> Result<(), Box<dyn std::error::Error>> {
+//! let entry = Entry::new()?;
+//! let app_info = vk::ApplicationInfo {
+//!     api_version: vk_make_version!(1, 0, 0),
+//!     ..Default::default()
+//! };
+//! let create_info = vk::InstanceCreateInfo {
+//!     p_application_info: &app_info,
+//!     ..Default::default()
+//! };
+//! let instance = unsafe { entry.create_instance(&create_info, None)? };
+//! # Ok(()) }
+//! ```
+//!
+
 extern crate shared_library;
 
 pub use device::Device;
-pub use entry::{Entry, InstanceError, LoadingError};
+pub use entry::{Entry, EntryCustom, InstanceError, LoadingError};
 pub use instance::Instance;
 
 mod device;

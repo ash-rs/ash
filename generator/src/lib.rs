@@ -12,11 +12,13 @@ pub extern crate vkxml;
 
 use heck::{CamelCase, ShoutySnakeCase, SnakeCase};
 use itertools::Itertools;
-use proc_macro2::Term;
+use proc_macro2::{Literal, Term};
 use quote::Tokens;
 use std::collections::{BTreeMap, HashMap, HashSet};
+use std::fmt::Display;
 use std::path::Path;
 use syn::Ident;
+
 pub trait ExtensionExt {}
 #[derive(Copy, Clone, Debug)]
 pub enum CType {
@@ -85,13 +87,24 @@ named!(cfloat<&str, f32>,
     terminated!(nom::float_s, char!('f'))
 );
 
+fn khronos_link<S: Display>(name: &S) -> Literal {
+    Literal::string(&format!(
+        "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/{name}.html>",
+        name = name
+    ))
+}
+
 pub fn define_handle_macro() -> Tokens {
     quote! {
         #[macro_export]
         macro_rules! define_handle{
             ($name: ident, $ty: ident) => {
+                define_handle!($name, $ty, doc = "");
+            };
+            ($name: ident, $ty: ident, $doc_link: meta) => {
                 #[repr(transparent)]
                 #[derive(Eq, PartialEq, Ord, PartialOrd, Clone, Copy, Hash)]
+                #[$doc_link]
                 pub struct $name(*mut u8);
                 impl Default for $name {
                     fn default() -> $name {
@@ -135,8 +148,12 @@ pub fn handle_nondispatchable_macro() -> Tokens {
         #[macro_export]
         macro_rules! handle_nondispatchable {
             ($name: ident, $ty: ident) => {
+                handle_nondispatchable!($name, $ty, doc = "");
+            };
+            ($name: ident, $ty: ident, $doc_link: meta) => {
                 #[repr(transparent)]
                 #[derive(Eq, PartialEq, Ord, PartialOrd, Clone, Copy, Hash, Default)]
+                #[$doc_link]
                 pub struct $name(u64);
 
                 impl Handle for $name {
@@ -168,6 +185,7 @@ pub fn handle_nondispatchable_macro() -> Tokens {
 }
 pub fn vk_version_macros() -> Tokens {
     quote! {
+        #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VK_MAKE_VERSION.html>"]
         #[macro_export]
         macro_rules! vk_make_version {
             ($major:expr, $minor:expr, $patch:expr) => {
@@ -175,6 +193,7 @@ pub fn vk_version_macros() -> Tokens {
             };
         }
 
+        #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VK_VERSION_MAJOR.html>"]
         #[macro_export]
         macro_rules! vk_version_major {
             ($major:expr) => {
@@ -182,6 +201,7 @@ pub fn vk_version_macros() -> Tokens {
             };
         }
 
+        #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VK_VERSION_MINOR.html>"]
         #[macro_export]
         macro_rules! vk_version_minor {
             ($minor:expr) => {
@@ -189,6 +209,7 @@ pub fn vk_version_macros() -> Tokens {
             };
         }
 
+        #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VK_VERSION_PATCH.html>"]
         #[macro_export]
         macro_rules! vk_version_patch {
             ($minor:expr) => {
@@ -700,6 +721,7 @@ fn generate_function_pointers<'a>(
     let raw_names_ref = &raw_names;
     let names_left = &names;
     let names_right = &names;
+    let khronos_links: Vec<_> = raw_names.iter().map(|name| khronos_link(name)).collect();
 
     let pfn_commands: Vec<_> = commands
         .iter()
@@ -847,6 +869,7 @@ fn generate_function_pointers<'a>(
                 }
             }
             #(
+                #[doc = #khronos_links]
                 pub unsafe fn #names_ref(&self, #expanded_params_ref) -> #return_types_ref {
                     (self.#names_left)(#(#param_names_ref,)*)
                 }
@@ -1005,7 +1028,9 @@ pub fn generate_extension<'a>(
 pub fn generate_typedef(typedef: &vkxml::Typedef) -> Tokens {
     let typedef_name = to_type_tokens(&typedef.name, None);
     let typedef_ty = to_type_tokens(&typedef.basetype, None);
+    let khronos_link = khronos_link(&typedef.name);
     quote! {
+        #[doc = #khronos_link]
         pub type #typedef_name = #typedef_ty;
     }
 }
@@ -1028,9 +1053,11 @@ pub fn generate_bitmask(
         return None;
     };
     bitflags_cache.insert(ident.clone());
+    let khronos_link = khronos_link(&bitmask.name);
     Some(quote! {
         #[repr(transparent)]
         #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+        #[doc = #khronos_link]
         pub struct #ident(Flags);
         vk_bitflags_wrapped!(#ident, 0b0, Flags);
     })
@@ -1134,6 +1161,8 @@ pub fn generate_enum<'a>(
         values.push(constant.variant_ident(&_enum.name));
     }
 
+    let khronos_link = khronos_link(&_enum.name);
+
     if name.contains("Bit") {
         let ident = Ident::from(_name.as_str());
         let all_bits = constants
@@ -1150,6 +1179,7 @@ pub fn generate_enum<'a>(
             let q = quote! {
                 #[repr(transparent)]
                 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+                #[doc = #khronos_link]
                 pub struct #ident(pub(crate) Flags);
                 vk_bitflags_wrapped!(#ident, #all_bits_term, Flags);
                 #impl_bitflags
@@ -1161,6 +1191,7 @@ pub fn generate_enum<'a>(
         let enum_quote = quote! {
             #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
             #[repr(transparent)]
+            #[doc = #khronos_link]
             pub struct #ident(pub(crate) i32);
             impl #ident {
                 pub fn from_raw(x: i32) -> Self { #ident(x) }
@@ -1745,9 +1776,11 @@ pub fn generate_struct(
     } else {
         quote!()
     };
+    let khronos_link = khronos_link(&_struct.name);
     quote! {
         #[repr(C)]
         #[derive(Copy, Clone, #default_str #dbg_str #manual_derive_tokens)]
+        #[doc = #khronos_link]
         pub struct #name {
             #(#params,)*
         }
@@ -1761,13 +1794,14 @@ pub fn generate_handle(handle: &vkxml::Handle) -> Option<Tokens> {
     if handle.name == "" {
         return None;
     }
+    let khronos_link = khronos_link(&handle.name);
     let tokens = match handle.ty {
         vkxml::HandleType::Dispatch => {
             let name = &handle.name[2..];
             let ty = Ident::from(name.to_shouty_snake_case());
             let name = Ident::from(name);
             quote! {
-                define_handle!(#name, #ty);
+                define_handle!(#name, #ty, doc = #khronos_link);
             }
         }
         vkxml::HandleType::NoDispatch => {
@@ -1775,7 +1809,7 @@ pub fn generate_handle(handle: &vkxml::Handle) -> Option<Tokens> {
             let ty = Ident::from(name.to_shouty_snake_case());
             let name = Ident::from(name);
             quote! {
-                handle_nondispatchable!(#name, #ty);
+                handle_nondispatchable!(#name, #ty, doc = #khronos_link);
             }
         }
     };
@@ -1791,8 +1825,10 @@ fn generate_funcptr(fnptr: &vkxml::FunctionPointer) -> Tokens {
             #ident: #type_tokens
         }
     });
+    let khronos_link = khronos_link(&fnptr.name);
     quote! {
         #[allow(non_camel_case_types)]
+        #[doc = #khronos_link]
         pub type #name = Option<unsafe extern "system" fn(#(#params),*) -> #ret_ty_tokens>;
     }
 }
@@ -1806,9 +1842,11 @@ fn generate_union(union: &vkxml::Union) -> Tokens {
             pub #name: #ty
         }
     });
+    let khronos_link = khronos_link(&union.name);
     quote! {
         #[repr(C)]
         #[derive(Copy, Clone)]
+        #[doc = #khronos_link]
         pub union #name {
             #(#fields),*
         }
