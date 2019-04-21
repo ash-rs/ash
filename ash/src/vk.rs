@@ -83,11 +83,6 @@ macro_rules! vk_bitflags_wrapped {
                 $name(0)
             }
         }
-        impl fmt::Debug for $name {
-            fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-                write!(f, "{}({:b})", stringify!($name), self.0)
-            }
-        }
         impl $name {
             #[inline]
             pub fn empty() -> $name {
@@ -41627,7 +41622,7 @@ impl<'a> BufferDeviceAddressCreateInfoEXTBuilder<'a> {
         self.inner
     }
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkImageLayout.html>"]
 pub struct ImageLayout(pub(crate) i32);
@@ -41659,7 +41654,7 @@ impl ImageLayout {
     #[doc = "Initial layout used when the data is populated by the CPU"]
     pub const PREINITIALIZED: Self = ImageLayout(8);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkAttachmentLoadOp.html>"]
 pub struct AttachmentLoadOp(pub(crate) i32);
@@ -41676,7 +41671,7 @@ impl AttachmentLoadOp {
     pub const CLEAR: Self = AttachmentLoadOp(1);
     pub const DONT_CARE: Self = AttachmentLoadOp(2);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkAttachmentStoreOp.html>"]
 pub struct AttachmentStoreOp(pub(crate) i32);
@@ -41692,7 +41687,7 @@ impl AttachmentStoreOp {
     pub const STORE: Self = AttachmentStoreOp(0);
     pub const DONT_CARE: Self = AttachmentStoreOp(1);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkImageType.html>"]
 pub struct ImageType(pub(crate) i32);
@@ -41709,7 +41704,7 @@ impl ImageType {
     pub const TYPE_2D: Self = ImageType(1);
     pub const TYPE_3D: Self = ImageType(2);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkImageTiling.html>"]
 pub struct ImageTiling(pub(crate) i32);
@@ -41725,7 +41720,7 @@ impl ImageTiling {
     pub const OPTIMAL: Self = ImageTiling(0);
     pub const LINEAR: Self = ImageTiling(1);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkImageViewType.html>"]
 pub struct ImageViewType(pub(crate) i32);
@@ -41746,7 +41741,7 @@ impl ImageViewType {
     pub const TYPE_2D_ARRAY: Self = ImageViewType(5);
     pub const CUBE_ARRAY: Self = ImageViewType(6);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkCommandBufferLevel.html>"]
 pub struct CommandBufferLevel(pub(crate) i32);
@@ -41762,7 +41757,7 @@ impl CommandBufferLevel {
     pub const PRIMARY: Self = CommandBufferLevel(0);
     pub const SECONDARY: Self = CommandBufferLevel(1);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkComponentSwizzle.html>"]
 pub struct ComponentSwizzle(pub(crate) i32);
@@ -41783,7 +41778,7 @@ impl ComponentSwizzle {
     pub const B: Self = ComponentSwizzle(5);
     pub const A: Self = ComponentSwizzle(6);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkDescriptorType.html>"]
 pub struct DescriptorType(pub(crate) i32);
@@ -41808,7 +41803,7 @@ impl DescriptorType {
     pub const STORAGE_BUFFER_DYNAMIC: Self = DescriptorType(9);
     pub const INPUT_ATTACHMENT: Self = DescriptorType(10);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkQueryType.html>"]
 pub struct QueryType(pub(crate) i32);
@@ -41826,7 +41821,7 @@ impl QueryType {
     pub const PIPELINE_STATISTICS: Self = QueryType(1);
     pub const TIMESTAMP: Self = QueryType(2);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkBorderColor.html>"]
 pub struct BorderColor(pub(crate) i32);
@@ -41846,7 +41841,7 @@ impl BorderColor {
     pub const FLOAT_OPAQUE_WHITE: Self = BorderColor(4);
     pub const INT_OPAQUE_WHITE: Self = BorderColor(5);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkPipelineBindPoint.html>"]
 pub struct PipelineBindPoint(pub(crate) i32);
@@ -41862,7 +41857,7 @@ impl PipelineBindPoint {
     pub const GRAPHICS: Self = PipelineBindPoint(0);
     pub const COMPUTE: Self = PipelineBindPoint(1);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkPipelineCacheHeaderVersion.html>"]
 pub struct PipelineCacheHeaderVersion(pub(crate) i32);
@@ -41877,7 +41872,7 @@ impl PipelineCacheHeaderVersion {
 impl PipelineCacheHeaderVersion {
     pub const ONE: Self = PipelineCacheHeaderVersion(1);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkPrimitiveTopology.html>"]
 pub struct PrimitiveTopology(pub(crate) i32);
@@ -41902,7 +41897,7 @@ impl PrimitiveTopology {
     pub const TRIANGLE_STRIP_WITH_ADJACENCY: Self = PrimitiveTopology(9);
     pub const PATCH_LIST: Self = PrimitiveTopology(10);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkSharingMode.html>"]
 pub struct SharingMode(pub(crate) i32);
@@ -41918,7 +41913,7 @@ impl SharingMode {
     pub const EXCLUSIVE: Self = SharingMode(0);
     pub const CONCURRENT: Self = SharingMode(1);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkIndexType.html>"]
 pub struct IndexType(pub(crate) i32);
@@ -41934,7 +41929,7 @@ impl IndexType {
     pub const UINT16: Self = IndexType(0);
     pub const UINT32: Self = IndexType(1);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkFilter.html>"]
 pub struct Filter(pub(crate) i32);
@@ -41950,7 +41945,7 @@ impl Filter {
     pub const NEAREST: Self = Filter(0);
     pub const LINEAR: Self = Filter(1);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkSamplerMipmapMode.html>"]
 pub struct SamplerMipmapMode(pub(crate) i32);
@@ -41968,7 +41963,7 @@ impl SamplerMipmapMode {
     #[doc = "Linear filter between mip levels"]
     pub const LINEAR: Self = SamplerMipmapMode(1);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkSamplerAddressMode.html>"]
 pub struct SamplerAddressMode(pub(crate) i32);
@@ -41986,7 +41981,7 @@ impl SamplerAddressMode {
     pub const CLAMP_TO_EDGE: Self = SamplerAddressMode(2);
     pub const CLAMP_TO_BORDER: Self = SamplerAddressMode(3);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkCompareOp.html>"]
 pub struct CompareOp(pub(crate) i32);
@@ -42008,7 +42003,7 @@ impl CompareOp {
     pub const GREATER_OR_EQUAL: Self = CompareOp(6);
     pub const ALWAYS: Self = CompareOp(7);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkPolygonMode.html>"]
 pub struct PolygonMode(pub(crate) i32);
@@ -42025,7 +42020,7 @@ impl PolygonMode {
     pub const LINE: Self = PolygonMode(1);
     pub const POINT: Self = PolygonMode(2);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkFrontFace.html>"]
 pub struct FrontFace(pub(crate) i32);
@@ -42041,7 +42036,7 @@ impl FrontFace {
     pub const COUNTER_CLOCKWISE: Self = FrontFace(0);
     pub const CLOCKWISE: Self = FrontFace(1);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkBlendFactor.html>"]
 pub struct BlendFactor(pub(crate) i32);
@@ -42074,7 +42069,7 @@ impl BlendFactor {
     pub const SRC1_ALPHA: Self = BlendFactor(17);
     pub const ONE_MINUS_SRC1_ALPHA: Self = BlendFactor(18);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkBlendOp.html>"]
 pub struct BlendOp(pub(crate) i32);
@@ -42093,7 +42088,7 @@ impl BlendOp {
     pub const MIN: Self = BlendOp(3);
     pub const MAX: Self = BlendOp(4);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkStencilOp.html>"]
 pub struct StencilOp(pub(crate) i32);
@@ -42115,7 +42110,7 @@ impl StencilOp {
     pub const INCREMENT_AND_WRAP: Self = StencilOp(6);
     pub const DECREMENT_AND_WRAP: Self = StencilOp(7);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkLogicOp.html>"]
 pub struct LogicOp(pub(crate) i32);
@@ -42145,7 +42140,7 @@ impl LogicOp {
     pub const NAND: Self = LogicOp(14);
     pub const SET: Self = LogicOp(15);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkInternalAllocationType.html>"]
 pub struct InternalAllocationType(pub(crate) i32);
@@ -42160,7 +42155,7 @@ impl InternalAllocationType {
 impl InternalAllocationType {
     pub const EXECUTABLE: Self = InternalAllocationType(0);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkSystemAllocationScope.html>"]
 pub struct SystemAllocationScope(pub(crate) i32);
@@ -42179,7 +42174,7 @@ impl SystemAllocationScope {
     pub const DEVICE: Self = SystemAllocationScope(3);
     pub const INSTANCE: Self = SystemAllocationScope(4);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkPhysicalDeviceType.html>"]
 pub struct PhysicalDeviceType(pub(crate) i32);
@@ -42198,7 +42193,7 @@ impl PhysicalDeviceType {
     pub const VIRTUAL_GPU: Self = PhysicalDeviceType(3);
     pub const CPU: Self = PhysicalDeviceType(4);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkVertexInputRate.html>"]
 pub struct VertexInputRate(pub(crate) i32);
@@ -42214,7 +42209,7 @@ impl VertexInputRate {
     pub const VERTEX: Self = VertexInputRate(0);
     pub const INSTANCE: Self = VertexInputRate(1);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkFormat.html>"]
 pub struct Format(pub(crate) i32);
@@ -42413,7 +42408,7 @@ impl Format {
     pub const ASTC_12X12_UNORM_BLOCK: Self = Format(183);
     pub const ASTC_12X12_SRGB_BLOCK: Self = Format(184);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkStructureType.html>"]
 pub struct StructureType(pub(crate) i32);
@@ -42478,7 +42473,7 @@ impl StructureType {
     #[doc = "Reserved for internal use by the loader, layers, and ICDs"]
     pub const LOADER_DEVICE_CREATE_INFO: Self = StructureType(48);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkSubpassContents.html>"]
 pub struct SubpassContents(pub(crate) i32);
@@ -42494,7 +42489,7 @@ impl SubpassContents {
     pub const INLINE: Self = SubpassContents(0);
     pub const SECONDARY_COMMAND_BUFFERS: Self = SubpassContents(1);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkResult.html>"]
 pub struct Result(pub(crate) i32);
@@ -42616,11 +42611,11 @@ impl fmt::Display for Result {
         if let Some(x) = name {
             fmt.write_str(x)
         } else {
-            write!(fmt, "{}", self.0)
+            self.0.fmt(fmt)
         }
     }
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkDynamicState.html>"]
 pub struct DynamicState(pub(crate) i32);
@@ -42643,7 +42638,7 @@ impl DynamicState {
     pub const STENCIL_WRITE_MASK: Self = DynamicState(7);
     pub const STENCIL_REFERENCE: Self = DynamicState(8);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkDescriptorUpdateTemplateType.html>"]
 pub struct DescriptorUpdateTemplateType(pub(crate) i32);
@@ -42659,7 +42654,7 @@ impl DescriptorUpdateTemplateType {
     #[doc = "Create descriptor update template for descriptor set updates"]
     pub const DESCRIPTOR_SET: Self = DescriptorUpdateTemplateType(0);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkObjectType.html>"]
 pub struct ObjectType(pub(crate) i32);
@@ -42724,7 +42719,7 @@ impl ObjectType {
     #[doc = "VkCommandPool"]
     pub const COMMAND_POOL: Self = ObjectType(25);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkPresentModeKHR.html>"]
 pub struct PresentModeKHR(pub(crate) i32);
@@ -42742,7 +42737,7 @@ impl PresentModeKHR {
     pub const FIFO: Self = PresentModeKHR(2);
     pub const FIFO_RELAXED: Self = PresentModeKHR(3);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkColorSpaceKHR.html>"]
 pub struct ColorSpaceKHR(pub(crate) i32);
@@ -42757,7 +42752,7 @@ impl ColorSpaceKHR {
 impl ColorSpaceKHR {
     pub const SRGB_NONLINEAR: Self = ColorSpaceKHR(0);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkTimeDomainEXT.html>"]
 pub struct TimeDomainEXT(pub(crate) i32);
@@ -42775,7 +42770,7 @@ impl TimeDomainEXT {
     pub const CLOCK_MONOTONIC_RAW: Self = TimeDomainEXT(2);
     pub const QUERY_PERFORMANCE_COUNTER: Self = TimeDomainEXT(3);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkDebugReportObjectTypeEXT.html>"]
 pub struct DebugReportObjectTypeEXT(pub(crate) i32);
@@ -42823,7 +42818,7 @@ impl DebugReportObjectTypeEXT {
     pub const INDIRECT_COMMANDS_LAYOUT_NVX: Self = DebugReportObjectTypeEXT(32);
     pub const VALIDATION_CACHE: Self = DebugReportObjectTypeEXT(33);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkRasterizationOrderAMD.html>"]
 pub struct RasterizationOrderAMD(pub(crate) i32);
@@ -42839,7 +42834,7 @@ impl RasterizationOrderAMD {
     pub const STRICT: Self = RasterizationOrderAMD(0);
     pub const RELAXED: Self = RasterizationOrderAMD(1);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkValidationCheckEXT.html>"]
 pub struct ValidationCheckEXT(pub(crate) i32);
@@ -42855,7 +42850,7 @@ impl ValidationCheckEXT {
     pub const ALL: Self = ValidationCheckEXT(0);
     pub const SHADERS: Self = ValidationCheckEXT(1);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkValidationFeatureEnableEXT.html>"]
 pub struct ValidationFeatureEnableEXT(pub(crate) i32);
@@ -42871,7 +42866,7 @@ impl ValidationFeatureEnableEXT {
     pub const GPU_ASSISTED: Self = ValidationFeatureEnableEXT(0);
     pub const GPU_ASSISTED_RESERVE_BINDING_SLOT: Self = ValidationFeatureEnableEXT(1);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkValidationFeatureDisableEXT.html>"]
 pub struct ValidationFeatureDisableEXT(pub(crate) i32);
@@ -42892,7 +42887,7 @@ impl ValidationFeatureDisableEXT {
     pub const CORE_CHECKS: Self = ValidationFeatureDisableEXT(5);
     pub const UNIQUE_HANDLES: Self = ValidationFeatureDisableEXT(6);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkIndirectCommandsTokenTypeNVX.html>"]
 pub struct IndirectCommandsTokenTypeNVX(pub(crate) i32);
@@ -42914,7 +42909,7 @@ impl IndirectCommandsTokenTypeNVX {
     pub const DRAW: Self = IndirectCommandsTokenTypeNVX(6);
     pub const DISPATCH: Self = IndirectCommandsTokenTypeNVX(7);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkObjectEntryTypeNVX.html>"]
 pub struct ObjectEntryTypeNVX(pub(crate) i32);
@@ -42933,7 +42928,7 @@ impl ObjectEntryTypeNVX {
     pub const VERTEX_BUFFER: Self = ObjectEntryTypeNVX(3);
     pub const PUSH_CONSTANT: Self = ObjectEntryTypeNVX(4);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkDisplayPowerStateEXT.html>"]
 pub struct DisplayPowerStateEXT(pub(crate) i32);
@@ -42950,7 +42945,7 @@ impl DisplayPowerStateEXT {
     pub const SUSPEND: Self = DisplayPowerStateEXT(1);
     pub const ON: Self = DisplayPowerStateEXT(2);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkDeviceEventTypeEXT.html>"]
 pub struct DeviceEventTypeEXT(pub(crate) i32);
@@ -42965,7 +42960,7 @@ impl DeviceEventTypeEXT {
 impl DeviceEventTypeEXT {
     pub const DISPLAY_HOTPLUG: Self = DeviceEventTypeEXT(0);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkDisplayEventTypeEXT.html>"]
 pub struct DisplayEventTypeEXT(pub(crate) i32);
@@ -42980,7 +42975,7 @@ impl DisplayEventTypeEXT {
 impl DisplayEventTypeEXT {
     pub const FIRST_PIXEL_OUT: Self = DisplayEventTypeEXT(0);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkViewportCoordinateSwizzleNV.html>"]
 pub struct ViewportCoordinateSwizzleNV(pub(crate) i32);
@@ -43002,7 +42997,7 @@ impl ViewportCoordinateSwizzleNV {
     pub const POSITIVE_W: Self = ViewportCoordinateSwizzleNV(6);
     pub const NEGATIVE_W: Self = ViewportCoordinateSwizzleNV(7);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkDiscardRectangleModeEXT.html>"]
 pub struct DiscardRectangleModeEXT(pub(crate) i32);
@@ -43018,7 +43013,7 @@ impl DiscardRectangleModeEXT {
     pub const INCLUSIVE: Self = DiscardRectangleModeEXT(0);
     pub const EXCLUSIVE: Self = DiscardRectangleModeEXT(1);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkPointClippingBehavior.html>"]
 pub struct PointClippingBehavior(pub(crate) i32);
@@ -43034,7 +43029,7 @@ impl PointClippingBehavior {
     pub const ALL_CLIP_PLANES: Self = PointClippingBehavior(0);
     pub const USER_CLIP_PLANES_ONLY: Self = PointClippingBehavior(1);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkSamplerReductionModeEXT.html>"]
 pub struct SamplerReductionModeEXT(pub(crate) i32);
@@ -43051,7 +43046,7 @@ impl SamplerReductionModeEXT {
     pub const MIN: Self = SamplerReductionModeEXT(1);
     pub const MAX: Self = SamplerReductionModeEXT(2);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkTessellationDomainOrigin.html>"]
 pub struct TessellationDomainOrigin(pub(crate) i32);
@@ -43067,7 +43062,7 @@ impl TessellationDomainOrigin {
     pub const UPPER_LEFT: Self = TessellationDomainOrigin(0);
     pub const LOWER_LEFT: Self = TessellationDomainOrigin(1);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkSamplerYcbcrModelConversion.html>"]
 pub struct SamplerYcbcrModelConversion(pub(crate) i32);
@@ -43090,7 +43085,7 @@ impl SamplerYcbcrModelConversion {
     #[doc = "aka UHD YUV"]
     pub const YCBCR_2020: Self = SamplerYcbcrModelConversion(4);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkSamplerYcbcrRange.html>"]
 pub struct SamplerYcbcrRange(pub(crate) i32);
@@ -43108,7 +43103,7 @@ impl SamplerYcbcrRange {
     #[doc = "Luma 0..1 maps to 16..235, chroma -0.5..0.5 to 16..240"]
     pub const ITU_NARROW: Self = SamplerYcbcrRange(1);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkChromaLocation.html>"]
 pub struct ChromaLocation(pub(crate) i32);
@@ -43124,7 +43119,7 @@ impl ChromaLocation {
     pub const COSITED_EVEN: Self = ChromaLocation(0);
     pub const MIDPOINT: Self = ChromaLocation(1);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkBlendOverlapEXT.html>"]
 pub struct BlendOverlapEXT(pub(crate) i32);
@@ -43141,7 +43136,7 @@ impl BlendOverlapEXT {
     pub const DISJOINT: Self = BlendOverlapEXT(1);
     pub const CONJOINT: Self = BlendOverlapEXT(2);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkCoverageModulationModeNV.html>"]
 pub struct CoverageModulationModeNV(pub(crate) i32);
@@ -43159,7 +43154,7 @@ impl CoverageModulationModeNV {
     pub const ALPHA: Self = CoverageModulationModeNV(2);
     pub const RGBA: Self = CoverageModulationModeNV(3);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkValidationCacheHeaderVersionEXT.html>"]
 pub struct ValidationCacheHeaderVersionEXT(pub(crate) i32);
@@ -43174,7 +43169,7 @@ impl ValidationCacheHeaderVersionEXT {
 impl ValidationCacheHeaderVersionEXT {
     pub const ONE: Self = ValidationCacheHeaderVersionEXT(1);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkShaderInfoTypeAMD.html>"]
 pub struct ShaderInfoTypeAMD(pub(crate) i32);
@@ -43191,7 +43186,7 @@ impl ShaderInfoTypeAMD {
     pub const BINARY: Self = ShaderInfoTypeAMD(1);
     pub const DISASSEMBLY: Self = ShaderInfoTypeAMD(2);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkQueueGlobalPriorityEXT.html>"]
 pub struct QueueGlobalPriorityEXT(pub(crate) i32);
@@ -43209,7 +43204,7 @@ impl QueueGlobalPriorityEXT {
     pub const HIGH: Self = QueueGlobalPriorityEXT(512);
     pub const REALTIME: Self = QueueGlobalPriorityEXT(1024);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkConservativeRasterizationModeEXT.html>"]
 pub struct ConservativeRasterizationModeEXT(pub(crate) i32);
@@ -43226,7 +43221,7 @@ impl ConservativeRasterizationModeEXT {
     pub const OVERESTIMATE: Self = ConservativeRasterizationModeEXT(1);
     pub const UNDERESTIMATE: Self = ConservativeRasterizationModeEXT(2);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkVendorId.html>"]
 pub struct VendorId(pub(crate) i32);
@@ -43246,7 +43241,7 @@ impl VendorId {
     #[doc = "Kazan Software Renderer"]
     pub const KAZAN: Self = VendorId(0x10003);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkDriverIdKHR.html>"]
 pub struct DriverIdKHR(pub(crate) i32);
@@ -43280,7 +43275,7 @@ impl DriverIdKHR {
     #[doc = "Google LLC"]
     pub const GOOGLE_PASTEL: Self = DriverIdKHR(10);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkShadingRatePaletteEntryNV.html>"]
 pub struct ShadingRatePaletteEntryNV(pub(crate) i32);
@@ -43306,7 +43301,7 @@ impl ShadingRatePaletteEntryNV {
     pub const TYPE_1_INVOCATION_PER_2X4_PIXELS: Self = ShadingRatePaletteEntryNV(10);
     pub const TYPE_1_INVOCATION_PER_4X4_PIXELS: Self = ShadingRatePaletteEntryNV(11);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkCoarseSampleOrderTypeNV.html>"]
 pub struct CoarseSampleOrderTypeNV(pub(crate) i32);
@@ -43324,7 +43319,7 @@ impl CoarseSampleOrderTypeNV {
     pub const PIXEL_MAJOR: Self = CoarseSampleOrderTypeNV(2);
     pub const SAMPLE_MAJOR: Self = CoarseSampleOrderTypeNV(3);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkCopyAccelerationStructureModeNV.html>"]
 pub struct CopyAccelerationStructureModeNV(pub(crate) i32);
@@ -43340,7 +43335,7 @@ impl CopyAccelerationStructureModeNV {
     pub const CLONE: Self = CopyAccelerationStructureModeNV(0);
     pub const COMPACT: Self = CopyAccelerationStructureModeNV(1);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkAccelerationStructureTypeNV.html>"]
 pub struct AccelerationStructureTypeNV(pub(crate) i32);
@@ -43356,7 +43351,7 @@ impl AccelerationStructureTypeNV {
     pub const TOP_LEVEL: Self = AccelerationStructureTypeNV(0);
     pub const BOTTOM_LEVEL: Self = AccelerationStructureTypeNV(1);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkGeometryTypeNV.html>"]
 pub struct GeometryTypeNV(pub(crate) i32);
@@ -43372,7 +43367,7 @@ impl GeometryTypeNV {
     pub const TRIANGLES: Self = GeometryTypeNV(0);
     pub const AABBS: Self = GeometryTypeNV(1);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkAccelerationStructureMemoryRequirementsTypeNV.html>"]
 pub struct AccelerationStructureMemoryRequirementsTypeNV(pub(crate) i32);
@@ -43389,7 +43384,7 @@ impl AccelerationStructureMemoryRequirementsTypeNV {
     pub const BUILD_SCRATCH: Self = AccelerationStructureMemoryRequirementsTypeNV(1);
     pub const UPDATE_SCRATCH: Self = AccelerationStructureMemoryRequirementsTypeNV(2);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkRayTracingShaderGroupTypeNV.html>"]
 pub struct RayTracingShaderGroupTypeNV(pub(crate) i32);
@@ -43406,7 +43401,7 @@ impl RayTracingShaderGroupTypeNV {
     pub const TRIANGLES_HIT_GROUP: Self = RayTracingShaderGroupTypeNV(1);
     pub const PROCEDURAL_HIT_GROUP: Self = RayTracingShaderGroupTypeNV(2);
 }
-#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkMemoryOverallocationBehaviorAMD.html>"]
 pub struct MemoryOverallocationBehaviorAMD(pub(crate) i32);
@@ -59379,7 +59374,7 @@ impl StructureType {
 impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_DRAW_PARAMETER_FEATURES: Self = StructureType(1000063000);
 }
-fn display_flags(
+pub(crate) fn debug_flags(
     f: &mut fmt::Formatter,
     known: &[(Flags, &'static str)],
     value: Flags,
@@ -59404,7 +59399,7 @@ fn display_flags(
     }
     Ok(())
 }
-impl fmt::Display for AccelerationStructureMemoryRequirementsTypeNV {
+impl fmt::Debug for AccelerationStructureMemoryRequirementsTypeNV {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::OBJECT => Some("OBJECT"),
@@ -59415,11 +59410,11 @@ impl fmt::Display for AccelerationStructureMemoryRequirementsTypeNV {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for AccelerationStructureTypeNV {
+impl fmt::Debug for AccelerationStructureTypeNV {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::TOP_LEVEL => Some("TOP_LEVEL"),
@@ -59429,11 +59424,11 @@ impl fmt::Display for AccelerationStructureTypeNV {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for AccessFlags {
+impl fmt::Debug for AccessFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (
@@ -59523,16 +59518,22 @@ impl fmt::Display for AccessFlags {
                 "FRAGMENT_DENSITY_MAP_READ_EXT",
             ),
         ];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for AttachmentDescriptionFlags {
+impl fmt::Debug for AndroidSurfaceCreateFlagsKHR {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for AttachmentDescriptionFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[(AttachmentDescriptionFlags::MAY_ALIAS.0, "MAY_ALIAS")];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for AttachmentLoadOp {
+impl fmt::Debug for AttachmentLoadOp {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::LOAD => Some("LOAD"),
@@ -59543,11 +59544,11 @@ impl fmt::Display for AttachmentLoadOp {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for AttachmentStoreOp {
+impl fmt::Debug for AttachmentStoreOp {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::STORE => Some("STORE"),
@@ -59557,11 +59558,11 @@ impl fmt::Display for AttachmentStoreOp {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for BlendFactor {
+impl fmt::Debug for BlendFactor {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::ZERO => Some("ZERO"),
@@ -59588,11 +59589,11 @@ impl fmt::Display for BlendFactor {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for BlendOp {
+impl fmt::Debug for BlendOp {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::ADD => Some("ADD"),
@@ -59651,11 +59652,11 @@ impl fmt::Display for BlendOp {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for BlendOverlapEXT {
+impl fmt::Debug for BlendOverlapEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::UNCORRELATED => Some("UNCORRELATED"),
@@ -59666,11 +59667,11 @@ impl fmt::Display for BlendOverlapEXT {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for BorderColor {
+impl fmt::Debug for BorderColor {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::FLOAT_TRANSPARENT_BLACK => Some("FLOAT_TRANSPARENT_BLACK"),
@@ -59684,11 +59685,11 @@ impl fmt::Display for BorderColor {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for BufferCreateFlags {
+impl fmt::Debug for BufferCreateFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (BufferCreateFlags::SPARSE_BINDING.0, "SPARSE_BINDING"),
@@ -59700,10 +59701,10 @@ impl fmt::Display for BufferCreateFlags {
             ),
             (BufferCreateFlags::PROTECTED.0, "PROTECTED"),
         ];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for BufferUsageFlags {
+impl fmt::Debug for BufferUsageFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (BufferUsageFlags::TRANSFER_SRC.0, "TRANSFER_SRC"),
@@ -59743,10 +59744,16 @@ impl fmt::Display for BufferUsageFlags {
                 "SHADER_DEVICE_ADDRESS_EXT",
             ),
         ];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for BuildAccelerationStructureFlagsNV {
+impl fmt::Debug for BufferViewCreateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for BuildAccelerationStructureFlagsNV {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (
@@ -59770,10 +59777,10 @@ impl fmt::Display for BuildAccelerationStructureFlagsNV {
                 "LOW_MEMORY",
             ),
         ];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for ChromaLocation {
+impl fmt::Debug for ChromaLocation {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::COSITED_EVEN => Some("COSITED_EVEN"),
@@ -59783,11 +59790,11 @@ impl fmt::Display for ChromaLocation {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for CoarseSampleOrderTypeNV {
+impl fmt::Debug for CoarseSampleOrderTypeNV {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::DEFAULT => Some("DEFAULT"),
@@ -59799,11 +59806,11 @@ impl fmt::Display for CoarseSampleOrderTypeNV {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for ColorComponentFlags {
+impl fmt::Debug for ColorComponentFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (ColorComponentFlags::R.0, "R"),
@@ -59811,10 +59818,10 @@ impl fmt::Display for ColorComponentFlags {
             (ColorComponentFlags::B.0, "B"),
             (ColorComponentFlags::A.0, "A"),
         ];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for ColorSpaceKHR {
+impl fmt::Debug for ColorSpaceKHR {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::SRGB_NONLINEAR => Some("SRGB_NONLINEAR"),
@@ -59837,11 +59844,11 @@ impl fmt::Display for ColorSpaceKHR {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for CommandBufferLevel {
+impl fmt::Debug for CommandBufferLevel {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::PRIMARY => Some("PRIMARY"),
@@ -59851,20 +59858,20 @@ impl fmt::Display for CommandBufferLevel {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for CommandBufferResetFlags {
+impl fmt::Debug for CommandBufferResetFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[(
             CommandBufferResetFlags::RELEASE_RESOURCES.0,
             "RELEASE_RESOURCES",
         )];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for CommandBufferUsageFlags {
+impl fmt::Debug for CommandBufferUsageFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (
@@ -59880,10 +59887,10 @@ impl fmt::Display for CommandBufferUsageFlags {
                 "SIMULTANEOUS_USE",
             ),
         ];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for CommandPoolCreateFlags {
+impl fmt::Debug for CommandPoolCreateFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (CommandPoolCreateFlags::TRANSIENT.0, "TRANSIENT"),
@@ -59893,19 +59900,25 @@ impl fmt::Display for CommandPoolCreateFlags {
             ),
             (CommandPoolCreateFlags::PROTECTED.0, "PROTECTED"),
         ];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for CommandPoolResetFlags {
+impl fmt::Debug for CommandPoolResetFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[(
             CommandPoolResetFlags::RELEASE_RESOURCES.0,
             "RELEASE_RESOURCES",
         )];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for CompareOp {
+impl fmt::Debug for CommandPoolTrimFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for CompareOp {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::NEVER => Some("NEVER"),
@@ -59921,11 +59934,11 @@ impl fmt::Display for CompareOp {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for ComponentSwizzle {
+impl fmt::Debug for ComponentSwizzle {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::IDENTITY => Some("IDENTITY"),
@@ -59940,11 +59953,11 @@ impl fmt::Display for ComponentSwizzle {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for CompositeAlphaFlagsKHR {
+impl fmt::Debug for CompositeAlphaFlagsKHR {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (CompositeAlphaFlagsKHR::OPAQUE.0, "OPAQUE"),
@@ -59952,16 +59965,16 @@ impl fmt::Display for CompositeAlphaFlagsKHR {
             (CompositeAlphaFlagsKHR::POST_MULTIPLIED.0, "POST_MULTIPLIED"),
             (CompositeAlphaFlagsKHR::INHERIT.0, "INHERIT"),
         ];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for ConditionalRenderingFlagsEXT {
+impl fmt::Debug for ConditionalRenderingFlagsEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[(ConditionalRenderingFlagsEXT::INVERTED.0, "INVERTED")];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for ConservativeRasterizationModeEXT {
+impl fmt::Debug for ConservativeRasterizationModeEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::DISABLED => Some("DISABLED"),
@@ -59972,11 +59985,11 @@ impl fmt::Display for ConservativeRasterizationModeEXT {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for CopyAccelerationStructureModeNV {
+impl fmt::Debug for CopyAccelerationStructureModeNV {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::CLONE => Some("CLONE"),
@@ -59986,11 +59999,11 @@ impl fmt::Display for CopyAccelerationStructureModeNV {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for CoverageModulationModeNV {
+impl fmt::Debug for CoverageModulationModeNV {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::NONE => Some("NONE"),
@@ -60002,11 +60015,11 @@ impl fmt::Display for CoverageModulationModeNV {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for CullModeFlags {
+impl fmt::Debug for CullModeFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (CullModeFlags::NONE.0, "NONE"),
@@ -60014,10 +60027,10 @@ impl fmt::Display for CullModeFlags {
             (CullModeFlags::BACK.0, "BACK"),
             (CullModeFlags::FRONT_AND_BACK.0, "FRONT_AND_BACK"),
         ];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for DebugReportFlagsEXT {
+impl fmt::Debug for DebugReportFlagsEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (DebugReportFlagsEXT::INFORMATION.0, "INFORMATION"),
@@ -60029,10 +60042,10 @@ impl fmt::Display for DebugReportFlagsEXT {
             (DebugReportFlagsEXT::ERROR.0, "ERROR"),
             (DebugReportFlagsEXT::DEBUG.0, "DEBUG"),
         ];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for DebugReportObjectTypeEXT {
+impl fmt::Debug for DebugReportObjectTypeEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::UNKNOWN => Some("UNKNOWN"),
@@ -60077,11 +60090,11 @@ impl fmt::Display for DebugReportObjectTypeEXT {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for DebugUtilsMessageSeverityFlagsEXT {
+impl fmt::Debug for DebugUtilsMessageSeverityFlagsEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (DebugUtilsMessageSeverityFlagsEXT::VERBOSE.0, "VERBOSE"),
@@ -60089,30 +60102,42 @@ impl fmt::Display for DebugUtilsMessageSeverityFlagsEXT {
             (DebugUtilsMessageSeverityFlagsEXT::WARNING.0, "WARNING"),
             (DebugUtilsMessageSeverityFlagsEXT::ERROR.0, "ERROR"),
         ];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for DebugUtilsMessageTypeFlagsEXT {
+impl fmt::Debug for DebugUtilsMessageTypeFlagsEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (DebugUtilsMessageTypeFlagsEXT::GENERAL.0, "GENERAL"),
             (DebugUtilsMessageTypeFlagsEXT::VALIDATION.0, "VALIDATION"),
             (DebugUtilsMessageTypeFlagsEXT::PERFORMANCE.0, "PERFORMANCE"),
         ];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for DependencyFlags {
+impl fmt::Debug for DebugUtilsMessengerCallbackDataFlagsEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for DebugUtilsMessengerCreateFlagsEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for DependencyFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (DependencyFlags::BY_REGION.0, "BY_REGION"),
             (DependencyFlags::DEVICE_GROUP.0, "DEVICE_GROUP"),
             (DependencyFlags::VIEW_LOCAL.0, "VIEW_LOCAL"),
         ];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for DescriptorBindingFlagsEXT {
+impl fmt::Debug for DescriptorBindingFlagsEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (
@@ -60132,10 +60157,10 @@ impl fmt::Display for DescriptorBindingFlagsEXT {
                 "VARIABLE_DESCRIPTOR_COUNT",
             ),
         ];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for DescriptorPoolCreateFlags {
+impl fmt::Debug for DescriptorPoolCreateFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (
@@ -60147,10 +60172,16 @@ impl fmt::Display for DescriptorPoolCreateFlags {
                 "UPDATE_AFTER_BIND_EXT",
             ),
         ];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for DescriptorSetLayoutCreateFlags {
+impl fmt::Debug for DescriptorPoolResetFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for DescriptorSetLayoutCreateFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (
@@ -60162,10 +60193,10 @@ impl fmt::Display for DescriptorSetLayoutCreateFlags {
                 "UPDATE_AFTER_BIND_POOL_EXT",
             ),
         ];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for DescriptorType {
+impl fmt::Debug for DescriptorType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::SAMPLER => Some("SAMPLER"),
@@ -60186,11 +60217,17 @@ impl fmt::Display for DescriptorType {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for DescriptorUpdateTemplateType {
+impl fmt::Debug for DescriptorUpdateTemplateCreateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for DescriptorUpdateTemplateType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::DESCRIPTOR_SET => Some("DESCRIPTOR_SET"),
@@ -60199,11 +60236,17 @@ impl fmt::Display for DescriptorUpdateTemplateType {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for DeviceEventTypeEXT {
+impl fmt::Debug for DeviceCreateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for DeviceEventTypeEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::DISPLAY_HOTPLUG => Some("DISPLAY_HOTPLUG"),
@@ -60212,11 +60255,11 @@ impl fmt::Display for DeviceEventTypeEXT {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for DeviceGroupPresentModeFlagsKHR {
+impl fmt::Debug for DeviceGroupPresentModeFlagsKHR {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (DeviceGroupPresentModeFlagsKHR::LOCAL.0, "LOCAL"),
@@ -60227,16 +60270,16 @@ impl fmt::Display for DeviceGroupPresentModeFlagsKHR {
                 "LOCAL_MULTI_DEVICE",
             ),
         ];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for DeviceQueueCreateFlags {
+impl fmt::Debug for DeviceQueueCreateFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[(DeviceQueueCreateFlags::PROTECTED.0, "PROTECTED")];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for DiscardRectangleModeEXT {
+impl fmt::Debug for DiscardRectangleModeEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::INCLUSIVE => Some("INCLUSIVE"),
@@ -60246,11 +60289,11 @@ impl fmt::Display for DiscardRectangleModeEXT {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for DisplayEventTypeEXT {
+impl fmt::Debug for DisplayEventTypeEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::FIRST_PIXEL_OUT => Some("FIRST_PIXEL_OUT"),
@@ -60259,11 +60302,17 @@ impl fmt::Display for DisplayEventTypeEXT {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for DisplayPlaneAlphaFlagsKHR {
+impl fmt::Debug for DisplayModeCreateFlagsKHR {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for DisplayPlaneAlphaFlagsKHR {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (DisplayPlaneAlphaFlagsKHR::OPAQUE.0, "OPAQUE"),
@@ -60274,10 +60323,10 @@ impl fmt::Display for DisplayPlaneAlphaFlagsKHR {
                 "PER_PIXEL_PREMULTIPLIED",
             ),
         ];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for DisplayPowerStateEXT {
+impl fmt::Debug for DisplayPowerStateEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::OFF => Some("OFF"),
@@ -60288,11 +60337,17 @@ impl fmt::Display for DisplayPowerStateEXT {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for DriverIdKHR {
+impl fmt::Debug for DisplaySurfaceCreateFlagsKHR {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for DriverIdKHR {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::AMD_PROPRIETARY => Some("AMD_PROPRIETARY"),
@@ -60310,11 +60365,11 @@ impl fmt::Display for DriverIdKHR {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for DynamicState {
+impl fmt::Debug for DynamicState {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::VIEWPORT => Some("VIEWPORT"),
@@ -60337,11 +60392,17 @@ impl fmt::Display for DynamicState {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for ExternalFenceFeatureFlags {
+impl fmt::Debug for EventCreateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for ExternalFenceFeatureFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (
@@ -60353,10 +60414,10 @@ impl fmt::Display for ExternalFenceFeatureFlags {
                 "EXTERNAL_FENCE_FEATURE_IMPORTABLE",
             ),
         ];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for ExternalFenceHandleTypeFlags {
+impl fmt::Debug for ExternalFenceHandleTypeFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (
@@ -60376,10 +60437,10 @@ impl fmt::Display for ExternalFenceHandleTypeFlags {
                 "EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD",
             ),
         ];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for ExternalMemoryFeatureFlags {
+impl fmt::Debug for ExternalMemoryFeatureFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (
@@ -60395,10 +60456,10 @@ impl fmt::Display for ExternalMemoryFeatureFlags {
                 "EXTERNAL_MEMORY_FEATURE_IMPORTABLE",
             ),
         ];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for ExternalMemoryFeatureFlagsNV {
+impl fmt::Debug for ExternalMemoryFeatureFlagsNV {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (
@@ -60414,16 +60475,16 @@ impl fmt::Display for ExternalMemoryFeatureFlagsNV {
                 "EXTERNAL_MEMORY_FEATURE_IMPORTABLE_NV",
             ),
         ];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for ExternalMemoryHandleTypeFlags {
+impl fmt::Debug for ExternalMemoryHandleTypeFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN : & [ ( Flags , & str ) ] = & [ ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32 . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_ANDROID_HARDWARE_BUFFER_ANDROID . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_ANDROID_HARDWARE_BUFFER_ANDROID" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_HOST_ALLOCATION . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_HOST_ALLOCATION" ) , ( ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_HOST_MAPPED_FOREIGN_MEMORY . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_HOST_MAPPED_FOREIGN_MEMORY" ) ] ;
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for ExternalMemoryHandleTypeFlagsNV {
+impl fmt::Debug for ExternalMemoryHandleTypeFlagsNV {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (
@@ -60443,10 +60504,10 @@ impl fmt::Display for ExternalMemoryHandleTypeFlagsNV {
                 "EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_NV",
             ),
         ];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for ExternalSemaphoreFeatureFlags {
+impl fmt::Debug for ExternalSemaphoreFeatureFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (
@@ -60458,10 +60519,10 @@ impl fmt::Display for ExternalSemaphoreFeatureFlags {
                 "EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE",
             ),
         ];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for ExternalSemaphoreHandleTypeFlags {
+impl fmt::Debug for ExternalSemaphoreHandleTypeFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (
@@ -60485,22 +60546,22 @@ impl fmt::Display for ExternalSemaphoreHandleTypeFlags {
                 "EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD",
             ),
         ];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for FenceCreateFlags {
+impl fmt::Debug for FenceCreateFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[(FenceCreateFlags::SIGNALED.0, "SIGNALED")];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for FenceImportFlags {
+impl fmt::Debug for FenceImportFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[(FenceImportFlags::TEMPORARY.0, "TEMPORARY")];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for Filter {
+impl fmt::Debug for Filter {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::NEAREST => Some("NEAREST"),
@@ -60511,11 +60572,11 @@ impl fmt::Display for Filter {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for Format {
+impl fmt::Debug for Format {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::UNDEFINED => Some("UNDEFINED"),
@@ -60778,17 +60839,23 @@ impl fmt::Display for Format {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for FormatFeatureFlags {
+impl fmt::Debug for FormatFeatureFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN : & [ ( Flags , & str ) ] = & [ ( FormatFeatureFlags :: SAMPLED_IMAGE . 0 , "SAMPLED_IMAGE" ) , ( FormatFeatureFlags :: STORAGE_IMAGE . 0 , "STORAGE_IMAGE" ) , ( FormatFeatureFlags :: STORAGE_IMAGE_ATOMIC . 0 , "STORAGE_IMAGE_ATOMIC" ) , ( FormatFeatureFlags :: UNIFORM_TEXEL_BUFFER . 0 , "UNIFORM_TEXEL_BUFFER" ) , ( FormatFeatureFlags :: STORAGE_TEXEL_BUFFER . 0 , "STORAGE_TEXEL_BUFFER" ) , ( FormatFeatureFlags :: STORAGE_TEXEL_BUFFER_ATOMIC . 0 , "STORAGE_TEXEL_BUFFER_ATOMIC" ) , ( FormatFeatureFlags :: VERTEX_BUFFER . 0 , "VERTEX_BUFFER" ) , ( FormatFeatureFlags :: COLOR_ATTACHMENT . 0 , "COLOR_ATTACHMENT" ) , ( FormatFeatureFlags :: COLOR_ATTACHMENT_BLEND . 0 , "COLOR_ATTACHMENT_BLEND" ) , ( FormatFeatureFlags :: DEPTH_STENCIL_ATTACHMENT . 0 , "DEPTH_STENCIL_ATTACHMENT" ) , ( FormatFeatureFlags :: BLIT_SRC . 0 , "BLIT_SRC" ) , ( FormatFeatureFlags :: BLIT_DST . 0 , "BLIT_DST" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_FILTER_LINEAR . 0 , "SAMPLED_IMAGE_FILTER_LINEAR" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_FILTER_CUBIC_IMG . 0 , "SAMPLED_IMAGE_FILTER_CUBIC_IMG" ) , ( FormatFeatureFlags :: RESERVED_27_KHR . 0 , "RESERVED_27_KHR" ) , ( FormatFeatureFlags :: RESERVED_28_KHR . 0 , "RESERVED_28_KHR" ) , ( FormatFeatureFlags :: RESERVED_25_KHR . 0 , "RESERVED_25_KHR" ) , ( FormatFeatureFlags :: RESERVED_26_KHR . 0 , "RESERVED_26_KHR" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_FILTER_MINMAX_EXT . 0 , "SAMPLED_IMAGE_FILTER_MINMAX_EXT" ) , ( FormatFeatureFlags :: FRAGMENT_DENSITY_MAP_EXT . 0 , "FRAGMENT_DENSITY_MAP_EXT" ) , ( FormatFeatureFlags :: TRANSFER_SRC . 0 , "TRANSFER_SRC" ) , ( FormatFeatureFlags :: TRANSFER_DST . 0 , "TRANSFER_DST" ) , ( FormatFeatureFlags :: MIDPOINT_CHROMA_SAMPLES . 0 , "MIDPOINT_CHROMA_SAMPLES" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT" ) , ( FormatFeatureFlags :: SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE . 0 , "SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE" ) , ( FormatFeatureFlags :: DISJOINT . 0 , "DISJOINT" ) , ( FormatFeatureFlags :: COSITED_CHROMA_SAMPLES . 0 , "COSITED_CHROMA_SAMPLES" ) ] ;
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for FrontFace {
+impl fmt::Debug for FramebufferCreateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for FrontFace {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::COUNTER_CLOCKWISE => Some("COUNTER_CLOCKWISE"),
@@ -60798,11 +60865,11 @@ impl fmt::Display for FrontFace {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for GeometryFlagsNV {
+impl fmt::Debug for GeometryFlagsNV {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (GeometryFlagsNV::OPAQUE.0, "OPAQUE"),
@@ -60811,10 +60878,10 @@ impl fmt::Display for GeometryFlagsNV {
                 "NO_DUPLICATE_ANY_HIT_INVOCATION",
             ),
         ];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for GeometryInstanceFlagsNV {
+impl fmt::Debug for GeometryInstanceFlagsNV {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (
@@ -60831,10 +60898,10 @@ impl fmt::Display for GeometryInstanceFlagsNV {
                 "FORCE_NO_OPAQUE",
             ),
         ];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for GeometryTypeNV {
+impl fmt::Debug for GeometryTypeNV {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::TRIANGLES => Some("TRIANGLES"),
@@ -60844,11 +60911,17 @@ impl fmt::Display for GeometryTypeNV {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for ImageAspectFlags {
+impl fmt::Debug for IOSSurfaceCreateFlagsMVK {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for ImageAspectFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (ImageAspectFlags::COLOR.0, "COLOR"),
@@ -60863,10 +60936,10 @@ impl fmt::Display for ImageAspectFlags {
             (ImageAspectFlags::PLANE_1.0, "PLANE_1"),
             (ImageAspectFlags::PLANE_2.0, "PLANE_2"),
         ];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for ImageCreateFlags {
+impl fmt::Debug for ImageCreateFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (ImageCreateFlags::SPARSE_BINDING.0, "SPARSE_BINDING"),
@@ -60897,10 +60970,10 @@ impl fmt::Display for ImageCreateFlags {
             (ImageCreateFlags::PROTECTED.0, "PROTECTED"),
             (ImageCreateFlags::DISJOINT.0, "DISJOINT"),
         ];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for ImageLayout {
+impl fmt::Debug for ImageLayout {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::UNDEFINED => Some("UNDEFINED"),
@@ -60927,11 +61000,17 @@ impl fmt::Display for ImageLayout {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for ImageTiling {
+impl fmt::Debug for ImagePipeSurfaceCreateFlagsFUCHSIA {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for ImageTiling {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::OPTIMAL => Some("OPTIMAL"),
@@ -60942,11 +61021,11 @@ impl fmt::Display for ImageTiling {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for ImageType {
+impl fmt::Debug for ImageType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::TYPE_1D => Some("TYPE_1D"),
@@ -60957,11 +61036,11 @@ impl fmt::Display for ImageType {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for ImageUsageFlags {
+impl fmt::Debug for ImageUsageFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (ImageUsageFlags::TRANSFER_SRC.0, "TRANSFER_SRC"),
@@ -60993,19 +61072,19 @@ impl fmt::Display for ImageUsageFlags {
                 "FRAGMENT_DENSITY_MAP_EXT",
             ),
         ];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for ImageViewCreateFlags {
+impl fmt::Debug for ImageViewCreateFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[(
             ImageViewCreateFlags::FRAGMENT_DENSITY_MAP_DYNAMIC_EXT.0,
             "FRAGMENT_DENSITY_MAP_DYNAMIC_EXT",
         )];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for ImageViewType {
+impl fmt::Debug for ImageViewType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::TYPE_1D => Some("TYPE_1D"),
@@ -61020,11 +61099,11 @@ impl fmt::Display for ImageViewType {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for IndexType {
+impl fmt::Debug for IndexType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::UINT16 => Some("UINT16"),
@@ -61035,11 +61114,11 @@ impl fmt::Display for IndexType {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for IndirectCommandsLayoutUsageFlagsNVX {
+impl fmt::Debug for IndirectCommandsLayoutUsageFlagsNVX {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (
@@ -61059,10 +61138,10 @@ impl fmt::Display for IndirectCommandsLayoutUsageFlagsNVX {
                 "INDEXED_SEQUENCES",
             ),
         ];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for IndirectCommandsTokenTypeNVX {
+impl fmt::Debug for IndirectCommandsTokenTypeNVX {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::PIPELINE => Some("PIPELINE"),
@@ -61078,11 +61157,17 @@ impl fmt::Display for IndirectCommandsTokenTypeNVX {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for InternalAllocationType {
+impl fmt::Debug for InstanceCreateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for InternalAllocationType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::EXECUTABLE => Some("EXECUTABLE"),
@@ -61091,11 +61176,11 @@ impl fmt::Display for InternalAllocationType {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for LogicOp {
+impl fmt::Debug for LogicOp {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::CLEAR => Some("CLEAR"),
@@ -61119,26 +61204,38 @@ impl fmt::Display for LogicOp {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for MemoryAllocateFlags {
+impl fmt::Debug for MacOSSurfaceCreateFlagsMVK {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(MemoryAllocateFlags::DEVICE_MASK.0, "DEVICE_MASK")];
-        display_flags(f, KNOWN, self.0)
+        const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for MemoryHeapFlags {
+impl fmt::Debug for MemoryAllocateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(MemoryAllocateFlags::DEVICE_MASK.0, "DEVICE_MASK")];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for MemoryHeapFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (MemoryHeapFlags::DEVICE_LOCAL.0, "DEVICE_LOCAL"),
             (MemoryHeapFlags::MULTI_INSTANCE.0, "MULTI_INSTANCE"),
         ];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for MemoryOverallocationBehaviorAMD {
+impl fmt::Debug for MemoryMapFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for MemoryOverallocationBehaviorAMD {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::DEFAULT => Some("DEFAULT"),
@@ -61149,11 +61246,11 @@ impl fmt::Display for MemoryOverallocationBehaviorAMD {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for MemoryPropertyFlags {
+impl fmt::Debug for MemoryPropertyFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (MemoryPropertyFlags::DEVICE_LOCAL.0, "DEVICE_LOCAL"),
@@ -61163,10 +61260,10 @@ impl fmt::Display for MemoryPropertyFlags {
             (MemoryPropertyFlags::LAZILY_ALLOCATED.0, "LAZILY_ALLOCATED"),
             (MemoryPropertyFlags::PROTECTED.0, "PROTECTED"),
         ];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for ObjectEntryTypeNVX {
+impl fmt::Debug for ObjectEntryTypeNVX {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::DESCRIPTOR_SET => Some("DESCRIPTOR_SET"),
@@ -61179,20 +61276,20 @@ impl fmt::Display for ObjectEntryTypeNVX {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for ObjectEntryUsageFlagsNVX {
+impl fmt::Debug for ObjectEntryUsageFlagsNVX {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (ObjectEntryUsageFlagsNVX::GRAPHICS.0, "GRAPHICS"),
             (ObjectEntryUsageFlagsNVX::COMPUTE.0, "COMPUTE"),
         ];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for ObjectType {
+impl fmt::Debug for ObjectType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::UNKNOWN => Some("UNKNOWN"),
@@ -61238,11 +61335,11 @@ impl fmt::Display for ObjectType {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for PeerMemoryFeatureFlags {
+impl fmt::Debug for PeerMemoryFeatureFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (PeerMemoryFeatureFlags::COPY_SRC.0, "COPY_SRC"),
@@ -61250,10 +61347,10 @@ impl fmt::Display for PeerMemoryFeatureFlags {
             (PeerMemoryFeatureFlags::GENERIC_SRC.0, "GENERIC_SRC"),
             (PeerMemoryFeatureFlags::GENERIC_DST.0, "GENERIC_DST"),
         ];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for PhysicalDeviceType {
+impl fmt::Debug for PhysicalDeviceType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::OTHER => Some("OTHER"),
@@ -61266,11 +61363,11 @@ impl fmt::Display for PhysicalDeviceType {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for PipelineBindPoint {
+impl fmt::Debug for PipelineBindPoint {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::GRAPHICS => Some("GRAPHICS"),
@@ -61281,11 +61378,17 @@ impl fmt::Display for PipelineBindPoint {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for PipelineCacheHeaderVersion {
+impl fmt::Debug for PipelineCacheCreateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for PipelineCacheHeaderVersion {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::ONE => Some("ONE"),
@@ -61294,11 +61397,29 @@ impl fmt::Display for PipelineCacheHeaderVersion {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for PipelineCreateFlags {
+impl fmt::Debug for PipelineColorBlendStateCreateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for PipelineCoverageModulationStateCreateFlagsNV {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for PipelineCoverageToColorStateCreateFlagsNV {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for PipelineCreateFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (
@@ -61317,10 +61438,70 @@ impl fmt::Display for PipelineCreateFlags {
             ),
             (PipelineCreateFlags::DISPATCH_BASE.0, "DISPATCH_BASE"),
         ];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for PipelineStageFlags {
+impl fmt::Debug for PipelineDepthStencilStateCreateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for PipelineDiscardRectangleStateCreateFlagsEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for PipelineDynamicStateCreateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for PipelineInputAssemblyStateCreateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for PipelineLayoutCreateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for PipelineMultisampleStateCreateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for PipelineRasterizationConservativeStateCreateFlagsEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for PipelineRasterizationStateCreateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for PipelineRasterizationStateStreamCreateFlagsEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for PipelineShaderStageCreateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for PipelineStageFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (PipelineStageFlags::TOP_OF_PIPE.0, "TOP_OF_PIPE"),
@@ -61388,10 +61569,34 @@ impl fmt::Display for PipelineStageFlags {
                 "FRAGMENT_DENSITY_PROCESS_EXT",
             ),
         ];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for PointClippingBehavior {
+impl fmt::Debug for PipelineTessellationStateCreateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for PipelineVertexInputStateCreateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for PipelineViewportStateCreateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for PipelineViewportSwizzleStateCreateFlagsNV {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for PointClippingBehavior {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::ALL_CLIP_PLANES => Some("ALL_CLIP_PLANES"),
@@ -61401,11 +61606,11 @@ impl fmt::Display for PointClippingBehavior {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for PolygonMode {
+impl fmt::Debug for PolygonMode {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::FILL => Some("FILL"),
@@ -61417,11 +61622,11 @@ impl fmt::Display for PolygonMode {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for PresentModeKHR {
+impl fmt::Debug for PresentModeKHR {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::IMMEDIATE => Some("IMMEDIATE"),
@@ -61435,11 +61640,11 @@ impl fmt::Display for PresentModeKHR {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for PrimitiveTopology {
+impl fmt::Debug for PrimitiveTopology {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::POINT_LIST => Some("POINT_LIST"),
@@ -61458,17 +61663,17 @@ impl fmt::Display for PrimitiveTopology {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for QueryControlFlags {
+impl fmt::Debug for QueryControlFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[(QueryControlFlags::PRECISE.0, "PRECISE")];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for QueryPipelineStatisticFlags {
+impl fmt::Debug for QueryPipelineStatisticFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (
@@ -61516,10 +61721,16 @@ impl fmt::Display for QueryPipelineStatisticFlags {
                 "COMPUTE_SHADER_INVOCATIONS",
             ),
         ];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for QueryResultFlags {
+impl fmt::Debug for QueryPoolCreateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for QueryResultFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (QueryResultFlags::TYPE_64.0, "TYPE_64"),
@@ -61527,10 +61738,10 @@ impl fmt::Display for QueryResultFlags {
             (QueryResultFlags::WITH_AVAILABILITY.0, "WITH_AVAILABILITY"),
             (QueryResultFlags::PARTIAL.0, "PARTIAL"),
         ];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for QueryType {
+impl fmt::Debug for QueryType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::OCCLUSION => Some("OCCLUSION"),
@@ -61547,11 +61758,11 @@ impl fmt::Display for QueryType {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for QueueFlags {
+impl fmt::Debug for QueueFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (QueueFlags::GRAPHICS.0, "GRAPHICS"),
@@ -61562,10 +61773,10 @@ impl fmt::Display for QueueFlags {
             (QueueFlags::RESERVED_5_KHR.0, "RESERVED_5_KHR"),
             (QueueFlags::PROTECTED.0, "PROTECTED"),
         ];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for QueueGlobalPriorityEXT {
+impl fmt::Debug for QueueGlobalPriorityEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::LOW => Some("LOW"),
@@ -61577,11 +61788,11 @@ impl fmt::Display for QueueGlobalPriorityEXT {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for RasterizationOrderAMD {
+impl fmt::Debug for RasterizationOrderAMD {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::STRICT => Some("STRICT"),
@@ -61591,11 +61802,11 @@ impl fmt::Display for RasterizationOrderAMD {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for RayTracingShaderGroupTypeNV {
+impl fmt::Debug for RayTracingShaderGroupTypeNV {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::GENERAL => Some("GENERAL"),
@@ -61606,18 +61817,18 @@ impl fmt::Display for RayTracingShaderGroupTypeNV {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for RenderPassCreateFlags {
+impl fmt::Debug for RenderPassCreateFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] =
             &[(RenderPassCreateFlags::RESERVED_0_KHR.0, "RESERVED_0_KHR")];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for ResolveModeFlagsKHR {
+impl fmt::Debug for ResolveModeFlagsKHR {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (ResolveModeFlagsKHR::NONE.0, "NONE"),
@@ -61626,10 +61837,55 @@ impl fmt::Display for ResolveModeFlagsKHR {
             (ResolveModeFlagsKHR::MIN.0, "MIN"),
             (ResolveModeFlagsKHR::MAX.0, "MAX"),
         ];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for SampleCountFlags {
+impl fmt::Debug for Result {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::SUCCESS => Some("SUCCESS"),
+            Self::NOT_READY => Some("NOT_READY"),
+            Self::TIMEOUT => Some("TIMEOUT"),
+            Self::EVENT_SET => Some("EVENT_SET"),
+            Self::EVENT_RESET => Some("EVENT_RESET"),
+            Self::INCOMPLETE => Some("INCOMPLETE"),
+            Self::ERROR_OUT_OF_HOST_MEMORY => Some("ERROR_OUT_OF_HOST_MEMORY"),
+            Self::ERROR_OUT_OF_DEVICE_MEMORY => Some("ERROR_OUT_OF_DEVICE_MEMORY"),
+            Self::ERROR_INITIALIZATION_FAILED => Some("ERROR_INITIALIZATION_FAILED"),
+            Self::ERROR_DEVICE_LOST => Some("ERROR_DEVICE_LOST"),
+            Self::ERROR_MEMORY_MAP_FAILED => Some("ERROR_MEMORY_MAP_FAILED"),
+            Self::ERROR_LAYER_NOT_PRESENT => Some("ERROR_LAYER_NOT_PRESENT"),
+            Self::ERROR_EXTENSION_NOT_PRESENT => Some("ERROR_EXTENSION_NOT_PRESENT"),
+            Self::ERROR_FEATURE_NOT_PRESENT => Some("ERROR_FEATURE_NOT_PRESENT"),
+            Self::ERROR_INCOMPATIBLE_DRIVER => Some("ERROR_INCOMPATIBLE_DRIVER"),
+            Self::ERROR_TOO_MANY_OBJECTS => Some("ERROR_TOO_MANY_OBJECTS"),
+            Self::ERROR_FORMAT_NOT_SUPPORTED => Some("ERROR_FORMAT_NOT_SUPPORTED"),
+            Self::ERROR_FRAGMENTED_POOL => Some("ERROR_FRAGMENTED_POOL"),
+            Self::ERROR_SURFACE_LOST_KHR => Some("ERROR_SURFACE_LOST_KHR"),
+            Self::ERROR_NATIVE_WINDOW_IN_USE_KHR => Some("ERROR_NATIVE_WINDOW_IN_USE_KHR"),
+            Self::SUBOPTIMAL_KHR => Some("SUBOPTIMAL_KHR"),
+            Self::ERROR_OUT_OF_DATE_KHR => Some("ERROR_OUT_OF_DATE_KHR"),
+            Self::ERROR_INCOMPATIBLE_DISPLAY_KHR => Some("ERROR_INCOMPATIBLE_DISPLAY_KHR"),
+            Self::ERROR_VALIDATION_FAILED_EXT => Some("ERROR_VALIDATION_FAILED_EXT"),
+            Self::ERROR_INVALID_SHADER_NV => Some("ERROR_INVALID_SHADER_NV"),
+            Self::ERROR_INVALID_DRM_FORMAT_MODIFIER_PLANE_LAYOUT_EXT => {
+                Some("ERROR_INVALID_DRM_FORMAT_MODIFIER_PLANE_LAYOUT_EXT")
+            }
+            Self::ERROR_FRAGMENTATION_EXT => Some("ERROR_FRAGMENTATION_EXT"),
+            Self::ERROR_NOT_PERMITTED_EXT => Some("ERROR_NOT_PERMITTED_EXT"),
+            Self::ERROR_INVALID_DEVICE_ADDRESS_EXT => Some("ERROR_INVALID_DEVICE_ADDRESS_EXT"),
+            Self::ERROR_OUT_OF_POOL_MEMORY => Some("ERROR_OUT_OF_POOL_MEMORY"),
+            Self::ERROR_INVALID_EXTERNAL_HANDLE => Some("ERROR_INVALID_EXTERNAL_HANDLE"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
+    }
+}
+impl fmt::Debug for SampleCountFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (SampleCountFlags::TYPE_1.0, "TYPE_1"),
@@ -61640,10 +61896,10 @@ impl fmt::Display for SampleCountFlags {
             (SampleCountFlags::TYPE_32.0, "TYPE_32"),
             (SampleCountFlags::TYPE_64.0, "TYPE_64"),
         ];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for SamplerAddressMode {
+impl fmt::Debug for SamplerAddressMode {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::REPEAT => Some("REPEAT"),
@@ -61655,11 +61911,11 @@ impl fmt::Display for SamplerAddressMode {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for SamplerCreateFlags {
+impl fmt::Debug for SamplerCreateFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (SamplerCreateFlags::SUBSAMPLED_EXT.0, "SUBSAMPLED_EXT"),
@@ -61668,10 +61924,10 @@ impl fmt::Display for SamplerCreateFlags {
                 "SUBSAMPLED_COARSE_RECONSTRUCTION_EXT",
             ),
         ];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for SamplerMipmapMode {
+impl fmt::Debug for SamplerMipmapMode {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::NEAREST => Some("NEAREST"),
@@ -61681,11 +61937,11 @@ impl fmt::Display for SamplerMipmapMode {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for SamplerReductionModeEXT {
+impl fmt::Debug for SamplerReductionModeEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::WEIGHTED_AVERAGE => Some("WEIGHTED_AVERAGE"),
@@ -61696,11 +61952,11 @@ impl fmt::Display for SamplerReductionModeEXT {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for SamplerYcbcrModelConversion {
+impl fmt::Debug for SamplerYcbcrModelConversion {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::RGB_IDENTITY => Some("RGB_IDENTITY"),
@@ -61713,11 +61969,11 @@ impl fmt::Display for SamplerYcbcrModelConversion {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for SamplerYcbcrRange {
+impl fmt::Debug for SamplerYcbcrRange {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::ITU_FULL => Some("ITU_FULL"),
@@ -61727,17 +61983,23 @@ impl fmt::Display for SamplerYcbcrRange {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for SemaphoreImportFlags {
+impl fmt::Debug for SemaphoreCreateFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(SemaphoreImportFlags::TEMPORARY.0, "TEMPORARY")];
-        display_flags(f, KNOWN, self.0)
+        const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for ShaderInfoTypeAMD {
+impl fmt::Debug for SemaphoreImportFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[(SemaphoreImportFlags::TEMPORARY.0, "TEMPORARY")];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for ShaderInfoTypeAMD {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::STATISTICS => Some("STATISTICS"),
@@ -61748,11 +62010,17 @@ impl fmt::Display for ShaderInfoTypeAMD {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for ShaderStageFlags {
+impl fmt::Debug for ShaderModuleCreateFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for ShaderStageFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (ShaderStageFlags::VERTEX.0, "VERTEX"),
@@ -61778,10 +62046,10 @@ impl fmt::Display for ShaderStageFlags {
             (ShaderStageFlags::TASK_NV.0, "TASK_NV"),
             (ShaderStageFlags::MESH_NV.0, "MESH_NV"),
         ];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for ShadingRatePaletteEntryNV {
+impl fmt::Debug for ShadingRatePaletteEntryNV {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::NO_INVOCATIONS => Some("NO_INVOCATIONS"),
@@ -61801,11 +62069,11 @@ impl fmt::Display for ShadingRatePaletteEntryNV {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for SharingMode {
+impl fmt::Debug for SharingMode {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::EXCLUSIVE => Some("EXCLUSIVE"),
@@ -61815,11 +62083,11 @@ impl fmt::Display for SharingMode {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for SparseImageFormatFlags {
+impl fmt::Debug for SparseImageFormatFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (SparseImageFormatFlags::SINGLE_MIPTAIL.0, "SINGLE_MIPTAIL"),
@@ -61832,16 +62100,16 @@ impl fmt::Display for SparseImageFormatFlags {
                 "NONSTANDARD_BLOCK_SIZE",
             ),
         ];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for SparseMemoryBindFlags {
+impl fmt::Debug for SparseMemoryBindFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[(SparseMemoryBindFlags::METADATA.0, "METADATA")];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for StencilFaceFlags {
+impl fmt::Debug for StencilFaceFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (StencilFaceFlags::FRONT.0, "FRONT"),
@@ -61851,10 +62119,10 @@ impl fmt::Display for StencilFaceFlags {
                 "STENCIL_FRONT_AND_BACK",
             ),
         ];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for StencilOp {
+impl fmt::Debug for StencilOp {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::KEEP => Some("KEEP"),
@@ -61870,11 +62138,11 @@ impl fmt::Display for StencilOp {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for StructureType {
+impl fmt::Debug for StructureType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::APPLICATION_INFO => Some("APPLICATION_INFO"),
@@ -62504,11 +62772,11 @@ impl fmt::Display for StructureType {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for SubgroupFeatureFlags {
+impl fmt::Debug for SubgroupFeatureFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (SubgroupFeatureFlags::BASIC.0, "BASIC"),
@@ -62521,10 +62789,10 @@ impl fmt::Display for SubgroupFeatureFlags {
             (SubgroupFeatureFlags::QUAD.0, "QUAD"),
             (SubgroupFeatureFlags::PARTITIONED_NV.0, "PARTITIONED_NV"),
         ];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for SubpassContents {
+impl fmt::Debug for SubpassContents {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::INLINE => Some("INLINE"),
@@ -62534,11 +62802,11 @@ impl fmt::Display for SubpassContents {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for SubpassDescriptionFlags {
+impl fmt::Debug for SubpassDescriptionFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (
@@ -62550,16 +62818,16 @@ impl fmt::Display for SubpassDescriptionFlags {
                 "PER_VIEW_POSITION_X_ONLY_NVX",
             ),
         ];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for SurfaceCounterFlagsEXT {
+impl fmt::Debug for SurfaceCounterFlagsEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[(SurfaceCounterFlagsEXT::VBLANK.0, "VBLANK")];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for SurfaceTransformFlagsKHR {
+impl fmt::Debug for SurfaceTransformFlagsKHR {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (SurfaceTransformFlagsKHR::IDENTITY.0, "IDENTITY"),
@@ -62584,10 +62852,10 @@ impl fmt::Display for SurfaceTransformFlagsKHR {
             ),
             (SurfaceTransformFlagsKHR::INHERIT.0, "INHERIT"),
         ];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for SwapchainCreateFlagsKHR {
+impl fmt::Debug for SwapchainCreateFlagsKHR {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (
@@ -62597,10 +62865,10 @@ impl fmt::Display for SwapchainCreateFlagsKHR {
             (SwapchainCreateFlagsKHR::PROTECTED.0, "PROTECTED"),
             (SwapchainCreateFlagsKHR::MUTABLE_FORMAT.0, "MUTABLE_FORMAT"),
         ];
-        display_flags(f, KNOWN, self.0)
+        debug_flags(f, KNOWN, self.0)
     }
 }
-impl fmt::Display for SystemAllocationScope {
+impl fmt::Debug for SystemAllocationScope {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::COMMAND => Some("COMMAND"),
@@ -62613,11 +62881,11 @@ impl fmt::Display for SystemAllocationScope {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for TessellationDomainOrigin {
+impl fmt::Debug for TessellationDomainOrigin {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::UPPER_LEFT => Some("UPPER_LEFT"),
@@ -62627,11 +62895,11 @@ impl fmt::Display for TessellationDomainOrigin {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for TimeDomainEXT {
+impl fmt::Debug for TimeDomainEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::DEVICE => Some("DEVICE"),
@@ -62643,11 +62911,17 @@ impl fmt::Display for TimeDomainEXT {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for ValidationCacheHeaderVersionEXT {
+impl fmt::Debug for ValidationCacheCreateFlagsEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for ValidationCacheHeaderVersionEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::ONE => Some("ONE"),
@@ -62656,11 +62930,11 @@ impl fmt::Display for ValidationCacheHeaderVersionEXT {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for ValidationCheckEXT {
+impl fmt::Debug for ValidationCheckEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::ALL => Some("ALL"),
@@ -62670,11 +62944,11 @@ impl fmt::Display for ValidationCheckEXT {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for ValidationFeatureDisableEXT {
+impl fmt::Debug for ValidationFeatureDisableEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::ALL => Some("ALL"),
@@ -62689,11 +62963,11 @@ impl fmt::Display for ValidationFeatureDisableEXT {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for ValidationFeatureEnableEXT {
+impl fmt::Debug for ValidationFeatureEnableEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::GPU_ASSISTED => Some("GPU_ASSISTED"),
@@ -62703,11 +62977,11 @@ impl fmt::Display for ValidationFeatureEnableEXT {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for VendorId {
+impl fmt::Debug for VendorId {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::VIV => Some("VIV"),
@@ -62718,11 +62992,11 @@ impl fmt::Display for VendorId {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for VertexInputRate {
+impl fmt::Debug for VertexInputRate {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::VERTEX => Some("VERTEX"),
@@ -62732,11 +63006,17 @@ impl fmt::Display for VertexInputRate {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
     }
 }
-impl fmt::Display for ViewportCoordinateSwizzleNV {
+impl fmt::Debug for ViSurfaceCreateFlagsNN {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for ViewportCoordinateSwizzleNV {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::POSITIVE_X => Some("POSITIVE_X"),
@@ -62752,8 +63032,32 @@ impl fmt::Display for ViewportCoordinateSwizzleNV {
         if let Some(x) = name {
             f.write_str(x)
         } else {
-            write!(f, "{}", self.0)
+            self.0.fmt(f)
         }
+    }
+}
+impl fmt::Debug for WaylandSurfaceCreateFlagsKHR {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for Win32SurfaceCreateFlagsKHR {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for XcbSurfaceCreateFlagsKHR {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for XlibSurfaceCreateFlagsKHR {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
     }
 }
 pub type DescriptorUpdateTemplateCreateFlagsKHR = DescriptorUpdateTemplateCreateFlags;
