@@ -54,7 +54,7 @@ impl fmt::Display for LoadingError {
 
 impl Error for LoadingError {}
 
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub enum InstanceError {
     LoadError(Vec<&'static str>),
     VkError(vk::Result),
