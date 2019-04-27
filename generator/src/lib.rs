@@ -229,11 +229,6 @@ pub fn vk_bitflags_wrapped_macro() -> Tokens {
                         $name(0)
                     }
                 }
-                impl fmt::Debug for $name {
-                    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-                        write!(f, "{}({:b})", stringify!($name), self.0)
-                    }
-                }
 
                 impl $name {
                     #[inline]
@@ -939,8 +934,8 @@ pub fn generate_extension_constants<'a>(
             };
             let ident = name_to_tokens(&extends);
             const_values
-                .entry(ident.clone())
-                .or_insert_with(Vec::new)
+                .get_mut(&ident)
+                .unwrap()
                 .push(ext_constant.variant_ident(&extends));
             let impl_block = bitflags_impl_block(ident, &extends, &[&ext_constant]);
             let doc_string = format!("Generated from '{}'", extension_name);
@@ -1037,6 +1032,7 @@ pub fn generate_typedef(typedef: &vkxml::Typedef) -> Tokens {
 pub fn generate_bitmask(
     bitmask: &vkxml::Bitmask,
     bitflags_cache: &mut HashSet<Ident>,
+    const_values: &mut BTreeMap<Ident, Vec<Ident>>,
 ) -> Option<Tokens> {
     // Workaround for empty bitmask
     if bitmask.name.is_empty() {
@@ -1053,6 +1049,7 @@ pub fn generate_bitmask(
         return None;
     };
     bitflags_cache.insert(ident.clone());
+    const_values.insert(ident.clone(), Vec::new());
     let khronos_link = khronos_link(&bitmask.name);
     Some(quote! {
         #[repr(transparent)]
@@ -1155,11 +1152,12 @@ pub fn generate_enum<'a>(
             _ => None,
         })
         .collect_vec();
-    let values = const_values.entry(ident.clone()).or_insert_with(Vec::new);
+    let mut values = Vec::with_capacity(constants.len());
     for constant in &constants {
         const_cache.insert(constant.name.as_str());
         values.push(constant.variant_ident(&_enum.name));
     }
+    const_values.insert(ident.clone(), values);
 
     let khronos_link = khronos_link(&_enum.name);
 
@@ -1189,7 +1187,7 @@ pub fn generate_enum<'a>(
     } else {
         let impl_block = bitflags_impl_block(ident, &_enum.name, &constants);
         let enum_quote = quote! {
-            #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+            #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
             #[repr(transparent)]
             #[doc = #khronos_link]
             pub struct #ident(pub(crate) i32);
@@ -1253,7 +1251,7 @@ pub fn generate_result(ident: Ident, _enum: &vkxml::Enumeration) -> Tokens {
                 if let Some(x) = name {
                     fmt.write_str(x)
                 } else {
-                    write!(fmt, "{}", self.0)
+                    self.0.fmt(fmt)
                 }
             }
         }
@@ -1881,13 +1879,16 @@ pub fn generate_definition(
     union_types: &HashSet<&str>,
     root_structs: &HashSet<String>,
     bitflags_cache: &mut HashSet<Ident>,
+    const_values: &mut BTreeMap<Ident, Vec<Ident>>,
 ) -> Option<Tokens> {
     match *definition {
         vkxml::DefinitionsElement::Typedef(ref typedef) => Some(generate_typedef(typedef)),
         vkxml::DefinitionsElement::Struct(ref _struct) => {
             Some(generate_struct(_struct, root_structs, union_types))
         }
-        vkxml::DefinitionsElement::Bitmask(ref mask) => generate_bitmask(mask, bitflags_cache),
+        vkxml::DefinitionsElement::Bitmask(ref mask) => {
+            generate_bitmask(mask, bitflags_cache, const_values)
+        }
         vkxml::DefinitionsElement::Handle(ref handle) => generate_handle(handle),
         vkxml::DefinitionsElement::FuncPtr(ref fp) => Some(generate_funcptr(fp)),
         vkxml::DefinitionsElement::Union(ref union) => Some(generate_union(union)),
@@ -2012,48 +2013,45 @@ pub fn generate_feature_extension<'a>(
     }
 }
 
-pub fn generate_const_displays<'a>(const_values: &BTreeMap<Ident, Vec<Ident>>) -> Tokens {
-    let impls = const_values
-        .iter()
-        .filter(|(ty, _)| *ty != "Result")
-        .map(|(ty, values)| {
-            if ty.to_string().contains("Flags") {
-                let cases = values.iter().map(|value| {
-                    let name = value.to_string();
-                    quote! { (#ty::#value.0, #name) }
-                });
-                quote! {
-                    impl fmt::Display for #ty {
-                        fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-                            const KNOWN: &[(Flags, &str)] = &[#(#cases),*];
-                            display_flags(f, KNOWN, self.0)
-                        }
+pub fn generate_const_debugs<'a>(const_values: &BTreeMap<Ident, Vec<Ident>>) -> Tokens {
+    let impls = const_values.iter().map(|(ty, values)| {
+        if ty.to_string().contains("Flags") {
+            let cases = values.iter().map(|value| {
+                let name = value.to_string();
+                quote! { (#ty::#value.0, #name) }
+            });
+            quote! {
+                impl fmt::Debug for #ty {
+                    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+                        const KNOWN: &[(Flags, &str)] = &[#(#cases),*];
+                        debug_flags(f, KNOWN, self.0)
                     }
                 }
-            } else {
-                let cases = values.iter().map(|value| {
-                    let name = value.to_string();
-                    quote! { Self::#value => Some(#name), }
-                });
-                quote! {
-                    impl fmt::Display for #ty {
-                        fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-                            let name = match *self {
-                                #(#cases)*
-                                _ => None,
-                            };
-                            if let Some(x) = name {
-                                f.write_str(x)
-                            } else {
-                                write!(f, "{}", self.0)
-                            }
+            }
+        } else {
+            let cases = values.iter().map(|value| {
+                let name = value.to_string();
+                quote! { Self::#value => Some(#name), }
+            });
+            quote! {
+                impl fmt::Debug for #ty {
+                    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+                        let name = match *self {
+                            #(#cases)*
+                            _ => None,
+                        };
+                        if let Some(x) = name {
+                            f.write_str(x)
+                        } else {
+                            self.0.fmt(f)
                         }
                     }
                 }
             }
-        });
+        }
+    });
     quote! {
-        fn display_flags(f: &mut fmt::Formatter, known: &[(Flags, &'static str)], value: Flags) -> fmt::Result {
+        pub(crate) fn debug_flags(f: &mut fmt::Formatter, known: &[(Flags, &'static str)], value: Flags) -> fmt::Result {
             let mut first = true;
             let mut accum = value;
             for (bit, name) in known {
@@ -2227,7 +2225,15 @@ pub fn write_source_code(path: &Path) {
     let root_names = root_struct_names(&definitions);
     let definition_code: Vec<_> = definitions
         .into_iter()
-        .filter_map(|def| generate_definition(def, &union_types, &root_names, &mut bitflags_cache))
+        .filter_map(|def| {
+            generate_definition(
+                def,
+                &union_types,
+                &root_names,
+                &mut bitflags_cache,
+                &mut const_values,
+            )
+        })
         .collect();
 
     let feature_code: Vec<_> = features
@@ -2237,7 +2243,7 @@ pub fn write_source_code(path: &Path) {
     let feature_extensions_code =
         generate_feature_extension(&spec2, &mut const_cache, &mut const_values);
 
-    let const_displays = generate_const_displays(&const_values);
+    let const_debugs = generate_const_debugs(&const_values);
 
     let mut file = File::create("../ash/src/vk.rs").expect("vk");
     let bitflags_macro = vk_bitflags_wrapped_macro();
@@ -2284,7 +2290,7 @@ pub fn write_source_code(path: &Path) {
         #(#constants_code)*
         #(#extension_code)*
         #feature_extensions_code
-        #const_displays
+        #const_debugs
         #(#aliases)*
     };
     write!(&mut file, "{}", source_code).expect("Unable to write to file");

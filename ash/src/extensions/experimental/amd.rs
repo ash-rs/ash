@@ -37,6 +37,20 @@ vk_bitflags_wrapped!(
     0b1111111111111111111111111111111,
     Flags
 );
+impl fmt::Debug for GpaSqShaderStageFlags {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[
+            (GpaSqShaderStageFlags::PS.0, "PS"),
+            (GpaSqShaderStageFlags::VS.0, "VS"),
+            (GpaSqShaderStageFlags::GS.0, "GS"),
+            (GpaSqShaderStageFlags::ES.0, "ES"),
+            (GpaSqShaderStageFlags::HS.0, "HS"),
+            (GpaSqShaderStageFlags::LS.0, "LS"),
+            (GpaSqShaderStageFlags::CS.0, "CS"),
+        ];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
 impl GpaSqShaderStageFlags {
     pub const PS: Self = GpaSqShaderStageFlags(0b1);
     pub const VS: Self = GpaSqShaderStageFlags(0b10);
