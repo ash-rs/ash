@@ -1,3 +1,8 @@
+# 0.29.0
+* *Breaking*: Removed Display impl for flags. The Debug impl now reports flags by name.
+* Functions now have a doc comment that links to the Vulkan spec
+* Entry has a new method called `try_enumerate_instance_version` which can be used in a 1.0 context.
+* The generator now uses `BTreeMap` for better diffs.
 # 0.28.0
 * Fixed a build issue on ARM.
 * *Breaking* Arrays are now passed by reference.
