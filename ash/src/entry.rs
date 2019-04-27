@@ -39,7 +39,7 @@ pub struct EntryCustom<L> {
     lib: L,
 }
 
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub enum LoadingError {
     LibraryLoadError(String),
 }
