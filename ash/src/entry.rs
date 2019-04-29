@@ -83,6 +83,11 @@ pub trait EntryV1_0 {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> Result<Self::Instance, InstanceError>;
 
+    unsafe fn create_instance_from_raw_handle(
+        &self,
+        raw_instance_handle: u64,
+    ) -> Result<Self::Instance, InstanceError>;
+
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkEnumerateInstanceLayerProperties.html>"]
     fn enumerate_instance_layer_properties(&self) -> VkResult<Vec<vk::LayerProperties>> {
         unsafe {
@@ -154,6 +159,16 @@ impl<L> EntryV1_0 for EntryCustom<L> {
         }
         Ok(Instance::load(&self.static_fn, instance))
     }
+
+    unsafe fn create_instance_from_raw_handle(
+        &self,
+        raw_instance_handle: u64,
+    ) -> Result<Self::Instance, InstanceError> {
+        use vk::Handle;
+        let instance = vk::Instance::from_raw(raw_instance_handle);
+        Ok(Instance::load(&self.static_fn, instance))
+    }
+
     fn fp_v1_0(&self) -> &vk::EntryFnV1_0 {
         &self.entry_fn_1_0
     }

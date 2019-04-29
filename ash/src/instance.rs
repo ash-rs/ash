@@ -52,6 +52,16 @@ impl InstanceV1_0 for Instance {
         }
         Ok(Device::load(&self.instance_fn_1_0, device))
     }
+
+    unsafe fn create_device_from_raw_handle(
+        &self,
+        raw_device_handle: u64,
+    ) -> Result<Self::Device, vk::Result> {
+        use vk::Handle;
+        let device = vk::Device::from_raw(raw_device_handle);
+        Ok(Device::load(&self.instance_fn_1_0, device))
+    }
+
     fn handle(&self) -> vk::Instance {
         self.handle
     }
@@ -268,6 +278,11 @@ pub trait InstanceV1_0 {
         physical_device: vk::PhysicalDevice,
         create_info: &vk::DeviceCreateInfo,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
+    ) -> Result<Self::Device, vk::Result>;
+
+    unsafe fn create_device_from_raw_handle(
+        &self,
+        raw_device_handle: u64,
     ) -> Result<Self::Device, vk::Result>;
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetDeviceProcAddr.html>"]
