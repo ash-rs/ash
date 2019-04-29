@@ -39,7 +39,7 @@ pub struct EntryCustom<L> {
     lib: L,
 }
 
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub enum LoadingError {
     LibraryLoadError(String),
 }
@@ -54,7 +54,7 @@ impl fmt::Display for LoadingError {
 
 impl Error for LoadingError {}
 
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub enum InstanceError {
     LoadError(Vec<&'static str>),
     VkError(vk::Result),
