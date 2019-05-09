@@ -125,7 +125,7 @@ let mut device_create_info = vk::DeviceCreateInfo::builder()
     .push_next(&mut variable_pointers);
 ```
 
-Pointer chains in builders differ from raw Vulkan. Instead of chaining every struct manually, you instead use `.push_next` on the struct that you are going to pass into the function. Those structs then get *pepended* into the chain.
+Pointer chains in builders differ from raw Vulkan. Instead of chaining every struct manually, you instead use `.push_next` on the struct that you are going to pass into the function. Those structs then get *prepended* into the chain.
 
 `push_next` is also type checked, you can only add valid structs to the chain. Both the structs and the builders can be passed into `push_next`. Only builders for structs that can be passed into functions will implement a `push_next`.
 
