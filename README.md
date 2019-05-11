@@ -259,5 +259,5 @@ cargo run --bin texture
 * [Vulkan tutorial](http://jhenriques.net/development.html)
 * [Vulkan examples](https://github.com/SaschaWillems/Vulkan)
 * [Vulkan tutorial](https://vulkan-tutorial.com/)
-* [Vulkano](https://github.com/tomaka/vulkano/)
+* [Vulkano](https://github.com/vulkano-rs/vulkano)
 * [vk-rs](https://github.com/Osspial/vk-rs)
