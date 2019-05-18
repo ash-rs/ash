@@ -378,11 +378,13 @@ impl ExampleBase {
                         .filter_map(|(index, ref info)| {
                             let supports_graphic_and_surface =
                                 info.queue_flags.contains(vk::QueueFlags::GRAPHICS)
-                                    && surface_loader.get_physical_device_surface_support(
-                                        *pdevice,
-                                        index as u32,
-                                        surface,
-                                    );
+                                    && surface_loader
+                                        .get_physical_device_surface_support(
+                                            *pdevice,
+                                            index as u32,
+                                            surface,
+                                        )
+                                        .unwrap();
                             match supports_graphic_and_surface {
                                 true => Some((*pdevice, index)),
                                 _ => None,
