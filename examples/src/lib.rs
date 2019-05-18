@@ -382,7 +382,7 @@ impl ExampleBase {
                                         *pdevice,
                                         index as u32,
                                         surface,
-                                    );
+                                    ).unwrap();
                             match supports_graphic_and_surface {
                                 true => Some((*pdevice, index)),
                                 _ => None,
