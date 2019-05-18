@@ -45,7 +45,7 @@ impl Surface {
 
         match err_code {
             vk::Result::SUCCESS => Ok(b > 0),
-            _ => Err(err_code)
+            _ => Err(err_code),
         }
     }
 
