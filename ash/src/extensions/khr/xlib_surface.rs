@@ -1,10 +1,10 @@
 #![allow(dead_code)]
-use prelude::*;
+use crate::prelude::*;
+use crate::version::{EntryV1_0, InstanceV1_0};
+use crate::vk;
+use crate::RawPtr;
 use std::ffi::CStr;
 use std::mem;
-use version::{EntryV1_0, InstanceV1_0};
-use vk;
-use RawPtr;
 
 #[derive(Clone)]
 pub struct XlibSurface {
@@ -44,5 +44,25 @@ impl XlibSurface {
             vk::Result::SUCCESS => Ok(surface),
             _ => Err(err_code),
         }
+    }
+
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceXlibPresentationSupportKHR.html"]
+    pub unsafe fn get_physical_device_xlib_presentation_support(
+        &self,
+        physical_device: vk::PhysicalDevice,
+        queue_family_index: u32,
+        display: &mut vk::Display,
+        visual_id: vk::VisualID,
+    ) -> bool {
+        let b = self
+            .xlib_surface_fn
+            .get_physical_device_xlib_presentation_support_khr(
+                physical_device,
+                queue_family_index,
+                display,
+                visual_id,
+            );
+
+        b > 0
     }
 }
