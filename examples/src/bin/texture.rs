@@ -112,7 +112,7 @@ fn main() {
         let index_buffer_memory_index = find_memorytype_index(
             &index_buffer_memory_req,
             &base.device_memory_properties,
-            vk::MemoryPropertyFlags::HOST_VISIBLE,
+            vk::MemoryPropertyFlags::HOST_VISIBLE | vk::MemoryPropertyFlags::HOST_COHERENT,
         )
         .expect("Unable to find suitable memorytype for the index buffer.");
         let index_allocate_info = vk::MemoryAllocateInfo {
@@ -178,7 +178,7 @@ fn main() {
         let vertex_input_buffer_memory_index = find_memorytype_index(
             &vertex_input_buffer_memory_req,
             &base.device_memory_properties,
-            vk::MemoryPropertyFlags::HOST_VISIBLE,
+            vk::MemoryPropertyFlags::HOST_VISIBLE | vk::MemoryPropertyFlags::HOST_COHERENT,
         )
         .expect("Unable to find suitable memorytype for the vertex buffer.");
 
@@ -234,7 +234,7 @@ fn main() {
         let uniform_color_buffer_memory_index = find_memorytype_index(
             &uniform_color_buffer_memory_req,
             &base.device_memory_properties,
-            vk::MemoryPropertyFlags::HOST_VISIBLE,
+            vk::MemoryPropertyFlags::HOST_VISIBLE | vk::MemoryPropertyFlags::HOST_COHERENT,
         )
         .expect("Unable to find suitable memorytype for the vertex buffer.");
 
@@ -281,7 +281,7 @@ fn main() {
         let image_buffer_memory_index = find_memorytype_index(
             &image_buffer_memory_req,
             &base.device_memory_properties,
-            vk::MemoryPropertyFlags::HOST_VISIBLE,
+            vk::MemoryPropertyFlags::HOST_VISIBLE | vk::MemoryPropertyFlags::HOST_COHERENT,
         )
         .expect("Unable to find suitable memorytype for the vertex buffer.");
 
