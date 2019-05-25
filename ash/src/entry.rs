@@ -143,7 +143,7 @@ impl<L> EntryV1_0 for EntryCustom<L> {
         create_info: &vk::InstanceCreateInfo,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> Result<Self::Instance, InstanceError> {
-        let mut instance: vk::Instance = mem::uninitialized();
+        let mut instance: vk::Instance = mem::zeroed();
         let err_code = self.fp_v1_0().create_instance(
             create_info,
             allocation_callbacks.as_raw_ptr(),

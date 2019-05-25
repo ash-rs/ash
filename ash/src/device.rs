@@ -43,7 +43,7 @@ pub trait DeviceV1_1: DeviceV1_0 {
         local_device_index: u32,
         remote_device_index: u32,
     ) -> vk::PeerMemoryFeatureFlags {
-        let mut peer_memory_features = mem::uninitialized();
+        let mut peer_memory_features = mem::zeroed();
         self.fp_v1_1().get_device_group_peer_memory_features(
             self.handle(),
             heap_index,
@@ -106,7 +106,7 @@ pub trait DeviceV1_1: DeviceV1_0 {
         &self,
         info: &vk::ImageSparseMemoryRequirementsInfo2,
     ) -> usize {
-        let mut count = mem::uninitialized();
+        let mut count = mem::zeroed();
         self.fp_v1_1().get_image_sparse_memory_requirements2(
             self.handle(),
             info,
@@ -147,7 +147,7 @@ pub trait DeviceV1_1: DeviceV1_0 {
         create_info: &vk::SamplerYcbcrConversionCreateInfo,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::SamplerYcbcrConversion> {
-        let mut ycbcr_conversion = mem::uninitialized();
+        let mut ycbcr_conversion = mem::zeroed();
         let err_code = self.fp_v1_1().create_sampler_ycbcr_conversion(
             self.handle(),
             create_info,
@@ -179,7 +179,7 @@ pub trait DeviceV1_1: DeviceV1_0 {
         create_info: &vk::DescriptorUpdateTemplateCreateInfo,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::DescriptorUpdateTemplate> {
-        let mut descriptor_update_template = mem::uninitialized();
+        let mut descriptor_update_template = mem::zeroed();
         let err_code = self.fp_v1_1().create_descriptor_update_template(
             self.handle(),
             create_info,
@@ -281,7 +281,7 @@ pub trait DeviceV1_0 {
         create_info: &vk::EventCreateInfo,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::Event> {
-        let mut event = mem::uninitialized();
+        let mut event = mem::zeroed();
         let err_code = self.fp_v1_0().create_event(
             self.handle(),
             create_info,
@@ -592,7 +592,7 @@ pub trait DeviceV1_0 {
         create_info: &vk::SamplerCreateInfo,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::Sampler> {
-        let mut sampler = mem::uninitialized();
+        let mut sampler = mem::zeroed();
         let err_code = self.fp_v1_0().create_sampler(
             self.handle(),
             create_info,
@@ -780,7 +780,7 @@ pub trait DeviceV1_0 {
         create_info: &vk::DescriptorSetLayoutCreateInfo,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::DescriptorSetLayout> {
-        let mut layout = mem::uninitialized();
+        let mut layout = mem::zeroed();
         let err_code = self.fp_v1_0().create_descriptor_set_layout(
             self.handle(),
             create_info,
@@ -808,7 +808,7 @@ pub trait DeviceV1_0 {
         create_info: &vk::DescriptorPoolCreateInfo,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::DescriptorPool> {
-        let mut pool = mem::uninitialized();
+        let mut pool = mem::zeroed();
         let err_code = self.fp_v1_0().create_descriptor_pool(
             self.handle(),
             create_info,
@@ -1356,7 +1356,7 @@ pub trait DeviceV1_0 {
         create_info: &vk::SemaphoreCreateInfo,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::Semaphore> {
-        let mut semaphore = mem::uninitialized();
+        let mut semaphore = mem::zeroed();
         let err_code = self.fp_v1_0().create_semaphore(
             self.handle(),
             create_info,
@@ -1421,7 +1421,7 @@ pub trait DeviceV1_0 {
         create_info: &vk::BufferCreateInfo,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::Buffer> {
-        let mut buffer = mem::uninitialized();
+        let mut buffer = mem::zeroed();
         let err_code = self.fp_v1_0().create_buffer(
             self.handle(),
             create_info,
@@ -1440,7 +1440,7 @@ pub trait DeviceV1_0 {
         create_info: &vk::PipelineLayoutCreateInfo,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::PipelineLayout> {
-        let mut pipeline_layout = mem::uninitialized();
+        let mut pipeline_layout = mem::zeroed();
         let err_code = self.fp_v1_0().create_pipeline_layout(
             self.handle(),
             create_info,
@@ -1459,7 +1459,7 @@ pub trait DeviceV1_0 {
         create_info: &vk::PipelineCacheCreateInfo,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::PipelineCache> {
-        let mut pipeline_cache = mem::uninitialized();
+        let mut pipeline_cache = mem::zeroed();
         let err_code = self.fp_v1_0().create_pipeline_cache(
             self.handle(),
             create_info,
@@ -1510,7 +1510,7 @@ pub trait DeviceV1_0 {
         size: vk::DeviceSize,
         flags: vk::MemoryMapFlags,
     ) -> VkResult<*mut c_void> {
-        let mut data: *mut c_void = mem::uninitialized();
+        let mut data: *mut c_void = mem::zeroed();
         let err_code =
             self.fp_v1_0()
                 .map_memory(self.handle(), memory, offset, size, flags, &mut data);
@@ -1560,7 +1560,7 @@ pub trait DeviceV1_0 {
         create_info: &vk::FramebufferCreateInfo,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::Framebuffer> {
-        let mut framebuffer = mem::uninitialized();
+        let mut framebuffer = mem::zeroed();
         let err_code = self.fp_v1_0().create_framebuffer(
             self.handle(),
             create_info,
@@ -1575,7 +1575,7 @@ pub trait DeviceV1_0 {
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetDeviceQueue.html>"]
     unsafe fn get_device_queue(&self, queue_family_index: u32, queue_index: u32) -> vk::Queue {
-        let mut queue = mem::uninitialized();
+        let mut queue = mem::zeroed();
         self.fp_v1_0()
             .get_device_queue(self.handle(), queue_family_index, queue_index, &mut queue);
         queue
@@ -1612,7 +1612,7 @@ pub trait DeviceV1_0 {
         create_info: &vk::RenderPassCreateInfo,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::RenderPass> {
-        let mut renderpass = mem::uninitialized();
+        let mut renderpass = mem::zeroed();
         let err_code = self.fp_v1_0().create_render_pass(
             self.handle(),
             create_info,
@@ -1709,7 +1709,7 @@ pub trait DeviceV1_0 {
         create_info: &vk::BufferViewCreateInfo,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::BufferView> {
-        let mut buffer_view = mem::uninitialized();
+        let mut buffer_view = mem::zeroed();
         let err_code = self.fp_v1_0().create_buffer_view(
             self.handle(),
             create_info,
@@ -1741,7 +1741,7 @@ pub trait DeviceV1_0 {
         create_info: &vk::ImageViewCreateInfo,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::ImageView> {
-        let mut image_view = mem::uninitialized();
+        let mut image_view = mem::zeroed();
         let err_code = self.fp_v1_0().create_image_view(
             self.handle(),
             create_info,
@@ -1778,7 +1778,7 @@ pub trait DeviceV1_0 {
         create_info: &vk::CommandPoolCreateInfo,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::CommandPool> {
-        let mut pool = mem::uninitialized();
+        let mut pool = mem::zeroed();
         let err_code = self.fp_v1_0().create_command_pool(
             self.handle(),
             create_info,
@@ -1797,7 +1797,7 @@ pub trait DeviceV1_0 {
         create_info: &vk::QueryPoolCreateInfo,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::QueryPool> {
-        let mut pool = mem::uninitialized();
+        let mut pool = mem::zeroed();
         let err_code = self.fp_v1_0().create_query_pool(
             self.handle(),
             create_info,
@@ -1816,7 +1816,7 @@ pub trait DeviceV1_0 {
         create_info: &vk::ImageCreateInfo,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::Image> {
-        let mut image = mem::uninitialized();
+        let mut image = mem::zeroed();
         let err_code = self.fp_v1_0().create_image(
             self.handle(),
             create_info,
@@ -1835,7 +1835,7 @@ pub trait DeviceV1_0 {
         image: vk::Image,
         subresource: vk::ImageSubresource,
     ) -> vk::SubresourceLayout {
-        let mut layout = mem::uninitialized();
+        let mut layout = mem::zeroed();
         self.fp_v1_0().get_image_subresource_layout(
             self.handle(),
             image,
@@ -1847,7 +1847,7 @@ pub trait DeviceV1_0 {
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetImageMemoryRequirements.html>"]
     unsafe fn get_image_memory_requirements(&self, image: vk::Image) -> vk::MemoryRequirements {
-        let mut mem_req = mem::uninitialized();
+        let mut mem_req = mem::zeroed();
         self.fp_v1_0()
             .get_image_memory_requirements(self.handle(), image, &mut mem_req);
         mem_req
@@ -1855,7 +1855,7 @@ pub trait DeviceV1_0 {
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetBufferMemoryRequirements.html>"]
     unsafe fn get_buffer_memory_requirements(&self, buffer: vk::Buffer) -> vk::MemoryRequirements {
-        let mut mem_req = mem::uninitialized();
+        let mut mem_req = mem::zeroed();
         self.fp_v1_0()
             .get_buffer_memory_requirements(self.handle(), buffer, &mut mem_req);
         mem_req
@@ -1867,7 +1867,7 @@ pub trait DeviceV1_0 {
         create_info: &vk::MemoryAllocateInfo,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::DeviceMemory> {
-        let mut memory = mem::uninitialized();
+        let mut memory = mem::zeroed();
         let err_code = self.fp_v1_0().allocate_memory(
             self.handle(),
             create_info,
@@ -1886,7 +1886,7 @@ pub trait DeviceV1_0 {
         create_info: &vk::ShaderModuleCreateInfo,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::ShaderModule> {
-        let mut shader = mem::uninitialized();
+        let mut shader = mem::zeroed();
         let err_code = self.fp_v1_0().create_shader_module(
             self.handle(),
             create_info,
@@ -1905,7 +1905,7 @@ pub trait DeviceV1_0 {
         create_info: &vk::FenceCreateInfo,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::Fence> {
-        let mut fence = mem::uninitialized();
+        let mut fence = mem::zeroed();
         let err_code = self.fp_v1_0().create_fence(
             self.handle(),
             create_info,

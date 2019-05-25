@@ -113,7 +113,7 @@ impl DebugUtils {
         create_info: &vk::DebugUtilsMessengerCreateInfoEXT,
         allocator: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::DebugUtilsMessengerEXT> {
-        let mut messenger = mem::uninitialized();
+        let mut messenger = mem::zeroed();
         let err_code = self.debug_utils_fn.create_debug_utils_messenger_ext(
             self.handle,
             create_info,

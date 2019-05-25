@@ -33,7 +33,7 @@ impl AndroidSurface {
         create_info: &vk::AndroidSurfaceCreateInfoKHR,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::SurfaceKHR> {
-        let mut surface = mem::uninitialized();
+        let mut surface = mem::zeroed();
         let err_code = self.android_surface_fn.create_android_surface_khr(
             self.handle,
             create_info,

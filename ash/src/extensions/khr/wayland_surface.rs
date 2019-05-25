@@ -33,7 +33,7 @@ impl WaylandSurface {
         create_info: &vk::WaylandSurfaceCreateInfoKHR,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::SurfaceKHR> {
-        let mut surface = mem::uninitialized();
+        let mut surface = mem::zeroed();
         let err_code = self.wayland_surface_fn.create_wayland_surface_khr(
             self.handle,
             create_info,

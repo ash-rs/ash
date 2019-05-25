@@ -50,7 +50,7 @@ impl Swapchain {
         semaphore: vk::Semaphore,
         fence: vk::Fence,
     ) -> VkResult<(u32, bool)> {
-        let mut index = mem::uninitialized();
+        let mut index = mem::zeroed();
         let err_code = self.swapchain_fn.acquire_next_image_khr(
             self.handle,
             swapchain,
@@ -72,7 +72,7 @@ impl Swapchain {
         create_info: &vk::SwapchainCreateInfoKHR,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::SwapchainKHR> {
-        let mut swapchain = mem::uninitialized();
+        let mut swapchain = mem::zeroed();
         let err_code = self.swapchain_fn.create_swapchain_khr(
             self.handle,
             create_info,
