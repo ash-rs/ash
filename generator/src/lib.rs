@@ -122,7 +122,7 @@ pub fn define_handle_macro() -> Tokens {
                 unsafe impl Sync for $name {}
 
                 impl $name{
-                    pub fn null() -> Self{
+                    pub const fn null() -> Self{
                         $name(::std::ptr::null_mut())
                     }
                 }
@@ -163,7 +163,7 @@ pub fn handle_nondispatchable_macro() -> Tokens {
                 }
 
                 impl $name{
-                    pub fn null() -> $name{
+                    pub const fn null() -> $name{
                         $name(0)
                     }
                 }
@@ -232,20 +232,20 @@ pub fn vk_bitflags_wrapped_macro() -> Tokens {
 
                 impl $name {
                     #[inline]
-                    pub fn empty() -> $name {
+                    pub const fn empty() -> $name {
                         $name(0)
                     }
 
                     #[inline]
-                    pub fn all() -> $name {
+                    pub const fn all() -> $name {
                         $name($all)
                     }
 
                     #[inline]
-                    pub fn from_raw(x: $flag_type) -> Self { $name(x) }
+                    pub const fn from_raw(x: $flag_type) -> Self { $name(x) }
 
                     #[inline]
-                    pub fn as_raw(self) -> $flag_type { self.0 }
+                    pub const fn as_raw(self) -> $flag_type { self.0 }
 
                     #[inline]
                     pub fn is_empty(self) -> bool {
