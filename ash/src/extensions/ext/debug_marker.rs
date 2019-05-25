@@ -1,9 +1,9 @@
 #![allow(dead_code)]
 use crate::prelude::*;
-use std::ffi::CStr;
-use std::mem;
 use crate::version::{DeviceV1_0, InstanceV1_0};
 use crate::vk;
+use std::ffi::CStr;
+use std::mem;
 
 #[derive(Clone)]
 pub struct DebugMarker {
