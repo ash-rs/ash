@@ -1432,7 +1432,7 @@ pub fn derive_setters(
         _ => None,
     });
 
-    let (has_next, is_next_const) = match members
+    let (has_next, _is_next_const) = match members
         .clone()
         .find(|field| field.param_ident().to_string() == "p_next")
     {
@@ -2275,7 +2275,7 @@ pub fn write_source_code(path: &Path) {
         pub trait Handle {
             const TYPE: ObjectType;
             fn as_raw(self) -> u64;
-            fn from_raw(u64) -> Self;
+            fn from_raw(_: u64) -> Self;
         }
 
         #version_macros

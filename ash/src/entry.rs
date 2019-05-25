@@ -1,5 +1,5 @@
-use instance::Instance;
-use prelude::*;
+use crate::instance::Instance;
+use crate::prelude::*;
 use shared_library::dynamic_library::DynamicLibrary;
 use std::error::Error;
 use std::fmt;
@@ -9,8 +9,8 @@ use std::os::raw::c_void;
 use std::path::Path;
 use std::ptr;
 use std::sync::Arc;
-use vk;
-use RawPtr;
+use crate::vk;
+use crate::RawPtr;
 
 #[cfg(windows)]
 const LIB_PATH: &'static str = "vulkan-1.dll";

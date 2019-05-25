@@ -1,11 +1,11 @@
 #![allow(dead_code)]
-use prelude::*;
+use crate::prelude::*;
 use std::ffi::CStr;
 use std::mem;
 use std::ptr;
-use version::{EntryV1_0, InstanceV1_0};
-use vk;
-use RawPtr;
+use crate::version::{EntryV1_0, InstanceV1_0};
+use crate::vk;
+use crate::RawPtr;
 
 #[derive(Clone)]
 pub struct Surface {

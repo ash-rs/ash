@@ -1,8 +1,8 @@
 #![allow(dead_code)]
 use std::ffi::CStr;
 use std::mem;
-use version::{DeviceV1_0, InstanceV1_0};
-use vk;
+use crate::version::{DeviceV1_0, InstanceV1_0};
+use crate::vk;
 
 #[derive(Clone)]
 pub struct MeshShader {

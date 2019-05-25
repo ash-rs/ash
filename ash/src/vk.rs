@@ -18,7 +18,7 @@ pub(crate) unsafe fn ptr_chain_iter<T>(ptr: &mut T) -> impl Iterator<Item = *mut
 pub trait Handle {
     const TYPE: ObjectType;
     fn as_raw(self) -> u64;
-    fn from_raw(u64) -> Self;
+    fn from_raw(_: u64) -> Self;
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VK_MAKE_VERSION.html>"]
 #[macro_export]

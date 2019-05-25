@@ -25,7 +25,7 @@
 
 use std::fmt;
 use std::os::raw::*;
-use vk::*;
+use crate::vk::*;
 
 // Extension: `VK_AMD_gpa_interface`
 
