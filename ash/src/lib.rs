@@ -23,8 +23,6 @@
 //! ```
 //!
 
-extern crate shared_library;
-
 pub use crate::device::Device;
 pub use crate::entry::{Entry, EntryCustom, InstanceError, LoadingError};
 pub use crate::instance::Instance;

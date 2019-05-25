@@ -1,7 +1,3 @@
-extern crate ash;
-extern crate examples;
-extern crate image;
-
 use std::default::Default;
 use std::ffi::CString;
 use std::fs::File;

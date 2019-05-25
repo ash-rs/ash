@@ -1,6 +1,3 @@
-extern crate ash;
-extern crate examples;
-
 use ash::util::*;
 use ash::vk;
 use examples::*;

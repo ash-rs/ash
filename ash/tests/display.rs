@@ -1,4 +1,4 @@
-extern crate ash;
+
 use ash::vk;
 
 #[test]

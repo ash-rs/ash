@@ -1,14 +1,14 @@
 #![recursion_limit = "256"]
-extern crate heck;
-extern crate itertools;
+
+
 #[macro_use]
 extern crate nom;
-extern crate proc_macro2;
+use proc_macro2;
 #[macro_use]
 extern crate quote;
-extern crate syn;
-pub extern crate vk_parse;
-pub extern crate vkxml;
+use syn;
+pub use vk_parse;
+pub use vkxml;
 
 use heck::{CamelCase, ShoutySnakeCase, SnakeCase};
 use itertools::Itertools;
