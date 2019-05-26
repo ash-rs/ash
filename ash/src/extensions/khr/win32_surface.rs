@@ -1,10 +1,10 @@
 #![allow(dead_code)]
-use prelude::*;
+use crate::prelude::*;
+use crate::version::{EntryV1_0, InstanceV1_0};
+use crate::vk;
+use crate::RawPtr;
 use std::ffi::CStr;
 use std::mem;
-use version::{EntryV1_0, InstanceV1_0};
-use vk;
-use RawPtr;
 
 #[derive(Clone)]
 pub struct Win32Surface {
@@ -44,5 +44,21 @@ impl Win32Surface {
             vk::Result::SUCCESS => Ok(surface),
             _ => Err(err_code),
         }
+    }
+
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceWin32PresentationSupportKHR.html"]
+    pub unsafe fn get_physical_device_win32_presentation_support(
+        &self,
+        physical_device: vk::PhysicalDevice,
+        queue_family_index: u32,
+    ) -> bool {
+        let b = self
+            .win32_surface_fn
+            .get_physical_device_win32_presentation_support_khr(
+                physical_device,
+                queue_family_index,
+            );
+
+        b > 0
     }
 }
