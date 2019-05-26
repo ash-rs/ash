@@ -8,6 +8,7 @@ repository = "https://github.com/MaikKlein/ash"
 readme = "../README.md"
 keywords = ["vulkan", "graphic"]
 documentation = "https://docs.rs/ash"
+edition = "2018"
 
 [dependencies]
 shared_library = "0.1.9"

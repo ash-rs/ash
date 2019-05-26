@@ -23,11 +23,9 @@
 //! ```
 //!
 
-extern crate shared_library;
-
-pub use device::Device;
-pub use entry::{Entry, EntryCustom, InstanceError, LoadingError};
-pub use instance::Instance;
+pub use crate::device::Device;
+pub use crate::entry::{Entry, EntryCustom, InstanceError, LoadingError};
+pub use crate::instance::Instance;
 
 mod device;
 mod entry;

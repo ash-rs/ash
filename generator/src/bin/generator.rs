@@ -1,4 +1,3 @@
-extern crate generator;
 use generator::write_source_code;
 use std::path::Path;
 

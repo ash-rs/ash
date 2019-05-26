@@ -1,4 +1,4 @@
-extern crate ash;
+use ash;
 
 use ash::vk::{PhysicalDeviceProperties, PipelineColorBlendStateCreateInfo};
 

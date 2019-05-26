@@ -1,11 +1,11 @@
 #![allow(dead_code)]
-use device::Device;
-use prelude::*;
+use crate::device::Device;
+use crate::prelude::*;
+use crate::vk;
+use crate::RawPtr;
 use std::mem;
 use std::os::raw::c_char;
 use std::ptr;
-use vk;
-use RawPtr;
 
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkInstance.html>"]
 #[derive(Clone)]

@@ -1,14 +1,13 @@
 #![recursion_limit = "256"]
-extern crate heck;
-extern crate itertools;
+
 #[macro_use]
 extern crate nom;
-extern crate proc_macro2;
+use proc_macro2;
 #[macro_use]
 extern crate quote;
-extern crate syn;
-pub extern crate vk_parse;
-pub extern crate vkxml;
+use syn;
+pub use vk_parse;
+pub use vkxml;
 
 use heck::{CamelCase, ShoutySnakeCase, SnakeCase};
 use itertools::Itertools;
@@ -122,7 +121,7 @@ pub fn define_handle_macro() -> Tokens {
                 unsafe impl Sync for $name {}
 
                 impl $name{
-                    pub fn null() -> Self{
+                    pub const fn null() -> Self{
                         $name(::std::ptr::null_mut())
                     }
                 }
@@ -163,7 +162,7 @@ pub fn handle_nondispatchable_macro() -> Tokens {
                 }
 
                 impl $name{
-                    pub fn null() -> $name{
+                    pub const fn null() -> $name{
                         $name(0)
                     }
                 }
@@ -232,20 +231,20 @@ pub fn vk_bitflags_wrapped_macro() -> Tokens {
 
                 impl $name {
                     #[inline]
-                    pub fn empty() -> $name {
+                    pub const fn empty() -> $name {
                         $name(0)
                     }
 
                     #[inline]
-                    pub fn all() -> $name {
+                    pub const fn all() -> $name {
                         $name($all)
                     }
 
                     #[inline]
-                    pub fn from_raw(x: $flag_type) -> Self { $name(x) }
+                    pub const fn from_raw(x: $flag_type) -> Self { $name(x) }
 
                     #[inline]
-                    pub fn as_raw(self) -> $flag_type { self.0 }
+                    pub const fn as_raw(self) -> $flag_type { self.0 }
 
                     #[inline]
                     pub fn is_empty(self) -> bool {
@@ -1432,7 +1431,7 @@ pub fn derive_setters(
         _ => None,
     });
 
-    let (has_next, is_next_const) = match members
+    let (has_next, _is_next_const) = match members
         .clone()
         .find(|field| field.param_ident().to_string() == "p_next")
     {
@@ -2275,7 +2274,7 @@ pub fn write_source_code(path: &Path) {
         pub trait Handle {
             const TYPE: ObjectType;
             fn as_raw(self) -> u64;
-            fn from_raw(u64) -> Self;
+            fn from_raw(_: u64) -> Self;
         }
 
         #version_macros

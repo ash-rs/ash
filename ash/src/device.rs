@@ -1,10 +1,10 @@
 #![allow(dead_code)]
-use prelude::*;
+use crate::prelude::*;
+use crate::vk;
+use crate::RawPtr;
 use std::mem;
 use std::os::raw::c_void;
 use std::ptr;
-use vk;
-use RawPtr;
 
 #[allow(non_camel_case_types)]
 pub trait DeviceV1_1: DeviceV1_0 {

@@ -1,10 +1,10 @@
 #![allow(dead_code)]
-use prelude::*;
+use crate::prelude::*;
+use crate::version::{DeviceV1_0, InstanceV1_0, InstanceV1_1};
+use crate::vk;
+use crate::RawPtr;
 use std::ffi::CStr;
 use std::mem;
-use version::{DeviceV1_0, InstanceV1_0, InstanceV1_1};
-use vk;
-use RawPtr;
 
 #[derive(Clone)]
 pub struct RayTracing {
