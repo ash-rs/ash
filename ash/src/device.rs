@@ -1510,7 +1510,7 @@ pub trait DeviceV1_0 {
         size: vk::DeviceSize,
         flags: vk::MemoryMapFlags,
     ) -> VkResult<*mut c_void> {
-        let mut data: *mut c_void = mem::zeroed();
+        let mut data: *mut c_void = ptr::null_mut();
         let err_code =
             self.fp_v1_0()
                 .map_memory(self.handle(), memory, offset, size, flags, &mut data);
