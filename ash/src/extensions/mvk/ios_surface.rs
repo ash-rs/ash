@@ -33,7 +33,7 @@ impl IOSSurface {
         create_info: &vk::IOSSurfaceCreateInfoMVK,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::SurfaceKHR> {
-        let mut surface = mem::uninitialized();
+        let mut surface = mem::zeroed();
         let err_code = self.ios_surface_fn.create_ios_surface_mvk(
             self.handle,
             create_info,

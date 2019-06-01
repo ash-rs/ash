@@ -33,7 +33,7 @@ impl XlibSurface {
         create_info: &vk::XlibSurfaceCreateInfoKHR,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::SurfaceKHR> {
-        let mut surface = mem::uninitialized();
+        let mut surface = mem::zeroed();
         let err_code = self.xlib_surface_fn.create_xlib_surface_khr(
             self.handle,
             create_info,

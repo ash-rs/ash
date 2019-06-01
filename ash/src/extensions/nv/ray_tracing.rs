@@ -41,7 +41,7 @@ impl RayTracing {
         create_info: &vk::AccelerationStructureCreateInfoNV,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::AccelerationStructureNV> {
-        let mut accel_struct = mem::uninitialized();
+        let mut accel_struct = mem::zeroed();
         let err_code = self.ray_tracing_fn.create_acceleration_structure_nv(
             self.handle,
             create_info,
@@ -72,7 +72,7 @@ impl RayTracing {
         &self,
         info: &vk::AccelerationStructureMemoryRequirementsInfoNV,
     ) -> vk::MemoryRequirements2KHR {
-        let mut requirements = mem::uninitialized();
+        let mut requirements = mem::zeroed();
         self.ray_tracing_fn
             .get_acceleration_structure_memory_requirements_nv(
                 self.handle,
@@ -181,7 +181,7 @@ impl RayTracing {
         create_info: &[vk::RayTracingPipelineCreateInfoNV],
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<Vec<vk::Pipeline>> {
-        let mut pipelines = vec![mem::uninitialized(); create_info.len()];
+        let mut pipelines = vec![mem::zeroed(); create_info.len()];
         let err_code = self.ray_tracing_fn.create_ray_tracing_pipelines_nv(
             self.handle,
             pipeline_cache,

@@ -33,7 +33,7 @@ impl Win32Surface {
         create_info: &vk::Win32SurfaceCreateInfoKHR,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::SurfaceKHR> {
-        let mut surface = mem::uninitialized();
+        let mut surface = mem::zeroed();
         let err_code = self.win32_surface_fn.create_win32_surface_khr(
             self.handle,
             create_info,

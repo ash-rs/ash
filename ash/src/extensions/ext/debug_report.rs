@@ -46,7 +46,7 @@ impl DebugReport {
         create_info: &vk::DebugReportCallbackCreateInfoEXT,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::DebugReportCallbackEXT> {
-        let mut debug_cb = mem::uninitialized();
+        let mut debug_cb = mem::zeroed();
         let err_code = self.debug_report_fn.create_debug_report_callback_ext(
             self.handle,
             create_info,

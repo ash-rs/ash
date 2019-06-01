@@ -30,8 +30,8 @@ fn assert_ffi_array_param_is_pointer() {
     unsafe {
         // don't run it, just make sure it compiles
         if false {
-            let device: ash::Device = std::mem::uninitialized();
-            let cmd_buffer = std::mem::uninitialized();
+            let device: ash::Device = std::mem::zeroed();
+            let cmd_buffer = std::mem::zeroed();
 
             let blend_constants: [f32; 4] = [0.0, 0.0, 0.0, 0.0];
 

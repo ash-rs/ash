@@ -40,7 +40,7 @@ impl InstanceV1_0 for Instance {
         create_info: &vk::DeviceCreateInfo,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> Result<Self::Device, vk::Result> {
-        let mut device: vk::Device = mem::uninitialized();
+        let mut device: vk::Device = mem::zeroed();
         let err_code = self.fp_v1_0().create_device(
             physical_device,
             create_info,
@@ -72,7 +72,7 @@ pub trait InstanceV1_1: InstanceV1_0 {
     fn fp_v1_1(&self) -> &vk::InstanceFnV1_1;
 
     unsafe fn enumerate_physical_device_groups_len(&self) -> usize {
-        let mut group_count = mem::uninitialized();
+        let mut group_count = mem::zeroed();
         self.fp_v1_1().enumerate_physical_device_groups(
             self.handle(),
             &mut group_count,
@@ -291,7 +291,7 @@ pub trait InstanceV1_0 {
         physical_device: vk::PhysicalDevice,
         format: vk::Format,
     ) -> vk::FormatProperties {
-        let mut format_prop = mem::uninitialized();
+        let mut format_prop = mem::zeroed();
         self.fp_v1_0().get_physical_device_format_properties(
             physical_device,
             format,
@@ -310,7 +310,7 @@ pub trait InstanceV1_0 {
         usage: vk::ImageUsageFlags,
         flags: vk::ImageCreateFlags,
     ) -> VkResult<vk::ImageFormatProperties> {
-        let mut image_format_prop = mem::uninitialized();
+        let mut image_format_prop = mem::zeroed();
         let err_code = self.fp_v1_0().get_physical_device_image_format_properties(
             physical_device,
             format,
@@ -332,7 +332,7 @@ pub trait InstanceV1_0 {
         &self,
         physical_device: vk::PhysicalDevice,
     ) -> vk::PhysicalDeviceMemoryProperties {
-        let mut memory_prop = mem::uninitialized();
+        let mut memory_prop = mem::zeroed();
         self.fp_v1_0()
             .get_physical_device_memory_properties(physical_device, &mut memory_prop);
         memory_prop
@@ -343,7 +343,7 @@ pub trait InstanceV1_0 {
         &self,
         physical_device: vk::PhysicalDevice,
     ) -> vk::PhysicalDeviceProperties {
-        let mut prop = mem::uninitialized();
+        let mut prop = mem::zeroed();
         self.fp_v1_0()
             .get_physical_device_properties(physical_device, &mut prop);
         prop
@@ -375,7 +375,7 @@ pub trait InstanceV1_0 {
         &self,
         physical_device: vk::PhysicalDevice,
     ) -> vk::PhysicalDeviceFeatures {
-        let mut prop = mem::uninitialized();
+        let mut prop = mem::zeroed();
         self.fp_v1_0()
             .get_physical_device_features(physical_device, &mut prop);
         prop
@@ -383,7 +383,7 @@ pub trait InstanceV1_0 {
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkEnumeratePhysicalDevices.html>"]
     unsafe fn enumerate_physical_devices(&self) -> VkResult<Vec<vk::PhysicalDevice>> {
-        let mut num = mem::uninitialized();
+        let mut num = mem::zeroed();
         self.fp_v1_0()
             .enumerate_physical_devices(self.handle(), &mut num, ptr::null_mut());
         let mut physical_devices = Vec::<vk::PhysicalDevice>::with_capacity(num as usize);

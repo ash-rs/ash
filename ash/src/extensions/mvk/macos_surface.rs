@@ -33,7 +33,7 @@ impl MacOSSurface {
         create_info: &vk::MacOSSurfaceCreateInfoMVK,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::SurfaceKHR> {
-        let mut surface = mem::uninitialized();
+        let mut surface = mem::zeroed();
         let err_code = self.macos_surface_fn.create_mac_os_surface_mvk(
             self.handle,
             create_info,
