@@ -3,10 +3,9 @@ use ash::vk;
 use examples::*;
 use std::default::Default;
 use std::ffi::CString;
-use std::fs::File;
+use std::io::Cursor;
 use std::mem;
 use std::mem::align_of;
-use std::path::Path;
 
 #[derive(Clone, Debug, Copy)]
 struct Vertex {
@@ -200,9 +199,8 @@ fn main() {
             .bind_buffer_memory(vertex_input_buffer, vertex_input_buffer_memory, 0)
             .unwrap();
         let mut vertex_spv_file =
-            File::open(Path::new("shader/triangle/vert.spv")).expect("Could not find vert.spv.");
-        let mut frag_spv_file =
-            File::open(Path::new("shader/triangle/frag.spv")).expect("Could not find frag.spv.");
+            Cursor::new(&include_bytes!("../../shader/triangle/vert.spv")[..]);
+        let mut frag_spv_file = Cursor::new(&include_bytes!("../../shader/triangle/frag.spv")[..]);
 
         let vertex_code =
             read_spv(&mut vertex_spv_file).expect("Failed to read vertex shader spv file");

@@ -1,9 +1,8 @@
 use std::default::Default;
 use std::ffi::CString;
-use std::fs::File;
+use std::io::Cursor;
 use std::mem::{self, align_of};
 use std::os::raw::c_void;
-use std::path::Path;
 
 use ash::util::*;
 use ash::vk;
@@ -263,7 +262,9 @@ fn main() {
             .bind_buffer_memory(uniform_color_buffer, uniform_color_buffer_memory, 0)
             .unwrap();
 
-        let image = image::open("assets/rust.png").unwrap().to_rgba();
+        let image = image::load_from_memory(include_bytes!("../../assets/rust.png"))
+            .unwrap()
+            .to_rgba();
         let image_dimensions = image.dimensions();
         let image_data = image.into_raw();
         let image_buffer_info = vk::BufferCreateInfo {
@@ -543,10 +544,8 @@ fn main() {
         ];
         base.device.update_descriptor_sets(&write_desc_sets, &[]);
 
-        let mut vertex_spv_file =
-            File::open(Path::new("shader/texture/vert.spv")).expect("Could not find vert.spv.");
-        let mut frag_spv_file =
-            File::open(Path::new("shader/texture/frag.spv")).expect("Could not find frag.spv.");
+        let mut vertex_spv_file = Cursor::new(&include_bytes!("../../shader/texture/vert.spv")[..]);
+        let mut frag_spv_file = Cursor::new(&include_bytes!("../../shader/texture/frag.spv")[..]);
 
         let vertex_code =
             read_spv(&mut vertex_spv_file).expect("Failed to read vertex shader spv file");
