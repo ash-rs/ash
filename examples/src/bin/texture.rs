@@ -544,10 +544,8 @@ fn main() {
         ];
         base.device.update_descriptor_sets(&write_desc_sets, &[]);
 
-        let mut vertex_spv_file =
-            Cursor::new(include_bytes!("../../shader/texture/vert.spv").to_vec());
-        let mut frag_spv_file =
-            Cursor::new(include_bytes!("../../shader/texture/frag.spv").to_vec());
+        let mut vertex_spv_file = Cursor::new(&include_bytes!("../../shader/texture/vert.spv")[..]);
+        let mut frag_spv_file = Cursor::new(&include_bytes!("../../shader/texture/frag.spv")[..]);
 
         let vertex_code =
             read_spv(&mut vertex_spv_file).expect("Failed to read vertex shader spv file");
