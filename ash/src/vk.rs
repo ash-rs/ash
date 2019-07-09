@@ -55,6 +55,7 @@ pub type wl_display = c_void;
 #[allow(non_camel_case_types)]
 pub type wl_surface = c_void;
 pub type HANDLE = *mut c_void;
+pub type HMONITOR = HANDLE;
 pub type DWORD = c_ulong;
 pub type LPCWSTR = *const u16;
 #[allow(non_camel_case_types)]
@@ -63,6 +64,9 @@ pub type zx_handle_t = u32;
 pub type SECURITY_ATTRIBUTES = ();
 pub type ANativeWindow = c_void;
 pub type AHardwareBuffer = c_void;
+pub type GgpStreamDescriptor = u32;
+pub type GgpFrameToken = u32;
+pub type CAMetalLayer = c_void;
 #[macro_export]
 macro_rules! vk_bitflags_wrapped {
     ( $ name : ident , $ all : expr , $ flag_type : ty ) => {
@@ -245,58 +249,6 @@ macro_rules! define_handle {
             }
         }
     };
-}
-#[allow(non_camel_case_types)]
-pub type PFN_vkGetInstanceProcAddr =
-    extern "system" fn(instance: Instance, p_name: *const c_char) -> PFN_vkVoidFunction;
-pub struct StaticFn {
-    pub get_instance_proc_addr:
-        extern "system" fn(instance: Instance, p_name: *const c_char) -> PFN_vkVoidFunction,
-}
-unsafe impl Send for StaticFn {}
-unsafe impl Sync for StaticFn {}
-impl ::std::clone::Clone for StaticFn {
-    fn clone(&self) -> Self {
-        StaticFn {
-            get_instance_proc_addr: self.get_instance_proc_addr,
-        }
-    }
-}
-impl StaticFn {
-    pub fn load<F>(mut _f: F) -> Self
-    where
-        F: FnMut(&::std::ffi::CStr) -> *const c_void,
-    {
-        StaticFn {
-            get_instance_proc_addr: unsafe {
-                extern "system" fn get_instance_proc_addr(
-                    _instance: Instance,
-                    _p_name: *const c_char,
-                ) -> PFN_vkVoidFunction {
-                    panic!(concat!(
-                        "Unable to load ",
-                        stringify!(get_instance_proc_addr)
-                    ))
-                }
-                let raw_name = stringify!(vkGetInstanceProcAddr);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    get_instance_proc_addr
-                } else {
-                    ::std::mem::transmute(val)
-                }
-            },
-        }
-    }
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetInstanceProcAddr.html>"]
-    pub unsafe fn get_instance_proc_addr(
-        &self,
-        instance: Instance,
-        p_name: *const c_char,
-    ) -> PFN_vkVoidFunction {
-        (self.get_instance_proc_addr)(instance, p_name)
-    }
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateInstance = extern "system" fn(
@@ -48583,41 +48535,12 @@ impl KhrDeviceGroupFn {
             .expect("Wrong extension string")
     }
 }
-pub struct KhrDeviceGroupFn {
-    pub get_device_group_present_capabilities_khr: extern "system" fn(
-        device: Device,
-        p_device_group_present_capabilities: *mut DeviceGroupPresentCapabilitiesKHR,
-    ) -> Result,
-    pub get_device_group_surface_present_modes_khr: extern "system" fn(
-        device: Device,
-        surface: SurfaceKHR,
-        p_modes: *mut DeviceGroupPresentModeFlagsKHR,
-    ) -> Result,
-    pub get_physical_device_present_rectangles_khr: extern "system" fn(
-        physical_device: PhysicalDevice,
-        surface: SurfaceKHR,
-        p_rect_count: *mut u32,
-        p_rects: *mut Rect2D,
-    ) -> Result,
-    pub acquire_next_image2_khr: extern "system" fn(
-        device: Device,
-        p_acquire_info: *const AcquireNextImageInfoKHR,
-        p_image_index: *mut u32,
-    ) -> Result,
-}
+pub struct KhrDeviceGroupFn {}
 unsafe impl Send for KhrDeviceGroupFn {}
 unsafe impl Sync for KhrDeviceGroupFn {}
 impl ::std::clone::Clone for KhrDeviceGroupFn {
     fn clone(&self) -> Self {
-        KhrDeviceGroupFn {
-            get_device_group_present_capabilities_khr: self
-                .get_device_group_present_capabilities_khr,
-            get_device_group_surface_present_modes_khr: self
-                .get_device_group_surface_present_modes_khr,
-            get_physical_device_present_rectangles_khr: self
-                .get_physical_device_present_rectangles_khr,
-            acquire_next_image2_khr: self.acquire_next_image2_khr,
-        }
+        KhrDeviceGroupFn {}
     }
 }
 impl KhrDeviceGroupFn {
@@ -48625,132 +48548,7 @@ impl KhrDeviceGroupFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrDeviceGroupFn {
-            get_device_group_present_capabilities_khr: unsafe {
-                extern "system" fn get_device_group_present_capabilities_khr(
-                    _device: Device,
-                    _p_device_group_present_capabilities: *mut DeviceGroupPresentCapabilitiesKHR,
-                ) -> Result {
-                    panic!(concat!(
-                        "Unable to load ",
-                        stringify!(get_device_group_present_capabilities_khr)
-                    ))
-                }
-                let raw_name = stringify!(vkGetDeviceGroupPresentCapabilitiesKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    get_device_group_present_capabilities_khr
-                } else {
-                    ::std::mem::transmute(val)
-                }
-            },
-            get_device_group_surface_present_modes_khr: unsafe {
-                extern "system" fn get_device_group_surface_present_modes_khr(
-                    _device: Device,
-                    _surface: SurfaceKHR,
-                    _p_modes: *mut DeviceGroupPresentModeFlagsKHR,
-                ) -> Result {
-                    panic!(concat!(
-                        "Unable to load ",
-                        stringify!(get_device_group_surface_present_modes_khr)
-                    ))
-                }
-                let raw_name = stringify!(vkGetDeviceGroupSurfacePresentModesKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    get_device_group_surface_present_modes_khr
-                } else {
-                    ::std::mem::transmute(val)
-                }
-            },
-            get_physical_device_present_rectangles_khr: unsafe {
-                extern "system" fn get_physical_device_present_rectangles_khr(
-                    _physical_device: PhysicalDevice,
-                    _surface: SurfaceKHR,
-                    _p_rect_count: *mut u32,
-                    _p_rects: *mut Rect2D,
-                ) -> Result {
-                    panic!(concat!(
-                        "Unable to load ",
-                        stringify!(get_physical_device_present_rectangles_khr)
-                    ))
-                }
-                let raw_name = stringify!(vkGetPhysicalDevicePresentRectanglesKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    get_physical_device_present_rectangles_khr
-                } else {
-                    ::std::mem::transmute(val)
-                }
-            },
-            acquire_next_image2_khr: unsafe {
-                extern "system" fn acquire_next_image2_khr(
-                    _device: Device,
-                    _p_acquire_info: *const AcquireNextImageInfoKHR,
-                    _p_image_index: *mut u32,
-                ) -> Result {
-                    panic!(concat!(
-                        "Unable to load ",
-                        stringify!(acquire_next_image2_khr)
-                    ))
-                }
-                let raw_name = stringify!(vkAcquireNextImage2KHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    acquire_next_image2_khr
-                } else {
-                    ::std::mem::transmute(val)
-                }
-            },
-        }
-    }
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetDeviceGroupPresentCapabilitiesKHR.html>"]
-    pub unsafe fn get_device_group_present_capabilities_khr(
-        &self,
-        device: Device,
-        p_device_group_present_capabilities: *mut DeviceGroupPresentCapabilitiesKHR,
-    ) -> Result {
-        (self.get_device_group_present_capabilities_khr)(
-            device,
-            p_device_group_present_capabilities,
-        )
-    }
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetDeviceGroupSurfacePresentModesKHR.html>"]
-    pub unsafe fn get_device_group_surface_present_modes_khr(
-        &self,
-        device: Device,
-        surface: SurfaceKHR,
-        p_modes: *mut DeviceGroupPresentModeFlagsKHR,
-    ) -> Result {
-        (self.get_device_group_surface_present_modes_khr)(device, surface, p_modes)
-    }
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDevicePresentRectanglesKHR.html>"]
-    pub unsafe fn get_physical_device_present_rectangles_khr(
-        &self,
-        physical_device: PhysicalDevice,
-        surface: SurfaceKHR,
-        p_rect_count: *mut u32,
-        p_rects: *mut Rect2D,
-    ) -> Result {
-        (self.get_physical_device_present_rectangles_khr)(
-            physical_device,
-            surface,
-            p_rect_count,
-            p_rects,
-        )
-    }
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkAcquireNextImage2KHR.html>"]
-    pub unsafe fn acquire_next_image2_khr(
-        &self,
-        device: Device,
-        p_acquire_info: *const AcquireNextImageInfoKHR,
-        p_image_index: *mut u32,
-    ) -> Result {
-        (self.acquire_next_image2_khr)(device, p_acquire_info, p_image_index)
+        KhrDeviceGroupFn {}
     }
 }
 impl ExtValidationFlagsFn {
@@ -49975,23 +49773,12 @@ impl KhrDescriptorUpdateTemplateFn {
             .expect("Wrong extension string")
     }
 }
-pub struct KhrDescriptorUpdateTemplateFn {
-    pub cmd_push_descriptor_set_with_template_khr: extern "system" fn(
-        command_buffer: CommandBuffer,
-        descriptor_update_template: DescriptorUpdateTemplate,
-        layout: PipelineLayout,
-        set: u32,
-        p_data: *const c_void,
-    ) -> c_void,
-}
+pub struct KhrDescriptorUpdateTemplateFn {}
 unsafe impl Send for KhrDescriptorUpdateTemplateFn {}
 unsafe impl Sync for KhrDescriptorUpdateTemplateFn {}
 impl ::std::clone::Clone for KhrDescriptorUpdateTemplateFn {
     fn clone(&self) -> Self {
-        KhrDescriptorUpdateTemplateFn {
-            cmd_push_descriptor_set_with_template_khr: self
-                .cmd_push_descriptor_set_with_template_khr,
-        }
+        KhrDescriptorUpdateTemplateFn {}
     }
 }
 impl KhrDescriptorUpdateTemplateFn {
@@ -49999,47 +49786,7 @@ impl KhrDescriptorUpdateTemplateFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrDescriptorUpdateTemplateFn {
-            cmd_push_descriptor_set_with_template_khr: unsafe {
-                extern "system" fn cmd_push_descriptor_set_with_template_khr(
-                    _command_buffer: CommandBuffer,
-                    _descriptor_update_template: DescriptorUpdateTemplate,
-                    _layout: PipelineLayout,
-                    _set: u32,
-                    _p_data: *const c_void,
-                ) -> c_void {
-                    panic!(concat!(
-                        "Unable to load ",
-                        stringify!(cmd_push_descriptor_set_with_template_khr)
-                    ))
-                }
-                let raw_name = stringify!(vkCmdPushDescriptorSetWithTemplateKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    cmd_push_descriptor_set_with_template_khr
-                } else {
-                    ::std::mem::transmute(val)
-                }
-            },
-        }
-    }
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCmdPushDescriptorSetWithTemplateKHR.html>"]
-    pub unsafe fn cmd_push_descriptor_set_with_template_khr(
-        &self,
-        command_buffer: CommandBuffer,
-        descriptor_update_template: DescriptorUpdateTemplate,
-        layout: PipelineLayout,
-        set: u32,
-        p_data: *const c_void,
-    ) -> c_void {
-        (self.cmd_push_descriptor_set_with_template_khr)(
-            command_buffer,
-            descriptor_update_template,
-            layout,
-            set,
-            p_data,
-        )
+        KhrDescriptorUpdateTemplateFn {}
     }
 }
 impl NvxDeviceGeneratedCommandsFn {
