@@ -368,9 +368,9 @@ pub fn platform_specific_types() -> Tokens {
         // Opage types
         pub type ANativeWindow = c_void;
         pub type AHardwareBuffer = c_void;
-        // I guessed the type definition here because they are apperantly under NDA, inside the
-        // Stadia SDK.
+        /// This definition is experimental and won't adhere to semver rules.
         pub type GgpStreamDescriptor = u32;
+        /// This definition is experimental and won't adhere to semver rules.
         pub type GgpFrameToken = u32;
         pub type CAMetalLayer = c_void;
     }

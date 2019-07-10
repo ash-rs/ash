@@ -64,7 +64,9 @@ pub type zx_handle_t = u32;
 pub type SECURITY_ATTRIBUTES = ();
 pub type ANativeWindow = c_void;
 pub type AHardwareBuffer = c_void;
+#[doc = r" This definition is experimental and won't adhere to semver rules."]
 pub type GgpStreamDescriptor = u32;
+#[doc = r" This definition is experimental and won't adhere to semver rules."]
 pub type GgpFrameToken = u32;
 pub type CAMetalLayer = c_void;
 #[macro_export]
