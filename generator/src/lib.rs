@@ -429,6 +429,22 @@ impl quote::ToTokens for ConstVal {
         }
     }
 }
+
+// Interleaves a number, for example 100000 => 100_000. Mostly used to make clippy happy
+fn interleave_number(symbol: char, count: usize, n: &str) -> String {
+    let number: String = n
+        .chars()
+        .rev()
+        .enumerate()
+        .fold(String::new(), |mut acc, (idx, next)| {
+            if idx != 0 && idx % count == 0 {
+                acc.push(symbol);
+            }
+            acc.push(next);
+            acc
+        });
+    number.chars().rev().collect()
+}
 impl Constant {
     pub fn value(&self) -> Option<ConstVal> {
         match *self {
@@ -453,11 +469,13 @@ impl Constant {
     pub fn to_tokens(&self) -> Tokens {
         match *self {
             Constant::Number(n) => {
-                let term = Term::intern(&n.to_string());
+                let number = interleave_number('_', 3, &n.to_string());
+                let term = Term::intern(&number);
                 quote! {#term}
             }
             Constant::Hex(ref s) => {
-                let term = Term::intern(&format!("0x{}", s));
+                let number = interleave_number('_', 4, s);
+                let term = Term::intern(&format!("0x{}", number));
                 quote! {#term}
             }
             Constant::Text(ref text) => {
@@ -470,7 +488,9 @@ impl Constant {
             }
             Constant::BitPos(pos) => {
                 let value = 1 << pos;
-                let term = Term::intern(&format!("0b{:b}", value));
+                let bit_string = format!("{:b}", value);
+                let bit_string = interleave_number('_', 4, &bit_string);
+                let term = Term::intern(&format!("0b{}", bit_string));
                 quote! {#term}
             }
         }
@@ -1154,7 +1174,9 @@ pub fn generate_enum<'a>(
             .iter()
             .filter_map(|constant| Constant::from_constant(constant).value())
             .fold(0, |acc, next| acc | next.bits());
-        let all_bits_term = Term::intern(&format!("0b{:b}", all_bits));
+        let bit_string = format!("{:b}", all_bits);
+        let bit_string = interleave_number('_', 4, &bit_string);
+        let all_bits_term = Term::intern(&format!("0b{}", bit_string));
 
         let impl_bitflags = bitflags_impl_block(ident, &_enum.name, &constants);
         if bitflags_cache.contains(&ident) {
@@ -2239,6 +2261,7 @@ pub fn write_source_code(path: &Path) {
     let version_macros = vk_version_macros();
     let platform_specific_types = platform_specific_types();
     let source_code = quote! {
+        #![allow(clippy::too_many_arguments)]
         use std::fmt;
         use std::os::raw::*;
         /// Iterates through the pointer chain. Includes the item that is passed into the function.
