@@ -13,19 +13,19 @@ use std::ptr;
 use std::sync::Arc;
 
 #[cfg(windows)]
-const LIB_PATH: &'static str = "vulkan-1.dll";
+const LIB_PATH: &str = "vulkan-1.dll";
 
 #[cfg(all(
     unix,
     not(any(target_os = "macos", target_os = "ios", target_os = "android"))
 ))]
-const LIB_PATH: &'static str = "libvulkan.so.1";
+const LIB_PATH: &str = "libvulkan.so.1";
 
 #[cfg(target_os = "android")]
-const LIB_PATH: &'static str = "libvulkan.so";
+const LIB_PATH: &str = "libvulkan.so";
 
 #[cfg(any(target_os = "macos", target_os = "ios"))]
-const LIB_PATH: &'static str = "libvulkan.dylib";
+const LIB_PATH: &str = "libvulkan.dylib";
 
 /// Function loader
 pub type Entry = EntryCustom<Arc<DynamicLibrary>>;
@@ -126,12 +126,12 @@ pub trait EntryV1_0 {
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetInstanceProcAddr.html>"]
-    fn get_instance_proc_addr(
+    unsafe fn get_instance_proc_addr(
         &self,
         instance: vk::Instance,
         p_name: *const c_char,
     ) -> vk::PFN_vkVoidFunction {
-        unsafe { self.static_fn().get_instance_proc_addr(instance, p_name) }
+        self.static_fn().get_instance_proc_addr(instance, p_name)
     }
 }
 
@@ -200,7 +200,7 @@ impl EntryCustom<Arc<DynamicLibrary>> {
             || {
                 DynamicLibrary::open(Some(&Path::new(LIB_PATH)))
                     .map_err(|err| LoadingError::LibraryLoadError(err.clone()))
-                    .map(|dl| Arc::new(dl))
+                    .map(Arc::new)
             },
             |vk_lib, name| unsafe {
                 vk_lib

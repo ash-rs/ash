@@ -20,7 +20,7 @@ impl Swapchain {
         });
         Swapchain {
             handle: device.handle(),
-            swapchain_fn: swapchain_fn,
+            swapchain_fn,
         }
     }
 

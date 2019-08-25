@@ -847,6 +847,7 @@ fn generate_function_pointers<'a>(
             }
         }
         impl #ident {
+            #[allow(clippy::cognitive_complexity)]
             pub fn load<F>(mut _f: F) -> Self
                 where F: FnMut(&::std::ffi::CStr) -> *const c_void
             {
@@ -2269,10 +2270,9 @@ pub fn write_source_code(path: &Path) {
         pub(crate) unsafe fn ptr_chain_iter<T>(
             ptr: &mut T,
         ) -> impl Iterator<Item = *mut BaseOutStructure> {
-            use std::ptr::null_mut;
             let ptr: *mut BaseOutStructure = ptr as *mut T as _;
             (0..).scan(ptr, |p_ptr, _| {
-                if *p_ptr == null_mut() {
+                if p_ptr.is_null() {
                     return None;
                 }
                 let n_ptr = (**p_ptr).p_next as *mut BaseOutStructure;

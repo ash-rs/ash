@@ -16,7 +16,7 @@ impl DebugMarker {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
         DebugMarker {
-            debug_marker_fn: debug_marker_fn,
+            debug_marker_fn,
         }
     }
 

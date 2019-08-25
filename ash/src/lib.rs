@@ -1,3 +1,4 @@
+#![allow(clippy::too_many_arguments)]
 //! # Vulkan API
 //!
 //! <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/index.html>
@@ -43,8 +44,8 @@ pub trait RawPtr<T> {
 
 impl<'r, T> RawPtr<T> for Option<&'r T> {
     fn as_raw_ptr(&self) -> *const T {
-        match self {
-            &Some(inner) => inner as *const T,
+        match *self {
+            Some(inner) => inner as *const T,
 
             _ => ::std::ptr::null(),
         }
