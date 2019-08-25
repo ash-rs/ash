@@ -15,9 +15,7 @@ impl DebugMarker {
         let debug_marker_fn = vk::ExtDebugMarkerFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
-        DebugMarker {
-            debug_marker_fn,
-        }
+        DebugMarker { debug_marker_fn }
     }
 
     pub fn name() -> &'static CStr {
