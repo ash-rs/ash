@@ -271,4 +271,12 @@ impl RayTracing {
     pub fn name() -> &'static CStr {
         vk::NvRayTracingFn::name()
     }
+
+    pub fn fp(&self) -> &vk::NvRayTracingFn {
+        &self.ray_tracing_fn
+    }
+
+    pub fn device(&self) -> vk::Device {
+        self.handle
+    }
 }

@@ -61,4 +61,12 @@ impl Win32Surface {
 
         b > 0
     }
+
+    pub fn fp(&self) -> &vk::KhrWin32SurfaceFn {
+        &self.win32_surface_fn
+    }
+
+    pub fn instance(&self) -> vk::Instance {
+        self.handle
+    }
 }

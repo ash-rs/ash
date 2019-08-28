@@ -64,4 +64,8 @@ impl DebugMarker {
         self.debug_marker_fn
             .cmd_debug_marker_insert_ext(command_buffer, marker_info);
     }
+
+    pub fn fp(&self) -> &vk::ExtDebugMarkerFn {
+        &self.debug_marker_fn
+    }
 }

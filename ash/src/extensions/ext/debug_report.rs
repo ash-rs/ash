@@ -58,4 +58,12 @@ impl DebugReport {
             _ => Err(err_code),
         }
     }
+
+    pub fn fp(&self) -> &vk::ExtDebugReportFn {
+        &self.debug_report_fn
+    }
+
+    pub fn instance(&self) -> vk::Instance {
+        self.handle
+    }
 }

@@ -139,11 +139,11 @@ impl Surface {
         );
     }
 
-    pub fn raw_fp(&self) -> &vk::KhrSurfaceFn {
+    pub fn fp(&self) -> &vk::KhrSurfaceFn {
         &self.surface_fn
     }
 
-    pub fn instance_handle(&self) -> vk::Instance {
+    pub fn instance(&self) -> vk::Instance {
         self.handle
     }
 }

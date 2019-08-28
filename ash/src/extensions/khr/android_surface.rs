@@ -45,4 +45,12 @@ impl AndroidSurface {
             _ => Err(err_code),
         }
     }
+
+    pub fn fp(&self) -> &vk::KhrAndroidSurfaceFn {
+        &self.android_surface_fn
+    }
+
+    pub fn instance(&self) -> vk::Instance {
+        self.handle
+    }
 }

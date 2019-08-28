@@ -63,4 +63,12 @@ impl WaylandSurface {
 
         b > 0
     }
+
+    pub fn fp(&self) -> &vk::KhrWaylandSurfaceFn {
+        &self.wayland_surface_fn
+    }
+
+    pub fn instance(&self) -> vk::Instance {
+        self.handle
+    }
 }

@@ -154,4 +154,12 @@ impl DebugUtils {
             callback_data,
         );
     }
+
+    pub fn fp(&self) -> &vk::ExtDebugUtilsFn {
+        &self.debug_utils_fn
+    }
+
+    pub fn instance(&self) -> vk::Instance {
+        self.handle
+    }
 }

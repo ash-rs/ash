@@ -47,4 +47,12 @@ impl DisplaySwapchain {
             _ => Err(err_code),
         }
     }
+
+    pub fn fp(&self) -> &vk::KhrDisplaySwapchainFn {
+        &self.swapchain_fn
+    }
+
+    pub fn device(&self) -> vk::Device {
+        self.handle
+    }
 }

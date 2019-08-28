@@ -127,11 +127,11 @@ impl Swapchain {
         }
     }
 
-    pub fn raw_fp(&self) -> &vk::KhrSwapchainFn {
+    pub fn fp(&self) -> &vk::KhrSwapchainFn {
         &self.swapchain_fn
     }
 
-    pub fn device_handle(&self) -> vk::Device {
+    pub fn device(&self) -> vk::Device {
         self.handle
     }
 }
