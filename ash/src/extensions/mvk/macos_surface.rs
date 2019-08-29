@@ -45,4 +45,12 @@ impl MacOSSurface {
             _ => Err(err_code),
         }
     }
+
+    pub fn fp(&self) -> &vk::MvkMacosSurfaceFn {
+        &self.macos_surface_fn
+    }
+
+    pub fn instance(&self) -> vk::Instance {
+        self.handle
+    }
 }

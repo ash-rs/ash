@@ -126,4 +126,12 @@ impl Swapchain {
             _ => Err(err_code),
         }
     }
+
+    pub fn fp(&self) -> &vk::KhrSwapchainFn {
+        &self.swapchain_fn
+    }
+
+    pub fn device(&self) -> vk::Device {
+        self.handle
+    }
 }

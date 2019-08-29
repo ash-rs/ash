@@ -45,4 +45,12 @@ impl IOSSurface {
             _ => Err(err_code),
         }
     }
+
+    pub fn fp(&self) -> &vk::MvkIosSurfaceFn {
+        &self.ios_surface_fn
+    }
+
+    pub fn instance(&self) -> vk::Instance {
+        self.handle
+    }
 }

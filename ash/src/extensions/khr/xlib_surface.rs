@@ -65,4 +65,12 @@ impl XlibSurface {
 
         b > 0
     }
+
+    pub fn fp(&self) -> &vk::KhrXlibSurfaceFn {
+        &self.xlib_surface_fn
+    }
+
+    pub fn instance(&self) -> vk::Instance {
+        self.handle
+    }
 }

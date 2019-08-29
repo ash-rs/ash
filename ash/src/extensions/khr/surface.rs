@@ -138,4 +138,12 @@ impl Surface {
             allocation_callbacks.as_raw_ptr(),
         );
     }
+
+    pub fn fp(&self) -> &vk::KhrSurfaceFn {
+        &self.surface_fn
+    }
+
+    pub fn instance(&self) -> vk::Instance {
+        self.handle
+    }
 }
