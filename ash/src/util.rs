@@ -1,7 +1,8 @@
 use crate::vk;
-use std::iter::Iterator;
+use std::iter::{self, FromIterator};
 use std::marker::PhantomData;
 use std::mem::size_of;
+use std::ops::DerefMut;
 use std::os::raw::c_void;
 use std::{io, slice};
 
@@ -101,7 +102,10 @@ impl<'a, T: Copy + 'a> Iterator for AlignIter<'a, T> {
 /// ];
 /// let words = ash::util::read_spv(&mut std::io::Cursor::new(&SPIRV[..])).unwrap();
 /// ```
-pub fn read_spv<R: io::Read + io::Seek>(x: &mut R) -> io::Result<Vec<u32>> {
+pub fn read_spv<
+    R: io::Read + io::Seek,
+    T: FromIterator<u32> + DerefMut<Target = [u32]>,
+>(x: &mut R) -> io::Result<T> {
     let size = x.seek(io::SeekFrom::End(0))?;
     if size % 4 != 0 {
         return Err(io::Error::new(
@@ -113,18 +117,19 @@ pub fn read_spv<R: io::Read + io::Seek>(x: &mut R) -> io::Result<Vec<u32>> {
         return Err(io::Error::new(io::ErrorKind::InvalidData, "input too long"));
     }
     let words = (size / 4) as usize;
-    let mut result = Vec::<u32>::with_capacity(words);
+    let mut result: T = iter::repeat(0)
+        .take(words)
+        .collect();
     x.seek(io::SeekFrom::Start(0))?;
     unsafe {
         x.read_exact(slice::from_raw_parts_mut(
             result.as_mut_ptr() as *mut u8,
             words * 4,
         ))?;
-        result.set_len(words);
     }
     const MAGIC_NUMBER: u32 = 0x07230203;
     if result.len() > 0 && result[0] == MAGIC_NUMBER.swap_bytes() {
-        for word in &mut result {
+        for word in result.iter_mut() {
             *word = word.swap_bytes();
         }
     }

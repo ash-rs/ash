@@ -4,7 +4,9 @@ use crate::version::{DeviceV1_0, InstanceV1_0, InstanceV1_1};
 use crate::vk;
 use crate::RawPtr;
 use std::ffi::CStr;
+use std::iter::{self, FromIterator};
 use std::mem;
+use std::ops::DerefMut;
 
 #[derive(Clone)]
 pub struct RayTracing {
@@ -175,13 +177,17 @@ impl RayTracing {
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateRayTracingPipelinesNV.html>"]
-    pub unsafe fn create_ray_tracing_pipelines(
+    pub unsafe fn create_ray_tracing_pipelines<
+        T: FromIterator<vk::Pipeline> + DerefMut<Target = [vk::Pipeline]>,
+    >(
         &self,
         pipeline_cache: vk::PipelineCache,
         create_info: &[vk::RayTracingPipelineCreateInfoNV],
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
-    ) -> VkResult<Vec<vk::Pipeline>> {
-        let mut pipelines = vec![mem::zeroed(); create_info.len()];
+    ) -> VkResult<T> {
+        let mut pipelines: T = iter::repeat(mem::zeroed())
+            .take(create_info.len())
+            .collect();
         let err_code = self.ray_tracing_fn.create_ray_tracing_pipelines_nv(
             self.handle,
             pipeline_cache,

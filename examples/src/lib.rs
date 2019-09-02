@@ -364,7 +364,7 @@ impl ExampleBase {
                 .create_debug_report_callback(&debug_info, None)
                 .unwrap();
             let surface = create_surface(&entry, &instance, &window).unwrap();
-            let pdevices = instance
+            let pdevices: Vec<_> = instance
                 .enumerate_physical_devices()
                 .expect("Physical device error");
             let surface_loader = Surface::new(&entry, &instance);
@@ -372,7 +372,7 @@ impl ExampleBase {
                 .iter()
                 .map(|pdevice| {
                     instance
-                        .get_physical_device_queue_family_properties(*pdevice)
+                        .get_physical_device_queue_family_properties::<Vec<_>>(*pdevice)
                         .iter()
                         .enumerate()
                         .filter_map(|(index, ref info)| {
@@ -419,7 +419,7 @@ impl ExampleBase {
 
             let present_queue = device.get_device_queue(queue_family_index as u32, 0);
 
-            let surface_formats = surface_loader
+            let surface_formats: Vec<_> = surface_loader
                 .get_physical_device_surface_formats(pdevice, surface)
                 .unwrap();
             let surface_format = surface_formats
@@ -457,7 +457,7 @@ impl ExampleBase {
             } else {
                 surface_capabilities.current_transform
             };
-            let present_modes = surface_loader
+            let present_modes: Vec<_> = surface_loader
                 .get_physical_device_surface_present_modes(pdevice, surface)
                 .unwrap();
             let present_mode = present_modes
@@ -496,13 +496,13 @@ impl ExampleBase {
                 .command_pool(pool)
                 .level(vk::CommandBufferLevel::PRIMARY);
 
-            let command_buffers = device
+            let command_buffers: Vec<_> = device
                 .allocate_command_buffers(&command_buffer_allocate_info)
                 .unwrap();
             let setup_command_buffer = command_buffers[0];
             let draw_command_buffer = command_buffers[1];
 
-            let present_images = swapchain_loader.get_swapchain_images(swapchain).unwrap();
+            let present_images: Vec<_> = swapchain_loader.get_swapchain_images(swapchain).unwrap();
             let present_image_views: Vec<vk::ImageView> = present_images
                 .iter()
                 .map(|&image| {

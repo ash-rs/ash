@@ -4,7 +4,9 @@ use crate::version::{EntryV1_0, InstanceV1_0};
 use crate::vk;
 use crate::RawPtr;
 use std::ffi::CStr;
+use std::iter::{self, FromIterator};
 use std::mem;
+use std::ops::DerefMut;
 use std::ptr;
 
 #[derive(Clone)]
@@ -50,11 +52,13 @@ impl Surface {
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceSurfacePresentModesKHR.html>"]
-    pub unsafe fn get_physical_device_surface_present_modes(
+    pub unsafe fn get_physical_device_surface_present_modes<
+        T: FromIterator<vk::PresentModeKHR> + DerefMut<Target = [vk::PresentModeKHR]>,
+    >(
         &self,
         physical_device: vk::PhysicalDevice,
         surface: vk::SurfaceKHR,
-    ) -> VkResult<Vec<vk::PresentModeKHR>> {
+    ) -> VkResult<T> {
         let mut count = 0;
         self.surface_fn
             .get_physical_device_surface_present_modes_khr(
@@ -63,7 +67,9 @@ impl Surface {
                 &mut count,
                 ptr::null_mut(),
             );
-        let mut v = Vec::with_capacity(count as usize);
+        let mut v: T = iter::repeat(mem::zeroed())
+            .take(count as usize)
+            .collect();
         let err_code = self
             .surface_fn
             .get_physical_device_surface_present_modes_khr(
@@ -72,7 +78,6 @@ impl Surface {
                 &mut count,
                 v.as_mut_ptr(),
             );
-        v.set_len(count as usize);
         match err_code {
             vk::Result::SUCCESS => Ok(v),
             _ => Err(err_code),
@@ -100,11 +105,13 @@ impl Surface {
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceSurfaceFormatsKHR.html>"]
-    pub unsafe fn get_physical_device_surface_formats(
+    pub unsafe fn get_physical_device_surface_formats<
+        T: FromIterator<vk::SurfaceFormatKHR> + DerefMut<Target = [vk::SurfaceFormatKHR]>,
+    >(
         &self,
         physical_device: vk::PhysicalDevice,
         surface: vk::SurfaceKHR,
-    ) -> VkResult<Vec<vk::SurfaceFormatKHR>> {
+    ) -> VkResult<T> {
         let mut count = 0;
         self.surface_fn.get_physical_device_surface_formats_khr(
             physical_device,
@@ -112,14 +119,15 @@ impl Surface {
             &mut count,
             ptr::null_mut(),
         );
-        let mut v = Vec::with_capacity(count as usize);
+        let mut v: T = iter::repeat(mem::zeroed())
+            .take(count as usize)
+            .collect();
         let err_code = self.surface_fn.get_physical_device_surface_formats_khr(
             physical_device,
             surface,
             &mut count,
             v.as_mut_ptr(),
         );
-        v.set_len(count as usize);
         match err_code {
             vk::Result::SUCCESS => Ok(v),
             _ => Err(err_code),

@@ -5,9 +5,10 @@ use crate::RawPtr;
 use shared_library::dynamic_library::DynamicLibrary;
 use std::error::Error;
 use std::fmt;
+use std::iter::{self, FromIterator};
 use std::mem;
-use std::os::raw::c_char;
-use std::os::raw::c_void;
+use std::ops::DerefMut;
+use std::os::raw::{c_char, c_void};
 use std::path::Path;
 use std::ptr;
 use std::sync::Arc;
@@ -84,17 +85,20 @@ pub trait EntryV1_0 {
     ) -> Result<Self::Instance, InstanceError>;
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkEnumerateInstanceLayerProperties.html>"]
-    fn enumerate_instance_layer_properties(&self) -> VkResult<Vec<vk::LayerProperties>> {
+    fn enumerate_instance_layer_properties<
+        T: FromIterator<vk::LayerProperties> + DerefMut<Target = [vk::LayerProperties]>,
+    >(&self) -> VkResult<T> {
         unsafe {
             let mut num = 0;
             self.fp_v1_0()
                 .enumerate_instance_layer_properties(&mut num, ptr::null_mut());
 
-            let mut v = Vec::with_capacity(num as usize);
+            let mut v: T = iter::repeat(mem::zeroed())
+                .take(num as usize)
+                .collect();
             let err_code = self
                 .fp_v1_0()
                 .enumerate_instance_layer_properties(&mut num, v.as_mut_ptr());
-            v.set_len(num as usize);
             match err_code {
                 vk::Result::SUCCESS => Ok(v),
                 _ => Err(err_code),
@@ -103,7 +107,9 @@ pub trait EntryV1_0 {
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkEnumerateInstanceExtensionProperties.html>"]
-    fn enumerate_instance_extension_properties(&self) -> VkResult<Vec<vk::ExtensionProperties>> {
+    fn enumerate_instance_extension_properties<
+        T: FromIterator<vk::ExtensionProperties> + DerefMut<Target = [vk::ExtensionProperties]>,
+    >(&self) -> VkResult<T> {
         unsafe {
             let mut num = 0;
             self.fp_v1_0().enumerate_instance_extension_properties(
@@ -111,13 +117,14 @@ pub trait EntryV1_0 {
                 &mut num,
                 ptr::null_mut(),
             );
-            let mut data = Vec::with_capacity(num as usize);
+            let mut data: T = iter::repeat(mem::zeroed())
+                .take(num as usize)
+                .collect();
             let err_code = self.fp_v1_0().enumerate_instance_extension_properties(
                 ptr::null(),
                 &mut num,
                 data.as_mut_ptr(),
             );
-            data.set_len(num as usize);
             match err_code {
                 vk::Result::SUCCESS => Ok(data),
                 _ => Err(err_code),

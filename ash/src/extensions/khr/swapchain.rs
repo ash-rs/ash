@@ -4,7 +4,9 @@ use crate::version::{DeviceV1_0, InstanceV1_0};
 use crate::vk;
 use crate::RawPtr;
 use std::ffi::CStr;
+use std::iter::{self, FromIterator};
 use std::mem;
+use std::ops::DerefMut;
 use std::ptr;
 
 #[derive(Clone)]
@@ -101,10 +103,12 @@ impl Swapchain {
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetSwapchainImagesKHR.html>"]
-    pub unsafe fn get_swapchain_images(
+    pub unsafe fn get_swapchain_images<
+        T: FromIterator<vk::Image> + DerefMut<Target = [vk::Image]>,
+    >(
         &self,
         swapchain: vk::SwapchainKHR,
-    ) -> VkResult<Vec<vk::Image>> {
+    ) -> VkResult<T> {
         let mut count = 0;
         self.swapchain_fn.get_swapchain_images_khr(
             self.handle,
@@ -113,14 +117,15 @@ impl Swapchain {
             ptr::null_mut(),
         );
 
-        let mut v = Vec::with_capacity(count as usize);
+        let mut v: T = iter::repeat(mem::zeroed())
+            .take(count as usize)
+            .collect();
         let err_code = self.swapchain_fn.get_swapchain_images_khr(
             self.handle,
             swapchain,
             &mut count,
             v.as_mut_ptr(),
         );
-        v.set_len(count as usize);
         match err_code {
             vk::Result::SUCCESS => Ok(v),
             _ => Err(err_code),

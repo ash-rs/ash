@@ -3,7 +3,9 @@ use crate::device::Device;
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
+use std::iter::{self, FromIterator};
 use std::mem;
+use std::ops::DerefMut;
 use std::os::raw::c_char;
 use std::ptr;
 
@@ -350,24 +352,27 @@ pub trait InstanceV1_0 {
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceQueueFamilyProperties.html>"]
-    unsafe fn get_physical_device_queue_family_properties(
+    unsafe fn get_physical_device_queue_family_properties<
+        T: FromIterator<vk::QueueFamilyProperties> + DerefMut<Target = [vk::QueueFamilyProperties]>,
+    >(
         &self,
         physical_device: vk::PhysicalDevice,
-    ) -> Vec<vk::QueueFamilyProperties> {
+    ) -> T {
         let mut queue_count = 0;
         self.fp_v1_0().get_physical_device_queue_family_properties(
             physical_device,
             &mut queue_count,
             ptr::null_mut(),
         );
-        let mut queue_families_vec = Vec::with_capacity(queue_count as usize);
+        let mut queue_families: T = iter::repeat(mem::zeroed())
+            .take(queue_count as usize)
+            .collect();
         self.fp_v1_0().get_physical_device_queue_family_properties(
             physical_device,
             &mut queue_count,
-            queue_families_vec.as_mut_ptr(),
+            queue_families.as_mut_ptr(),
         );
-        queue_families_vec.set_len(queue_count as usize);
-        queue_families_vec
+        queue_families
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceFeatures.html>"]
@@ -382,17 +387,20 @@ pub trait InstanceV1_0 {
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkEnumeratePhysicalDevices.html>"]
-    unsafe fn enumerate_physical_devices(&self) -> VkResult<Vec<vk::PhysicalDevice>> {
+    unsafe fn enumerate_physical_devices<
+        T: FromIterator<vk::PhysicalDevice> + DerefMut<Target = [vk::PhysicalDevice]>,
+    >(&self) -> VkResult<T> {
         let mut num = mem::zeroed();
         self.fp_v1_0()
             .enumerate_physical_devices(self.handle(), &mut num, ptr::null_mut());
-        let mut physical_devices = Vec::<vk::PhysicalDevice>::with_capacity(num as usize);
+        let mut physical_devices: T = iter::repeat(mem::zeroed())
+            .take(num as usize)
+            .collect();
         let err_code = self.fp_v1_0().enumerate_physical_devices(
             self.handle(),
             &mut num,
             physical_devices.as_mut_ptr(),
         );
-        physical_devices.set_len(num as usize);
         match err_code {
             vk::Result::SUCCESS => Ok(physical_devices),
             _ => Err(err_code),
@@ -400,10 +408,12 @@ pub trait InstanceV1_0 {
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkEnumerateDeviceExtensionProperties.html>"]
-    unsafe fn enumerate_device_extension_properties(
+    unsafe fn enumerate_device_extension_properties<
+        T: FromIterator<vk::ExtensionProperties> + DerefMut<Target = [vk::ExtensionProperties]>,
+    >(
         &self,
         device: vk::PhysicalDevice,
-    ) -> Result<Vec<vk::ExtensionProperties>, vk::Result> {
+    ) -> VkResult<T> {
         let mut num = 0;
         self.fp_v1_0().enumerate_device_extension_properties(
             device,
@@ -411,14 +421,15 @@ pub trait InstanceV1_0 {
             &mut num,
             ptr::null_mut(),
         );
-        let mut data = Vec::with_capacity(num as usize);
+        let mut data: T = iter::repeat(mem::zeroed())
+            .take(num as usize)
+            .collect();
         let err_code = self.fp_v1_0().enumerate_device_extension_properties(
             device,
             ptr::null(),
             &mut num,
             data.as_mut_ptr(),
         );
-        data.set_len(num as usize);
         match err_code {
             vk::Result::SUCCESS => Ok(data),
             _ => Err(err_code),

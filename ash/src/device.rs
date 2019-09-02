@@ -2,7 +2,9 @@
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
+use std::iter::{self, FromIterator};
 use std::mem;
+use std::ops::DerefMut;
 use std::os::raw::c_void;
 use std::ptr;
 
@@ -756,18 +758,20 @@ pub trait DeviceV1_0 {
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkAllocateDescriptorSets.html>"]
-    unsafe fn allocate_descriptor_sets(
+    unsafe fn allocate_descriptor_sets<
+        T: FromIterator<vk::DescriptorSet> + DerefMut<Target = [vk::DescriptorSet]>,
+    >(
         &self,
         create_info: &vk::DescriptorSetAllocateInfo,
-    ) -> VkResult<Vec<vk::DescriptorSet>> {
-        let mut desc_set = Vec::with_capacity(create_info.descriptor_set_count as usize);
+    ) -> VkResult<T> {
+        let mut desc_set: T = iter::repeat(mem::zeroed())
+            .take(create_info.descriptor_set_count as usize)
+            .collect();
         let err_code = self.fp_v1_0().allocate_descriptor_sets(
             self.handle(),
             create_info,
             desc_set.as_mut_ptr(),
         );
-
-        desc_set.set_len(create_info.descriptor_set_count as usize);
         match err_code {
             vk::Result::SUCCESS => Ok(desc_set),
             _ => Err(err_code),
@@ -1370,13 +1374,17 @@ pub trait DeviceV1_0 {
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateGraphicsPipelines.html>"]
-    unsafe fn create_graphics_pipelines(
+    unsafe fn create_graphics_pipelines<
+        T: FromIterator<vk::Pipeline> + DerefMut<Target = [vk::Pipeline]>,
+    >(
         &self,
         pipeline_cache: vk::PipelineCache,
         create_infos: &[vk::GraphicsPipelineCreateInfo],
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
-    ) -> Result<Vec<vk::Pipeline>, (Vec<vk::Pipeline>, vk::Result)> {
-        let mut pipelines = Vec::with_capacity(create_infos.len());
+    ) -> Result<T, (T, vk::Result)> {
+        let mut pipelines: T = iter::repeat(mem::zeroed())
+            .take(create_infos.len())
+            .collect();
         let err_code = self.fp_v1_0().create_graphics_pipelines(
             self.handle(),
             pipeline_cache,
@@ -1385,7 +1393,6 @@ pub trait DeviceV1_0 {
             allocation_callbacks.as_raw_ptr(),
             pipelines.as_mut_ptr(),
         );
-        pipelines.set_len(create_infos.len());
         match err_code {
             vk::Result::SUCCESS => Ok(pipelines),
             _ => Err((pipelines, err_code)),
@@ -1393,13 +1400,17 @@ pub trait DeviceV1_0 {
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateComputePipelines.html>"]
-    unsafe fn create_compute_pipelines(
+    unsafe fn create_compute_pipelines<
+        T: FromIterator<vk::Pipeline> + DerefMut<Target = [vk::Pipeline]>,
+    >(
         &self,
         pipeline_cache: vk::PipelineCache,
         create_infos: &[vk::ComputePipelineCreateInfo],
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
-    ) -> Result<Vec<vk::Pipeline>, (Vec<vk::Pipeline>, vk::Result)> {
-        let mut pipelines = Vec::with_capacity(create_infos.len());
+    ) -> Result<T, (T, vk::Result)> {
+        let mut pipelines: T = iter::repeat(mem::zeroed())
+            .take(create_infos.len())
+            .collect();
         let err_code = self.fp_v1_0().create_compute_pipelines(
             self.handle(),
             pipeline_cache,
@@ -1408,7 +1419,6 @@ pub trait DeviceV1_0 {
             allocation_callbacks.as_raw_ptr(),
             pipelines.as_mut_ptr(),
         );
-        pipelines.set_len(create_infos.len());
         match err_code {
             vk::Result::SUCCESS => Ok(pipelines),
             _ => Err((pipelines, err_code)),
@@ -1474,10 +1484,12 @@ pub trait DeviceV1_0 {
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPipelineCacheData.html>"]
-    unsafe fn get_pipeline_cache_data(
+    unsafe fn get_pipeline_cache_data<
+        T: FromIterator<u8> + DerefMut<Target = [u8]>,
+    >(
         &self,
         pipeline_cache: vk::PipelineCache,
-    ) -> VkResult<Vec<u8>> {
+    ) -> VkResult<T> {
         let mut data_size: usize = 0;
         let err_code = self.fp_v1_0().get_pipeline_cache_data(
             self.handle(),
@@ -1488,14 +1500,13 @@ pub trait DeviceV1_0 {
         if err_code != vk::Result::SUCCESS {
             return Err(err_code);
         };
-        let mut data: Vec<u8> = Vec::with_capacity(data_size);
+        let mut data: T = iter::repeat(0).take(data_size).collect();
         let err_code = self.fp_v1_0().get_pipeline_cache_data(
             self.handle(),
             pipeline_cache,
             &mut data_size,
             data.as_mut_ptr() as _,
         );
-        data.set_len(data_size);
         match err_code {
             vk::Result::SUCCESS => Ok(data),
             _ => Err(err_code),
@@ -1755,17 +1766,20 @@ pub trait DeviceV1_0 {
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkAllocateCommandBuffers.html>"]
-    unsafe fn allocate_command_buffers(
+    unsafe fn allocate_command_buffers<
+        T: FromIterator<vk::CommandBuffer> + DerefMut<Target = [vk::CommandBuffer]>,
+    >(
         &self,
         create_info: &vk::CommandBufferAllocateInfo,
-    ) -> VkResult<Vec<vk::CommandBuffer>> {
-        let mut buffers = Vec::with_capacity(create_info.command_buffer_count as usize);
+    ) -> VkResult<T> {
+        let mut buffers: T = iter::repeat(mem::zeroed())
+            .take(create_info.command_buffer_count as usize)
+            .collect();
         let err_code = self.fp_v1_0().allocate_command_buffers(
             self.handle(),
             create_info,
             buffers.as_mut_ptr(),
         );
-        buffers.set_len(create_info.command_buffer_count as usize);
         match err_code {
             vk::Result::SUCCESS => Ok(buffers),
             _ => Err(err_code),

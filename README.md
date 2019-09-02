@@ -36,12 +36,15 @@ let instance = entry.create_instance(&create_info, None)
 ### `Vec<T>` instead of mutable slices
 
 ```Rust
-pub fn get_swapchain_images(&self,
-                            swapchain: vk::SwapchainKHR)
-                            -> VkResult<Vec<vk::Image>>;
-let present_images = swapchain_loader.get_swapchain_images_khr(swapchain).unwrap();
+pub fn get_swapchain_images<
+    T: FromIterator<vk::Image> + DerefMut<Target = [vk::Image]>,
+>(
+    &self,
+    swapchain: vk::SwapchainKHR,
+) -> VkResult<T>;
+let present_images: Vec<T> = swapchain_loader.get_swapchain_images_khr(swapchain).unwrap();
 ```
-*Note*: Functions don't return `Vec<T>` if this would limit the functionality. See `p_next`.
+*Note*: Functions don't return `FromIterator<T> + DerefMut<[T]>` if this would limit the functionality. See `p_next`.
 
 ### Slices
 ```Rust

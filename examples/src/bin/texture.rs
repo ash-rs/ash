@@ -508,7 +508,7 @@ fn main() {
         let desc_alloc_info = vk::DescriptorSetAllocateInfo::builder()
             .descriptor_pool(descriptor_pool)
             .set_layouts(&desc_set_layouts);
-        let descriptor_sets = base
+        let descriptor_sets: Vec<_> = base
             .device
             .allocate_descriptor_sets(&desc_alloc_info)
             .unwrap();
@@ -547,11 +547,11 @@ fn main() {
         let mut vertex_spv_file = Cursor::new(&include_bytes!("../../shader/texture/vert.spv")[..]);
         let mut frag_spv_file = Cursor::new(&include_bytes!("../../shader/texture/frag.spv")[..]);
 
-        let vertex_code =
+        let vertex_code: Vec<_> =
             read_spv(&mut vertex_spv_file).expect("Failed to read vertex shader spv file");
         let vertex_shader_info = vk::ShaderModuleCreateInfo::builder().code(&vertex_code);
 
-        let frag_code =
+        let frag_code: Vec<_> =
             read_spv(&mut frag_spv_file).expect("Failed to read fragment shader spv file");
         let frag_shader_info = vk::ShaderModuleCreateInfo::builder().code(&frag_code);
 
@@ -689,7 +689,7 @@ fn main() {
             .layout(pipeline_layout)
             .render_pass(renderpass);
 
-        let graphics_pipelines = base
+        let graphics_pipelines: Vec<_> = base
             .device
             .create_graphics_pipelines(
                 vk::PipelineCache::null(),
