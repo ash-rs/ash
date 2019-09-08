@@ -83,7 +83,7 @@ named!(inverse_number<&str, (CType, String)>,
 );
 
 named!(cfloat<&str, f32>,
-    terminated!(nom::float_s, char!('f'))
+    terminated!(nom::float, char!('f'))
 );
 
 fn khronos_link<S: Display>(name: &S) -> Literal {
@@ -847,7 +847,6 @@ fn generate_function_pointers<'a>(
             }
         }
         impl #ident {
-            #[allow(clippy::cognitive_complexity)]
             pub fn load<F>(mut _f: F) -> Self
                 where F: FnMut(&::std::ffi::CStr) -> *const c_void
             {
@@ -2262,7 +2261,7 @@ pub fn write_source_code(path: &Path) {
     let version_macros = vk_version_macros();
     let platform_specific_types = platform_specific_types();
     let source_code = quote! {
-        #![allow(clippy::too_many_arguments)]
+        #![allow(clippy::too_many_arguments, clippy::cognitive_complexity)]
         use std::fmt;
         use std::os::raw::*;
         /// Iterates through the pointer chain. Includes the item that is passed into the function.

@@ -1,4 +1,4 @@
-#![allow(clippy::too_many_arguments)]
+#![allow(clippy::too_many_arguments, clippy::cognitive_complexity)]
 use std::fmt;
 use std::os::raw::*;
 #[doc = r" Iterates through the pointer chain. Includes the item that is passed into the function."]
@@ -263,7 +263,6 @@ impl ::std::clone::Clone for StaticFn {
     }
 }
 impl StaticFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -342,7 +341,6 @@ impl ::std::clone::Clone for EntryFnV1_0 {
     }
 }
 impl EntryFnV1_0 {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -607,7 +605,6 @@ impl ::std::clone::Clone for InstanceFnV1_0 {
     }
 }
 impl InstanceFnV1_0 {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -2611,7 +2608,6 @@ impl ::std::clone::Clone for DeviceFnV1_0 {
     }
 }
 impl DeviceFnV1_0 {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -6216,7 +6212,6 @@ impl ::std::clone::Clone for EntryFnV1_1 {
     }
 }
 impl EntryFnV1_1 {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -6390,7 +6385,6 @@ impl ::std::clone::Clone for InstanceFnV1_1 {
     }
 }
 impl InstanceFnV1_1 {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -6960,7 +6954,6 @@ impl ::std::clone::Clone for DeviceFnV1_1 {
     }
 }
 impl DeviceFnV1_1 {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -44384,7 +44377,6 @@ impl ::std::clone::Clone for KhrSurfaceFn {
     }
 }
 impl KhrSurfaceFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -44704,7 +44696,6 @@ impl ::std::clone::Clone for KhrSwapchainFn {
     }
 }
 impl KhrSwapchainFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -45159,7 +45150,6 @@ impl ::std::clone::Clone for KhrDisplayFn {
     }
 }
 impl KhrDisplayFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -45455,7 +45445,6 @@ impl ::std::clone::Clone for KhrDisplaySwapchainFn {
     }
 }
 impl KhrDisplaySwapchainFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -45557,7 +45546,6 @@ impl ::std::clone::Clone for KhrXlibSurfaceFn {
     }
 }
 impl KhrXlibSurfaceFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -45683,7 +45671,6 @@ impl ::std::clone::Clone for KhrXcbSurfaceFn {
     }
 }
 impl KhrXcbSurfaceFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -45807,7 +45794,6 @@ impl ::std::clone::Clone for KhrWaylandSurfaceFn {
     }
 }
 impl KhrWaylandSurfaceFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -45899,7 +45885,6 @@ impl ::std::clone::Clone for KhrMirSurfaceFn {
     }
 }
 impl KhrMirSurfaceFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -45938,7 +45923,6 @@ impl ::std::clone::Clone for KhrAndroidSurfaceFn {
     }
 }
 impl KhrAndroidSurfaceFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -46020,7 +46004,6 @@ impl ::std::clone::Clone for KhrWin32SurfaceFn {
     }
 }
 impl KhrWin32SurfaceFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -46157,7 +46140,6 @@ impl ::std::clone::Clone for AndroidNativeBufferFn {
     }
 }
 impl AndroidNativeBufferFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -46338,7 +46320,6 @@ impl ::std::clone::Clone for ExtDebugReportFn {
     }
 }
 impl ExtDebugReportFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -46490,7 +46471,6 @@ impl ::std::clone::Clone for NvGlslShaderFn {
     }
 }
 impl NvGlslShaderFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -46517,7 +46497,6 @@ impl ::std::clone::Clone for ExtDepthRangeUnrestrictedFn {
     }
 }
 impl ExtDepthRangeUnrestrictedFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -46540,7 +46519,6 @@ impl ::std::clone::Clone for KhrSamplerMirrorClampToEdgeFn {
     }
 }
 impl KhrSamplerMirrorClampToEdgeFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -46563,7 +46541,6 @@ impl ::std::clone::Clone for ImgFilterCubicFn {
     }
 }
 impl ImgFilterCubicFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -46594,7 +46571,6 @@ impl ::std::clone::Clone for AmdExtension17Fn {
     }
 }
 impl AmdExtension17Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -46617,7 +46593,6 @@ impl ::std::clone::Clone for AmdExtension18Fn {
     }
 }
 impl AmdExtension18Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -46640,7 +46615,6 @@ impl ::std::clone::Clone for AmdRasterizationOrderFn {
     }
 }
 impl AmdRasterizationOrderFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -46668,7 +46642,6 @@ impl ::std::clone::Clone for AmdExtension20Fn {
     }
 }
 impl AmdExtension20Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -46691,7 +46664,6 @@ impl ::std::clone::Clone for AmdShaderTrinaryMinmaxFn {
     }
 }
 impl AmdShaderTrinaryMinmaxFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -46714,7 +46686,6 @@ impl ::std::clone::Clone for AmdShaderExplicitVertexParameterFn {
     }
 }
 impl AmdShaderExplicitVertexParameterFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -46779,7 +46750,6 @@ impl ::std::clone::Clone for ExtDebugMarkerFn {
     }
 }
 impl ExtDebugMarkerFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -46945,7 +46915,6 @@ impl ::std::clone::Clone for AmdExtension24Fn {
     }
 }
 impl AmdExtension24Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -47016,7 +46985,6 @@ impl ::std::clone::Clone for AmdExtension25Fn {
     }
 }
 impl AmdExtension25Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -47087,7 +47055,6 @@ impl ::std::clone::Clone for AmdGcnShaderFn {
     }
 }
 impl AmdGcnShaderFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -47110,7 +47077,6 @@ impl ::std::clone::Clone for NvDedicatedAllocationFn {
     }
 }
 impl NvDedicatedAllocationFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -47145,7 +47111,6 @@ impl ::std::clone::Clone for ExtExtension28Fn {
     }
 }
 impl ExtExtension28Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -47270,7 +47235,6 @@ impl ::std::clone::Clone for ExtTransformFeedbackFn {
     }
 }
 impl ExtTransformFeedbackFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -47567,7 +47531,6 @@ impl ::std::clone::Clone for NvxExtension30Fn {
     }
 }
 impl NvxExtension30Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -47590,7 +47553,6 @@ impl ::std::clone::Clone for NvxExtension31Fn {
     }
 }
 impl NvxExtension31Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -47613,7 +47575,6 @@ impl ::std::clone::Clone for AmdExtension32Fn {
     }
 }
 impl AmdExtension32Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -47636,7 +47597,6 @@ impl ::std::clone::Clone for AmdExtension33Fn {
     }
 }
 impl AmdExtension33Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -47701,7 +47661,6 @@ impl ::std::clone::Clone for AmdDrawIndirectCountFn {
     }
 }
 impl AmdDrawIndirectCountFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -47815,7 +47774,6 @@ impl ::std::clone::Clone for AmdExtension35Fn {
     }
 }
 impl AmdExtension35Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -47838,7 +47796,6 @@ impl ::std::clone::Clone for AmdNegativeViewportHeightFn {
     }
 }
 impl AmdNegativeViewportHeightFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -47861,7 +47818,6 @@ impl ::std::clone::Clone for AmdGpuShaderHalfFloatFn {
     }
 }
 impl AmdGpuShaderHalfFloatFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -47884,7 +47840,6 @@ impl ::std::clone::Clone for AmdShaderBallotFn {
     }
 }
 impl AmdShaderBallotFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -47907,7 +47862,6 @@ impl ::std::clone::Clone for AmdExtension39Fn {
     }
 }
 impl AmdExtension39Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -47930,7 +47884,6 @@ impl ::std::clone::Clone for AmdExtension40Fn {
     }
 }
 impl AmdExtension40Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -47953,7 +47906,6 @@ impl ::std::clone::Clone for AmdExtension41Fn {
     }
 }
 impl AmdExtension41Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -47976,7 +47928,6 @@ impl ::std::clone::Clone for AmdTextureGatherBiasLodFn {
     }
 }
 impl AmdTextureGatherBiasLodFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -48023,7 +47974,6 @@ impl ::std::clone::Clone for AmdShaderInfoFn {
     }
 }
 impl AmdShaderInfoFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -48086,7 +48036,6 @@ impl ::std::clone::Clone for AmdExtension44Fn {
     }
 }
 impl AmdExtension44Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -48109,7 +48058,6 @@ impl ::std::clone::Clone for AmdExtension45Fn {
     }
 }
 impl AmdExtension45Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -48132,7 +48080,6 @@ impl ::std::clone::Clone for AmdExtension46Fn {
     }
 }
 impl AmdExtension46Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -48155,7 +48102,6 @@ impl ::std::clone::Clone for AmdShaderImageLoadStoreLodFn {
     }
 }
 impl AmdShaderImageLoadStoreLodFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -48178,7 +48124,6 @@ impl ::std::clone::Clone for NvxExtension48Fn {
     }
 }
 impl NvxExtension48Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -48201,7 +48146,6 @@ impl ::std::clone::Clone for GoogleExtension49Fn {
     }
 }
 impl GoogleExtension49Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -48224,7 +48168,6 @@ impl ::std::clone::Clone for GoogleExtension50Fn {
     }
 }
 impl GoogleExtension50Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -48247,7 +48190,6 @@ impl ::std::clone::Clone for NvCornerSampledImageFn {
     }
 }
 impl NvCornerSampledImageFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -48278,7 +48220,6 @@ impl ::std::clone::Clone for NvxExtension52Fn {
     }
 }
 impl NvxExtension52Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -48301,7 +48242,6 @@ impl ::std::clone::Clone for NvExtension53Fn {
     }
 }
 impl NvExtension53Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -48324,7 +48264,6 @@ impl ::std::clone::Clone for KhrMultiviewFn {
     }
 }
 impl KhrMultiviewFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -48347,7 +48286,6 @@ impl ::std::clone::Clone for ImgFormatPvrtcFn {
     }
 }
 impl ImgFormatPvrtcFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -48427,7 +48365,6 @@ impl ::std::clone::Clone for NvExternalMemoryCapabilitiesFn {
     }
 }
 impl NvExternalMemoryCapabilitiesFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -48499,7 +48436,6 @@ impl ::std::clone::Clone for NvExternalMemoryFn {
     }
 }
 impl NvExternalMemoryFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -48546,7 +48482,6 @@ impl ::std::clone::Clone for NvExternalMemoryWin32Fn {
     }
 }
 impl NvExternalMemoryWin32Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -48609,7 +48544,6 @@ impl ::std::clone::Clone for NvWin32KeyedMutexFn {
     }
 }
 impl NvWin32KeyedMutexFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -48636,7 +48570,6 @@ impl ::std::clone::Clone for KhrGetPhysicalDeviceProperties2Fn {
     }
 }
 impl KhrGetPhysicalDeviceProperties2Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -48688,7 +48621,6 @@ impl ::std::clone::Clone for KhrDeviceGroupFn {
     }
 }
 impl KhrDeviceGroupFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -48836,7 +48768,6 @@ impl ::std::clone::Clone for ExtValidationFlagsFn {
     }
 }
 impl ExtValidationFlagsFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -48879,7 +48810,6 @@ impl ::std::clone::Clone for NnViSurfaceFn {
     }
 }
 impl NnViSurfaceFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -48935,7 +48865,6 @@ impl ::std::clone::Clone for KhrShaderDrawParametersFn {
     }
 }
 impl KhrShaderDrawParametersFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -48958,7 +48887,6 @@ impl ::std::clone::Clone for ExtShaderSubgroupBallotFn {
     }
 }
 impl ExtShaderSubgroupBallotFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -48981,7 +48909,6 @@ impl ::std::clone::Clone for ExtShaderSubgroupVoteFn {
     }
 }
 impl ExtShaderSubgroupVoteFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -49004,7 +48931,6 @@ impl ::std::clone::Clone for ArmExtension01Fn {
     }
 }
 impl ArmExtension01Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -49027,7 +48953,6 @@ impl ::std::clone::Clone for ExtAstcDecodeModeFn {
     }
 }
 impl ExtAstcDecodeModeFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -49058,7 +48983,6 @@ impl ::std::clone::Clone for ImgExtension69Fn {
     }
 }
 impl ImgExtension69Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -49081,7 +49005,6 @@ impl ::std::clone::Clone for KhrMaintenance1Fn {
     }
 }
 impl KhrMaintenance1Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -49104,7 +49027,6 @@ impl ::std::clone::Clone for KhrDeviceGroupCreationFn {
     }
 }
 impl KhrDeviceGroupCreationFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -49127,7 +49049,6 @@ impl ::std::clone::Clone for KhrExternalMemoryCapabilitiesFn {
     }
 }
 impl KhrExternalMemoryCapabilitiesFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -49150,7 +49071,6 @@ impl ::std::clone::Clone for KhrExternalMemoryFn {
     }
 }
 impl KhrExternalMemoryFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -49201,7 +49121,6 @@ impl ::std::clone::Clone for KhrExternalMemoryWin32Fn {
     }
 }
 impl KhrExternalMemoryWin32Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -49334,7 +49253,6 @@ impl ::std::clone::Clone for KhrExternalMemoryFdFn {
     }
 }
 impl KhrExternalMemoryFdFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -49427,7 +49345,6 @@ impl ::std::clone::Clone for KhrWin32KeyedMutexFn {
     }
 }
 impl KhrWin32KeyedMutexFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -49454,7 +49371,6 @@ impl ::std::clone::Clone for KhrExternalSemaphoreCapabilitiesFn {
     }
 }
 impl KhrExternalSemaphoreCapabilitiesFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -49477,7 +49393,6 @@ impl ::std::clone::Clone for KhrExternalSemaphoreFn {
     }
 }
 impl KhrExternalSemaphoreFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -49524,7 +49439,6 @@ impl ::std::clone::Clone for KhrExternalSemaphoreWin32Fn {
     }
 }
 impl KhrExternalSemaphoreWin32Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -49644,7 +49558,6 @@ impl ::std::clone::Clone for KhrExternalSemaphoreFdFn {
     }
 }
 impl KhrExternalSemaphoreFdFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -49766,7 +49679,6 @@ impl ::std::clone::Clone for KhrPushDescriptorFn {
     }
 }
 impl KhrPushDescriptorFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -49897,7 +49809,6 @@ impl ::std::clone::Clone for ExtConditionalRenderingFn {
     }
 }
 impl ExtConditionalRenderingFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -49999,7 +49910,6 @@ impl ::std::clone::Clone for KhrShaderFloat16Int8Fn {
     }
 }
 impl KhrShaderFloat16Int8Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -50026,7 +49936,6 @@ impl ::std::clone::Clone for Khr16bitStorageFn {
     }
 }
 impl Khr16bitStorageFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -50049,7 +49958,6 @@ impl ::std::clone::Clone for KhrIncrementalPresentFn {
     }
 }
 impl KhrIncrementalPresentFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -50087,7 +49995,6 @@ impl ::std::clone::Clone for KhrDescriptorUpdateTemplateFn {
     }
 }
 impl KhrDescriptorUpdateTemplateFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -50269,7 +50176,6 @@ impl ::std::clone::Clone for NvxDeviceGeneratedCommandsFn {
     }
 }
 impl NvxDeviceGeneratedCommandsFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -50640,7 +50546,6 @@ impl ::std::clone::Clone for NvClipSpaceWScalingFn {
     }
 }
 impl NvClipSpaceWScalingFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -50716,7 +50621,6 @@ impl ::std::clone::Clone for ExtDirectModeDisplayFn {
     }
 }
 impl ExtDirectModeDisplayFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -50792,7 +50696,6 @@ impl ::std::clone::Clone for ExtAcquireXlibDisplayFn {
     }
 }
 impl ExtAcquireXlibDisplayFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -50891,7 +50794,6 @@ impl ::std::clone::Clone for ExtDisplaySurfaceCounterFn {
     }
 }
 impl ExtDisplaySurfaceCounterFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -51010,7 +50912,6 @@ impl ::std::clone::Clone for ExtDisplayControlFn {
     }
 }
 impl ExtDisplayControlFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -51208,7 +51109,6 @@ impl ::std::clone::Clone for GoogleDisplayTimingFn {
     }
 }
 impl GoogleDisplayTimingFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -51301,7 +51201,6 @@ impl ::std::clone::Clone for NvSampleMaskOverrideCoverageFn {
     }
 }
 impl NvSampleMaskOverrideCoverageFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -51324,7 +51223,6 @@ impl ::std::clone::Clone for NvGeometryShaderPassthroughFn {
     }
 }
 impl NvGeometryShaderPassthroughFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -51347,7 +51245,6 @@ impl ::std::clone::Clone for NvViewportArray2Fn {
     }
 }
 impl NvViewportArray2Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -51370,7 +51267,6 @@ impl ::std::clone::Clone for NvxMultiviewPerViewAttributesFn {
     }
 }
 impl NvxMultiviewPerViewAttributesFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -51406,7 +51302,6 @@ impl ::std::clone::Clone for NvViewportSwizzleFn {
     }
 }
 impl NvViewportSwizzleFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -51449,7 +51344,6 @@ impl ::std::clone::Clone for ExtDiscardRectanglesFn {
     }
 }
 impl ExtDiscardRectanglesFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -51521,7 +51415,6 @@ impl ::std::clone::Clone for NvExtension101Fn {
     }
 }
 impl NvExtension101Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -51544,7 +51437,6 @@ impl ::std::clone::Clone for ExtConservativeRasterizationFn {
     }
 }
 impl ExtConservativeRasterizationFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -51577,7 +51469,6 @@ impl ::std::clone::Clone for NvExtension103Fn {
     }
 }
 impl NvExtension103Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -51600,7 +51491,6 @@ impl ::std::clone::Clone for NvExtension104Fn {
     }
 }
 impl NvExtension104Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -51623,7 +51513,6 @@ impl ::std::clone::Clone for ExtSwapchainColorspaceFn {
     }
 }
 impl ExtSwapchainColorspaceFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -51718,7 +51607,6 @@ impl ::std::clone::Clone for ExtHdrMetadataFn {
     }
 }
 impl ExtHdrMetadataFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -51774,7 +51662,6 @@ impl ::std::clone::Clone for ImgExtension107Fn {
     }
 }
 impl ImgExtension107Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -51797,7 +51684,6 @@ impl ::std::clone::Clone for ImgExtension108Fn {
     }
 }
 impl ImgExtension108Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -51820,7 +51706,6 @@ impl ::std::clone::Clone for ImgExtension109Fn {
     }
 }
 impl ImgExtension109Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -51893,7 +51778,6 @@ impl ::std::clone::Clone for KhrCreateRenderpass2Fn {
     }
 }
 impl KhrCreateRenderpass2Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -52061,7 +51945,6 @@ impl ::std::clone::Clone for ImgExtension111Fn {
     }
 }
 impl ImgExtension111Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -52092,7 +51975,6 @@ impl ::std::clone::Clone for KhrSharedPresentableImageFn {
     }
 }
 impl KhrSharedPresentableImageFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -52159,7 +52041,6 @@ impl ::std::clone::Clone for KhrExternalFenceCapabilitiesFn {
     }
 }
 impl KhrExternalFenceCapabilitiesFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -52182,7 +52063,6 @@ impl ::std::clone::Clone for KhrExternalFenceFn {
     }
 }
 impl KhrExternalFenceFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -52229,7 +52109,6 @@ impl ::std::clone::Clone for KhrExternalFenceWin32Fn {
     }
 }
 impl KhrExternalFenceWin32Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -52345,7 +52224,6 @@ impl ::std::clone::Clone for KhrExternalFenceFdFn {
     }
 }
 impl KhrExternalFenceFdFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -52427,7 +52305,6 @@ impl ::std::clone::Clone for KhrExtension117Fn {
     }
 }
 impl KhrExtension117Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -52450,7 +52327,6 @@ impl ::std::clone::Clone for KhrMaintenance2Fn {
     }
 }
 impl KhrMaintenance2Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -52473,7 +52349,6 @@ impl ::std::clone::Clone for KhrExtension119Fn {
     }
 }
 impl KhrExtension119Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -52525,7 +52400,6 @@ impl ::std::clone::Clone for KhrGetSurfaceCapabilities2Fn {
     }
 }
 impl KhrGetSurfaceCapabilities2Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -52630,7 +52504,6 @@ impl ::std::clone::Clone for KhrVariablePointersFn {
     }
 }
 impl KhrVariablePointersFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -52707,7 +52580,6 @@ impl ::std::clone::Clone for KhrGetDisplayProperties2Fn {
     }
 }
 impl KhrGetDisplayProperties2Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -52902,7 +52774,6 @@ impl ::std::clone::Clone for MvkIosSurfaceFn {
     }
 }
 impl MvkIosSurfaceFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -52977,7 +52848,6 @@ impl ::std::clone::Clone for MvkMacosSurfaceFn {
     }
 }
 impl MvkMacosSurfaceFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -53035,7 +52905,6 @@ impl ::std::clone::Clone for MvkMoltenvkFn {
     }
 }
 impl MvkMoltenvkFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -53058,7 +52927,6 @@ impl ::std::clone::Clone for ExtExternalMemoryDmaBufFn {
     }
 }
 impl ExtExternalMemoryDmaBufFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -53086,7 +52954,6 @@ impl ::std::clone::Clone for ExtQueueFamilyForeignFn {
     }
 }
 impl ExtQueueFamilyForeignFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -53109,7 +52976,6 @@ impl ::std::clone::Clone for KhrDedicatedAllocationFn {
     }
 }
 impl KhrDedicatedAllocationFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -53229,7 +53095,6 @@ impl ::std::clone::Clone for ExtDebugUtilsFn {
     }
 }
 impl ExtDebugUtilsFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -53607,7 +53472,6 @@ impl ::std::clone::Clone for AndroidExternalMemoryAndroidHardwareBufferFn {
     }
 }
 impl AndroidExternalMemoryAndroidHardwareBufferFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -53719,7 +53583,6 @@ impl ::std::clone::Clone for ExtSamplerFilterMinmaxFn {
     }
 }
 impl ExtSamplerFilterMinmaxFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -53755,7 +53618,6 @@ impl ::std::clone::Clone for KhrStorageBufferStorageClassFn {
     }
 }
 impl KhrStorageBufferStorageClassFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -53778,7 +53640,6 @@ impl ::std::clone::Clone for AmdGpuShaderInt16Fn {
     }
 }
 impl AmdGpuShaderInt16Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -53801,7 +53662,6 @@ impl ::std::clone::Clone for AmdExtension134Fn {
     }
 }
 impl AmdExtension134Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -53824,7 +53684,6 @@ impl ::std::clone::Clone for AmdExtension135Fn {
     }
 }
 impl AmdExtension135Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -53847,7 +53706,6 @@ impl ::std::clone::Clone for AmdExtension136Fn {
     }
 }
 impl AmdExtension136Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -53870,7 +53728,6 @@ impl ::std::clone::Clone for AmdMixedAttachmentSamplesFn {
     }
 }
 impl AmdMixedAttachmentSamplesFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -53893,7 +53750,6 @@ impl ::std::clone::Clone for AmdShaderFragmentMaskFn {
     }
 }
 impl AmdShaderFragmentMaskFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -53916,7 +53772,6 @@ impl ::std::clone::Clone for ExtInlineUniformBlockFn {
     }
 }
 impl ExtInlineUniformBlockFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -53962,7 +53817,6 @@ impl ::std::clone::Clone for AmdExtension140Fn {
     }
 }
 impl AmdExtension140Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -53985,7 +53839,6 @@ impl ::std::clone::Clone for ExtShaderStencilExportFn {
     }
 }
 impl ExtShaderStencilExportFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -54008,7 +53861,6 @@ impl ::std::clone::Clone for AmdExtension142Fn {
     }
 }
 impl AmdExtension142Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -54031,7 +53883,6 @@ impl ::std::clone::Clone for AmdExtension143Fn {
     }
 }
 impl AmdExtension143Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -54079,7 +53930,6 @@ impl ::std::clone::Clone for ExtSampleLocationsFn {
     }
 }
 impl ExtSampleLocationsFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -54191,7 +54041,6 @@ impl ::std::clone::Clone for KhrRelaxedBlockLayoutFn {
     }
 }
 impl KhrRelaxedBlockLayoutFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -54214,7 +54063,6 @@ impl ::std::clone::Clone for KhrGetMemoryRequirements2Fn {
     }
 }
 impl KhrGetMemoryRequirements2Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -54237,7 +54085,6 @@ impl ::std::clone::Clone for KhrImageFormatListFn {
     }
 }
 impl KhrImageFormatListFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -54264,7 +54111,6 @@ impl ::std::clone::Clone for ExtBlendOperationAdvancedFn {
     }
 }
 impl ExtBlendOperationAdvancedFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -54490,7 +54336,6 @@ impl ::std::clone::Clone for NvFragmentCoverageToColorFn {
     }
 }
 impl NvFragmentCoverageToColorFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -54517,7 +54362,6 @@ impl ::std::clone::Clone for NvExtension151Fn {
     }
 }
 impl NvExtension151Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -54540,7 +54384,6 @@ impl ::std::clone::Clone for NvExtension152Fn {
     }
 }
 impl NvExtension152Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -54563,7 +54406,6 @@ impl ::std::clone::Clone for NvFramebufferMixedSamplesFn {
     }
 }
 impl NvFramebufferMixedSamplesFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -54591,7 +54433,6 @@ impl ::std::clone::Clone for NvFillRectangleFn {
     }
 }
 impl NvFillRectangleFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -54618,7 +54459,6 @@ impl ::std::clone::Clone for NvExtension155Fn {
     }
 }
 impl NvExtension155Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -54641,7 +54481,6 @@ impl ::std::clone::Clone for ExtPostDepthCoverageFn {
     }
 }
 impl ExtPostDepthCoverageFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -54664,7 +54503,6 @@ impl ::std::clone::Clone for KhrSamplerYcbcrConversionFn {
     }
 }
 impl KhrSamplerYcbcrConversionFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -54687,7 +54525,6 @@ impl ::std::clone::Clone for KhrBindMemory2Fn {
     }
 }
 impl KhrBindMemory2Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -54725,7 +54562,6 @@ impl ::std::clone::Clone for ExtImageDrmFormatModifierFn {
     }
 }
 impl ExtImageDrmFormatModifierFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -54828,7 +54664,6 @@ impl ::std::clone::Clone for ExtExtension160Fn {
     }
 }
 impl ExtExtension160Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -54907,7 +54742,6 @@ impl ::std::clone::Clone for ExtValidationCacheFn {
     }
 }
 impl ExtValidationCacheFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -55065,7 +54899,6 @@ impl ::std::clone::Clone for ExtDescriptorIndexingFn {
     }
 }
 impl ExtDescriptorIndexingFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -55124,7 +54957,6 @@ impl ::std::clone::Clone for ExtShaderViewportIndexLayerFn {
     }
 }
 impl ExtShaderViewportIndexLayerFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -55147,7 +54979,6 @@ impl ::std::clone::Clone for NvExtension164Fn {
     }
 }
 impl NvExtension164Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -55212,7 +55043,6 @@ impl ::std::clone::Clone for NvShadingRateImageFn {
     }
 }
 impl NvShadingRateImageFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -55581,7 +55411,6 @@ impl ::std::clone::Clone for NvRayTracingFn {
     }
 }
 impl NvRayTracingFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -56186,7 +56015,6 @@ impl ::std::clone::Clone for NvRepresentativeFragmentTestFn {
     }
 }
 impl NvRepresentativeFragmentTestFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -56219,7 +56047,6 @@ impl ::std::clone::Clone for NvExtension168Fn {
     }
 }
 impl NvExtension168Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -56242,7 +56069,6 @@ impl ::std::clone::Clone for KhrMaintenance3Fn {
     }
 }
 impl KhrMaintenance3Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -56307,7 +56133,6 @@ impl ::std::clone::Clone for KhrDrawIndirectCountFn {
     }
 }
 impl KhrDrawIndirectCountFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -56421,7 +56246,6 @@ impl ::std::clone::Clone for QcomExtension171Fn {
     }
 }
 impl QcomExtension171Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -56444,7 +56268,6 @@ impl ::std::clone::Clone for QcomExtension172Fn {
     }
 }
 impl QcomExtension172Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -56467,7 +56290,6 @@ impl ::std::clone::Clone for QcomExtension173Fn {
     }
 }
 impl QcomExtension173Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -56490,7 +56312,6 @@ impl ::std::clone::Clone for QcomExtension174Fn {
     }
 }
 impl QcomExtension174Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -56513,7 +56334,6 @@ impl ::std::clone::Clone for ExtGlobalPriorityFn {
     }
 }
 impl ExtGlobalPriorityFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -56544,7 +56364,6 @@ impl ::std::clone::Clone for ExtExtension176Fn {
     }
 }
 impl ExtExtension176Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -56567,7 +56386,6 @@ impl ::std::clone::Clone for ExtExtension177Fn {
     }
 }
 impl ExtExtension177Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -56590,7 +56408,6 @@ impl ::std::clone::Clone for Khr8bitStorageFn {
     }
 }
 impl Khr8bitStorageFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -56633,7 +56450,6 @@ impl ::std::clone::Clone for ExtExternalMemoryHostFn {
     }
 }
 impl ExtExternalMemoryHostFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -56734,7 +56550,6 @@ impl ::std::clone::Clone for AmdBufferMarkerFn {
     }
 }
 impl AmdBufferMarkerFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -56797,7 +56612,6 @@ impl ::std::clone::Clone for KhrShaderAtomicInt64Fn {
     }
 }
 impl KhrShaderAtomicInt64Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -56824,7 +56638,6 @@ impl ::std::clone::Clone for AmdExtension182Fn {
     }
 }
 impl AmdExtension182Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -56847,7 +56660,6 @@ impl ::std::clone::Clone for AmdExtension183Fn {
     }
 }
 impl AmdExtension183Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -56870,7 +56682,6 @@ impl ::std::clone::Clone for AmdExtension184Fn {
     }
 }
 impl AmdExtension184Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -56924,7 +56735,6 @@ impl ::std::clone::Clone for ExtCalibratedTimestampsFn {
     }
 }
 impl ExtCalibratedTimestampsFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -57024,7 +56834,6 @@ impl ::std::clone::Clone for AmdShaderCorePropertiesFn {
     }
 }
 impl AmdShaderCorePropertiesFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -57051,7 +56860,6 @@ impl ::std::clone::Clone for AmdExtension187Fn {
     }
 }
 impl AmdExtension187Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -57074,7 +56882,6 @@ impl ::std::clone::Clone for AmdExtension188Fn {
     }
 }
 impl AmdExtension188Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -57097,7 +56904,6 @@ impl ::std::clone::Clone for AmdExtension189Fn {
     }
 }
 impl AmdExtension189Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -57120,7 +56926,6 @@ impl ::std::clone::Clone for AmdMemoryOverallocationBehaviorFn {
     }
 }
 impl AmdMemoryOverallocationBehaviorFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -57147,7 +56952,6 @@ impl ::std::clone::Clone for ExtVertexAttributeDivisorFn {
     }
 }
 impl ExtVertexAttributeDivisorFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -57185,7 +56989,6 @@ impl ::std::clone::Clone for GoogleExtension192Fn {
     }
 }
 impl GoogleExtension192Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -57208,7 +57011,6 @@ impl ::std::clone::Clone for GoogleExtension193Fn {
     }
 }
 impl GoogleExtension193Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -57231,7 +57033,6 @@ impl ::std::clone::Clone for GoogleExtension194Fn {
     }
 }
 impl GoogleExtension194Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -57254,7 +57055,6 @@ impl ::std::clone::Clone for GoogleExtension195Fn {
     }
 }
 impl GoogleExtension195Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -57277,7 +57077,6 @@ impl ::std::clone::Clone for GoogleExtension196Fn {
     }
 }
 impl GoogleExtension196Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -57300,7 +57099,6 @@ impl ::std::clone::Clone for KhrDriverPropertiesFn {
     }
 }
 impl KhrDriverPropertiesFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -57327,7 +57125,6 @@ impl ::std::clone::Clone for KhrShaderFloatControlsFn {
     }
 }
 impl KhrShaderFloatControlsFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -57354,7 +57151,6 @@ impl ::std::clone::Clone for NvShaderSubgroupPartitionedFn {
     }
 }
 impl NvShaderSubgroupPartitionedFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -57381,7 +57177,6 @@ impl ::std::clone::Clone for KhrDepthStencilResolveFn {
     }
 }
 impl KhrDepthStencilResolveFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -57413,7 +57208,6 @@ impl ::std::clone::Clone for KhrSwapchainMutableFormatFn {
     }
 }
 impl KhrSwapchainMutableFormatFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -57440,7 +57234,6 @@ impl ::std::clone::Clone for NvComputeShaderDerivativesFn {
     }
 }
 impl NvComputeShaderDerivativesFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -57515,7 +57308,6 @@ impl ::std::clone::Clone for NvMeshShaderFn {
     }
 }
 impl NvMeshShaderFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -57670,7 +57462,6 @@ impl ::std::clone::Clone for NvFragmentShaderBarycentricFn {
     }
 }
 impl NvFragmentShaderBarycentricFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -57698,7 +57489,6 @@ impl ::std::clone::Clone for NvShaderImageFootprintFn {
     }
 }
 impl NvShaderImageFootprintFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -57742,7 +57532,6 @@ impl ::std::clone::Clone for NvScissorExclusiveFn {
     }
 }
 impl NvScissorExclusiveFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -57837,7 +57626,6 @@ impl ::std::clone::Clone for NvDeviceDiagnosticCheckpointsFn {
     }
 }
 impl NvDeviceDiagnosticCheckpointsFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -57925,7 +57713,6 @@ impl ::std::clone::Clone for KhrExtension208Fn {
     }
 }
 impl KhrExtension208Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -57948,7 +57735,6 @@ impl ::std::clone::Clone for KhrExtension209Fn {
     }
 }
 impl KhrExtension209Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -57971,7 +57757,6 @@ impl ::std::clone::Clone for IntelExtension210Fn {
     }
 }
 impl IntelExtension210Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -57994,7 +57779,6 @@ impl ::std::clone::Clone for IntelExtension211Fn {
     }
 }
 impl IntelExtension211Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -58017,7 +57801,6 @@ impl ::std::clone::Clone for KhrVulkanMemoryModelFn {
     }
 }
 impl KhrVulkanMemoryModelFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -58044,7 +57827,6 @@ impl ::std::clone::Clone for ExtPciBusInfoFn {
     }
 }
 impl ExtPciBusInfoFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -58071,7 +57853,6 @@ impl ::std::clone::Clone for AmdExtension214Fn {
     }
 }
 impl AmdExtension214Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -58110,7 +57891,6 @@ impl ::std::clone::Clone for FuchsiaImagepipeSurfaceFn {
     }
 }
 impl FuchsiaImagepipeSurfaceFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -58169,7 +57949,6 @@ impl ::std::clone::Clone for GoogleExtension216Fn {
     }
 }
 impl GoogleExtension216Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -58192,7 +57971,6 @@ impl ::std::clone::Clone for GoogleExtension217Fn {
     }
 }
 impl GoogleExtension217Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -58215,7 +57993,6 @@ impl ::std::clone::Clone for ExtMacosIosWindowFn {
     }
 }
 impl ExtMacosIosWindowFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -58238,7 +58015,6 @@ impl ::std::clone::Clone for ExtFragmentDensityMapFn {
     }
 }
 impl ExtFragmentDensityMapFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -58313,7 +58089,6 @@ impl ::std::clone::Clone for ExtExtension220Fn {
     }
 }
 impl ExtExtension220Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -58336,7 +58111,6 @@ impl ::std::clone::Clone for KhrExtension221Fn {
     }
 }
 impl KhrExtension221Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -58363,7 +58137,6 @@ impl ::std::clone::Clone for ExtScalarBlockLayoutFn {
     }
 }
 impl ExtScalarBlockLayoutFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -58390,7 +58163,6 @@ impl ::std::clone::Clone for ExtExtension223Fn {
     }
 }
 impl ExtExtension223Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -58413,7 +58185,6 @@ impl ::std::clone::Clone for GoogleHlslFunctionality1Fn {
     }
 }
 impl GoogleHlslFunctionality1Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -58436,7 +58207,6 @@ impl ::std::clone::Clone for GoogleDecorateStringFn {
     }
 }
 impl GoogleDecorateStringFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -58459,7 +58229,6 @@ impl ::std::clone::Clone for AmdExtension226Fn {
     }
 }
 impl AmdExtension226Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -58482,7 +58251,6 @@ impl ::std::clone::Clone for AmdExtension227Fn {
     }
 }
 impl AmdExtension227Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -58505,7 +58273,6 @@ impl ::std::clone::Clone for AmdExtension228Fn {
     }
 }
 impl AmdExtension228Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -58528,7 +58295,6 @@ impl ::std::clone::Clone for AmdExtension229Fn {
     }
 }
 impl AmdExtension229Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -58551,7 +58317,6 @@ impl ::std::clone::Clone for AmdExtension230Fn {
     }
 }
 impl AmdExtension230Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -58574,7 +58339,6 @@ impl ::std::clone::Clone for AmdExtension231Fn {
     }
 }
 impl AmdExtension231Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -58597,7 +58361,6 @@ impl ::std::clone::Clone for AmdExtension232Fn {
     }
 }
 impl AmdExtension232Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -58620,7 +58383,6 @@ impl ::std::clone::Clone for AmdExtension233Fn {
     }
 }
 impl AmdExtension233Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -58643,7 +58405,6 @@ impl ::std::clone::Clone for AmdExtension234Fn {
     }
 }
 impl AmdExtension234Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -58666,7 +58427,6 @@ impl ::std::clone::Clone for AmdExtension235Fn {
     }
 }
 impl AmdExtension235Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -58689,7 +58449,6 @@ impl ::std::clone::Clone for AmdExtension236Fn {
     }
 }
 impl AmdExtension236Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -58712,7 +58471,6 @@ impl ::std::clone::Clone for KhrExtension237Fn {
     }
 }
 impl KhrExtension237Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -58735,7 +58493,6 @@ impl ::std::clone::Clone for ExtMemoryBudgetFn {
     }
 }
 impl ExtMemoryBudgetFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -58762,7 +58519,6 @@ impl ::std::clone::Clone for ExtMemoryPriorityFn {
     }
 }
 impl ExtMemoryPriorityFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -58793,7 +58549,6 @@ impl ::std::clone::Clone for KhrExtension240Fn {
     }
 }
 impl KhrExtension240Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -58816,7 +58571,6 @@ impl ::std::clone::Clone for NvExtension241Fn {
     }
 }
 impl NvExtension241Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -58839,7 +58593,6 @@ impl ::std::clone::Clone for NvExtension242Fn {
     }
 }
 impl NvExtension242Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -58862,7 +58615,6 @@ impl ::std::clone::Clone for IntelExtension243Fn {
     }
 }
 impl IntelExtension243Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -58885,7 +58637,6 @@ impl ::std::clone::Clone for MesaExtension244Fn {
     }
 }
 impl MesaExtension244Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -58918,7 +58669,6 @@ impl ::std::clone::Clone for ExtBufferDeviceAddressFn {
     }
 }
 impl ExtBufferDeviceAddressFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -58993,7 +58743,6 @@ impl ::std::clone::Clone for ExtExtension246Fn {
     }
 }
 impl ExtExtension246Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -59016,7 +58765,6 @@ impl ::std::clone::Clone for ExtSeparateStencilUsageFn {
     }
 }
 impl ExtSeparateStencilUsageFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -59043,7 +58791,6 @@ impl ::std::clone::Clone for ExtValidationFeaturesFn {
     }
 }
 impl ExtValidationFeaturesFn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -59070,7 +58817,6 @@ impl ::std::clone::Clone for KhrExtension249Fn {
     }
 }
 impl KhrExtension249Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
@@ -59093,7 +58839,6 @@ impl ::std::clone::Clone for NvExtension250Fn {
     }
 }
 impl NvExtension250Fn {
-    #[allow(clippy::cognitive_complexity)]
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
