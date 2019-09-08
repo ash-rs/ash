@@ -731,9 +731,9 @@ fn generate_function_pointers<'a>(
             let ident = cmd.name.as_str();
             if !fn_cache.contains(ident) {
                 fn_cache.insert(ident);
-                return true;
+                true
             } else {
-                return false;
+                false
             }
         })
         .collect();
@@ -971,9 +971,7 @@ pub fn generate_extension_commands<'a>(
         .filter_map(|ext_item| match ext_item {
             vk_parse::ExtensionChild::Require { items, .. } => {
                 Some(items.iter().filter_map(|item| match item {
-                    vk_parse::InterfaceItem::Command { ref name, .. } => {
-                        cmd_map.get(name).map(|c| *c)
-                    }
+                    vk_parse::InterfaceItem::Command { ref name, .. } => cmd_map.get(name).copied(),
                     _ => None,
                 }))
             }
@@ -1055,8 +1053,8 @@ pub fn generate_bitmask(
     if bitflags_cache.contains(&ident) {
         return None;
     };
-    bitflags_cache.insert(ident.clone());
-    const_values.insert(ident.clone(), Vec::new());
+    bitflags_cache.insert(ident);
+    const_values.insert(ident, Vec::new());
     let khronos_link = khronos_link(&bitmask.name);
     Some(quote! {
         #[repr(transparent)]
@@ -1080,7 +1078,7 @@ pub fn variant_ident(enum_name: &str, variant_name: &str) -> Ident {
     let vendors = ["_NVX", "_KHR", "_EXT", "_NV", "_AMD", "_ANDROID", "_GOOGLE"];
     let mut struct_name = _name.to_shouty_snake_case();
     let vendor = vendors
-        .into_iter()
+        .iter()
         .find(|&vendor| struct_name.contains(vendor))
         .cloned()
         .unwrap_or("");
@@ -1164,7 +1162,7 @@ pub fn generate_enum<'a>(
         const_cache.insert(constant.name.as_str());
         values.push(constant.variant_ident(&_enum.name));
     }
-    const_values.insert(ident.clone(), values);
+    const_values.insert(ident, values);
 
     let khronos_link = khronos_link(&_enum.name);
 
@@ -1182,7 +1180,7 @@ pub fn generate_enum<'a>(
         if bitflags_cache.contains(&ident) {
             EnumType::Bitflags(quote! {})
         } else {
-            bitflags_cache.insert(ident.clone());
+            bitflags_cache.insert(ident);
             let q = quote! {
                 #[repr(transparent)]
                 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -1443,7 +1441,7 @@ pub fn derive_setters(
 
     let (has_next, _is_next_const) = match members
         .clone()
-        .find(|field| field.param_ident().to_string() == "p_next")
+        .find(|field| field.param_ident().as_ref() == "p_next")
     {
         Some(p_next) => {
             if p_next.type_tokens(false).to_string().starts_with("*const") {
@@ -1471,7 +1469,7 @@ pub fn derive_setters(
                     if !array_size.starts_with("latexmath")
                         && !nofilter_count_members
                             .iter()
-                            .any(|n| *n == &(_struct.name.clone() + "." + field_name))
+                            .any(|&n| n == (_struct.name.clone() + "." + field_name))
                     {
                         return Some((*array_size).clone());
                     }
@@ -1583,8 +1581,7 @@ pub fn derive_setters(
                         let slice_param_ty_tokens = Term::intern(&slice_param_ty_tokens);
                         let ptr = Term::intern(ptr);
 
-                        match array_type {
-                            vkxml::ArrayType::Dynamic => {
+                        if let vkxml::ArrayType::Dynamic = array_type {
                                 return Some(quote!{
                                     pub fn #param_ident_short(mut self, #param_ident_short: #slice_param_ty_tokens) -> #name_builder<'a> {
                                         self.inner.#array_size_ident = #param_ident_short.len() as _;
@@ -1592,8 +1589,6 @@ pub fn derive_setters(
                                         self
                                     }
                                 });
-                            }
-                            _ => {}
                         }
                     }
                 }
@@ -1640,7 +1635,7 @@ pub fn derive_setters(
                 .map(|extends| name_to_tokens(&format!("Extends{}", name_to_tokens(&extends))))
                 .collect()
         })
-        .unwrap_or(vec![]);
+        .unwrap_or_else(|| vec![]);
 
     // We only implement a next methods for root structs with a `pnext` field.
     let next_function = if has_next && root_structs.is_empty() {
@@ -2022,7 +2017,7 @@ pub fn generate_feature_extension<'a>(
     }
 }
 
-pub fn generate_const_debugs<'a>(const_values: &BTreeMap<Ident, Vec<Ident>>) -> Tokens {
+pub fn generate_const_debugs(const_values: &BTreeMap<Ident, Vec<Ident>>) -> Tokens {
     let impls = const_values.iter().map(|(ty, values)| {
         if ty.to_string().contains("Flags") {
             let cases = values.iter().map(|value| {
@@ -2097,7 +2092,7 @@ pub fn generate_aliases_of_types<'a>(
             if ty_cache.contains(&name_ident) {
                 return None;
             };
-            ty_cache.insert(name_ident.clone());
+            ty_cache.insert(name_ident);
             let alias_ident = name_to_tokens(alias);
             let tokens = quote! {
                 pub type #name_ident = #alias_ident;

@@ -284,7 +284,7 @@ fn main() {
         }];
         let scissors = [vk::Rect2D {
             offset: vk::Offset2D { x: 0, y: 0 },
-            extent: base.surface_resolution.clone(),
+            extent: base.surface_resolution,
         }];
         let viewport_state_info = vk::PipelineViewportStateCreateInfo::builder()
             .scissors(&scissors)
@@ -311,8 +311,8 @@ fn main() {
             depth_test_enable: 1,
             depth_write_enable: 1,
             depth_compare_op: vk::CompareOp::LESS_OR_EQUAL,
-            front: noop_stencil_state.clone(),
-            back: noop_stencil_state.clone(),
+            front: noop_stencil_state,
+            back: noop_stencil_state,
             max_depth_bounds: 1.0,
             ..Default::default()
         };
@@ -387,7 +387,7 @@ fn main() {
                 .framebuffer(framebuffers[present_index as usize])
                 .render_area(vk::Rect2D {
                     offset: vk::Offset2D { x: 0, y: 0 },
-                    extent: base.surface_resolution.clone(),
+                    extent: base.surface_resolution,
                 })
                 .clear_values(&clear_values);
 
