@@ -27,15 +27,10 @@ fn assert_struct_field_is_array() {
 #[allow(dead_code)]
 fn assert_ffi_array_param_is_pointer() {
     use ash::version::DeviceV1_0;
-    unsafe {
-        // don't run it, just make sure it compiles
-        if false {
-            let device: ash::Device = std::mem::zeroed();
-            let cmd_buffer = std::mem::zeroed();
+    // don't run it, just make sure it compiles
+    unsafe fn dummy(device: &ash::Device, cmd_buffer: ash::vk::CommandBuffer) {
+        let blend_constants: [f32; 4] = [0.0, 0.0, 0.0, 0.0];
 
-            let blend_constants: [f32; 4] = [0.0, 0.0, 0.0, 0.0];
-
-            device.cmd_set_blend_constants(cmd_buffer, &blend_constants);
-        }
+        device.cmd_set_blend_constants(cmd_buffer, &blend_constants);
     }
 }
