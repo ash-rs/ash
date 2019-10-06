@@ -340,7 +340,7 @@ impl ExampleBase {
                 .application_version(0)
                 .engine_name(&app_name)
                 .engine_version(0)
-                .api_version(vk_make_version!(1, 0, 0));
+                .api_version(vk::make_version(1, 0, 0));
 
             let create_info = vk::InstanceCreateInfo::builder()
                 .application_info(&appinfo)

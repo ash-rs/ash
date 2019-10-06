@@ -181,13 +181,11 @@ pub trait EntryV1_1: EntryV1_0 {
 
 impl EntryCustom<Arc<DynamicLibrary>> {
     /// ```rust,no_run
-    /// # #[macro_use]
-    /// # extern crate ash;
     /// use ash::{vk, Entry, version::EntryV1_0};
     /// # fn main() -> Result<(), Box<std::error::Error>> {
     /// let entry = Entry::new()?;
     /// let app_info = vk::ApplicationInfo {
-    ///     api_version: vk_make_version!(1, 0, 0),
+    ///     api_version: vk::make_version(1, 0, 0),
     ///     ..Default::default()
     /// };
     /// let create_info = vk::InstanceCreateInfo {
@@ -240,17 +238,15 @@ impl<L> EntryCustom<L> {
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkEnumerateInstanceVersion.html>"]
     /// ```rust,no_run
-    /// # #[macro_use]
-    /// # extern crate ash;
-    /// # use ash::Entry;
+    /// # use ash::{Entry, vk};
     /// # fn main() -> Result<(), Box<std::error::Error>> {
     /// let entry = Entry::new()?;
     /// match entry.try_enumerate_instance_version()? {
     ///     // Vulkan 1.1+
     ///     Some(version) => {
-    ///         let major = vk_version_major!(version);
-    ///         let minor = vk_version_minor!(version);
-    ///         let patch = vk_version_patch!(version);
+    ///         let major = vk::version_major(version);
+    ///         let minor = vk::version_minor(version);
+    ///         let patch = vk::version_patch(version);
     ///     },
     ///     // Vulkan 1.0
     ///     None => {},

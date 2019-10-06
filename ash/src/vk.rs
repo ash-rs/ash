@@ -21,32 +21,20 @@ pub trait Handle {
     fn from_raw(_: u64) -> Self;
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VK_MAKE_VERSION.html>"]
-#[macro_export]
-macro_rules! vk_make_version {
-    ( $ major : expr , $ minor : expr , $ patch : expr ) => {
-        (($major as u32) << 22) | (($minor as u32) << 12) | $patch as u32
-    };
+pub const fn make_version(major: u32, minor: u32, patch: u32) -> u32 {
+    (major << 22) | (minor << 12) | patch
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VK_VERSION_MAJOR.html>"]
-#[macro_export]
-macro_rules! vk_version_major {
-    ( $ major : expr ) => {
-        ($major as u32) >> 22
-    };
+pub const fn version_major(version: u32) -> u32 {
+    version >> 22
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VK_VERSION_MINOR.html>"]
-#[macro_export]
-macro_rules! vk_version_minor {
-    ( $ minor : expr ) => {
-        (($minor as u32) >> 12) & 0x3ff
-    };
+pub const fn version_minor(version: u32) -> u32 {
+    (version >> 12) & 0x3ff
 }
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VK_VERSION_PATCH.html>"]
-#[macro_export]
-macro_rules! vk_version_patch {
-    ( $ minor : expr ) => {
-        ($minor as u32) & 0xfff
-    };
+pub const fn version_patch(version: u32) -> u32 {
+    version & 0xfff
 }
 pub type RROutput = c_ulong;
 pub type VisualID = c_uint;
