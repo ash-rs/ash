@@ -1,5 +1,6 @@
 pub use self::android_surface::AndroidSurface;
 pub use self::display_swapchain::DisplaySwapchain;
+pub use self::push_descriptor::PushDescriptor;
 pub use self::surface::Surface;
 pub use self::swapchain::Swapchain;
 pub use self::wayland_surface::WaylandSurface;
@@ -9,6 +10,7 @@ pub use self::xlib_surface::XlibSurface;
 
 mod android_surface;
 mod display_swapchain;
+mod push_descriptor;
 mod surface;
 mod swapchain;
 mod wayland_surface;
