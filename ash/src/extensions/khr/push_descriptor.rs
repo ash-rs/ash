@@ -34,16 +34,15 @@ impl PushDescriptor {
         pipeline_bind_point: vk::PipelineBindPoint,
         layout: vk::PipelineLayout,
         set: u32,
-        descriptor_write_count: u32,
-        p_descriptor_writes: *const vk::WriteDescriptorSet,
+        descriptor_writes: &[vk::WriteDescriptorSet],
     ) {
         self.push_descriptors_fn.cmd_push_descriptor_set_khr(
             command_buffer,
             pipeline_bind_point,
             layout,
             set,
-            descriptor_write_count,
-            p_descriptor_writes,
+            descriptor_writes.len() as u32,
+            descriptor_writes.as_ptr(),
         );
     }
 
