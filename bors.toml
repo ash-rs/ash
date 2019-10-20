@@ -1,6 +1,3 @@
-status = [
-  "continuous-integration/travis-ci/push",
-  "continuous-integration/appveyor/branch"
-]
+status = ["check"]
 
 timeout_sec = 18000 # 5 hours
