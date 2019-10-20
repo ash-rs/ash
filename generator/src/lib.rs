@@ -731,9 +731,9 @@ fn generate_function_pointers<'a>(
             let ident = cmd.name.as_str();
             if !fn_cache.contains(ident) {
                 fn_cache.insert(ident);
-                return true;
+                true
             } else {
-                return false;
+                false
             }
         })
         .collect();
