@@ -533,7 +533,9 @@ pub trait FeatureExt {
 impl FeatureExt for vkxml::Feature {
     fn is_version(&self, major: u32, minor: u32) -> bool {
         let self_major = self.version as u32;
-        let self_minor = (self.version * 10.0) as u32 - self_major;
+        let self_minor = (self.version * 10.0) as u32 - self_major * 10;
+
+        println!("{} {}", self_major, self_minor);
         major == self_major && self_minor == minor
     }
     fn version_string(&self) -> String {
@@ -750,19 +752,6 @@ fn generate_function_pointers<'a>(
     let names_left = &names;
     let names_right = &names;
     let khronos_links: Vec<_> = raw_names.iter().map(|name| khronos_link(name)).collect();
-
-    let pfn_commands: Vec<_> = commands
-        .iter()
-        .filter(|cmd| {
-            let ident = cmd.name.as_str();
-            if !fn_cache.contains(ident) {
-                fn_cache.insert(ident);
-                true
-            } else {
-                false
-            }
-        })
-        .collect();
 
     let params: Vec<Vec<(Ident, Tokens)>> = commands
         .iter()

@@ -253,6 +253,58 @@ macro_rules! define_handle {
     };
 }
 #[allow(non_camel_case_types)]
+pub type PFN_vkGetInstanceProcAddr =
+    extern "system" fn(instance: Instance, p_name: *const c_char) -> PFN_vkVoidFunction;
+pub struct StaticFn {
+    pub get_instance_proc_addr:
+        extern "system" fn(instance: Instance, p_name: *const c_char) -> PFN_vkVoidFunction,
+}
+unsafe impl Send for StaticFn {}
+unsafe impl Sync for StaticFn {}
+impl ::std::clone::Clone for StaticFn {
+    fn clone(&self) -> Self {
+        StaticFn {
+            get_instance_proc_addr: self.get_instance_proc_addr,
+        }
+    }
+}
+impl StaticFn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        StaticFn {
+            get_instance_proc_addr: unsafe {
+                extern "system" fn get_instance_proc_addr(
+                    _instance: Instance,
+                    _p_name: *const c_char,
+                ) -> PFN_vkVoidFunction {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_instance_proc_addr)
+                    ))
+                }
+                let raw_name = stringify!(vkGetInstanceProcAddr);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    get_instance_proc_addr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetInstanceProcAddr.html>"]
+    pub unsafe fn get_instance_proc_addr(
+        &self,
+        instance: Instance,
+        p_name: *const c_char,
+    ) -> PFN_vkVoidFunction {
+        (self.get_instance_proc_addr)(instance, p_name)
+    }
+}
+#[allow(non_camel_case_types)]
 pub type PFN_vkCreateInstance = extern "system" fn(
     p_create_info: *const InstanceCreateInfo,
     p_allocator: *const AllocationCallbacks,
