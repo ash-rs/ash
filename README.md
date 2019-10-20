@@ -5,7 +5,7 @@ A very lightweight wrapper around Vulkan
 [![LICENSE](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE-MIT)
 [![LICENSE](https://img.shields.io/badge/license-apache-blue.svg)](LICENSE-APACHE)
 [![Documentation](https://docs.rs/ash/badge.svg)](https://docs.rs/ash)
-[![Build Status](https://github.com/MaikKlein/ash/workflows/CI/badge.svg)](https://github.com/MaikKlein/ash/actions?workflow=CI)
+[![Build Status](https://github.com/MaikKlein/ash/workflows/CI/badge.svg)](https://github.com/MaikKlein/ash/actions?workflow=Continuous+integration)
 [![Join the chat at https://gitter.im/MaikKlein/ash](https://badges.gitter.im/MaikKlein/ash.svg)](https://gitter.im/MaikKlein/ash?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Crates.io Version](https://img.shields.io/crates/v/ash.svg)](https://crates.io/crates/ash)
 [![](https://tokei.rs/b1/github/maikklein/ash)](https://github.com/MaikKlein/ash)
