@@ -1,4 +1,3 @@
-#[macro_use]
 extern crate ash;
 #[cfg(target_os = "windows")]
 extern crate winapi;
