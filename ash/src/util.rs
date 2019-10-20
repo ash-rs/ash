@@ -122,13 +122,13 @@ pub fn read_spv<R: io::Read + io::Seek>(x: &mut R) -> io::Result<Vec<u32>> {
         ))?;
         result.set_len(words);
     }
-    const MAGIC_NUMBER: u32 = 0x07230203;
-    if result.len() > 0 && result[0] == MAGIC_NUMBER.swap_bytes() {
+    const MAGIC_NUMBER: u32 = 0x0723_0203;
+    if !result.is_empty() && result[0] == MAGIC_NUMBER.swap_bytes() {
         for word in &mut result {
             *word = word.swap_bytes();
         }
     }
-    if result.len() == 0 || result[0] != MAGIC_NUMBER {
+    if result.is_empty() || result[0] != MAGIC_NUMBER {
         return Err(io::Error::new(
             io::ErrorKind::InvalidData,
             "input missing SPIR-V magic number",

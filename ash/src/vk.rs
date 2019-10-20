@@ -1,12 +1,12 @@
+#![allow(clippy::too_many_arguments, clippy::cognitive_complexity)]
 use std::fmt;
 use std::os::raw::*;
 #[doc = r" Iterates through the pointer chain. Includes the item that is passed into the function."]
 #[doc = r" Stops at the last `BaseOutStructure` that has a null `p_next` field."]
 pub(crate) unsafe fn ptr_chain_iter<T>(ptr: &mut T) -> impl Iterator<Item = *mut BaseOutStructure> {
-    use std::ptr::null_mut;
     let ptr: *mut BaseOutStructure = ptr as *mut T as _;
     (0..).scan(ptr, |p_ptr, _| {
-        if *p_ptr == null_mut() {
+        if p_ptr.is_null() {
             return None;
         }
         let n_ptr = (**p_ptr).p_next as *mut BaseOutStructure;
@@ -43190,7 +43190,7 @@ impl QueueGlobalPriorityEXT {
     pub const LOW: Self = QueueGlobalPriorityEXT(128);
     pub const MEDIUM: Self = QueueGlobalPriorityEXT(256);
     pub const HIGH: Self = QueueGlobalPriorityEXT(512);
-    pub const REALTIME: Self = QueueGlobalPriorityEXT(1024);
+    pub const REALTIME: Self = QueueGlobalPriorityEXT(1_024);
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
@@ -43223,11 +43223,11 @@ impl VendorId {
 }
 impl VendorId {
     #[doc = "Vivante vendor ID"]
-    pub const VIV: Self = VendorId(0x10001);
+    pub const VIV: Self = VendorId(0x1_0001);
     #[doc = "VeriSilicon vendor ID"]
-    pub const VSI: Self = VendorId(0x10002);
+    pub const VSI: Self = VendorId(0x1_0002);
     #[doc = "Kazan Software Renderer"]
-    pub const KAZAN: Self = VendorId(0x10003);
+    pub const KAZAN: Self = VendorId(0x1_0003);
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
@@ -43415,7 +43415,7 @@ impl CullModeFlags {
     pub const NONE: Self = CullModeFlags(0);
     pub const FRONT: Self = CullModeFlags(0b1);
     pub const BACK: Self = CullModeFlags(0b10);
-    pub const FRONT_AND_BACK: Self = CullModeFlags(0x00000003);
+    pub const FRONT_AND_BACK: Self = CullModeFlags(0x0000_0003);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -43448,7 +43448,7 @@ impl DeviceQueueCreateFlags {}
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkMemoryPropertyFlagBits.html>"]
 pub struct MemoryPropertyFlags(pub(crate) Flags);
-vk_bitflags_wrapped!(MemoryPropertyFlags, 0b11111, Flags);
+vk_bitflags_wrapped!(MemoryPropertyFlags, 0b1_1111, Flags);
 impl MemoryPropertyFlags {
     #[doc = "If otherwise stated, then allocate memory on device"]
     pub const DEVICE_LOCAL: Self = MemoryPropertyFlags(0b1);
@@ -43459,7 +43459,7 @@ impl MemoryPropertyFlags {
     #[doc = "Memory will be cached by the host"]
     pub const HOST_CACHED: Self = MemoryPropertyFlags(0b1000);
     #[doc = "Memory may be allocated by the driver when it is required"]
-    pub const LAZILY_ALLOCATED: Self = MemoryPropertyFlags(0b10000);
+    pub const LAZILY_ALLOCATED: Self = MemoryPropertyFlags(0b1_0000);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -43474,7 +43474,7 @@ impl MemoryHeapFlags {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkAccessFlagBits.html>"]
 pub struct AccessFlags(pub(crate) Flags);
-vk_bitflags_wrapped!(AccessFlags, 0b11111111111111111, Flags);
+vk_bitflags_wrapped!(AccessFlags, 0b1_1111_1111_1111_1111, Flags);
 impl AccessFlags {
     #[doc = "Controls coherency of indirect command reads"]
     pub const INDIRECT_COMMAND_READ: Self = AccessFlags(0b1);
@@ -43485,37 +43485,37 @@ impl AccessFlags {
     #[doc = "Controls coherency of uniform buffer reads"]
     pub const UNIFORM_READ: Self = AccessFlags(0b1000);
     #[doc = "Controls coherency of input attachment reads"]
-    pub const INPUT_ATTACHMENT_READ: Self = AccessFlags(0b10000);
+    pub const INPUT_ATTACHMENT_READ: Self = AccessFlags(0b1_0000);
     #[doc = "Controls coherency of shader reads"]
-    pub const SHADER_READ: Self = AccessFlags(0b100000);
+    pub const SHADER_READ: Self = AccessFlags(0b10_0000);
     #[doc = "Controls coherency of shader writes"]
-    pub const SHADER_WRITE: Self = AccessFlags(0b1000000);
+    pub const SHADER_WRITE: Self = AccessFlags(0b100_0000);
     #[doc = "Controls coherency of color attachment reads"]
-    pub const COLOR_ATTACHMENT_READ: Self = AccessFlags(0b10000000);
+    pub const COLOR_ATTACHMENT_READ: Self = AccessFlags(0b1000_0000);
     #[doc = "Controls coherency of color attachment writes"]
-    pub const COLOR_ATTACHMENT_WRITE: Self = AccessFlags(0b100000000);
+    pub const COLOR_ATTACHMENT_WRITE: Self = AccessFlags(0b1_0000_0000);
     #[doc = "Controls coherency of depth/stencil attachment reads"]
-    pub const DEPTH_STENCIL_ATTACHMENT_READ: Self = AccessFlags(0b1000000000);
+    pub const DEPTH_STENCIL_ATTACHMENT_READ: Self = AccessFlags(0b10_0000_0000);
     #[doc = "Controls coherency of depth/stencil attachment writes"]
-    pub const DEPTH_STENCIL_ATTACHMENT_WRITE: Self = AccessFlags(0b10000000000);
+    pub const DEPTH_STENCIL_ATTACHMENT_WRITE: Self = AccessFlags(0b100_0000_0000);
     #[doc = "Controls coherency of transfer reads"]
-    pub const TRANSFER_READ: Self = AccessFlags(0b100000000000);
+    pub const TRANSFER_READ: Self = AccessFlags(0b1000_0000_0000);
     #[doc = "Controls coherency of transfer writes"]
-    pub const TRANSFER_WRITE: Self = AccessFlags(0b1000000000000);
+    pub const TRANSFER_WRITE: Self = AccessFlags(0b1_0000_0000_0000);
     #[doc = "Controls coherency of host reads"]
-    pub const HOST_READ: Self = AccessFlags(0b10000000000000);
+    pub const HOST_READ: Self = AccessFlags(0b10_0000_0000_0000);
     #[doc = "Controls coherency of host writes"]
-    pub const HOST_WRITE: Self = AccessFlags(0b100000000000000);
+    pub const HOST_WRITE: Self = AccessFlags(0b100_0000_0000_0000);
     #[doc = "Controls coherency of memory reads"]
-    pub const MEMORY_READ: Self = AccessFlags(0b1000000000000000);
+    pub const MEMORY_READ: Self = AccessFlags(0b1000_0000_0000_0000);
     #[doc = "Controls coherency of memory writes"]
-    pub const MEMORY_WRITE: Self = AccessFlags(0b10000000000000000);
+    pub const MEMORY_WRITE: Self = AccessFlags(0b1_0000_0000_0000_0000);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkBufferUsageFlagBits.html>"]
 pub struct BufferUsageFlags(pub(crate) Flags);
-vk_bitflags_wrapped!(BufferUsageFlags, 0b111111111, Flags);
+vk_bitflags_wrapped!(BufferUsageFlags, 0b1_1111_1111, Flags);
 impl BufferUsageFlags {
     #[doc = "Can be used as a source of transfer operations"]
     pub const TRANSFER_SRC: Self = BufferUsageFlags(0b1);
@@ -43526,15 +43526,15 @@ impl BufferUsageFlags {
     #[doc = "Can be used as IBO"]
     pub const STORAGE_TEXEL_BUFFER: Self = BufferUsageFlags(0b1000);
     #[doc = "Can be used as UBO"]
-    pub const UNIFORM_BUFFER: Self = BufferUsageFlags(0b10000);
+    pub const UNIFORM_BUFFER: Self = BufferUsageFlags(0b1_0000);
     #[doc = "Can be used as SSBO"]
-    pub const STORAGE_BUFFER: Self = BufferUsageFlags(0b100000);
+    pub const STORAGE_BUFFER: Self = BufferUsageFlags(0b10_0000);
     #[doc = "Can be used as source of fixed-function index fetch (index buffer)"]
-    pub const INDEX_BUFFER: Self = BufferUsageFlags(0b1000000);
+    pub const INDEX_BUFFER: Self = BufferUsageFlags(0b100_0000);
     #[doc = "Can be used as source of fixed-function vertex fetch (VBO)"]
-    pub const VERTEX_BUFFER: Self = BufferUsageFlags(0b10000000);
+    pub const VERTEX_BUFFER: Self = BufferUsageFlags(0b1000_0000);
     #[doc = "Can be the source of indirect parameters (e.g. indirect buffer, parameter buffer)"]
-    pub const INDIRECT_BUFFER: Self = BufferUsageFlags(0b100000000);
+    pub const INDIRECT_BUFFER: Self = BufferUsageFlags(0b1_0000_0000);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -43553,22 +43553,26 @@ impl BufferCreateFlags {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkShaderStageFlagBits.html>"]
 pub struct ShaderStageFlags(pub(crate) Flags);
-vk_bitflags_wrapped!(ShaderStageFlags, 0b1111111111111111111111111111111, Flags);
+vk_bitflags_wrapped!(
+    ShaderStageFlags,
+    0b111_1111_1111_1111_1111_1111_1111_1111,
+    Flags
+);
 impl ShaderStageFlags {
     pub const VERTEX: Self = ShaderStageFlags(0b1);
     pub const TESSELLATION_CONTROL: Self = ShaderStageFlags(0b10);
     pub const TESSELLATION_EVALUATION: Self = ShaderStageFlags(0b100);
     pub const GEOMETRY: Self = ShaderStageFlags(0b1000);
-    pub const FRAGMENT: Self = ShaderStageFlags(0b10000);
-    pub const COMPUTE: Self = ShaderStageFlags(0b100000);
-    pub const ALL_GRAPHICS: Self = ShaderStageFlags(0x0000001F);
-    pub const ALL: Self = ShaderStageFlags(0x7FFFFFFF);
+    pub const FRAGMENT: Self = ShaderStageFlags(0b1_0000);
+    pub const COMPUTE: Self = ShaderStageFlags(0b10_0000);
+    pub const ALL_GRAPHICS: Self = ShaderStageFlags(0x0000_001F);
+    pub const ALL: Self = ShaderStageFlags(0x7FFF_FFFF);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkImageUsageFlagBits.html>"]
 pub struct ImageUsageFlags(pub(crate) Flags);
-vk_bitflags_wrapped!(ImageUsageFlags, 0b11111111, Flags);
+vk_bitflags_wrapped!(ImageUsageFlags, 0b1111_1111, Flags);
 impl ImageUsageFlags {
     #[doc = "Can be used as a source of transfer operations"]
     pub const TRANSFER_SRC: Self = ImageUsageFlags(0b1);
@@ -43579,19 +43583,19 @@ impl ImageUsageFlags {
     #[doc = "Can be used as storage image (STORAGE_IMAGE descriptor type)"]
     pub const STORAGE: Self = ImageUsageFlags(0b1000);
     #[doc = "Can be used as framebuffer color attachment"]
-    pub const COLOR_ATTACHMENT: Self = ImageUsageFlags(0b10000);
+    pub const COLOR_ATTACHMENT: Self = ImageUsageFlags(0b1_0000);
     #[doc = "Can be used as framebuffer depth/stencil attachment"]
-    pub const DEPTH_STENCIL_ATTACHMENT: Self = ImageUsageFlags(0b100000);
+    pub const DEPTH_STENCIL_ATTACHMENT: Self = ImageUsageFlags(0b10_0000);
     #[doc = "Image data not needed outside of rendering"]
-    pub const TRANSIENT_ATTACHMENT: Self = ImageUsageFlags(0b1000000);
+    pub const TRANSIENT_ATTACHMENT: Self = ImageUsageFlags(0b100_0000);
     #[doc = "Can be used as framebuffer input attachment"]
-    pub const INPUT_ATTACHMENT: Self = ImageUsageFlags(0b10000000);
+    pub const INPUT_ATTACHMENT: Self = ImageUsageFlags(0b1000_0000);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkImageCreateFlagBits.html>"]
 pub struct ImageCreateFlags(pub(crate) Flags);
-vk_bitflags_wrapped!(ImageCreateFlags, 0b11111, Flags);
+vk_bitflags_wrapped!(ImageCreateFlags, 0b1_1111, Flags);
 impl ImageCreateFlags {
     #[doc = "Image should support sparse backing"]
     pub const SPARSE_BINDING: Self = ImageCreateFlags(0b1);
@@ -43602,7 +43606,7 @@ impl ImageCreateFlags {
     #[doc = "Allows image views to have different format than the base image"]
     pub const MUTABLE_FORMAT: Self = ImageCreateFlags(0b1000);
     #[doc = "Allows creating image views with cube type from the created image"]
-    pub const CUBE_COMPATIBLE: Self = ImageCreateFlags(0b10000);
+    pub const CUBE_COMPATIBLE: Self = ImageCreateFlags(0b1_0000);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -43649,7 +43653,7 @@ impl FenceCreateFlags {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkFormatFeatureFlagBits.html>"]
 pub struct FormatFeatureFlags(pub(crate) Flags);
-vk_bitflags_wrapped!(FormatFeatureFlags, 0b1111111111111, Flags);
+vk_bitflags_wrapped!(FormatFeatureFlags, 0b1_1111_1111_1111, Flags);
 impl FormatFeatureFlags {
     #[doc = "Format can be used for sampled images (SAMPLED_IMAGE and COMBINED_IMAGE_SAMPLER descriptor types)"]
     pub const SAMPLED_IMAGE: Self = FormatFeatureFlags(0b1);
@@ -43660,23 +43664,23 @@ impl FormatFeatureFlags {
     #[doc = "Format can be used for uniform texel buffers (TBOs)"]
     pub const UNIFORM_TEXEL_BUFFER: Self = FormatFeatureFlags(0b1000);
     #[doc = "Format can be used for storage texel buffers (IBOs)"]
-    pub const STORAGE_TEXEL_BUFFER: Self = FormatFeatureFlags(0b10000);
+    pub const STORAGE_TEXEL_BUFFER: Self = FormatFeatureFlags(0b1_0000);
     #[doc = "Format supports atomic operations in case it is used for storage texel buffers"]
-    pub const STORAGE_TEXEL_BUFFER_ATOMIC: Self = FormatFeatureFlags(0b100000);
+    pub const STORAGE_TEXEL_BUFFER_ATOMIC: Self = FormatFeatureFlags(0b10_0000);
     #[doc = "Format can be used for vertex buffers (VBOs)"]
-    pub const VERTEX_BUFFER: Self = FormatFeatureFlags(0b1000000);
+    pub const VERTEX_BUFFER: Self = FormatFeatureFlags(0b100_0000);
     #[doc = "Format can be used for color attachment images"]
-    pub const COLOR_ATTACHMENT: Self = FormatFeatureFlags(0b10000000);
+    pub const COLOR_ATTACHMENT: Self = FormatFeatureFlags(0b1000_0000);
     #[doc = "Format supports blending in case it is used for color attachment images"]
-    pub const COLOR_ATTACHMENT_BLEND: Self = FormatFeatureFlags(0b100000000);
+    pub const COLOR_ATTACHMENT_BLEND: Self = FormatFeatureFlags(0b1_0000_0000);
     #[doc = "Format can be used for depth/stencil attachment images"]
-    pub const DEPTH_STENCIL_ATTACHMENT: Self = FormatFeatureFlags(0b1000000000);
+    pub const DEPTH_STENCIL_ATTACHMENT: Self = FormatFeatureFlags(0b10_0000_0000);
     #[doc = "Format can be used as the source image of blits with vkCmdBlitImage"]
-    pub const BLIT_SRC: Self = FormatFeatureFlags(0b10000000000);
+    pub const BLIT_SRC: Self = FormatFeatureFlags(0b100_0000_0000);
     #[doc = "Format can be used as the destination image of blits with vkCmdBlitImage"]
-    pub const BLIT_DST: Self = FormatFeatureFlags(0b100000000000);
+    pub const BLIT_DST: Self = FormatFeatureFlags(0b1000_0000_0000);
     #[doc = "Format can be filtered with VK_FILTER_LINEAR when being sampled"]
-    pub const SAMPLED_IMAGE_FILTER_LINEAR: Self = FormatFeatureFlags(0b1000000000000);
+    pub const SAMPLED_IMAGE_FILTER_LINEAR: Self = FormatFeatureFlags(0b1_0000_0000_0000);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -43717,7 +43721,7 @@ impl CommandBufferUsageFlags {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkQueryPipelineStatisticFlagBits.html>"]
 pub struct QueryPipelineStatisticFlags(pub(crate) Flags);
-vk_bitflags_wrapped!(QueryPipelineStatisticFlags, 0b11111111111, Flags);
+vk_bitflags_wrapped!(QueryPipelineStatisticFlags, 0b111_1111_1111, Flags);
 impl QueryPipelineStatisticFlags {
     #[doc = "Optional"]
     pub const INPUT_ASSEMBLY_VERTICES: Self = QueryPipelineStatisticFlags(0b1);
@@ -43728,20 +43732,21 @@ impl QueryPipelineStatisticFlags {
     #[doc = "Optional"]
     pub const GEOMETRY_SHADER_INVOCATIONS: Self = QueryPipelineStatisticFlags(0b1000);
     #[doc = "Optional"]
-    pub const GEOMETRY_SHADER_PRIMITIVES: Self = QueryPipelineStatisticFlags(0b10000);
+    pub const GEOMETRY_SHADER_PRIMITIVES: Self = QueryPipelineStatisticFlags(0b1_0000);
     #[doc = "Optional"]
-    pub const CLIPPING_INVOCATIONS: Self = QueryPipelineStatisticFlags(0b100000);
+    pub const CLIPPING_INVOCATIONS: Self = QueryPipelineStatisticFlags(0b10_0000);
     #[doc = "Optional"]
-    pub const CLIPPING_PRIMITIVES: Self = QueryPipelineStatisticFlags(0b1000000);
+    pub const CLIPPING_PRIMITIVES: Self = QueryPipelineStatisticFlags(0b100_0000);
     #[doc = "Optional"]
-    pub const FRAGMENT_SHADER_INVOCATIONS: Self = QueryPipelineStatisticFlags(0b10000000);
+    pub const FRAGMENT_SHADER_INVOCATIONS: Self = QueryPipelineStatisticFlags(0b1000_0000);
     #[doc = "Optional"]
-    pub const TESSELLATION_CONTROL_SHADER_PATCHES: Self = QueryPipelineStatisticFlags(0b100000000);
+    pub const TESSELLATION_CONTROL_SHADER_PATCHES: Self =
+        QueryPipelineStatisticFlags(0b1_0000_0000);
     #[doc = "Optional"]
     pub const TESSELLATION_EVALUATION_SHADER_INVOCATIONS: Self =
-        QueryPipelineStatisticFlags(0b1000000000);
+        QueryPipelineStatisticFlags(0b10_0000_0000);
     #[doc = "Optional"]
-    pub const COMPUTE_SHADER_INVOCATIONS: Self = QueryPipelineStatisticFlags(0b10000000000);
+    pub const COMPUTE_SHADER_INVOCATIONS: Self = QueryPipelineStatisticFlags(0b100_0000_0000);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -43780,7 +43785,7 @@ impl SparseMemoryBindFlags {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkPipelineStageFlagBits.html>"]
 pub struct PipelineStageFlags(pub(crate) Flags);
-vk_bitflags_wrapped!(PipelineStageFlags, 0b11111111111111111, Flags);
+vk_bitflags_wrapped!(PipelineStageFlags, 0b1_1111_1111_1111_1111, Flags);
 impl PipelineStageFlags {
     #[doc = "Before subsequent commands are processed"]
     pub const TOP_OF_PIPE: Self = PipelineStageFlags(0b1);
@@ -43791,31 +43796,31 @@ impl PipelineStageFlags {
     #[doc = "Vertex shading"]
     pub const VERTEX_SHADER: Self = PipelineStageFlags(0b1000);
     #[doc = "Tessellation control shading"]
-    pub const TESSELLATION_CONTROL_SHADER: Self = PipelineStageFlags(0b10000);
+    pub const TESSELLATION_CONTROL_SHADER: Self = PipelineStageFlags(0b1_0000);
     #[doc = "Tessellation evaluation shading"]
-    pub const TESSELLATION_EVALUATION_SHADER: Self = PipelineStageFlags(0b100000);
+    pub const TESSELLATION_EVALUATION_SHADER: Self = PipelineStageFlags(0b10_0000);
     #[doc = "Geometry shading"]
-    pub const GEOMETRY_SHADER: Self = PipelineStageFlags(0b1000000);
+    pub const GEOMETRY_SHADER: Self = PipelineStageFlags(0b100_0000);
     #[doc = "Fragment shading"]
-    pub const FRAGMENT_SHADER: Self = PipelineStageFlags(0b10000000);
+    pub const FRAGMENT_SHADER: Self = PipelineStageFlags(0b1000_0000);
     #[doc = "Early fragment (depth and stencil) tests"]
-    pub const EARLY_FRAGMENT_TESTS: Self = PipelineStageFlags(0b100000000);
+    pub const EARLY_FRAGMENT_TESTS: Self = PipelineStageFlags(0b1_0000_0000);
     #[doc = "Late fragment (depth and stencil) tests"]
-    pub const LATE_FRAGMENT_TESTS: Self = PipelineStageFlags(0b1000000000);
+    pub const LATE_FRAGMENT_TESTS: Self = PipelineStageFlags(0b10_0000_0000);
     #[doc = "Color attachment writes"]
-    pub const COLOR_ATTACHMENT_OUTPUT: Self = PipelineStageFlags(0b10000000000);
+    pub const COLOR_ATTACHMENT_OUTPUT: Self = PipelineStageFlags(0b100_0000_0000);
     #[doc = "Compute shading"]
-    pub const COMPUTE_SHADER: Self = PipelineStageFlags(0b100000000000);
+    pub const COMPUTE_SHADER: Self = PipelineStageFlags(0b1000_0000_0000);
     #[doc = "Transfer/copy operations"]
-    pub const TRANSFER: Self = PipelineStageFlags(0b1000000000000);
+    pub const TRANSFER: Self = PipelineStageFlags(0b1_0000_0000_0000);
     #[doc = "After previous commands have completed"]
-    pub const BOTTOM_OF_PIPE: Self = PipelineStageFlags(0b10000000000000);
+    pub const BOTTOM_OF_PIPE: Self = PipelineStageFlags(0b10_0000_0000_0000);
     #[doc = "Indicates host (CPU) is a source/sink of the dependency"]
-    pub const HOST: Self = PipelineStageFlags(0b100000000000000);
+    pub const HOST: Self = PipelineStageFlags(0b100_0000_0000_0000);
     #[doc = "All stages of the graphics pipeline"]
-    pub const ALL_GRAPHICS: Self = PipelineStageFlags(0b1000000000000000);
+    pub const ALL_GRAPHICS: Self = PipelineStageFlags(0b1000_0000_0000_0000);
     #[doc = "All stages supported on the queue"]
-    pub const ALL_COMMANDS: Self = PipelineStageFlags(0b10000000000000000);
+    pub const ALL_COMMANDS: Self = PipelineStageFlags(0b1_0000_0000_0000_0000);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -43850,7 +43855,7 @@ impl CommandBufferResetFlags {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkSampleCountFlagBits.html>"]
 pub struct SampleCountFlags(pub(crate) Flags);
-vk_bitflags_wrapped!(SampleCountFlags, 0b1111111, Flags);
+vk_bitflags_wrapped!(SampleCountFlags, 0b111_1111, Flags);
 impl SampleCountFlags {
     #[doc = "Sample count 1 supported"]
     pub const TYPE_1: Self = SampleCountFlags(0b1);
@@ -43861,11 +43866,11 @@ impl SampleCountFlags {
     #[doc = "Sample count 8 supported"]
     pub const TYPE_8: Self = SampleCountFlags(0b1000);
     #[doc = "Sample count 16 supported"]
-    pub const TYPE_16: Self = SampleCountFlags(0b10000);
+    pub const TYPE_16: Self = SampleCountFlags(0b1_0000);
     #[doc = "Sample count 32 supported"]
-    pub const TYPE_32: Self = SampleCountFlags(0b100000);
+    pub const TYPE_32: Self = SampleCountFlags(0b10_0000);
     #[doc = "Sample count 64 supported"]
-    pub const TYPE_64: Self = SampleCountFlags(0b1000000);
+    pub const TYPE_64: Self = SampleCountFlags(0b100_0000);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -43887,7 +43892,7 @@ impl StencilFaceFlags {
     #[doc = "Back face"]
     pub const BACK: Self = StencilFaceFlags(0b10);
     #[doc = "Front and back faces"]
-    pub const STENCIL_FRONT_AND_BACK: Self = StencilFaceFlags(0x00000003);
+    pub const STENCIL_FRONT_AND_BACK: Self = StencilFaceFlags(0x0000_0003);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -43933,29 +43938,29 @@ impl CompositeAlphaFlagsKHR {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkSurfaceTransformFlagBitsKHR.html>"]
 pub struct SurfaceTransformFlagsKHR(pub(crate) Flags);
-vk_bitflags_wrapped!(SurfaceTransformFlagsKHR, 0b111111111, Flags);
+vk_bitflags_wrapped!(SurfaceTransformFlagsKHR, 0b1_1111_1111, Flags);
 impl SurfaceTransformFlagsKHR {
     pub const IDENTITY: Self = SurfaceTransformFlagsKHR(0b1);
     pub const ROTATE_90: Self = SurfaceTransformFlagsKHR(0b10);
     pub const ROTATE_180: Self = SurfaceTransformFlagsKHR(0b100);
     pub const ROTATE_270: Self = SurfaceTransformFlagsKHR(0b1000);
-    pub const HORIZONTAL_MIRROR: Self = SurfaceTransformFlagsKHR(0b10000);
-    pub const HORIZONTAL_MIRROR_ROTATE_90: Self = SurfaceTransformFlagsKHR(0b100000);
-    pub const HORIZONTAL_MIRROR_ROTATE_180: Self = SurfaceTransformFlagsKHR(0b1000000);
-    pub const HORIZONTAL_MIRROR_ROTATE_270: Self = SurfaceTransformFlagsKHR(0b10000000);
-    pub const INHERIT: Self = SurfaceTransformFlagsKHR(0b100000000);
+    pub const HORIZONTAL_MIRROR: Self = SurfaceTransformFlagsKHR(0b1_0000);
+    pub const HORIZONTAL_MIRROR_ROTATE_90: Self = SurfaceTransformFlagsKHR(0b10_0000);
+    pub const HORIZONTAL_MIRROR_ROTATE_180: Self = SurfaceTransformFlagsKHR(0b100_0000);
+    pub const HORIZONTAL_MIRROR_ROTATE_270: Self = SurfaceTransformFlagsKHR(0b1000_0000);
+    pub const INHERIT: Self = SurfaceTransformFlagsKHR(0b1_0000_0000);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkDebugReportFlagBitsEXT.html>"]
 pub struct DebugReportFlagsEXT(pub(crate) Flags);
-vk_bitflags_wrapped!(DebugReportFlagsEXT, 0b11111, Flags);
+vk_bitflags_wrapped!(DebugReportFlagsEXT, 0b1_1111, Flags);
 impl DebugReportFlagsEXT {
     pub const INFORMATION: Self = DebugReportFlagsEXT(0b1);
     pub const WARNING: Self = DebugReportFlagsEXT(0b10);
     pub const PERFORMANCE_WARNING: Self = DebugReportFlagsEXT(0b100);
     pub const ERROR: Self = DebugReportFlagsEXT(0b1000);
-    pub const DEBUG: Self = DebugReportFlagsEXT(0b10000);
+    pub const DEBUG: Self = DebugReportFlagsEXT(0b1_0000);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -43986,7 +43991,7 @@ impl ExternalMemoryFeatureFlagsNV {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkSubgroupFeatureFlagBits.html>"]
 pub struct SubgroupFeatureFlags(pub(crate) Flags);
-vk_bitflags_wrapped!(SubgroupFeatureFlags, 0b11111111, Flags);
+vk_bitflags_wrapped!(SubgroupFeatureFlags, 0b1111_1111, Flags);
 impl SubgroupFeatureFlags {
     #[doc = "Basic subgroup operations"]
     pub const BASIC: Self = SubgroupFeatureFlags(0b1);
@@ -43997,13 +44002,13 @@ impl SubgroupFeatureFlags {
     #[doc = "Ballot subgroup operations"]
     pub const BALLOT: Self = SubgroupFeatureFlags(0b1000);
     #[doc = "Shuffle subgroup operations"]
-    pub const SHUFFLE: Self = SubgroupFeatureFlags(0b10000);
+    pub const SHUFFLE: Self = SubgroupFeatureFlags(0b1_0000);
     #[doc = "Shuffle relative subgroup operations"]
-    pub const SHUFFLE_RELATIVE: Self = SubgroupFeatureFlags(0b100000);
+    pub const SHUFFLE_RELATIVE: Self = SubgroupFeatureFlags(0b10_0000);
     #[doc = "Clustered subgroup operations"]
-    pub const CLUSTERED: Self = SubgroupFeatureFlags(0b1000000);
+    pub const CLUSTERED: Self = SubgroupFeatureFlags(0b100_0000);
     #[doc = "Quad subgroup operations"]
-    pub const QUAD: Self = SubgroupFeatureFlags(0b10000000);
+    pub const QUAD: Self = SubgroupFeatureFlags(0b1000_0000);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -44035,7 +44040,7 @@ impl DescriptorSetLayoutCreateFlags {}
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkExternalMemoryHandleTypeFlagBits.html>"]
 pub struct ExternalMemoryHandleTypeFlags(pub(crate) Flags);
-vk_bitflags_wrapped!(ExternalMemoryHandleTypeFlags, 0b1111111, Flags);
+vk_bitflags_wrapped!(ExternalMemoryHandleTypeFlags, 0b111_1111, Flags);
 impl ExternalMemoryHandleTypeFlags {
     pub const EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD: Self = ExternalMemoryHandleTypeFlags(0b1);
     pub const EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32: Self = ExternalMemoryHandleTypeFlags(0b10);
@@ -44044,11 +44049,11 @@ impl ExternalMemoryHandleTypeFlags {
     pub const EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE: Self =
         ExternalMemoryHandleTypeFlags(0b1000);
     pub const EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT: Self =
-        ExternalMemoryHandleTypeFlags(0b10000);
+        ExternalMemoryHandleTypeFlags(0b1_0000);
     pub const EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP: Self =
-        ExternalMemoryHandleTypeFlags(0b100000);
+        ExternalMemoryHandleTypeFlags(0b10_0000);
     pub const EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE: Self =
-        ExternalMemoryHandleTypeFlags(0b1000000);
+        ExternalMemoryHandleTypeFlags(0b100_0000);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -44064,7 +44069,7 @@ impl ExternalMemoryFeatureFlags {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkExternalSemaphoreHandleTypeFlagBits.html>"]
 pub struct ExternalSemaphoreHandleTypeFlags(pub(crate) Flags);
-vk_bitflags_wrapped!(ExternalSemaphoreHandleTypeFlags, 0b11111, Flags);
+vk_bitflags_wrapped!(ExternalSemaphoreHandleTypeFlags, 0b1_1111, Flags);
 impl ExternalSemaphoreHandleTypeFlags {
     pub const EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD: Self =
         ExternalSemaphoreHandleTypeFlags(0b1);
@@ -44075,7 +44080,7 @@ impl ExternalSemaphoreHandleTypeFlags {
     pub const EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE: Self =
         ExternalSemaphoreHandleTypeFlags(0b1000);
     pub const EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD: Self =
-        ExternalSemaphoreHandleTypeFlags(0b10000);
+        ExternalSemaphoreHandleTypeFlags(0b1_0000);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -44186,12 +44191,12 @@ impl SubpassDescriptionFlags {}
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkDebugUtilsMessageSeverityFlagBitsEXT.html>"]
 pub struct DebugUtilsMessageSeverityFlagsEXT(pub(crate) Flags);
-vk_bitflags_wrapped!(DebugUtilsMessageSeverityFlagsEXT, 0b1000100010001, Flags);
+vk_bitflags_wrapped!(DebugUtilsMessageSeverityFlagsEXT, 0b1_0001_0001_0001, Flags);
 impl DebugUtilsMessageSeverityFlagsEXT {
     pub const VERBOSE: Self = DebugUtilsMessageSeverityFlagsEXT(0b1);
-    pub const INFO: Self = DebugUtilsMessageSeverityFlagsEXT(0b10000);
-    pub const WARNING: Self = DebugUtilsMessageSeverityFlagsEXT(0b100000000);
-    pub const ERROR: Self = DebugUtilsMessageSeverityFlagsEXT(0b1000000000000);
+    pub const INFO: Self = DebugUtilsMessageSeverityFlagsEXT(0b1_0000);
+    pub const WARNING: Self = DebugUtilsMessageSeverityFlagsEXT(0b1_0000_0000);
+    pub const ERROR: Self = DebugUtilsMessageSeverityFlagsEXT(0b1_0000_0000_0000);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -44258,13 +44263,13 @@ impl GeometryFlagsNV {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkBuildAccelerationStructureFlagBitsNV.html>"]
 pub struct BuildAccelerationStructureFlagsNV(pub(crate) Flags);
-vk_bitflags_wrapped!(BuildAccelerationStructureFlagsNV, 0b11111, Flags);
+vk_bitflags_wrapped!(BuildAccelerationStructureFlagsNV, 0b1_1111, Flags);
 impl BuildAccelerationStructureFlagsNV {
     pub const ALLOW_UPDATE: Self = BuildAccelerationStructureFlagsNV(0b1);
     pub const ALLOW_COMPACTION: Self = BuildAccelerationStructureFlagsNV(0b10);
     pub const PREFER_FAST_TRACE: Self = BuildAccelerationStructureFlagsNV(0b100);
     pub const PREFER_FAST_BUILD: Self = BuildAccelerationStructureFlagsNV(0b1000);
-    pub const LOW_MEMORY: Self = BuildAccelerationStructureFlagsNV(0b10000);
+    pub const LOW_MEMORY: Self = BuildAccelerationStructureFlagsNV(0b1_0000);
 }
 pub const MAX_PHYSICAL_DEVICE_NAME_SIZE: usize = 256;
 pub const UUID_SIZE: usize = 16;
@@ -44549,15 +44554,15 @@ impl KhrSurfaceFn {
 }
 #[doc = "Generated from \'VK_KHR_surface\'"]
 impl Result {
-    pub const ERROR_SURFACE_LOST_KHR: Self = Result(-1000000000);
+    pub const ERROR_SURFACE_LOST_KHR: Self = Result(-1_000_000_000);
 }
 #[doc = "Generated from \'VK_KHR_surface\'"]
 impl Result {
-    pub const ERROR_NATIVE_WINDOW_IN_USE_KHR: Self = Result(-1000000001);
+    pub const ERROR_NATIVE_WINDOW_IN_USE_KHR: Self = Result(-1_000_000_001);
 }
 #[doc = "Generated from \'VK_KHR_surface\'"]
 impl ObjectType {
-    pub const SURFACE_KHR: Self = ObjectType(1000000000);
+    pub const SURFACE_KHR: Self = ObjectType(1_000_000_000);
 }
 impl KhrSwapchainFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -44977,51 +44982,51 @@ impl KhrSwapchainFn {
 }
 #[doc = "Generated from \'VK_KHR_swapchain\'"]
 impl StructureType {
-    pub const SWAPCHAIN_CREATE_INFO_KHR: Self = StructureType(1000001000);
+    pub const SWAPCHAIN_CREATE_INFO_KHR: Self = StructureType(1_000_001_000);
 }
 #[doc = "Generated from \'VK_KHR_swapchain\'"]
 impl StructureType {
-    pub const PRESENT_INFO_KHR: Self = StructureType(1000001001);
+    pub const PRESENT_INFO_KHR: Self = StructureType(1_000_001_001);
 }
 #[doc = "Generated from \'VK_KHR_swapchain\'"]
 impl ImageLayout {
-    pub const PRESENT_SRC_KHR: Self = ImageLayout(1000001002);
+    pub const PRESENT_SRC_KHR: Self = ImageLayout(1_000_001_002);
 }
 #[doc = "Generated from \'VK_KHR_swapchain\'"]
 impl Result {
-    pub const SUBOPTIMAL_KHR: Self = Result(1000001003);
+    pub const SUBOPTIMAL_KHR: Self = Result(1_000_001_003);
 }
 #[doc = "Generated from \'VK_KHR_swapchain\'"]
 impl Result {
-    pub const ERROR_OUT_OF_DATE_KHR: Self = Result(-1000001004);
+    pub const ERROR_OUT_OF_DATE_KHR: Self = Result(-1_000_001_004);
 }
 #[doc = "Generated from \'VK_KHR_swapchain\'"]
 impl ObjectType {
-    pub const SWAPCHAIN_KHR: Self = ObjectType(1000001000);
+    pub const SWAPCHAIN_KHR: Self = ObjectType(1_000_001_000);
 }
 #[doc = "Generated from \'VK_KHR_swapchain\'"]
 impl StructureType {
-    pub const DEVICE_GROUP_PRESENT_CAPABILITIES_KHR: Self = StructureType(1000060007);
+    pub const DEVICE_GROUP_PRESENT_CAPABILITIES_KHR: Self = StructureType(1_000_060_007);
 }
 #[doc = "Generated from \'VK_KHR_swapchain\'"]
 impl StructureType {
-    pub const IMAGE_SWAPCHAIN_CREATE_INFO_KHR: Self = StructureType(1000060008);
+    pub const IMAGE_SWAPCHAIN_CREATE_INFO_KHR: Self = StructureType(1_000_060_008);
 }
 #[doc = "Generated from \'VK_KHR_swapchain\'"]
 impl StructureType {
-    pub const BIND_IMAGE_MEMORY_SWAPCHAIN_INFO_KHR: Self = StructureType(1000060009);
+    pub const BIND_IMAGE_MEMORY_SWAPCHAIN_INFO_KHR: Self = StructureType(1_000_060_009);
 }
 #[doc = "Generated from \'VK_KHR_swapchain\'"]
 impl StructureType {
-    pub const ACQUIRE_NEXT_IMAGE_INFO_KHR: Self = StructureType(1000060010);
+    pub const ACQUIRE_NEXT_IMAGE_INFO_KHR: Self = StructureType(1_000_060_010);
 }
 #[doc = "Generated from \'VK_KHR_swapchain\'"]
 impl StructureType {
-    pub const DEVICE_GROUP_PRESENT_INFO_KHR: Self = StructureType(1000060011);
+    pub const DEVICE_GROUP_PRESENT_INFO_KHR: Self = StructureType(1_000_060_011);
 }
 #[doc = "Generated from \'VK_KHR_swapchain\'"]
 impl StructureType {
-    pub const DEVICE_GROUP_SWAPCHAIN_CREATE_INFO_KHR: Self = StructureType(1000060012);
+    pub const DEVICE_GROUP_SWAPCHAIN_CREATE_INFO_KHR: Self = StructureType(1_000_060_012);
 }
 #[doc = "Generated from \'VK_KHR_swapchain\'"]
 impl SwapchainCreateFlagsKHR {
@@ -45393,19 +45398,19 @@ impl KhrDisplayFn {
 }
 #[doc = "Generated from \'VK_KHR_display\'"]
 impl StructureType {
-    pub const DISPLAY_MODE_CREATE_INFO_KHR: Self = StructureType(1000002000);
+    pub const DISPLAY_MODE_CREATE_INFO_KHR: Self = StructureType(1_000_002_000);
 }
 #[doc = "Generated from \'VK_KHR_display\'"]
 impl StructureType {
-    pub const DISPLAY_SURFACE_CREATE_INFO_KHR: Self = StructureType(1000002001);
+    pub const DISPLAY_SURFACE_CREATE_INFO_KHR: Self = StructureType(1_000_002_001);
 }
 #[doc = "Generated from \'VK_KHR_display\'"]
 impl ObjectType {
-    pub const DISPLAY_KHR: Self = ObjectType(1000002000);
+    pub const DISPLAY_KHR: Self = ObjectType(1_000_002_000);
 }
 #[doc = "Generated from \'VK_KHR_display\'"]
 impl ObjectType {
-    pub const DISPLAY_MODE_KHR: Self = ObjectType(1000002001);
+    pub const DISPLAY_MODE_KHR: Self = ObjectType(1_000_002_001);
 }
 impl KhrDisplaySwapchainFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -45489,11 +45494,11 @@ impl KhrDisplaySwapchainFn {
 }
 #[doc = "Generated from \'VK_KHR_display_swapchain\'"]
 impl StructureType {
-    pub const DISPLAY_PRESENT_INFO_KHR: Self = StructureType(1000003000);
+    pub const DISPLAY_PRESENT_INFO_KHR: Self = StructureType(1_000_003_000);
 }
 #[doc = "Generated from \'VK_KHR_display_swapchain\'"]
 impl Result {
-    pub const ERROR_INCOMPATIBLE_DISPLAY_KHR: Self = Result(-1000003001);
+    pub const ERROR_INCOMPATIBLE_DISPLAY_KHR: Self = Result(-1_000_003_001);
 }
 impl KhrXlibSurfaceFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -45618,7 +45623,7 @@ impl KhrXlibSurfaceFn {
 }
 #[doc = "Generated from \'VK_KHR_xlib_surface\'"]
 impl StructureType {
-    pub const XLIB_SURFACE_CREATE_INFO_KHR: Self = StructureType(1000004000);
+    pub const XLIB_SURFACE_CREATE_INFO_KHR: Self = StructureType(1_000_004_000);
 }
 impl KhrXcbSurfaceFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -45743,7 +45748,7 @@ impl KhrXcbSurfaceFn {
 }
 #[doc = "Generated from \'VK_KHR_xcb_surface\'"]
 impl StructureType {
-    pub const XCB_SURFACE_CREATE_INFO_KHR: Self = StructureType(1000005000);
+    pub const XCB_SURFACE_CREATE_INFO_KHR: Self = StructureType(1_000_005_000);
 }
 impl KhrWaylandSurfaceFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -45863,7 +45868,7 @@ impl KhrWaylandSurfaceFn {
 }
 #[doc = "Generated from \'VK_KHR_wayland_surface\'"]
 impl StructureType {
-    pub const WAYLAND_SURFACE_CREATE_INFO_KHR: Self = StructureType(1000006000);
+    pub const WAYLAND_SURFACE_CREATE_INFO_KHR: Self = StructureType(1_000_006_000);
 }
 impl KhrMirSurfaceFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -45959,7 +45964,7 @@ impl KhrAndroidSurfaceFn {
 }
 #[doc = "Generated from \'VK_KHR_android_surface\'"]
 impl StructureType {
-    pub const ANDROID_SURFACE_CREATE_INFO_KHR: Self = StructureType(1000008000);
+    pub const ANDROID_SURFACE_CREATE_INFO_KHR: Self = StructureType(1_000_008_000);
 }
 impl KhrWin32SurfaceFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -46070,7 +46075,7 @@ impl KhrWin32SurfaceFn {
 }
 #[doc = "Generated from \'VK_KHR_win32_surface\'"]
 impl StructureType {
-    pub const WIN32_SURFACE_CREATE_INFO_KHR: Self = StructureType(1000009000);
+    pub const WIN32_SURFACE_CREATE_INFO_KHR: Self = StructureType(1_000_009_000);
 }
 impl AndroidNativeBufferFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -46248,7 +46253,7 @@ impl AndroidNativeBufferFn {
 }
 #[doc = "Generated from \'VK_ANDROID_native_buffer\'"]
 impl StructureType {
-    pub const NATIVE_BUFFER_ANDROID: Self = StructureType(1000010000);
+    pub const NATIVE_BUFFER_ANDROID: Self = StructureType(1_000_010_000);
 }
 impl ExtDebugReportFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -46433,23 +46438,23 @@ impl ExtDebugReportFn {
 }
 #[doc = "Generated from \'VK_EXT_debug_report\'"]
 impl StructureType {
-    pub const DEBUG_REPORT_CALLBACK_CREATE_INFO_EXT: Self = StructureType(1000011000);
+    pub const DEBUG_REPORT_CALLBACK_CREATE_INFO_EXT: Self = StructureType(1_000_011_000);
 }
 #[doc = "Generated from \'VK_EXT_debug_report\'"]
 impl Result {
-    pub const ERROR_VALIDATION_FAILED_EXT: Self = Result(-1000011001);
+    pub const ERROR_VALIDATION_FAILED_EXT: Self = Result(-1_000_011_001);
 }
 #[doc = "Generated from \'VK_EXT_debug_report\'"]
 impl ObjectType {
-    pub const DEBUG_REPORT_CALLBACK_EXT: Self = ObjectType(1000011000);
+    pub const DEBUG_REPORT_CALLBACK_EXT: Self = ObjectType(1_000_011_000);
 }
 #[doc = "Generated from \'VK_EXT_debug_report\'"]
 impl DebugReportObjectTypeEXT {
-    pub const SAMPLER_YCBCR_CONVERSION: Self = DebugReportObjectTypeEXT(1000156000);
+    pub const SAMPLER_YCBCR_CONVERSION: Self = DebugReportObjectTypeEXT(1_000_156_000);
 }
 #[doc = "Generated from \'VK_EXT_debug_report\'"]
 impl DebugReportObjectTypeEXT {
-    pub const DESCRIPTOR_UPDATE_TEMPLATE: Self = DebugReportObjectTypeEXT(1000085000);
+    pub const DESCRIPTOR_UPDATE_TEMPLATE: Self = DebugReportObjectTypeEXT(1_000_085_000);
 }
 impl NvGlslShaderFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -46475,7 +46480,7 @@ impl NvGlslShaderFn {
 }
 #[doc = "Generated from \'VK_NV_glsl_shader\'"]
 impl Result {
-    pub const ERROR_INVALID_SHADER_NV: Self = Result(-1000012000);
+    pub const ERROR_INVALID_SHADER_NV: Self = Result(-1_000_012_000);
 }
 impl ExtDepthRangeUnrestrictedFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -46545,11 +46550,11 @@ impl ImgFilterCubicFn {
 }
 #[doc = "Generated from \'VK_IMG_filter_cubic\'"]
 impl Filter {
-    pub const CUBIC_IMG: Self = Filter(1000015000);
+    pub const CUBIC_IMG: Self = Filter(1_000_015_000);
 }
 #[doc = "Generated from \'VK_IMG_filter_cubic\'"]
 impl FormatFeatureFlags {
-    pub const SAMPLED_IMAGE_FILTER_CUBIC_IMG: Self = FormatFeatureFlags(0b10000000000000);
+    pub const SAMPLED_IMAGE_FILTER_CUBIC_IMG: Self = FormatFeatureFlags(0b10_0000_0000_0000);
 }
 impl AmdExtension17Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -46620,7 +46625,7 @@ impl AmdRasterizationOrderFn {
 #[doc = "Generated from \'VK_AMD_rasterization_order\'"]
 impl StructureType {
     pub const PIPELINE_RASTERIZATION_STATE_RASTERIZATION_ORDER_AMD: Self =
-        StructureType(1000018000);
+        StructureType(1_000_018_000);
 }
 impl AmdExtension20Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -46885,15 +46890,15 @@ impl ExtDebugMarkerFn {
 }
 #[doc = "Generated from \'VK_EXT_debug_marker\'"]
 impl StructureType {
-    pub const DEBUG_MARKER_OBJECT_NAME_INFO_EXT: Self = StructureType(1000022000);
+    pub const DEBUG_MARKER_OBJECT_NAME_INFO_EXT: Self = StructureType(1_000_022_000);
 }
 #[doc = "Generated from \'VK_EXT_debug_marker\'"]
 impl StructureType {
-    pub const DEBUG_MARKER_OBJECT_TAG_INFO_EXT: Self = StructureType(1000022001);
+    pub const DEBUG_MARKER_OBJECT_TAG_INFO_EXT: Self = StructureType(1_000_022_001);
 }
 #[doc = "Generated from \'VK_EXT_debug_marker\'"]
 impl StructureType {
-    pub const DEBUG_MARKER_MARKER_INFO_EXT: Self = StructureType(1000022002);
+    pub const DEBUG_MARKER_MARKER_INFO_EXT: Self = StructureType(1_000_022_002);
 }
 impl AmdExtension24Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -46919,51 +46924,51 @@ impl AmdExtension24Fn {
 }
 #[doc = "Generated from \'VK_AMD_extension_24\'"]
 impl QueueFlags {
-    pub const RESERVED_6_KHR: Self = QueueFlags(0b1000000);
+    pub const RESERVED_6_KHR: Self = QueueFlags(0b100_0000);
 }
 #[doc = "Generated from \'VK_AMD_extension_24\'"]
 impl PipelineStageFlags {
-    pub const RESERVED_27_KHR: Self = PipelineStageFlags(0b1000000000000000000000000000);
+    pub const RESERVED_27_KHR: Self = PipelineStageFlags(0b1000_0000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from \'VK_AMD_extension_24\'"]
 impl AccessFlags {
-    pub const RESERVED_30_KHR: Self = AccessFlags(0b1000000000000000000000000000000);
+    pub const RESERVED_30_KHR: Self = AccessFlags(0b100_0000_0000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from \'VK_AMD_extension_24\'"]
 impl AccessFlags {
-    pub const RESERVED_31_KHR: Self = AccessFlags(0b10000000000000000000000000000000);
+    pub const RESERVED_31_KHR: Self = AccessFlags(0b1000_0000_0000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from \'VK_AMD_extension_24\'"]
 impl BufferUsageFlags {
-    pub const RESERVED_15_KHR: Self = BufferUsageFlags(0b1000000000000000);
+    pub const RESERVED_15_KHR: Self = BufferUsageFlags(0b1000_0000_0000_0000);
 }
 #[doc = "Generated from \'VK_AMD_extension_24\'"]
 impl BufferUsageFlags {
-    pub const RESERVED_16_KHR: Self = BufferUsageFlags(0b10000000000000000);
+    pub const RESERVED_16_KHR: Self = BufferUsageFlags(0b1_0000_0000_0000_0000);
 }
 #[doc = "Generated from \'VK_AMD_extension_24\'"]
 impl ImageUsageFlags {
-    pub const RESERVED_13_KHR: Self = ImageUsageFlags(0b10000000000000);
+    pub const RESERVED_13_KHR: Self = ImageUsageFlags(0b10_0000_0000_0000);
 }
 #[doc = "Generated from \'VK_AMD_extension_24\'"]
 impl ImageUsageFlags {
-    pub const RESERVED_14_KHR: Self = ImageUsageFlags(0b100000000000000);
+    pub const RESERVED_14_KHR: Self = ImageUsageFlags(0b100_0000_0000_0000);
 }
 #[doc = "Generated from \'VK_AMD_extension_24\'"]
 impl ImageUsageFlags {
-    pub const RESERVED_15_KHR: Self = ImageUsageFlags(0b1000000000000000);
+    pub const RESERVED_15_KHR: Self = ImageUsageFlags(0b1000_0000_0000_0000);
 }
 #[doc = "Generated from \'VK_AMD_extension_24\'"]
 impl FormatFeatureFlags {
-    pub const RESERVED_27_KHR: Self = FormatFeatureFlags(0b1000000000000000000000000000);
+    pub const RESERVED_27_KHR: Self = FormatFeatureFlags(0b1000_0000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from \'VK_AMD_extension_24\'"]
 impl FormatFeatureFlags {
-    pub const RESERVED_28_KHR: Self = FormatFeatureFlags(0b10000000000000000000000000000);
+    pub const RESERVED_28_KHR: Self = FormatFeatureFlags(0b1_0000_0000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from \'VK_AMD_extension_24\'"]
 impl QueryType {
-    pub const RESERVED_8: Self = QueryType(1000023008);
+    pub const RESERVED_8: Self = QueryType(1_000_023_008);
 }
 impl AmdExtension25Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -46989,51 +46994,51 @@ impl AmdExtension25Fn {
 }
 #[doc = "Generated from \'VK_AMD_extension_25\'"]
 impl QueueFlags {
-    pub const RESERVED_5_KHR: Self = QueueFlags(0b100000);
+    pub const RESERVED_5_KHR: Self = QueueFlags(0b10_0000);
 }
 #[doc = "Generated from \'VK_AMD_extension_25\'"]
 impl PipelineStageFlags {
-    pub const RESERVED_26_KHR: Self = PipelineStageFlags(0b100000000000000000000000000);
+    pub const RESERVED_26_KHR: Self = PipelineStageFlags(0b100_0000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from \'VK_AMD_extension_25\'"]
 impl AccessFlags {
-    pub const RESERVED_28_KHR: Self = AccessFlags(0b10000000000000000000000000000);
+    pub const RESERVED_28_KHR: Self = AccessFlags(0b1_0000_0000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from \'VK_AMD_extension_25\'"]
 impl AccessFlags {
-    pub const RESERVED_29_KHR: Self = AccessFlags(0b100000000000000000000000000000);
+    pub const RESERVED_29_KHR: Self = AccessFlags(0b10_0000_0000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from \'VK_AMD_extension_25\'"]
 impl BufferUsageFlags {
-    pub const RESERVED_13_KHR: Self = BufferUsageFlags(0b10000000000000);
+    pub const RESERVED_13_KHR: Self = BufferUsageFlags(0b10_0000_0000_0000);
 }
 #[doc = "Generated from \'VK_AMD_extension_25\'"]
 impl BufferUsageFlags {
-    pub const RESERVED_14_KHR: Self = BufferUsageFlags(0b100000000000000);
+    pub const RESERVED_14_KHR: Self = BufferUsageFlags(0b100_0000_0000_0000);
 }
 #[doc = "Generated from \'VK_AMD_extension_25\'"]
 impl ImageUsageFlags {
-    pub const RESERVED_10_KHR: Self = ImageUsageFlags(0b10000000000);
+    pub const RESERVED_10_KHR: Self = ImageUsageFlags(0b100_0000_0000);
 }
 #[doc = "Generated from \'VK_AMD_extension_25\'"]
 impl ImageUsageFlags {
-    pub const RESERVED_11_KHR: Self = ImageUsageFlags(0b100000000000);
+    pub const RESERVED_11_KHR: Self = ImageUsageFlags(0b1000_0000_0000);
 }
 #[doc = "Generated from \'VK_AMD_extension_25\'"]
 impl ImageUsageFlags {
-    pub const RESERVED_12_KHR: Self = ImageUsageFlags(0b1000000000000);
+    pub const RESERVED_12_KHR: Self = ImageUsageFlags(0b1_0000_0000_0000);
 }
 #[doc = "Generated from \'VK_AMD_extension_25\'"]
 impl FormatFeatureFlags {
-    pub const RESERVED_25_KHR: Self = FormatFeatureFlags(0b10000000000000000000000000);
+    pub const RESERVED_25_KHR: Self = FormatFeatureFlags(0b10_0000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from \'VK_AMD_extension_25\'"]
 impl FormatFeatureFlags {
-    pub const RESERVED_26_KHR: Self = FormatFeatureFlags(0b100000000000000000000000000);
+    pub const RESERVED_26_KHR: Self = FormatFeatureFlags(0b100_0000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from \'VK_AMD_extension_25\'"]
 impl QueryType {
-    pub const RESERVED_4: Self = QueryType(1000024004);
+    pub const RESERVED_4: Self = QueryType(1_000_024_004);
 }
 impl AmdGcnShaderFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -47081,15 +47086,15 @@ impl NvDedicatedAllocationFn {
 }
 #[doc = "Generated from \'VK_NV_dedicated_allocation\'"]
 impl StructureType {
-    pub const DEDICATED_ALLOCATION_IMAGE_CREATE_INFO_NV: Self = StructureType(1000026000);
+    pub const DEDICATED_ALLOCATION_IMAGE_CREATE_INFO_NV: Self = StructureType(1_000_026_000);
 }
 #[doc = "Generated from \'VK_NV_dedicated_allocation\'"]
 impl StructureType {
-    pub const DEDICATED_ALLOCATION_BUFFER_CREATE_INFO_NV: Self = StructureType(1000026001);
+    pub const DEDICATED_ALLOCATION_BUFFER_CREATE_INFO_NV: Self = StructureType(1_000_026_001);
 }
 #[doc = "Generated from \'VK_NV_dedicated_allocation\'"]
 impl StructureType {
-    pub const DEDICATED_ALLOCATION_MEMORY_ALLOCATE_INFO_NV: Self = StructureType(1000026002);
+    pub const DEDICATED_ALLOCATION_MEMORY_ALLOCATE_INFO_NV: Self = StructureType(1_000_026_002);
 }
 impl ExtExtension28Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -47469,45 +47474,47 @@ impl ExtTransformFeedbackFn {
 }
 #[doc = "Generated from \'VK_EXT_transform_feedback\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_TRANSFORM_FEEDBACK_FEATURES_EXT: Self = StructureType(1000028000);
+    pub const PHYSICAL_DEVICE_TRANSFORM_FEEDBACK_FEATURES_EXT: Self = StructureType(1_000_028_000);
 }
 #[doc = "Generated from \'VK_EXT_transform_feedback\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_TRANSFORM_FEEDBACK_PROPERTIES_EXT: Self = StructureType(1000028001);
+    pub const PHYSICAL_DEVICE_TRANSFORM_FEEDBACK_PROPERTIES_EXT: Self =
+        StructureType(1_000_028_001);
 }
 #[doc = "Generated from \'VK_EXT_transform_feedback\'"]
 impl StructureType {
-    pub const PIPELINE_RASTERIZATION_STATE_STREAM_CREATE_INFO_EXT: Self = StructureType(1000028002);
+    pub const PIPELINE_RASTERIZATION_STATE_STREAM_CREATE_INFO_EXT: Self =
+        StructureType(1_000_028_002);
 }
 #[doc = "Generated from \'VK_EXT_transform_feedback\'"]
 impl QueryType {
-    pub const TRANSFORM_FEEDBACK_STREAM_EXT: Self = QueryType(1000028004);
+    pub const TRANSFORM_FEEDBACK_STREAM_EXT: Self = QueryType(1_000_028_004);
 }
 #[doc = "Generated from \'VK_EXT_transform_feedback\'"]
 impl BufferUsageFlags {
-    pub const TRANSFORM_FEEDBACK_BUFFER_EXT: Self = BufferUsageFlags(0b100000000000);
+    pub const TRANSFORM_FEEDBACK_BUFFER_EXT: Self = BufferUsageFlags(0b1000_0000_0000);
 }
 #[doc = "Generated from \'VK_EXT_transform_feedback\'"]
 impl BufferUsageFlags {
-    pub const TRANSFORM_FEEDBACK_COUNTER_BUFFER_EXT: Self = BufferUsageFlags(0b1000000000000);
+    pub const TRANSFORM_FEEDBACK_COUNTER_BUFFER_EXT: Self = BufferUsageFlags(0b1_0000_0000_0000);
 }
 #[doc = "Generated from \'VK_EXT_transform_feedback\'"]
 impl AccessFlags {
-    pub const TRANSFORM_FEEDBACK_WRITE_EXT: Self = AccessFlags(0b10000000000000000000000000);
+    pub const TRANSFORM_FEEDBACK_WRITE_EXT: Self = AccessFlags(0b10_0000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from \'VK_EXT_transform_feedback\'"]
 impl AccessFlags {
     pub const TRANSFORM_FEEDBACK_COUNTER_READ_EXT: Self =
-        AccessFlags(0b100000000000000000000000000);
+        AccessFlags(0b100_0000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from \'VK_EXT_transform_feedback\'"]
 impl AccessFlags {
     pub const TRANSFORM_FEEDBACK_COUNTER_WRITE_EXT: Self =
-        AccessFlags(0b1000000000000000000000000000);
+        AccessFlags(0b1000_0000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from \'VK_EXT_transform_feedback\'"]
 impl PipelineStageFlags {
-    pub const TRANSFORM_FEEDBACK_EXT: Self = PipelineStageFlags(0b1000000000000000000000000);
+    pub const TRANSFORM_FEEDBACK_EXT: Self = PipelineStageFlags(0b1_0000_0000_0000_0000_0000_0000);
 }
 impl NvxExtension30Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -47930,7 +47937,7 @@ impl AmdTextureGatherBiasLodFn {
 }
 #[doc = "Generated from \'VK_AMD_texture_gather_bias_lod\'"]
 impl StructureType {
-    pub const TEXTURE_LOD_GATHER_FORMAT_PROPERTIES_AMD: Self = StructureType(1000041000);
+    pub const TEXTURE_LOD_GATHER_FORMAT_PROPERTIES_AMD: Self = StructureType(1_000_041_000);
 }
 impl AmdShaderInfoFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -48192,11 +48199,11 @@ impl NvCornerSampledImageFn {
 }
 #[doc = "Generated from \'VK_NV_corner_sampled_image\'"]
 impl ImageCreateFlags {
-    pub const CORNER_SAMPLED_NV: Self = ImageCreateFlags(0b10000000000000);
+    pub const CORNER_SAMPLED_NV: Self = ImageCreateFlags(0b10_0000_0000_0000);
 }
 #[doc = "Generated from \'VK_NV_corner_sampled_image\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_CORNER_SAMPLED_IMAGE_FEATURES_NV: Self = StructureType(1000050000);
+    pub const PHYSICAL_DEVICE_CORNER_SAMPLED_IMAGE_FEATURES_NV: Self = StructureType(1_000_050_000);
 }
 impl NvxExtension52Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -48288,35 +48295,35 @@ impl ImgFormatPvrtcFn {
 }
 #[doc = "Generated from \'VK_IMG_format_pvrtc\'"]
 impl Format {
-    pub const PVRTC1_2BPP_UNORM_BLOCK_IMG: Self = Format(1000054000);
+    pub const PVRTC1_2BPP_UNORM_BLOCK_IMG: Self = Format(1_000_054_000);
 }
 #[doc = "Generated from \'VK_IMG_format_pvrtc\'"]
 impl Format {
-    pub const PVRTC1_4BPP_UNORM_BLOCK_IMG: Self = Format(1000054001);
+    pub const PVRTC1_4BPP_UNORM_BLOCK_IMG: Self = Format(1_000_054_001);
 }
 #[doc = "Generated from \'VK_IMG_format_pvrtc\'"]
 impl Format {
-    pub const PVRTC2_2BPP_UNORM_BLOCK_IMG: Self = Format(1000054002);
+    pub const PVRTC2_2BPP_UNORM_BLOCK_IMG: Self = Format(1_000_054_002);
 }
 #[doc = "Generated from \'VK_IMG_format_pvrtc\'"]
 impl Format {
-    pub const PVRTC2_4BPP_UNORM_BLOCK_IMG: Self = Format(1000054003);
+    pub const PVRTC2_4BPP_UNORM_BLOCK_IMG: Self = Format(1_000_054_003);
 }
 #[doc = "Generated from \'VK_IMG_format_pvrtc\'"]
 impl Format {
-    pub const PVRTC1_2BPP_SRGB_BLOCK_IMG: Self = Format(1000054004);
+    pub const PVRTC1_2BPP_SRGB_BLOCK_IMG: Self = Format(1_000_054_004);
 }
 #[doc = "Generated from \'VK_IMG_format_pvrtc\'"]
 impl Format {
-    pub const PVRTC1_4BPP_SRGB_BLOCK_IMG: Self = Format(1000054005);
+    pub const PVRTC1_4BPP_SRGB_BLOCK_IMG: Self = Format(1_000_054_005);
 }
 #[doc = "Generated from \'VK_IMG_format_pvrtc\'"]
 impl Format {
-    pub const PVRTC2_2BPP_SRGB_BLOCK_IMG: Self = Format(1000054006);
+    pub const PVRTC2_2BPP_SRGB_BLOCK_IMG: Self = Format(1_000_054_006);
 }
 #[doc = "Generated from \'VK_IMG_format_pvrtc\'"]
 impl Format {
-    pub const PVRTC2_4BPP_SRGB_BLOCK_IMG: Self = Format(1000054007);
+    pub const PVRTC2_4BPP_SRGB_BLOCK_IMG: Self = Format(1_000_054_007);
 }
 impl NvExternalMemoryCapabilitiesFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -48438,11 +48445,11 @@ impl NvExternalMemoryFn {
 }
 #[doc = "Generated from \'VK_NV_external_memory\'"]
 impl StructureType {
-    pub const EXTERNAL_MEMORY_IMAGE_CREATE_INFO_NV: Self = StructureType(1000056000);
+    pub const EXTERNAL_MEMORY_IMAGE_CREATE_INFO_NV: Self = StructureType(1_000_056_000);
 }
 #[doc = "Generated from \'VK_NV_external_memory\'"]
 impl StructureType {
-    pub const EXPORT_MEMORY_ALLOCATE_INFO_NV: Self = StructureType(1000056001);
+    pub const EXPORT_MEMORY_ALLOCATE_INFO_NV: Self = StructureType(1_000_056_001);
 }
 impl NvExternalMemoryWin32Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -48516,11 +48523,11 @@ impl NvExternalMemoryWin32Fn {
 }
 #[doc = "Generated from \'VK_NV_external_memory_win32\'"]
 impl StructureType {
-    pub const IMPORT_MEMORY_WIN32_HANDLE_INFO_NV: Self = StructureType(1000057000);
+    pub const IMPORT_MEMORY_WIN32_HANDLE_INFO_NV: Self = StructureType(1_000_057_000);
 }
 #[doc = "Generated from \'VK_NV_external_memory_win32\'"]
 impl StructureType {
-    pub const EXPORT_MEMORY_WIN32_HANDLE_INFO_NV: Self = StructureType(1000057001);
+    pub const EXPORT_MEMORY_WIN32_HANDLE_INFO_NV: Self = StructureType(1_000_057_001);
 }
 impl NvWin32KeyedMutexFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -48546,7 +48553,7 @@ impl NvWin32KeyedMutexFn {
 }
 #[doc = "Generated from \'VK_NV_win32_keyed_mutex\'"]
 impl StructureType {
-    pub const WIN32_KEYED_MUTEX_ACQUIRE_RELEASE_INFO_NV: Self = StructureType(1000058000);
+    pub const WIN32_KEYED_MUTEX_ACQUIRE_RELEASE_INFO_NV: Self = StructureType(1_000_058_000);
 }
 impl KhrGetPhysicalDeviceProperties2Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -48770,7 +48777,7 @@ impl ExtValidationFlagsFn {
 }
 #[doc = "Generated from \'VK_EXT_validation_flags\'"]
 impl StructureType {
-    pub const VALIDATION_FLAGS_EXT: Self = StructureType(1000061000);
+    pub const VALIDATION_FLAGS_EXT: Self = StructureType(1_000_061_000);
 }
 impl NnViSurfaceFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -48841,7 +48848,7 @@ impl NnViSurfaceFn {
 }
 #[doc = "Generated from \'VK_NN_vi_surface\'"]
 impl StructureType {
-    pub const VI_SURFACE_CREATE_INFO_NN: Self = StructureType(1000062000);
+    pub const VI_SURFACE_CREATE_INFO_NN: Self = StructureType(1_000_062_000);
 }
 impl KhrShaderDrawParametersFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -48955,11 +48962,11 @@ impl ExtAstcDecodeModeFn {
 }
 #[doc = "Generated from \'VK_EXT_astc_decode_mode\'"]
 impl StructureType {
-    pub const IMAGE_VIEW_ASTC_DECODE_MODE_EXT: Self = StructureType(1000067000);
+    pub const IMAGE_VIEW_ASTC_DECODE_MODE_EXT: Self = StructureType(1_000_067_000);
 }
 #[doc = "Generated from \'VK_EXT_astc_decode_mode\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_ASTC_DECODE_FEATURES_EXT: Self = StructureType(1000067001);
+    pub const PHYSICAL_DEVICE_ASTC_DECODE_FEATURES_EXT: Self = StructureType(1_000_067_001);
 }
 impl ImgExtension69Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -49189,19 +49196,19 @@ impl KhrExternalMemoryWin32Fn {
 }
 #[doc = "Generated from \'VK_KHR_external_memory_win32\'"]
 impl StructureType {
-    pub const IMPORT_MEMORY_WIN32_HANDLE_INFO_KHR: Self = StructureType(1000073000);
+    pub const IMPORT_MEMORY_WIN32_HANDLE_INFO_KHR: Self = StructureType(1_000_073_000);
 }
 #[doc = "Generated from \'VK_KHR_external_memory_win32\'"]
 impl StructureType {
-    pub const EXPORT_MEMORY_WIN32_HANDLE_INFO_KHR: Self = StructureType(1000073001);
+    pub const EXPORT_MEMORY_WIN32_HANDLE_INFO_KHR: Self = StructureType(1_000_073_001);
 }
 #[doc = "Generated from \'VK_KHR_external_memory_win32\'"]
 impl StructureType {
-    pub const MEMORY_WIN32_HANDLE_PROPERTIES_KHR: Self = StructureType(1000073002);
+    pub const MEMORY_WIN32_HANDLE_PROPERTIES_KHR: Self = StructureType(1_000_073_002);
 }
 #[doc = "Generated from \'VK_KHR_external_memory_win32\'"]
 impl StructureType {
-    pub const MEMORY_GET_WIN32_HANDLE_INFO_KHR: Self = StructureType(1000073003);
+    pub const MEMORY_GET_WIN32_HANDLE_INFO_KHR: Self = StructureType(1_000_073_003);
 }
 impl KhrExternalMemoryFdFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -49313,15 +49320,15 @@ impl KhrExternalMemoryFdFn {
 }
 #[doc = "Generated from \'VK_KHR_external_memory_fd\'"]
 impl StructureType {
-    pub const IMPORT_MEMORY_FD_INFO_KHR: Self = StructureType(1000074000);
+    pub const IMPORT_MEMORY_FD_INFO_KHR: Self = StructureType(1_000_074_000);
 }
 #[doc = "Generated from \'VK_KHR_external_memory_fd\'"]
 impl StructureType {
-    pub const MEMORY_FD_PROPERTIES_KHR: Self = StructureType(1000074001);
+    pub const MEMORY_FD_PROPERTIES_KHR: Self = StructureType(1_000_074_001);
 }
 #[doc = "Generated from \'VK_KHR_external_memory_fd\'"]
 impl StructureType {
-    pub const MEMORY_GET_FD_INFO_KHR: Self = StructureType(1000074002);
+    pub const MEMORY_GET_FD_INFO_KHR: Self = StructureType(1_000_074_002);
 }
 impl KhrWin32KeyedMutexFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -49347,7 +49354,7 @@ impl KhrWin32KeyedMutexFn {
 }
 #[doc = "Generated from \'VK_KHR_win32_keyed_mutex\'"]
 impl StructureType {
-    pub const WIN32_KEYED_MUTEX_ACQUIRE_RELEASE_INFO_KHR: Self = StructureType(1000075000);
+    pub const WIN32_KEYED_MUTEX_ACQUIRE_RELEASE_INFO_KHR: Self = StructureType(1_000_075_000);
 }
 impl KhrExternalSemaphoreCapabilitiesFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -49498,19 +49505,19 @@ impl KhrExternalSemaphoreWin32Fn {
 }
 #[doc = "Generated from \'VK_KHR_external_semaphore_win32\'"]
 impl StructureType {
-    pub const IMPORT_SEMAPHORE_WIN32_HANDLE_INFO_KHR: Self = StructureType(1000078000);
+    pub const IMPORT_SEMAPHORE_WIN32_HANDLE_INFO_KHR: Self = StructureType(1_000_078_000);
 }
 #[doc = "Generated from \'VK_KHR_external_semaphore_win32\'"]
 impl StructureType {
-    pub const EXPORT_SEMAPHORE_WIN32_HANDLE_INFO_KHR: Self = StructureType(1000078001);
+    pub const EXPORT_SEMAPHORE_WIN32_HANDLE_INFO_KHR: Self = StructureType(1_000_078_001);
 }
 #[doc = "Generated from \'VK_KHR_external_semaphore_win32\'"]
 impl StructureType {
-    pub const D3D12_FENCE_SUBMIT_INFO_KHR: Self = StructureType(1000078002);
+    pub const D3D12_FENCE_SUBMIT_INFO_KHR: Self = StructureType(1_000_078_002);
 }
 #[doc = "Generated from \'VK_KHR_external_semaphore_win32\'"]
 impl StructureType {
-    pub const SEMAPHORE_GET_WIN32_HANDLE_INFO_KHR: Self = StructureType(1000078003);
+    pub const SEMAPHORE_GET_WIN32_HANDLE_INFO_KHR: Self = StructureType(1_000_078_003);
 }
 impl KhrExternalSemaphoreFdFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -49614,11 +49621,11 @@ impl KhrExternalSemaphoreFdFn {
 }
 #[doc = "Generated from \'VK_KHR_external_semaphore_fd\'"]
 impl StructureType {
-    pub const IMPORT_SEMAPHORE_FD_INFO_KHR: Self = StructureType(1000079000);
+    pub const IMPORT_SEMAPHORE_FD_INFO_KHR: Self = StructureType(1_000_079_000);
 }
 #[doc = "Generated from \'VK_KHR_external_semaphore_fd\'"]
 impl StructureType {
-    pub const SEMAPHORE_GET_FD_INFO_KHR: Self = StructureType(1000079001);
+    pub const SEMAPHORE_GET_FD_INFO_KHR: Self = StructureType(1_000_079_001);
 }
 impl KhrPushDescriptorFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -49763,7 +49770,7 @@ impl KhrPushDescriptorFn {
 }
 #[doc = "Generated from \'VK_KHR_push_descriptor\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_PUSH_DESCRIPTOR_PROPERTIES_KHR: Self = StructureType(1000080000);
+    pub const PHYSICAL_DEVICE_PUSH_DESCRIPTOR_PROPERTIES_KHR: Self = StructureType(1_000_080_000);
 }
 #[doc = "Generated from \'VK_KHR_push_descriptor\'"]
 impl DescriptorSetLayoutCreateFlags {
@@ -49865,27 +49872,28 @@ impl ExtConditionalRenderingFn {
 #[doc = "Generated from \'VK_EXT_conditional_rendering\'"]
 impl StructureType {
     pub const COMMAND_BUFFER_INHERITANCE_CONDITIONAL_RENDERING_INFO_EXT: Self =
-        StructureType(1000081000);
+        StructureType(1_000_081_000);
 }
 #[doc = "Generated from \'VK_EXT_conditional_rendering\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_CONDITIONAL_RENDERING_FEATURES_EXT: Self = StructureType(1000081001);
+    pub const PHYSICAL_DEVICE_CONDITIONAL_RENDERING_FEATURES_EXT: Self =
+        StructureType(1_000_081_001);
 }
 #[doc = "Generated from \'VK_EXT_conditional_rendering\'"]
 impl StructureType {
-    pub const CONDITIONAL_RENDERING_BEGIN_INFO_EXT: Self = StructureType(1000081002);
+    pub const CONDITIONAL_RENDERING_BEGIN_INFO_EXT: Self = StructureType(1_000_081_002);
 }
 #[doc = "Generated from \'VK_EXT_conditional_rendering\'"]
 impl AccessFlags {
-    pub const CONDITIONAL_RENDERING_READ_EXT: Self = AccessFlags(0b100000000000000000000);
+    pub const CONDITIONAL_RENDERING_READ_EXT: Self = AccessFlags(0b1_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from \'VK_EXT_conditional_rendering\'"]
 impl BufferUsageFlags {
-    pub const CONDITIONAL_RENDERING_EXT: Self = BufferUsageFlags(0b1000000000);
+    pub const CONDITIONAL_RENDERING_EXT: Self = BufferUsageFlags(0b10_0000_0000);
 }
 #[doc = "Generated from \'VK_EXT_conditional_rendering\'"]
 impl PipelineStageFlags {
-    pub const CONDITIONAL_RENDERING_EXT: Self = PipelineStageFlags(0b1000000000000000000);
+    pub const CONDITIONAL_RENDERING_EXT: Self = PipelineStageFlags(0b100_0000_0000_0000_0000);
 }
 impl KhrShaderFloat16Int8Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -49911,7 +49919,7 @@ impl KhrShaderFloat16Int8Fn {
 }
 #[doc = "Generated from \'VK_KHR_shader_float16_int8\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_FLOAT16_INT8_FEATURES_KHR: Self = StructureType(1000082000);
+    pub const PHYSICAL_DEVICE_FLOAT16_INT8_FEATURES_KHR: Self = StructureType(1_000_082_000);
 }
 impl Khr16bitStorageFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -49959,7 +49967,7 @@ impl KhrIncrementalPresentFn {
 }
 #[doc = "Generated from \'VK_KHR_incremental_present\'"]
 impl StructureType {
-    pub const PRESENT_REGIONS_KHR: Self = StructureType(1000084000);
+    pub const PRESENT_REGIONS_KHR: Self = StructureType(1_000_084_000);
 }
 impl KhrDescriptorUpdateTemplateFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -50465,47 +50473,47 @@ impl NvxDeviceGeneratedCommandsFn {
 }
 #[doc = "Generated from \'VK_NVX_device_generated_commands\'"]
 impl StructureType {
-    pub const OBJECT_TABLE_CREATE_INFO_NVX: Self = StructureType(1000086000);
+    pub const OBJECT_TABLE_CREATE_INFO_NVX: Self = StructureType(1_000_086_000);
 }
 #[doc = "Generated from \'VK_NVX_device_generated_commands\'"]
 impl StructureType {
-    pub const INDIRECT_COMMANDS_LAYOUT_CREATE_INFO_NVX: Self = StructureType(1000086001);
+    pub const INDIRECT_COMMANDS_LAYOUT_CREATE_INFO_NVX: Self = StructureType(1_000_086_001);
 }
 #[doc = "Generated from \'VK_NVX_device_generated_commands\'"]
 impl StructureType {
-    pub const CMD_PROCESS_COMMANDS_INFO_NVX: Self = StructureType(1000086002);
+    pub const CMD_PROCESS_COMMANDS_INFO_NVX: Self = StructureType(1_000_086_002);
 }
 #[doc = "Generated from \'VK_NVX_device_generated_commands\'"]
 impl StructureType {
-    pub const CMD_RESERVE_SPACE_FOR_COMMANDS_INFO_NVX: Self = StructureType(1000086003);
+    pub const CMD_RESERVE_SPACE_FOR_COMMANDS_INFO_NVX: Self = StructureType(1_000_086_003);
 }
 #[doc = "Generated from \'VK_NVX_device_generated_commands\'"]
 impl StructureType {
-    pub const DEVICE_GENERATED_COMMANDS_LIMITS_NVX: Self = StructureType(1000086004);
+    pub const DEVICE_GENERATED_COMMANDS_LIMITS_NVX: Self = StructureType(1_000_086_004);
 }
 #[doc = "Generated from \'VK_NVX_device_generated_commands\'"]
 impl StructureType {
-    pub const DEVICE_GENERATED_COMMANDS_FEATURES_NVX: Self = StructureType(1000086005);
+    pub const DEVICE_GENERATED_COMMANDS_FEATURES_NVX: Self = StructureType(1_000_086_005);
 }
 #[doc = "Generated from \'VK_NVX_device_generated_commands\'"]
 impl PipelineStageFlags {
-    pub const COMMAND_PROCESS_NVX: Self = PipelineStageFlags(0b100000000000000000);
+    pub const COMMAND_PROCESS_NVX: Self = PipelineStageFlags(0b10_0000_0000_0000_0000);
 }
 #[doc = "Generated from \'VK_NVX_device_generated_commands\'"]
 impl AccessFlags {
-    pub const COMMAND_PROCESS_READ_NVX: Self = AccessFlags(0b100000000000000000);
+    pub const COMMAND_PROCESS_READ_NVX: Self = AccessFlags(0b10_0000_0000_0000_0000);
 }
 #[doc = "Generated from \'VK_NVX_device_generated_commands\'"]
 impl AccessFlags {
-    pub const COMMAND_PROCESS_WRITE_NVX: Self = AccessFlags(0b1000000000000000000);
+    pub const COMMAND_PROCESS_WRITE_NVX: Self = AccessFlags(0b100_0000_0000_0000_0000);
 }
 #[doc = "Generated from \'VK_NVX_device_generated_commands\'"]
 impl ObjectType {
-    pub const OBJECT_TABLE_NVX: Self = ObjectType(1000086000);
+    pub const OBJECT_TABLE_NVX: Self = ObjectType(1_000_086_000);
 }
 #[doc = "Generated from \'VK_NVX_device_generated_commands\'"]
 impl ObjectType {
-    pub const INDIRECT_COMMANDS_LAYOUT_NVX: Self = ObjectType(1000086001);
+    pub const INDIRECT_COMMANDS_LAYOUT_NVX: Self = ObjectType(1_000_086_001);
 }
 impl NvClipSpaceWScalingFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -50584,11 +50592,11 @@ impl NvClipSpaceWScalingFn {
 }
 #[doc = "Generated from \'VK_NV_clip_space_w_scaling\'"]
 impl StructureType {
-    pub const PIPELINE_VIEWPORT_W_SCALING_STATE_CREATE_INFO_NV: Self = StructureType(1000087000);
+    pub const PIPELINE_VIEWPORT_W_SCALING_STATE_CREATE_INFO_NV: Self = StructureType(1_000_087_000);
 }
 #[doc = "Generated from \'VK_NV_clip_space_w_scaling\'"]
 impl DynamicState {
-    pub const VIEWPORT_W_SCALING_NV: Self = DynamicState(1000087000);
+    pub const VIEWPORT_W_SCALING_NV: Self = DynamicState(1_000_087_000);
 }
 impl ExtDirectModeDisplayFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -50829,7 +50837,7 @@ impl ExtDisplaySurfaceCounterFn {
 }
 #[doc = "Generated from \'VK_EXT_display_surface_counter\'"]
 impl StructureType {
-    pub const SURFACE_CAPABILITIES_2_EXT: Self = StructureType(1000090000);
+    pub const SURFACE_CAPABILITIES_2_EXT: Self = StructureType(1_000_090_000);
 }
 impl ExtDisplayControlFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -51044,19 +51052,19 @@ impl ExtDisplayControlFn {
 }
 #[doc = "Generated from \'VK_EXT_display_control\'"]
 impl StructureType {
-    pub const DISPLAY_POWER_INFO_EXT: Self = StructureType(1000091000);
+    pub const DISPLAY_POWER_INFO_EXT: Self = StructureType(1_000_091_000);
 }
 #[doc = "Generated from \'VK_EXT_display_control\'"]
 impl StructureType {
-    pub const DEVICE_EVENT_INFO_EXT: Self = StructureType(1000091001);
+    pub const DEVICE_EVENT_INFO_EXT: Self = StructureType(1_000_091_001);
 }
 #[doc = "Generated from \'VK_EXT_display_control\'"]
 impl StructureType {
-    pub const DISPLAY_EVENT_INFO_EXT: Self = StructureType(1000091002);
+    pub const DISPLAY_EVENT_INFO_EXT: Self = StructureType(1_000_091_002);
 }
 #[doc = "Generated from \'VK_EXT_display_control\'"]
 impl StructureType {
-    pub const SWAPCHAIN_COUNTER_CREATE_INFO_EXT: Self = StructureType(1000091003);
+    pub const SWAPCHAIN_COUNTER_CREATE_INFO_EXT: Self = StructureType(1_000_091_003);
 }
 impl GoogleDisplayTimingFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -51176,7 +51184,7 @@ impl GoogleDisplayTimingFn {
 }
 #[doc = "Generated from \'VK_GOOGLE_display_timing\'"]
 impl StructureType {
-    pub const PRESENT_TIMES_INFO_GOOGLE: Self = StructureType(1000092000);
+    pub const PRESENT_TIMES_INFO_GOOGLE: Self = StructureType(1_000_092_000);
 }
 impl NvSampleMaskOverrideCoverageFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -51269,7 +51277,7 @@ impl NvxMultiviewPerViewAttributesFn {
 #[doc = "Generated from \'VK_NVX_multiview_per_view_attributes\'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_MULTIVIEW_PER_VIEW_ATTRIBUTES_PROPERTIES_NVX: Self =
-        StructureType(1000097000);
+        StructureType(1_000_097_000);
 }
 #[doc = "Generated from \'VK_NVX_multiview_per_view_attributes\'"]
 impl SubpassDescriptionFlags {
@@ -51303,7 +51311,7 @@ impl NvViewportSwizzleFn {
 }
 #[doc = "Generated from \'VK_NV_viewport_swizzle\'"]
 impl StructureType {
-    pub const PIPELINE_VIEWPORT_SWIZZLE_STATE_CREATE_INFO_NV: Self = StructureType(1000098000);
+    pub const PIPELINE_VIEWPORT_SWIZZLE_STATE_CREATE_INFO_NV: Self = StructureType(1_000_098_000);
 }
 impl ExtDiscardRectanglesFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -51382,15 +51390,15 @@ impl ExtDiscardRectanglesFn {
 }
 #[doc = "Generated from \'VK_EXT_discard_rectangles\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_DISCARD_RECTANGLE_PROPERTIES_EXT: Self = StructureType(1000099000);
+    pub const PHYSICAL_DEVICE_DISCARD_RECTANGLE_PROPERTIES_EXT: Self = StructureType(1_000_099_000);
 }
 #[doc = "Generated from \'VK_EXT_discard_rectangles\'"]
 impl StructureType {
-    pub const PIPELINE_DISCARD_RECTANGLE_STATE_CREATE_INFO_EXT: Self = StructureType(1000099001);
+    pub const PIPELINE_DISCARD_RECTANGLE_STATE_CREATE_INFO_EXT: Self = StructureType(1_000_099_001);
 }
 #[doc = "Generated from \'VK_EXT_discard_rectangles\'"]
 impl DynamicState {
-    pub const DISCARD_RECTANGLE_EXT: Self = DynamicState(1000099000);
+    pub const DISCARD_RECTANGLE_EXT: Self = DynamicState(1_000_099_000);
 }
 impl NvExtension101Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -51439,12 +51447,12 @@ impl ExtConservativeRasterizationFn {
 #[doc = "Generated from \'VK_EXT_conservative_rasterization\'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_CONSERVATIVE_RASTERIZATION_PROPERTIES_EXT: Self =
-        StructureType(1000101000);
+        StructureType(1_000_101_000);
 }
 #[doc = "Generated from \'VK_EXT_conservative_rasterization\'"]
 impl StructureType {
     pub const PIPELINE_RASTERIZATION_CONSERVATIVE_STATE_CREATE_INFO_EXT: Self =
-        StructureType(1000101001);
+        StructureType(1_000_101_001);
 }
 impl NvExtension103Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -51514,59 +51522,59 @@ impl ExtSwapchainColorspaceFn {
 }
 #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
 impl ColorSpaceKHR {
-    pub const DISPLAY_P3_NONLINEAR_EXT: Self = ColorSpaceKHR(1000104001);
+    pub const DISPLAY_P3_NONLINEAR_EXT: Self = ColorSpaceKHR(1_000_104_001);
 }
 #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
 impl ColorSpaceKHR {
-    pub const EXTENDED_SRGB_LINEAR_EXT: Self = ColorSpaceKHR(1000104002);
+    pub const EXTENDED_SRGB_LINEAR_EXT: Self = ColorSpaceKHR(1_000_104_002);
 }
 #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
 impl ColorSpaceKHR {
-    pub const DCI_P3_LINEAR_EXT: Self = ColorSpaceKHR(1000104003);
+    pub const DCI_P3_LINEAR_EXT: Self = ColorSpaceKHR(1_000_104_003);
 }
 #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
 impl ColorSpaceKHR {
-    pub const DCI_P3_NONLINEAR_EXT: Self = ColorSpaceKHR(1000104004);
+    pub const DCI_P3_NONLINEAR_EXT: Self = ColorSpaceKHR(1_000_104_004);
 }
 #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
 impl ColorSpaceKHR {
-    pub const BT709_LINEAR_EXT: Self = ColorSpaceKHR(1000104005);
+    pub const BT709_LINEAR_EXT: Self = ColorSpaceKHR(1_000_104_005);
 }
 #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
 impl ColorSpaceKHR {
-    pub const BT709_NONLINEAR_EXT: Self = ColorSpaceKHR(1000104006);
+    pub const BT709_NONLINEAR_EXT: Self = ColorSpaceKHR(1_000_104_006);
 }
 #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
 impl ColorSpaceKHR {
-    pub const BT2020_LINEAR_EXT: Self = ColorSpaceKHR(1000104007);
+    pub const BT2020_LINEAR_EXT: Self = ColorSpaceKHR(1_000_104_007);
 }
 #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
 impl ColorSpaceKHR {
-    pub const HDR10_ST2084_EXT: Self = ColorSpaceKHR(1000104008);
+    pub const HDR10_ST2084_EXT: Self = ColorSpaceKHR(1_000_104_008);
 }
 #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
 impl ColorSpaceKHR {
-    pub const DOLBYVISION_EXT: Self = ColorSpaceKHR(1000104009);
+    pub const DOLBYVISION_EXT: Self = ColorSpaceKHR(1_000_104_009);
 }
 #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
 impl ColorSpaceKHR {
-    pub const HDR10_HLG_EXT: Self = ColorSpaceKHR(1000104010);
+    pub const HDR10_HLG_EXT: Self = ColorSpaceKHR(1_000_104_010);
 }
 #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
 impl ColorSpaceKHR {
-    pub const ADOBERGB_LINEAR_EXT: Self = ColorSpaceKHR(1000104011);
+    pub const ADOBERGB_LINEAR_EXT: Self = ColorSpaceKHR(1_000_104_011);
 }
 #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
 impl ColorSpaceKHR {
-    pub const ADOBERGB_NONLINEAR_EXT: Self = ColorSpaceKHR(1000104012);
+    pub const ADOBERGB_NONLINEAR_EXT: Self = ColorSpaceKHR(1_000_104_012);
 }
 #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
 impl ColorSpaceKHR {
-    pub const PASS_THROUGH_EXT: Self = ColorSpaceKHR(1000104013);
+    pub const PASS_THROUGH_EXT: Self = ColorSpaceKHR(1_000_104_013);
 }
 #[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
 impl ColorSpaceKHR {
-    pub const EXTENDED_SRGB_NONLINEAR_EXT: Self = ColorSpaceKHR(1000104014);
+    pub const EXTENDED_SRGB_NONLINEAR_EXT: Self = ColorSpaceKHR(1_000_104_014);
 }
 impl ExtHdrMetadataFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -51637,7 +51645,7 @@ impl ExtHdrMetadataFn {
 }
 #[doc = "Generated from \'VK_EXT_hdr_metadata\'"]
 impl StructureType {
-    pub const HDR_METADATA_EXT: Self = StructureType(1000105000);
+    pub const HDR_METADATA_EXT: Self = StructureType(1_000_105_000);
 }
 impl ImgExtension107Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -51896,31 +51904,31 @@ impl KhrCreateRenderpass2Fn {
 }
 #[doc = "Generated from \'VK_KHR_create_renderpass2\'"]
 impl StructureType {
-    pub const ATTACHMENT_DESCRIPTION_2_KHR: Self = StructureType(1000109000);
+    pub const ATTACHMENT_DESCRIPTION_2_KHR: Self = StructureType(1_000_109_000);
 }
 #[doc = "Generated from \'VK_KHR_create_renderpass2\'"]
 impl StructureType {
-    pub const ATTACHMENT_REFERENCE_2_KHR: Self = StructureType(1000109001);
+    pub const ATTACHMENT_REFERENCE_2_KHR: Self = StructureType(1_000_109_001);
 }
 #[doc = "Generated from \'VK_KHR_create_renderpass2\'"]
 impl StructureType {
-    pub const SUBPASS_DESCRIPTION_2_KHR: Self = StructureType(1000109002);
+    pub const SUBPASS_DESCRIPTION_2_KHR: Self = StructureType(1_000_109_002);
 }
 #[doc = "Generated from \'VK_KHR_create_renderpass2\'"]
 impl StructureType {
-    pub const SUBPASS_DEPENDENCY_2_KHR: Self = StructureType(1000109003);
+    pub const SUBPASS_DEPENDENCY_2_KHR: Self = StructureType(1_000_109_003);
 }
 #[doc = "Generated from \'VK_KHR_create_renderpass2\'"]
 impl StructureType {
-    pub const RENDER_PASS_CREATE_INFO_2_KHR: Self = StructureType(1000109004);
+    pub const RENDER_PASS_CREATE_INFO_2_KHR: Self = StructureType(1_000_109_004);
 }
 #[doc = "Generated from \'VK_KHR_create_renderpass2\'"]
 impl StructureType {
-    pub const SUBPASS_BEGIN_INFO_KHR: Self = StructureType(1000109005);
+    pub const SUBPASS_BEGIN_INFO_KHR: Self = StructureType(1_000_109_005);
 }
 #[doc = "Generated from \'VK_KHR_create_renderpass2\'"]
 impl StructureType {
-    pub const SUBPASS_END_INFO_KHR: Self = StructureType(1000109006);
+    pub const SUBPASS_END_INFO_KHR: Self = StructureType(1_000_109_006);
 }
 impl ImgExtension111Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -52004,19 +52012,19 @@ impl KhrSharedPresentableImageFn {
 }
 #[doc = "Generated from \'VK_KHR_shared_presentable_image\'"]
 impl StructureType {
-    pub const SHARED_PRESENT_SURFACE_CAPABILITIES_KHR: Self = StructureType(1000111000);
+    pub const SHARED_PRESENT_SURFACE_CAPABILITIES_KHR: Self = StructureType(1_000_111_000);
 }
 #[doc = "Generated from \'VK_KHR_shared_presentable_image\'"]
 impl PresentModeKHR {
-    pub const SHARED_DEMAND_REFRESH: Self = PresentModeKHR(1000111000);
+    pub const SHARED_DEMAND_REFRESH: Self = PresentModeKHR(1_000_111_000);
 }
 #[doc = "Generated from \'VK_KHR_shared_presentable_image\'"]
 impl PresentModeKHR {
-    pub const SHARED_CONTINUOUS_REFRESH: Self = PresentModeKHR(1000111001);
+    pub const SHARED_CONTINUOUS_REFRESH: Self = PresentModeKHR(1_000_111_001);
 }
 #[doc = "Generated from \'VK_KHR_shared_presentable_image\'"]
 impl ImageLayout {
-    pub const SHARED_PRESENT_KHR: Self = ImageLayout(1000111000);
+    pub const SHARED_PRESENT_KHR: Self = ImageLayout(1_000_111_000);
 }
 impl KhrExternalFenceCapabilitiesFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -52167,15 +52175,15 @@ impl KhrExternalFenceWin32Fn {
 }
 #[doc = "Generated from \'VK_KHR_external_fence_win32\'"]
 impl StructureType {
-    pub const IMPORT_FENCE_WIN32_HANDLE_INFO_KHR: Self = StructureType(1000114000);
+    pub const IMPORT_FENCE_WIN32_HANDLE_INFO_KHR: Self = StructureType(1_000_114_000);
 }
 #[doc = "Generated from \'VK_KHR_external_fence_win32\'"]
 impl StructureType {
-    pub const EXPORT_FENCE_WIN32_HANDLE_INFO_KHR: Self = StructureType(1000114001);
+    pub const EXPORT_FENCE_WIN32_HANDLE_INFO_KHR: Self = StructureType(1_000_114_001);
 }
 #[doc = "Generated from \'VK_KHR_external_fence_win32\'"]
 impl StructureType {
-    pub const FENCE_GET_WIN32_HANDLE_INFO_KHR: Self = StructureType(1000114002);
+    pub const FENCE_GET_WIN32_HANDLE_INFO_KHR: Self = StructureType(1_000_114_002);
 }
 impl KhrExternalFenceFdFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -52276,11 +52284,11 @@ impl KhrExternalFenceFdFn {
 }
 #[doc = "Generated from \'VK_KHR_external_fence_fd\'"]
 impl StructureType {
-    pub const IMPORT_FENCE_FD_INFO_KHR: Self = StructureType(1000115000);
+    pub const IMPORT_FENCE_FD_INFO_KHR: Self = StructureType(1_000_115_000);
 }
 #[doc = "Generated from \'VK_KHR_external_fence_fd\'"]
 impl StructureType {
-    pub const FENCE_GET_FD_INFO_KHR: Self = StructureType(1000115001);
+    pub const FENCE_GET_FD_INFO_KHR: Self = StructureType(1_000_115_001);
 }
 impl KhrExtension117Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -52471,15 +52479,15 @@ impl KhrGetSurfaceCapabilities2Fn {
 }
 #[doc = "Generated from \'VK_KHR_get_surface_capabilities2\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_SURFACE_INFO_2_KHR: Self = StructureType(1000119000);
+    pub const PHYSICAL_DEVICE_SURFACE_INFO_2_KHR: Self = StructureType(1_000_119_000);
 }
 #[doc = "Generated from \'VK_KHR_get_surface_capabilities2\'"]
 impl StructureType {
-    pub const SURFACE_CAPABILITIES_2_KHR: Self = StructureType(1000119001);
+    pub const SURFACE_CAPABILITIES_2_KHR: Self = StructureType(1_000_119_001);
 }
 #[doc = "Generated from \'VK_KHR_get_surface_capabilities2\'"]
 impl StructureType {
-    pub const SURFACE_FORMAT_2_KHR: Self = StructureType(1000119002);
+    pub const SURFACE_FORMAT_2_KHR: Self = StructureType(1_000_119_002);
 }
 impl KhrVariablePointersFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -52717,23 +52725,23 @@ impl KhrGetDisplayProperties2Fn {
 }
 #[doc = "Generated from \'VK_KHR_get_display_properties2\'"]
 impl StructureType {
-    pub const DISPLAY_PROPERTIES_2_KHR: Self = StructureType(1000121000);
+    pub const DISPLAY_PROPERTIES_2_KHR: Self = StructureType(1_000_121_000);
 }
 #[doc = "Generated from \'VK_KHR_get_display_properties2\'"]
 impl StructureType {
-    pub const DISPLAY_PLANE_PROPERTIES_2_KHR: Self = StructureType(1000121001);
+    pub const DISPLAY_PLANE_PROPERTIES_2_KHR: Self = StructureType(1_000_121_001);
 }
 #[doc = "Generated from \'VK_KHR_get_display_properties2\'"]
 impl StructureType {
-    pub const DISPLAY_MODE_PROPERTIES_2_KHR: Self = StructureType(1000121002);
+    pub const DISPLAY_MODE_PROPERTIES_2_KHR: Self = StructureType(1_000_121_002);
 }
 #[doc = "Generated from \'VK_KHR_get_display_properties2\'"]
 impl StructureType {
-    pub const DISPLAY_PLANE_INFO_2_KHR: Self = StructureType(1000121003);
+    pub const DISPLAY_PLANE_INFO_2_KHR: Self = StructureType(1_000_121_003);
 }
 #[doc = "Generated from \'VK_KHR_get_display_properties2\'"]
 impl StructureType {
-    pub const DISPLAY_PLANE_CAPABILITIES_2_KHR: Self = StructureType(1000121004);
+    pub const DISPLAY_PLANE_CAPABILITIES_2_KHR: Self = StructureType(1_000_121_004);
 }
 impl MvkIosSurfaceFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -52807,7 +52815,7 @@ impl MvkIosSurfaceFn {
 }
 #[doc = "Generated from \'VK_MVK_ios_surface\'"]
 impl StructureType {
-    pub const IOS_SURFACE_CREATE_INFO_M: Self = StructureType(1000122000);
+    pub const IOS_SURFACE_CREATE_INFO_M: Self = StructureType(1_000_122_000);
 }
 impl MvkMacosSurfaceFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -52881,7 +52889,7 @@ impl MvkMacosSurfaceFn {
 }
 #[doc = "Generated from \'VK_MVK_macos_surface\'"]
 impl StructureType {
-    pub const MACOS_SURFACE_CREATE_INFO_M: Self = StructureType(1000123000);
+    pub const MACOS_SURFACE_CREATE_INFO_M: Self = StructureType(1_000_123_000);
 }
 impl MvkMoltenvkFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -52929,7 +52937,7 @@ impl ExtExternalMemoryDmaBufFn {
 #[doc = "Generated from \'VK_EXT_external_memory_dma_buf\'"]
 impl ExternalMemoryHandleTypeFlags {
     pub const EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF: Self =
-        ExternalMemoryHandleTypeFlags(0b1000000000);
+        ExternalMemoryHandleTypeFlags(0b10_0000_0000);
 }
 impl ExtQueueFamilyForeignFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -53397,27 +53405,27 @@ impl ExtDebugUtilsFn {
 }
 #[doc = "Generated from \'VK_EXT_debug_utils\'"]
 impl StructureType {
-    pub const DEBUG_UTILS_OBJECT_NAME_INFO_EXT: Self = StructureType(1000128000);
+    pub const DEBUG_UTILS_OBJECT_NAME_INFO_EXT: Self = StructureType(1_000_128_000);
 }
 #[doc = "Generated from \'VK_EXT_debug_utils\'"]
 impl StructureType {
-    pub const DEBUG_UTILS_OBJECT_TAG_INFO_EXT: Self = StructureType(1000128001);
+    pub const DEBUG_UTILS_OBJECT_TAG_INFO_EXT: Self = StructureType(1_000_128_001);
 }
 #[doc = "Generated from \'VK_EXT_debug_utils\'"]
 impl StructureType {
-    pub const DEBUG_UTILS_LABEL_EXT: Self = StructureType(1000128002);
+    pub const DEBUG_UTILS_LABEL_EXT: Self = StructureType(1_000_128_002);
 }
 #[doc = "Generated from \'VK_EXT_debug_utils\'"]
 impl StructureType {
-    pub const DEBUG_UTILS_MESSENGER_CALLBACK_DATA_EXT: Self = StructureType(1000128003);
+    pub const DEBUG_UTILS_MESSENGER_CALLBACK_DATA_EXT: Self = StructureType(1_000_128_003);
 }
 #[doc = "Generated from \'VK_EXT_debug_utils\'"]
 impl StructureType {
-    pub const DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT: Self = StructureType(1000128004);
+    pub const DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT: Self = StructureType(1_000_128_004);
 }
 #[doc = "Generated from \'VK_EXT_debug_utils\'"]
 impl ObjectType {
-    pub const DEBUG_UTILS_MESSENGER_EXT: Self = ObjectType(1000128000);
+    pub const DEBUG_UTILS_MESSENGER_EXT: Self = ObjectType(1_000_128_000);
 }
 impl AndroidExternalMemoryAndroidHardwareBufferFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -53533,31 +53541,32 @@ impl AndroidExternalMemoryAndroidHardwareBufferFn {
 #[doc = "Generated from \'VK_ANDROID_external_memory_android_hardware_buffer\'"]
 impl ExternalMemoryHandleTypeFlags {
     pub const EXTERNAL_MEMORY_HANDLE_TYPE_ANDROID_HARDWARE_BUFFER_ANDROID: Self =
-        ExternalMemoryHandleTypeFlags(0b10000000000);
+        ExternalMemoryHandleTypeFlags(0b100_0000_0000);
 }
 #[doc = "Generated from \'VK_ANDROID_external_memory_android_hardware_buffer\'"]
 impl StructureType {
-    pub const ANDROID_HARDWARE_BUFFER_USAGE_ANDROID: Self = StructureType(1000129000);
+    pub const ANDROID_HARDWARE_BUFFER_USAGE_ANDROID: Self = StructureType(1_000_129_000);
 }
 #[doc = "Generated from \'VK_ANDROID_external_memory_android_hardware_buffer\'"]
 impl StructureType {
-    pub const ANDROID_HARDWARE_BUFFER_PROPERTIES_ANDROID: Self = StructureType(1000129001);
+    pub const ANDROID_HARDWARE_BUFFER_PROPERTIES_ANDROID: Self = StructureType(1_000_129_001);
 }
 #[doc = "Generated from \'VK_ANDROID_external_memory_android_hardware_buffer\'"]
 impl StructureType {
-    pub const ANDROID_HARDWARE_BUFFER_FORMAT_PROPERTIES_ANDROID: Self = StructureType(1000129002);
+    pub const ANDROID_HARDWARE_BUFFER_FORMAT_PROPERTIES_ANDROID: Self =
+        StructureType(1_000_129_002);
 }
 #[doc = "Generated from \'VK_ANDROID_external_memory_android_hardware_buffer\'"]
 impl StructureType {
-    pub const IMPORT_ANDROID_HARDWARE_BUFFER_INFO_ANDROID: Self = StructureType(1000129003);
+    pub const IMPORT_ANDROID_HARDWARE_BUFFER_INFO_ANDROID: Self = StructureType(1_000_129_003);
 }
 #[doc = "Generated from \'VK_ANDROID_external_memory_android_hardware_buffer\'"]
 impl StructureType {
-    pub const MEMORY_GET_ANDROID_HARDWARE_BUFFER_INFO_ANDROID: Self = StructureType(1000129004);
+    pub const MEMORY_GET_ANDROID_HARDWARE_BUFFER_INFO_ANDROID: Self = StructureType(1_000_129_004);
 }
 #[doc = "Generated from \'VK_ANDROID_external_memory_android_hardware_buffer\'"]
 impl StructureType {
-    pub const EXTERNAL_FORMAT_ANDROID: Self = StructureType(1000129005);
+    pub const EXTERNAL_FORMAT_ANDROID: Self = StructureType(1_000_129_005);
 }
 impl ExtSamplerFilterMinmaxFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -53584,15 +53593,15 @@ impl ExtSamplerFilterMinmaxFn {
 #[doc = "Generated from \'VK_EXT_sampler_filter_minmax\'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_SAMPLER_FILTER_MINMAX_PROPERTIES_EXT: Self =
-        StructureType(1000130000);
+        StructureType(1_000_130_000);
 }
 #[doc = "Generated from \'VK_EXT_sampler_filter_minmax\'"]
 impl StructureType {
-    pub const SAMPLER_REDUCTION_MODE_CREATE_INFO_EXT: Self = StructureType(1000130001);
+    pub const SAMPLER_REDUCTION_MODE_CREATE_INFO_EXT: Self = StructureType(1_000_130_001);
 }
 #[doc = "Generated from \'VK_EXT_sampler_filter_minmax\'"]
 impl FormatFeatureFlags {
-    pub const SAMPLED_IMAGE_FILTER_MINMAX_EXT: Self = FormatFeatureFlags(0b10000000000000000);
+    pub const SAMPLED_IMAGE_FILTER_MINMAX_EXT: Self = FormatFeatureFlags(0b1_0000_0000_0000_0000);
 }
 impl KhrStorageBufferStorageClassFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -53772,24 +53781,26 @@ impl ExtInlineUniformBlockFn {
 }
 #[doc = "Generated from \'VK_EXT_inline_uniform_block\'"]
 impl DescriptorType {
-    pub const INLINE_UNIFORM_BLOCK_EXT: Self = DescriptorType(1000138000);
+    pub const INLINE_UNIFORM_BLOCK_EXT: Self = DescriptorType(1_000_138_000);
 }
 #[doc = "Generated from \'VK_EXT_inline_uniform_block\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_INLINE_UNIFORM_BLOCK_FEATURES_EXT: Self = StructureType(1000138000);
+    pub const PHYSICAL_DEVICE_INLINE_UNIFORM_BLOCK_FEATURES_EXT: Self =
+        StructureType(1_000_138_000);
 }
 #[doc = "Generated from \'VK_EXT_inline_uniform_block\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_INLINE_UNIFORM_BLOCK_PROPERTIES_EXT: Self = StructureType(1000138001);
+    pub const PHYSICAL_DEVICE_INLINE_UNIFORM_BLOCK_PROPERTIES_EXT: Self =
+        StructureType(1_000_138_001);
 }
 #[doc = "Generated from \'VK_EXT_inline_uniform_block\'"]
 impl StructureType {
-    pub const WRITE_DESCRIPTOR_SET_INLINE_UNIFORM_BLOCK_EXT: Self = StructureType(1000138002);
+    pub const WRITE_DESCRIPTOR_SET_INLINE_UNIFORM_BLOCK_EXT: Self = StructureType(1_000_138_002);
 }
 #[doc = "Generated from \'VK_EXT_inline_uniform_block\'"]
 impl StructureType {
     pub const DESCRIPTOR_POOL_INLINE_UNIFORM_BLOCK_CREATE_INFO_EXT: Self =
-        StructureType(1000138003);
+        StructureType(1_000_138_003);
 }
 impl AmdExtension140Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -53989,31 +54000,31 @@ impl ExtSampleLocationsFn {
 }
 #[doc = "Generated from \'VK_EXT_sample_locations\'"]
 impl ImageCreateFlags {
-    pub const SAMPLE_LOCATIONS_COMPATIBLE_DEPTH_EXT: Self = ImageCreateFlags(0b1000000000000);
+    pub const SAMPLE_LOCATIONS_COMPATIBLE_DEPTH_EXT: Self = ImageCreateFlags(0b1_0000_0000_0000);
 }
 #[doc = "Generated from \'VK_EXT_sample_locations\'"]
 impl StructureType {
-    pub const SAMPLE_LOCATIONS_INFO_EXT: Self = StructureType(1000143000);
+    pub const SAMPLE_LOCATIONS_INFO_EXT: Self = StructureType(1_000_143_000);
 }
 #[doc = "Generated from \'VK_EXT_sample_locations\'"]
 impl StructureType {
-    pub const RENDER_PASS_SAMPLE_LOCATIONS_BEGIN_INFO_EXT: Self = StructureType(1000143001);
+    pub const RENDER_PASS_SAMPLE_LOCATIONS_BEGIN_INFO_EXT: Self = StructureType(1_000_143_001);
 }
 #[doc = "Generated from \'VK_EXT_sample_locations\'"]
 impl StructureType {
-    pub const PIPELINE_SAMPLE_LOCATIONS_STATE_CREATE_INFO_EXT: Self = StructureType(1000143002);
+    pub const PIPELINE_SAMPLE_LOCATIONS_STATE_CREATE_INFO_EXT: Self = StructureType(1_000_143_002);
 }
 #[doc = "Generated from \'VK_EXT_sample_locations\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_SAMPLE_LOCATIONS_PROPERTIES_EXT: Self = StructureType(1000143003);
+    pub const PHYSICAL_DEVICE_SAMPLE_LOCATIONS_PROPERTIES_EXT: Self = StructureType(1_000_143_003);
 }
 #[doc = "Generated from \'VK_EXT_sample_locations\'"]
 impl StructureType {
-    pub const MULTISAMPLE_PROPERTIES_EXT: Self = StructureType(1000143004);
+    pub const MULTISAMPLE_PROPERTIES_EXT: Self = StructureType(1_000_143_004);
 }
 #[doc = "Generated from \'VK_EXT_sample_locations\'"]
 impl DynamicState {
-    pub const SAMPLE_LOCATIONS_EXT: Self = DynamicState(1000143000);
+    pub const SAMPLE_LOCATIONS_EXT: Self = DynamicState(1_000_143_000);
 }
 impl KhrRelaxedBlockLayoutFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -54083,7 +54094,7 @@ impl KhrImageFormatListFn {
 }
 #[doc = "Generated from \'VK_KHR_image_format_list\'"]
 impl StructureType {
-    pub const IMAGE_FORMAT_LIST_CREATE_INFO_KHR: Self = StructureType(1000147000);
+    pub const IMAGE_FORMAT_LIST_CREATE_INFO_KHR: Self = StructureType(1_000_147_000);
 }
 impl ExtBlendOperationAdvancedFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -54110,204 +54121,205 @@ impl ExtBlendOperationAdvancedFn {
 #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_BLEND_OPERATION_ADVANCED_FEATURES_EXT: Self =
-        StructureType(1000148000);
+        StructureType(1_000_148_000);
 }
 #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_BLEND_OPERATION_ADVANCED_PROPERTIES_EXT: Self =
-        StructureType(1000148001);
+        StructureType(1_000_148_001);
 }
 #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
 impl StructureType {
-    pub const PIPELINE_COLOR_BLEND_ADVANCED_STATE_CREATE_INFO_EXT: Self = StructureType(1000148002);
+    pub const PIPELINE_COLOR_BLEND_ADVANCED_STATE_CREATE_INFO_EXT: Self =
+        StructureType(1_000_148_002);
 }
 #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
 impl BlendOp {
-    pub const ZERO_EXT: Self = BlendOp(1000148000);
+    pub const ZERO_EXT: Self = BlendOp(1_000_148_000);
 }
 #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
 impl BlendOp {
-    pub const SRC_EXT: Self = BlendOp(1000148001);
+    pub const SRC_EXT: Self = BlendOp(1_000_148_001);
 }
 #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
 impl BlendOp {
-    pub const DST_EXT: Self = BlendOp(1000148002);
+    pub const DST_EXT: Self = BlendOp(1_000_148_002);
 }
 #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
 impl BlendOp {
-    pub const SRC_OVER_EXT: Self = BlendOp(1000148003);
+    pub const SRC_OVER_EXT: Self = BlendOp(1_000_148_003);
 }
 #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
 impl BlendOp {
-    pub const DST_OVER_EXT: Self = BlendOp(1000148004);
+    pub const DST_OVER_EXT: Self = BlendOp(1_000_148_004);
 }
 #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
 impl BlendOp {
-    pub const SRC_IN_EXT: Self = BlendOp(1000148005);
+    pub const SRC_IN_EXT: Self = BlendOp(1_000_148_005);
 }
 #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
 impl BlendOp {
-    pub const DST_IN_EXT: Self = BlendOp(1000148006);
+    pub const DST_IN_EXT: Self = BlendOp(1_000_148_006);
 }
 #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
 impl BlendOp {
-    pub const SRC_OUT_EXT: Self = BlendOp(1000148007);
+    pub const SRC_OUT_EXT: Self = BlendOp(1_000_148_007);
 }
 #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
 impl BlendOp {
-    pub const DST_OUT_EXT: Self = BlendOp(1000148008);
+    pub const DST_OUT_EXT: Self = BlendOp(1_000_148_008);
 }
 #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
 impl BlendOp {
-    pub const SRC_ATOP_EXT: Self = BlendOp(1000148009);
+    pub const SRC_ATOP_EXT: Self = BlendOp(1_000_148_009);
 }
 #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
 impl BlendOp {
-    pub const DST_ATOP_EXT: Self = BlendOp(1000148010);
+    pub const DST_ATOP_EXT: Self = BlendOp(1_000_148_010);
 }
 #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
 impl BlendOp {
-    pub const XOR_EXT: Self = BlendOp(1000148011);
+    pub const XOR_EXT: Self = BlendOp(1_000_148_011);
 }
 #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
 impl BlendOp {
-    pub const MULTIPLY_EXT: Self = BlendOp(1000148012);
+    pub const MULTIPLY_EXT: Self = BlendOp(1_000_148_012);
 }
 #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
 impl BlendOp {
-    pub const SCREEN_EXT: Self = BlendOp(1000148013);
+    pub const SCREEN_EXT: Self = BlendOp(1_000_148_013);
 }
 #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
 impl BlendOp {
-    pub const OVERLAY_EXT: Self = BlendOp(1000148014);
+    pub const OVERLAY_EXT: Self = BlendOp(1_000_148_014);
 }
 #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
 impl BlendOp {
-    pub const DARKEN_EXT: Self = BlendOp(1000148015);
+    pub const DARKEN_EXT: Self = BlendOp(1_000_148_015);
 }
 #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
 impl BlendOp {
-    pub const LIGHTEN_EXT: Self = BlendOp(1000148016);
+    pub const LIGHTEN_EXT: Self = BlendOp(1_000_148_016);
 }
 #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
 impl BlendOp {
-    pub const COLORDODGE_EXT: Self = BlendOp(1000148017);
+    pub const COLORDODGE_EXT: Self = BlendOp(1_000_148_017);
 }
 #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
 impl BlendOp {
-    pub const COLORBURN_EXT: Self = BlendOp(1000148018);
+    pub const COLORBURN_EXT: Self = BlendOp(1_000_148_018);
 }
 #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
 impl BlendOp {
-    pub const HARDLIGHT_EXT: Self = BlendOp(1000148019);
+    pub const HARDLIGHT_EXT: Self = BlendOp(1_000_148_019);
 }
 #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
 impl BlendOp {
-    pub const SOFTLIGHT_EXT: Self = BlendOp(1000148020);
+    pub const SOFTLIGHT_EXT: Self = BlendOp(1_000_148_020);
 }
 #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
 impl BlendOp {
-    pub const DIFFERENCE_EXT: Self = BlendOp(1000148021);
+    pub const DIFFERENCE_EXT: Self = BlendOp(1_000_148_021);
 }
 #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
 impl BlendOp {
-    pub const EXCLUSION_EXT: Self = BlendOp(1000148022);
+    pub const EXCLUSION_EXT: Self = BlendOp(1_000_148_022);
 }
 #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
 impl BlendOp {
-    pub const INVERT_EXT: Self = BlendOp(1000148023);
+    pub const INVERT_EXT: Self = BlendOp(1_000_148_023);
 }
 #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
 impl BlendOp {
-    pub const INVERT_RGB_EXT: Self = BlendOp(1000148024);
+    pub const INVERT_RGB_EXT: Self = BlendOp(1_000_148_024);
 }
 #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
 impl BlendOp {
-    pub const LINEARDODGE_EXT: Self = BlendOp(1000148025);
+    pub const LINEARDODGE_EXT: Self = BlendOp(1_000_148_025);
 }
 #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
 impl BlendOp {
-    pub const LINEARBURN_EXT: Self = BlendOp(1000148026);
+    pub const LINEARBURN_EXT: Self = BlendOp(1_000_148_026);
 }
 #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
 impl BlendOp {
-    pub const VIVIDLIGHT_EXT: Self = BlendOp(1000148027);
+    pub const VIVIDLIGHT_EXT: Self = BlendOp(1_000_148_027);
 }
 #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
 impl BlendOp {
-    pub const LINEARLIGHT_EXT: Self = BlendOp(1000148028);
+    pub const LINEARLIGHT_EXT: Self = BlendOp(1_000_148_028);
 }
 #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
 impl BlendOp {
-    pub const PINLIGHT_EXT: Self = BlendOp(1000148029);
+    pub const PINLIGHT_EXT: Self = BlendOp(1_000_148_029);
 }
 #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
 impl BlendOp {
-    pub const HARDMIX_EXT: Self = BlendOp(1000148030);
+    pub const HARDMIX_EXT: Self = BlendOp(1_000_148_030);
 }
 #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
 impl BlendOp {
-    pub const HSL_HUE_EXT: Self = BlendOp(1000148031);
+    pub const HSL_HUE_EXT: Self = BlendOp(1_000_148_031);
 }
 #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
 impl BlendOp {
-    pub const HSL_SATURATION_EXT: Self = BlendOp(1000148032);
+    pub const HSL_SATURATION_EXT: Self = BlendOp(1_000_148_032);
 }
 #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
 impl BlendOp {
-    pub const HSL_COLOR_EXT: Self = BlendOp(1000148033);
+    pub const HSL_COLOR_EXT: Self = BlendOp(1_000_148_033);
 }
 #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
 impl BlendOp {
-    pub const HSL_LUMINOSITY_EXT: Self = BlendOp(1000148034);
+    pub const HSL_LUMINOSITY_EXT: Self = BlendOp(1_000_148_034);
 }
 #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
 impl BlendOp {
-    pub const PLUS_EXT: Self = BlendOp(1000148035);
+    pub const PLUS_EXT: Self = BlendOp(1_000_148_035);
 }
 #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
 impl BlendOp {
-    pub const PLUS_CLAMPED_EXT: Self = BlendOp(1000148036);
+    pub const PLUS_CLAMPED_EXT: Self = BlendOp(1_000_148_036);
 }
 #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
 impl BlendOp {
-    pub const PLUS_CLAMPED_ALPHA_EXT: Self = BlendOp(1000148037);
+    pub const PLUS_CLAMPED_ALPHA_EXT: Self = BlendOp(1_000_148_037);
 }
 #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
 impl BlendOp {
-    pub const PLUS_DARKER_EXT: Self = BlendOp(1000148038);
+    pub const PLUS_DARKER_EXT: Self = BlendOp(1_000_148_038);
 }
 #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
 impl BlendOp {
-    pub const MINUS_EXT: Self = BlendOp(1000148039);
+    pub const MINUS_EXT: Self = BlendOp(1_000_148_039);
 }
 #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
 impl BlendOp {
-    pub const MINUS_CLAMPED_EXT: Self = BlendOp(1000148040);
+    pub const MINUS_CLAMPED_EXT: Self = BlendOp(1_000_148_040);
 }
 #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
 impl BlendOp {
-    pub const CONTRAST_EXT: Self = BlendOp(1000148041);
+    pub const CONTRAST_EXT: Self = BlendOp(1_000_148_041);
 }
 #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
 impl BlendOp {
-    pub const INVERT_OVG_EXT: Self = BlendOp(1000148042);
+    pub const INVERT_OVG_EXT: Self = BlendOp(1_000_148_042);
 }
 #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
 impl BlendOp {
-    pub const RED_EXT: Self = BlendOp(1000148043);
+    pub const RED_EXT: Self = BlendOp(1_000_148_043);
 }
 #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
 impl BlendOp {
-    pub const GREEN_EXT: Self = BlendOp(1000148044);
+    pub const GREEN_EXT: Self = BlendOp(1_000_148_044);
 }
 #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
 impl BlendOp {
-    pub const BLUE_EXT: Self = BlendOp(1000148045);
+    pub const BLUE_EXT: Self = BlendOp(1_000_148_045);
 }
 #[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
 impl AccessFlags {
-    pub const COLOR_ATTACHMENT_READ_NONCOHERENT_EXT: Self = AccessFlags(0b10000000000000000000);
+    pub const COLOR_ATTACHMENT_READ_NONCOHERENT_EXT: Self = AccessFlags(0b1000_0000_0000_0000_0000);
 }
 impl NvFragmentCoverageToColorFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -54333,7 +54345,7 @@ impl NvFragmentCoverageToColorFn {
 }
 #[doc = "Generated from \'VK_NV_fragment_coverage_to_color\'"]
 impl StructureType {
-    pub const PIPELINE_COVERAGE_TO_COLOR_STATE_CREATE_INFO_NV: Self = StructureType(1000149000);
+    pub const PIPELINE_COVERAGE_TO_COLOR_STATE_CREATE_INFO_NV: Self = StructureType(1_000_149_000);
 }
 impl NvExtension151Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -54403,7 +54415,8 @@ impl NvFramebufferMixedSamplesFn {
 }
 #[doc = "Generated from \'VK_NV_framebuffer_mixed_samples\'"]
 impl StructureType {
-    pub const PIPELINE_COVERAGE_MODULATION_STATE_CREATE_INFO_NV: Self = StructureType(1000152000);
+    pub const PIPELINE_COVERAGE_MODULATION_STATE_CREATE_INFO_NV: Self =
+        StructureType(1_000_152_000);
 }
 impl NvFillRectangleFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -54429,7 +54442,7 @@ impl NvFillRectangleFn {
 }
 #[doc = "Generated from \'VK_NV_fill_rectangle\'"]
 impl PolygonMode {
-    pub const FILL_RECTANGLE_NV: Self = PolygonMode(1000153000);
+    pub const FILL_RECTANGLE_NV: Self = PolygonMode(1_000_153_000);
 }
 impl NvExtension155Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -54588,51 +54601,53 @@ impl ExtImageDrmFormatModifierFn {
 }
 #[doc = "Generated from \'VK_EXT_image_drm_format_modifier\'"]
 impl Result {
-    pub const ERROR_INVALID_DRM_FORMAT_MODIFIER_PLANE_LAYOUT_EXT: Self = Result(-1000158000);
+    pub const ERROR_INVALID_DRM_FORMAT_MODIFIER_PLANE_LAYOUT_EXT: Self = Result(-1_000_158_000);
 }
 #[doc = "Generated from \'VK_EXT_image_drm_format_modifier\'"]
 impl StructureType {
-    pub const DRM_FORMAT_MODIFIER_PROPERTIES_LIST_EXT: Self = StructureType(1000158000);
+    pub const DRM_FORMAT_MODIFIER_PROPERTIES_LIST_EXT: Self = StructureType(1_000_158_000);
 }
 #[doc = "Generated from \'VK_EXT_image_drm_format_modifier\'"]
 impl StructureType {
-    pub const DRM_FORMAT_MODIFIER_PROPERTIES_EXT: Self = StructureType(1000158001);
+    pub const DRM_FORMAT_MODIFIER_PROPERTIES_EXT: Self = StructureType(1_000_158_001);
 }
 #[doc = "Generated from \'VK_EXT_image_drm_format_modifier\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_IMAGE_DRM_FORMAT_MODIFIER_INFO_EXT: Self = StructureType(1000158002);
+    pub const PHYSICAL_DEVICE_IMAGE_DRM_FORMAT_MODIFIER_INFO_EXT: Self =
+        StructureType(1_000_158_002);
 }
 #[doc = "Generated from \'VK_EXT_image_drm_format_modifier\'"]
 impl StructureType {
-    pub const IMAGE_DRM_FORMAT_MODIFIER_LIST_CREATE_INFO_EXT: Self = StructureType(1000158003);
+    pub const IMAGE_DRM_FORMAT_MODIFIER_LIST_CREATE_INFO_EXT: Self = StructureType(1_000_158_003);
 }
 #[doc = "Generated from \'VK_EXT_image_drm_format_modifier\'"]
 impl StructureType {
-    pub const IMAGE_DRM_FORMAT_MODIFIER_EXPLICIT_CREATE_INFO_EXT: Self = StructureType(1000158004);
+    pub const IMAGE_DRM_FORMAT_MODIFIER_EXPLICIT_CREATE_INFO_EXT: Self =
+        StructureType(1_000_158_004);
 }
 #[doc = "Generated from \'VK_EXT_image_drm_format_modifier\'"]
 impl StructureType {
-    pub const IMAGE_DRM_FORMAT_MODIFIER_PROPERTIES_EXT: Self = StructureType(1000158005);
+    pub const IMAGE_DRM_FORMAT_MODIFIER_PROPERTIES_EXT: Self = StructureType(1_000_158_005);
 }
 #[doc = "Generated from \'VK_EXT_image_drm_format_modifier\'"]
 impl ImageTiling {
-    pub const DRM_FORMAT_MODIFIER_EXT: Self = ImageTiling(1000158000);
+    pub const DRM_FORMAT_MODIFIER_EXT: Self = ImageTiling(1_000_158_000);
 }
 #[doc = "Generated from \'VK_EXT_image_drm_format_modifier\'"]
 impl ImageAspectFlags {
-    pub const MEMORY_PLANE_0_EXT: Self = ImageAspectFlags(0b10000000);
+    pub const MEMORY_PLANE_0_EXT: Self = ImageAspectFlags(0b1000_0000);
 }
 #[doc = "Generated from \'VK_EXT_image_drm_format_modifier\'"]
 impl ImageAspectFlags {
-    pub const MEMORY_PLANE_1_EXT: Self = ImageAspectFlags(0b100000000);
+    pub const MEMORY_PLANE_1_EXT: Self = ImageAspectFlags(0b1_0000_0000);
 }
 #[doc = "Generated from \'VK_EXT_image_drm_format_modifier\'"]
 impl ImageAspectFlags {
-    pub const MEMORY_PLANE_2_EXT: Self = ImageAspectFlags(0b1000000000);
+    pub const MEMORY_PLANE_2_EXT: Self = ImageAspectFlags(0b10_0000_0000);
 }
 #[doc = "Generated from \'VK_EXT_image_drm_format_modifier\'"]
 impl ImageAspectFlags {
-    pub const MEMORY_PLANE_3_EXT: Self = ImageAspectFlags(0b10000000000);
+    pub const MEMORY_PLANE_3_EXT: Self = ImageAspectFlags(0b100_0000_0000);
 }
 impl ExtExtension160Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -54859,15 +54874,15 @@ impl ExtValidationCacheFn {
 }
 #[doc = "Generated from \'VK_EXT_validation_cache\'"]
 impl StructureType {
-    pub const VALIDATION_CACHE_CREATE_INFO_EXT: Self = StructureType(1000160000);
+    pub const VALIDATION_CACHE_CREATE_INFO_EXT: Self = StructureType(1_000_160_000);
 }
 #[doc = "Generated from \'VK_EXT_validation_cache\'"]
 impl StructureType {
-    pub const SHADER_MODULE_VALIDATION_CACHE_CREATE_INFO_EXT: Self = StructureType(1000160001);
+    pub const SHADER_MODULE_VALIDATION_CACHE_CREATE_INFO_EXT: Self = StructureType(1_000_160_001);
 }
 #[doc = "Generated from \'VK_EXT_validation_cache\'"]
 impl ObjectType {
-    pub const VALIDATION_CACHE_EXT: Self = ObjectType(1000160000);
+    pub const VALIDATION_CACHE_EXT: Self = ObjectType(1_000_160_000);
 }
 impl ExtDescriptorIndexingFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -54893,25 +54908,27 @@ impl ExtDescriptorIndexingFn {
 }
 #[doc = "Generated from \'VK_EXT_descriptor_indexing\'"]
 impl StructureType {
-    pub const DESCRIPTOR_SET_LAYOUT_BINDING_FLAGS_CREATE_INFO_EXT: Self = StructureType(1000161000);
+    pub const DESCRIPTOR_SET_LAYOUT_BINDING_FLAGS_CREATE_INFO_EXT: Self =
+        StructureType(1_000_161_000);
 }
 #[doc = "Generated from \'VK_EXT_descriptor_indexing\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_FEATURES_EXT: Self = StructureType(1000161001);
+    pub const PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_FEATURES_EXT: Self = StructureType(1_000_161_001);
 }
 #[doc = "Generated from \'VK_EXT_descriptor_indexing\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_PROPERTIES_EXT: Self = StructureType(1000161002);
+    pub const PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_PROPERTIES_EXT: Self =
+        StructureType(1_000_161_002);
 }
 #[doc = "Generated from \'VK_EXT_descriptor_indexing\'"]
 impl StructureType {
     pub const DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_ALLOCATE_INFO_EXT: Self =
-        StructureType(1000161003);
+        StructureType(1_000_161_003);
 }
 #[doc = "Generated from \'VK_EXT_descriptor_indexing\'"]
 impl StructureType {
     pub const DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_LAYOUT_SUPPORT_EXT: Self =
-        StructureType(1000161004);
+        StructureType(1_000_161_004);
 }
 #[doc = "Generated from \'VK_EXT_descriptor_indexing\'"]
 impl DescriptorPoolCreateFlags {
@@ -54923,7 +54940,7 @@ impl DescriptorSetLayoutCreateFlags {
 }
 #[doc = "Generated from \'VK_EXT_descriptor_indexing\'"]
 impl Result {
-    pub const ERROR_FRAGMENTATION_EXT: Self = Result(-1000161000);
+    pub const ERROR_FRAGMENTATION_EXT: Self = Result(-1_000_161_000);
 }
 impl ExtShaderViewportIndexLayerFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -55138,44 +55155,44 @@ impl NvShadingRateImageFn {
 #[doc = "Generated from \'VK_NV_shading_rate_image\'"]
 impl StructureType {
     pub const PIPELINE_VIEWPORT_SHADING_RATE_IMAGE_STATE_CREATE_INFO_NV: Self =
-        StructureType(1000164000);
+        StructureType(1_000_164_000);
 }
 #[doc = "Generated from \'VK_NV_shading_rate_image\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_SHADING_RATE_IMAGE_FEATURES_NV: Self = StructureType(1000164001);
+    pub const PHYSICAL_DEVICE_SHADING_RATE_IMAGE_FEATURES_NV: Self = StructureType(1_000_164_001);
 }
 #[doc = "Generated from \'VK_NV_shading_rate_image\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_SHADING_RATE_IMAGE_PROPERTIES_NV: Self = StructureType(1000164002);
+    pub const PHYSICAL_DEVICE_SHADING_RATE_IMAGE_PROPERTIES_NV: Self = StructureType(1_000_164_002);
 }
 #[doc = "Generated from \'VK_NV_shading_rate_image\'"]
 impl ImageLayout {
-    pub const SHADING_RATE_OPTIMAL_NV: Self = ImageLayout(1000164003);
+    pub const SHADING_RATE_OPTIMAL_NV: Self = ImageLayout(1_000_164_003);
 }
 #[doc = "Generated from \'VK_NV_shading_rate_image\'"]
 impl DynamicState {
-    pub const VIEWPORT_SHADING_RATE_PALETTE_NV: Self = DynamicState(1000164004);
+    pub const VIEWPORT_SHADING_RATE_PALETTE_NV: Self = DynamicState(1_000_164_004);
 }
 #[doc = "Generated from \'VK_NV_shading_rate_image\'"]
 impl AccessFlags {
-    pub const SHADING_RATE_IMAGE_READ_NV: Self = AccessFlags(0b100000000000000000000000);
+    pub const SHADING_RATE_IMAGE_READ_NV: Self = AccessFlags(0b1000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from \'VK_NV_shading_rate_image\'"]
 impl ImageUsageFlags {
-    pub const SHADING_RATE_IMAGE_NV: Self = ImageUsageFlags(0b100000000);
+    pub const SHADING_RATE_IMAGE_NV: Self = ImageUsageFlags(0b1_0000_0000);
 }
 #[doc = "Generated from \'VK_NV_shading_rate_image\'"]
 impl PipelineStageFlags {
-    pub const SHADING_RATE_IMAGE_NV: Self = PipelineStageFlags(0b10000000000000000000000);
+    pub const SHADING_RATE_IMAGE_NV: Self = PipelineStageFlags(0b100_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from \'VK_NV_shading_rate_image\'"]
 impl StructureType {
     pub const PIPELINE_VIEWPORT_COARSE_SAMPLE_ORDER_STATE_CREATE_INFO_NV: Self =
-        StructureType(1000164005);
+        StructureType(1_000_164_005);
 }
 #[doc = "Generated from \'VK_NV_shading_rate_image\'"]
 impl DynamicState {
-    pub const VIEWPORT_COARSE_SAMPLE_ORDER_NV: Self = DynamicState(1000164006);
+    pub const VIEWPORT_COARSE_SAMPLE_ORDER_NV: Self = DynamicState(1_000_164_006);
 }
 impl NvRayTracingFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -55867,120 +55884,121 @@ impl NvRayTracingFn {
 }
 #[doc = "Generated from \'VK_NV_ray_tracing\'"]
 impl StructureType {
-    pub const RAY_TRACING_PIPELINE_CREATE_INFO_NV: Self = StructureType(1000165000);
+    pub const RAY_TRACING_PIPELINE_CREATE_INFO_NV: Self = StructureType(1_000_165_000);
 }
 #[doc = "Generated from \'VK_NV_ray_tracing\'"]
 impl StructureType {
-    pub const ACCELERATION_STRUCTURE_CREATE_INFO_NV: Self = StructureType(1000165001);
+    pub const ACCELERATION_STRUCTURE_CREATE_INFO_NV: Self = StructureType(1_000_165_001);
 }
 #[doc = "Generated from \'VK_NV_ray_tracing\'"]
 impl StructureType {
-    pub const GEOMETRY_NV: Self = StructureType(1000165003);
+    pub const GEOMETRY_NV: Self = StructureType(1_000_165_003);
 }
 #[doc = "Generated from \'VK_NV_ray_tracing\'"]
 impl StructureType {
-    pub const GEOMETRY_TRIANGLES_NV: Self = StructureType(1000165004);
+    pub const GEOMETRY_TRIANGLES_NV: Self = StructureType(1_000_165_004);
 }
 #[doc = "Generated from \'VK_NV_ray_tracing\'"]
 impl StructureType {
-    pub const GEOMETRY_AABB_NV: Self = StructureType(1000165005);
+    pub const GEOMETRY_AABB_NV: Self = StructureType(1_000_165_005);
 }
 #[doc = "Generated from \'VK_NV_ray_tracing\'"]
 impl StructureType {
-    pub const BIND_ACCELERATION_STRUCTURE_MEMORY_INFO_NV: Self = StructureType(1000165006);
+    pub const BIND_ACCELERATION_STRUCTURE_MEMORY_INFO_NV: Self = StructureType(1_000_165_006);
 }
 #[doc = "Generated from \'VK_NV_ray_tracing\'"]
 impl StructureType {
-    pub const WRITE_DESCRIPTOR_SET_ACCELERATION_STRUCTURE_NV: Self = StructureType(1000165007);
+    pub const WRITE_DESCRIPTOR_SET_ACCELERATION_STRUCTURE_NV: Self = StructureType(1_000_165_007);
 }
 #[doc = "Generated from \'VK_NV_ray_tracing\'"]
 impl StructureType {
-    pub const ACCELERATION_STRUCTURE_MEMORY_REQUIREMENTS_INFO_NV: Self = StructureType(1000165008);
+    pub const ACCELERATION_STRUCTURE_MEMORY_REQUIREMENTS_INFO_NV: Self =
+        StructureType(1_000_165_008);
 }
 #[doc = "Generated from \'VK_NV_ray_tracing\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_RAY_TRACING_PROPERTIES_NV: Self = StructureType(1000165009);
+    pub const PHYSICAL_DEVICE_RAY_TRACING_PROPERTIES_NV: Self = StructureType(1_000_165_009);
 }
 #[doc = "Generated from \'VK_NV_ray_tracing\'"]
 impl StructureType {
-    pub const RAY_TRACING_SHADER_GROUP_CREATE_INFO_NV: Self = StructureType(1000165011);
+    pub const RAY_TRACING_SHADER_GROUP_CREATE_INFO_NV: Self = StructureType(1_000_165_011);
 }
 #[doc = "Generated from \'VK_NV_ray_tracing\'"]
 impl StructureType {
-    pub const ACCELERATION_STRUCTURE_INFO_NV: Self = StructureType(1000165012);
+    pub const ACCELERATION_STRUCTURE_INFO_NV: Self = StructureType(1_000_165_012);
 }
 #[doc = "Generated from \'VK_NV_ray_tracing\'"]
 impl ShaderStageFlags {
-    pub const RAYGEN_NV: Self = ShaderStageFlags(0b100000000);
+    pub const RAYGEN_NV: Self = ShaderStageFlags(0b1_0000_0000);
 }
 #[doc = "Generated from \'VK_NV_ray_tracing\'"]
 impl ShaderStageFlags {
-    pub const ANY_HIT_NV: Self = ShaderStageFlags(0b1000000000);
+    pub const ANY_HIT_NV: Self = ShaderStageFlags(0b10_0000_0000);
 }
 #[doc = "Generated from \'VK_NV_ray_tracing\'"]
 impl ShaderStageFlags {
-    pub const CLOSEST_HIT_NV: Self = ShaderStageFlags(0b10000000000);
+    pub const CLOSEST_HIT_NV: Self = ShaderStageFlags(0b100_0000_0000);
 }
 #[doc = "Generated from \'VK_NV_ray_tracing\'"]
 impl ShaderStageFlags {
-    pub const MISS_NV: Self = ShaderStageFlags(0b100000000000);
+    pub const MISS_NV: Self = ShaderStageFlags(0b1000_0000_0000);
 }
 #[doc = "Generated from \'VK_NV_ray_tracing\'"]
 impl ShaderStageFlags {
-    pub const INTERSECTION_NV: Self = ShaderStageFlags(0b1000000000000);
+    pub const INTERSECTION_NV: Self = ShaderStageFlags(0b1_0000_0000_0000);
 }
 #[doc = "Generated from \'VK_NV_ray_tracing\'"]
 impl ShaderStageFlags {
-    pub const CALLABLE_NV: Self = ShaderStageFlags(0b10000000000000);
+    pub const CALLABLE_NV: Self = ShaderStageFlags(0b10_0000_0000_0000);
 }
 #[doc = "Generated from \'VK_NV_ray_tracing\'"]
 impl PipelineStageFlags {
-    pub const RAY_TRACING_SHADER_NV: Self = PipelineStageFlags(0b1000000000000000000000);
+    pub const RAY_TRACING_SHADER_NV: Self = PipelineStageFlags(0b10_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from \'VK_NV_ray_tracing\'"]
 impl PipelineStageFlags {
     pub const ACCELERATION_STRUCTURE_BUILD_NV: Self =
-        PipelineStageFlags(0b10000000000000000000000000);
+        PipelineStageFlags(0b10_0000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from \'VK_NV_ray_tracing\'"]
 impl BufferUsageFlags {
-    pub const RAY_TRACING_NV: Self = BufferUsageFlags(0b10000000000);
+    pub const RAY_TRACING_NV: Self = BufferUsageFlags(0b100_0000_0000);
 }
 #[doc = "Generated from \'VK_NV_ray_tracing\'"]
 impl PipelineBindPoint {
-    pub const RAY_TRACING_NV: Self = PipelineBindPoint(1000165000);
+    pub const RAY_TRACING_NV: Self = PipelineBindPoint(1_000_165_000);
 }
 #[doc = "Generated from \'VK_NV_ray_tracing\'"]
 impl DescriptorType {
-    pub const ACCELERATION_STRUCTURE_NV: Self = DescriptorType(1000165000);
+    pub const ACCELERATION_STRUCTURE_NV: Self = DescriptorType(1_000_165_000);
 }
 #[doc = "Generated from \'VK_NV_ray_tracing\'"]
 impl AccessFlags {
-    pub const ACCELERATION_STRUCTURE_READ_NV: Self = AccessFlags(0b1000000000000000000000);
+    pub const ACCELERATION_STRUCTURE_READ_NV: Self = AccessFlags(0b10_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from \'VK_NV_ray_tracing\'"]
 impl AccessFlags {
-    pub const ACCELERATION_STRUCTURE_WRITE_NV: Self = AccessFlags(0b10000000000000000000000);
+    pub const ACCELERATION_STRUCTURE_WRITE_NV: Self = AccessFlags(0b100_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from \'VK_NV_ray_tracing\'"]
 impl QueryType {
-    pub const ACCELERATION_STRUCTURE_COMPACTED_SIZE_NV: Self = QueryType(1000165000);
+    pub const ACCELERATION_STRUCTURE_COMPACTED_SIZE_NV: Self = QueryType(1_000_165_000);
 }
 #[doc = "Generated from \'VK_NV_ray_tracing\'"]
 impl PipelineCreateFlags {
-    pub const DEFER_COMPILE_NV: Self = PipelineCreateFlags(0b100000);
+    pub const DEFER_COMPILE_NV: Self = PipelineCreateFlags(0b10_0000);
 }
 #[doc = "Generated from \'VK_NV_ray_tracing\'"]
 impl ObjectType {
-    pub const ACCELERATION_STRUCTURE_NV: Self = ObjectType(1000165000);
+    pub const ACCELERATION_STRUCTURE_NV: Self = ObjectType(1_000_165_000);
 }
 #[doc = "Generated from \'VK_NV_ray_tracing\'"]
 impl DebugReportObjectTypeEXT {
-    pub const ACCELERATION_STRUCTURE_NV: Self = DebugReportObjectTypeEXT(1000165000);
+    pub const ACCELERATION_STRUCTURE_NV: Self = DebugReportObjectTypeEXT(1_000_165_000);
 }
 #[doc = "Generated from \'VK_NV_ray_tracing\'"]
 impl IndexType {
-    pub const NONE_NV: Self = IndexType(1000165000);
+    pub const NONE_NV: Self = IndexType(1_000_165_000);
 }
 impl NvRepresentativeFragmentTestFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -56007,12 +56025,12 @@ impl NvRepresentativeFragmentTestFn {
 #[doc = "Generated from \'VK_NV_representative_fragment_test\'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_REPRESENTATIVE_FRAGMENT_TEST_FEATURES_NV: Self =
-        StructureType(1000166000);
+        StructureType(1_000_166_000);
 }
 #[doc = "Generated from \'VK_NV_representative_fragment_test\'"]
 impl StructureType {
     pub const PIPELINE_REPRESENTATIVE_FRAGMENT_TEST_STATE_CREATE_INFO_NV: Self =
-        StructureType(1000166001);
+        StructureType(1_000_166_001);
 }
 impl NvExtension168Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -56325,11 +56343,11 @@ impl ExtGlobalPriorityFn {
 }
 #[doc = "Generated from \'VK_EXT_global_priority\'"]
 impl StructureType {
-    pub const DEVICE_QUEUE_GLOBAL_PRIORITY_CREATE_INFO_EXT: Self = StructureType(1000174000);
+    pub const DEVICE_QUEUE_GLOBAL_PRIORITY_CREATE_INFO_EXT: Self = StructureType(1_000_174_000);
 }
 #[doc = "Generated from \'VK_EXT_global_priority\'"]
 impl Result {
-    pub const ERROR_NOT_PERMITTED_EXT: Self = Result(-1000174001);
+    pub const ERROR_NOT_PERMITTED_EXT: Self = Result(-1_000_174_001);
 }
 impl ExtExtension176Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -56399,7 +56417,7 @@ impl Khr8bitStorageFn {
 }
 #[doc = "Generated from \'VK_KHR_8bit_storage\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_8BIT_STORAGE_FEATURES_KHR: Self = StructureType(1000177000);
+    pub const PHYSICAL_DEVICE_8BIT_STORAGE_FEATURES_KHR: Self = StructureType(1_000_177_000);
 }
 impl ExtExternalMemoryHostFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -56478,25 +56496,26 @@ impl ExtExternalMemoryHostFn {
 }
 #[doc = "Generated from \'VK_EXT_external_memory_host\'"]
 impl StructureType {
-    pub const IMPORT_MEMORY_HOST_POINTER_INFO_EXT: Self = StructureType(1000178000);
+    pub const IMPORT_MEMORY_HOST_POINTER_INFO_EXT: Self = StructureType(1_000_178_000);
 }
 #[doc = "Generated from \'VK_EXT_external_memory_host\'"]
 impl StructureType {
-    pub const MEMORY_HOST_POINTER_PROPERTIES_EXT: Self = StructureType(1000178001);
+    pub const MEMORY_HOST_POINTER_PROPERTIES_EXT: Self = StructureType(1_000_178_001);
 }
 #[doc = "Generated from \'VK_EXT_external_memory_host\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_EXTERNAL_MEMORY_HOST_PROPERTIES_EXT: Self = StructureType(1000178002);
+    pub const PHYSICAL_DEVICE_EXTERNAL_MEMORY_HOST_PROPERTIES_EXT: Self =
+        StructureType(1_000_178_002);
 }
 #[doc = "Generated from \'VK_EXT_external_memory_host\'"]
 impl ExternalMemoryHandleTypeFlags {
     pub const EXTERNAL_MEMORY_HANDLE_TYPE_HOST_ALLOCATION: Self =
-        ExternalMemoryHandleTypeFlags(0b10000000);
+        ExternalMemoryHandleTypeFlags(0b1000_0000);
 }
 #[doc = "Generated from \'VK_EXT_external_memory_host\'"]
 impl ExternalMemoryHandleTypeFlags {
     pub const EXTERNAL_MEMORY_HANDLE_TYPE_HOST_MAPPED_FOREIGN_MEMORY: Self =
-        ExternalMemoryHandleTypeFlags(0b100000000);
+        ExternalMemoryHandleTypeFlags(0b1_0000_0000);
 }
 impl AmdBufferMarkerFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -56602,7 +56621,7 @@ impl KhrShaderAtomicInt64Fn {
 }
 #[doc = "Generated from \'VK_KHR_shader_atomic_int64\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_SHADER_ATOMIC_INT64_FEATURES_KHR: Self = StructureType(1000180000);
+    pub const PHYSICAL_DEVICE_SHADER_ATOMIC_INT64_FEATURES_KHR: Self = StructureType(1_000_180_000);
 }
 impl AmdExtension182Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -56798,7 +56817,7 @@ impl ExtCalibratedTimestampsFn {
 }
 #[doc = "Generated from \'VK_EXT_calibrated_timestamps\'"]
 impl StructureType {
-    pub const CALIBRATED_TIMESTAMP_INFO_EXT: Self = StructureType(1000184000);
+    pub const CALIBRATED_TIMESTAMP_INFO_EXT: Self = StructureType(1_000_184_000);
 }
 impl AmdShaderCorePropertiesFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -56824,7 +56843,7 @@ impl AmdShaderCorePropertiesFn {
 }
 #[doc = "Generated from \'VK_AMD_shader_core_properties\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_AMD: Self = StructureType(1000185000);
+    pub const PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_AMD: Self = StructureType(1_000_185_000);
 }
 impl AmdExtension187Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -56916,7 +56935,7 @@ impl AmdMemoryOverallocationBehaviorFn {
 }
 #[doc = "Generated from \'VK_AMD_memory_overallocation_behavior\'"]
 impl StructureType {
-    pub const DEVICE_MEMORY_OVERALLOCATION_CREATE_INFO_AMD: Self = StructureType(1000189000);
+    pub const DEVICE_MEMORY_OVERALLOCATION_CREATE_INFO_AMD: Self = StructureType(1_000_189_000);
 }
 impl ExtVertexAttributeDivisorFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -56943,16 +56962,17 @@ impl ExtVertexAttributeDivisorFn {
 #[doc = "Generated from \'VK_EXT_vertex_attribute_divisor\'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_PROPERTIES_EXT: Self =
-        StructureType(1000190000);
+        StructureType(1_000_190_000);
 }
 #[doc = "Generated from \'VK_EXT_vertex_attribute_divisor\'"]
 impl StructureType {
-    pub const PIPELINE_VERTEX_INPUT_DIVISOR_STATE_CREATE_INFO_EXT: Self = StructureType(1000190001);
+    pub const PIPELINE_VERTEX_INPUT_DIVISOR_STATE_CREATE_INFO_EXT: Self =
+        StructureType(1_000_190_001);
 }
 #[doc = "Generated from \'VK_EXT_vertex_attribute_divisor\'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_FEATURES_EXT: Self =
-        StructureType(1000190002);
+        StructureType(1_000_190_002);
 }
 impl GoogleExtension192Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -57088,7 +57108,7 @@ impl KhrDriverPropertiesFn {
 }
 #[doc = "Generated from \'VK_KHR_driver_properties\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_DRIVER_PROPERTIES_KHR: Self = StructureType(1000196000);
+    pub const PHYSICAL_DEVICE_DRIVER_PROPERTIES_KHR: Self = StructureType(1_000_196_000);
 }
 impl KhrShaderFloatControlsFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -57114,7 +57134,7 @@ impl KhrShaderFloatControlsFn {
 }
 #[doc = "Generated from \'VK_KHR_shader_float_controls\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_FLOAT_CONTROLS_PROPERTIES_KHR: Self = StructureType(1000197000);
+    pub const PHYSICAL_DEVICE_FLOAT_CONTROLS_PROPERTIES_KHR: Self = StructureType(1_000_197_000);
 }
 impl NvShaderSubgroupPartitionedFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -57140,7 +57160,7 @@ impl NvShaderSubgroupPartitionedFn {
 }
 #[doc = "Generated from \'VK_NV_shader_subgroup_partitioned\'"]
 impl SubgroupFeatureFlags {
-    pub const PARTITIONED_NV: Self = SubgroupFeatureFlags(0b100000000);
+    pub const PARTITIONED_NV: Self = SubgroupFeatureFlags(0b1_0000_0000);
 }
 impl KhrDepthStencilResolveFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -57167,11 +57187,11 @@ impl KhrDepthStencilResolveFn {
 #[doc = "Generated from \'VK_KHR_depth_stencil_resolve\'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_DEPTH_STENCIL_RESOLVE_PROPERTIES_KHR: Self =
-        StructureType(1000199000);
+        StructureType(1_000_199_000);
 }
 #[doc = "Generated from \'VK_KHR_depth_stencil_resolve\'"]
 impl StructureType {
-    pub const SUBPASS_DESCRIPTION_DEPTH_STENCIL_RESOLVE_KHR: Self = StructureType(1000199001);
+    pub const SUBPASS_DESCRIPTION_DEPTH_STENCIL_RESOLVE_KHR: Self = StructureType(1_000_199_001);
 }
 impl KhrSwapchainMutableFormatFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -57224,7 +57244,7 @@ impl NvComputeShaderDerivativesFn {
 #[doc = "Generated from \'VK_NV_compute_shader_derivatives\'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_COMPUTE_SHADER_DERIVATIVES_FEATURES_NV: Self =
-        StructureType(1000201000);
+        StructureType(1_000_201_000);
 }
 impl NvMeshShaderFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -57405,27 +57425,27 @@ impl NvMeshShaderFn {
 }
 #[doc = "Generated from \'VK_NV_mesh_shader\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_MESH_SHADER_FEATURES_NV: Self = StructureType(1000202000);
+    pub const PHYSICAL_DEVICE_MESH_SHADER_FEATURES_NV: Self = StructureType(1_000_202_000);
 }
 #[doc = "Generated from \'VK_NV_mesh_shader\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_MESH_SHADER_PROPERTIES_NV: Self = StructureType(1000202001);
+    pub const PHYSICAL_DEVICE_MESH_SHADER_PROPERTIES_NV: Self = StructureType(1_000_202_001);
 }
 #[doc = "Generated from \'VK_NV_mesh_shader\'"]
 impl ShaderStageFlags {
-    pub const TASK_NV: Self = ShaderStageFlags(0b1000000);
+    pub const TASK_NV: Self = ShaderStageFlags(0b100_0000);
 }
 #[doc = "Generated from \'VK_NV_mesh_shader\'"]
 impl ShaderStageFlags {
-    pub const MESH_NV: Self = ShaderStageFlags(0b10000000);
+    pub const MESH_NV: Self = ShaderStageFlags(0b1000_0000);
 }
 #[doc = "Generated from \'VK_NV_mesh_shader\'"]
 impl PipelineStageFlags {
-    pub const TASK_SHADER_NV: Self = PipelineStageFlags(0b10000000000000000000);
+    pub const TASK_SHADER_NV: Self = PipelineStageFlags(0b1000_0000_0000_0000_0000);
 }
 #[doc = "Generated from \'VK_NV_mesh_shader\'"]
 impl PipelineStageFlags {
-    pub const MESH_SHADER_NV: Self = PipelineStageFlags(0b100000000000000000000);
+    pub const MESH_SHADER_NV: Self = PipelineStageFlags(0b1_0000_0000_0000_0000_0000);
 }
 impl NvFragmentShaderBarycentricFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -57452,7 +57472,7 @@ impl NvFragmentShaderBarycentricFn {
 #[doc = "Generated from \'VK_NV_fragment_shader_barycentric\'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_FRAGMENT_SHADER_BARYCENTRIC_FEATURES_NV: Self =
-        StructureType(1000203000);
+        StructureType(1_000_203_000);
 }
 impl NvShaderImageFootprintFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -57478,7 +57498,8 @@ impl NvShaderImageFootprintFn {
 }
 #[doc = "Generated from \'VK_NV_shader_image_footprint\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_SHADER_IMAGE_FOOTPRINT_FEATURES_NV: Self = StructureType(1000204000);
+    pub const PHYSICAL_DEVICE_SHADER_IMAGE_FOOTPRINT_FEATURES_NV: Self =
+        StructureType(1_000_204_000);
 }
 impl NvScissorExclusiveFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -57558,15 +57579,15 @@ impl NvScissorExclusiveFn {
 #[doc = "Generated from \'VK_NV_scissor_exclusive\'"]
 impl StructureType {
     pub const PIPELINE_VIEWPORT_EXCLUSIVE_SCISSOR_STATE_CREATE_INFO_NV: Self =
-        StructureType(1000205000);
+        StructureType(1_000_205_000);
 }
 #[doc = "Generated from \'VK_NV_scissor_exclusive\'"]
 impl DynamicState {
-    pub const EXCLUSIVE_SCISSOR_NV: Self = DynamicState(1000205001);
+    pub const EXCLUSIVE_SCISSOR_NV: Self = DynamicState(1_000_205_001);
 }
 #[doc = "Generated from \'VK_NV_scissor_exclusive\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_EXCLUSIVE_SCISSOR_FEATURES_NV: Self = StructureType(1000205002);
+    pub const PHYSICAL_DEVICE_EXCLUSIVE_SCISSOR_FEATURES_NV: Self = StructureType(1_000_205_002);
 }
 impl NvDeviceDiagnosticCheckpointsFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -57671,11 +57692,11 @@ impl NvDeviceDiagnosticCheckpointsFn {
 }
 #[doc = "Generated from \'VK_NV_device_diagnostic_checkpoints\'"]
 impl StructureType {
-    pub const CHECKPOINT_DATA_NV: Self = StructureType(1000206000);
+    pub const CHECKPOINT_DATA_NV: Self = StructureType(1_000_206_000);
 }
 #[doc = "Generated from \'VK_NV_device_diagnostic_checkpoints\'"]
 impl StructureType {
-    pub const QUEUE_FAMILY_CHECKPOINT_PROPERTIES_NV: Self = StructureType(1000206001);
+    pub const QUEUE_FAMILY_CHECKPOINT_PROPERTIES_NV: Self = StructureType(1_000_206_001);
 }
 impl KhrExtension208Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -57789,7 +57810,7 @@ impl KhrVulkanMemoryModelFn {
 }
 #[doc = "Generated from \'VK_KHR_vulkan_memory_model\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_VULKAN_MEMORY_MODEL_FEATURES_KHR: Self = StructureType(1000211000);
+    pub const PHYSICAL_DEVICE_VULKAN_MEMORY_MODEL_FEATURES_KHR: Self = StructureType(1_000_211_000);
 }
 impl ExtPciBusInfoFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -57815,7 +57836,7 @@ impl ExtPciBusInfoFn {
 }
 #[doc = "Generated from \'VK_EXT_pci_bus_info\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_PCI_BUS_INFO_PROPERTIES_EXT: Self = StructureType(1000212000);
+    pub const PHYSICAL_DEVICE_PCI_BUS_INFO_PROPERTIES_EXT: Self = StructureType(1_000_212_000);
 }
 impl AmdExtension214Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -57911,7 +57932,7 @@ impl FuchsiaImagepipeSurfaceFn {
 }
 #[doc = "Generated from \'VK_FUCHSIA_imagepipe_surface\'"]
 impl StructureType {
-    pub const IMAGEPIPE_SURFACE_CREATE_INFO_FUCHSIA: Self = StructureType(1000214000);
+    pub const IMAGEPIPE_SURFACE_CREATE_INFO_FUCHSIA: Self = StructureType(1_000_214_000);
 }
 impl GoogleExtension216Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -58003,35 +58024,38 @@ impl ExtFragmentDensityMapFn {
 }
 #[doc = "Generated from \'VK_EXT_fragment_density_map\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_FEATURES_EXT: Self = StructureType(1000218000);
+    pub const PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_FEATURES_EXT: Self =
+        StructureType(1_000_218_000);
 }
 #[doc = "Generated from \'VK_EXT_fragment_density_map\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_PROPERTIES_EXT: Self = StructureType(1000218001);
+    pub const PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_PROPERTIES_EXT: Self =
+        StructureType(1_000_218_001);
 }
 #[doc = "Generated from \'VK_EXT_fragment_density_map\'"]
 impl StructureType {
-    pub const RENDER_PASS_FRAGMENT_DENSITY_MAP_CREATE_INFO_EXT: Self = StructureType(1000218002);
+    pub const RENDER_PASS_FRAGMENT_DENSITY_MAP_CREATE_INFO_EXT: Self = StructureType(1_000_218_002);
 }
 #[doc = "Generated from \'VK_EXT_fragment_density_map\'"]
 impl ImageCreateFlags {
-    pub const SUBSAMPLED_EXT: Self = ImageCreateFlags(0b100000000000000);
+    pub const SUBSAMPLED_EXT: Self = ImageCreateFlags(0b100_0000_0000_0000);
 }
 #[doc = "Generated from \'VK_EXT_fragment_density_map\'"]
 impl ImageLayout {
-    pub const FRAGMENT_DENSITY_MAP_OPTIMAL_EXT: Self = ImageLayout(1000218000);
+    pub const FRAGMENT_DENSITY_MAP_OPTIMAL_EXT: Self = ImageLayout(1_000_218_000);
 }
 #[doc = "Generated from \'VK_EXT_fragment_density_map\'"]
 impl AccessFlags {
-    pub const FRAGMENT_DENSITY_MAP_READ_EXT: Self = AccessFlags(0b1000000000000000000000000);
+    pub const FRAGMENT_DENSITY_MAP_READ_EXT: Self = AccessFlags(0b1_0000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from \'VK_EXT_fragment_density_map\'"]
 impl FormatFeatureFlags {
-    pub const FRAGMENT_DENSITY_MAP_EXT: Self = FormatFeatureFlags(0b1000000000000000000000000);
+    pub const FRAGMENT_DENSITY_MAP_EXT: Self =
+        FormatFeatureFlags(0b1_0000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from \'VK_EXT_fragment_density_map\'"]
 impl ImageUsageFlags {
-    pub const FRAGMENT_DENSITY_MAP_EXT: Self = ImageUsageFlags(0b1000000000);
+    pub const FRAGMENT_DENSITY_MAP_EXT: Self = ImageUsageFlags(0b10_0000_0000);
 }
 #[doc = "Generated from \'VK_EXT_fragment_density_map\'"]
 impl ImageViewCreateFlags {
@@ -58039,7 +58063,8 @@ impl ImageViewCreateFlags {
 }
 #[doc = "Generated from \'VK_EXT_fragment_density_map\'"]
 impl PipelineStageFlags {
-    pub const FRAGMENT_DENSITY_PROCESS_EXT: Self = PipelineStageFlags(0b100000000000000000000000);
+    pub const FRAGMENT_DENSITY_PROCESS_EXT: Self =
+        PipelineStageFlags(0b1000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from \'VK_EXT_fragment_density_map\'"]
 impl SamplerCreateFlags {
@@ -58121,7 +58146,7 @@ impl ExtScalarBlockLayoutFn {
 }
 #[doc = "Generated from \'VK_EXT_scalar_block_layout\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_SCALAR_BLOCK_LAYOUT_FEATURES_EXT: Self = StructureType(1000221000);
+    pub const PHYSICAL_DEVICE_SCALAR_BLOCK_LAYOUT_FEATURES_EXT: Self = StructureType(1_000_221_000);
 }
 impl ExtExtension223Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -58477,7 +58502,7 @@ impl ExtMemoryBudgetFn {
 }
 #[doc = "Generated from \'VK_EXT_memory_budget\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_MEMORY_BUDGET_PROPERTIES_EXT: Self = StructureType(1000237000);
+    pub const PHYSICAL_DEVICE_MEMORY_BUDGET_PROPERTIES_EXT: Self = StructureType(1_000_237_000);
 }
 impl ExtMemoryPriorityFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -58503,11 +58528,11 @@ impl ExtMemoryPriorityFn {
 }
 #[doc = "Generated from \'VK_EXT_memory_priority\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_MEMORY_PRIORITY_FEATURES_EXT: Self = StructureType(1000238000);
+    pub const PHYSICAL_DEVICE_MEMORY_PRIORITY_FEATURES_EXT: Self = StructureType(1_000_238_000);
 }
 #[doc = "Generated from \'VK_EXT_memory_priority\'"]
 impl StructureType {
-    pub const MEMORY_PRIORITY_ALLOCATE_INFO_EXT: Self = StructureType(1000238001);
+    pub const MEMORY_PRIORITY_ALLOCATE_INFO_EXT: Self = StructureType(1_000_238_001);
 }
 impl KhrExtension240Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -58681,27 +58706,27 @@ impl ExtBufferDeviceAddressFn {
 }
 #[doc = "Generated from \'VK_EXT_buffer_device_address\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_BUFFER_ADDRESS_FEATURES_EXT: Self = StructureType(1000244000);
+    pub const PHYSICAL_DEVICE_BUFFER_ADDRESS_FEATURES_EXT: Self = StructureType(1_000_244_000);
 }
 #[doc = "Generated from \'VK_EXT_buffer_device_address\'"]
 impl StructureType {
-    pub const BUFFER_DEVICE_ADDRESS_INFO_EXT: Self = StructureType(1000244001);
+    pub const BUFFER_DEVICE_ADDRESS_INFO_EXT: Self = StructureType(1_000_244_001);
 }
 #[doc = "Generated from \'VK_EXT_buffer_device_address\'"]
 impl StructureType {
-    pub const BUFFER_DEVICE_ADDRESS_CREATE_INFO_EXT: Self = StructureType(1000244002);
+    pub const BUFFER_DEVICE_ADDRESS_CREATE_INFO_EXT: Self = StructureType(1_000_244_002);
 }
 #[doc = "Generated from \'VK_EXT_buffer_device_address\'"]
 impl BufferUsageFlags {
-    pub const SHADER_DEVICE_ADDRESS_EXT: Self = BufferUsageFlags(0b100000000000000000);
+    pub const SHADER_DEVICE_ADDRESS_EXT: Self = BufferUsageFlags(0b10_0000_0000_0000_0000);
 }
 #[doc = "Generated from \'VK_EXT_buffer_device_address\'"]
 impl BufferCreateFlags {
-    pub const DEVICE_ADDRESS_CAPTURE_REPLAY_EXT: Self = BufferCreateFlags(0b10000);
+    pub const DEVICE_ADDRESS_CAPTURE_REPLAY_EXT: Self = BufferCreateFlags(0b1_0000);
 }
 #[doc = "Generated from \'VK_EXT_buffer_device_address\'"]
 impl Result {
-    pub const ERROR_INVALID_DEVICE_ADDRESS_EXT: Self = Result(-1000244000);
+    pub const ERROR_INVALID_DEVICE_ADDRESS_EXT: Self = Result(-1_000_244_000);
 }
 impl ExtExtension246Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -58749,7 +58774,7 @@ impl ExtSeparateStencilUsageFn {
 }
 #[doc = "Generated from \'VK_EXT_separate_stencil_usage\'"]
 impl StructureType {
-    pub const IMAGE_STENCIL_USAGE_CREATE_INFO_EXT: Self = StructureType(1000246000);
+    pub const IMAGE_STENCIL_USAGE_CREATE_INFO_EXT: Self = StructureType(1_000_246_000);
 }
 impl ExtValidationFeaturesFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -58775,7 +58800,7 @@ impl ExtValidationFeaturesFn {
 }
 #[doc = "Generated from \'VK_EXT_validation_features\'"]
 impl StructureType {
-    pub const VALIDATION_FEATURES_EXT: Self = StructureType(1000247000);
+    pub const VALIDATION_FEATURES_EXT: Self = StructureType(1_000_247_000);
 }
 impl KhrExtension249Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -58823,51 +58848,51 @@ impl NvExtension250Fn {
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_SUBGROUP_PROPERTIES: Self = StructureType(1000094000);
+    pub const PHYSICAL_DEVICE_SUBGROUP_PROPERTIES: Self = StructureType(1_000_094_000);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const BIND_BUFFER_MEMORY_INFO: Self = StructureType(1000157000);
+    pub const BIND_BUFFER_MEMORY_INFO: Self = StructureType(1_000_157_000);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const BIND_IMAGE_MEMORY_INFO: Self = StructureType(1000157001);
+    pub const BIND_IMAGE_MEMORY_INFO: Self = StructureType(1_000_157_001);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl ImageCreateFlags {
-    pub const ALIAS: Self = ImageCreateFlags(0b10000000000);
+    pub const ALIAS: Self = ImageCreateFlags(0b100_0000_0000);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_16BIT_STORAGE_FEATURES: Self = StructureType(1000083000);
+    pub const PHYSICAL_DEVICE_16BIT_STORAGE_FEATURES: Self = StructureType(1_000_083_000);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const MEMORY_DEDICATED_REQUIREMENTS: Self = StructureType(1000127000);
+    pub const MEMORY_DEDICATED_REQUIREMENTS: Self = StructureType(1_000_127_000);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const MEMORY_DEDICATED_ALLOCATE_INFO: Self = StructureType(1000127001);
+    pub const MEMORY_DEDICATED_ALLOCATE_INFO: Self = StructureType(1_000_127_001);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const MEMORY_ALLOCATE_FLAGS_INFO: Self = StructureType(1000060000);
+    pub const MEMORY_ALLOCATE_FLAGS_INFO: Self = StructureType(1_000_060_000);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const DEVICE_GROUP_RENDER_PASS_BEGIN_INFO: Self = StructureType(1000060003);
+    pub const DEVICE_GROUP_RENDER_PASS_BEGIN_INFO: Self = StructureType(1_000_060_003);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const DEVICE_GROUP_COMMAND_BUFFER_BEGIN_INFO: Self = StructureType(1000060004);
+    pub const DEVICE_GROUP_COMMAND_BUFFER_BEGIN_INFO: Self = StructureType(1_000_060_004);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const DEVICE_GROUP_SUBMIT_INFO: Self = StructureType(1000060005);
+    pub const DEVICE_GROUP_SUBMIT_INFO: Self = StructureType(1_000_060_005);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const DEVICE_GROUP_BIND_SPARSE_INFO: Self = StructureType(1000060006);
+    pub const DEVICE_GROUP_BIND_SPARSE_INFO: Self = StructureType(1_000_060_006);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl PipelineCreateFlags {
@@ -58875,7 +58900,7 @@ impl PipelineCreateFlags {
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl PipelineCreateFlags {
-    pub const DISPATCH_BASE: Self = PipelineCreateFlags(0b10000);
+    pub const DISPATCH_BASE: Self = PipelineCreateFlags(0b1_0000);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl DependencyFlags {
@@ -58883,23 +58908,23 @@ impl DependencyFlags {
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const BIND_BUFFER_MEMORY_DEVICE_GROUP_INFO: Self = StructureType(1000060013);
+    pub const BIND_BUFFER_MEMORY_DEVICE_GROUP_INFO: Self = StructureType(1_000_060_013);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const BIND_IMAGE_MEMORY_DEVICE_GROUP_INFO: Self = StructureType(1000060014);
+    pub const BIND_IMAGE_MEMORY_DEVICE_GROUP_INFO: Self = StructureType(1_000_060_014);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl ImageCreateFlags {
-    pub const SPLIT_INSTANCE_BIND_REGIONS: Self = ImageCreateFlags(0b1000000);
+    pub const SPLIT_INSTANCE_BIND_REGIONS: Self = ImageCreateFlags(0b100_0000);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_GROUP_PROPERTIES: Self = StructureType(1000070000);
+    pub const PHYSICAL_DEVICE_GROUP_PROPERTIES: Self = StructureType(1_000_070_000);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const DEVICE_GROUP_DEVICE_CREATE_INFO: Self = StructureType(1000070001);
+    pub const DEVICE_GROUP_DEVICE_CREATE_INFO: Self = StructureType(1_000_070_001);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl MemoryHeapFlags {
@@ -58907,120 +58932,120 @@ impl MemoryHeapFlags {
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const BUFFER_MEMORY_REQUIREMENTS_INFO_2: Self = StructureType(1000146000);
+    pub const BUFFER_MEMORY_REQUIREMENTS_INFO_2: Self = StructureType(1_000_146_000);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const IMAGE_MEMORY_REQUIREMENTS_INFO_2: Self = StructureType(1000146001);
+    pub const IMAGE_MEMORY_REQUIREMENTS_INFO_2: Self = StructureType(1_000_146_001);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const IMAGE_SPARSE_MEMORY_REQUIREMENTS_INFO_2: Self = StructureType(1000146002);
+    pub const IMAGE_SPARSE_MEMORY_REQUIREMENTS_INFO_2: Self = StructureType(1_000_146_002);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const MEMORY_REQUIREMENTS_2: Self = StructureType(1000146003);
+    pub const MEMORY_REQUIREMENTS_2: Self = StructureType(1_000_146_003);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const SPARSE_IMAGE_MEMORY_REQUIREMENTS_2: Self = StructureType(1000146004);
+    pub const SPARSE_IMAGE_MEMORY_REQUIREMENTS_2: Self = StructureType(1_000_146_004);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_FEATURES_2: Self = StructureType(1000059000);
+    pub const PHYSICAL_DEVICE_FEATURES_2: Self = StructureType(1_000_059_000);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_PROPERTIES_2: Self = StructureType(1000059001);
+    pub const PHYSICAL_DEVICE_PROPERTIES_2: Self = StructureType(1_000_059_001);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const FORMAT_PROPERTIES_2: Self = StructureType(1000059002);
+    pub const FORMAT_PROPERTIES_2: Self = StructureType(1_000_059_002);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const IMAGE_FORMAT_PROPERTIES_2: Self = StructureType(1000059003);
+    pub const IMAGE_FORMAT_PROPERTIES_2: Self = StructureType(1_000_059_003);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_IMAGE_FORMAT_INFO_2: Self = StructureType(1000059004);
+    pub const PHYSICAL_DEVICE_IMAGE_FORMAT_INFO_2: Self = StructureType(1_000_059_004);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const QUEUE_FAMILY_PROPERTIES_2: Self = StructureType(1000059005);
+    pub const QUEUE_FAMILY_PROPERTIES_2: Self = StructureType(1_000_059_005);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_MEMORY_PROPERTIES_2: Self = StructureType(1000059006);
+    pub const PHYSICAL_DEVICE_MEMORY_PROPERTIES_2: Self = StructureType(1_000_059_006);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const SPARSE_IMAGE_FORMAT_PROPERTIES_2: Self = StructureType(1000059007);
+    pub const SPARSE_IMAGE_FORMAT_PROPERTIES_2: Self = StructureType(1_000_059_007);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_SPARSE_IMAGE_FORMAT_INFO_2: Self = StructureType(1000059008);
+    pub const PHYSICAL_DEVICE_SPARSE_IMAGE_FORMAT_INFO_2: Self = StructureType(1_000_059_008);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl Result {
-    pub const ERROR_OUT_OF_POOL_MEMORY: Self = Result(-1000069000);
+    pub const ERROR_OUT_OF_POOL_MEMORY: Self = Result(-1_000_069_000);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl FormatFeatureFlags {
-    pub const TRANSFER_SRC: Self = FormatFeatureFlags(0b100000000000000);
+    pub const TRANSFER_SRC: Self = FormatFeatureFlags(0b100_0000_0000_0000);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl FormatFeatureFlags {
-    pub const TRANSFER_DST: Self = FormatFeatureFlags(0b1000000000000000);
+    pub const TRANSFER_DST: Self = FormatFeatureFlags(0b1000_0000_0000_0000);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl ImageCreateFlags {
-    pub const TYPE_2D_ARRAY_COMPATIBLE: Self = ImageCreateFlags(0b100000);
+    pub const TYPE_2D_ARRAY_COMPATIBLE: Self = ImageCreateFlags(0b10_0000);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl ImageCreateFlags {
-    pub const BLOCK_TEXEL_VIEW_COMPATIBLE: Self = ImageCreateFlags(0b10000000);
+    pub const BLOCK_TEXEL_VIEW_COMPATIBLE: Self = ImageCreateFlags(0b1000_0000);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl ImageCreateFlags {
-    pub const EXTENDED_USAGE: Self = ImageCreateFlags(0b100000000);
+    pub const EXTENDED_USAGE: Self = ImageCreateFlags(0b1_0000_0000);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_POINT_CLIPPING_PROPERTIES: Self = StructureType(1000117000);
+    pub const PHYSICAL_DEVICE_POINT_CLIPPING_PROPERTIES: Self = StructureType(1_000_117_000);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const RENDER_PASS_INPUT_ATTACHMENT_ASPECT_CREATE_INFO: Self = StructureType(1000117001);
+    pub const RENDER_PASS_INPUT_ATTACHMENT_ASPECT_CREATE_INFO: Self = StructureType(1_000_117_001);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const IMAGE_VIEW_USAGE_CREATE_INFO: Self = StructureType(1000117002);
+    pub const IMAGE_VIEW_USAGE_CREATE_INFO: Self = StructureType(1_000_117_002);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
     pub const PIPELINE_TESSELLATION_DOMAIN_ORIGIN_STATE_CREATE_INFO: Self =
-        StructureType(1000117003);
+        StructureType(1_000_117_003);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl ImageLayout {
-    pub const DEPTH_READ_ONLY_STENCIL_ATTACHMENT_OPTIMAL: Self = ImageLayout(1000117000);
+    pub const DEPTH_READ_ONLY_STENCIL_ATTACHMENT_OPTIMAL: Self = ImageLayout(1_000_117_000);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl ImageLayout {
-    pub const DEPTH_ATTACHMENT_STENCIL_READ_ONLY_OPTIMAL: Self = ImageLayout(1000117001);
+    pub const DEPTH_ATTACHMENT_STENCIL_READ_ONLY_OPTIMAL: Self = ImageLayout(1_000_117_001);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const RENDER_PASS_MULTIVIEW_CREATE_INFO: Self = StructureType(1000053000);
+    pub const RENDER_PASS_MULTIVIEW_CREATE_INFO: Self = StructureType(1_000_053_000);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_MULTIVIEW_FEATURES: Self = StructureType(1000053001);
+    pub const PHYSICAL_DEVICE_MULTIVIEW_FEATURES: Self = StructureType(1_000_053_001);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_MULTIVIEW_PROPERTIES: Self = StructureType(1000053002);
+    pub const PHYSICAL_DEVICE_MULTIVIEW_PROPERTIES: Self = StructureType(1_000_053_002);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl DependencyFlags {
@@ -59028,27 +59053,27 @@ impl DependencyFlags {
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_VARIABLE_POINTER_FEATURES: Self = StructureType(1000120000);
+    pub const PHYSICAL_DEVICE_VARIABLE_POINTER_FEATURES: Self = StructureType(1_000_120_000);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const PROTECTED_SUBMIT_INFO: Self = StructureType(1000145000);
+    pub const PROTECTED_SUBMIT_INFO: Self = StructureType(1_000_145_000);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_PROTECTED_MEMORY_FEATURES: Self = StructureType(1000145001);
+    pub const PHYSICAL_DEVICE_PROTECTED_MEMORY_FEATURES: Self = StructureType(1_000_145_001);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_PROTECTED_MEMORY_PROPERTIES: Self = StructureType(1000145002);
+    pub const PHYSICAL_DEVICE_PROTECTED_MEMORY_PROPERTIES: Self = StructureType(1_000_145_002);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const DEVICE_QUEUE_INFO_2: Self = StructureType(1000145003);
+    pub const DEVICE_QUEUE_INFO_2: Self = StructureType(1_000_145_003);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl QueueFlags {
-    pub const PROTECTED: Self = QueueFlags(0b10000);
+    pub const PROTECTED: Self = QueueFlags(0b1_0000);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl DeviceQueueCreateFlags {
@@ -59056,7 +59081,7 @@ impl DeviceQueueCreateFlags {
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl MemoryPropertyFlags {
-    pub const PROTECTED: Self = MemoryPropertyFlags(0b100000);
+    pub const PROTECTED: Self = MemoryPropertyFlags(0b10_0000);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl BufferCreateFlags {
@@ -59064,7 +59089,7 @@ impl BufferCreateFlags {
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl ImageCreateFlags {
-    pub const PROTECTED: Self = ImageCreateFlags(0b100000000000);
+    pub const PROTECTED: Self = ImageCreateFlags(0b1000_0000_0000);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl CommandPoolCreateFlags {
@@ -59072,295 +59097,296 @@ impl CommandPoolCreateFlags {
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const SAMPLER_YCBCR_CONVERSION_CREATE_INFO: Self = StructureType(1000156000);
+    pub const SAMPLER_YCBCR_CONVERSION_CREATE_INFO: Self = StructureType(1_000_156_000);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const SAMPLER_YCBCR_CONVERSION_INFO: Self = StructureType(1000156001);
+    pub const SAMPLER_YCBCR_CONVERSION_INFO: Self = StructureType(1_000_156_001);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const BIND_IMAGE_PLANE_MEMORY_INFO: Self = StructureType(1000156002);
+    pub const BIND_IMAGE_PLANE_MEMORY_INFO: Self = StructureType(1_000_156_002);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const IMAGE_PLANE_MEMORY_REQUIREMENTS_INFO: Self = StructureType(1000156003);
+    pub const IMAGE_PLANE_MEMORY_REQUIREMENTS_INFO: Self = StructureType(1_000_156_003);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_SAMPLER_YCBCR_CONVERSION_FEATURES: Self = StructureType(1000156004);
+    pub const PHYSICAL_DEVICE_SAMPLER_YCBCR_CONVERSION_FEATURES: Self =
+        StructureType(1_000_156_004);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const SAMPLER_YCBCR_CONVERSION_IMAGE_FORMAT_PROPERTIES: Self = StructureType(1000156005);
+    pub const SAMPLER_YCBCR_CONVERSION_IMAGE_FORMAT_PROPERTIES: Self = StructureType(1_000_156_005);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl ObjectType {
-    pub const SAMPLER_YCBCR_CONVERSION: Self = ObjectType(1000156000);
+    pub const SAMPLER_YCBCR_CONVERSION: Self = ObjectType(1_000_156_000);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl Format {
-    pub const G8B8G8R8_422_UNORM: Self = Format(1000156000);
+    pub const G8B8G8R8_422_UNORM: Self = Format(1_000_156_000);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl Format {
-    pub const B8G8R8G8_422_UNORM: Self = Format(1000156001);
+    pub const B8G8R8G8_422_UNORM: Self = Format(1_000_156_001);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl Format {
-    pub const G8_B8_R8_3PLANE_420_UNORM: Self = Format(1000156002);
+    pub const G8_B8_R8_3PLANE_420_UNORM: Self = Format(1_000_156_002);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl Format {
-    pub const G8_B8R8_2PLANE_420_UNORM: Self = Format(1000156003);
+    pub const G8_B8R8_2PLANE_420_UNORM: Self = Format(1_000_156_003);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl Format {
-    pub const G8_B8_R8_3PLANE_422_UNORM: Self = Format(1000156004);
+    pub const G8_B8_R8_3PLANE_422_UNORM: Self = Format(1_000_156_004);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl Format {
-    pub const G8_B8R8_2PLANE_422_UNORM: Self = Format(1000156005);
+    pub const G8_B8R8_2PLANE_422_UNORM: Self = Format(1_000_156_005);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl Format {
-    pub const G8_B8_R8_3PLANE_444_UNORM: Self = Format(1000156006);
+    pub const G8_B8_R8_3PLANE_444_UNORM: Self = Format(1_000_156_006);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl Format {
-    pub const R10X6_UNORM_PACK16: Self = Format(1000156007);
+    pub const R10X6_UNORM_PACK16: Self = Format(1_000_156_007);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl Format {
-    pub const R10X6G10X6_UNORM_2PACK16: Self = Format(1000156008);
+    pub const R10X6G10X6_UNORM_2PACK16: Self = Format(1_000_156_008);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl Format {
-    pub const R10X6G10X6B10X6A10X6_UNORM_4PACK16: Self = Format(1000156009);
+    pub const R10X6G10X6B10X6A10X6_UNORM_4PACK16: Self = Format(1_000_156_009);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl Format {
-    pub const G10X6B10X6G10X6R10X6_422_UNORM_4PACK16: Self = Format(1000156010);
+    pub const G10X6B10X6G10X6R10X6_422_UNORM_4PACK16: Self = Format(1_000_156_010);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl Format {
-    pub const B10X6G10X6R10X6G10X6_422_UNORM_4PACK16: Self = Format(1000156011);
+    pub const B10X6G10X6R10X6G10X6_422_UNORM_4PACK16: Self = Format(1_000_156_011);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl Format {
-    pub const G10X6_B10X6_R10X6_3PLANE_420_UNORM_3PACK16: Self = Format(1000156012);
+    pub const G10X6_B10X6_R10X6_3PLANE_420_UNORM_3PACK16: Self = Format(1_000_156_012);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl Format {
-    pub const G10X6_B10X6R10X6_2PLANE_420_UNORM_3PACK16: Self = Format(1000156013);
+    pub const G10X6_B10X6R10X6_2PLANE_420_UNORM_3PACK16: Self = Format(1_000_156_013);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl Format {
-    pub const G10X6_B10X6_R10X6_3PLANE_422_UNORM_3PACK16: Self = Format(1000156014);
+    pub const G10X6_B10X6_R10X6_3PLANE_422_UNORM_3PACK16: Self = Format(1_000_156_014);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl Format {
-    pub const G10X6_B10X6R10X6_2PLANE_422_UNORM_3PACK16: Self = Format(1000156015);
+    pub const G10X6_B10X6R10X6_2PLANE_422_UNORM_3PACK16: Self = Format(1_000_156_015);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl Format {
-    pub const G10X6_B10X6_R10X6_3PLANE_444_UNORM_3PACK16: Self = Format(1000156016);
+    pub const G10X6_B10X6_R10X6_3PLANE_444_UNORM_3PACK16: Self = Format(1_000_156_016);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl Format {
-    pub const R12X4_UNORM_PACK16: Self = Format(1000156017);
+    pub const R12X4_UNORM_PACK16: Self = Format(1_000_156_017);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl Format {
-    pub const R12X4G12X4_UNORM_2PACK16: Self = Format(1000156018);
+    pub const R12X4G12X4_UNORM_2PACK16: Self = Format(1_000_156_018);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl Format {
-    pub const R12X4G12X4B12X4A12X4_UNORM_4PACK16: Self = Format(1000156019);
+    pub const R12X4G12X4B12X4A12X4_UNORM_4PACK16: Self = Format(1_000_156_019);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl Format {
-    pub const G12X4B12X4G12X4R12X4_422_UNORM_4PACK16: Self = Format(1000156020);
+    pub const G12X4B12X4G12X4R12X4_422_UNORM_4PACK16: Self = Format(1_000_156_020);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl Format {
-    pub const B12X4G12X4R12X4G12X4_422_UNORM_4PACK16: Self = Format(1000156021);
+    pub const B12X4G12X4R12X4G12X4_422_UNORM_4PACK16: Self = Format(1_000_156_021);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl Format {
-    pub const G12X4_B12X4_R12X4_3PLANE_420_UNORM_3PACK16: Self = Format(1000156022);
+    pub const G12X4_B12X4_R12X4_3PLANE_420_UNORM_3PACK16: Self = Format(1_000_156_022);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl Format {
-    pub const G12X4_B12X4R12X4_2PLANE_420_UNORM_3PACK16: Self = Format(1000156023);
+    pub const G12X4_B12X4R12X4_2PLANE_420_UNORM_3PACK16: Self = Format(1_000_156_023);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl Format {
-    pub const G12X4_B12X4_R12X4_3PLANE_422_UNORM_3PACK16: Self = Format(1000156024);
+    pub const G12X4_B12X4_R12X4_3PLANE_422_UNORM_3PACK16: Self = Format(1_000_156_024);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl Format {
-    pub const G12X4_B12X4R12X4_2PLANE_422_UNORM_3PACK16: Self = Format(1000156025);
+    pub const G12X4_B12X4R12X4_2PLANE_422_UNORM_3PACK16: Self = Format(1_000_156_025);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl Format {
-    pub const G12X4_B12X4_R12X4_3PLANE_444_UNORM_3PACK16: Self = Format(1000156026);
+    pub const G12X4_B12X4_R12X4_3PLANE_444_UNORM_3PACK16: Self = Format(1_000_156_026);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl Format {
-    pub const G16B16G16R16_422_UNORM: Self = Format(1000156027);
+    pub const G16B16G16R16_422_UNORM: Self = Format(1_000_156_027);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl Format {
-    pub const B16G16R16G16_422_UNORM: Self = Format(1000156028);
+    pub const B16G16R16G16_422_UNORM: Self = Format(1_000_156_028);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl Format {
-    pub const G16_B16_R16_3PLANE_420_UNORM: Self = Format(1000156029);
+    pub const G16_B16_R16_3PLANE_420_UNORM: Self = Format(1_000_156_029);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl Format {
-    pub const G16_B16R16_2PLANE_420_UNORM: Self = Format(1000156030);
+    pub const G16_B16R16_2PLANE_420_UNORM: Self = Format(1_000_156_030);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl Format {
-    pub const G16_B16_R16_3PLANE_422_UNORM: Self = Format(1000156031);
+    pub const G16_B16_R16_3PLANE_422_UNORM: Self = Format(1_000_156_031);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl Format {
-    pub const G16_B16R16_2PLANE_422_UNORM: Self = Format(1000156032);
+    pub const G16_B16R16_2PLANE_422_UNORM: Self = Format(1_000_156_032);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl Format {
-    pub const G16_B16_R16_3PLANE_444_UNORM: Self = Format(1000156033);
+    pub const G16_B16_R16_3PLANE_444_UNORM: Self = Format(1_000_156_033);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl ImageAspectFlags {
-    pub const PLANE_0: Self = ImageAspectFlags(0b10000);
+    pub const PLANE_0: Self = ImageAspectFlags(0b1_0000);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl ImageAspectFlags {
-    pub const PLANE_1: Self = ImageAspectFlags(0b100000);
+    pub const PLANE_1: Self = ImageAspectFlags(0b10_0000);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl ImageAspectFlags {
-    pub const PLANE_2: Self = ImageAspectFlags(0b1000000);
+    pub const PLANE_2: Self = ImageAspectFlags(0b100_0000);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl ImageCreateFlags {
-    pub const DISJOINT: Self = ImageCreateFlags(0b1000000000);
+    pub const DISJOINT: Self = ImageCreateFlags(0b10_0000_0000);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl FormatFeatureFlags {
-    pub const MIDPOINT_CHROMA_SAMPLES: Self = FormatFeatureFlags(0b100000000000000000);
+    pub const MIDPOINT_CHROMA_SAMPLES: Self = FormatFeatureFlags(0b10_0000_0000_0000_0000);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl FormatFeatureFlags {
     pub const SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER: Self =
-        FormatFeatureFlags(0b1000000000000000000);
+        FormatFeatureFlags(0b100_0000_0000_0000_0000);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl FormatFeatureFlags {
     pub const SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER: Self =
-        FormatFeatureFlags(0b10000000000000000000);
+        FormatFeatureFlags(0b1000_0000_0000_0000_0000);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl FormatFeatureFlags {
     pub const SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT: Self =
-        FormatFeatureFlags(0b100000000000000000000);
+        FormatFeatureFlags(0b1_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl FormatFeatureFlags {
     pub const SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE: Self =
-        FormatFeatureFlags(0b1000000000000000000000);
+        FormatFeatureFlags(0b10_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl FormatFeatureFlags {
-    pub const DISJOINT: Self = FormatFeatureFlags(0b10000000000000000000000);
+    pub const DISJOINT: Self = FormatFeatureFlags(0b100_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl FormatFeatureFlags {
-    pub const COSITED_CHROMA_SAMPLES: Self = FormatFeatureFlags(0b100000000000000000000000);
+    pub const COSITED_CHROMA_SAMPLES: Self = FormatFeatureFlags(0b1000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const DESCRIPTOR_UPDATE_TEMPLATE_CREATE_INFO: Self = StructureType(1000085000);
+    pub const DESCRIPTOR_UPDATE_TEMPLATE_CREATE_INFO: Self = StructureType(1_000_085_000);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl ObjectType {
-    pub const DESCRIPTOR_UPDATE_TEMPLATE: Self = ObjectType(1000085000);
+    pub const DESCRIPTOR_UPDATE_TEMPLATE: Self = ObjectType(1_000_085_000);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_EXTERNAL_IMAGE_FORMAT_INFO: Self = StructureType(1000071000);
+    pub const PHYSICAL_DEVICE_EXTERNAL_IMAGE_FORMAT_INFO: Self = StructureType(1_000_071_000);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const EXTERNAL_IMAGE_FORMAT_PROPERTIES: Self = StructureType(1000071001);
+    pub const EXTERNAL_IMAGE_FORMAT_PROPERTIES: Self = StructureType(1_000_071_001);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_EXTERNAL_BUFFER_INFO: Self = StructureType(1000071002);
+    pub const PHYSICAL_DEVICE_EXTERNAL_BUFFER_INFO: Self = StructureType(1_000_071_002);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const EXTERNAL_BUFFER_PROPERTIES: Self = StructureType(1000071003);
+    pub const EXTERNAL_BUFFER_PROPERTIES: Self = StructureType(1_000_071_003);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_ID_PROPERTIES: Self = StructureType(1000071004);
+    pub const PHYSICAL_DEVICE_ID_PROPERTIES: Self = StructureType(1_000_071_004);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const EXTERNAL_MEMORY_BUFFER_CREATE_INFO: Self = StructureType(1000072000);
+    pub const EXTERNAL_MEMORY_BUFFER_CREATE_INFO: Self = StructureType(1_000_072_000);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const EXTERNAL_MEMORY_IMAGE_CREATE_INFO: Self = StructureType(1000072001);
+    pub const EXTERNAL_MEMORY_IMAGE_CREATE_INFO: Self = StructureType(1_000_072_001);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const EXPORT_MEMORY_ALLOCATE_INFO: Self = StructureType(1000072002);
+    pub const EXPORT_MEMORY_ALLOCATE_INFO: Self = StructureType(1_000_072_002);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl Result {
-    pub const ERROR_INVALID_EXTERNAL_HANDLE: Self = Result(-1000072003);
+    pub const ERROR_INVALID_EXTERNAL_HANDLE: Self = Result(-1_000_072_003);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_EXTERNAL_FENCE_INFO: Self = StructureType(1000112000);
+    pub const PHYSICAL_DEVICE_EXTERNAL_FENCE_INFO: Self = StructureType(1_000_112_000);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const EXTERNAL_FENCE_PROPERTIES: Self = StructureType(1000112001);
+    pub const EXTERNAL_FENCE_PROPERTIES: Self = StructureType(1_000_112_001);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const EXPORT_FENCE_CREATE_INFO: Self = StructureType(1000113000);
+    pub const EXPORT_FENCE_CREATE_INFO: Self = StructureType(1_000_113_000);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const EXPORT_SEMAPHORE_CREATE_INFO: Self = StructureType(1000077000);
+    pub const EXPORT_SEMAPHORE_CREATE_INFO: Self = StructureType(1_000_077_000);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_EXTERNAL_SEMAPHORE_INFO: Self = StructureType(1000076000);
+    pub const PHYSICAL_DEVICE_EXTERNAL_SEMAPHORE_INFO: Self = StructureType(1_000_076_000);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const EXTERNAL_SEMAPHORE_PROPERTIES: Self = StructureType(1000076001);
+    pub const EXTERNAL_SEMAPHORE_PROPERTIES: Self = StructureType(1_000_076_001);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_MAINTENANCE_3_PROPERTIES: Self = StructureType(1000168000);
+    pub const PHYSICAL_DEVICE_MAINTENANCE_3_PROPERTIES: Self = StructureType(1_000_168_000);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const DESCRIPTOR_SET_LAYOUT_SUPPORT: Self = StructureType(1000168001);
+    pub const DESCRIPTOR_SET_LAYOUT_SUPPORT: Self = StructureType(1_000_168_001);
 }
 #[doc = "Generated from \'VK_VERSION_1_1\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_SHADER_DRAW_PARAMETER_FEATURES: Self = StructureType(1000063000);
+    pub const PHYSICAL_DEVICE_SHADER_DRAW_PARAMETER_FEATURES: Self = StructureType(1_000_063_000);
 }
 pub(crate) fn debug_flags(
     f: &mut fmt::Formatter,

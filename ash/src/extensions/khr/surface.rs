@@ -20,7 +20,7 @@ impl Surface {
         });
         Surface {
             handle: instance.handle(),
-            surface_fn: surface_fn,
+            surface_fn,
         }
     }
 

@@ -1,4 +1,3 @@
-#[macro_use]
 extern crate ash;
 #[cfg(target_os = "windows")]
 extern crate winapi;
@@ -170,7 +169,7 @@ unsafe fn create_surface<E: EntryV1_0, I: InstanceV1_0>(
         s_type: vk::StructureType::WIN32_SURFACE_CREATE_INFO_KHR,
         p_next: ptr::null(),
         flags: Default::default(),
-        hinstance: hinstance,
+        hinstance,
         hwnd: hwnd as *const c_void,
     };
     let win32_surface_loader = Win32Surface::new(entry, instance);
@@ -245,12 +244,10 @@ pub fn find_memorytype_index_f<F: Fn(vk::MemoryPropertyFlags, vk::MemoryProperty
 ) -> Option<u32> {
     let mut memory_type_bits = memory_req.memory_type_bits;
     for (index, ref memory_type) in memory_prop.memory_types.iter().enumerate() {
-        if memory_type_bits & 1 == 1 {
-            if f(memory_type.property_flags, flags) {
-                return Some(index as u32);
-            }
+        if memory_type_bits & 1 == 1 && f(memory_type.property_flags, flags) {
+            return Some(index as u32);
         }
-        memory_type_bits = memory_type_bits >> 1;
+        memory_type_bits >>= 1;
     }
     None
 }
@@ -319,8 +316,8 @@ impl ExampleBase {
             let window = winit::WindowBuilder::new()
                 .with_title("Ash - Example")
                 .with_dimensions(winit::dpi::LogicalSize::new(
-                    window_width as f64,
-                    window_height as f64,
+                    f64::from(window_width),
+                    f64::from(window_height),
                 ))
                 .build(&events_loop)
                 .unwrap();
@@ -385,9 +382,10 @@ impl ExampleBase {
                                             surface,
                                         )
                                         .unwrap();
-                            match supports_graphic_and_surface {
-                                true => Some((*pdevice, index)),
-                                _ => None,
+                            if supports_graphic_and_surface {
+                                Some((*pdevice, index))
+                            } else {
+                                None
                             }
                         })
                         .nth(0)
@@ -429,7 +427,7 @@ impl ExampleBase {
                         format: vk::Format::B8G8R8_UNORM,
                         color_space: sfmt.color_space,
                     },
-                    _ => sfmt.clone(),
+                    _ => *sfmt,
                 })
                 .nth(0)
                 .expect("Unable to find suitable surface format.");
@@ -472,7 +470,7 @@ impl ExampleBase {
                 .min_image_count(desired_image_count)
                 .image_color_space(surface_format.color_space)
                 .image_format(surface_format.format)
-                .image_extent(surface_resolution.clone())
+                .image_extent(surface_resolution)
                 .image_usage(vk::ImageUsageFlags::COLOR_ATTACHMENT)
                 .image_sharing_mode(vk::SharingMode::EXCLUSIVE)
                 .pre_transform(pre_transform)
@@ -625,32 +623,32 @@ impl ExampleBase {
                 .unwrap();
             ExampleBase {
                 events_loop: RefCell::new(events_loop),
-                entry: entry,
-                instance: instance,
-                device: device,
-                queue_family_index: queue_family_index,
-                pdevice: pdevice,
-                device_memory_properties: device_memory_properties,
-                window: window,
-                surface_loader: surface_loader,
-                surface_format: surface_format,
-                present_queue: present_queue,
-                surface_resolution: surface_resolution,
-                swapchain_loader: swapchain_loader,
-                swapchain: swapchain,
-                present_images: present_images,
-                present_image_views: present_image_views,
-                pool: pool,
-                draw_command_buffer: draw_command_buffer,
-                setup_command_buffer: setup_command_buffer,
-                depth_image: depth_image,
-                depth_image_view: depth_image_view,
-                present_complete_semaphore: present_complete_semaphore,
-                rendering_complete_semaphore: rendering_complete_semaphore,
-                surface: surface,
-                debug_call_back: debug_call_back,
-                debug_report_loader: debug_report_loader,
-                depth_image_memory: depth_image_memory,
+                entry,
+                instance,
+                device,
+                queue_family_index,
+                pdevice,
+                device_memory_properties,
+                window,
+                surface_loader,
+                surface_format,
+                present_queue,
+                surface_resolution,
+                swapchain_loader,
+                swapchain,
+                present_images,
+                present_image_views,
+                pool,
+                draw_command_buffer,
+                setup_command_buffer,
+                depth_image,
+                depth_image_view,
+                present_complete_semaphore,
+                rendering_complete_semaphore,
+                surface,
+                debug_call_back,
+                debug_report_loader,
+                depth_image_memory,
             }
         }
     }

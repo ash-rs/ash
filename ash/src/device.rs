@@ -1,4 +1,4 @@
-#![allow(dead_code)]
+#![allow(clippy::trivially_copy_pass_by_ref)]
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;

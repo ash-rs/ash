@@ -522,7 +522,7 @@ fn main() {
         let tex_descriptor = vk::DescriptorImageInfo {
             image_layout: vk::ImageLayout::SHADER_READ_ONLY_OPTIMAL,
             image_view: tex_image_view,
-            sampler: sampler,
+            sampler,
         };
 
         let write_desc_sets = [
@@ -624,7 +624,7 @@ fn main() {
             max_depth: 1.0,
         }];
         let scissors = [vk::Rect2D {
-            extent: base.surface_resolution.clone(),
+            extent: base.surface_resolution,
             ..Default::default()
         }];
         let viewport_state_info = vk::PipelineViewportStateCreateInfo::builder()
@@ -652,8 +652,8 @@ fn main() {
             depth_test_enable: 1,
             depth_write_enable: 1,
             depth_compare_op: vk::CompareOp::LESS_OR_EQUAL,
-            front: noop_stencil_state.clone(),
-            back: noop_stencil_state.clone(),
+            front: noop_stencil_state,
+            back: noop_stencil_state,
             max_depth_bounds: 1.0,
             ..Default::default()
         };
@@ -729,7 +729,7 @@ fn main() {
                 .framebuffer(framebuffers[present_index as usize])
                 .render_area(vk::Rect2D {
                     offset: vk::Offset2D { x: 0, y: 0 },
-                    extent: base.surface_resolution.clone(),
+                    extent: base.surface_resolution,
                 })
                 .clear_values(&clear_values);
 
