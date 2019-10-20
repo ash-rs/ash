@@ -534,8 +534,6 @@ impl FeatureExt for vkxml::Feature {
     fn is_version(&self, major: u32, minor: u32) -> bool {
         let self_major = self.version as u32;
         let self_minor = (self.version * 10.0) as u32 - self_major * 10;
-
-        println!("{} {}", self_major, self_minor);
         major == self_major && self_minor == minor
     }
     fn version_string(&self) -> String {
