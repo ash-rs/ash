@@ -52,6 +52,32 @@ impl<'r, T> RawPtr<T> for Option<&'r T> {
     }
 }
 
+/// Include correctly aligned and typed precompiled SPIR-V
+///
+/// Does not account for endianness mismatches between the SPIR-V file and the target. See
+/// `util::read_spv` for a more general solution.
+#[macro_export]
+macro_rules! include_spv {
+    ($path:expr) => {
+        &$crate::util::Align4(*include_bytes!($path)) as &$crate::Spirv
+    };
+}
+
+/// Type returned by `include_spv`, convertible to `&[u32]`
+///
+/// The definition of this type is unstable.
+pub type Spirv = util::Align4<[u8]>;
+
+impl std::ops::Deref for Spirv {
+    type Target = [u32];
+    fn deref(&self) -> &[u32] {
+        #[allow(clippy::cast_ptr_alignment)]
+        unsafe {
+            std::slice::from_raw_parts(self.0.as_ptr() as *const u32, self.0.len() / 4)
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::vk;
