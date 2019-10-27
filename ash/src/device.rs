@@ -1670,10 +1670,11 @@ pub trait DeviceV1_0 {
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetFenceStatus.html>"]
-    unsafe fn get_fence_status(&self, fence: vk::Fence) -> VkResult<()> {
+    unsafe fn get_fence_status(&self, fence: vk::Fence) -> VkResult<bool> {
         let err_code = self.fp_v1_0().get_fence_status(self.handle(), fence);
         match err_code {
-            vk::Result::SUCCESS => Ok(()),
+            vk::Result::SUCCESS => Ok(true),
+            vk::Result::NOT_READY => Ok(false),
             _ => Err(err_code),
         }
     }
