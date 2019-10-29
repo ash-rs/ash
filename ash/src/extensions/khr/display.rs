@@ -140,16 +140,16 @@ impl Display {
         create_info: &vk::DisplayModeCreateInfoKHR,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::DisplayModeKHR> {
-        let mut display_mode = mem::zeroed();
+        let mut display_mode = mem::MaybeUninit::zeroed();
         let err_code = self.display_fn.create_display_mode_khr(
             physical_device,
             display,
             create_info,
             allocation_callbacks.as_raw_ptr(),
-            &mut display_mode,
+            display_mode.as_mut_ptr(),
         );
         match err_code {
-            vk::Result::SUCCESS => Ok(display_mode),
+            vk::Result::SUCCESS => Ok(display_mode.assume_init()),
             _ => Err(err_code),
         }
     }
@@ -161,15 +161,15 @@ impl Display {
         mode: vk::DisplayModeKHR,
         plane_index: u32,
     ) -> VkResult<vk::DisplayPlaneCapabilitiesKHR> {
-        let mut display_plane_capabilities = mem::zeroed();
+        let mut display_plane_capabilities = mem::MaybeUninit::zeroed();
         let err_code = self.display_fn.get_display_plane_capabilities_khr(
             physical_device,
             mode,
             plane_index,
-            &mut display_plane_capabilities,
+            display_plane_capabilities.as_mut_ptr(),
         );
         match err_code {
-            vk::Result::SUCCESS => Ok(display_plane_capabilities),
+            vk::Result::SUCCESS => Ok(display_plane_capabilities.assume_init()),
             _ => Err(err_code),
         }
     }
@@ -180,15 +180,15 @@ impl Display {
         create_info: &vk::DisplaySurfaceCreateInfoKHR,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::SurfaceKHR> {
-        let mut surface = mem::zeroed();
+        let mut surface = mem::MaybeUninit::zeroed();
         let err_code = self.display_fn.create_display_plane_surface_khr(
             self.handle,
             create_info,
             allocation_callbacks.as_raw_ptr(),
-            &mut surface,
+            surface.as_mut_ptr(),
         );
         match err_code {
-            vk::Result::SUCCESS => Ok(surface),
+            vk::Result::SUCCESS => Ok(surface.assume_init()),
             _ => Err(err_code),
         }
     }
