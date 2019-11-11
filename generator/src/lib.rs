@@ -1762,7 +1762,8 @@ pub fn derive_setters(
 /// require and add the missing derives yourself.
 pub fn manual_derives(_struct: &vkxml::Struct) -> Tokens {
     match _struct.name.as_str() {
-        "VkExtent3D" | "VKExtent2D" => quote! {PartialEq, Eq, Hash,},
+        "VkClearRect" | "VkExtent2D" | "VkExtent3D" | "VkOffset2D" | "VkOffset3D" | "VkRect2D"
+        | "VkSurfaceFormatKHR" => quote! {PartialEq, Eq, Hash,},
         _ => quote! {},
     }
 }

@@ -7926,7 +7926,7 @@ impl ::std::default::Default for BaseInStructure {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
+#[derive(Copy, Clone, Default, Debug, PartialEq, Eq, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkOffset2D.html>"]
 pub struct Offset2D {
     pub x: i32,
@@ -7973,7 +7973,7 @@ impl<'a> Offset2DBuilder<'a> {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
+#[derive(Copy, Clone, Default, Debug, PartialEq, Eq, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkOffset3D.html>"]
 pub struct Offset3D {
     pub x: i32,
@@ -8025,7 +8025,7 @@ impl<'a> Offset3DBuilder<'a> {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
+#[derive(Copy, Clone, Default, Debug, PartialEq, Eq, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkExtent2D.html>"]
 pub struct Extent2D {
     pub width: u32,
@@ -8191,7 +8191,7 @@ impl<'a> ViewportBuilder<'a> {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
+#[derive(Copy, Clone, Default, Debug, PartialEq, Eq, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkRect2D.html>"]
 pub struct Rect2D {
     pub offset: Offset2D,
@@ -8238,7 +8238,7 @@ impl<'a> Rect2DBuilder<'a> {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
+#[derive(Copy, Clone, Default, Debug, PartialEq, Eq, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkClearRect.html>"]
 pub struct ClearRect {
     pub rect: Rect2D,
@@ -19360,7 +19360,7 @@ impl<'a> StreamDescriptorSurfaceCreateInfoGGPBuilder<'a> {
     }
 }
 #[repr(C)]
-#[derive(Copy, Clone, Default, Debug)]
+#[derive(Copy, Clone, Default, Debug, PartialEq, Eq, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkSurfaceFormatKHR.html>"]
 pub struct SurfaceFormatKHR {
     pub format: Format,
