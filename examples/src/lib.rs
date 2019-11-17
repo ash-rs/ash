@@ -5,7 +5,7 @@ extern crate winapi;
 #[cfg(target_os = "macos")]
 extern crate cocoa;
 #[cfg(target_os = "macos")]
-extern crate metal_rs as metal;
+extern crate metal;
 #[cfg(target_os = "macos")]
 extern crate objc;
 extern crate winit;
