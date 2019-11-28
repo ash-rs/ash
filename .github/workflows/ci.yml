@@ -87,4 +87,4 @@ jobs:
       - uses: actions/upload-artifact@v1
         with:
           name: triangle
-          path: target/release
+          path: target/release/triangle
