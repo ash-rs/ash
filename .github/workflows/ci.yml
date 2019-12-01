@@ -35,6 +35,7 @@ jobs:
     name: Rustfmt
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v1
       - uses: actions-rs/toolchain@v1
         with:
           profile: minimal
@@ -78,8 +79,8 @@ jobs:
             bin: triangle.exe
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v1
       - uses: actions-rs/toolchain@v1
+      - uses: actions/checkout@v1
         with:
           toolchain: stable
           target: ${{ matrix.target }}
@@ -96,4 +97,4 @@ jobs:
       - uses: actions/upload-artifact@v1
         with:
           name: triangle
-          path: target/release/${{ matrix.bin }}
+          path: ../target/release/${{ matrix.bin }}
