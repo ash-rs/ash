@@ -85,10 +85,11 @@ jobs:
           toolchain: stable
           target: ${{ matrix.target }}
           override: true
-      - uses: actions-rs/cargo@v1
+      - name: Install musl tools
         if: matrix.os == 'ubuntu-latest'
         run: |
           sudo apt-get install -y musl-tools
+      - uses: actions-rs/cargo@v1
         with:
           command: build
           args: --release --target=${{ matrix.target }}
