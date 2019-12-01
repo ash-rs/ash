@@ -38,6 +38,11 @@ pub mod vk;
 // macros of vk need to be defined beforehand
 pub mod extensions;
 
+/// Implement this trait for A => B, so that &[A] => &[B] is valid.
+pub unsafe trait Cast<T> {}
+
+unsafe impl<T> Cast<T> for T {}
+
 pub trait RawPtr<T> {
     fn as_raw_ptr(&self) -> *const T;
 }

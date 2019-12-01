@@ -1,7 +1,7 @@
 #![allow(clippy::trivially_copy_pass_by_ref)]
 use crate::prelude::*;
 use crate::vk;
-use crate::RawPtr;
+use crate::{Cast, RawPtr};
 use std::mem;
 use std::os::raw::c_void;
 use std::ptr;
@@ -1373,7 +1373,7 @@ pub trait DeviceV1_0 {
     unsafe fn create_graphics_pipelines(
         &self,
         pipeline_cache: vk::PipelineCache,
-        create_infos: &[vk::GraphicsPipelineCreateInfo],
+        create_infos: &[impl Cast<vk::GraphicsPipelineCreateInfo>],
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> Result<Vec<vk::Pipeline>, (Vec<vk::Pipeline>, vk::Result)> {
         let mut pipelines = Vec::with_capacity(create_infos.len());
@@ -1381,7 +1381,7 @@ pub trait DeviceV1_0 {
             self.handle(),
             pipeline_cache,
             create_infos.len() as u32,
-            create_infos.as_ptr(),
+            create_infos.as_ptr() as *const _,
             allocation_callbacks.as_raw_ptr(),
             pipelines.as_mut_ptr(),
         );

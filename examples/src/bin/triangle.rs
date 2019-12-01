@@ -54,8 +54,7 @@ fn main() {
         let subpasses = [vk::SubpassDescription::builder()
             .color_attachments(&color_attachment_refs)
             .depth_stencil_attachment(&depth_attachment_ref)
-            .pipeline_bind_point(vk::PipelineBindPoint::GRAPHICS)
-            .build()];
+            .pipeline_bind_point(vk::PipelineBindPoint::GRAPHICS)];
 
         let renderpass_create_info = vk::RenderPassCreateInfo::builder()
             .attachments(&renderpass_attachments)
@@ -349,11 +348,7 @@ fn main() {
 
         let graphics_pipelines = base
             .device
-            .create_graphics_pipelines(
-                vk::PipelineCache::null(),
-                &[graphic_pipeline_info.build()],
-                None,
-            )
+            .create_graphics_pipelines(vk::PipelineCache::null(), &[graphic_pipeline_info], None)
             .expect("Unable to create graphics pipeline");
 
         let graphic_pipeline = graphics_pipelines[0];

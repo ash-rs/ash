@@ -1574,34 +1574,41 @@ pub fn derive_setters(
 
                         let slice_param_ty_tokens;
                         let ptr;
+                        let mutability;
                         if param_ty_string.starts_with("*const ") {
                             let slice_type = &param_ty_string[7..];
                             if slice_type == "c_void" {
                                 slice_param_ty_tokens = "&'a [u8]".to_string();
                                 ptr = ".as_ptr() as *const c_void";
+                                mutability = "const"
                             } else {
-                                slice_param_ty_tokens = "&'a [".to_string() + slice_type + "]";
+                                slice_param_ty_tokens = "&'a [".to_string() + &format!("impl crate::Cast<{}>",slice_type) + "]";
                                 ptr = ".as_ptr()";
+                                mutability = "const"
                             }
                         } else {
                             // *mut
                             let slice_type = &param_ty_string[5..];
                             if slice_type == "c_void" {
-                                slice_param_ty_tokens = "&mut 'a [u8]".to_string();
+                                slice_param_ty_tokens = "&'a mut [u8]".to_string();
                                 ptr = ".as_mut_ptr() as *mut c_void";
+                                mutability = "mut"
                             } else {
-                                slice_param_ty_tokens = "&'a mut [".to_string() + slice_type + "]";
+                                slice_param_ty_tokens = "&'a mut [".to_string() + &format!("impl crate::Cast<{}>",slice_type) + "]";
                                 ptr = ".as_mut_ptr()";
+                                mutability = "mut"
                             }
                         }
                         let slice_param_ty_tokens = Term::intern(&slice_param_ty_tokens);
+
                         let ptr = Term::intern(ptr);
+                        let mutability = Term::intern(mutability);
 
                         if let vkxml::ArrayType::Dynamic = array_type {
                                 return Some(quote!{
                                     pub fn #param_ident_short(mut self, #param_ident_short: #slice_param_ty_tokens) -> #name_builder<'a> {
                                         self.inner.#array_size_ident = #param_ident_short.len() as _;
-                                        self.inner.#param_ident = #param_ident_short#ptr;
+                                        self.inner.#param_ident = #param_ident_short#ptr as *#mutability _;
                                         self
                                     }
                                 });
@@ -1714,6 +1721,8 @@ pub fn derive_setters(
                 }
             }
         }
+
+        unsafe impl crate::Cast<#name> for #name_builder<'_> {}
 
         #[repr(transparent)]
         pub struct #name_builder<'a> {

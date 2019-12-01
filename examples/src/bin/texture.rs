@@ -65,8 +65,7 @@ fn main() {
         let subpasses = [vk::SubpassDescription::builder()
             .color_attachments(&color_attachment_refs)
             .depth_stencil_attachment(&depth_attachment_ref)
-            .pipeline_bind_point(vk::PipelineBindPoint::GRAPHICS)
-            .build()];
+            .pipeline_bind_point(vk::PipelineBindPoint::GRAPHICS)];
 
         let renderpass_create_info = vk::RenderPassCreateInfo::builder()
             .attachments(&renderpass_attachments)
@@ -385,8 +384,7 @@ fn main() {
                     .image_subresource(
                         vk::ImageSubresourceLayers::builder()
                             .aspect_mask(vk::ImageAspectFlags::COLOR)
-                            .layer_count(1)
-                            .build(),
+                            .layer_count(1),
                     )
                     .image_extent(vk::Extent3D {
                         width: image_dimensions.0,
@@ -399,7 +397,7 @@ fn main() {
                     image_buffer,
                     texture_image,
                     vk::ImageLayout::TRANSFER_DST_OPTIMAL,
-                    &[buffer_copy_regions.build()],
+                    &[buffer_copy_regions],
                 );
                 let texture_barrier_end = vk::ImageMemoryBarrier {
                     src_access_mask: vk::AccessFlags::TRANSFER_WRITE,
@@ -691,11 +689,7 @@ fn main() {
 
         let graphics_pipelines = base
             .device
-            .create_graphics_pipelines(
-                vk::PipelineCache::null(),
-                &[graphic_pipeline_infos.build()],
-                None,
-            )
+            .create_graphics_pipelines(vk::PipelineCache::null(), &[graphic_pipeline_infos], None)
             .unwrap();
 
         let graphic_pipeline = graphics_pipelines[0];

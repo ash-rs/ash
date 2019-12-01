@@ -7940,6 +7940,7 @@ impl Offset2D {
         }
     }
 }
+unsafe impl crate::Cast<Offset2D> for Offset2DBuilder<'_> {}
 #[repr(transparent)]
 pub struct Offset2DBuilder<'a> {
     inner: Offset2D,
@@ -7988,6 +7989,7 @@ impl Offset3D {
         }
     }
 }
+unsafe impl crate::Cast<Offset3D> for Offset3DBuilder<'_> {}
 #[repr(transparent)]
 pub struct Offset3DBuilder<'a> {
     inner: Offset3D,
@@ -8039,6 +8041,7 @@ impl Extent2D {
         }
     }
 }
+unsafe impl crate::Cast<Extent2D> for Extent2DBuilder<'_> {}
 #[repr(transparent)]
 pub struct Extent2DBuilder<'a> {
     inner: Extent2D,
@@ -8087,6 +8090,7 @@ impl Extent3D {
         }
     }
 }
+unsafe impl crate::Cast<Extent3D> for Extent3DBuilder<'_> {}
 #[repr(transparent)]
 pub struct Extent3DBuilder<'a> {
     inner: Extent3D,
@@ -8142,6 +8146,7 @@ impl Viewport {
         }
     }
 }
+unsafe impl crate::Cast<Viewport> for ViewportBuilder<'_> {}
 #[repr(transparent)]
 pub struct ViewportBuilder<'a> {
     inner: Viewport,
@@ -8205,6 +8210,7 @@ impl Rect2D {
         }
     }
 }
+unsafe impl crate::Cast<Rect2D> for Rect2DBuilder<'_> {}
 #[repr(transparent)]
 pub struct Rect2DBuilder<'a> {
     inner: Rect2D,
@@ -8253,6 +8259,7 @@ impl ClearRect {
         }
     }
 }
+unsafe impl crate::Cast<ClearRect> for ClearRectBuilder<'_> {}
 #[repr(transparent)]
 pub struct ClearRectBuilder<'a> {
     inner: ClearRect,
@@ -8306,6 +8313,7 @@ impl ComponentMapping {
         }
     }
 }
+unsafe impl crate::Cast<ComponentMapping> for ComponentMappingBuilder<'_> {}
 #[repr(transparent)]
 pub struct ComponentMappingBuilder<'a> {
     inner: ComponentMapping,
@@ -8400,6 +8408,7 @@ impl PhysicalDeviceProperties {
         }
     }
 }
+unsafe impl crate::Cast<PhysicalDeviceProperties> for PhysicalDevicePropertiesBuilder<'_> {}
 #[repr(transparent)]
 pub struct PhysicalDevicePropertiesBuilder<'a> {
     inner: PhysicalDeviceProperties,
@@ -8505,6 +8514,7 @@ impl ExtensionProperties {
         }
     }
 }
+unsafe impl crate::Cast<ExtensionProperties> for ExtensionPropertiesBuilder<'_> {}
 #[repr(transparent)]
 pub struct ExtensionPropertiesBuilder<'a> {
     inner: ExtensionProperties,
@@ -8581,6 +8591,7 @@ impl LayerProperties {
         }
     }
 }
+unsafe impl crate::Cast<LayerProperties> for LayerPropertiesBuilder<'_> {}
 #[repr(transparent)]
 pub struct LayerPropertiesBuilder<'a> {
     inner: LayerProperties,
@@ -8663,6 +8674,7 @@ impl ApplicationInfo {
         }
     }
 }
+unsafe impl crate::Cast<ApplicationInfo> for ApplicationInfoBuilder<'_> {}
 #[repr(transparent)]
 pub struct ApplicationInfoBuilder<'a> {
     inner: ApplicationInfo,
@@ -8783,6 +8795,7 @@ impl AllocationCallbacks {
         }
     }
 }
+unsafe impl crate::Cast<AllocationCallbacks> for AllocationCallbacksBuilder<'_> {}
 #[repr(transparent)]
 pub struct AllocationCallbacksBuilder<'a> {
     inner: AllocationCallbacks,
@@ -8874,6 +8887,7 @@ impl DeviceQueueCreateInfo {
         }
     }
 }
+unsafe impl crate::Cast<DeviceQueueCreateInfo> for DeviceQueueCreateInfoBuilder<'_> {}
 #[repr(transparent)]
 pub struct DeviceQueueCreateInfoBuilder<'a> {
     inner: DeviceQueueCreateInfo,
@@ -8905,10 +8919,10 @@ impl<'a> DeviceQueueCreateInfoBuilder<'a> {
     }
     pub fn queue_priorities(
         mut self,
-        queue_priorities: &'a [f32],
+        queue_priorities: &'a [impl crate::Cast<f32>],
     ) -> DeviceQueueCreateInfoBuilder<'a> {
         self.inner.queue_count = queue_priorities.len() as _;
-        self.inner.p_queue_priorities = queue_priorities.as_ptr();
+        self.inner.p_queue_priorities = queue_priorities.as_ptr() as *const _;
         self
     }
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
@@ -8974,6 +8988,7 @@ impl DeviceCreateInfo {
         }
     }
 }
+unsafe impl crate::Cast<DeviceCreateInfo> for DeviceCreateInfoBuilder<'_> {}
 #[repr(transparent)]
 pub struct DeviceCreateInfoBuilder<'a> {
     inner: DeviceCreateInfo,
@@ -8998,10 +9013,10 @@ impl<'a> DeviceCreateInfoBuilder<'a> {
     }
     pub fn queue_create_infos(
         mut self,
-        queue_create_infos: &'a [DeviceQueueCreateInfo],
+        queue_create_infos: &'a [impl crate::Cast<DeviceQueueCreateInfo>],
     ) -> DeviceCreateInfoBuilder<'a> {
         self.inner.queue_create_info_count = queue_create_infos.len() as _;
-        self.inner.p_queue_create_infos = queue_create_infos.as_ptr();
+        self.inner.p_queue_create_infos = queue_create_infos.as_ptr() as *const _;
         self
     }
     pub fn enabled_layer_names(
@@ -9086,6 +9101,7 @@ impl InstanceCreateInfo {
         }
     }
 }
+unsafe impl crate::Cast<InstanceCreateInfo> for InstanceCreateInfoBuilder<'_> {}
 #[repr(transparent)]
 pub struct InstanceCreateInfoBuilder<'a> {
     inner: InstanceCreateInfo,
@@ -9172,6 +9188,7 @@ impl QueueFamilyProperties {
         }
     }
 }
+unsafe impl crate::Cast<QueueFamilyProperties> for QueueFamilyPropertiesBuilder<'_> {}
 #[repr(transparent)]
 pub struct QueueFamilyPropertiesBuilder<'a> {
     inner: QueueFamilyProperties,
@@ -9244,6 +9261,10 @@ impl PhysicalDeviceMemoryProperties {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDeviceMemoryProperties>
+    for PhysicalDeviceMemoryPropertiesBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDeviceMemoryPropertiesBuilder<'a> {
@@ -9324,6 +9345,7 @@ impl MemoryAllocateInfo {
         }
     }
 }
+unsafe impl crate::Cast<MemoryAllocateInfo> for MemoryAllocateInfoBuilder<'_> {}
 #[repr(transparent)]
 pub struct MemoryAllocateInfoBuilder<'a> {
     inner: MemoryAllocateInfo,
@@ -9390,6 +9412,7 @@ impl MemoryRequirements {
         }
     }
 }
+unsafe impl crate::Cast<MemoryRequirements> for MemoryRequirementsBuilder<'_> {}
 #[repr(transparent)]
 pub struct MemoryRequirementsBuilder<'a> {
     inner: MemoryRequirements,
@@ -9442,6 +9465,7 @@ impl SparseImageFormatProperties {
         }
     }
 }
+unsafe impl crate::Cast<SparseImageFormatProperties> for SparseImageFormatPropertiesBuilder<'_> {}
 #[repr(transparent)]
 pub struct SparseImageFormatPropertiesBuilder<'a> {
     inner: SparseImageFormatProperties,
@@ -9504,6 +9528,10 @@ impl SparseImageMemoryRequirements {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<SparseImageMemoryRequirements>
+    for SparseImageMemoryRequirementsBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct SparseImageMemoryRequirementsBuilder<'a> {
@@ -9579,6 +9607,7 @@ impl MemoryType {
         }
     }
 }
+unsafe impl crate::Cast<MemoryType> for MemoryTypeBuilder<'_> {}
 #[repr(transparent)]
 pub struct MemoryTypeBuilder<'a> {
     inner: MemoryType,
@@ -9626,6 +9655,7 @@ impl MemoryHeap {
         }
     }
 }
+unsafe impl crate::Cast<MemoryHeap> for MemoryHeapBuilder<'_> {}
 #[repr(transparent)]
 pub struct MemoryHeapBuilder<'a> {
     inner: MemoryHeap,
@@ -9687,6 +9717,7 @@ impl MappedMemoryRange {
         }
     }
 }
+unsafe impl crate::Cast<MappedMemoryRange> for MappedMemoryRangeBuilder<'_> {}
 #[repr(transparent)]
 pub struct MappedMemoryRangeBuilder<'a> {
     inner: MappedMemoryRange,
@@ -9757,6 +9788,7 @@ impl FormatProperties {
         }
     }
 }
+unsafe impl crate::Cast<FormatProperties> for FormatPropertiesBuilder<'_> {}
 #[repr(transparent)]
 pub struct FormatPropertiesBuilder<'a> {
     inner: FormatProperties,
@@ -9820,6 +9852,7 @@ impl ImageFormatProperties {
         }
     }
 }
+unsafe impl crate::Cast<ImageFormatProperties> for ImageFormatPropertiesBuilder<'_> {}
 #[repr(transparent)]
 pub struct ImageFormatPropertiesBuilder<'a> {
     inner: ImageFormatProperties,
@@ -9886,6 +9919,7 @@ impl DescriptorBufferInfo {
         }
     }
 }
+unsafe impl crate::Cast<DescriptorBufferInfo> for DescriptorBufferInfoBuilder<'_> {}
 #[repr(transparent)]
 pub struct DescriptorBufferInfoBuilder<'a> {
     inner: DescriptorBufferInfo,
@@ -9938,6 +9972,7 @@ impl DescriptorImageInfo {
         }
     }
 }
+unsafe impl crate::Cast<DescriptorImageInfo> for DescriptorImageInfoBuilder<'_> {}
 #[repr(transparent)]
 pub struct DescriptorImageInfoBuilder<'a> {
     inner: DescriptorImageInfo,
@@ -10013,6 +10048,7 @@ impl WriteDescriptorSet {
         }
     }
 }
+unsafe impl crate::Cast<WriteDescriptorSet> for WriteDescriptorSetBuilder<'_> {}
 #[repr(transparent)]
 pub struct WriteDescriptorSetBuilder<'a> {
     inner: WriteDescriptorSet,
@@ -10052,26 +10088,26 @@ impl<'a> WriteDescriptorSetBuilder<'a> {
     }
     pub fn image_info(
         mut self,
-        image_info: &'a [DescriptorImageInfo],
+        image_info: &'a [impl crate::Cast<DescriptorImageInfo>],
     ) -> WriteDescriptorSetBuilder<'a> {
         self.inner.descriptor_count = image_info.len() as _;
-        self.inner.p_image_info = image_info.as_ptr();
+        self.inner.p_image_info = image_info.as_ptr() as *const _;
         self
     }
     pub fn buffer_info(
         mut self,
-        buffer_info: &'a [DescriptorBufferInfo],
+        buffer_info: &'a [impl crate::Cast<DescriptorBufferInfo>],
     ) -> WriteDescriptorSetBuilder<'a> {
         self.inner.descriptor_count = buffer_info.len() as _;
-        self.inner.p_buffer_info = buffer_info.as_ptr();
+        self.inner.p_buffer_info = buffer_info.as_ptr() as *const _;
         self
     }
     pub fn texel_buffer_view(
         mut self,
-        texel_buffer_view: &'a [BufferView],
+        texel_buffer_view: &'a [impl crate::Cast<BufferView>],
     ) -> WriteDescriptorSetBuilder<'a> {
         self.inner.descriptor_count = texel_buffer_view.len() as _;
-        self.inner.p_texel_buffer_view = texel_buffer_view.as_ptr();
+        self.inner.p_texel_buffer_view = texel_buffer_view.as_ptr() as *const _;
         self
     }
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
@@ -10135,6 +10171,7 @@ impl CopyDescriptorSet {
         }
     }
 }
+unsafe impl crate::Cast<CopyDescriptorSet> for CopyDescriptorSetBuilder<'_> {}
 #[repr(transparent)]
 pub struct CopyDescriptorSetBuilder<'a> {
     inner: CopyDescriptorSet,
@@ -10240,6 +10277,7 @@ impl BufferCreateInfo {
         }
     }
 }
+unsafe impl crate::Cast<BufferCreateInfo> for BufferCreateInfoBuilder<'_> {}
 #[repr(transparent)]
 pub struct BufferCreateInfoBuilder<'a> {
     inner: BufferCreateInfo,
@@ -10276,10 +10314,10 @@ impl<'a> BufferCreateInfoBuilder<'a> {
     }
     pub fn queue_family_indices(
         mut self,
-        queue_family_indices: &'a [u32],
+        queue_family_indices: &'a [impl crate::Cast<u32>],
     ) -> BufferCreateInfoBuilder<'a> {
         self.inner.queue_family_index_count = queue_family_indices.len() as _;
-        self.inner.p_queue_family_indices = queue_family_indices.as_ptr();
+        self.inner.p_queue_family_indices = queue_family_indices.as_ptr() as *const _;
         self
     }
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
@@ -10339,6 +10377,7 @@ impl BufferViewCreateInfo {
         }
     }
 }
+unsafe impl crate::Cast<BufferViewCreateInfo> for BufferViewCreateInfoBuilder<'_> {}
 #[repr(transparent)]
 pub struct BufferViewCreateInfoBuilder<'a> {
     inner: BufferViewCreateInfo,
@@ -10417,6 +10456,7 @@ impl ImageSubresource {
         }
     }
 }
+unsafe impl crate::Cast<ImageSubresource> for ImageSubresourceBuilder<'_> {}
 #[repr(transparent)]
 pub struct ImageSubresourceBuilder<'a> {
     inner: ImageSubresource,
@@ -10470,6 +10510,7 @@ impl ImageSubresourceLayers {
         }
     }
 }
+unsafe impl crate::Cast<ImageSubresourceLayers> for ImageSubresourceLayersBuilder<'_> {}
 #[repr(transparent)]
 pub struct ImageSubresourceLayersBuilder<'a> {
     inner: ImageSubresourceLayers,
@@ -10531,6 +10572,7 @@ impl ImageSubresourceRange {
         }
     }
 }
+unsafe impl crate::Cast<ImageSubresourceRange> for ImageSubresourceRangeBuilder<'_> {}
 #[repr(transparent)]
 pub struct ImageSubresourceRangeBuilder<'a> {
     inner: ImageSubresourceRange,
@@ -10605,6 +10647,7 @@ impl MemoryBarrier {
         }
     }
 }
+unsafe impl crate::Cast<MemoryBarrier> for MemoryBarrierBuilder<'_> {}
 #[repr(transparent)]
 pub struct MemoryBarrierBuilder<'a> {
     inner: MemoryBarrier,
@@ -10692,6 +10735,7 @@ impl BufferMemoryBarrier {
         }
     }
 }
+unsafe impl crate::Cast<BufferMemoryBarrier> for BufferMemoryBarrierBuilder<'_> {}
 #[repr(transparent)]
 pub struct BufferMemoryBarrierBuilder<'a> {
     inner: BufferMemoryBarrier,
@@ -10813,6 +10857,7 @@ impl ImageMemoryBarrier {
         }
     }
 }
+unsafe impl crate::Cast<ImageMemoryBarrier> for ImageMemoryBarrierBuilder<'_> {}
 #[repr(transparent)]
 pub struct ImageMemoryBarrierBuilder<'a> {
     inner: ImageMemoryBarrier,
@@ -10951,6 +10996,7 @@ impl ImageCreateInfo {
         }
     }
 }
+unsafe impl crate::Cast<ImageCreateInfo> for ImageCreateInfoBuilder<'_> {}
 #[repr(transparent)]
 pub struct ImageCreateInfoBuilder<'a> {
     inner: ImageCreateInfo,
@@ -11011,10 +11057,10 @@ impl<'a> ImageCreateInfoBuilder<'a> {
     }
     pub fn queue_family_indices(
         mut self,
-        queue_family_indices: &'a [u32],
+        queue_family_indices: &'a [impl crate::Cast<u32>],
     ) -> ImageCreateInfoBuilder<'a> {
         self.inner.queue_family_index_count = queue_family_indices.len() as _;
-        self.inner.p_queue_family_indices = queue_family_indices.as_ptr();
+        self.inner.p_queue_family_indices = queue_family_indices.as_ptr() as *const _;
         self
     }
     pub fn initial_layout(mut self, initial_layout: ImageLayout) -> ImageCreateInfoBuilder<'a> {
@@ -11063,6 +11109,7 @@ impl SubresourceLayout {
         }
     }
 }
+unsafe impl crate::Cast<SubresourceLayout> for SubresourceLayoutBuilder<'_> {}
 #[repr(transparent)]
 pub struct SubresourceLayoutBuilder<'a> {
     inner: SubresourceLayout,
@@ -11142,6 +11189,7 @@ impl ImageViewCreateInfo {
         }
     }
 }
+unsafe impl crate::Cast<ImageViewCreateInfo> for ImageViewCreateInfoBuilder<'_> {}
 #[repr(transparent)]
 pub struct ImageViewCreateInfoBuilder<'a> {
     inner: ImageViewCreateInfo,
@@ -11227,6 +11275,7 @@ impl BufferCopy {
         }
     }
 }
+unsafe impl crate::Cast<BufferCopy> for BufferCopyBuilder<'_> {}
 #[repr(transparent)]
 pub struct BufferCopyBuilder<'a> {
     inner: BufferCopy,
@@ -11281,6 +11330,7 @@ impl SparseMemoryBind {
         }
     }
 }
+unsafe impl crate::Cast<SparseMemoryBind> for SparseMemoryBindBuilder<'_> {}
 #[repr(transparent)]
 pub struct SparseMemoryBindBuilder<'a> {
     inner: SparseMemoryBind,
@@ -11344,6 +11394,7 @@ impl SparseImageMemoryBind {
         }
     }
 }
+unsafe impl crate::Cast<SparseImageMemoryBind> for SparseImageMemoryBindBuilder<'_> {}
 #[repr(transparent)]
 pub struct SparseImageMemoryBindBuilder<'a> {
     inner: SparseImageMemoryBind,
@@ -11420,6 +11471,7 @@ impl SparseBufferMemoryBindInfo {
         }
     }
 }
+unsafe impl crate::Cast<SparseBufferMemoryBindInfo> for SparseBufferMemoryBindInfoBuilder<'_> {}
 #[repr(transparent)]
 pub struct SparseBufferMemoryBindInfoBuilder<'a> {
     inner: SparseBufferMemoryBindInfo,
@@ -11441,9 +11493,12 @@ impl<'a> SparseBufferMemoryBindInfoBuilder<'a> {
         self.inner.buffer = buffer;
         self
     }
-    pub fn binds(mut self, binds: &'a [SparseMemoryBind]) -> SparseBufferMemoryBindInfoBuilder<'a> {
+    pub fn binds(
+        mut self,
+        binds: &'a [impl crate::Cast<SparseMemoryBind>],
+    ) -> SparseBufferMemoryBindInfoBuilder<'a> {
         self.inner.bind_count = binds.len() as _;
-        self.inner.p_binds = binds.as_ptr();
+        self.inner.p_binds = binds.as_ptr() as *const _;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -11478,6 +11533,10 @@ impl SparseImageOpaqueMemoryBindInfo {
         }
     }
 }
+unsafe impl crate::Cast<SparseImageOpaqueMemoryBindInfo>
+    for SparseImageOpaqueMemoryBindInfoBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct SparseImageOpaqueMemoryBindInfoBuilder<'a> {
     inner: SparseImageOpaqueMemoryBindInfo,
@@ -11501,10 +11560,10 @@ impl<'a> SparseImageOpaqueMemoryBindInfoBuilder<'a> {
     }
     pub fn binds(
         mut self,
-        binds: &'a [SparseMemoryBind],
+        binds: &'a [impl crate::Cast<SparseMemoryBind>],
     ) -> SparseImageOpaqueMemoryBindInfoBuilder<'a> {
         self.inner.bind_count = binds.len() as _;
-        self.inner.p_binds = binds.as_ptr();
+        self.inner.p_binds = binds.as_ptr() as *const _;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -11539,6 +11598,7 @@ impl SparseImageMemoryBindInfo {
         }
     }
 }
+unsafe impl crate::Cast<SparseImageMemoryBindInfo> for SparseImageMemoryBindInfoBuilder<'_> {}
 #[repr(transparent)]
 pub struct SparseImageMemoryBindInfoBuilder<'a> {
     inner: SparseImageMemoryBindInfo,
@@ -11562,10 +11622,10 @@ impl<'a> SparseImageMemoryBindInfoBuilder<'a> {
     }
     pub fn binds(
         mut self,
-        binds: &'a [SparseImageMemoryBind],
+        binds: &'a [impl crate::Cast<SparseImageMemoryBind>],
     ) -> SparseImageMemoryBindInfoBuilder<'a> {
         self.inner.bind_count = binds.len() as _;
-        self.inner.p_binds = binds.as_ptr();
+        self.inner.p_binds = binds.as_ptr() as *const _;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -11618,6 +11678,7 @@ impl BindSparseInfo {
         }
     }
 }
+unsafe impl crate::Cast<BindSparseInfo> for BindSparseInfoBuilder<'_> {}
 #[repr(transparent)]
 pub struct BindSparseInfoBuilder<'a> {
     inner: BindSparseInfo,
@@ -11638,42 +11699,42 @@ impl<'a> ::std::ops::DerefMut for BindSparseInfoBuilder<'a> {
 impl<'a> BindSparseInfoBuilder<'a> {
     pub fn wait_semaphores(
         mut self,
-        wait_semaphores: &'a [Semaphore],
+        wait_semaphores: &'a [impl crate::Cast<Semaphore>],
     ) -> BindSparseInfoBuilder<'a> {
         self.inner.wait_semaphore_count = wait_semaphores.len() as _;
-        self.inner.p_wait_semaphores = wait_semaphores.as_ptr();
+        self.inner.p_wait_semaphores = wait_semaphores.as_ptr() as *const _;
         self
     }
     pub fn buffer_binds(
         mut self,
-        buffer_binds: &'a [SparseBufferMemoryBindInfo],
+        buffer_binds: &'a [impl crate::Cast<SparseBufferMemoryBindInfo>],
     ) -> BindSparseInfoBuilder<'a> {
         self.inner.buffer_bind_count = buffer_binds.len() as _;
-        self.inner.p_buffer_binds = buffer_binds.as_ptr();
+        self.inner.p_buffer_binds = buffer_binds.as_ptr() as *const _;
         self
     }
     pub fn image_opaque_binds(
         mut self,
-        image_opaque_binds: &'a [SparseImageOpaqueMemoryBindInfo],
+        image_opaque_binds: &'a [impl crate::Cast<SparseImageOpaqueMemoryBindInfo>],
     ) -> BindSparseInfoBuilder<'a> {
         self.inner.image_opaque_bind_count = image_opaque_binds.len() as _;
-        self.inner.p_image_opaque_binds = image_opaque_binds.as_ptr();
+        self.inner.p_image_opaque_binds = image_opaque_binds.as_ptr() as *const _;
         self
     }
     pub fn image_binds(
         mut self,
-        image_binds: &'a [SparseImageMemoryBindInfo],
+        image_binds: &'a [impl crate::Cast<SparseImageMemoryBindInfo>],
     ) -> BindSparseInfoBuilder<'a> {
         self.inner.image_bind_count = image_binds.len() as _;
-        self.inner.p_image_binds = image_binds.as_ptr();
+        self.inner.p_image_binds = image_binds.as_ptr() as *const _;
         self
     }
     pub fn signal_semaphores(
         mut self,
-        signal_semaphores: &'a [Semaphore],
+        signal_semaphores: &'a [impl crate::Cast<Semaphore>],
     ) -> BindSparseInfoBuilder<'a> {
         self.inner.signal_semaphore_count = signal_semaphores.len() as _;
-        self.inner.p_signal_semaphores = signal_semaphores.as_ptr();
+        self.inner.p_signal_semaphores = signal_semaphores.as_ptr() as *const _;
         self
     }
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
@@ -11718,6 +11779,7 @@ impl ImageCopy {
         }
     }
 }
+unsafe impl crate::Cast<ImageCopy> for ImageCopyBuilder<'_> {}
 #[repr(transparent)]
 pub struct ImageCopyBuilder<'a> {
     inner: ImageCopy,
@@ -11795,6 +11857,7 @@ impl ImageBlit {
         }
     }
 }
+unsafe impl crate::Cast<ImageBlit> for ImageBlitBuilder<'_> {}
 #[repr(transparent)]
 pub struct ImageBlitBuilder<'a> {
     inner: ImageBlit,
@@ -11860,6 +11923,7 @@ impl BufferImageCopy {
         }
     }
 }
+unsafe impl crate::Cast<BufferImageCopy> for BufferImageCopyBuilder<'_> {}
 #[repr(transparent)]
 pub struct BufferImageCopyBuilder<'a> {
     inner: BufferImageCopy,
@@ -11929,6 +11993,7 @@ impl ImageResolve {
         }
     }
 }
+unsafe impl crate::Cast<ImageResolve> for ImageResolveBuilder<'_> {}
 #[repr(transparent)]
 pub struct ImageResolveBuilder<'a> {
     inner: ImageResolve,
@@ -12008,6 +12073,7 @@ impl ShaderModuleCreateInfo {
         }
     }
 }
+unsafe impl crate::Cast<ShaderModuleCreateInfo> for ShaderModuleCreateInfoBuilder<'_> {}
 #[repr(transparent)]
 pub struct ShaderModuleCreateInfoBuilder<'a> {
     inner: ShaderModuleCreateInfo,
@@ -12088,6 +12154,7 @@ impl DescriptorSetLayoutBinding {
         }
     }
 }
+unsafe impl crate::Cast<DescriptorSetLayoutBinding> for DescriptorSetLayoutBindingBuilder<'_> {}
 #[repr(transparent)]
 pub struct DescriptorSetLayoutBindingBuilder<'a> {
     inner: DescriptorSetLayoutBinding,
@@ -12132,10 +12199,10 @@ impl<'a> DescriptorSetLayoutBindingBuilder<'a> {
     }
     pub fn immutable_samplers(
         mut self,
-        immutable_samplers: &'a [Sampler],
+        immutable_samplers: &'a [impl crate::Cast<Sampler>],
     ) -> DescriptorSetLayoutBindingBuilder<'a> {
         self.inner.descriptor_count = immutable_samplers.len() as _;
-        self.inner.p_immutable_samplers = immutable_samplers.as_ptr();
+        self.inner.p_immutable_samplers = immutable_samplers.as_ptr() as *const _;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -12174,6 +12241,10 @@ impl DescriptorSetLayoutCreateInfo {
         }
     }
 }
+unsafe impl crate::Cast<DescriptorSetLayoutCreateInfo>
+    for DescriptorSetLayoutCreateInfoBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct DescriptorSetLayoutCreateInfoBuilder<'a> {
     inner: DescriptorSetLayoutCreateInfo,
@@ -12201,10 +12272,10 @@ impl<'a> DescriptorSetLayoutCreateInfoBuilder<'a> {
     }
     pub fn bindings(
         mut self,
-        bindings: &'a [DescriptorSetLayoutBinding],
+        bindings: &'a [impl crate::Cast<DescriptorSetLayoutBinding>],
     ) -> DescriptorSetLayoutCreateInfoBuilder<'a> {
         self.inner.binding_count = bindings.len() as _;
-        self.inner.p_bindings = bindings.as_ptr();
+        self.inner.p_bindings = bindings.as_ptr() as *const _;
         self
     }
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
@@ -12246,6 +12317,7 @@ impl DescriptorPoolSize {
         }
     }
 }
+unsafe impl crate::Cast<DescriptorPoolSize> for DescriptorPoolSizeBuilder<'_> {}
 #[repr(transparent)]
 pub struct DescriptorPoolSizeBuilder<'a> {
     inner: DescriptorPoolSize,
@@ -12309,6 +12381,7 @@ impl DescriptorPoolCreateInfo {
         }
     }
 }
+unsafe impl crate::Cast<DescriptorPoolCreateInfo> for DescriptorPoolCreateInfoBuilder<'_> {}
 #[repr(transparent)]
 pub struct DescriptorPoolCreateInfoBuilder<'a> {
     inner: DescriptorPoolCreateInfo,
@@ -12340,10 +12413,10 @@ impl<'a> DescriptorPoolCreateInfoBuilder<'a> {
     }
     pub fn pool_sizes(
         mut self,
-        pool_sizes: &'a [DescriptorPoolSize],
+        pool_sizes: &'a [impl crate::Cast<DescriptorPoolSize>],
     ) -> DescriptorPoolCreateInfoBuilder<'a> {
         self.inner.pool_size_count = pool_sizes.len() as _;
-        self.inner.p_pool_sizes = pool_sizes.as_ptr();
+        self.inner.p_pool_sizes = pool_sizes.as_ptr() as *const _;
         self
     }
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
@@ -12399,6 +12472,7 @@ impl DescriptorSetAllocateInfo {
         }
     }
 }
+unsafe impl crate::Cast<DescriptorSetAllocateInfo> for DescriptorSetAllocateInfoBuilder<'_> {}
 #[repr(transparent)]
 pub struct DescriptorSetAllocateInfoBuilder<'a> {
     inner: DescriptorSetAllocateInfo,
@@ -12426,10 +12500,10 @@ impl<'a> DescriptorSetAllocateInfoBuilder<'a> {
     }
     pub fn set_layouts(
         mut self,
-        set_layouts: &'a [DescriptorSetLayout],
+        set_layouts: &'a [impl crate::Cast<DescriptorSetLayout>],
     ) -> DescriptorSetAllocateInfoBuilder<'a> {
         self.inner.descriptor_set_count = set_layouts.len() as _;
-        self.inner.p_set_layouts = set_layouts.as_ptr();
+        self.inner.p_set_layouts = set_layouts.as_ptr() as *const _;
         self
     }
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
@@ -12472,6 +12546,7 @@ impl SpecializationMapEntry {
         }
     }
 }
+unsafe impl crate::Cast<SpecializationMapEntry> for SpecializationMapEntryBuilder<'_> {}
 #[repr(transparent)]
 pub struct SpecializationMapEntryBuilder<'a> {
     inner: SpecializationMapEntry,
@@ -12535,6 +12610,7 @@ impl SpecializationInfo {
         }
     }
 }
+unsafe impl crate::Cast<SpecializationInfo> for SpecializationInfoBuilder<'_> {}
 #[repr(transparent)]
 pub struct SpecializationInfoBuilder<'a> {
     inner: SpecializationInfo,
@@ -12554,15 +12630,15 @@ impl<'a> ::std::ops::DerefMut for SpecializationInfoBuilder<'a> {
 impl<'a> SpecializationInfoBuilder<'a> {
     pub fn map_entries(
         mut self,
-        map_entries: &'a [SpecializationMapEntry],
+        map_entries: &'a [impl crate::Cast<SpecializationMapEntry>],
     ) -> SpecializationInfoBuilder<'a> {
         self.inner.map_entry_count = map_entries.len() as _;
-        self.inner.p_map_entries = map_entries.as_ptr();
+        self.inner.p_map_entries = map_entries.as_ptr() as *const _;
         self
     }
     pub fn data(mut self, data: &'a [u8]) -> SpecializationInfoBuilder<'a> {
         self.inner.data_size = data.len() as _;
-        self.inner.p_data = data.as_ptr() as *const c_void;
+        self.inner.p_data = data.as_ptr() as *const c_void as *const _;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -12604,6 +12680,10 @@ impl PipelineShaderStageCreateInfo {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PipelineShaderStageCreateInfo>
+    for PipelineShaderStageCreateInfoBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PipelineShaderStageCreateInfoBuilder<'a> {
@@ -12706,6 +12786,7 @@ impl ComputePipelineCreateInfo {
         }
     }
 }
+unsafe impl crate::Cast<ComputePipelineCreateInfo> for ComputePipelineCreateInfoBuilder<'_> {}
 #[repr(transparent)]
 pub struct ComputePipelineCreateInfoBuilder<'a> {
     inner: ComputePipelineCreateInfo,
@@ -12793,6 +12874,10 @@ impl VertexInputBindingDescription {
         }
     }
 }
+unsafe impl crate::Cast<VertexInputBindingDescription>
+    for VertexInputBindingDescriptionBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct VertexInputBindingDescriptionBuilder<'a> {
     inner: VertexInputBindingDescription,
@@ -12848,6 +12933,10 @@ impl VertexInputAttributeDescription {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<VertexInputAttributeDescription>
+    for VertexInputAttributeDescriptionBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct VertexInputAttributeDescriptionBuilder<'a> {
@@ -12922,6 +13011,10 @@ impl PipelineVertexInputStateCreateInfo {
         }
     }
 }
+unsafe impl crate::Cast<PipelineVertexInputStateCreateInfo>
+    for PipelineVertexInputStateCreateInfoBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PipelineVertexInputStateCreateInfoBuilder<'a> {
     inner: PipelineVertexInputStateCreateInfo,
@@ -12949,18 +13042,19 @@ impl<'a> PipelineVertexInputStateCreateInfoBuilder<'a> {
     }
     pub fn vertex_binding_descriptions(
         mut self,
-        vertex_binding_descriptions: &'a [VertexInputBindingDescription],
+        vertex_binding_descriptions: &'a [impl crate::Cast<VertexInputBindingDescription>],
     ) -> PipelineVertexInputStateCreateInfoBuilder<'a> {
         self.inner.vertex_binding_description_count = vertex_binding_descriptions.len() as _;
-        self.inner.p_vertex_binding_descriptions = vertex_binding_descriptions.as_ptr();
+        self.inner.p_vertex_binding_descriptions = vertex_binding_descriptions.as_ptr() as *const _;
         self
     }
     pub fn vertex_attribute_descriptions(
         mut self,
-        vertex_attribute_descriptions: &'a [VertexInputAttributeDescription],
+        vertex_attribute_descriptions: &'a [impl crate::Cast<VertexInputAttributeDescription>],
     ) -> PipelineVertexInputStateCreateInfoBuilder<'a> {
         self.inner.vertex_attribute_description_count = vertex_attribute_descriptions.len() as _;
-        self.inner.p_vertex_attribute_descriptions = vertex_attribute_descriptions.as_ptr();
+        self.inner.p_vertex_attribute_descriptions =
+            vertex_attribute_descriptions.as_ptr() as *const _;
         self
     }
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
@@ -13015,6 +13109,10 @@ impl PipelineInputAssemblyStateCreateInfo {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PipelineInputAssemblyStateCreateInfo>
+    for PipelineInputAssemblyStateCreateInfoBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PipelineInputAssemblyStateCreateInfoBuilder<'a> {
@@ -13106,6 +13204,10 @@ impl PipelineTessellationStateCreateInfo {
         }
     }
 }
+unsafe impl crate::Cast<PipelineTessellationStateCreateInfo>
+    for PipelineTessellationStateCreateInfoBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PipelineTessellationStateCreateInfoBuilder<'a> {
     inner: PipelineTessellationStateCreateInfo,
@@ -13195,6 +13297,10 @@ impl PipelineViewportStateCreateInfo {
         }
     }
 }
+unsafe impl crate::Cast<PipelineViewportStateCreateInfo>
+    for PipelineViewportStateCreateInfoBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PipelineViewportStateCreateInfoBuilder<'a> {
     inner: PipelineViewportStateCreateInfo,
@@ -13229,10 +13335,10 @@ impl<'a> PipelineViewportStateCreateInfoBuilder<'a> {
     }
     pub fn viewports(
         mut self,
-        viewports: &'a [Viewport],
+        viewports: &'a [impl crate::Cast<Viewport>],
     ) -> PipelineViewportStateCreateInfoBuilder<'a> {
         self.inner.viewport_count = viewports.len() as _;
-        self.inner.p_viewports = viewports.as_ptr();
+        self.inner.p_viewports = viewports.as_ptr() as *const _;
         self
     }
     pub fn scissor_count(
@@ -13244,10 +13350,10 @@ impl<'a> PipelineViewportStateCreateInfoBuilder<'a> {
     }
     pub fn scissors(
         mut self,
-        scissors: &'a [Rect2D],
+        scissors: &'a [impl crate::Cast<Rect2D>],
     ) -> PipelineViewportStateCreateInfoBuilder<'a> {
         self.inner.scissor_count = scissors.len() as _;
-        self.inner.p_scissors = scissors.as_ptr();
+        self.inner.p_scissors = scissors.as_ptr() as *const _;
         self
     }
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
@@ -13318,6 +13424,10 @@ impl PipelineRasterizationStateCreateInfo {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PipelineRasterizationStateCreateInfo>
+    for PipelineRasterizationStateCreateInfoBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PipelineRasterizationStateCreateInfoBuilder<'a> {
@@ -13475,6 +13585,10 @@ impl PipelineMultisampleStateCreateInfo {
         }
     }
 }
+unsafe impl crate::Cast<PipelineMultisampleStateCreateInfo>
+    for PipelineMultisampleStateCreateInfoBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PipelineMultisampleStateCreateInfoBuilder<'a> {
     inner: PipelineMultisampleStateCreateInfo,
@@ -13586,6 +13700,10 @@ impl PipelineColorBlendAttachmentState {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PipelineColorBlendAttachmentState>
+    for PipelineColorBlendAttachmentStateBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PipelineColorBlendAttachmentStateBuilder<'a> {
@@ -13702,6 +13820,10 @@ impl PipelineColorBlendStateCreateInfo {
         }
     }
 }
+unsafe impl crate::Cast<PipelineColorBlendStateCreateInfo>
+    for PipelineColorBlendStateCreateInfoBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PipelineColorBlendStateCreateInfoBuilder<'a> {
     inner: PipelineColorBlendStateCreateInfo,
@@ -13740,10 +13862,10 @@ impl<'a> PipelineColorBlendStateCreateInfoBuilder<'a> {
     }
     pub fn attachments(
         mut self,
-        attachments: &'a [PipelineColorBlendAttachmentState],
+        attachments: &'a [impl crate::Cast<PipelineColorBlendAttachmentState>],
     ) -> PipelineColorBlendStateCreateInfoBuilder<'a> {
         self.inner.attachment_count = attachments.len() as _;
-        self.inner.p_attachments = attachments.as_ptr();
+        self.inner.p_attachments = attachments.as_ptr() as *const _;
         self
     }
     pub fn blend_constants(
@@ -13806,6 +13928,10 @@ impl PipelineDynamicStateCreateInfo {
         }
     }
 }
+unsafe impl crate::Cast<PipelineDynamicStateCreateInfo>
+    for PipelineDynamicStateCreateInfoBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PipelineDynamicStateCreateInfoBuilder<'a> {
     inner: PipelineDynamicStateCreateInfo,
@@ -13833,10 +13959,10 @@ impl<'a> PipelineDynamicStateCreateInfoBuilder<'a> {
     }
     pub fn dynamic_states(
         mut self,
-        dynamic_states: &'a [DynamicState],
+        dynamic_states: &'a [impl crate::Cast<DynamicState>],
     ) -> PipelineDynamicStateCreateInfoBuilder<'a> {
         self.inner.dynamic_state_count = dynamic_states.len() as _;
-        self.inner.p_dynamic_states = dynamic_states.as_ptr();
+        self.inner.p_dynamic_states = dynamic_states.as_ptr() as *const _;
         self
     }
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
@@ -13883,6 +14009,7 @@ impl StencilOpState {
         }
     }
 }
+unsafe impl crate::Cast<StencilOpState> for StencilOpStateBuilder<'_> {}
 #[repr(transparent)]
 pub struct StencilOpStateBuilder<'a> {
     inner: StencilOpState,
@@ -13977,6 +14104,10 @@ impl PipelineDepthStencilStateCreateInfo {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PipelineDepthStencilStateCreateInfo>
+    for PipelineDepthStencilStateCreateInfoBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PipelineDepthStencilStateCreateInfoBuilder<'a> {
@@ -14144,6 +14275,7 @@ impl GraphicsPipelineCreateInfo {
         }
     }
 }
+unsafe impl crate::Cast<GraphicsPipelineCreateInfo> for GraphicsPipelineCreateInfoBuilder<'_> {}
 #[repr(transparent)]
 pub struct GraphicsPipelineCreateInfoBuilder<'a> {
     inner: GraphicsPipelineCreateInfo,
@@ -14168,10 +14300,10 @@ impl<'a> GraphicsPipelineCreateInfoBuilder<'a> {
     }
     pub fn stages(
         mut self,
-        stages: &'a [PipelineShaderStageCreateInfo],
+        stages: &'a [impl crate::Cast<PipelineShaderStageCreateInfo>],
     ) -> GraphicsPipelineCreateInfoBuilder<'a> {
         self.inner.stage_count = stages.len() as _;
-        self.inner.p_stages = stages.as_ptr();
+        self.inner.p_stages = stages.as_ptr() as *const _;
         self
     }
     pub fn vertex_input_state(
@@ -14316,6 +14448,7 @@ impl PipelineCacheCreateInfo {
         }
     }
 }
+unsafe impl crate::Cast<PipelineCacheCreateInfo> for PipelineCacheCreateInfoBuilder<'_> {}
 #[repr(transparent)]
 pub struct PipelineCacheCreateInfoBuilder<'a> {
     inner: PipelineCacheCreateInfo,
@@ -14340,7 +14473,7 @@ impl<'a> PipelineCacheCreateInfoBuilder<'a> {
     }
     pub fn initial_data(mut self, initial_data: &'a [u8]) -> PipelineCacheCreateInfoBuilder<'a> {
         self.inner.initial_data_size = initial_data.len() as _;
-        self.inner.p_initial_data = initial_data.as_ptr() as *const c_void;
+        self.inner.p_initial_data = initial_data.as_ptr() as *const c_void as *const _;
         self
     }
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
@@ -14383,6 +14516,7 @@ impl PushConstantRange {
         }
     }
 }
+unsafe impl crate::Cast<PushConstantRange> for PushConstantRangeBuilder<'_> {}
 #[repr(transparent)]
 pub struct PushConstantRangeBuilder<'a> {
     inner: PushConstantRange,
@@ -14452,6 +14586,7 @@ impl PipelineLayoutCreateInfo {
         }
     }
 }
+unsafe impl crate::Cast<PipelineLayoutCreateInfo> for PipelineLayoutCreateInfoBuilder<'_> {}
 #[repr(transparent)]
 pub struct PipelineLayoutCreateInfoBuilder<'a> {
     inner: PipelineLayoutCreateInfo,
@@ -14479,18 +14614,18 @@ impl<'a> PipelineLayoutCreateInfoBuilder<'a> {
     }
     pub fn set_layouts(
         mut self,
-        set_layouts: &'a [DescriptorSetLayout],
+        set_layouts: &'a [impl crate::Cast<DescriptorSetLayout>],
     ) -> PipelineLayoutCreateInfoBuilder<'a> {
         self.inner.set_layout_count = set_layouts.len() as _;
-        self.inner.p_set_layouts = set_layouts.as_ptr();
+        self.inner.p_set_layouts = set_layouts.as_ptr() as *const _;
         self
     }
     pub fn push_constant_ranges(
         mut self,
-        push_constant_ranges: &'a [PushConstantRange],
+        push_constant_ranges: &'a [impl crate::Cast<PushConstantRange>],
     ) -> PipelineLayoutCreateInfoBuilder<'a> {
         self.inner.push_constant_range_count = push_constant_ranges.len() as _;
-        self.inner.p_push_constant_ranges = push_constant_ranges.as_ptr();
+        self.inner.p_push_constant_ranges = push_constant_ranges.as_ptr() as *const _;
         self
     }
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
@@ -14572,6 +14707,7 @@ impl SamplerCreateInfo {
         }
     }
 }
+unsafe impl crate::Cast<SamplerCreateInfo> for SamplerCreateInfoBuilder<'_> {}
 #[repr(transparent)]
 pub struct SamplerCreateInfoBuilder<'a> {
     inner: SamplerCreateInfo,
@@ -14717,6 +14853,7 @@ impl CommandPoolCreateInfo {
         }
     }
 }
+unsafe impl crate::Cast<CommandPoolCreateInfo> for CommandPoolCreateInfoBuilder<'_> {}
 #[repr(transparent)]
 pub struct CommandPoolCreateInfoBuilder<'a> {
     inner: CommandPoolCreateInfo,
@@ -14799,6 +14936,7 @@ impl CommandBufferAllocateInfo {
         }
     }
 }
+unsafe impl crate::Cast<CommandBufferAllocateInfo> for CommandBufferAllocateInfoBuilder<'_> {}
 #[repr(transparent)]
 pub struct CommandBufferAllocateInfoBuilder<'a> {
     inner: CommandBufferAllocateInfo,
@@ -14894,6 +15032,7 @@ impl CommandBufferInheritanceInfo {
         }
     }
 }
+unsafe impl crate::Cast<CommandBufferInheritanceInfo> for CommandBufferInheritanceInfoBuilder<'_> {}
 #[repr(transparent)]
 pub struct CommandBufferInheritanceInfoBuilder<'a> {
     inner: CommandBufferInheritanceInfo,
@@ -15002,6 +15141,7 @@ impl CommandBufferBeginInfo {
         }
     }
 }
+unsafe impl crate::Cast<CommandBufferBeginInfo> for CommandBufferBeginInfoBuilder<'_> {}
 #[repr(transparent)]
 pub struct CommandBufferBeginInfoBuilder<'a> {
     inner: CommandBufferBeginInfo,
@@ -15101,6 +15241,7 @@ impl RenderPassBeginInfo {
         }
     }
 }
+unsafe impl crate::Cast<RenderPassBeginInfo> for RenderPassBeginInfoBuilder<'_> {}
 #[repr(transparent)]
 pub struct RenderPassBeginInfoBuilder<'a> {
     inner: RenderPassBeginInfo,
@@ -15133,10 +15274,10 @@ impl<'a> RenderPassBeginInfoBuilder<'a> {
     }
     pub fn clear_values(
         mut self,
-        clear_values: &'a [ClearValue],
+        clear_values: &'a [impl crate::Cast<ClearValue>],
     ) -> RenderPassBeginInfoBuilder<'a> {
         self.inner.clear_value_count = clear_values.len() as _;
-        self.inner.p_clear_values = clear_values.as_ptr();
+        self.inner.p_clear_values = clear_values.as_ptr() as *const _;
         self
     }
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
@@ -15191,6 +15332,7 @@ impl ClearDepthStencilValue {
         }
     }
 }
+unsafe impl crate::Cast<ClearDepthStencilValue> for ClearDepthStencilValueBuilder<'_> {}
 #[repr(transparent)]
 pub struct ClearDepthStencilValueBuilder<'a> {
     inner: ClearDepthStencilValue,
@@ -15260,6 +15402,7 @@ impl ClearAttachment {
         }
     }
 }
+unsafe impl crate::Cast<ClearAttachment> for ClearAttachmentBuilder<'_> {}
 #[repr(transparent)]
 pub struct ClearAttachmentBuilder<'a> {
     inner: ClearAttachment,
@@ -15318,6 +15461,7 @@ impl AttachmentDescription {
         }
     }
 }
+unsafe impl crate::Cast<AttachmentDescription> for AttachmentDescriptionBuilder<'_> {}
 #[repr(transparent)]
 pub struct AttachmentDescriptionBuilder<'a> {
     inner: AttachmentDescription,
@@ -15402,6 +15546,7 @@ impl AttachmentReference {
         }
     }
 }
+unsafe impl crate::Cast<AttachmentReference> for AttachmentReferenceBuilder<'_> {}
 #[repr(transparent)]
 pub struct AttachmentReferenceBuilder<'a> {
     inner: AttachmentReference,
@@ -15473,6 +15618,7 @@ impl SubpassDescription {
         }
     }
 }
+unsafe impl crate::Cast<SubpassDescription> for SubpassDescriptionBuilder<'_> {}
 #[repr(transparent)]
 pub struct SubpassDescriptionBuilder<'a> {
     inner: SubpassDescription,
@@ -15503,26 +15649,26 @@ impl<'a> SubpassDescriptionBuilder<'a> {
     }
     pub fn input_attachments(
         mut self,
-        input_attachments: &'a [AttachmentReference],
+        input_attachments: &'a [impl crate::Cast<AttachmentReference>],
     ) -> SubpassDescriptionBuilder<'a> {
         self.inner.input_attachment_count = input_attachments.len() as _;
-        self.inner.p_input_attachments = input_attachments.as_ptr();
+        self.inner.p_input_attachments = input_attachments.as_ptr() as *const _;
         self
     }
     pub fn color_attachments(
         mut self,
-        color_attachments: &'a [AttachmentReference],
+        color_attachments: &'a [impl crate::Cast<AttachmentReference>],
     ) -> SubpassDescriptionBuilder<'a> {
         self.inner.color_attachment_count = color_attachments.len() as _;
-        self.inner.p_color_attachments = color_attachments.as_ptr();
+        self.inner.p_color_attachments = color_attachments.as_ptr() as *const _;
         self
     }
     pub fn resolve_attachments(
         mut self,
-        resolve_attachments: &'a [AttachmentReference],
+        resolve_attachments: &'a [impl crate::Cast<AttachmentReference>],
     ) -> SubpassDescriptionBuilder<'a> {
         self.inner.color_attachment_count = resolve_attachments.len() as _;
-        self.inner.p_resolve_attachments = resolve_attachments.as_ptr();
+        self.inner.p_resolve_attachments = resolve_attachments.as_ptr() as *const _;
         self
     }
     pub fn depth_stencil_attachment(
@@ -15534,10 +15680,10 @@ impl<'a> SubpassDescriptionBuilder<'a> {
     }
     pub fn preserve_attachments(
         mut self,
-        preserve_attachments: &'a [u32],
+        preserve_attachments: &'a [impl crate::Cast<u32>],
     ) -> SubpassDescriptionBuilder<'a> {
         self.inner.preserve_attachment_count = preserve_attachments.len() as _;
-        self.inner.p_preserve_attachments = preserve_attachments.as_ptr();
+        self.inner.p_preserve_attachments = preserve_attachments.as_ptr() as *const _;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -15567,6 +15713,7 @@ impl SubpassDependency {
         }
     }
 }
+unsafe impl crate::Cast<SubpassDependency> for SubpassDependencyBuilder<'_> {}
 #[repr(transparent)]
 pub struct SubpassDependencyBuilder<'a> {
     inner: SubpassDependency,
@@ -15665,6 +15812,7 @@ impl RenderPassCreateInfo {
         }
     }
 }
+unsafe impl crate::Cast<RenderPassCreateInfo> for RenderPassCreateInfoBuilder<'_> {}
 #[repr(transparent)]
 pub struct RenderPassCreateInfoBuilder<'a> {
     inner: RenderPassCreateInfo,
@@ -15689,26 +15837,26 @@ impl<'a> RenderPassCreateInfoBuilder<'a> {
     }
     pub fn attachments(
         mut self,
-        attachments: &'a [AttachmentDescription],
+        attachments: &'a [impl crate::Cast<AttachmentDescription>],
     ) -> RenderPassCreateInfoBuilder<'a> {
         self.inner.attachment_count = attachments.len() as _;
-        self.inner.p_attachments = attachments.as_ptr();
+        self.inner.p_attachments = attachments.as_ptr() as *const _;
         self
     }
     pub fn subpasses(
         mut self,
-        subpasses: &'a [SubpassDescription],
+        subpasses: &'a [impl crate::Cast<SubpassDescription>],
     ) -> RenderPassCreateInfoBuilder<'a> {
         self.inner.subpass_count = subpasses.len() as _;
-        self.inner.p_subpasses = subpasses.as_ptr();
+        self.inner.p_subpasses = subpasses.as_ptr() as *const _;
         self
     }
     pub fn dependencies(
         mut self,
-        dependencies: &'a [SubpassDependency],
+        dependencies: &'a [impl crate::Cast<SubpassDependency>],
     ) -> RenderPassCreateInfoBuilder<'a> {
         self.inner.dependency_count = dependencies.len() as _;
-        self.inner.p_dependencies = dependencies.as_ptr();
+        self.inner.p_dependencies = dependencies.as_ptr() as *const _;
         self
     }
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
@@ -15760,6 +15908,7 @@ impl EventCreateInfo {
         }
     }
 }
+unsafe impl crate::Cast<EventCreateInfo> for EventCreateInfoBuilder<'_> {}
 #[repr(transparent)]
 pub struct EventCreateInfoBuilder<'a> {
     inner: EventCreateInfo,
@@ -15831,6 +15980,7 @@ impl FenceCreateInfo {
         }
     }
 }
+unsafe impl crate::Cast<FenceCreateInfo> for FenceCreateInfoBuilder<'_> {}
 #[repr(transparent)]
 pub struct FenceCreateInfoBuilder<'a> {
     inner: FenceCreateInfo,
@@ -15945,6 +16095,7 @@ impl PhysicalDeviceFeatures {
         }
     }
 }
+unsafe impl crate::Cast<PhysicalDeviceFeatures> for PhysicalDeviceFeaturesBuilder<'_> {}
 #[repr(transparent)]
 pub struct PhysicalDeviceFeaturesBuilder<'a> {
     inner: PhysicalDeviceFeatures,
@@ -16335,6 +16486,10 @@ impl PhysicalDeviceSparseProperties {
         }
     }
 }
+unsafe impl crate::Cast<PhysicalDeviceSparseProperties>
+    for PhysicalDeviceSparsePropertiesBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PhysicalDeviceSparsePropertiesBuilder<'a> {
     inner: PhysicalDeviceSparseProperties,
@@ -16626,6 +16781,7 @@ impl PhysicalDeviceLimits {
         }
     }
 }
+unsafe impl crate::Cast<PhysicalDeviceLimits> for PhysicalDeviceLimitsBuilder<'_> {}
 #[repr(transparent)]
 pub struct PhysicalDeviceLimitsBuilder<'a> {
     inner: PhysicalDeviceLimits,
@@ -17420,6 +17576,7 @@ impl SemaphoreCreateInfo {
         }
     }
 }
+unsafe impl crate::Cast<SemaphoreCreateInfo> for SemaphoreCreateInfoBuilder<'_> {}
 #[repr(transparent)]
 pub struct SemaphoreCreateInfoBuilder<'a> {
     inner: SemaphoreCreateInfo,
@@ -17497,6 +17654,7 @@ impl QueryPoolCreateInfo {
         }
     }
 }
+unsafe impl crate::Cast<QueryPoolCreateInfo> for QueryPoolCreateInfoBuilder<'_> {}
 #[repr(transparent)]
 pub struct QueryPoolCreateInfoBuilder<'a> {
     inner: QueryPoolCreateInfo,
@@ -17595,6 +17753,7 @@ impl FramebufferCreateInfo {
         }
     }
 }
+unsafe impl crate::Cast<FramebufferCreateInfo> for FramebufferCreateInfoBuilder<'_> {}
 #[repr(transparent)]
 pub struct FramebufferCreateInfoBuilder<'a> {
     inner: FramebufferCreateInfo,
@@ -17621,9 +17780,12 @@ impl<'a> FramebufferCreateInfoBuilder<'a> {
         self.inner.render_pass = render_pass;
         self
     }
-    pub fn attachments(mut self, attachments: &'a [ImageView]) -> FramebufferCreateInfoBuilder<'a> {
+    pub fn attachments(
+        mut self,
+        attachments: &'a [impl crate::Cast<ImageView>],
+    ) -> FramebufferCreateInfoBuilder<'a> {
         self.inner.attachment_count = attachments.len() as _;
-        self.inner.p_attachments = attachments.as_ptr();
+        self.inner.p_attachments = attachments.as_ptr() as *const _;
         self
     }
     pub fn width(mut self, width: u32) -> FramebufferCreateInfoBuilder<'a> {
@@ -17679,6 +17841,7 @@ impl DrawIndirectCommand {
         }
     }
 }
+unsafe impl crate::Cast<DrawIndirectCommand> for DrawIndirectCommandBuilder<'_> {}
 #[repr(transparent)]
 pub struct DrawIndirectCommandBuilder<'a> {
     inner: DrawIndirectCommand,
@@ -17737,6 +17900,7 @@ impl DrawIndexedIndirectCommand {
         }
     }
 }
+unsafe impl crate::Cast<DrawIndexedIndirectCommand> for DrawIndexedIndirectCommandBuilder<'_> {}
 #[repr(transparent)]
 pub struct DrawIndexedIndirectCommandBuilder<'a> {
     inner: DrawIndexedIndirectCommand,
@@ -17797,6 +17961,7 @@ impl DispatchIndirectCommand {
         }
     }
 }
+unsafe impl crate::Cast<DispatchIndirectCommand> for DispatchIndirectCommandBuilder<'_> {}
 #[repr(transparent)]
 pub struct DispatchIndirectCommandBuilder<'a> {
     inner: DispatchIndirectCommand,
@@ -17870,6 +18035,7 @@ impl SubmitInfo {
         }
     }
 }
+unsafe impl crate::Cast<SubmitInfo> for SubmitInfoBuilder<'_> {}
 #[repr(transparent)]
 pub struct SubmitInfoBuilder<'a> {
     inner: SubmitInfo,
@@ -17888,33 +18054,36 @@ impl<'a> ::std::ops::DerefMut for SubmitInfoBuilder<'a> {
     }
 }
 impl<'a> SubmitInfoBuilder<'a> {
-    pub fn wait_semaphores(mut self, wait_semaphores: &'a [Semaphore]) -> SubmitInfoBuilder<'a> {
+    pub fn wait_semaphores(
+        mut self,
+        wait_semaphores: &'a [impl crate::Cast<Semaphore>],
+    ) -> SubmitInfoBuilder<'a> {
         self.inner.wait_semaphore_count = wait_semaphores.len() as _;
-        self.inner.p_wait_semaphores = wait_semaphores.as_ptr();
+        self.inner.p_wait_semaphores = wait_semaphores.as_ptr() as *const _;
         self
     }
     pub fn wait_dst_stage_mask(
         mut self,
-        wait_dst_stage_mask: &'a [PipelineStageFlags],
+        wait_dst_stage_mask: &'a [impl crate::Cast<PipelineStageFlags>],
     ) -> SubmitInfoBuilder<'a> {
         self.inner.wait_semaphore_count = wait_dst_stage_mask.len() as _;
-        self.inner.p_wait_dst_stage_mask = wait_dst_stage_mask.as_ptr();
+        self.inner.p_wait_dst_stage_mask = wait_dst_stage_mask.as_ptr() as *const _;
         self
     }
     pub fn command_buffers(
         mut self,
-        command_buffers: &'a [CommandBuffer],
+        command_buffers: &'a [impl crate::Cast<CommandBuffer>],
     ) -> SubmitInfoBuilder<'a> {
         self.inner.command_buffer_count = command_buffers.len() as _;
-        self.inner.p_command_buffers = command_buffers.as_ptr();
+        self.inner.p_command_buffers = command_buffers.as_ptr() as *const _;
         self
     }
     pub fn signal_semaphores(
         mut self,
-        signal_semaphores: &'a [Semaphore],
+        signal_semaphores: &'a [impl crate::Cast<Semaphore>],
     ) -> SubmitInfoBuilder<'a> {
         self.inner.signal_semaphore_count = signal_semaphores.len() as _;
-        self.inner.p_signal_semaphores = signal_semaphores.as_ptr();
+        self.inner.p_signal_semaphores = signal_semaphores.as_ptr() as *const _;
         self
     }
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
@@ -17971,6 +18140,7 @@ impl DisplayPropertiesKHR {
         }
     }
 }
+unsafe impl crate::Cast<DisplayPropertiesKHR> for DisplayPropertiesKHRBuilder<'_> {}
 #[repr(transparent)]
 pub struct DisplayPropertiesKHRBuilder<'a> {
     inner: DisplayPropertiesKHR,
@@ -18053,6 +18223,7 @@ impl DisplayPlanePropertiesKHR {
         }
     }
 }
+unsafe impl crate::Cast<DisplayPlanePropertiesKHR> for DisplayPlanePropertiesKHRBuilder<'_> {}
 #[repr(transparent)]
 pub struct DisplayPlanePropertiesKHRBuilder<'a> {
     inner: DisplayPlanePropertiesKHR,
@@ -18106,6 +18277,7 @@ impl DisplayModeParametersKHR {
         }
     }
 }
+unsafe impl crate::Cast<DisplayModeParametersKHR> for DisplayModeParametersKHRBuilder<'_> {}
 #[repr(transparent)]
 pub struct DisplayModeParametersKHRBuilder<'a> {
     inner: DisplayModeParametersKHR,
@@ -18156,6 +18328,7 @@ impl DisplayModePropertiesKHR {
         }
     }
 }
+unsafe impl crate::Cast<DisplayModePropertiesKHR> for DisplayModePropertiesKHRBuilder<'_> {}
 #[repr(transparent)]
 pub struct DisplayModePropertiesKHRBuilder<'a> {
     inner: DisplayModePropertiesKHR,
@@ -18221,6 +18394,7 @@ impl DisplayModeCreateInfoKHR {
         }
     }
 }
+unsafe impl crate::Cast<DisplayModeCreateInfoKHR> for DisplayModeCreateInfoKHRBuilder<'_> {}
 #[repr(transparent)]
 pub struct DisplayModeCreateInfoKHRBuilder<'a> {
     inner: DisplayModeCreateInfoKHR,
@@ -18299,6 +18473,7 @@ impl DisplayPlaneCapabilitiesKHR {
         }
     }
 }
+unsafe impl crate::Cast<DisplayPlaneCapabilitiesKHR> for DisplayPlaneCapabilitiesKHRBuilder<'_> {}
 #[repr(transparent)]
 pub struct DisplayPlaneCapabilitiesKHRBuilder<'a> {
     inner: DisplayPlaneCapabilitiesKHR,
@@ -18425,6 +18600,7 @@ impl DisplaySurfaceCreateInfoKHR {
         }
     }
 }
+unsafe impl crate::Cast<DisplaySurfaceCreateInfoKHR> for DisplaySurfaceCreateInfoKHRBuilder<'_> {}
 #[repr(transparent)]
 pub struct DisplaySurfaceCreateInfoKHRBuilder<'a> {
     inner: DisplaySurfaceCreateInfoKHR,
@@ -18546,6 +18722,7 @@ impl DisplayPresentInfoKHR {
         }
     }
 }
+unsafe impl crate::Cast<DisplayPresentInfoKHR> for DisplayPresentInfoKHRBuilder<'_> {}
 #[repr(transparent)]
 pub struct DisplayPresentInfoKHRBuilder<'a> {
     inner: DisplayPresentInfoKHR,
@@ -18607,6 +18784,7 @@ impl SurfaceCapabilitiesKHR {
         }
     }
 }
+unsafe impl crate::Cast<SurfaceCapabilitiesKHR> for SurfaceCapabilitiesKHRBuilder<'_> {}
 #[repr(transparent)]
 pub struct SurfaceCapabilitiesKHRBuilder<'a> {
     inner: SurfaceCapabilitiesKHR,
@@ -18719,6 +18897,7 @@ impl AndroidSurfaceCreateInfoKHR {
         }
     }
 }
+unsafe impl crate::Cast<AndroidSurfaceCreateInfoKHR> for AndroidSurfaceCreateInfoKHRBuilder<'_> {}
 #[repr(transparent)]
 pub struct AndroidSurfaceCreateInfoKHRBuilder<'a> {
     inner: AndroidSurfaceCreateInfoKHR,
@@ -18799,6 +18978,7 @@ impl ViSurfaceCreateInfoNN {
         }
     }
 }
+unsafe impl crate::Cast<ViSurfaceCreateInfoNN> for ViSurfaceCreateInfoNNBuilder<'_> {}
 #[repr(transparent)]
 pub struct ViSurfaceCreateInfoNNBuilder<'a> {
     inner: ViSurfaceCreateInfoNN,
@@ -18878,6 +19058,7 @@ impl WaylandSurfaceCreateInfoKHR {
         }
     }
 }
+unsafe impl crate::Cast<WaylandSurfaceCreateInfoKHR> for WaylandSurfaceCreateInfoKHRBuilder<'_> {}
 #[repr(transparent)]
 pub struct WaylandSurfaceCreateInfoKHRBuilder<'a> {
     inner: WaylandSurfaceCreateInfoKHR,
@@ -18964,6 +19145,7 @@ impl Win32SurfaceCreateInfoKHR {
         }
     }
 }
+unsafe impl crate::Cast<Win32SurfaceCreateInfoKHR> for Win32SurfaceCreateInfoKHRBuilder<'_> {}
 #[repr(transparent)]
 pub struct Win32SurfaceCreateInfoKHRBuilder<'a> {
     inner: Win32SurfaceCreateInfoKHR,
@@ -19050,6 +19232,7 @@ impl XlibSurfaceCreateInfoKHR {
         }
     }
 }
+unsafe impl crate::Cast<XlibSurfaceCreateInfoKHR> for XlibSurfaceCreateInfoKHRBuilder<'_> {}
 #[repr(transparent)]
 pub struct XlibSurfaceCreateInfoKHRBuilder<'a> {
     inner: XlibSurfaceCreateInfoKHR,
@@ -19136,6 +19319,7 @@ impl XcbSurfaceCreateInfoKHR {
         }
     }
 }
+unsafe impl crate::Cast<XcbSurfaceCreateInfoKHR> for XcbSurfaceCreateInfoKHRBuilder<'_> {}
 #[repr(transparent)]
 pub struct XcbSurfaceCreateInfoKHRBuilder<'a> {
     inner: XcbSurfaceCreateInfoKHR,
@@ -19220,6 +19404,10 @@ impl ImagePipeSurfaceCreateInfoFUCHSIA {
         }
     }
 }
+unsafe impl crate::Cast<ImagePipeSurfaceCreateInfoFUCHSIA>
+    for ImagePipeSurfaceCreateInfoFUCHSIABuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct ImagePipeSurfaceCreateInfoFUCHSIABuilder<'a> {
     inner: ImagePipeSurfaceCreateInfoFUCHSIA,
@@ -19303,6 +19491,10 @@ impl StreamDescriptorSurfaceCreateInfoGGP {
         }
     }
 }
+unsafe impl crate::Cast<StreamDescriptorSurfaceCreateInfoGGP>
+    for StreamDescriptorSurfaceCreateInfoGGPBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct StreamDescriptorSurfaceCreateInfoGGPBuilder<'a> {
     inner: StreamDescriptorSurfaceCreateInfoGGP,
@@ -19374,6 +19566,7 @@ impl SurfaceFormatKHR {
         }
     }
 }
+unsafe impl crate::Cast<SurfaceFormatKHR> for SurfaceFormatKHRBuilder<'_> {}
 #[repr(transparent)]
 pub struct SurfaceFormatKHRBuilder<'a> {
     inner: SurfaceFormatKHR,
@@ -19461,6 +19654,7 @@ impl SwapchainCreateInfoKHR {
         }
     }
 }
+unsafe impl crate::Cast<SwapchainCreateInfoKHR> for SwapchainCreateInfoKHRBuilder<'_> {}
 #[repr(transparent)]
 pub struct SwapchainCreateInfoKHRBuilder<'a> {
     inner: SwapchainCreateInfoKHR,
@@ -19529,10 +19723,10 @@ impl<'a> SwapchainCreateInfoKHRBuilder<'a> {
     }
     pub fn queue_family_indices(
         mut self,
-        queue_family_indices: &'a [u32],
+        queue_family_indices: &'a [impl crate::Cast<u32>],
     ) -> SwapchainCreateInfoKHRBuilder<'a> {
         self.inner.queue_family_index_count = queue_family_indices.len() as _;
-        self.inner.p_queue_family_indices = queue_family_indices.as_ptr();
+        self.inner.p_queue_family_indices = queue_family_indices.as_ptr() as *const _;
         self
     }
     pub fn pre_transform(
@@ -19626,6 +19820,7 @@ impl PresentInfoKHR {
         }
     }
 }
+unsafe impl crate::Cast<PresentInfoKHR> for PresentInfoKHRBuilder<'_> {}
 #[repr(transparent)]
 pub struct PresentInfoKHRBuilder<'a> {
     inner: PresentInfoKHR,
@@ -19646,25 +19841,34 @@ impl<'a> ::std::ops::DerefMut for PresentInfoKHRBuilder<'a> {
 impl<'a> PresentInfoKHRBuilder<'a> {
     pub fn wait_semaphores(
         mut self,
-        wait_semaphores: &'a [Semaphore],
+        wait_semaphores: &'a [impl crate::Cast<Semaphore>],
     ) -> PresentInfoKHRBuilder<'a> {
         self.inner.wait_semaphore_count = wait_semaphores.len() as _;
-        self.inner.p_wait_semaphores = wait_semaphores.as_ptr();
+        self.inner.p_wait_semaphores = wait_semaphores.as_ptr() as *const _;
         self
     }
-    pub fn swapchains(mut self, swapchains: &'a [SwapchainKHR]) -> PresentInfoKHRBuilder<'a> {
+    pub fn swapchains(
+        mut self,
+        swapchains: &'a [impl crate::Cast<SwapchainKHR>],
+    ) -> PresentInfoKHRBuilder<'a> {
         self.inner.swapchain_count = swapchains.len() as _;
-        self.inner.p_swapchains = swapchains.as_ptr();
+        self.inner.p_swapchains = swapchains.as_ptr() as *const _;
         self
     }
-    pub fn image_indices(mut self, image_indices: &'a [u32]) -> PresentInfoKHRBuilder<'a> {
+    pub fn image_indices(
+        mut self,
+        image_indices: &'a [impl crate::Cast<u32>],
+    ) -> PresentInfoKHRBuilder<'a> {
         self.inner.swapchain_count = image_indices.len() as _;
-        self.inner.p_image_indices = image_indices.as_ptr();
+        self.inner.p_image_indices = image_indices.as_ptr() as *const _;
         self
     }
-    pub fn results(mut self, results: &'a mut [Result]) -> PresentInfoKHRBuilder<'a> {
+    pub fn results(
+        mut self,
+        results: &'a mut [impl crate::Cast<Result>],
+    ) -> PresentInfoKHRBuilder<'a> {
         self.inner.swapchain_count = results.len() as _;
-        self.inner.p_results = results.as_mut_ptr();
+        self.inner.p_results = results.as_mut_ptr() as *mut _;
         self
     }
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
@@ -19730,6 +19934,10 @@ impl DebugReportCallbackCreateInfoEXT {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<DebugReportCallbackCreateInfoEXT>
+    for DebugReportCallbackCreateInfoEXTBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct DebugReportCallbackCreateInfoEXTBuilder<'a> {
@@ -19805,6 +20013,7 @@ impl ValidationFlagsEXT {
         }
     }
 }
+unsafe impl crate::Cast<ValidationFlagsEXT> for ValidationFlagsEXTBuilder<'_> {}
 #[repr(transparent)]
 pub struct ValidationFlagsEXTBuilder<'a> {
     inner: ValidationFlagsEXT,
@@ -19826,10 +20035,10 @@ impl<'a> ::std::ops::DerefMut for ValidationFlagsEXTBuilder<'a> {
 impl<'a> ValidationFlagsEXTBuilder<'a> {
     pub fn disabled_validation_checks(
         mut self,
-        disabled_validation_checks: &'a [ValidationCheckEXT],
+        disabled_validation_checks: &'a [impl crate::Cast<ValidationCheckEXT>],
     ) -> ValidationFlagsEXTBuilder<'a> {
         self.inner.disabled_validation_check_count = disabled_validation_checks.len() as _;
-        self.inner.p_disabled_validation_checks = disabled_validation_checks.as_ptr();
+        self.inner.p_disabled_validation_checks = disabled_validation_checks.as_ptr() as *const _;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -19870,6 +20079,7 @@ impl ValidationFeaturesEXT {
         }
     }
 }
+unsafe impl crate::Cast<ValidationFeaturesEXT> for ValidationFeaturesEXTBuilder<'_> {}
 #[repr(transparent)]
 pub struct ValidationFeaturesEXTBuilder<'a> {
     inner: ValidationFeaturesEXT,
@@ -19891,18 +20101,19 @@ impl<'a> ::std::ops::DerefMut for ValidationFeaturesEXTBuilder<'a> {
 impl<'a> ValidationFeaturesEXTBuilder<'a> {
     pub fn enabled_validation_features(
         mut self,
-        enabled_validation_features: &'a [ValidationFeatureEnableEXT],
+        enabled_validation_features: &'a [impl crate::Cast<ValidationFeatureEnableEXT>],
     ) -> ValidationFeaturesEXTBuilder<'a> {
         self.inner.enabled_validation_feature_count = enabled_validation_features.len() as _;
-        self.inner.p_enabled_validation_features = enabled_validation_features.as_ptr();
+        self.inner.p_enabled_validation_features = enabled_validation_features.as_ptr() as *const _;
         self
     }
     pub fn disabled_validation_features(
         mut self,
-        disabled_validation_features: &'a [ValidationFeatureDisableEXT],
+        disabled_validation_features: &'a [impl crate::Cast<ValidationFeatureDisableEXT>],
     ) -> ValidationFeaturesEXTBuilder<'a> {
         self.inner.disabled_validation_feature_count = disabled_validation_features.len() as _;
-        self.inner.p_disabled_validation_features = disabled_validation_features.as_ptr();
+        self.inner.p_disabled_validation_features =
+            disabled_validation_features.as_ptr() as *const _;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -19936,6 +20147,10 @@ impl PipelineRasterizationStateRasterizationOrderAMD {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PipelineRasterizationStateRasterizationOrderAMD>
+    for PipelineRasterizationStateRasterizationOrderAMDBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PipelineRasterizationStateRasterizationOrderAMDBuilder<'a> {
@@ -20005,6 +20220,7 @@ impl DebugMarkerObjectNameInfoEXT {
         }
     }
 }
+unsafe impl crate::Cast<DebugMarkerObjectNameInfoEXT> for DebugMarkerObjectNameInfoEXTBuilder<'_> {}
 #[repr(transparent)]
 pub struct DebugMarkerObjectNameInfoEXTBuilder<'a> {
     inner: DebugMarkerObjectNameInfoEXT,
@@ -20098,6 +20314,7 @@ impl DebugMarkerObjectTagInfoEXT {
         }
     }
 }
+unsafe impl crate::Cast<DebugMarkerObjectTagInfoEXT> for DebugMarkerObjectTagInfoEXTBuilder<'_> {}
 #[repr(transparent)]
 pub struct DebugMarkerObjectTagInfoEXTBuilder<'a> {
     inner: DebugMarkerObjectTagInfoEXT,
@@ -20133,7 +20350,7 @@ impl<'a> DebugMarkerObjectTagInfoEXTBuilder<'a> {
     }
     pub fn tag(mut self, tag: &'a [u8]) -> DebugMarkerObjectTagInfoEXTBuilder<'a> {
         self.inner.tag_size = tag.len() as _;
-        self.inner.p_tag = tag.as_ptr() as *const c_void;
+        self.inner.p_tag = tag.as_ptr() as *const c_void as *const _;
         self
     }
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
@@ -20187,6 +20404,7 @@ impl DebugMarkerMarkerInfoEXT {
         }
     }
 }
+unsafe impl crate::Cast<DebugMarkerMarkerInfoEXT> for DebugMarkerMarkerInfoEXTBuilder<'_> {}
 #[repr(transparent)]
 pub struct DebugMarkerMarkerInfoEXTBuilder<'a> {
     inner: DebugMarkerMarkerInfoEXT,
@@ -20265,6 +20483,10 @@ impl DedicatedAllocationImageCreateInfoNV {
         }
     }
 }
+unsafe impl crate::Cast<DedicatedAllocationImageCreateInfoNV>
+    for DedicatedAllocationImageCreateInfoNVBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct DedicatedAllocationImageCreateInfoNVBuilder<'a> {
     inner: DedicatedAllocationImageCreateInfoNV,
@@ -20322,6 +20544,10 @@ impl DedicatedAllocationBufferCreateInfoNV {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<DedicatedAllocationBufferCreateInfoNV>
+    for DedicatedAllocationBufferCreateInfoNVBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct DedicatedAllocationBufferCreateInfoNVBuilder<'a> {
@@ -20383,6 +20609,10 @@ impl DedicatedAllocationMemoryAllocateInfoNV {
         }
     }
 }
+unsafe impl crate::Cast<DedicatedAllocationMemoryAllocateInfoNV>
+    for DedicatedAllocationMemoryAllocateInfoNVBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct DedicatedAllocationMemoryAllocateInfoNVBuilder<'a> {
     inner: DedicatedAllocationMemoryAllocateInfoNV,
@@ -20433,6 +20663,10 @@ impl ExternalImageFormatPropertiesNV {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<ExternalImageFormatPropertiesNV>
+    for ExternalImageFormatPropertiesNVBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct ExternalImageFormatPropertiesNVBuilder<'a> {
@@ -20511,6 +20745,10 @@ impl ExternalMemoryImageCreateInfoNV {
         }
     }
 }
+unsafe impl crate::Cast<ExternalMemoryImageCreateInfoNV>
+    for ExternalMemoryImageCreateInfoNVBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct ExternalMemoryImageCreateInfoNVBuilder<'a> {
     inner: ExternalMemoryImageCreateInfoNV,
@@ -20569,6 +20807,7 @@ impl ExportMemoryAllocateInfoNV {
         }
     }
 }
+unsafe impl crate::Cast<ExportMemoryAllocateInfoNV> for ExportMemoryAllocateInfoNVBuilder<'_> {}
 #[repr(transparent)]
 pub struct ExportMemoryAllocateInfoNVBuilder<'a> {
     inner: ExportMemoryAllocateInfoNV,
@@ -20628,6 +20867,10 @@ impl ImportMemoryWin32HandleInfoNV {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<ImportMemoryWin32HandleInfoNV>
+    for ImportMemoryWin32HandleInfoNVBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct ImportMemoryWin32HandleInfoNVBuilder<'a> {
@@ -20692,6 +20935,10 @@ impl ExportMemoryWin32HandleInfoNV {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<ExportMemoryWin32HandleInfoNV>
+    for ExportMemoryWin32HandleInfoNVBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct ExportMemoryWin32HandleInfoNVBuilder<'a> {
@@ -20767,6 +21014,10 @@ impl Win32KeyedMutexAcquireReleaseInfoNV {
         }
     }
 }
+unsafe impl crate::Cast<Win32KeyedMutexAcquireReleaseInfoNV>
+    for Win32KeyedMutexAcquireReleaseInfoNVBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct Win32KeyedMutexAcquireReleaseInfoNVBuilder<'a> {
     inner: Win32KeyedMutexAcquireReleaseInfoNV,
@@ -20788,42 +21039,43 @@ impl<'a> ::std::ops::DerefMut for Win32KeyedMutexAcquireReleaseInfoNVBuilder<'a>
 impl<'a> Win32KeyedMutexAcquireReleaseInfoNVBuilder<'a> {
     pub fn acquire_syncs(
         mut self,
-        acquire_syncs: &'a [DeviceMemory],
+        acquire_syncs: &'a [impl crate::Cast<DeviceMemory>],
     ) -> Win32KeyedMutexAcquireReleaseInfoNVBuilder<'a> {
         self.inner.acquire_count = acquire_syncs.len() as _;
-        self.inner.p_acquire_syncs = acquire_syncs.as_ptr();
+        self.inner.p_acquire_syncs = acquire_syncs.as_ptr() as *const _;
         self
     }
     pub fn acquire_keys(
         mut self,
-        acquire_keys: &'a [u64],
+        acquire_keys: &'a [impl crate::Cast<u64>],
     ) -> Win32KeyedMutexAcquireReleaseInfoNVBuilder<'a> {
         self.inner.acquire_count = acquire_keys.len() as _;
-        self.inner.p_acquire_keys = acquire_keys.as_ptr();
+        self.inner.p_acquire_keys = acquire_keys.as_ptr() as *const _;
         self
     }
     pub fn acquire_timeout_milliseconds(
         mut self,
-        acquire_timeout_milliseconds: &'a [u32],
+        acquire_timeout_milliseconds: &'a [impl crate::Cast<u32>],
     ) -> Win32KeyedMutexAcquireReleaseInfoNVBuilder<'a> {
         self.inner.acquire_count = acquire_timeout_milliseconds.len() as _;
-        self.inner.p_acquire_timeout_milliseconds = acquire_timeout_milliseconds.as_ptr();
+        self.inner.p_acquire_timeout_milliseconds =
+            acquire_timeout_milliseconds.as_ptr() as *const _;
         self
     }
     pub fn release_syncs(
         mut self,
-        release_syncs: &'a [DeviceMemory],
+        release_syncs: &'a [impl crate::Cast<DeviceMemory>],
     ) -> Win32KeyedMutexAcquireReleaseInfoNVBuilder<'a> {
         self.inner.release_count = release_syncs.len() as _;
-        self.inner.p_release_syncs = release_syncs.as_ptr();
+        self.inner.p_release_syncs = release_syncs.as_ptr() as *const _;
         self
     }
     pub fn release_keys(
         mut self,
-        release_keys: &'a [u64],
+        release_keys: &'a [impl crate::Cast<u64>],
     ) -> Win32KeyedMutexAcquireReleaseInfoNVBuilder<'a> {
         self.inner.release_count = release_keys.len() as _;
-        self.inner.p_release_keys = release_keys.as_ptr();
+        self.inner.p_release_keys = release_keys.as_ptr() as *const _;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -20857,6 +21109,10 @@ impl DeviceGeneratedCommandsFeaturesNVX {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<DeviceGeneratedCommandsFeaturesNVX>
+    for DeviceGeneratedCommandsFeaturesNVXBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct DeviceGeneratedCommandsFeaturesNVXBuilder<'a> {
@@ -20939,6 +21195,10 @@ impl DeviceGeneratedCommandsLimitsNVX {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<DeviceGeneratedCommandsLimitsNVX>
+    for DeviceGeneratedCommandsLimitsNVXBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct DeviceGeneratedCommandsLimitsNVXBuilder<'a> {
@@ -21037,6 +21297,7 @@ impl IndirectCommandsTokenNVX {
         }
     }
 }
+unsafe impl crate::Cast<IndirectCommandsTokenNVX> for IndirectCommandsTokenNVXBuilder<'_> {}
 #[repr(transparent)]
 pub struct IndirectCommandsTokenNVXBuilder<'a> {
     inner: IndirectCommandsTokenNVX,
@@ -21092,6 +21353,10 @@ impl IndirectCommandsLayoutTokenNVX {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<IndirectCommandsLayoutTokenNVX>
+    for IndirectCommandsLayoutTokenNVXBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct IndirectCommandsLayoutTokenNVXBuilder<'a> {
@@ -21170,6 +21435,10 @@ impl IndirectCommandsLayoutCreateInfoNVX {
         }
     }
 }
+unsafe impl crate::Cast<IndirectCommandsLayoutCreateInfoNVX>
+    for IndirectCommandsLayoutCreateInfoNVXBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct IndirectCommandsLayoutCreateInfoNVXBuilder<'a> {
     inner: IndirectCommandsLayoutCreateInfoNVX,
@@ -21204,10 +21473,10 @@ impl<'a> IndirectCommandsLayoutCreateInfoNVXBuilder<'a> {
     }
     pub fn tokens(
         mut self,
-        tokens: &'a [IndirectCommandsLayoutTokenNVX],
+        tokens: &'a [impl crate::Cast<IndirectCommandsLayoutTokenNVX>],
     ) -> IndirectCommandsLayoutCreateInfoNVXBuilder<'a> {
         self.inner.token_count = tokens.len() as _;
-        self.inner.p_tokens = tokens.as_ptr();
+        self.inner.p_tokens = tokens.as_ptr() as *const _;
         self
     }
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
@@ -21277,6 +21546,7 @@ impl CmdProcessCommandsInfoNVX {
         }
     }
 }
+unsafe impl crate::Cast<CmdProcessCommandsInfoNVX> for CmdProcessCommandsInfoNVXBuilder<'_> {}
 #[repr(transparent)]
 pub struct CmdProcessCommandsInfoNVXBuilder<'a> {
     inner: CmdProcessCommandsInfoNVX,
@@ -21311,10 +21581,10 @@ impl<'a> CmdProcessCommandsInfoNVXBuilder<'a> {
     }
     pub fn indirect_commands_tokens(
         mut self,
-        indirect_commands_tokens: &'a [IndirectCommandsTokenNVX],
+        indirect_commands_tokens: &'a [impl crate::Cast<IndirectCommandsTokenNVX>],
     ) -> CmdProcessCommandsInfoNVXBuilder<'a> {
         self.inner.indirect_commands_token_count = indirect_commands_tokens.len() as _;
-        self.inner.p_indirect_commands_tokens = indirect_commands_tokens.as_ptr();
+        self.inner.p_indirect_commands_tokens = indirect_commands_tokens.as_ptr() as *const _;
         self
     }
     pub fn max_sequences_count(
@@ -21411,6 +21681,10 @@ impl CmdReserveSpaceForCommandsInfoNVX {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<CmdReserveSpaceForCommandsInfoNVX>
+    for CmdReserveSpaceForCommandsInfoNVXBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct CmdReserveSpaceForCommandsInfoNVXBuilder<'a> {
@@ -21516,6 +21790,7 @@ impl ObjectTableCreateInfoNVX {
         }
     }
 }
+unsafe impl crate::Cast<ObjectTableCreateInfoNVX> for ObjectTableCreateInfoNVXBuilder<'_> {}
 #[repr(transparent)]
 pub struct ObjectTableCreateInfoNVXBuilder<'a> {
     inner: ObjectTableCreateInfoNVX,
@@ -21536,26 +21811,26 @@ impl<'a> ::std::ops::DerefMut for ObjectTableCreateInfoNVXBuilder<'a> {
 impl<'a> ObjectTableCreateInfoNVXBuilder<'a> {
     pub fn object_entry_types(
         mut self,
-        object_entry_types: &'a [ObjectEntryTypeNVX],
+        object_entry_types: &'a [impl crate::Cast<ObjectEntryTypeNVX>],
     ) -> ObjectTableCreateInfoNVXBuilder<'a> {
         self.inner.object_count = object_entry_types.len() as _;
-        self.inner.p_object_entry_types = object_entry_types.as_ptr();
+        self.inner.p_object_entry_types = object_entry_types.as_ptr() as *const _;
         self
     }
     pub fn object_entry_counts(
         mut self,
-        object_entry_counts: &'a [u32],
+        object_entry_counts: &'a [impl crate::Cast<u32>],
     ) -> ObjectTableCreateInfoNVXBuilder<'a> {
         self.inner.object_count = object_entry_counts.len() as _;
-        self.inner.p_object_entry_counts = object_entry_counts.as_ptr();
+        self.inner.p_object_entry_counts = object_entry_counts.as_ptr() as *const _;
         self
     }
     pub fn object_entry_usage_flags(
         mut self,
-        object_entry_usage_flags: &'a [ObjectEntryUsageFlagsNVX],
+        object_entry_usage_flags: &'a [impl crate::Cast<ObjectEntryUsageFlagsNVX>],
     ) -> ObjectTableCreateInfoNVXBuilder<'a> {
         self.inner.object_count = object_entry_usage_flags.len() as _;
-        self.inner.p_object_entry_usage_flags = object_entry_usage_flags.as_ptr();
+        self.inner.p_object_entry_usage_flags = object_entry_usage_flags.as_ptr() as *const _;
         self
     }
     pub fn max_uniform_buffers_per_descriptor(
@@ -21632,6 +21907,7 @@ impl ObjectTableEntryNVX {
         }
     }
 }
+unsafe impl crate::Cast<ObjectTableEntryNVX> for ObjectTableEntryNVXBuilder<'_> {}
 #[repr(transparent)]
 pub struct ObjectTableEntryNVXBuilder<'a> {
     inner: ObjectTableEntryNVX,
@@ -21680,6 +21956,7 @@ impl ObjectTablePipelineEntryNVX {
         }
     }
 }
+unsafe impl crate::Cast<ObjectTablePipelineEntryNVX> for ObjectTablePipelineEntryNVXBuilder<'_> {}
 #[repr(transparent)]
 pub struct ObjectTablePipelineEntryNVXBuilder<'a> {
     inner: ObjectTablePipelineEntryNVX,
@@ -21735,6 +22012,10 @@ impl ObjectTableDescriptorSetEntryNVX {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<ObjectTableDescriptorSetEntryNVX>
+    for ObjectTableDescriptorSetEntryNVXBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct ObjectTableDescriptorSetEntryNVXBuilder<'a> {
@@ -21801,6 +22082,10 @@ impl ObjectTableVertexBufferEntryNVX {
         }
     }
 }
+unsafe impl crate::Cast<ObjectTableVertexBufferEntryNVX>
+    for ObjectTableVertexBufferEntryNVXBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct ObjectTableVertexBufferEntryNVXBuilder<'a> {
     inner: ObjectTableVertexBufferEntryNVX,
@@ -21856,6 +22141,10 @@ impl ObjectTableIndexBufferEntryNVX {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<ObjectTableIndexBufferEntryNVX>
+    for ObjectTableIndexBufferEntryNVXBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct ObjectTableIndexBufferEntryNVXBuilder<'a> {
@@ -21919,6 +22208,10 @@ impl ObjectTablePushConstantEntryNVX {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<ObjectTablePushConstantEntryNVX>
+    for ObjectTablePushConstantEntryNVXBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct ObjectTablePushConstantEntryNVXBuilder<'a> {
@@ -21994,6 +22287,7 @@ impl PhysicalDeviceFeatures2 {
         }
     }
 }
+unsafe impl crate::Cast<PhysicalDeviceFeatures2> for PhysicalDeviceFeatures2Builder<'_> {}
 #[repr(transparent)]
 pub struct PhysicalDeviceFeatures2Builder<'a> {
     inner: PhysicalDeviceFeatures2,
@@ -22052,6 +22346,7 @@ impl PhysicalDeviceProperties2 {
         }
     }
 }
+unsafe impl crate::Cast<PhysicalDeviceProperties2> for PhysicalDeviceProperties2Builder<'_> {}
 #[repr(transparent)]
 pub struct PhysicalDeviceProperties2Builder<'a> {
     inner: PhysicalDeviceProperties2,
@@ -22126,6 +22421,7 @@ impl FormatProperties2 {
         }
     }
 }
+unsafe impl crate::Cast<FormatProperties2> for FormatProperties2Builder<'_> {}
 #[repr(transparent)]
 pub struct FormatProperties2Builder<'a> {
     inner: FormatProperties2,
@@ -22200,6 +22496,7 @@ impl ImageFormatProperties2 {
         }
     }
 }
+unsafe impl crate::Cast<ImageFormatProperties2> for ImageFormatProperties2Builder<'_> {}
 #[repr(transparent)]
 pub struct ImageFormatProperties2Builder<'a> {
     inner: ImageFormatProperties2,
@@ -22281,6 +22578,10 @@ impl PhysicalDeviceImageFormatInfo2 {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDeviceImageFormatInfo2>
+    for PhysicalDeviceImageFormatInfo2Builder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDeviceImageFormatInfo2Builder<'a> {
@@ -22369,6 +22670,7 @@ impl QueueFamilyProperties2 {
         }
     }
 }
+unsafe impl crate::Cast<QueueFamilyProperties2> for QueueFamilyProperties2Builder<'_> {}
 #[repr(transparent)]
 pub struct QueueFamilyProperties2Builder<'a> {
     inner: QueueFamilyProperties2,
@@ -22442,6 +22744,10 @@ impl PhysicalDeviceMemoryProperties2 {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDeviceMemoryProperties2>
+    for PhysicalDeviceMemoryProperties2Builder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDeviceMemoryProperties2Builder<'a> {
@@ -22517,6 +22823,7 @@ impl SparseImageFormatProperties2 {
         }
     }
 }
+unsafe impl crate::Cast<SparseImageFormatProperties2> for SparseImageFormatProperties2Builder<'_> {}
 #[repr(transparent)]
 pub struct SparseImageFormatProperties2Builder<'a> {
     inner: SparseImageFormatProperties2,
@@ -22598,6 +22905,10 @@ impl PhysicalDeviceSparseImageFormatInfo2 {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDeviceSparseImageFormatInfo2>
+    for PhysicalDeviceSparseImageFormatInfo2Builder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDeviceSparseImageFormatInfo2Builder<'a> {
@@ -22695,6 +23006,10 @@ impl PhysicalDevicePushDescriptorPropertiesKHR {
         }
     }
 }
+unsafe impl crate::Cast<PhysicalDevicePushDescriptorPropertiesKHR>
+    for PhysicalDevicePushDescriptorPropertiesKHRBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PhysicalDevicePushDescriptorPropertiesKHRBuilder<'a> {
     inner: PhysicalDevicePushDescriptorPropertiesKHR,
@@ -22748,6 +23063,7 @@ impl ConformanceVersionKHR {
         }
     }
 }
+unsafe impl crate::Cast<ConformanceVersionKHR> for ConformanceVersionKHRBuilder<'_> {}
 #[repr(transparent)]
 pub struct ConformanceVersionKHRBuilder<'a> {
     inner: ConformanceVersionKHR,
@@ -22835,6 +23151,10 @@ impl PhysicalDeviceDriverPropertiesKHR {
         }
     }
 }
+unsafe impl crate::Cast<PhysicalDeviceDriverPropertiesKHR>
+    for PhysicalDeviceDriverPropertiesKHRBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PhysicalDeviceDriverPropertiesKHRBuilder<'a> {
     inner: PhysicalDeviceDriverPropertiesKHR,
@@ -22916,6 +23236,7 @@ impl PresentRegionsKHR {
         }
     }
 }
+unsafe impl crate::Cast<PresentRegionsKHR> for PresentRegionsKHRBuilder<'_> {}
 #[repr(transparent)]
 pub struct PresentRegionsKHRBuilder<'a> {
     inner: PresentRegionsKHR,
@@ -22935,9 +23256,12 @@ impl<'a> ::std::ops::DerefMut for PresentRegionsKHRBuilder<'a> {
     }
 }
 impl<'a> PresentRegionsKHRBuilder<'a> {
-    pub fn regions(mut self, regions: &'a [PresentRegionKHR]) -> PresentRegionsKHRBuilder<'a> {
+    pub fn regions(
+        mut self,
+        regions: &'a [impl crate::Cast<PresentRegionKHR>],
+    ) -> PresentRegionsKHRBuilder<'a> {
         self.inner.swapchain_count = regions.len() as _;
-        self.inner.p_regions = regions.as_ptr();
+        self.inner.p_regions = regions.as_ptr() as *const _;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -22970,6 +23294,7 @@ impl PresentRegionKHR {
         }
     }
 }
+unsafe impl crate::Cast<PresentRegionKHR> for PresentRegionKHRBuilder<'_> {}
 #[repr(transparent)]
 pub struct PresentRegionKHRBuilder<'a> {
     inner: PresentRegionKHR,
@@ -22987,9 +23312,12 @@ impl<'a> ::std::ops::DerefMut for PresentRegionKHRBuilder<'a> {
     }
 }
 impl<'a> PresentRegionKHRBuilder<'a> {
-    pub fn rectangles(mut self, rectangles: &'a [RectLayerKHR]) -> PresentRegionKHRBuilder<'a> {
+    pub fn rectangles(
+        mut self,
+        rectangles: &'a [impl crate::Cast<RectLayerKHR>],
+    ) -> PresentRegionKHRBuilder<'a> {
         self.inner.rectangle_count = rectangles.len() as _;
-        self.inner.p_rectangles = rectangles.as_ptr();
+        self.inner.p_rectangles = rectangles.as_ptr() as *const _;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -23015,6 +23343,7 @@ impl RectLayerKHR {
         }
     }
 }
+unsafe impl crate::Cast<RectLayerKHR> for RectLayerKHRBuilder<'_> {}
 #[repr(transparent)]
 pub struct RectLayerKHRBuilder<'a> {
     inner: RectLayerKHR,
@@ -23078,6 +23407,10 @@ impl PhysicalDeviceVariablePointersFeatures {
         }
     }
 }
+unsafe impl crate::Cast<PhysicalDeviceVariablePointersFeatures>
+    for PhysicalDeviceVariablePointersFeaturesBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PhysicalDeviceVariablePointersFeaturesBuilder<'a> {
     inner: PhysicalDeviceVariablePointersFeatures,
@@ -23134,6 +23467,7 @@ impl ExternalMemoryProperties {
         }
     }
 }
+unsafe impl crate::Cast<ExternalMemoryProperties> for ExternalMemoryPropertiesBuilder<'_> {}
 #[repr(transparent)]
 pub struct ExternalMemoryPropertiesBuilder<'a> {
     inner: ExternalMemoryProperties,
@@ -23204,6 +23538,10 @@ impl PhysicalDeviceExternalImageFormatInfo {
         }
     }
 }
+unsafe impl crate::Cast<PhysicalDeviceExternalImageFormatInfo>
+    for PhysicalDeviceExternalImageFormatInfoBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PhysicalDeviceExternalImageFormatInfoBuilder<'a> {
     inner: PhysicalDeviceExternalImageFormatInfo,
@@ -23264,6 +23602,10 @@ impl ExternalImageFormatProperties {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<ExternalImageFormatProperties>
+    for ExternalImageFormatPropertiesBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct ExternalImageFormatPropertiesBuilder<'a> {
@@ -23326,6 +23668,10 @@ impl PhysicalDeviceExternalBufferInfo {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDeviceExternalBufferInfo>
+    for PhysicalDeviceExternalBufferInfoBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDeviceExternalBufferInfoBuilder<'a> {
@@ -23412,6 +23758,7 @@ impl ExternalBufferProperties {
         }
     }
 }
+unsafe impl crate::Cast<ExternalBufferProperties> for ExternalBufferPropertiesBuilder<'_> {}
 #[repr(transparent)]
 pub struct ExternalBufferPropertiesBuilder<'a> {
     inner: ExternalBufferProperties,
@@ -23494,6 +23841,7 @@ impl PhysicalDeviceIDProperties {
         }
     }
 }
+unsafe impl crate::Cast<PhysicalDeviceIDProperties> for PhysicalDeviceIDPropertiesBuilder<'_> {}
 #[repr(transparent)]
 pub struct PhysicalDeviceIDPropertiesBuilder<'a> {
     inner: PhysicalDeviceIDProperties,
@@ -23580,6 +23928,10 @@ impl ExternalMemoryImageCreateInfo {
         }
     }
 }
+unsafe impl crate::Cast<ExternalMemoryImageCreateInfo>
+    for ExternalMemoryImageCreateInfoBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct ExternalMemoryImageCreateInfoBuilder<'a> {
     inner: ExternalMemoryImageCreateInfo,
@@ -23637,6 +23989,10 @@ impl ExternalMemoryBufferCreateInfo {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<ExternalMemoryBufferCreateInfo>
+    for ExternalMemoryBufferCreateInfoBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct ExternalMemoryBufferCreateInfoBuilder<'a> {
@@ -23696,6 +24052,7 @@ impl ExportMemoryAllocateInfo {
         }
     }
 }
+unsafe impl crate::Cast<ExportMemoryAllocateInfo> for ExportMemoryAllocateInfoBuilder<'_> {}
 #[repr(transparent)]
 pub struct ExportMemoryAllocateInfoBuilder<'a> {
     inner: ExportMemoryAllocateInfo,
@@ -23757,6 +24114,10 @@ impl ImportMemoryWin32HandleInfoKHR {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<ImportMemoryWin32HandleInfoKHR>
+    for ImportMemoryWin32HandleInfoKHRBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct ImportMemoryWin32HandleInfoKHRBuilder<'a> {
@@ -23828,6 +24189,10 @@ impl ExportMemoryWin32HandleInfoKHR {
         }
     }
 }
+unsafe impl crate::Cast<ExportMemoryWin32HandleInfoKHR>
+    for ExportMemoryWin32HandleInfoKHRBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct ExportMemoryWin32HandleInfoKHRBuilder<'a> {
     inner: ExportMemoryWin32HandleInfoKHR,
@@ -23893,6 +24258,10 @@ impl MemoryWin32HandlePropertiesKHR {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<MemoryWin32HandlePropertiesKHR>
+    for MemoryWin32HandlePropertiesKHRBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct MemoryWin32HandlePropertiesKHRBuilder<'a> {
@@ -23970,6 +24339,7 @@ impl MemoryGetWin32HandleInfoKHR {
         }
     }
 }
+unsafe impl crate::Cast<MemoryGetWin32HandleInfoKHR> for MemoryGetWin32HandleInfoKHRBuilder<'_> {}
 #[repr(transparent)]
 pub struct MemoryGetWin32HandleInfoKHRBuilder<'a> {
     inner: MemoryGetWin32HandleInfoKHR,
@@ -24050,6 +24420,7 @@ impl ImportMemoryFdInfoKHR {
         }
     }
 }
+unsafe impl crate::Cast<ImportMemoryFdInfoKHR> for ImportMemoryFdInfoKHRBuilder<'_> {}
 #[repr(transparent)]
 pub struct ImportMemoryFdInfoKHRBuilder<'a> {
     inner: ImportMemoryFdInfoKHR,
@@ -24112,6 +24483,7 @@ impl MemoryFdPropertiesKHR {
         }
     }
 }
+unsafe impl crate::Cast<MemoryFdPropertiesKHR> for MemoryFdPropertiesKHRBuilder<'_> {}
 #[repr(transparent)]
 pub struct MemoryFdPropertiesKHRBuilder<'a> {
     inner: MemoryFdPropertiesKHR,
@@ -24185,6 +24557,7 @@ impl MemoryGetFdInfoKHR {
         }
     }
 }
+unsafe impl crate::Cast<MemoryGetFdInfoKHR> for MemoryGetFdInfoKHRBuilder<'_> {}
 #[repr(transparent)]
 pub struct MemoryGetFdInfoKHRBuilder<'a> {
     inner: MemoryGetFdInfoKHR,
@@ -24275,6 +24648,10 @@ impl Win32KeyedMutexAcquireReleaseInfoKHR {
         }
     }
 }
+unsafe impl crate::Cast<Win32KeyedMutexAcquireReleaseInfoKHR>
+    for Win32KeyedMutexAcquireReleaseInfoKHRBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct Win32KeyedMutexAcquireReleaseInfoKHRBuilder<'a> {
     inner: Win32KeyedMutexAcquireReleaseInfoKHR,
@@ -24296,42 +24673,42 @@ impl<'a> ::std::ops::DerefMut for Win32KeyedMutexAcquireReleaseInfoKHRBuilder<'a
 impl<'a> Win32KeyedMutexAcquireReleaseInfoKHRBuilder<'a> {
     pub fn acquire_syncs(
         mut self,
-        acquire_syncs: &'a [DeviceMemory],
+        acquire_syncs: &'a [impl crate::Cast<DeviceMemory>],
     ) -> Win32KeyedMutexAcquireReleaseInfoKHRBuilder<'a> {
         self.inner.acquire_count = acquire_syncs.len() as _;
-        self.inner.p_acquire_syncs = acquire_syncs.as_ptr();
+        self.inner.p_acquire_syncs = acquire_syncs.as_ptr() as *const _;
         self
     }
     pub fn acquire_keys(
         mut self,
-        acquire_keys: &'a [u64],
+        acquire_keys: &'a [impl crate::Cast<u64>],
     ) -> Win32KeyedMutexAcquireReleaseInfoKHRBuilder<'a> {
         self.inner.acquire_count = acquire_keys.len() as _;
-        self.inner.p_acquire_keys = acquire_keys.as_ptr();
+        self.inner.p_acquire_keys = acquire_keys.as_ptr() as *const _;
         self
     }
     pub fn acquire_timeouts(
         mut self,
-        acquire_timeouts: &'a [u32],
+        acquire_timeouts: &'a [impl crate::Cast<u32>],
     ) -> Win32KeyedMutexAcquireReleaseInfoKHRBuilder<'a> {
         self.inner.acquire_count = acquire_timeouts.len() as _;
-        self.inner.p_acquire_timeouts = acquire_timeouts.as_ptr();
+        self.inner.p_acquire_timeouts = acquire_timeouts.as_ptr() as *const _;
         self
     }
     pub fn release_syncs(
         mut self,
-        release_syncs: &'a [DeviceMemory],
+        release_syncs: &'a [impl crate::Cast<DeviceMemory>],
     ) -> Win32KeyedMutexAcquireReleaseInfoKHRBuilder<'a> {
         self.inner.release_count = release_syncs.len() as _;
-        self.inner.p_release_syncs = release_syncs.as_ptr();
+        self.inner.p_release_syncs = release_syncs.as_ptr() as *const _;
         self
     }
     pub fn release_keys(
         mut self,
-        release_keys: &'a [u64],
+        release_keys: &'a [impl crate::Cast<u64>],
     ) -> Win32KeyedMutexAcquireReleaseInfoKHRBuilder<'a> {
         self.inner.release_count = release_keys.len() as _;
-        self.inner.p_release_keys = release_keys.as_ptr();
+        self.inner.p_release_keys = release_keys.as_ptr() as *const _;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -24365,6 +24742,10 @@ impl PhysicalDeviceExternalSemaphoreInfo {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDeviceExternalSemaphoreInfo>
+    for PhysicalDeviceExternalSemaphoreInfoBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDeviceExternalSemaphoreInfoBuilder<'a> {
@@ -24444,6 +24825,7 @@ impl ExternalSemaphoreProperties {
         }
     }
 }
+unsafe impl crate::Cast<ExternalSemaphoreProperties> for ExternalSemaphorePropertiesBuilder<'_> {}
 #[repr(transparent)]
 pub struct ExternalSemaphorePropertiesBuilder<'a> {
     inner: ExternalSemaphoreProperties,
@@ -24532,6 +24914,7 @@ impl ExportSemaphoreCreateInfo {
         }
     }
 }
+unsafe impl crate::Cast<ExportSemaphoreCreateInfo> for ExportSemaphoreCreateInfoBuilder<'_> {}
 #[repr(transparent)]
 pub struct ExportSemaphoreCreateInfoBuilder<'a> {
     inner: ExportSemaphoreCreateInfo,
@@ -24597,6 +24980,10 @@ impl ImportSemaphoreWin32HandleInfoKHR {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<ImportSemaphoreWin32HandleInfoKHR>
+    for ImportSemaphoreWin32HandleInfoKHRBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct ImportSemaphoreWin32HandleInfoKHRBuilder<'a> {
@@ -24698,6 +25085,10 @@ impl ExportSemaphoreWin32HandleInfoKHR {
         }
     }
 }
+unsafe impl crate::Cast<ExportSemaphoreWin32HandleInfoKHR>
+    for ExportSemaphoreWin32HandleInfoKHRBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct ExportSemaphoreWin32HandleInfoKHRBuilder<'a> {
     inner: ExportSemaphoreWin32HandleInfoKHR,
@@ -24770,6 +25161,7 @@ impl D3D12FenceSubmitInfoKHR {
         }
     }
 }
+unsafe impl crate::Cast<D3D12FenceSubmitInfoKHR> for D3D12FenceSubmitInfoKHRBuilder<'_> {}
 #[repr(transparent)]
 pub struct D3D12FenceSubmitInfoKHRBuilder<'a> {
     inner: D3D12FenceSubmitInfoKHR,
@@ -24791,18 +25183,18 @@ impl<'a> ::std::ops::DerefMut for D3D12FenceSubmitInfoKHRBuilder<'a> {
 impl<'a> D3D12FenceSubmitInfoKHRBuilder<'a> {
     pub fn wait_semaphore_values(
         mut self,
-        wait_semaphore_values: &'a [u64],
+        wait_semaphore_values: &'a [impl crate::Cast<u64>],
     ) -> D3D12FenceSubmitInfoKHRBuilder<'a> {
         self.inner.wait_semaphore_values_count = wait_semaphore_values.len() as _;
-        self.inner.p_wait_semaphore_values = wait_semaphore_values.as_ptr();
+        self.inner.p_wait_semaphore_values = wait_semaphore_values.as_ptr() as *const _;
         self
     }
     pub fn signal_semaphore_values(
         mut self,
-        signal_semaphore_values: &'a [u64],
+        signal_semaphore_values: &'a [impl crate::Cast<u64>],
     ) -> D3D12FenceSubmitInfoKHRBuilder<'a> {
         self.inner.signal_semaphore_values_count = signal_semaphore_values.len() as _;
-        self.inner.p_signal_semaphore_values = signal_semaphore_values.as_ptr();
+        self.inner.p_signal_semaphore_values = signal_semaphore_values.as_ptr() as *const _;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -24838,6 +25230,10 @@ impl SemaphoreGetWin32HandleInfoKHR {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<SemaphoreGetWin32HandleInfoKHR>
+    for SemaphoreGetWin32HandleInfoKHRBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct SemaphoreGetWin32HandleInfoKHRBuilder<'a> {
@@ -24923,6 +25319,7 @@ impl ImportSemaphoreFdInfoKHR {
         }
     }
 }
+unsafe impl crate::Cast<ImportSemaphoreFdInfoKHR> for ImportSemaphoreFdInfoKHRBuilder<'_> {}
 #[repr(transparent)]
 pub struct ImportSemaphoreFdInfoKHRBuilder<'a> {
     inner: ImportSemaphoreFdInfoKHR,
@@ -25011,6 +25408,7 @@ impl SemaphoreGetFdInfoKHR {
         }
     }
 }
+unsafe impl crate::Cast<SemaphoreGetFdInfoKHR> for SemaphoreGetFdInfoKHRBuilder<'_> {}
 #[repr(transparent)]
 pub struct SemaphoreGetFdInfoKHRBuilder<'a> {
     inner: SemaphoreGetFdInfoKHR,
@@ -25088,6 +25486,10 @@ impl PhysicalDeviceExternalFenceInfo {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDeviceExternalFenceInfo>
+    for PhysicalDeviceExternalFenceInfoBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDeviceExternalFenceInfoBuilder<'a> {
@@ -25167,6 +25569,7 @@ impl ExternalFenceProperties {
         }
     }
 }
+unsafe impl crate::Cast<ExternalFenceProperties> for ExternalFencePropertiesBuilder<'_> {}
 #[repr(transparent)]
 pub struct ExternalFencePropertiesBuilder<'a> {
     inner: ExternalFenceProperties,
@@ -25255,6 +25658,7 @@ impl ExportFenceCreateInfo {
         }
     }
 }
+unsafe impl crate::Cast<ExportFenceCreateInfo> for ExportFenceCreateInfoBuilder<'_> {}
 #[repr(transparent)]
 pub struct ExportFenceCreateInfoBuilder<'a> {
     inner: ExportFenceCreateInfo,
@@ -25320,6 +25724,10 @@ impl ImportFenceWin32HandleInfoKHR {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<ImportFenceWin32HandleInfoKHR>
+    for ImportFenceWin32HandleInfoKHRBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct ImportFenceWin32HandleInfoKHRBuilder<'a> {
@@ -25415,6 +25823,10 @@ impl ExportFenceWin32HandleInfoKHR {
         }
     }
 }
+unsafe impl crate::Cast<ExportFenceWin32HandleInfoKHR>
+    for ExportFenceWin32HandleInfoKHRBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct ExportFenceWin32HandleInfoKHRBuilder<'a> {
     inner: ExportFenceWin32HandleInfoKHR,
@@ -25483,6 +25895,7 @@ impl FenceGetWin32HandleInfoKHR {
         }
     }
 }
+unsafe impl crate::Cast<FenceGetWin32HandleInfoKHR> for FenceGetWin32HandleInfoKHRBuilder<'_> {}
 #[repr(transparent)]
 pub struct FenceGetWin32HandleInfoKHRBuilder<'a> {
     inner: FenceGetWin32HandleInfoKHR,
@@ -25567,6 +25980,7 @@ impl ImportFenceFdInfoKHR {
         }
     }
 }
+unsafe impl crate::Cast<ImportFenceFdInfoKHR> for ImportFenceFdInfoKHRBuilder<'_> {}
 #[repr(transparent)]
 pub struct ImportFenceFdInfoKHRBuilder<'a> {
     inner: ImportFenceFdInfoKHR,
@@ -25655,6 +26069,7 @@ impl FenceGetFdInfoKHR {
         }
     }
 }
+unsafe impl crate::Cast<FenceGetFdInfoKHR> for FenceGetFdInfoKHRBuilder<'_> {}
 #[repr(transparent)]
 pub struct FenceGetFdInfoKHRBuilder<'a> {
     inner: FenceGetFdInfoKHR,
@@ -25737,6 +26152,10 @@ impl PhysicalDeviceMultiviewFeatures {
         }
     }
 }
+unsafe impl crate::Cast<PhysicalDeviceMultiviewFeatures>
+    for PhysicalDeviceMultiviewFeaturesBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PhysicalDeviceMultiviewFeaturesBuilder<'a> {
     inner: PhysicalDeviceMultiviewFeatures,
@@ -25807,6 +26226,10 @@ impl PhysicalDeviceMultiviewProperties {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDeviceMultiviewProperties>
+    for PhysicalDeviceMultiviewPropertiesBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDeviceMultiviewPropertiesBuilder<'a> {
@@ -25883,6 +26306,10 @@ impl RenderPassMultiviewCreateInfo {
         }
     }
 }
+unsafe impl crate::Cast<RenderPassMultiviewCreateInfo>
+    for RenderPassMultiviewCreateInfoBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct RenderPassMultiviewCreateInfoBuilder<'a> {
     inner: RenderPassMultiviewCreateInfo,
@@ -25902,25 +26329,28 @@ impl<'a> ::std::ops::DerefMut for RenderPassMultiviewCreateInfoBuilder<'a> {
     }
 }
 impl<'a> RenderPassMultiviewCreateInfoBuilder<'a> {
-    pub fn view_masks(mut self, view_masks: &'a [u32]) -> RenderPassMultiviewCreateInfoBuilder<'a> {
+    pub fn view_masks(
+        mut self,
+        view_masks: &'a [impl crate::Cast<u32>],
+    ) -> RenderPassMultiviewCreateInfoBuilder<'a> {
         self.inner.subpass_count = view_masks.len() as _;
-        self.inner.p_view_masks = view_masks.as_ptr();
+        self.inner.p_view_masks = view_masks.as_ptr() as *const _;
         self
     }
     pub fn view_offsets(
         mut self,
-        view_offsets: &'a [i32],
+        view_offsets: &'a [impl crate::Cast<i32>],
     ) -> RenderPassMultiviewCreateInfoBuilder<'a> {
         self.inner.dependency_count = view_offsets.len() as _;
-        self.inner.p_view_offsets = view_offsets.as_ptr();
+        self.inner.p_view_offsets = view_offsets.as_ptr() as *const _;
         self
     }
     pub fn correlation_masks(
         mut self,
-        correlation_masks: &'a [u32],
+        correlation_masks: &'a [impl crate::Cast<u32>],
     ) -> RenderPassMultiviewCreateInfoBuilder<'a> {
         self.inner.correlation_mask_count = correlation_masks.len() as _;
-        self.inner.p_correlation_masks = correlation_masks.as_ptr();
+        self.inner.p_correlation_masks = correlation_masks.as_ptr() as *const _;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -25975,6 +26405,7 @@ impl SurfaceCapabilities2EXT {
         }
     }
 }
+unsafe impl crate::Cast<SurfaceCapabilities2EXT> for SurfaceCapabilities2EXTBuilder<'_> {}
 #[repr(transparent)]
 pub struct SurfaceCapabilities2EXTBuilder<'a> {
     inner: SurfaceCapabilities2EXT,
@@ -26113,6 +26544,7 @@ impl DisplayPowerInfoEXT {
         }
     }
 }
+unsafe impl crate::Cast<DisplayPowerInfoEXT> for DisplayPowerInfoEXTBuilder<'_> {}
 #[repr(transparent)]
 pub struct DisplayPowerInfoEXTBuilder<'a> {
     inner: DisplayPowerInfoEXT,
@@ -26187,6 +26619,7 @@ impl DeviceEventInfoEXT {
         }
     }
 }
+unsafe impl crate::Cast<DeviceEventInfoEXT> for DeviceEventInfoEXTBuilder<'_> {}
 #[repr(transparent)]
 pub struct DeviceEventInfoEXTBuilder<'a> {
     inner: DeviceEventInfoEXT,
@@ -26261,6 +26694,7 @@ impl DisplayEventInfoEXT {
         }
     }
 }
+unsafe impl crate::Cast<DisplayEventInfoEXT> for DisplayEventInfoEXTBuilder<'_> {}
 #[repr(transparent)]
 pub struct DisplayEventInfoEXTBuilder<'a> {
     inner: DisplayEventInfoEXT,
@@ -26335,6 +26769,10 @@ impl SwapchainCounterCreateInfoEXT {
         }
     }
 }
+unsafe impl crate::Cast<SwapchainCounterCreateInfoEXT>
+    for SwapchainCounterCreateInfoEXTBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct SwapchainCounterCreateInfoEXTBuilder<'a> {
     inner: SwapchainCounterCreateInfoEXT,
@@ -26396,6 +26834,10 @@ impl PhysicalDeviceGroupProperties {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDeviceGroupProperties>
+    for PhysicalDeviceGroupPropertiesBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDeviceGroupPropertiesBuilder<'a> {
@@ -26487,6 +26929,7 @@ impl MemoryAllocateFlagsInfo {
         }
     }
 }
+unsafe impl crate::Cast<MemoryAllocateFlagsInfo> for MemoryAllocateFlagsInfoBuilder<'_> {}
 #[repr(transparent)]
 pub struct MemoryAllocateFlagsInfoBuilder<'a> {
     inner: MemoryAllocateFlagsInfo,
@@ -26550,6 +26993,7 @@ impl BindBufferMemoryInfo {
         }
     }
 }
+unsafe impl crate::Cast<BindBufferMemoryInfo> for BindBufferMemoryInfoBuilder<'_> {}
 #[repr(transparent)]
 pub struct BindBufferMemoryInfoBuilder<'a> {
     inner: BindBufferMemoryInfo,
@@ -26631,6 +27075,10 @@ impl BindBufferMemoryDeviceGroupInfo {
         }
     }
 }
+unsafe impl crate::Cast<BindBufferMemoryDeviceGroupInfo>
+    for BindBufferMemoryDeviceGroupInfoBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct BindBufferMemoryDeviceGroupInfoBuilder<'a> {
     inner: BindBufferMemoryDeviceGroupInfo,
@@ -26652,10 +27100,10 @@ impl<'a> ::std::ops::DerefMut for BindBufferMemoryDeviceGroupInfoBuilder<'a> {
 impl<'a> BindBufferMemoryDeviceGroupInfoBuilder<'a> {
     pub fn device_indices(
         mut self,
-        device_indices: &'a [u32],
+        device_indices: &'a [impl crate::Cast<u32>],
     ) -> BindBufferMemoryDeviceGroupInfoBuilder<'a> {
         self.inner.device_index_count = device_indices.len() as _;
-        self.inner.p_device_indices = device_indices.as_ptr();
+        self.inner.p_device_indices = device_indices.as_ptr() as *const _;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -26694,6 +27142,7 @@ impl BindImageMemoryInfo {
         }
     }
 }
+unsafe impl crate::Cast<BindImageMemoryInfo> for BindImageMemoryInfoBuilder<'_> {}
 #[repr(transparent)]
 pub struct BindImageMemoryInfoBuilder<'a> {
     inner: BindImageMemoryInfo,
@@ -26779,6 +27228,10 @@ impl BindImageMemoryDeviceGroupInfo {
         }
     }
 }
+unsafe impl crate::Cast<BindImageMemoryDeviceGroupInfo>
+    for BindImageMemoryDeviceGroupInfoBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct BindImageMemoryDeviceGroupInfoBuilder<'a> {
     inner: BindImageMemoryDeviceGroupInfo,
@@ -26800,18 +27253,18 @@ impl<'a> ::std::ops::DerefMut for BindImageMemoryDeviceGroupInfoBuilder<'a> {
 impl<'a> BindImageMemoryDeviceGroupInfoBuilder<'a> {
     pub fn device_indices(
         mut self,
-        device_indices: &'a [u32],
+        device_indices: &'a [impl crate::Cast<u32>],
     ) -> BindImageMemoryDeviceGroupInfoBuilder<'a> {
         self.inner.device_index_count = device_indices.len() as _;
-        self.inner.p_device_indices = device_indices.as_ptr();
+        self.inner.p_device_indices = device_indices.as_ptr() as *const _;
         self
     }
     pub fn split_instance_bind_regions(
         mut self,
-        split_instance_bind_regions: &'a [Rect2D],
+        split_instance_bind_regions: &'a [impl crate::Cast<Rect2D>],
     ) -> BindImageMemoryDeviceGroupInfoBuilder<'a> {
         self.inner.split_instance_bind_region_count = split_instance_bind_regions.len() as _;
-        self.inner.p_split_instance_bind_regions = split_instance_bind_regions.as_ptr();
+        self.inner.p_split_instance_bind_regions = split_instance_bind_regions.as_ptr() as *const _;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -26850,6 +27303,10 @@ impl DeviceGroupRenderPassBeginInfo {
         }
     }
 }
+unsafe impl crate::Cast<DeviceGroupRenderPassBeginInfo>
+    for DeviceGroupRenderPassBeginInfoBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct DeviceGroupRenderPassBeginInfoBuilder<'a> {
     inner: DeviceGroupRenderPassBeginInfo,
@@ -26875,10 +27332,10 @@ impl<'a> DeviceGroupRenderPassBeginInfoBuilder<'a> {
     }
     pub fn device_render_areas(
         mut self,
-        device_render_areas: &'a [Rect2D],
+        device_render_areas: &'a [impl crate::Cast<Rect2D>],
     ) -> DeviceGroupRenderPassBeginInfoBuilder<'a> {
         self.inner.device_render_area_count = device_render_areas.len() as _;
-        self.inner.p_device_render_areas = device_render_areas.as_ptr();
+        self.inner.p_device_render_areas = device_render_areas.as_ptr() as *const _;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -26912,6 +27369,10 @@ impl DeviceGroupCommandBufferBeginInfo {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<DeviceGroupCommandBufferBeginInfo>
+    for DeviceGroupCommandBufferBeginInfoBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct DeviceGroupCommandBufferBeginInfoBuilder<'a> {
@@ -26978,6 +27439,7 @@ impl DeviceGroupSubmitInfo {
         }
     }
 }
+unsafe impl crate::Cast<DeviceGroupSubmitInfo> for DeviceGroupSubmitInfoBuilder<'_> {}
 #[repr(transparent)]
 pub struct DeviceGroupSubmitInfoBuilder<'a> {
     inner: DeviceGroupSubmitInfo,
@@ -26999,26 +27461,28 @@ impl<'a> ::std::ops::DerefMut for DeviceGroupSubmitInfoBuilder<'a> {
 impl<'a> DeviceGroupSubmitInfoBuilder<'a> {
     pub fn wait_semaphore_device_indices(
         mut self,
-        wait_semaphore_device_indices: &'a [u32],
+        wait_semaphore_device_indices: &'a [impl crate::Cast<u32>],
     ) -> DeviceGroupSubmitInfoBuilder<'a> {
         self.inner.wait_semaphore_count = wait_semaphore_device_indices.len() as _;
-        self.inner.p_wait_semaphore_device_indices = wait_semaphore_device_indices.as_ptr();
+        self.inner.p_wait_semaphore_device_indices =
+            wait_semaphore_device_indices.as_ptr() as *const _;
         self
     }
     pub fn command_buffer_device_masks(
         mut self,
-        command_buffer_device_masks: &'a [u32],
+        command_buffer_device_masks: &'a [impl crate::Cast<u32>],
     ) -> DeviceGroupSubmitInfoBuilder<'a> {
         self.inner.command_buffer_count = command_buffer_device_masks.len() as _;
-        self.inner.p_command_buffer_device_masks = command_buffer_device_masks.as_ptr();
+        self.inner.p_command_buffer_device_masks = command_buffer_device_masks.as_ptr() as *const _;
         self
     }
     pub fn signal_semaphore_device_indices(
         mut self,
-        signal_semaphore_device_indices: &'a [u32],
+        signal_semaphore_device_indices: &'a [impl crate::Cast<u32>],
     ) -> DeviceGroupSubmitInfoBuilder<'a> {
         self.inner.signal_semaphore_count = signal_semaphore_device_indices.len() as _;
-        self.inner.p_signal_semaphore_device_indices = signal_semaphore_device_indices.as_ptr();
+        self.inner.p_signal_semaphore_device_indices =
+            signal_semaphore_device_indices.as_ptr() as *const _;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -27055,6 +27519,7 @@ impl DeviceGroupBindSparseInfo {
         }
     }
 }
+unsafe impl crate::Cast<DeviceGroupBindSparseInfo> for DeviceGroupBindSparseInfoBuilder<'_> {}
 #[repr(transparent)]
 pub struct DeviceGroupBindSparseInfoBuilder<'a> {
     inner: DeviceGroupBindSparseInfo,
@@ -27121,6 +27586,10 @@ impl DeviceGroupPresentCapabilitiesKHR {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<DeviceGroupPresentCapabilitiesKHR>
+    for DeviceGroupPresentCapabilitiesKHRBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct DeviceGroupPresentCapabilitiesKHRBuilder<'a> {
@@ -27203,6 +27672,7 @@ impl ImageSwapchainCreateInfoKHR {
         }
     }
 }
+unsafe impl crate::Cast<ImageSwapchainCreateInfoKHR> for ImageSwapchainCreateInfoKHRBuilder<'_> {}
 #[repr(transparent)]
 pub struct ImageSwapchainCreateInfoKHRBuilder<'a> {
     inner: ImageSwapchainCreateInfoKHR,
@@ -27259,6 +27729,10 @@ impl BindImageMemorySwapchainInfoKHR {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<BindImageMemorySwapchainInfoKHR>
+    for BindImageMemorySwapchainInfoKHRBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct BindImageMemorySwapchainInfoKHRBuilder<'a> {
@@ -27330,6 +27804,7 @@ impl AcquireNextImageInfoKHR {
         }
     }
 }
+unsafe impl crate::Cast<AcquireNextImageInfoKHR> for AcquireNextImageInfoKHRBuilder<'_> {}
 #[repr(transparent)]
 pub struct AcquireNextImageInfoKHRBuilder<'a> {
     inner: AcquireNextImageInfoKHR,
@@ -27421,6 +27896,7 @@ impl DeviceGroupPresentInfoKHR {
         }
     }
 }
+unsafe impl crate::Cast<DeviceGroupPresentInfoKHR> for DeviceGroupPresentInfoKHRBuilder<'_> {}
 #[repr(transparent)]
 pub struct DeviceGroupPresentInfoKHRBuilder<'a> {
     inner: DeviceGroupPresentInfoKHR,
@@ -27440,9 +27916,12 @@ impl<'a> ::std::ops::DerefMut for DeviceGroupPresentInfoKHRBuilder<'a> {
     }
 }
 impl<'a> DeviceGroupPresentInfoKHRBuilder<'a> {
-    pub fn device_masks(mut self, device_masks: &'a [u32]) -> DeviceGroupPresentInfoKHRBuilder<'a> {
+    pub fn device_masks(
+        mut self,
+        device_masks: &'a [impl crate::Cast<u32>],
+    ) -> DeviceGroupPresentInfoKHRBuilder<'a> {
         self.inner.swapchain_count = device_masks.len() as _;
-        self.inner.p_device_masks = device_masks.as_ptr();
+        self.inner.p_device_masks = device_masks.as_ptr() as *const _;
         self
     }
     pub fn mode(
@@ -27486,6 +27965,7 @@ impl DeviceGroupDeviceCreateInfo {
         }
     }
 }
+unsafe impl crate::Cast<DeviceGroupDeviceCreateInfo> for DeviceGroupDeviceCreateInfoBuilder<'_> {}
 #[repr(transparent)]
 pub struct DeviceGroupDeviceCreateInfoBuilder<'a> {
     inner: DeviceGroupDeviceCreateInfo,
@@ -27507,10 +27987,10 @@ impl<'a> ::std::ops::DerefMut for DeviceGroupDeviceCreateInfoBuilder<'a> {
 impl<'a> DeviceGroupDeviceCreateInfoBuilder<'a> {
     pub fn physical_devices(
         mut self,
-        physical_devices: &'a [PhysicalDevice],
+        physical_devices: &'a [impl crate::Cast<PhysicalDevice>],
     ) -> DeviceGroupDeviceCreateInfoBuilder<'a> {
         self.inner.physical_device_count = physical_devices.len() as _;
-        self.inner.p_physical_devices = physical_devices.as_ptr();
+        self.inner.p_physical_devices = physical_devices.as_ptr() as *const _;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -27544,6 +28024,10 @@ impl DeviceGroupSwapchainCreateInfoKHR {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<DeviceGroupSwapchainCreateInfoKHR>
+    for DeviceGroupSwapchainCreateInfoKHRBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct DeviceGroupSwapchainCreateInfoKHRBuilder<'a> {
@@ -27596,6 +28080,10 @@ impl DescriptorUpdateTemplateEntry {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<DescriptorUpdateTemplateEntry>
+    for DescriptorUpdateTemplateEntryBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct DescriptorUpdateTemplateEntryBuilder<'a> {
@@ -27693,6 +28181,10 @@ impl DescriptorUpdateTemplateCreateInfo {
         }
     }
 }
+unsafe impl crate::Cast<DescriptorUpdateTemplateCreateInfo>
+    for DescriptorUpdateTemplateCreateInfoBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct DescriptorUpdateTemplateCreateInfoBuilder<'a> {
     inner: DescriptorUpdateTemplateCreateInfo,
@@ -27720,10 +28212,10 @@ impl<'a> DescriptorUpdateTemplateCreateInfoBuilder<'a> {
     }
     pub fn descriptor_update_entries(
         mut self,
-        descriptor_update_entries: &'a [DescriptorUpdateTemplateEntry],
+        descriptor_update_entries: &'a [impl crate::Cast<DescriptorUpdateTemplateEntry>],
     ) -> DescriptorUpdateTemplateCreateInfoBuilder<'a> {
         self.inner.descriptor_update_entry_count = descriptor_update_entries.len() as _;
-        self.inner.p_descriptor_update_entries = descriptor_update_entries.as_ptr();
+        self.inner.p_descriptor_update_entries = descriptor_update_entries.as_ptr() as *const _;
         self
     }
     pub fn template_type(
@@ -27797,6 +28289,7 @@ impl XYColorEXT {
         }
     }
 }
+unsafe impl crate::Cast<XYColorEXT> for XYColorEXTBuilder<'_> {}
 #[repr(transparent)]
 pub struct XYColorEXTBuilder<'a> {
     inner: XYColorEXT,
@@ -27868,6 +28361,7 @@ impl HdrMetadataEXT {
         }
     }
 }
+unsafe impl crate::Cast<HdrMetadataEXT> for HdrMetadataEXTBuilder<'_> {}
 #[repr(transparent)]
 pub struct HdrMetadataEXTBuilder<'a> {
     inner: HdrMetadataEXT,
@@ -27982,6 +28476,10 @@ impl DisplayNativeHdrSurfaceCapabilitiesAMD {
         }
     }
 }
+unsafe impl crate::Cast<DisplayNativeHdrSurfaceCapabilitiesAMD>
+    for DisplayNativeHdrSurfaceCapabilitiesAMDBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct DisplayNativeHdrSurfaceCapabilitiesAMDBuilder<'a> {
     inner: DisplayNativeHdrSurfaceCapabilitiesAMD,
@@ -28040,6 +28538,10 @@ impl SwapchainDisplayNativeHdrCreateInfoAMD {
         }
     }
 }
+unsafe impl crate::Cast<SwapchainDisplayNativeHdrCreateInfoAMD>
+    for SwapchainDisplayNativeHdrCreateInfoAMDBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct SwapchainDisplayNativeHdrCreateInfoAMDBuilder<'a> {
     inner: SwapchainDisplayNativeHdrCreateInfoAMD,
@@ -28087,6 +28589,7 @@ impl RefreshCycleDurationGOOGLE {
         }
     }
 }
+unsafe impl crate::Cast<RefreshCycleDurationGOOGLE> for RefreshCycleDurationGOOGLEBuilder<'_> {}
 #[repr(transparent)]
 pub struct RefreshCycleDurationGOOGLEBuilder<'a> {
     inner: RefreshCycleDurationGOOGLE,
@@ -28136,6 +28639,7 @@ impl PastPresentationTimingGOOGLE {
         }
     }
 }
+unsafe impl crate::Cast<PastPresentationTimingGOOGLE> for PastPresentationTimingGOOGLEBuilder<'_> {}
 #[repr(transparent)]
 pub struct PastPresentationTimingGOOGLEBuilder<'a> {
     inner: PastPresentationTimingGOOGLE,
@@ -28219,6 +28723,7 @@ impl PresentTimesInfoGOOGLE {
         }
     }
 }
+unsafe impl crate::Cast<PresentTimesInfoGOOGLE> for PresentTimesInfoGOOGLEBuilder<'_> {}
 #[repr(transparent)]
 pub struct PresentTimesInfoGOOGLEBuilder<'a> {
     inner: PresentTimesInfoGOOGLE,
@@ -28238,9 +28743,12 @@ impl<'a> ::std::ops::DerefMut for PresentTimesInfoGOOGLEBuilder<'a> {
     }
 }
 impl<'a> PresentTimesInfoGOOGLEBuilder<'a> {
-    pub fn times(mut self, times: &'a [PresentTimeGOOGLE]) -> PresentTimesInfoGOOGLEBuilder<'a> {
+    pub fn times(
+        mut self,
+        times: &'a [impl crate::Cast<PresentTimeGOOGLE>],
+    ) -> PresentTimesInfoGOOGLEBuilder<'a> {
         self.inner.swapchain_count = times.len() as _;
-        self.inner.p_times = times.as_ptr();
+        self.inner.p_times = times.as_ptr() as *const _;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -28265,6 +28773,7 @@ impl PresentTimeGOOGLE {
         }
     }
 }
+unsafe impl crate::Cast<PresentTimeGOOGLE> for PresentTimeGOOGLEBuilder<'_> {}
 #[repr(transparent)]
 pub struct PresentTimeGOOGLEBuilder<'a> {
     inner: PresentTimeGOOGLE,
@@ -28327,6 +28836,7 @@ impl IOSSurfaceCreateInfoMVK {
         }
     }
 }
+unsafe impl crate::Cast<IOSSurfaceCreateInfoMVK> for IOSSurfaceCreateInfoMVKBuilder<'_> {}
 #[repr(transparent)]
 pub struct IOSSurfaceCreateInfoMVKBuilder<'a> {
     inner: IOSSurfaceCreateInfoMVK,
@@ -28404,6 +28914,7 @@ impl MacOSSurfaceCreateInfoMVK {
         }
     }
 }
+unsafe impl crate::Cast<MacOSSurfaceCreateInfoMVK> for MacOSSurfaceCreateInfoMVKBuilder<'_> {}
 #[repr(transparent)]
 pub struct MacOSSurfaceCreateInfoMVKBuilder<'a> {
     inner: MacOSSurfaceCreateInfoMVK,
@@ -28484,6 +28995,7 @@ impl MetalSurfaceCreateInfoEXT {
         }
     }
 }
+unsafe impl crate::Cast<MetalSurfaceCreateInfoEXT> for MetalSurfaceCreateInfoEXTBuilder<'_> {}
 #[repr(transparent)]
 pub struct MetalSurfaceCreateInfoEXTBuilder<'a> {
     inner: MetalSurfaceCreateInfoEXT,
@@ -28552,6 +29064,7 @@ impl ViewportWScalingNV {
         }
     }
 }
+unsafe impl crate::Cast<ViewportWScalingNV> for ViewportWScalingNVBuilder<'_> {}
 #[repr(transparent)]
 pub struct ViewportWScalingNVBuilder<'a> {
     inner: ViewportWScalingNV,
@@ -28613,6 +29126,10 @@ impl PipelineViewportWScalingStateCreateInfoNV {
         }
     }
 }
+unsafe impl crate::Cast<PipelineViewportWScalingStateCreateInfoNV>
+    for PipelineViewportWScalingStateCreateInfoNVBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PipelineViewportWScalingStateCreateInfoNVBuilder<'a> {
     inner: PipelineViewportWScalingStateCreateInfoNV,
@@ -28644,10 +29161,10 @@ impl<'a> PipelineViewportWScalingStateCreateInfoNVBuilder<'a> {
     }
     pub fn viewport_w_scalings(
         mut self,
-        viewport_w_scalings: &'a [ViewportWScalingNV],
+        viewport_w_scalings: &'a [impl crate::Cast<ViewportWScalingNV>],
     ) -> PipelineViewportWScalingStateCreateInfoNVBuilder<'a> {
         self.inner.viewport_count = viewport_w_scalings.len() as _;
-        self.inner.p_viewport_w_scalings = viewport_w_scalings.as_ptr();
+        self.inner.p_viewport_w_scalings = viewport_w_scalings.as_ptr() as *const _;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -28674,6 +29191,7 @@ impl ViewportSwizzleNV {
         }
     }
 }
+unsafe impl crate::Cast<ViewportSwizzleNV> for ViewportSwizzleNVBuilder<'_> {}
 #[repr(transparent)]
 pub struct ViewportSwizzleNVBuilder<'a> {
     inner: ViewportSwizzleNV,
@@ -28743,6 +29261,10 @@ impl PipelineViewportSwizzleStateCreateInfoNV {
         }
     }
 }
+unsafe impl crate::Cast<PipelineViewportSwizzleStateCreateInfoNV>
+    for PipelineViewportSwizzleStateCreateInfoNVBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PipelineViewportSwizzleStateCreateInfoNVBuilder<'a> {
     inner: PipelineViewportSwizzleStateCreateInfoNV,
@@ -28774,10 +29296,10 @@ impl<'a> PipelineViewportSwizzleStateCreateInfoNVBuilder<'a> {
     }
     pub fn viewport_swizzles(
         mut self,
-        viewport_swizzles: &'a [ViewportSwizzleNV],
+        viewport_swizzles: &'a [impl crate::Cast<ViewportSwizzleNV>],
     ) -> PipelineViewportSwizzleStateCreateInfoNVBuilder<'a> {
         self.inner.viewport_count = viewport_swizzles.len() as _;
-        self.inner.p_viewport_swizzles = viewport_swizzles.as_ptr();
+        self.inner.p_viewport_swizzles = viewport_swizzles.as_ptr() as *const _;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -28811,6 +29333,10 @@ impl PhysicalDeviceDiscardRectanglePropertiesEXT {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDeviceDiscardRectanglePropertiesEXT>
+    for PhysicalDeviceDiscardRectanglePropertiesEXTBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDeviceDiscardRectanglePropertiesEXTBuilder<'a> {
@@ -28879,6 +29405,10 @@ impl PipelineDiscardRectangleStateCreateInfoEXT {
         }
     }
 }
+unsafe impl crate::Cast<PipelineDiscardRectangleStateCreateInfoEXT>
+    for PipelineDiscardRectangleStateCreateInfoEXTBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PipelineDiscardRectangleStateCreateInfoEXTBuilder<'a> {
     inner: PipelineDiscardRectangleStateCreateInfoEXT,
@@ -28917,10 +29447,10 @@ impl<'a> PipelineDiscardRectangleStateCreateInfoEXTBuilder<'a> {
     }
     pub fn discard_rectangles(
         mut self,
-        discard_rectangles: &'a [Rect2D],
+        discard_rectangles: &'a [impl crate::Cast<Rect2D>],
     ) -> PipelineDiscardRectangleStateCreateInfoEXTBuilder<'a> {
         self.inner.discard_rectangle_count = discard_rectangles.len() as _;
-        self.inner.p_discard_rectangles = discard_rectangles.as_ptr();
+        self.inner.p_discard_rectangles = discard_rectangles.as_ptr() as *const _;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -28954,6 +29484,10 @@ impl PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDeviceMultiviewPerViewAttributesPropertiesNVX>
+    for PhysicalDeviceMultiviewPerViewAttributesPropertiesNVXBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDeviceMultiviewPerViewAttributesPropertiesNVXBuilder<'a> {
@@ -29009,6 +29543,10 @@ impl InputAttachmentAspectReference {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<InputAttachmentAspectReference>
+    for InputAttachmentAspectReferenceBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct InputAttachmentAspectReferenceBuilder<'a> {
@@ -29079,6 +29617,10 @@ impl RenderPassInputAttachmentAspectCreateInfo {
         }
     }
 }
+unsafe impl crate::Cast<RenderPassInputAttachmentAspectCreateInfo>
+    for RenderPassInputAttachmentAspectCreateInfoBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct RenderPassInputAttachmentAspectCreateInfoBuilder<'a> {
     inner: RenderPassInputAttachmentAspectCreateInfo,
@@ -29100,10 +29642,10 @@ impl<'a> ::std::ops::DerefMut for RenderPassInputAttachmentAspectCreateInfoBuild
 impl<'a> RenderPassInputAttachmentAspectCreateInfoBuilder<'a> {
     pub fn aspect_references(
         mut self,
-        aspect_references: &'a [InputAttachmentAspectReference],
+        aspect_references: &'a [impl crate::Cast<InputAttachmentAspectReference>],
     ) -> RenderPassInputAttachmentAspectCreateInfoBuilder<'a> {
         self.inner.aspect_reference_count = aspect_references.len() as _;
-        self.inner.p_aspect_references = aspect_references.as_ptr();
+        self.inner.p_aspect_references = aspect_references.as_ptr() as *const _;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -29137,6 +29679,10 @@ impl PhysicalDeviceSurfaceInfo2KHR {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDeviceSurfaceInfo2KHR>
+    for PhysicalDeviceSurfaceInfo2KHRBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDeviceSurfaceInfo2KHRBuilder<'a> {
@@ -29209,6 +29755,7 @@ impl SurfaceCapabilities2KHR {
         }
     }
 }
+unsafe impl crate::Cast<SurfaceCapabilities2KHR> for SurfaceCapabilities2KHRBuilder<'_> {}
 #[repr(transparent)]
 pub struct SurfaceCapabilities2KHRBuilder<'a> {
     inner: SurfaceCapabilities2KHR,
@@ -29283,6 +29830,7 @@ impl SurfaceFormat2KHR {
         }
     }
 }
+unsafe impl crate::Cast<SurfaceFormat2KHR> for SurfaceFormat2KHRBuilder<'_> {}
 #[repr(transparent)]
 pub struct SurfaceFormat2KHRBuilder<'a> {
     inner: SurfaceFormat2KHR,
@@ -29357,6 +29905,7 @@ impl DisplayProperties2KHR {
         }
     }
 }
+unsafe impl crate::Cast<DisplayProperties2KHR> for DisplayProperties2KHRBuilder<'_> {}
 #[repr(transparent)]
 pub struct DisplayProperties2KHRBuilder<'a> {
     inner: DisplayProperties2KHR,
@@ -29431,6 +29980,7 @@ impl DisplayPlaneProperties2KHR {
         }
     }
 }
+unsafe impl crate::Cast<DisplayPlaneProperties2KHR> for DisplayPlaneProperties2KHRBuilder<'_> {}
 #[repr(transparent)]
 pub struct DisplayPlaneProperties2KHRBuilder<'a> {
     inner: DisplayPlaneProperties2KHR,
@@ -29505,6 +30055,7 @@ impl DisplayModeProperties2KHR {
         }
     }
 }
+unsafe impl crate::Cast<DisplayModeProperties2KHR> for DisplayModeProperties2KHRBuilder<'_> {}
 #[repr(transparent)]
 pub struct DisplayModeProperties2KHRBuilder<'a> {
     inner: DisplayModeProperties2KHR,
@@ -29581,6 +30132,7 @@ impl DisplayPlaneInfo2KHR {
         }
     }
 }
+unsafe impl crate::Cast<DisplayPlaneInfo2KHR> for DisplayPlaneInfo2KHRBuilder<'_> {}
 #[repr(transparent)]
 pub struct DisplayPlaneInfo2KHRBuilder<'a> {
     inner: DisplayPlaneInfo2KHR,
@@ -29656,6 +30208,7 @@ impl DisplayPlaneCapabilities2KHR {
         }
     }
 }
+unsafe impl crate::Cast<DisplayPlaneCapabilities2KHR> for DisplayPlaneCapabilities2KHRBuilder<'_> {}
 #[repr(transparent)]
 pub struct DisplayPlaneCapabilities2KHRBuilder<'a> {
     inner: DisplayPlaneCapabilities2KHR,
@@ -29730,6 +30283,10 @@ impl SharedPresentSurfaceCapabilitiesKHR {
         }
     }
 }
+unsafe impl crate::Cast<SharedPresentSurfaceCapabilitiesKHR>
+    for SharedPresentSurfaceCapabilitiesKHRBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct SharedPresentSurfaceCapabilitiesKHRBuilder<'a> {
     inner: SharedPresentSurfaceCapabilitiesKHR,
@@ -29793,6 +30350,10 @@ impl PhysicalDevice16BitStorageFeatures {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDevice16BitStorageFeatures>
+    for PhysicalDevice16BitStorageFeaturesBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDevice16BitStorageFeaturesBuilder<'a> {
@@ -29880,6 +30441,10 @@ impl PhysicalDeviceSubgroupProperties {
         }
     }
 }
+unsafe impl crate::Cast<PhysicalDeviceSubgroupProperties>
+    for PhysicalDeviceSubgroupPropertiesBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PhysicalDeviceSubgroupPropertiesBuilder<'a> {
     inner: PhysicalDeviceSubgroupProperties,
@@ -29959,6 +30524,10 @@ impl BufferMemoryRequirementsInfo2 {
         }
     }
 }
+unsafe impl crate::Cast<BufferMemoryRequirementsInfo2>
+    for BufferMemoryRequirementsInfo2Builder<'_>
+{
+}
 #[repr(transparent)]
 pub struct BufferMemoryRequirementsInfo2Builder<'a> {
     inner: BufferMemoryRequirementsInfo2,
@@ -30030,6 +30599,7 @@ impl ImageMemoryRequirementsInfo2 {
         }
     }
 }
+unsafe impl crate::Cast<ImageMemoryRequirementsInfo2> for ImageMemoryRequirementsInfo2Builder<'_> {}
 #[repr(transparent)]
 pub struct ImageMemoryRequirementsInfo2Builder<'a> {
     inner: ImageMemoryRequirementsInfo2,
@@ -30100,6 +30670,10 @@ impl ImageSparseMemoryRequirementsInfo2 {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<ImageSparseMemoryRequirementsInfo2>
+    for ImageSparseMemoryRequirementsInfo2Builder<'_>
+{
 }
 #[repr(transparent)]
 pub struct ImageSparseMemoryRequirementsInfo2Builder<'a> {
@@ -30172,6 +30746,7 @@ impl MemoryRequirements2 {
         }
     }
 }
+unsafe impl crate::Cast<MemoryRequirements2> for MemoryRequirements2Builder<'_> {}
 #[repr(transparent)]
 pub struct MemoryRequirements2Builder<'a> {
     inner: MemoryRequirements2,
@@ -30245,6 +30820,10 @@ impl SparseImageMemoryRequirements2 {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<SparseImageMemoryRequirements2>
+    for SparseImageMemoryRequirements2Builder<'_>
+{
 }
 #[repr(transparent)]
 pub struct SparseImageMemoryRequirements2Builder<'a> {
@@ -30320,6 +30899,10 @@ impl PhysicalDevicePointClippingProperties {
         }
     }
 }
+unsafe impl crate::Cast<PhysicalDevicePointClippingProperties>
+    for PhysicalDevicePointClippingPropertiesBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PhysicalDevicePointClippingPropertiesBuilder<'a> {
     inner: PhysicalDevicePointClippingProperties,
@@ -30380,6 +30963,7 @@ impl MemoryDedicatedRequirements {
         }
     }
 }
+unsafe impl crate::Cast<MemoryDedicatedRequirements> for MemoryDedicatedRequirementsBuilder<'_> {}
 #[repr(transparent)]
 pub struct MemoryDedicatedRequirementsBuilder<'a> {
     inner: MemoryDedicatedRequirements,
@@ -30447,6 +31031,7 @@ impl MemoryDedicatedAllocateInfo {
         }
     }
 }
+unsafe impl crate::Cast<MemoryDedicatedAllocateInfo> for MemoryDedicatedAllocateInfoBuilder<'_> {}
 #[repr(transparent)]
 pub struct MemoryDedicatedAllocateInfoBuilder<'a> {
     inner: MemoryDedicatedAllocateInfo,
@@ -30506,6 +31091,7 @@ impl ImageViewUsageCreateInfo {
         }
     }
 }
+unsafe impl crate::Cast<ImageViewUsageCreateInfo> for ImageViewUsageCreateInfoBuilder<'_> {}
 #[repr(transparent)]
 pub struct ImageViewUsageCreateInfoBuilder<'a> {
     inner: ImageViewUsageCreateInfo,
@@ -30560,6 +31146,10 @@ impl PipelineTessellationDomainOriginStateCreateInfo {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PipelineTessellationDomainOriginStateCreateInfo>
+    for PipelineTessellationDomainOriginStateCreateInfoBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PipelineTessellationDomainOriginStateCreateInfoBuilder<'a> {
@@ -30625,6 +31215,7 @@ impl SamplerYcbcrConversionInfo {
         }
     }
 }
+unsafe impl crate::Cast<SamplerYcbcrConversionInfo> for SamplerYcbcrConversionInfoBuilder<'_> {}
 #[repr(transparent)]
 pub struct SamplerYcbcrConversionInfoBuilder<'a> {
     inner: SamplerYcbcrConversionInfo,
@@ -30698,6 +31289,10 @@ impl SamplerYcbcrConversionCreateInfo {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<SamplerYcbcrConversionCreateInfo>
+    for SamplerYcbcrConversionCreateInfoBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct SamplerYcbcrConversionCreateInfoBuilder<'a> {
@@ -30819,6 +31414,7 @@ impl BindImagePlaneMemoryInfo {
         }
     }
 }
+unsafe impl crate::Cast<BindImagePlaneMemoryInfo> for BindImagePlaneMemoryInfoBuilder<'_> {}
 #[repr(transparent)]
 pub struct BindImagePlaneMemoryInfoBuilder<'a> {
     inner: BindImagePlaneMemoryInfo,
@@ -30876,6 +31472,10 @@ impl ImagePlaneMemoryRequirementsInfo {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<ImagePlaneMemoryRequirementsInfo>
+    for ImagePlaneMemoryRequirementsInfoBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct ImagePlaneMemoryRequirementsInfoBuilder<'a> {
@@ -30935,6 +31535,10 @@ impl PhysicalDeviceSamplerYcbcrConversionFeatures {
         }
     }
 }
+unsafe impl crate::Cast<PhysicalDeviceSamplerYcbcrConversionFeatures>
+    for PhysicalDeviceSamplerYcbcrConversionFeaturesBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PhysicalDeviceSamplerYcbcrConversionFeaturesBuilder<'a> {
     inner: PhysicalDeviceSamplerYcbcrConversionFeatures,
@@ -30992,6 +31596,10 @@ impl SamplerYcbcrConversionImageFormatProperties {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<SamplerYcbcrConversionImageFormatProperties>
+    for SamplerYcbcrConversionImageFormatPropertiesBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct SamplerYcbcrConversionImageFormatPropertiesBuilder<'a> {
@@ -31055,6 +31663,10 @@ impl TextureLODGatherFormatPropertiesAMD {
         }
     }
 }
+unsafe impl crate::Cast<TextureLODGatherFormatPropertiesAMD>
+    for TextureLODGatherFormatPropertiesAMDBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct TextureLODGatherFormatPropertiesAMDBuilder<'a> {
     inner: TextureLODGatherFormatPropertiesAMD,
@@ -31117,6 +31729,10 @@ impl ConditionalRenderingBeginInfoEXT {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<ConditionalRenderingBeginInfoEXT>
+    for ConditionalRenderingBeginInfoEXTBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct ConditionalRenderingBeginInfoEXTBuilder<'a> {
@@ -31200,6 +31816,7 @@ impl ProtectedSubmitInfo {
         }
     }
 }
+unsafe impl crate::Cast<ProtectedSubmitInfo> for ProtectedSubmitInfoBuilder<'_> {}
 #[repr(transparent)]
 pub struct ProtectedSubmitInfoBuilder<'a> {
     inner: ProtectedSubmitInfo,
@@ -31254,6 +31871,10 @@ impl PhysicalDeviceProtectedMemoryFeatures {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDeviceProtectedMemoryFeatures>
+    for PhysicalDeviceProtectedMemoryFeaturesBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDeviceProtectedMemoryFeaturesBuilder<'a> {
@@ -31312,6 +31933,10 @@ impl PhysicalDeviceProtectedMemoryProperties {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDeviceProtectedMemoryProperties>
+    for PhysicalDeviceProtectedMemoryPropertiesBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDeviceProtectedMemoryPropertiesBuilder<'a> {
@@ -31378,6 +32003,7 @@ impl DeviceQueueInfo2 {
         }
     }
 }
+unsafe impl crate::Cast<DeviceQueueInfo2> for DeviceQueueInfo2Builder<'_> {}
 #[repr(transparent)]
 pub struct DeviceQueueInfo2Builder<'a> {
     inner: DeviceQueueInfo2,
@@ -31461,6 +32087,10 @@ impl PipelineCoverageToColorStateCreateInfoNV {
         }
     }
 }
+unsafe impl crate::Cast<PipelineCoverageToColorStateCreateInfoNV>
+    for PipelineCoverageToColorStateCreateInfoNVBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PipelineCoverageToColorStateCreateInfoNVBuilder<'a> {
     inner: PipelineCoverageToColorStateCreateInfoNV,
@@ -31538,6 +32168,10 @@ impl PhysicalDeviceSamplerFilterMinmaxPropertiesEXT {
         }
     }
 }
+unsafe impl crate::Cast<PhysicalDeviceSamplerFilterMinmaxPropertiesEXT>
+    for PhysicalDeviceSamplerFilterMinmaxPropertiesEXTBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PhysicalDeviceSamplerFilterMinmaxPropertiesEXTBuilder<'a> {
     inner: PhysicalDeviceSamplerFilterMinmaxPropertiesEXT,
@@ -31598,6 +32232,7 @@ impl SampleLocationEXT {
         }
     }
 }
+unsafe impl crate::Cast<SampleLocationEXT> for SampleLocationEXTBuilder<'_> {}
 #[repr(transparent)]
 pub struct SampleLocationEXTBuilder<'a> {
     inner: SampleLocationEXT,
@@ -31661,6 +32296,7 @@ impl SampleLocationsInfoEXT {
         }
     }
 }
+unsafe impl crate::Cast<SampleLocationsInfoEXT> for SampleLocationsInfoEXTBuilder<'_> {}
 #[repr(transparent)]
 pub struct SampleLocationsInfoEXTBuilder<'a> {
     inner: SampleLocationsInfoEXT,
@@ -31696,10 +32332,10 @@ impl<'a> SampleLocationsInfoEXTBuilder<'a> {
     }
     pub fn sample_locations(
         mut self,
-        sample_locations: &'a [SampleLocationEXT],
+        sample_locations: &'a [impl crate::Cast<SampleLocationEXT>],
     ) -> SampleLocationsInfoEXTBuilder<'a> {
         self.inner.sample_locations_count = sample_locations.len() as _;
-        self.inner.p_sample_locations = sample_locations.as_ptr();
+        self.inner.p_sample_locations = sample_locations.as_ptr() as *const _;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -31724,6 +32360,7 @@ impl AttachmentSampleLocationsEXT {
         }
     }
 }
+unsafe impl crate::Cast<AttachmentSampleLocationsEXT> for AttachmentSampleLocationsEXTBuilder<'_> {}
 #[repr(transparent)]
 pub struct AttachmentSampleLocationsEXTBuilder<'a> {
     inner: AttachmentSampleLocationsEXT,
@@ -31777,6 +32414,7 @@ impl SubpassSampleLocationsEXT {
         }
     }
 }
+unsafe impl crate::Cast<SubpassSampleLocationsEXT> for SubpassSampleLocationsEXTBuilder<'_> {}
 #[repr(transparent)]
 pub struct SubpassSampleLocationsEXTBuilder<'a> {
     inner: SubpassSampleLocationsEXT,
@@ -31843,6 +32481,10 @@ impl RenderPassSampleLocationsBeginInfoEXT {
         }
     }
 }
+unsafe impl crate::Cast<RenderPassSampleLocationsBeginInfoEXT>
+    for RenderPassSampleLocationsBeginInfoEXTBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct RenderPassSampleLocationsBeginInfoEXTBuilder<'a> {
     inner: RenderPassSampleLocationsBeginInfoEXT,
@@ -31864,20 +32506,21 @@ impl<'a> ::std::ops::DerefMut for RenderPassSampleLocationsBeginInfoEXTBuilder<'
 impl<'a> RenderPassSampleLocationsBeginInfoEXTBuilder<'a> {
     pub fn attachment_initial_sample_locations(
         mut self,
-        attachment_initial_sample_locations: &'a [AttachmentSampleLocationsEXT],
+        attachment_initial_sample_locations: &'a [impl crate::Cast<AttachmentSampleLocationsEXT>],
     ) -> RenderPassSampleLocationsBeginInfoEXTBuilder<'a> {
         self.inner.attachment_initial_sample_locations_count =
             attachment_initial_sample_locations.len() as _;
         self.inner.p_attachment_initial_sample_locations =
-            attachment_initial_sample_locations.as_ptr();
+            attachment_initial_sample_locations.as_ptr() as *const _;
         self
     }
     pub fn post_subpass_sample_locations(
         mut self,
-        post_subpass_sample_locations: &'a [SubpassSampleLocationsEXT],
+        post_subpass_sample_locations: &'a [impl crate::Cast<SubpassSampleLocationsEXT>],
     ) -> RenderPassSampleLocationsBeginInfoEXTBuilder<'a> {
         self.inner.post_subpass_sample_locations_count = post_subpass_sample_locations.len() as _;
-        self.inner.p_post_subpass_sample_locations = post_subpass_sample_locations.as_ptr();
+        self.inner.p_post_subpass_sample_locations =
+            post_subpass_sample_locations.as_ptr() as *const _;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -31913,6 +32556,10 @@ impl PipelineSampleLocationsStateCreateInfoEXT {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PipelineSampleLocationsStateCreateInfoEXT>
+    for PipelineSampleLocationsStateCreateInfoEXTBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PipelineSampleLocationsStateCreateInfoEXTBuilder<'a> {
@@ -31992,6 +32639,10 @@ impl PhysicalDeviceSampleLocationsPropertiesEXT {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDeviceSampleLocationsPropertiesEXT>
+    for PhysicalDeviceSampleLocationsPropertiesEXTBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDeviceSampleLocationsPropertiesEXTBuilder<'a> {
@@ -32082,6 +32733,7 @@ impl MultisamplePropertiesEXT {
         }
     }
 }
+unsafe impl crate::Cast<MultisamplePropertiesEXT> for MultisamplePropertiesEXTBuilder<'_> {}
 #[repr(transparent)]
 pub struct MultisamplePropertiesEXTBuilder<'a> {
     inner: MultisamplePropertiesEXT,
@@ -32156,6 +32808,10 @@ impl SamplerReductionModeCreateInfoEXT {
         }
     }
 }
+unsafe impl crate::Cast<SamplerReductionModeCreateInfoEXT>
+    for SamplerReductionModeCreateInfoEXTBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct SamplerReductionModeCreateInfoEXTBuilder<'a> {
     inner: SamplerReductionModeCreateInfoEXT,
@@ -32213,6 +32869,10 @@ impl PhysicalDeviceBlendOperationAdvancedFeaturesEXT {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDeviceBlendOperationAdvancedFeaturesEXT>
+    for PhysicalDeviceBlendOperationAdvancedFeaturesEXTBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDeviceBlendOperationAdvancedFeaturesEXTBuilder<'a> {
@@ -32281,6 +32941,10 @@ impl PhysicalDeviceBlendOperationAdvancedPropertiesEXT {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDeviceBlendOperationAdvancedPropertiesEXT>
+    for PhysicalDeviceBlendOperationAdvancedPropertiesEXTBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDeviceBlendOperationAdvancedPropertiesEXTBuilder<'a> {
@@ -32384,6 +33048,10 @@ impl PipelineColorBlendAdvancedStateCreateInfoEXT {
         }
     }
 }
+unsafe impl crate::Cast<PipelineColorBlendAdvancedStateCreateInfoEXT>
+    for PipelineColorBlendAdvancedStateCreateInfoEXTBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PipelineColorBlendAdvancedStateCreateInfoEXTBuilder<'a> {
     inner: PipelineColorBlendAdvancedStateCreateInfoEXT,
@@ -32464,6 +33132,10 @@ impl PhysicalDeviceInlineUniformBlockFeaturesEXT {
         }
     }
 }
+unsafe impl crate::Cast<PhysicalDeviceInlineUniformBlockFeaturesEXT>
+    for PhysicalDeviceInlineUniformBlockFeaturesEXTBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PhysicalDeviceInlineUniformBlockFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceInlineUniformBlockFeaturesEXT,
@@ -32538,6 +33210,10 @@ impl PhysicalDeviceInlineUniformBlockPropertiesEXT {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDeviceInlineUniformBlockPropertiesEXT>
+    for PhysicalDeviceInlineUniformBlockPropertiesEXTBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDeviceInlineUniformBlockPropertiesEXTBuilder<'a> {
@@ -32636,6 +33312,10 @@ impl WriteDescriptorSetInlineUniformBlockEXT {
         }
     }
 }
+unsafe impl crate::Cast<WriteDescriptorSetInlineUniformBlockEXT>
+    for WriteDescriptorSetInlineUniformBlockEXTBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct WriteDescriptorSetInlineUniformBlockEXTBuilder<'a> {
     inner: WriteDescriptorSetInlineUniformBlockEXT,
@@ -32657,7 +33337,7 @@ impl<'a> ::std::ops::DerefMut for WriteDescriptorSetInlineUniformBlockEXTBuilder
 impl<'a> WriteDescriptorSetInlineUniformBlockEXTBuilder<'a> {
     pub fn data(mut self, data: &'a [u8]) -> WriteDescriptorSetInlineUniformBlockEXTBuilder<'a> {
         self.inner.data_size = data.len() as _;
-        self.inner.p_data = data.as_ptr() as *const c_void;
+        self.inner.p_data = data.as_ptr() as *const c_void as *const _;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -32691,6 +33371,10 @@ impl DescriptorPoolInlineUniformBlockCreateInfoEXT {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<DescriptorPoolInlineUniformBlockCreateInfoEXT>
+    for DescriptorPoolInlineUniformBlockCreateInfoEXTBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct DescriptorPoolInlineUniformBlockCreateInfoEXTBuilder<'a> {
@@ -32761,6 +33445,10 @@ impl PipelineCoverageModulationStateCreateInfoNV {
         }
     }
 }
+unsafe impl crate::Cast<PipelineCoverageModulationStateCreateInfoNV>
+    for PipelineCoverageModulationStateCreateInfoNVBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PipelineCoverageModulationStateCreateInfoNVBuilder<'a> {
     inner: PipelineCoverageModulationStateCreateInfoNV,
@@ -32809,10 +33497,10 @@ impl<'a> PipelineCoverageModulationStateCreateInfoNVBuilder<'a> {
     }
     pub fn coverage_modulation_table(
         mut self,
-        coverage_modulation_table: &'a [f32],
+        coverage_modulation_table: &'a [impl crate::Cast<f32>],
     ) -> PipelineCoverageModulationStateCreateInfoNVBuilder<'a> {
         self.inner.coverage_modulation_table_count = coverage_modulation_table.len() as _;
-        self.inner.p_coverage_modulation_table = coverage_modulation_table.as_ptr();
+        self.inner.p_coverage_modulation_table = coverage_modulation_table.as_ptr() as *const _;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -32849,6 +33537,7 @@ impl ImageFormatListCreateInfoKHR {
         }
     }
 }
+unsafe impl crate::Cast<ImageFormatListCreateInfoKHR> for ImageFormatListCreateInfoKHRBuilder<'_> {}
 #[repr(transparent)]
 pub struct ImageFormatListCreateInfoKHRBuilder<'a> {
     inner: ImageFormatListCreateInfoKHR,
@@ -32874,10 +33563,10 @@ impl<'a> ::std::ops::DerefMut for ImageFormatListCreateInfoKHRBuilder<'a> {
 impl<'a> ImageFormatListCreateInfoKHRBuilder<'a> {
     pub fn view_formats(
         mut self,
-        view_formats: &'a [Format],
+        view_formats: &'a [impl crate::Cast<Format>],
     ) -> ImageFormatListCreateInfoKHRBuilder<'a> {
         self.inner.view_format_count = view_formats.len() as _;
-        self.inner.p_view_formats = view_formats.as_ptr();
+        self.inner.p_view_formats = view_formats.as_ptr() as *const _;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -32916,6 +33605,7 @@ impl ValidationCacheCreateInfoEXT {
         }
     }
 }
+unsafe impl crate::Cast<ValidationCacheCreateInfoEXT> for ValidationCacheCreateInfoEXTBuilder<'_> {}
 #[repr(transparent)]
 pub struct ValidationCacheCreateInfoEXTBuilder<'a> {
     inner: ValidationCacheCreateInfoEXT,
@@ -32946,7 +33636,7 @@ impl<'a> ValidationCacheCreateInfoEXTBuilder<'a> {
         initial_data: &'a [u8],
     ) -> ValidationCacheCreateInfoEXTBuilder<'a> {
         self.inner.initial_data_size = initial_data.len() as _;
-        self.inner.p_initial_data = initial_data.as_ptr() as *const c_void;
+        self.inner.p_initial_data = initial_data.as_ptr() as *const c_void as *const _;
         self
     }
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
@@ -32997,6 +33687,10 @@ impl ShaderModuleValidationCacheCreateInfoEXT {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<ShaderModuleValidationCacheCreateInfoEXT>
+    for ShaderModuleValidationCacheCreateInfoEXTBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct ShaderModuleValidationCacheCreateInfoEXTBuilder<'a> {
@@ -33057,6 +33751,10 @@ impl PhysicalDeviceMaintenance3Properties {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDeviceMaintenance3Properties>
+    for PhysicalDeviceMaintenance3PropertiesBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDeviceMaintenance3PropertiesBuilder<'a> {
@@ -33123,6 +33821,7 @@ impl DescriptorSetLayoutSupport {
         }
     }
 }
+unsafe impl crate::Cast<DescriptorSetLayoutSupport> for DescriptorSetLayoutSupportBuilder<'_> {}
 #[repr(transparent)]
 pub struct DescriptorSetLayoutSupportBuilder<'a> {
     inner: DescriptorSetLayoutSupport,
@@ -33194,6 +33893,10 @@ impl PhysicalDeviceShaderDrawParametersFeatures {
         }
     }
 }
+unsafe impl crate::Cast<PhysicalDeviceShaderDrawParametersFeatures>
+    for PhysicalDeviceShaderDrawParametersFeaturesBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PhysicalDeviceShaderDrawParametersFeaturesBuilder<'a> {
     inner: PhysicalDeviceShaderDrawParametersFeatures,
@@ -33253,6 +33956,10 @@ impl PhysicalDeviceShaderFloat16Int8FeaturesKHR {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDeviceShaderFloat16Int8FeaturesKHR>
+    for PhysicalDeviceShaderFloat16Int8FeaturesKHRBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDeviceShaderFloat16Int8FeaturesKHRBuilder<'a> {
@@ -33350,6 +34057,10 @@ impl PhysicalDeviceFloatControlsPropertiesKHR {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDeviceFloatControlsPropertiesKHR>
+    for PhysicalDeviceFloatControlsPropertiesKHRBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDeviceFloatControlsPropertiesKHRBuilder<'a> {
@@ -33527,6 +34238,10 @@ impl PhysicalDeviceHostQueryResetFeaturesEXT {
         }
     }
 }
+unsafe impl crate::Cast<PhysicalDeviceHostQueryResetFeaturesEXT>
+    for PhysicalDeviceHostQueryResetFeaturesEXTBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PhysicalDeviceHostQueryResetFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceHostQueryResetFeaturesEXT,
@@ -33575,6 +34290,7 @@ impl NativeBufferUsage2ANDROID {
         }
     }
 }
+unsafe impl crate::Cast<NativeBufferUsage2ANDROID> for NativeBufferUsage2ANDROIDBuilder<'_> {}
 #[repr(transparent)]
 pub struct NativeBufferUsage2ANDROIDBuilder<'a> {
     inner: NativeBufferUsage2ANDROID,
@@ -33640,6 +34356,7 @@ impl NativeBufferANDROID {
         }
     }
 }
+unsafe impl crate::Cast<NativeBufferANDROID> for NativeBufferANDROIDBuilder<'_> {}
 #[repr(transparent)]
 pub struct NativeBufferANDROIDBuilder<'a> {
     inner: NativeBufferANDROID,
@@ -33727,6 +34444,10 @@ impl SwapchainImageCreateInfoANDROID {
         }
     }
 }
+unsafe impl crate::Cast<SwapchainImageCreateInfoANDROID>
+    for SwapchainImageCreateInfoANDROIDBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct SwapchainImageCreateInfoANDROIDBuilder<'a> {
     inner: SwapchainImageCreateInfoANDROID,
@@ -33801,6 +34522,10 @@ impl PhysicalDevicePresentationPropertiesANDROID {
         }
     }
 }
+unsafe impl crate::Cast<PhysicalDevicePresentationPropertiesANDROID>
+    for PhysicalDevicePresentationPropertiesANDROIDBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PhysicalDevicePresentationPropertiesANDROIDBuilder<'a> {
     inner: PhysicalDevicePresentationPropertiesANDROID,
@@ -33868,6 +34593,7 @@ impl ShaderResourceUsageAMD {
         }
     }
 }
+unsafe impl crate::Cast<ShaderResourceUsageAMD> for ShaderResourceUsageAMDBuilder<'_> {}
 #[repr(transparent)]
 pub struct ShaderResourceUsageAMDBuilder<'a> {
     inner: ShaderResourceUsageAMD,
@@ -33954,6 +34680,7 @@ impl ShaderStatisticsInfoAMD {
         }
     }
 }
+unsafe impl crate::Cast<ShaderStatisticsInfoAMD> for ShaderStatisticsInfoAMDBuilder<'_> {}
 #[repr(transparent)]
 pub struct ShaderStatisticsInfoAMDBuilder<'a> {
     inner: ShaderStatisticsInfoAMD,
@@ -34052,6 +34779,10 @@ impl DeviceQueueGlobalPriorityCreateInfoEXT {
         }
     }
 }
+unsafe impl crate::Cast<DeviceQueueGlobalPriorityCreateInfoEXT>
+    for DeviceQueueGlobalPriorityCreateInfoEXTBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct DeviceQueueGlobalPriorityCreateInfoEXTBuilder<'a> {
     inner: DeviceQueueGlobalPriorityCreateInfoEXT,
@@ -34114,6 +34845,7 @@ impl DebugUtilsObjectNameInfoEXT {
         }
     }
 }
+unsafe impl crate::Cast<DebugUtilsObjectNameInfoEXT> for DebugUtilsObjectNameInfoEXTBuilder<'_> {}
 #[repr(transparent)]
 pub struct DebugUtilsObjectNameInfoEXTBuilder<'a> {
     inner: DebugUtilsObjectNameInfoEXT,
@@ -34207,6 +34939,7 @@ impl DebugUtilsObjectTagInfoEXT {
         }
     }
 }
+unsafe impl crate::Cast<DebugUtilsObjectTagInfoEXT> for DebugUtilsObjectTagInfoEXTBuilder<'_> {}
 #[repr(transparent)]
 pub struct DebugUtilsObjectTagInfoEXTBuilder<'a> {
     inner: DebugUtilsObjectTagInfoEXT,
@@ -34239,7 +34972,7 @@ impl<'a> DebugUtilsObjectTagInfoEXTBuilder<'a> {
     }
     pub fn tag(mut self, tag: &'a [u8]) -> DebugUtilsObjectTagInfoEXTBuilder<'a> {
         self.inner.tag_size = tag.len() as _;
-        self.inner.p_tag = tag.as_ptr() as *const c_void;
+        self.inner.p_tag = tag.as_ptr() as *const c_void as *const _;
         self
     }
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
@@ -34293,6 +35026,7 @@ impl DebugUtilsLabelEXT {
         }
     }
 }
+unsafe impl crate::Cast<DebugUtilsLabelEXT> for DebugUtilsLabelEXTBuilder<'_> {}
 #[repr(transparent)]
 pub struct DebugUtilsLabelEXTBuilder<'a> {
     inner: DebugUtilsLabelEXT,
@@ -34391,6 +35125,10 @@ impl DebugUtilsMessengerCreateInfoEXT {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<DebugUtilsMessengerCreateInfoEXT>
+    for DebugUtilsMessengerCreateInfoEXTBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct DebugUtilsMessengerCreateInfoEXTBuilder<'a> {
@@ -34496,6 +35234,10 @@ impl DebugUtilsMessengerCallbackDataEXT {
         }
     }
 }
+unsafe impl crate::Cast<DebugUtilsMessengerCallbackDataEXT>
+    for DebugUtilsMessengerCallbackDataEXTBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct DebugUtilsMessengerCallbackDataEXTBuilder<'a> {
     inner: DebugUtilsMessengerCallbackDataEXT,
@@ -34544,26 +35286,26 @@ impl<'a> DebugUtilsMessengerCallbackDataEXTBuilder<'a> {
     }
     pub fn queue_labels(
         mut self,
-        queue_labels: &'a [DebugUtilsLabelEXT],
+        queue_labels: &'a [impl crate::Cast<DebugUtilsLabelEXT>],
     ) -> DebugUtilsMessengerCallbackDataEXTBuilder<'a> {
         self.inner.queue_label_count = queue_labels.len() as _;
-        self.inner.p_queue_labels = queue_labels.as_ptr();
+        self.inner.p_queue_labels = queue_labels.as_ptr() as *const _;
         self
     }
     pub fn cmd_buf_labels(
         mut self,
-        cmd_buf_labels: &'a [DebugUtilsLabelEXT],
+        cmd_buf_labels: &'a [impl crate::Cast<DebugUtilsLabelEXT>],
     ) -> DebugUtilsMessengerCallbackDataEXTBuilder<'a> {
         self.inner.cmd_buf_label_count = cmd_buf_labels.len() as _;
-        self.inner.p_cmd_buf_labels = cmd_buf_labels.as_ptr();
+        self.inner.p_cmd_buf_labels = cmd_buf_labels.as_ptr() as *const _;
         self
     }
     pub fn objects(
         mut self,
-        objects: &'a [DebugUtilsObjectNameInfoEXT],
+        objects: &'a [impl crate::Cast<DebugUtilsObjectNameInfoEXT>],
     ) -> DebugUtilsMessengerCallbackDataEXTBuilder<'a> {
         self.inner.object_count = objects.len() as _;
-        self.inner.p_objects = objects.as_ptr();
+        self.inner.p_objects = objects.as_ptr() as *const _;
         self
     }
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
@@ -34616,6 +35358,10 @@ impl ImportMemoryHostPointerInfoEXT {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<ImportMemoryHostPointerInfoEXT>
+    for ImportMemoryHostPointerInfoEXTBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct ImportMemoryHostPointerInfoEXTBuilder<'a> {
@@ -34681,6 +35427,10 @@ impl MemoryHostPointerPropertiesEXT {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<MemoryHostPointerPropertiesEXT>
+    for MemoryHostPointerPropertiesEXTBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct MemoryHostPointerPropertiesEXTBuilder<'a> {
@@ -34755,6 +35505,10 @@ impl PhysicalDeviceExternalMemoryHostPropertiesEXT {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDeviceExternalMemoryHostPropertiesEXT>
+    for PhysicalDeviceExternalMemoryHostPropertiesEXTBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDeviceExternalMemoryHostPropertiesEXTBuilder<'a> {
@@ -34832,6 +35586,10 @@ impl PhysicalDeviceConservativeRasterizationPropertiesEXT {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDeviceConservativeRasterizationPropertiesEXT>
+    for PhysicalDeviceConservativeRasterizationPropertiesEXTBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDeviceConservativeRasterizationPropertiesEXTBuilder<'a> {
@@ -34958,6 +35716,7 @@ impl CalibratedTimestampInfoEXT {
         }
     }
 }
+unsafe impl crate::Cast<CalibratedTimestampInfoEXT> for CalibratedTimestampInfoEXTBuilder<'_> {}
 #[repr(transparent)]
 pub struct CalibratedTimestampInfoEXTBuilder<'a> {
     inner: CalibratedTimestampInfoEXT,
@@ -35057,6 +35816,10 @@ impl PhysicalDeviceShaderCorePropertiesAMD {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDeviceShaderCorePropertiesAMD>
+    for PhysicalDeviceShaderCorePropertiesAMDBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDeviceShaderCorePropertiesAMDBuilder<'a> {
@@ -35211,6 +35974,10 @@ impl PipelineRasterizationConservativeStateCreateInfoEXT {
         }
     }
 }
+unsafe impl crate::Cast<PipelineRasterizationConservativeStateCreateInfoEXT>
+    for PipelineRasterizationConservativeStateCreateInfoEXTBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PipelineRasterizationConservativeStateCreateInfoEXTBuilder<'a> {
     inner: PipelineRasterizationConservativeStateCreateInfoEXT,
@@ -35326,6 +36093,10 @@ impl PhysicalDeviceDescriptorIndexingFeaturesEXT {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDeviceDescriptorIndexingFeaturesEXT>
+    for PhysicalDeviceDescriptorIndexingFeaturesEXTBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDeviceDescriptorIndexingFeaturesEXTBuilder<'a> {
@@ -35591,6 +36362,10 @@ impl PhysicalDeviceDescriptorIndexingPropertiesEXT {
         }
     }
 }
+unsafe impl crate::Cast<PhysicalDeviceDescriptorIndexingPropertiesEXT>
+    for PhysicalDeviceDescriptorIndexingPropertiesEXTBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PhysicalDeviceDescriptorIndexingPropertiesEXTBuilder<'a> {
     inner: PhysicalDeviceDescriptorIndexingPropertiesEXT,
@@ -35848,6 +36623,10 @@ impl DescriptorSetLayoutBindingFlagsCreateInfoEXT {
         }
     }
 }
+unsafe impl crate::Cast<DescriptorSetLayoutBindingFlagsCreateInfoEXT>
+    for DescriptorSetLayoutBindingFlagsCreateInfoEXTBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct DescriptorSetLayoutBindingFlagsCreateInfoEXTBuilder<'a> {
     inner: DescriptorSetLayoutBindingFlagsCreateInfoEXT,
@@ -35872,10 +36651,10 @@ impl<'a> ::std::ops::DerefMut for DescriptorSetLayoutBindingFlagsCreateInfoEXTBu
 impl<'a> DescriptorSetLayoutBindingFlagsCreateInfoEXTBuilder<'a> {
     pub fn binding_flags(
         mut self,
-        binding_flags: &'a [DescriptorBindingFlagsEXT],
+        binding_flags: &'a [impl crate::Cast<DescriptorBindingFlagsEXT>],
     ) -> DescriptorSetLayoutBindingFlagsCreateInfoEXTBuilder<'a> {
         self.inner.binding_count = binding_flags.len() as _;
-        self.inner.p_binding_flags = binding_flags.as_ptr();
+        self.inner.p_binding_flags = binding_flags.as_ptr() as *const _;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -35912,6 +36691,10 @@ impl DescriptorSetVariableDescriptorCountAllocateInfoEXT {
         }
     }
 }
+unsafe impl crate::Cast<DescriptorSetVariableDescriptorCountAllocateInfoEXT>
+    for DescriptorSetVariableDescriptorCountAllocateInfoEXTBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct DescriptorSetVariableDescriptorCountAllocateInfoEXTBuilder<'a> {
     inner: DescriptorSetVariableDescriptorCountAllocateInfoEXT,
@@ -35939,10 +36722,10 @@ impl<'a> ::std::ops::DerefMut for DescriptorSetVariableDescriptorCountAllocateIn
 impl<'a> DescriptorSetVariableDescriptorCountAllocateInfoEXTBuilder<'a> {
     pub fn descriptor_counts(
         mut self,
-        descriptor_counts: &'a [u32],
+        descriptor_counts: &'a [impl crate::Cast<u32>],
     ) -> DescriptorSetVariableDescriptorCountAllocateInfoEXTBuilder<'a> {
         self.inner.descriptor_set_count = descriptor_counts.len() as _;
-        self.inner.p_descriptor_counts = descriptor_counts.as_ptr();
+        self.inner.p_descriptor_counts = descriptor_counts.as_ptr() as *const _;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -35976,6 +36759,10 @@ impl DescriptorSetVariableDescriptorCountLayoutSupportEXT {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<DescriptorSetVariableDescriptorCountLayoutSupportEXT>
+    for DescriptorSetVariableDescriptorCountLayoutSupportEXTBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct DescriptorSetVariableDescriptorCountLayoutSupportEXTBuilder<'a> {
@@ -36057,6 +36844,7 @@ impl AttachmentDescription2KHR {
         }
     }
 }
+unsafe impl crate::Cast<AttachmentDescription2KHR> for AttachmentDescription2KHRBuilder<'_> {}
 #[repr(transparent)]
 pub struct AttachmentDescription2KHRBuilder<'a> {
     inner: AttachmentDescription2KHR,
@@ -36179,6 +36967,7 @@ impl AttachmentReference2KHR {
         }
     }
 }
+unsafe impl crate::Cast<AttachmentReference2KHR> for AttachmentReference2KHRBuilder<'_> {}
 #[repr(transparent)]
 pub struct AttachmentReference2KHRBuilder<'a> {
     inner: AttachmentReference2KHR,
@@ -36281,6 +37070,7 @@ impl SubpassDescription2KHR {
         }
     }
 }
+unsafe impl crate::Cast<SubpassDescription2KHR> for SubpassDescription2KHRBuilder<'_> {}
 #[repr(transparent)]
 pub struct SubpassDescription2KHRBuilder<'a> {
     inner: SubpassDescription2KHR,
@@ -36316,26 +37106,26 @@ impl<'a> SubpassDescription2KHRBuilder<'a> {
     }
     pub fn input_attachments(
         mut self,
-        input_attachments: &'a [AttachmentReference2KHR],
+        input_attachments: &'a [impl crate::Cast<AttachmentReference2KHR>],
     ) -> SubpassDescription2KHRBuilder<'a> {
         self.inner.input_attachment_count = input_attachments.len() as _;
-        self.inner.p_input_attachments = input_attachments.as_ptr();
+        self.inner.p_input_attachments = input_attachments.as_ptr() as *const _;
         self
     }
     pub fn color_attachments(
         mut self,
-        color_attachments: &'a [AttachmentReference2KHR],
+        color_attachments: &'a [impl crate::Cast<AttachmentReference2KHR>],
     ) -> SubpassDescription2KHRBuilder<'a> {
         self.inner.color_attachment_count = color_attachments.len() as _;
-        self.inner.p_color_attachments = color_attachments.as_ptr();
+        self.inner.p_color_attachments = color_attachments.as_ptr() as *const _;
         self
     }
     pub fn resolve_attachments(
         mut self,
-        resolve_attachments: &'a [AttachmentReference2KHR],
+        resolve_attachments: &'a [impl crate::Cast<AttachmentReference2KHR>],
     ) -> SubpassDescription2KHRBuilder<'a> {
         self.inner.color_attachment_count = resolve_attachments.len() as _;
-        self.inner.p_resolve_attachments = resolve_attachments.as_ptr();
+        self.inner.p_resolve_attachments = resolve_attachments.as_ptr() as *const _;
         self
     }
     pub fn depth_stencil_attachment(
@@ -36347,10 +37137,10 @@ impl<'a> SubpassDescription2KHRBuilder<'a> {
     }
     pub fn preserve_attachments(
         mut self,
-        preserve_attachments: &'a [u32],
+        preserve_attachments: &'a [impl crate::Cast<u32>],
     ) -> SubpassDescription2KHRBuilder<'a> {
         self.inner.preserve_attachment_count = preserve_attachments.len() as _;
-        self.inner.p_preserve_attachments = preserve_attachments.as_ptr();
+        self.inner.p_preserve_attachments = preserve_attachments.as_ptr() as *const _;
         self
     }
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
@@ -36416,6 +37206,7 @@ impl SubpassDependency2KHR {
         }
     }
 }
+unsafe impl crate::Cast<SubpassDependency2KHR> for SubpassDependency2KHRBuilder<'_> {}
 #[repr(transparent)]
 pub struct SubpassDependency2KHRBuilder<'a> {
     inner: SubpassDependency2KHR,
@@ -36546,6 +37337,7 @@ impl RenderPassCreateInfo2KHR {
         }
     }
 }
+unsafe impl crate::Cast<RenderPassCreateInfo2KHR> for RenderPassCreateInfo2KHRBuilder<'_> {}
 #[repr(transparent)]
 pub struct RenderPassCreateInfo2KHRBuilder<'a> {
     inner: RenderPassCreateInfo2KHR,
@@ -36570,34 +37362,34 @@ impl<'a> RenderPassCreateInfo2KHRBuilder<'a> {
     }
     pub fn attachments(
         mut self,
-        attachments: &'a [AttachmentDescription2KHR],
+        attachments: &'a [impl crate::Cast<AttachmentDescription2KHR>],
     ) -> RenderPassCreateInfo2KHRBuilder<'a> {
         self.inner.attachment_count = attachments.len() as _;
-        self.inner.p_attachments = attachments.as_ptr();
+        self.inner.p_attachments = attachments.as_ptr() as *const _;
         self
     }
     pub fn subpasses(
         mut self,
-        subpasses: &'a [SubpassDescription2KHR],
+        subpasses: &'a [impl crate::Cast<SubpassDescription2KHR>],
     ) -> RenderPassCreateInfo2KHRBuilder<'a> {
         self.inner.subpass_count = subpasses.len() as _;
-        self.inner.p_subpasses = subpasses.as_ptr();
+        self.inner.p_subpasses = subpasses.as_ptr() as *const _;
         self
     }
     pub fn dependencies(
         mut self,
-        dependencies: &'a [SubpassDependency2KHR],
+        dependencies: &'a [impl crate::Cast<SubpassDependency2KHR>],
     ) -> RenderPassCreateInfo2KHRBuilder<'a> {
         self.inner.dependency_count = dependencies.len() as _;
-        self.inner.p_dependencies = dependencies.as_ptr();
+        self.inner.p_dependencies = dependencies.as_ptr() as *const _;
         self
     }
     pub fn correlated_view_masks(
         mut self,
-        correlated_view_masks: &'a [u32],
+        correlated_view_masks: &'a [impl crate::Cast<u32>],
     ) -> RenderPassCreateInfo2KHRBuilder<'a> {
         self.inner.correlated_view_mask_count = correlated_view_masks.len() as _;
-        self.inner.p_correlated_view_masks = correlated_view_masks.as_ptr();
+        self.inner.p_correlated_view_masks = correlated_view_masks.as_ptr() as *const _;
         self
     }
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
@@ -36649,6 +37441,7 @@ impl SubpassBeginInfoKHR {
         }
     }
 }
+unsafe impl crate::Cast<SubpassBeginInfoKHR> for SubpassBeginInfoKHRBuilder<'_> {}
 #[repr(transparent)]
 pub struct SubpassBeginInfoKHRBuilder<'a> {
     inner: SubpassBeginInfoKHR,
@@ -36718,6 +37511,7 @@ impl SubpassEndInfoKHR {
         }
     }
 }
+unsafe impl crate::Cast<SubpassEndInfoKHR> for SubpassEndInfoKHRBuilder<'_> {}
 #[repr(transparent)]
 pub struct SubpassEndInfoKHRBuilder<'a> {
     inner: SubpassEndInfoKHR,
@@ -36774,6 +37568,10 @@ impl VertexInputBindingDivisorDescriptionEXT {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<VertexInputBindingDivisorDescriptionEXT>
+    for VertexInputBindingDivisorDescriptionEXTBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct VertexInputBindingDivisorDescriptionEXTBuilder<'a> {
@@ -36834,6 +37632,10 @@ impl PipelineVertexInputDivisorStateCreateInfoEXT {
         }
     }
 }
+unsafe impl crate::Cast<PipelineVertexInputDivisorStateCreateInfoEXT>
+    for PipelineVertexInputDivisorStateCreateInfoEXTBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PipelineVertexInputDivisorStateCreateInfoEXTBuilder<'a> {
     inner: PipelineVertexInputDivisorStateCreateInfoEXT,
@@ -36861,10 +37663,10 @@ impl<'a> ::std::ops::DerefMut for PipelineVertexInputDivisorStateCreateInfoEXTBu
 impl<'a> PipelineVertexInputDivisorStateCreateInfoEXTBuilder<'a> {
     pub fn vertex_binding_divisors(
         mut self,
-        vertex_binding_divisors: &'a [VertexInputBindingDivisorDescriptionEXT],
+        vertex_binding_divisors: &'a [impl crate::Cast<VertexInputBindingDivisorDescriptionEXT>],
     ) -> PipelineVertexInputDivisorStateCreateInfoEXTBuilder<'a> {
         self.inner.vertex_binding_divisor_count = vertex_binding_divisors.len() as _;
-        self.inner.p_vertex_binding_divisors = vertex_binding_divisors.as_ptr();
+        self.inner.p_vertex_binding_divisors = vertex_binding_divisors.as_ptr() as *const _;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -36898,6 +37700,10 @@ impl PhysicalDeviceVertexAttributeDivisorPropertiesEXT {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDeviceVertexAttributeDivisorPropertiesEXT>
+    for PhysicalDeviceVertexAttributeDivisorPropertiesEXTBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDeviceVertexAttributeDivisorPropertiesEXTBuilder<'a> {
@@ -36965,6 +37771,10 @@ impl PhysicalDevicePCIBusInfoPropertiesEXT {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDevicePCIBusInfoPropertiesEXT>
+    for PhysicalDevicePCIBusInfoPropertiesEXTBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDevicePCIBusInfoPropertiesEXTBuilder<'a> {
@@ -37042,6 +37852,10 @@ impl ImportAndroidHardwareBufferInfoANDROID {
         }
     }
 }
+unsafe impl crate::Cast<ImportAndroidHardwareBufferInfoANDROID>
+    for ImportAndroidHardwareBufferInfoANDROIDBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct ImportAndroidHardwareBufferInfoANDROIDBuilder<'a> {
     inner: ImportAndroidHardwareBufferInfoANDROID,
@@ -37099,6 +37913,10 @@ impl AndroidHardwareBufferUsageANDROID {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<AndroidHardwareBufferUsageANDROID>
+    for AndroidHardwareBufferUsageANDROIDBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct AndroidHardwareBufferUsageANDROIDBuilder<'a> {
@@ -37159,6 +37977,10 @@ impl AndroidHardwareBufferPropertiesANDROID {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<AndroidHardwareBufferPropertiesANDROID>
+    for AndroidHardwareBufferPropertiesANDROIDBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct AndroidHardwareBufferPropertiesANDROIDBuilder<'a> {
@@ -37240,6 +38062,10 @@ impl MemoryGetAndroidHardwareBufferInfoANDROID {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<MemoryGetAndroidHardwareBufferInfoANDROID>
+    for MemoryGetAndroidHardwareBufferInfoANDROIDBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct MemoryGetAndroidHardwareBufferInfoANDROIDBuilder<'a> {
@@ -37328,6 +38154,10 @@ impl AndroidHardwareBufferFormatPropertiesANDROID {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<AndroidHardwareBufferFormatPropertiesANDROID>
+    for AndroidHardwareBufferFormatPropertiesANDROIDBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct AndroidHardwareBufferFormatPropertiesANDROIDBuilder<'a> {
@@ -37442,6 +38272,10 @@ impl CommandBufferInheritanceConditionalRenderingInfoEXT {
         }
     }
 }
+unsafe impl crate::Cast<CommandBufferInheritanceConditionalRenderingInfoEXT>
+    for CommandBufferInheritanceConditionalRenderingInfoEXTBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct CommandBufferInheritanceConditionalRenderingInfoEXTBuilder<'a> {
     inner: CommandBufferInheritanceConditionalRenderingInfoEXT,
@@ -37506,6 +38340,7 @@ impl ExternalFormatANDROID {
         }
     }
 }
+unsafe impl crate::Cast<ExternalFormatANDROID> for ExternalFormatANDROIDBuilder<'_> {}
 #[repr(transparent)]
 pub struct ExternalFormatANDROIDBuilder<'a> {
     inner: ExternalFormatANDROID,
@@ -37566,6 +38401,10 @@ impl PhysicalDevice8BitStorageFeaturesKHR {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDevice8BitStorageFeaturesKHR>
+    for PhysicalDevice8BitStorageFeaturesKHRBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDevice8BitStorageFeaturesKHRBuilder<'a> {
@@ -37642,6 +38481,10 @@ impl PhysicalDeviceConditionalRenderingFeaturesEXT {
         }
     }
 }
+unsafe impl crate::Cast<PhysicalDeviceConditionalRenderingFeaturesEXT>
+    for PhysicalDeviceConditionalRenderingFeaturesEXTBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PhysicalDeviceConditionalRenderingFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceConditionalRenderingFeaturesEXT,
@@ -37710,6 +38553,10 @@ impl PhysicalDeviceVulkanMemoryModelFeaturesKHR {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDeviceVulkanMemoryModelFeaturesKHR>
+    for PhysicalDeviceVulkanMemoryModelFeaturesKHRBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDeviceVulkanMemoryModelFeaturesKHRBuilder<'a> {
@@ -37787,6 +38634,10 @@ impl PhysicalDeviceShaderAtomicInt64FeaturesKHR {
         }
     }
 }
+unsafe impl crate::Cast<PhysicalDeviceShaderAtomicInt64FeaturesKHR>
+    for PhysicalDeviceShaderAtomicInt64FeaturesKHRBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PhysicalDeviceShaderAtomicInt64FeaturesKHRBuilder<'a> {
     inner: PhysicalDeviceShaderAtomicInt64FeaturesKHR,
@@ -37853,6 +38704,10 @@ impl PhysicalDeviceVertexAttributeDivisorFeaturesEXT {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDeviceVertexAttributeDivisorFeaturesEXT>
+    for PhysicalDeviceVertexAttributeDivisorFeaturesEXTBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDeviceVertexAttributeDivisorFeaturesEXTBuilder<'a> {
@@ -37921,6 +38776,10 @@ impl QueueFamilyCheckpointPropertiesNV {
         }
     }
 }
+unsafe impl crate::Cast<QueueFamilyCheckpointPropertiesNV>
+    for QueueFamilyCheckpointPropertiesNVBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct QueueFamilyCheckpointPropertiesNVBuilder<'a> {
     inner: QueueFamilyCheckpointPropertiesNV,
@@ -37981,6 +38840,7 @@ impl CheckpointDataNV {
         }
     }
 }
+unsafe impl crate::Cast<CheckpointDataNV> for CheckpointDataNVBuilder<'_> {}
 #[repr(transparent)]
 pub struct CheckpointDataNVBuilder<'a> {
     inner: CheckpointDataNV,
@@ -38064,6 +38924,10 @@ impl PhysicalDeviceDepthStencilResolvePropertiesKHR {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDeviceDepthStencilResolvePropertiesKHR>
+    for PhysicalDeviceDepthStencilResolvePropertiesKHRBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDeviceDepthStencilResolvePropertiesKHRBuilder<'a> {
@@ -38151,6 +39015,10 @@ impl SubpassDescriptionDepthStencilResolveKHR {
         }
     }
 }
+unsafe impl crate::Cast<SubpassDescriptionDepthStencilResolveKHR>
+    for SubpassDescriptionDepthStencilResolveKHRBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct SubpassDescriptionDepthStencilResolveKHRBuilder<'a> {
     inner: SubpassDescriptionDepthStencilResolveKHR,
@@ -38223,6 +39091,7 @@ impl ImageViewASTCDecodeModeEXT {
         }
     }
 }
+unsafe impl crate::Cast<ImageViewASTCDecodeModeEXT> for ImageViewASTCDecodeModeEXTBuilder<'_> {}
 #[repr(transparent)]
 pub struct ImageViewASTCDecodeModeEXTBuilder<'a> {
     inner: ImageViewASTCDecodeModeEXT,
@@ -38277,6 +39146,10 @@ impl PhysicalDeviceASTCDecodeFeaturesEXT {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDeviceASTCDecodeFeaturesEXT>
+    for PhysicalDeviceASTCDecodeFeaturesEXTBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDeviceASTCDecodeFeaturesEXTBuilder<'a> {
@@ -38337,6 +39210,10 @@ impl PhysicalDeviceTransformFeedbackFeaturesEXT {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDeviceTransformFeedbackFeaturesEXT>
+    for PhysicalDeviceTransformFeedbackFeaturesEXTBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDeviceTransformFeedbackFeaturesEXTBuilder<'a> {
@@ -38420,6 +39297,10 @@ impl PhysicalDeviceTransformFeedbackPropertiesEXT {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDeviceTransformFeedbackPropertiesEXT>
+    for PhysicalDeviceTransformFeedbackPropertiesEXTBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDeviceTransformFeedbackPropertiesEXTBuilder<'a> {
@@ -38552,6 +39433,10 @@ impl PipelineRasterizationStateStreamCreateInfoEXT {
         }
     }
 }
+unsafe impl crate::Cast<PipelineRasterizationStateStreamCreateInfoEXT>
+    for PipelineRasterizationStateStreamCreateInfoEXTBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PipelineRasterizationStateStreamCreateInfoEXTBuilder<'a> {
     inner: PipelineRasterizationStateStreamCreateInfoEXT,
@@ -38623,6 +39508,10 @@ impl PhysicalDeviceRepresentativeFragmentTestFeaturesNV {
         }
     }
 }
+unsafe impl crate::Cast<PhysicalDeviceRepresentativeFragmentTestFeaturesNV>
+    for PhysicalDeviceRepresentativeFragmentTestFeaturesNVBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PhysicalDeviceRepresentativeFragmentTestFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceRepresentativeFragmentTestFeaturesNV,
@@ -38683,6 +39572,10 @@ impl PipelineRepresentativeFragmentTestStateCreateInfoNV {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PipelineRepresentativeFragmentTestStateCreateInfoNV>
+    for PipelineRepresentativeFragmentTestStateCreateInfoNVBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PipelineRepresentativeFragmentTestStateCreateInfoNVBuilder<'a> {
@@ -38748,6 +39641,10 @@ impl PhysicalDeviceExclusiveScissorFeaturesNV {
         }
     }
 }
+unsafe impl crate::Cast<PhysicalDeviceExclusiveScissorFeaturesNV>
+    for PhysicalDeviceExclusiveScissorFeaturesNVBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PhysicalDeviceExclusiveScissorFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceExclusiveScissorFeaturesNV,
@@ -38808,6 +39705,10 @@ impl PipelineViewportExclusiveScissorStateCreateInfoNV {
         }
     }
 }
+unsafe impl crate::Cast<PipelineViewportExclusiveScissorStateCreateInfoNV>
+    for PipelineViewportExclusiveScissorStateCreateInfoNVBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PipelineViewportExclusiveScissorStateCreateInfoNVBuilder<'a> {
     inner: PipelineViewportExclusiveScissorStateCreateInfoNV,
@@ -38835,10 +39736,10 @@ impl<'a> ::std::ops::DerefMut for PipelineViewportExclusiveScissorStateCreateInf
 impl<'a> PipelineViewportExclusiveScissorStateCreateInfoNVBuilder<'a> {
     pub fn exclusive_scissors(
         mut self,
-        exclusive_scissors: &'a [Rect2D],
+        exclusive_scissors: &'a [impl crate::Cast<Rect2D>],
     ) -> PipelineViewportExclusiveScissorStateCreateInfoNVBuilder<'a> {
         self.inner.exclusive_scissor_count = exclusive_scissors.len() as _;
-        self.inner.p_exclusive_scissors = exclusive_scissors.as_ptr();
+        self.inner.p_exclusive_scissors = exclusive_scissors.as_ptr() as *const _;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -38872,6 +39773,10 @@ impl PhysicalDeviceCornerSampledImageFeaturesNV {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDeviceCornerSampledImageFeaturesNV>
+    for PhysicalDeviceCornerSampledImageFeaturesNVBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDeviceCornerSampledImageFeaturesNVBuilder<'a> {
@@ -38932,6 +39837,10 @@ impl PhysicalDeviceComputeShaderDerivativesFeaturesNV {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDeviceComputeShaderDerivativesFeaturesNV>
+    for PhysicalDeviceComputeShaderDerivativesFeaturesNVBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDeviceComputeShaderDerivativesFeaturesNVBuilder<'a> {
@@ -39001,6 +39910,10 @@ impl PhysicalDeviceFragmentShaderBarycentricFeaturesNV {
         }
     }
 }
+unsafe impl crate::Cast<PhysicalDeviceFragmentShaderBarycentricFeaturesNV>
+    for PhysicalDeviceFragmentShaderBarycentricFeaturesNVBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PhysicalDeviceFragmentShaderBarycentricFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceFragmentShaderBarycentricFeaturesNV,
@@ -39062,6 +39975,10 @@ impl PhysicalDeviceShaderImageFootprintFeaturesNV {
         }
     }
 }
+unsafe impl crate::Cast<PhysicalDeviceShaderImageFootprintFeaturesNV>
+    for PhysicalDeviceShaderImageFootprintFeaturesNVBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PhysicalDeviceShaderImageFootprintFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceShaderImageFootprintFeaturesNV,
@@ -39119,6 +40036,10 @@ impl PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNV>
+    for PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNVBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDeviceDedicatedAllocationImageAliasingFeaturesNVBuilder<'a> {
@@ -39181,6 +40102,7 @@ impl ShadingRatePaletteNV {
         }
     }
 }
+unsafe impl crate::Cast<ShadingRatePaletteNV> for ShadingRatePaletteNVBuilder<'_> {}
 #[repr(transparent)]
 pub struct ShadingRatePaletteNVBuilder<'a> {
     inner: ShadingRatePaletteNV,
@@ -39200,10 +40122,11 @@ impl<'a> ::std::ops::DerefMut for ShadingRatePaletteNVBuilder<'a> {
 impl<'a> ShadingRatePaletteNVBuilder<'a> {
     pub fn shading_rate_palette_entries(
         mut self,
-        shading_rate_palette_entries: &'a [ShadingRatePaletteEntryNV],
+        shading_rate_palette_entries: &'a [impl crate::Cast<ShadingRatePaletteEntryNV>],
     ) -> ShadingRatePaletteNVBuilder<'a> {
         self.inner.shading_rate_palette_entry_count = shading_rate_palette_entries.len() as _;
-        self.inner.p_shading_rate_palette_entries = shading_rate_palette_entries.as_ptr();
+        self.inner.p_shading_rate_palette_entries =
+            shading_rate_palette_entries.as_ptr() as *const _;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -39242,6 +40165,10 @@ impl PipelineViewportShadingRateImageStateCreateInfoNV {
         }
     }
 }
+unsafe impl crate::Cast<PipelineViewportShadingRateImageStateCreateInfoNV>
+    for PipelineViewportShadingRateImageStateCreateInfoNVBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PipelineViewportShadingRateImageStateCreateInfoNVBuilder<'a> {
     inner: PipelineViewportShadingRateImageStateCreateInfoNV,
@@ -39276,10 +40203,10 @@ impl<'a> PipelineViewportShadingRateImageStateCreateInfoNVBuilder<'a> {
     }
     pub fn shading_rate_palettes(
         mut self,
-        shading_rate_palettes: &'a [ShadingRatePaletteNV],
+        shading_rate_palettes: &'a [impl crate::Cast<ShadingRatePaletteNV>],
     ) -> PipelineViewportShadingRateImageStateCreateInfoNVBuilder<'a> {
         self.inner.viewport_count = shading_rate_palettes.len() as _;
-        self.inner.p_shading_rate_palettes = shading_rate_palettes.as_ptr();
+        self.inner.p_shading_rate_palettes = shading_rate_palettes.as_ptr() as *const _;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -39315,6 +40242,10 @@ impl PhysicalDeviceShadingRateImageFeaturesNV {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDeviceShadingRateImageFeaturesNV>
+    for PhysicalDeviceShadingRateImageFeaturesNVBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDeviceShadingRateImageFeaturesNVBuilder<'a> {
@@ -39385,6 +40316,10 @@ impl PhysicalDeviceShadingRateImagePropertiesNV {
         }
     }
 }
+unsafe impl crate::Cast<PhysicalDeviceShadingRateImagePropertiesNV>
+    for PhysicalDeviceShadingRateImagePropertiesNVBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PhysicalDeviceShadingRateImagePropertiesNVBuilder<'a> {
     inner: PhysicalDeviceShadingRateImagePropertiesNV,
@@ -39451,6 +40386,7 @@ impl CoarseSampleLocationNV {
         }
     }
 }
+unsafe impl crate::Cast<CoarseSampleLocationNV> for CoarseSampleLocationNVBuilder<'_> {}
 #[repr(transparent)]
 pub struct CoarseSampleLocationNVBuilder<'a> {
     inner: CoarseSampleLocationNV,
@@ -39514,6 +40450,7 @@ impl CoarseSampleOrderCustomNV {
         }
     }
 }
+unsafe impl crate::Cast<CoarseSampleOrderCustomNV> for CoarseSampleOrderCustomNVBuilder<'_> {}
 #[repr(transparent)]
 pub struct CoarseSampleOrderCustomNVBuilder<'a> {
     inner: CoarseSampleOrderCustomNV,
@@ -39544,10 +40481,10 @@ impl<'a> CoarseSampleOrderCustomNVBuilder<'a> {
     }
     pub fn sample_locations(
         mut self,
-        sample_locations: &'a [CoarseSampleLocationNV],
+        sample_locations: &'a [impl crate::Cast<CoarseSampleLocationNV>],
     ) -> CoarseSampleOrderCustomNVBuilder<'a> {
         self.inner.sample_location_count = sample_locations.len() as _;
-        self.inner.p_sample_locations = sample_locations.as_ptr();
+        self.inner.p_sample_locations = sample_locations.as_ptr() as *const _;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -39586,6 +40523,10 @@ impl PipelineViewportCoarseSampleOrderStateCreateInfoNV {
         }
     }
 }
+unsafe impl crate::Cast<PipelineViewportCoarseSampleOrderStateCreateInfoNV>
+    for PipelineViewportCoarseSampleOrderStateCreateInfoNVBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PipelineViewportCoarseSampleOrderStateCreateInfoNVBuilder<'a> {
     inner: PipelineViewportCoarseSampleOrderStateCreateInfoNV,
@@ -39620,10 +40561,10 @@ impl<'a> PipelineViewportCoarseSampleOrderStateCreateInfoNVBuilder<'a> {
     }
     pub fn custom_sample_orders(
         mut self,
-        custom_sample_orders: &'a [CoarseSampleOrderCustomNV],
+        custom_sample_orders: &'a [impl crate::Cast<CoarseSampleOrderCustomNV>],
     ) -> PipelineViewportCoarseSampleOrderStateCreateInfoNVBuilder<'a> {
         self.inner.custom_sample_order_count = custom_sample_orders.len() as _;
-        self.inner.p_custom_sample_orders = custom_sample_orders.as_ptr();
+        self.inner.p_custom_sample_orders = custom_sample_orders.as_ptr() as *const _;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -39659,6 +40600,10 @@ impl PhysicalDeviceMeshShaderFeaturesNV {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDeviceMeshShaderFeaturesNV>
+    for PhysicalDeviceMeshShaderFeaturesNVBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDeviceMeshShaderFeaturesNVBuilder<'a> {
@@ -39748,6 +40693,10 @@ impl PhysicalDeviceMeshShaderPropertiesNV {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDeviceMeshShaderPropertiesNV>
+    for PhysicalDeviceMeshShaderPropertiesNVBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDeviceMeshShaderPropertiesNVBuilder<'a> {
@@ -39881,6 +40830,10 @@ impl DrawMeshTasksIndirectCommandNV {
         }
     }
 }
+unsafe impl crate::Cast<DrawMeshTasksIndirectCommandNV>
+    for DrawMeshTasksIndirectCommandNVBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct DrawMeshTasksIndirectCommandNVBuilder<'a> {
     inner: DrawMeshTasksIndirectCommandNV,
@@ -39945,6 +40898,10 @@ impl RayTracingShaderGroupCreateInfoNV {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<RayTracingShaderGroupCreateInfoNV>
+    for RayTracingShaderGroupCreateInfoNVBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct RayTracingShaderGroupCreateInfoNVBuilder<'a> {
@@ -40064,6 +41021,10 @@ impl RayTracingPipelineCreateInfoNV {
         }
     }
 }
+unsafe impl crate::Cast<RayTracingPipelineCreateInfoNV>
+    for RayTracingPipelineCreateInfoNVBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct RayTracingPipelineCreateInfoNVBuilder<'a> {
     inner: RayTracingPipelineCreateInfoNV,
@@ -40091,18 +41052,18 @@ impl<'a> RayTracingPipelineCreateInfoNVBuilder<'a> {
     }
     pub fn stages(
         mut self,
-        stages: &'a [PipelineShaderStageCreateInfo],
+        stages: &'a [impl crate::Cast<PipelineShaderStageCreateInfo>],
     ) -> RayTracingPipelineCreateInfoNVBuilder<'a> {
         self.inner.stage_count = stages.len() as _;
-        self.inner.p_stages = stages.as_ptr();
+        self.inner.p_stages = stages.as_ptr() as *const _;
         self
     }
     pub fn groups(
         mut self,
-        groups: &'a [RayTracingShaderGroupCreateInfoNV],
+        groups: &'a [impl crate::Cast<RayTracingShaderGroupCreateInfoNV>],
     ) -> RayTracingPipelineCreateInfoNVBuilder<'a> {
         self.inner.group_count = groups.len() as _;
-        self.inner.p_groups = groups.as_ptr();
+        self.inner.p_groups = groups.as_ptr() as *const _;
         self
     }
     pub fn max_recursion_depth(
@@ -40199,6 +41160,7 @@ impl GeometryTrianglesNV {
         }
     }
 }
+unsafe impl crate::Cast<GeometryTrianglesNV> for GeometryTrianglesNVBuilder<'_> {}
 #[repr(transparent)]
 pub struct GeometryTrianglesNVBuilder<'a> {
     inner: GeometryTrianglesNV,
@@ -40319,6 +41281,7 @@ impl GeometryAABBNV {
         }
     }
 }
+unsafe impl crate::Cast<GeometryAABBNV> for GeometryAABBNVBuilder<'_> {}
 #[repr(transparent)]
 pub struct GeometryAABBNVBuilder<'a> {
     inner: GeometryAABBNV,
@@ -40392,6 +41355,7 @@ impl GeometryDataNV {
         }
     }
 }
+unsafe impl crate::Cast<GeometryDataNV> for GeometryDataNVBuilder<'_> {}
 #[repr(transparent)]
 pub struct GeometryDataNVBuilder<'a> {
     inner: GeometryDataNV,
@@ -40453,6 +41417,7 @@ impl GeometryNV {
         }
     }
 }
+unsafe impl crate::Cast<GeometryNV> for GeometryNVBuilder<'_> {}
 #[repr(transparent)]
 pub struct GeometryNVBuilder<'a> {
     inner: GeometryNV,
@@ -40537,6 +41502,7 @@ impl AccelerationStructureInfoNV {
         }
     }
 }
+unsafe impl crate::Cast<AccelerationStructureInfoNV> for AccelerationStructureInfoNVBuilder<'_> {}
 #[repr(transparent)]
 pub struct AccelerationStructureInfoNVBuilder<'a> {
     inner: AccelerationStructureInfoNV,
@@ -40572,10 +41538,10 @@ impl<'a> AccelerationStructureInfoNVBuilder<'a> {
     }
     pub fn geometries(
         mut self,
-        geometries: &'a [GeometryNV],
+        geometries: &'a [impl crate::Cast<GeometryNV>],
     ) -> AccelerationStructureInfoNVBuilder<'a> {
         self.inner.geometry_count = geometries.len() as _;
-        self.inner.p_geometries = geometries.as_ptr();
+        self.inner.p_geometries = geometries.as_ptr() as *const _;
         self
     }
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
@@ -40628,6 +41594,10 @@ impl AccelerationStructureCreateInfoNV {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<AccelerationStructureCreateInfoNV>
+    for AccelerationStructureCreateInfoNVBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct AccelerationStructureCreateInfoNVBuilder<'a> {
@@ -40718,6 +41688,10 @@ impl BindAccelerationStructureMemoryInfoNV {
         }
     }
 }
+unsafe impl crate::Cast<BindAccelerationStructureMemoryInfoNV>
+    for BindAccelerationStructureMemoryInfoNVBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct BindAccelerationStructureMemoryInfoNVBuilder<'a> {
     inner: BindAccelerationStructureMemoryInfoNV,
@@ -40759,10 +41733,10 @@ impl<'a> BindAccelerationStructureMemoryInfoNVBuilder<'a> {
     }
     pub fn device_indices(
         mut self,
-        device_indices: &'a [u32],
+        device_indices: &'a [impl crate::Cast<u32>],
     ) -> BindAccelerationStructureMemoryInfoNVBuilder<'a> {
         self.inner.device_index_count = device_indices.len() as _;
-        self.inner.p_device_indices = device_indices.as_ptr();
+        self.inner.p_device_indices = device_indices.as_ptr() as *const _;
         self
     }
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
@@ -40816,6 +41790,10 @@ impl WriteDescriptorSetAccelerationStructureNV {
         }
     }
 }
+unsafe impl crate::Cast<WriteDescriptorSetAccelerationStructureNV>
+    for WriteDescriptorSetAccelerationStructureNVBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct WriteDescriptorSetAccelerationStructureNVBuilder<'a> {
     inner: WriteDescriptorSetAccelerationStructureNV,
@@ -40837,10 +41815,10 @@ impl<'a> ::std::ops::DerefMut for WriteDescriptorSetAccelerationStructureNVBuild
 impl<'a> WriteDescriptorSetAccelerationStructureNVBuilder<'a> {
     pub fn acceleration_structures(
         mut self,
-        acceleration_structures: &'a [AccelerationStructureNV],
+        acceleration_structures: &'a [impl crate::Cast<AccelerationStructureNV>],
     ) -> WriteDescriptorSetAccelerationStructureNVBuilder<'a> {
         self.inner.acceleration_structure_count = acceleration_structures.len() as _;
-        self.inner.p_acceleration_structures = acceleration_structures.as_ptr();
+        self.inner.p_acceleration_structures = acceleration_structures.as_ptr() as *const _;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -40876,6 +41854,10 @@ impl AccelerationStructureMemoryRequirementsInfoNV {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<AccelerationStructureMemoryRequirementsInfoNV>
+    for AccelerationStructureMemoryRequirementsInfoNVBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct AccelerationStructureMemoryRequirementsInfoNVBuilder<'a> {
@@ -40971,6 +41953,10 @@ impl PhysicalDeviceRayTracingPropertiesNV {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDeviceRayTracingPropertiesNV>
+    for PhysicalDeviceRayTracingPropertiesNVBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDeviceRayTracingPropertiesNVBuilder<'a> {
@@ -41082,6 +42068,10 @@ impl DrmFormatModifierPropertiesListEXT {
         }
     }
 }
+unsafe impl crate::Cast<DrmFormatModifierPropertiesListEXT>
+    for DrmFormatModifierPropertiesListEXTBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct DrmFormatModifierPropertiesListEXTBuilder<'a> {
     inner: DrmFormatModifierPropertiesListEXT,
@@ -41103,10 +42093,11 @@ impl<'a> ::std::ops::DerefMut for DrmFormatModifierPropertiesListEXTBuilder<'a> 
 impl<'a> DrmFormatModifierPropertiesListEXTBuilder<'a> {
     pub fn drm_format_modifier_properties(
         mut self,
-        drm_format_modifier_properties: &'a mut [DrmFormatModifierPropertiesEXT],
+        drm_format_modifier_properties: &'a mut [impl crate::Cast<DrmFormatModifierPropertiesEXT>],
     ) -> DrmFormatModifierPropertiesListEXTBuilder<'a> {
         self.inner.drm_format_modifier_count = drm_format_modifier_properties.len() as _;
-        self.inner.p_drm_format_modifier_properties = drm_format_modifier_properties.as_mut_ptr();
+        self.inner.p_drm_format_modifier_properties =
+            drm_format_modifier_properties.as_mut_ptr() as *mut _;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -41131,6 +42122,10 @@ impl DrmFormatModifierPropertiesEXT {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<DrmFormatModifierPropertiesEXT>
+    for DrmFormatModifierPropertiesEXTBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct DrmFormatModifierPropertiesEXTBuilder<'a> {
@@ -41208,6 +42203,10 @@ impl PhysicalDeviceImageDrmFormatModifierInfoEXT {
         }
     }
 }
+unsafe impl crate::Cast<PhysicalDeviceImageDrmFormatModifierInfoEXT>
+    for PhysicalDeviceImageDrmFormatModifierInfoEXTBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PhysicalDeviceImageDrmFormatModifierInfoEXTBuilder<'a> {
     inner: PhysicalDeviceImageDrmFormatModifierInfoEXT,
@@ -41246,10 +42245,10 @@ impl<'a> PhysicalDeviceImageDrmFormatModifierInfoEXTBuilder<'a> {
     }
     pub fn queue_family_indices(
         mut self,
-        queue_family_indices: &'a [u32],
+        queue_family_indices: &'a [impl crate::Cast<u32>],
     ) -> PhysicalDeviceImageDrmFormatModifierInfoEXTBuilder<'a> {
         self.inner.queue_family_index_count = queue_family_indices.len() as _;
-        self.inner.p_queue_family_indices = queue_family_indices.as_ptr();
+        self.inner.p_queue_family_indices = queue_family_indices.as_ptr() as *const _;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -41286,6 +42285,10 @@ impl ImageDrmFormatModifierListCreateInfoEXT {
         }
     }
 }
+unsafe impl crate::Cast<ImageDrmFormatModifierListCreateInfoEXT>
+    for ImageDrmFormatModifierListCreateInfoEXTBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct ImageDrmFormatModifierListCreateInfoEXTBuilder<'a> {
     inner: ImageDrmFormatModifierListCreateInfoEXT,
@@ -41307,10 +42310,10 @@ impl<'a> ::std::ops::DerefMut for ImageDrmFormatModifierListCreateInfoEXTBuilder
 impl<'a> ImageDrmFormatModifierListCreateInfoEXTBuilder<'a> {
     pub fn drm_format_modifiers(
         mut self,
-        drm_format_modifiers: &'a [u64],
+        drm_format_modifiers: &'a [impl crate::Cast<u64>],
     ) -> ImageDrmFormatModifierListCreateInfoEXTBuilder<'a> {
         self.inner.drm_format_modifier_count = drm_format_modifiers.len() as _;
-        self.inner.p_drm_format_modifiers = drm_format_modifiers.as_ptr();
+        self.inner.p_drm_format_modifiers = drm_format_modifiers.as_ptr() as *const _;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -41349,6 +42352,10 @@ impl ImageDrmFormatModifierExplicitCreateInfoEXT {
         }
     }
 }
+unsafe impl crate::Cast<ImageDrmFormatModifierExplicitCreateInfoEXT>
+    for ImageDrmFormatModifierExplicitCreateInfoEXTBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct ImageDrmFormatModifierExplicitCreateInfoEXTBuilder<'a> {
     inner: ImageDrmFormatModifierExplicitCreateInfoEXT,
@@ -41377,10 +42384,10 @@ impl<'a> ImageDrmFormatModifierExplicitCreateInfoEXTBuilder<'a> {
     }
     pub fn plane_layouts(
         mut self,
-        plane_layouts: &'a [SubresourceLayout],
+        plane_layouts: &'a [impl crate::Cast<SubresourceLayout>],
     ) -> ImageDrmFormatModifierExplicitCreateInfoEXTBuilder<'a> {
         self.inner.drm_format_modifier_plane_count = plane_layouts.len() as _;
-        self.inner.p_plane_layouts = plane_layouts.as_ptr();
+        self.inner.p_plane_layouts = plane_layouts.as_ptr() as *const _;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -41414,6 +42421,10 @@ impl ImageDrmFormatModifierPropertiesEXT {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<ImageDrmFormatModifierPropertiesEXT>
+    for ImageDrmFormatModifierPropertiesEXTBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct ImageDrmFormatModifierPropertiesEXTBuilder<'a> {
@@ -41489,6 +42500,10 @@ impl ImageStencilUsageCreateInfoEXT {
         }
     }
 }
+unsafe impl crate::Cast<ImageStencilUsageCreateInfoEXT>
+    for ImageStencilUsageCreateInfoEXTBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct ImageStencilUsageCreateInfoEXTBuilder<'a> {
     inner: ImageStencilUsageCreateInfoEXT,
@@ -41548,6 +42563,10 @@ impl DeviceMemoryOverallocationCreateInfoAMD {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<DeviceMemoryOverallocationCreateInfoAMD>
+    for DeviceMemoryOverallocationCreateInfoAMDBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct DeviceMemoryOverallocationCreateInfoAMDBuilder<'a> {
@@ -41610,6 +42629,10 @@ impl PhysicalDeviceFragmentDensityMapFeaturesEXT {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDeviceFragmentDensityMapFeaturesEXT>
+    for PhysicalDeviceFragmentDensityMapFeaturesEXTBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDeviceFragmentDensityMapFeaturesEXTBuilder<'a> {
@@ -41688,6 +42711,10 @@ impl PhysicalDeviceFragmentDensityMapPropertiesEXT {
         }
     }
 }
+unsafe impl crate::Cast<PhysicalDeviceFragmentDensityMapPropertiesEXT>
+    for PhysicalDeviceFragmentDensityMapPropertiesEXTBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PhysicalDeviceFragmentDensityMapPropertiesEXTBuilder<'a> {
     inner: PhysicalDeviceFragmentDensityMapPropertiesEXT,
@@ -41763,6 +42790,10 @@ impl RenderPassFragmentDensityMapCreateInfoEXT {
         }
     }
 }
+unsafe impl crate::Cast<RenderPassFragmentDensityMapCreateInfoEXT>
+    for RenderPassFragmentDensityMapCreateInfoEXTBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct RenderPassFragmentDensityMapCreateInfoEXTBuilder<'a> {
     inner: RenderPassFragmentDensityMapCreateInfoEXT,
@@ -41820,6 +42851,10 @@ impl PhysicalDeviceScalarBlockLayoutFeaturesEXT {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDeviceScalarBlockLayoutFeaturesEXT>
+    for PhysicalDeviceScalarBlockLayoutFeaturesEXTBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDeviceScalarBlockLayoutFeaturesEXTBuilder<'a> {
@@ -41879,6 +42914,10 @@ impl SurfaceProtectedCapabilitiesKHR {
         }
     }
 }
+unsafe impl crate::Cast<SurfaceProtectedCapabilitiesKHR>
+    for SurfaceProtectedCapabilitiesKHRBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct SurfaceProtectedCapabilitiesKHRBuilder<'a> {
     inner: SurfaceProtectedCapabilitiesKHR,
@@ -41936,6 +42975,10 @@ impl PhysicalDeviceUniformBufferStandardLayoutFeaturesKHR {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDeviceUniformBufferStandardLayoutFeaturesKHR>
+    for PhysicalDeviceUniformBufferStandardLayoutFeaturesKHRBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDeviceUniformBufferStandardLayoutFeaturesKHRBuilder<'a> {
@@ -41998,6 +43041,10 @@ impl PhysicalDeviceDepthClipEnableFeaturesEXT {
         }
     }
 }
+unsafe impl crate::Cast<PhysicalDeviceDepthClipEnableFeaturesEXT>
+    for PhysicalDeviceDepthClipEnableFeaturesEXTBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PhysicalDeviceDepthClipEnableFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceDepthClipEnableFeaturesEXT,
@@ -42057,6 +43104,10 @@ impl PipelineRasterizationDepthClipStateCreateInfoEXT {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PipelineRasterizationDepthClipStateCreateInfoEXT>
+    for PipelineRasterizationDepthClipStateCreateInfoEXTBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PipelineRasterizationDepthClipStateCreateInfoEXTBuilder<'a> {
@@ -42131,6 +43182,10 @@ impl PhysicalDeviceMemoryBudgetPropertiesEXT {
         }
     }
 }
+unsafe impl crate::Cast<PhysicalDeviceMemoryBudgetPropertiesEXT>
+    for PhysicalDeviceMemoryBudgetPropertiesEXTBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PhysicalDeviceMemoryBudgetPropertiesEXTBuilder<'a> {
     inner: PhysicalDeviceMemoryBudgetPropertiesEXT,
@@ -42199,6 +43254,10 @@ impl PhysicalDeviceMemoryPriorityFeaturesEXT {
         }
     }
 }
+unsafe impl crate::Cast<PhysicalDeviceMemoryPriorityFeaturesEXT>
+    for PhysicalDeviceMemoryPriorityFeaturesEXTBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PhysicalDeviceMemoryPriorityFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceMemoryPriorityFeaturesEXT,
@@ -42256,6 +43315,10 @@ impl MemoryPriorityAllocateInfoEXT {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<MemoryPriorityAllocateInfoEXT>
+    for MemoryPriorityAllocateInfoEXTBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct MemoryPriorityAllocateInfoEXTBuilder<'a> {
@@ -42315,6 +43378,10 @@ impl PhysicalDeviceBufferDeviceAddressFeaturesEXT {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDeviceBufferDeviceAddressFeaturesEXT>
+    for PhysicalDeviceBufferDeviceAddressFeaturesEXTBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDeviceBufferDeviceAddressFeaturesEXTBuilder<'a> {
@@ -42389,6 +43456,7 @@ impl BufferDeviceAddressInfoEXT {
         }
     }
 }
+unsafe impl crate::Cast<BufferDeviceAddressInfoEXT> for BufferDeviceAddressInfoEXTBuilder<'_> {}
 #[repr(transparent)]
 pub struct BufferDeviceAddressInfoEXTBuilder<'a> {
     inner: BufferDeviceAddressInfoEXT,
@@ -42460,6 +43528,10 @@ impl BufferDeviceAddressCreateInfoEXT {
         }
     }
 }
+unsafe impl crate::Cast<BufferDeviceAddressCreateInfoEXT>
+    for BufferDeviceAddressCreateInfoEXTBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct BufferDeviceAddressCreateInfoEXTBuilder<'a> {
     inner: BufferDeviceAddressCreateInfoEXT,
@@ -42517,6 +43589,10 @@ impl PhysicalDeviceImageViewImageFormatInfoEXT {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDeviceImageViewImageFormatInfoEXT>
+    for PhysicalDeviceImageViewImageFormatInfoEXTBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDeviceImageViewImageFormatInfoEXTBuilder<'a> {
@@ -42580,6 +43656,10 @@ impl FilterCubicImageViewImageFormatPropertiesEXT {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<FilterCubicImageViewImageFormatPropertiesEXT>
+    for FilterCubicImageViewImageFormatPropertiesEXTBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct FilterCubicImageViewImageFormatPropertiesEXTBuilder<'a> {
@@ -42649,6 +43729,10 @@ impl PhysicalDeviceImagelessFramebufferFeaturesKHR {
         }
     }
 }
+unsafe impl crate::Cast<PhysicalDeviceImagelessFramebufferFeaturesKHR>
+    for PhysicalDeviceImagelessFramebufferFeaturesKHRBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PhysicalDeviceImagelessFramebufferFeaturesKHRBuilder<'a> {
     inner: PhysicalDeviceImagelessFramebufferFeaturesKHR,
@@ -42709,6 +43793,10 @@ impl FramebufferAttachmentsCreateInfoKHR {
         }
     }
 }
+unsafe impl crate::Cast<FramebufferAttachmentsCreateInfoKHR>
+    for FramebufferAttachmentsCreateInfoKHRBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct FramebufferAttachmentsCreateInfoKHRBuilder<'a> {
     inner: FramebufferAttachmentsCreateInfoKHR,
@@ -42730,10 +43818,10 @@ impl<'a> ::std::ops::DerefMut for FramebufferAttachmentsCreateInfoKHRBuilder<'a>
 impl<'a> FramebufferAttachmentsCreateInfoKHRBuilder<'a> {
     pub fn attachment_image_infos(
         mut self,
-        attachment_image_infos: &'a [FramebufferAttachmentImageInfoKHR],
+        attachment_image_infos: &'a [impl crate::Cast<FramebufferAttachmentImageInfoKHR>],
     ) -> FramebufferAttachmentsCreateInfoKHRBuilder<'a> {
         self.inner.attachment_image_info_count = attachment_image_infos.len() as _;
-        self.inner.p_attachment_image_infos = attachment_image_infos.as_ptr();
+        self.inner.p_attachment_image_infos = attachment_image_infos.as_ptr() as *const _;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -42780,6 +43868,10 @@ impl FramebufferAttachmentImageInfoKHR {
         }
     }
 }
+unsafe impl crate::Cast<FramebufferAttachmentImageInfoKHR>
+    for FramebufferAttachmentImageInfoKHRBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct FramebufferAttachmentImageInfoKHRBuilder<'a> {
     inner: FramebufferAttachmentImageInfoKHR,
@@ -42823,10 +43915,10 @@ impl<'a> FramebufferAttachmentImageInfoKHRBuilder<'a> {
     }
     pub fn view_formats(
         mut self,
-        view_formats: &'a [Format],
+        view_formats: &'a [impl crate::Cast<Format>],
     ) -> FramebufferAttachmentImageInfoKHRBuilder<'a> {
         self.inner.view_format_count = view_formats.len() as _;
-        self.inner.p_view_formats = view_formats.as_ptr();
+        self.inner.p_view_formats = view_formats.as_ptr() as *const _;
         self
     }
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
@@ -42880,6 +43972,10 @@ impl RenderPassAttachmentBeginInfoKHR {
         }
     }
 }
+unsafe impl crate::Cast<RenderPassAttachmentBeginInfoKHR>
+    for RenderPassAttachmentBeginInfoKHRBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct RenderPassAttachmentBeginInfoKHRBuilder<'a> {
     inner: RenderPassAttachmentBeginInfoKHR,
@@ -42901,10 +43997,10 @@ impl<'a> ::std::ops::DerefMut for RenderPassAttachmentBeginInfoKHRBuilder<'a> {
 impl<'a> RenderPassAttachmentBeginInfoKHRBuilder<'a> {
     pub fn attachments(
         mut self,
-        attachments: &'a [ImageView],
+        attachments: &'a [impl crate::Cast<ImageView>],
     ) -> RenderPassAttachmentBeginInfoKHRBuilder<'a> {
         self.inner.attachment_count = attachments.len() as _;
-        self.inner.p_attachments = attachments.as_ptr();
+        self.inner.p_attachments = attachments.as_ptr() as *const _;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -42938,6 +44034,10 @@ impl PhysicalDeviceTextureCompressionASTCHDRFeaturesEXT {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDeviceTextureCompressionASTCHDRFeaturesEXT>
+    for PhysicalDeviceTextureCompressionASTCHDRFeaturesEXTBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDeviceTextureCompressionASTCHDRFeaturesEXTBuilder<'a> {
@@ -43001,6 +44101,10 @@ impl PhysicalDeviceCooperativeMatrixFeaturesNV {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDeviceCooperativeMatrixFeaturesNV>
+    for PhysicalDeviceCooperativeMatrixFeaturesNVBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDeviceCooperativeMatrixFeaturesNVBuilder<'a> {
@@ -43067,6 +44171,10 @@ impl PhysicalDeviceCooperativeMatrixPropertiesNV {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDeviceCooperativeMatrixPropertiesNV>
+    for PhysicalDeviceCooperativeMatrixPropertiesNVBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDeviceCooperativeMatrixPropertiesNVBuilder<'a> {
@@ -43142,6 +44250,10 @@ impl CooperativeMatrixPropertiesNV {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<CooperativeMatrixPropertiesNV>
+    for CooperativeMatrixPropertiesNVBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct CooperativeMatrixPropertiesNVBuilder<'a> {
@@ -43242,6 +44354,10 @@ impl PhysicalDeviceYcbcrImageArraysFeaturesEXT {
         }
     }
 }
+unsafe impl crate::Cast<PhysicalDeviceYcbcrImageArraysFeaturesEXT>
+    for PhysicalDeviceYcbcrImageArraysFeaturesEXTBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PhysicalDeviceYcbcrImageArraysFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceYcbcrImageArraysFeaturesEXT,
@@ -43304,6 +44420,7 @@ impl ImageViewHandleInfoNVX {
         }
     }
 }
+unsafe impl crate::Cast<ImageViewHandleInfoNVX> for ImageViewHandleInfoNVXBuilder<'_> {}
 #[repr(transparent)]
 pub struct ImageViewHandleInfoNVXBuilder<'a> {
     inner: ImageViewHandleInfoNVX,
@@ -43386,6 +44503,7 @@ impl PresentFrameTokenGGP {
         }
     }
 }
+unsafe impl crate::Cast<PresentFrameTokenGGP> for PresentFrameTokenGGPBuilder<'_> {}
 #[repr(transparent)]
 pub struct PresentFrameTokenGGPBuilder<'a> {
     inner: PresentFrameTokenGGP,
@@ -43431,6 +44549,7 @@ impl PipelineCreationFeedbackEXT {
         }
     }
 }
+unsafe impl crate::Cast<PipelineCreationFeedbackEXT> for PipelineCreationFeedbackEXTBuilder<'_> {}
 #[repr(transparent)]
 pub struct PipelineCreationFeedbackEXTBuilder<'a> {
     inner: PipelineCreationFeedbackEXT,
@@ -43495,6 +44614,10 @@ impl PipelineCreationFeedbackCreateInfoEXT {
         }
     }
 }
+unsafe impl crate::Cast<PipelineCreationFeedbackCreateInfoEXT>
+    for PipelineCreationFeedbackCreateInfoEXTBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PipelineCreationFeedbackCreateInfoEXTBuilder<'a> {
     inner: PipelineCreationFeedbackCreateInfoEXT,
@@ -43530,12 +44653,12 @@ impl<'a> PipelineCreationFeedbackCreateInfoEXTBuilder<'a> {
     }
     pub fn pipeline_stage_creation_feedbacks(
         mut self,
-        pipeline_stage_creation_feedbacks: &'a mut [PipelineCreationFeedbackEXT],
+        pipeline_stage_creation_feedbacks: &'a mut [impl crate::Cast<PipelineCreationFeedbackEXT>],
     ) -> PipelineCreationFeedbackCreateInfoEXTBuilder<'a> {
         self.inner.pipeline_stage_creation_feedback_count =
             pipeline_stage_creation_feedbacks.len() as _;
         self.inner.p_pipeline_stage_creation_feedbacks =
-            pipeline_stage_creation_feedbacks.as_mut_ptr();
+            pipeline_stage_creation_feedbacks.as_mut_ptr() as *mut _;
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -43569,6 +44692,10 @@ impl SurfaceFullScreenExclusiveInfoEXT {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<SurfaceFullScreenExclusiveInfoEXT>
+    for SurfaceFullScreenExclusiveInfoEXTBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct SurfaceFullScreenExclusiveInfoEXTBuilder<'a> {
@@ -43629,6 +44756,10 @@ impl SurfaceFullScreenExclusiveWin32InfoEXT {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<SurfaceFullScreenExclusiveWin32InfoEXT>
+    for SurfaceFullScreenExclusiveWin32InfoEXTBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct SurfaceFullScreenExclusiveWin32InfoEXTBuilder<'a> {
@@ -43693,6 +44824,10 @@ impl SurfaceCapabilitiesFullScreenExclusiveEXT {
         }
     }
 }
+unsafe impl crate::Cast<SurfaceCapabilitiesFullScreenExclusiveEXT>
+    for SurfaceCapabilitiesFullScreenExclusiveEXTBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct SurfaceCapabilitiesFullScreenExclusiveEXTBuilder<'a> {
     inner: SurfaceCapabilitiesFullScreenExclusiveEXT,
@@ -43754,6 +44889,7 @@ impl HeadlessSurfaceCreateInfoEXT {
         }
     }
 }
+unsafe impl crate::Cast<HeadlessSurfaceCreateInfoEXT> for HeadlessSurfaceCreateInfoEXTBuilder<'_> {}
 #[repr(transparent)]
 pub struct HeadlessSurfaceCreateInfoEXTBuilder<'a> {
     inner: HeadlessSurfaceCreateInfoEXT,
@@ -43828,6 +44964,10 @@ impl PhysicalDeviceCoverageReductionModeFeaturesNV {
         }
     }
 }
+unsafe impl crate::Cast<PhysicalDeviceCoverageReductionModeFeaturesNV>
+    for PhysicalDeviceCoverageReductionModeFeaturesNVBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PhysicalDeviceCoverageReductionModeFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceCoverageReductionModeFeaturesNV,
@@ -43887,6 +45027,10 @@ impl PipelineCoverageReductionStateCreateInfoNV {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PipelineCoverageReductionStateCreateInfoNV>
+    for PipelineCoverageReductionStateCreateInfoNVBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PipelineCoverageReductionStateCreateInfoNVBuilder<'a> {
@@ -43964,6 +45108,10 @@ impl FramebufferMixedSamplesCombinationNV {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<FramebufferMixedSamplesCombinationNV>
+    for FramebufferMixedSamplesCombinationNVBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct FramebufferMixedSamplesCombinationNVBuilder<'a> {
@@ -44060,6 +45208,10 @@ impl PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL {
         }
     }
 }
+unsafe impl crate::Cast<PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL>
+    for PhysicalDeviceShaderIntegerFunctions2FeaturesINTELBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PhysicalDeviceShaderIntegerFunctions2FeaturesINTELBuilder<'a> {
     inner: PhysicalDeviceShaderIntegerFunctions2FeaturesINTEL,
@@ -44134,6 +45286,7 @@ impl PerformanceValueINTEL {
         }
     }
 }
+unsafe impl crate::Cast<PerformanceValueINTEL> for PerformanceValueINTELBuilder<'_> {}
 #[repr(transparent)]
 pub struct PerformanceValueINTELBuilder<'a> {
     inner: PerformanceValueINTEL,
@@ -44190,6 +45343,10 @@ impl InitializePerformanceApiInfoINTEL {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<InitializePerformanceApiInfoINTEL>
+    for InitializePerformanceApiInfoINTELBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct InitializePerformanceApiInfoINTELBuilder<'a> {
@@ -44265,6 +45422,7 @@ impl QueryPoolCreateInfoINTEL {
         }
     }
 }
+unsafe impl crate::Cast<QueryPoolCreateInfoINTEL> for QueryPoolCreateInfoINTELBuilder<'_> {}
 #[repr(transparent)]
 pub struct QueryPoolCreateInfoINTELBuilder<'a> {
     inner: QueryPoolCreateInfoINTEL,
@@ -44339,6 +45497,7 @@ impl PerformanceMarkerInfoINTEL {
         }
     }
 }
+unsafe impl crate::Cast<PerformanceMarkerInfoINTEL> for PerformanceMarkerInfoINTELBuilder<'_> {}
 #[repr(transparent)]
 pub struct PerformanceMarkerInfoINTELBuilder<'a> {
     inner: PerformanceMarkerInfoINTEL,
@@ -44409,6 +45568,10 @@ impl PerformanceStreamMarkerInfoINTEL {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PerformanceStreamMarkerInfoINTEL>
+    for PerformanceStreamMarkerInfoINTELBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PerformanceStreamMarkerInfoINTELBuilder<'a> {
@@ -44485,6 +45648,7 @@ impl PerformanceOverrideInfoINTEL {
         }
     }
 }
+unsafe impl crate::Cast<PerformanceOverrideInfoINTEL> for PerformanceOverrideInfoINTELBuilder<'_> {}
 #[repr(transparent)]
 pub struct PerformanceOverrideInfoINTELBuilder<'a> {
     inner: PerformanceOverrideInfoINTEL,
@@ -44567,6 +45731,10 @@ impl PerformanceConfigurationAcquireInfoINTEL {
         }
     }
 }
+unsafe impl crate::Cast<PerformanceConfigurationAcquireInfoINTEL>
+    for PerformanceConfigurationAcquireInfoINTELBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PerformanceConfigurationAcquireInfoINTELBuilder<'a> {
     inner: PerformanceConfigurationAcquireInfoINTEL,
@@ -44641,6 +45809,10 @@ impl PhysicalDeviceIndexTypeUint8FeaturesEXT {
         }
     }
 }
+unsafe impl crate::Cast<PhysicalDeviceIndexTypeUint8FeaturesEXT>
+    for PhysicalDeviceIndexTypeUint8FeaturesEXTBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PhysicalDeviceIndexTypeUint8FeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceIndexTypeUint8FeaturesEXT,
@@ -44700,6 +45872,10 @@ impl PhysicalDeviceShaderSMBuiltinsPropertiesNV {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDeviceShaderSMBuiltinsPropertiesNV>
+    for PhysicalDeviceShaderSMBuiltinsPropertiesNVBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDeviceShaderSMBuiltinsPropertiesNVBuilder<'a> {
@@ -44769,6 +45945,10 @@ impl PhysicalDeviceShaderSMBuiltinsFeaturesNV {
         }
     }
 }
+unsafe impl crate::Cast<PhysicalDeviceShaderSMBuiltinsFeaturesNV>
+    for PhysicalDeviceShaderSMBuiltinsFeaturesNVBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PhysicalDeviceShaderSMBuiltinsFeaturesNVBuilder<'a> {
     inner: PhysicalDeviceShaderSMBuiltinsFeaturesNV,
@@ -44830,6 +46010,10 @@ impl PhysicalDeviceFragmentShaderInterlockFeaturesEXT {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDeviceFragmentShaderInterlockFeaturesEXT>
+    for PhysicalDeviceFragmentShaderInterlockFeaturesEXTBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDeviceFragmentShaderInterlockFeaturesEXTBuilder<'a> {
@@ -44907,6 +46091,10 @@ impl PhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXT {
         }
     }
 }
+unsafe impl crate::Cast<PhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXT>
+    for PhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXTBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXT,
@@ -44969,6 +46157,10 @@ impl PhysicalDeviceTexelBufferAlignmentFeaturesEXT {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDeviceTexelBufferAlignmentFeaturesEXT>
+    for PhysicalDeviceTexelBufferAlignmentFeaturesEXTBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDeviceTexelBufferAlignmentFeaturesEXTBuilder<'a> {
@@ -45033,6 +46225,10 @@ impl PhysicalDeviceTexelBufferAlignmentPropertiesEXT {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDeviceTexelBufferAlignmentPropertiesEXT>
+    for PhysicalDeviceTexelBufferAlignmentPropertiesEXTBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDeviceTexelBufferAlignmentPropertiesEXTBuilder<'a> {
@@ -45128,6 +46324,10 @@ impl PhysicalDeviceSubgroupSizeControlPropertiesEXT {
         }
     }
 }
+unsafe impl crate::Cast<PhysicalDeviceSubgroupSizeControlPropertiesEXT>
+    for PhysicalDeviceSubgroupSizeControlPropertiesEXTBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PhysicalDeviceSubgroupSizeControlPropertiesEXTBuilder<'a> {
     inner: PhysicalDeviceSubgroupSizeControlPropertiesEXT,
@@ -45210,6 +46410,10 @@ impl PipelineShaderStageRequiredSubgroupSizeCreateInfoEXT {
         }
     }
 }
+unsafe impl crate::Cast<PipelineShaderStageRequiredSubgroupSizeCreateInfoEXT>
+    for PipelineShaderStageRequiredSubgroupSizeCreateInfoEXTBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PipelineShaderStageRequiredSubgroupSizeCreateInfoEXTBuilder<'a> {
     inner: PipelineShaderStageRequiredSubgroupSizeCreateInfoEXT,
@@ -45283,6 +46487,10 @@ impl PhysicalDeviceLineRasterizationFeaturesEXT {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PhysicalDeviceLineRasterizationFeaturesEXT>
+    for PhysicalDeviceLineRasterizationFeaturesEXTBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PhysicalDeviceLineRasterizationFeaturesEXTBuilder<'a> {
@@ -45377,6 +46585,10 @@ impl PhysicalDeviceLineRasterizationPropertiesEXT {
         }
     }
 }
+unsafe impl crate::Cast<PhysicalDeviceLineRasterizationPropertiesEXT>
+    for PhysicalDeviceLineRasterizationPropertiesEXTBuilder<'_>
+{
+}
 #[repr(transparent)]
 pub struct PhysicalDeviceLineRasterizationPropertiesEXTBuilder<'a> {
     inner: PhysicalDeviceLineRasterizationPropertiesEXT,
@@ -45443,6 +46655,10 @@ impl PipelineRasterizationLineStateCreateInfoEXT {
             marker: ::std::marker::PhantomData,
         }
     }
+}
+unsafe impl crate::Cast<PipelineRasterizationLineStateCreateInfoEXT>
+    for PipelineRasterizationLineStateCreateInfoEXTBuilder<'_>
+{
 }
 #[repr(transparent)]
 pub struct PipelineRasterizationLineStateCreateInfoEXTBuilder<'a> {
