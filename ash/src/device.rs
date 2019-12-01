@@ -722,7 +722,7 @@ pub trait DeviceV1_0 {
         src_buffer: vk::Buffer,
         dst_image: vk::Image,
         dst_image_layout: vk::ImageLayout,
-        regions: &[vk::BufferImageCopy],
+        regions: &[impl Cast<vk::BufferImageCopy>],
     ) {
         self.fp_v1_0().cmd_copy_buffer_to_image(
             command_buffer,
@@ -730,7 +730,7 @@ pub trait DeviceV1_0 {
             dst_image,
             dst_image_layout,
             regions.len() as u32,
-            regions.as_ptr(),
+            regions.as_ptr() as *const _,
         );
     }
 
