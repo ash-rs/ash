@@ -65,7 +65,6 @@ jobs:
 
   build:
     name: Artifact
-    runs-on: ubuntu-latest
     strategy:
       matrix:
         include:
