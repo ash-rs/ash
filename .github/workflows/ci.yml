@@ -67,6 +67,7 @@ jobs:
     name: Artifact
     strategy:
       matrix:
+        os: [ubuntu-latest, windows-latest]
         include:
           - os: ubuntu-latest
             rust: stable
