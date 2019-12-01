@@ -68,9 +68,16 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        target:
-          - x86_64-unknown-linux-gnu
-          - x86_64-pc-windows-gnu
+        include:
+          - os: ubuntu-latest
+            rust: stable
+            target: x86_64-unknown-linux-musl
+            bin: triangle
+          - os: windows-latest
+            rust: stable
+            target: x86_64-pc-windows-msvc
+            bin: triangle.exe
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v1
       - uses: actions-rs/toolchain@v1
@@ -80,11 +87,10 @@ jobs:
           override: true
       - uses: actions-rs/cargo@v1
         with:
-          use-cross: true
           command: build
           args: --release --target=${{ matrix.target }}
 
       - uses: actions/upload-artifact@v1
         with:
           name: triangle
-          path: target/release/triangle
+          path: target/release/${{ matrix.bin }}
