@@ -384,7 +384,8 @@ fn main() {
                     .image_subresource(
                         vk::ImageSubresourceLayers::builder()
                             .aspect_mask(vk::ImageAspectFlags::COLOR)
-                            .layer_count(1),
+                            .layer_count(1)
+                            .build(),
                     )
                     .image_extent(vk::Extent3D {
                         width: image_dimensions.0,
