@@ -79,8 +79,8 @@ jobs:
             bin: triangle.exe
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions-rs/toolchain@v1
       - uses: actions/checkout@v1
+      - uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
           target: ${{ matrix.target }}
