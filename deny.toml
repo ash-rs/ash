@@ -13,4 +13,5 @@ allow = [
     "BSD-2-Clause",
     "BSD-3-Clause",
     "ISC",
+    "CC0-1.0"
 ]
