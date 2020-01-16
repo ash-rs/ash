@@ -47415,7 +47415,7 @@ pub struct PipelineExecutableInternalRepresentationKHR {
     pub description: [c_char; MAX_DESCRIPTION_SIZE],
     pub is_text: Bool32,
     pub data_size: usize,
-    pub p_data: *const c_void,
+    pub p_data: *mut c_void,
 }
 impl fmt::Debug for PipelineExecutableInternalRepresentationKHR {
     fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
@@ -47443,7 +47443,7 @@ impl ::std::default::Default for PipelineExecutableInternalRepresentationKHR {
             description: unsafe { ::std::mem::zeroed() },
             is_text: Bool32::default(),
             data_size: usize::default(),
-            p_data: ::std::ptr::null(),
+            p_data: ::std::ptr::null_mut(),
         }
     }
 }
@@ -47496,10 +47496,10 @@ impl<'a> PipelineExecutableInternalRepresentationKHRBuilder<'a> {
     }
     pub fn data(
         mut self,
-        data: &'a [u8],
+        data: &'a mut [u8],
     ) -> PipelineExecutableInternalRepresentationKHRBuilder<'a> {
         self.inner.data_size = data.len() as _;
-        self.inner.p_data = data.as_ptr() as *const c_void;
+        self.inner.p_data = data.as_mut_ptr() as *mut c_void;
         self
     }
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]

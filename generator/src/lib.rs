@@ -1597,7 +1597,7 @@ pub fn derive_setters(
                             // *mut
                             let slice_type = &param_ty_string[5..];
                             if slice_type == "c_void" {
-                                slice_param_ty_tokens = "&mut 'a [u8]".to_string();
+                                slice_param_ty_tokens = "&'a mut [u8]".to_string();
                                 ptr = ".as_mut_ptr() as *mut c_void";
                             } else {
                                 slice_param_ty_tokens = "&'a mut [".to_string() + slice_type + "]";
