@@ -47406,6 +47406,127 @@ impl<'a> PipelineExecutableStatisticKHRBuilder<'a> {
     }
 }
 #[repr(C)]
+#[derive(Copy, Clone)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkPipelineExecutableInternalRepresentationKHR.html>"]
+pub struct PipelineExecutableInternalRepresentationKHR {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub name: [c_char; MAX_DESCRIPTION_SIZE],
+    pub description: [c_char; MAX_DESCRIPTION_SIZE],
+    pub is_text: Bool32,
+    pub data_size: usize,
+    pub p_data: *const c_void,
+}
+impl fmt::Debug for PipelineExecutableInternalRepresentationKHR {
+    fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+        fmt.debug_struct("PipelineExecutableInternalRepresentationKHR")
+            .field("s_type", &self.s_type)
+            .field("p_next", &self.p_next)
+            .field("name", &unsafe {
+                ::std::ffi::CStr::from_ptr(self.name.as_ptr() as *const c_char)
+            })
+            .field("description", &unsafe {
+                ::std::ffi::CStr::from_ptr(self.description.as_ptr() as *const c_char)
+            })
+            .field("is_text", &self.is_text)
+            .field("data_size", &self.data_size)
+            .field("p_data", &self.p_data)
+            .finish()
+    }
+}
+impl ::std::default::Default for PipelineExecutableInternalRepresentationKHR {
+    fn default() -> PipelineExecutableInternalRepresentationKHR {
+        PipelineExecutableInternalRepresentationKHR {
+            s_type: StructureType::PIPELINE_EXECUTABLE_INTERNAL_REPRESENTATION_KHR,
+            p_next: ::std::ptr::null_mut(),
+            name: unsafe { ::std::mem::zeroed() },
+            description: unsafe { ::std::mem::zeroed() },
+            is_text: Bool32::default(),
+            data_size: usize::default(),
+            p_data: ::std::ptr::null(),
+        }
+    }
+}
+impl PipelineExecutableInternalRepresentationKHR {
+    pub fn builder<'a>() -> PipelineExecutableInternalRepresentationKHRBuilder<'a> {
+        PipelineExecutableInternalRepresentationKHRBuilder {
+            inner: PipelineExecutableInternalRepresentationKHR::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct PipelineExecutableInternalRepresentationKHRBuilder<'a> {
+    inner: PipelineExecutableInternalRepresentationKHR,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+pub unsafe trait ExtendsPipelineExecutableInternalRepresentationKHR {}
+impl<'a> ::std::ops::Deref for PipelineExecutableInternalRepresentationKHRBuilder<'a> {
+    type Target = PipelineExecutableInternalRepresentationKHR;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PipelineExecutableInternalRepresentationKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> PipelineExecutableInternalRepresentationKHRBuilder<'a> {
+    pub fn name(
+        mut self,
+        name: [c_char; MAX_DESCRIPTION_SIZE],
+    ) -> PipelineExecutableInternalRepresentationKHRBuilder<'a> {
+        self.inner.name = name;
+        self
+    }
+    pub fn description(
+        mut self,
+        description: [c_char; MAX_DESCRIPTION_SIZE],
+    ) -> PipelineExecutableInternalRepresentationKHRBuilder<'a> {
+        self.inner.description = description;
+        self
+    }
+    pub fn is_text(
+        mut self,
+        is_text: bool,
+    ) -> PipelineExecutableInternalRepresentationKHRBuilder<'a> {
+        self.inner.is_text = is_text.into();
+        self
+    }
+    pub fn data(
+        mut self,
+        data: &'a [u8],
+    ) -> PipelineExecutableInternalRepresentationKHRBuilder<'a> {
+        self.inner.data_size = data.len() as _;
+        self.inner.p_data = data.as_ptr() as *const c_void;
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsPipelineExecutableInternalRepresentationKHR>(
+        mut self,
+        next: &'a mut T,
+    ) -> PipelineExecutableInternalRepresentationKHRBuilder<'a> {
+        unsafe {
+            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> PipelineExecutableInternalRepresentationKHR {
+        self.inner
+    }
+}
+#[repr(C)]
 #[derive(Copy, Clone, Debug)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkPhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXT.html>"]
 pub struct PhysicalDeviceShaderDemoteToHelperInvocationFeaturesEXT {
@@ -55459,6 +55580,10 @@ impl KhrSamplerMirrorClampToEdgeFn {
         KhrSamplerMirrorClampToEdgeFn {}
     }
 }
+#[doc = "Generated from \'VK_KHR_sampler_mirror_clamp_to_edge\'"]
+impl SamplerAddressMode {
+    pub const MIRROR_CLAMP_TO_EDGE: Self = SamplerAddressMode(4);
+}
 impl ImgFilterCubicFn {
     pub fn name() -> &'static ::std::ffi::CStr {
         ::std::ffi::CStr::from_bytes_with_nul(b"VK_IMG_filter_cubic\0")
@@ -58582,6 +58707,10 @@ impl StructureType {
 #[doc = "Generated from \'VK_KHR_push_descriptor\'"]
 impl DescriptorSetLayoutCreateFlags {
     pub const PUSH_DESCRIPTOR_KHR: Self = DescriptorSetLayoutCreateFlags(0b1);
+}
+#[doc = "Generated from \'VK_KHR_push_descriptor\'"]
+impl DescriptorUpdateTemplateType {
+    pub const PUSH_DESCRIPTORS_KHR: Self = DescriptorUpdateTemplateType(1);
 }
 impl ExtConditionalRenderingFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -70508,6 +70637,22 @@ impl StructureType {
 }
 #[doc = "Generated from \'VK_VERSION_1_2\'"]
 impl StructureType {
+    pub const PHYSICAL_DEVICE_VULKAN_1_1_FEATURES: Self = StructureType(49);
+}
+#[doc = "Generated from \'VK_VERSION_1_2\'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_VULKAN_1_1_PROPERTIES: Self = StructureType(50);
+}
+#[doc = "Generated from \'VK_VERSION_1_2\'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_VULKAN_1_2_FEATURES: Self = StructureType(51);
+}
+#[doc = "Generated from \'VK_VERSION_1_2\'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_VULKAN_1_2_PROPERTIES: Self = StructureType(52);
+}
+#[doc = "Generated from \'VK_VERSION_1_2\'"]
+impl StructureType {
     pub const IMAGE_FORMAT_LIST_CREATE_INFO: Self = StructureType(1_000_147_000);
 }
 #[doc = "Generated from \'VK_VERSION_1_2\'"]
@@ -71650,6 +71795,7 @@ impl fmt::Debug for DescriptorUpdateTemplateType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::DESCRIPTOR_SET => Some("DESCRIPTOR_SET"),
+            Self::PUSH_DESCRIPTORS_KHR => Some("PUSH_DESCRIPTORS_KHR"),
             _ => None,
         };
         if let Some(x) = name {
@@ -73685,6 +73831,7 @@ impl fmt::Debug for SamplerAddressMode {
             Self::MIRRORED_REPEAT => Some("MIRRORED_REPEAT"),
             Self::CLAMP_TO_EDGE => Some("CLAMP_TO_EDGE"),
             Self::CLAMP_TO_BORDER => Some("CLAMP_TO_BORDER"),
+            Self::MIRROR_CLAMP_TO_EDGE => Some("MIRROR_CLAMP_TO_EDGE"),
             _ => None,
         };
         if let Some(x) = name {
@@ -74709,6 +74856,18 @@ impl fmt::Debug for StructureType {
             Self::DESCRIPTOR_SET_LAYOUT_SUPPORT => Some("DESCRIPTOR_SET_LAYOUT_SUPPORT"),
             Self::PHYSICAL_DEVICE_SHADER_DRAW_PARAMETERS_FEATURES => {
                 Some("PHYSICAL_DEVICE_SHADER_DRAW_PARAMETERS_FEATURES")
+            }
+            Self::PHYSICAL_DEVICE_VULKAN_1_1_FEATURES => {
+                Some("PHYSICAL_DEVICE_VULKAN_1_1_FEATURES")
+            }
+            Self::PHYSICAL_DEVICE_VULKAN_1_1_PROPERTIES => {
+                Some("PHYSICAL_DEVICE_VULKAN_1_1_PROPERTIES")
+            }
+            Self::PHYSICAL_DEVICE_VULKAN_1_2_FEATURES => {
+                Some("PHYSICAL_DEVICE_VULKAN_1_2_FEATURES")
+            }
+            Self::PHYSICAL_DEVICE_VULKAN_1_2_PROPERTIES => {
+                Some("PHYSICAL_DEVICE_VULKAN_1_2_PROPERTIES")
             }
             Self::IMAGE_FORMAT_LIST_CREATE_INFO => Some("IMAGE_FORMAT_LIST_CREATE_INFO"),
             Self::ATTACHMENT_DESCRIPTION_2 => Some("ATTACHMENT_DESCRIPTION_2"),

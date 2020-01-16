@@ -946,7 +946,16 @@ pub fn generate_extension_constants<'a>(
                     let value = if *positive { value } else { -value };
                     Some((Constant::Number(value as i32), Some(extends.clone())))
                 }
-                _ => None,
+                EnumSpec::Value { value, extends } => {
+                    if let (Some(extends), Ok(value)) = (extends, value.parse::<i32>()) {
+                        Some((Constant::Number(value), Some(extends.clone())))
+                    } else {
+                        None
+                    }
+                }
+                _ => {
+                    None
+                },
             }?;
             let extends = extends?;
             let ext_constant = ExtensionConstant {
@@ -2176,6 +2185,7 @@ pub fn write_source_code(path: &Path) {
         })
         .flat_map(|definitions| definitions.elements.iter())
         .collect();
+    // println!("{:#?}", definitions);
 
     let enums: Vec<&vkxml::Enumeration> = spec
         .elements
@@ -2201,6 +2211,7 @@ pub fn write_source_code(path: &Path) {
         })
         .flat_map(|constants| constants.elements.iter())
         .collect();
+    // println!("{:#?}", constants);
 
     let mut fn_cache = HashSet::new();
     let mut bitflags_cache = HashSet::new();
@@ -2218,6 +2229,7 @@ pub fn write_source_code(path: &Path) {
             };
             acc
         });
+    // println!("{:#?}", const_values);
 
     let constants_code: Vec<_> = constants
         .iter()
