@@ -2185,7 +2185,6 @@ pub fn write_source_code(path: &Path) {
         })
         .flat_map(|definitions| definitions.elements.iter())
         .collect();
-    // println!("{:#?}", definitions);
 
     let enums: Vec<&vkxml::Enumeration> = spec
         .elements
@@ -2211,7 +2210,6 @@ pub fn write_source_code(path: &Path) {
         })
         .flat_map(|constants| constants.elements.iter())
         .collect();
-    // println!("{:#?}", constants);
 
     let mut fn_cache = HashSet::new();
     let mut bitflags_cache = HashSet::new();
@@ -2229,7 +2227,6 @@ pub fn write_source_code(path: &Path) {
             };
             acc
         });
-    // println!("{:#?}", const_values);
 
     let constants_code: Vec<_> = constants
         .iter()
