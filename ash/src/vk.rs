@@ -45394,7 +45394,7 @@ pub union PerformanceCounterResultKHR {
     pub uint32: u32,
     pub uint64: u64,
     pub float32: f32,
-    pub float64: double,
+    pub float64: f64,
 }
 impl ::std::default::Default for PerformanceCounterResultKHR {
     fn default() -> PerformanceCounterResultKHR {
@@ -47281,7 +47281,7 @@ pub union PipelineExecutableStatisticValueKHR {
     pub b32: Bool32,
     pub i64: i64,
     pub u64: u64,
-    pub f64: double,
+    pub f64: f64,
 }
 impl ::std::default::Default for PipelineExecutableStatisticValueKHR {
     fn default() -> PipelineExecutableStatisticValueKHR {

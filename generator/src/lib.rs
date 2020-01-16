@@ -648,6 +648,7 @@ fn name_to_tokens(type_name: &str) -> Ident {
         "void" => "c_void",
         "char" => "c_char",
         "float" => "f32",
+        "double" => "f64",
         "long" => "c_ulong",
         _ => {
             if type_name.starts_with("Vk") {
