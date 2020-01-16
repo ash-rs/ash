@@ -89,7 +89,7 @@ named!(cfloat<&str, f32>,
 
 fn khronos_link<S: Display>(name: &S) -> Literal {
     Literal::string(&format!(
-        "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/{name}.html>",
+        "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/{name}.html>",
         name = name
     ))
 }
@@ -185,22 +185,22 @@ pub fn handle_nondispatchable_macro() -> Tokens {
 }
 pub fn vk_version_macros() -> Tokens {
     quote! {
-        #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VK_MAKE_VERSION.html>"]
+        #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VK_MAKE_VERSION.html>"]
         pub const fn make_version(major: u32, minor: u32, patch: u32) -> u32 {
             (major << 22) | (minor << 12) | patch
         }
 
-        #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VK_VERSION_MAJOR.html>"]
+        #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VK_VERSION_MAJOR.html>"]
         pub const fn version_major(version: u32) -> u32 {
             version >> 22
         }
 
-        #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VK_VERSION_MINOR.html>"]
+        #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VK_VERSION_MINOR.html>"]
         pub const fn version_minor(version: u32) -> u32 {
             (version >> 12) & 0x3ff
         }
 
-        #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VK_VERSION_PATCH.html>"]
+        #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VK_VERSION_PATCH.html>"]
         pub const fn version_patch(version: u32) -> u32 {
             version & 0xfff
         }
