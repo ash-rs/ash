@@ -953,9 +953,7 @@ pub fn generate_extension_constants<'a>(
                         None
                     }
                 }
-                _ => {
-                    None
-                },
+                _ => None,
             }?;
             let extends = extends?;
             let ext_constant = ExtensionConstant {
