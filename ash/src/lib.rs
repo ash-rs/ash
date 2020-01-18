@@ -1,4 +1,4 @@
-#![allow(clippy::too_many_arguments)]
+#![allow(clippy::too_many_arguments, clippy::missing_safety_doc)]
 //! # Vulkan API
 //!
 //! <https://www.khronos.org/registry/vulkan/specs/1.1-extensions/html/index.html>
