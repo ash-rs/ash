@@ -199,7 +199,7 @@ impl EntryCustom<Arc<DynamicLibrary>> {
         Self::new_custom(
             || {
                 DynamicLibrary::open(Some(&Path::new(LIB_PATH)))
-                    .map_err(|err| LoadingError::LibraryLoadError(err.clone()))
+                    .map_err(LoadingError::LibraryLoadError)
                     .map(Arc::new)
             },
             |vk_lib, name| unsafe {

@@ -1655,7 +1655,7 @@ pub fn derive_setters(
         .map(|extends| {
             extends
                 .split(',')
-                .filter(|extend| root_struct_names.contains(&extend.to_string()))
+                .filter(|extend| root_struct_names.contains(*extend))
                 .map(|extends| name_to_tokens(&format!("Extends{}", name_to_tokens(&extends))))
                 .collect()
         })
