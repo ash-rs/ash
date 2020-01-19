@@ -18,7 +18,6 @@ A very lightweight wrapper around Vulkan
 - [x] No validation, everything is **unsafe**
 - [x] Generated from `vk.xml`
 - [x] Support for Vulkan 1.1
-- [x] Support for Vulkan 1.2
 
 ## Features
 ### Explicit returns with `Result`
