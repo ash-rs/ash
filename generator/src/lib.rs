@@ -2281,7 +2281,7 @@ pub fn write_source_code(path: &Path) {
     let version_macros = vk_version_macros();
     let platform_specific_types = platform_specific_types();
     let source_code = quote! {
-        #![allow(clippy::too_many_arguments, clippy::cognitive_complexity)]
+        #![allow(clippy::too_many_arguments, clippy::cognitive_complexity, clippy::wrong_self_convention)]
         use std::fmt;
         use std::os::raw::*;
         /// Iterates through the pointer chain. Includes the item that is passed into the function.
