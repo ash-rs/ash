@@ -89,7 +89,7 @@ named!(cfloat<&str, f32>,
 
 fn khronos_link<S: Display>(name: &S) -> Literal {
     Literal::string(&format!(
-        "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/{name}.html>",
+        "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/{name}.html>",
         name = name
     ))
 }
@@ -185,22 +185,22 @@ pub fn handle_nondispatchable_macro() -> Tokens {
 }
 pub fn vk_version_macros() -> Tokens {
     quote! {
-        #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VK_MAKE_VERSION.html>"]
+        #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VK_MAKE_VERSION.html>"]
         pub const fn make_version(major: u32, minor: u32, patch: u32) -> u32 {
             (major << 22) | (minor << 12) | patch
         }
 
-        #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VK_VERSION_MAJOR.html>"]
+        #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VK_VERSION_MAJOR.html>"]
         pub const fn version_major(version: u32) -> u32 {
             version >> 22
         }
 
-        #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VK_VERSION_MINOR.html>"]
+        #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VK_VERSION_MINOR.html>"]
         pub const fn version_minor(version: u32) -> u32 {
             (version >> 12) & 0x3ff
         }
 
-        #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VK_VERSION_PATCH.html>"]
+        #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VK_VERSION_PATCH.html>"]
         pub const fn version_patch(version: u32) -> u32 {
             version & 0xfff
         }
@@ -648,6 +648,7 @@ fn name_to_tokens(type_name: &str) -> Ident {
         "void" => "c_void",
         "char" => "c_char",
         "float" => "f32",
+        "double" => "f64",
         "long" => "c_ulong",
         _ => {
             if type_name.starts_with("Vk") {
@@ -944,6 +945,13 @@ pub fn generate_extension_constants<'a>(
                     let value = ext_base + (extnumber - 1) * ext_block_size + offset;
                     let value = if *positive { value } else { -value };
                     Some((Constant::Number(value as i32), Some(extends.clone())))
+                }
+                EnumSpec::Value { value, extends } => {
+                    if let (Some(extends), Ok(value)) = (extends, value.parse::<i32>()) {
+                        Some((Constant::Number(value), Some(extends.clone())))
+                    } else {
+                        None
+                    }
                 }
                 _ => None,
             }?;
@@ -1587,7 +1595,7 @@ pub fn derive_setters(
                             // *mut
                             let slice_type = &param_ty_string[5..];
                             if slice_type == "c_void" {
-                                slice_param_ty_tokens = "&mut 'a [u8]".to_string();
+                                slice_param_ty_tokens = "&'a mut [u8]".to_string();
                                 ptr = ".as_mut_ptr() as *mut c_void";
                             } else {
                                 slice_param_ty_tokens = "&'a mut [".to_string() + slice_type + "]";
@@ -2273,7 +2281,7 @@ pub fn write_source_code(path: &Path) {
     let version_macros = vk_version_macros();
     let platform_specific_types = platform_specific_types();
     let source_code = quote! {
-        #![allow(clippy::too_many_arguments, clippy::cognitive_complexity)]
+        #![allow(clippy::too_many_arguments, clippy::cognitive_complexity, clippy::wrong_self_convention)]
         use std::fmt;
         use std::os::raw::*;
         /// Iterates through the pointer chain. Includes the item that is passed into the function.
