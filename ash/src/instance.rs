@@ -13,6 +13,7 @@ pub struct Instance {
     handle: vk::Instance,
     instance_fn_1_0: vk::InstanceFnV1_0,
     instance_fn_1_1: vk::InstanceFnV1_1,
+    instance_fn_1_2: vk::InstanceFnV1_2,
 }
 impl Instance {
     pub unsafe fn load(static_fn: &vk::StaticFn, instance: vk::Instance) -> Self {
@@ -22,11 +23,15 @@ impl Instance {
         let instance_fn_1_1 = vk::InstanceFnV1_1::load(|name| {
             mem::transmute(static_fn.get_instance_proc_addr(instance, name.as_ptr()))
         });
+        let instance_fn_1_2 = vk::InstanceFnV1_2::load(|name| {
+            mem::transmute(static_fn.get_instance_proc_addr(instance, name.as_ptr()))
+        });
 
         Instance {
             handle: instance,
             instance_fn_1_0,
             instance_fn_1_1,
+            instance_fn_1_2,
         }
     }
 }
@@ -65,6 +70,17 @@ impl InstanceV1_1 for Instance {
     fn fp_v1_1(&self) -> &vk::InstanceFnV1_1 {
         &self.instance_fn_1_1
     }
+}
+
+impl InstanceV1_2 for Instance {
+    fn fp_v1_2(&self) -> &vk::InstanceFnV1_2 {
+        &self.instance_fn_1_2
+    }
+}
+
+#[allow(non_camel_case_types)]
+pub trait InstanceV1_2: InstanceV1_1 {
+    fn fp_v1_2(&self) -> &vk::InstanceFnV1_2;
 }
 
 #[allow(non_camel_case_types)]
