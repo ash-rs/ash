@@ -7,7 +7,7 @@ use std::mem;
 use std::os::raw::c_char;
 use std::ptr;
 
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/VkInstance.html>"]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkInstance.html>"]
 #[derive(Clone)]
 pub struct Instance {
     handle: vk::Instance,
@@ -33,7 +33,7 @@ impl Instance {
 
 impl InstanceV1_0 for Instance {
     type Device = Device;
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateDevice.html>"]
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateDevice.html>"]
     unsafe fn create_device(
         &self,
         physical_device: vk::PhysicalDevice,
@@ -81,7 +81,7 @@ pub trait InstanceV1_1: InstanceV1_0 {
         group_count as usize
     }
 
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkEnumeratePhysicalDeviceGroups.html>"]
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkEnumeratePhysicalDeviceGroups.html>"]
     fn enumerate_physical_device_groups(
         &self,
         out: &mut [vk::PhysicalDeviceGroupProperties],
@@ -101,7 +101,7 @@ pub trait InstanceV1_1: InstanceV1_0 {
         }
     }
 
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceProperties2.html>"]
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceProperties2.html>"]
     unsafe fn get_physical_device_properties2(
         &self,
         physical_device: vk::PhysicalDevice,
@@ -111,7 +111,7 @@ pub trait InstanceV1_1: InstanceV1_0 {
             .get_physical_device_properties2(physical_device, prop);
     }
 
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceFormatProperties2.html>"]
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceFormatProperties2.html>"]
     unsafe fn get_physical_device_format_properties2(
         &self,
         physical_device: vk::PhysicalDevice,
@@ -122,7 +122,7 @@ pub trait InstanceV1_1: InstanceV1_0 {
             .get_physical_device_format_properties2(physical_device, format, out);
     }
 
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceImageFormatProperties2.html>"]
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceImageFormatProperties2.html>"]
     unsafe fn get_physical_device_image_format_properties2(
         &self,
         physical_device: vk::PhysicalDevice,
@@ -154,7 +154,7 @@ pub trait InstanceV1_1: InstanceV1_0 {
         queue_count as usize
     }
 
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceQueueFamilyProperties2.html>"]
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceQueueFamilyProperties2.html>"]
     unsafe fn get_physical_device_queue_family_properties2(
         &self,
         physical_device: vk::PhysicalDevice,
@@ -168,7 +168,7 @@ pub trait InstanceV1_1: InstanceV1_0 {
         );
     }
 
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceMemoryProperties2.html>"]
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceMemoryProperties2.html>"]
     unsafe fn get_physical_device_memory_properties2(
         &self,
         physical_device: vk::PhysicalDevice,
@@ -194,7 +194,7 @@ pub trait InstanceV1_1: InstanceV1_0 {
         format_count as usize
     }
 
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceSparseImageFormatProperties2.html>"]
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceSparseImageFormatProperties2.html>"]
     unsafe fn get_physical_device_sparse_image_format_properties2(
         &self,
         physical_device: vk::PhysicalDevice,
@@ -211,7 +211,7 @@ pub trait InstanceV1_1: InstanceV1_0 {
             );
     }
 
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceExternalBufferProperties.html>"]
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceExternalBufferProperties.html>"]
     unsafe fn get_physical_device_external_buffer_properties(
         &self,
         physical_device: vk::PhysicalDevice,
@@ -226,7 +226,7 @@ pub trait InstanceV1_1: InstanceV1_0 {
             );
     }
 
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceExternalFenceProperties.html>"]
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceExternalFenceProperties.html>"]
     unsafe fn get_physical_device_external_fence_properties(
         &self,
         physical_device: vk::PhysicalDevice,
@@ -241,7 +241,7 @@ pub trait InstanceV1_1: InstanceV1_0 {
             );
     }
 
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceExternalSemaphoreProperties.html>"]
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceExternalSemaphoreProperties.html>"]
     unsafe fn get_physical_device_external_semaphore_properties(
         &self,
         physical_device: vk::PhysicalDevice,
@@ -262,7 +262,7 @@ pub trait InstanceV1_0 {
     type Device;
     fn handle(&self) -> vk::Instance;
     fn fp_v1_0(&self) -> &vk::InstanceFnV1_0;
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateDevice.html>"]
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateDevice.html>"]
     unsafe fn create_device(
         &self,
         physical_device: vk::PhysicalDevice,
@@ -270,7 +270,7 @@ pub trait InstanceV1_0 {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> Result<Self::Device, vk::Result>;
 
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetDeviceProcAddr.html>"]
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetDeviceProcAddr.html>"]
     unsafe fn get_device_proc_addr(
         &self,
         device: vk::Device,
@@ -279,13 +279,13 @@ pub trait InstanceV1_0 {
         self.fp_v1_0().get_device_proc_addr(device, p_name)
     }
 
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkDestroyInstance.html>"]
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkDestroyInstance.html>"]
     unsafe fn destroy_instance(&self, allocation_callbacks: Option<&vk::AllocationCallbacks>) {
         self.fp_v1_0()
             .destroy_instance(self.handle(), allocation_callbacks.as_raw_ptr());
     }
 
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceFormatProperties.html>"]
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceFormatProperties.html>"]
     unsafe fn get_physical_device_format_properties(
         &self,
         physical_device: vk::PhysicalDevice,
@@ -300,7 +300,7 @@ pub trait InstanceV1_0 {
         format_prop
     }
 
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceImageFormatProperties.html>"]
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceImageFormatProperties.html>"]
     unsafe fn get_physical_device_image_format_properties(
         &self,
         physical_device: vk::PhysicalDevice,
@@ -327,7 +327,7 @@ pub trait InstanceV1_0 {
         }
     }
 
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceMemoryProperties.html>"]
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceMemoryProperties.html>"]
     unsafe fn get_physical_device_memory_properties(
         &self,
         physical_device: vk::PhysicalDevice,
@@ -338,7 +338,7 @@ pub trait InstanceV1_0 {
         memory_prop
     }
 
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceProperties.html>"]
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceProperties.html>"]
     unsafe fn get_physical_device_properties(
         &self,
         physical_device: vk::PhysicalDevice,
@@ -349,7 +349,7 @@ pub trait InstanceV1_0 {
         prop
     }
 
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceQueueFamilyProperties.html>"]
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceQueueFamilyProperties.html>"]
     unsafe fn get_physical_device_queue_family_properties(
         &self,
         physical_device: vk::PhysicalDevice,
@@ -370,7 +370,7 @@ pub trait InstanceV1_0 {
         queue_families_vec
     }
 
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetPhysicalDeviceFeatures.html>"]
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceFeatures.html>"]
     unsafe fn get_physical_device_features(
         &self,
         physical_device: vk::PhysicalDevice,
@@ -381,7 +381,7 @@ pub trait InstanceV1_0 {
         prop
     }
 
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkEnumeratePhysicalDevices.html>"]
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkEnumeratePhysicalDevices.html>"]
     unsafe fn enumerate_physical_devices(&self) -> VkResult<Vec<vk::PhysicalDevice>> {
         let mut num = mem::zeroed();
         self.fp_v1_0()
@@ -399,7 +399,7 @@ pub trait InstanceV1_0 {
         }
     }
 
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkEnumerateDeviceExtensionProperties.html>"]
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkEnumerateDeviceExtensionProperties.html>"]
     unsafe fn enumerate_device_extension_properties(
         &self,
         device: vk::PhysicalDevice,
