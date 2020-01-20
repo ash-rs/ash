@@ -7,6 +7,193 @@ use std::os::raw::c_void;
 use std::ptr;
 
 #[allow(non_camel_case_types)]
+pub trait DeviceV1_2: DeviceV1_1 {
+    fn fp_v1_2(&self) -> &vk::DeviceFnV1_2;
+
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdDrawIndirectCount.html>"]
+    unsafe fn cmd_draw_indirect_count(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        buffer: vk::Buffer,
+        offset: vk::DeviceSize,
+        count_buffer: vk::Buffer,
+        count_buffer_offset: vk::DeviceSize,
+        max_draw_count: u32,
+        stride: u32,
+    ) {
+        self.fp_v1_2().cmd_draw_indirect_count(
+            command_buffer,
+            buffer,
+            offset,
+            count_buffer,
+            count_buffer_offset,
+            max_draw_count,
+            stride,
+        );
+    }
+
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdDrawIndexedIndirectCount.html>"]
+    unsafe fn cmd_draw_indexed_indirect_count(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        buffer: vk::Buffer,
+        offset: vk::DeviceSize,
+        count_buffer: vk::Buffer,
+        count_buffer_offset: vk::DeviceSize,
+        max_draw_count: u32,
+        stride: u32,
+    ) {
+        self.fp_v1_2().cmd_draw_indexed_indirect_count(
+            command_buffer,
+            buffer,
+            offset,
+            count_buffer,
+            count_buffer_offset,
+            max_draw_count,
+            stride,
+        );
+    }
+
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateRenderPass2.html>"]
+    unsafe fn create_render_pass2(
+        &self,
+        create_info: &vk::RenderPassCreateInfo2,
+        allocation_callbacks: Option<&vk::AllocationCallbacks>,
+    ) -> VkResult<vk::RenderPass> {
+        let mut renderpass = mem::zeroed();
+        let err_code = self.fp_v1_2().create_render_pass2(
+            self.handle(),
+            create_info,
+            allocation_callbacks.as_raw_ptr(),
+            &mut renderpass,
+        );
+        match err_code {
+            vk::Result::SUCCESS => Ok(renderpass),
+            _ => Err(err_code),
+        }
+    }
+
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdBeginRenderPass2.html>"]
+    unsafe fn cmd_begin_render_pass2(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        render_pass_begin_info: &vk::RenderPassBeginInfo,
+        subpass_begin_info: &vk::SubpassBeginInfo,
+    ) {
+        self.fp_v1_2().cmd_begin_render_pass2(
+            command_buffer,
+            render_pass_begin_info,
+            subpass_begin_info,
+        );
+    }
+
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdNextSubpass2.html>"]
+    unsafe fn cmd_next_subpass2(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        subpass_begin_info: &vk::SubpassBeginInfo,
+        subpass_end_info: &vk::SubpassEndInfo,
+    ) {
+        self.fp_v1_2()
+            .cmd_next_subpass2(command_buffer, subpass_begin_info, subpass_end_info);
+    }
+
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdEndRenderPass2.html>"]
+    unsafe fn cmd_end_render_pass2(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        subpass_end_info: &vk::SubpassEndInfo,
+    ) {
+        self.fp_v1_2()
+            .cmd_end_render_pass2(command_buffer, subpass_end_info);
+    }
+
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkResetQueryPool.html>"]
+    unsafe fn reset_query_pool(
+        &self,
+        device: vk::Device,
+        query_pool: vk::QueryPool,
+        first_query: u32,
+        query_count: u32,
+    ) {
+        self.fp_v1_2()
+            .reset_query_pool(device, query_pool, first_query, query_count);
+    }
+
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetSemaphoreCounterValue.html>"]
+    unsafe fn get_semaphore_counter_value(
+        &self,
+        device: vk::Device,
+        semaphore: vk::Semaphore,
+    ) -> VkResult<u64> {
+        let mut value = 0;
+        let err_code = self
+            .fp_v1_2()
+            .get_semaphore_counter_value(device, semaphore, &mut value);
+        match err_code {
+            vk::Result::SUCCESS => Ok(value),
+            _ => Err(err_code),
+        }
+    }
+
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkWaitSemaphores.html>"]
+    unsafe fn wait_semaphores(
+        &self,
+        device: vk::Device,
+        wait_info: &vk::SemaphoreWaitInfo,
+        timeout: u64,
+    ) -> VkResult<()> {
+        let err_code = self.fp_v1_2().wait_semaphores(device, wait_info, timeout);
+        match err_code {
+            vk::Result::SUCCESS => Ok(()),
+            _ => Err(err_code),
+        }
+    }
+
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkSignalSemaphore.html>"]
+    unsafe fn signal_semaphore(
+        &self,
+        device: vk::Device,
+        signal_info: &vk::SemaphoreSignalInfo,
+    ) -> VkResult<()> {
+        let err_code = self.fp_v1_2().signal_semaphore(device, signal_info);
+        match err_code {
+            vk::Result::SUCCESS => Ok(()),
+            _ => Err(err_code),
+        }
+    }
+
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetBufferDeviceAddress.html>"]
+    unsafe fn get_buffer_device_address(
+        &self,
+        device: vk::Device,
+        info: &vk::BufferDeviceAddressInfo,
+    ) -> vk::DeviceAddress {
+        self.fp_v1_2().get_buffer_device_address(device, info)
+    }
+
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetBufferOpaqueCaptureAddress.html>"]
+    unsafe fn get_buffer_opaque_capture_address(
+        &self,
+        device: vk::Device,
+        info: &vk::BufferDeviceAddressInfo,
+    ) -> u64 {
+        self.fp_v1_2()
+            .get_buffer_opaque_capture_address(device, info)
+    }
+
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetDeviceMemoryOpaqueCaptureAddress.html>"]
+    unsafe fn get_device_memory_opaque_capture_address(
+        &self,
+        device: vk::Device,
+        info: &vk::DeviceMemoryOpaqueCaptureAddressInfo,
+    ) -> u64 {
+        self.fp_v1_2()
+            .get_device_memory_opaque_capture_address(device, info)
+    }
+}
+
+#[allow(non_camel_case_types)]
 pub trait DeviceV1_1: DeviceV1_0 {
     fn fp_v1_1(&self) -> &vk::DeviceFnV1_1;
 
@@ -1958,6 +2145,7 @@ pub struct Device {
     handle: vk::Device,
     device_fn_1_0: vk::DeviceFnV1_0,
     device_fn_1_1: vk::DeviceFnV1_1,
+    device_fn_1_2: vk::DeviceFnV1_2,
 }
 impl Device {
     pub unsafe fn load(instance_fn: &vk::InstanceFnV1_0, device: vk::Device) -> Self {
@@ -1967,10 +2155,14 @@ impl Device {
         let device_fn_1_1 = vk::DeviceFnV1_1::load(|name| {
             mem::transmute(instance_fn.get_device_proc_addr(device, name.as_ptr()))
         });
+        let device_fn_1_2 = vk::DeviceFnV1_2::load(|name| {
+            mem::transmute(instance_fn.get_device_proc_addr(device, name.as_ptr()))
+        });
         Device {
             handle: device,
             device_fn_1_0,
             device_fn_1_1,
+            device_fn_1_2,
         }
     }
 }
@@ -1988,6 +2180,12 @@ impl DeviceV1_0 for Device {
 impl DeviceV1_1 for Device {
     fn fp_v1_1(&self) -> &vk::DeviceFnV1_1 {
         &self.device_fn_1_1
+    }
+}
+
+impl DeviceV1_2 for Device {
+    fn fp_v1_2(&self) -> &vk::DeviceFnV1_2 {
+        &self.device_fn_1_2
     }
 }
 
