@@ -101,6 +101,16 @@ pub trait InstanceV1_1: InstanceV1_0 {
         }
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceFeatures2.html>"]
+    unsafe fn get_physical_device_features2(
+        &self,
+        physical_device: vk::PhysicalDevice,
+        features: &mut vk::PhysicalDeviceFeatures2,
+    ) {
+        self.fp_v1_1()
+            .get_physical_device_features2(physical_device, features);
+    }
+
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceProperties2.html>"]
     unsafe fn get_physical_device_properties2(
         &self,
