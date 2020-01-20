@@ -166,6 +166,10 @@ impl<L> EntryV1_0 for EntryCustom<L> {
 pub trait EntryV1_1: EntryV1_0 {
     fn fp_v1_1(&self) -> &vk::EntryFnV1_1;
 
+    /// Please note that it is recommended to use [`EntryCustom::try_enumerate_instance_version`]
+    /// instead because it also works with Vulkan 1.0.
+    ///
+    /// [`EntryCustom::try_enumerate_instance_version`]: ../struct.EntryCustom.html#method.try_enumerate_instance_version
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkEnumerateInstanceVersion.html>"]
     fn enumerate_instance_version(&self) -> VkResult<u32> {
         unsafe {
@@ -176,6 +180,12 @@ pub trait EntryV1_1: EntryV1_0 {
                 _ => Err(err_code),
             }
         }
+    }
+}
+
+impl<L> EntryV1_1 for EntryCustom<L> {
+    fn fp_v1_1(&self) -> &vk::EntryFnV1_1 {
+        &self.entry_fn_1_1
     }
 }
 
