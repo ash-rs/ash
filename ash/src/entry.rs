@@ -36,6 +36,7 @@ pub struct EntryCustom<L> {
     static_fn: vk::StaticFn,
     entry_fn_1_0: vk::EntryFnV1_0,
     entry_fn_1_1: vk::EntryFnV1_1,
+    entry_fn_1_2: vk::EntryFnV1_2,
     lib: L,
 }
 
@@ -189,6 +190,17 @@ impl<L> EntryV1_1 for EntryCustom<L> {
     }
 }
 
+#[allow(non_camel_case_types)]
+pub trait EntryV1_2: EntryV1_1 {
+    fn fp_v1_2(&self) -> &vk::EntryFnV1_2;
+}
+
+impl<L> EntryV1_2 for EntryCustom<L> {
+    fn fp_v1_2(&self) -> &vk::EntryFnV1_2 {
+        &self.entry_fn_1_2
+    }
+}
+
 impl EntryCustom<Arc<DynamicLibrary>> {
     /// ```rust,no_run
     /// use ash::{vk, Entry, version::EntryV1_0};
@@ -238,10 +250,15 @@ impl<L> EntryCustom<L> {
             mem::transmute(static_fn.get_instance_proc_addr(vk::Instance::null(), name.as_ptr()))
         });
 
+        let entry_fn_1_2 = vk::EntryFnV1_2::load(|name| unsafe {
+            mem::transmute(static_fn.get_instance_proc_addr(vk::Instance::null(), name.as_ptr()))
+        });
+
         Ok(EntryCustom {
             static_fn,
             entry_fn_1_0,
             entry_fn_1_1,
+            entry_fn_1_2,
             lib,
         })
     }
