@@ -36,6 +36,7 @@ pub struct EntryCustom<L> {
     static_fn: vk::StaticFn,
     entry_fn_1_0: vk::EntryFnV1_0,
     entry_fn_1_1: vk::EntryFnV1_1,
+    entry_fn_1_2: vk::EntryFnV1_2,
     lib: L,
 }
 
@@ -76,14 +77,14 @@ pub trait EntryV1_0 {
     type Instance;
     fn fp_v1_0(&self) -> &vk::EntryFnV1_0;
     fn static_fn(&self) -> &vk::StaticFn;
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateInstance.html>"]
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateInstance.html>"]
     unsafe fn create_instance(
         &self,
         create_info: &vk::InstanceCreateInfo,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> Result<Self::Instance, InstanceError>;
 
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkEnumerateInstanceLayerProperties.html>"]
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkEnumerateInstanceLayerProperties.html>"]
     fn enumerate_instance_layer_properties(&self) -> VkResult<Vec<vk::LayerProperties>> {
         unsafe {
             let mut num = 0;
@@ -102,7 +103,7 @@ pub trait EntryV1_0 {
         }
     }
 
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkEnumerateInstanceExtensionProperties.html>"]
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkEnumerateInstanceExtensionProperties.html>"]
     fn enumerate_instance_extension_properties(&self) -> VkResult<Vec<vk::ExtensionProperties>> {
         unsafe {
             let mut num = 0;
@@ -125,7 +126,7 @@ pub trait EntryV1_0 {
         }
     }
 
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkGetInstanceProcAddr.html>"]
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetInstanceProcAddr.html>"]
     unsafe fn get_instance_proc_addr(
         &self,
         instance: vk::Instance,
@@ -137,7 +138,7 @@ pub trait EntryV1_0 {
 
 impl<L> EntryV1_0 for EntryCustom<L> {
     type Instance = Instance;
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkCreateInstance.html>"]
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateInstance.html>"]
     unsafe fn create_instance(
         &self,
         create_info: &vk::InstanceCreateInfo,
@@ -166,7 +167,8 @@ impl<L> EntryV1_0 for EntryCustom<L> {
 pub trait EntryV1_1: EntryV1_0 {
     fn fp_v1_1(&self) -> &vk::EntryFnV1_1;
 
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkEnumerateInstanceVersion.html>"]
+    #[deprecated = "This function is unavailable and therefore panics on Vulkan 1.0, please use `try_enumerate_instance_version` instead"]
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkEnumerateInstanceVersion.html>"]
     fn enumerate_instance_version(&self) -> VkResult<u32> {
         unsafe {
             let mut api_version = 0;
@@ -176,6 +178,23 @@ pub trait EntryV1_1: EntryV1_0 {
                 _ => Err(err_code),
             }
         }
+    }
+}
+
+impl<L> EntryV1_1 for EntryCustom<L> {
+    fn fp_v1_1(&self) -> &vk::EntryFnV1_1 {
+        &self.entry_fn_1_1
+    }
+}
+
+#[allow(non_camel_case_types)]
+pub trait EntryV1_2: EntryV1_1 {
+    fn fp_v1_2(&self) -> &vk::EntryFnV1_2;
+}
+
+impl<L> EntryV1_2 for EntryCustom<L> {
+    fn fp_v1_2(&self) -> &vk::EntryFnV1_2 {
+        &self.entry_fn_1_2
     }
 }
 
@@ -228,15 +247,20 @@ impl<L> EntryCustom<L> {
             mem::transmute(static_fn.get_instance_proc_addr(vk::Instance::null(), name.as_ptr()))
         });
 
+        let entry_fn_1_2 = vk::EntryFnV1_2::load(|name| unsafe {
+            mem::transmute(static_fn.get_instance_proc_addr(vk::Instance::null(), name.as_ptr()))
+        });
+
         Ok(EntryCustom {
             static_fn,
             entry_fn_1_0,
             entry_fn_1_1,
+            entry_fn_1_2,
             lib,
         })
     }
 
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.1-extensions/man/html/vkEnumerateInstanceVersion.html>"]
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkEnumerateInstanceVersion.html>"]
     /// ```rust,no_run
     /// # use ash::{Entry, vk};
     /// # fn main() -> Result<(), Box<std::error::Error>> {
