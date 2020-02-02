@@ -341,11 +341,11 @@ pub fn platform_specific_types() -> Tokens {
         pub type Display = *const c_void;
         pub type Window = c_ulong;
         #[allow(non_camel_case_types)]
-        pub type xcb_connection_t = *const c_void;
+        pub type xcb_connection_t = c_void;
         #[allow(non_camel_case_types)]
         pub type xcb_window_t = u32;
         #[allow(non_camel_case_types)]
-        pub type xcb_visualid_t = *const c_void;
+        pub type xcb_visualid_t = u32;
         pub type MirConnection = *const c_void;
         pub type MirSurface = *const c_void;
         pub type HINSTANCE = *const c_void;
