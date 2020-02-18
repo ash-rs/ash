@@ -1,6 +1,7 @@
 pub use self::android_surface::AndroidSurface;
 pub use self::display::Display;
 pub use self::display_swapchain::DisplaySwapchain;
+pub use self::external_memory_fd::ExternalMemoryFd;
 pub use self::push_descriptor::PushDescriptor;
 pub use self::surface::Surface;
 pub use self::swapchain::Swapchain;
@@ -12,6 +13,7 @@ pub use self::xlib_surface::XlibSurface;
 mod android_surface;
 mod display;
 mod display_swapchain;
+mod external_memory_fd;
 mod push_descriptor;
 mod surface;
 mod swapchain;
