@@ -38,6 +38,10 @@ impl Instance {
 
 impl InstanceV1_0 for Instance {
     type Device = Device;
+    /// # Safety
+    /// In order for the created `Device` to be valid for the duration of its
+    /// usage, the `Instance` this was called on must be dropped later than the
+    /// resulting `Device`.
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateDevice.html>"]
     unsafe fn create_device(
         &self,
@@ -288,6 +292,10 @@ pub trait InstanceV1_0 {
     type Device;
     fn handle(&self) -> vk::Instance;
     fn fp_v1_0(&self) -> &vk::InstanceFnV1_0;
+    /// # Safety
+    /// In order for the created `Device` to be valid for the duration of its
+    /// usage, the `Instance` this was called on must be dropped later than the
+    /// resulting `Device`.
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateDevice.html>"]
     unsafe fn create_device(
         &self,
