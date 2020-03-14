@@ -77,11 +77,12 @@ pub trait EntryV1_0 {
     type Instance;
     fn fp_v1_0(&self) -> &vk::EntryFnV1_0;
     fn static_fn(&self) -> &vk::StaticFn;
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateInstance.html>"]
+    ///
     /// # Safety
     /// In order for the created `Instance` to be valid for the duration of its
     /// usage, the `Entry` this was called on must be dropped later than the
     /// resulting `Instance`.
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateInstance.html>"]
     unsafe fn create_instance(
         &self,
         create_info: &vk::InstanceCreateInfo,
@@ -142,11 +143,12 @@ pub trait EntryV1_0 {
 
 impl<L> EntryV1_0 for EntryCustom<L> {
     type Instance = Instance;
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateInstance.html>"]
+    ///
     /// # Safety
     /// In order for the created `Instance` to be valid for the duration of its
     /// usage, the `Entry` this was called on must be dropped later than the
     /// resulting `Instance`.
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateInstance.html>"]
     unsafe fn create_instance(
         &self,
         create_info: &vk::InstanceCreateInfo,
