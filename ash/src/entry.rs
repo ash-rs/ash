@@ -2,13 +2,13 @@ use crate::instance::Instance;
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
-use shared_library::dynamic_library::DynamicLibrary;
+use libloading::Library;
 use std::error::Error;
 use std::fmt;
+use std::io;
 use std::mem;
 use std::os::raw::c_char;
 use std::os::raw::c_void;
-use std::path::Path;
 use std::ptr;
 use std::sync::Arc;
 
@@ -28,7 +28,7 @@ const LIB_PATH: &str = "libvulkan.so";
 const LIB_PATH: &str = "libvulkan.dylib";
 
 /// Function loader
-pub type Entry = EntryCustom<Arc<DynamicLibrary>>;
+pub type Entry = EntryCustom<Arc<Library>>;
 
 /// Function loader
 #[derive(Clone)]
@@ -40,9 +40,9 @@ pub struct EntryCustom<L> {
     lib: L,
 }
 
-#[derive(Clone, Debug)]
+#[derive(Debug)]
 pub enum LoadingError {
-    LibraryLoadError(String),
+    LibraryLoadError(io::Error),
 }
 
 impl fmt::Display for LoadingError {
@@ -206,7 +206,7 @@ impl<L> EntryV1_2 for EntryCustom<L> {
     }
 }
 
-impl EntryCustom<Arc<DynamicLibrary>> {
+impl EntryCustom<Arc<Library>> {
     /// ```rust,no_run
     /// use ash::{vk, Entry, version::EntryV1_0};
     /// # fn main() -> Result<(), Box<std::error::Error>> {
@@ -225,13 +225,14 @@ impl EntryCustom<Arc<DynamicLibrary>> {
     pub fn new() -> Result<Entry, LoadingError> {
         Self::new_custom(
             || {
-                DynamicLibrary::open(Some(&Path::new(LIB_PATH)))
+                Library::new(&LIB_PATH)
                     .map_err(LoadingError::LibraryLoadError)
                     .map(Arc::new)
             },
             |vk_lib, name| unsafe {
                 vk_lib
-                    .symbol(&*name.to_string_lossy())
+                    .get(name.to_bytes_with_nul())
+                    .map(|symbol| *symbol)
                     .unwrap_or(ptr::null_mut())
             },
         )

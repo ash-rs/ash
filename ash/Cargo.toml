@@ -11,7 +11,7 @@ documentation = "https://docs.rs/ash"
 edition = "2018"
 
 [dependencies]
-shared_library = "0.1.9"
+libloading = "0.5.2"
 
 [features]
 default = []
