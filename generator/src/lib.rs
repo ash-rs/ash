@@ -403,7 +403,7 @@ impl ConstantExt for vkxml::ExtensionEnum {
         Constant::from_extension_enum(self).expect("").to_tokens()
     }
     fn notation(&self) -> Option<&str> {
-        self.notation.as_ref().map(|s| s.as_str())
+        self.notation.as_deref()
     }
 }
 
@@ -415,7 +415,7 @@ impl ConstantExt for vkxml::Constant {
         Constant::from_constant(self).to_tokens()
     }
     fn notation(&self) -> Option<&str> {
-        self.notation.as_ref().map(|s| s.as_str())
+        self.notation.as_deref()
     }
 }
 
@@ -672,7 +672,7 @@ impl FieldExt for vkxml::Field {
         true
     }
     fn param_ident(&self) -> Ident {
-        let name = self.name.as_ref().map(|s| s.as_str()).unwrap_or("field");
+        let name = self.name.as_deref().unwrap_or("field");
         let name_corrected = match name {
             "type" => "ty",
             _ => name,
@@ -1112,7 +1112,7 @@ pub fn variant_ident(enum_name: &str, variant_name: &str) -> Ident {
         .replace(vendor, "");
     let is_digit = new_variant_name
         .chars()
-        .nth(0)
+        .next()
         .map(|c| c.is_digit(10))
         .unwrap_or(false);
     if is_digit {
@@ -1246,7 +1246,7 @@ pub fn generate_result(ident: Ident, _enum: &vkxml::Enumeration) -> Tokens {
         let (variant_name, notation) = match *elem {
             vkxml::EnumerationElement::Enum(ref constant) => (
                 constant.name.as_str(),
-                constant.notation.as_ref().map(|s| s.as_str()).unwrap_or(""),
+                constant.notation.as_deref().unwrap_or(""),
             ),
             _ => {
                 return None;
@@ -1319,7 +1319,7 @@ pub fn derive_default(_struct: &vkxml::Struct) -> Option<Tokens> {
             let ty = field
                 .type_enums
                 .as_ref()
-                .and_then(|ty| ty.split(',').nth(0));
+                .and_then(|ty| ty.split(',').next());
             if let Some(variant) = ty {
                 let variant_ident = variant_ident("VkStructureType", variant);
 
@@ -2139,7 +2139,7 @@ pub fn write_source_code(path: &Path) {
             vk_parse::RegistryChild::Extensions(ref ext) => Some(&ext.children),
             _ => None,
         })
-        .nth(0)
+        .next()
         .expect("extension");
     let mut ty_cache = HashSet::new();
     let aliases: Vec<_> = spec2

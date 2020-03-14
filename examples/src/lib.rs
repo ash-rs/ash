@@ -388,10 +388,10 @@ impl ExampleBase {
                                 None
                             }
                         })
-                        .nth(0)
+                        .next()
                 })
                 .filter_map(|v| v)
-                .nth(0)
+                .next()
                 .expect("Couldn't find suitable device.");
             let queue_family_index = queue_family_index as u32;
             let device_extension_names_raw = [Swapchain::name().as_ptr()];
@@ -429,7 +429,7 @@ impl ExampleBase {
                     },
                     _ => *sfmt,
                 })
-                .nth(0)
+                .next()
                 .expect("Unable to find suitable surface format.");
             let surface_capabilities = surface_loader
                 .get_physical_device_surface_capabilities(pdevice, surface)
