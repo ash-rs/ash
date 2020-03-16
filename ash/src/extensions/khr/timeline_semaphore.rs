@@ -1,5 +1,4 @@
 #![allow(dead_code)]
-use crate::prelude::*;
 use crate::version::{EntryV1_0, InstanceV1_0};
 use crate::vk;
 use std::ffi::CStr;
