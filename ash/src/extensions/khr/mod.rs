@@ -9,6 +9,7 @@ pub use self::wayland_surface::WaylandSurface;
 pub use self::win32_surface::Win32Surface;
 pub use self::xcb_surface::XcbSurface;
 pub use self::xlib_surface::XlibSurface;
+pub use self::ray_tracing::RayTracing;
 
 mod android_surface;
 mod display;
@@ -21,3 +22,4 @@ mod wayland_surface;
 mod win32_surface;
 mod xcb_surface;
 mod xlib_surface;
+mod ray_tracing;
