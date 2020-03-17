@@ -1503,7 +1503,11 @@ pub fn derive_setters(
     _struct: &vkxml::Struct,
     root_struct_names: &HashSet<String, impl BuildHasher>,
 ) -> Option<Tokens> {
-    if &_struct.name == "VkBaseInStructure" || &_struct.name == "VkBaseOutStructure" {
+    if &_struct.name == "VkBaseInStructure"
+        || &_struct.name == "VkBaseOutStructure"
+        || &_struct.name == "VkTransformMatrixKHR"
+        || &_struct.name == "VkAccelerationStructureInstanceKHR"
+    {
         return None;
     }
 
@@ -1833,6 +1837,29 @@ pub fn generate_struct(
     union_types: &HashSet<&str, impl BuildHasher>,
 ) -> Tokens {
     let name = name_to_tokens(&_struct.name);
+    if &_struct.name == "VkTransformMatrixKHR" {
+        return quote! {
+            #[repr(C)]
+            #[derive(Copy, Clone)]
+            pub struct TransformMatrixKHR {
+                pub matrix: [f32; 12],
+            }
+        };
+    }
+
+    if &_struct.name == "VkAccelerationStructureInstanceKHR" {
+        return quote! {
+            #[repr(C)]
+            #[derive(Copy, Clone)]
+            pub struct AccelerationStructureInstanceKHR {
+                pub transform: TransformMatrixKHR,
+                pub instance_custom_index_and_mask: u32,
+                pub instance_shader_binding_table_record_offset_and_flags: u32,
+                pub acceleration_structure_reference: u64,
+            }
+        };
+    }
+
     let members = _struct.elements.iter().filter_map(|elem| match *elem {
         vkxml::StructElement::Member(ref field) => Some(field),
         _ => None,
