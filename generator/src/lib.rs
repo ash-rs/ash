@@ -954,7 +954,7 @@ pub fn generate_extension_constants<'a>(
     extension_number: i64,
     extension_items: &'a [vk_parse::ExtensionChild],
     const_cache: &mut HashSet<&'a str, impl BuildHasher>,
-    const_values: &mut BTreeMap<Ident, Vec<Ident>>,
+    const_values: &mut BTreeMap<Ident, Vec<ConstantMatchInfo>>,
 ) -> quote::Tokens {
     use vk_parse::EnumSpec;
     let items = extension_items
@@ -969,9 +969,9 @@ pub fn generate_extension_constants<'a>(
             if const_cache.contains(_enum.name.as_str()) {
                 return None;
             }
-            let (constant, extends) = match &_enum.spec {
+            let (constant, extends, is_alias) = match &_enum.spec {
                 EnumSpec::Bitpos { bitpos, extends } => {
-                    Some((Constant::BitPos(*bitpos as u32), extends.clone()))
+                    Some((Constant::BitPos(*bitpos as u32), extends.clone(), false))
                 }
                 EnumSpec::Offset {
                     offset,
@@ -984,11 +984,11 @@ pub fn generate_extension_constants<'a>(
                     let extnumber = extnumber.unwrap_or_else(|| extension_number);
                     let value = ext_base + (extnumber - 1) * ext_block_size + offset;
                     let value = if *positive { value } else { -value };
-                    Some((Constant::Number(value as i32), Some(extends.clone())))
+                    Some((Constant::Number(value as i32), Some(extends.clone()), false))
                 }
                 EnumSpec::Value { value, extends } => {
                     if let (Some(extends), Ok(value)) = (extends, value.parse::<i32>()) {
-                        Some((Constant::Number(value), Some(extends.clone())))
+                        Some((Constant::Number(value), Some(extends.clone()), false))
                     } else {
                         None
                     }
@@ -1000,7 +1000,7 @@ pub fn generate_extension_constants<'a>(
                         if key.to_string() == "DISPATCH_BASE" {
                             None
                         } else {
-                            Some((Constant::Alias(ident, key), Some(extends.clone())))
+                            Some((Constant::Alias(ident, key), Some(extends.clone()), true))
                         }
                     } else {
                         None
@@ -1017,7 +1017,10 @@ pub fn generate_extension_constants<'a>(
             const_values
                 .get_mut(&ident)
                 .unwrap()
-                .push(ext_constant.variant_ident(&extends));
+                .push(ConstantMatchInfo {
+                    ident: ext_constant.variant_ident(&extends),
+                    is_alias,
+                });
             let impl_block = bitflags_impl_block(ident, &extends, &[&ext_constant]);
             let doc_string = format!("Generated from '{}'", extension_name);
             let q = quote! {
@@ -1090,7 +1093,7 @@ pub fn generate_extension<'a>(
     extension: &'a vk_parse::Extension,
     cmd_map: &CommandMap<'a>,
     const_cache: &mut HashSet<&'a str, impl BuildHasher>,
-    const_values: &mut BTreeMap<Ident, Vec<Ident>>,
+    const_values: &mut BTreeMap<Ident, Vec<ConstantMatchInfo>>,
     cmd_aliases: &HashMap<String, String, impl BuildHasher>,
     fn_cache: &mut HashSet<&'a str, impl BuildHasher>,
 ) -> Option<quote::Tokens> {
@@ -1132,7 +1135,7 @@ pub fn generate_typedef(typedef: &vkxml::Typedef) -> Tokens {
 pub fn generate_bitmask(
     bitmask: &vkxml::Bitmask,
     bitflags_cache: &mut HashSet<Ident, impl BuildHasher>,
-    const_values: &mut BTreeMap<Ident, Vec<Ident>>,
+    const_values: &mut BTreeMap<Ident, Vec<ConstantMatchInfo>>,
 ) -> Option<Tokens> {
     // Workaround for empty bitmask
     if bitmask.name.is_empty() {
@@ -1238,7 +1241,7 @@ pub fn bitflags_impl_block(
 pub fn generate_enum<'a>(
     _enum: &'a vkxml::Enumeration,
     const_cache: &mut HashSet<&'a str, impl BuildHasher>,
-    const_values: &mut BTreeMap<Ident, Vec<Ident>>,
+    const_values: &mut BTreeMap<Ident, Vec<ConstantMatchInfo>>,
     bitflags_cache: &mut HashSet<Ident, impl BuildHasher>,
 ) -> EnumType {
     let name = &_enum.name[2..];
@@ -1255,7 +1258,10 @@ pub fn generate_enum<'a>(
     let mut values = Vec::with_capacity(constants.len());
     for constant in &constants {
         const_cache.insert(constant.name.as_str());
-        values.push(constant.variant_ident(&_enum.name));
+        values.push(ConstantMatchInfo {
+            ident: constant.variant_ident(&_enum.name),
+            is_alias: false,
+        });
     }
     const_values.insert(ident, values);
 
@@ -2009,7 +2015,7 @@ pub fn generate_definition(
     union_types: &HashSet<&str, impl BuildHasher>,
     root_structs: &HashSet<String, impl BuildHasher>,
     bitflags_cache: &mut HashSet<Ident, impl BuildHasher>,
-    const_values: &mut BTreeMap<Ident, Vec<Ident>>,
+    const_values: &mut BTreeMap<Ident, Vec<ConstantMatchInfo>>,
 ) -> Option<Tokens> {
     match *definition {
         vkxml::DefinitionsElement::Typedef(ref typedef) => Some(generate_typedef(typedef)),
@@ -2134,7 +2140,7 @@ pub fn generate_constant<'a>(
 pub fn generate_feature_extension<'a>(
     registry: &'a vk_parse::Registry,
     const_cache: &mut HashSet<&'a str, impl BuildHasher>,
-    const_values: &mut BTreeMap<Ident, Vec<Ident>>,
+    const_values: &mut BTreeMap<Ident, Vec<ConstantMatchInfo>>,
 ) -> Tokens {
     let constants = registry.0.iter().filter_map(|item| match item {
         vk_parse::RegistryChild::Feature(feature) => Some(generate_extension_constants(
@@ -2151,12 +2157,22 @@ pub fn generate_feature_extension<'a>(
     }
 }
 
-pub fn generate_const_debugs(const_values: &BTreeMap<Ident, Vec<Ident>>) -> Tokens {
+pub struct ConstantMatchInfo {
+    pub ident: Ident,
+    pub is_alias: bool,
+}
+
+pub fn generate_const_debugs(const_values: &BTreeMap<Ident, Vec<ConstantMatchInfo>>) -> Tokens {
     let impls = const_values.iter().map(|(ty, values)| {
         if ty.to_string().contains("Flags") {
-            let cases = values.iter().map(|value| {
-                let name = value.to_string();
-                quote! { (#ty::#value.0, #name) }
+            let cases = values.iter().filter_map(|value| {
+                if value.is_alias {
+                    None
+                } else {
+                    let name = value.ident.to_string();
+                    let ident = value.ident;
+                    Some(quote! { (#ty::#ident.0, #name) })
+                }
             });
             quote! {
                 impl fmt::Debug for #ty {
@@ -2167,9 +2183,14 @@ pub fn generate_const_debugs(const_values: &BTreeMap<Ident, Vec<Ident>>) -> Toke
                 }
             }
         } else {
-            let cases = values.iter().map(|value| {
-                let name = value.to_string();
-                quote! { Self::#value => Some(#name), }
+            let cases = values.iter().filter_map(|value| {
+                if value.is_alias {
+                    None
+                } else {
+                    let name = value.ident.to_string();
+                    let ident = value.ident;
+                    Some(quote! { Self::#ident => Some(#name), })
+                }
             });
             quote! {
                 impl fmt::Debug for #ty {
@@ -2340,7 +2361,7 @@ pub fn write_source_code(path: &Path) {
     let mut bitflags_cache = HashSet::new();
     let mut const_cache = HashSet::new();
 
-    let mut const_values: BTreeMap<Ident, Vec<Ident>> = BTreeMap::new();
+    let mut const_values: BTreeMap<Ident, Vec<ConstantMatchInfo>> = BTreeMap::new();
 
     let (enum_code, bitflags_code) = enums
         .into_iter()
