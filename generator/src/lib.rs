@@ -391,7 +391,7 @@ impl ConstVal {
 }
 pub trait ConstantExt {
     fn variant_ident(&self, enum_name: &str) -> Ident;
-    fn to_tokens(&self) -> Tokens;
+    fn to_tokens(&self, ident: Option<Ident>) -> Tokens;
     fn notation(&self) -> Option<&str>;
 }
 
@@ -399,8 +399,11 @@ impl ConstantExt for vkxml::ExtensionEnum {
     fn variant_ident(&self, enum_name: &str) -> Ident {
         variant_ident(enum_name, &self.name)
     }
-    fn to_tokens(&self) -> Tokens {
-        Constant::from_extension_enum(self).expect("").to_tokens()
+    fn to_tokens(&self, ident: Option<Ident>) -> Tokens {
+        let expr = Constant::from_extension_enum(self)
+            .expect("")
+            .to_tokens(ident);
+        quote! { #ident(#expr) }
     }
     fn notation(&self) -> Option<&str> {
         self.notation.as_deref()
@@ -411,8 +414,9 @@ impl ConstantExt for vkxml::Constant {
     fn variant_ident(&self, enum_name: &str) -> Ident {
         variant_ident(enum_name, &self.name)
     }
-    fn to_tokens(&self) -> Tokens {
-        Constant::from_constant(self).to_tokens()
+    fn to_tokens(&self, ident: Option<Ident>) -> Tokens {
+        let expr = Constant::from_constant(self).to_tokens(ident);
+        quote! { #expr }
     }
     fn notation(&self) -> Option<&str> {
         self.notation.as_deref()
@@ -426,7 +430,9 @@ pub enum Constant {
     BitPos(u32),
     CExpr(vkxml::CExpression),
     Text(String),
+    Alias(Ident, Ident),
 }
+
 impl quote::ToTokens for ConstVal {
     fn to_tokens(&self, tokens: &mut Tokens) {
         match self {
@@ -473,32 +479,35 @@ impl Constant {
         }
     }
 
-    pub fn to_tokens(&self) -> Tokens {
+    pub fn to_tokens(&self, ident: Option<Ident>) -> Tokens {
         match *self {
             Constant::Number(n) => {
                 let number = interleave_number('_', 3, &n.to_string());
                 let term = Term::intern(&number);
-                quote! {#term}
+                quote! {#ident(#term)}
             }
             Constant::Hex(ref s) => {
                 let number = interleave_number('_', 4, s);
                 let term = Term::intern(&format!("0x{}", number));
-                quote! {#term}
+                quote! {#ident(#term)}
             }
             Constant::Text(ref text) => {
-                quote! {#text}
+                quote! {#ident(#text)}
             }
             Constant::CExpr(ref expr) => {
                 let (_, (_, rexpr)) = cexpr(expr).expect("Unable to parse cexpr");
                 let term = Term::intern(rexpr.as_str());
-                quote! {#term}
+                quote! {#ident(#term)}
             }
             Constant::BitPos(pos) => {
                 let value = 1 << pos;
                 let bit_string = format!("{:b}", value);
                 let bit_string = interleave_number('_', 4, &bit_string);
                 let term = Term::intern(&format!("0b{}", bit_string));
-                quote! {#term}
+                quote! {#ident(#term)}
+            }
+            Constant::Alias(ref base, ref value) => {
+                quote! {#base::#value}
             }
         }
     }
@@ -932,8 +941,8 @@ impl<'a> ConstantExt for ExtensionConstant<'a> {
     fn variant_ident(&self, enum_name: &str) -> Ident {
         variant_ident(enum_name, self.name)
     }
-    fn to_tokens(&self) -> Tokens {
-        self.constant.to_tokens()
+    fn to_tokens(&self, ident: Option<Ident>) -> Tokens {
+        self.constant.to_tokens(ident)
     }
     fn notation(&self) -> Option<&str> {
         None
@@ -980,6 +989,19 @@ pub fn generate_extension_constants<'a>(
                 EnumSpec::Value { value, extends } => {
                     if let (Some(extends), Ok(value)) = (extends, value.parse::<i32>()) {
                         Some((Constant::Number(value), Some(extends.clone())))
+                    } else {
+                        None
+                    }
+                }
+                EnumSpec::Alias { alias, extends } => {
+                    if let Some(extends) = extends {
+                        let ident = name_to_tokens(&extends);
+                        let key = variant_ident(&extends, &alias);
+                        if key.to_string() == "DISPATCH_BASE" {
+                            None
+                        } else {
+                            Some((Constant::Alias(ident, key), Some(extends.clone())))
+                        }
                     } else {
                         None
                     }
@@ -1183,7 +1205,7 @@ pub fn bitflags_impl_block(
         .iter()
         .map(|constant| {
             let variant_ident = constant.variant_ident(enum_name);
-            let tokens = constant.to_tokens();
+            let tokens = constant.to_tokens(Some(ident));
             (variant_ident, tokens)
         })
         .collect_vec();
@@ -1203,7 +1225,7 @@ pub fn bitflags_impl_block(
             .map(|((variant_ident, value), ref notation)| {
                 quote! {
                     #notation
-                    pub const #variant_ident: Self = #ident(#value);
+                    pub const #variant_ident: Self = #value;
                 }
             });
     quote! {
@@ -2097,7 +2119,7 @@ pub fn generate_constant<'a>(
     let c = Constant::from_constant(constant);
     let name = constant_name(&constant.name);
     let ident = Ident::from(name.as_str());
-    let value = c.to_tokens();
+    let value = c.to_tokens(None);
     let ty = if name == "TRUE" || name == "FALSE" {
         CType::Bool32
     } else {
