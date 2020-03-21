@@ -1,9 +1,4 @@
-#![allow(
-    clippy::too_many_arguments,
-    clippy::cognitive_complexity,
-    clippy::wrong_self_convention
-)]
-use std::fmt;
+# ! [ allow ( clippy :: too_many_arguments , clippy :: cognitive_complexity , clippy :: wrong_self_convention ) ]use std::fmt;
 use std::os::raw::*;
 #[doc = r" Iterates through the pointer chain. Includes the item that is passed into the function."]
 #[doc = r" Stops at the last `BaseOutStructure` that has a null `p_next` field."]
@@ -6250,70 +6245,6 @@ impl EntryFnV1_1 {
         (self.enumerate_instance_version)(p_api_version)
     }
 }
-#[allow(non_camel_case_types)]
-pub type PFN_vkEnumeratePhysicalDeviceGroups = extern "system" fn(
-    instance: Instance,
-    p_physical_device_group_count: *mut u32,
-    p_physical_device_group_properties: *mut PhysicalDeviceGroupProperties,
-) -> Result;
-#[allow(non_camel_case_types)]
-pub type PFN_vkGetPhysicalDeviceFeatures2 = extern "system" fn(
-    physical_device: PhysicalDevice,
-    p_features: *mut PhysicalDeviceFeatures2,
-) -> c_void;
-#[allow(non_camel_case_types)]
-pub type PFN_vkGetPhysicalDeviceProperties2 = extern "system" fn(
-    physical_device: PhysicalDevice,
-    p_properties: *mut PhysicalDeviceProperties2,
-) -> c_void;
-#[allow(non_camel_case_types)]
-pub type PFN_vkGetPhysicalDeviceFormatProperties2 = extern "system" fn(
-    physical_device: PhysicalDevice,
-    format: Format,
-    p_format_properties: *mut FormatProperties2,
-) -> c_void;
-#[allow(non_camel_case_types)]
-pub type PFN_vkGetPhysicalDeviceImageFormatProperties2 = extern "system" fn(
-    physical_device: PhysicalDevice,
-    p_image_format_info: *const PhysicalDeviceImageFormatInfo2,
-    p_image_format_properties: *mut ImageFormatProperties2,
-) -> Result;
-#[allow(non_camel_case_types)]
-pub type PFN_vkGetPhysicalDeviceQueueFamilyProperties2 = extern "system" fn(
-    physical_device: PhysicalDevice,
-    p_queue_family_property_count: *mut u32,
-    p_queue_family_properties: *mut QueueFamilyProperties2,
-) -> c_void;
-#[allow(non_camel_case_types)]
-pub type PFN_vkGetPhysicalDeviceMemoryProperties2 = extern "system" fn(
-    physical_device: PhysicalDevice,
-    p_memory_properties: *mut PhysicalDeviceMemoryProperties2,
-) -> c_void;
-#[allow(non_camel_case_types)]
-pub type PFN_vkGetPhysicalDeviceSparseImageFormatProperties2 = extern "system" fn(
-    physical_device: PhysicalDevice,
-    p_format_info: *const PhysicalDeviceSparseImageFormatInfo2,
-    p_property_count: *mut u32,
-    p_properties: *mut SparseImageFormatProperties2,
-) -> c_void;
-#[allow(non_camel_case_types)]
-pub type PFN_vkGetPhysicalDeviceExternalBufferProperties = extern "system" fn(
-    physical_device: PhysicalDevice,
-    p_external_buffer_info: *const PhysicalDeviceExternalBufferInfo,
-    p_external_buffer_properties: *mut ExternalBufferProperties,
-) -> c_void;
-#[allow(non_camel_case_types)]
-pub type PFN_vkGetPhysicalDeviceExternalFenceProperties = extern "system" fn(
-    physical_device: PhysicalDevice,
-    p_external_fence_info: *const PhysicalDeviceExternalFenceInfo,
-    p_external_fence_properties: *mut ExternalFenceProperties,
-) -> c_void;
-#[allow(non_camel_case_types)]
-pub type PFN_vkGetPhysicalDeviceExternalSemaphoreProperties = extern "system" fn(
-    physical_device: PhysicalDevice,
-    p_external_semaphore_info: *const PhysicalDeviceExternalSemaphoreInfo,
-    p_external_semaphore_properties: *mut ExternalSemaphoreProperties,
-) -> c_void;
 pub struct InstanceFnV1_1 {
     pub enumerate_physical_device_groups: extern "system" fn(
         instance: Instance,
@@ -6748,108 +6679,11 @@ impl InstanceFnV1_1 {
     }
 }
 #[allow(non_camel_case_types)]
-pub type PFN_vkBindBufferMemory2 = extern "system" fn(
+pub type PFN_vkGetDeviceQueue2 = extern "system" fn(
     device: Device,
     bind_info_count: u32,
     p_bind_infos: *const BindBufferMemoryInfo,
 ) -> Result;
-#[allow(non_camel_case_types)]
-pub type PFN_vkBindImageMemory2 = extern "system" fn(
-    device: Device,
-    bind_info_count: u32,
-    p_bind_infos: *const BindImageMemoryInfo,
-) -> Result;
-#[allow(non_camel_case_types)]
-pub type PFN_vkGetDeviceGroupPeerMemoryFeatures = extern "system" fn(
-    device: Device,
-    heap_index: u32,
-    local_device_index: u32,
-    remote_device_index: u32,
-    p_peer_memory_features: *mut PeerMemoryFeatureFlags,
-) -> c_void;
-#[allow(non_camel_case_types)]
-pub type PFN_vkCmdSetDeviceMask =
-    extern "system" fn(command_buffer: CommandBuffer, device_mask: u32) -> c_void;
-#[allow(non_camel_case_types)]
-pub type PFN_vkCmdDispatchBase = extern "system" fn(
-    command_buffer: CommandBuffer,
-    base_group_x: u32,
-    base_group_y: u32,
-    base_group_z: u32,
-    group_count_x: u32,
-    group_count_y: u32,
-    group_count_z: u32,
-) -> c_void;
-#[allow(non_camel_case_types)]
-pub type PFN_vkGetImageMemoryRequirements2 = extern "system" fn(
-    device: Device,
-    p_info: *const ImageMemoryRequirementsInfo2,
-    p_memory_requirements: *mut MemoryRequirements2,
-) -> c_void;
-#[allow(non_camel_case_types)]
-pub type PFN_vkGetBufferMemoryRequirements2 = extern "system" fn(
-    device: Device,
-    p_info: *const BufferMemoryRequirementsInfo2,
-    p_memory_requirements: *mut MemoryRequirements2,
-) -> c_void;
-#[allow(non_camel_case_types)]
-pub type PFN_vkGetImageSparseMemoryRequirements2 = extern "system" fn(
-    device: Device,
-    p_info: *const ImageSparseMemoryRequirementsInfo2,
-    p_sparse_memory_requirement_count: *mut u32,
-    p_sparse_memory_requirements: *mut SparseImageMemoryRequirements2,
-) -> c_void;
-#[allow(non_camel_case_types)]
-pub type PFN_vkTrimCommandPool = extern "system" fn(
-    device: Device,
-    command_pool: CommandPool,
-    flags: CommandPoolTrimFlags,
-) -> c_void;
-#[allow(non_camel_case_types)]
-pub type PFN_vkGetDeviceQueue2 = extern "system" fn(
-    device: Device,
-    p_queue_info: *const DeviceQueueInfo2,
-    p_queue: *mut Queue,
-) -> c_void;
-#[allow(non_camel_case_types)]
-pub type PFN_vkCreateSamplerYcbcrConversion = extern "system" fn(
-    device: Device,
-    p_create_info: *const SamplerYcbcrConversionCreateInfo,
-    p_allocator: *const AllocationCallbacks,
-    p_ycbcr_conversion: *mut SamplerYcbcrConversion,
-) -> Result;
-#[allow(non_camel_case_types)]
-pub type PFN_vkDestroySamplerYcbcrConversion = extern "system" fn(
-    device: Device,
-    ycbcr_conversion: SamplerYcbcrConversion,
-    p_allocator: *const AllocationCallbacks,
-) -> c_void;
-#[allow(non_camel_case_types)]
-pub type PFN_vkCreateDescriptorUpdateTemplate = extern "system" fn(
-    device: Device,
-    p_create_info: *const DescriptorUpdateTemplateCreateInfo,
-    p_allocator: *const AllocationCallbacks,
-    p_descriptor_update_template: *mut DescriptorUpdateTemplate,
-) -> Result;
-#[allow(non_camel_case_types)]
-pub type PFN_vkDestroyDescriptorUpdateTemplate = extern "system" fn(
-    device: Device,
-    descriptor_update_template: DescriptorUpdateTemplate,
-    p_allocator: *const AllocationCallbacks,
-) -> c_void;
-#[allow(non_camel_case_types)]
-pub type PFN_vkUpdateDescriptorSetWithTemplate = extern "system" fn(
-    device: Device,
-    descriptor_set: DescriptorSet,
-    descriptor_update_template: DescriptorUpdateTemplate,
-    p_data: *const c_void,
-) -> c_void;
-#[allow(non_camel_case_types)]
-pub type PFN_vkGetDescriptorSetLayoutSupport = extern "system" fn(
-    device: Device,
-    p_create_info: *const DescriptorSetLayoutCreateInfo,
-    p_support: *mut DescriptorSetLayoutSupport,
-) -> c_void;
 pub struct DeviceFnV1_1 {
     pub bind_buffer_memory2: extern "system" fn(
         device: Device,
@@ -7502,78 +7336,6 @@ impl InstanceFnV1_2 {
         InstanceFnV1_2 {}
     }
 }
-#[allow(non_camel_case_types)]
-pub type PFN_vkCmdDrawIndirectCount = extern "system" fn(
-    command_buffer: CommandBuffer,
-    buffer: Buffer,
-    offset: DeviceSize,
-    count_buffer: Buffer,
-    count_buffer_offset: DeviceSize,
-    max_draw_count: u32,
-    stride: u32,
-) -> c_void;
-#[allow(non_camel_case_types)]
-pub type PFN_vkCmdDrawIndexedIndirectCount = extern "system" fn(
-    command_buffer: CommandBuffer,
-    buffer: Buffer,
-    offset: DeviceSize,
-    count_buffer: Buffer,
-    count_buffer_offset: DeviceSize,
-    max_draw_count: u32,
-    stride: u32,
-) -> c_void;
-#[allow(non_camel_case_types)]
-pub type PFN_vkCreateRenderPass2 = extern "system" fn(
-    device: Device,
-    p_create_info: *const RenderPassCreateInfo2,
-    p_allocator: *const AllocationCallbacks,
-    p_render_pass: *mut RenderPass,
-) -> Result;
-#[allow(non_camel_case_types)]
-pub type PFN_vkCmdBeginRenderPass2 = extern "system" fn(
-    command_buffer: CommandBuffer,
-    p_render_pass_begin: *const RenderPassBeginInfo,
-    p_subpass_begin_info: *const SubpassBeginInfo,
-) -> c_void;
-#[allow(non_camel_case_types)]
-pub type PFN_vkCmdNextSubpass2 = extern "system" fn(
-    command_buffer: CommandBuffer,
-    p_subpass_begin_info: *const SubpassBeginInfo,
-    p_subpass_end_info: *const SubpassEndInfo,
-) -> c_void;
-#[allow(non_camel_case_types)]
-pub type PFN_vkCmdEndRenderPass2 = extern "system" fn(
-    command_buffer: CommandBuffer,
-    p_subpass_end_info: *const SubpassEndInfo,
-) -> c_void;
-#[allow(non_camel_case_types)]
-pub type PFN_vkResetQueryPool = extern "system" fn(
-    device: Device,
-    query_pool: QueryPool,
-    first_query: u32,
-    query_count: u32,
-) -> c_void;
-#[allow(non_camel_case_types)]
-pub type PFN_vkGetSemaphoreCounterValue =
-    extern "system" fn(device: Device, semaphore: Semaphore, p_value: *mut u64) -> Result;
-#[allow(non_camel_case_types)]
-pub type PFN_vkWaitSemaphores = extern "system" fn(
-    device: Device,
-    p_wait_info: *const SemaphoreWaitInfo,
-    timeout: u64,
-) -> Result;
-#[allow(non_camel_case_types)]
-pub type PFN_vkSignalSemaphore =
-    extern "system" fn(device: Device, p_signal_info: *const SemaphoreSignalInfo) -> Result;
-#[allow(non_camel_case_types)]
-pub type PFN_vkGetBufferDeviceAddress =
-    extern "system" fn(device: Device, p_info: *const BufferDeviceAddressInfo) -> DeviceAddress;
-#[allow(non_camel_case_types)]
-pub type PFN_vkGetBufferOpaqueCaptureAddress =
-    extern "system" fn(device: Device, p_info: *const BufferDeviceAddressInfo) -> u64;
-#[allow(non_camel_case_types)]
-pub type PFN_vkGetDeviceMemoryOpaqueCaptureAddress =
-    extern "system" fn(device: Device, p_info: *const DeviceMemoryOpaqueCaptureAddressInfo) -> u64;
 pub struct DeviceFnV1_2 {
     pub cmd_draw_indirect_count: extern "system" fn(
         command_buffer: CommandBuffer,
@@ -56712,12 +56474,34 @@ impl AmdDrawIndirectCountFn {
             .expect("Wrong extension string")
     }
 }
-pub struct AmdDrawIndirectCountFn {}
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdDrawIndirectCount = extern "system" fn(
+    command_buffer: CommandBuffer,
+    buffer: Buffer,
+    offset: DeviceSize,
+    count_buffer: Buffer,
+    count_buffer_offset: DeviceSize,
+    max_draw_count: u32,
+    stride: u32,
+) -> c_void;
+pub struct AmdDrawIndirectCountFn {
+    pub cmd_draw_indirect_count: extern "system" fn(
+        command_buffer: CommandBuffer,
+        buffer: Buffer,
+        offset: DeviceSize,
+        count_buffer: Buffer,
+        count_buffer_offset: DeviceSize,
+        max_draw_count: u32,
+        stride: u32,
+    ) -> c_void,
+}
 unsafe impl Send for AmdDrawIndirectCountFn {}
 unsafe impl Sync for AmdDrawIndirectCountFn {}
 impl ::std::clone::Clone for AmdDrawIndirectCountFn {
     fn clone(&self) -> Self {
-        AmdDrawIndirectCountFn {}
+        AmdDrawIndirectCountFn {
+            cmd_draw_indirect_count: self.cmd_draw_indirect_count,
+        }
     }
 }
 impl AmdDrawIndirectCountFn {
@@ -56725,7 +56509,53 @@ impl AmdDrawIndirectCountFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdDrawIndirectCountFn {}
+        AmdDrawIndirectCountFn {
+            cmd_draw_indirect_count: unsafe {
+                extern "system" fn cmd_draw_indirect_count(
+                    _command_buffer: CommandBuffer,
+                    _buffer: Buffer,
+                    _offset: DeviceSize,
+                    _count_buffer: Buffer,
+                    _count_buffer_offset: DeviceSize,
+                    _max_draw_count: u32,
+                    _stride: u32,
+                ) -> c_void {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_draw_indirect_count)
+                    ))
+                }
+                let raw_name = stringify!(vkCmdDrawIndirectCount);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    cmd_draw_indirect_count
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdDrawIndirectCount.html>"]
+    pub unsafe fn cmd_draw_indirect_count(
+        &self,
+        command_buffer: CommandBuffer,
+        buffer: Buffer,
+        offset: DeviceSize,
+        count_buffer: Buffer,
+        count_buffer_offset: DeviceSize,
+        max_draw_count: u32,
+        stride: u32,
+    ) -> c_void {
+        (self.cmd_draw_indirect_count)(
+            command_buffer,
+            buffer,
+            offset,
+            count_buffer,
+            count_buffer_offset,
+            max_draw_count,
+            stride,
+        )
     }
 }
 impl AmdExtension35Fn {
@@ -57590,12 +57420,97 @@ impl KhrGetPhysicalDeviceProperties2Fn {
             .expect("Wrong extension string")
     }
 }
-pub struct KhrGetPhysicalDeviceProperties2Fn {}
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetPhysicalDeviceFeatures2 = extern "system" fn(
+    physical_device: PhysicalDevice,
+    p_features: *mut PhysicalDeviceFeatures2,
+) -> c_void;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetPhysicalDeviceProperties2 = extern "system" fn(
+    physical_device: PhysicalDevice,
+    p_properties: *mut PhysicalDeviceProperties2,
+) -> c_void;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetPhysicalDeviceFormatProperties2 = extern "system" fn(
+    physical_device: PhysicalDevice,
+    format: Format,
+    p_format_properties: *mut FormatProperties2,
+) -> c_void;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetPhysicalDeviceImageFormatProperties2 = extern "system" fn(
+    physical_device: PhysicalDevice,
+    p_image_format_info: *const PhysicalDeviceImageFormatInfo2,
+    p_image_format_properties: *mut ImageFormatProperties2,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetPhysicalDeviceQueueFamilyProperties2 = extern "system" fn(
+    physical_device: PhysicalDevice,
+    p_queue_family_property_count: *mut u32,
+    p_queue_family_properties: *mut QueueFamilyProperties2,
+) -> c_void;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetPhysicalDeviceMemoryProperties2 = extern "system" fn(
+    physical_device: PhysicalDevice,
+    p_memory_properties: *mut PhysicalDeviceMemoryProperties2,
+) -> c_void;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetPhysicalDeviceSparseImageFormatProperties2 = extern "system" fn(
+    physical_device: PhysicalDevice,
+    p_format_info: *const PhysicalDeviceSparseImageFormatInfo2,
+    p_property_count: *mut u32,
+    p_properties: *mut SparseImageFormatProperties2,
+) -> c_void;
+pub struct KhrGetPhysicalDeviceProperties2Fn {
+    pub get_physical_device_features2: extern "system" fn(
+        physical_device: PhysicalDevice,
+        p_features: *mut PhysicalDeviceFeatures2,
+    ) -> c_void,
+    pub get_physical_device_properties2: extern "system" fn(
+        physical_device: PhysicalDevice,
+        p_properties: *mut PhysicalDeviceProperties2,
+    ) -> c_void,
+    pub get_physical_device_format_properties2: extern "system" fn(
+        physical_device: PhysicalDevice,
+        format: Format,
+        p_format_properties: *mut FormatProperties2,
+    ) -> c_void,
+    pub get_physical_device_image_format_properties2: extern "system" fn(
+        physical_device: PhysicalDevice,
+        p_image_format_info: *const PhysicalDeviceImageFormatInfo2,
+        p_image_format_properties: *mut ImageFormatProperties2,
+    ) -> Result,
+    pub get_physical_device_queue_family_properties2: extern "system" fn(
+        physical_device: PhysicalDevice,
+        p_queue_family_property_count: *mut u32,
+        p_queue_family_properties: *mut QueueFamilyProperties2,
+    ) -> c_void,
+    pub get_physical_device_memory_properties2: extern "system" fn(
+        physical_device: PhysicalDevice,
+        p_memory_properties: *mut PhysicalDeviceMemoryProperties2,
+    ) -> c_void,
+    pub get_physical_device_sparse_image_format_properties2: extern "system" fn(
+        physical_device: PhysicalDevice,
+        p_format_info: *const PhysicalDeviceSparseImageFormatInfo2,
+        p_property_count: *mut u32,
+        p_properties: *mut SparseImageFormatProperties2,
+    ) -> c_void,
+}
 unsafe impl Send for KhrGetPhysicalDeviceProperties2Fn {}
 unsafe impl Sync for KhrGetPhysicalDeviceProperties2Fn {}
 impl ::std::clone::Clone for KhrGetPhysicalDeviceProperties2Fn {
     fn clone(&self) -> Self {
-        KhrGetPhysicalDeviceProperties2Fn {}
+        KhrGetPhysicalDeviceProperties2Fn {
+            get_physical_device_features2: self.get_physical_device_features2,
+            get_physical_device_properties2: self.get_physical_device_properties2,
+            get_physical_device_format_properties2: self.get_physical_device_format_properties2,
+            get_physical_device_image_format_properties2: self
+                .get_physical_device_image_format_properties2,
+            get_physical_device_queue_family_properties2: self
+                .get_physical_device_queue_family_properties2,
+            get_physical_device_memory_properties2: self.get_physical_device_memory_properties2,
+            get_physical_device_sparse_image_format_properties2: self
+                .get_physical_device_sparse_image_format_properties2,
+        }
     }
 }
 impl KhrGetPhysicalDeviceProperties2Fn {
@@ -57603,7 +57518,220 @@ impl KhrGetPhysicalDeviceProperties2Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrGetPhysicalDeviceProperties2Fn {}
+        KhrGetPhysicalDeviceProperties2Fn {
+            get_physical_device_features2: unsafe {
+                extern "system" fn get_physical_device_features2(
+                    _physical_device: PhysicalDevice,
+                    _p_features: *mut PhysicalDeviceFeatures2,
+                ) -> c_void {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_physical_device_features2)
+                    ))
+                }
+                let raw_name = stringify!(vkGetPhysicalDeviceFeatures2);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    get_physical_device_features2
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_physical_device_properties2: unsafe {
+                extern "system" fn get_physical_device_properties2(
+                    _physical_device: PhysicalDevice,
+                    _p_properties: *mut PhysicalDeviceProperties2,
+                ) -> c_void {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_physical_device_properties2)
+                    ))
+                }
+                let raw_name = stringify!(vkGetPhysicalDeviceProperties2);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    get_physical_device_properties2
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_physical_device_format_properties2: unsafe {
+                extern "system" fn get_physical_device_format_properties2(
+                    _physical_device: PhysicalDevice,
+                    _format: Format,
+                    _p_format_properties: *mut FormatProperties2,
+                ) -> c_void {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_physical_device_format_properties2)
+                    ))
+                }
+                let raw_name = stringify!(vkGetPhysicalDeviceFormatProperties2);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    get_physical_device_format_properties2
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_physical_device_image_format_properties2: unsafe {
+                extern "system" fn get_physical_device_image_format_properties2(
+                    _physical_device: PhysicalDevice,
+                    _p_image_format_info: *const PhysicalDeviceImageFormatInfo2,
+                    _p_image_format_properties: *mut ImageFormatProperties2,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_physical_device_image_format_properties2)
+                    ))
+                }
+                let raw_name = stringify!(vkGetPhysicalDeviceImageFormatProperties2);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    get_physical_device_image_format_properties2
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_physical_device_queue_family_properties2: unsafe {
+                extern "system" fn get_physical_device_queue_family_properties2(
+                    _physical_device: PhysicalDevice,
+                    _p_queue_family_property_count: *mut u32,
+                    _p_queue_family_properties: *mut QueueFamilyProperties2,
+                ) -> c_void {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_physical_device_queue_family_properties2)
+                    ))
+                }
+                let raw_name = stringify!(vkGetPhysicalDeviceQueueFamilyProperties2);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    get_physical_device_queue_family_properties2
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_physical_device_memory_properties2: unsafe {
+                extern "system" fn get_physical_device_memory_properties2(
+                    _physical_device: PhysicalDevice,
+                    _p_memory_properties: *mut PhysicalDeviceMemoryProperties2,
+                ) -> c_void {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_physical_device_memory_properties2)
+                    ))
+                }
+                let raw_name = stringify!(vkGetPhysicalDeviceMemoryProperties2);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    get_physical_device_memory_properties2
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_physical_device_sparse_image_format_properties2: unsafe {
+                extern "system" fn get_physical_device_sparse_image_format_properties2(
+                    _physical_device: PhysicalDevice,
+                    _p_format_info: *const PhysicalDeviceSparseImageFormatInfo2,
+                    _p_property_count: *mut u32,
+                    _p_properties: *mut SparseImageFormatProperties2,
+                ) -> c_void {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_physical_device_sparse_image_format_properties2)
+                    ))
+                }
+                let raw_name = stringify!(vkGetPhysicalDeviceSparseImageFormatProperties2);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    get_physical_device_sparse_image_format_properties2
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceFeatures2.html>"]
+    pub unsafe fn get_physical_device_features2(
+        &self,
+        physical_device: PhysicalDevice,
+        p_features: *mut PhysicalDeviceFeatures2,
+    ) -> c_void {
+        (self.get_physical_device_features2)(physical_device, p_features)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceProperties2.html>"]
+    pub unsafe fn get_physical_device_properties2(
+        &self,
+        physical_device: PhysicalDevice,
+        p_properties: *mut PhysicalDeviceProperties2,
+    ) -> c_void {
+        (self.get_physical_device_properties2)(physical_device, p_properties)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceFormatProperties2.html>"]
+    pub unsafe fn get_physical_device_format_properties2(
+        &self,
+        physical_device: PhysicalDevice,
+        format: Format,
+        p_format_properties: *mut FormatProperties2,
+    ) -> c_void {
+        (self.get_physical_device_format_properties2)(physical_device, format, p_format_properties)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceImageFormatProperties2.html>"]
+    pub unsafe fn get_physical_device_image_format_properties2(
+        &self,
+        physical_device: PhysicalDevice,
+        p_image_format_info: *const PhysicalDeviceImageFormatInfo2,
+        p_image_format_properties: *mut ImageFormatProperties2,
+    ) -> Result {
+        (self.get_physical_device_image_format_properties2)(
+            physical_device,
+            p_image_format_info,
+            p_image_format_properties,
+        )
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceQueueFamilyProperties2.html>"]
+    pub unsafe fn get_physical_device_queue_family_properties2(
+        &self,
+        physical_device: PhysicalDevice,
+        p_queue_family_property_count: *mut u32,
+        p_queue_family_properties: *mut QueueFamilyProperties2,
+    ) -> c_void {
+        (self.get_physical_device_queue_family_properties2)(
+            physical_device,
+            p_queue_family_property_count,
+            p_queue_family_properties,
+        )
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceMemoryProperties2.html>"]
+    pub unsafe fn get_physical_device_memory_properties2(
+        &self,
+        physical_device: PhysicalDevice,
+        p_memory_properties: *mut PhysicalDeviceMemoryProperties2,
+    ) -> c_void {
+        (self.get_physical_device_memory_properties2)(physical_device, p_memory_properties)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceSparseImageFormatProperties2.html>"]
+    pub unsafe fn get_physical_device_sparse_image_format_properties2(
+        &self,
+        physical_device: PhysicalDevice,
+        p_format_info: *const PhysicalDeviceSparseImageFormatInfo2,
+        p_property_count: *mut u32,
+        p_properties: *mut SparseImageFormatProperties2,
+    ) -> c_void {
+        (self.get_physical_device_sparse_image_format_properties2)(
+            physical_device,
+            p_format_info,
+            p_property_count,
+            p_properties,
+        )
     }
 }
 impl KhrDeviceGroupFn {
@@ -57612,12 +57740,83 @@ impl KhrDeviceGroupFn {
             .expect("Wrong extension string")
     }
 }
-pub struct KhrDeviceGroupFn {}
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetDeviceGroupPeerMemoryFeatures = extern "system" fn(
+    device: Device,
+    heap_index: u32,
+    local_device_index: u32,
+    remote_device_index: u32,
+    p_peer_memory_features: *mut PeerMemoryFeatureFlags,
+) -> c_void;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetDeviceMask =
+    extern "system" fn(command_buffer: CommandBuffer, device_mask: u32) -> c_void;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdDispatchBase = extern "system" fn(
+    command_buffer: CommandBuffer,
+    base_group_x: u32,
+    base_group_y: u32,
+    base_group_z: u32,
+    group_count_x: u32,
+    group_count_y: u32,
+    group_count_z: u32,
+) -> c_void;
+pub struct KhrDeviceGroupFn {
+    pub get_device_group_peer_memory_features: extern "system" fn(
+        device: Device,
+        heap_index: u32,
+        local_device_index: u32,
+        remote_device_index: u32,
+        p_peer_memory_features: *mut PeerMemoryFeatureFlags,
+    ) -> c_void,
+    pub cmd_set_device_mask:
+        extern "system" fn(command_buffer: CommandBuffer, device_mask: u32) -> c_void,
+    pub cmd_dispatch_base: extern "system" fn(
+        command_buffer: CommandBuffer,
+        base_group_x: u32,
+        base_group_y: u32,
+        base_group_z: u32,
+        group_count_x: u32,
+        group_count_y: u32,
+        group_count_z: u32,
+    ) -> c_void,
+    pub get_device_group_present_capabilities_khr: extern "system" fn(
+        device: Device,
+        p_device_group_present_capabilities: *mut DeviceGroupPresentCapabilitiesKHR,
+    ) -> Result,
+    pub get_device_group_surface_present_modes_khr: extern "system" fn(
+        device: Device,
+        surface: SurfaceKHR,
+        p_modes: *mut DeviceGroupPresentModeFlagsKHR,
+    ) -> Result,
+    pub get_physical_device_present_rectangles_khr: extern "system" fn(
+        physical_device: PhysicalDevice,
+        surface: SurfaceKHR,
+        p_rect_count: *mut u32,
+        p_rects: *mut Rect2D,
+    ) -> Result,
+    pub acquire_next_image2_khr: extern "system" fn(
+        device: Device,
+        p_acquire_info: *const AcquireNextImageInfoKHR,
+        p_image_index: *mut u32,
+    ) -> Result,
+}
 unsafe impl Send for KhrDeviceGroupFn {}
 unsafe impl Sync for KhrDeviceGroupFn {}
 impl ::std::clone::Clone for KhrDeviceGroupFn {
     fn clone(&self) -> Self {
-        KhrDeviceGroupFn {}
+        KhrDeviceGroupFn {
+            get_device_group_peer_memory_features: self.get_device_group_peer_memory_features,
+            cmd_set_device_mask: self.cmd_set_device_mask,
+            cmd_dispatch_base: self.cmd_dispatch_base,
+            get_device_group_present_capabilities_khr: self
+                .get_device_group_present_capabilities_khr,
+            get_device_group_surface_present_modes_khr: self
+                .get_device_group_surface_present_modes_khr,
+            get_physical_device_present_rectangles_khr: self
+                .get_physical_device_present_rectangles_khr,
+            acquire_next_image2_khr: self.acquire_next_image2_khr,
+        }
     }
 }
 impl KhrDeviceGroupFn {
@@ -57625,7 +57824,237 @@ impl KhrDeviceGroupFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrDeviceGroupFn {}
+        KhrDeviceGroupFn {
+            get_device_group_peer_memory_features: unsafe {
+                extern "system" fn get_device_group_peer_memory_features(
+                    _device: Device,
+                    _heap_index: u32,
+                    _local_device_index: u32,
+                    _remote_device_index: u32,
+                    _p_peer_memory_features: *mut PeerMemoryFeatureFlags,
+                ) -> c_void {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_device_group_peer_memory_features)
+                    ))
+                }
+                let raw_name = stringify!(vkGetDeviceGroupPeerMemoryFeatures);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    get_device_group_peer_memory_features
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_device_mask: unsafe {
+                extern "system" fn cmd_set_device_mask(
+                    _command_buffer: CommandBuffer,
+                    _device_mask: u32,
+                ) -> c_void {
+                    panic!(concat!("Unable to load ", stringify!(cmd_set_device_mask)))
+                }
+                let raw_name = stringify!(vkCmdSetDeviceMask);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    cmd_set_device_mask
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_dispatch_base: unsafe {
+                extern "system" fn cmd_dispatch_base(
+                    _command_buffer: CommandBuffer,
+                    _base_group_x: u32,
+                    _base_group_y: u32,
+                    _base_group_z: u32,
+                    _group_count_x: u32,
+                    _group_count_y: u32,
+                    _group_count_z: u32,
+                ) -> c_void {
+                    panic!(concat!("Unable to load ", stringify!(cmd_dispatch_base)))
+                }
+                let raw_name = stringify!(vkCmdDispatchBase);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    cmd_dispatch_base
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_device_group_present_capabilities_khr: unsafe {
+                extern "system" fn get_device_group_present_capabilities_khr(
+                    _device: Device,
+                    _p_device_group_present_capabilities: *mut DeviceGroupPresentCapabilitiesKHR,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_device_group_present_capabilities_khr)
+                    ))
+                }
+                let raw_name = stringify!(vkGetDeviceGroupPresentCapabilitiesKHR);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    get_device_group_present_capabilities_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_device_group_surface_present_modes_khr: unsafe {
+                extern "system" fn get_device_group_surface_present_modes_khr(
+                    _device: Device,
+                    _surface: SurfaceKHR,
+                    _p_modes: *mut DeviceGroupPresentModeFlagsKHR,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_device_group_surface_present_modes_khr)
+                    ))
+                }
+                let raw_name = stringify!(vkGetDeviceGroupSurfacePresentModesKHR);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    get_device_group_surface_present_modes_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_physical_device_present_rectangles_khr: unsafe {
+                extern "system" fn get_physical_device_present_rectangles_khr(
+                    _physical_device: PhysicalDevice,
+                    _surface: SurfaceKHR,
+                    _p_rect_count: *mut u32,
+                    _p_rects: *mut Rect2D,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_physical_device_present_rectangles_khr)
+                    ))
+                }
+                let raw_name = stringify!(vkGetPhysicalDevicePresentRectanglesKHR);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    get_physical_device_present_rectangles_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            acquire_next_image2_khr: unsafe {
+                extern "system" fn acquire_next_image2_khr(
+                    _device: Device,
+                    _p_acquire_info: *const AcquireNextImageInfoKHR,
+                    _p_image_index: *mut u32,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(acquire_next_image2_khr)
+                    ))
+                }
+                let raw_name = stringify!(vkAcquireNextImage2KHR);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    acquire_next_image2_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetDeviceGroupPeerMemoryFeatures.html>"]
+    pub unsafe fn get_device_group_peer_memory_features(
+        &self,
+        device: Device,
+        heap_index: u32,
+        local_device_index: u32,
+        remote_device_index: u32,
+        p_peer_memory_features: *mut PeerMemoryFeatureFlags,
+    ) -> c_void {
+        (self.get_device_group_peer_memory_features)(
+            device,
+            heap_index,
+            local_device_index,
+            remote_device_index,
+            p_peer_memory_features,
+        )
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetDeviceMask.html>"]
+    pub unsafe fn cmd_set_device_mask(
+        &self,
+        command_buffer: CommandBuffer,
+        device_mask: u32,
+    ) -> c_void {
+        (self.cmd_set_device_mask)(command_buffer, device_mask)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdDispatchBase.html>"]
+    pub unsafe fn cmd_dispatch_base(
+        &self,
+        command_buffer: CommandBuffer,
+        base_group_x: u32,
+        base_group_y: u32,
+        base_group_z: u32,
+        group_count_x: u32,
+        group_count_y: u32,
+        group_count_z: u32,
+    ) -> c_void {
+        (self.cmd_dispatch_base)(
+            command_buffer,
+            base_group_x,
+            base_group_y,
+            base_group_z,
+            group_count_x,
+            group_count_y,
+            group_count_z,
+        )
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetDeviceGroupPresentCapabilitiesKHR.html>"]
+    pub unsafe fn get_device_group_present_capabilities_khr(
+        &self,
+        device: Device,
+        p_device_group_present_capabilities: *mut DeviceGroupPresentCapabilitiesKHR,
+    ) -> Result {
+        (self.get_device_group_present_capabilities_khr)(
+            device,
+            p_device_group_present_capabilities,
+        )
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetDeviceGroupSurfacePresentModesKHR.html>"]
+    pub unsafe fn get_device_group_surface_present_modes_khr(
+        &self,
+        device: Device,
+        surface: SurfaceKHR,
+        p_modes: *mut DeviceGroupPresentModeFlagsKHR,
+    ) -> Result {
+        (self.get_device_group_surface_present_modes_khr)(device, surface, p_modes)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDevicePresentRectanglesKHR.html>"]
+    pub unsafe fn get_physical_device_present_rectangles_khr(
+        &self,
+        physical_device: PhysicalDevice,
+        surface: SurfaceKHR,
+        p_rect_count: *mut u32,
+        p_rects: *mut Rect2D,
+    ) -> Result {
+        (self.get_physical_device_present_rectangles_khr)(
+            physical_device,
+            surface,
+            p_rect_count,
+            p_rects,
+        )
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkAcquireNextImage2KHR.html>"]
+    pub unsafe fn acquire_next_image2_khr(
+        &self,
+        device: Device,
+        p_acquire_info: *const AcquireNextImageInfoKHR,
+        p_image_index: *mut u32,
+    ) -> Result {
+        (self.acquire_next_image2_khr)(device, p_acquire_info, p_image_index)
     }
 }
 impl ExtValidationFlagsFn {
@@ -57932,12 +58361,26 @@ impl KhrMaintenance1Fn {
             .expect("Wrong extension string")
     }
 }
-pub struct KhrMaintenance1Fn {}
+#[allow(non_camel_case_types)]
+pub type PFN_vkTrimCommandPool = extern "system" fn(
+    device: Device,
+    command_pool: CommandPool,
+    flags: CommandPoolTrimFlags,
+) -> c_void;
+pub struct KhrMaintenance1Fn {
+    pub trim_command_pool: extern "system" fn(
+        device: Device,
+        command_pool: CommandPool,
+        flags: CommandPoolTrimFlags,
+    ) -> c_void,
+}
 unsafe impl Send for KhrMaintenance1Fn {}
 unsafe impl Sync for KhrMaintenance1Fn {}
 impl ::std::clone::Clone for KhrMaintenance1Fn {
     fn clone(&self) -> Self {
-        KhrMaintenance1Fn {}
+        KhrMaintenance1Fn {
+            trim_command_pool: self.trim_command_pool,
+        }
     }
 }
 impl KhrMaintenance1Fn {
@@ -57945,7 +58388,34 @@ impl KhrMaintenance1Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrMaintenance1Fn {}
+        KhrMaintenance1Fn {
+            trim_command_pool: unsafe {
+                extern "system" fn trim_command_pool(
+                    _device: Device,
+                    _command_pool: CommandPool,
+                    _flags: CommandPoolTrimFlags,
+                ) -> c_void {
+                    panic!(concat!("Unable to load ", stringify!(trim_command_pool)))
+                }
+                let raw_name = stringify!(vkTrimCommandPool);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    trim_command_pool
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkTrimCommandPool.html>"]
+    pub unsafe fn trim_command_pool(
+        &self,
+        device: Device,
+        command_pool: CommandPool,
+        flags: CommandPoolTrimFlags,
+    ) -> c_void {
+        (self.trim_command_pool)(device, command_pool, flags)
     }
 }
 impl KhrDeviceGroupCreationFn {
@@ -57954,12 +58424,26 @@ impl KhrDeviceGroupCreationFn {
             .expect("Wrong extension string")
     }
 }
-pub struct KhrDeviceGroupCreationFn {}
+#[allow(non_camel_case_types)]
+pub type PFN_vkEnumeratePhysicalDeviceGroups = extern "system" fn(
+    instance: Instance,
+    p_physical_device_group_count: *mut u32,
+    p_physical_device_group_properties: *mut PhysicalDeviceGroupProperties,
+) -> Result;
+pub struct KhrDeviceGroupCreationFn {
+    pub enumerate_physical_device_groups: extern "system" fn(
+        instance: Instance,
+        p_physical_device_group_count: *mut u32,
+        p_physical_device_group_properties: *mut PhysicalDeviceGroupProperties,
+    ) -> Result,
+}
 unsafe impl Send for KhrDeviceGroupCreationFn {}
 unsafe impl Sync for KhrDeviceGroupCreationFn {}
 impl ::std::clone::Clone for KhrDeviceGroupCreationFn {
     fn clone(&self) -> Self {
-        KhrDeviceGroupCreationFn {}
+        KhrDeviceGroupCreationFn {
+            enumerate_physical_device_groups: self.enumerate_physical_device_groups,
+        }
     }
 }
 impl KhrDeviceGroupCreationFn {
@@ -57967,7 +58451,41 @@ impl KhrDeviceGroupCreationFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrDeviceGroupCreationFn {}
+        KhrDeviceGroupCreationFn {
+            enumerate_physical_device_groups: unsafe {
+                extern "system" fn enumerate_physical_device_groups(
+                    _instance: Instance,
+                    _p_physical_device_group_count: *mut u32,
+                    _p_physical_device_group_properties: *mut PhysicalDeviceGroupProperties,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(enumerate_physical_device_groups)
+                    ))
+                }
+                let raw_name = stringify!(vkEnumeratePhysicalDeviceGroups);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    enumerate_physical_device_groups
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkEnumeratePhysicalDeviceGroups.html>"]
+    pub unsafe fn enumerate_physical_device_groups(
+        &self,
+        instance: Instance,
+        p_physical_device_group_count: *mut u32,
+        p_physical_device_group_properties: *mut PhysicalDeviceGroupProperties,
+    ) -> Result {
+        (self.enumerate_physical_device_groups)(
+            instance,
+            p_physical_device_group_count,
+            p_physical_device_group_properties,
+        )
     }
 }
 impl KhrExternalMemoryCapabilitiesFn {
@@ -57976,12 +58494,27 @@ impl KhrExternalMemoryCapabilitiesFn {
             .expect("Wrong extension string")
     }
 }
-pub struct KhrExternalMemoryCapabilitiesFn {}
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetPhysicalDeviceExternalBufferProperties = extern "system" fn(
+    physical_device: PhysicalDevice,
+    p_external_buffer_info: *const PhysicalDeviceExternalBufferInfo,
+    p_external_buffer_properties: *mut ExternalBufferProperties,
+) -> c_void;
+pub struct KhrExternalMemoryCapabilitiesFn {
+    pub get_physical_device_external_buffer_properties: extern "system" fn(
+        physical_device: PhysicalDevice,
+        p_external_buffer_info: *const PhysicalDeviceExternalBufferInfo,
+        p_external_buffer_properties: *mut ExternalBufferProperties,
+    ) -> c_void,
+}
 unsafe impl Send for KhrExternalMemoryCapabilitiesFn {}
 unsafe impl Sync for KhrExternalMemoryCapabilitiesFn {}
 impl ::std::clone::Clone for KhrExternalMemoryCapabilitiesFn {
     fn clone(&self) -> Self {
-        KhrExternalMemoryCapabilitiesFn {}
+        KhrExternalMemoryCapabilitiesFn {
+            get_physical_device_external_buffer_properties: self
+                .get_physical_device_external_buffer_properties,
+        }
     }
 }
 impl KhrExternalMemoryCapabilitiesFn {
@@ -57989,7 +58522,41 @@ impl KhrExternalMemoryCapabilitiesFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrExternalMemoryCapabilitiesFn {}
+        KhrExternalMemoryCapabilitiesFn {
+            get_physical_device_external_buffer_properties: unsafe {
+                extern "system" fn get_physical_device_external_buffer_properties(
+                    _physical_device: PhysicalDevice,
+                    _p_external_buffer_info: *const PhysicalDeviceExternalBufferInfo,
+                    _p_external_buffer_properties: *mut ExternalBufferProperties,
+                ) -> c_void {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_physical_device_external_buffer_properties)
+                    ))
+                }
+                let raw_name = stringify!(vkGetPhysicalDeviceExternalBufferProperties);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    get_physical_device_external_buffer_properties
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceExternalBufferProperties.html>"]
+    pub unsafe fn get_physical_device_external_buffer_properties(
+        &self,
+        physical_device: PhysicalDevice,
+        p_external_buffer_info: *const PhysicalDeviceExternalBufferInfo,
+        p_external_buffer_properties: *mut ExternalBufferProperties,
+    ) -> c_void {
+        (self.get_physical_device_external_buffer_properties)(
+            physical_device,
+            p_external_buffer_info,
+            p_external_buffer_properties,
+        )
     }
 }
 impl KhrExternalMemoryFn {
@@ -58298,12 +58865,27 @@ impl KhrExternalSemaphoreCapabilitiesFn {
             .expect("Wrong extension string")
     }
 }
-pub struct KhrExternalSemaphoreCapabilitiesFn {}
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetPhysicalDeviceExternalSemaphoreProperties = extern "system" fn(
+    physical_device: PhysicalDevice,
+    p_external_semaphore_info: *const PhysicalDeviceExternalSemaphoreInfo,
+    p_external_semaphore_properties: *mut ExternalSemaphoreProperties,
+) -> c_void;
+pub struct KhrExternalSemaphoreCapabilitiesFn {
+    pub get_physical_device_external_semaphore_properties: extern "system" fn(
+        physical_device: PhysicalDevice,
+        p_external_semaphore_info: *const PhysicalDeviceExternalSemaphoreInfo,
+        p_external_semaphore_properties: *mut ExternalSemaphoreProperties,
+    ) -> c_void,
+}
 unsafe impl Send for KhrExternalSemaphoreCapabilitiesFn {}
 unsafe impl Sync for KhrExternalSemaphoreCapabilitiesFn {}
 impl ::std::clone::Clone for KhrExternalSemaphoreCapabilitiesFn {
     fn clone(&self) -> Self {
-        KhrExternalSemaphoreCapabilitiesFn {}
+        KhrExternalSemaphoreCapabilitiesFn {
+            get_physical_device_external_semaphore_properties: self
+                .get_physical_device_external_semaphore_properties,
+        }
     }
 }
 impl KhrExternalSemaphoreCapabilitiesFn {
@@ -58311,7 +58893,41 @@ impl KhrExternalSemaphoreCapabilitiesFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrExternalSemaphoreCapabilitiesFn {}
+        KhrExternalSemaphoreCapabilitiesFn {
+            get_physical_device_external_semaphore_properties: unsafe {
+                extern "system" fn get_physical_device_external_semaphore_properties(
+                    _physical_device: PhysicalDevice,
+                    _p_external_semaphore_info: *const PhysicalDeviceExternalSemaphoreInfo,
+                    _p_external_semaphore_properties: *mut ExternalSemaphoreProperties,
+                ) -> c_void {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_physical_device_external_semaphore_properties)
+                    ))
+                }
+                let raw_name = stringify!(vkGetPhysicalDeviceExternalSemaphoreProperties);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    get_physical_device_external_semaphore_properties
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceExternalSemaphoreProperties.html>"]
+    pub unsafe fn get_physical_device_external_semaphore_properties(
+        &self,
+        physical_device: PhysicalDevice,
+        p_external_semaphore_info: *const PhysicalDeviceExternalSemaphoreInfo,
+        p_external_semaphore_properties: *mut ExternalSemaphoreProperties,
+    ) -> c_void {
+        (self.get_physical_device_external_semaphore_properties)(
+            physical_device,
+            p_external_semaphore_info,
+            p_external_semaphore_properties,
+        )
     }
 }
 impl KhrExternalSemaphoreFn {
@@ -58911,12 +59527,63 @@ impl KhrDescriptorUpdateTemplateFn {
             .expect("Wrong extension string")
     }
 }
-pub struct KhrDescriptorUpdateTemplateFn {}
+#[allow(non_camel_case_types)]
+pub type PFN_vkCreateDescriptorUpdateTemplate = extern "system" fn(
+    device: Device,
+    p_create_info: *const DescriptorUpdateTemplateCreateInfo,
+    p_allocator: *const AllocationCallbacks,
+    p_descriptor_update_template: *mut DescriptorUpdateTemplate,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkDestroyDescriptorUpdateTemplate = extern "system" fn(
+    device: Device,
+    descriptor_update_template: DescriptorUpdateTemplate,
+    p_allocator: *const AllocationCallbacks,
+) -> c_void;
+#[allow(non_camel_case_types)]
+pub type PFN_vkUpdateDescriptorSetWithTemplate = extern "system" fn(
+    device: Device,
+    descriptor_set: DescriptorSet,
+    descriptor_update_template: DescriptorUpdateTemplate,
+    p_data: *const c_void,
+) -> c_void;
+pub struct KhrDescriptorUpdateTemplateFn {
+    pub create_descriptor_update_template: extern "system" fn(
+        device: Device,
+        p_create_info: *const DescriptorUpdateTemplateCreateInfo,
+        p_allocator: *const AllocationCallbacks,
+        p_descriptor_update_template: *mut DescriptorUpdateTemplate,
+    ) -> Result,
+    pub destroy_descriptor_update_template: extern "system" fn(
+        device: Device,
+        descriptor_update_template: DescriptorUpdateTemplate,
+        p_allocator: *const AllocationCallbacks,
+    ) -> c_void,
+    pub update_descriptor_set_with_template: extern "system" fn(
+        device: Device,
+        descriptor_set: DescriptorSet,
+        descriptor_update_template: DescriptorUpdateTemplate,
+        p_data: *const c_void,
+    ) -> c_void,
+    pub cmd_push_descriptor_set_with_template_khr: extern "system" fn(
+        command_buffer: CommandBuffer,
+        descriptor_update_template: DescriptorUpdateTemplate,
+        layout: PipelineLayout,
+        set: u32,
+        p_data: *const c_void,
+    ) -> c_void,
+}
 unsafe impl Send for KhrDescriptorUpdateTemplateFn {}
 unsafe impl Sync for KhrDescriptorUpdateTemplateFn {}
 impl ::std::clone::Clone for KhrDescriptorUpdateTemplateFn {
     fn clone(&self) -> Self {
-        KhrDescriptorUpdateTemplateFn {}
+        KhrDescriptorUpdateTemplateFn {
+            create_descriptor_update_template: self.create_descriptor_update_template,
+            destroy_descriptor_update_template: self.destroy_descriptor_update_template,
+            update_descriptor_set_with_template: self.update_descriptor_set_with_template,
+            cmd_push_descriptor_set_with_template_khr: self
+                .cmd_push_descriptor_set_with_template_khr,
+        }
     }
 }
 impl KhrDescriptorUpdateTemplateFn {
@@ -58924,7 +59591,148 @@ impl KhrDescriptorUpdateTemplateFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrDescriptorUpdateTemplateFn {}
+        KhrDescriptorUpdateTemplateFn {
+            create_descriptor_update_template: unsafe {
+                extern "system" fn create_descriptor_update_template(
+                    _device: Device,
+                    _p_create_info: *const DescriptorUpdateTemplateCreateInfo,
+                    _p_allocator: *const AllocationCallbacks,
+                    _p_descriptor_update_template: *mut DescriptorUpdateTemplate,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(create_descriptor_update_template)
+                    ))
+                }
+                let raw_name = stringify!(vkCreateDescriptorUpdateTemplate);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    create_descriptor_update_template
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            destroy_descriptor_update_template: unsafe {
+                extern "system" fn destroy_descriptor_update_template(
+                    _device: Device,
+                    _descriptor_update_template: DescriptorUpdateTemplate,
+                    _p_allocator: *const AllocationCallbacks,
+                ) -> c_void {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(destroy_descriptor_update_template)
+                    ))
+                }
+                let raw_name = stringify!(vkDestroyDescriptorUpdateTemplate);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    destroy_descriptor_update_template
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            update_descriptor_set_with_template: unsafe {
+                extern "system" fn update_descriptor_set_with_template(
+                    _device: Device,
+                    _descriptor_set: DescriptorSet,
+                    _descriptor_update_template: DescriptorUpdateTemplate,
+                    _p_data: *const c_void,
+                ) -> c_void {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(update_descriptor_set_with_template)
+                    ))
+                }
+                let raw_name = stringify!(vkUpdateDescriptorSetWithTemplate);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    update_descriptor_set_with_template
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_push_descriptor_set_with_template_khr: unsafe {
+                extern "system" fn cmd_push_descriptor_set_with_template_khr(
+                    _command_buffer: CommandBuffer,
+                    _descriptor_update_template: DescriptorUpdateTemplate,
+                    _layout: PipelineLayout,
+                    _set: u32,
+                    _p_data: *const c_void,
+                ) -> c_void {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_push_descriptor_set_with_template_khr)
+                    ))
+                }
+                let raw_name = stringify!(vkCmdPushDescriptorSetWithTemplateKHR);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    cmd_push_descriptor_set_with_template_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateDescriptorUpdateTemplate.html>"]
+    pub unsafe fn create_descriptor_update_template(
+        &self,
+        device: Device,
+        p_create_info: *const DescriptorUpdateTemplateCreateInfo,
+        p_allocator: *const AllocationCallbacks,
+        p_descriptor_update_template: *mut DescriptorUpdateTemplate,
+    ) -> Result {
+        (self.create_descriptor_update_template)(
+            device,
+            p_create_info,
+            p_allocator,
+            p_descriptor_update_template,
+        )
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkDestroyDescriptorUpdateTemplate.html>"]
+    pub unsafe fn destroy_descriptor_update_template(
+        &self,
+        device: Device,
+        descriptor_update_template: DescriptorUpdateTemplate,
+        p_allocator: *const AllocationCallbacks,
+    ) -> c_void {
+        (self.destroy_descriptor_update_template)(device, descriptor_update_template, p_allocator)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkUpdateDescriptorSetWithTemplate.html>"]
+    pub unsafe fn update_descriptor_set_with_template(
+        &self,
+        device: Device,
+        descriptor_set: DescriptorSet,
+        descriptor_update_template: DescriptorUpdateTemplate,
+        p_data: *const c_void,
+    ) -> c_void {
+        (self.update_descriptor_set_with_template)(
+            device,
+            descriptor_set,
+            descriptor_update_template,
+            p_data,
+        )
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdPushDescriptorSetWithTemplateKHR.html>"]
+    pub unsafe fn cmd_push_descriptor_set_with_template_khr(
+        &self,
+        command_buffer: CommandBuffer,
+        descriptor_update_template: DescriptorUpdateTemplate,
+        layout: PipelineLayout,
+        set: u32,
+        p_data: *const c_void,
+    ) -> c_void {
+        (self.cmd_push_descriptor_set_with_template_khr)(
+            command_buffer,
+            descriptor_update_template,
+            layout,
+            set,
+            p_data,
+        )
     }
 }
 impl NvxDeviceGeneratedCommandsFn {
@@ -60613,12 +61421,62 @@ impl KhrCreateRenderpass2Fn {
             .expect("Wrong extension string")
     }
 }
-pub struct KhrCreateRenderpass2Fn {}
+#[allow(non_camel_case_types)]
+pub type PFN_vkCreateRenderPass2 = extern "system" fn(
+    device: Device,
+    p_create_info: *const RenderPassCreateInfo2,
+    p_allocator: *const AllocationCallbacks,
+    p_render_pass: *mut RenderPass,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdBeginRenderPass2 = extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_render_pass_begin: *const RenderPassBeginInfo,
+    p_subpass_begin_info: *const SubpassBeginInfo,
+) -> c_void;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdNextSubpass2 = extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_subpass_begin_info: *const SubpassBeginInfo,
+    p_subpass_end_info: *const SubpassEndInfo,
+) -> c_void;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdEndRenderPass2 = extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_subpass_end_info: *const SubpassEndInfo,
+) -> c_void;
+pub struct KhrCreateRenderpass2Fn {
+    pub create_render_pass2: extern "system" fn(
+        device: Device,
+        p_create_info: *const RenderPassCreateInfo2,
+        p_allocator: *const AllocationCallbacks,
+        p_render_pass: *mut RenderPass,
+    ) -> Result,
+    pub cmd_begin_render_pass2: extern "system" fn(
+        command_buffer: CommandBuffer,
+        p_render_pass_begin: *const RenderPassBeginInfo,
+        p_subpass_begin_info: *const SubpassBeginInfo,
+    ) -> c_void,
+    pub cmd_next_subpass2: extern "system" fn(
+        command_buffer: CommandBuffer,
+        p_subpass_begin_info: *const SubpassBeginInfo,
+        p_subpass_end_info: *const SubpassEndInfo,
+    ) -> c_void,
+    pub cmd_end_render_pass2: extern "system" fn(
+        command_buffer: CommandBuffer,
+        p_subpass_end_info: *const SubpassEndInfo,
+    ) -> c_void,
+}
 unsafe impl Send for KhrCreateRenderpass2Fn {}
 unsafe impl Sync for KhrCreateRenderpass2Fn {}
 impl ::std::clone::Clone for KhrCreateRenderpass2Fn {
     fn clone(&self) -> Self {
-        KhrCreateRenderpass2Fn {}
+        KhrCreateRenderpass2Fn {
+            create_render_pass2: self.create_render_pass2,
+            cmd_begin_render_pass2: self.cmd_begin_render_pass2,
+            cmd_next_subpass2: self.cmd_next_subpass2,
+            cmd_end_render_pass2: self.cmd_end_render_pass2,
+        }
     }
 }
 impl KhrCreateRenderpass2Fn {
@@ -60626,7 +61484,115 @@ impl KhrCreateRenderpass2Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrCreateRenderpass2Fn {}
+        KhrCreateRenderpass2Fn {
+            create_render_pass2: unsafe {
+                extern "system" fn create_render_pass2(
+                    _device: Device,
+                    _p_create_info: *const RenderPassCreateInfo2,
+                    _p_allocator: *const AllocationCallbacks,
+                    _p_render_pass: *mut RenderPass,
+                ) -> Result {
+                    panic!(concat!("Unable to load ", stringify!(create_render_pass2)))
+                }
+                let raw_name = stringify!(vkCreateRenderPass2);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    create_render_pass2
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_begin_render_pass2: unsafe {
+                extern "system" fn cmd_begin_render_pass2(
+                    _command_buffer: CommandBuffer,
+                    _p_render_pass_begin: *const RenderPassBeginInfo,
+                    _p_subpass_begin_info: *const SubpassBeginInfo,
+                ) -> c_void {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_begin_render_pass2)
+                    ))
+                }
+                let raw_name = stringify!(vkCmdBeginRenderPass2);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    cmd_begin_render_pass2
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_next_subpass2: unsafe {
+                extern "system" fn cmd_next_subpass2(
+                    _command_buffer: CommandBuffer,
+                    _p_subpass_begin_info: *const SubpassBeginInfo,
+                    _p_subpass_end_info: *const SubpassEndInfo,
+                ) -> c_void {
+                    panic!(concat!("Unable to load ", stringify!(cmd_next_subpass2)))
+                }
+                let raw_name = stringify!(vkCmdNextSubpass2);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    cmd_next_subpass2
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_end_render_pass2: unsafe {
+                extern "system" fn cmd_end_render_pass2(
+                    _command_buffer: CommandBuffer,
+                    _p_subpass_end_info: *const SubpassEndInfo,
+                ) -> c_void {
+                    panic!(concat!("Unable to load ", stringify!(cmd_end_render_pass2)))
+                }
+                let raw_name = stringify!(vkCmdEndRenderPass2);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    cmd_end_render_pass2
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateRenderPass2.html>"]
+    pub unsafe fn create_render_pass2(
+        &self,
+        device: Device,
+        p_create_info: *const RenderPassCreateInfo2,
+        p_allocator: *const AllocationCallbacks,
+        p_render_pass: *mut RenderPass,
+    ) -> Result {
+        (self.create_render_pass2)(device, p_create_info, p_allocator, p_render_pass)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdBeginRenderPass2.html>"]
+    pub unsafe fn cmd_begin_render_pass2(
+        &self,
+        command_buffer: CommandBuffer,
+        p_render_pass_begin: *const RenderPassBeginInfo,
+        p_subpass_begin_info: *const SubpassBeginInfo,
+    ) -> c_void {
+        (self.cmd_begin_render_pass2)(command_buffer, p_render_pass_begin, p_subpass_begin_info)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdNextSubpass2.html>"]
+    pub unsafe fn cmd_next_subpass2(
+        &self,
+        command_buffer: CommandBuffer,
+        p_subpass_begin_info: *const SubpassBeginInfo,
+        p_subpass_end_info: *const SubpassEndInfo,
+    ) -> c_void {
+        (self.cmd_next_subpass2)(command_buffer, p_subpass_begin_info, p_subpass_end_info)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdEndRenderPass2.html>"]
+    pub unsafe fn cmd_end_render_pass2(
+        &self,
+        command_buffer: CommandBuffer,
+        p_subpass_end_info: *const SubpassEndInfo,
+    ) -> c_void {
+        (self.cmd_end_render_pass2)(command_buffer, p_subpass_end_info)
     }
 }
 impl ImgExtension111Fn {
@@ -60731,12 +61697,27 @@ impl KhrExternalFenceCapabilitiesFn {
             .expect("Wrong extension string")
     }
 }
-pub struct KhrExternalFenceCapabilitiesFn {}
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetPhysicalDeviceExternalFenceProperties = extern "system" fn(
+    physical_device: PhysicalDevice,
+    p_external_fence_info: *const PhysicalDeviceExternalFenceInfo,
+    p_external_fence_properties: *mut ExternalFenceProperties,
+) -> c_void;
+pub struct KhrExternalFenceCapabilitiesFn {
+    pub get_physical_device_external_fence_properties: extern "system" fn(
+        physical_device: PhysicalDevice,
+        p_external_fence_info: *const PhysicalDeviceExternalFenceInfo,
+        p_external_fence_properties: *mut ExternalFenceProperties,
+    ) -> c_void,
+}
 unsafe impl Send for KhrExternalFenceCapabilitiesFn {}
 unsafe impl Sync for KhrExternalFenceCapabilitiesFn {}
 impl ::std::clone::Clone for KhrExternalFenceCapabilitiesFn {
     fn clone(&self) -> Self {
-        KhrExternalFenceCapabilitiesFn {}
+        KhrExternalFenceCapabilitiesFn {
+            get_physical_device_external_fence_properties: self
+                .get_physical_device_external_fence_properties,
+        }
     }
 }
 impl KhrExternalFenceCapabilitiesFn {
@@ -60744,7 +61725,41 @@ impl KhrExternalFenceCapabilitiesFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrExternalFenceCapabilitiesFn {}
+        KhrExternalFenceCapabilitiesFn {
+            get_physical_device_external_fence_properties: unsafe {
+                extern "system" fn get_physical_device_external_fence_properties(
+                    _physical_device: PhysicalDevice,
+                    _p_external_fence_info: *const PhysicalDeviceExternalFenceInfo,
+                    _p_external_fence_properties: *mut ExternalFenceProperties,
+                ) -> c_void {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_physical_device_external_fence_properties)
+                    ))
+                }
+                let raw_name = stringify!(vkGetPhysicalDeviceExternalFenceProperties);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    get_physical_device_external_fence_properties
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceExternalFenceProperties.html>"]
+    pub unsafe fn get_physical_device_external_fence_properties(
+        &self,
+        physical_device: PhysicalDevice,
+        p_external_fence_info: *const PhysicalDeviceExternalFenceInfo,
+        p_external_fence_properties: *mut ExternalFenceProperties,
+    ) -> c_void {
+        (self.get_physical_device_external_fence_properties)(
+            physical_device,
+            p_external_fence_info,
+            p_external_fence_properties,
+        )
     }
 }
 impl KhrExternalFenceFn {
@@ -62941,12 +63956,52 @@ impl KhrGetMemoryRequirements2Fn {
             .expect("Wrong extension string")
     }
 }
-pub struct KhrGetMemoryRequirements2Fn {}
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetImageMemoryRequirements2 = extern "system" fn(
+    device: Device,
+    p_info: *const ImageMemoryRequirementsInfo2,
+    p_memory_requirements: *mut MemoryRequirements2,
+) -> c_void;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetBufferMemoryRequirements2 = extern "system" fn(
+    device: Device,
+    p_info: *const BufferMemoryRequirementsInfo2,
+    p_memory_requirements: *mut MemoryRequirements2,
+) -> c_void;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetImageSparseMemoryRequirements2 = extern "system" fn(
+    device: Device,
+    p_info: *const ImageSparseMemoryRequirementsInfo2,
+    p_sparse_memory_requirement_count: *mut u32,
+    p_sparse_memory_requirements: *mut SparseImageMemoryRequirements2,
+) -> c_void;
+pub struct KhrGetMemoryRequirements2Fn {
+    pub get_image_memory_requirements2: extern "system" fn(
+        device: Device,
+        p_info: *const ImageMemoryRequirementsInfo2,
+        p_memory_requirements: *mut MemoryRequirements2,
+    ) -> c_void,
+    pub get_buffer_memory_requirements2: extern "system" fn(
+        device: Device,
+        p_info: *const BufferMemoryRequirementsInfo2,
+        p_memory_requirements: *mut MemoryRequirements2,
+    ) -> c_void,
+    pub get_image_sparse_memory_requirements2: extern "system" fn(
+        device: Device,
+        p_info: *const ImageSparseMemoryRequirementsInfo2,
+        p_sparse_memory_requirement_count: *mut u32,
+        p_sparse_memory_requirements: *mut SparseImageMemoryRequirements2,
+    ) -> c_void,
+}
 unsafe impl Send for KhrGetMemoryRequirements2Fn {}
 unsafe impl Sync for KhrGetMemoryRequirements2Fn {}
 impl ::std::clone::Clone for KhrGetMemoryRequirements2Fn {
     fn clone(&self) -> Self {
-        KhrGetMemoryRequirements2Fn {}
+        KhrGetMemoryRequirements2Fn {
+            get_image_memory_requirements2: self.get_image_memory_requirements2,
+            get_buffer_memory_requirements2: self.get_buffer_memory_requirements2,
+            get_image_sparse_memory_requirements2: self.get_image_sparse_memory_requirements2,
+        }
     }
 }
 impl KhrGetMemoryRequirements2Fn {
@@ -62954,7 +64009,102 @@ impl KhrGetMemoryRequirements2Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrGetMemoryRequirements2Fn {}
+        KhrGetMemoryRequirements2Fn {
+            get_image_memory_requirements2: unsafe {
+                extern "system" fn get_image_memory_requirements2(
+                    _device: Device,
+                    _p_info: *const ImageMemoryRequirementsInfo2,
+                    _p_memory_requirements: *mut MemoryRequirements2,
+                ) -> c_void {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_image_memory_requirements2)
+                    ))
+                }
+                let raw_name = stringify!(vkGetImageMemoryRequirements2);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    get_image_memory_requirements2
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_buffer_memory_requirements2: unsafe {
+                extern "system" fn get_buffer_memory_requirements2(
+                    _device: Device,
+                    _p_info: *const BufferMemoryRequirementsInfo2,
+                    _p_memory_requirements: *mut MemoryRequirements2,
+                ) -> c_void {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_buffer_memory_requirements2)
+                    ))
+                }
+                let raw_name = stringify!(vkGetBufferMemoryRequirements2);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    get_buffer_memory_requirements2
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_image_sparse_memory_requirements2: unsafe {
+                extern "system" fn get_image_sparse_memory_requirements2(
+                    _device: Device,
+                    _p_info: *const ImageSparseMemoryRequirementsInfo2,
+                    _p_sparse_memory_requirement_count: *mut u32,
+                    _p_sparse_memory_requirements: *mut SparseImageMemoryRequirements2,
+                ) -> c_void {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_image_sparse_memory_requirements2)
+                    ))
+                }
+                let raw_name = stringify!(vkGetImageSparseMemoryRequirements2);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    get_image_sparse_memory_requirements2
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetImageMemoryRequirements2.html>"]
+    pub unsafe fn get_image_memory_requirements2(
+        &self,
+        device: Device,
+        p_info: *const ImageMemoryRequirementsInfo2,
+        p_memory_requirements: *mut MemoryRequirements2,
+    ) -> c_void {
+        (self.get_image_memory_requirements2)(device, p_info, p_memory_requirements)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetBufferMemoryRequirements2.html>"]
+    pub unsafe fn get_buffer_memory_requirements2(
+        &self,
+        device: Device,
+        p_info: *const BufferMemoryRequirementsInfo2,
+        p_memory_requirements: *mut MemoryRequirements2,
+    ) -> c_void {
+        (self.get_buffer_memory_requirements2)(device, p_info, p_memory_requirements)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetImageSparseMemoryRequirements2.html>"]
+    pub unsafe fn get_image_sparse_memory_requirements2(
+        &self,
+        device: Device,
+        p_info: *const ImageSparseMemoryRequirementsInfo2,
+        p_sparse_memory_requirement_count: *mut u32,
+        p_sparse_memory_requirements: *mut SparseImageMemoryRequirements2,
+    ) -> c_void {
+        (self.get_image_sparse_memory_requirements2)(
+            device,
+            p_info,
+            p_sparse_memory_requirement_count,
+            p_sparse_memory_requirements,
+        )
     }
 }
 impl KhrImageFormatListFn {
@@ -63409,12 +64559,40 @@ impl KhrSamplerYcbcrConversionFn {
             .expect("Wrong extension string")
     }
 }
-pub struct KhrSamplerYcbcrConversionFn {}
+#[allow(non_camel_case_types)]
+pub type PFN_vkCreateSamplerYcbcrConversion = extern "system" fn(
+    device: Device,
+    p_create_info: *const SamplerYcbcrConversionCreateInfo,
+    p_allocator: *const AllocationCallbacks,
+    p_ycbcr_conversion: *mut SamplerYcbcrConversion,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkDestroySamplerYcbcrConversion = extern "system" fn(
+    device: Device,
+    ycbcr_conversion: SamplerYcbcrConversion,
+    p_allocator: *const AllocationCallbacks,
+) -> c_void;
+pub struct KhrSamplerYcbcrConversionFn {
+    pub create_sampler_ycbcr_conversion: extern "system" fn(
+        device: Device,
+        p_create_info: *const SamplerYcbcrConversionCreateInfo,
+        p_allocator: *const AllocationCallbacks,
+        p_ycbcr_conversion: *mut SamplerYcbcrConversion,
+    ) -> Result,
+    pub destroy_sampler_ycbcr_conversion: extern "system" fn(
+        device: Device,
+        ycbcr_conversion: SamplerYcbcrConversion,
+        p_allocator: *const AllocationCallbacks,
+    ) -> c_void,
+}
 unsafe impl Send for KhrSamplerYcbcrConversionFn {}
 unsafe impl Sync for KhrSamplerYcbcrConversionFn {}
 impl ::std::clone::Clone for KhrSamplerYcbcrConversionFn {
     fn clone(&self) -> Self {
-        KhrSamplerYcbcrConversionFn {}
+        KhrSamplerYcbcrConversionFn {
+            create_sampler_ycbcr_conversion: self.create_sampler_ycbcr_conversion,
+            destroy_sampler_ycbcr_conversion: self.destroy_sampler_ycbcr_conversion,
+        }
     }
 }
 impl KhrSamplerYcbcrConversionFn {
@@ -63422,7 +64600,73 @@ impl KhrSamplerYcbcrConversionFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrSamplerYcbcrConversionFn {}
+        KhrSamplerYcbcrConversionFn {
+            create_sampler_ycbcr_conversion: unsafe {
+                extern "system" fn create_sampler_ycbcr_conversion(
+                    _device: Device,
+                    _p_create_info: *const SamplerYcbcrConversionCreateInfo,
+                    _p_allocator: *const AllocationCallbacks,
+                    _p_ycbcr_conversion: *mut SamplerYcbcrConversion,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(create_sampler_ycbcr_conversion)
+                    ))
+                }
+                let raw_name = stringify!(vkCreateSamplerYcbcrConversion);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    create_sampler_ycbcr_conversion
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            destroy_sampler_ycbcr_conversion: unsafe {
+                extern "system" fn destroy_sampler_ycbcr_conversion(
+                    _device: Device,
+                    _ycbcr_conversion: SamplerYcbcrConversion,
+                    _p_allocator: *const AllocationCallbacks,
+                ) -> c_void {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(destroy_sampler_ycbcr_conversion)
+                    ))
+                }
+                let raw_name = stringify!(vkDestroySamplerYcbcrConversion);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    destroy_sampler_ycbcr_conversion
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateSamplerYcbcrConversion.html>"]
+    pub unsafe fn create_sampler_ycbcr_conversion(
+        &self,
+        device: Device,
+        p_create_info: *const SamplerYcbcrConversionCreateInfo,
+        p_allocator: *const AllocationCallbacks,
+        p_ycbcr_conversion: *mut SamplerYcbcrConversion,
+    ) -> Result {
+        (self.create_sampler_ycbcr_conversion)(
+            device,
+            p_create_info,
+            p_allocator,
+            p_ycbcr_conversion,
+        )
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkDestroySamplerYcbcrConversion.html>"]
+    pub unsafe fn destroy_sampler_ycbcr_conversion(
+        &self,
+        device: Device,
+        ycbcr_conversion: SamplerYcbcrConversion,
+        p_allocator: *const AllocationCallbacks,
+    ) -> c_void {
+        (self.destroy_sampler_ycbcr_conversion)(device, ycbcr_conversion, p_allocator)
     }
 }
 impl KhrBindMemory2Fn {
@@ -63431,12 +64675,38 @@ impl KhrBindMemory2Fn {
             .expect("Wrong extension string")
     }
 }
-pub struct KhrBindMemory2Fn {}
+#[allow(non_camel_case_types)]
+pub type PFN_vkBindBufferMemory2 = extern "system" fn(
+    device: Device,
+    bind_info_count: u32,
+    p_bind_infos: *const BindBufferMemoryInfo,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkBindImageMemory2 = extern "system" fn(
+    device: Device,
+    bind_info_count: u32,
+    p_bind_infos: *const BindImageMemoryInfo,
+) -> Result;
+pub struct KhrBindMemory2Fn {
+    pub bind_buffer_memory2: extern "system" fn(
+        device: Device,
+        bind_info_count: u32,
+        p_bind_infos: *const BindBufferMemoryInfo,
+    ) -> Result,
+    pub bind_image_memory2: extern "system" fn(
+        device: Device,
+        bind_info_count: u32,
+        p_bind_infos: *const BindImageMemoryInfo,
+    ) -> Result,
+}
 unsafe impl Send for KhrBindMemory2Fn {}
 unsafe impl Sync for KhrBindMemory2Fn {}
 impl ::std::clone::Clone for KhrBindMemory2Fn {
     fn clone(&self) -> Self {
-        KhrBindMemory2Fn {}
+        KhrBindMemory2Fn {
+            bind_buffer_memory2: self.bind_buffer_memory2,
+            bind_image_memory2: self.bind_image_memory2,
+        }
     }
 }
 impl KhrBindMemory2Fn {
@@ -63444,7 +64714,60 @@ impl KhrBindMemory2Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrBindMemory2Fn {}
+        KhrBindMemory2Fn {
+            bind_buffer_memory2: unsafe {
+                extern "system" fn bind_buffer_memory2(
+                    _device: Device,
+                    _bind_info_count: u32,
+                    _p_bind_infos: *const BindBufferMemoryInfo,
+                ) -> Result {
+                    panic!(concat!("Unable to load ", stringify!(bind_buffer_memory2)))
+                }
+                let raw_name = stringify!(vkBindBufferMemory2);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    bind_buffer_memory2
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            bind_image_memory2: unsafe {
+                extern "system" fn bind_image_memory2(
+                    _device: Device,
+                    _bind_info_count: u32,
+                    _p_bind_infos: *const BindImageMemoryInfo,
+                ) -> Result {
+                    panic!(concat!("Unable to load ", stringify!(bind_image_memory2)))
+                }
+                let raw_name = stringify!(vkBindImageMemory2);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    bind_image_memory2
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkBindBufferMemory2.html>"]
+    pub unsafe fn bind_buffer_memory2(
+        &self,
+        device: Device,
+        bind_info_count: u32,
+        p_bind_infos: *const BindBufferMemoryInfo,
+    ) -> Result {
+        (self.bind_buffer_memory2)(device, bind_info_count, p_bind_infos)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkBindImageMemory2.html>"]
+    pub unsafe fn bind_image_memory2(
+        &self,
+        device: Device,
+        bind_info_count: u32,
+        p_bind_infos: *const BindImageMemoryInfo,
+    ) -> Result {
+        (self.bind_image_memory2)(device, bind_info_count, p_bind_infos)
     }
 }
 impl ExtImageDrmFormatModifierFn {
@@ -64939,12 +66262,26 @@ impl KhrMaintenance3Fn {
             .expect("Wrong extension string")
     }
 }
-pub struct KhrMaintenance3Fn {}
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetDescriptorSetLayoutSupport = extern "system" fn(
+    device: Device,
+    p_create_info: *const DescriptorSetLayoutCreateInfo,
+    p_support: *mut DescriptorSetLayoutSupport,
+) -> c_void;
+pub struct KhrMaintenance3Fn {
+    pub get_descriptor_set_layout_support: extern "system" fn(
+        device: Device,
+        p_create_info: *const DescriptorSetLayoutCreateInfo,
+        p_support: *mut DescriptorSetLayoutSupport,
+    ) -> c_void,
+}
 unsafe impl Send for KhrMaintenance3Fn {}
 unsafe impl Sync for KhrMaintenance3Fn {}
 impl ::std::clone::Clone for KhrMaintenance3Fn {
     fn clone(&self) -> Self {
-        KhrMaintenance3Fn {}
+        KhrMaintenance3Fn {
+            get_descriptor_set_layout_support: self.get_descriptor_set_layout_support,
+        }
     }
 }
 impl KhrMaintenance3Fn {
@@ -64952,7 +66289,37 @@ impl KhrMaintenance3Fn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrMaintenance3Fn {}
+        KhrMaintenance3Fn {
+            get_descriptor_set_layout_support: unsafe {
+                extern "system" fn get_descriptor_set_layout_support(
+                    _device: Device,
+                    _p_create_info: *const DescriptorSetLayoutCreateInfo,
+                    _p_support: *mut DescriptorSetLayoutSupport,
+                ) -> c_void {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_descriptor_set_layout_support)
+                    ))
+                }
+                let raw_name = stringify!(vkGetDescriptorSetLayoutSupport);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    get_descriptor_set_layout_support
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetDescriptorSetLayoutSupport.html>"]
+    pub unsafe fn get_descriptor_set_layout_support(
+        &self,
+        device: Device,
+        p_create_info: *const DescriptorSetLayoutCreateInfo,
+        p_support: *mut DescriptorSetLayoutSupport,
+    ) -> c_void {
+        (self.get_descriptor_set_layout_support)(device, p_create_info, p_support)
     }
 }
 impl KhrDrawIndirectCountFn {
@@ -64961,12 +66328,44 @@ impl KhrDrawIndirectCountFn {
             .expect("Wrong extension string")
     }
 }
-pub struct KhrDrawIndirectCountFn {}
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdDrawIndexedIndirectCount = extern "system" fn(
+    command_buffer: CommandBuffer,
+    buffer: Buffer,
+    offset: DeviceSize,
+    count_buffer: Buffer,
+    count_buffer_offset: DeviceSize,
+    max_draw_count: u32,
+    stride: u32,
+) -> c_void;
+pub struct KhrDrawIndirectCountFn {
+    pub cmd_draw_indirect_count: extern "system" fn(
+        command_buffer: CommandBuffer,
+        buffer: Buffer,
+        offset: DeviceSize,
+        count_buffer: Buffer,
+        count_buffer_offset: DeviceSize,
+        max_draw_count: u32,
+        stride: u32,
+    ) -> c_void,
+    pub cmd_draw_indexed_indirect_count: extern "system" fn(
+        command_buffer: CommandBuffer,
+        buffer: Buffer,
+        offset: DeviceSize,
+        count_buffer: Buffer,
+        count_buffer_offset: DeviceSize,
+        max_draw_count: u32,
+        stride: u32,
+    ) -> c_void,
+}
 unsafe impl Send for KhrDrawIndirectCountFn {}
 unsafe impl Sync for KhrDrawIndirectCountFn {}
 impl ::std::clone::Clone for KhrDrawIndirectCountFn {
     fn clone(&self) -> Self {
-        KhrDrawIndirectCountFn {}
+        KhrDrawIndirectCountFn {
+            cmd_draw_indirect_count: self.cmd_draw_indirect_count,
+            cmd_draw_indexed_indirect_count: self.cmd_draw_indexed_indirect_count,
+        }
     }
 }
 impl KhrDrawIndirectCountFn {
@@ -64974,7 +66373,98 @@ impl KhrDrawIndirectCountFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrDrawIndirectCountFn {}
+        KhrDrawIndirectCountFn {
+            cmd_draw_indirect_count: unsafe {
+                extern "system" fn cmd_draw_indirect_count(
+                    _command_buffer: CommandBuffer,
+                    _buffer: Buffer,
+                    _offset: DeviceSize,
+                    _count_buffer: Buffer,
+                    _count_buffer_offset: DeviceSize,
+                    _max_draw_count: u32,
+                    _stride: u32,
+                ) -> c_void {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_draw_indirect_count)
+                    ))
+                }
+                let raw_name = stringify!(vkCmdDrawIndirectCount);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    cmd_draw_indirect_count
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_draw_indexed_indirect_count: unsafe {
+                extern "system" fn cmd_draw_indexed_indirect_count(
+                    _command_buffer: CommandBuffer,
+                    _buffer: Buffer,
+                    _offset: DeviceSize,
+                    _count_buffer: Buffer,
+                    _count_buffer_offset: DeviceSize,
+                    _max_draw_count: u32,
+                    _stride: u32,
+                ) -> c_void {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_draw_indexed_indirect_count)
+                    ))
+                }
+                let raw_name = stringify!(vkCmdDrawIndexedIndirectCount);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    cmd_draw_indexed_indirect_count
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdDrawIndirectCount.html>"]
+    pub unsafe fn cmd_draw_indirect_count(
+        &self,
+        command_buffer: CommandBuffer,
+        buffer: Buffer,
+        offset: DeviceSize,
+        count_buffer: Buffer,
+        count_buffer_offset: DeviceSize,
+        max_draw_count: u32,
+        stride: u32,
+    ) -> c_void {
+        (self.cmd_draw_indirect_count)(
+            command_buffer,
+            buffer,
+            offset,
+            count_buffer,
+            count_buffer_offset,
+            max_draw_count,
+            stride,
+        )
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdDrawIndexedIndirectCount.html>"]
+    pub unsafe fn cmd_draw_indexed_indirect_count(
+        &self,
+        command_buffer: CommandBuffer,
+        buffer: Buffer,
+        offset: DeviceSize,
+        count_buffer: Buffer,
+        count_buffer_offset: DeviceSize,
+        max_draw_count: u32,
+        stride: u32,
+    ) -> c_void {
+        (self.cmd_draw_indexed_indirect_count)(
+            command_buffer,
+            buffer,
+            offset,
+            count_buffer,
+            count_buffer_offset,
+            max_draw_count,
+            stride,
+        )
     }
 }
 impl ExtFilterCubicFn {
@@ -66470,12 +67960,38 @@ impl KhrTimelineSemaphoreFn {
             .expect("Wrong extension string")
     }
 }
-pub struct KhrTimelineSemaphoreFn {}
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetSemaphoreCounterValue =
+    extern "system" fn(device: Device, semaphore: Semaphore, p_value: *mut u64) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkWaitSemaphores = extern "system" fn(
+    device: Device,
+    p_wait_info: *const SemaphoreWaitInfo,
+    timeout: u64,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkSignalSemaphore =
+    extern "system" fn(device: Device, p_signal_info: *const SemaphoreSignalInfo) -> Result;
+pub struct KhrTimelineSemaphoreFn {
+    pub get_semaphore_counter_value:
+        extern "system" fn(device: Device, semaphore: Semaphore, p_value: *mut u64) -> Result,
+    pub wait_semaphores: extern "system" fn(
+        device: Device,
+        p_wait_info: *const SemaphoreWaitInfo,
+        timeout: u64,
+    ) -> Result,
+    pub signal_semaphore:
+        extern "system" fn(device: Device, p_signal_info: *const SemaphoreSignalInfo) -> Result,
+}
 unsafe impl Send for KhrTimelineSemaphoreFn {}
 unsafe impl Sync for KhrTimelineSemaphoreFn {}
 impl ::std::clone::Clone for KhrTimelineSemaphoreFn {
     fn clone(&self) -> Self {
-        KhrTimelineSemaphoreFn {}
+        KhrTimelineSemaphoreFn {
+            get_semaphore_counter_value: self.get_semaphore_counter_value,
+            wait_semaphores: self.wait_semaphores,
+            signal_semaphore: self.signal_semaphore,
+        }
     }
 }
 impl KhrTimelineSemaphoreFn {
@@ -66483,7 +67999,87 @@ impl KhrTimelineSemaphoreFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrTimelineSemaphoreFn {}
+        KhrTimelineSemaphoreFn {
+            get_semaphore_counter_value: unsafe {
+                extern "system" fn get_semaphore_counter_value(
+                    _device: Device,
+                    _semaphore: Semaphore,
+                    _p_value: *mut u64,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_semaphore_counter_value)
+                    ))
+                }
+                let raw_name = stringify!(vkGetSemaphoreCounterValue);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    get_semaphore_counter_value
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            wait_semaphores: unsafe {
+                extern "system" fn wait_semaphores(
+                    _device: Device,
+                    _p_wait_info: *const SemaphoreWaitInfo,
+                    _timeout: u64,
+                ) -> Result {
+                    panic!(concat!("Unable to load ", stringify!(wait_semaphores)))
+                }
+                let raw_name = stringify!(vkWaitSemaphores);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    wait_semaphores
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            signal_semaphore: unsafe {
+                extern "system" fn signal_semaphore(
+                    _device: Device,
+                    _p_signal_info: *const SemaphoreSignalInfo,
+                ) -> Result {
+                    panic!(concat!("Unable to load ", stringify!(signal_semaphore)))
+                }
+                let raw_name = stringify!(vkSignalSemaphore);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    signal_semaphore
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetSemaphoreCounterValue.html>"]
+    pub unsafe fn get_semaphore_counter_value(
+        &self,
+        device: Device,
+        semaphore: Semaphore,
+        p_value: *mut u64,
+    ) -> Result {
+        (self.get_semaphore_counter_value)(device, semaphore, p_value)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkWaitSemaphores.html>"]
+    pub unsafe fn wait_semaphores(
+        &self,
+        device: Device,
+        p_wait_info: *const SemaphoreWaitInfo,
+        timeout: u64,
+    ) -> Result {
+        (self.wait_semaphores)(device, p_wait_info, timeout)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkSignalSemaphore.html>"]
+    pub unsafe fn signal_semaphore(
+        &self,
+        device: Device,
+        p_signal_info: *const SemaphoreSignalInfo,
+    ) -> Result {
+        (self.signal_semaphore)(device, p_signal_info)
     }
 }
 impl KhrExtension209Fn {
@@ -67925,12 +69521,20 @@ impl ExtBufferDeviceAddressFn {
             .expect("Wrong extension string")
     }
 }
-pub struct ExtBufferDeviceAddressFn {}
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetBufferDeviceAddress =
+    extern "system" fn(device: Device, p_info: *const BufferDeviceAddressInfo) -> DeviceAddress;
+pub struct ExtBufferDeviceAddressFn {
+    pub get_buffer_device_address:
+        extern "system" fn(device: Device, p_info: *const BufferDeviceAddressInfo) -> DeviceAddress,
+}
 unsafe impl Send for ExtBufferDeviceAddressFn {}
 unsafe impl Sync for ExtBufferDeviceAddressFn {}
 impl ::std::clone::Clone for ExtBufferDeviceAddressFn {
     fn clone(&self) -> Self {
-        ExtBufferDeviceAddressFn {}
+        ExtBufferDeviceAddressFn {
+            get_buffer_device_address: self.get_buffer_device_address,
+        }
     }
 }
 impl ExtBufferDeviceAddressFn {
@@ -67938,7 +69542,35 @@ impl ExtBufferDeviceAddressFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtBufferDeviceAddressFn {}
+        ExtBufferDeviceAddressFn {
+            get_buffer_device_address: unsafe {
+                extern "system" fn get_buffer_device_address(
+                    _device: Device,
+                    _p_info: *const BufferDeviceAddressInfo,
+                ) -> DeviceAddress {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_buffer_device_address)
+                    ))
+                }
+                let raw_name = stringify!(vkGetBufferDeviceAddress);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    get_buffer_device_address
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetBufferDeviceAddress.html>"]
+    pub unsafe fn get_buffer_device_address(
+        &self,
+        device: Device,
+        p_info: *const BufferDeviceAddressInfo,
+    ) -> DeviceAddress {
+        (self.get_buffer_device_address)(device, p_info)
     }
 }
 #[doc = "Generated from \'VK_EXT_buffer_device_address\'"]
@@ -68651,12 +70283,31 @@ impl KhrBufferDeviceAddressFn {
             .expect("Wrong extension string")
     }
 }
-pub struct KhrBufferDeviceAddressFn {}
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetBufferOpaqueCaptureAddress =
+    extern "system" fn(device: Device, p_info: *const BufferDeviceAddressInfo) -> DeviceAddress;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetDeviceMemoryOpaqueCaptureAddress =
+    extern "system" fn(device: Device, p_info: *const BufferDeviceAddressInfo) -> u64;
+pub struct KhrBufferDeviceAddressFn {
+    pub get_buffer_device_address:
+        extern "system" fn(device: Device, p_info: *const BufferDeviceAddressInfo) -> DeviceAddress,
+    pub get_buffer_opaque_capture_address:
+        extern "system" fn(device: Device, p_info: *const BufferDeviceAddressInfo) -> u64,
+    pub get_device_memory_opaque_capture_address: extern "system" fn(
+        device: Device,
+        p_info: *const DeviceMemoryOpaqueCaptureAddressInfo,
+    ) -> u64,
+}
 unsafe impl Send for KhrBufferDeviceAddressFn {}
 unsafe impl Sync for KhrBufferDeviceAddressFn {}
 impl ::std::clone::Clone for KhrBufferDeviceAddressFn {
     fn clone(&self) -> Self {
-        KhrBufferDeviceAddressFn {}
+        KhrBufferDeviceAddressFn {
+            get_buffer_device_address: self.get_buffer_device_address,
+            get_buffer_opaque_capture_address: self.get_buffer_opaque_capture_address,
+            get_device_memory_opaque_capture_address: self.get_device_memory_opaque_capture_address,
+        }
     }
 }
 impl KhrBufferDeviceAddressFn {
@@ -68664,7 +70315,89 @@ impl KhrBufferDeviceAddressFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrBufferDeviceAddressFn {}
+        KhrBufferDeviceAddressFn {
+            get_buffer_device_address: unsafe {
+                extern "system" fn get_buffer_device_address(
+                    _device: Device,
+                    _p_info: *const BufferDeviceAddressInfo,
+                ) -> DeviceAddress {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_buffer_device_address)
+                    ))
+                }
+                let raw_name = stringify!(vkGetBufferDeviceAddress);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    get_buffer_device_address
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_buffer_opaque_capture_address: unsafe {
+                extern "system" fn get_buffer_opaque_capture_address(
+                    _device: Device,
+                    _p_info: *const BufferDeviceAddressInfo,
+                ) -> u64 {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_buffer_opaque_capture_address)
+                    ))
+                }
+                let raw_name = stringify!(vkGetBufferOpaqueCaptureAddress);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    get_buffer_opaque_capture_address
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_device_memory_opaque_capture_address: unsafe {
+                extern "system" fn get_device_memory_opaque_capture_address(
+                    _device: Device,
+                    _p_info: *const DeviceMemoryOpaqueCaptureAddressInfo,
+                ) -> u64 {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_device_memory_opaque_capture_address)
+                    ))
+                }
+                let raw_name = stringify!(vkGetDeviceMemoryOpaqueCaptureAddress);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    get_device_memory_opaque_capture_address
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetBufferDeviceAddress.html>"]
+    pub unsafe fn get_buffer_device_address(
+        &self,
+        device: Device,
+        p_info: *const BufferDeviceAddressInfo,
+    ) -> DeviceAddress {
+        (self.get_buffer_device_address)(device, p_info)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetBufferOpaqueCaptureAddress.html>"]
+    pub unsafe fn get_buffer_opaque_capture_address(
+        &self,
+        device: Device,
+        p_info: *const BufferDeviceAddressInfo,
+    ) -> u64 {
+        (self.get_buffer_opaque_capture_address)(device, p_info)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetDeviceMemoryOpaqueCaptureAddress.html>"]
+    pub unsafe fn get_device_memory_opaque_capture_address(
+        &self,
+        device: Device,
+        p_info: *const DeviceMemoryOpaqueCaptureAddressInfo,
+    ) -> u64 {
+        (self.get_device_memory_opaque_capture_address)(device, p_info)
     }
 }
 impl ExtExtension259Fn {
@@ -68801,12 +70534,28 @@ impl ExtHostQueryResetFn {
             .expect("Wrong extension string")
     }
 }
-pub struct ExtHostQueryResetFn {}
+#[allow(non_camel_case_types)]
+pub type PFN_vkResetQueryPool = extern "system" fn(
+    device: Device,
+    query_pool: QueryPool,
+    first_query: u32,
+    query_count: u32,
+) -> c_void;
+pub struct ExtHostQueryResetFn {
+    pub reset_query_pool: extern "system" fn(
+        device: Device,
+        query_pool: QueryPool,
+        first_query: u32,
+        query_count: u32,
+    ) -> c_void,
+}
 unsafe impl Send for ExtHostQueryResetFn {}
 unsafe impl Sync for ExtHostQueryResetFn {}
 impl ::std::clone::Clone for ExtHostQueryResetFn {
     fn clone(&self) -> Self {
-        ExtHostQueryResetFn {}
+        ExtHostQueryResetFn {
+            reset_query_pool: self.reset_query_pool,
+        }
     }
 }
 impl ExtHostQueryResetFn {
@@ -68814,7 +70563,36 @@ impl ExtHostQueryResetFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtHostQueryResetFn {}
+        ExtHostQueryResetFn {
+            reset_query_pool: unsafe {
+                extern "system" fn reset_query_pool(
+                    _device: Device,
+                    _query_pool: QueryPool,
+                    _first_query: u32,
+                    _query_count: u32,
+                ) -> c_void {
+                    panic!(concat!("Unable to load ", stringify!(reset_query_pool)))
+                }
+                let raw_name = stringify!(vkResetQueryPool);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    reset_query_pool
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkResetQueryPool.html>"]
+    pub unsafe fn reset_query_pool(
+        &self,
+        device: Device,
+        query_pool: QueryPool,
+        first_query: u32,
+        query_count: u32,
+    ) -> c_void {
+        (self.reset_query_pool)(device, query_pool, first_query, query_count)
     }
 }
 impl GgpExtension263Fn {

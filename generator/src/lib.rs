@@ -725,8 +725,23 @@ fn generate_function_pointers<'a>(
     commands: &[&'a vkxml::Command],
     fn_cache: &mut HashSet<&'a str, impl BuildHasher>,
 ) -> quote::Tokens {
-    // We filter commands so that we don't have duplicates
-    let commands: Vec<_> = commands
+    // Commands can have duplicates inside them because they are declared per features. But we only
+    // really want to generate one function pointer.
+    let commands = {
+        let mut cache = HashSet::new();
+        let mut cmd_vec: Vec<&vkxml::Command> = Vec::new();
+        for cmd in commands {
+            let name = cmd.name.as_str();
+            if !cache.contains(name) {
+                cmd_vec.push(cmd);
+                cache.insert(name);
+            }
+        }
+        cmd_vec
+    };
+    // PFN function pointers are global and can not have duplicates. This can happen because there
+    // are aliases to commands
+    let commands_pfn: Vec<_> = commands
         .iter()
         .filter(|cmd| {
             let ident = cmd.name.as_str();
@@ -809,7 +824,7 @@ fn generate_function_pointers<'a>(
         .collect();
     let return_types_ref = &return_types;
 
-    let pfn_names: Vec<_> = commands
+    let pfn_names: Vec<_> = commands_pfn
         .iter()
         .map(|cmd| Ident::from(format!("PFN_{}", cmd.name.as_str())))
         .collect();
@@ -985,21 +1000,30 @@ pub fn generate_extension_commands<'a>(
     extension_name: &str,
     items: &[vk_parse::ExtensionChild],
     cmd_map: &CommandMap<'a>,
+    cmd_aliases: &HashMap<String, String, impl BuildHasher>,
     fn_cache: &mut HashSet<&'a str, impl BuildHasher>,
 ) -> Tokens {
+    let get_cmd = |name: &str| -> Option<&vkxml::Command> {
+        cmd_map.get(name).copied().or_else(|| {
+            cmd_aliases
+                .get(name)
+                .and_then(|alias_name| cmd_map.get(alias_name).copied())
+        })
+    };
     let commands = items
         .iter()
         .filter_map(|ext_item| match ext_item {
             vk_parse::ExtensionChild::Require { items, .. } => {
                 Some(items.iter().filter_map(|item| match item {
-                    vk_parse::InterfaceItem::Command { ref name, .. } => cmd_map.get(name).copied(),
+                    vk_parse::InterfaceItem::Command { ref name, .. } => get_cmd(name),
                     _ => None,
                 }))
             }
             _ => None,
         })
-        .flat_map(|iter| iter)
+        .flatten()
         .collect_vec();
+
     let name = format!("{}Fn", extension_name.to_camel_case());
     let ident = Ident::from(&name[2..]);
     let fp = generate_function_pointers(ident, &commands, fn_cache);
@@ -1024,6 +1048,7 @@ pub fn generate_extension<'a>(
     cmd_map: &CommandMap<'a>,
     const_cache: &mut HashSet<&'a str, impl BuildHasher>,
     const_values: &mut BTreeMap<Ident, Vec<Ident>>,
+    cmd_aliases: &HashMap<String, String, impl BuildHasher>,
     fn_cache: &mut HashSet<&'a str, impl BuildHasher>,
 ) -> Option<quote::Tokens> {
     // Okay this is a little bit odd. We need to generate all extensions, even disabled ones,
@@ -1039,7 +1064,13 @@ pub fn generate_extension<'a>(
         const_cache,
         const_values,
     );
-    let fp = generate_extension_commands(&extension.name, &extension.children, cmd_map, fn_cache);
+    let fp = generate_extension_commands(
+        &extension.name,
+        &extension.children,
+        cmd_map,
+        cmd_aliases,
+        fn_cache,
+    );
     let q = quote! {
         #fp
         #extension_tokens
@@ -2154,6 +2185,24 @@ pub fn write_source_code(path: &Path) {
         .collect();
 
     let spec = vk_parse::parse_file_as_vkxml(path);
+    let cmd_aliases: HashMap<String, String> = spec2
+        .0
+        .iter()
+        .filter_map(|item| match item {
+            vk_parse::RegistryChild::Commands(cmds) => {
+                let cmd_tuple_iter = cmds.children.iter().filter_map(|cmd| match cmd {
+                    vk_parse::Command::Alias { name, alias } => {
+                        Some((name.to_string(), alias.to_string()))
+                    }
+                    _ => None,
+                });
+                Some(cmd_tuple_iter)
+            }
+            _ => None,
+        })
+        .flatten()
+        .collect();
+
     let commands: HashMap<vkxml::Identifier, &vkxml::Command> = spec
         .elements
         .iter()
@@ -2238,6 +2287,7 @@ pub fn write_source_code(path: &Path) {
                 &commands,
                 &mut const_cache,
                 &mut const_values,
+                &cmd_aliases,
                 &mut fn_cache,
             )
         })
