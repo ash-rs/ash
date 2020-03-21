@@ -2353,10 +2353,13 @@ pub fn write_source_code(path: &Path) {
             acc
         });
 
-    let constants_code: Vec<_> = constants
+    let mut constants_code: Vec<_> = constants
         .iter()
         .map(|constant| generate_constant(constant, &mut const_cache))
         .collect();
+
+    constants_code.push(quote! { pub const SHADER_UNUSED_NV : u32 = SHADER_UNUSED_KHR;});
+
     let extension_code = extensions
         .iter()
         .filter_map(|ext| {

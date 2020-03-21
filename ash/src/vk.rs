@@ -55804,6 +55804,7 @@ pub const MAX_DEVICE_GROUP_SIZE: usize = (32);
 pub const MAX_DRIVER_NAME_SIZE: usize = (256);
 pub const MAX_DRIVER_INFO_SIZE: usize = (256);
 pub const SHADER_UNUSED_KHR: u32 = (!0);
+pub const SHADER_UNUSED_NV: u32 = SHADER_UNUSED_KHR;
 impl KhrSurfaceFn {
     pub fn name() -> &'static ::std::ffi::CStr {
         ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_surface\0").expect("Wrong extension string")
