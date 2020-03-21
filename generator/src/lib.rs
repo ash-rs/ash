@@ -997,7 +997,7 @@ pub fn generate_extension_constants<'a>(
                     if let Some(extends) = extends {
                         let ident = name_to_tokens(&extends);
                         let key = variant_ident(&extends, &alias);
-                        if key.to_string() == "DISPATCH_BASE" {
+                        if key == "DISPATCH_BASE" {
                             None
                         } else {
                             Some((Constant::Alias(ident, key), Some(extends.clone()), true))
