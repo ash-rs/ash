@@ -723,6 +723,7 @@ pub type CommandMap<'a> = HashMap<vkxml::Identifier, &'a vkxml::Command>;
 fn generate_function_pointers<'a>(
     ident: Ident,
     commands: &[&'a vkxml::Command],
+    aliases: &HashMap<String, String, impl BuildHasher>,
     fn_cache: &mut HashSet<&'a str, impl BuildHasher>,
 ) -> quote::Tokens {
     // Commands can have duplicates inside them because they are declared per features. But we only
@@ -753,14 +754,29 @@ fn generate_function_pointers<'a>(
             }
         })
         .collect();
-    let names: Vec<_> = commands.iter().map(|cmd| cmd.command_ident()).collect();
+
+    let function_name_raw = |name: &str| -> String {
+        if let Some(alias_name) = aliases.get(name) {
+            alias_name.to_string()
+        } else {
+            name.to_string()
+        }
+    };
+    let function_name = |name: &str| -> Ident {
+        let fn_name = function_name_raw(&name);
+        Ident::from(fn_name[2..].to_snake_case().as_str())
+    };
+    let names: Vec<_> = commands
+        .iter()
+        .map(|cmd| function_name(&cmd.name))
+        .collect();
     let names_ref = &names;
     let names_ref1 = &names;
     let names_ref2 = &names;
     let names_ref3 = &names;
     let raw_names: Vec<_> = commands
         .iter()
-        .map(|cmd| Ident::from(cmd.name.as_str()))
+        .map(|cmd| Ident::from(function_name_raw(cmd.name.as_str()).as_str()))
         .collect();
     let raw_names_ref = &raw_names;
     let names_left = &names;
@@ -1003,30 +1019,35 @@ pub fn generate_extension_commands<'a>(
     cmd_aliases: &HashMap<String, String, impl BuildHasher>,
     fn_cache: &mut HashSet<&'a str, impl BuildHasher>,
 ) -> Tokens {
-    let get_cmd = |name: &str| -> Option<&vkxml::Command> {
-        cmd_map.get(name).copied().or_else(|| {
-            cmd_aliases
-                .get(name)
-                .and_then(|alias_name| cmd_map.get(alias_name).copied())
-        })
-    };
-    let commands = items
+    let mut commands = Vec::new();
+    let mut aliases = HashMap::new();
+    items
         .iter()
         .filter_map(|ext_item| match ext_item {
             vk_parse::ExtensionChild::Require { items, .. } => {
                 Some(items.iter().filter_map(|item| match item {
-                    vk_parse::InterfaceItem::Command { ref name, .. } => get_cmd(name),
+                    vk_parse::InterfaceItem::Command { ref name, .. } => Some(name),
                     _ => None,
                 }))
             }
             _ => None,
         })
         .flatten()
-        .collect_vec();
+        .for_each(|name| {
+            if let Some(cmd) = cmd_map.get(name).copied() {
+                commands.push(cmd);
+            } else if let Some(cmd) = cmd_aliases
+                .get(name)
+                .and_then(|alias_name| cmd_map.get(alias_name).copied())
+            {
+                aliases.insert(cmd.name.clone(), name.to_string());
+                commands.push(cmd);
+            }
+        });
 
     let name = format!("{}Fn", extension_name.to_camel_case());
     let ident = Ident::from(&name[2..]);
-    let fp = generate_function_pointers(ident, &commands, fn_cache);
+    let fp = generate_function_pointers(ident, &commands, &aliases, fn_cache);
     let byte_name = format!("{}\0", extension_name);
 
     let byte_name_ident =
@@ -2003,23 +2024,31 @@ pub fn generate_feature<'a>(
         );
     let version = feature.version_string();
     let static_fn = if feature.is_version(1, 0) {
-        generate_function_pointers(Ident::from("StaticFn"), &static_commands, fn_cache)
+        generate_function_pointers(
+            Ident::from("StaticFn"),
+            &static_commands,
+            &HashMap::new(),
+            fn_cache,
+        )
     } else {
         quote! {}
     };
     let entry = generate_function_pointers(
         Ident::from(format!("EntryFnV{}", version).as_str()),
         &entry_commands,
+        &HashMap::new(),
         fn_cache,
     );
     let instance = generate_function_pointers(
         Ident::from(format!("InstanceFnV{}", version).as_str()),
         &instance_commands,
+        &HashMap::new(),
         fn_cache,
     );
     let device = generate_function_pointers(
         Ident::from(format!("DeviceFnV{}", version).as_str()),
         &device_commands,
+        &HashMap::new(),
         fn_cache,
     );
     quote! {
