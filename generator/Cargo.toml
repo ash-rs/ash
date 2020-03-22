@@ -10,7 +10,7 @@ vkxml = "0.3"
 nom = "4.0"
 heck = "0.3"
 proc-macro2 = "0.2"
-itertools = "0.7"
+itertools = "0.9"
 
 [dependencies.quote]
 version = "0.4.2"
