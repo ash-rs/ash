@@ -34,7 +34,8 @@ impl TimelineSemaphore {
         semaphore: vk::Semaphore,
     ) -> VkResult<u64> {
         let mut value = 0;
-        let err_code = self.timeline_semaphore_fn.get_semaphore_counter_value_khr(device, semaphore, &mut value);
+        let err_code = self.timeline_semaphore_fn
+            .get_semaphore_counter_value_khr(device, semaphore, &mut value);
 
         match err_code {
             vk::Result::SUCCESS => Ok(value),
@@ -49,7 +50,8 @@ impl TimelineSemaphore {
         wait_info: &vk::SemaphoreWaitInfo,
         timeout: u64,
     ) -> VkResult<()> {
-        let err_code = self.timeline_semaphore_fn.wait_semaphores_khr(device, wait_info, timeout);
+        let err_code = self.timeline_semaphore_fn
+            .wait_semaphores_khr(device, wait_info, timeout);
 
         match err_code {
             vk::Result::SUCCESS => Ok(()),
@@ -63,7 +65,8 @@ impl TimelineSemaphore {
         device: vk::Device,
         signal_info: &vk::SemaphoreSignalInfo,
     ) -> VkResult<()> {
-        let err_code = self.timeline_semaphore_fn.signal_semaphore_khr(device, signal_info);
+        let err_code = self.timeline_semaphore_fn
+            .signal_semaphore_khr(device, signal_info);
 
         match err_code {
             vk::Result::SUCCESS => Ok(()),
