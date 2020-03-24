@@ -20,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Switch to [libloading](https://github.com/nagisa/rust_libloading)
-- Vulkan version macros are not const functions
+- Vulkan version macros are now const functions
 - Switched to a new [changelog](https://keepachangelog.com/en/1.0.0/) format
 
 ### Fixed
