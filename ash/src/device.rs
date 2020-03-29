@@ -120,14 +120,11 @@ pub trait DeviceV1_2: DeviceV1_1 {
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetSemaphoreCounterValue.html>"]
-    unsafe fn get_semaphore_counter_value(
-        &self,
-        semaphore: vk::Semaphore,
-    ) -> VkResult<u64> {
+    unsafe fn get_semaphore_counter_value(&self, semaphore: vk::Semaphore) -> VkResult<u64> {
         let mut value = 0;
-        let err_code = self
-            .fp_v1_2()
-            .get_semaphore_counter_value(self.handle(), semaphore, &mut value);
+        let err_code =
+            self.fp_v1_2()
+                .get_semaphore_counter_value(self.handle(), semaphore, &mut value);
         match err_code {
             vk::Result::SUCCESS => Ok(value),
             _ => Err(err_code),
@@ -140,7 +137,9 @@ pub trait DeviceV1_2: DeviceV1_1 {
         wait_info: &vk::SemaphoreWaitInfo,
         timeout: u64,
     ) -> VkResult<()> {
-        let err_code = self.fp_v1_2().wait_semaphores(self.handle(), wait_info, timeout);
+        let err_code = self
+            .fp_v1_2()
+            .wait_semaphores(self.handle(), wait_info, timeout);
         match err_code {
             vk::Result::SUCCESS => Ok(()),
             _ => Err(err_code),
@@ -148,10 +147,7 @@ pub trait DeviceV1_2: DeviceV1_1 {
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkSignalSemaphore.html>"]
-    unsafe fn signal_semaphore(
-        &self,
-        signal_info: &vk::SemaphoreSignalInfo,
-    ) -> VkResult<()> {
+    unsafe fn signal_semaphore(&self, signal_info: &vk::SemaphoreSignalInfo) -> VkResult<()> {
         let err_code = self.fp_v1_2().signal_semaphore(self.handle(), signal_info);
         match err_code {
             vk::Result::SUCCESS => Ok(()),
@@ -164,14 +160,12 @@ pub trait DeviceV1_2: DeviceV1_1 {
         &self,
         info: &vk::BufferDeviceAddressInfo,
     ) -> vk::DeviceAddress {
-        self.fp_v1_2().get_buffer_device_address(self.handle(), info)
+        self.fp_v1_2()
+            .get_buffer_device_address(self.handle(), info)
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetBufferOpaqueCaptureAddress.html>"]
-    unsafe fn get_buffer_opaque_capture_address(
-        &self,
-        info: &vk::BufferDeviceAddressInfo,
-    ) -> u64 {
+    unsafe fn get_buffer_opaque_capture_address(&self, info: &vk::BufferDeviceAddressInfo) -> u64 {
         self.fp_v1_2()
             .get_buffer_opaque_capture_address(self.handle(), info)
     }
