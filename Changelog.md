@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] - ReleaseDate
 
+### Changed
+
+- The `vk::Device` parameter in 1.2 functions is now implicit.
+
 ## [0.30.0] - 2020-03-22
 
 ### Added
