@@ -2258,10 +2258,10 @@ pub fn generate_aliases_of_types<'a>(
         #(#aliases)*
     }
 }
-pub fn write_source_code(path: &Path) {
+pub fn write_source_code<P: AsRef<Path>>(vk_xml: &Path, vk_rs: P) {
     use std::fs::File;
     use std::io::Write;
-    let spec2 = vk_parse::parse_file(path);
+    let spec2 = vk_parse::parse_file(vk_xml);
     let extensions: &Vec<vk_parse::Extension> = spec2
         .0
         .iter()
@@ -2283,7 +2283,7 @@ pub fn write_source_code(path: &Path) {
         })
         .collect();
 
-    let spec = vk_parse::parse_file_as_vkxml(path);
+    let spec = vk_parse::parse_file_as_vkxml(vk_xml);
     let cmd_aliases: HashMap<String, String> = spec2
         .0
         .iter()
@@ -2426,7 +2426,7 @@ pub fn write_source_code(path: &Path) {
 
     let const_debugs = generate_const_debugs(&const_values);
 
-    let mut file = File::create("../ash/src/vk.rs").expect("vk");
+    let mut file = File::create(vk_rs).expect("vk.rs");
     let bitflags_macro = vk_bitflags_wrapped_macro();
     let handle_nondispatchable_macro = handle_nondispatchable_macro();
     let define_handle_macro = define_handle_macro();
