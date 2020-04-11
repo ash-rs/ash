@@ -1158,7 +1158,7 @@ pub fn generate_bitmask(
         #[repr(transparent)]
         #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
         #[doc = #khronos_link]
-        pub struct #ident(Flags);
+        pub struct #ident(pub(crate) Flags);
         vk_bitflags_wrapped!(#ident, 0b0, Flags);
     })
 }
@@ -2426,16 +2426,13 @@ pub fn write_source_code<P: AsRef<Path>>(vk_xml: &Path, vk_rs: P) {
 
     let const_debugs = generate_const_debugs(&const_values);
 
-    let mut file = File::create(vk_rs).expect("vk.rs");
     let bitflags_macro = vk_bitflags_wrapped_macro();
     let handle_nondispatchable_macro = handle_nondispatchable_macro();
     let define_handle_macro = define_handle_macro();
     let version_macros = vk_version_macros();
     let platform_specific_types = platform_specific_types();
-    let source_code = quote! {
-        #![allow(clippy::too_many_arguments, clippy::cognitive_complexity, clippy::wrong_self_convention)]
-        use std::fmt;
-        use std::os::raw::*;
+
+    let ptr_chain_code = quote! {
         /// Iterates through the pointer chain. Includes the item that is passed into the function.
         /// Stops at the last `BaseOutStructure` that has a null `p_next` field.
         pub(crate) unsafe fn ptr_chain_iter<T>(
@@ -2452,6 +2449,13 @@ pub fn write_source_code<P: AsRef<Path>>(vk_xml: &Path, vk_rs: P) {
                 Some(old)
             })
         }
+    };
+
+    let prelude_code = quote! {
+        use std::os::raw::*;
+
+        use crate::vk::enums::ObjectType;
+        use crate::vk::definitions::BaseOutStructure;
 
         pub trait Handle {
             const TYPE: ObjectType;
@@ -2464,15 +2468,137 @@ pub fn write_source_code<P: AsRef<Path>>(vk_xml: &Path, vk_rs: P) {
         #bitflags_macro
         #handle_nondispatchable_macro
         #define_handle_macro
+        #ptr_chain_code
+    };
+
+    let dir = vk_rs.as_ref().parent().unwrap().to_path_buf().join("vk");
+    std::fs::create_dir_all(&dir).expect("failed to create vk dir");
+
+    let mut vk_rs_file = File::create(vk_rs).expect("vk.rs");
+
+    let mut vk_prelude_file = File::create(dir.join("prelude.rs")).expect("vk/prelude.rs");
+    let mut vk_features_file = File::create(dir.join("features.rs")).expect("vk/features.rs");
+    let mut vk_definitions_file =
+        File::create(dir.join("definitions.rs")).expect("vk/definitions.rs");
+    let mut vk_enums_file = File::create(dir.join("enums.rs")).expect("vk/enums.rs");
+    let mut vk_bitflags_file = File::create(dir.join("bitflags.rs")).expect("vk/bitflags.rs");
+    let mut vk_constants_file = File::create(dir.join("constants.rs")).expect("vk/constants.rs");
+    let mut vk_extensions_file = File::create(dir.join("extensions.rs")).expect("vk/extensions.rs");
+    let mut vk_feature_extensions_file =
+        File::create(dir.join("feature_extensions.rs")).expect("vk/feature_extensions.rs");
+    let mut vk_const_debugs_file =
+        File::create(dir.join("const_debugs.rs")).expect("vk/const_debugs.rs");
+    let mut vk_aliases_file = File::create(dir.join("aliases.rs")).expect("vk/aliases.rs");
+
+    let feature_code = quote! {
+        use std::os::raw::*;
+        use crate::vk::bitflags::*;
+        use crate::vk::definitions::*;
+        use crate::vk::enums::*;
         #(#feature_code)*
+    };
+
+    let definition_code = quote! {
+        use crate::vk::prelude::*;
+        use std::fmt;
+        use std::os::raw::*;
+        use crate::vk::aliases::*;
+        use crate::vk::bitflags::*;
+        use crate::vk::constants::*;
+        use crate::vk::enums::*;
         #(#definition_code)*
+    };
+
+    let enum_code = quote! {
+        use std::fmt;
         #(#enum_code)*
+    };
+
+    let bitflags_code = quote! {
+        use crate::vk::definitions::*;
         #(#bitflags_code)*
+    };
+
+    let constants_code = quote! {
+        use crate::vk::definitions::*;
         #(#constants_code)*
+    };
+
+    let extension_code = quote! {
+        use crate::vk::prelude::*;
+        use std::os::raw::*;
+        use crate::vk::aliases::*;
+        use crate::vk::bitflags::*;
+        use crate::vk::definitions::*;
+        use crate::vk::enums::*;
         #(#extension_code)*
-        #feature_extensions_code
+    };
+
+    let feature_extensions_code = quote! {
+        use crate::vk::bitflags::*;
+        use crate::vk::enums::*;
+       #feature_extensions_code
+    };
+
+    let const_debugs = quote! {
+        use std::fmt;
+        use crate::vk::bitflags::*;
+        use crate::vk::definitions::*;
+        use crate::vk::enums::*;
         #const_debugs
+    };
+
+    let aliases = quote! {
+        use crate::vk::bitflags::*;
+        use crate::vk::definitions::*;
+        use crate::vk::enums::*;
         #(#aliases)*
     };
-    write!(&mut file, "{}", source_code).expect("Unable to write to file");
+
+    let vk_rs_code1 = r#"
+#![allow(clippy::too_many_arguments, clippy::cognitive_complexity, clippy::wrong_self_convention)]
+"#;
+    let vk_rs_code2 = quote! {
+        #[macro_use]
+        mod prelude;
+        pub use prelude::*;
+        mod aliases;
+        pub use aliases::*;
+        mod bitflags;
+        pub use bitflags::*;
+        mod const_debugs;
+        pub(crate) use const_debugs::*;
+        mod constants;
+        pub use constants::*;
+        mod definitions;
+        pub use definitions::*;
+        mod enums;
+        pub use enums::*;
+        mod extensions;
+        pub use extensions::*;
+        mod feature_extensions;
+        pub use feature_extensions::*;
+        mod features;
+        pub use features::*;
+    };
+
+    write!(&mut vk_prelude_file, "{}", prelude_code).expect("Unable to write to vk/prelude.rs");
+    write!(&mut vk_features_file, "{}", feature_code).expect("Unable to write vk/features.rs");
+    write!(&mut vk_definitions_file, "{}", definition_code)
+        .expect("Unable to write vk/definitions.rs");
+    write!(&mut vk_enums_file, "{}", enum_code).expect("Unable to write vk/enums.rs");
+    write!(&mut vk_bitflags_file, "{}", bitflags_code).expect("Unable to write vk/bitflags.rs");
+    write!(&mut vk_constants_file, "{}", constants_code).expect("Unable to write vk/constants.rs");
+    write!(&mut vk_extensions_file, "{}", extension_code)
+        .expect("Unable to write vk/extensions.rs");
+    write!(
+        &mut vk_feature_extensions_file,
+        "{}",
+        feature_extensions_code
+    )
+    .expect("Unable to write vk/feature_extensions.rs");
+    write!(&mut vk_const_debugs_file, "{}", const_debugs)
+        .expect("Unable to write vk/const_debugs.rs");
+    write!(&mut vk_aliases_file, "{}", aliases).expect("Unable to write vk/aliases.rs");
+    write!(&mut vk_rs_file, "{} {}", vk_rs_code1, vk_rs_code2).expect("Unable to write vk.rs");
 }
