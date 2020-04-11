@@ -1300,8 +1300,8 @@ pub fn generate_enum<'a>(
             #[doc = #khronos_link]
             pub struct #ident(pub(crate) i32);
             impl #ident {
-                pub fn from_raw(x: i32) -> Self { #ident(x) }
-                pub fn as_raw(self) -> i32 { self.0 }
+                pub const fn from_raw(x: i32) -> Self { #ident(x) }
+                pub const fn as_raw(self) -> i32 { self.0 }
             }
             #impl_block
         };
