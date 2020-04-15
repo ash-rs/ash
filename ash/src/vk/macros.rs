@@ -1,11 +1,3 @@
-use crate::vk::definitions::BaseOutStructure;
-use crate::vk::enums::ObjectType;
-use std::os::raw::*;
-pub trait Handle {
-    const TYPE: ObjectType;
-    fn as_raw(self) -> u64;
-    fn from_raw(_: u64) -> Self;
-}
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VK_MAKE_VERSION.html>"]
 pub const fn make_version(major: u32, minor: u32, patch: u32) -> u32 {
     (major << 22) | (minor << 12) | patch
@@ -22,39 +14,6 @@ pub const fn version_minor(version: u32) -> u32 {
 pub const fn version_patch(version: u32) -> u32 {
     version & 0xfff
 }
-pub type RROutput = c_ulong;
-pub type VisualID = c_uint;
-pub type Display = *const c_void;
-pub type Window = c_ulong;
-#[allow(non_camel_case_types)]
-pub type xcb_connection_t = c_void;
-#[allow(non_camel_case_types)]
-pub type xcb_window_t = u32;
-#[allow(non_camel_case_types)]
-pub type xcb_visualid_t = u32;
-pub type MirConnection = *const c_void;
-pub type MirSurface = *const c_void;
-pub type HINSTANCE = *const c_void;
-pub type HWND = *const c_void;
-#[allow(non_camel_case_types)]
-pub type wl_display = c_void;
-#[allow(non_camel_case_types)]
-pub type wl_surface = c_void;
-pub type HANDLE = *mut c_void;
-pub type HMONITOR = HANDLE;
-pub type DWORD = c_ulong;
-pub type LPCWSTR = *const u16;
-#[allow(non_camel_case_types)]
-pub type zx_handle_t = u32;
-#[allow(non_camel_case_types)]
-pub type SECURITY_ATTRIBUTES = ();
-pub type ANativeWindow = c_void;
-pub type AHardwareBuffer = c_void;
-#[doc = r" This definition is experimental and won't adhere to semver rules."]
-pub type GgpStreamDescriptor = u32;
-#[doc = r" This definition is experimental and won't adhere to semver rules."]
-pub type GgpFrameToken = u32;
-pub type CAMetalLayer = c_void;
 #[macro_export]
 macro_rules! vk_bitflags_wrapped {
     ( $ name : ident , $ all : expr , $ flag_type : ty ) => {
@@ -237,18 +196,4 @@ macro_rules! define_handle {
             }
         }
     };
-}
-#[doc = r" Iterates through the pointer chain. Includes the item that is passed into the function."]
-#[doc = r" Stops at the last `BaseOutStructure` that has a null `p_next` field."]
-pub(crate) unsafe fn ptr_chain_iter<T>(ptr: &mut T) -> impl Iterator<Item = *mut BaseOutStructure> {
-    let ptr: *mut BaseOutStructure = ptr as *mut T as _;
-    (0..).scan(ptr, |p_ptr, _| {
-        if p_ptr.is_null() {
-            return None;
-        }
-        let n_ptr = (**p_ptr).p_next as *mut BaseOutStructure;
-        let old = *p_ptr;
-        *p_ptr = n_ptr;
-        Some(old)
-    })
 }

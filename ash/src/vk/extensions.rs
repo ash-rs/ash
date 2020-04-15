@@ -2,7 +2,7 @@ use crate::vk::aliases::*;
 use crate::vk::bitflags::*;
 use crate::vk::definitions::*;
 use crate::vk::enums::*;
-use crate::vk::prelude::*;
+use crate::vk::platform_types::*;
 use std::os::raw::*;
 impl KhrSurfaceFn {
     pub fn name() -> &'static ::std::ffi::CStr {

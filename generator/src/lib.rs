@@ -2258,7 +2258,7 @@ pub fn generate_aliases_of_types<'a>(
         #(#aliases)*
     }
 }
-pub fn write_source_code<P: AsRef<Path>>(vk_xml: &Path, vk_rs: P) {
+pub fn write_source_code<P: AsRef<Path>>(vk_xml: &Path, src_dir: P) {
     use std::fs::File;
     use std::io::Write;
     let spec2 = vk_parse::parse_file(vk_xml);
@@ -2451,44 +2451,36 @@ pub fn write_source_code<P: AsRef<Path>>(vk_xml: &Path, vk_rs: P) {
         }
     };
 
-    let prelude_code = quote! {
-        use std::os::raw::*;
-
-        use crate::vk::enums::ObjectType;
-        use crate::vk::definitions::BaseOutStructure;
-
-        pub trait Handle {
-            const TYPE: ObjectType;
-            fn as_raw(self) -> u64;
-            fn from_raw(_: u64) -> Self;
-        }
-
+    let macros_code = quote! {
         #version_macros
-        #platform_specific_types
         #bitflags_macro
         #handle_nondispatchable_macro
         #define_handle_macro
-        #ptr_chain_code
     };
 
-    let dir = vk_rs.as_ref().parent().unwrap().to_path_buf().join("vk");
-    std::fs::create_dir_all(&dir).expect("failed to create vk dir");
+    let src_dir = src_dir.as_ref();
 
-    let mut vk_rs_file = File::create(vk_rs).expect("vk.rs");
+    let vk_dir = src_dir.join("vk");
+    std::fs::create_dir_all(&vk_dir).expect("failed to create vk dir");
 
-    let mut vk_prelude_file = File::create(dir.join("prelude.rs")).expect("vk/prelude.rs");
-    let mut vk_features_file = File::create(dir.join("features.rs")).expect("vk/features.rs");
+    let mut vk_rs_file = File::create(src_dir.join("vk.rs")).expect("vk.rs");
+
+    let mut vk_macros_file = File::create(vk_dir.join("macros.rs")).expect("vk/macros.rs");
+    let mut vk_features_file = File::create(vk_dir.join("features.rs")).expect("vk/features.rs");
     let mut vk_definitions_file =
-        File::create(dir.join("definitions.rs")).expect("vk/definitions.rs");
-    let mut vk_enums_file = File::create(dir.join("enums.rs")).expect("vk/enums.rs");
-    let mut vk_bitflags_file = File::create(dir.join("bitflags.rs")).expect("vk/bitflags.rs");
-    let mut vk_constants_file = File::create(dir.join("constants.rs")).expect("vk/constants.rs");
-    let mut vk_extensions_file = File::create(dir.join("extensions.rs")).expect("vk/extensions.rs");
+        File::create(vk_dir.join("definitions.rs")).expect("vk/definitions.rs");
+    let mut vk_platform_types_file =
+        File::create(vk_dir.join("platform_types.rs")).expect("vk/platform_types.rs");
+    let mut vk_enums_file = File::create(vk_dir.join("enums.rs")).expect("vk/enums.rs");
+    let mut vk_bitflags_file = File::create(vk_dir.join("bitflags.rs")).expect("vk/bitflags.rs");
+    let mut vk_constants_file = File::create(vk_dir.join("constants.rs")).expect("vk/constants.rs");
+    let mut vk_extensions_file =
+        File::create(vk_dir.join("extensions.rs")).expect("vk/extensions.rs");
     let mut vk_feature_extensions_file =
-        File::create(dir.join("feature_extensions.rs")).expect("vk/feature_extensions.rs");
+        File::create(vk_dir.join("feature_extensions.rs")).expect("vk/feature_extensions.rs");
     let mut vk_const_debugs_file =
-        File::create(dir.join("const_debugs.rs")).expect("vk/const_debugs.rs");
-    let mut vk_aliases_file = File::create(dir.join("aliases.rs")).expect("vk/aliases.rs");
+        File::create(vk_dir.join("const_debugs.rs")).expect("vk/const_debugs.rs");
+    let mut vk_aliases_file = File::create(vk_dir.join("aliases.rs")).expect("vk/aliases.rs");
 
     let feature_code = quote! {
         use std::os::raw::*;
@@ -2499,9 +2491,10 @@ pub fn write_source_code<P: AsRef<Path>>(vk_xml: &Path, vk_rs: P) {
     };
 
     let definition_code = quote! {
-        use crate::vk::prelude::*;
         use std::fmt;
         use std::os::raw::*;
+        use crate::vk::{Handle, ptr_chain_iter};
+        use crate::vk::platform_types::*;
         use crate::vk::aliases::*;
         use crate::vk::bitflags::*;
         use crate::vk::constants::*;
@@ -2525,8 +2518,8 @@ pub fn write_source_code<P: AsRef<Path>>(vk_xml: &Path, vk_rs: P) {
     };
 
     let extension_code = quote! {
-        use crate::vk::prelude::*;
         use std::os::raw::*;
+        use crate::vk::platform_types::*;
         use crate::vk::aliases::*;
         use crate::vk::bitflags::*;
         use crate::vk::definitions::*;
@@ -2555,13 +2548,21 @@ pub fn write_source_code<P: AsRef<Path>>(vk_xml: &Path, vk_rs: P) {
         #(#aliases)*
     };
 
-    let vk_rs_code1 = r#"
+    let platform_types_code = quote! {
+        use std::os::raw::*;
+        #platform_specific_types
+    };
+
+    // These are defined outside of `quote!` because rustfmt doesn't seem
+    // to format them correctly when they contain extra spaces.
+    let vk_rs_clippy_lints = r#"
 #![allow(clippy::too_many_arguments, clippy::cognitive_complexity, clippy::wrong_self_convention)]
 "#;
-    let vk_rs_code2 = quote! {
+
+    let vk_rs_code = quote! {
         #[macro_use]
-        mod prelude;
-        pub use prelude::*;
+        mod macros;
+        pub use macros::*;
         mod aliases;
         pub use aliases::*;
         mod bitflags;
@@ -2580,9 +2581,21 @@ pub fn write_source_code<P: AsRef<Path>>(vk_xml: &Path, vk_rs: P) {
         pub use feature_extensions::*;
         mod features;
         pub use features::*;
+        mod platform_types;
+        pub use platform_types::*;
+
+        #ptr_chain_code
+
+        pub trait Handle {
+            const TYPE: ObjectType;
+            fn as_raw(self) -> u64;
+            fn from_raw(_: u64) -> Self;
+        }
     };
 
-    write!(&mut vk_prelude_file, "{}", prelude_code).expect("Unable to write to vk/prelude.rs");
+    write!(&mut vk_macros_file, "{}", macros_code).expect("Unable to write vk/macros.rs");
+    write!(&mut vk_platform_types_file, "{}", platform_types_code)
+        .expect("Unable to write to vk/platform_types.rs");
     write!(&mut vk_features_file, "{}", feature_code).expect("Unable to write vk/features.rs");
     write!(&mut vk_definitions_file, "{}", definition_code)
         .expect("Unable to write vk/definitions.rs");
@@ -2600,5 +2613,6 @@ pub fn write_source_code<P: AsRef<Path>>(vk_xml: &Path, vk_rs: P) {
     write!(&mut vk_const_debugs_file, "{}", const_debugs)
         .expect("Unable to write vk/const_debugs.rs");
     write!(&mut vk_aliases_file, "{}", aliases).expect("Unable to write vk/aliases.rs");
-    write!(&mut vk_rs_file, "{} {}", vk_rs_code1, vk_rs_code2).expect("Unable to write vk.rs");
+    write!(&mut vk_rs_file, "{} {}", vk_rs_clippy_lints, vk_rs_code)
+        .expect("Unable to write vk.rs");
 }
