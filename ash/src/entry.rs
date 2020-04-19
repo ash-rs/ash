@@ -224,25 +224,24 @@ impl EntryCustom<Arc<Library>> {
     /// # Ok(()) }
     /// ```
     pub fn new() -> Result<Entry, LoadingError> {
-        Self::new_custom(
-            || Library::new(&LIB_PATH).map_err(LoadingError).map(Arc::new),
-            |vk_lib, name| unsafe {
-                vk_lib
-                    .get(name.to_bytes_with_nul())
-                    .map(|symbol| *symbol)
-                    .unwrap_or(ptr::null_mut())
-            },
-        )
+        let lib = Library::new(&LIB_PATH)
+            .map_err(LoadingError)
+            .map(Arc::new)?;
+
+        Ok(Self::new_custom(lib, |vk_lib, name| unsafe {
+            vk_lib
+                .get(name.to_bytes_with_nul())
+                .map(|symbol| *symbol)
+                .unwrap_or(ptr::null_mut())
+        }))
     }
 }
 
 impl<L> EntryCustom<L> {
-    pub fn new_custom<Open, Load>(open: Open, mut load: Load) -> Result<Self, LoadingError>
+    pub fn new_custom<Load>(mut lib: L, mut load: Load) -> Self
     where
-        Open: FnOnce() -> Result<L, LoadingError>,
         Load: FnMut(&mut L, &::std::ffi::CStr) -> *const c_void,
     {
-        let mut lib = open()?;
         let static_fn = vk::StaticFn::load(|name| load(&mut lib, name));
 
         let entry_fn_1_0 = vk::EntryFnV1_0::load(|name| unsafe {
@@ -257,13 +256,13 @@ impl<L> EntryCustom<L> {
             mem::transmute(static_fn.get_instance_proc_addr(vk::Instance::null(), name.as_ptr()))
         });
 
-        Ok(EntryCustom {
+        EntryCustom {
             static_fn,
             entry_fn_1_0,
             entry_fn_1_1,
             entry_fn_1_2,
             lib,
-        })
+        }
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkEnumerateInstanceVersion.html>"]
