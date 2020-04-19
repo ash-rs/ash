@@ -5,7 +5,6 @@ use crate::RawPtr;
 use libloading::Library;
 use std::error::Error;
 use std::fmt;
-use std::io;
 use std::mem;
 use std::os::raw::c_char;
 use std::os::raw::c_void;
@@ -42,7 +41,7 @@ pub struct EntryCustom<L> {
 
 #[derive(Debug)]
 pub enum LoadingError {
-    LibraryLoadError(io::Error),
+    LibraryLoadError(libloading::Error),
 }
 
 impl fmt::Display for LoadingError {
