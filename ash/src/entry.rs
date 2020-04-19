@@ -40,19 +40,19 @@ pub struct EntryCustom<L> {
 }
 
 #[derive(Debug)]
-pub enum LoadingError {
-    LibraryLoadError(libloading::Error),
-}
+pub struct LoadingError(libloading::Error);
 
 impl fmt::Display for LoadingError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        match self {
-            LoadingError::LibraryLoadError(e) => write!(f, "{}", e),
-        }
+        fmt::Display::fmt(&self.0, f)
     }
 }
 
-impl Error for LoadingError {}
+impl Error for LoadingError {
+    fn source(&self) -> Option<&(dyn Error + 'static)> {
+        Error::source(&self.0)
+    }
+}
 
 #[derive(Clone, Debug)]
 pub enum InstanceError {
@@ -225,11 +225,7 @@ impl EntryCustom<Arc<Library>> {
     /// ```
     pub fn new() -> Result<Entry, LoadingError> {
         Self::new_custom(
-            || {
-                Library::new(&LIB_PATH)
-                    .map_err(LoadingError::LibraryLoadError)
-                    .map(Arc::new)
-            },
+            || Library::new(&LIB_PATH).map_err(LoadingError).map(Arc::new),
             |vk_lib, name| unsafe {
                 vk_lib
                     .get(name.to_bytes_with_nul())
