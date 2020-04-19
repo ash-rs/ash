@@ -324,7 +324,7 @@ impl ExampleBase {
             let entry = Entry::new().unwrap();
             let app_name = CString::new("VulkanTriangle").unwrap();
 
-            let layer_names = [CString::new("VK_LAYER_LUNARG_standard_validation").unwrap()];
+            let layer_names = [CString::new("VK_LAYER_KHRONOS_validation").unwrap()];
             let layers_names_raw: Vec<*const i8> = layer_names
                 .iter()
                 .map(|raw_name| raw_name.as_ptr())
