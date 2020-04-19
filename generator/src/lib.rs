@@ -1158,7 +1158,7 @@ pub fn generate_bitmask(
         #[repr(transparent)]
         #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
         #[doc = #khronos_link]
-        pub struct #ident(Flags);
+        pub struct #ident(pub(crate) Flags);
         vk_bitflags_wrapped!(#ident, 0b0, Flags);
     })
 }
@@ -2258,10 +2258,10 @@ pub fn generate_aliases_of_types<'a>(
         #(#aliases)*
     }
 }
-pub fn write_source_code(path: &Path) {
+pub fn write_source_code<P: AsRef<Path>>(vk_xml: &Path, src_dir: P) {
     use std::fs::File;
     use std::io::Write;
-    let spec2 = vk_parse::parse_file(path);
+    let spec2 = vk_parse::parse_file(vk_xml);
     let extensions: &Vec<vk_parse::Extension> = spec2
         .0
         .iter()
@@ -2283,7 +2283,7 @@ pub fn write_source_code(path: &Path) {
         })
         .collect();
 
-    let spec = vk_parse::parse_file_as_vkxml(path);
+    let spec = vk_parse::parse_file_as_vkxml(vk_xml);
     let cmd_aliases: HashMap<String, String> = spec2
         .0
         .iter()
@@ -2426,16 +2426,13 @@ pub fn write_source_code(path: &Path) {
 
     let const_debugs = generate_const_debugs(&const_values);
 
-    let mut file = File::create("../ash/src/vk.rs").expect("vk");
     let bitflags_macro = vk_bitflags_wrapped_macro();
     let handle_nondispatchable_macro = handle_nondispatchable_macro();
     let define_handle_macro = define_handle_macro();
     let version_macros = vk_version_macros();
     let platform_specific_types = platform_specific_types();
-    let source_code = quote! {
-        #![allow(clippy::too_many_arguments, clippy::cognitive_complexity, clippy::wrong_self_convention)]
-        use std::fmt;
-        use std::os::raw::*;
+
+    let ptr_chain_code = quote! {
         /// Iterates through the pointer chain. Includes the item that is passed into the function.
         /// Stops at the last `BaseOutStructure` that has a null `p_next` field.
         pub(crate) unsafe fn ptr_chain_iter<T>(
@@ -2452,27 +2449,170 @@ pub fn write_source_code(path: &Path) {
                 Some(old)
             })
         }
+    };
+
+    let macros_code = quote! {
+        #version_macros
+        #bitflags_macro
+        #handle_nondispatchable_macro
+        #define_handle_macro
+    };
+
+    let src_dir = src_dir.as_ref();
+
+    let vk_dir = src_dir.join("vk");
+    std::fs::create_dir_all(&vk_dir).expect("failed to create vk dir");
+
+    let mut vk_rs_file = File::create(src_dir.join("vk.rs")).expect("vk.rs");
+
+    let mut vk_macros_file = File::create(vk_dir.join("macros.rs")).expect("vk/macros.rs");
+    let mut vk_features_file = File::create(vk_dir.join("features.rs")).expect("vk/features.rs");
+    let mut vk_definitions_file =
+        File::create(vk_dir.join("definitions.rs")).expect("vk/definitions.rs");
+    let mut vk_platform_types_file =
+        File::create(vk_dir.join("platform_types.rs")).expect("vk/platform_types.rs");
+    let mut vk_enums_file = File::create(vk_dir.join("enums.rs")).expect("vk/enums.rs");
+    let mut vk_bitflags_file = File::create(vk_dir.join("bitflags.rs")).expect("vk/bitflags.rs");
+    let mut vk_constants_file = File::create(vk_dir.join("constants.rs")).expect("vk/constants.rs");
+    let mut vk_extensions_file =
+        File::create(vk_dir.join("extensions.rs")).expect("vk/extensions.rs");
+    let mut vk_feature_extensions_file =
+        File::create(vk_dir.join("feature_extensions.rs")).expect("vk/feature_extensions.rs");
+    let mut vk_const_debugs_file =
+        File::create(vk_dir.join("const_debugs.rs")).expect("vk/const_debugs.rs");
+    let mut vk_aliases_file = File::create(vk_dir.join("aliases.rs")).expect("vk/aliases.rs");
+
+    let feature_code = quote! {
+        use std::os::raw::*;
+        use crate::vk::bitflags::*;
+        use crate::vk::definitions::*;
+        use crate::vk::enums::*;
+        #(#feature_code)*
+    };
+
+    let definition_code = quote! {
+        use std::fmt;
+        use std::os::raw::*;
+        use crate::vk::{Handle, ptr_chain_iter};
+        use crate::vk::platform_types::*;
+        use crate::vk::aliases::*;
+        use crate::vk::bitflags::*;
+        use crate::vk::constants::*;
+        use crate::vk::enums::*;
+        #(#definition_code)*
+    };
+
+    let enum_code = quote! {
+        use std::fmt;
+        #(#enum_code)*
+    };
+
+    let bitflags_code = quote! {
+        use crate::vk::definitions::*;
+        #(#bitflags_code)*
+    };
+
+    let constants_code = quote! {
+        use crate::vk::definitions::*;
+        #(#constants_code)*
+    };
+
+    let extension_code = quote! {
+        use std::os::raw::*;
+        use crate::vk::platform_types::*;
+        use crate::vk::aliases::*;
+        use crate::vk::bitflags::*;
+        use crate::vk::definitions::*;
+        use crate::vk::enums::*;
+        #(#extension_code)*
+    };
+
+    let feature_extensions_code = quote! {
+        use crate::vk::bitflags::*;
+        use crate::vk::enums::*;
+       #feature_extensions_code
+    };
+
+    let const_debugs = quote! {
+        use std::fmt;
+        use crate::vk::bitflags::*;
+        use crate::vk::definitions::*;
+        use crate::vk::enums::*;
+        #const_debugs
+    };
+
+    let aliases = quote! {
+        use crate::vk::bitflags::*;
+        use crate::vk::definitions::*;
+        use crate::vk::enums::*;
+        #(#aliases)*
+    };
+
+    let platform_types_code = quote! {
+        use std::os::raw::*;
+        #platform_specific_types
+    };
+
+    // These are defined outside of `quote!` because rustfmt doesn't seem
+    // to format them correctly when they contain extra spaces.
+    let vk_rs_clippy_lints = r#"
+#![allow(clippy::too_many_arguments, clippy::cognitive_complexity, clippy::wrong_self_convention)]
+"#;
+
+    let vk_rs_code = quote! {
+        #[macro_use]
+        mod macros;
+        pub use macros::*;
+        mod aliases;
+        pub use aliases::*;
+        mod bitflags;
+        pub use bitflags::*;
+        mod const_debugs;
+        pub(crate) use const_debugs::*;
+        mod constants;
+        pub use constants::*;
+        mod definitions;
+        pub use definitions::*;
+        mod enums;
+        pub use enums::*;
+        mod extensions;
+        pub use extensions::*;
+        mod feature_extensions;
+        pub use feature_extensions::*;
+        mod features;
+        pub use features::*;
+        mod platform_types;
+        pub use platform_types::*;
+
+        #ptr_chain_code
 
         pub trait Handle {
             const TYPE: ObjectType;
             fn as_raw(self) -> u64;
             fn from_raw(_: u64) -> Self;
         }
-
-        #version_macros
-        #platform_specific_types
-        #bitflags_macro
-        #handle_nondispatchable_macro
-        #define_handle_macro
-        #(#feature_code)*
-        #(#definition_code)*
-        #(#enum_code)*
-        #(#bitflags_code)*
-        #(#constants_code)*
-        #(#extension_code)*
-        #feature_extensions_code
-        #const_debugs
-        #(#aliases)*
     };
-    write!(&mut file, "{}", source_code).expect("Unable to write to file");
+
+    write!(&mut vk_macros_file, "{}", macros_code).expect("Unable to write vk/macros.rs");
+    write!(&mut vk_platform_types_file, "{}", platform_types_code)
+        .expect("Unable to write to vk/platform_types.rs");
+    write!(&mut vk_features_file, "{}", feature_code).expect("Unable to write vk/features.rs");
+    write!(&mut vk_definitions_file, "{}", definition_code)
+        .expect("Unable to write vk/definitions.rs");
+    write!(&mut vk_enums_file, "{}", enum_code).expect("Unable to write vk/enums.rs");
+    write!(&mut vk_bitflags_file, "{}", bitflags_code).expect("Unable to write vk/bitflags.rs");
+    write!(&mut vk_constants_file, "{}", constants_code).expect("Unable to write vk/constants.rs");
+    write!(&mut vk_extensions_file, "{}", extension_code)
+        .expect("Unable to write vk/extensions.rs");
+    write!(
+        &mut vk_feature_extensions_file,
+        "{}",
+        feature_extensions_code
+    )
+    .expect("Unable to write vk/feature_extensions.rs");
+    write!(&mut vk_const_debugs_file, "{}", const_debugs)
+        .expect("Unable to write vk/const_debugs.rs");
+    write!(&mut vk_aliases_file, "{}", aliases).expect("Unable to write vk/aliases.rs");
+    write!(&mut vk_rs_file, "{} {}", vk_rs_clippy_lints, vk_rs_code)
+        .expect("Unable to write vk.rs");
 }
