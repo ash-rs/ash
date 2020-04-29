@@ -23,7 +23,7 @@ use std::mem;
 #[cfg(all(unix, not(target_os = "android"), not(target_os = "macos")))]
 use ash::extensions::khr::XlibSurface;
 use ash::extensions::{
-    ext::DebugReport,
+    ext::DebugUtils,
     khr::{Surface, Swapchain},
 };
 
@@ -33,11 +33,12 @@ use ash::extensions::khr::Win32Surface;
 use ash::extensions::mvk::MacOSSurface;
 pub use ash::version::{DeviceV1_0, EntryV1_0, InstanceV1_0};
 use ash::{vk, Device, Entry, Instance};
+use std::borrow::Cow;
 use std::cell::RefCell;
 use std::default::Default;
 use std::ffi::{CStr, CString};
 use std::ops::Drop;
-use std::os::raw::{c_char, c_void};
+use std::os::raw::c_void;
 
 // Simple offset_of macro akin to C++ offsetof
 #[macro_export]
@@ -181,7 +182,7 @@ fn extension_names() -> Vec<*const i8> {
     vec![
         Surface::name().as_ptr(),
         XlibSurface::name().as_ptr(),
-        DebugReport::name().as_ptr(),
+        DebugUtils::name().as_ptr(),
     ]
 }
 
@@ -190,7 +191,7 @@ fn extension_names() -> Vec<*const i8> {
     vec![
         Surface::name().as_ptr(),
         MacOSSurface::name().as_ptr(),
-        DebugReport::name().as_ptr(),
+        DebugUtils::name().as_ptr(),
     ]
 }
 
@@ -199,21 +200,40 @@ fn extension_names() -> Vec<*const i8> {
     vec![
         Surface::name().as_ptr(),
         Win32Surface::name().as_ptr(),
-        DebugReport::name().as_ptr(),
+        DebugUtils::name().as_ptr(),
     ]
 }
 
 unsafe extern "system" fn vulkan_debug_callback(
-    _: vk::DebugReportFlagsEXT,
-    _: vk::DebugReportObjectTypeEXT,
-    _: u64,
-    _: usize,
-    _: i32,
-    _: *const c_char,
-    p_message: *const c_char,
-    _: *mut c_void,
-) -> u32 {
-    println!("{:?}", CStr::from_ptr(p_message));
+    message_severity: vk::DebugUtilsMessageSeverityFlagsEXT,
+    message_type: vk::DebugUtilsMessageTypeFlagsEXT,
+    p_callback_data: *const vk::DebugUtilsMessengerCallbackDataEXT,
+    _user_data: *mut std::os::raw::c_void,
+) -> vk::Bool32 {
+    let callback_data = *p_callback_data;
+    let message_id_number: i32 = callback_data.message_id_number as i32;
+
+    let message_id_name = if callback_data.p_message_id_name.is_null() {
+        Cow::from("")
+    } else {
+        CStr::from_ptr(callback_data.p_message_id_name).to_string_lossy()
+    };
+
+    let message = if callback_data.p_message.is_null() {
+        Cow::from("")
+    } else {
+        CStr::from_ptr(callback_data.p_message).to_string_lossy()
+    };
+
+    println!(
+        "{:?}:\n{:?} [{} ({})] : {}\n",
+        message_severity,
+        message_type,
+        message_id_name,
+        &message_id_number.to_string(),
+        message,
+    );
+
     vk::FALSE
 }
 
@@ -258,10 +278,10 @@ pub struct ExampleBase {
     pub device: Device,
     pub surface_loader: Surface,
     pub swapchain_loader: Swapchain,
-    pub debug_report_loader: DebugReport,
+    pub debug_utils_loader: DebugUtils,
     pub window: winit::Window,
     pub events_loop: RefCell<winit::EventsLoop>,
-    pub debug_call_back: vk::DebugReportCallbackEXT,
+    pub debug_call_back: vk::DebugUtilsMessengerEXT,
 
     pub pdevice: vk::PhysicalDevice,
     pub device_memory_properties: vk::PhysicalDeviceMemoryProperties,
@@ -348,17 +368,18 @@ impl ExampleBase {
                 .create_instance(&create_info, None)
                 .expect("Instance creation error");
 
-            let debug_info = vk::DebugReportCallbackCreateInfoEXT::builder()
-                .flags(
-                    vk::DebugReportFlagsEXT::ERROR
-                        | vk::DebugReportFlagsEXT::WARNING
-                        | vk::DebugReportFlagsEXT::PERFORMANCE_WARNING,
+            let debug_info = vk::DebugUtilsMessengerCreateInfoEXT::builder()
+                .message_severity(
+                    vk::DebugUtilsMessageSeverityFlagsEXT::ERROR
+                        | vk::DebugUtilsMessageSeverityFlagsEXT::WARNING
+                        | vk::DebugUtilsMessageSeverityFlagsEXT::INFO,
                 )
-                .pfn_callback(Some(vulkan_debug_callback));
+                .message_type(vk::DebugUtilsMessageTypeFlagsEXT::all())
+                .pfn_user_callback(Some(vulkan_debug_callback));
 
-            let debug_report_loader = DebugReport::new(&entry, &instance);
-            let debug_call_back = debug_report_loader
-                .create_debug_report_callback(&debug_info, None)
+            let debug_utils_loader = DebugUtils::new(&entry, &instance);
+            let debug_call_back = debug_utils_loader
+                .create_debug_utils_messenger(&debug_info, None)
                 .unwrap();
             let surface = create_surface(&entry, &instance, &window).unwrap();
             let pdevices = instance
@@ -647,7 +668,7 @@ impl ExampleBase {
                 rendering_complete_semaphore,
                 surface,
                 debug_call_back,
-                debug_report_loader,
+                debug_utils_loader,
                 depth_image_memory,
             }
         }
@@ -673,8 +694,8 @@ impl Drop for ExampleBase {
                 .destroy_swapchain(self.swapchain, None);
             self.device.destroy_device(None);
             self.surface_loader.destroy_surface(self.surface, None);
-            self.debug_report_loader
-                .destroy_debug_report_callback(self.debug_call_back, None);
+            self.debug_utils_loader
+                .destroy_debug_utils_messenger(self.debug_call_back, None);
             self.instance.destroy_instance(None);
         }
     }
