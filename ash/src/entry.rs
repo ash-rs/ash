@@ -2,20 +2,12 @@ use crate::instance::Instance;
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
-#[cfg(feature = "libloading")]
-use libloading::Library;
 use std::error::Error;
 use std::fmt;
 use std::mem;
 use std::os::raw::c_char;
 use std::os::raw::c_void;
 use std::ptr;
-#[cfg(feature = "libloading")]
-use std::sync::Arc;
-
-/// Function loader
-#[cfg(feature = "libloading")]
-pub type Entry = EntryCustom<Arc<Library>>;
 
 /// Function loader
 #[derive(Clone)]
@@ -25,24 +17,6 @@ pub struct EntryCustom<L> {
     entry_fn_1_1: vk::EntryFnV1_1,
     entry_fn_1_2: vk::EntryFnV1_2,
     lib: L,
-}
-
-#[cfg(feature = "libloading")]
-#[derive(Debug)]
-pub struct LoadingError(libloading::Error);
-
-#[cfg(feature = "libloading")]
-impl fmt::Display for LoadingError {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        fmt::Display::fmt(&self.0, f)
-    }
-}
-
-#[cfg(feature = "libloading")]
-impl Error for LoadingError {
-    fn source(&self) -> Option<&(dyn Error + 'static)> {
-        Error::source(&self.0)
-    }
 }
 
 #[derive(Clone, Debug)]
@@ -195,52 +169,6 @@ pub trait EntryV1_2: EntryV1_1 {
 impl<L> EntryV1_2 for EntryCustom<L> {
     fn fp_v1_2(&self) -> &vk::EntryFnV1_2 {
         &self.entry_fn_1_2
-    }
-}
-
-#[cfg(feature = "libloading")]
-impl EntryCustom<Arc<Library>> {
-    #[cfg(windows)]
-    const LIB_PATH: &'static str = "vulkan-1.dll";
-
-    #[cfg(all(
-        unix,
-        not(any(target_os = "macos", target_os = "ios", target_os = "android"))
-    ))]
-    const LIB_PATH: &'static str = "libvulkan.so.1";
-
-    #[cfg(target_os = "android")]
-    const LIB_PATH: &'static str = "libvulkan.so";
-
-    #[cfg(any(target_os = "macos", target_os = "ios"))]
-    const LIB_PATH: &'static str = "libvulkan.dylib";
-
-    /// ```rust,no_run
-    /// use ash::{vk, Entry, version::EntryV1_0};
-    /// # fn main() -> Result<(), Box<std::error::Error>> {
-    /// let entry = Entry::new()?;
-    /// let app_info = vk::ApplicationInfo {
-    ///     api_version: vk::make_version(1, 0, 0),
-    ///     ..Default::default()
-    /// };
-    /// let create_info = vk::InstanceCreateInfo {
-    ///     p_application_info: &app_info,
-    ///     ..Default::default()
-    /// };
-    /// let instance = unsafe { entry.create_instance(&create_info, None)? };
-    /// # Ok(()) }
-    /// ```
-    pub fn new() -> Result<Entry, LoadingError> {
-        let lib = Library::new(&Self::LIB_PATH)
-            .map_err(LoadingError)
-            .map(Arc::new)?;
-
-        Ok(Self::new_custom(lib, |vk_lib, name| unsafe {
-            vk_lib
-                .get(name.to_bytes_with_nul())
-                .map(|symbol| *symbol)
-                .unwrap_or(ptr::null_mut())
-        }))
     }
 }
 
