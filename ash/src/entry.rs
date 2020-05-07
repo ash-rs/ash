@@ -5,7 +5,6 @@ use crate::RawPtr;
 use libloading::Library;
 use std::error::Error;
 use std::fmt;
-use std::io;
 use std::mem;
 use std::os::raw::c_char;
 use std::os::raw::c_void;
@@ -41,19 +40,19 @@ pub struct EntryCustom<L> {
 }
 
 #[derive(Debug)]
-pub enum LoadingError {
-    LibraryLoadError(io::Error),
-}
+pub struct LoadingError(libloading::Error);
 
 impl fmt::Display for LoadingError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        match self {
-            LoadingError::LibraryLoadError(e) => write!(f, "{}", e),
-        }
+        fmt::Display::fmt(&self.0, f)
     }
 }
 
-impl Error for LoadingError {}
+impl Error for LoadingError {
+    fn source(&self) -> Option<&(dyn Error + 'static)> {
+        Error::source(&self.0)
+    }
+}
 
 #[derive(Clone, Debug)]
 pub enum InstanceError {
@@ -225,29 +224,24 @@ impl EntryCustom<Arc<Library>> {
     /// # Ok(()) }
     /// ```
     pub fn new() -> Result<Entry, LoadingError> {
-        Self::new_custom(
-            || {
-                Library::new(&LIB_PATH)
-                    .map_err(LoadingError::LibraryLoadError)
-                    .map(Arc::new)
-            },
-            |vk_lib, name| unsafe {
-                vk_lib
-                    .get(name.to_bytes_with_nul())
-                    .map(|symbol| *symbol)
-                    .unwrap_or(ptr::null_mut())
-            },
-        )
+        let lib = Library::new(&LIB_PATH)
+            .map_err(LoadingError)
+            .map(Arc::new)?;
+
+        Ok(Self::new_custom(lib, |vk_lib, name| unsafe {
+            vk_lib
+                .get(name.to_bytes_with_nul())
+                .map(|symbol| *symbol)
+                .unwrap_or(ptr::null_mut())
+        }))
     }
 }
 
 impl<L> EntryCustom<L> {
-    pub fn new_custom<Open, Load>(open: Open, mut load: Load) -> Result<Self, LoadingError>
+    pub fn new_custom<Load>(mut lib: L, mut load: Load) -> Self
     where
-        Open: FnOnce() -> Result<L, LoadingError>,
         Load: FnMut(&mut L, &::std::ffi::CStr) -> *const c_void,
     {
-        let mut lib = open()?;
         let static_fn = vk::StaticFn::load(|name| load(&mut lib, name));
 
         let entry_fn_1_0 = vk::EntryFnV1_0::load(|name| unsafe {
@@ -262,13 +256,13 @@ impl<L> EntryCustom<L> {
             mem::transmute(static_fn.get_instance_proc_addr(vk::Instance::null(), name.as_ptr()))
         });
 
-        Ok(EntryCustom {
+        EntryCustom {
             static_fn,
             entry_fn_1_0,
             entry_fn_1_1,
             entry_fn_1_2,
             lib,
-        })
+        }
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkEnumerateInstanceVersion.html>"]
