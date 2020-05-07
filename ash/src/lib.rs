@@ -23,7 +23,9 @@
 //!
 
 pub use crate::device::Device;
-pub use crate::entry::{Entry, EntryCustom, InstanceError, LoadingError};
+#[cfg(feature = "libloading")]
+pub use crate::entry::{Entry, LoadingError};
+pub use crate::entry::{EntryCustom, InstanceError};
 pub use crate::instance::Instance;
 
 mod device;

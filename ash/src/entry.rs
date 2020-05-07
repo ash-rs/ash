@@ -2,6 +2,7 @@ use crate::instance::Instance;
 use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
+#[cfg(feature = "libloading")]
 use libloading::Library;
 use std::error::Error;
 use std::fmt;
@@ -9,24 +10,11 @@ use std::mem;
 use std::os::raw::c_char;
 use std::os::raw::c_void;
 use std::ptr;
+#[cfg(feature = "libloading")]
 use std::sync::Arc;
 
-#[cfg(windows)]
-const LIB_PATH: &str = "vulkan-1.dll";
-
-#[cfg(all(
-    unix,
-    not(any(target_os = "macos", target_os = "ios", target_os = "android"))
-))]
-const LIB_PATH: &str = "libvulkan.so.1";
-
-#[cfg(target_os = "android")]
-const LIB_PATH: &str = "libvulkan.so";
-
-#[cfg(any(target_os = "macos", target_os = "ios"))]
-const LIB_PATH: &str = "libvulkan.dylib";
-
 /// Function loader
+#[cfg(feature = "libloading")]
 pub type Entry = EntryCustom<Arc<Library>>;
 
 /// Function loader
@@ -39,15 +27,18 @@ pub struct EntryCustom<L> {
     lib: L,
 }
 
+#[cfg(feature = "libloading")]
 #[derive(Debug)]
 pub struct LoadingError(libloading::Error);
 
+#[cfg(feature = "libloading")]
 impl fmt::Display for LoadingError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         fmt::Display::fmt(&self.0, f)
     }
 }
 
+#[cfg(feature = "libloading")]
 impl Error for LoadingError {
     fn source(&self) -> Option<&(dyn Error + 'static)> {
         Error::source(&self.0)
@@ -207,7 +198,23 @@ impl<L> EntryV1_2 for EntryCustom<L> {
     }
 }
 
+#[cfg(feature = "libloading")]
 impl EntryCustom<Arc<Library>> {
+    #[cfg(windows)]
+    const LIB_PATH: &'static str = "vulkan-1.dll";
+
+    #[cfg(all(
+        unix,
+        not(any(target_os = "macos", target_os = "ios", target_os = "android"))
+    ))]
+    const LIB_PATH: &'static str = "libvulkan.so.1";
+
+    #[cfg(target_os = "android")]
+    const LIB_PATH: &'static str = "libvulkan.so";
+
+    #[cfg(any(target_os = "macos", target_os = "ios"))]
+    const LIB_PATH: &'static str = "libvulkan.dylib";
+
     /// ```rust,no_run
     /// use ash::{vk, Entry, version::EntryV1_0};
     /// # fn main() -> Result<(), Box<std::error::Error>> {
@@ -224,7 +231,7 @@ impl EntryCustom<Arc<Library>> {
     /// # Ok(()) }
     /// ```
     pub fn new() -> Result<Entry, LoadingError> {
-        let lib = Library::new(&LIB_PATH)
+        let lib = Library::new(&Self::LIB_PATH)
             .map_err(LoadingError)
             .map(Arc::new)?;
 
