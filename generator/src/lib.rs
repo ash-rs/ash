@@ -2261,7 +2261,7 @@ pub fn generate_aliases_of_types<'a>(
 pub fn write_source_code<P: AsRef<Path>>(vk_xml: &Path, src_dir: P) {
     use std::fs::File;
     use std::io::Write;
-    let spec2 = vk_parse::parse_file(vk_xml);
+    let (spec2, _errors) = vk_parse::parse_file(vk_xml).expect("Invalid xml file");
     let extensions: &Vec<vk_parse::Extension> = spec2
         .0
         .iter()
@@ -2283,7 +2283,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_xml: &Path, src_dir: P) {
         })
         .collect();
 
-    let spec = vk_parse::parse_file_as_vkxml(vk_xml);
+    let spec = vk_parse::parse_file_as_vkxml(vk_xml).expect("Invalid xml file.");
     let cmd_aliases: HashMap<String, String> = spec2
         .0
         .iter()
