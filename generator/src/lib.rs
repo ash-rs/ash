@@ -2,10 +2,8 @@
 
 #[macro_use]
 extern crate nom;
-use proc_macro2;
 #[macro_use]
 extern crate quote;
-use syn;
 pub use vk_parse;
 pub use vkxml;
 
@@ -390,20 +388,21 @@ impl ConstVal {
     }
 }
 pub trait ConstantExt {
+    fn constant(&self) -> Constant;
     fn variant_ident(&self, enum_name: &str) -> Ident;
-    fn to_tokens(&self, ident: Option<Ident>) -> Tokens;
+    fn to_tokens(&self) -> Tokens;
     fn notation(&self) -> Option<&str>;
 }
 
 impl ConstantExt for vkxml::ExtensionEnum {
+    fn constant(&self) -> Constant {
+        Constant::from_extension_enum(self).unwrap()
+    }
     fn variant_ident(&self, enum_name: &str) -> Ident {
         variant_ident(enum_name, &self.name)
     }
-    fn to_tokens(&self, ident: Option<Ident>) -> Tokens {
-        let expr = Constant::from_extension_enum(self)
-            .expect("")
-            .to_tokens(ident);
-        quote! { #ident(#expr) }
+    fn to_tokens(&self) -> Tokens {
+        Constant::from_extension_enum(self).expect("").to_tokens()
     }
     fn notation(&self) -> Option<&str> {
         self.notation.as_deref()
@@ -411,19 +410,21 @@ impl ConstantExt for vkxml::ExtensionEnum {
 }
 
 impl ConstantExt for vkxml::Constant {
+    fn constant(&self) -> Constant {
+        Constant::from_constant(self)
+    }
     fn variant_ident(&self, enum_name: &str) -> Ident {
         variant_ident(enum_name, &self.name)
     }
-    fn to_tokens(&self, ident: Option<Ident>) -> Tokens {
-        let expr = Constant::from_constant(self).to_tokens(ident);
-        quote! { #expr }
+    fn to_tokens(&self) -> Tokens {
+        Constant::from_constant(self).to_tokens()
     }
     fn notation(&self) -> Option<&str> {
         self.notation.as_deref()
     }
 }
 
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub enum Constant {
     Number(i32),
     Hex(String),
@@ -479,32 +480,32 @@ impl Constant {
         }
     }
 
-    pub fn to_tokens(&self, ident: Option<Ident>) -> Tokens {
+    pub fn to_tokens(&self) -> Tokens {
         match *self {
             Constant::Number(n) => {
                 let number = interleave_number('_', 3, &n.to_string());
                 let term = Term::intern(&number);
-                quote! {#ident(#term)}
+                quote! {#term}
             }
             Constant::Hex(ref s) => {
                 let number = interleave_number('_', 4, s);
                 let term = Term::intern(&format!("0x{}", number));
-                quote! {#ident(#term)}
+                quote! {#term}
             }
             Constant::Text(ref text) => {
-                quote! {#ident(#text)}
+                quote! {#text}
             }
             Constant::CExpr(ref expr) => {
                 let (_, (_, rexpr)) = cexpr(expr).expect("Unable to parse cexpr");
                 let term = Term::intern(rexpr.as_str());
-                quote! {#ident(#term)}
+                quote! {#term}
             }
             Constant::BitPos(pos) => {
                 let value = 1 << pos;
                 let bit_string = format!("{:b}", value);
                 let bit_string = interleave_number('_', 4, &bit_string);
                 let term = Term::intern(&format!("0b{}", bit_string));
-                quote! {#ident(#term)}
+                quote! {#term}
             }
             Constant::Alias(ref base, ref value) => {
                 quote! {#base::#value}
@@ -938,11 +939,14 @@ pub struct ExtensionConstant<'a> {
     pub constant: Constant,
 }
 impl<'a> ConstantExt for ExtensionConstant<'a> {
+    fn constant(&self) -> Constant {
+        self.constant.clone()
+    }
     fn variant_ident(&self, enum_name: &str) -> Ident {
         variant_ident(enum_name, self.name)
     }
-    fn to_tokens(&self, ident: Option<Ident>) -> Tokens {
-        self.constant.to_tokens(ident)
+    fn to_tokens(&self) -> Tokens {
+        self.constant.to_tokens()
     }
     fn notation(&self) -> Option<&str> {
         None
@@ -1208,7 +1212,13 @@ pub fn bitflags_impl_block(
         .iter()
         .map(|constant| {
             let variant_ident = constant.variant_ident(enum_name);
-            let tokens = constant.to_tokens(Some(ident));
+            let constant = constant.constant();
+            let tokens = constant.to_tokens();
+            let tokens = if let Constant::Alias(_, _) = &constant {
+                tokens
+            } else {
+                quote!(Self(#tokens))
+            };
             (variant_ident, tokens)
         })
         .collect_vec();
@@ -2125,7 +2135,7 @@ pub fn generate_constant<'a>(
     let c = Constant::from_constant(constant);
     let name = constant_name(&constant.name);
     let ident = Ident::from(name.as_str());
-    let value = c.to_tokens(None);
+    let value = c.to_tokens();
     let ty = if name == "TRUE" || name == "FALSE" {
         CType::Bool32
     } else {
