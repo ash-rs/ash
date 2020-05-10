@@ -11,10 +11,10 @@ documentation = "https://docs.rs/ash"
 edition = "2018"
 
 [dependencies]
-libloading = "0.6.1"
+libloading = { version = "0.6.1", optional = true }
 
 [features]
-default = []
+default = ["libloading"]
 
 [package.metadata.release]
 no-dev-version = true
