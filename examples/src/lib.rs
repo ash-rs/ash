@@ -326,20 +326,10 @@ impl ExampleBase {
 
             let present_queue = device.get_device_queue(queue_family_index as u32, 0);
 
-            let surface_formats = surface_loader
+            let surface_format = surface_loader
                 .get_physical_device_surface_formats(pdevice, surface)
-                .unwrap();
-            let surface_format = surface_formats
-                .iter()
-                .map(|sfmt| match sfmt.format {
-                    vk::Format::UNDEFINED => vk::SurfaceFormatKHR {
-                        format: vk::Format::B8G8R8_UNORM,
-                        color_space: sfmt.color_space,
-                    },
-                    _ => *sfmt,
-                })
-                .next()
-                .expect("Unable to find suitable surface format.");
+                .unwrap()[0];
+
             let surface_capabilities = surface_loader
                 .get_physical_device_surface_capabilities(pdevice, surface)
                 .unwrap();
