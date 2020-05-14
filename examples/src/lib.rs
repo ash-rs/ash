@@ -38,6 +38,7 @@ use std::cell::RefCell;
 use std::default::Default;
 use std::ffi::{CStr, CString};
 use std::ops::Drop;
+use std::os::raw::c_void;
 
 // Simple offset_of macro akin to C++ offsetof
 #[macro_export]
@@ -207,7 +208,7 @@ unsafe extern "system" fn vulkan_debug_callback(
     message_severity: vk::DebugUtilsMessageSeverityFlagsEXT,
     message_type: vk::DebugUtilsMessageTypeFlagsEXT,
     p_callback_data: *const vk::DebugUtilsMessengerCallbackDataEXT,
-    _user_data: *mut std::os::raw::c_void,
+    _user_data: *mut c_void,
 ) -> vk::Bool32 {
     let callback_data = *p_callback_data;
     let message_id_number: i32 = callback_data.message_id_number as i32;
