@@ -14564,12 +14564,30 @@ impl<'a> ::std::ops::DerefMut for PhysicalDeviceFeatures2Builder<'a> {
         &mut self.inner
     }
 }
+pub unsafe trait ExtendsPhysicalDeviceFeatures2 {}
 impl<'a> PhysicalDeviceFeatures2Builder<'a> {
     pub fn features(
         mut self,
         features: PhysicalDeviceFeatures,
     ) -> PhysicalDeviceFeatures2Builder<'a> {
         self.inner.features = features;
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsPhysicalDeviceFeatures2>(
+        mut self,
+        next: &'a mut T,
+    ) -> PhysicalDeviceFeatures2Builder<'a> {
+        unsafe {
+            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
         self
     }
     #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
@@ -39492,6 +39510,11 @@ unsafe impl ExtendsDeviceCreateInfo
 {
 }
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceSeparateDepthStencilLayoutsFeatures {}
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceSeparateDepthStencilLayoutsFeaturesBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceSeparateDepthStencilLayoutsFeatures {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceSeparateDepthStencilLayoutsFeaturesBuilder<'a> {
     type Target = PhysicalDeviceSeparateDepthStencilLayoutsFeatures;
     fn deref(&self) -> &Self::Target {
