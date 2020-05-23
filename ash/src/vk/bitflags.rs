@@ -217,8 +217,11 @@ impl ImageViewCreateFlags {}
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkSamplerCreateFlagBits.html>"]
 pub struct SamplerCreateFlags(pub(crate) Flags);
-vk_bitflags_wrapped!(SamplerCreateFlags, 0b0, Flags);
-impl SamplerCreateFlags {}
+vk_bitflags_wrapped!(SamplerCreateFlags, 0b11, Flags);
+impl SamplerCreateFlags {
+    pub const SUBSAMPLED: Self = Self(0b1);
+    pub const SUBSAMPLED_COARSE_RECONSTRUCTION: Self = Self(0b10);
+}
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPipelineCreateFlagBits.html>"]
