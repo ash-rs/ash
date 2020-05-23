@@ -4,4 +4,5 @@ members = [
     "ash",
     "ash-window",
     "generator",
+    "generator2",
 ]
