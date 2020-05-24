@@ -1,0 +1,8934 @@
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Alias {
+    alias: "VK_ACCELERATION_STRUCTURE_MEMORY_REQUIREMENTS_TYPE_OBJECT_KHR",
+    extends: Some(
+        "VkAccelerationStructureMemoryRequirementsTypeKHR",
+    ),
+}
+Alias {
+    alias: "VK_ACCELERATION_STRUCTURE_MEMORY_REQUIREMENTS_TYPE_BUILD_SCRATCH_KHR",
+    extends: Some(
+        "VkAccelerationStructureMemoryRequirementsTypeKHR",
+    ),
+}
+Alias {
+    alias: "VK_ACCELERATION_STRUCTURE_MEMORY_REQUIREMENTS_TYPE_UPDATE_SCRATCH_KHR",
+    extends: Some(
+        "VkAccelerationStructureMemoryRequirementsTypeKHR",
+    ),
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Alias {
+    alias: "VK_ACCELERATION_STRUCTURE_TYPE_TOP_LEVEL_KHR",
+    extends: Some(
+        "VkAccelerationStructureTypeKHR",
+    ),
+}
+Alias {
+    alias: "VK_ACCELERATION_STRUCTURE_TYPE_BOTTOM_LEVEL_KHR",
+    extends: Some(
+        "VkAccelerationStructureTypeKHR",
+    ),
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Bitpos {
+    bitpos: 1,
+    extends: None,
+}
+Bitpos {
+    bitpos: 2,
+    extends: None,
+}
+Bitpos {
+    bitpos: 3,
+    extends: None,
+}
+Bitpos {
+    bitpos: 4,
+    extends: None,
+}
+Bitpos {
+    bitpos: 5,
+    extends: None,
+}
+Bitpos {
+    bitpos: 6,
+    extends: None,
+}
+Bitpos {
+    bitpos: 7,
+    extends: None,
+}
+Bitpos {
+    bitpos: 8,
+    extends: None,
+}
+Bitpos {
+    bitpos: 9,
+    extends: None,
+}
+Bitpos {
+    bitpos: 10,
+    extends: None,
+}
+Bitpos {
+    bitpos: 11,
+    extends: None,
+}
+Bitpos {
+    bitpos: 12,
+    extends: None,
+}
+Bitpos {
+    bitpos: 13,
+    extends: None,
+}
+Bitpos {
+    bitpos: 14,
+    extends: None,
+}
+Bitpos {
+    bitpos: 15,
+    extends: None,
+}
+Bitpos {
+    bitpos: 16,
+    extends: None,
+}
+Bitpos {
+    bitpos: 30,
+    extends: Some(
+        "VkAccessFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 31,
+    extends: Some(
+        "VkAccessFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 28,
+    extends: Some(
+        "VkAccessFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 29,
+    extends: Some(
+        "VkAccessFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 19,
+    extends: Some(
+        "VkAccessFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 20,
+    extends: Some(
+        "VkAccessFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 24,
+    extends: Some(
+        "VkAccessFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 25,
+    extends: Some(
+        "VkAccessFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 26,
+    extends: Some(
+        "VkAccessFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 27,
+    extends: Some(
+        "VkAccessFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 21,
+    extends: Some(
+        "VkAccessFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 22,
+    extends: Some(
+        "VkAccessFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 17,
+    extends: Some(
+        "VkAccessFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 18,
+    extends: Some(
+        "VkAccessFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_ACCESS_ACCELERATION_STRUCTURE_READ_BIT_KHR",
+    extends: Some(
+        "VkAccessFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_ACCESS_ACCELERATION_STRUCTURE_WRITE_BIT_KHR",
+    extends: Some(
+        "VkAccessFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 23,
+    extends: Some(
+        "VkAccessFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Value {
+    value: "3",
+    extends: None,
+}
+Value {
+    value: "4",
+    extends: None,
+}
+Value {
+    value: "5",
+    extends: None,
+}
+Value {
+    value: "6",
+    extends: None,
+}
+Value {
+    value: "7",
+    extends: None,
+}
+Value {
+    value: "8",
+    extends: None,
+}
+Value {
+    value: "9",
+    extends: None,
+}
+Value {
+    value: "10",
+    extends: None,
+}
+Value {
+    value: "11",
+    extends: None,
+}
+Value {
+    value: "12",
+    extends: None,
+}
+Value {
+    value: "13",
+    extends: None,
+}
+Value {
+    value: "14",
+    extends: None,
+}
+Value {
+    value: "15",
+    extends: None,
+}
+Value {
+    value: "16",
+    extends: None,
+}
+Value {
+    value: "17",
+    extends: None,
+}
+Value {
+    value: "18",
+    extends: None,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Value {
+    value: "3",
+    extends: None,
+}
+Value {
+    value: "4",
+    extends: None,
+}
+Offset {
+    offset: 0,
+    extends: "VkBlendOp",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkBlendOp",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 2,
+    extends: "VkBlendOp",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 3,
+    extends: "VkBlendOp",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 4,
+    extends: "VkBlendOp",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 5,
+    extends: "VkBlendOp",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 6,
+    extends: "VkBlendOp",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 7,
+    extends: "VkBlendOp",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 8,
+    extends: "VkBlendOp",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 9,
+    extends: "VkBlendOp",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 10,
+    extends: "VkBlendOp",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 11,
+    extends: "VkBlendOp",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 12,
+    extends: "VkBlendOp",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 13,
+    extends: "VkBlendOp",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 14,
+    extends: "VkBlendOp",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 15,
+    extends: "VkBlendOp",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 16,
+    extends: "VkBlendOp",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 17,
+    extends: "VkBlendOp",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 18,
+    extends: "VkBlendOp",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 19,
+    extends: "VkBlendOp",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 20,
+    extends: "VkBlendOp",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 21,
+    extends: "VkBlendOp",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 22,
+    extends: "VkBlendOp",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 23,
+    extends: "VkBlendOp",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 24,
+    extends: "VkBlendOp",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 25,
+    extends: "VkBlendOp",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 26,
+    extends: "VkBlendOp",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 27,
+    extends: "VkBlendOp",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 28,
+    extends: "VkBlendOp",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 29,
+    extends: "VkBlendOp",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 30,
+    extends: "VkBlendOp",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 31,
+    extends: "VkBlendOp",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 32,
+    extends: "VkBlendOp",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 33,
+    extends: "VkBlendOp",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 34,
+    extends: "VkBlendOp",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 35,
+    extends: "VkBlendOp",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 36,
+    extends: "VkBlendOp",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 37,
+    extends: "VkBlendOp",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 38,
+    extends: "VkBlendOp",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 39,
+    extends: "VkBlendOp",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 40,
+    extends: "VkBlendOp",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 41,
+    extends: "VkBlendOp",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 42,
+    extends: "VkBlendOp",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 43,
+    extends: "VkBlendOp",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 44,
+    extends: "VkBlendOp",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 45,
+    extends: "VkBlendOp",
+    extnumber: None,
+    dir: true,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Value {
+    value: "3",
+    extends: None,
+}
+Value {
+    value: "4",
+    extends: None,
+}
+Value {
+    value: "5",
+    extends: None,
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Bitpos {
+    bitpos: 1,
+    extends: None,
+}
+Bitpos {
+    bitpos: 2,
+    extends: None,
+}
+Alias {
+    alias: "VK_BUFFER_CREATE_DEVICE_ADDRESS_CAPTURE_REPLAY_BIT",
+    extends: Some(
+        "VkBufferCreateFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_BUFFER_CREATE_DEVICE_ADDRESS_CAPTURE_REPLAY_BIT",
+    extends: Some(
+        "VkBufferCreateFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Bitpos {
+    bitpos: 1,
+    extends: None,
+}
+Bitpos {
+    bitpos: 2,
+    extends: None,
+}
+Bitpos {
+    bitpos: 3,
+    extends: None,
+}
+Bitpos {
+    bitpos: 4,
+    extends: None,
+}
+Bitpos {
+    bitpos: 5,
+    extends: None,
+}
+Bitpos {
+    bitpos: 6,
+    extends: None,
+}
+Bitpos {
+    bitpos: 7,
+    extends: None,
+}
+Bitpos {
+    bitpos: 8,
+    extends: None,
+}
+Bitpos {
+    bitpos: 15,
+    extends: Some(
+        "VkBufferUsageFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 16,
+    extends: Some(
+        "VkBufferUsageFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 13,
+    extends: Some(
+        "VkBufferUsageFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 14,
+    extends: Some(
+        "VkBufferUsageFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_BUFFER_USAGE_SHADER_DEVICE_ADDRESS_BIT",
+    extends: Some(
+        "VkBufferUsageFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 9,
+    extends: Some(
+        "VkBufferUsageFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 11,
+    extends: Some(
+        "VkBufferUsageFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 12,
+    extends: Some(
+        "VkBufferUsageFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_BUFFER_USAGE_SHADER_DEVICE_ADDRESS_BIT",
+    extends: Some(
+        "VkBufferUsageFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 10,
+    extends: Some(
+        "VkBufferUsageFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_BUFFER_USAGE_RAY_TRACING_BIT_KHR",
+    extends: Some(
+        "VkBufferUsageFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 18,
+    extends: Some(
+        "VkBufferUsageFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Bitpos {
+    bitpos: 1,
+    extends: None,
+}
+Bitpos {
+    bitpos: 2,
+    extends: None,
+}
+Bitpos {
+    bitpos: 3,
+    extends: None,
+}
+Bitpos {
+    bitpos: 4,
+    extends: None,
+}
+Alias {
+    alias: "VK_BUILD_ACCELERATION_STRUCTURE_ALLOW_UPDATE_BIT_KHR",
+    extends: Some(
+        "VkBuildAccelerationStructureFlagBitsKHR",
+    ),
+}
+Alias {
+    alias: "VK_BUILD_ACCELERATION_STRUCTURE_ALLOW_COMPACTION_BIT_KHR",
+    extends: Some(
+        "VkBuildAccelerationStructureFlagBitsKHR",
+    ),
+}
+Alias {
+    alias: "VK_BUILD_ACCELERATION_STRUCTURE_PREFER_FAST_TRACE_BIT_KHR",
+    extends: Some(
+        "VkBuildAccelerationStructureFlagBitsKHR",
+    ),
+}
+Alias {
+    alias: "VK_BUILD_ACCELERATION_STRUCTURE_PREFER_FAST_BUILD_BIT_KHR",
+    extends: Some(
+        "VkBuildAccelerationStructureFlagBitsKHR",
+    ),
+}
+Alias {
+    alias: "VK_BUILD_ACCELERATION_STRUCTURE_LOW_MEMORY_BIT_KHR",
+    extends: Some(
+        "VkBuildAccelerationStructureFlagBitsKHR",
+    ),
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Alias {
+    alias: "VK_CHROMA_LOCATION_COSITED_EVEN",
+    extends: Some(
+        "VkChromaLocation",
+    ),
+}
+Alias {
+    alias: "VK_CHROMA_LOCATION_MIDPOINT",
+    extends: Some(
+        "VkChromaLocation",
+    ),
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Value {
+    value: "3",
+    extends: None,
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Bitpos {
+    bitpos: 1,
+    extends: None,
+}
+Bitpos {
+    bitpos: 2,
+    extends: None,
+}
+Bitpos {
+    bitpos: 3,
+    extends: None,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Alias {
+    alias: "VK_COLOR_SPACE_SRGB_NONLINEAR_KHR",
+    extends: None,
+}
+Offset {
+    offset: 0,
+    extends: "VkColorSpaceKHR",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkColorSpaceKHR",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 2,
+    extends: "VkColorSpaceKHR",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 3,
+    extends: "VkColorSpaceKHR",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 4,
+    extends: "VkColorSpaceKHR",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 5,
+    extends: "VkColorSpaceKHR",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 6,
+    extends: "VkColorSpaceKHR",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 7,
+    extends: "VkColorSpaceKHR",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 8,
+    extends: "VkColorSpaceKHR",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 9,
+    extends: "VkColorSpaceKHR",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 10,
+    extends: "VkColorSpaceKHR",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 11,
+    extends: "VkColorSpaceKHR",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 12,
+    extends: "VkColorSpaceKHR",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 13,
+    extends: "VkColorSpaceKHR",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 14,
+    extends: "VkColorSpaceKHR",
+    extnumber: None,
+    dir: true,
+}
+Alias {
+    alias: "VK_COLOR_SPACE_DISPLAY_P3_LINEAR_EXT",
+    extends: Some(
+        "VkColorSpaceKHR",
+    ),
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Bitpos {
+    bitpos: 1,
+    extends: None,
+}
+Bitpos {
+    bitpos: 2,
+    extends: None,
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Bitpos {
+    bitpos: 1,
+    extends: None,
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Value {
+    value: "3",
+    extends: None,
+}
+Value {
+    value: "4",
+    extends: None,
+}
+Value {
+    value: "5",
+    extends: None,
+}
+Value {
+    value: "6",
+    extends: None,
+}
+Value {
+    value: "7",
+    extends: None,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Value {
+    value: "3",
+    extends: None,
+}
+Value {
+    value: "4",
+    extends: None,
+}
+Value {
+    value: "5",
+    extends: None,
+}
+Value {
+    value: "6",
+    extends: None,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Value {
+    value: "3",
+    extends: None,
+}
+Value {
+    value: "4",
+    extends: None,
+}
+Value {
+    value: "5",
+    extends: None,
+}
+Value {
+    value: "6",
+    extends: None,
+}
+Value {
+    value: "7",
+    extends: None,
+}
+Value {
+    value: "8",
+    extends: None,
+}
+Value {
+    value: "9",
+    extends: None,
+}
+Value {
+    value: "10",
+    extends: None,
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Bitpos {
+    bitpos: 1,
+    extends: None,
+}
+Bitpos {
+    bitpos: 2,
+    extends: None,
+}
+Bitpos {
+    bitpos: 3,
+    extends: None,
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Value {
+    value: "3",
+    extends: None,
+}
+Alias {
+    alias: "VK_COPY_ACCELERATION_STRUCTURE_MODE_CLONE_KHR",
+    extends: Some(
+        "VkCopyAccelerationStructureModeKHR",
+    ),
+}
+Alias {
+    alias: "VK_COPY_ACCELERATION_STRUCTURE_MODE_COMPACT_KHR",
+    extends: Some(
+        "VkCopyAccelerationStructureModeKHR",
+    ),
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Value {
+    value: "3",
+    extends: None,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Bitpos {
+    bitpos: 1,
+    extends: None,
+}
+Value {
+    value: "0x00000003",
+    extends: None,
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Bitpos {
+    bitpos: 1,
+    extends: None,
+}
+Bitpos {
+    bitpos: 2,
+    extends: None,
+}
+Bitpos {
+    bitpos: 3,
+    extends: None,
+}
+Bitpos {
+    bitpos: 4,
+    extends: None,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Value {
+    value: "3",
+    extends: None,
+}
+Value {
+    value: "4",
+    extends: None,
+}
+Value {
+    value: "5",
+    extends: None,
+}
+Value {
+    value: "6",
+    extends: None,
+}
+Value {
+    value: "7",
+    extends: None,
+}
+Value {
+    value: "8",
+    extends: None,
+}
+Value {
+    value: "9",
+    extends: None,
+}
+Value {
+    value: "10",
+    extends: None,
+}
+Value {
+    value: "11",
+    extends: None,
+}
+Value {
+    value: "12",
+    extends: None,
+}
+Value {
+    value: "13",
+    extends: None,
+}
+Value {
+    value: "14",
+    extends: None,
+}
+Value {
+    value: "15",
+    extends: None,
+}
+Value {
+    value: "16",
+    extends: None,
+}
+Value {
+    value: "17",
+    extends: None,
+}
+Value {
+    value: "18",
+    extends: None,
+}
+Value {
+    value: "19",
+    extends: None,
+}
+Value {
+    value: "20",
+    extends: None,
+}
+Value {
+    value: "21",
+    extends: None,
+}
+Value {
+    value: "22",
+    extends: None,
+}
+Value {
+    value: "23",
+    extends: None,
+}
+Value {
+    value: "24",
+    extends: None,
+}
+Value {
+    value: "25",
+    extends: None,
+}
+Value {
+    value: "26",
+    extends: None,
+}
+Value {
+    value: "27",
+    extends: None,
+}
+Value {
+    value: "28",
+    extends: None,
+}
+Alias {
+    alias: "VK_DEBUG_REPORT_OBJECT_TYPE_DEBUG_REPORT_CALLBACK_EXT_EXT",
+    extends: None,
+}
+Value {
+    value: "29",
+    extends: None,
+}
+Value {
+    value: "30",
+    extends: None,
+}
+Value {
+    value: "33",
+    extends: None,
+}
+Alias {
+    alias: "VK_DEBUG_REPORT_OBJECT_TYPE_VALIDATION_CACHE_EXT_EXT",
+    extends: None,
+}
+Offset {
+    offset: 0,
+    extends: "VkDebugReportObjectTypeEXT",
+    extnumber: Some(
+        157,
+    ),
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkDebugReportObjectTypeEXT",
+    extnumber: Some(
+        86,
+    ),
+    dir: true,
+}
+Alias {
+    alias: "VK_DEBUG_REPORT_OBJECT_TYPE_DESCRIPTOR_UPDATE_TEMPLATE_EXT",
+    extends: Some(
+        "VkDebugReportObjectTypeEXT",
+    ),
+}
+Offset {
+    offset: 0,
+    extends: "VkDebugReportObjectTypeEXT",
+    extnumber: Some(
+        166,
+    ),
+    dir: true,
+}
+Alias {
+    alias: "VK_DEBUG_REPORT_OBJECT_TYPE_SAMPLER_YCBCR_CONVERSION_EXT",
+    extends: Some(
+        "VkDebugReportObjectTypeEXT",
+    ),
+}
+Offset {
+    offset: 0,
+    extends: "VkDebugReportObjectTypeEXT",
+    extnumber: None,
+    dir: true,
+}
+Alias {
+    alias: "VK_DEBUG_REPORT_OBJECT_TYPE_ACCELERATION_STRUCTURE_KHR_EXT",
+    extends: Some(
+        "VkDebugReportObjectTypeEXT",
+    ),
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Bitpos {
+    bitpos: 4,
+    extends: None,
+}
+Bitpos {
+    bitpos: 8,
+    extends: None,
+}
+Bitpos {
+    bitpos: 12,
+    extends: None,
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Bitpos {
+    bitpos: 1,
+    extends: None,
+}
+Bitpos {
+    bitpos: 2,
+    extends: None,
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Alias {
+    alias: "VK_DEPENDENCY_DEVICE_GROUP_BIT",
+    extends: Some(
+        "VkDependencyFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_DEPENDENCY_VIEW_LOCAL_BIT",
+    extends: Some(
+        "VkDependencyFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Bitpos {
+    bitpos: 1,
+    extends: None,
+}
+Bitpos {
+    bitpos: 2,
+    extends: None,
+}
+Bitpos {
+    bitpos: 3,
+    extends: None,
+}
+Alias {
+    alias: "VK_DESCRIPTOR_BINDING_UPDATE_AFTER_BIND_BIT",
+    extends: Some(
+        "VkDescriptorBindingFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_DESCRIPTOR_BINDING_UPDATE_UNUSED_WHILE_PENDING_BIT",
+    extends: Some(
+        "VkDescriptorBindingFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_DESCRIPTOR_BINDING_PARTIALLY_BOUND_BIT",
+    extends: Some(
+        "VkDescriptorBindingFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_DESCRIPTOR_BINDING_VARIABLE_DESCRIPTOR_COUNT_BIT",
+    extends: Some(
+        "VkDescriptorBindingFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Alias {
+    alias: "VK_DESCRIPTOR_POOL_CREATE_UPDATE_AFTER_BIND_BIT",
+    extends: Some(
+        "VkDescriptorPoolCreateFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_DESCRIPTOR_SET_LAYOUT_CREATE_UPDATE_AFTER_BIND_POOL_BIT",
+    extends: Some(
+        "VkDescriptorSetLayoutCreateFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 0,
+    extends: Some(
+        "VkDescriptorSetLayoutCreateFlagBits",
+    ),
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Value {
+    value: "3",
+    extends: None,
+}
+Value {
+    value: "4",
+    extends: None,
+}
+Value {
+    value: "5",
+    extends: None,
+}
+Value {
+    value: "6",
+    extends: None,
+}
+Value {
+    value: "7",
+    extends: None,
+}
+Value {
+    value: "8",
+    extends: None,
+}
+Value {
+    value: "9",
+    extends: None,
+}
+Value {
+    value: "10",
+    extends: None,
+}
+Offset {
+    offset: 0,
+    extends: "VkDescriptorType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkDescriptorType",
+    extnumber: Some(
+        166,
+    ),
+    dir: true,
+}
+Alias {
+    alias: "VK_DESCRIPTOR_TYPE_ACCELERATION_STRUCTURE_KHR",
+    extends: Some(
+        "VkDescriptorType",
+    ),
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Alias {
+    alias: "VK_DESCRIPTOR_UPDATE_TEMPLATE_TYPE_DESCRIPTOR_SET",
+    extends: Some(
+        "VkDescriptorUpdateTemplateType",
+    ),
+}
+Value {
+    value: "1",
+    extends: Some(
+        "VkDescriptorUpdateTemplateType",
+    ),
+}
+Value {
+    value: "1",
+    extends: Some(
+        "VkDescriptorUpdateTemplateType",
+    ),
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Bitpos {
+    bitpos: 1,
+    extends: None,
+}
+Bitpos {
+    bitpos: 2,
+    extends: None,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Bitpos {
+    bitpos: 1,
+    extends: None,
+}
+Bitpos {
+    bitpos: 2,
+    extends: None,
+}
+Bitpos {
+    bitpos: 3,
+    extends: None,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Bitpos {
+    bitpos: 1,
+    extends: None,
+}
+Bitpos {
+    bitpos: 2,
+    extends: None,
+}
+Bitpos {
+    bitpos: 3,
+    extends: None,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Value {
+    value: "3",
+    extends: None,
+}
+Value {
+    value: "4",
+    extends: None,
+}
+Value {
+    value: "5",
+    extends: None,
+}
+Value {
+    value: "6",
+    extends: None,
+}
+Value {
+    value: "7",
+    extends: None,
+}
+Value {
+    value: "8",
+    extends: None,
+}
+Value {
+    value: "9",
+    extends: None,
+}
+Value {
+    value: "10",
+    extends: None,
+}
+Value {
+    value: "11",
+    extends: None,
+}
+Value {
+    value: "12",
+    extends: None,
+}
+Alias {
+    alias: "VK_DRIVER_ID_AMD_PROPRIETARY",
+    extends: Some(
+        "VkDriverId",
+    ),
+}
+Alias {
+    alias: "VK_DRIVER_ID_AMD_OPEN_SOURCE",
+    extends: Some(
+        "VkDriverId",
+    ),
+}
+Alias {
+    alias: "VK_DRIVER_ID_MESA_RADV",
+    extends: Some(
+        "VkDriverId",
+    ),
+}
+Alias {
+    alias: "VK_DRIVER_ID_NVIDIA_PROPRIETARY",
+    extends: Some(
+        "VkDriverId",
+    ),
+}
+Alias {
+    alias: "VK_DRIVER_ID_INTEL_PROPRIETARY_WINDOWS",
+    extends: Some(
+        "VkDriverId",
+    ),
+}
+Alias {
+    alias: "VK_DRIVER_ID_INTEL_OPEN_SOURCE_MESA",
+    extends: Some(
+        "VkDriverId",
+    ),
+}
+Alias {
+    alias: "VK_DRIVER_ID_IMAGINATION_PROPRIETARY",
+    extends: Some(
+        "VkDriverId",
+    ),
+}
+Alias {
+    alias: "VK_DRIVER_ID_QUALCOMM_PROPRIETARY",
+    extends: Some(
+        "VkDriverId",
+    ),
+}
+Alias {
+    alias: "VK_DRIVER_ID_ARM_PROPRIETARY",
+    extends: Some(
+        "VkDriverId",
+    ),
+}
+Alias {
+    alias: "VK_DRIVER_ID_GOOGLE_SWIFTSHADER",
+    extends: Some(
+        "VkDriverId",
+    ),
+}
+Alias {
+    alias: "VK_DRIVER_ID_GGP_PROPRIETARY",
+    extends: Some(
+        "VkDriverId",
+    ),
+}
+Alias {
+    alias: "VK_DRIVER_ID_BROADCOM_PROPRIETARY",
+    extends: Some(
+        "VkDriverId",
+    ),
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Value {
+    value: "3",
+    extends: None,
+}
+Value {
+    value: "4",
+    extends: None,
+}
+Value {
+    value: "5",
+    extends: None,
+}
+Value {
+    value: "6",
+    extends: None,
+}
+Value {
+    value: "7",
+    extends: None,
+}
+Value {
+    value: "8",
+    extends: None,
+}
+Offset {
+    offset: 0,
+    extends: "VkDynamicState",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkDynamicState",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkDynamicState",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkDynamicState",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkDynamicState",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 4,
+    extends: "VkDynamicState",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 6,
+    extends: "VkDynamicState",
+    extnumber: None,
+    dir: true,
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Bitpos {
+    bitpos: 1,
+    extends: None,
+}
+Alias {
+    alias: "VK_EXTERNAL_FENCE_FEATURE_EXPORTABLE_BIT",
+    extends: Some(
+        "VkExternalFenceFeatureFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_EXTERNAL_FENCE_FEATURE_IMPORTABLE_BIT",
+    extends: Some(
+        "VkExternalFenceFeatureFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Bitpos {
+    bitpos: 1,
+    extends: None,
+}
+Bitpos {
+    bitpos: 2,
+    extends: None,
+}
+Bitpos {
+    bitpos: 3,
+    extends: None,
+}
+Alias {
+    alias: "VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD_BIT",
+    extends: Some(
+        "VkExternalFenceHandleTypeFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_BIT",
+    extends: Some(
+        "VkExternalFenceHandleTypeFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT",
+    extends: Some(
+        "VkExternalFenceHandleTypeFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD_BIT",
+    extends: Some(
+        "VkExternalFenceHandleTypeFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Bitpos {
+    bitpos: 1,
+    extends: None,
+}
+Bitpos {
+    bitpos: 2,
+    extends: None,
+}
+Alias {
+    alias: "VK_EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_BIT",
+    extends: Some(
+        "VkExternalMemoryFeatureFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_EXTERNAL_MEMORY_FEATURE_EXPORTABLE_BIT",
+    extends: Some(
+        "VkExternalMemoryFeatureFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_EXTERNAL_MEMORY_FEATURE_IMPORTABLE_BIT",
+    extends: Some(
+        "VkExternalMemoryFeatureFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Bitpos {
+    bitpos: 1,
+    extends: None,
+}
+Bitpos {
+    bitpos: 2,
+    extends: None,
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Bitpos {
+    bitpos: 1,
+    extends: None,
+}
+Bitpos {
+    bitpos: 2,
+    extends: None,
+}
+Bitpos {
+    bitpos: 3,
+    extends: None,
+}
+Bitpos {
+    bitpos: 4,
+    extends: None,
+}
+Bitpos {
+    bitpos: 5,
+    extends: None,
+}
+Bitpos {
+    bitpos: 6,
+    extends: None,
+}
+Bitpos {
+    bitpos: 10,
+    extends: Some(
+        "VkExternalMemoryHandleTypeFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 9,
+    extends: Some(
+        "VkExternalMemoryHandleTypeFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 7,
+    extends: Some(
+        "VkExternalMemoryHandleTypeFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 8,
+    extends: Some(
+        "VkExternalMemoryHandleTypeFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD_BIT",
+    extends: Some(
+        "VkExternalMemoryHandleTypeFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_BIT",
+    extends: Some(
+        "VkExternalMemoryHandleTypeFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT",
+    extends: Some(
+        "VkExternalMemoryHandleTypeFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_BIT",
+    extends: Some(
+        "VkExternalMemoryHandleTypeFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT_BIT",
+    extends: Some(
+        "VkExternalMemoryHandleTypeFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP_BIT",
+    extends: Some(
+        "VkExternalMemoryHandleTypeFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE_BIT",
+    extends: Some(
+        "VkExternalMemoryHandleTypeFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Bitpos {
+    bitpos: 1,
+    extends: None,
+}
+Bitpos {
+    bitpos: 2,
+    extends: None,
+}
+Bitpos {
+    bitpos: 3,
+    extends: None,
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Bitpos {
+    bitpos: 1,
+    extends: None,
+}
+Alias {
+    alias: "VK_EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE_BIT",
+    extends: Some(
+        "VkExternalSemaphoreFeatureFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE_BIT",
+    extends: Some(
+        "VkExternalSemaphoreFeatureFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Bitpos {
+    bitpos: 1,
+    extends: None,
+}
+Bitpos {
+    bitpos: 2,
+    extends: None,
+}
+Bitpos {
+    bitpos: 3,
+    extends: None,
+}
+Bitpos {
+    bitpos: 4,
+    extends: None,
+}
+Alias {
+    alias: "VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD_BIT",
+    extends: Some(
+        "VkExternalSemaphoreHandleTypeFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_BIT",
+    extends: Some(
+        "VkExternalSemaphoreHandleTypeFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT_BIT",
+    extends: Some(
+        "VkExternalSemaphoreHandleTypeFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE_BIT",
+    extends: Some(
+        "VkExternalSemaphoreHandleTypeFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD_BIT",
+    extends: Some(
+        "VkExternalSemaphoreHandleTypeFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Alias {
+    alias: "VK_FENCE_IMPORT_TEMPORARY_BIT",
+    extends: Some(
+        "VkFenceImportFlagBits",
+    ),
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Alias {
+    alias: "VK_FILTER_CUBIC_IMG",
+    extends: Some(
+        "VkFilter",
+    ),
+}
+Offset {
+    offset: 0,
+    extends: "VkFilter",
+    extnumber: None,
+    dir: true,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Value {
+    value: "3",
+    extends: None,
+}
+Value {
+    value: "4",
+    extends: None,
+}
+Value {
+    value: "5",
+    extends: None,
+}
+Value {
+    value: "6",
+    extends: None,
+}
+Value {
+    value: "7",
+    extends: None,
+}
+Value {
+    value: "8",
+    extends: None,
+}
+Value {
+    value: "9",
+    extends: None,
+}
+Value {
+    value: "10",
+    extends: None,
+}
+Value {
+    value: "11",
+    extends: None,
+}
+Value {
+    value: "12",
+    extends: None,
+}
+Value {
+    value: "13",
+    extends: None,
+}
+Value {
+    value: "14",
+    extends: None,
+}
+Value {
+    value: "15",
+    extends: None,
+}
+Value {
+    value: "16",
+    extends: None,
+}
+Value {
+    value: "17",
+    extends: None,
+}
+Value {
+    value: "18",
+    extends: None,
+}
+Value {
+    value: "19",
+    extends: None,
+}
+Value {
+    value: "20",
+    extends: None,
+}
+Value {
+    value: "21",
+    extends: None,
+}
+Value {
+    value: "22",
+    extends: None,
+}
+Value {
+    value: "23",
+    extends: None,
+}
+Value {
+    value: "24",
+    extends: None,
+}
+Value {
+    value: "25",
+    extends: None,
+}
+Value {
+    value: "26",
+    extends: None,
+}
+Value {
+    value: "27",
+    extends: None,
+}
+Value {
+    value: "28",
+    extends: None,
+}
+Value {
+    value: "29",
+    extends: None,
+}
+Value {
+    value: "30",
+    extends: None,
+}
+Value {
+    value: "31",
+    extends: None,
+}
+Value {
+    value: "32",
+    extends: None,
+}
+Value {
+    value: "33",
+    extends: None,
+}
+Value {
+    value: "34",
+    extends: None,
+}
+Value {
+    value: "35",
+    extends: None,
+}
+Value {
+    value: "36",
+    extends: None,
+}
+Value {
+    value: "37",
+    extends: None,
+}
+Value {
+    value: "38",
+    extends: None,
+}
+Value {
+    value: "39",
+    extends: None,
+}
+Value {
+    value: "40",
+    extends: None,
+}
+Value {
+    value: "41",
+    extends: None,
+}
+Value {
+    value: "42",
+    extends: None,
+}
+Value {
+    value: "43",
+    extends: None,
+}
+Value {
+    value: "44",
+    extends: None,
+}
+Value {
+    value: "45",
+    extends: None,
+}
+Value {
+    value: "46",
+    extends: None,
+}
+Value {
+    value: "47",
+    extends: None,
+}
+Value {
+    value: "48",
+    extends: None,
+}
+Value {
+    value: "49",
+    extends: None,
+}
+Value {
+    value: "50",
+    extends: None,
+}
+Value {
+    value: "51",
+    extends: None,
+}
+Value {
+    value: "52",
+    extends: None,
+}
+Value {
+    value: "53",
+    extends: None,
+}
+Value {
+    value: "54",
+    extends: None,
+}
+Value {
+    value: "55",
+    extends: None,
+}
+Value {
+    value: "56",
+    extends: None,
+}
+Value {
+    value: "57",
+    extends: None,
+}
+Value {
+    value: "58",
+    extends: None,
+}
+Value {
+    value: "59",
+    extends: None,
+}
+Value {
+    value: "60",
+    extends: None,
+}
+Value {
+    value: "61",
+    extends: None,
+}
+Value {
+    value: "62",
+    extends: None,
+}
+Value {
+    value: "63",
+    extends: None,
+}
+Value {
+    value: "64",
+    extends: None,
+}
+Value {
+    value: "65",
+    extends: None,
+}
+Value {
+    value: "66",
+    extends: None,
+}
+Value {
+    value: "67",
+    extends: None,
+}
+Value {
+    value: "68",
+    extends: None,
+}
+Value {
+    value: "69",
+    extends: None,
+}
+Value {
+    value: "70",
+    extends: None,
+}
+Value {
+    value: "71",
+    extends: None,
+}
+Value {
+    value: "72",
+    extends: None,
+}
+Value {
+    value: "73",
+    extends: None,
+}
+Value {
+    value: "74",
+    extends: None,
+}
+Value {
+    value: "75",
+    extends: None,
+}
+Value {
+    value: "76",
+    extends: None,
+}
+Value {
+    value: "77",
+    extends: None,
+}
+Value {
+    value: "78",
+    extends: None,
+}
+Value {
+    value: "79",
+    extends: None,
+}
+Value {
+    value: "80",
+    extends: None,
+}
+Value {
+    value: "81",
+    extends: None,
+}
+Value {
+    value: "82",
+    extends: None,
+}
+Value {
+    value: "83",
+    extends: None,
+}
+Value {
+    value: "84",
+    extends: None,
+}
+Value {
+    value: "85",
+    extends: None,
+}
+Value {
+    value: "86",
+    extends: None,
+}
+Value {
+    value: "87",
+    extends: None,
+}
+Value {
+    value: "88",
+    extends: None,
+}
+Value {
+    value: "89",
+    extends: None,
+}
+Value {
+    value: "90",
+    extends: None,
+}
+Value {
+    value: "91",
+    extends: None,
+}
+Value {
+    value: "92",
+    extends: None,
+}
+Value {
+    value: "93",
+    extends: None,
+}
+Value {
+    value: "94",
+    extends: None,
+}
+Value {
+    value: "95",
+    extends: None,
+}
+Value {
+    value: "96",
+    extends: None,
+}
+Value {
+    value: "97",
+    extends: None,
+}
+Value {
+    value: "98",
+    extends: None,
+}
+Value {
+    value: "99",
+    extends: None,
+}
+Value {
+    value: "100",
+    extends: None,
+}
+Value {
+    value: "101",
+    extends: None,
+}
+Value {
+    value: "102",
+    extends: None,
+}
+Value {
+    value: "103",
+    extends: None,
+}
+Value {
+    value: "104",
+    extends: None,
+}
+Value {
+    value: "105",
+    extends: None,
+}
+Value {
+    value: "106",
+    extends: None,
+}
+Value {
+    value: "107",
+    extends: None,
+}
+Value {
+    value: "108",
+    extends: None,
+}
+Value {
+    value: "109",
+    extends: None,
+}
+Value {
+    value: "110",
+    extends: None,
+}
+Value {
+    value: "111",
+    extends: None,
+}
+Value {
+    value: "112",
+    extends: None,
+}
+Value {
+    value: "113",
+    extends: None,
+}
+Value {
+    value: "114",
+    extends: None,
+}
+Value {
+    value: "115",
+    extends: None,
+}
+Value {
+    value: "116",
+    extends: None,
+}
+Value {
+    value: "117",
+    extends: None,
+}
+Value {
+    value: "118",
+    extends: None,
+}
+Value {
+    value: "119",
+    extends: None,
+}
+Value {
+    value: "120",
+    extends: None,
+}
+Value {
+    value: "121",
+    extends: None,
+}
+Value {
+    value: "122",
+    extends: None,
+}
+Value {
+    value: "123",
+    extends: None,
+}
+Value {
+    value: "124",
+    extends: None,
+}
+Value {
+    value: "125",
+    extends: None,
+}
+Value {
+    value: "126",
+    extends: None,
+}
+Value {
+    value: "127",
+    extends: None,
+}
+Value {
+    value: "128",
+    extends: None,
+}
+Value {
+    value: "129",
+    extends: None,
+}
+Value {
+    value: "130",
+    extends: None,
+}
+Value {
+    value: "131",
+    extends: None,
+}
+Value {
+    value: "132",
+    extends: None,
+}
+Value {
+    value: "133",
+    extends: None,
+}
+Value {
+    value: "134",
+    extends: None,
+}
+Value {
+    value: "135",
+    extends: None,
+}
+Value {
+    value: "136",
+    extends: None,
+}
+Value {
+    value: "137",
+    extends: None,
+}
+Value {
+    value: "138",
+    extends: None,
+}
+Value {
+    value: "139",
+    extends: None,
+}
+Value {
+    value: "140",
+    extends: None,
+}
+Value {
+    value: "141",
+    extends: None,
+}
+Value {
+    value: "142",
+    extends: None,
+}
+Value {
+    value: "143",
+    extends: None,
+}
+Value {
+    value: "144",
+    extends: None,
+}
+Value {
+    value: "145",
+    extends: None,
+}
+Value {
+    value: "146",
+    extends: None,
+}
+Value {
+    value: "147",
+    extends: None,
+}
+Value {
+    value: "148",
+    extends: None,
+}
+Value {
+    value: "149",
+    extends: None,
+}
+Value {
+    value: "150",
+    extends: None,
+}
+Value {
+    value: "151",
+    extends: None,
+}
+Value {
+    value: "152",
+    extends: None,
+}
+Value {
+    value: "153",
+    extends: None,
+}
+Value {
+    value: "154",
+    extends: None,
+}
+Value {
+    value: "155",
+    extends: None,
+}
+Value {
+    value: "156",
+    extends: None,
+}
+Value {
+    value: "157",
+    extends: None,
+}
+Value {
+    value: "158",
+    extends: None,
+}
+Value {
+    value: "159",
+    extends: None,
+}
+Value {
+    value: "160",
+    extends: None,
+}
+Value {
+    value: "161",
+    extends: None,
+}
+Value {
+    value: "162",
+    extends: None,
+}
+Value {
+    value: "163",
+    extends: None,
+}
+Value {
+    value: "164",
+    extends: None,
+}
+Value {
+    value: "165",
+    extends: None,
+}
+Value {
+    value: "166",
+    extends: None,
+}
+Value {
+    value: "167",
+    extends: None,
+}
+Value {
+    value: "168",
+    extends: None,
+}
+Value {
+    value: "169",
+    extends: None,
+}
+Value {
+    value: "170",
+    extends: None,
+}
+Value {
+    value: "171",
+    extends: None,
+}
+Value {
+    value: "172",
+    extends: None,
+}
+Value {
+    value: "173",
+    extends: None,
+}
+Value {
+    value: "174",
+    extends: None,
+}
+Value {
+    value: "175",
+    extends: None,
+}
+Value {
+    value: "176",
+    extends: None,
+}
+Value {
+    value: "177",
+    extends: None,
+}
+Value {
+    value: "178",
+    extends: None,
+}
+Value {
+    value: "179",
+    extends: None,
+}
+Value {
+    value: "180",
+    extends: None,
+}
+Value {
+    value: "181",
+    extends: None,
+}
+Value {
+    value: "182",
+    extends: None,
+}
+Value {
+    value: "183",
+    extends: None,
+}
+Value {
+    value: "184",
+    extends: None,
+}
+Offset {
+    offset: 0,
+    extends: "VkFormat",
+    extnumber: Some(
+        67,
+    ),
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkFormat",
+    extnumber: Some(
+        67,
+    ),
+    dir: true,
+}
+Offset {
+    offset: 2,
+    extends: "VkFormat",
+    extnumber: Some(
+        67,
+    ),
+    dir: true,
+}
+Offset {
+    offset: 3,
+    extends: "VkFormat",
+    extnumber: Some(
+        67,
+    ),
+    dir: true,
+}
+Offset {
+    offset: 4,
+    extends: "VkFormat",
+    extnumber: Some(
+        67,
+    ),
+    dir: true,
+}
+Offset {
+    offset: 5,
+    extends: "VkFormat",
+    extnumber: Some(
+        67,
+    ),
+    dir: true,
+}
+Offset {
+    offset: 6,
+    extends: "VkFormat",
+    extnumber: Some(
+        67,
+    ),
+    dir: true,
+}
+Offset {
+    offset: 7,
+    extends: "VkFormat",
+    extnumber: Some(
+        67,
+    ),
+    dir: true,
+}
+Offset {
+    offset: 8,
+    extends: "VkFormat",
+    extnumber: Some(
+        67,
+    ),
+    dir: true,
+}
+Offset {
+    offset: 9,
+    extends: "VkFormat",
+    extnumber: Some(
+        67,
+    ),
+    dir: true,
+}
+Offset {
+    offset: 10,
+    extends: "VkFormat",
+    extnumber: Some(
+        67,
+    ),
+    dir: true,
+}
+Offset {
+    offset: 11,
+    extends: "VkFormat",
+    extnumber: Some(
+        67,
+    ),
+    dir: true,
+}
+Offset {
+    offset: 12,
+    extends: "VkFormat",
+    extnumber: Some(
+        67,
+    ),
+    dir: true,
+}
+Offset {
+    offset: 13,
+    extends: "VkFormat",
+    extnumber: Some(
+        67,
+    ),
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkFormat",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkFormat",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 2,
+    extends: "VkFormat",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 3,
+    extends: "VkFormat",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 4,
+    extends: "VkFormat",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 5,
+    extends: "VkFormat",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 6,
+    extends: "VkFormat",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 7,
+    extends: "VkFormat",
+    extnumber: None,
+    dir: true,
+}
+Alias {
+    alias: "VK_FORMAT_G8B8G8R8_422_UNORM",
+    extends: Some(
+        "VkFormat",
+    ),
+}
+Alias {
+    alias: "VK_FORMAT_B8G8R8G8_422_UNORM",
+    extends: Some(
+        "VkFormat",
+    ),
+}
+Alias {
+    alias: "VK_FORMAT_G8_B8_R8_3PLANE_420_UNORM",
+    extends: Some(
+        "VkFormat",
+    ),
+}
+Alias {
+    alias: "VK_FORMAT_G8_B8R8_2PLANE_420_UNORM",
+    extends: Some(
+        "VkFormat",
+    ),
+}
+Alias {
+    alias: "VK_FORMAT_G8_B8_R8_3PLANE_422_UNORM",
+    extends: Some(
+        "VkFormat",
+    ),
+}
+Alias {
+    alias: "VK_FORMAT_G8_B8R8_2PLANE_422_UNORM",
+    extends: Some(
+        "VkFormat",
+    ),
+}
+Alias {
+    alias: "VK_FORMAT_G8_B8_R8_3PLANE_444_UNORM",
+    extends: Some(
+        "VkFormat",
+    ),
+}
+Alias {
+    alias: "VK_FORMAT_R10X6_UNORM_PACK16",
+    extends: Some(
+        "VkFormat",
+    ),
+}
+Alias {
+    alias: "VK_FORMAT_R10X6G10X6_UNORM_2PACK16",
+    extends: Some(
+        "VkFormat",
+    ),
+}
+Alias {
+    alias: "VK_FORMAT_R10X6G10X6B10X6A10X6_UNORM_4PACK16",
+    extends: Some(
+        "VkFormat",
+    ),
+}
+Alias {
+    alias: "VK_FORMAT_G10X6B10X6G10X6R10X6_422_UNORM_4PACK16",
+    extends: Some(
+        "VkFormat",
+    ),
+}
+Alias {
+    alias: "VK_FORMAT_B10X6G10X6R10X6G10X6_422_UNORM_4PACK16",
+    extends: Some(
+        "VkFormat",
+    ),
+}
+Alias {
+    alias: "VK_FORMAT_G10X6_B10X6_R10X6_3PLANE_420_UNORM_3PACK16",
+    extends: Some(
+        "VkFormat",
+    ),
+}
+Alias {
+    alias: "VK_FORMAT_G10X6_B10X6R10X6_2PLANE_420_UNORM_3PACK16",
+    extends: Some(
+        "VkFormat",
+    ),
+}
+Alias {
+    alias: "VK_FORMAT_G10X6_B10X6_R10X6_3PLANE_422_UNORM_3PACK16",
+    extends: Some(
+        "VkFormat",
+    ),
+}
+Alias {
+    alias: "VK_FORMAT_G10X6_B10X6R10X6_2PLANE_422_UNORM_3PACK16",
+    extends: Some(
+        "VkFormat",
+    ),
+}
+Alias {
+    alias: "VK_FORMAT_G10X6_B10X6_R10X6_3PLANE_444_UNORM_3PACK16",
+    extends: Some(
+        "VkFormat",
+    ),
+}
+Alias {
+    alias: "VK_FORMAT_R12X4_UNORM_PACK16",
+    extends: Some(
+        "VkFormat",
+    ),
+}
+Alias {
+    alias: "VK_FORMAT_R12X4G12X4_UNORM_2PACK16",
+    extends: Some(
+        "VkFormat",
+    ),
+}
+Alias {
+    alias: "VK_FORMAT_R12X4G12X4B12X4A12X4_UNORM_4PACK16",
+    extends: Some(
+        "VkFormat",
+    ),
+}
+Alias {
+    alias: "VK_FORMAT_G12X4B12X4G12X4R12X4_422_UNORM_4PACK16",
+    extends: Some(
+        "VkFormat",
+    ),
+}
+Alias {
+    alias: "VK_FORMAT_B12X4G12X4R12X4G12X4_422_UNORM_4PACK16",
+    extends: Some(
+        "VkFormat",
+    ),
+}
+Alias {
+    alias: "VK_FORMAT_G12X4_B12X4_R12X4_3PLANE_420_UNORM_3PACK16",
+    extends: Some(
+        "VkFormat",
+    ),
+}
+Alias {
+    alias: "VK_FORMAT_G12X4_B12X4R12X4_2PLANE_420_UNORM_3PACK16",
+    extends: Some(
+        "VkFormat",
+    ),
+}
+Alias {
+    alias: "VK_FORMAT_G12X4_B12X4_R12X4_3PLANE_422_UNORM_3PACK16",
+    extends: Some(
+        "VkFormat",
+    ),
+}
+Alias {
+    alias: "VK_FORMAT_G12X4_B12X4R12X4_2PLANE_422_UNORM_3PACK16",
+    extends: Some(
+        "VkFormat",
+    ),
+}
+Alias {
+    alias: "VK_FORMAT_G12X4_B12X4_R12X4_3PLANE_444_UNORM_3PACK16",
+    extends: Some(
+        "VkFormat",
+    ),
+}
+Alias {
+    alias: "VK_FORMAT_G16B16G16R16_422_UNORM",
+    extends: Some(
+        "VkFormat",
+    ),
+}
+Alias {
+    alias: "VK_FORMAT_B16G16R16G16_422_UNORM",
+    extends: Some(
+        "VkFormat",
+    ),
+}
+Alias {
+    alias: "VK_FORMAT_G16_B16_R16_3PLANE_420_UNORM",
+    extends: Some(
+        "VkFormat",
+    ),
+}
+Alias {
+    alias: "VK_FORMAT_G16_B16R16_2PLANE_420_UNORM",
+    extends: Some(
+        "VkFormat",
+    ),
+}
+Alias {
+    alias: "VK_FORMAT_G16_B16_R16_3PLANE_422_UNORM",
+    extends: Some(
+        "VkFormat",
+    ),
+}
+Alias {
+    alias: "VK_FORMAT_G16_B16R16_2PLANE_422_UNORM",
+    extends: Some(
+        "VkFormat",
+    ),
+}
+Alias {
+    alias: "VK_FORMAT_G16_B16_R16_3PLANE_444_UNORM",
+    extends: Some(
+        "VkFormat",
+    ),
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Bitpos {
+    bitpos: 1,
+    extends: None,
+}
+Bitpos {
+    bitpos: 2,
+    extends: None,
+}
+Bitpos {
+    bitpos: 3,
+    extends: None,
+}
+Bitpos {
+    bitpos: 4,
+    extends: None,
+}
+Bitpos {
+    bitpos: 5,
+    extends: None,
+}
+Bitpos {
+    bitpos: 6,
+    extends: None,
+}
+Bitpos {
+    bitpos: 7,
+    extends: None,
+}
+Bitpos {
+    bitpos: 8,
+    extends: None,
+}
+Bitpos {
+    bitpos: 9,
+    extends: None,
+}
+Bitpos {
+    bitpos: 10,
+    extends: None,
+}
+Bitpos {
+    bitpos: 11,
+    extends: None,
+}
+Bitpos {
+    bitpos: 12,
+    extends: None,
+}
+Bitpos {
+    bitpos: 27,
+    extends: Some(
+        "VkFormatFeatureFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 28,
+    extends: Some(
+        "VkFormatFeatureFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 25,
+    extends: Some(
+        "VkFormatFeatureFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 26,
+    extends: Some(
+        "VkFormatFeatureFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_CUBIC_BIT_IMG",
+    extends: Some(
+        "VkFormatFeatureFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 24,
+    extends: Some(
+        "VkFormatFeatureFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_FORMAT_FEATURE_SAMPLED_IMAGE_FILTER_MINMAX_BIT",
+    extends: Some(
+        "VkFormatFeatureFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 13,
+    extends: Some(
+        "VkFormatFeatureFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_FORMAT_FEATURE_TRANSFER_SRC_BIT",
+    extends: Some(
+        "VkFormatFeatureFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_FORMAT_FEATURE_TRANSFER_DST_BIT",
+    extends: Some(
+        "VkFormatFeatureFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 29,
+    extends: Some(
+        "VkFormatFeatureFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_FORMAT_FEATURE_MIDPOINT_CHROMA_SAMPLES_BIT",
+    extends: Some(
+        "VkFormatFeatureFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_FORMAT_FEATURE_SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER_BIT",
+    extends: Some(
+        "VkFormatFeatureFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_FORMAT_FEATURE_SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER_BIT",
+    extends: Some(
+        "VkFormatFeatureFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_FORMAT_FEATURE_SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_BIT",
+    extends: Some(
+        "VkFormatFeatureFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_FORMAT_FEATURE_SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE_BIT",
+    extends: Some(
+        "VkFormatFeatureFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_FORMAT_FEATURE_DISJOINT_BIT",
+    extends: Some(
+        "VkFormatFeatureFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_FORMAT_FEATURE_COSITED_CHROMA_SAMPLES_BIT",
+    extends: Some(
+        "VkFormatFeatureFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_FRAMEBUFFER_CREATE_IMAGELESS_BIT",
+    extends: Some(
+        "VkFramebufferCreateFlagBits",
+    ),
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Value {
+    value: "3",
+    extends: None,
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Bitpos {
+    bitpos: 1,
+    extends: None,
+}
+Alias {
+    alias: "VK_GEOMETRY_OPAQUE_BIT_KHR",
+    extends: Some(
+        "VkGeometryFlagBitsKHR",
+    ),
+}
+Alias {
+    alias: "VK_GEOMETRY_NO_DUPLICATE_ANY_HIT_INVOCATION_BIT_KHR",
+    extends: Some(
+        "VkGeometryFlagBitsKHR",
+    ),
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Bitpos {
+    bitpos: 1,
+    extends: None,
+}
+Bitpos {
+    bitpos: 2,
+    extends: None,
+}
+Bitpos {
+    bitpos: 3,
+    extends: None,
+}
+Alias {
+    alias: "VK_GEOMETRY_INSTANCE_TRIANGLE_FACING_CULL_DISABLE_BIT_KHR",
+    extends: Some(
+        "VkGeometryInstanceFlagBitsKHR",
+    ),
+}
+Alias {
+    alias: "VK_GEOMETRY_INSTANCE_TRIANGLE_FRONT_COUNTERCLOCKWISE_BIT_KHR",
+    extends: Some(
+        "VkGeometryInstanceFlagBitsKHR",
+    ),
+}
+Alias {
+    alias: "VK_GEOMETRY_INSTANCE_FORCE_OPAQUE_BIT_KHR",
+    extends: Some(
+        "VkGeometryInstanceFlagBitsKHR",
+    ),
+}
+Alias {
+    alias: "VK_GEOMETRY_INSTANCE_FORCE_NO_OPAQUE_BIT_KHR",
+    extends: Some(
+        "VkGeometryInstanceFlagBitsKHR",
+    ),
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Offset {
+    offset: 0,
+    extends: "VkGeometryTypeKHR",
+    extnumber: None,
+    dir: true,
+}
+Alias {
+    alias: "VK_GEOMETRY_TYPE_TRIANGLES_KHR",
+    extends: Some(
+        "VkGeometryTypeKHR",
+    ),
+}
+Alias {
+    alias: "VK_GEOMETRY_TYPE_AABBS_KHR",
+    extends: Some(
+        "VkGeometryTypeKHR",
+    ),
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Bitpos {
+    bitpos: 1,
+    extends: None,
+}
+Bitpos {
+    bitpos: 2,
+    extends: None,
+}
+Bitpos {
+    bitpos: 3,
+    extends: None,
+}
+Bitpos {
+    bitpos: 7,
+    extends: Some(
+        "VkImageAspectFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 8,
+    extends: Some(
+        "VkImageAspectFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 9,
+    extends: Some(
+        "VkImageAspectFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 10,
+    extends: Some(
+        "VkImageAspectFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_IMAGE_ASPECT_PLANE_0_BIT",
+    extends: Some(
+        "VkImageAspectFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_IMAGE_ASPECT_PLANE_1_BIT",
+    extends: Some(
+        "VkImageAspectFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_IMAGE_ASPECT_PLANE_2_BIT",
+    extends: Some(
+        "VkImageAspectFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Bitpos {
+    bitpos: 1,
+    extends: None,
+}
+Bitpos {
+    bitpos: 2,
+    extends: None,
+}
+Bitpos {
+    bitpos: 3,
+    extends: None,
+}
+Bitpos {
+    bitpos: 4,
+    extends: None,
+}
+Bitpos {
+    bitpos: 14,
+    extends: Some(
+        "VkImageCreateFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 12,
+    extends: Some(
+        "VkImageCreateFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_IMAGE_CREATE_ALIAS_BIT",
+    extends: Some(
+        "VkImageCreateFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_IMAGE_CREATE_SPLIT_INSTANCE_BIND_REGIONS_BIT",
+    extends: Some(
+        "VkImageCreateFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_IMAGE_CREATE_2D_ARRAY_COMPATIBLE_BIT",
+    extends: Some(
+        "VkImageCreateFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_IMAGE_CREATE_BLOCK_TEXEL_VIEW_COMPATIBLE_BIT",
+    extends: Some(
+        "VkImageCreateFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_IMAGE_CREATE_EXTENDED_USAGE_BIT",
+    extends: Some(
+        "VkImageCreateFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_IMAGE_CREATE_DISJOINT_BIT",
+    extends: Some(
+        "VkImageCreateFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 13,
+    extends: Some(
+        "VkImageCreateFlagBits",
+    ),
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Value {
+    value: "3",
+    extends: None,
+}
+Value {
+    value: "4",
+    extends: None,
+}
+Value {
+    value: "5",
+    extends: None,
+}
+Value {
+    value: "6",
+    extends: None,
+}
+Value {
+    value: "7",
+    extends: None,
+}
+Value {
+    value: "8",
+    extends: None,
+}
+Offset {
+    offset: 0,
+    extends: "VkImageLayout",
+    extnumber: None,
+    dir: true,
+}
+Alias {
+    alias: "VK_IMAGE_LAYOUT_DEPTH_READ_ONLY_STENCIL_ATTACHMENT_OPTIMAL",
+    extends: Some(
+        "VkImageLayout",
+    ),
+}
+Alias {
+    alias: "VK_IMAGE_LAYOUT_DEPTH_ATTACHMENT_STENCIL_READ_ONLY_OPTIMAL",
+    extends: Some(
+        "VkImageLayout",
+    ),
+}
+Alias {
+    alias: "VK_IMAGE_LAYOUT_DEPTH_ATTACHMENT_OPTIMAL",
+    extends: Some(
+        "VkImageLayout",
+    ),
+}
+Alias {
+    alias: "VK_IMAGE_LAYOUT_DEPTH_READ_ONLY_OPTIMAL",
+    extends: Some(
+        "VkImageLayout",
+    ),
+}
+Alias {
+    alias: "VK_IMAGE_LAYOUT_STENCIL_ATTACHMENT_OPTIMAL",
+    extends: Some(
+        "VkImageLayout",
+    ),
+}
+Alias {
+    alias: "VK_IMAGE_LAYOUT_STENCIL_READ_ONLY_OPTIMAL",
+    extends: Some(
+        "VkImageLayout",
+    ),
+}
+Offset {
+    offset: 0,
+    extends: "VkImageLayout",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 2,
+    extends: "VkImageLayout",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 3,
+    extends: "VkImageLayout",
+    extnumber: None,
+    dir: true,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Offset {
+    offset: 0,
+    extends: "VkImageTiling",
+    extnumber: None,
+    dir: true,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Bitpos {
+    bitpos: 1,
+    extends: None,
+}
+Bitpos {
+    bitpos: 2,
+    extends: None,
+}
+Bitpos {
+    bitpos: 3,
+    extends: None,
+}
+Bitpos {
+    bitpos: 4,
+    extends: None,
+}
+Bitpos {
+    bitpos: 5,
+    extends: None,
+}
+Bitpos {
+    bitpos: 6,
+    extends: None,
+}
+Bitpos {
+    bitpos: 7,
+    extends: None,
+}
+Bitpos {
+    bitpos: 13,
+    extends: Some(
+        "VkImageUsageFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 14,
+    extends: Some(
+        "VkImageUsageFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 15,
+    extends: Some(
+        "VkImageUsageFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 10,
+    extends: Some(
+        "VkImageUsageFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 11,
+    extends: Some(
+        "VkImageUsageFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 12,
+    extends: Some(
+        "VkImageUsageFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 9,
+    extends: Some(
+        "VkImageUsageFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 8,
+    extends: Some(
+        "VkImageUsageFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 16,
+    extends: Some(
+        "VkImageUsageFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 17,
+    extends: Some(
+        "VkImageUsageFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 0,
+    extends: Some(
+        "VkImageViewCreateFlagBits",
+    ),
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Value {
+    value: "3",
+    extends: None,
+}
+Value {
+    value: "4",
+    extends: None,
+}
+Value {
+    value: "5",
+    extends: None,
+}
+Value {
+    value: "6",
+    extends: None,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Offset {
+    offset: 0,
+    extends: "VkIndexType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkIndexType",
+    extnumber: Some(
+        166,
+    ),
+    dir: true,
+}
+Alias {
+    alias: "VK_INDEX_TYPE_NONE_KHR",
+    extends: Some(
+        "VkIndexType",
+    ),
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Bitpos {
+    bitpos: 1,
+    extends: None,
+}
+Bitpos {
+    bitpos: 2,
+    extends: None,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Value {
+    value: "3",
+    extends: None,
+}
+Value {
+    value: "4",
+    extends: None,
+}
+Value {
+    value: "5",
+    extends: None,
+}
+Value {
+    value: "6",
+    extends: None,
+}
+Value {
+    value: "7",
+    extends: None,
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Value {
+    value: "3",
+    extends: None,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Value {
+    value: "3",
+    extends: None,
+}
+Value {
+    value: "4",
+    extends: None,
+}
+Value {
+    value: "5",
+    extends: None,
+}
+Value {
+    value: "6",
+    extends: None,
+}
+Value {
+    value: "7",
+    extends: None,
+}
+Value {
+    value: "8",
+    extends: None,
+}
+Value {
+    value: "9",
+    extends: None,
+}
+Value {
+    value: "10",
+    extends: None,
+}
+Value {
+    value: "11",
+    extends: None,
+}
+Value {
+    value: "12",
+    extends: None,
+}
+Value {
+    value: "13",
+    extends: None,
+}
+Value {
+    value: "14",
+    extends: None,
+}
+Value {
+    value: "15",
+    extends: None,
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Alias {
+    alias: "VK_MEMORY_ALLOCATE_DEVICE_ADDRESS_BIT",
+    extends: Some(
+        "VkMemoryAllocateFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_MEMORY_ALLOCATE_DEVICE_ADDRESS_CAPTURE_REPLAY_BIT",
+    extends: Some(
+        "VkMemoryAllocateFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_MEMORY_ALLOCATE_DEVICE_MASK_BIT",
+    extends: Some(
+        "VkMemoryAllocateFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Alias {
+    alias: "VK_MEMORY_HEAP_MULTI_INSTANCE_BIT",
+    extends: Some(
+        "VkMemoryHeapFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 2,
+    extends: Some(
+        "VkMemoryHeapFlagBits",
+    ),
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Bitpos {
+    bitpos: 1,
+    extends: None,
+}
+Bitpos {
+    bitpos: 2,
+    extends: None,
+}
+Bitpos {
+    bitpos: 3,
+    extends: None,
+}
+Bitpos {
+    bitpos: 4,
+    extends: None,
+}
+Bitpos {
+    bitpos: 6,
+    extends: Some(
+        "VkMemoryPropertyFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 7,
+    extends: Some(
+        "VkMemoryPropertyFlagBits",
+    ),
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Value {
+    value: "3",
+    extends: None,
+}
+Value {
+    value: "4",
+    extends: None,
+}
+Value {
+    value: "5",
+    extends: None,
+}
+Value {
+    value: "6",
+    extends: None,
+}
+Value {
+    value: "7",
+    extends: None,
+}
+Value {
+    value: "8",
+    extends: None,
+}
+Value {
+    value: "9",
+    extends: None,
+}
+Value {
+    value: "10",
+    extends: None,
+}
+Value {
+    value: "11",
+    extends: None,
+}
+Value {
+    value: "12",
+    extends: None,
+}
+Value {
+    value: "13",
+    extends: None,
+}
+Value {
+    value: "14",
+    extends: None,
+}
+Value {
+    value: "15",
+    extends: None,
+}
+Value {
+    value: "16",
+    extends: None,
+}
+Value {
+    value: "17",
+    extends: None,
+}
+Value {
+    value: "18",
+    extends: None,
+}
+Value {
+    value: "19",
+    extends: None,
+}
+Value {
+    value: "20",
+    extends: None,
+}
+Value {
+    value: "21",
+    extends: None,
+}
+Value {
+    value: "22",
+    extends: None,
+}
+Value {
+    value: "23",
+    extends: None,
+}
+Value {
+    value: "24",
+    extends: None,
+}
+Value {
+    value: "25",
+    extends: None,
+}
+Offset {
+    offset: 0,
+    extends: "VkObjectType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkObjectType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkObjectType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkObjectType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkObjectType",
+    extnumber: None,
+    dir: true,
+}
+Alias {
+    alias: "VK_OBJECT_TYPE_DESCRIPTOR_UPDATE_TEMPLATE",
+    extends: Some(
+        "VkObjectType",
+    ),
+}
+Offset {
+    offset: 0,
+    extends: "VkObjectType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkObjectType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkObjectType",
+    extnumber: Some(
+        166,
+    ),
+    dir: true,
+}
+Alias {
+    alias: "VK_OBJECT_TYPE_SAMPLER_YCBCR_CONVERSION",
+    extends: Some(
+        "VkObjectType",
+    ),
+}
+Offset {
+    offset: 0,
+    extends: "VkObjectType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkObjectType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkObjectType",
+    extnumber: None,
+    dir: true,
+}
+Alias {
+    alias: "VK_OBJECT_TYPE_ACCELERATION_STRUCTURE_KHR",
+    extends: Some(
+        "VkObjectType",
+    ),
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Bitpos {
+    bitpos: 1,
+    extends: None,
+}
+Bitpos {
+    bitpos: 2,
+    extends: None,
+}
+Bitpos {
+    bitpos: 3,
+    extends: None,
+}
+Alias {
+    alias: "VK_PEER_MEMORY_FEATURE_COPY_SRC_BIT",
+    extends: Some(
+        "VkPeerMemoryFeatureFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_PEER_MEMORY_FEATURE_COPY_DST_BIT",
+    extends: Some(
+        "VkPeerMemoryFeatureFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_PEER_MEMORY_FEATURE_GENERIC_SRC_BIT",
+    extends: Some(
+        "VkPeerMemoryFeatureFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_PEER_MEMORY_FEATURE_GENERIC_DST_BIT",
+    extends: Some(
+        "VkPeerMemoryFeatureFlagBits",
+    ),
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Bitpos {
+    bitpos: 1,
+    extends: None,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Alias {
+    alias: "VK_PERFORMANCE_COUNTER_SCOPE_COMMAND_BUFFER_KHR",
+    extends: None,
+}
+Alias {
+    alias: "VK_PERFORMANCE_COUNTER_SCOPE_RENDER_PASS_KHR",
+    extends: None,
+}
+Alias {
+    alias: "VK_PERFORMANCE_COUNTER_SCOPE_COMMAND_KHR",
+    extends: None,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Value {
+    value: "3",
+    extends: None,
+}
+Value {
+    value: "4",
+    extends: None,
+}
+Value {
+    value: "5",
+    extends: None,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Value {
+    value: "3",
+    extends: None,
+}
+Value {
+    value: "4",
+    extends: None,
+}
+Value {
+    value: "5",
+    extends: None,
+}
+Value {
+    value: "6",
+    extends: None,
+}
+Value {
+    value: "7",
+    extends: None,
+}
+Value {
+    value: "8",
+    extends: None,
+}
+Value {
+    value: "9",
+    extends: None,
+}
+Value {
+    value: "10",
+    extends: None,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Value {
+    value: "3",
+    extends: None,
+}
+Value {
+    value: "4",
+    extends: None,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Value {
+    value: "3",
+    extends: None,
+}
+Value {
+    value: "4",
+    extends: None,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Offset {
+    offset: 0,
+    extends: "VkPipelineBindPoint",
+    extnumber: Some(
+        166,
+    ),
+    dir: true,
+}
+Alias {
+    alias: "VK_PIPELINE_BIND_POINT_RAY_TRACING_KHR",
+    extends: Some(
+        "VkPipelineBindPoint",
+    ),
+}
+Bitpos {
+    bitpos: 0,
+    extends: Some(
+        "VkPipelineCacheCreateFlagBits",
+    ),
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Bitpos {
+    bitpos: 1,
+    extends: None,
+}
+Bitpos {
+    bitpos: 2,
+    extends: None,
+}
+Bitpos {
+    bitpos: 8,
+    extends: Some(
+        "VkPipelineCreateFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 9,
+    extends: Some(
+        "VkPipelineCreateFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_PIPELINE_CREATE_VIEW_INDEX_FROM_DEVICE_INDEX_BIT",
+    extends: Some(
+        "VkPipelineCreateFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_PIPELINE_CREATE_DISPATCH_BASE",
+    extends: Some(
+        "VkPipelineCreateFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 6,
+    extends: Some(
+        "VkPipelineCreateFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 7,
+    extends: Some(
+        "VkPipelineCreateFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 11,
+    extends: Some(
+        "VkPipelineCreateFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 14,
+    extends: Some(
+        "VkPipelineCreateFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 15,
+    extends: Some(
+        "VkPipelineCreateFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 16,
+    extends: Some(
+        "VkPipelineCreateFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 17,
+    extends: Some(
+        "VkPipelineCreateFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 12,
+    extends: Some(
+        "VkPipelineCreateFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 13,
+    extends: Some(
+        "VkPipelineCreateFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 18,
+    extends: Some(
+        "VkPipelineCreateFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 5,
+    extends: Some(
+        "VkPipelineCreateFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Bitpos {
+    bitpos: 1,
+    extends: None,
+}
+Bitpos {
+    bitpos: 2,
+    extends: None,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Value {
+    value: "3",
+    extends: None,
+}
+Bitpos {
+    bitpos: 0,
+    extends: Some(
+        "VkPipelineShaderStageCreateFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 1,
+    extends: Some(
+        "VkPipelineShaderStageCreateFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 3,
+    extends: Some(
+        "VkPipelineShaderStageCreateFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 2,
+    extends: Some(
+        "VkPipelineShaderStageCreateFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Bitpos {
+    bitpos: 1,
+    extends: None,
+}
+Bitpos {
+    bitpos: 2,
+    extends: None,
+}
+Bitpos {
+    bitpos: 3,
+    extends: None,
+}
+Bitpos {
+    bitpos: 4,
+    extends: None,
+}
+Bitpos {
+    bitpos: 5,
+    extends: None,
+}
+Bitpos {
+    bitpos: 6,
+    extends: None,
+}
+Bitpos {
+    bitpos: 7,
+    extends: None,
+}
+Bitpos {
+    bitpos: 8,
+    extends: None,
+}
+Bitpos {
+    bitpos: 9,
+    extends: None,
+}
+Bitpos {
+    bitpos: 10,
+    extends: None,
+}
+Bitpos {
+    bitpos: 11,
+    extends: None,
+}
+Bitpos {
+    bitpos: 12,
+    extends: None,
+}
+Bitpos {
+    bitpos: 13,
+    extends: None,
+}
+Bitpos {
+    bitpos: 14,
+    extends: None,
+}
+Bitpos {
+    bitpos: 15,
+    extends: None,
+}
+Bitpos {
+    bitpos: 16,
+    extends: None,
+}
+Bitpos {
+    bitpos: 27,
+    extends: Some(
+        "VkPipelineStageFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 26,
+    extends: Some(
+        "VkPipelineStageFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 18,
+    extends: Some(
+        "VkPipelineStageFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 23,
+    extends: Some(
+        "VkPipelineStageFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 24,
+    extends: Some(
+        "VkPipelineStageFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 21,
+    extends: Some(
+        "VkPipelineStageFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 25,
+    extends: Some(
+        "VkPipelineStageFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 17,
+    extends: Some(
+        "VkPipelineStageFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 19,
+    extends: Some(
+        "VkPipelineStageFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 20,
+    extends: Some(
+        "VkPipelineStageFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_PIPELINE_STAGE_RAY_TRACING_SHADER_BIT_KHR",
+    extends: Some(
+        "VkPipelineStageFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_PIPELINE_STAGE_ACCELERATION_STRUCTURE_BUILD_BIT_KHR",
+    extends: Some(
+        "VkPipelineStageFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 22,
+    extends: Some(
+        "VkPipelineStageFlagBits",
+    ),
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Alias {
+    alias: "VK_POINT_CLIPPING_BEHAVIOR_ALL_CLIP_PLANES",
+    extends: Some(
+        "VkPointClippingBehavior",
+    ),
+}
+Alias {
+    alias: "VK_POINT_CLIPPING_BEHAVIOR_USER_CLIP_PLANES_ONLY",
+    extends: Some(
+        "VkPointClippingBehavior",
+    ),
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Offset {
+    offset: 0,
+    extends: "VkPolygonMode",
+    extnumber: None,
+    dir: true,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Value {
+    value: "3",
+    extends: None,
+}
+Offset {
+    offset: 0,
+    extends: "VkPresentModeKHR",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkPresentModeKHR",
+    extnumber: None,
+    dir: true,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Value {
+    value: "3",
+    extends: None,
+}
+Value {
+    value: "4",
+    extends: None,
+}
+Value {
+    value: "5",
+    extends: None,
+}
+Value {
+    value: "6",
+    extends: None,
+}
+Value {
+    value: "7",
+    extends: None,
+}
+Value {
+    value: "8",
+    extends: None,
+}
+Value {
+    value: "9",
+    extends: None,
+}
+Value {
+    value: "10",
+    extends: None,
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Bitpos {
+    bitpos: 1,
+    extends: None,
+}
+Bitpos {
+    bitpos: 2,
+    extends: None,
+}
+Bitpos {
+    bitpos: 3,
+    extends: None,
+}
+Bitpos {
+    bitpos: 4,
+    extends: None,
+}
+Bitpos {
+    bitpos: 5,
+    extends: None,
+}
+Bitpos {
+    bitpos: 6,
+    extends: None,
+}
+Bitpos {
+    bitpos: 7,
+    extends: None,
+}
+Bitpos {
+    bitpos: 8,
+    extends: None,
+}
+Bitpos {
+    bitpos: 9,
+    extends: None,
+}
+Bitpos {
+    bitpos: 10,
+    extends: None,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Bitpos {
+    bitpos: 1,
+    extends: None,
+}
+Bitpos {
+    bitpos: 2,
+    extends: None,
+}
+Bitpos {
+    bitpos: 3,
+    extends: None,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Offset {
+    offset: 8,
+    extends: "VkQueryType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 4,
+    extends: "VkQueryType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 4,
+    extends: "VkQueryType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkQueryType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkQueryType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkQueryType",
+    extnumber: Some(
+        166,
+    ),
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkQueryType",
+    extnumber: None,
+    dir: true,
+}
+Alias {
+    alias: "VK_QUERY_TYPE_ACCELERATION_STRUCTURE_COMPACTED_SIZE_KHR",
+    extends: Some(
+        "VkQueryType",
+    ),
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Bitpos {
+    bitpos: 1,
+    extends: None,
+}
+Bitpos {
+    bitpos: 2,
+    extends: None,
+}
+Bitpos {
+    bitpos: 3,
+    extends: None,
+}
+Bitpos {
+    bitpos: 6,
+    extends: Some(
+        "VkQueueFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 5,
+    extends: Some(
+        "VkQueueFlagBits",
+    ),
+}
+Value {
+    value: "128",
+    extends: None,
+}
+Value {
+    value: "256",
+    extends: None,
+}
+Value {
+    value: "512",
+    extends: None,
+}
+Value {
+    value: "1024",
+    extends: None,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Alias {
+    alias: "VK_RAY_TRACING_SHADER_GROUP_TYPE_GENERAL_KHR",
+    extends: Some(
+        "VkRayTracingShaderGroupTypeKHR",
+    ),
+}
+Alias {
+    alias: "VK_RAY_TRACING_SHADER_GROUP_TYPE_TRIANGLES_HIT_GROUP_KHR",
+    extends: Some(
+        "VkRayTracingShaderGroupTypeKHR",
+    ),
+}
+Alias {
+    alias: "VK_RAY_TRACING_SHADER_GROUP_TYPE_PROCEDURAL_HIT_GROUP_KHR",
+    extends: Some(
+        "VkRayTracingShaderGroupTypeKHR",
+    ),
+}
+Bitpos {
+    bitpos: 0,
+    extends: Some(
+        "VkRenderPassCreateFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 1,
+    extends: Some(
+        "VkRenderPassCreateFlagBits",
+    ),
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Bitpos {
+    bitpos: 1,
+    extends: None,
+}
+Bitpos {
+    bitpos: 2,
+    extends: None,
+}
+Bitpos {
+    bitpos: 3,
+    extends: None,
+}
+Alias {
+    alias: "VK_RESOLVE_MODE_NONE",
+    extends: Some(
+        "VkResolveModeFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_RESOLVE_MODE_SAMPLE_ZERO_BIT",
+    extends: Some(
+        "VkResolveModeFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_RESOLVE_MODE_AVERAGE_BIT",
+    extends: Some(
+        "VkResolveModeFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_RESOLVE_MODE_MIN_BIT",
+    extends: Some(
+        "VkResolveModeFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_RESOLVE_MODE_MAX_BIT",
+    extends: Some(
+        "VkResolveModeFlagBits",
+    ),
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Value {
+    value: "3",
+    extends: None,
+}
+Value {
+    value: "4",
+    extends: None,
+}
+Value {
+    value: "5",
+    extends: None,
+}
+Value {
+    value: "-1",
+    extends: None,
+}
+Value {
+    value: "-2",
+    extends: None,
+}
+Value {
+    value: "-3",
+    extends: None,
+}
+Value {
+    value: "-4",
+    extends: None,
+}
+Value {
+    value: "-5",
+    extends: None,
+}
+Value {
+    value: "-6",
+    extends: None,
+}
+Value {
+    value: "-7",
+    extends: None,
+}
+Value {
+    value: "-8",
+    extends: None,
+}
+Value {
+    value: "-9",
+    extends: None,
+}
+Value {
+    value: "-10",
+    extends: None,
+}
+Value {
+    value: "-11",
+    extends: None,
+}
+Value {
+    value: "-12",
+    extends: None,
+}
+Value {
+    value: "-13",
+    extends: None,
+}
+Alias {
+    alias: "VK_ERROR_INVALID_OPAQUE_CAPTURE_ADDRESS",
+    extends: Some(
+        "VkResult",
+    ),
+}
+Offset {
+    offset: 1,
+    extends: "VkResult",
+    extnumber: None,
+    dir: false,
+}
+Alias {
+    alias: "VK_ERROR_FRAGMENTATION",
+    extends: Some(
+        "VkResult",
+    ),
+}
+Offset {
+    offset: 0,
+    extends: "VkResult",
+    extnumber: None,
+    dir: false,
+}
+Offset {
+    offset: 1,
+    extends: "VkResult",
+    extnumber: None,
+    dir: false,
+}
+Offset {
+    offset: 0,
+    extends: "VkResult",
+    extnumber: None,
+    dir: false,
+}
+Offset {
+    offset: 0,
+    extends: "VkResult",
+    extnumber: None,
+    dir: true,
+}
+Alias {
+    alias: "VK_ERROR_INVALID_OPAQUE_CAPTURE_ADDRESS",
+    extends: Some(
+        "VkResult",
+    ),
+}
+Offset {
+    offset: 0,
+    extends: "VkResult",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkResult",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 2,
+    extends: "VkResult",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 3,
+    extends: "VkResult",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkResult",
+    extnumber: None,
+    dir: false,
+}
+Alias {
+    alias: "VK_ERROR_INVALID_EXTERNAL_HANDLE",
+    extends: Some(
+        "VkResult",
+    ),
+}
+Alias {
+    alias: "VK_ERROR_OUT_OF_POOL_MEMORY",
+    extends: Some(
+        "VkResult",
+    ),
+}
+Offset {
+    offset: 0,
+    extends: "VkResult",
+    extnumber: None,
+    dir: false,
+}
+Offset {
+    offset: 0,
+    extends: "VkResult",
+    extnumber: None,
+    dir: false,
+}
+Offset {
+    offset: 1,
+    extends: "VkResult",
+    extnumber: None,
+    dir: false,
+}
+Offset {
+    offset: 3,
+    extends: "VkResult",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 4,
+    extends: "VkResult",
+    extnumber: None,
+    dir: false,
+}
+Offset {
+    offset: 0,
+    extends: "VkResult",
+    extnumber: None,
+    dir: false,
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Bitpos {
+    bitpos: 1,
+    extends: None,
+}
+Bitpos {
+    bitpos: 2,
+    extends: None,
+}
+Bitpos {
+    bitpos: 3,
+    extends: None,
+}
+Bitpos {
+    bitpos: 4,
+    extends: None,
+}
+Bitpos {
+    bitpos: 5,
+    extends: None,
+}
+Bitpos {
+    bitpos: 6,
+    extends: None,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Value {
+    value: "3",
+    extends: None,
+}
+Value {
+    value: "4",
+    extends: Some(
+        "VkSamplerAddressMode",
+    ),
+}
+Alias {
+    alias: "VK_SAMPLER_ADDRESS_MODE_MIRROR_CLAMP_TO_EDGE",
+    extends: Some(
+        "VkSamplerAddressMode",
+    ),
+}
+Bitpos {
+    bitpos: 0,
+    extends: Some(
+        "VkSamplerCreateFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 1,
+    extends: Some(
+        "VkSamplerCreateFlagBits",
+    ),
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Alias {
+    alias: "VK_SAMPLER_REDUCTION_MODE_WEIGHTED_AVERAGE",
+    extends: Some(
+        "VkSamplerReductionMode",
+    ),
+}
+Alias {
+    alias: "VK_SAMPLER_REDUCTION_MODE_MIN",
+    extends: Some(
+        "VkSamplerReductionMode",
+    ),
+}
+Alias {
+    alias: "VK_SAMPLER_REDUCTION_MODE_MAX",
+    extends: Some(
+        "VkSamplerReductionMode",
+    ),
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Value {
+    value: "3",
+    extends: None,
+}
+Value {
+    value: "4",
+    extends: None,
+}
+Alias {
+    alias: "VK_SAMPLER_YCBCR_MODEL_CONVERSION_RGB_IDENTITY",
+    extends: Some(
+        "VkSamplerYcbcrModelConversion",
+    ),
+}
+Alias {
+    alias: "VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_IDENTITY",
+    extends: Some(
+        "VkSamplerYcbcrModelConversion",
+    ),
+}
+Alias {
+    alias: "VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_709",
+    extends: Some(
+        "VkSamplerYcbcrModelConversion",
+    ),
+}
+Alias {
+    alias: "VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_601",
+    extends: Some(
+        "VkSamplerYcbcrModelConversion",
+    ),
+}
+Alias {
+    alias: "VK_SAMPLER_YCBCR_MODEL_CONVERSION_YCBCR_2020",
+    extends: Some(
+        "VkSamplerYcbcrModelConversion",
+    ),
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Alias {
+    alias: "VK_SAMPLER_YCBCR_RANGE_ITU_FULL",
+    extends: Some(
+        "VkSamplerYcbcrRange",
+    ),
+}
+Alias {
+    alias: "VK_SAMPLER_YCBCR_RANGE_ITU_NARROW",
+    extends: Some(
+        "VkSamplerYcbcrRange",
+    ),
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Value {
+    value: "3",
+    extends: None,
+}
+Value {
+    value: "5",
+    extends: None,
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Alias {
+    alias: "VK_SEMAPHORE_IMPORT_TEMPORARY_BIT",
+    extends: Some(
+        "VkSemaphoreImportFlagBits",
+    ),
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Alias {
+    alias: "VK_SEMAPHORE_TYPE_BINARY",
+    extends: Some(
+        "VkSemaphoreType",
+    ),
+}
+Alias {
+    alias: "VK_SEMAPHORE_TYPE_TIMELINE",
+    extends: Some(
+        "VkSemaphoreType",
+    ),
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Alias {
+    alias: "VK_SEMAPHORE_WAIT_ANY_BIT",
+    extends: Some(
+        "VkSemaphoreWaitFlagBits",
+    ),
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Alias {
+    alias: "VK_SHADER_FLOAT_CONTROLS_INDEPENDENCE_32_BIT_ONLY",
+    extends: Some(
+        "VkShaderFloatControlsIndependence",
+    ),
+}
+Alias {
+    alias: "VK_SHADER_FLOAT_CONTROLS_INDEPENDENCE_ALL",
+    extends: Some(
+        "VkShaderFloatControlsIndependence",
+    ),
+}
+Alias {
+    alias: "VK_SHADER_FLOAT_CONTROLS_INDEPENDENCE_NONE",
+    extends: Some(
+        "VkShaderFloatControlsIndependence",
+    ),
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Bitpos {
+    bitpos: 0,
+    extends: Some(
+        "VkShaderModuleCreateFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Bitpos {
+    bitpos: 1,
+    extends: None,
+}
+Bitpos {
+    bitpos: 2,
+    extends: None,
+}
+Bitpos {
+    bitpos: 3,
+    extends: None,
+}
+Bitpos {
+    bitpos: 4,
+    extends: None,
+}
+Bitpos {
+    bitpos: 5,
+    extends: None,
+}
+Value {
+    value: "0x0000001F",
+    extends: None,
+}
+Value {
+    value: "0x7FFFFFFF",
+    extends: None,
+}
+Bitpos {
+    bitpos: 8,
+    extends: Some(
+        "VkShaderStageFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 9,
+    extends: Some(
+        "VkShaderStageFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 10,
+    extends: Some(
+        "VkShaderStageFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 11,
+    extends: Some(
+        "VkShaderStageFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 12,
+    extends: Some(
+        "VkShaderStageFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 13,
+    extends: Some(
+        "VkShaderStageFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 6,
+    extends: Some(
+        "VkShaderStageFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 7,
+    extends: Some(
+        "VkShaderStageFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_SHADER_STAGE_RAYGEN_BIT_KHR",
+    extends: Some(
+        "VkShaderStageFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_SHADER_STAGE_ANY_HIT_BIT_KHR",
+    extends: Some(
+        "VkShaderStageFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_SHADER_STAGE_CLOSEST_HIT_BIT_KHR",
+    extends: Some(
+        "VkShaderStageFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_SHADER_STAGE_MISS_BIT_KHR",
+    extends: Some(
+        "VkShaderStageFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_SHADER_STAGE_INTERSECTION_BIT_KHR",
+    extends: Some(
+        "VkShaderStageFlagBits",
+    ),
+}
+Alias {
+    alias: "VK_SHADER_STAGE_CALLABLE_BIT_KHR",
+    extends: Some(
+        "VkShaderStageFlagBits",
+    ),
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Value {
+    value: "3",
+    extends: None,
+}
+Value {
+    value: "4",
+    extends: None,
+}
+Value {
+    value: "5",
+    extends: None,
+}
+Value {
+    value: "6",
+    extends: None,
+}
+Value {
+    value: "7",
+    extends: None,
+}
+Value {
+    value: "8",
+    extends: None,
+}
+Value {
+    value: "9",
+    extends: None,
+}
+Value {
+    value: "10",
+    extends: None,
+}
+Value {
+    value: "11",
+    extends: None,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Bitpos {
+    bitpos: 1,
+    extends: None,
+}
+Bitpos {
+    bitpos: 2,
+    extends: None,
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Bitpos {
+    bitpos: 1,
+    extends: None,
+}
+Value {
+    value: "0x00000003",
+    extends: None,
+}
+Alias {
+    alias: "VK_STENCIL_FACE_FRONT_AND_BACK",
+    extends: None,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Value {
+    value: "3",
+    extends: None,
+}
+Value {
+    value: "4",
+    extends: None,
+}
+Value {
+    value: "5",
+    extends: None,
+}
+Value {
+    value: "6",
+    extends: None,
+}
+Value {
+    value: "7",
+    extends: None,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Value {
+    value: "3",
+    extends: None,
+}
+Value {
+    value: "4",
+    extends: None,
+}
+Value {
+    value: "5",
+    extends: None,
+}
+Value {
+    value: "6",
+    extends: None,
+}
+Value {
+    value: "7",
+    extends: None,
+}
+Value {
+    value: "8",
+    extends: None,
+}
+Value {
+    value: "9",
+    extends: None,
+}
+Value {
+    value: "10",
+    extends: None,
+}
+Value {
+    value: "11",
+    extends: None,
+}
+Value {
+    value: "12",
+    extends: None,
+}
+Value {
+    value: "13",
+    extends: None,
+}
+Value {
+    value: "14",
+    extends: None,
+}
+Value {
+    value: "15",
+    extends: None,
+}
+Value {
+    value: "16",
+    extends: None,
+}
+Value {
+    value: "17",
+    extends: None,
+}
+Value {
+    value: "18",
+    extends: None,
+}
+Value {
+    value: "19",
+    extends: None,
+}
+Value {
+    value: "20",
+    extends: None,
+}
+Value {
+    value: "21",
+    extends: None,
+}
+Value {
+    value: "22",
+    extends: None,
+}
+Value {
+    value: "23",
+    extends: None,
+}
+Value {
+    value: "24",
+    extends: None,
+}
+Value {
+    value: "25",
+    extends: None,
+}
+Value {
+    value: "26",
+    extends: None,
+}
+Value {
+    value: "27",
+    extends: None,
+}
+Value {
+    value: "28",
+    extends: None,
+}
+Value {
+    value: "29",
+    extends: None,
+}
+Value {
+    value: "30",
+    extends: None,
+}
+Value {
+    value: "31",
+    extends: None,
+}
+Value {
+    value: "32",
+    extends: None,
+}
+Value {
+    value: "33",
+    extends: None,
+}
+Value {
+    value: "34",
+    extends: None,
+}
+Value {
+    value: "35",
+    extends: None,
+}
+Value {
+    value: "36",
+    extends: None,
+}
+Value {
+    value: "37",
+    extends: None,
+}
+Value {
+    value: "38",
+    extends: None,
+}
+Value {
+    value: "39",
+    extends: None,
+}
+Value {
+    value: "40",
+    extends: None,
+}
+Value {
+    value: "41",
+    extends: None,
+}
+Value {
+    value: "42",
+    extends: None,
+}
+Value {
+    value: "43",
+    extends: None,
+}
+Value {
+    value: "44",
+    extends: None,
+}
+Value {
+    value: "45",
+    extends: None,
+}
+Value {
+    value: "46",
+    extends: None,
+}
+Value {
+    value: "47",
+    extends: None,
+}
+Value {
+    value: "48",
+    extends: None,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 2,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 3,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 4,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 5,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 2,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 2,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_BUFFER_DEVICE_ADDRESS_FEATURES_EXT",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_BUFFER_DEVICE_ADDRESS_INFO",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Offset {
+    offset: 2,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 2,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 2,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_DEBUG_REPORT_CALLBACK_CREATE_INFO_EXT",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 2,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 3,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 4,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_BINDING_FLAGS_CREATE_INFO",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_FEATURES",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_PROPERTIES",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_ALLOCATE_INFO",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_LAYOUT_SUPPORT",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 2,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 3,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_SURFACE_CAPABILITIES_2_EXT",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 2,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 2,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 2,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_HOST_QUERY_RESET_FEATURES",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 2,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 3,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 4,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 5,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 2,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 3,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 2,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 2,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 3,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 4,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SAMPLER_FILTER_MINMAX_PROPERTIES",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_SAMPLER_REDUCTION_MODE_CREATE_INFO",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SCALAR_BLOCK_LAYOUT_FEATURES",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_IMAGE_STENCIL_USAGE_CREATE_INFO",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 2,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 2,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 2,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 2,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 3,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 4,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 5,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_16BIT_STORAGE_FEATURES",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_8BIT_STORAGE_FEATURES",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_BIND_BUFFER_MEMORY_INFO",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_BIND_IMAGE_MEMORY_INFO",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_BUFFER_DEVICE_ADDRESS_FEATURES",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_BUFFER_DEVICE_ADDRESS_INFO",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_BUFFER_OPAQUE_CAPTURE_ADDRESS_CREATE_INFO",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_MEMORY_OPAQUE_CAPTURE_ADDRESS_ALLOCATE_INFO",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_DEVICE_MEMORY_OPAQUE_CAPTURE_ADDRESS_INFO",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_ATTACHMENT_DESCRIPTION_2",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_ATTACHMENT_REFERENCE_2",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_SUBPASS_DESCRIPTION_2",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_SUBPASS_DEPENDENCY_2",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO_2",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_SUBPASS_BEGIN_INFO",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_SUBPASS_END_INFO",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_MEMORY_DEDICATED_REQUIREMENTS",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_MEMORY_DEDICATED_ALLOCATE_INFO",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DEPTH_STENCIL_RESOLVE_PROPERTIES",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_SUBPASS_DESCRIPTION_DEPTH_STENCIL_RESOLVE",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_DESCRIPTOR_UPDATE_TEMPLATE_CREATE_INFO",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_FLAGS_INFO",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_DEVICE_GROUP_RENDER_PASS_BEGIN_INFO",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_DEVICE_GROUP_COMMAND_BUFFER_BEGIN_INFO",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_DEVICE_GROUP_SUBMIT_INFO",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_DEVICE_GROUP_BIND_SPARSE_INFO",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_BIND_BUFFER_MEMORY_DEVICE_GROUP_INFO",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_BIND_IMAGE_MEMORY_DEVICE_GROUP_INFO",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Offset {
+    offset: 7,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 8,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 9,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 10,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 11,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 12,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_GROUP_PROPERTIES",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_DEVICE_GROUP_DEVICE_CREATE_INFO",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_DRIVER_PROPERTIES",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_EXPORT_FENCE_CREATE_INFO",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_FENCE_INFO",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_EXTERNAL_FENCE_PROPERTIES",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 2,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_EXTERNAL_MEMORY_BUFFER_CREATE_INFO",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_EXTERNAL_MEMORY_IMAGE_CREATE_INFO",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_EXPORT_MEMORY_ALLOCATE_INFO",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_IMAGE_FORMAT_INFO",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_EXTERNAL_IMAGE_FORMAT_PROPERTIES",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_BUFFER_INFO",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_EXTERNAL_BUFFER_PROPERTIES",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_ID_PROPERTIES",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 2,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 2,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 3,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_EXPORT_SEMAPHORE_CREATE_INFO",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_EXTERNAL_SEMAPHORE_INFO",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_EXTERNAL_SEMAPHORE_PROPERTIES",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 2,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 3,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 2,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 3,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 4,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_BUFFER_MEMORY_REQUIREMENTS_INFO_2",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_IMAGE_MEMORY_REQUIREMENTS_INFO_2",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_IMAGE_SPARSE_MEMORY_REQUIREMENTS_INFO_2",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_MEMORY_REQUIREMENTS_2",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_SPARSE_IMAGE_MEMORY_REQUIREMENTS_2",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FEATURES_2",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_PROPERTIES_2",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_FORMAT_PROPERTIES_2",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_IMAGE_FORMAT_PROPERTIES_2",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGE_FORMAT_INFO_2",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_QUEUE_FAMILY_PROPERTIES_2",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MEMORY_PROPERTIES_2",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_SPARSE_IMAGE_FORMAT_PROPERTIES_2",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SPARSE_IMAGE_FORMAT_INFO_2",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 2,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_IMAGE_FORMAT_LIST_CREATE_INFO",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_IMAGELESS_FRAMEBUFFER_FEATURES",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_FRAMEBUFFER_ATTACHMENTS_CREATE_INFO",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_FRAMEBUFFER_ATTACHMENT_IMAGE_INFO",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_RENDER_PASS_ATTACHMENT_BEGIN_INFO",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_POINT_CLIPPING_PROPERTIES",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_RENDER_PASS_INPUT_ATTACHMENT_ASPECT_CREATE_INFO",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_IMAGE_VIEW_USAGE_CREATE_INFO",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_PIPELINE_TESSELLATION_DOMAIN_ORIGIN_STATE_CREATE_INFO",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MAINTENANCE_3_PROPERTIES",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_SUPPORT",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_RENDER_PASS_MULTIVIEW_CREATE_INFO",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MULTIVIEW_FEATURES",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_MULTIVIEW_PROPERTIES",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 2,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 3,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 4,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 5,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 6,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 2,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 3,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 4,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 5,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 6,
+    extends: "VkStructureType",
+    extnumber: Some(
+        166,
+    ),
+    dir: true,
+}
+Offset {
+    offset: 7,
+    extends: "VkStructureType",
+    extnumber: Some(
+        166,
+    ),
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 2,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 3,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 4,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 5,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 6,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 7,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 8,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 9,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 10,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 11,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 12,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 13,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 14,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 15,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 16,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 17,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 18,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_SAMPLER_YCBCR_CONVERSION_CREATE_INFO",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_SAMPLER_YCBCR_CONVERSION_INFO",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_BIND_IMAGE_PLANE_MEMORY_INFO",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_IMAGE_PLANE_MEMORY_REQUIREMENTS_INFO",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SAMPLER_YCBCR_CONVERSION_FEATURES",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_SAMPLER_YCBCR_CONVERSION_IMAGE_FORMAT_PROPERTIES",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SEPARATE_DEPTH_STENCIL_LAYOUTS_FEATURES",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_ATTACHMENT_REFERENCE_STENCIL_LAYOUT",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_ATTACHMENT_DESCRIPTION_STENCIL_LAYOUT",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_ATOMIC_INT64_FEATURES",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_FLOAT16_INT8_FEATURES",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_FLOAT16_INT8_FEATURES",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FLOAT_CONTROLS_PROPERTIES",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_SHADER_SUBGROUP_EXTENDED_TYPES_FEATURES",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 7,
+    extends: "VkStructureType",
+    extnumber: Some(
+        61,
+    ),
+    dir: true,
+}
+Offset {
+    offset: 8,
+    extends: "VkStructureType",
+    extnumber: Some(
+        61,
+    ),
+    dir: true,
+}
+Offset {
+    offset: 9,
+    extends: "VkStructureType",
+    extnumber: Some(
+        61,
+    ),
+    dir: true,
+}
+Offset {
+    offset: 10,
+    extends: "VkStructureType",
+    extnumber: Some(
+        61,
+    ),
+    dir: true,
+}
+Offset {
+    offset: 11,
+    extends: "VkStructureType",
+    extnumber: Some(
+        61,
+    ),
+    dir: true,
+}
+Offset {
+    offset: 12,
+    extends: "VkStructureType",
+    extnumber: Some(
+        61,
+    ),
+    dir: true,
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_TIMELINE_SEMAPHORE_FEATURES",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_TIMELINE_SEMAPHORE_PROPERTIES",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_SEMAPHORE_TYPE_CREATE_INFO",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_TIMELINE_SEMAPHORE_SUBMIT_INFO",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_SEMAPHORE_WAIT_INFO",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_SEMAPHORE_SIGNAL_INFO",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_UNIFORM_BUFFER_STANDARD_LAYOUT_FEATURES",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VARIABLE_POINTER_FEATURES",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VARIABLE_POINTER_FEATURES",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_VULKAN_MEMORY_MODEL_FEATURES",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 2,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 2,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 2,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 2,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 3,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 4,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 5,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 6,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 7,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 3,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 4,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 5,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_BIND_ACCELERATION_STRUCTURE_MEMORY_INFO_KHR",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Alias {
+    alias: "VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET_ACCELERATION_STRUCTURE_KHR",
+    extends: Some(
+        "VkStructureType",
+    ),
+}
+Offset {
+    offset: 8,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 9,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 11,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 12,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 2,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 2,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 5,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 0,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Offset {
+    offset: 1,
+    extends: "VkStructureType",
+    extnumber: None,
+    dir: true,
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Bitpos {
+    bitpos: 1,
+    extends: None,
+}
+Bitpos {
+    bitpos: 2,
+    extends: None,
+}
+Bitpos {
+    bitpos: 3,
+    extends: None,
+}
+Bitpos {
+    bitpos: 4,
+    extends: None,
+}
+Bitpos {
+    bitpos: 5,
+    extends: None,
+}
+Bitpos {
+    bitpos: 6,
+    extends: None,
+}
+Bitpos {
+    bitpos: 7,
+    extends: None,
+}
+Bitpos {
+    bitpos: 8,
+    extends: Some(
+        "VkSubgroupFeatureFlagBits",
+    ),
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Bitpos {
+    bitpos: 0,
+    extends: Some(
+        "VkSubpassDescriptionFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 1,
+    extends: Some(
+        "VkSubpassDescriptionFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 2,
+    extends: Some(
+        "VkSubpassDescriptionFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 3,
+    extends: Some(
+        "VkSubpassDescriptionFlagBits",
+    ),
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Bitpos {
+    bitpos: 1,
+    extends: None,
+}
+Bitpos {
+    bitpos: 2,
+    extends: None,
+}
+Bitpos {
+    bitpos: 3,
+    extends: None,
+}
+Bitpos {
+    bitpos: 4,
+    extends: None,
+}
+Bitpos {
+    bitpos: 5,
+    extends: None,
+}
+Bitpos {
+    bitpos: 6,
+    extends: None,
+}
+Bitpos {
+    bitpos: 7,
+    extends: None,
+}
+Bitpos {
+    bitpos: 8,
+    extends: None,
+}
+Bitpos {
+    bitpos: 0,
+    extends: Some(
+        "VkSwapchainCreateFlagBitsKHR",
+    ),
+}
+Bitpos {
+    bitpos: 0,
+    extends: Some(
+        "VkSwapchainCreateFlagBitsKHR",
+    ),
+}
+Bitpos {
+    bitpos: 1,
+    extends: Some(
+        "VkSwapchainCreateFlagBitsKHR",
+    ),
+}
+Bitpos {
+    bitpos: 2,
+    extends: Some(
+        "VkSwapchainCreateFlagBitsKHR",
+    ),
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Value {
+    value: "3",
+    extends: None,
+}
+Value {
+    value: "4",
+    extends: None,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Alias {
+    alias: "VK_TESSELLATION_DOMAIN_ORIGIN_UPPER_LEFT",
+    extends: Some(
+        "VkTessellationDomainOrigin",
+    ),
+}
+Alias {
+    alias: "VK_TESSELLATION_DOMAIN_ORIGIN_LOWER_LEFT",
+    extends: Some(
+        "VkTessellationDomainOrigin",
+    ),
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Value {
+    value: "3",
+    extends: None,
+}
+Bitpos {
+    bitpos: 0,
+    extends: None,
+}
+Bitpos {
+    bitpos: 1,
+    extends: None,
+}
+Bitpos {
+    bitpos: 2,
+    extends: None,
+}
+Bitpos {
+    bitpos: 3,
+    extends: None,
+}
+Bitpos {
+    bitpos: 4,
+    extends: None,
+}
+Bitpos {
+    bitpos: 5,
+    extends: Some(
+        "VkToolPurposeFlagBitsEXT",
+    ),
+}
+Bitpos {
+    bitpos: 6,
+    extends: Some(
+        "VkToolPurposeFlagBitsEXT",
+    ),
+}
+Bitpos {
+    bitpos: 5,
+    extends: Some(
+        "VkToolPurposeFlagBitsEXT",
+    ),
+}
+Bitpos {
+    bitpos: 6,
+    extends: Some(
+        "VkToolPurposeFlagBitsEXT",
+    ),
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Value {
+    value: "3",
+    extends: None,
+}
+Value {
+    value: "4",
+    extends: None,
+}
+Value {
+    value: "5",
+    extends: None,
+}
+Value {
+    value: "6",
+    extends: None,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Value {
+    value: "3",
+    extends: None,
+}
+Value {
+    value: "0x10001",
+    extends: None,
+}
+Value {
+    value: "0x10002",
+    extends: None,
+}
+Value {
+    value: "0x10003",
+    extends: None,
+}
+Value {
+    value: "0x10004",
+    extends: None,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "0",
+    extends: None,
+}
+Value {
+    value: "1",
+    extends: None,
+}
+Value {
+    value: "2",
+    extends: None,
+}
+Value {
+    value: "3",
+    extends: None,
+}
+Value {
+    value: "4",
+    extends: None,
+}
+Value {
+    value: "5",
+    extends: None,
+}
+Value {
+    value: "6",
+    extends: None,
+}
+Value {
+    value: "7",
+    extends: None,
+}
