@@ -6,6 +6,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] - ReleaseDate
 
+## [0.31.0] - 2020-05-10
+
+### Added
+
+- `libloading` is now an optional dependency, but still used by default
+- Add metal surface extension
+- Implement `VK_KHR_draw_indirect_count`
+- Added const qualifier to `as_raw` and `from_raw` fns on enums
+
+### Changed
+
+- The `vk::Device` parameter in 1.2 functions is now implicit
+- Moved library creation out of `Entry::new_custom`
+
+### Fixed
+
+- Initialize MemoryRequirements with `Default` instead of `zeroed`
+
 ## [0.30.0] - 2020-03-22
 
 ### Added
@@ -108,5 +126,6 @@ flags: vk::CommandPoolCreateFlags::RESET_COMMAND_BUFFER_BIT,
 can write to aligned memory.
 
 
-[Unreleased]: https://github.com/MaikKlein/ash/compare/0.30.0...HEAD
+[Unreleased]: https://github.com/MaikKlein/ash/compare/0.31.0...HEAD
+[0.31.0]: https://github.com/MaikKlein/ash/releases/tag/0.31.0
 [0.30.0]: https://github.com/MaikKlein/ash/releases/tag/0.30.0

@@ -2,10 +2,8 @@
 
 #[macro_use]
 extern crate nom;
-use proc_macro2;
 #[macro_use]
 extern crate quote;
-use syn;
 pub use vk_parse;
 pub use vkxml;
 
@@ -390,20 +388,21 @@ impl ConstVal {
     }
 }
 pub trait ConstantExt {
+    fn constant(&self) -> Constant;
     fn variant_ident(&self, enum_name: &str) -> Ident;
-    fn to_tokens(&self, ident: Option<Ident>) -> Tokens;
+    fn to_tokens(&self) -> Tokens;
     fn notation(&self) -> Option<&str>;
 }
 
 impl ConstantExt for vkxml::ExtensionEnum {
+    fn constant(&self) -> Constant {
+        Constant::from_extension_enum(self).unwrap()
+    }
     fn variant_ident(&self, enum_name: &str) -> Ident {
         variant_ident(enum_name, &self.name)
     }
-    fn to_tokens(&self, ident: Option<Ident>) -> Tokens {
-        let expr = Constant::from_extension_enum(self)
-            .expect("")
-            .to_tokens(ident);
-        quote! { #ident(#expr) }
+    fn to_tokens(&self) -> Tokens {
+        Constant::from_extension_enum(self).expect("").to_tokens()
     }
     fn notation(&self) -> Option<&str> {
         self.notation.as_deref()
@@ -411,19 +410,21 @@ impl ConstantExt for vkxml::ExtensionEnum {
 }
 
 impl ConstantExt for vkxml::Constant {
+    fn constant(&self) -> Constant {
+        Constant::from_constant(self)
+    }
     fn variant_ident(&self, enum_name: &str) -> Ident {
         variant_ident(enum_name, &self.name)
     }
-    fn to_tokens(&self, ident: Option<Ident>) -> Tokens {
-        let expr = Constant::from_constant(self).to_tokens(ident);
-        quote! { #expr }
+    fn to_tokens(&self) -> Tokens {
+        Constant::from_constant(self).to_tokens()
     }
     fn notation(&self) -> Option<&str> {
         self.notation.as_deref()
     }
 }
 
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub enum Constant {
     Number(i32),
     Hex(String),
@@ -479,32 +480,32 @@ impl Constant {
         }
     }
 
-    pub fn to_tokens(&self, ident: Option<Ident>) -> Tokens {
+    pub fn to_tokens(&self) -> Tokens {
         match *self {
             Constant::Number(n) => {
                 let number = interleave_number('_', 3, &n.to_string());
                 let term = Term::intern(&number);
-                quote! {#ident(#term)}
+                quote! {#term}
             }
             Constant::Hex(ref s) => {
                 let number = interleave_number('_', 4, s);
                 let term = Term::intern(&format!("0x{}", number));
-                quote! {#ident(#term)}
+                quote! {#term}
             }
             Constant::Text(ref text) => {
-                quote! {#ident(#text)}
+                quote! {#text}
             }
             Constant::CExpr(ref expr) => {
                 let (_, (_, rexpr)) = cexpr(expr).expect("Unable to parse cexpr");
                 let term = Term::intern(rexpr.as_str());
-                quote! {#ident(#term)}
+                quote! {#term}
             }
             Constant::BitPos(pos) => {
                 let value = 1 << pos;
                 let bit_string = format!("{:b}", value);
                 let bit_string = interleave_number('_', 4, &bit_string);
                 let term = Term::intern(&format!("0b{}", bit_string));
-                quote! {#ident(#term)}
+                quote! {#term}
             }
             Constant::Alias(ref base, ref value) => {
                 quote! {#base::#value}
@@ -938,11 +939,14 @@ pub struct ExtensionConstant<'a> {
     pub constant: Constant,
 }
 impl<'a> ConstantExt for ExtensionConstant<'a> {
+    fn constant(&self) -> Constant {
+        self.constant.clone()
+    }
     fn variant_ident(&self, enum_name: &str) -> Ident {
         variant_ident(enum_name, self.name)
     }
-    fn to_tokens(&self, ident: Option<Ident>) -> Tokens {
-        self.constant.to_tokens(ident)
+    fn to_tokens(&self) -> Tokens {
+        self.constant.to_tokens()
     }
     fn notation(&self) -> Option<&str> {
         None
@@ -1158,7 +1162,7 @@ pub fn generate_bitmask(
         #[repr(transparent)]
         #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
         #[doc = #khronos_link]
-        pub struct #ident(Flags);
+        pub struct #ident(pub(crate) Flags);
         vk_bitflags_wrapped!(#ident, 0b0, Flags);
     })
 }
@@ -1208,7 +1212,13 @@ pub fn bitflags_impl_block(
         .iter()
         .map(|constant| {
             let variant_ident = constant.variant_ident(enum_name);
-            let tokens = constant.to_tokens(Some(ident));
+            let constant = constant.constant();
+            let tokens = constant.to_tokens();
+            let tokens = if let Constant::Alias(_, _) = &constant {
+                tokens
+            } else {
+                quote!(Self(#tokens))
+            };
             (variant_ident, tokens)
         })
         .collect_vec();
@@ -1300,8 +1310,8 @@ pub fn generate_enum<'a>(
             #[doc = #khronos_link]
             pub struct #ident(pub(crate) i32);
             impl #ident {
-                pub fn from_raw(x: i32) -> Self { #ident(x) }
-                pub fn as_raw(self) -> i32 { self.0 }
+                pub const fn from_raw(x: i32) -> Self { #ident(x) }
+                pub const fn as_raw(self) -> i32 { self.0 }
             }
             #impl_block
         };
@@ -2125,7 +2135,7 @@ pub fn generate_constant<'a>(
     let c = Constant::from_constant(constant);
     let name = constant_name(&constant.name);
     let ident = Ident::from(name.as_str());
-    let value = c.to_tokens(None);
+    let value = c.to_tokens();
     let ty = if name == "TRUE" || name == "FALSE" {
         CType::Bool32
     } else {
@@ -2258,10 +2268,10 @@ pub fn generate_aliases_of_types<'a>(
         #(#aliases)*
     }
 }
-pub fn write_source_code(path: &Path) {
+pub fn write_source_code<P: AsRef<Path>>(vk_xml: &Path, src_dir: P) {
     use std::fs::File;
     use std::io::Write;
-    let spec2 = vk_parse::parse_file(path);
+    let (spec2, _errors) = vk_parse::parse_file(vk_xml).expect("Invalid xml file");
     let extensions: &Vec<vk_parse::Extension> = spec2
         .0
         .iter()
@@ -2283,7 +2293,7 @@ pub fn write_source_code(path: &Path) {
         })
         .collect();
 
-    let spec = vk_parse::parse_file_as_vkxml(path);
+    let spec = vk_parse::parse_file_as_vkxml(vk_xml).expect("Invalid xml file.");
     let cmd_aliases: HashMap<String, String> = spec2
         .0
         .iter()
@@ -2426,16 +2436,13 @@ pub fn write_source_code(path: &Path) {
 
     let const_debugs = generate_const_debugs(&const_values);
 
-    let mut file = File::create("../ash/src/vk.rs").expect("vk");
     let bitflags_macro = vk_bitflags_wrapped_macro();
     let handle_nondispatchable_macro = handle_nondispatchable_macro();
     let define_handle_macro = define_handle_macro();
     let version_macros = vk_version_macros();
     let platform_specific_types = platform_specific_types();
-    let source_code = quote! {
-        #![allow(clippy::too_many_arguments, clippy::cognitive_complexity, clippy::wrong_self_convention)]
-        use std::fmt;
-        use std::os::raw::*;
+
+    let ptr_chain_code = quote! {
         /// Iterates through the pointer chain. Includes the item that is passed into the function.
         /// Stops at the last `BaseOutStructure` that has a null `p_next` field.
         pub(crate) unsafe fn ptr_chain_iter<T>(
@@ -2452,27 +2459,170 @@ pub fn write_source_code(path: &Path) {
                 Some(old)
             })
         }
+    };
+
+    let macros_code = quote! {
+        #version_macros
+        #bitflags_macro
+        #handle_nondispatchable_macro
+        #define_handle_macro
+    };
+
+    let src_dir = src_dir.as_ref();
+
+    let vk_dir = src_dir.join("vk");
+    std::fs::create_dir_all(&vk_dir).expect("failed to create vk dir");
+
+    let mut vk_rs_file = File::create(src_dir.join("vk.rs")).expect("vk.rs");
+
+    let mut vk_macros_file = File::create(vk_dir.join("macros.rs")).expect("vk/macros.rs");
+    let mut vk_features_file = File::create(vk_dir.join("features.rs")).expect("vk/features.rs");
+    let mut vk_definitions_file =
+        File::create(vk_dir.join("definitions.rs")).expect("vk/definitions.rs");
+    let mut vk_platform_types_file =
+        File::create(vk_dir.join("platform_types.rs")).expect("vk/platform_types.rs");
+    let mut vk_enums_file = File::create(vk_dir.join("enums.rs")).expect("vk/enums.rs");
+    let mut vk_bitflags_file = File::create(vk_dir.join("bitflags.rs")).expect("vk/bitflags.rs");
+    let mut vk_constants_file = File::create(vk_dir.join("constants.rs")).expect("vk/constants.rs");
+    let mut vk_extensions_file =
+        File::create(vk_dir.join("extensions.rs")).expect("vk/extensions.rs");
+    let mut vk_feature_extensions_file =
+        File::create(vk_dir.join("feature_extensions.rs")).expect("vk/feature_extensions.rs");
+    let mut vk_const_debugs_file =
+        File::create(vk_dir.join("const_debugs.rs")).expect("vk/const_debugs.rs");
+    let mut vk_aliases_file = File::create(vk_dir.join("aliases.rs")).expect("vk/aliases.rs");
+
+    let feature_code = quote! {
+        use std::os::raw::*;
+        use crate::vk::bitflags::*;
+        use crate::vk::definitions::*;
+        use crate::vk::enums::*;
+        #(#feature_code)*
+    };
+
+    let definition_code = quote! {
+        use std::fmt;
+        use std::os::raw::*;
+        use crate::vk::{Handle, ptr_chain_iter};
+        use crate::vk::platform_types::*;
+        use crate::vk::aliases::*;
+        use crate::vk::bitflags::*;
+        use crate::vk::constants::*;
+        use crate::vk::enums::*;
+        #(#definition_code)*
+    };
+
+    let enum_code = quote! {
+        use std::fmt;
+        #(#enum_code)*
+    };
+
+    let bitflags_code = quote! {
+        use crate::vk::definitions::*;
+        #(#bitflags_code)*
+    };
+
+    let constants_code = quote! {
+        use crate::vk::definitions::*;
+        #(#constants_code)*
+    };
+
+    let extension_code = quote! {
+        use std::os::raw::*;
+        use crate::vk::platform_types::*;
+        use crate::vk::aliases::*;
+        use crate::vk::bitflags::*;
+        use crate::vk::definitions::*;
+        use crate::vk::enums::*;
+        #(#extension_code)*
+    };
+
+    let feature_extensions_code = quote! {
+        use crate::vk::bitflags::*;
+        use crate::vk::enums::*;
+       #feature_extensions_code
+    };
+
+    let const_debugs = quote! {
+        use std::fmt;
+        use crate::vk::bitflags::*;
+        use crate::vk::definitions::*;
+        use crate::vk::enums::*;
+        #const_debugs
+    };
+
+    let aliases = quote! {
+        use crate::vk::bitflags::*;
+        use crate::vk::definitions::*;
+        use crate::vk::enums::*;
+        #(#aliases)*
+    };
+
+    let platform_types_code = quote! {
+        use std::os::raw::*;
+        #platform_specific_types
+    };
+
+    // These are defined outside of `quote!` because rustfmt doesn't seem
+    // to format them correctly when they contain extra spaces.
+    let vk_rs_clippy_lints = r#"
+#![allow(clippy::too_many_arguments, clippy::cognitive_complexity, clippy::wrong_self_convention)]
+"#;
+
+    let vk_rs_code = quote! {
+        #[macro_use]
+        mod macros;
+        pub use macros::*;
+        mod aliases;
+        pub use aliases::*;
+        mod bitflags;
+        pub use bitflags::*;
+        mod const_debugs;
+        pub(crate) use const_debugs::*;
+        mod constants;
+        pub use constants::*;
+        mod definitions;
+        pub use definitions::*;
+        mod enums;
+        pub use enums::*;
+        mod extensions;
+        pub use extensions::*;
+        mod feature_extensions;
+        pub use feature_extensions::*;
+        mod features;
+        pub use features::*;
+        mod platform_types;
+        pub use platform_types::*;
+
+        #ptr_chain_code
 
         pub trait Handle {
             const TYPE: ObjectType;
             fn as_raw(self) -> u64;
             fn from_raw(_: u64) -> Self;
         }
-
-        #version_macros
-        #platform_specific_types
-        #bitflags_macro
-        #handle_nondispatchable_macro
-        #define_handle_macro
-        #(#feature_code)*
-        #(#definition_code)*
-        #(#enum_code)*
-        #(#bitflags_code)*
-        #(#constants_code)*
-        #(#extension_code)*
-        #feature_extensions_code
-        #const_debugs
-        #(#aliases)*
     };
-    write!(&mut file, "{}", source_code).expect("Unable to write to file");
+
+    write!(&mut vk_macros_file, "{}", macros_code).expect("Unable to write vk/macros.rs");
+    write!(&mut vk_platform_types_file, "{}", platform_types_code)
+        .expect("Unable to write to vk/platform_types.rs");
+    write!(&mut vk_features_file, "{}", feature_code).expect("Unable to write vk/features.rs");
+    write!(&mut vk_definitions_file, "{}", definition_code)
+        .expect("Unable to write vk/definitions.rs");
+    write!(&mut vk_enums_file, "{}", enum_code).expect("Unable to write vk/enums.rs");
+    write!(&mut vk_bitflags_file, "{}", bitflags_code).expect("Unable to write vk/bitflags.rs");
+    write!(&mut vk_constants_file, "{}", constants_code).expect("Unable to write vk/constants.rs");
+    write!(&mut vk_extensions_file, "{}", extension_code)
+        .expect("Unable to write vk/extensions.rs");
+    write!(
+        &mut vk_feature_extensions_file,
+        "{}",
+        feature_extensions_code
+    )
+    .expect("Unable to write vk/feature_extensions.rs");
+    write!(&mut vk_const_debugs_file, "{}", const_debugs)
+        .expect("Unable to write vk/const_debugs.rs");
+    write!(&mut vk_aliases_file, "{}", aliases).expect("Unable to write vk/aliases.rs");
+    write!(&mut vk_rs_file, "{} {}", vk_rs_clippy_lints, vk_rs_code)
+        .expect("Unable to write vk.rs");
 }
