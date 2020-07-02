@@ -36,7 +36,7 @@ use ash::{vk, Device, Entry, Instance};
 use std::borrow::Cow;
 use std::cell::RefCell;
 use std::default::Default;
-use std::ffi::{c_void, CStr, CString};
+use std::ffi::{CStr, CString};
 use std::ops::Drop;
 
 // Simple offset_of macro akin to C++ offsetof
@@ -158,6 +158,7 @@ unsafe fn create_surface<E: EntryV1_0, I: InstanceV1_0>(
     instance: &I,
     window: &winit::Window,
 ) -> Result<vk::SurfaceKHR, vk::Result> {
+    use std::ffi::c_void;
     use std::ptr;
     use winapi::shared::windef::HWND;
     use winapi::um::libloaderapi::GetModuleHandleW;
