@@ -36,7 +36,7 @@ use ash::{vk, Device, Entry, Instance};
 use std::borrow::Cow;
 use std::cell::RefCell;
 use std::default::Default;
-use std::ffi::{CStr, CString};
+use std::ffi::{c_void, CStr, CString};
 use std::ops::Drop;
 
 // Simple offset_of macro akin to C++ offsetof
