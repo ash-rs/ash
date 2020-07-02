@@ -1753,7 +1753,7 @@ pub fn derive_setters(
                 .map(|extends| name_to_tokens(&format!("Extends{}", name_to_tokens(&extends))))
                 .collect()
         })
-        .unwrap_or_else(|| vec![]);
+        .unwrap_or_else(Vec::new);
 
     // We only implement a next methods for root structs with a `pnext` field.
     let next_function = if has_next && root_structs.is_empty() {
