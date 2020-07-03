@@ -13,6 +13,12 @@ use ash::extensions::ext; // portability extensions
 /// Create a surface from a raw surface handle.
 ///
 /// `instance` must have created with platform specific surface extensions enabled.
+///
+/// # Safety
+///
+/// In order for the created `SurfaceKHR` to be valid for the duration of its
+/// usage, the `Instance` this was called on must be dropped later than the
+/// resulting `SurfaceKHR`.
 pub unsafe fn create_surface<E, I>(
     entry: &E,
     instance: &I,
@@ -92,7 +98,7 @@ where
 
             let layer = match macos::metal_layer_from_handle(handle) {
                 Layer::Existing(layer) | Layer::Allocated(layer) => layer as *mut _,
-                Layer::None => return Err(vk::Result::ERROR_INITIALIZATION_FAILED)
+                Layer::None => return Err(vk::Result::ERROR_INITIALIZATION_FAILED),
             };
 
             let surface_desc = vk::MetalSurfaceCreateInfoEXT::builder().layer(&*layer);
@@ -106,7 +112,7 @@ where
 
             let layer = match ios::metal_layer_from_handle(handle) {
                 Layer::Existing(layer) | Layer::Allocated(layer) => layer as *mut _,
-                Layer::None => return Err(vk::Result::ERROR_INITIALIZATION_FAILED)
+                Layer::None => return Err(vk::Result::ERROR_INITIALIZATION_FAILED),
             };
 
             let surface_desc = vk::MetalSurfaceCreateInfoEXT::builder().layer(&*layer);
