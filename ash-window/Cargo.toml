@@ -21,5 +21,4 @@ raw-window-handle = "0.3"
 raw-window-metal = "0.1"
 
 [dev-dependencies]
-beryllium = { version = "0.3", features = ["extern_crate_raw_window_handle", "static_link"], default-features = false }
 winit = "0.19.4"
