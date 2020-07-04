@@ -10,15 +10,14 @@ use beryllium::*;
 use std::error::Error;
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let sdl = beryllium::init()?;
+    let sdl = SDL::init(InitFlags::Everything)?;
 
-    let window = sdl.create_window(
+    let window = sdl.create_raw_window(
         "ash-window x beryllium",
-        WINDOW_POSITION_CENTERED,
-        WINDOW_POSITION_CENTERED,
+        WindowPosition::default(),
         800,
         600,
-        WindowFlags::default(),
+        0,
     )?;
 
     unsafe {
@@ -41,9 +40,9 @@ fn main() -> Result<(), Box<dyn Error>> {
         println!("surface: {:?}", surface);
 
         'main: loop {
-            while let Some(event) = sdl.poll_event() {
+            while let Some(event) = sdl.poll_events() {
                 match event {
-                    Event::Quit { .. } => break 'main,
+                    Ok(Event::Quit { .. }) => break 'main,
                     _ => (),
                 }
             }
