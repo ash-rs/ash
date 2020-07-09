@@ -5,7 +5,6 @@ use crate::vk;
 use std::ffi::CStr;
 use std::mem;
 use std::ptr;
-use crate::vk::PipelineExecutableStatisticFormatKHR;
 
 #[derive(Clone)]
 pub struct PipelineExecutableProperties {
