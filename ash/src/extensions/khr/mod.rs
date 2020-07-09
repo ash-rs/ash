@@ -1,4 +1,3 @@
-
 pub use self::android_surface::AndroidSurface;
 pub use self::display::Display;
 pub use self::display_swapchain::DisplaySwapchain;

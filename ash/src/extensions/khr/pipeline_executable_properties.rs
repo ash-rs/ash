@@ -14,9 +14,10 @@ pub struct PipelineExecutableProperties {
 
 impl PipelineExecutableProperties {
     pub fn new<E: EntryV1_0, I: InstanceV1_0>(entry: &E, instance: &I) -> PipelineExecutableProperties {
-        let pipeline_executable_properties_fn = vk::KhrPipelineExecutablePropertiesFn::load(|name| unsafe {
-            mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
-        });
+        let pipeline_executable_properties_fn =
+            vk::KhrPipelineExecutablePropertiesFn::load(|name| unsafe {
+                mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
+            });
 
         PipelineExecutableProperties {
             handle: instance.handle(),
@@ -29,11 +30,28 @@ impl PipelineExecutableProperties {
     }
 
     #[doc = "https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPipelineExecutableInternalRepresentationsKHR.html"]
-    pub unsafe fn get_pipeline_executable_internal_representations(&self, device: vk::Device, executable_info: &vk::PipelineExecutableInfoKHR) -> VkResult<Vec<vk::PipelineExecutableInternalRepresentationKHR>> {
+    pub unsafe fn get_pipeline_executable_internal_representations(
+        &self,
+        device: vk::Device,
+        executable_info: &vk::PipelineExecutableInfoKHR,
+    ) -> VkResult<Vec<vk::PipelineExecutableInternalRepresentationKHR>> {
         let mut count = 0;
-        self.pipeline_executable_properties_fn.get_pipeline_executable_internal_representations_khr(device, executable_info, &mut count, ptr::null_mut());
+        self.pipeline_executable_properties_fn
+            .get_pipeline_executable_internal_representations_khr(
+                device,
+                executable_info,
+                &mut count,
+                ptr::null_mut(),
+            );
         let mut v = Vec::with_capacity(count as usize);
-        let err_code = self.pipeline_executable_properties_fn.get_pipeline_executable_internal_representations_khr(device, executable_info, &mut count, v.as_mut_ptr());
+        let err_code = self
+            .pipeline_executable_properties_fn
+            .get_pipeline_executable_internal_representations_khr(
+                device,
+                executable_info,
+                &mut count,
+                v.as_mut_ptr(),
+            );
         v.set_len(count as usize);
         match err_code {
             vk::Result::SUCCESS => Ok(v),
@@ -42,11 +60,28 @@ impl PipelineExecutableProperties {
     }
 
     #[doc = "https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPipelineExecutablePropertiesKHR.html"]
-    pub unsafe fn get_pipeline_executable_properties(&self, device: vk::Device, pipeline_info: &vk::PipelineInfoKHR) -> VkResult<Vec<vk::PipelineExecutablePropertiesKHR>> {
+    pub unsafe fn get_pipeline_executable_properties(
+        &self,
+        device: vk::Device,
+        pipeline_info: &vk::PipelineInfoKHR,
+    ) -> VkResult<Vec<vk::PipelineExecutablePropertiesKHR>> {
         let mut count = 0;
-        self.pipeline_executable_properties_fn.get_pipeline_executable_properties_khr(device, pipeline_info, &mut count, ptr::null_mut());
+        self.pipeline_executable_properties_fn
+            .get_pipeline_executable_properties_khr(
+                device,
+                pipeline_info,
+                &mut count,
+                ptr::null_mut(),
+            );
         let mut v = Vec::with_capacity(count as usize);
-        let err_code = self.pipeline_executable_properties_fn.get_pipeline_executable_properties_khr(device, pipeline_info, &mut count, v.as_mut_ptr());
+        let err_code = self
+            .pipeline_executable_properties_fn
+            .get_pipeline_executable_properties_khr(
+                device,
+                pipeline_info,
+                &mut count,
+                v.as_mut_ptr(),
+            );
         v.set_len(count as usize);
         match err_code {
             vk::Result::SUCCESS => Ok(v),
@@ -55,11 +90,28 @@ impl PipelineExecutableProperties {
     }
 
     #[doc = "https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPipelineExecutableStatisticsKHR.html"]
-    pub unsafe fn get_pipeline_executable_statistics(&self, device: vk::Device, executable_info: &vk::PipelineExecutableInfoKHR) -> VkResult<Vec<vk::PipelineExecutableStatisticKHR>> {
+    pub unsafe fn get_pipeline_executable_statistics(
+        &self,
+        device: vk::Device,
+        executable_info: &vk::PipelineExecutableInfoKHR,
+    ) -> VkResult<Vec<vk::PipelineExecutableStatisticKHR>> {
         let mut count = 0;
-        self.pipeline_executable_properties_fn.get_pipeline_executable_statistics_khr(device, executable_info, &mut count, ptr::null_mut());
+        self.pipeline_executable_properties_fn
+            .get_pipeline_executable_statistics_khr(
+                device,
+                executable_info,
+                &mut count,
+                ptr::null_mut(),
+            );
         let mut v = Vec::with_capacity(count as usize);
-        let err_code = self.pipeline_executable_properties_fn.get_pipeline_executable_statistics_khr(device, executable_info, &mut count, v.as_mut_ptr());
+        let err_code = self
+            .pipeline_executable_properties_fn
+            .get_pipeline_executable_statistics_khr(
+                device,
+                executable_info,
+                &mut count,
+                v.as_mut_ptr(),
+            );
         v.set_len(count as usize);
         match err_code {
             vk::Result::SUCCESS => Ok(v),
