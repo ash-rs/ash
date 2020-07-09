@@ -1,8 +1,10 @@
+
 pub use self::android_surface::AndroidSurface;
 pub use self::display::Display;
 pub use self::display_swapchain::DisplaySwapchain;
 pub use self::draw_indirect_count::DrawIndirectCount;
 pub use self::external_memory_fd::ExternalMemoryFd;
+pub use self::pipeline_executable_properties::PipelineExecutableProperties;
 pub use self::push_descriptor::PushDescriptor;
 pub use self::ray_tracing::RayTracing;
 pub use self::surface::Surface;
@@ -18,6 +20,7 @@ mod display;
 mod display_swapchain;
 mod draw_indirect_count;
 mod external_memory_fd;
+mod pipeline_executable_properties;
 mod push_descriptor;
 mod ray_tracing;
 mod surface;
