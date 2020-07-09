@@ -1,0 +1,24 @@
+[package]
+name = "ash-window"
+version = "0.4.1"
+authors = ["msiglreith <m.siglreith@gmail.com>"]
+edition = "2018"
+license = "MIT OR Apache-2.0"
+description = "Interop library between ash and raw-window-handle"
+documentation = "https://docs.rs/ash-window"
+repository = "https://github.com/MaikKlein/ash"
+readme = "README.md"
+keywords = ["window", "ash", "graphics"]
+categories = ["game-engines", "graphics"]
+exclude = [".github/*"]
+workspace = ".."
+
+[dependencies]
+ash = { path = "../ash" }
+raw-window-handle = "0.3"
+
+[target.'cfg(any(target_os = "macos", target_os = "ios"))'.dependencies]
+raw-window-metal = "0.1"
+
+[dev-dependencies]
+winit = "0.19.4"
