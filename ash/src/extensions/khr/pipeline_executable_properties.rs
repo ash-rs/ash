@@ -13,7 +13,10 @@ pub struct PipelineExecutableProperties {
 }
 
 impl PipelineExecutableProperties {
-    pub fn new<E: EntryV1_0, I: InstanceV1_0>(entry: &E, instance: &I) -> PipelineExecutableProperties {
+    pub fn new<E: EntryV1_0, I: InstanceV1_0>(
+        entry: &E,
+        instance: &I,
+    ) -> PipelineExecutableProperties {
         let pipeline_executable_properties_fn =
             vk::KhrPipelineExecutablePropertiesFn::load(|name| unsafe {
                 mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
@@ -43,9 +46,7 @@ impl PipelineExecutableProperties {
                 &mut count,
                 ptr::null_mut(),
             );
-        let mut v: Vec<_> = (0..count)
-            .map(|_| Default::default())
-            .collect();
+        let mut v: Vec<_> = (0..count).map(|_| Default::default()).collect();
         let err_code = self
             .pipeline_executable_properties_fn
             .get_pipeline_executable_internal_representations_khr(
@@ -75,9 +76,7 @@ impl PipelineExecutableProperties {
                 &mut count,
                 ptr::null_mut(),
             );
-        let mut v: Vec<_> = (0..count)
-            .map(|_| Default::default())
-            .collect();
+        let mut v: Vec<_> = (0..count).map(|_| Default::default()).collect();
         let err_code = self
             .pipeline_executable_properties_fn
             .get_pipeline_executable_properties_khr(
@@ -107,9 +106,7 @@ impl PipelineExecutableProperties {
                 &mut count,
                 ptr::null_mut(),
             );
-        let mut v: Vec<_> = (0..count)
-            .map(|_| Default::default())
-            .collect();
+        let mut v: Vec<_> = (0..count).map(|_| Default::default()).collect();
         let err_code = self
             .pipeline_executable_properties_fn
             .get_pipeline_executable_statistics_khr(
