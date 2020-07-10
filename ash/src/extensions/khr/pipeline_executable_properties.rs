@@ -43,7 +43,9 @@ impl PipelineExecutableProperties {
                 &mut count,
                 ptr::null_mut(),
             );
-        let mut v = Vec::with_capacity(count as usize);
+        let mut v: Vec<_> = (0..count)
+            .map(|_| Default::default())
+            .collect();
         let err_code = self
             .pipeline_executable_properties_fn
             .get_pipeline_executable_internal_representations_khr(
@@ -73,7 +75,9 @@ impl PipelineExecutableProperties {
                 &mut count,
                 ptr::null_mut(),
             );
-        let mut v = Vec::with_capacity(count as usize);
+        let mut v: Vec<_> = (0..count)
+            .map(|_| Default::default())
+            .collect();
         let err_code = self
             .pipeline_executable_properties_fn
             .get_pipeline_executable_properties_khr(
@@ -103,7 +107,9 @@ impl PipelineExecutableProperties {
                 &mut count,
                 ptr::null_mut(),
             );
-        let mut v = Vec::with_capacity(count as usize);
+        let mut v: Vec<_> = (0..count)
+            .map(|_| Default::default())
+            .collect();
         let err_code = self
             .pipeline_executable_properties_fn
             .get_pipeline_executable_statistics_khr(
