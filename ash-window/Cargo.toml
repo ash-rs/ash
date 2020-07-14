@@ -1,6 +1,6 @@
 [package]
 name = "ash-window"
-version = "0.4.1"
+version = "0.5.0"
 authors = ["msiglreith <m.siglreith@gmail.com>"]
 edition = "2018"
 license = "MIT OR Apache-2.0"
