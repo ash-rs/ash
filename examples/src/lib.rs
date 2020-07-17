@@ -178,7 +178,7 @@ unsafe fn create_surface<E: EntryV1_0, I: InstanceV1_0>(
 }
 
 #[cfg(all(unix, not(target_os = "android"), not(target_os = "macos")))]
-fn extension_names() -> Vec<*const i8> {
+fn extension_names() -> Vec<*const u8> {
     vec![
         Surface::name().as_ptr(),
         XlibSurface::name().as_ptr(),
@@ -345,7 +345,7 @@ impl ExampleBase {
             let app_name = CString::new("VulkanTriangle").unwrap();
 
             let layer_names = [CString::new("VK_LAYER_KHRONOS_validation").unwrap()];
-            let layers_names_raw: Vec<*const i8> = layer_names
+            let layers_names_raw: Vec<*const u8> = layer_names
                 .iter()
                 .map(|raw_name| raw_name.as_ptr())
                 .collect();
