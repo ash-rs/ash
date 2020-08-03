@@ -1,6 +1,7 @@
 use crate::entry::EntryCustom;
 use libloading::Library;
 use std::error::Error;
+use std::ffi::OsStr;
 use std::fmt;
 use std::ptr;
 use std::sync::Arc;
@@ -39,6 +40,8 @@ impl Error for LoadingError {
 }
 
 impl EntryCustom<Arc<Library>> {
+    /// Load default Vulkan library for the current platform
+    ///
     /// ```rust,no_run
     /// use ash::{vk, Entry, version::EntryV1_0};
     /// # fn main() -> Result<(), Box<std::error::Error>> {
@@ -55,9 +58,12 @@ impl EntryCustom<Arc<Library>> {
     /// # Ok(()) }
     /// ```
     pub fn new() -> Result<Entry, LoadingError> {
-        let lib = Library::new(&LIB_PATH)
-            .map_err(LoadingError)
-            .map(Arc::new)?;
+        Self::with_library(&LIB_PATH)
+    }
+
+    /// Load Vulkan library at `path`
+    pub fn with_library<P: AsRef<OsStr>>(path: &P) -> Result<Entry, LoadingError> {
+        let lib = Library::new(path).map_err(LoadingError).map(Arc::new)?;
 
         Ok(Self::new_custom(lib, |vk_lib, name| unsafe {
             vk_lib
