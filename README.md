@@ -20,7 +20,7 @@ A very lightweight wrapper around Vulkan
 
 ## Features
 ### Explicit returns with `Result`
-```Rust
+```rust
 // function signature
 pub fn create_instance(&self,
                        create_info: &vk::InstanceCreateInfo,
@@ -33,7 +33,7 @@ let instance = entry.create_instance(&create_info, None)
 
 ### `Vec<T>` instead of mutable slices
 
-```Rust
+```rust
 pub fn get_swapchain_images(&self,
                             swapchain: vk::SwapchainKHR)
                             -> VkResult<Vec<vk::Image>>;
@@ -42,7 +42,7 @@ let present_images = swapchain_loader.get_swapchain_images_khr(swapchain).unwrap
 *Note*: Functions don't return `Vec<T>` if this would limit the functionality. See `p_next`.
 
 ### Slices
-```Rust
+```rust
 pub fn cmd_pipeline_barrier(&self,
                             command_buffer: vk::CommandBuffer,
                             src_stage_mask: vk::PipelineStageFlags,
@@ -60,7 +60,7 @@ Each Vulkan handle type is exposed as a newtyped struct for improved type safety
 interop with non-Ash Vulkan code.
 
 ### Default implementation for all types
-```Rust
+```rust
 // No need to manually set the structure type
 let desc_alloc_info = vk::DescriptorSetAllocateInfo {
     descriptor_pool: self.pool,
@@ -71,7 +71,7 @@ let desc_alloc_info = vk::DescriptorSetAllocateInfo {
 ```
 ### Builder pattern
 
-```Rust
+```rust
 // We lose all lifetime information when we call `.build()`. Be carefull!
 let queue_info = [vk::DeviceQueueCreateInfo::builder()
     .queue_family_index(queue_family_index)
@@ -90,7 +90,7 @@ let device: Device = instance
 ```
 
 Builders have an explicit lifetime, and are marked as `#[repr(transparent)]`.
-```Rust
+```rust
 #[repr(transparent)]
 pub struct DeviceCreateInfoBuilder<'a> {
     inner: DeviceCreateInfo,
@@ -113,7 +113,7 @@ Calling `.build()` will **discard** that lifetime because Vulkan structs use raw
 
 ### Pointer chains
 
-```Rust
+```rust
 let mut variable_pointers = vk::PhysicalDeviceVariablePointerFeatures::builder();
 let mut corner =
     vk::PhysicalDeviceCornerSampledImageFeaturesNV::builder();
@@ -130,18 +130,18 @@ Pointer chains in builders differ from raw Vulkan. Instead of chaining every str
 
 ### Flags and constants as associated constants
 
-```Rust
+```rust
 // Bitflag
 vk::AccessFlags::COLOR_ATTACHMENT_READ | vk::AccessFlags::COLOR_ATTACHMENT_WRITE
 ```
 
-```Rust
+```rust
 // Constant
 vk::PipelineBindPoint::GRAPHICS,
 ```
 ### Debug/Display for Flags
 
-```Rust
+```rust
 let flag = vk::AccessFlags::COLOR_ATTACHMENT_READ
         | vk::AccessFlags::COLOR_ATTACHMENT_WRITE;
 println!("Debug: {:?}", flag);
@@ -168,7 +168,7 @@ Custom loaders can be implemented.
 
 ### Extension loading
 Additionally, every Vulkan extension has to be loaded explicitly. You can find all extensions under [ash::extensions](https://github.com/MaikKlein/ash/tree/master/ash/src/extensions).
-```Rust
+```rust
 use ash::extensions::khr::Swapchain;
 let swapchain_loader = Swapchain::new(&instance, &device);
 let swapchain = swapchain_loader.create_swapchain(&swapchain_create_info).unwrap();
@@ -178,12 +178,12 @@ let swapchain = swapchain_loader.create_swapchain(&swapchain_create_info).unwrap
 
 Raw function pointers are available, if something hasn't been exposed yet in the higher level API. Please open an issue if anything is missing.
 
-```Rust
+```rust
 device.fp_v1_0().destroy_device(...);
 ```
 
 ### Support for extension names
-```Rust
+```rust
 use ash::extensions::{Swapchain, XlibSurface, Surface, DebugReport};
 #[cfg(all(unix, not(target_os = "android")))]
 fn extension_names() -> Vec<*const i8> {
@@ -197,7 +197,7 @@ fn extension_names() -> Vec<*const i8> {
 
 ### Implicit handles
 Handles from Instance or Device are passed implicitly.
-```Rust
+```rust
 pub fn create_command_pool(&self,
                            create_info: &vk::CommandPoolCreateInfo)
                            -> VkResult<vk::CommandPool>;
