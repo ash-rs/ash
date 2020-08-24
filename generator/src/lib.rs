@@ -1723,20 +1723,30 @@ pub fn derive_setters(
             // Unique cases
             if name == "pCode" {
                 return Some(quote!{
-                        pub fn code(mut self, code: &'a [u32]) -> #name_builder<'a> {
-                            self.inner.code_size = code.len() * 4;
-                            self.inner.p_code = code.as_ptr() as *const u32;
-                            self
-                        }
+                    pub fn code(mut self, code: &'a [u32]) -> #name_builder<'a> {
+                        self.inner.code_size = code.len() * 4;
+                        self.inner.p_code = code.as_ptr() as *const u32;
+                        self
+                    }
                 });
             }
 
             if name == "pSampleMask" {
                 return Some(quote!{
-                        pub fn sample_mask(mut self, sample_mask: &'a [SampleMask]) -> #name_builder<'a> {
-                            self.inner.p_sample_mask = sample_mask.as_ptr() as *const SampleMask;
-                            self
-                        }
+                    pub fn sample_mask(mut self, sample_mask: &'a [SampleMask]) -> #name_builder<'a> {
+                        self.inner.p_sample_mask = sample_mask.as_ptr() as *const SampleMask;
+                        self
+                    }
+                });
+            }
+
+            if name == "ppGeometries" {
+                return Some(quote!{
+                    pub fn geometries_ptrs(mut self, geometries: &'a [*const AccelerationStructureGeometryKHR]) -> #name_builder<'a> {
+                        self.inner.geometry_count = geometries.len() as _;
+                        self.inner.pp_geometries = geometries.as_ptr();
+                        self
+                    }
                 });
             }
         }
