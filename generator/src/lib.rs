@@ -1689,6 +1689,8 @@ pub fn derive_setters(
         // TODO: Improve in future when https://github.com/rust-lang/rust/issues/53667 is merged id:6
         if param_ident_string.starts_with("p_") || param_ident_string.starts_with("pp_") {
             if param_ty_string == "*const c_char" {
+                assert!(field.null_terminate);
+                assert_eq!(field.size, None);
                 return Some(quote!{
                         pub fn #param_ident_short(mut self, #param_ident_short: &'a ::std::ffi::CStr) -> #name_builder<'a> {
                             self.inner.#param_ident = #param_ident_short.as_ptr();
