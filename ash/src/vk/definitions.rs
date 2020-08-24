@@ -1543,16 +1543,16 @@ impl<'a> DeviceCreateInfoBuilder<'a> {
         mut self,
         enabled_layer_names: &'a [*const c_char],
     ) -> DeviceCreateInfoBuilder<'a> {
-        self.inner.pp_enabled_layer_names = enabled_layer_names.as_ptr();
         self.inner.enabled_layer_count = enabled_layer_names.len() as _;
+        self.inner.pp_enabled_layer_names = enabled_layer_names.as_ptr();
         self
     }
     pub fn enabled_extension_names(
         mut self,
         enabled_extension_names: &'a [*const c_char],
     ) -> DeviceCreateInfoBuilder<'a> {
-        self.inner.pp_enabled_extension_names = enabled_extension_names.as_ptr();
         self.inner.enabled_extension_count = enabled_extension_names.len() as _;
+        self.inner.pp_enabled_extension_names = enabled_extension_names.as_ptr();
         self
     }
     pub fn enabled_features(
@@ -1654,16 +1654,16 @@ impl<'a> InstanceCreateInfoBuilder<'a> {
         mut self,
         enabled_layer_names: &'a [*const c_char],
     ) -> InstanceCreateInfoBuilder<'a> {
-        self.inner.pp_enabled_layer_names = enabled_layer_names.as_ptr();
         self.inner.enabled_layer_count = enabled_layer_names.len() as _;
+        self.inner.pp_enabled_layer_names = enabled_layer_names.as_ptr();
         self
     }
     pub fn enabled_extension_names(
         mut self,
         enabled_extension_names: &'a [*const c_char],
     ) -> InstanceCreateInfoBuilder<'a> {
-        self.inner.pp_enabled_extension_names = enabled_extension_names.as_ptr();
         self.inner.enabled_extension_count = enabled_extension_names.len() as _;
+        self.inner.pp_enabled_extension_names = enabled_extension_names.as_ptr();
         self
     }
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]

@@ -965,6 +965,7 @@ pub fn generate_extension_constants<'a>(
             if const_cache.contains(_enum.name.as_str()) {
                 return None;
             }
+
             let (constant, extends, is_alias) = match &_enum.spec {
                 EnumSpec::Bitpos { bitpos, extends } => {
                     Some((Constant::BitPos(*bitpos as u32), extends.clone(), false))
@@ -1696,20 +1697,10 @@ pub fn derive_setters(
                 });
             }
 
-            if let Some(ref array_type) = field.array {
+            if matches!(field.array, Some(vkxml::ArrayType::Dynamic)) {
                 if let Some(ref array_size) = field.size {
                     if !array_size.starts_with("latexmath") {
                         let array_size_ident = Ident::from(array_size.to_snake_case().as_str());
-                        if param_ty_string == "*const *const c_char" {
-                            return Some(quote!{
-                                    pub fn #param_ident_short(mut self, #param_ident_short: &'a [*const c_char]) -> #name_builder<'a> {
-                                        self.inner.#param_ident = #param_ident_short.as_ptr();
-                                        self.inner.#array_size_ident = #param_ident_short.len() as _;
-                                        self
-                                    }
-                            });
-                        }
-
                         let slice_param_ty_tokens;
                         let ptr;
                         if param_ty_string.starts_with("*const ") {
@@ -1735,15 +1726,13 @@ pub fn derive_setters(
                         let slice_param_ty_tokens = Term::intern(&slice_param_ty_tokens);
                         let ptr = Term::intern(ptr);
 
-                        if let vkxml::ArrayType::Dynamic = array_type {
-                                return Some(quote!{
-                                    pub fn #param_ident_short(mut self, #param_ident_short: #slice_param_ty_tokens) -> #name_builder<'a> {
-                                        self.inner.#array_size_ident = #param_ident_short.len() as _;
-                                        self.inner.#param_ident = #param_ident_short#ptr;
-                                        self
-                                    }
-                                });
-                        }
+                        return Some(quote!{
+                            pub fn #param_ident_short(mut self, #param_ident_short: #slice_param_ty_tokens) -> #name_builder<'a> {
+                                self.inner.#array_size_ident = #param_ident_short.len() as _;
+                                self.inner.#param_ident = #param_ident_short#ptr;
+                                self
+                            }
+                        });
                     }
                 }
             }
