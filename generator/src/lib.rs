@@ -693,6 +693,7 @@ fn map_identifier_to_rust(term: Term) -> Term {
 ///
 /// Examples:
 /// - `VK_MAKE_VERSION(1, 2, VK_HEADER_VERSION)` -> `crate::vk::make_version(1, 2, HEADER_VERSION)`
+/// - `2*VK_UUID_SIZE` -> `2 * UUID_SIZE`
 fn convert_c_expression(c_expr: &str) -> TokenStream {
     fn rewrite_token_stream(stream: TokenStream) -> TokenStream {
         stream
@@ -1761,8 +1762,6 @@ pub fn derive_setters(
             if matches!(field.array, Some(vkxml::ArrayType::Dynamic)) {
                 if let Some(ref array_size) = field.size {
                     if !array_size.starts_with("latexmath") {
-                        let array_size_ident = Ident::from(array_size.to_snake_case().as_str());
-
                         let mut slice_param_ty_tokens = field.safe_type_tokens(quote!('a));
 
                         let mut ptr = if field.is_const {
@@ -1781,9 +1780,23 @@ pub fn derive_setters(
 
                         let mutable = if field.is_const { quote!() } else { quote!(mut) };
 
+                        let set_size_stmt = if array_size.contains("ename:") {
+                            // Should contain the same minus `ename:`-prefixed identifiers
+                            let array_size = field.c_size.as_ref().unwrap();
+                            let c_size = convert_c_expression(array_size);
+                            let inner_type = field.inner_type_tokens();
+
+                            slice_param_ty_tokens = quote!([#inner_type; #c_size]);
+
+                            quote!()
+                        } else {
+                            let array_size_ident = Ident::from(array_size.to_snake_case().as_str());
+                            quote!(self.inner.#array_size_ident = #param_ident_short.len() as _;)
+                        };
+
                         return Some(quote! {
                             pub fn #param_ident_short(mut self, #param_ident_short: &'a #mutable #slice_param_ty_tokens) -> #name_builder<'a> {
-                                self.inner.#array_size_ident = #param_ident_short.len() as _;
+                                #set_size_stmt
                                 self.inner.#param_ident = #param_ident_short#ptr;
                                 self
                             }
