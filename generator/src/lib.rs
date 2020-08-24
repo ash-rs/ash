@@ -5,7 +5,7 @@ use quote::*;
 
 use heck::{CamelCase, ShoutySnakeCase, SnakeCase};
 use itertools::Itertools;
-use proc_macro2::{Literal, Term};
+use proc_macro2::{Literal, Term, TokenStream};
 use quote::Tokens;
 use std::collections::{BTreeMap, HashMap, HashSet};
 use std::fmt::Display;
@@ -547,6 +547,7 @@ impl FeatureExt for vkxml::Feature {
         if version.len() == 1 {
             version = format!("{}_0", version)
         }
+
         version.replace(".", "_")
     }
 }
@@ -1159,7 +1160,6 @@ pub fn generate_define(define: &vkxml::Define) -> Tokens {
         if define.defref.contains(&"VK_MAKE_VERSION".to_string()) {
             let c_expr = c_expr.replace("VK_", "");
             let c_expr = c_expr.replace("MAKE_VERSION", "crate::vk::make_version");
-            use proc_macro2::TokenStream;
             use std::str::FromStr;
             let c_expr = TokenStream::from_str(&c_expr).unwrap();
             quote!(pub const #ident: u32 = #c_expr;)
@@ -1701,32 +1701,34 @@ pub fn derive_setters(
                 if let Some(ref array_size) = field.size {
                     if !array_size.starts_with("latexmath") {
                         let array_size_ident = Ident::from(array_size.to_snake_case().as_str());
-                        let slice_param_ty_tokens;
-                        let ptr;
-                        if param_ty_string.starts_with("*const ") {
-                            let slice_type = &param_ty_string[7..];
-                            if slice_type == "c_void" {
-                                slice_param_ty_tokens = "&'a [u8]".to_string();
-                                ptr = ".as_ptr() as *const c_void";
-                            } else {
-                                slice_param_ty_tokens = "&'a [".to_string() + slice_type + "]";
-                                ptr = ".as_ptr()";
-                            }
-                        } else {
-                            // *mut
-                            let slice_type = &param_ty_string[5..];
-                            if slice_type == "c_void" {
-                                slice_param_ty_tokens = "&'a mut [u8]".to_string();
-                                ptr = ".as_mut_ptr() as *mut c_void";
-                            } else {
-                                slice_param_ty_tokens = "&'a mut [".to_string() + slice_type + "]";
-                                ptr = ".as_mut_ptr()";
-                            }
-                        }
-                        let slice_param_ty_tokens = Term::intern(&slice_param_ty_tokens);
-                        let ptr = Term::intern(ptr);
 
-                        return Some(quote!{
+                        let param_ty = param_ty_string.splitn(2, ' ').collect_vec();
+                        assert_eq!(param_ty.len(), 2);
+                        let mutable = match param_ty[0] {
+                            "*const" => false,
+                            "*mut" => true,
+                            _ => unreachable!("Unexpected const-ness type: {}", param_ty[0]),
+                        };
+                        let mut slice_type = param_ty[1].parse::<TokenStream>().unwrap();
+
+                        let mut ptr = if mutable {
+                            quote!(.as_mut_ptr())
+                        } else {
+                            quote!(.as_ptr())
+                        };
+
+                        // Interpret void array as byte array
+                        if param_ty[1] == "c_void" {
+                            let mutable = if mutable { quote!(mut) } else { quote!(const) };
+
+                            slice_type = quote!(u8).into();
+                            ptr = quote!(#ptr as *#mutable c_void);
+                        };
+
+                        let mutable = if mutable { quote!(mut) } else { quote!() };
+                        let slice_param_ty_tokens = quote!(&'a #mutable [#slice_type]);
+
+                        return Some(quote! {
                             pub fn #param_ident_short(mut self, #param_ident_short: #slice_param_ty_tokens) -> #name_builder<'a> {
                                 self.inner.#array_size_ident = #param_ident_short.len() as _;
                                 self.inner.#param_ident = #param_ident_short#ptr;
@@ -1738,13 +1740,13 @@ pub fn derive_setters(
             }
 
             if let Some(param_ty_string) = param_ty_string.strip_prefix("*const ") {
-                let slice_param_ty_tokens = "&'a ".to_string() + param_ty_string;
-                let slice_param_ty_tokens = Term::intern(&slice_param_ty_tokens);
+                let slice_param_ty_tokens = param_ty_string.parse::<TokenStream>().unwrap();
+                let slice_param_ty_tokens = quote!(&'a #slice_param_ty_tokens);
                 return Some(quote!{
-                        pub fn #param_ident_short(mut self, #param_ident_short: #slice_param_ty_tokens) -> #name_builder<'a> {
-                            self.inner.#param_ident = #param_ident_short;
-                            self
-                        }
+                    pub fn #param_ident_short(mut self, #param_ident_short: #slice_param_ty_tokens) -> #name_builder<'a> {
+                        self.inner.#param_ident = #param_ident_short;
+                        self
+                    }
                 });
             }
         }
