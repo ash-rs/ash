@@ -32,13 +32,9 @@ impl DebugUtils {
         device: vk::Device,
         name_info: &vk::DebugUtilsObjectNameInfoEXT,
     ) -> VkResult<()> {
-        let err_code = self
-            .debug_utils_fn
-            .set_debug_utils_object_name_ext(device, name_info);
-        match err_code {
-            vk::Result::SUCCESS => Ok(()),
-            _ => Err(err_code),
-        }
+        self.debug_utils_fn
+            .set_debug_utils_object_name_ext(device, name_info)
+            .into()
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkSetDebugUtilsObjectTagEXT.html>"]
@@ -47,13 +43,9 @@ impl DebugUtils {
         device: vk::Device,
         tag_info: &vk::DebugUtilsObjectTagInfoEXT,
     ) -> VkResult<()> {
-        let err_code = self
-            .debug_utils_fn
-            .set_debug_utils_object_tag_ext(device, tag_info);
-        match err_code {
-            vk::Result::SUCCESS => Ok(()),
-            _ => Err(err_code),
-        }
+        self.debug_utils_fn
+            .set_debug_utils_object_tag_ext(device, tag_info)
+            .into()
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdBeginDebugUtilsLabelEXT.html>"]

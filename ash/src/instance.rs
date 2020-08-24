@@ -49,7 +49,7 @@ impl InstanceV1_0 for Instance {
         physical_device: vk::PhysicalDevice,
         create_info: &vk::DeviceCreateInfo,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
-    ) -> Result<Self::Device, vk::Result> {
+    ) -> VkResult<Self::Device> {
         let mut device: vk::Device = mem::zeroed();
         let err_code = self.fp_v1_0().create_device(
             physical_device,
@@ -109,16 +109,9 @@ pub trait InstanceV1_1: InstanceV1_0 {
     ) -> VkResult<()> {
         unsafe {
             let mut group_count = out.len() as u32;
-            let err_code = self.fp_v1_1().enumerate_physical_device_groups(
-                self.handle(),
-                &mut group_count,
-                out.as_mut_ptr(),
-            );
-            if err_code == vk::Result::SUCCESS {
-                Ok(())
-            } else {
-                Err(err_code)
-            }
+            self.fp_v1_1()
+                .enumerate_physical_device_groups(self.handle(), &mut group_count, out.as_mut_ptr())
+                .into()
         }
     }
 
@@ -160,16 +153,13 @@ pub trait InstanceV1_1: InstanceV1_0 {
         format_info: &vk::PhysicalDeviceImageFormatInfo2,
         image_format_prop: &mut vk::ImageFormatProperties2,
     ) -> VkResult<()> {
-        let err_code = self.fp_v1_1().get_physical_device_image_format_properties2(
-            physical_device,
-            format_info,
-            image_format_prop,
-        );
-        if err_code == vk::Result::SUCCESS {
-            Ok(())
-        } else {
-            Err(err_code)
-        }
+        self.fp_v1_1()
+            .get_physical_device_image_format_properties2(
+                physical_device,
+                format_info,
+                image_format_prop,
+            )
+            .into()
     }
 
     unsafe fn get_physical_device_queue_family_properties2_len(

@@ -87,15 +87,13 @@ impl RayTracing {
         &self,
         bind_info: &[vk::BindAccelerationStructureMemoryInfoNV],
     ) -> VkResult<()> {
-        let err_code = self.ray_tracing_fn.bind_acceleration_structure_memory_nv(
-            self.handle,
-            bind_info.len() as u32,
-            bind_info.as_ptr(),
-        );
-        match err_code {
-            vk::Result::SUCCESS => Ok(()),
-            _ => Err(err_code),
-        }
+        self.ray_tracing_fn
+            .bind_acceleration_structure_memory_nv(
+                self.handle,
+                bind_info.len() as u32,
+                bind_info.as_ptr(),
+            )
+            .into()
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdBuildAccelerationStructureNV.html>"]
@@ -204,18 +202,16 @@ impl RayTracing {
         group_count: u32,
         data: &mut [u8],
     ) -> VkResult<()> {
-        let err_code = self.ray_tracing_fn.get_ray_tracing_shader_group_handles_nv(
-            self.handle,
-            pipeline,
-            first_group,
-            group_count,
-            data.len(),
-            data.as_mut_ptr() as *mut std::ffi::c_void,
-        );
-        match err_code {
-            vk::Result::SUCCESS => Ok(()),
-            _ => Err(err_code),
-        }
+        self.ray_tracing_fn
+            .get_ray_tracing_shader_group_handles_nv(
+                self.handle,
+                pipeline,
+                first_group,
+                group_count,
+                data.len(),
+                data.as_mut_ptr() as *mut std::ffi::c_void,
+            )
+            .into()
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetAccelerationStructureHandleNV.html>"]
@@ -259,13 +255,9 @@ impl RayTracing {
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCompileDeferredNV.html>"]
     pub unsafe fn compile_deferred(&self, pipeline: vk::Pipeline, shader: u32) -> VkResult<()> {
-        let err_code = self
-            .ray_tracing_fn
-            .compile_deferred_nv(self.handle, pipeline, shader);
-        match err_code {
-            vk::Result::SUCCESS => Ok(()),
-            _ => Err(err_code),
-        }
+        self.ray_tracing_fn
+            .compile_deferred_nv(self.handle, pipeline, shader)
+            .into()
     }
 
     pub fn name() -> &'static CStr {
