@@ -7,17 +7,17 @@ use std::ffi::CStr;
 use std::mem;
 
 #[derive(Clone)]
-pub struct RayTracing {
+pub struct RayTracingPipeline {
     handle: vk::Device,
-    ray_tracing_fn: vk::KhrRayTracingFn,
+    ray_tracing_fn: vk::KhrRayTracingPipelineFn,
 }
 
-impl RayTracing {
-    pub fn new<I: InstanceV1_0, D: DeviceV1_0>(instance: &I, device: &D) -> RayTracing {
-        let ray_tracing_fn = vk::KhrRayTracingFn::load(|name| unsafe {
+impl RayTracingPipeline {
+    pub fn new<I: InstanceV1_0, D: DeviceV1_0>(instance: &I, device: &D) -> Self {
+        let ray_tracing_fn = vk::KhrRayTracingPipelineFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
-        RayTracing {
+        Self {
             handle: device.handle(),
             ray_tracing_fn,
         }
@@ -26,8 +26,8 @@ impl RayTracing {
     pub unsafe fn get_properties<I: InstanceV1_1>(
         instance: &I,
         pdevice: vk::PhysicalDevice,
-    ) -> vk::PhysicalDeviceRayTracingPropertiesKHR {
-        let mut props_rt = vk::PhysicalDeviceRayTracingPropertiesKHR::default();
+    ) -> vk::PhysicalDeviceRayTracingPipelinePropertiesKHR {
+        let mut props_rt = vk::PhysicalDeviceRayTracingPipelinePropertiesKHR::default();
         {
             let mut props = vk::PhysicalDeviceProperties2::builder().push_next(&mut props_rt);
             instance.get_physical_device_properties2(pdevice, &mut props);
@@ -39,10 +39,10 @@ impl RayTracing {
     pub unsafe fn cmd_trace_rays(
         &self,
         command_buffer: vk::CommandBuffer,
-        raygen_shader_binding_tables: &[vk::StridedBufferRegionKHR],
-        miss_shader_binding_tables: &[vk::StridedBufferRegionKHR],
-        hit_shader_binding_tables: &[vk::StridedBufferRegionKHR],
-        callable_shader_binding_tables: &[vk::StridedBufferRegionKHR],
+        raygen_shader_binding_tables: &[vk::StridedDeviceAddressRegionKHR],
+        miss_shader_binding_tables: &[vk::StridedDeviceAddressRegionKHR],
+        hit_shader_binding_tables: &[vk::StridedDeviceAddressRegionKHR],
+        callable_shader_binding_tables: &[vk::StridedDeviceAddressRegionKHR],
         width: u32,
         height: u32,
         depth: u32,
@@ -62,6 +62,7 @@ impl RayTracing {
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateRayTracingPipelinesKHR.html>"]
     pub unsafe fn create_ray_tracing_pipelines(
         &self,
+        deferred_operation: vk::DeferredOperationKHR,
         pipeline_cache: vk::PipelineCache,
         create_info: &[vk::RayTracingPipelineCreateInfoKHR],
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
@@ -70,6 +71,7 @@ impl RayTracing {
         self.ray_tracing_fn
             .create_ray_tracing_pipelines_khr(
                 self.handle,
+                deferred_operation,
                 pipeline_cache,
                 create_info.len() as u32,
                 create_info.as_ptr(),
@@ -102,6 +104,7 @@ impl RayTracing {
         err_code.result_with_success(data)
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetRayTracingCaptureReplayShaderGroupHandlesKHR.html>"]
     pub unsafe fn get_ray_tracing_capture_replay_shader_group_handles(
         &self,
         device: vk::Device,
@@ -124,15 +127,15 @@ impl RayTracing {
             .result_with_success(data)
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdTraceRaysIndirectKHR.html>"]
     pub unsafe fn cmd_trace_rays_indirect(
         &self,
         command_buffer: vk::CommandBuffer,
-        raygen_shader_binding_table: &[vk::StridedBufferRegionKHR],
-        miss_shader_binding_table: &[vk::StridedBufferRegionKHR],
-        hit_shader_binding_table: &[vk::StridedBufferRegionKHR],
-        callable_shader_binding_table: &[vk::StridedBufferRegionKHR],
-        buffer: vk::Buffer,
-        offset: vk::DeviceSize,
+        raygen_shader_binding_table: &[vk::StridedDeviceAddressRegionKHR],
+        miss_shader_binding_table: &[vk::StridedDeviceAddressRegionKHR],
+        hit_shader_binding_table: &[vk::StridedDeviceAddressRegionKHR],
+        callable_shader_binding_table: &[vk::StridedDeviceAddressRegionKHR],
+        indirect_device_address: vk::DeviceAddress,
     ) {
         self.ray_tracing_fn.cmd_trace_rays_indirect_khr(
             command_buffer,
@@ -140,16 +143,37 @@ impl RayTracing {
             miss_shader_binding_table.as_ptr(),
             hit_shader_binding_table.as_ptr(),
             callable_shader_binding_table.as_ptr(),
-            buffer,
-            offset,
+            indirect_device_address,
         );
     }
 
-    pub fn name() -> &'static CStr {
-        vk::KhrRayTracingFn::name()
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetRayTracingShaderGroupStackSizeKHR.html>"]
+    pub unsafe fn get_ray_tracing_shader_group_stack_size(
+        &self,
+        device: vk::Device,
+        pipeline: vk::Pipeline,
+        group: u32,
+        group_shader: vk::ShaderGroupShaderKHR,
+    ) -> vk::DeviceSize {
+        self.ray_tracing_fn
+            .get_ray_tracing_shader_group_stack_size_khr(device, pipeline, group, group_shader)
     }
 
-    pub fn fp(&self) -> &vk::KhrRayTracingFn {
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetRayTracingPipelineStackSizeKHR.html>"]
+    pub unsafe fn cmd_set_ray_tracing_pipeline_stack_size(
+        &self,
+        command_buffer: vk::CommandBuffer,
+        pipeline_stack_size: u32,
+    ) {
+        self.ray_tracing_fn
+            .cmd_set_ray_tracing_pipeline_stack_size_khr(command_buffer, pipeline_stack_size);
+    }
+
+    pub fn name() -> &'static CStr {
+        vk::KhrRayTracingPipelineFn::name()
+    }
+
+    pub fn fp(&self) -> &vk::KhrRayTracingPipelineFn {
         &self.ray_tracing_fn
     }
 
