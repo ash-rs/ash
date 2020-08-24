@@ -359,7 +359,7 @@ pub fn platform_specific_types() -> Tokens {
         // typedefs are only here so that the code compiles for now
         #[allow(non_camel_case_types)]
         pub type SECURITY_ATTRIBUTES = ();
-        // Opage types
+        // Opaque types
         pub type ANativeWindow = c_void;
         pub type AHardwareBuffer = c_void;
         pub type CAMetalLayer = c_void;
@@ -603,7 +603,7 @@ impl CommandExt for vkxml::Command {
 }
 
 pub trait FieldExt {
-    /// Returns the name of the paramter that doesn't clash with Rusts resevered
+    /// Returns the name of the parameter that doesn't clash with Rusts reserved
     /// keywords
     fn param_ident(&self) -> Ident;
 
@@ -1438,9 +1438,9 @@ pub fn derive_default(_struct: &vkxml::Struct) -> Option<Tokens> {
     // also doesn't mark them as pointers
     let handles = ["LPCWSTR", "HANDLE", "HINSTANCE", "HWND", "HMONITOR"];
     let contains_ptr = members.clone().any(|field| field.reference.is_some());
-    let contains_strucutre_type = members.clone().any(is_structure_type);
+    let contains_structure_type = members.clone().any(is_structure_type);
     let contains_static_array = members.clone().any(is_static_array);
-    if !(contains_ptr || contains_strucutre_type || contains_static_array) {
+    if !(contains_ptr || contains_structure_type || contains_static_array) {
         return None;
     };
     let default_fields = members.clone().map(|field| {
