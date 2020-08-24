@@ -35,95 +35,6 @@ impl RayTracing {
         props_rt
     }
 
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateAccelerationStructureKHR.html>"]
-    pub unsafe fn create_acceleration_structure(
-        &self,
-        create_info: &vk::AccelerationStructureCreateInfoKHR,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
-    ) -> VkResult<vk::AccelerationStructureKHR> {
-        let mut accel_struct = mem::zeroed();
-        self.ray_tracing_fn
-            .create_acceleration_structure_khr(
-                self.handle,
-                create_info,
-                allocation_callbacks.as_raw_ptr(),
-                &mut accel_struct,
-            )
-            .result_with_success(accel_struct)
-    }
-
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkDestroyAccelerationStructureKHR.html>"]
-    pub unsafe fn destroy_acceleration_structure(
-        &self,
-        accel_struct: vk::AccelerationStructureKHR,
-        allocation_callbacks: Option<&vk::AllocationCallbacks>,
-    ) {
-        self.ray_tracing_fn.destroy_acceleration_structure_khr(
-            self.handle,
-            accel_struct,
-            allocation_callbacks.as_raw_ptr(),
-        );
-    }
-
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetAccelerationStructureMemoryRequirementsKHR.html>"]
-    pub unsafe fn get_acceleration_structure_memory_requirements(
-        &self,
-        info: &vk::AccelerationStructureMemoryRequirementsInfoKHR,
-    ) -> vk::MemoryRequirements2KHR {
-        let mut requirements = Default::default();
-        self.ray_tracing_fn
-            .get_acceleration_structure_memory_requirements_khr(
-                self.handle,
-                info,
-                &mut requirements,
-            );
-        requirements
-    }
-
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkBindAccelerationStructureMemoryKHR.html>"]
-    pub unsafe fn bind_acceleration_structure_memory(
-        &self,
-        bind_info: &[vk::BindAccelerationStructureMemoryInfoKHR],
-    ) -> VkResult<()> {
-        self.ray_tracing_fn
-            .bind_acceleration_structure_memory_khr(
-                self.handle,
-                bind_info.len() as u32,
-                bind_info.as_ptr(),
-            )
-            .into()
-    }
-
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdBuildAccelerationStructureKHR.html>"]
-    pub unsafe fn cmd_build_acceleration_structure(
-        &self,
-        command_buffer: vk::CommandBuffer,
-        infos: &[vk::AccelerationStructureBuildGeometryInfoKHR],
-        offset_infos: &[&[vk::AccelerationStructureBuildOffsetInfoKHR]],
-    ) {
-        let offset_info_ptr = offset_infos
-            .iter()
-            .map(|slice| slice.as_ptr())
-            .collect::<Vec<*const vk::AccelerationStructureBuildOffsetInfoKHR>>();
-
-        self.ray_tracing_fn.cmd_build_acceleration_structure_khr(
-            command_buffer,
-            infos.len() as u32,
-            infos.as_ptr(),
-            offset_info_ptr.as_ptr(),
-        );
-    }
-
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdCopyAccelerationStructureKHR.html>"]
-    pub unsafe fn cmd_copy_acceleration_structure(
-        &self,
-        command_buffer: vk::CommandBuffer,
-        info: &vk::CopyAccelerationStructureInfoKHR,
-    ) {
-        self.ray_tracing_fn
-            .cmd_copy_acceleration_structure_khr(command_buffer, info);
-    }
-
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdTraceRaysKHR.html>"]
     pub unsafe fn cmd_trace_rays(
         &self,
@@ -191,91 +102,6 @@ impl RayTracing {
         err_code.result_with_success(data)
     }
 
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetAccelerationStructureHandleKHR.html>"]
-    pub unsafe fn get_acceleration_structure_device_address(
-        &self,
-        info: &vk::AccelerationStructureDeviceAddressInfoKHR,
-    ) -> vk::DeviceAddress {
-        self.ray_tracing_fn
-            .get_acceleration_structure_device_address_khr(self.handle, info)
-    }
-
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdWriteAccelerationStructuresPropertiesKHR.html>"]
-    pub unsafe fn cmd_write_acceleration_structures_properties(
-        &self,
-        command_buffer: vk::CommandBuffer,
-        structures: &[vk::AccelerationStructureKHR],
-        query_type: vk::QueryType,
-        query_pool: vk::QueryPool,
-        first_query: u32,
-    ) {
-        self.ray_tracing_fn
-            .cmd_write_acceleration_structures_properties_khr(
-                command_buffer,
-                structures.len() as u32,
-                structures.as_ptr(),
-                query_type,
-                query_pool,
-                first_query,
-            );
-    }
-
-    pub unsafe fn cmd_build_acceleration_structure_indirect(
-        &self,
-        command_buffer: vk::CommandBuffer,
-        info: &vk::AccelerationStructureBuildGeometryInfoKHR,
-        indirect_buffer: vk::Buffer,
-        indirect_offset: vk::DeviceSize,
-        indirect_stride: u32,
-    ) {
-        self.ray_tracing_fn
-            .cmd_build_acceleration_structure_indirect_khr(
-                command_buffer,
-                info,
-                indirect_buffer,
-                indirect_offset,
-                indirect_stride,
-            );
-    }
-
-    pub unsafe fn copy_acceleration_structure_to_memory(
-        &self,
-        device: vk::Device,
-        info: &vk::CopyAccelerationStructureToMemoryInfoKHR,
-    ) -> VkResult<()> {
-        self.ray_tracing_fn
-            .copy_acceleration_structure_to_memory_khr(device, info)
-            .into()
-    }
-
-    pub unsafe fn copy_memory_to_acceleration_structure(
-        &self,
-        device: vk::Device,
-        info: &vk::CopyMemoryToAccelerationStructureInfoKHR,
-    ) -> VkResult<()> {
-        self.ray_tracing_fn
-            .copy_memory_to_acceleration_structure_khr(device, info)
-            .into()
-    }
-
-    pub unsafe fn cmd_copy_acceleration_structure_to_memory(
-        &self,
-        command_buffer: vk::CommandBuffer,
-        info: &vk::CopyAccelerationStructureToMemoryInfoKHR,
-    ) {
-        self.ray_tracing_fn
-            .cmd_copy_acceleration_structure_to_memory_khr(command_buffer, info);
-    }
-
-    pub unsafe fn cmd_copy_memory_to_acceleration_structure(
-        &self,
-        command_buffer: vk::CommandBuffer,
-        info: &vk::CopyMemoryToAccelerationStructureInfoKHR,
-    ) {
-        self.ray_tracing_fn
-            .cmd_copy_memory_to_acceleration_structure_khr(command_buffer, info);
-    }
-
     pub unsafe fn get_ray_tracing_capture_replay_shader_group_handles(
         &self,
         device: vk::Device,
@@ -317,16 +143,6 @@ impl RayTracing {
             buffer,
             offset,
         );
-    }
-
-    pub unsafe fn get_device_acceleration_structure_compatibility(
-        &self,
-        device: vk::Device,
-        version: &vk::AccelerationStructureVersionKHR,
-    ) -> VkResult<()> {
-        self.ray_tracing_fn
-            .get_device_acceleration_structure_compatibility_khr(device, version)
-            .into()
     }
 
     pub fn name() -> &'static CStr {

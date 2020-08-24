@@ -1,3 +1,4 @@
+pub use self::acceleration_structure::AccelerationStructure;
 pub use self::android_surface::AndroidSurface;
 pub use self::display::Display;
 pub use self::display_swapchain::DisplaySwapchain;
@@ -14,6 +15,7 @@ pub use self::win32_surface::Win32Surface;
 pub use self::xcb_surface::XcbSurface;
 pub use self::xlib_surface::XlibSurface;
 
+mod acceleration_structure;
 mod android_surface;
 mod display;
 mod display_swapchain;
