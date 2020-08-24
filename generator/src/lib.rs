@@ -380,6 +380,8 @@ pub fn platform_specific_types() -> Tokens {
         // https://github.com/google/gapid/commit/22aafebec4638c6aaa77667096bca30f6e842d95#diff-ab3ab4a7d89b4fc8a344ff4e9332865f268ea1669ee379c1b516a954ecc2e7a6R20-R21
         pub type GgpStreamDescriptor = u32;
         pub type GgpFrameToken = u64;
+        pub type IDirectFB = c_void;
+        pub type IDirectFBSurface = c_void;
     }
 }
 #[derive(Debug, Copy, Clone)]

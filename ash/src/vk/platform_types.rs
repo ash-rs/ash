@@ -30,3 +30,5 @@ pub type AHardwareBuffer = c_void;
 pub type CAMetalLayer = c_void;
 pub type GgpStreamDescriptor = u32;
 pub type GgpFrameToken = u64;
+pub type IDirectFB = c_void;
+pub type IDirectFBSurface = c_void;
