@@ -869,6 +869,7 @@ impl SubpassContents {
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkResult.html>"]
+#[must_use]
 pub struct Result(pub(crate) i32);
 impl Result {
     pub const fn from_raw(x: i32) -> Self {

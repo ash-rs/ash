@@ -1346,24 +1346,24 @@ pub fn generate_enum<'a>(
             EnumType::Bitflags(q)
         }
     } else {
+        let (struct_attribute, special_quote) = match _name.as_str() {
+            //"StructureType" => generate_structure_type(&_name, _enum, create_info_constants),
+            "Result" => (quote!(#[must_use]), generate_result(ident, _enum)),
+            _ => (quote!(), quote!()),
+        };
+
         let impl_block = bitflags_impl_block(ident, &_enum.name, &constants);
         let enum_quote = quote! {
             #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
             #[repr(transparent)]
             #[doc = #khronos_link]
+            #struct_attribute
             pub struct #ident(pub(crate) i32);
             impl #ident {
                 pub const fn from_raw(x: i32) -> Self { #ident(x) }
                 pub const fn as_raw(self) -> i32 { self.0 }
             }
             #impl_block
-        };
-        let special_quote = match _name.as_str() {
-            //"StructureType" => generate_structure_type(&_name, _enum, create_info_constants),
-            "Result" => generate_result(ident, _enum),
-            _ => {
-                quote! {}
-            }
         };
         let q = quote! {
             #enum_quote
