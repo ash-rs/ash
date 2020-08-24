@@ -1171,12 +1171,17 @@ pub fn generate_define(define: &vkxml::Define) -> Tokens {
     }
 }
 pub fn generate_typedef(typedef: &vkxml::Typedef) -> Tokens {
-    let typedef_name = to_type_tokens(&typedef.name, None);
-    let typedef_ty = to_type_tokens(&typedef.basetype, None);
-    let khronos_link = khronos_link(&typedef.name);
-    quote! {
-        #[doc = #khronos_link]
-        pub type #typedef_name = #typedef_ty;
+    if typedef.basetype.is_empty() {
+        // Ignore forward declarations
+        quote! {}
+    } else {
+        let typedef_name = to_type_tokens(&typedef.name, None);
+        let typedef_ty = to_type_tokens(&typedef.basetype, None);
+        let khronos_link = khronos_link(&typedef.name);
+        quote! {
+            #[doc = #khronos_link]
+            pub type #typedef_name = #typedef_ty;
+        }
     }
 }
 pub fn generate_bitmask(
