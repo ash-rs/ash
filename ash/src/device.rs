@@ -710,13 +710,15 @@ pub trait DeviceV1_0 {
         &self,
         pool: vk::DescriptorPool,
         descriptor_sets: &[vk::DescriptorSet],
-    ) {
-        self.fp_v1_0().free_descriptor_sets(
-            self.handle(),
-            pool,
-            descriptor_sets.len() as u32,
-            descriptor_sets.as_ptr(),
-        );
+    ) -> VkResult<()> {
+        self.fp_v1_0()
+            .free_descriptor_sets(
+                self.handle(),
+                pool,
+                descriptor_sets.len() as u32,
+                descriptor_sets.as_ptr(),
+            )
+            .into()
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkUpdateDescriptorSets.html>"]

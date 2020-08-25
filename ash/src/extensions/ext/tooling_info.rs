@@ -33,8 +33,12 @@ impl ToolingInfo {
         physical_device: vk::PhysicalDevice,
     ) -> VkResult<Vec<vk::PhysicalDeviceToolPropertiesEXT>> {
         let mut count = 0;
-        self.tooling_info_fn
+        let err_code = self
+            .tooling_info_fn
             .get_physical_device_tool_properties_ext(physical_device, &mut count, ptr::null_mut());
+        if err_code != vk::Result::SUCCESS {
+            return Err(err_code);
+        }
         let mut v = Vec::with_capacity(count as usize);
         let err_code = self
             .tooling_info_fn

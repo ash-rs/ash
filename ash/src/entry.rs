@@ -57,9 +57,12 @@ pub trait EntryV1_0 {
     fn enumerate_instance_layer_properties(&self) -> VkResult<Vec<vk::LayerProperties>> {
         unsafe {
             let mut num = 0;
-            self.fp_v1_0()
+            let err_code = self
+                .fp_v1_0()
                 .enumerate_instance_layer_properties(&mut num, ptr::null_mut());
-
+            if err_code != vk::Result::SUCCESS {
+                return Err(err_code);
+            }
             let mut v = Vec::with_capacity(num as usize);
             let err_code = self
                 .fp_v1_0()
@@ -76,11 +79,14 @@ pub trait EntryV1_0 {
     fn enumerate_instance_extension_properties(&self) -> VkResult<Vec<vk::ExtensionProperties>> {
         unsafe {
             let mut num = 0;
-            self.fp_v1_0().enumerate_instance_extension_properties(
+            let err_code = self.fp_v1_0().enumerate_instance_extension_properties(
                 ptr::null(),
                 &mut num,
                 ptr::null_mut(),
             );
+            if err_code != vk::Result::SUCCESS {
+                return Err(err_code);
+            }
             let mut data = Vec::with_capacity(num as usize);
             let err_code = self.fp_v1_0().enumerate_instance_extension_properties(
                 ptr::null(),

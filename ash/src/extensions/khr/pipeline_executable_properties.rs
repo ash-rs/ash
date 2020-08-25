@@ -39,13 +39,17 @@ impl PipelineExecutableProperties {
         executable_info: &vk::PipelineExecutableInfoKHR,
     ) -> VkResult<Vec<vk::PipelineExecutableInternalRepresentationKHR>> {
         let mut count = 0;
-        self.pipeline_executable_properties_fn
+        let err_code = self
+            .pipeline_executable_properties_fn
             .get_pipeline_executable_internal_representations_khr(
                 device,
                 executable_info,
                 &mut count,
                 ptr::null_mut(),
             );
+        if err_code != vk::Result::SUCCESS {
+            return Err(err_code);
+        }
         let mut v: Vec<_> = vec![Default::default(); count as usize];
         let err_code = self
             .pipeline_executable_properties_fn
@@ -68,13 +72,17 @@ impl PipelineExecutableProperties {
         pipeline_info: &vk::PipelineInfoKHR,
     ) -> VkResult<Vec<vk::PipelineExecutablePropertiesKHR>> {
         let mut count = 0;
-        self.pipeline_executable_properties_fn
+        let err_code = self
+            .pipeline_executable_properties_fn
             .get_pipeline_executable_properties_khr(
                 device,
                 pipeline_info,
                 &mut count,
                 ptr::null_mut(),
             );
+        if err_code != vk::Result::SUCCESS {
+            return Err(err_code);
+        }
         let mut v: Vec<_> = vec![Default::default(); count as usize];
         let err_code = self
             .pipeline_executable_properties_fn
@@ -97,13 +105,17 @@ impl PipelineExecutableProperties {
         executable_info: &vk::PipelineExecutableInfoKHR,
     ) -> VkResult<Vec<vk::PipelineExecutableStatisticKHR>> {
         let mut count = 0;
-        self.pipeline_executable_properties_fn
+        let err_code = self
+            .pipeline_executable_properties_fn
             .get_pipeline_executable_statistics_khr(
                 device,
                 executable_info,
                 &mut count,
                 ptr::null_mut(),
             );
+        if err_code != vk::Result::SUCCESS {
+            return Err(err_code);
+        }
         let mut v: Vec<_> = vec![Default::default(); count as usize];
         let err_code = self
             .pipeline_executable_properties_fn
