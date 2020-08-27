@@ -1123,6 +1123,19 @@ pub fn generate_extension<'a>(
     };
     Some(q)
 }
+pub fn generate_define(define: &vkxml::Define) -> Tokens {
+    if let Some(value) = &define.value {
+        let name = constant_name(&define.name);
+        if name == "NULL_HANDLE" {
+            return quote!();
+        }
+        let ident = Ident::from(name.as_str());
+
+        str::parse::<u32>(value).map_or(quote!(), |v| quote!(pub const #ident: u32 = #v;))
+    } else {
+        quote!()
+    }
+}
 pub fn generate_typedef(typedef: &vkxml::Typedef) -> Tokens {
     let typedef_name = to_type_tokens(&typedef.name, None);
     let typedef_ty = to_type_tokens(&typedef.basetype, None);
@@ -2024,6 +2037,7 @@ pub fn generate_definition(
     const_values: &mut BTreeMap<Ident, Vec<ConstantMatchInfo>>,
 ) -> Option<Tokens> {
     match *definition {
+        vkxml::DefinitionsElement::Define(ref define) => Some(generate_define(define)),
         vkxml::DefinitionsElement::Typedef(ref typedef) => Some(generate_typedef(typedef)),
         vkxml::DefinitionsElement::Struct(ref _struct) => {
             Some(generate_struct(_struct, root_structs, union_types))

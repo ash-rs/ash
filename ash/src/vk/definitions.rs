@@ -6,6 +6,7 @@ use crate::vk::platform_types::*;
 use crate::vk::{ptr_chain_iter, Handle};
 use std::fmt;
 use std::os::raw::*;
+pub const HEADER_VERSION: u32 = 135u32;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkSampleMask.html>"]
 pub type SampleMask = u32;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkBool32.html>"]
