@@ -1124,14 +1124,28 @@ pub fn generate_extension<'a>(
     Some(q)
 }
 pub fn generate_define(define: &vkxml::Define) -> Tokens {
-    if let Some(value) = &define.value {
-        let name = constant_name(&define.name);
-        if name == "NULL_HANDLE" {
-            return quote!();
-        }
-        let ident = Ident::from(name.as_str());
+    let name = constant_name(&define.name);
+    let ident = Ident::from(name.as_str());
+    let deprecated = define
+        .comment
+        .as_ref()
+        .map_or(false, |c| c.contains("DEPRECATED"));
 
+    if name == "NULL_HANDLE" || deprecated {
+        quote!()
+    } else if let Some(value) = &define.value {
         str::parse::<u32>(value).map_or(quote!(), |v| quote!(pub const #ident: u32 = #v;))
+    } else if let Some(c_expr) = &define.c_expression {
+        if define.defref.contains(&"VK_MAKE_VERSION".to_string()) {
+            let c_expr = c_expr.replace("VK_", "");
+            let c_expr = c_expr.replace("MAKE_VERSION", "crate::vk::make_version");
+            use proc_macro2::TokenStream;
+            use std::str::FromStr;
+            let c_expr = TokenStream::from_str(&c_expr).unwrap();
+            quote!(pub const #ident: u32 = #c_expr;)
+        } else {
+            quote!()
+        }
     } else {
         quote!()
     }
