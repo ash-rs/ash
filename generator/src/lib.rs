@@ -1075,6 +1075,28 @@ pub fn generate_extension_commands<'a>(
     let fp = generate_function_pointers(ident, &commands, &aliases, fn_cache);
     let byte_name = format!("{}\0", extension_name);
 
+    let spec_version = items
+        .iter()
+        .find_map(|ext_item| match ext_item {
+            vk_parse::ExtensionChild::Require { items, .. } => {
+                items.iter().find_map(|item| match item {
+                    vk_parse::InterfaceItem::Enum(ref e) if e.name.contains("SPEC_VERSION") => {
+                        Some(e)
+                    }
+                    _ => None,
+                })
+            }
+            _ => None,
+        })
+        .and_then(|e| {
+            if let vk_parse::EnumSpec::Value { value, .. } = &e.spec {
+                let v: u32 = str::parse(value).unwrap();
+                Some(quote!(pub const SPEC_VERSION: u32 = #v;))
+            } else {
+                None
+            }
+        });
+
     let byte_name_ident =
         syn::LitByteStr::new(byte_name.as_bytes(), proc_macro2::Span::call_site());
     let extension_cstr = quote! {
@@ -1082,6 +1104,7 @@ pub fn generate_extension_commands<'a>(
             pub fn name() -> &'static ::std::ffi::CStr {
                 ::std::ffi::CStr::from_bytes_with_nul(#byte_name_ident).expect("Wrong extension string")
             }
+            #spec_version
         }
     };
     quote! {
