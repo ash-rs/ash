@@ -174,18 +174,21 @@ impl RayTracing {
         pipeline: vk::Pipeline,
         first_group: u32,
         group_count: u32,
-        data: &mut [u8],
-    ) -> VkResult<()> {
-        self.ray_tracing_fn
+        data_size: usize,
+    ) -> VkResult<Vec<u8>> {
+        let mut data = Vec::<u8>::with_capacity(data_size);
+        let err_code = self
+            .ray_tracing_fn
             .get_ray_tracing_shader_group_handles_khr(
                 self.handle,
                 pipeline,
                 first_group,
                 group_count,
-                data.len(),
+                data_size,
                 data.as_mut_ptr() as *mut std::ffi::c_void,
-            )
-            .into()
+            );
+        data.set_len(data_size);
+        err_code.result_with_success(data)
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetAccelerationStructureHandleKHR.html>"]
