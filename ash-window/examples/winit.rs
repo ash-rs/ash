@@ -35,12 +35,14 @@ fn main() -> Result<(), Box<dyn Error>> {
 
         let mut running = true;
         while running {
-            events_loop.poll_events(|event| match event {
-                winit::Event::WindowEvent {
+            events_loop.poll_events(|event| {
+                if let winit::Event::WindowEvent {
                     event: winit::WindowEvent::CloseRequested,
                     ..
-                } => running = false,
-                _ => (),
+                } = event
+                {
+                    running = false;
+                }
             });
         }
 
