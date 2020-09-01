@@ -1,11 +1,7 @@
 #![recursion_limit = "256"]
 
-#[macro_use]
-extern crate nom;
-#[macro_use]
-extern crate quote;
-pub use vk_parse;
-pub use vkxml;
+use nom::{alt, char, do_parse, map, named, opt, tag, take_while1, terminated};
+use quote::*;
 
 use heck::{CamelCase, ShoutySnakeCase, SnakeCase};
 use itertools::Itertools;
