@@ -1075,6 +1075,28 @@ pub fn generate_extension_commands<'a>(
     let fp = generate_function_pointers(ident, &commands, &aliases, fn_cache);
     let byte_name = format!("{}\0", extension_name);
 
+    let spec_version = items
+        .iter()
+        .find_map(|ext_item| match ext_item {
+            vk_parse::ExtensionChild::Require { items, .. } => {
+                items.iter().find_map(|item| match item {
+                    vk_parse::InterfaceItem::Enum(ref e) if e.name.contains("SPEC_VERSION") => {
+                        Some(e)
+                    }
+                    _ => None,
+                })
+            }
+            _ => None,
+        })
+        .and_then(|e| {
+            if let vk_parse::EnumSpec::Value { value, .. } = &e.spec {
+                let v: u32 = str::parse(value).unwrap();
+                Some(quote!(pub const SPEC_VERSION: u32 = #v;))
+            } else {
+                None
+            }
+        });
+
     let byte_name_ident =
         syn::LitByteStr::new(byte_name.as_bytes(), proc_macro2::Span::call_site());
     let extension_cstr = quote! {
@@ -1082,6 +1104,7 @@ pub fn generate_extension_commands<'a>(
             pub fn name() -> &'static ::std::ffi::CStr {
                 ::std::ffi::CStr::from_bytes_with_nul(#byte_name_ident).expect("Wrong extension string")
             }
+            #spec_version
         }
     };
     quote! {
@@ -1122,6 +1145,33 @@ pub fn generate_extension<'a>(
         #extension_tokens
     };
     Some(q)
+}
+pub fn generate_define(define: &vkxml::Define) -> Tokens {
+    let name = constant_name(&define.name);
+    let ident = Ident::from(name.as_str());
+    let deprecated = define
+        .comment
+        .as_ref()
+        .map_or(false, |c| c.contains("DEPRECATED"));
+
+    if name == "NULL_HANDLE" || deprecated {
+        quote!()
+    } else if let Some(value) = &define.value {
+        str::parse::<u32>(value).map_or(quote!(), |v| quote!(pub const #ident: u32 = #v;))
+    } else if let Some(c_expr) = &define.c_expression {
+        if define.defref.contains(&"VK_MAKE_VERSION".to_string()) {
+            let c_expr = c_expr.replace("VK_", "");
+            let c_expr = c_expr.replace("MAKE_VERSION", "crate::vk::make_version");
+            use proc_macro2::TokenStream;
+            use std::str::FromStr;
+            let c_expr = TokenStream::from_str(&c_expr).unwrap();
+            quote!(pub const #ident: u32 = #c_expr;)
+        } else {
+            quote!()
+        }
+    } else {
+        quote!()
+    }
 }
 pub fn generate_typedef(typedef: &vkxml::Typedef) -> Tokens {
     let typedef_name = to_type_tokens(&typedef.name, None);
@@ -2024,6 +2074,7 @@ pub fn generate_definition(
     const_values: &mut BTreeMap<Ident, Vec<ConstantMatchInfo>>,
 ) -> Option<Tokens> {
     match *definition {
+        vkxml::DefinitionsElement::Define(ref define) => Some(generate_define(define)),
         vkxml::DefinitionsElement::Typedef(ref typedef) => Some(generate_typedef(typedef)),
         vkxml::DefinitionsElement::Struct(ref _struct) => {
             Some(generate_struct(_struct, root_structs, union_types))
