@@ -29,6 +29,7 @@ macro_rules! offset_of {
 pub fn record_submit_commandbuffer<D: DeviceV1_0, F: FnOnce(&D, vk::CommandBuffer)>(
     device: &D,
     command_buffer: vk::CommandBuffer,
+    command_buffer_reuse_fence: vk::Fence,
     submit_queue: vk::Queue,
     wait_mask: &[vk::PipelineStageFlags],
     wait_semaphores: &[vk::Semaphore],
@@ -36,6 +37,14 @@ pub fn record_submit_commandbuffer<D: DeviceV1_0, F: FnOnce(&D, vk::CommandBuffe
     f: F,
 ) {
     unsafe {
+        device
+            .wait_for_fences(&[command_buffer_reuse_fence], true, std::u64::MAX)
+            .expect("Wait for fence failed.");
+
+        device
+            .reset_fences(&[command_buffer_reuse_fence])
+            .expect("Reset fences failed.");
+
         device
             .reset_command_buffer(
                 command_buffer,
@@ -54,10 +63,6 @@ pub fn record_submit_commandbuffer<D: DeviceV1_0, F: FnOnce(&D, vk::CommandBuffe
             .end_command_buffer(command_buffer)
             .expect("End commandbuffer");
 
-        let submit_fence = device
-            .create_fence(&vk::FenceCreateInfo::default(), None)
-            .expect("Create fence failed.");
-
         let command_buffers = vec![command_buffer];
 
         let submit_info = vk::SubmitInfo::builder()
@@ -67,12 +72,8 @@ pub fn record_submit_commandbuffer<D: DeviceV1_0, F: FnOnce(&D, vk::CommandBuffe
             .signal_semaphores(signal_semaphores);
 
         device
-            .queue_submit(submit_queue, &[submit_info.build()], submit_fence)
+            .queue_submit(submit_queue, &[submit_info.build()], command_buffer_reuse_fence)
             .expect("queue submit failed.");
-        device
-            .wait_for_fences(&[submit_fence], true, std::u64::MAX)
-            .expect("Wait for fence failed.");
-        device.destroy_fence(submit_fence, None);
     }
 }
 
@@ -178,6 +179,9 @@ pub struct ExampleBase {
 
     pub present_complete_semaphore: vk::Semaphore,
     pub rendering_complete_semaphore: vk::Semaphore,
+
+    pub draw_commands_reuse_fence: vk::Fence,
+    pub setup_commands_reuse_fence: vk::Fence,
 }
 
 impl ExampleBase {
@@ -459,9 +463,20 @@ impl ExampleBase {
                 .bind_image_memory(depth_image, depth_image_memory, 0)
                 .expect("Unable to bind depth image memory");
 
+            let fence_create_info = vk::FenceCreateInfo::builder()
+                .flags(vk::FenceCreateFlags::SIGNALED);
+
+            let draw_commands_reuse_fence = device
+                .create_fence(&fence_create_info, None)
+                .expect("Create fence failed.");
+            let setup_commands_reuse_fence = device
+                .create_fence(&fence_create_info, None)
+                .expect("Create fence failed.");
+
             record_submit_commandbuffer(
                 &device,
                 setup_command_buffer,
+                setup_commands_reuse_fence,
                 present_queue,
                 &[],
                 &[],
@@ -519,6 +534,7 @@ impl ExampleBase {
             let rendering_complete_semaphore = device
                 .create_semaphore(&semaphore_create_info, None)
                 .unwrap();
+
             ExampleBase {
                 events_loop: RefCell::new(events_loop),
                 entry,
@@ -543,6 +559,8 @@ impl ExampleBase {
                 depth_image_view,
                 present_complete_semaphore,
                 rendering_complete_semaphore,
+                draw_commands_reuse_fence,
+                setup_commands_reuse_fence,
                 surface,
                 debug_call_back,
                 debug_utils_loader,
@@ -559,7 +577,11 @@ impl Drop for ExampleBase {
             self.device
                 .destroy_semaphore(self.present_complete_semaphore, None);
             self.device
-                .destroy_semaphore(self.rendering_complete_semaphore, None);
+                .destroy_semaphore(self.rendering_complete_semaphore, None);           
+            self.device
+                .destroy_fence(self.draw_commands_reuse_fence, None);
+            self.device
+                .destroy_fence(self.setup_commands_reuse_fence, None);
             self.device.free_memory(self.depth_image_memory, None);
             self.device.destroy_image_view(self.depth_image_view, None);
             self.device.destroy_image(self.depth_image, None);

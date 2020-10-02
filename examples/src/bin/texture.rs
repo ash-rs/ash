@@ -355,6 +355,7 @@ fn main() {
         record_submit_commandbuffer(
             &base.device,
             base.setup_command_buffer,
+            base.setup_commands_reuse_fence,
             base.present_queue,
             &[],
             &[],
@@ -736,6 +737,7 @@ fn main() {
             record_submit_commandbuffer(
                 &base.device,
                 base.draw_command_buffer,
+                base.draw_commands_reuse_fence,
                 base.present_queue,
                 &[vk::PipelineStageFlags::BOTTOM_OF_PIPE],
                 &[base.present_complete_semaphore],
