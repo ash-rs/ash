@@ -25,7 +25,9 @@ macro_rules! offset_of {
         }
     }};
 }
-
+/// Helper function for submitting command buffers. Immediately waits for the fence before the command buffer
+/// is executed. That way we can delay the waiting for the fences by 1 frame which is good for performance.
+/// Make sure to create the fence in a signaled state on the first use.
 #[allow(clippy::too_many_arguments)]
 pub fn record_submit_commandbuffer<D: DeviceV1_0, F: FnOnce(&D, vk::CommandBuffer)>(
     device: &D,
