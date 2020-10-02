@@ -26,6 +26,7 @@ macro_rules! offset_of {
     }};
 }
 
+#[allow(clippy::too_many_arguments)]
 pub fn record_submit_commandbuffer<D: DeviceV1_0, F: FnOnce(&D, vk::CommandBuffer)>(
     device: &D,
     command_buffer: vk::CommandBuffer,
@@ -72,7 +73,11 @@ pub fn record_submit_commandbuffer<D: DeviceV1_0, F: FnOnce(&D, vk::CommandBuffe
             .signal_semaphores(signal_semaphores);
 
         device
-            .queue_submit(submit_queue, &[submit_info.build()], command_buffer_reuse_fence)
+            .queue_submit(
+                submit_queue,
+                &[submit_info.build()],
+                command_buffer_reuse_fence,
+            )
             .expect("queue submit failed.");
     }
 }
@@ -463,8 +468,8 @@ impl ExampleBase {
                 .bind_image_memory(depth_image, depth_image_memory, 0)
                 .expect("Unable to bind depth image memory");
 
-            let fence_create_info = vk::FenceCreateInfo::builder()
-                .flags(vk::FenceCreateFlags::SIGNALED);
+            let fence_create_info =
+                vk::FenceCreateInfo::builder().flags(vk::FenceCreateFlags::SIGNALED);
 
             let draw_commands_reuse_fence = device
                 .create_fence(&fence_create_info, None)
@@ -577,7 +582,7 @@ impl Drop for ExampleBase {
             self.device
                 .destroy_semaphore(self.present_complete_semaphore, None);
             self.device
-                .destroy_semaphore(self.rendering_complete_semaphore, None);           
+                .destroy_semaphore(self.rendering_complete_semaphore, None);
             self.device
                 .destroy_fence(self.draw_commands_reuse_fence, None);
             self.device
