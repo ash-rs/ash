@@ -575,9 +575,11 @@ impl CommandExt for vkxml::Command {
         let is_first_param_device = self
             .param
             .get(0)
-            .map(|field| match field.basetype.as_str() {
-                "VkDevice" | "VkCommandBuffer" | "VkQueue" => true,
-                _ => false,
+            .map(|field| {
+                matches!(
+                    field.basetype.as_str(),
+                    "VkDevice" | "VkCommandBuffer" | "VkQueue"
+                )
             })
             .unwrap_or(false);
         match self.name.as_str() {
@@ -1426,10 +1428,7 @@ fn is_static_array(field: &vkxml::Field) -> bool {
     field
         .array
         .as_ref()
-        .map(|ty| match ty {
-            vkxml::ArrayType::Static => true,
-            _ => false,
-        })
+        .map(|ty| matches!(ty, vkxml::ArrayType::Static))
         .unwrap_or(false)
 }
 pub fn derive_default(_struct: &vkxml::Struct) -> Option<Tokens> {
