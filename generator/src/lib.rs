@@ -362,11 +362,11 @@ pub fn platform_specific_types() -> Tokens {
         // Opage types
         pub type ANativeWindow = c_void;
         pub type AHardwareBuffer = c_void;
-        /// This definition is experimental and won't adhere to semver rules.
-        pub type GgpStreamDescriptor = u32;
-        /// This definition is experimental and won't adhere to semver rules.
-        pub type GgpFrameToken = u32;
         pub type CAMetalLayer = c_void;
+        // This definition is behind an NDA with a best effort guess from
+        // https://github.com/google/gapid/commit/22aafebec4638c6aaa77667096bca30f6e842d95#diff-ab3ab4a7d89b4fc8a344ff4e9332865f268ea1669ee379c1b516a954ecc2e7a6R20-R21
+        pub type GgpStreamDescriptor = u32;
+        pub type GgpFrameToken = u64;
     }
 }
 #[derive(Debug, Copy, Clone)]
