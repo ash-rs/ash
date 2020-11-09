@@ -1974,7 +1974,7 @@ pub fn generate_struct(
 }
 
 pub fn generate_handle(handle: &vkxml::Handle) -> Option<Tokens> {
-    if handle.name == "" {
+    if handle.name.is_empty() {
         return None;
     }
     let khronos_link = khronos_link(&handle.name);
