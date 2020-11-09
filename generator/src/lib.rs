@@ -658,13 +658,7 @@ fn name_to_tokens(type_name: &str) -> Ident {
         "float" => "f32",
         "double" => "f64",
         "long" => "c_ulong",
-        _ => {
-            if type_name.starts_with("Vk") {
-                &type_name[2..]
-            } else {
-                type_name
-            }
-        }
+        _ => type_name.strip_prefix("Vk").unwrap_or(type_name),
     };
     let new_name = new_name.replace("FlagBits", "Flags");
     Ident::from(new_name.as_str())
@@ -1658,13 +1652,10 @@ pub fn derive_setters(
             return None;
         }
 
-        let mut param_ident_short = param_ident_string.as_str();
-        if param_ident_string.starts_with("p_") {
-            param_ident_short = &param_ident_string[2..];
-        };
-        if param_ident_string.starts_with("pp_") {
-            param_ident_short = &param_ident_string[3..];
-        };
+        let param_ident_short = param_ident_string
+            .strip_prefix("p_")
+            .or_else(|| param_ident_string.strip_prefix("pp_"))
+            .unwrap_or_else(|| param_ident_string.as_str());
         let param_ident_short = Term::intern(&param_ident_short);
 
         if let Some(name) = field.name.as_ref() {
@@ -1757,8 +1748,8 @@ pub fn derive_setters(
                 }
             }
 
-            if param_ty_string.starts_with("*const ") {
-                let slice_param_ty_tokens = "&'a ".to_string() + &param_ty_string[7..];
+            if let Some(param_ty_string) = param_ty_string.strip_prefix("*const ") {
+                let slice_param_ty_tokens = "&'a ".to_string() + param_ty_string;
                 let slice_param_ty_tokens = Term::intern(&slice_param_ty_tokens);
                 return Some(quote!{
                         pub fn #param_ident_short(mut self, #param_ident_short: #slice_param_ty_tokens) -> #name_builder<'a> {
