@@ -2278,8 +2278,8 @@ pub fn generate_const_debugs(const_values: &BTreeMap<Ident, Vec<ConstantMatchInf
         #(#impls)*
     }
 }
-pub fn generate_aliases_of_types<'a>(
-    types: &'a vk_parse::Types,
+pub fn generate_aliases_of_types(
+    types: &vk_parse::Types,
     ty_cache: &mut HashSet<Ident, impl BuildHasher>,
 ) -> Tokens {
     let aliases = types
