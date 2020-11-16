@@ -619,26 +619,15 @@ pub trait ToTokens {
 }
 impl ToTokens for vkxml::ReferenceType {
     fn to_tokens(&self, is_const: bool) -> Tokens {
-        let ptr_name = match self {
-            vkxml::ReferenceType::Pointer => {
-                if is_const {
-                    "*const"
-                } else {
-                    "*mut"
-                }
-            }
-            vkxml::ReferenceType::PointerToPointer => "*mut *mut",
-            vkxml::ReferenceType::PointerToConstPointer => {
-                if is_const {
-                    "*const *const"
-                } else {
-                    "*mut *const"
-                }
-            }
+        let r = if is_const {
+            quote!(*const)
+        } else {
+            quote!(*mut)
         };
-        let ident = Term::intern(ptr_name);
-        quote! {
-            #ident
+        match self {
+            vkxml::ReferenceType::Pointer => quote!(#r),
+            vkxml::ReferenceType::PointerToPointer => quote!(#r *mut),
+            vkxml::ReferenceType::PointerToConstPointer => quote!(#r *const),
         }
     }
 }
