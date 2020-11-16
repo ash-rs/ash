@@ -78,7 +78,7 @@ named!(inverse_number<&str, (CType, String)>,
 );
 
 named!(cfloat<&str, f32>,
-    terminated!(nom::float, char!('f'))
+    terminated!(nom::number::complete::float, char!('f'))
 );
 
 fn khronos_link<S: Display>(name: &S) -> Literal {
