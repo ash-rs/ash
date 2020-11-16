@@ -234,11 +234,8 @@ impl<L> EntryCustom<L> {
                 )
             };
             if let Some(enumerate_instance_version) = enumerate_instance_version {
-                let err_code = (enumerate_instance_version)(&mut api_version);
-                match err_code {
-                    vk::Result::SUCCESS => Ok(Some(api_version)),
-                    _ => Err(err_code),
-                }
+                (enumerate_instance_version)(&mut api_version)
+                    .result_with_success(Some(api_version))
             } else {
                 Ok(None)
             }
