@@ -47,10 +47,7 @@ impl Display {
             v.as_mut_ptr(),
         );
         v.set_len(count as usize);
-        match err_code {
-            vk::Result::SUCCESS => Ok(v),
-            _ => Err(err_code),
-        }
+        err_code.result_with_success(v)
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceDisplayPlanePropertiesKHR.html>"]
@@ -78,10 +75,7 @@ impl Display {
                 v.as_mut_ptr(),
             );
         v.set_len(count as usize);
-        match err_code {
-            vk::Result::SUCCESS => Ok(v),
-            _ => Err(err_code),
-        }
+        err_code.result_with_success(v)
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetDisplayPlaneSupportedDisplaysKHR.html>"]
@@ -107,10 +101,7 @@ impl Display {
             v.as_mut_ptr(),
         );
         v.set_len(count as usize);
-        match err_code {
-            vk::Result::SUCCESS => Ok(v),
-            _ => Err(err_code),
-        }
+        err_code.result_with_success(v)
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetDisplayModePropertiesKHR.html>"]
@@ -131,10 +122,7 @@ impl Display {
             v.as_mut_ptr(),
         );
         v.set_len(count as usize);
-        match err_code {
-            vk::Result::SUCCESS => Ok(v),
-            _ => Err(err_code),
-        }
+        err_code.result_with_success(v)
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateDisplayModeKHR.html>"]

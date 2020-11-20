@@ -34,14 +34,9 @@ impl TimelineSemaphore {
         semaphore: vk::Semaphore,
     ) -> VkResult<u64> {
         let mut value = 0;
-        let err_code = self
-            .timeline_semaphore_fn
-            .get_semaphore_counter_value_khr(device, semaphore, &mut value);
-
-        match err_code {
-            vk::Result::SUCCESS => Ok(value),
-            _ => Err(err_code),
-        }
+        self.timeline_semaphore_fn
+            .get_semaphore_counter_value_khr(device, semaphore, &mut value)
+            .result_with_success(value)
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkWaitSemaphores.html>"]

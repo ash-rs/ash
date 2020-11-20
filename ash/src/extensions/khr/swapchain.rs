@@ -116,10 +116,7 @@ impl Swapchain {
             v.as_mut_ptr(),
         );
         v.set_len(count as usize);
-        match err_code {
-            vk::Result::SUCCESS => Ok(v),
-            _ => Err(err_code),
-        }
+        err_code.result_with_success(v)
     }
 
     pub fn fp(&self) -> &vk::KhrSwapchainFn {

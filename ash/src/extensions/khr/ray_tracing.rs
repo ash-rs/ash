@@ -283,8 +283,7 @@ impl RayTracing {
     ) -> VkResult<Vec<u8>> {
         let mut data: Vec<u8> = Vec::with_capacity(data_size);
 
-        let err_code = self
-            .ray_tracing_fn
+        self.ray_tracing_fn
             .get_ray_tracing_capture_replay_shader_group_handles_khr(
                 device,
                 pipeline,
@@ -292,12 +291,8 @@ impl RayTracing {
                 group_count,
                 data_size,
                 data.as_mut_ptr() as *mut _,
-            );
-
-        match err_code {
-            vk::Result::SUCCESS => Ok(data),
-            _ => Err(err_code),
-        }
+            )
+            .result_with_success(data)
     }
 
     pub unsafe fn cmd_trace_rays_indirect(

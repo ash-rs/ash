@@ -57,21 +57,15 @@ pub trait EntryV1_0 {
     fn enumerate_instance_layer_properties(&self) -> VkResult<Vec<vk::LayerProperties>> {
         unsafe {
             let mut num = 0;
-            let err_code = self
-                .fp_v1_0()
-                .enumerate_instance_layer_properties(&mut num, ptr::null_mut());
-            if err_code != vk::Result::SUCCESS {
-                return Err(err_code);
-            }
+            self.fp_v1_0()
+                .enumerate_instance_layer_properties(&mut num, ptr::null_mut())
+                .result()?;
             let mut v = Vec::with_capacity(num as usize);
             let err_code = self
                 .fp_v1_0()
                 .enumerate_instance_layer_properties(&mut num, v.as_mut_ptr());
             v.set_len(num as usize);
-            match err_code {
-                vk::Result::SUCCESS => Ok(v),
-                _ => Err(err_code),
-            }
+            err_code.result_with_success(v)
         }
     }
 
@@ -89,10 +83,7 @@ pub trait EntryV1_0 {
                 data.as_mut_ptr(),
             );
             data.set_len(num as usize);
-            match err_code {
-                vk::Result::SUCCESS => Ok(data),
-                _ => Err(err_code),
-            }
+            err_code.result_with_success(data)
         }
     }
 
@@ -120,14 +111,14 @@ impl<L> EntryV1_0 for EntryCustom<L> {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> Result<Self::Instance, InstanceError> {
         let mut instance: vk::Instance = mem::zeroed();
-        let err_code = self.fp_v1_0().create_instance(
-            create_info,
-            allocation_callbacks.as_raw_ptr(),
-            &mut instance,
-        );
-        if err_code != vk::Result::SUCCESS {
-            return Err(InstanceError::VkError(err_code));
-        }
+        self.fp_v1_0()
+            .create_instance(
+                create_info,
+                allocation_callbacks.as_raw_ptr(),
+                &mut instance,
+            )
+            .result()
+            .map_err(InstanceError::VkError)?;
         Ok(Instance::load(&self.static_fn, instance))
     }
     fn fp_v1_0(&self) -> &vk::EntryFnV1_0 {

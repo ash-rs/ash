@@ -904,10 +904,7 @@ pub trait DeviceV1_0 {
         );
 
         desc_set.set_len(create_info.descriptor_set_count as usize);
-        match err_code {
-            vk::Result::SUCCESS => Ok(desc_set),
-            _ => Err(err_code),
-        }
+        err_code.result_with_success(desc_set)
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateDescriptorSetLayout.html>"]
@@ -1597,10 +1594,7 @@ pub trait DeviceV1_0 {
             data.as_mut_ptr() as _,
         );
         data.set_len(data_size);
-        match err_code {
-            vk::Result::SUCCESS => Ok(data),
-            _ => Err(err_code),
-        }
+        err_code.result_with_success(data)
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkMapMemory.html>"]
@@ -1826,10 +1820,7 @@ pub trait DeviceV1_0 {
             buffers.as_mut_ptr(),
         );
         buffers.set_len(create_info.command_buffer_count as usize);
-        match err_code {
-            vk::Result::SUCCESS => Ok(buffers),
-            _ => Err(err_code),
-        }
+        err_code.result_with_success(buffers)
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateCommandPool.html>"]
