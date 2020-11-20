@@ -1581,15 +1581,14 @@ pub trait DeviceV1_0 {
         pipeline_cache: vk::PipelineCache,
     ) -> VkResult<Vec<u8>> {
         let mut data_size: usize = 0;
-        let err_code = self.fp_v1_0().get_pipeline_cache_data(
-            self.handle(),
-            pipeline_cache,
-            &mut data_size,
-            ptr::null_mut(),
-        );
-        if err_code != vk::Result::SUCCESS {
-            return Err(err_code);
-        }
+        self.fp_v1_0()
+            .get_pipeline_cache_data(
+                self.handle(),
+                pipeline_cache,
+                &mut data_size,
+                ptr::null_mut(),
+            )
+            .result()?;
         let mut data: Vec<u8> = Vec::with_capacity(data_size);
         let err_code = self.fp_v1_0().get_pipeline_cache_data(
             self.handle(),

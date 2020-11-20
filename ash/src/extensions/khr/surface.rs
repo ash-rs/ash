@@ -102,15 +102,14 @@ impl Surface {
         surface: vk::SurfaceKHR,
     ) -> VkResult<Vec<vk::SurfaceFormatKHR>> {
         let mut count = 0;
-        let err_code = self.surface_fn.get_physical_device_surface_formats_khr(
-            physical_device,
-            surface,
-            &mut count,
-            ptr::null_mut(),
-        );
-        if err_code != vk::Result::SUCCESS {
-            return Err(err_code);
-        }
+        self.surface_fn
+            .get_physical_device_surface_formats_khr(
+                physical_device,
+                surface,
+                &mut count,
+                ptr::null_mut(),
+            )
+            .result()?;
         let mut v = Vec::with_capacity(count as usize);
         let err_code = self.surface_fn.get_physical_device_surface_formats_khr(
             physical_device,

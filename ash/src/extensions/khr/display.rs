@@ -33,14 +33,13 @@ impl Display {
         physical_device: vk::PhysicalDevice,
     ) -> VkResult<Vec<vk::DisplayPropertiesKHR>> {
         let mut count = 0;
-        let err_code = self.display_fn.get_physical_device_display_properties_khr(
-            physical_device,
-            &mut count,
-            ptr::null_mut(),
-        );
-        if err_code != vk::Result::SUCCESS {
-            return Err(err_code);
-        }
+        self.display_fn
+            .get_physical_device_display_properties_khr(
+                physical_device,
+                &mut count,
+                ptr::null_mut(),
+            )
+            .result()?;
         let mut v = Vec::with_capacity(count as usize);
         let err_code = self.display_fn.get_physical_device_display_properties_khr(
             physical_device,
@@ -92,15 +91,14 @@ impl Display {
         plane_index: u32,
     ) -> VkResult<Vec<vk::DisplayKHR>> {
         let mut count = 0;
-        let err_code = self.display_fn.get_display_plane_supported_displays_khr(
-            physical_device,
-            plane_index,
-            &mut count,
-            ptr::null_mut(),
-        );
-        if err_code != vk::Result::SUCCESS {
-            return Err(err_code);
-        }
+        self.display_fn
+            .get_display_plane_supported_displays_khr(
+                physical_device,
+                plane_index,
+                &mut count,
+                ptr::null_mut(),
+            )
+            .result()?;
         let mut v = Vec::with_capacity(count as usize);
         let err_code = self.display_fn.get_display_plane_supported_displays_khr(
             physical_device,
@@ -122,15 +120,9 @@ impl Display {
         display: vk::DisplayKHR,
     ) -> VkResult<Vec<vk::DisplayModePropertiesKHR>> {
         let mut count = 0;
-        let err_code = self.display_fn.get_display_mode_properties_khr(
-            physical_device,
-            display,
-            &mut count,
-            ptr::null_mut(),
-        );
-        if err_code != vk::Result::SUCCESS {
-            return Err(err_code);
-        }
+        self.display_fn
+            .get_display_mode_properties_khr(physical_device, display, &mut count, ptr::null_mut())
+            .result()?;
         let mut v = Vec::with_capacity(count as usize);
         let err_code = self.display_fn.get_display_mode_properties_khr(
             physical_device,

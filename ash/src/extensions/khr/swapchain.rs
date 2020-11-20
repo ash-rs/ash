@@ -104,15 +104,9 @@ impl Swapchain {
         swapchain: vk::SwapchainKHR,
     ) -> VkResult<Vec<vk::Image>> {
         let mut count = 0;
-        let err_code = self.swapchain_fn.get_swapchain_images_khr(
-            self.handle,
-            swapchain,
-            &mut count,
-            ptr::null_mut(),
-        );
-        if err_code != vk::Result::SUCCESS {
-            return Err(err_code);
-        }
+        self.swapchain_fn
+            .get_swapchain_images_khr(self.handle, swapchain, &mut count, ptr::null_mut())
+            .result()?;
 
         let mut v = Vec::with_capacity(count as usize);
         let err_code = self.swapchain_fn.get_swapchain_images_khr(

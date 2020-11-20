@@ -51,15 +51,14 @@ impl InstanceV1_0 for Instance {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<Self::Device> {
         let mut device: vk::Device = mem::zeroed();
-        let err_code = self.fp_v1_0().create_device(
-            physical_device,
-            create_info,
-            allocation_callbacks.as_raw_ptr(),
-            &mut device,
-        );
-        if err_code != vk::Result::SUCCESS {
-            return Err(err_code);
-        }
+        self.fp_v1_0()
+            .create_device(
+                physical_device,
+                create_info,
+                allocation_callbacks.as_raw_ptr(),
+                &mut device,
+            )
+            .result()?;
         Ok(Device::load(&self.instance_fn_1_0, device))
     }
     fn handle(&self) -> vk::Instance {
@@ -407,12 +406,9 @@ pub trait InstanceV1_0 {
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkEnumeratePhysicalDevices.html>"]
     unsafe fn enumerate_physical_devices(&self) -> VkResult<Vec<vk::PhysicalDevice>> {
         let mut num = mem::zeroed();
-        let err_code =
-            self.fp_v1_0()
-                .enumerate_physical_devices(self.handle(), &mut num, ptr::null_mut());
-        if err_code != vk::Result::SUCCESS {
-            return Err(err_code);
-        }
+        self.fp_v1_0()
+            .enumerate_physical_devices(self.handle(), &mut num, ptr::null_mut())
+            .result()?;
         let mut physical_devices = Vec::<vk::PhysicalDevice>::with_capacity(num as usize);
         let err_code = self.fp_v1_0().enumerate_physical_devices(
             self.handle(),
@@ -432,15 +428,9 @@ pub trait InstanceV1_0 {
         device: vk::PhysicalDevice,
     ) -> Result<Vec<vk::ExtensionProperties>, vk::Result> {
         let mut num = 0;
-        let err_code = self.fp_v1_0().enumerate_device_extension_properties(
-            device,
-            ptr::null(),
-            &mut num,
-            ptr::null_mut(),
-        );
-        if err_code != vk::Result::SUCCESS {
-            return Err(err_code);
-        }
+        self.fp_v1_0()
+            .enumerate_device_extension_properties(device, ptr::null(), &mut num, ptr::null_mut())
+            .result()?;
         let mut data = Vec::with_capacity(num as usize);
         let err_code = self.fp_v1_0().enumerate_device_extension_properties(
             device,
