@@ -36,17 +36,9 @@ impl Surface {
         surface: vk::SurfaceKHR,
     ) -> VkResult<bool> {
         let mut b = mem::zeroed();
-        let err_code = self.surface_fn.get_physical_device_surface_support_khr(
-            physical_device,
-            queue_index,
-            surface,
-            &mut b,
-        );
-
-        match err_code {
-            vk::Result::SUCCESS => Ok(b > 0),
-            _ => Err(err_code),
-        }
+        self.surface_fn
+            .get_physical_device_surface_support_khr(physical_device, queue_index, surface, &mut b)
+            .result_with_success(b > 0)
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceSurfacePresentModesKHR.html>"]

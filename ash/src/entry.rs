@@ -152,11 +152,9 @@ pub trait EntryV1_1: EntryV1_0 {
     fn enumerate_instance_version(&self) -> VkResult<u32> {
         unsafe {
             let mut api_version = 0;
-            let err_code = self.fp_v1_1().enumerate_instance_version(&mut api_version);
-            match err_code {
-                vk::Result::SUCCESS => Ok(api_version),
-                _ => Err(err_code),
-            }
+            self.fp_v1_1()
+                .enumerate_instance_version(&mut api_version)
+                .result_with_success(api_version)
         }
     }
 }

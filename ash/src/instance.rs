@@ -94,15 +94,9 @@ pub trait InstanceV1_1: InstanceV1_0 {
 
     unsafe fn enumerate_physical_device_groups_len(&self) -> VkResult<usize> {
         let mut group_count = mem::zeroed();
-        let err_code = self.fp_v1_1().enumerate_physical_device_groups(
-            self.handle(),
-            &mut group_count,
-            ptr::null_mut(),
-        );
-        match err_code {
-            vk::Result::SUCCESS => Ok(group_count as usize),
-            _ => Err(err_code),
-        }
+        self.fp_v1_1()
+            .enumerate_physical_device_groups(self.handle(), &mut group_count, ptr::null_mut())
+            .result_with_success(group_count as usize)
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkEnumeratePhysicalDeviceGroups.html>"]

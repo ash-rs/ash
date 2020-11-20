@@ -106,16 +106,14 @@ impl DebugUtils {
         allocator: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::DebugUtilsMessengerEXT> {
         let mut messenger = mem::zeroed();
-        let err_code = self.debug_utils_fn.create_debug_utils_messenger_ext(
-            self.handle,
-            create_info,
-            allocator.as_raw_ptr(),
-            &mut messenger,
-        );
-        match err_code {
-            vk::Result::SUCCESS => Ok(messenger),
-            _ => Err(err_code),
-        }
+        self.debug_utils_fn
+            .create_debug_utils_messenger_ext(
+                self.handle,
+                create_info,
+                allocator.as_raw_ptr(),
+                &mut messenger,
+            )
+            .result_with_success(messenger)
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkDestroyDebugUtilsMessengerEXT.html>"]

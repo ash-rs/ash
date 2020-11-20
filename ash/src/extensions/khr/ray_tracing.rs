@@ -42,16 +42,14 @@ impl RayTracing {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::AccelerationStructureKHR> {
         let mut accel_struct = mem::zeroed();
-        let err_code = self.ray_tracing_fn.create_acceleration_structure_khr(
-            self.handle,
-            create_info,
-            allocation_callbacks.as_raw_ptr(),
-            &mut accel_struct,
-        );
-        match err_code {
-            vk::Result::SUCCESS => Ok(accel_struct),
-            _ => Err(err_code),
-        }
+        self.ray_tracing_fn
+            .create_acceleration_structure_khr(
+                self.handle,
+                create_info,
+                allocation_callbacks.as_raw_ptr(),
+                &mut accel_struct,
+            )
+            .result_with_success(accel_struct)
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkDestroyAccelerationStructureKHR.html>"]
@@ -158,18 +156,16 @@ impl RayTracing {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<Vec<vk::Pipeline>> {
         let mut pipelines = vec![mem::zeroed(); create_info.len()];
-        let err_code = self.ray_tracing_fn.create_ray_tracing_pipelines_khr(
-            self.handle,
-            pipeline_cache,
-            create_info.len() as u32,
-            create_info.as_ptr(),
-            allocation_callbacks.as_raw_ptr(),
-            pipelines.as_mut_ptr(),
-        );
-        match err_code {
-            vk::Result::SUCCESS => Ok(pipelines),
-            _ => Err(err_code),
-        }
+        self.ray_tracing_fn
+            .create_ray_tracing_pipelines_khr(
+                self.handle,
+                pipeline_cache,
+                create_info.len() as u32,
+                create_info.as_ptr(),
+                allocation_callbacks.as_raw_ptr(),
+                pipelines.as_mut_ptr(),
+            )
+            .result_with_success(pipelines)
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetRayTracingShaderGroupHandlesKHR.html>"]
