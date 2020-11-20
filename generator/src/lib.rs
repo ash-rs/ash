@@ -5,7 +5,7 @@ use quote::*;
 
 use heck::{CamelCase, ShoutySnakeCase, SnakeCase};
 use itertools::Itertools;
-use proc_macro2::{Literal, Term, TokenStream};
+use proc_macro2::{Literal, Term, TokenNode, TokenStream, TokenTree};
 use quote::Tokens;
 use std::collections::{BTreeMap, HashMap, HashSet};
 use std::fmt::Display;
@@ -670,6 +670,40 @@ fn to_type_tokens(type_name: &str, reference: Option<&vkxml::ReferenceType>) -> 
     quote! {#ptr_name #new_name}
 }
 
+fn map_identifier_to_rust(term: Term) -> Term {
+    match term.as_str() {
+        "VK_MAKE_VERSION" => Term::intern("crate::vk::make_version"),
+        s => Term::intern(&constant_name(&s)),
+    }
+}
+
+/// Parse and yield a C expression that is valid to write in Rust
+/// Identifiers are replaced with their Rust vk equivalent.
+///
+/// Examples:
+/// - `VK_MAKE_VERSION(1, 2, VK_HEADER_VERSION)` -> `crate::vk::make_version(1, 2, HEADER_VERSION)`
+fn convert_c_expression(c_expr: &str) -> TokenStream {
+    fn rewrite_token_stream(stream: TokenStream) -> TokenStream {
+        stream
+            .into_iter()
+            .map(|tok| TokenTree {
+                kind: rewrite_token_node(tok.kind),
+                ..tok
+            })
+            .collect::<TokenStream>()
+    }
+    fn rewrite_token_node(node: TokenNode) -> TokenNode {
+        match node {
+            TokenNode::Group(d, stream) => TokenNode::Group(d, rewrite_token_stream(stream)),
+            TokenNode::Term(term) => TokenNode::Term(map_identifier_to_rust(term)),
+            _ => node,
+        }
+    }
+
+    let c_expr = c_expr.parse().unwrap();
+    rewrite_token_stream(c_expr)
+}
+
 impl FieldExt for vkxml::Field {
     fn is_clone(&self) -> bool {
         true
@@ -1158,10 +1192,8 @@ pub fn generate_define(define: &vkxml::Define) -> Tokens {
         str::parse::<u32>(value).map_or(quote!(), |v| quote!(pub const #ident: u32 = #v;))
     } else if let Some(c_expr) = &define.c_expression {
         if define.defref.contains(&"VK_MAKE_VERSION".to_string()) {
-            let c_expr = c_expr.replace("VK_", "");
-            let c_expr = c_expr.replace("MAKE_VERSION", "crate::vk::make_version");
-            use std::str::FromStr;
-            let c_expr = TokenStream::from_str(&c_expr).unwrap();
+            let c_expr = convert_c_expression(c_expr);
+
             quote!(pub const #ident: u32 = #c_expr;)
         } else {
             quote!()
