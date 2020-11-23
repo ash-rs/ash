@@ -2750,10 +2750,6 @@ impl AccessFlags {
     pub const RESERVED_30_KHR: Self = Self(0b100_0000_0000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from \'VK_AMD_extension_24\'"]
-impl AccessFlags {
-    pub const RESERVED_31_KHR: Self = Self(0b1000_0000_0000_0000_0000_0000_0000_0000);
-}
-#[doc = "Generated from \'VK_AMD_extension_24\'"]
 impl BufferUsageFlags {
     pub const RESERVED_15_KHR: Self = Self(0b1000_0000_0000_0000);
 }
@@ -3361,14 +3357,25 @@ impl NvxImageViewHandleFn {
         ::std::ffi::CStr::from_bytes_with_nul(b"VK_NVX_image_view_handle\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 1u32;
+    pub const SPEC_VERSION: u32 = 2u32;
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetImageViewHandleNVX =
     extern "system" fn(device: Device, p_info: *const ImageViewHandleInfoNVX) -> u32;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetImageViewAddressNVX = extern "system" fn(
+    device: Device,
+    image_view: ImageView,
+    p_properties: *mut ImageViewAddressPropertiesNVX,
+) -> Result;
 pub struct NvxImageViewHandleFn {
     pub get_image_view_handle_nvx:
         extern "system" fn(device: Device, p_info: *const ImageViewHandleInfoNVX) -> u32,
+    pub get_image_view_address_nvx: extern "system" fn(
+        device: Device,
+        image_view: ImageView,
+        p_properties: *mut ImageViewAddressPropertiesNVX,
+    ) -> Result,
 }
 unsafe impl Send for NvxImageViewHandleFn {}
 unsafe impl Sync for NvxImageViewHandleFn {}
@@ -3376,6 +3383,7 @@ impl ::std::clone::Clone for NvxImageViewHandleFn {
     fn clone(&self) -> Self {
         NvxImageViewHandleFn {
             get_image_view_handle_nvx: self.get_image_view_handle_nvx,
+            get_image_view_address_nvx: self.get_image_view_address_nvx,
         }
     }
 }
@@ -3404,6 +3412,26 @@ impl NvxImageViewHandleFn {
                     ::std::mem::transmute(val)
                 }
             },
+            get_image_view_address_nvx: unsafe {
+                extern "system" fn get_image_view_address_nvx(
+                    _device: Device,
+                    _image_view: ImageView,
+                    _p_properties: *mut ImageViewAddressPropertiesNVX,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_image_view_address_nvx)
+                    ))
+                }
+                let raw_name = stringify!(vkGetImageViewAddressNVX);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    get_image_view_address_nvx
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
         }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetImageViewHandleNVX.html>"]
@@ -3414,10 +3442,23 @@ impl NvxImageViewHandleFn {
     ) -> u32 {
         (self.get_image_view_handle_nvx)(device, p_info)
     }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetImageViewAddressNVX.html>"]
+    pub unsafe fn get_image_view_address_nvx(
+        &self,
+        device: Device,
+        image_view: ImageView,
+        p_properties: *mut ImageViewAddressPropertiesNVX,
+    ) -> Result {
+        (self.get_image_view_address_nvx)(device, image_view, p_properties)
+    }
 }
 #[doc = "Generated from \'VK_NVX_image_view_handle\'"]
 impl StructureType {
     pub const IMAGE_VIEW_HANDLE_INFO_NVX: Self = Self(1_000_030_000);
+}
+#[doc = "Generated from \'VK_NVX_image_view_handle\'"]
+impl StructureType {
+    pub const IMAGE_VIEW_ADDRESS_PROPERTIES_NVX: Self = Self(1_000_030_001);
 }
 impl AmdExtension32Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -9642,13 +9683,13 @@ impl KhrVariablePointersFn {
 }
 #[doc = "Generated from \'VK_KHR_variable_pointers\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_VARIABLE_POINTER_FEATURES_KHR: Self =
-        StructureType::PHYSICAL_DEVICE_VARIABLE_POINTER_FEATURES;
+    pub const PHYSICAL_DEVICE_VARIABLE_POINTERS_FEATURES_KHR: Self =
+        StructureType::PHYSICAL_DEVICE_VARIABLE_POINTERS_FEATURES;
 }
 #[doc = "Generated from \'VK_KHR_variable_pointers\'"]
 impl StructureType {
-    pub const PHYSICAL_DEVICE_VARIABLE_POINTERS_FEATURES_KHR: Self =
-        StructureType::PHYSICAL_DEVICE_VARIABLE_POINTER_FEATURES;
+    pub const PHYSICAL_DEVICE_VARIABLE_POINTER_FEATURES_KHR: Self =
+        StructureType::PHYSICAL_DEVICE_VARIABLE_POINTERS_FEATURES_KHR;
 }
 impl KhrGetDisplayProperties2Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -9888,7 +9929,7 @@ impl MvkIosSurfaceFn {
         ::std::ffi::CStr::from_bytes_with_nul(b"VK_MVK_ios_surface\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 2u32;
+    pub const SPEC_VERSION: u32 = 3u32;
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateIOSSurfaceMVK = extern "system" fn(
@@ -9963,7 +10004,7 @@ impl MvkMacosSurfaceFn {
         ::std::ffi::CStr::from_bytes_with_nul(b"VK_MVK_macos_surface\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 2u32;
+    pub const SPEC_VERSION: u32 = 3u32;
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateMacOSSurfaceMVK = extern "system" fn(
@@ -10143,7 +10184,7 @@ impl ExtDebugUtilsFn {
         ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_debug_utils\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 1u32;
+    pub const SPEC_VERSION: u32 = 2u32;
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkSetDebugUtilsObjectNameEXT =
@@ -11691,12 +11732,12 @@ impl NvFragmentCoverageToColorFn {
 impl StructureType {
     pub const PIPELINE_COVERAGE_TO_COLOR_STATE_CREATE_INFO_NV: Self = Self(1_000_149_000);
 }
-impl KhrRayTracingFn {
+impl KhrAccelerationStructureFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_ray_tracing\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_acceleration_structure\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 8u32;
+    pub const SPEC_VERSION: u32 = 11u32;
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateAccelerationStructureKHR = extern "system" fn(
@@ -11712,50 +11753,45 @@ pub type PFN_vkDestroyAccelerationStructureKHR = extern "system" fn(
     p_allocator: *const AllocationCallbacks,
 ) -> c_void;
 #[allow(non_camel_case_types)]
-pub type PFN_vkGetAccelerationStructureMemoryRequirementsKHR = extern "system" fn(
-    device: Device,
-    p_info: *const AccelerationStructureMemoryRequirementsInfoKHR,
-    p_memory_requirements: *mut MemoryRequirements2,
-) -> c_void;
-#[allow(non_camel_case_types)]
-pub type PFN_vkBindAccelerationStructureMemoryKHR = extern "system" fn(
-    device: Device,
-    bind_info_count: u32,
-    p_bind_infos: *const BindAccelerationStructureMemoryInfoKHR,
-) -> Result;
-#[allow(non_camel_case_types)]
-pub type PFN_vkCmdBuildAccelerationStructureKHR = extern "system" fn(
+pub type PFN_vkCmdBuildAccelerationStructuresKHR = extern "system" fn(
     command_buffer: CommandBuffer,
     info_count: u32,
     p_infos: *const AccelerationStructureBuildGeometryInfoKHR,
-    pp_offset_infos: *const *const AccelerationStructureBuildOffsetInfoKHR,
+    pp_build_range_infos: *const *const AccelerationStructureBuildRangeInfoKHR,
 ) -> c_void;
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdBuildAccelerationStructureIndirectKHR = extern "system" fn(
+pub type PFN_vkCmdBuildAccelerationStructuresIndirectKHR = extern "system" fn(
     command_buffer: CommandBuffer,
-    p_info: *const AccelerationStructureBuildGeometryInfoKHR,
-    indirect_buffer: Buffer,
-    indirect_offset: DeviceSize,
-    indirect_stride: u32,
-) -> c_void;
-#[allow(non_camel_case_types)]
-pub type PFN_vkBuildAccelerationStructureKHR = extern "system" fn(
-    device: Device,
     info_count: u32,
     p_infos: *const AccelerationStructureBuildGeometryInfoKHR,
-    pp_offset_infos: *const *const AccelerationStructureBuildOffsetInfoKHR,
+    p_indirect_device_addresses: *const DeviceAddress,
+    p_indirect_strides: *const u32,
+    pp_max_primitive_counts: *const *const u32,
+) -> c_void;
+#[allow(non_camel_case_types)]
+pub type PFN_vkBuildAccelerationStructuresKHR = extern "system" fn(
+    device: Device,
+    deferred_operation: DeferredOperationKHR,
+    info_count: u32,
+    p_infos: *const AccelerationStructureBuildGeometryInfoKHR,
+    pp_build_range_infos: *const *const AccelerationStructureBuildRangeInfoKHR,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkCopyAccelerationStructureKHR =
-    extern "system" fn(device: Device, p_info: *const CopyAccelerationStructureInfoKHR) -> Result;
+pub type PFN_vkCopyAccelerationStructureKHR = extern "system" fn(
+    device: Device,
+    deferred_operation: DeferredOperationKHR,
+    p_info: *const CopyAccelerationStructureInfoKHR,
+) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCopyAccelerationStructureToMemoryKHR = extern "system" fn(
     device: Device,
+    deferred_operation: DeferredOperationKHR,
     p_info: *const CopyAccelerationStructureToMemoryInfoKHR,
 ) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCopyMemoryToAccelerationStructureKHR = extern "system" fn(
     device: Device,
+    deferred_operation: DeferredOperationKHR,
     p_info: *const CopyMemoryToAccelerationStructureInfoKHR,
 ) -> Result;
 #[allow(non_camel_case_types)]
@@ -11784,48 +11820,10 @@ pub type PFN_vkCmdCopyMemoryToAccelerationStructureKHR = extern "system" fn(
     p_info: *const CopyMemoryToAccelerationStructureInfoKHR,
 ) -> c_void;
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdTraceRaysKHR = extern "system" fn(
-    command_buffer: CommandBuffer,
-    p_raygen_shader_binding_table: *const StridedBufferRegionKHR,
-    p_miss_shader_binding_table: *const StridedBufferRegionKHR,
-    p_hit_shader_binding_table: *const StridedBufferRegionKHR,
-    p_callable_shader_binding_table: *const StridedBufferRegionKHR,
-    width: u32,
-    height: u32,
-    depth: u32,
-) -> c_void;
-#[allow(non_camel_case_types)]
-pub type PFN_vkCreateRayTracingPipelinesKHR = extern "system" fn(
-    device: Device,
-    pipeline_cache: PipelineCache,
-    create_info_count: u32,
-    p_create_infos: *const RayTracingPipelineCreateInfoKHR,
-    p_allocator: *const AllocationCallbacks,
-    p_pipelines: *mut Pipeline,
-) -> Result;
-#[allow(non_camel_case_types)]
-pub type PFN_vkGetRayTracingShaderGroupHandlesKHR = extern "system" fn(
-    device: Device,
-    pipeline: Pipeline,
-    first_group: u32,
-    group_count: u32,
-    data_size: usize,
-    p_data: *mut c_void,
-) -> Result;
-#[allow(non_camel_case_types)]
 pub type PFN_vkGetAccelerationStructureDeviceAddressKHR = extern "system" fn(
     device: Device,
     p_info: *const AccelerationStructureDeviceAddressInfoKHR,
 ) -> DeviceAddress;
-#[allow(non_camel_case_types)]
-pub type PFN_vkGetRayTracingCaptureReplayShaderGroupHandlesKHR = extern "system" fn(
-    device: Device,
-    pipeline: Pipeline,
-    first_group: u32,
-    group_count: u32,
-    data_size: usize,
-    p_data: *mut c_void,
-) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdWriteAccelerationStructuresPropertiesKHR = extern "system" fn(
     command_buffer: CommandBuffer,
@@ -11836,19 +11834,20 @@ pub type PFN_vkCmdWriteAccelerationStructuresPropertiesKHR = extern "system" fn(
     first_query: u32,
 ) -> c_void;
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdTraceRaysIndirectKHR = extern "system" fn(
-    command_buffer: CommandBuffer,
-    p_raygen_shader_binding_table: *const StridedBufferRegionKHR,
-    p_miss_shader_binding_table: *const StridedBufferRegionKHR,
-    p_hit_shader_binding_table: *const StridedBufferRegionKHR,
-    p_callable_shader_binding_table: *const StridedBufferRegionKHR,
-    buffer: Buffer,
-    offset: DeviceSize,
+pub type PFN_vkGetDeviceAccelerationStructureCompatibilityKHR = extern "system" fn(
+    device: Device,
+    p_version_info: *const AccelerationStructureVersionInfoKHR,
+    p_compatibility: *mut AccelerationStructureCompatibilityKHR,
 ) -> c_void;
 #[allow(non_camel_case_types)]
-pub type PFN_vkGetDeviceAccelerationStructureCompatibilityKHR =
-    extern "system" fn(device: Device, version: *const AccelerationStructureVersionKHR) -> Result;
-pub struct KhrRayTracingFn {
+pub type PFN_vkGetAccelerationStructureBuildSizesKHR = extern "system" fn(
+    device: Device,
+    build_type: AccelerationStructureBuildTypeKHR,
+    p_build_info: *const AccelerationStructureBuildGeometryInfoKHR,
+    p_max_primitive_counts: *const u32,
+    p_size_info: *mut AccelerationStructureBuildSizesInfoKHR,
+) -> c_void;
+pub struct KhrAccelerationStructureFn {
     pub create_acceleration_structure_khr: extern "system" fn(
         device: Device,
         p_create_info: *const AccelerationStructureCreateInfoKHR,
@@ -11860,45 +11859,40 @@ pub struct KhrRayTracingFn {
         acceleration_structure: AccelerationStructureKHR,
         p_allocator: *const AllocationCallbacks,
     ) -> c_void,
-    pub get_acceleration_structure_memory_requirements_khr: extern "system" fn(
-        device: Device,
-        p_info: *const AccelerationStructureMemoryRequirementsInfoKHR,
-        p_memory_requirements: *mut MemoryRequirements2,
-    ) -> c_void,
-    pub bind_acceleration_structure_memory_khr: extern "system" fn(
-        device: Device,
-        bind_info_count: u32,
-        p_bind_infos: *const BindAccelerationStructureMemoryInfoKHR,
-    ) -> Result,
-    pub cmd_build_acceleration_structure_khr: extern "system" fn(
+    pub cmd_build_acceleration_structures_khr: extern "system" fn(
         command_buffer: CommandBuffer,
         info_count: u32,
         p_infos: *const AccelerationStructureBuildGeometryInfoKHR,
-        pp_offset_infos: *const *const AccelerationStructureBuildOffsetInfoKHR,
+        pp_build_range_infos: *const *const AccelerationStructureBuildRangeInfoKHR,
     ) -> c_void,
-    pub cmd_build_acceleration_structure_indirect_khr: extern "system" fn(
+    pub cmd_build_acceleration_structures_indirect_khr: extern "system" fn(
         command_buffer: CommandBuffer,
-        p_info: *const AccelerationStructureBuildGeometryInfoKHR,
-        indirect_buffer: Buffer,
-        indirect_offset: DeviceSize,
-        indirect_stride: u32,
-    ) -> c_void,
-    pub build_acceleration_structure_khr: extern "system" fn(
-        device: Device,
         info_count: u32,
         p_infos: *const AccelerationStructureBuildGeometryInfoKHR,
-        pp_offset_infos: *const *const AccelerationStructureBuildOffsetInfoKHR,
+        p_indirect_device_addresses: *const DeviceAddress,
+        p_indirect_strides: *const u32,
+        pp_max_primitive_counts: *const *const u32,
+    ) -> c_void,
+    pub build_acceleration_structures_khr: extern "system" fn(
+        device: Device,
+        deferred_operation: DeferredOperationKHR,
+        info_count: u32,
+        p_infos: *const AccelerationStructureBuildGeometryInfoKHR,
+        pp_build_range_infos: *const *const AccelerationStructureBuildRangeInfoKHR,
     ) -> Result,
     pub copy_acceleration_structure_khr: extern "system" fn(
         device: Device,
+        deferred_operation: DeferredOperationKHR,
         p_info: *const CopyAccelerationStructureInfoKHR,
     ) -> Result,
     pub copy_acceleration_structure_to_memory_khr: extern "system" fn(
         device: Device,
+        deferred_operation: DeferredOperationKHR,
         p_info: *const CopyAccelerationStructureToMemoryInfoKHR,
     ) -> Result,
     pub copy_memory_to_acceleration_structure_khr: extern "system" fn(
         device: Device,
+        deferred_operation: DeferredOperationKHR,
         p_info: *const CopyMemoryToAccelerationStructureInfoKHR,
     ) -> Result,
     pub write_acceleration_structures_properties_khr: extern "system" fn(
@@ -11922,44 +11916,10 @@ pub struct KhrRayTracingFn {
         command_buffer: CommandBuffer,
         p_info: *const CopyMemoryToAccelerationStructureInfoKHR,
     ) -> c_void,
-    pub cmd_trace_rays_khr: extern "system" fn(
-        command_buffer: CommandBuffer,
-        p_raygen_shader_binding_table: *const StridedBufferRegionKHR,
-        p_miss_shader_binding_table: *const StridedBufferRegionKHR,
-        p_hit_shader_binding_table: *const StridedBufferRegionKHR,
-        p_callable_shader_binding_table: *const StridedBufferRegionKHR,
-        width: u32,
-        height: u32,
-        depth: u32,
-    ) -> c_void,
-    pub create_ray_tracing_pipelines_khr: extern "system" fn(
-        device: Device,
-        pipeline_cache: PipelineCache,
-        create_info_count: u32,
-        p_create_infos: *const RayTracingPipelineCreateInfoKHR,
-        p_allocator: *const AllocationCallbacks,
-        p_pipelines: *mut Pipeline,
-    ) -> Result,
-    pub get_ray_tracing_shader_group_handles_khr: extern "system" fn(
-        device: Device,
-        pipeline: Pipeline,
-        first_group: u32,
-        group_count: u32,
-        data_size: usize,
-        p_data: *mut c_void,
-    ) -> Result,
     pub get_acceleration_structure_device_address_khr: extern "system" fn(
         device: Device,
         p_info: *const AccelerationStructureDeviceAddressInfoKHR,
     ) -> DeviceAddress,
-    pub get_ray_tracing_capture_replay_shader_group_handles_khr: extern "system" fn(
-        device: Device,
-        pipeline: Pipeline,
-        first_group: u32,
-        group_count: u32,
-        data_size: usize,
-        p_data: *mut c_void,
-    ) -> Result,
     pub cmd_write_acceleration_structures_properties_khr: extern "system" fn(
         command_buffer: CommandBuffer,
         acceleration_structure_count: u32,
@@ -11968,34 +11928,30 @@ pub struct KhrRayTracingFn {
         query_pool: QueryPool,
         first_query: u32,
     ) -> c_void,
-    pub cmd_trace_rays_indirect_khr: extern "system" fn(
-        command_buffer: CommandBuffer,
-        p_raygen_shader_binding_table: *const StridedBufferRegionKHR,
-        p_miss_shader_binding_table: *const StridedBufferRegionKHR,
-        p_hit_shader_binding_table: *const StridedBufferRegionKHR,
-        p_callable_shader_binding_table: *const StridedBufferRegionKHR,
-        buffer: Buffer,
-        offset: DeviceSize,
-    ) -> c_void,
     pub get_device_acceleration_structure_compatibility_khr: extern "system" fn(
         device: Device,
-        version: *const AccelerationStructureVersionKHR,
-    ) -> Result,
+        p_version_info: *const AccelerationStructureVersionInfoKHR,
+        p_compatibility: *mut AccelerationStructureCompatibilityKHR,
+    ) -> c_void,
+    pub get_acceleration_structure_build_sizes_khr: extern "system" fn(
+        device: Device,
+        build_type: AccelerationStructureBuildTypeKHR,
+        p_build_info: *const AccelerationStructureBuildGeometryInfoKHR,
+        p_max_primitive_counts: *const u32,
+        p_size_info: *mut AccelerationStructureBuildSizesInfoKHR,
+    ) -> c_void,
 }
-unsafe impl Send for KhrRayTracingFn {}
-unsafe impl Sync for KhrRayTracingFn {}
-impl ::std::clone::Clone for KhrRayTracingFn {
+unsafe impl Send for KhrAccelerationStructureFn {}
+unsafe impl Sync for KhrAccelerationStructureFn {}
+impl ::std::clone::Clone for KhrAccelerationStructureFn {
     fn clone(&self) -> Self {
-        KhrRayTracingFn {
+        KhrAccelerationStructureFn {
             create_acceleration_structure_khr: self.create_acceleration_structure_khr,
             destroy_acceleration_structure_khr: self.destroy_acceleration_structure_khr,
-            get_acceleration_structure_memory_requirements_khr: self
-                .get_acceleration_structure_memory_requirements_khr,
-            bind_acceleration_structure_memory_khr: self.bind_acceleration_structure_memory_khr,
-            cmd_build_acceleration_structure_khr: self.cmd_build_acceleration_structure_khr,
-            cmd_build_acceleration_structure_indirect_khr: self
-                .cmd_build_acceleration_structure_indirect_khr,
-            build_acceleration_structure_khr: self.build_acceleration_structure_khr,
+            cmd_build_acceleration_structures_khr: self.cmd_build_acceleration_structures_khr,
+            cmd_build_acceleration_structures_indirect_khr: self
+                .cmd_build_acceleration_structures_indirect_khr,
+            build_acceleration_structures_khr: self.build_acceleration_structures_khr,
             copy_acceleration_structure_khr: self.copy_acceleration_structure_khr,
             copy_acceleration_structure_to_memory_khr: self
                 .copy_acceleration_structure_to_memory_khr,
@@ -12008,27 +11964,23 @@ impl ::std::clone::Clone for KhrRayTracingFn {
                 .cmd_copy_acceleration_structure_to_memory_khr,
             cmd_copy_memory_to_acceleration_structure_khr: self
                 .cmd_copy_memory_to_acceleration_structure_khr,
-            cmd_trace_rays_khr: self.cmd_trace_rays_khr,
-            create_ray_tracing_pipelines_khr: self.create_ray_tracing_pipelines_khr,
-            get_ray_tracing_shader_group_handles_khr: self.get_ray_tracing_shader_group_handles_khr,
             get_acceleration_structure_device_address_khr: self
                 .get_acceleration_structure_device_address_khr,
-            get_ray_tracing_capture_replay_shader_group_handles_khr: self
-                .get_ray_tracing_capture_replay_shader_group_handles_khr,
             cmd_write_acceleration_structures_properties_khr: self
                 .cmd_write_acceleration_structures_properties_khr,
-            cmd_trace_rays_indirect_khr: self.cmd_trace_rays_indirect_khr,
             get_device_acceleration_structure_compatibility_khr: self
                 .get_device_acceleration_structure_compatibility_khr,
+            get_acceleration_structure_build_sizes_khr: self
+                .get_acceleration_structure_build_sizes_khr,
         }
     }
 }
-impl KhrRayTracingFn {
+impl KhrAccelerationStructureFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrRayTracingFn {
+        KhrAccelerationStructureFn {
             create_acceleration_structure_khr: unsafe {
                 extern "system" fn create_acceleration_structure_khr(
                     _device: Device,
@@ -12070,106 +12022,68 @@ impl KhrRayTracingFn {
                     ::std::mem::transmute(val)
                 }
             },
-            get_acceleration_structure_memory_requirements_khr: unsafe {
-                extern "system" fn get_acceleration_structure_memory_requirements_khr(
-                    _device: Device,
-                    _p_info: *const AccelerationStructureMemoryRequirementsInfoKHR,
-                    _p_memory_requirements: *mut MemoryRequirements2,
-                ) -> c_void {
-                    panic!(concat!(
-                        "Unable to load ",
-                        stringify!(get_acceleration_structure_memory_requirements_khr)
-                    ))
-                }
-                let raw_name = stringify!(vkGetAccelerationStructureMemoryRequirementsKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    get_acceleration_structure_memory_requirements_khr
-                } else {
-                    ::std::mem::transmute(val)
-                }
-            },
-            bind_acceleration_structure_memory_khr: unsafe {
-                extern "system" fn bind_acceleration_structure_memory_khr(
-                    _device: Device,
-                    _bind_info_count: u32,
-                    _p_bind_infos: *const BindAccelerationStructureMemoryInfoKHR,
-                ) -> Result {
-                    panic!(concat!(
-                        "Unable to load ",
-                        stringify!(bind_acceleration_structure_memory_khr)
-                    ))
-                }
-                let raw_name = stringify!(vkBindAccelerationStructureMemoryKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    bind_acceleration_structure_memory_khr
-                } else {
-                    ::std::mem::transmute(val)
-                }
-            },
-            cmd_build_acceleration_structure_khr: unsafe {
-                extern "system" fn cmd_build_acceleration_structure_khr(
+            cmd_build_acceleration_structures_khr: unsafe {
+                extern "system" fn cmd_build_acceleration_structures_khr(
                     _command_buffer: CommandBuffer,
                     _info_count: u32,
                     _p_infos: *const AccelerationStructureBuildGeometryInfoKHR,
-                    _pp_offset_infos: *const *const AccelerationStructureBuildOffsetInfoKHR,
+                    _pp_build_range_infos: *const *const AccelerationStructureBuildRangeInfoKHR,
                 ) -> c_void {
                     panic!(concat!(
                         "Unable to load ",
-                        stringify!(cmd_build_acceleration_structure_khr)
+                        stringify!(cmd_build_acceleration_structures_khr)
                     ))
                 }
-                let raw_name = stringify!(vkCmdBuildAccelerationStructureKHR);
+                let raw_name = stringify!(vkCmdBuildAccelerationStructuresKHR);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
                 let val = _f(&cname);
                 if val.is_null() {
-                    cmd_build_acceleration_structure_khr
+                    cmd_build_acceleration_structures_khr
                 } else {
                     ::std::mem::transmute(val)
                 }
             },
-            cmd_build_acceleration_structure_indirect_khr: unsafe {
-                extern "system" fn cmd_build_acceleration_structure_indirect_khr(
+            cmd_build_acceleration_structures_indirect_khr: unsafe {
+                extern "system" fn cmd_build_acceleration_structures_indirect_khr(
                     _command_buffer: CommandBuffer,
-                    _p_info: *const AccelerationStructureBuildGeometryInfoKHR,
-                    _indirect_buffer: Buffer,
-                    _indirect_offset: DeviceSize,
-                    _indirect_stride: u32,
-                ) -> c_void {
-                    panic!(concat!(
-                        "Unable to load ",
-                        stringify!(cmd_build_acceleration_structure_indirect_khr)
-                    ))
-                }
-                let raw_name = stringify!(vkCmdBuildAccelerationStructureIndirectKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    cmd_build_acceleration_structure_indirect_khr
-                } else {
-                    ::std::mem::transmute(val)
-                }
-            },
-            build_acceleration_structure_khr: unsafe {
-                extern "system" fn build_acceleration_structure_khr(
-                    _device: Device,
                     _info_count: u32,
                     _p_infos: *const AccelerationStructureBuildGeometryInfoKHR,
-                    _pp_offset_infos: *const *const AccelerationStructureBuildOffsetInfoKHR,
+                    _p_indirect_device_addresses: *const DeviceAddress,
+                    _p_indirect_strides: *const u32,
+                    _pp_max_primitive_counts: *const *const u32,
+                ) -> c_void {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_build_acceleration_structures_indirect_khr)
+                    ))
+                }
+                let raw_name = stringify!(vkCmdBuildAccelerationStructuresIndirectKHR);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    cmd_build_acceleration_structures_indirect_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            build_acceleration_structures_khr: unsafe {
+                extern "system" fn build_acceleration_structures_khr(
+                    _device: Device,
+                    _deferred_operation: DeferredOperationKHR,
+                    _info_count: u32,
+                    _p_infos: *const AccelerationStructureBuildGeometryInfoKHR,
+                    _pp_build_range_infos: *const *const AccelerationStructureBuildRangeInfoKHR,
                 ) -> Result {
                     panic!(concat!(
                         "Unable to load ",
-                        stringify!(build_acceleration_structure_khr)
+                        stringify!(build_acceleration_structures_khr)
                     ))
                 }
-                let raw_name = stringify!(vkBuildAccelerationStructureKHR);
+                let raw_name = stringify!(vkBuildAccelerationStructuresKHR);
                 let cname = ::std::ffi::CString::new(raw_name).unwrap();
                 let val = _f(&cname);
                 if val.is_null() {
-                    build_acceleration_structure_khr
+                    build_acceleration_structures_khr
                 } else {
                     ::std::mem::transmute(val)
                 }
@@ -12177,6 +12091,7 @@ impl KhrRayTracingFn {
             copy_acceleration_structure_khr: unsafe {
                 extern "system" fn copy_acceleration_structure_khr(
                     _device: Device,
+                    _deferred_operation: DeferredOperationKHR,
                     _p_info: *const CopyAccelerationStructureInfoKHR,
                 ) -> Result {
                     panic!(concat!(
@@ -12196,6 +12111,7 @@ impl KhrRayTracingFn {
             copy_acceleration_structure_to_memory_khr: unsafe {
                 extern "system" fn copy_acceleration_structure_to_memory_khr(
                     _device: Device,
+                    _deferred_operation: DeferredOperationKHR,
                     _p_info: *const CopyAccelerationStructureToMemoryInfoKHR,
                 ) -> Result {
                     panic!(concat!(
@@ -12215,6 +12131,7 @@ impl KhrRayTracingFn {
             copy_memory_to_acceleration_structure_khr: unsafe {
                 extern "system" fn copy_memory_to_acceleration_structure_khr(
                     _device: Device,
+                    _deferred_operation: DeferredOperationKHR,
                     _p_info: *const CopyMemoryToAccelerationStructureInfoKHR,
                 ) -> Result {
                     panic!(concat!(
@@ -12312,74 +12229,6 @@ impl KhrRayTracingFn {
                     ::std::mem::transmute(val)
                 }
             },
-            cmd_trace_rays_khr: unsafe {
-                extern "system" fn cmd_trace_rays_khr(
-                    _command_buffer: CommandBuffer,
-                    _p_raygen_shader_binding_table: *const StridedBufferRegionKHR,
-                    _p_miss_shader_binding_table: *const StridedBufferRegionKHR,
-                    _p_hit_shader_binding_table: *const StridedBufferRegionKHR,
-                    _p_callable_shader_binding_table: *const StridedBufferRegionKHR,
-                    _width: u32,
-                    _height: u32,
-                    _depth: u32,
-                ) -> c_void {
-                    panic!(concat!("Unable to load ", stringify!(cmd_trace_rays_khr)))
-                }
-                let raw_name = stringify!(vkCmdTraceRaysKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    cmd_trace_rays_khr
-                } else {
-                    ::std::mem::transmute(val)
-                }
-            },
-            create_ray_tracing_pipelines_khr: unsafe {
-                extern "system" fn create_ray_tracing_pipelines_khr(
-                    _device: Device,
-                    _pipeline_cache: PipelineCache,
-                    _create_info_count: u32,
-                    _p_create_infos: *const RayTracingPipelineCreateInfoKHR,
-                    _p_allocator: *const AllocationCallbacks,
-                    _p_pipelines: *mut Pipeline,
-                ) -> Result {
-                    panic!(concat!(
-                        "Unable to load ",
-                        stringify!(create_ray_tracing_pipelines_khr)
-                    ))
-                }
-                let raw_name = stringify!(vkCreateRayTracingPipelinesKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    create_ray_tracing_pipelines_khr
-                } else {
-                    ::std::mem::transmute(val)
-                }
-            },
-            get_ray_tracing_shader_group_handles_khr: unsafe {
-                extern "system" fn get_ray_tracing_shader_group_handles_khr(
-                    _device: Device,
-                    _pipeline: Pipeline,
-                    _first_group: u32,
-                    _group_count: u32,
-                    _data_size: usize,
-                    _p_data: *mut c_void,
-                ) -> Result {
-                    panic!(concat!(
-                        "Unable to load ",
-                        stringify!(get_ray_tracing_shader_group_handles_khr)
-                    ))
-                }
-                let raw_name = stringify!(vkGetRayTracingShaderGroupHandlesKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    get_ray_tracing_shader_group_handles_khr
-                } else {
-                    ::std::mem::transmute(val)
-                }
-            },
             get_acceleration_structure_device_address_khr: unsafe {
                 extern "system" fn get_acceleration_structure_device_address_khr(
                     _device: Device,
@@ -12395,29 +12244,6 @@ impl KhrRayTracingFn {
                 let val = _f(&cname);
                 if val.is_null() {
                     get_acceleration_structure_device_address_khr
-                } else {
-                    ::std::mem::transmute(val)
-                }
-            },
-            get_ray_tracing_capture_replay_shader_group_handles_khr: unsafe {
-                extern "system" fn get_ray_tracing_capture_replay_shader_group_handles_khr(
-                    _device: Device,
-                    _pipeline: Pipeline,
-                    _first_group: u32,
-                    _group_count: u32,
-                    _data_size: usize,
-                    _p_data: *mut c_void,
-                ) -> Result {
-                    panic!(concat!(
-                        "Unable to load ",
-                        stringify!(get_ray_tracing_capture_replay_shader_group_handles_khr)
-                    ))
-                }
-                let raw_name = stringify!(vkGetRayTracingCaptureReplayShaderGroupHandlesKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    get_ray_tracing_capture_replay_shader_group_handles_khr
                 } else {
                     ::std::mem::transmute(val)
                 }
@@ -12445,35 +12271,12 @@ impl KhrRayTracingFn {
                     ::std::mem::transmute(val)
                 }
             },
-            cmd_trace_rays_indirect_khr: unsafe {
-                extern "system" fn cmd_trace_rays_indirect_khr(
-                    _command_buffer: CommandBuffer,
-                    _p_raygen_shader_binding_table: *const StridedBufferRegionKHR,
-                    _p_miss_shader_binding_table: *const StridedBufferRegionKHR,
-                    _p_hit_shader_binding_table: *const StridedBufferRegionKHR,
-                    _p_callable_shader_binding_table: *const StridedBufferRegionKHR,
-                    _buffer: Buffer,
-                    _offset: DeviceSize,
-                ) -> c_void {
-                    panic!(concat!(
-                        "Unable to load ",
-                        stringify!(cmd_trace_rays_indirect_khr)
-                    ))
-                }
-                let raw_name = stringify!(vkCmdTraceRaysIndirectKHR);
-                let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                let val = _f(&cname);
-                if val.is_null() {
-                    cmd_trace_rays_indirect_khr
-                } else {
-                    ::std::mem::transmute(val)
-                }
-            },
             get_device_acceleration_structure_compatibility_khr: unsafe {
                 extern "system" fn get_device_acceleration_structure_compatibility_khr(
                     _device: Device,
-                    _version: *const AccelerationStructureVersionKHR,
-                ) -> Result {
+                    _p_version_info: *const AccelerationStructureVersionInfoKHR,
+                    _p_compatibility: *mut AccelerationStructureCompatibilityKHR,
+                ) -> c_void {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(get_device_acceleration_structure_compatibility_khr)
@@ -12484,6 +12287,28 @@ impl KhrRayTracingFn {
                 let val = _f(&cname);
                 if val.is_null() {
                     get_device_acceleration_structure_compatibility_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_acceleration_structure_build_sizes_khr: unsafe {
+                extern "system" fn get_acceleration_structure_build_sizes_khr(
+                    _device: Device,
+                    _build_type: AccelerationStructureBuildTypeKHR,
+                    _p_build_info: *const AccelerationStructureBuildGeometryInfoKHR,
+                    _p_max_primitive_counts: *const u32,
+                    _p_size_info: *mut AccelerationStructureBuildSizesInfoKHR,
+                ) -> c_void {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_acceleration_structure_build_sizes_khr)
+                    ))
+                }
+                let raw_name = stringify!(vkGetAccelerationStructureBuildSizesKHR);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    get_acceleration_structure_build_sizes_khr
                 } else {
                     ::std::mem::transmute(val)
                 }
@@ -12514,93 +12339,83 @@ impl KhrRayTracingFn {
     ) -> c_void {
         (self.destroy_acceleration_structure_khr)(device, acceleration_structure, p_allocator)
     }
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetAccelerationStructureMemoryRequirementsKHR.html>"]
-    pub unsafe fn get_acceleration_structure_memory_requirements_khr(
-        &self,
-        device: Device,
-        p_info: *const AccelerationStructureMemoryRequirementsInfoKHR,
-        p_memory_requirements: *mut MemoryRequirements2,
-    ) -> c_void {
-        (self.get_acceleration_structure_memory_requirements_khr)(
-            device,
-            p_info,
-            p_memory_requirements,
-        )
-    }
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkBindAccelerationStructureMemoryKHR.html>"]
-    pub unsafe fn bind_acceleration_structure_memory_khr(
-        &self,
-        device: Device,
-        bind_info_count: u32,
-        p_bind_infos: *const BindAccelerationStructureMemoryInfoKHR,
-    ) -> Result {
-        (self.bind_acceleration_structure_memory_khr)(device, bind_info_count, p_bind_infos)
-    }
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdBuildAccelerationStructureKHR.html>"]
-    pub unsafe fn cmd_build_acceleration_structure_khr(
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdBuildAccelerationStructuresKHR.html>"]
+    pub unsafe fn cmd_build_acceleration_structures_khr(
         &self,
         command_buffer: CommandBuffer,
         info_count: u32,
         p_infos: *const AccelerationStructureBuildGeometryInfoKHR,
-        pp_offset_infos: *const *const AccelerationStructureBuildOffsetInfoKHR,
+        pp_build_range_infos: *const *const AccelerationStructureBuildRangeInfoKHR,
     ) -> c_void {
-        (self.cmd_build_acceleration_structure_khr)(
+        (self.cmd_build_acceleration_structures_khr)(
             command_buffer,
             info_count,
             p_infos,
-            pp_offset_infos,
+            pp_build_range_infos,
         )
     }
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdBuildAccelerationStructureIndirectKHR.html>"]
-    pub unsafe fn cmd_build_acceleration_structure_indirect_khr(
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdBuildAccelerationStructuresIndirectKHR.html>"]
+    pub unsafe fn cmd_build_acceleration_structures_indirect_khr(
         &self,
         command_buffer: CommandBuffer,
-        p_info: *const AccelerationStructureBuildGeometryInfoKHR,
-        indirect_buffer: Buffer,
-        indirect_offset: DeviceSize,
-        indirect_stride: u32,
-    ) -> c_void {
-        (self.cmd_build_acceleration_structure_indirect_khr)(
-            command_buffer,
-            p_info,
-            indirect_buffer,
-            indirect_offset,
-            indirect_stride,
-        )
-    }
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkBuildAccelerationStructureKHR.html>"]
-    pub unsafe fn build_acceleration_structure_khr(
-        &self,
-        device: Device,
         info_count: u32,
         p_infos: *const AccelerationStructureBuildGeometryInfoKHR,
-        pp_offset_infos: *const *const AccelerationStructureBuildOffsetInfoKHR,
+        p_indirect_device_addresses: *const DeviceAddress,
+        p_indirect_strides: *const u32,
+        pp_max_primitive_counts: *const *const u32,
+    ) -> c_void {
+        (self.cmd_build_acceleration_structures_indirect_khr)(
+            command_buffer,
+            info_count,
+            p_infos,
+            p_indirect_device_addresses,
+            p_indirect_strides,
+            pp_max_primitive_counts,
+        )
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkBuildAccelerationStructuresKHR.html>"]
+    pub unsafe fn build_acceleration_structures_khr(
+        &self,
+        device: Device,
+        deferred_operation: DeferredOperationKHR,
+        info_count: u32,
+        p_infos: *const AccelerationStructureBuildGeometryInfoKHR,
+        pp_build_range_infos: *const *const AccelerationStructureBuildRangeInfoKHR,
     ) -> Result {
-        (self.build_acceleration_structure_khr)(device, info_count, p_infos, pp_offset_infos)
+        (self.build_acceleration_structures_khr)(
+            device,
+            deferred_operation,
+            info_count,
+            p_infos,
+            pp_build_range_infos,
+        )
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCopyAccelerationStructureKHR.html>"]
     pub unsafe fn copy_acceleration_structure_khr(
         &self,
         device: Device,
+        deferred_operation: DeferredOperationKHR,
         p_info: *const CopyAccelerationStructureInfoKHR,
     ) -> Result {
-        (self.copy_acceleration_structure_khr)(device, p_info)
+        (self.copy_acceleration_structure_khr)(device, deferred_operation, p_info)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCopyAccelerationStructureToMemoryKHR.html>"]
     pub unsafe fn copy_acceleration_structure_to_memory_khr(
         &self,
         device: Device,
+        deferred_operation: DeferredOperationKHR,
         p_info: *const CopyAccelerationStructureToMemoryInfoKHR,
     ) -> Result {
-        (self.copy_acceleration_structure_to_memory_khr)(device, p_info)
+        (self.copy_acceleration_structure_to_memory_khr)(device, deferred_operation, p_info)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCopyMemoryToAccelerationStructureKHR.html>"]
     pub unsafe fn copy_memory_to_acceleration_structure_khr(
         &self,
         device: Device,
+        deferred_operation: DeferredOperationKHR,
         p_info: *const CopyMemoryToAccelerationStructureInfoKHR,
     ) -> Result {
-        (self.copy_memory_to_acceleration_structure_khr)(device, p_info)
+        (self.copy_memory_to_acceleration_structure_khr)(device, deferred_operation, p_info)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkWriteAccelerationStructuresPropertiesKHR.html>"]
     pub unsafe fn write_acceleration_structures_properties_khr(
@@ -12647,14 +12462,481 @@ impl KhrRayTracingFn {
     ) -> c_void {
         (self.cmd_copy_memory_to_acceleration_structure_khr)(command_buffer, p_info)
     }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetAccelerationStructureDeviceAddressKHR.html>"]
+    pub unsafe fn get_acceleration_structure_device_address_khr(
+        &self,
+        device: Device,
+        p_info: *const AccelerationStructureDeviceAddressInfoKHR,
+    ) -> DeviceAddress {
+        (self.get_acceleration_structure_device_address_khr)(device, p_info)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdWriteAccelerationStructuresPropertiesKHR.html>"]
+    pub unsafe fn cmd_write_acceleration_structures_properties_khr(
+        &self,
+        command_buffer: CommandBuffer,
+        acceleration_structure_count: u32,
+        p_acceleration_structures: *const AccelerationStructureKHR,
+        query_type: QueryType,
+        query_pool: QueryPool,
+        first_query: u32,
+    ) -> c_void {
+        (self.cmd_write_acceleration_structures_properties_khr)(
+            command_buffer,
+            acceleration_structure_count,
+            p_acceleration_structures,
+            query_type,
+            query_pool,
+            first_query,
+        )
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetDeviceAccelerationStructureCompatibilityKHR.html>"]
+    pub unsafe fn get_device_acceleration_structure_compatibility_khr(
+        &self,
+        device: Device,
+        p_version_info: *const AccelerationStructureVersionInfoKHR,
+        p_compatibility: *mut AccelerationStructureCompatibilityKHR,
+    ) -> c_void {
+        (self.get_device_acceleration_structure_compatibility_khr)(
+            device,
+            p_version_info,
+            p_compatibility,
+        )
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetAccelerationStructureBuildSizesKHR.html>"]
+    pub unsafe fn get_acceleration_structure_build_sizes_khr(
+        &self,
+        device: Device,
+        build_type: AccelerationStructureBuildTypeKHR,
+        p_build_info: *const AccelerationStructureBuildGeometryInfoKHR,
+        p_max_primitive_counts: *const u32,
+        p_size_info: *mut AccelerationStructureBuildSizesInfoKHR,
+    ) -> c_void {
+        (self.get_acceleration_structure_build_sizes_khr)(
+            device,
+            build_type,
+            p_build_info,
+            p_max_primitive_counts,
+            p_size_info,
+        )
+    }
+}
+#[doc = "Generated from \'VK_KHR_acceleration_structure\'"]
+impl StructureType {
+    pub const WRITE_DESCRIPTOR_SET_ACCELERATION_STRUCTURE_KHR: Self = Self(1_000_150_007);
+}
+#[doc = "Generated from \'VK_KHR_acceleration_structure\'"]
+impl StructureType {
+    pub const ACCELERATION_STRUCTURE_BUILD_GEOMETRY_INFO_KHR: Self = Self(1_000_150_000);
+}
+#[doc = "Generated from \'VK_KHR_acceleration_structure\'"]
+impl StructureType {
+    pub const ACCELERATION_STRUCTURE_DEVICE_ADDRESS_INFO_KHR: Self = Self(1_000_150_002);
+}
+#[doc = "Generated from \'VK_KHR_acceleration_structure\'"]
+impl StructureType {
+    pub const ACCELERATION_STRUCTURE_GEOMETRY_AABBS_DATA_KHR: Self = Self(1_000_150_003);
+}
+#[doc = "Generated from \'VK_KHR_acceleration_structure\'"]
+impl StructureType {
+    pub const ACCELERATION_STRUCTURE_GEOMETRY_INSTANCES_DATA_KHR: Self = Self(1_000_150_004);
+}
+#[doc = "Generated from \'VK_KHR_acceleration_structure\'"]
+impl StructureType {
+    pub const ACCELERATION_STRUCTURE_GEOMETRY_TRIANGLES_DATA_KHR: Self = Self(1_000_150_005);
+}
+#[doc = "Generated from \'VK_KHR_acceleration_structure\'"]
+impl StructureType {
+    pub const ACCELERATION_STRUCTURE_GEOMETRY_KHR: Self = Self(1_000_150_006);
+}
+#[doc = "Generated from \'VK_KHR_acceleration_structure\'"]
+impl StructureType {
+    pub const ACCELERATION_STRUCTURE_VERSION_INFO_KHR: Self = Self(1_000_150_009);
+}
+#[doc = "Generated from \'VK_KHR_acceleration_structure\'"]
+impl StructureType {
+    pub const COPY_ACCELERATION_STRUCTURE_INFO_KHR: Self = Self(1_000_150_010);
+}
+#[doc = "Generated from \'VK_KHR_acceleration_structure\'"]
+impl StructureType {
+    pub const COPY_ACCELERATION_STRUCTURE_TO_MEMORY_INFO_KHR: Self = Self(1_000_150_011);
+}
+#[doc = "Generated from \'VK_KHR_acceleration_structure\'"]
+impl StructureType {
+    pub const COPY_MEMORY_TO_ACCELERATION_STRUCTURE_INFO_KHR: Self = Self(1_000_150_012);
+}
+#[doc = "Generated from \'VK_KHR_acceleration_structure\'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_ACCELERATION_STRUCTURE_FEATURES_KHR: Self = Self(1_000_150_013);
+}
+#[doc = "Generated from \'VK_KHR_acceleration_structure\'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_ACCELERATION_STRUCTURE_PROPERTIES_KHR: Self = Self(1_000_150_014);
+}
+#[doc = "Generated from \'VK_KHR_acceleration_structure\'"]
+impl StructureType {
+    pub const ACCELERATION_STRUCTURE_CREATE_INFO_KHR: Self = Self(1_000_150_017);
+}
+#[doc = "Generated from \'VK_KHR_acceleration_structure\'"]
+impl StructureType {
+    pub const ACCELERATION_STRUCTURE_BUILD_SIZES_INFO_KHR: Self = Self(1_000_150_020);
+}
+#[doc = "Generated from \'VK_KHR_acceleration_structure\'"]
+impl PipelineStageFlags {
+    pub const ACCELERATION_STRUCTURE_BUILD_KHR: Self = Self(0b10_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from \'VK_KHR_acceleration_structure\'"]
+impl DescriptorType {
+    pub const ACCELERATION_STRUCTURE_KHR: Self = Self(1_000_150_000);
+}
+#[doc = "Generated from \'VK_KHR_acceleration_structure\'"]
+impl AccessFlags {
+    pub const ACCELERATION_STRUCTURE_READ_KHR: Self = Self(0b10_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from \'VK_KHR_acceleration_structure\'"]
+impl AccessFlags {
+    pub const ACCELERATION_STRUCTURE_WRITE_KHR: Self = Self(0b100_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from \'VK_KHR_acceleration_structure\'"]
+impl QueryType {
+    pub const ACCELERATION_STRUCTURE_COMPACTED_SIZE_KHR: Self = Self(1_000_150_000);
+}
+#[doc = "Generated from \'VK_KHR_acceleration_structure\'"]
+impl QueryType {
+    pub const ACCELERATION_STRUCTURE_SERIALIZATION_SIZE_KHR: Self = Self(1_000_150_001);
+}
+#[doc = "Generated from \'VK_KHR_acceleration_structure\'"]
+impl ObjectType {
+    pub const ACCELERATION_STRUCTURE_KHR: Self = Self(1_000_150_000);
+}
+#[doc = "Generated from \'VK_KHR_acceleration_structure\'"]
+impl DebugReportObjectTypeEXT {
+    pub const ACCELERATION_STRUCTURE_KHR: Self = Self(1_000_150_000);
+}
+#[doc = "Generated from \'VK_KHR_acceleration_structure\'"]
+impl IndexType {
+    pub const NONE_KHR: Self = Self(1_000_165_000);
+}
+#[doc = "Generated from \'VK_KHR_acceleration_structure\'"]
+impl FormatFeatureFlags {
+    pub const ACCELERATION_STRUCTURE_VERTEX_BUFFER_KHR: Self =
+        Self(0b10_0000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from \'VK_KHR_acceleration_structure\'"]
+impl BufferUsageFlags {
+    pub const ACCELERATION_STRUCTURE_BUILD_INPUT_READ_ONLY_KHR: Self =
+        Self(0b1000_0000_0000_0000_0000);
+}
+#[doc = "Generated from \'VK_KHR_acceleration_structure\'"]
+impl BufferUsageFlags {
+    pub const ACCELERATION_STRUCTURE_STORAGE_KHR: Self = Self(0b1_0000_0000_0000_0000_0000);
+}
+impl KhrRayTracingPipelineFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_ray_tracing_pipeline\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdTraceRaysKHR = extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_raygen_shader_binding_table: *const StridedDeviceAddressRegionKHR,
+    p_miss_shader_binding_table: *const StridedDeviceAddressRegionKHR,
+    p_hit_shader_binding_table: *const StridedDeviceAddressRegionKHR,
+    p_callable_shader_binding_table: *const StridedDeviceAddressRegionKHR,
+    width: u32,
+    height: u32,
+    depth: u32,
+) -> c_void;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCreateRayTracingPipelinesKHR = extern "system" fn(
+    device: Device,
+    deferred_operation: DeferredOperationKHR,
+    pipeline_cache: PipelineCache,
+    create_info_count: u32,
+    p_create_infos: *const RayTracingPipelineCreateInfoKHR,
+    p_allocator: *const AllocationCallbacks,
+    p_pipelines: *mut Pipeline,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetRayTracingShaderGroupHandlesKHR = extern "system" fn(
+    device: Device,
+    pipeline: Pipeline,
+    first_group: u32,
+    group_count: u32,
+    data_size: usize,
+    p_data: *mut c_void,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetRayTracingCaptureReplayShaderGroupHandlesKHR = extern "system" fn(
+    device: Device,
+    pipeline: Pipeline,
+    first_group: u32,
+    group_count: u32,
+    data_size: usize,
+    p_data: *mut c_void,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdTraceRaysIndirectKHR = extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_raygen_shader_binding_table: *const StridedDeviceAddressRegionKHR,
+    p_miss_shader_binding_table: *const StridedDeviceAddressRegionKHR,
+    p_hit_shader_binding_table: *const StridedDeviceAddressRegionKHR,
+    p_callable_shader_binding_table: *const StridedDeviceAddressRegionKHR,
+    indirect_device_address: DeviceAddress,
+) -> c_void;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetRayTracingShaderGroupStackSizeKHR = extern "system" fn(
+    device: Device,
+    pipeline: Pipeline,
+    group: u32,
+    group_shader: ShaderGroupShaderKHR,
+) -> DeviceSize;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetRayTracingPipelineStackSizeKHR =
+    extern "system" fn(command_buffer: CommandBuffer, pipeline_stack_size: u32) -> c_void;
+pub struct KhrRayTracingPipelineFn {
+    pub cmd_trace_rays_khr: extern "system" fn(
+        command_buffer: CommandBuffer,
+        p_raygen_shader_binding_table: *const StridedDeviceAddressRegionKHR,
+        p_miss_shader_binding_table: *const StridedDeviceAddressRegionKHR,
+        p_hit_shader_binding_table: *const StridedDeviceAddressRegionKHR,
+        p_callable_shader_binding_table: *const StridedDeviceAddressRegionKHR,
+        width: u32,
+        height: u32,
+        depth: u32,
+    ) -> c_void,
+    pub create_ray_tracing_pipelines_khr: extern "system" fn(
+        device: Device,
+        deferred_operation: DeferredOperationKHR,
+        pipeline_cache: PipelineCache,
+        create_info_count: u32,
+        p_create_infos: *const RayTracingPipelineCreateInfoKHR,
+        p_allocator: *const AllocationCallbacks,
+        p_pipelines: *mut Pipeline,
+    ) -> Result,
+    pub get_ray_tracing_shader_group_handles_khr: extern "system" fn(
+        device: Device,
+        pipeline: Pipeline,
+        first_group: u32,
+        group_count: u32,
+        data_size: usize,
+        p_data: *mut c_void,
+    ) -> Result,
+    pub get_ray_tracing_capture_replay_shader_group_handles_khr: extern "system" fn(
+        device: Device,
+        pipeline: Pipeline,
+        first_group: u32,
+        group_count: u32,
+        data_size: usize,
+        p_data: *mut c_void,
+    ) -> Result,
+    pub cmd_trace_rays_indirect_khr: extern "system" fn(
+        command_buffer: CommandBuffer,
+        p_raygen_shader_binding_table: *const StridedDeviceAddressRegionKHR,
+        p_miss_shader_binding_table: *const StridedDeviceAddressRegionKHR,
+        p_hit_shader_binding_table: *const StridedDeviceAddressRegionKHR,
+        p_callable_shader_binding_table: *const StridedDeviceAddressRegionKHR,
+        indirect_device_address: DeviceAddress,
+    ) -> c_void,
+    pub get_ray_tracing_shader_group_stack_size_khr: extern "system" fn(
+        device: Device,
+        pipeline: Pipeline,
+        group: u32,
+        group_shader: ShaderGroupShaderKHR,
+    ) -> DeviceSize,
+    pub cmd_set_ray_tracing_pipeline_stack_size_khr:
+        extern "system" fn(command_buffer: CommandBuffer, pipeline_stack_size: u32) -> c_void,
+}
+unsafe impl Send for KhrRayTracingPipelineFn {}
+unsafe impl Sync for KhrRayTracingPipelineFn {}
+impl ::std::clone::Clone for KhrRayTracingPipelineFn {
+    fn clone(&self) -> Self {
+        KhrRayTracingPipelineFn {
+            cmd_trace_rays_khr: self.cmd_trace_rays_khr,
+            create_ray_tracing_pipelines_khr: self.create_ray_tracing_pipelines_khr,
+            get_ray_tracing_shader_group_handles_khr: self.get_ray_tracing_shader_group_handles_khr,
+            get_ray_tracing_capture_replay_shader_group_handles_khr: self
+                .get_ray_tracing_capture_replay_shader_group_handles_khr,
+            cmd_trace_rays_indirect_khr: self.cmd_trace_rays_indirect_khr,
+            get_ray_tracing_shader_group_stack_size_khr: self
+                .get_ray_tracing_shader_group_stack_size_khr,
+            cmd_set_ray_tracing_pipeline_stack_size_khr: self
+                .cmd_set_ray_tracing_pipeline_stack_size_khr,
+        }
+    }
+}
+impl KhrRayTracingPipelineFn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        KhrRayTracingPipelineFn {
+            cmd_trace_rays_khr: unsafe {
+                extern "system" fn cmd_trace_rays_khr(
+                    _command_buffer: CommandBuffer,
+                    _p_raygen_shader_binding_table: *const StridedDeviceAddressRegionKHR,
+                    _p_miss_shader_binding_table: *const StridedDeviceAddressRegionKHR,
+                    _p_hit_shader_binding_table: *const StridedDeviceAddressRegionKHR,
+                    _p_callable_shader_binding_table: *const StridedDeviceAddressRegionKHR,
+                    _width: u32,
+                    _height: u32,
+                    _depth: u32,
+                ) -> c_void {
+                    panic!(concat!("Unable to load ", stringify!(cmd_trace_rays_khr)))
+                }
+                let raw_name = stringify!(vkCmdTraceRaysKHR);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    cmd_trace_rays_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            create_ray_tracing_pipelines_khr: unsafe {
+                extern "system" fn create_ray_tracing_pipelines_khr(
+                    _device: Device,
+                    _deferred_operation: DeferredOperationKHR,
+                    _pipeline_cache: PipelineCache,
+                    _create_info_count: u32,
+                    _p_create_infos: *const RayTracingPipelineCreateInfoKHR,
+                    _p_allocator: *const AllocationCallbacks,
+                    _p_pipelines: *mut Pipeline,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(create_ray_tracing_pipelines_khr)
+                    ))
+                }
+                let raw_name = stringify!(vkCreateRayTracingPipelinesKHR);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    create_ray_tracing_pipelines_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_ray_tracing_shader_group_handles_khr: unsafe {
+                extern "system" fn get_ray_tracing_shader_group_handles_khr(
+                    _device: Device,
+                    _pipeline: Pipeline,
+                    _first_group: u32,
+                    _group_count: u32,
+                    _data_size: usize,
+                    _p_data: *mut c_void,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_ray_tracing_shader_group_handles_khr)
+                    ))
+                }
+                let raw_name = stringify!(vkGetRayTracingShaderGroupHandlesKHR);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    get_ray_tracing_shader_group_handles_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_ray_tracing_capture_replay_shader_group_handles_khr: unsafe {
+                extern "system" fn get_ray_tracing_capture_replay_shader_group_handles_khr(
+                    _device: Device,
+                    _pipeline: Pipeline,
+                    _first_group: u32,
+                    _group_count: u32,
+                    _data_size: usize,
+                    _p_data: *mut c_void,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_ray_tracing_capture_replay_shader_group_handles_khr)
+                    ))
+                }
+                let raw_name = stringify!(vkGetRayTracingCaptureReplayShaderGroupHandlesKHR);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    get_ray_tracing_capture_replay_shader_group_handles_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_trace_rays_indirect_khr: unsafe {
+                extern "system" fn cmd_trace_rays_indirect_khr(
+                    _command_buffer: CommandBuffer,
+                    _p_raygen_shader_binding_table: *const StridedDeviceAddressRegionKHR,
+                    _p_miss_shader_binding_table: *const StridedDeviceAddressRegionKHR,
+                    _p_hit_shader_binding_table: *const StridedDeviceAddressRegionKHR,
+                    _p_callable_shader_binding_table: *const StridedDeviceAddressRegionKHR,
+                    _indirect_device_address: DeviceAddress,
+                ) -> c_void {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_trace_rays_indirect_khr)
+                    ))
+                }
+                let raw_name = stringify!(vkCmdTraceRaysIndirectKHR);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    cmd_trace_rays_indirect_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_ray_tracing_shader_group_stack_size_khr: unsafe {
+                extern "system" fn get_ray_tracing_shader_group_stack_size_khr(
+                    _device: Device,
+                    _pipeline: Pipeline,
+                    _group: u32,
+                    _group_shader: ShaderGroupShaderKHR,
+                ) -> DeviceSize {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_ray_tracing_shader_group_stack_size_khr)
+                    ))
+                }
+                let raw_name = stringify!(vkGetRayTracingShaderGroupStackSizeKHR);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    get_ray_tracing_shader_group_stack_size_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_ray_tracing_pipeline_stack_size_khr: unsafe {
+                extern "system" fn cmd_set_ray_tracing_pipeline_stack_size_khr(
+                    _command_buffer: CommandBuffer,
+                    _pipeline_stack_size: u32,
+                ) -> c_void {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_ray_tracing_pipeline_stack_size_khr)
+                    ))
+                }
+                let raw_name = stringify!(vkCmdSetRayTracingPipelineStackSizeKHR);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    cmd_set_ray_tracing_pipeline_stack_size_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdTraceRaysKHR.html>"]
     pub unsafe fn cmd_trace_rays_khr(
         &self,
         command_buffer: CommandBuffer,
-        p_raygen_shader_binding_table: *const StridedBufferRegionKHR,
-        p_miss_shader_binding_table: *const StridedBufferRegionKHR,
-        p_hit_shader_binding_table: *const StridedBufferRegionKHR,
-        p_callable_shader_binding_table: *const StridedBufferRegionKHR,
+        p_raygen_shader_binding_table: *const StridedDeviceAddressRegionKHR,
+        p_miss_shader_binding_table: *const StridedDeviceAddressRegionKHR,
+        p_hit_shader_binding_table: *const StridedDeviceAddressRegionKHR,
+        p_callable_shader_binding_table: *const StridedDeviceAddressRegionKHR,
         width: u32,
         height: u32,
         depth: u32,
@@ -12674,6 +12956,7 @@ impl KhrRayTracingFn {
     pub unsafe fn create_ray_tracing_pipelines_khr(
         &self,
         device: Device,
+        deferred_operation: DeferredOperationKHR,
         pipeline_cache: PipelineCache,
         create_info_count: u32,
         p_create_infos: *const RayTracingPipelineCreateInfoKHR,
@@ -12682,6 +12965,7 @@ impl KhrRayTracingFn {
     ) -> Result {
         (self.create_ray_tracing_pipelines_khr)(
             device,
+            deferred_operation,
             pipeline_cache,
             create_info_count,
             p_create_infos,
@@ -12708,14 +12992,6 @@ impl KhrRayTracingFn {
             p_data,
         )
     }
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetAccelerationStructureDeviceAddressKHR.html>"]
-    pub unsafe fn get_acceleration_structure_device_address_khr(
-        &self,
-        device: Device,
-        p_info: *const AccelerationStructureDeviceAddressInfoKHR,
-    ) -> DeviceAddress {
-        (self.get_acceleration_structure_device_address_khr)(device, p_info)
-    }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetRayTracingCaptureReplayShaderGroupHandlesKHR.html>"]
     pub unsafe fn get_ray_tracing_capture_replay_shader_group_handles_khr(
         &self,
@@ -12735,35 +13011,15 @@ impl KhrRayTracingFn {
             p_data,
         )
     }
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdWriteAccelerationStructuresPropertiesKHR.html>"]
-    pub unsafe fn cmd_write_acceleration_structures_properties_khr(
-        &self,
-        command_buffer: CommandBuffer,
-        acceleration_structure_count: u32,
-        p_acceleration_structures: *const AccelerationStructureKHR,
-        query_type: QueryType,
-        query_pool: QueryPool,
-        first_query: u32,
-    ) -> c_void {
-        (self.cmd_write_acceleration_structures_properties_khr)(
-            command_buffer,
-            acceleration_structure_count,
-            p_acceleration_structures,
-            query_type,
-            query_pool,
-            first_query,
-        )
-    }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdTraceRaysIndirectKHR.html>"]
     pub unsafe fn cmd_trace_rays_indirect_khr(
         &self,
         command_buffer: CommandBuffer,
-        p_raygen_shader_binding_table: *const StridedBufferRegionKHR,
-        p_miss_shader_binding_table: *const StridedBufferRegionKHR,
-        p_hit_shader_binding_table: *const StridedBufferRegionKHR,
-        p_callable_shader_binding_table: *const StridedBufferRegionKHR,
-        buffer: Buffer,
-        offset: DeviceSize,
+        p_raygen_shader_binding_table: *const StridedDeviceAddressRegionKHR,
+        p_miss_shader_binding_table: *const StridedDeviceAddressRegionKHR,
+        p_hit_shader_binding_table: *const StridedDeviceAddressRegionKHR,
+        p_callable_shader_binding_table: *const StridedDeviceAddressRegionKHR,
+        indirect_device_address: DeviceAddress,
     ) -> c_void {
         (self.cmd_trace_rays_indirect_khr)(
             command_buffer,
@@ -12771,211 +13027,143 @@ impl KhrRayTracingFn {
             p_miss_shader_binding_table,
             p_hit_shader_binding_table,
             p_callable_shader_binding_table,
-            buffer,
-            offset,
+            indirect_device_address,
         )
     }
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetDeviceAccelerationStructureCompatibilityKHR.html>"]
-    pub unsafe fn get_device_acceleration_structure_compatibility_khr(
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetRayTracingShaderGroupStackSizeKHR.html>"]
+    pub unsafe fn get_ray_tracing_shader_group_stack_size_khr(
         &self,
         device: Device,
-        version: *const AccelerationStructureVersionKHR,
-    ) -> Result {
-        (self.get_device_acceleration_structure_compatibility_khr)(device, version)
+        pipeline: Pipeline,
+        group: u32,
+        group_shader: ShaderGroupShaderKHR,
+    ) -> DeviceSize {
+        (self.get_ray_tracing_shader_group_stack_size_khr)(device, pipeline, group, group_shader)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetRayTracingPipelineStackSizeKHR.html>"]
+    pub unsafe fn cmd_set_ray_tracing_pipeline_stack_size_khr(
+        &self,
+        command_buffer: CommandBuffer,
+        pipeline_stack_size: u32,
+    ) -> c_void {
+        (self.cmd_set_ray_tracing_pipeline_stack_size_khr)(command_buffer, pipeline_stack_size)
     }
 }
-#[doc = "Generated from \'VK_KHR_ray_tracing\'"]
+#[doc = "Generated from \'VK_KHR_ray_tracing_pipeline\'"]
 impl StructureType {
-    pub const BIND_ACCELERATION_STRUCTURE_MEMORY_INFO_KHR: Self = Self(1_000_165_006);
+    pub const PHYSICAL_DEVICE_RAY_TRACING_PIPELINE_FEATURES_KHR: Self = Self(1_000_347_000);
 }
-#[doc = "Generated from \'VK_KHR_ray_tracing\'"]
+#[doc = "Generated from \'VK_KHR_ray_tracing_pipeline\'"]
 impl StructureType {
-    pub const WRITE_DESCRIPTOR_SET_ACCELERATION_STRUCTURE_KHR: Self = Self(1_000_165_007);
+    pub const PHYSICAL_DEVICE_RAY_TRACING_PIPELINE_PROPERTIES_KHR: Self = Self(1_000_347_001);
 }
-#[doc = "Generated from \'VK_KHR_ray_tracing\'"]
-impl StructureType {
-    pub const ACCELERATION_STRUCTURE_BUILD_GEOMETRY_INFO_KHR: Self = Self(1_000_150_000);
-}
-#[doc = "Generated from \'VK_KHR_ray_tracing\'"]
-impl StructureType {
-    pub const ACCELERATION_STRUCTURE_CREATE_GEOMETRY_TYPE_INFO_KHR: Self = Self(1_000_150_001);
-}
-#[doc = "Generated from \'VK_KHR_ray_tracing\'"]
-impl StructureType {
-    pub const ACCELERATION_STRUCTURE_DEVICE_ADDRESS_INFO_KHR: Self = Self(1_000_150_002);
-}
-#[doc = "Generated from \'VK_KHR_ray_tracing\'"]
-impl StructureType {
-    pub const ACCELERATION_STRUCTURE_GEOMETRY_AABBS_DATA_KHR: Self = Self(1_000_150_003);
-}
-#[doc = "Generated from \'VK_KHR_ray_tracing\'"]
-impl StructureType {
-    pub const ACCELERATION_STRUCTURE_GEOMETRY_INSTANCES_DATA_KHR: Self = Self(1_000_150_004);
-}
-#[doc = "Generated from \'VK_KHR_ray_tracing\'"]
-impl StructureType {
-    pub const ACCELERATION_STRUCTURE_GEOMETRY_TRIANGLES_DATA_KHR: Self = Self(1_000_150_005);
-}
-#[doc = "Generated from \'VK_KHR_ray_tracing\'"]
-impl StructureType {
-    pub const ACCELERATION_STRUCTURE_GEOMETRY_KHR: Self = Self(1_000_150_006);
-}
-#[doc = "Generated from \'VK_KHR_ray_tracing\'"]
-impl StructureType {
-    pub const ACCELERATION_STRUCTURE_INFO_KHR: Self = Self(1_000_150_007);
-}
-#[doc = "Generated from \'VK_KHR_ray_tracing\'"]
-impl StructureType {
-    pub const ACCELERATION_STRUCTURE_MEMORY_REQUIREMENTS_INFO_KHR: Self = Self(1_000_150_008);
-}
-#[doc = "Generated from \'VK_KHR_ray_tracing\'"]
-impl StructureType {
-    pub const ACCELERATION_STRUCTURE_VERSION_KHR: Self = Self(1_000_150_009);
-}
-#[doc = "Generated from \'VK_KHR_ray_tracing\'"]
-impl StructureType {
-    pub const COPY_ACCELERATION_STRUCTURE_INFO_KHR: Self = Self(1_000_150_010);
-}
-#[doc = "Generated from \'VK_KHR_ray_tracing\'"]
-impl StructureType {
-    pub const COPY_ACCELERATION_STRUCTURE_TO_MEMORY_INFO_KHR: Self = Self(1_000_150_011);
-}
-#[doc = "Generated from \'VK_KHR_ray_tracing\'"]
-impl StructureType {
-    pub const COPY_MEMORY_TO_ACCELERATION_STRUCTURE_INFO_KHR: Self = Self(1_000_150_012);
-}
-#[doc = "Generated from \'VK_KHR_ray_tracing\'"]
-impl StructureType {
-    pub const PHYSICAL_DEVICE_RAY_TRACING_FEATURES_KHR: Self = Self(1_000_150_013);
-}
-#[doc = "Generated from \'VK_KHR_ray_tracing\'"]
-impl StructureType {
-    pub const PHYSICAL_DEVICE_RAY_TRACING_PROPERTIES_KHR: Self = Self(1_000_150_014);
-}
-#[doc = "Generated from \'VK_KHR_ray_tracing\'"]
+#[doc = "Generated from \'VK_KHR_ray_tracing_pipeline\'"]
 impl StructureType {
     pub const RAY_TRACING_PIPELINE_CREATE_INFO_KHR: Self = Self(1_000_150_015);
 }
-#[doc = "Generated from \'VK_KHR_ray_tracing\'"]
+#[doc = "Generated from \'VK_KHR_ray_tracing_pipeline\'"]
 impl StructureType {
     pub const RAY_TRACING_SHADER_GROUP_CREATE_INFO_KHR: Self = Self(1_000_150_016);
 }
-#[doc = "Generated from \'VK_KHR_ray_tracing\'"]
-impl StructureType {
-    pub const ACCELERATION_STRUCTURE_CREATE_INFO_KHR: Self = Self(1_000_150_017);
-}
-#[doc = "Generated from \'VK_KHR_ray_tracing\'"]
+#[doc = "Generated from \'VK_KHR_ray_tracing_pipeline\'"]
 impl StructureType {
     pub const RAY_TRACING_PIPELINE_INTERFACE_CREATE_INFO_KHR: Self = Self(1_000_150_018);
 }
-#[doc = "Generated from \'VK_KHR_ray_tracing\'"]
+#[doc = "Generated from \'VK_KHR_ray_tracing_pipeline\'"]
 impl ShaderStageFlags {
     pub const RAYGEN_KHR: Self = Self(0b1_0000_0000);
 }
-#[doc = "Generated from \'VK_KHR_ray_tracing\'"]
+#[doc = "Generated from \'VK_KHR_ray_tracing_pipeline\'"]
 impl ShaderStageFlags {
     pub const ANY_HIT_KHR: Self = Self(0b10_0000_0000);
 }
-#[doc = "Generated from \'VK_KHR_ray_tracing\'"]
+#[doc = "Generated from \'VK_KHR_ray_tracing_pipeline\'"]
 impl ShaderStageFlags {
     pub const CLOSEST_HIT_KHR: Self = Self(0b100_0000_0000);
 }
-#[doc = "Generated from \'VK_KHR_ray_tracing\'"]
+#[doc = "Generated from \'VK_KHR_ray_tracing_pipeline\'"]
 impl ShaderStageFlags {
     pub const MISS_KHR: Self = Self(0b1000_0000_0000);
 }
-#[doc = "Generated from \'VK_KHR_ray_tracing\'"]
+#[doc = "Generated from \'VK_KHR_ray_tracing_pipeline\'"]
 impl ShaderStageFlags {
     pub const INTERSECTION_KHR: Self = Self(0b1_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_KHR_ray_tracing\'"]
+#[doc = "Generated from \'VK_KHR_ray_tracing_pipeline\'"]
 impl ShaderStageFlags {
     pub const CALLABLE_KHR: Self = Self(0b10_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_KHR_ray_tracing\'"]
+#[doc = "Generated from \'VK_KHR_ray_tracing_pipeline\'"]
 impl PipelineStageFlags {
     pub const RAY_TRACING_SHADER_KHR: Self = Self(0b10_0000_0000_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_KHR_ray_tracing\'"]
-impl PipelineStageFlags {
-    pub const ACCELERATION_STRUCTURE_BUILD_KHR: Self = Self(0b10_0000_0000_0000_0000_0000_0000);
-}
-#[doc = "Generated from \'VK_KHR_ray_tracing\'"]
+#[doc = "Generated from \'VK_KHR_ray_tracing_pipeline\'"]
 impl BufferUsageFlags {
-    pub const RAY_TRACING_KHR: Self = Self(0b100_0000_0000);
+    pub const SHADER_BINDING_TABLE_KHR: Self = Self(0b100_0000_0000);
 }
-#[doc = "Generated from \'VK_KHR_ray_tracing\'"]
+#[doc = "Generated from \'VK_KHR_ray_tracing_pipeline\'"]
 impl PipelineBindPoint {
     pub const RAY_TRACING_KHR: Self = Self(1_000_165_000);
 }
-#[doc = "Generated from \'VK_KHR_ray_tracing\'"]
-impl DescriptorType {
-    pub const ACCELERATION_STRUCTURE_KHR: Self = Self(1_000_165_000);
-}
-#[doc = "Generated from \'VK_KHR_ray_tracing\'"]
-impl AccessFlags {
-    pub const ACCELERATION_STRUCTURE_READ_KHR: Self = Self(0b10_0000_0000_0000_0000_0000);
-}
-#[doc = "Generated from \'VK_KHR_ray_tracing\'"]
-impl AccessFlags {
-    pub const ACCELERATION_STRUCTURE_WRITE_KHR: Self = Self(0b100_0000_0000_0000_0000_0000);
-}
-#[doc = "Generated from \'VK_KHR_ray_tracing\'"]
-impl QueryType {
-    pub const ACCELERATION_STRUCTURE_COMPACTED_SIZE_KHR: Self = Self(1_000_165_000);
-}
-#[doc = "Generated from \'VK_KHR_ray_tracing\'"]
-impl QueryType {
-    pub const ACCELERATION_STRUCTURE_SERIALIZATION_SIZE_KHR: Self = Self(1_000_150_000);
-}
-#[doc = "Generated from \'VK_KHR_ray_tracing\'"]
-impl ObjectType {
-    pub const ACCELERATION_STRUCTURE_KHR: Self = Self(1_000_165_000);
-}
-#[doc = "Generated from \'VK_KHR_ray_tracing\'"]
-impl DebugReportObjectTypeEXT {
-    pub const ACCELERATION_STRUCTURE_KHR: Self = Self(1_000_165_000);
-}
-#[doc = "Generated from \'VK_KHR_ray_tracing\'"]
-impl IndexType {
-    pub const NONE_KHR: Self = Self(1_000_165_000);
-}
-#[doc = "Generated from \'VK_KHR_ray_tracing\'"]
-impl GeometryTypeKHR {
-    pub const INSTANCES: Self = Self(1_000_150_000);
-}
-#[doc = "Generated from \'VK_KHR_ray_tracing\'"]
-impl Result {
-    pub const ERROR_INCOMPATIBLE_VERSION_KHR: Self = Self(-1_000_150_000);
-}
-#[doc = "Generated from \'VK_KHR_ray_tracing\'"]
-impl FormatFeatureFlags {
-    pub const ACCELERATION_STRUCTURE_VERTEX_BUFFER_KHR: Self =
-        Self(0b10_0000_0000_0000_0000_0000_0000_0000);
-}
-#[doc = "Generated from \'VK_KHR_ray_tracing\'"]
+#[doc = "Generated from \'VK_KHR_ray_tracing_pipeline\'"]
 impl PipelineCreateFlags {
     pub const RAY_TRACING_NO_NULL_ANY_HIT_SHADERS_KHR: Self = Self(0b100_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_KHR_ray_tracing\'"]
+#[doc = "Generated from \'VK_KHR_ray_tracing_pipeline\'"]
 impl PipelineCreateFlags {
     pub const RAY_TRACING_NO_NULL_CLOSEST_HIT_SHADERS_KHR: Self = Self(0b1000_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_KHR_ray_tracing\'"]
+#[doc = "Generated from \'VK_KHR_ray_tracing_pipeline\'"]
 impl PipelineCreateFlags {
     pub const RAY_TRACING_NO_NULL_MISS_SHADERS_KHR: Self = Self(0b1_0000_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_KHR_ray_tracing\'"]
+#[doc = "Generated from \'VK_KHR_ray_tracing_pipeline\'"]
 impl PipelineCreateFlags {
     pub const RAY_TRACING_NO_NULL_INTERSECTION_SHADERS_KHR: Self = Self(0b10_0000_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_KHR_ray_tracing\'"]
+#[doc = "Generated from \'VK_KHR_ray_tracing_pipeline\'"]
 impl PipelineCreateFlags {
     pub const RAY_TRACING_SKIP_TRIANGLES_KHR: Self = Self(0b1_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_KHR_ray_tracing\'"]
+#[doc = "Generated from \'VK_KHR_ray_tracing_pipeline\'"]
 impl PipelineCreateFlags {
     pub const RAY_TRACING_SKIP_AABBS_KHR: Self = Self(0b10_0000_0000_0000);
+}
+#[doc = "Generated from \'VK_KHR_ray_tracing_pipeline\'"]
+impl PipelineCreateFlags {
+    pub const RAY_TRACING_SHADER_GROUP_HANDLE_CAPTURE_REPLAY_KHR: Self =
+        Self(0b1000_0000_0000_0000_0000);
+}
+#[doc = "Generated from \'VK_KHR_ray_tracing_pipeline\'"]
+impl DynamicState {
+    pub const RAY_TRACING_PIPELINE_STACK_SIZE_KHR: Self = Self(1_000_347_000);
+}
+impl KhrRayQueryFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_ray_query\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+pub struct KhrRayQueryFn {}
+unsafe impl Send for KhrRayQueryFn {}
+unsafe impl Sync for KhrRayQueryFn {}
+impl ::std::clone::Clone for KhrRayQueryFn {
+    fn clone(&self) -> Self {
+        KhrRayQueryFn {}
+    }
+}
+impl KhrRayQueryFn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        KhrRayQueryFn {}
+    }
+}
+#[doc = "Generated from \'VK_KHR_ray_query\'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_RAY_QUERY_FEATURES_KHR: Self = Self(1_000_348_013);
 }
 impl NvExtension152Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -13697,10 +13885,6 @@ impl StructureType {
 }
 #[doc = "Generated from \'VK_EXT_image_drm_format_modifier\'"]
 impl StructureType {
-    pub const DRM_FORMAT_MODIFIER_PROPERTIES_EXT: Self = Self(1_000_158_001);
-}
-#[doc = "Generated from \'VK_EXT_image_drm_format_modifier\'"]
-impl StructureType {
     pub const PHYSICAL_DEVICE_IMAGE_DRM_FORMAT_MODIFIER_INFO_EXT: Self = Self(1_000_158_002);
 }
 #[doc = "Generated from \'VK_EXT_image_drm_format_modifier\'"]
@@ -14074,28 +14258,36 @@ impl ExtShaderViewportIndexLayerFn {
         ExtShaderViewportIndexLayerFn {}
     }
 }
-impl NvExtension164Fn {
+impl KhrPortabilitySubsetFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_164\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_portability_subset\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
-pub struct NvExtension164Fn {}
-unsafe impl Send for NvExtension164Fn {}
-unsafe impl Sync for NvExtension164Fn {}
-impl ::std::clone::Clone for NvExtension164Fn {
+pub struct KhrPortabilitySubsetFn {}
+unsafe impl Send for KhrPortabilitySubsetFn {}
+unsafe impl Sync for KhrPortabilitySubsetFn {}
+impl ::std::clone::Clone for KhrPortabilitySubsetFn {
     fn clone(&self) -> Self {
-        NvExtension164Fn {}
+        KhrPortabilitySubsetFn {}
     }
 }
-impl NvExtension164Fn {
+impl KhrPortabilitySubsetFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvExtension164Fn {}
+        KhrPortabilitySubsetFn {}
     }
+}
+#[doc = "Generated from \'VK_KHR_portability_subset\'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_PORTABILITY_SUBSET_FEATURES_KHR: Self = Self(1_000_163_000);
+}
+#[doc = "Generated from \'VK_KHR_portability_subset\'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_PORTABILITY_SUBSET_PROPERTIES_KHR: Self = Self(1_000_163_001);
 }
 impl NvShadingRateImageFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -14320,44 +14512,44 @@ pub type PFN_vkCreateAccelerationStructureNV = extern "system" fn(
     p_acceleration_structure: *mut AccelerationStructureNV,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkGetAccelerationStructureMemoryRequirementsNV = extern "system" fn(
+pub type PFN_vkDestroyAccelerationStructureNV = extern "system" fn(
     device: Device,
-    acceleration_structure: AccelerationStructureKHR,
+    acceleration_structure: AccelerationStructureNV,
     p_allocator: *const AllocationCallbacks,
 ) -> c_void;
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdBuildAccelerationStructureNV = extern "system" fn(
+pub type PFN_vkGetAccelerationStructureMemoryRequirementsNV = extern "system" fn(
     device: Device,
     p_info: *const AccelerationStructureMemoryRequirementsInfoNV,
     p_memory_requirements: *mut MemoryRequirements2KHR,
 ) -> c_void;
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdCopyAccelerationStructureNV = extern "system" fn(
+pub type PFN_vkBindAccelerationStructureMemoryNV = extern "system" fn(
     device: Device,
     bind_info_count: u32,
-    p_bind_infos: *const BindAccelerationStructureMemoryInfoKHR,
+    p_bind_infos: *const BindAccelerationStructureMemoryInfoNV,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdTraceRaysNV = extern "system" fn(
+pub type PFN_vkCmdBuildAccelerationStructureNV = extern "system" fn(
     command_buffer: CommandBuffer,
     p_info: *const AccelerationStructureInfoNV,
     instance_data: Buffer,
     instance_offset: DeviceSize,
     update: Bool32,
-    dst: AccelerationStructureKHR,
-    src: AccelerationStructureKHR,
+    dst: AccelerationStructureNV,
+    src: AccelerationStructureNV,
     scratch: Buffer,
     scratch_offset: DeviceSize,
 ) -> c_void;
 #[allow(non_camel_case_types)]
-pub type PFN_vkCreateRayTracingPipelinesNV = extern "system" fn(
+pub type PFN_vkCmdCopyAccelerationStructureNV = extern "system" fn(
     command_buffer: CommandBuffer,
-    dst: AccelerationStructureKHR,
-    src: AccelerationStructureKHR,
+    dst: AccelerationStructureNV,
+    src: AccelerationStructureNV,
     mode: CopyAccelerationStructureModeKHR,
 ) -> c_void;
 #[allow(non_camel_case_types)]
-pub type PFN_vkGetAccelerationStructureHandleNV = extern "system" fn(
+pub type PFN_vkCmdTraceRaysNV = extern "system" fn(
     command_buffer: CommandBuffer,
     raygen_shader_binding_table_buffer: Buffer,
     raygen_shader_binding_offset: DeviceSize,
@@ -14375,7 +14567,7 @@ pub type PFN_vkGetAccelerationStructureHandleNV = extern "system" fn(
     depth: u32,
 ) -> c_void;
 #[allow(non_camel_case_types)]
-pub type PFN_vkCompileDeferredNV = extern "system" fn(
+pub type PFN_vkCreateRayTracingPipelinesNV = extern "system" fn(
     device: Device,
     pipeline_cache: PipelineCache,
     create_info_count: u32,
@@ -14383,6 +14575,31 @@ pub type PFN_vkCompileDeferredNV = extern "system" fn(
     p_allocator: *const AllocationCallbacks,
     p_pipelines: *mut Pipeline,
 ) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetAccelerationStructureHandleNV = extern "system" fn(
+    device: Device,
+    pipeline: Pipeline,
+    first_group: u32,
+    group_count: u32,
+    data_size: usize,
+    p_data: *mut c_void,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdWriteAccelerationStructuresPropertiesNV = extern "system" fn(
+    device: Device,
+    acceleration_structure: AccelerationStructureNV,
+    data_size: usize,
+    p_data: *mut c_void,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCompileDeferredNV = extern "system" fn(
+    command_buffer: CommandBuffer,
+    acceleration_structure_count: u32,
+    p_acceleration_structures: *const AccelerationStructureNV,
+    query_type: QueryType,
+    query_pool: QueryPool,
+    first_query: u32,
+) -> c_void;
 pub struct NvRayTracingFn {
     pub create_acceleration_structure_nv: extern "system" fn(
         device: Device,
@@ -14392,7 +14609,7 @@ pub struct NvRayTracingFn {
     ) -> Result,
     pub destroy_acceleration_structure_nv: extern "system" fn(
         device: Device,
-        acceleration_structure: AccelerationStructureKHR,
+        acceleration_structure: AccelerationStructureNV,
         p_allocator: *const AllocationCallbacks,
     ) -> c_void,
     pub get_acceleration_structure_memory_requirements_nv: extern "system" fn(
@@ -14403,7 +14620,7 @@ pub struct NvRayTracingFn {
     pub bind_acceleration_structure_memory_nv: extern "system" fn(
         device: Device,
         bind_info_count: u32,
-        p_bind_infos: *const BindAccelerationStructureMemoryInfoKHR,
+        p_bind_infos: *const BindAccelerationStructureMemoryInfoNV,
     ) -> Result,
     pub cmd_build_acceleration_structure_nv: extern "system" fn(
         command_buffer: CommandBuffer,
@@ -14411,15 +14628,15 @@ pub struct NvRayTracingFn {
         instance_data: Buffer,
         instance_offset: DeviceSize,
         update: Bool32,
-        dst: AccelerationStructureKHR,
-        src: AccelerationStructureKHR,
+        dst: AccelerationStructureNV,
+        src: AccelerationStructureNV,
         scratch: Buffer,
         scratch_offset: DeviceSize,
     ) -> c_void,
     pub cmd_copy_acceleration_structure_nv: extern "system" fn(
         command_buffer: CommandBuffer,
-        dst: AccelerationStructureKHR,
-        src: AccelerationStructureKHR,
+        dst: AccelerationStructureNV,
+        src: AccelerationStructureNV,
         mode: CopyAccelerationStructureModeKHR,
     ) -> c_void,
     pub cmd_trace_rays_nv: extern "system" fn(
@@ -14457,14 +14674,14 @@ pub struct NvRayTracingFn {
     ) -> Result,
     pub get_acceleration_structure_handle_nv: extern "system" fn(
         device: Device,
-        acceleration_structure: AccelerationStructureKHR,
+        acceleration_structure: AccelerationStructureNV,
         data_size: usize,
         p_data: *mut c_void,
     ) -> Result,
     pub cmd_write_acceleration_structures_properties_nv: extern "system" fn(
         command_buffer: CommandBuffer,
         acceleration_structure_count: u32,
-        p_acceleration_structures: *const AccelerationStructureKHR,
+        p_acceleration_structures: *const AccelerationStructureNV,
         query_type: QueryType,
         query_pool: QueryPool,
         first_query: u32,
@@ -14524,7 +14741,7 @@ impl NvRayTracingFn {
             destroy_acceleration_structure_nv: unsafe {
                 extern "system" fn destroy_acceleration_structure_nv(
                     _device: Device,
-                    _acceleration_structure: AccelerationStructureKHR,
+                    _acceleration_structure: AccelerationStructureNV,
                     _p_allocator: *const AllocationCallbacks,
                 ) -> c_void {
                     panic!(concat!(
@@ -14565,7 +14782,7 @@ impl NvRayTracingFn {
                 extern "system" fn bind_acceleration_structure_memory_nv(
                     _device: Device,
                     _bind_info_count: u32,
-                    _p_bind_infos: *const BindAccelerationStructureMemoryInfoKHR,
+                    _p_bind_infos: *const BindAccelerationStructureMemoryInfoNV,
                 ) -> Result {
                     panic!(concat!(
                         "Unable to load ",
@@ -14588,8 +14805,8 @@ impl NvRayTracingFn {
                     _instance_data: Buffer,
                     _instance_offset: DeviceSize,
                     _update: Bool32,
-                    _dst: AccelerationStructureKHR,
-                    _src: AccelerationStructureKHR,
+                    _dst: AccelerationStructureNV,
+                    _src: AccelerationStructureNV,
                     _scratch: Buffer,
                     _scratch_offset: DeviceSize,
                 ) -> c_void {
@@ -14610,8 +14827,8 @@ impl NvRayTracingFn {
             cmd_copy_acceleration_structure_nv: unsafe {
                 extern "system" fn cmd_copy_acceleration_structure_nv(
                     _command_buffer: CommandBuffer,
-                    _dst: AccelerationStructureKHR,
-                    _src: AccelerationStructureKHR,
+                    _dst: AccelerationStructureNV,
+                    _src: AccelerationStructureNV,
                     _mode: CopyAccelerationStructureModeKHR,
                 ) -> c_void {
                     panic!(concat!(
@@ -14706,7 +14923,7 @@ impl NvRayTracingFn {
             get_acceleration_structure_handle_nv: unsafe {
                 extern "system" fn get_acceleration_structure_handle_nv(
                     _device: Device,
-                    _acceleration_structure: AccelerationStructureKHR,
+                    _acceleration_structure: AccelerationStructureNV,
                     _data_size: usize,
                     _p_data: *mut c_void,
                 ) -> Result {
@@ -14728,7 +14945,7 @@ impl NvRayTracingFn {
                 extern "system" fn cmd_write_acceleration_structures_properties_nv(
                     _command_buffer: CommandBuffer,
                     _acceleration_structure_count: u32,
-                    _p_acceleration_structures: *const AccelerationStructureKHR,
+                    _p_acceleration_structures: *const AccelerationStructureNV,
                     _query_type: QueryType,
                     _query_pool: QueryPool,
                     _first_query: u32,
@@ -14785,7 +15002,7 @@ impl NvRayTracingFn {
     pub unsafe fn destroy_acceleration_structure_nv(
         &self,
         device: Device,
-        acceleration_structure: AccelerationStructureKHR,
+        acceleration_structure: AccelerationStructureNV,
         p_allocator: *const AllocationCallbacks,
     ) -> c_void {
         (self.destroy_acceleration_structure_nv)(device, acceleration_structure, p_allocator)
@@ -14808,7 +15025,7 @@ impl NvRayTracingFn {
         &self,
         device: Device,
         bind_info_count: u32,
-        p_bind_infos: *const BindAccelerationStructureMemoryInfoKHR,
+        p_bind_infos: *const BindAccelerationStructureMemoryInfoNV,
     ) -> Result {
         (self.bind_acceleration_structure_memory_nv)(device, bind_info_count, p_bind_infos)
     }
@@ -14820,8 +15037,8 @@ impl NvRayTracingFn {
         instance_data: Buffer,
         instance_offset: DeviceSize,
         update: Bool32,
-        dst: AccelerationStructureKHR,
-        src: AccelerationStructureKHR,
+        dst: AccelerationStructureNV,
+        src: AccelerationStructureNV,
         scratch: Buffer,
         scratch_offset: DeviceSize,
     ) -> c_void {
@@ -14841,8 +15058,8 @@ impl NvRayTracingFn {
     pub unsafe fn cmd_copy_acceleration_structure_nv(
         &self,
         command_buffer: CommandBuffer,
-        dst: AccelerationStructureKHR,
-        src: AccelerationStructureKHR,
+        dst: AccelerationStructureNV,
+        src: AccelerationStructureNV,
         mode: CopyAccelerationStructureModeKHR,
     ) -> c_void {
         (self.cmd_copy_acceleration_structure_nv)(command_buffer, dst, src, mode)
@@ -14926,7 +15143,7 @@ impl NvRayTracingFn {
     pub unsafe fn get_acceleration_structure_handle_nv(
         &self,
         device: Device,
-        acceleration_structure: AccelerationStructureKHR,
+        acceleration_structure: AccelerationStructureNV,
         data_size: usize,
         p_data: *mut c_void,
     ) -> Result {
@@ -14942,7 +15159,7 @@ impl NvRayTracingFn {
         &self,
         command_buffer: CommandBuffer,
         acceleration_structure_count: u32,
-        p_acceleration_structures: *const AccelerationStructureKHR,
+        p_acceleration_structures: *const AccelerationStructureNV,
         query_type: QueryType,
         query_pool: QueryPool,
         first_query: u32,
@@ -14988,13 +15205,11 @@ impl StructureType {
 }
 #[doc = "Generated from \'VK_NV_ray_tracing\'"]
 impl StructureType {
-    pub const BIND_ACCELERATION_STRUCTURE_MEMORY_INFO_NV: Self =
-        StructureType::BIND_ACCELERATION_STRUCTURE_MEMORY_INFO_KHR;
+    pub const BIND_ACCELERATION_STRUCTURE_MEMORY_INFO_NV: Self = Self(1_000_165_006);
 }
 #[doc = "Generated from \'VK_NV_ray_tracing\'"]
 impl StructureType {
-    pub const WRITE_DESCRIPTOR_SET_ACCELERATION_STRUCTURE_NV: Self =
-        StructureType::WRITE_DESCRIPTOR_SET_ACCELERATION_STRUCTURE_KHR;
+    pub const WRITE_DESCRIPTOR_SET_ACCELERATION_STRUCTURE_NV: Self = Self(1_000_165_007);
 }
 #[doc = "Generated from \'VK_NV_ray_tracing\'"]
 impl StructureType {
@@ -15047,7 +15262,7 @@ impl PipelineStageFlags {
 }
 #[doc = "Generated from \'VK_NV_ray_tracing\'"]
 impl BufferUsageFlags {
-    pub const RAY_TRACING_NV: Self = BufferUsageFlags::RAY_TRACING_KHR;
+    pub const RAY_TRACING_NV: Self = BufferUsageFlags::SHADER_BINDING_TABLE_KHR;
 }
 #[doc = "Generated from \'VK_NV_ray_tracing\'"]
 impl PipelineBindPoint {
@@ -15055,7 +15270,7 @@ impl PipelineBindPoint {
 }
 #[doc = "Generated from \'VK_NV_ray_tracing\'"]
 impl DescriptorType {
-    pub const ACCELERATION_STRUCTURE_NV: Self = DescriptorType::ACCELERATION_STRUCTURE_KHR;
+    pub const ACCELERATION_STRUCTURE_NV: Self = Self(1_000_165_000);
 }
 #[doc = "Generated from \'VK_NV_ray_tracing\'"]
 impl AccessFlags {
@@ -15067,8 +15282,7 @@ impl AccessFlags {
 }
 #[doc = "Generated from \'VK_NV_ray_tracing\'"]
 impl QueryType {
-    pub const ACCELERATION_STRUCTURE_COMPACTED_SIZE_NV: Self =
-        QueryType::ACCELERATION_STRUCTURE_COMPACTED_SIZE_KHR;
+    pub const ACCELERATION_STRUCTURE_COMPACTED_SIZE_NV: Self = Self(1_000_165_000);
 }
 #[doc = "Generated from \'VK_NV_ray_tracing\'"]
 impl PipelineCreateFlags {
@@ -15076,12 +15290,11 @@ impl PipelineCreateFlags {
 }
 #[doc = "Generated from \'VK_NV_ray_tracing\'"]
 impl ObjectType {
-    pub const ACCELERATION_STRUCTURE_NV: Self = ObjectType::ACCELERATION_STRUCTURE_KHR;
+    pub const ACCELERATION_STRUCTURE_NV: Self = Self(1_000_165_000);
 }
 #[doc = "Generated from \'VK_NV_ray_tracing\'"]
 impl DebugReportObjectTypeEXT {
-    pub const ACCELERATION_STRUCTURE_NV: Self =
-        DebugReportObjectTypeEXT::ACCELERATION_STRUCTURE_KHR;
+    pub const ACCELERATION_STRUCTURE_NV: Self = Self(1_000_165_000);
 }
 #[doc = "Generated from \'VK_NV_ray_tracing\'"]
 impl IndexType {
@@ -15169,20 +15382,6 @@ impl CopyAccelerationStructureModeKHR {
 #[doc = "Generated from \'VK_NV_ray_tracing\'"]
 impl CopyAccelerationStructureModeKHR {
     pub const COMPACT_NV: Self = CopyAccelerationStructureModeKHR::COMPACT;
-}
-#[doc = "Generated from \'VK_NV_ray_tracing\'"]
-impl AccelerationStructureMemoryRequirementsTypeKHR {
-    pub const OBJECT_NV: Self = AccelerationStructureMemoryRequirementsTypeKHR::OBJECT;
-}
-#[doc = "Generated from \'VK_NV_ray_tracing\'"]
-impl AccelerationStructureMemoryRequirementsTypeKHR {
-    pub const BUILD_SCRATCH_NV: Self =
-        AccelerationStructureMemoryRequirementsTypeKHR::BUILD_SCRATCH;
-}
-#[doc = "Generated from \'VK_NV_ray_tracing\'"]
-impl AccelerationStructureMemoryRequirementsTypeKHR {
-    pub const UPDATE_SCRATCH_NV: Self =
-        AccelerationStructureMemoryRequirementsTypeKHR::UPDATE_SCRATCH;
 }
 impl NvRepresentativeFragmentTestFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -15492,36 +15691,36 @@ impl StructureType {
 impl StructureType {
     pub const FILTER_CUBIC_IMAGE_VIEW_IMAGE_FORMAT_PROPERTIES_EXT: Self = Self(1_000_170_001);
 }
-impl QcomExtension172Fn {
+impl QcomRenderPassShaderResolveFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_QCOM_extension_172\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_QCOM_render_pass_shader_resolve\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 4u32;
 }
-pub struct QcomExtension172Fn {}
-unsafe impl Send for QcomExtension172Fn {}
-unsafe impl Sync for QcomExtension172Fn {}
-impl ::std::clone::Clone for QcomExtension172Fn {
+pub struct QcomRenderPassShaderResolveFn {}
+unsafe impl Send for QcomRenderPassShaderResolveFn {}
+unsafe impl Sync for QcomRenderPassShaderResolveFn {}
+impl ::std::clone::Clone for QcomRenderPassShaderResolveFn {
     fn clone(&self) -> Self {
-        QcomExtension172Fn {}
+        QcomRenderPassShaderResolveFn {}
     }
 }
-impl QcomExtension172Fn {
+impl QcomRenderPassShaderResolveFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        QcomExtension172Fn {}
+        QcomRenderPassShaderResolveFn {}
     }
 }
-#[doc = "Generated from \'VK_QCOM_extension_172\'"]
+#[doc = "Generated from \'VK_QCOM_render_pass_shader_resolve\'"]
 impl SubpassDescriptionFlags {
-    pub const RESERVED_2_QCOM: Self = Self(0b100);
+    pub const FRAGMENT_REGION_QCOM: Self = Self(0b100);
 }
-#[doc = "Generated from \'VK_QCOM_extension_172\'"]
+#[doc = "Generated from \'VK_QCOM_render_pass_shader_resolve\'"]
 impl SubpassDescriptionFlags {
-    pub const RESERVED_3_QCOM: Self = Self(0b1000);
+    pub const SHADER_RESOLVE_QCOM: Self = Self(0b1000);
 }
 impl QcomExtension173Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -16384,6 +16583,10 @@ impl GoogleExtension196Fn {
     {
         GoogleExtension196Fn {}
     }
+}
+#[doc = "Generated from \'VK_GOOGLE_extension_196\'"]
+impl PipelineCacheCreateFlags {
+    pub const RESERVED_1_EXT: Self = Self(0b10);
 }
 impl KhrDriverPropertiesFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -17656,7 +17859,12 @@ impl IntelPerformanceQueryFn {
 }
 #[doc = "Generated from \'VK_INTEL_performance_query\'"]
 impl StructureType {
-    pub const QUERY_POOL_CREATE_INFO_INTEL: Self = Self(1_000_210_000);
+    pub const QUERY_POOL_PERFORMANCE_QUERY_CREATE_INFO_INTEL: Self = Self(1_000_210_000);
+}
+#[doc = "Generated from \'VK_INTEL_performance_query\'"]
+impl StructureType {
+    pub const QUERY_POOL_CREATE_INFO_INTEL: Self =
+        StructureType::QUERY_POOL_PERFORMANCE_QUERY_CREATE_INFO_INTEL;
 }
 #[doc = "Generated from \'VK_INTEL_performance_query\'"]
 impl StructureType {
@@ -17895,28 +18103,32 @@ impl FuchsiaImagepipeSurfaceFn {
 impl StructureType {
     pub const IMAGEPIPE_SURFACE_CREATE_INFO_FUCHSIA: Self = Self(1_000_214_000);
 }
-impl GoogleExtension216Fn {
+impl KhrShaderTerminateInvocationFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_GOOGLE_extension_216\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_shader_terminate_invocation\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
-pub struct GoogleExtension216Fn {}
-unsafe impl Send for GoogleExtension216Fn {}
-unsafe impl Sync for GoogleExtension216Fn {}
-impl ::std::clone::Clone for GoogleExtension216Fn {
+pub struct KhrShaderTerminateInvocationFn {}
+unsafe impl Send for KhrShaderTerminateInvocationFn {}
+unsafe impl Sync for KhrShaderTerminateInvocationFn {}
+impl ::std::clone::Clone for KhrShaderTerminateInvocationFn {
     fn clone(&self) -> Self {
-        GoogleExtension216Fn {}
+        KhrShaderTerminateInvocationFn {}
     }
 }
-impl GoogleExtension216Fn {
+impl KhrShaderTerminateInvocationFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        GoogleExtension216Fn {}
+        KhrShaderTerminateInvocationFn {}
     }
+}
+#[doc = "Generated from \'VK_KHR_shader_terminate_invocation\'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_SHADER_TERMINATE_INVOCATION_FEATURES_KHR: Self = Self(1_000_215_000);
 }
 impl GoogleExtension217Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -18278,28 +18490,166 @@ impl PipelineShaderStageCreateFlags {
 impl PipelineShaderStageCreateFlags {
     pub const REQUIRE_FULL_SUBGROUPS_EXT: Self = Self(0b10);
 }
-impl AmdExtension227Fn {
+impl KhrFragmentShadingRateFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_227\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_fragment_shading_rate\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
-pub struct AmdExtension227Fn {}
-unsafe impl Send for AmdExtension227Fn {}
-unsafe impl Sync for AmdExtension227Fn {}
-impl ::std::clone::Clone for AmdExtension227Fn {
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetPhysicalDeviceFragmentShadingRatesKHR = extern "system" fn(
+    physical_device: PhysicalDevice,
+    p_fragment_shading_rate_count: *mut u32,
+    p_fragment_shading_rates: *mut PhysicalDeviceFragmentShadingRateKHR,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetFragmentShadingRateKHR = extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_fragment_size: *const Extent2D,
+    combiner_ops: &[FragmentShadingRateCombinerOpKHR; 2],
+) -> c_void;
+pub struct KhrFragmentShadingRateFn {
+    pub get_physical_device_fragment_shading_rates_khr: extern "system" fn(
+        physical_device: PhysicalDevice,
+        p_fragment_shading_rate_count: *mut u32,
+        p_fragment_shading_rates: *mut PhysicalDeviceFragmentShadingRateKHR,
+    ) -> Result,
+    pub cmd_set_fragment_shading_rate_khr: extern "system" fn(
+        command_buffer: CommandBuffer,
+        p_fragment_size: *const Extent2D,
+        combiner_ops: &[FragmentShadingRateCombinerOpKHR; 2],
+    ) -> c_void,
+}
+unsafe impl Send for KhrFragmentShadingRateFn {}
+unsafe impl Sync for KhrFragmentShadingRateFn {}
+impl ::std::clone::Clone for KhrFragmentShadingRateFn {
     fn clone(&self) -> Self {
-        AmdExtension227Fn {}
+        KhrFragmentShadingRateFn {
+            get_physical_device_fragment_shading_rates_khr: self
+                .get_physical_device_fragment_shading_rates_khr,
+            cmd_set_fragment_shading_rate_khr: self.cmd_set_fragment_shading_rate_khr,
+        }
     }
 }
-impl AmdExtension227Fn {
+impl KhrFragmentShadingRateFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdExtension227Fn {}
+        KhrFragmentShadingRateFn {
+            get_physical_device_fragment_shading_rates_khr: unsafe {
+                extern "system" fn get_physical_device_fragment_shading_rates_khr(
+                    _physical_device: PhysicalDevice,
+                    _p_fragment_shading_rate_count: *mut u32,
+                    _p_fragment_shading_rates: *mut PhysicalDeviceFragmentShadingRateKHR,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_physical_device_fragment_shading_rates_khr)
+                    ))
+                }
+                let raw_name = stringify!(vkGetPhysicalDeviceFragmentShadingRatesKHR);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    get_physical_device_fragment_shading_rates_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_fragment_shading_rate_khr: unsafe {
+                extern "system" fn cmd_set_fragment_shading_rate_khr(
+                    _command_buffer: CommandBuffer,
+                    _p_fragment_size: *const Extent2D,
+                    _combiner_ops: &[FragmentShadingRateCombinerOpKHR; 2],
+                ) -> c_void {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_fragment_shading_rate_khr)
+                    ))
+                }
+                let raw_name = stringify!(vkCmdSetFragmentShadingRateKHR);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    cmd_set_fragment_shading_rate_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
     }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceFragmentShadingRatesKHR.html>"]
+    pub unsafe fn get_physical_device_fragment_shading_rates_khr(
+        &self,
+        physical_device: PhysicalDevice,
+        p_fragment_shading_rate_count: *mut u32,
+        p_fragment_shading_rates: *mut PhysicalDeviceFragmentShadingRateKHR,
+    ) -> Result {
+        (self.get_physical_device_fragment_shading_rates_khr)(
+            physical_device,
+            p_fragment_shading_rate_count,
+            p_fragment_shading_rates,
+        )
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetFragmentShadingRateKHR.html>"]
+    pub unsafe fn cmd_set_fragment_shading_rate_khr(
+        &self,
+        command_buffer: CommandBuffer,
+        p_fragment_size: *const Extent2D,
+        combiner_ops: &[FragmentShadingRateCombinerOpKHR; 2],
+    ) -> c_void {
+        (self.cmd_set_fragment_shading_rate_khr)(command_buffer, p_fragment_size, combiner_ops)
+    }
+}
+#[doc = "Generated from \'VK_KHR_fragment_shading_rate\'"]
+impl ImageLayout {
+    pub const FRAGMENT_SHADING_RATE_ATTACHMENT_OPTIMAL_KHR: Self =
+        ImageLayout::SHADING_RATE_OPTIMAL_NV;
+}
+#[doc = "Generated from \'VK_KHR_fragment_shading_rate\'"]
+impl DynamicState {
+    pub const FRAGMENT_SHADING_RATE_KHR: Self = Self(1_000_226_000);
+}
+#[doc = "Generated from \'VK_KHR_fragment_shading_rate\'"]
+impl StructureType {
+    pub const FRAGMENT_SHADING_RATE_ATTACHMENT_INFO_KHR: Self = Self(1_000_226_000);
+}
+#[doc = "Generated from \'VK_KHR_fragment_shading_rate\'"]
+impl StructureType {
+    pub const PIPELINE_FRAGMENT_SHADING_RATE_STATE_CREATE_INFO_KHR: Self = Self(1_000_226_001);
+}
+#[doc = "Generated from \'VK_KHR_fragment_shading_rate\'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_FRAGMENT_SHADING_RATE_PROPERTIES_KHR: Self = Self(1_000_226_002);
+}
+#[doc = "Generated from \'VK_KHR_fragment_shading_rate\'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_FRAGMENT_SHADING_RATE_FEATURES_KHR: Self = Self(1_000_226_003);
+}
+#[doc = "Generated from \'VK_KHR_fragment_shading_rate\'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_FRAGMENT_SHADING_RATE_KHR: Self = Self(1_000_226_004);
+}
+#[doc = "Generated from \'VK_KHR_fragment_shading_rate\'"]
+impl AccessFlags {
+    pub const FRAGMENT_SHADING_RATE_ATTACHMENT_READ_KHR: Self =
+        AccessFlags::SHADING_RATE_IMAGE_READ_NV;
+}
+#[doc = "Generated from \'VK_KHR_fragment_shading_rate\'"]
+impl ImageUsageFlags {
+    pub const FRAGMENT_SHADING_RATE_ATTACHMENT_KHR: Self = ImageUsageFlags::SHADING_RATE_IMAGE_NV;
+}
+#[doc = "Generated from \'VK_KHR_fragment_shading_rate\'"]
+impl PipelineStageFlags {
+    pub const FRAGMENT_SHADING_RATE_ATTACHMENT_KHR: Self =
+        PipelineStageFlags::SHADING_RATE_IMAGE_NV;
+}
+#[doc = "Generated from \'VK_KHR_fragment_shading_rate\'"]
+impl FormatFeatureFlags {
+    pub const FRAGMENT_SHADING_RATE_ATTACHMENT_KHR: Self =
+        Self(0b100_0000_0000_0000_0000_0000_0000_0000);
 }
 impl AmdShaderCoreProperties2Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -18478,28 +18828,32 @@ impl AmdExtension234Fn {
         AmdExtension234Fn {}
     }
 }
-impl AmdExtension235Fn {
+impl ExtShaderImageAtomicInt64Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_235\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_shader_image_atomic_int64\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
-pub struct AmdExtension235Fn {}
-unsafe impl Send for AmdExtension235Fn {}
-unsafe impl Sync for AmdExtension235Fn {}
-impl ::std::clone::Clone for AmdExtension235Fn {
+pub struct ExtShaderImageAtomicInt64Fn {}
+unsafe impl Send for ExtShaderImageAtomicInt64Fn {}
+unsafe impl Sync for ExtShaderImageAtomicInt64Fn {}
+impl ::std::clone::Clone for ExtShaderImageAtomicInt64Fn {
     fn clone(&self) -> Self {
-        AmdExtension235Fn {}
+        ExtShaderImageAtomicInt64Fn {}
     }
 }
-impl AmdExtension235Fn {
+impl ExtShaderImageAtomicInt64Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdExtension235Fn {}
+        ExtShaderImageAtomicInt64Fn {}
     }
+}
+#[doc = "Generated from \'VK_EXT_shader_image_atomic_int64\'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_SHADER_IMAGE_ATOMIC_INT64_FEATURES_EXT: Self = Self(1_000_234_000);
 }
 impl AmdExtension236Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -18965,7 +19319,7 @@ impl ExtValidationFeaturesFn {
         ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_validation_features\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 3u32;
+    pub const SPEC_VERSION: u32 = 4u32;
 }
 pub struct ExtValidationFeaturesFn {}
 unsafe impl Send for ExtValidationFeaturesFn {}
@@ -19842,28 +20196,32 @@ impl StructureType {
 impl DynamicState {
     pub const LINE_STIPPLE_EXT: Self = Self(1_000_259_000);
 }
-impl NvExtension261Fn {
+impl ExtShaderAtomicFloatFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_261\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_shader_atomic_float\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
-pub struct NvExtension261Fn {}
-unsafe impl Send for NvExtension261Fn {}
-unsafe impl Sync for NvExtension261Fn {}
-impl ::std::clone::Clone for NvExtension261Fn {
+pub struct ExtShaderAtomicFloatFn {}
+unsafe impl Send for ExtShaderAtomicFloatFn {}
+unsafe impl Sync for ExtShaderAtomicFloatFn {}
+impl ::std::clone::Clone for ExtShaderAtomicFloatFn {
     fn clone(&self) -> Self {
-        NvExtension261Fn {}
+        ExtShaderAtomicFloatFn {}
     }
 }
-impl NvExtension261Fn {
+impl ExtShaderAtomicFloatFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvExtension261Fn {}
+        ExtShaderAtomicFloatFn {}
     }
+}
+#[doc = "Generated from \'VK_EXT_shader_atomic_float\'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT_FEATURES_EXT: Self = Self(1_000_260_000);
 }
 impl ExtHostQueryResetFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -20061,35 +20419,567 @@ impl ExtExtension267Fn {
         ExtExtension267Fn {}
     }
 }
-impl KhrExtension268Fn {
+impl ExtExtendedDynamicStateFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_extension_268\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extended_dynamic_state\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
-pub struct KhrExtension268Fn {}
-unsafe impl Send for KhrExtension268Fn {}
-unsafe impl Sync for KhrExtension268Fn {}
-impl ::std::clone::Clone for KhrExtension268Fn {
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetCullModeEXT =
+    extern "system" fn(command_buffer: CommandBuffer, cull_mode: CullModeFlags) -> c_void;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetFrontFaceEXT =
+    extern "system" fn(command_buffer: CommandBuffer, front_face: FrontFace) -> c_void;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetPrimitiveTopologyEXT = extern "system" fn(
+    command_buffer: CommandBuffer,
+    primitive_topology: PrimitiveTopology,
+) -> c_void;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetViewportWithCountEXT = extern "system" fn(
+    command_buffer: CommandBuffer,
+    viewport_count: u32,
+    p_viewports: *const Viewport,
+) -> c_void;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetScissorWithCountEXT = extern "system" fn(
+    command_buffer: CommandBuffer,
+    scissor_count: u32,
+    p_scissors: *const Rect2D,
+) -> c_void;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdBindVertexBuffers2EXT = extern "system" fn(
+    command_buffer: CommandBuffer,
+    first_binding: u32,
+    binding_count: u32,
+    p_buffers: *const Buffer,
+    p_offsets: *const DeviceSize,
+    p_sizes: *const DeviceSize,
+    p_strides: *const DeviceSize,
+) -> c_void;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetDepthTestEnableEXT =
+    extern "system" fn(command_buffer: CommandBuffer, depth_test_enable: Bool32) -> c_void;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetDepthWriteEnableEXT =
+    extern "system" fn(command_buffer: CommandBuffer, depth_write_enable: Bool32) -> c_void;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetDepthCompareOpEXT =
+    extern "system" fn(command_buffer: CommandBuffer, depth_compare_op: CompareOp) -> c_void;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetDepthBoundsTestEnableEXT =
+    extern "system" fn(command_buffer: CommandBuffer, depth_bounds_test_enable: Bool32) -> c_void;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetStencilTestEnableEXT =
+    extern "system" fn(command_buffer: CommandBuffer, stencil_test_enable: Bool32) -> c_void;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetStencilOpEXT = extern "system" fn(
+    command_buffer: CommandBuffer,
+    face_mask: StencilFaceFlags,
+    fail_op: StencilOp,
+    pass_op: StencilOp,
+    depth_fail_op: StencilOp,
+    compare_op: CompareOp,
+) -> c_void;
+pub struct ExtExtendedDynamicStateFn {
+    pub cmd_set_cull_mode_ext:
+        extern "system" fn(command_buffer: CommandBuffer, cull_mode: CullModeFlags) -> c_void,
+    pub cmd_set_front_face_ext:
+        extern "system" fn(command_buffer: CommandBuffer, front_face: FrontFace) -> c_void,
+    pub cmd_set_primitive_topology_ext: extern "system" fn(
+        command_buffer: CommandBuffer,
+        primitive_topology: PrimitiveTopology,
+    ) -> c_void,
+    pub cmd_set_viewport_with_count_ext: extern "system" fn(
+        command_buffer: CommandBuffer,
+        viewport_count: u32,
+        p_viewports: *const Viewport,
+    ) -> c_void,
+    pub cmd_set_scissor_with_count_ext: extern "system" fn(
+        command_buffer: CommandBuffer,
+        scissor_count: u32,
+        p_scissors: *const Rect2D,
+    ) -> c_void,
+    pub cmd_bind_vertex_buffers2_ext: extern "system" fn(
+        command_buffer: CommandBuffer,
+        first_binding: u32,
+        binding_count: u32,
+        p_buffers: *const Buffer,
+        p_offsets: *const DeviceSize,
+        p_sizes: *const DeviceSize,
+        p_strides: *const DeviceSize,
+    ) -> c_void,
+    pub cmd_set_depth_test_enable_ext:
+        extern "system" fn(command_buffer: CommandBuffer, depth_test_enable: Bool32) -> c_void,
+    pub cmd_set_depth_write_enable_ext:
+        extern "system" fn(command_buffer: CommandBuffer, depth_write_enable: Bool32) -> c_void,
+    pub cmd_set_depth_compare_op_ext:
+        extern "system" fn(command_buffer: CommandBuffer, depth_compare_op: CompareOp) -> c_void,
+    pub cmd_set_depth_bounds_test_enable_ext: extern "system" fn(
+        command_buffer: CommandBuffer,
+        depth_bounds_test_enable: Bool32,
+    ) -> c_void,
+    pub cmd_set_stencil_test_enable_ext:
+        extern "system" fn(command_buffer: CommandBuffer, stencil_test_enable: Bool32) -> c_void,
+    pub cmd_set_stencil_op_ext: extern "system" fn(
+        command_buffer: CommandBuffer,
+        face_mask: StencilFaceFlags,
+        fail_op: StencilOp,
+        pass_op: StencilOp,
+        depth_fail_op: StencilOp,
+        compare_op: CompareOp,
+    ) -> c_void,
+}
+unsafe impl Send for ExtExtendedDynamicStateFn {}
+unsafe impl Sync for ExtExtendedDynamicStateFn {}
+impl ::std::clone::Clone for ExtExtendedDynamicStateFn {
     fn clone(&self) -> Self {
-        KhrExtension268Fn {}
+        ExtExtendedDynamicStateFn {
+            cmd_set_cull_mode_ext: self.cmd_set_cull_mode_ext,
+            cmd_set_front_face_ext: self.cmd_set_front_face_ext,
+            cmd_set_primitive_topology_ext: self.cmd_set_primitive_topology_ext,
+            cmd_set_viewport_with_count_ext: self.cmd_set_viewport_with_count_ext,
+            cmd_set_scissor_with_count_ext: self.cmd_set_scissor_with_count_ext,
+            cmd_bind_vertex_buffers2_ext: self.cmd_bind_vertex_buffers2_ext,
+            cmd_set_depth_test_enable_ext: self.cmd_set_depth_test_enable_ext,
+            cmd_set_depth_write_enable_ext: self.cmd_set_depth_write_enable_ext,
+            cmd_set_depth_compare_op_ext: self.cmd_set_depth_compare_op_ext,
+            cmd_set_depth_bounds_test_enable_ext: self.cmd_set_depth_bounds_test_enable_ext,
+            cmd_set_stencil_test_enable_ext: self.cmd_set_stencil_test_enable_ext,
+            cmd_set_stencil_op_ext: self.cmd_set_stencil_op_ext,
+        }
     }
 }
-impl KhrExtension268Fn {
+impl ExtExtendedDynamicStateFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        KhrExtension268Fn {}
+        ExtExtendedDynamicStateFn {
+            cmd_set_cull_mode_ext: unsafe {
+                extern "system" fn cmd_set_cull_mode_ext(
+                    _command_buffer: CommandBuffer,
+                    _cull_mode: CullModeFlags,
+                ) -> c_void {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_cull_mode_ext)
+                    ))
+                }
+                let raw_name = stringify!(vkCmdSetCullModeEXT);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    cmd_set_cull_mode_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_front_face_ext: unsafe {
+                extern "system" fn cmd_set_front_face_ext(
+                    _command_buffer: CommandBuffer,
+                    _front_face: FrontFace,
+                ) -> c_void {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_front_face_ext)
+                    ))
+                }
+                let raw_name = stringify!(vkCmdSetFrontFaceEXT);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    cmd_set_front_face_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_primitive_topology_ext: unsafe {
+                extern "system" fn cmd_set_primitive_topology_ext(
+                    _command_buffer: CommandBuffer,
+                    _primitive_topology: PrimitiveTopology,
+                ) -> c_void {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_primitive_topology_ext)
+                    ))
+                }
+                let raw_name = stringify!(vkCmdSetPrimitiveTopologyEXT);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    cmd_set_primitive_topology_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_viewport_with_count_ext: unsafe {
+                extern "system" fn cmd_set_viewport_with_count_ext(
+                    _command_buffer: CommandBuffer,
+                    _viewport_count: u32,
+                    _p_viewports: *const Viewport,
+                ) -> c_void {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_viewport_with_count_ext)
+                    ))
+                }
+                let raw_name = stringify!(vkCmdSetViewportWithCountEXT);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    cmd_set_viewport_with_count_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_scissor_with_count_ext: unsafe {
+                extern "system" fn cmd_set_scissor_with_count_ext(
+                    _command_buffer: CommandBuffer,
+                    _scissor_count: u32,
+                    _p_scissors: *const Rect2D,
+                ) -> c_void {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_scissor_with_count_ext)
+                    ))
+                }
+                let raw_name = stringify!(vkCmdSetScissorWithCountEXT);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    cmd_set_scissor_with_count_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_bind_vertex_buffers2_ext: unsafe {
+                extern "system" fn cmd_bind_vertex_buffers2_ext(
+                    _command_buffer: CommandBuffer,
+                    _first_binding: u32,
+                    _binding_count: u32,
+                    _p_buffers: *const Buffer,
+                    _p_offsets: *const DeviceSize,
+                    _p_sizes: *const DeviceSize,
+                    _p_strides: *const DeviceSize,
+                ) -> c_void {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_bind_vertex_buffers2_ext)
+                    ))
+                }
+                let raw_name = stringify!(vkCmdBindVertexBuffers2EXT);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    cmd_bind_vertex_buffers2_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_depth_test_enable_ext: unsafe {
+                extern "system" fn cmd_set_depth_test_enable_ext(
+                    _command_buffer: CommandBuffer,
+                    _depth_test_enable: Bool32,
+                ) -> c_void {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_depth_test_enable_ext)
+                    ))
+                }
+                let raw_name = stringify!(vkCmdSetDepthTestEnableEXT);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    cmd_set_depth_test_enable_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_depth_write_enable_ext: unsafe {
+                extern "system" fn cmd_set_depth_write_enable_ext(
+                    _command_buffer: CommandBuffer,
+                    _depth_write_enable: Bool32,
+                ) -> c_void {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_depth_write_enable_ext)
+                    ))
+                }
+                let raw_name = stringify!(vkCmdSetDepthWriteEnableEXT);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    cmd_set_depth_write_enable_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_depth_compare_op_ext: unsafe {
+                extern "system" fn cmd_set_depth_compare_op_ext(
+                    _command_buffer: CommandBuffer,
+                    _depth_compare_op: CompareOp,
+                ) -> c_void {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_depth_compare_op_ext)
+                    ))
+                }
+                let raw_name = stringify!(vkCmdSetDepthCompareOpEXT);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    cmd_set_depth_compare_op_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_depth_bounds_test_enable_ext: unsafe {
+                extern "system" fn cmd_set_depth_bounds_test_enable_ext(
+                    _command_buffer: CommandBuffer,
+                    _depth_bounds_test_enable: Bool32,
+                ) -> c_void {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_depth_bounds_test_enable_ext)
+                    ))
+                }
+                let raw_name = stringify!(vkCmdSetDepthBoundsTestEnableEXT);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    cmd_set_depth_bounds_test_enable_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_stencil_test_enable_ext: unsafe {
+                extern "system" fn cmd_set_stencil_test_enable_ext(
+                    _command_buffer: CommandBuffer,
+                    _stencil_test_enable: Bool32,
+                ) -> c_void {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_stencil_test_enable_ext)
+                    ))
+                }
+                let raw_name = stringify!(vkCmdSetStencilTestEnableEXT);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    cmd_set_stencil_test_enable_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_stencil_op_ext: unsafe {
+                extern "system" fn cmd_set_stencil_op_ext(
+                    _command_buffer: CommandBuffer,
+                    _face_mask: StencilFaceFlags,
+                    _fail_op: StencilOp,
+                    _pass_op: StencilOp,
+                    _depth_fail_op: StencilOp,
+                    _compare_op: CompareOp,
+                ) -> c_void {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_stencil_op_ext)
+                    ))
+                }
+                let raw_name = stringify!(vkCmdSetStencilOpEXT);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    cmd_set_stencil_op_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
     }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetCullModeEXT.html>"]
+    pub unsafe fn cmd_set_cull_mode_ext(
+        &self,
+        command_buffer: CommandBuffer,
+        cull_mode: CullModeFlags,
+    ) -> c_void {
+        (self.cmd_set_cull_mode_ext)(command_buffer, cull_mode)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetFrontFaceEXT.html>"]
+    pub unsafe fn cmd_set_front_face_ext(
+        &self,
+        command_buffer: CommandBuffer,
+        front_face: FrontFace,
+    ) -> c_void {
+        (self.cmd_set_front_face_ext)(command_buffer, front_face)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetPrimitiveTopologyEXT.html>"]
+    pub unsafe fn cmd_set_primitive_topology_ext(
+        &self,
+        command_buffer: CommandBuffer,
+        primitive_topology: PrimitiveTopology,
+    ) -> c_void {
+        (self.cmd_set_primitive_topology_ext)(command_buffer, primitive_topology)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetViewportWithCountEXT.html>"]
+    pub unsafe fn cmd_set_viewport_with_count_ext(
+        &self,
+        command_buffer: CommandBuffer,
+        viewport_count: u32,
+        p_viewports: *const Viewport,
+    ) -> c_void {
+        (self.cmd_set_viewport_with_count_ext)(command_buffer, viewport_count, p_viewports)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetScissorWithCountEXT.html>"]
+    pub unsafe fn cmd_set_scissor_with_count_ext(
+        &self,
+        command_buffer: CommandBuffer,
+        scissor_count: u32,
+        p_scissors: *const Rect2D,
+    ) -> c_void {
+        (self.cmd_set_scissor_with_count_ext)(command_buffer, scissor_count, p_scissors)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdBindVertexBuffers2EXT.html>"]
+    pub unsafe fn cmd_bind_vertex_buffers2_ext(
+        &self,
+        command_buffer: CommandBuffer,
+        first_binding: u32,
+        binding_count: u32,
+        p_buffers: *const Buffer,
+        p_offsets: *const DeviceSize,
+        p_sizes: *const DeviceSize,
+        p_strides: *const DeviceSize,
+    ) -> c_void {
+        (self.cmd_bind_vertex_buffers2_ext)(
+            command_buffer,
+            first_binding,
+            binding_count,
+            p_buffers,
+            p_offsets,
+            p_sizes,
+            p_strides,
+        )
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetDepthTestEnableEXT.html>"]
+    pub unsafe fn cmd_set_depth_test_enable_ext(
+        &self,
+        command_buffer: CommandBuffer,
+        depth_test_enable: Bool32,
+    ) -> c_void {
+        (self.cmd_set_depth_test_enable_ext)(command_buffer, depth_test_enable)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetDepthWriteEnableEXT.html>"]
+    pub unsafe fn cmd_set_depth_write_enable_ext(
+        &self,
+        command_buffer: CommandBuffer,
+        depth_write_enable: Bool32,
+    ) -> c_void {
+        (self.cmd_set_depth_write_enable_ext)(command_buffer, depth_write_enable)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetDepthCompareOpEXT.html>"]
+    pub unsafe fn cmd_set_depth_compare_op_ext(
+        &self,
+        command_buffer: CommandBuffer,
+        depth_compare_op: CompareOp,
+    ) -> c_void {
+        (self.cmd_set_depth_compare_op_ext)(command_buffer, depth_compare_op)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetDepthBoundsTestEnableEXT.html>"]
+    pub unsafe fn cmd_set_depth_bounds_test_enable_ext(
+        &self,
+        command_buffer: CommandBuffer,
+        depth_bounds_test_enable: Bool32,
+    ) -> c_void {
+        (self.cmd_set_depth_bounds_test_enable_ext)(command_buffer, depth_bounds_test_enable)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetStencilTestEnableEXT.html>"]
+    pub unsafe fn cmd_set_stencil_test_enable_ext(
+        &self,
+        command_buffer: CommandBuffer,
+        stencil_test_enable: Bool32,
+    ) -> c_void {
+        (self.cmd_set_stencil_test_enable_ext)(command_buffer, stencil_test_enable)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetStencilOpEXT.html>"]
+    pub unsafe fn cmd_set_stencil_op_ext(
+        &self,
+        command_buffer: CommandBuffer,
+        face_mask: StencilFaceFlags,
+        fail_op: StencilOp,
+        pass_op: StencilOp,
+        depth_fail_op: StencilOp,
+        compare_op: CompareOp,
+    ) -> c_void {
+        (self.cmd_set_stencil_op_ext)(
+            command_buffer,
+            face_mask,
+            fail_op,
+            pass_op,
+            depth_fail_op,
+            compare_op,
+        )
+    }
+}
+#[doc = "Generated from \'VK_EXT_extended_dynamic_state\'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_FEATURES_EXT: Self = Self(1_000_267_000);
+}
+#[doc = "Generated from \'VK_EXT_extended_dynamic_state\'"]
+impl DynamicState {
+    pub const CULL_MODE_EXT: Self = Self(1_000_267_000);
+}
+#[doc = "Generated from \'VK_EXT_extended_dynamic_state\'"]
+impl DynamicState {
+    pub const FRONT_FACE_EXT: Self = Self(1_000_267_001);
+}
+#[doc = "Generated from \'VK_EXT_extended_dynamic_state\'"]
+impl DynamicState {
+    pub const PRIMITIVE_TOPOLOGY_EXT: Self = Self(1_000_267_002);
+}
+#[doc = "Generated from \'VK_EXT_extended_dynamic_state\'"]
+impl DynamicState {
+    pub const VIEWPORT_WITH_COUNT_EXT: Self = Self(1_000_267_003);
+}
+#[doc = "Generated from \'VK_EXT_extended_dynamic_state\'"]
+impl DynamicState {
+    pub const SCISSOR_WITH_COUNT_EXT: Self = Self(1_000_267_004);
+}
+#[doc = "Generated from \'VK_EXT_extended_dynamic_state\'"]
+impl DynamicState {
+    pub const VERTEX_INPUT_BINDING_STRIDE_EXT: Self = Self(1_000_267_005);
+}
+#[doc = "Generated from \'VK_EXT_extended_dynamic_state\'"]
+impl DynamicState {
+    pub const DEPTH_TEST_ENABLE_EXT: Self = Self(1_000_267_006);
+}
+#[doc = "Generated from \'VK_EXT_extended_dynamic_state\'"]
+impl DynamicState {
+    pub const DEPTH_WRITE_ENABLE_EXT: Self = Self(1_000_267_007);
+}
+#[doc = "Generated from \'VK_EXT_extended_dynamic_state\'"]
+impl DynamicState {
+    pub const DEPTH_COMPARE_OP_EXT: Self = Self(1_000_267_008);
+}
+#[doc = "Generated from \'VK_EXT_extended_dynamic_state\'"]
+impl DynamicState {
+    pub const DEPTH_BOUNDS_TEST_ENABLE_EXT: Self = Self(1_000_267_009);
+}
+#[doc = "Generated from \'VK_EXT_extended_dynamic_state\'"]
+impl DynamicState {
+    pub const STENCIL_TEST_ENABLE_EXT: Self = Self(1_000_267_010);
+}
+#[doc = "Generated from \'VK_EXT_extended_dynamic_state\'"]
+impl DynamicState {
+    pub const STENCIL_OP_EXT: Self = Self(1_000_267_011);
 }
 impl KhrDeferredHostOperationsFn {
     pub fn name() -> &'static ::std::ffi::CStr {
         ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_deferred_host_operations\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 2u32;
+    pub const SPEC_VERSION: u32 = 4u32;
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateDeferredOperationKHR = extern "system" fn(
@@ -20291,10 +21181,6 @@ impl KhrDeferredHostOperationsFn {
     ) -> Result {
         (self.deferred_operation_join_khr)(device, operation)
     }
-}
-#[doc = "Generated from \'VK_KHR_deferred_host_operations\'"]
-impl StructureType {
-    pub const DEFERRED_OPERATION_INFO_KHR: Self = Self(1_000_268_000);
 }
 #[doc = "Generated from \'VK_KHR_deferred_host_operations\'"]
 impl ObjectType {
@@ -21194,28 +22080,40 @@ impl ExtExtension284Fn {
         ExtExtension284Fn {}
     }
 }
-impl ExtExtension285Fn {
+impl ExtDeviceMemoryReportFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_285\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_device_memory_report\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
-pub struct ExtExtension285Fn {}
-unsafe impl Send for ExtExtension285Fn {}
-unsafe impl Sync for ExtExtension285Fn {}
-impl ::std::clone::Clone for ExtExtension285Fn {
+pub struct ExtDeviceMemoryReportFn {}
+unsafe impl Send for ExtDeviceMemoryReportFn {}
+unsafe impl Sync for ExtDeviceMemoryReportFn {}
+impl ::std::clone::Clone for ExtDeviceMemoryReportFn {
     fn clone(&self) -> Self {
-        ExtExtension285Fn {}
+        ExtDeviceMemoryReportFn {}
     }
 }
-impl ExtExtension285Fn {
+impl ExtDeviceMemoryReportFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtExtension285Fn {}
+        ExtDeviceMemoryReportFn {}
     }
+}
+#[doc = "Generated from \'VK_EXT_device_memory_report\'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_DEVICE_MEMORY_REPORT_FEATURES_EXT: Self = Self(1_000_284_000);
+}
+#[doc = "Generated from \'VK_EXT_device_memory_report\'"]
+impl StructureType {
+    pub const DEVICE_DEVICE_MEMORY_REPORT_CREATE_INFO_EXT: Self = Self(1_000_284_001);
+}
+#[doc = "Generated from \'VK_EXT_device_memory_report\'"]
+impl StructureType {
+    pub const DEVICE_MEMORY_REPORT_CALLBACK_DATA_EXT: Self = Self(1_000_284_002);
 }
 impl ExtExtension286Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -21240,51 +22138,79 @@ impl ExtExtension286Fn {
         ExtExtension286Fn {}
     }
 }
-impl NvxExtension287Fn {
+impl ExtRobustness2Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NVX_extension_287\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_robustness2\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
-pub struct NvxExtension287Fn {}
-unsafe impl Send for NvxExtension287Fn {}
-unsafe impl Sync for NvxExtension287Fn {}
-impl ::std::clone::Clone for NvxExtension287Fn {
+pub struct ExtRobustness2Fn {}
+unsafe impl Send for ExtRobustness2Fn {}
+unsafe impl Sync for ExtRobustness2Fn {}
+impl ::std::clone::Clone for ExtRobustness2Fn {
     fn clone(&self) -> Self {
-        NvxExtension287Fn {}
+        ExtRobustness2Fn {}
     }
 }
-impl NvxExtension287Fn {
+impl ExtRobustness2Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvxExtension287Fn {}
+        ExtRobustness2Fn {}
     }
 }
-impl NvxExtension288Fn {
+#[doc = "Generated from \'VK_EXT_robustness2\'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_ROBUSTNESS_2_FEATURES_EXT: Self = Self(1_000_286_000);
+}
+#[doc = "Generated from \'VK_EXT_robustness2\'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_ROBUSTNESS_2_PROPERTIES_EXT: Self = Self(1_000_286_001);
+}
+impl ExtCustomBorderColorFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NVX_extension_288\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_custom_border_color\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 12u32;
 }
-pub struct NvxExtension288Fn {}
-unsafe impl Send for NvxExtension288Fn {}
-unsafe impl Sync for NvxExtension288Fn {}
-impl ::std::clone::Clone for NvxExtension288Fn {
+pub struct ExtCustomBorderColorFn {}
+unsafe impl Send for ExtCustomBorderColorFn {}
+unsafe impl Sync for ExtCustomBorderColorFn {}
+impl ::std::clone::Clone for ExtCustomBorderColorFn {
     fn clone(&self) -> Self {
-        NvxExtension288Fn {}
+        ExtCustomBorderColorFn {}
     }
 }
-impl NvxExtension288Fn {
+impl ExtCustomBorderColorFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvxExtension288Fn {}
+        ExtCustomBorderColorFn {}
     }
+}
+#[doc = "Generated from \'VK_EXT_custom_border_color\'"]
+impl StructureType {
+    pub const SAMPLER_CUSTOM_BORDER_COLOR_CREATE_INFO_EXT: Self = Self(1_000_287_000);
+}
+#[doc = "Generated from \'VK_EXT_custom_border_color\'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_CUSTOM_BORDER_COLOR_PROPERTIES_EXT: Self = Self(1_000_287_001);
+}
+#[doc = "Generated from \'VK_EXT_custom_border_color\'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_CUSTOM_BORDER_COLOR_FEATURES_EXT: Self = Self(1_000_287_002);
+}
+#[doc = "Generated from \'VK_EXT_custom_border_color\'"]
+impl BorderColor {
+    pub const FLOAT_CUSTOM_EXT: Self = Self(1_000_287_003);
+}
+#[doc = "Generated from \'VK_EXT_custom_border_color\'"]
+impl BorderColor {
+    pub const INT_CUSTOM_EXT: Self = Self(1_000_287_004);
 }
 impl ExtExtension289Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -21308,6 +22234,126 @@ impl ExtExtension289Fn {
     {
         ExtExtension289Fn {}
     }
+}
+#[doc = "Generated from \'VK_EXT_extension_289\'"]
+impl Format {
+    pub const ASTC_3X3X3_UNORM_BLOCK_EXT: Self = Self(1_000_288_000);
+}
+#[doc = "Generated from \'VK_EXT_extension_289\'"]
+impl Format {
+    pub const ASTC_3X3X3_SRGB_BLOCK_EXT: Self = Self(1_000_288_001);
+}
+#[doc = "Generated from \'VK_EXT_extension_289\'"]
+impl Format {
+    pub const ASTC_3X3X3_SFLOAT_BLOCK_EXT: Self = Self(1_000_288_002);
+}
+#[doc = "Generated from \'VK_EXT_extension_289\'"]
+impl Format {
+    pub const ASTC_4X3X3_UNORM_BLOCK_EXT: Self = Self(1_000_288_003);
+}
+#[doc = "Generated from \'VK_EXT_extension_289\'"]
+impl Format {
+    pub const ASTC_4X3X3_SRGB_BLOCK_EXT: Self = Self(1_000_288_004);
+}
+#[doc = "Generated from \'VK_EXT_extension_289\'"]
+impl Format {
+    pub const ASTC_4X3X3_SFLOAT_BLOCK_EXT: Self = Self(1_000_288_005);
+}
+#[doc = "Generated from \'VK_EXT_extension_289\'"]
+impl Format {
+    pub const ASTC_4X4X3_UNORM_BLOCK_EXT: Self = Self(1_000_288_006);
+}
+#[doc = "Generated from \'VK_EXT_extension_289\'"]
+impl Format {
+    pub const ASTC_4X4X3_SRGB_BLOCK_EXT: Self = Self(1_000_288_007);
+}
+#[doc = "Generated from \'VK_EXT_extension_289\'"]
+impl Format {
+    pub const ASTC_4X4X3_SFLOAT_BLOCK_EXT: Self = Self(1_000_288_008);
+}
+#[doc = "Generated from \'VK_EXT_extension_289\'"]
+impl Format {
+    pub const ASTC_4X4X4_UNORM_BLOCK_EXT: Self = Self(1_000_288_009);
+}
+#[doc = "Generated from \'VK_EXT_extension_289\'"]
+impl Format {
+    pub const ASTC_4X4X4_SRGB_BLOCK_EXT: Self = Self(1_000_288_010);
+}
+#[doc = "Generated from \'VK_EXT_extension_289\'"]
+impl Format {
+    pub const ASTC_4X4X4_SFLOAT_BLOCK_EXT: Self = Self(1_000_288_011);
+}
+#[doc = "Generated from \'VK_EXT_extension_289\'"]
+impl Format {
+    pub const ASTC_5X4X4_UNORM_BLOCK_EXT: Self = Self(1_000_288_012);
+}
+#[doc = "Generated from \'VK_EXT_extension_289\'"]
+impl Format {
+    pub const ASTC_5X4X4_SRGB_BLOCK_EXT: Self = Self(1_000_288_013);
+}
+#[doc = "Generated from \'VK_EXT_extension_289\'"]
+impl Format {
+    pub const ASTC_5X4X4_SFLOAT_BLOCK_EXT: Self = Self(1_000_288_014);
+}
+#[doc = "Generated from \'VK_EXT_extension_289\'"]
+impl Format {
+    pub const ASTC_5X5X4_UNORM_BLOCK_EXT: Self = Self(1_000_288_015);
+}
+#[doc = "Generated from \'VK_EXT_extension_289\'"]
+impl Format {
+    pub const ASTC_5X5X4_SRGB_BLOCK_EXT: Self = Self(1_000_288_016);
+}
+#[doc = "Generated from \'VK_EXT_extension_289\'"]
+impl Format {
+    pub const ASTC_5X5X4_SFLOAT_BLOCK_EXT: Self = Self(1_000_288_017);
+}
+#[doc = "Generated from \'VK_EXT_extension_289\'"]
+impl Format {
+    pub const ASTC_5X5X5_UNORM_BLOCK_EXT: Self = Self(1_000_288_018);
+}
+#[doc = "Generated from \'VK_EXT_extension_289\'"]
+impl Format {
+    pub const ASTC_5X5X5_SRGB_BLOCK_EXT: Self = Self(1_000_288_019);
+}
+#[doc = "Generated from \'VK_EXT_extension_289\'"]
+impl Format {
+    pub const ASTC_5X5X5_SFLOAT_BLOCK_EXT: Self = Self(1_000_288_020);
+}
+#[doc = "Generated from \'VK_EXT_extension_289\'"]
+impl Format {
+    pub const ASTC_6X5X5_UNORM_BLOCK_EXT: Self = Self(1_000_288_021);
+}
+#[doc = "Generated from \'VK_EXT_extension_289\'"]
+impl Format {
+    pub const ASTC_6X5X5_SRGB_BLOCK_EXT: Self = Self(1_000_288_022);
+}
+#[doc = "Generated from \'VK_EXT_extension_289\'"]
+impl Format {
+    pub const ASTC_6X5X5_SFLOAT_BLOCK_EXT: Self = Self(1_000_288_023);
+}
+#[doc = "Generated from \'VK_EXT_extension_289\'"]
+impl Format {
+    pub const ASTC_6X6X5_UNORM_BLOCK_EXT: Self = Self(1_000_288_024);
+}
+#[doc = "Generated from \'VK_EXT_extension_289\'"]
+impl Format {
+    pub const ASTC_6X6X5_SRGB_BLOCK_EXT: Self = Self(1_000_288_025);
+}
+#[doc = "Generated from \'VK_EXT_extension_289\'"]
+impl Format {
+    pub const ASTC_6X6X5_SFLOAT_BLOCK_EXT: Self = Self(1_000_288_026);
+}
+#[doc = "Generated from \'VK_EXT_extension_289\'"]
+impl Format {
+    pub const ASTC_6X6X6_UNORM_BLOCK_EXT: Self = Self(1_000_288_027);
+}
+#[doc = "Generated from \'VK_EXT_extension_289\'"]
+impl Format {
+    pub const ASTC_6X6X6_SRGB_BLOCK_EXT: Self = Self(1_000_288_028);
+}
+#[doc = "Generated from \'VK_EXT_extension_289\'"]
+impl Format {
+    pub const ASTC_6X6X6_SFLOAT_BLOCK_EXT: Self = Self(1_000_288_029);
 }
 impl GoogleUserTypeFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -21455,28 +22501,231 @@ impl KhrExtension295Fn {
         KhrExtension295Fn {}
     }
 }
-impl NvExtension296Fn {
+impl ExtPrivateDataFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_296\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_private_data\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
-pub struct NvExtension296Fn {}
-unsafe impl Send for NvExtension296Fn {}
-unsafe impl Sync for NvExtension296Fn {}
-impl ::std::clone::Clone for NvExtension296Fn {
+#[allow(non_camel_case_types)]
+pub type PFN_vkCreatePrivateDataSlotEXT = extern "system" fn(
+    device: Device,
+    p_create_info: *const PrivateDataSlotCreateInfoEXT,
+    p_allocator: *const AllocationCallbacks,
+    p_private_data_slot: *mut PrivateDataSlotEXT,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkDestroyPrivateDataSlotEXT = extern "system" fn(
+    device: Device,
+    private_data_slot: PrivateDataSlotEXT,
+    p_allocator: *const AllocationCallbacks,
+) -> c_void;
+#[allow(non_camel_case_types)]
+pub type PFN_vkSetPrivateDataEXT = extern "system" fn(
+    device: Device,
+    object_type: ObjectType,
+    object_handle: u64,
+    private_data_slot: PrivateDataSlotEXT,
+    data: u64,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetPrivateDataEXT = extern "system" fn(
+    device: Device,
+    object_type: ObjectType,
+    object_handle: u64,
+    private_data_slot: PrivateDataSlotEXT,
+    p_data: *mut u64,
+) -> c_void;
+pub struct ExtPrivateDataFn {
+    pub create_private_data_slot_ext: extern "system" fn(
+        device: Device,
+        p_create_info: *const PrivateDataSlotCreateInfoEXT,
+        p_allocator: *const AllocationCallbacks,
+        p_private_data_slot: *mut PrivateDataSlotEXT,
+    ) -> Result,
+    pub destroy_private_data_slot_ext: extern "system" fn(
+        device: Device,
+        private_data_slot: PrivateDataSlotEXT,
+        p_allocator: *const AllocationCallbacks,
+    ) -> c_void,
+    pub set_private_data_ext: extern "system" fn(
+        device: Device,
+        object_type: ObjectType,
+        object_handle: u64,
+        private_data_slot: PrivateDataSlotEXT,
+        data: u64,
+    ) -> Result,
+    pub get_private_data_ext: extern "system" fn(
+        device: Device,
+        object_type: ObjectType,
+        object_handle: u64,
+        private_data_slot: PrivateDataSlotEXT,
+        p_data: *mut u64,
+    ) -> c_void,
+}
+unsafe impl Send for ExtPrivateDataFn {}
+unsafe impl Sync for ExtPrivateDataFn {}
+impl ::std::clone::Clone for ExtPrivateDataFn {
     fn clone(&self) -> Self {
-        NvExtension296Fn {}
+        ExtPrivateDataFn {
+            create_private_data_slot_ext: self.create_private_data_slot_ext,
+            destroy_private_data_slot_ext: self.destroy_private_data_slot_ext,
+            set_private_data_ext: self.set_private_data_ext,
+            get_private_data_ext: self.get_private_data_ext,
+        }
     }
 }
-impl NvExtension296Fn {
+impl ExtPrivateDataFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvExtension296Fn {}
+        ExtPrivateDataFn {
+            create_private_data_slot_ext: unsafe {
+                extern "system" fn create_private_data_slot_ext(
+                    _device: Device,
+                    _p_create_info: *const PrivateDataSlotCreateInfoEXT,
+                    _p_allocator: *const AllocationCallbacks,
+                    _p_private_data_slot: *mut PrivateDataSlotEXT,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(create_private_data_slot_ext)
+                    ))
+                }
+                let raw_name = stringify!(vkCreatePrivateDataSlotEXT);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    create_private_data_slot_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            destroy_private_data_slot_ext: unsafe {
+                extern "system" fn destroy_private_data_slot_ext(
+                    _device: Device,
+                    _private_data_slot: PrivateDataSlotEXT,
+                    _p_allocator: *const AllocationCallbacks,
+                ) -> c_void {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(destroy_private_data_slot_ext)
+                    ))
+                }
+                let raw_name = stringify!(vkDestroyPrivateDataSlotEXT);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    destroy_private_data_slot_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            set_private_data_ext: unsafe {
+                extern "system" fn set_private_data_ext(
+                    _device: Device,
+                    _object_type: ObjectType,
+                    _object_handle: u64,
+                    _private_data_slot: PrivateDataSlotEXT,
+                    _data: u64,
+                ) -> Result {
+                    panic!(concat!("Unable to load ", stringify!(set_private_data_ext)))
+                }
+                let raw_name = stringify!(vkSetPrivateDataEXT);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    set_private_data_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_private_data_ext: unsafe {
+                extern "system" fn get_private_data_ext(
+                    _device: Device,
+                    _object_type: ObjectType,
+                    _object_handle: u64,
+                    _private_data_slot: PrivateDataSlotEXT,
+                    _p_data: *mut u64,
+                ) -> c_void {
+                    panic!(concat!("Unable to load ", stringify!(get_private_data_ext)))
+                }
+                let raw_name = stringify!(vkGetPrivateDataEXT);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    get_private_data_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
     }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreatePrivateDataSlotEXT.html>"]
+    pub unsafe fn create_private_data_slot_ext(
+        &self,
+        device: Device,
+        p_create_info: *const PrivateDataSlotCreateInfoEXT,
+        p_allocator: *const AllocationCallbacks,
+        p_private_data_slot: *mut PrivateDataSlotEXT,
+    ) -> Result {
+        (self.create_private_data_slot_ext)(device, p_create_info, p_allocator, p_private_data_slot)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkDestroyPrivateDataSlotEXT.html>"]
+    pub unsafe fn destroy_private_data_slot_ext(
+        &self,
+        device: Device,
+        private_data_slot: PrivateDataSlotEXT,
+        p_allocator: *const AllocationCallbacks,
+    ) -> c_void {
+        (self.destroy_private_data_slot_ext)(device, private_data_slot, p_allocator)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkSetPrivateDataEXT.html>"]
+    pub unsafe fn set_private_data_ext(
+        &self,
+        device: Device,
+        object_type: ObjectType,
+        object_handle: u64,
+        private_data_slot: PrivateDataSlotEXT,
+        data: u64,
+    ) -> Result {
+        (self.set_private_data_ext)(device, object_type, object_handle, private_data_slot, data)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPrivateDataEXT.html>"]
+    pub unsafe fn get_private_data_ext(
+        &self,
+        device: Device,
+        object_type: ObjectType,
+        object_handle: u64,
+        private_data_slot: PrivateDataSlotEXT,
+        p_data: *mut u64,
+    ) -> c_void {
+        (self.get_private_data_ext)(
+            device,
+            object_type,
+            object_handle,
+            private_data_slot,
+            p_data,
+        )
+    }
+}
+#[doc = "Generated from \'VK_EXT_private_data\'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_PRIVATE_DATA_FEATURES_EXT: Self = Self(1_000_295_000);
+}
+#[doc = "Generated from \'VK_EXT_private_data\'"]
+impl StructureType {
+    pub const DEVICE_PRIVATE_DATA_CREATE_INFO_EXT: Self = Self(1_000_295_001);
+}
+#[doc = "Generated from \'VK_EXT_private_data\'"]
+impl StructureType {
+    pub const PRIVATE_DATA_SLOT_CREATE_INFO_EXT: Self = Self(1_000_295_002);
+}
+#[doc = "Generated from \'VK_EXT_private_data\'"]
+impl ObjectType {
+    pub const PRIVATE_DATA_SLOT_EXT: Self = Self(1_000_295_000);
 }
 impl KhrExtension297Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -21510,7 +22759,7 @@ impl ExtPipelineCreationCacheControlFn {
         ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_pipeline_creation_cache_control\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 2u32;
+    pub const SPEC_VERSION: u32 = 3u32;
 }
 pub struct ExtPipelineCreationCacheControlFn {}
 unsafe impl Send for ExtPipelineCreationCacheControlFn {}
@@ -21543,7 +22792,11 @@ impl PipelineCreateFlags {
 }
 #[doc = "Generated from \'VK_EXT_pipeline_creation_cache_control\'"]
 impl Result {
-    pub const ERROR_PIPELINE_COMPILE_REQUIRED_EXT: Self = Self(1_000_297_000);
+    pub const PIPELINE_COMPILE_REQUIRED_EXT: Self = Self(1_000_297_000);
+}
+#[doc = "Generated from \'VK_EXT_pipeline_creation_cache_control\'"]
+impl Result {
+    pub const ERROR_PIPELINE_COMPILE_REQUIRED_EXT: Self = Result::PIPELINE_COMPILE_REQUIRED_EXT;
 }
 #[doc = "Generated from \'VK_EXT_pipeline_creation_cache_control\'"]
 impl PipelineCacheCreateFlags {
@@ -21626,28 +22879,32 @@ impl StructureType {
 impl StructureType {
     pub const DEVICE_DIAGNOSTICS_CONFIG_CREATE_INFO_NV: Self = Self(1_000_300_001);
 }
-impl QcomExtension302Fn {
+impl QcomRenderPassStoreOpsFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_QCOM_extension_302\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_QCOM_render_pass_store_ops\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 2u32;
 }
-pub struct QcomExtension302Fn {}
-unsafe impl Send for QcomExtension302Fn {}
-unsafe impl Sync for QcomExtension302Fn {}
-impl ::std::clone::Clone for QcomExtension302Fn {
+pub struct QcomRenderPassStoreOpsFn {}
+unsafe impl Send for QcomRenderPassStoreOpsFn {}
+unsafe impl Sync for QcomRenderPassStoreOpsFn {}
+impl ::std::clone::Clone for QcomRenderPassStoreOpsFn {
     fn clone(&self) -> Self {
-        QcomExtension302Fn {}
+        QcomRenderPassStoreOpsFn {}
     }
 }
-impl QcomExtension302Fn {
+impl QcomRenderPassStoreOpsFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        QcomExtension302Fn {}
+        QcomRenderPassStoreOpsFn {}
     }
+}
+#[doc = "Generated from \'VK_QCOM_render_pass_store_ops\'"]
+impl AttachmentStoreOp {
+    pub const NONE_QCOM: Self = Self(1_000_301_000);
 }
 impl QcomExtension303Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -22139,4 +23396,1543 @@ impl AmdExtension323Fn {
     {
         AmdExtension323Fn {}
     }
+}
+impl KhrExtension324Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_extension_324\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+pub struct KhrExtension324Fn {}
+unsafe impl Send for KhrExtension324Fn {}
+unsafe impl Sync for KhrExtension324Fn {}
+impl ::std::clone::Clone for KhrExtension324Fn {
+    fn clone(&self) -> Self {
+        KhrExtension324Fn {}
+    }
+}
+impl KhrExtension324Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        KhrExtension324Fn {}
+    }
+}
+impl KhrExtension325Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_extension_325\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+pub struct KhrExtension325Fn {}
+unsafe impl Send for KhrExtension325Fn {}
+unsafe impl Sync for KhrExtension325Fn {}
+impl ::std::clone::Clone for KhrExtension325Fn {
+    fn clone(&self) -> Self {
+        KhrExtension325Fn {}
+    }
+}
+impl KhrExtension325Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        KhrExtension325Fn {}
+    }
+}
+impl KhrExtension326Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_extension_326\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+pub struct KhrExtension326Fn {}
+unsafe impl Send for KhrExtension326Fn {}
+unsafe impl Sync for KhrExtension326Fn {}
+impl ::std::clone::Clone for KhrExtension326Fn {
+    fn clone(&self) -> Self {
+        KhrExtension326Fn {}
+    }
+}
+impl KhrExtension326Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        KhrExtension326Fn {}
+    }
+}
+impl NvFragmentShadingRateEnumsFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_fragment_shading_rate_enums\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetFragmentShadingRateEnumNV = extern "system" fn(
+    command_buffer: CommandBuffer,
+    shading_rate: FragmentShadingRateNV,
+    combiner_ops: &[FragmentShadingRateCombinerOpKHR; 2],
+) -> c_void;
+pub struct NvFragmentShadingRateEnumsFn {
+    pub cmd_set_fragment_shading_rate_enum_nv: extern "system" fn(
+        command_buffer: CommandBuffer,
+        shading_rate: FragmentShadingRateNV,
+        combiner_ops: &[FragmentShadingRateCombinerOpKHR; 2],
+    ) -> c_void,
+}
+unsafe impl Send for NvFragmentShadingRateEnumsFn {}
+unsafe impl Sync for NvFragmentShadingRateEnumsFn {}
+impl ::std::clone::Clone for NvFragmentShadingRateEnumsFn {
+    fn clone(&self) -> Self {
+        NvFragmentShadingRateEnumsFn {
+            cmd_set_fragment_shading_rate_enum_nv: self.cmd_set_fragment_shading_rate_enum_nv,
+        }
+    }
+}
+impl NvFragmentShadingRateEnumsFn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        NvFragmentShadingRateEnumsFn {
+            cmd_set_fragment_shading_rate_enum_nv: unsafe {
+                extern "system" fn cmd_set_fragment_shading_rate_enum_nv(
+                    _command_buffer: CommandBuffer,
+                    _shading_rate: FragmentShadingRateNV,
+                    _combiner_ops: &[FragmentShadingRateCombinerOpKHR; 2],
+                ) -> c_void {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_fragment_shading_rate_enum_nv)
+                    ))
+                }
+                let raw_name = stringify!(vkCmdSetFragmentShadingRateEnumNV);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    cmd_set_fragment_shading_rate_enum_nv
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetFragmentShadingRateEnumNV.html>"]
+    pub unsafe fn cmd_set_fragment_shading_rate_enum_nv(
+        &self,
+        command_buffer: CommandBuffer,
+        shading_rate: FragmentShadingRateNV,
+        combiner_ops: &[FragmentShadingRateCombinerOpKHR; 2],
+    ) -> c_void {
+        (self.cmd_set_fragment_shading_rate_enum_nv)(command_buffer, shading_rate, combiner_ops)
+    }
+}
+#[doc = "Generated from \'VK_NV_fragment_shading_rate_enums\'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_FRAGMENT_SHADING_RATE_ENUMS_PROPERTIES_NV: Self = Self(1_000_326_000);
+}
+#[doc = "Generated from \'VK_NV_fragment_shading_rate_enums\'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_FRAGMENT_SHADING_RATE_ENUMS_FEATURES_NV: Self = Self(1_000_326_001);
+}
+#[doc = "Generated from \'VK_NV_fragment_shading_rate_enums\'"]
+impl StructureType {
+    pub const PIPELINE_FRAGMENT_SHADING_RATE_ENUM_STATE_CREATE_INFO_NV: Self = Self(1_000_326_002);
+}
+impl NvExtension328Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_328\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+pub struct NvExtension328Fn {}
+unsafe impl Send for NvExtension328Fn {}
+unsafe impl Sync for NvExtension328Fn {}
+impl ::std::clone::Clone for NvExtension328Fn {
+    fn clone(&self) -> Self {
+        NvExtension328Fn {}
+    }
+}
+impl NvExtension328Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        NvExtension328Fn {}
+    }
+}
+impl NvExtension329Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_329\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+pub struct NvExtension329Fn {}
+unsafe impl Send for NvExtension329Fn {}
+unsafe impl Sync for NvExtension329Fn {}
+impl ::std::clone::Clone for NvExtension329Fn {
+    fn clone(&self) -> Self {
+        NvExtension329Fn {}
+    }
+}
+impl NvExtension329Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        NvExtension329Fn {}
+    }
+}
+impl NvExtension330Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_330\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+pub struct NvExtension330Fn {}
+unsafe impl Send for NvExtension330Fn {}
+unsafe impl Sync for NvExtension330Fn {}
+impl ::std::clone::Clone for NvExtension330Fn {
+    fn clone(&self) -> Self {
+        NvExtension330Fn {}
+    }
+}
+impl NvExtension330Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        NvExtension330Fn {}
+    }
+}
+impl NvExtension331Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_331\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+pub struct NvExtension331Fn {}
+unsafe impl Send for NvExtension331Fn {}
+unsafe impl Sync for NvExtension331Fn {}
+impl ::std::clone::Clone for NvExtension331Fn {
+    fn clone(&self) -> Self {
+        NvExtension331Fn {}
+    }
+}
+impl NvExtension331Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        NvExtension331Fn {}
+    }
+}
+impl NvExtension332Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_332\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+pub struct NvExtension332Fn {}
+unsafe impl Send for NvExtension332Fn {}
+unsafe impl Sync for NvExtension332Fn {}
+impl ::std::clone::Clone for NvExtension332Fn {
+    fn clone(&self) -> Self {
+        NvExtension332Fn {}
+    }
+}
+impl NvExtension332Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        NvExtension332Fn {}
+    }
+}
+impl ExtFragmentDensityMap2Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_fragment_density_map2\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+pub struct ExtFragmentDensityMap2Fn {}
+unsafe impl Send for ExtFragmentDensityMap2Fn {}
+unsafe impl Sync for ExtFragmentDensityMap2Fn {}
+impl ::std::clone::Clone for ExtFragmentDensityMap2Fn {
+    fn clone(&self) -> Self {
+        ExtFragmentDensityMap2Fn {}
+    }
+}
+impl ExtFragmentDensityMap2Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        ExtFragmentDensityMap2Fn {}
+    }
+}
+#[doc = "Generated from \'VK_EXT_fragment_density_map2\'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_2_FEATURES_EXT: Self = Self(1_000_332_000);
+}
+#[doc = "Generated from \'VK_EXT_fragment_density_map2\'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_2_PROPERTIES_EXT: Self = Self(1_000_332_001);
+}
+#[doc = "Generated from \'VK_EXT_fragment_density_map2\'"]
+impl ImageViewCreateFlags {
+    pub const FRAGMENT_DENSITY_MAP_DEFERRED_EXT: Self = Self(0b10);
+}
+impl QcomRotatedCopyCommandsFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_QCOM_rotated_copy_commands\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+pub struct QcomRotatedCopyCommandsFn {}
+unsafe impl Send for QcomRotatedCopyCommandsFn {}
+unsafe impl Sync for QcomRotatedCopyCommandsFn {}
+impl ::std::clone::Clone for QcomRotatedCopyCommandsFn {
+    fn clone(&self) -> Self {
+        QcomRotatedCopyCommandsFn {}
+    }
+}
+impl QcomRotatedCopyCommandsFn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        QcomRotatedCopyCommandsFn {}
+    }
+}
+#[doc = "Generated from \'VK_QCOM_rotated_copy_commands\'"]
+impl StructureType {
+    pub const COPY_COMMAND_TRANSFORM_INFO_QCOM: Self = Self(1_000_333_000);
+}
+impl KhrExtension335Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_extension_335\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+pub struct KhrExtension335Fn {}
+unsafe impl Send for KhrExtension335Fn {}
+unsafe impl Sync for KhrExtension335Fn {}
+impl ::std::clone::Clone for KhrExtension335Fn {
+    fn clone(&self) -> Self {
+        KhrExtension335Fn {}
+    }
+}
+impl KhrExtension335Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        KhrExtension335Fn {}
+    }
+}
+impl ExtImageRobustnessFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_image_robustness\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+pub struct ExtImageRobustnessFn {}
+unsafe impl Send for ExtImageRobustnessFn {}
+unsafe impl Sync for ExtImageRobustnessFn {}
+impl ::std::clone::Clone for ExtImageRobustnessFn {
+    fn clone(&self) -> Self {
+        ExtImageRobustnessFn {}
+    }
+}
+impl ExtImageRobustnessFn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        ExtImageRobustnessFn {}
+    }
+}
+#[doc = "Generated from \'VK_EXT_image_robustness\'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_IMAGE_ROBUSTNESS_FEATURES_EXT: Self = Self(1_000_335_000);
+}
+impl KhrExtension337Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_extension_337\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+pub struct KhrExtension337Fn {}
+unsafe impl Send for KhrExtension337Fn {}
+unsafe impl Sync for KhrExtension337Fn {}
+impl ::std::clone::Clone for KhrExtension337Fn {
+    fn clone(&self) -> Self {
+        KhrExtension337Fn {}
+    }
+}
+impl KhrExtension337Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        KhrExtension337Fn {}
+    }
+}
+impl KhrCopyCommands2Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_copy_commands2\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdCopyBuffer2KHR = extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_copy_buffer_info: *const CopyBufferInfo2KHR,
+) -> c_void;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdCopyImage2KHR = extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_copy_image_info: *const CopyImageInfo2KHR,
+) -> c_void;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdCopyBufferToImage2KHR = extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_copy_buffer_to_image_info: *const CopyBufferToImageInfo2KHR,
+) -> c_void;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdCopyImageToBuffer2KHR = extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_copy_image_to_buffer_info: *const CopyImageToBufferInfo2KHR,
+) -> c_void;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdBlitImage2KHR = extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_blit_image_info: *const BlitImageInfo2KHR,
+) -> c_void;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdResolveImage2KHR = extern "system" fn(
+    command_buffer: CommandBuffer,
+    p_resolve_image_info: *const ResolveImageInfo2KHR,
+) -> c_void;
+pub struct KhrCopyCommands2Fn {
+    pub cmd_copy_buffer2_khr: extern "system" fn(
+        command_buffer: CommandBuffer,
+        p_copy_buffer_info: *const CopyBufferInfo2KHR,
+    ) -> c_void,
+    pub cmd_copy_image2_khr: extern "system" fn(
+        command_buffer: CommandBuffer,
+        p_copy_image_info: *const CopyImageInfo2KHR,
+    ) -> c_void,
+    pub cmd_copy_buffer_to_image2_khr: extern "system" fn(
+        command_buffer: CommandBuffer,
+        p_copy_buffer_to_image_info: *const CopyBufferToImageInfo2KHR,
+    ) -> c_void,
+    pub cmd_copy_image_to_buffer2_khr: extern "system" fn(
+        command_buffer: CommandBuffer,
+        p_copy_image_to_buffer_info: *const CopyImageToBufferInfo2KHR,
+    ) -> c_void,
+    pub cmd_blit_image2_khr: extern "system" fn(
+        command_buffer: CommandBuffer,
+        p_blit_image_info: *const BlitImageInfo2KHR,
+    ) -> c_void,
+    pub cmd_resolve_image2_khr: extern "system" fn(
+        command_buffer: CommandBuffer,
+        p_resolve_image_info: *const ResolveImageInfo2KHR,
+    ) -> c_void,
+}
+unsafe impl Send for KhrCopyCommands2Fn {}
+unsafe impl Sync for KhrCopyCommands2Fn {}
+impl ::std::clone::Clone for KhrCopyCommands2Fn {
+    fn clone(&self) -> Self {
+        KhrCopyCommands2Fn {
+            cmd_copy_buffer2_khr: self.cmd_copy_buffer2_khr,
+            cmd_copy_image2_khr: self.cmd_copy_image2_khr,
+            cmd_copy_buffer_to_image2_khr: self.cmd_copy_buffer_to_image2_khr,
+            cmd_copy_image_to_buffer2_khr: self.cmd_copy_image_to_buffer2_khr,
+            cmd_blit_image2_khr: self.cmd_blit_image2_khr,
+            cmd_resolve_image2_khr: self.cmd_resolve_image2_khr,
+        }
+    }
+}
+impl KhrCopyCommands2Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        KhrCopyCommands2Fn {
+            cmd_copy_buffer2_khr: unsafe {
+                extern "system" fn cmd_copy_buffer2_khr(
+                    _command_buffer: CommandBuffer,
+                    _p_copy_buffer_info: *const CopyBufferInfo2KHR,
+                ) -> c_void {
+                    panic!(concat!("Unable to load ", stringify!(cmd_copy_buffer2_khr)))
+                }
+                let raw_name = stringify!(vkCmdCopyBuffer2KHR);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    cmd_copy_buffer2_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_copy_image2_khr: unsafe {
+                extern "system" fn cmd_copy_image2_khr(
+                    _command_buffer: CommandBuffer,
+                    _p_copy_image_info: *const CopyImageInfo2KHR,
+                ) -> c_void {
+                    panic!(concat!("Unable to load ", stringify!(cmd_copy_image2_khr)))
+                }
+                let raw_name = stringify!(vkCmdCopyImage2KHR);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    cmd_copy_image2_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_copy_buffer_to_image2_khr: unsafe {
+                extern "system" fn cmd_copy_buffer_to_image2_khr(
+                    _command_buffer: CommandBuffer,
+                    _p_copy_buffer_to_image_info: *const CopyBufferToImageInfo2KHR,
+                ) -> c_void {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_copy_buffer_to_image2_khr)
+                    ))
+                }
+                let raw_name = stringify!(vkCmdCopyBufferToImage2KHR);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    cmd_copy_buffer_to_image2_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_copy_image_to_buffer2_khr: unsafe {
+                extern "system" fn cmd_copy_image_to_buffer2_khr(
+                    _command_buffer: CommandBuffer,
+                    _p_copy_image_to_buffer_info: *const CopyImageToBufferInfo2KHR,
+                ) -> c_void {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_copy_image_to_buffer2_khr)
+                    ))
+                }
+                let raw_name = stringify!(vkCmdCopyImageToBuffer2KHR);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    cmd_copy_image_to_buffer2_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_blit_image2_khr: unsafe {
+                extern "system" fn cmd_blit_image2_khr(
+                    _command_buffer: CommandBuffer,
+                    _p_blit_image_info: *const BlitImageInfo2KHR,
+                ) -> c_void {
+                    panic!(concat!("Unable to load ", stringify!(cmd_blit_image2_khr)))
+                }
+                let raw_name = stringify!(vkCmdBlitImage2KHR);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    cmd_blit_image2_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_resolve_image2_khr: unsafe {
+                extern "system" fn cmd_resolve_image2_khr(
+                    _command_buffer: CommandBuffer,
+                    _p_resolve_image_info: *const ResolveImageInfo2KHR,
+                ) -> c_void {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_resolve_image2_khr)
+                    ))
+                }
+                let raw_name = stringify!(vkCmdResolveImage2KHR);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    cmd_resolve_image2_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdCopyBuffer2KHR.html>"]
+    pub unsafe fn cmd_copy_buffer2_khr(
+        &self,
+        command_buffer: CommandBuffer,
+        p_copy_buffer_info: *const CopyBufferInfo2KHR,
+    ) -> c_void {
+        (self.cmd_copy_buffer2_khr)(command_buffer, p_copy_buffer_info)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdCopyImage2KHR.html>"]
+    pub unsafe fn cmd_copy_image2_khr(
+        &self,
+        command_buffer: CommandBuffer,
+        p_copy_image_info: *const CopyImageInfo2KHR,
+    ) -> c_void {
+        (self.cmd_copy_image2_khr)(command_buffer, p_copy_image_info)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdCopyBufferToImage2KHR.html>"]
+    pub unsafe fn cmd_copy_buffer_to_image2_khr(
+        &self,
+        command_buffer: CommandBuffer,
+        p_copy_buffer_to_image_info: *const CopyBufferToImageInfo2KHR,
+    ) -> c_void {
+        (self.cmd_copy_buffer_to_image2_khr)(command_buffer, p_copy_buffer_to_image_info)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdCopyImageToBuffer2KHR.html>"]
+    pub unsafe fn cmd_copy_image_to_buffer2_khr(
+        &self,
+        command_buffer: CommandBuffer,
+        p_copy_image_to_buffer_info: *const CopyImageToBufferInfo2KHR,
+    ) -> c_void {
+        (self.cmd_copy_image_to_buffer2_khr)(command_buffer, p_copy_image_to_buffer_info)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdBlitImage2KHR.html>"]
+    pub unsafe fn cmd_blit_image2_khr(
+        &self,
+        command_buffer: CommandBuffer,
+        p_blit_image_info: *const BlitImageInfo2KHR,
+    ) -> c_void {
+        (self.cmd_blit_image2_khr)(command_buffer, p_blit_image_info)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdResolveImage2KHR.html>"]
+    pub unsafe fn cmd_resolve_image2_khr(
+        &self,
+        command_buffer: CommandBuffer,
+        p_resolve_image_info: *const ResolveImageInfo2KHR,
+    ) -> c_void {
+        (self.cmd_resolve_image2_khr)(command_buffer, p_resolve_image_info)
+    }
+}
+#[doc = "Generated from \'VK_KHR_copy_commands2\'"]
+impl StructureType {
+    pub const COPY_BUFFER_INFO_2_KHR: Self = Self(1_000_337_000);
+}
+#[doc = "Generated from \'VK_KHR_copy_commands2\'"]
+impl StructureType {
+    pub const COPY_IMAGE_INFO_2_KHR: Self = Self(1_000_337_001);
+}
+#[doc = "Generated from \'VK_KHR_copy_commands2\'"]
+impl StructureType {
+    pub const COPY_BUFFER_TO_IMAGE_INFO_2_KHR: Self = Self(1_000_337_002);
+}
+#[doc = "Generated from \'VK_KHR_copy_commands2\'"]
+impl StructureType {
+    pub const COPY_IMAGE_TO_BUFFER_INFO_2_KHR: Self = Self(1_000_337_003);
+}
+#[doc = "Generated from \'VK_KHR_copy_commands2\'"]
+impl StructureType {
+    pub const BLIT_IMAGE_INFO_2_KHR: Self = Self(1_000_337_004);
+}
+#[doc = "Generated from \'VK_KHR_copy_commands2\'"]
+impl StructureType {
+    pub const RESOLVE_IMAGE_INFO_2_KHR: Self = Self(1_000_337_005);
+}
+#[doc = "Generated from \'VK_KHR_copy_commands2\'"]
+impl StructureType {
+    pub const BUFFER_COPY_2_KHR: Self = Self(1_000_337_006);
+}
+#[doc = "Generated from \'VK_KHR_copy_commands2\'"]
+impl StructureType {
+    pub const IMAGE_COPY_2_KHR: Self = Self(1_000_337_007);
+}
+#[doc = "Generated from \'VK_KHR_copy_commands2\'"]
+impl StructureType {
+    pub const IMAGE_BLIT_2_KHR: Self = Self(1_000_337_008);
+}
+#[doc = "Generated from \'VK_KHR_copy_commands2\'"]
+impl StructureType {
+    pub const BUFFER_IMAGE_COPY_2_KHR: Self = Self(1_000_337_009);
+}
+#[doc = "Generated from \'VK_KHR_copy_commands2\'"]
+impl StructureType {
+    pub const IMAGE_RESOLVE_2_KHR: Self = Self(1_000_337_010);
+}
+impl ArmExtension339Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_ARM_extension_339\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+pub struct ArmExtension339Fn {}
+unsafe impl Send for ArmExtension339Fn {}
+unsafe impl Sync for ArmExtension339Fn {}
+impl ::std::clone::Clone for ArmExtension339Fn {
+    fn clone(&self) -> Self {
+        ArmExtension339Fn {}
+    }
+}
+impl ArmExtension339Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        ArmExtension339Fn {}
+    }
+}
+impl ExtExtension340Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_340\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+pub struct ExtExtension340Fn {}
+unsafe impl Send for ExtExtension340Fn {}
+unsafe impl Sync for ExtExtension340Fn {}
+impl ::std::clone::Clone for ExtExtension340Fn {
+    fn clone(&self) -> Self {
+        ExtExtension340Fn {}
+    }
+}
+impl ExtExtension340Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        ExtExtension340Fn {}
+    }
+}
+impl Ext4444FormatsFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_4444_formats\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+pub struct Ext4444FormatsFn {}
+unsafe impl Send for Ext4444FormatsFn {}
+unsafe impl Sync for Ext4444FormatsFn {}
+impl ::std::clone::Clone for Ext4444FormatsFn {
+    fn clone(&self) -> Self {
+        Ext4444FormatsFn {}
+    }
+}
+impl Ext4444FormatsFn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        Ext4444FormatsFn {}
+    }
+}
+#[doc = "Generated from \'VK_EXT_4444_formats\'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_4444_FORMATS_FEATURES_EXT: Self = Self(1_000_340_000);
+}
+#[doc = "Generated from \'VK_EXT_4444_formats\'"]
+impl Format {
+    pub const A4R4G4B4_UNORM_PACK16_EXT: Self = Self(1_000_340_000);
+}
+#[doc = "Generated from \'VK_EXT_4444_formats\'"]
+impl Format {
+    pub const A4B4G4R4_UNORM_PACK16_EXT: Self = Self(1_000_340_001);
+}
+impl ExtExtension342Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_342\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+pub struct ExtExtension342Fn {}
+unsafe impl Send for ExtExtension342Fn {}
+unsafe impl Sync for ExtExtension342Fn {}
+impl ::std::clone::Clone for ExtExtension342Fn {
+    fn clone(&self) -> Self {
+        ExtExtension342Fn {}
+    }
+}
+impl ExtExtension342Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        ExtExtension342Fn {}
+    }
+}
+impl ArmExtension343Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_ARM_extension_343\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+pub struct ArmExtension343Fn {}
+unsafe impl Send for ArmExtension343Fn {}
+unsafe impl Sync for ArmExtension343Fn {}
+impl ::std::clone::Clone for ArmExtension343Fn {
+    fn clone(&self) -> Self {
+        ArmExtension343Fn {}
+    }
+}
+impl ArmExtension343Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        ArmExtension343Fn {}
+    }
+}
+impl ArmExtension344Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_ARM_extension_344\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+pub struct ArmExtension344Fn {}
+unsafe impl Send for ArmExtension344Fn {}
+unsafe impl Sync for ArmExtension344Fn {}
+impl ::std::clone::Clone for ArmExtension344Fn {
+    fn clone(&self) -> Self {
+        ArmExtension344Fn {}
+    }
+}
+impl ArmExtension344Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        ArmExtension344Fn {}
+    }
+}
+impl ArmExtension345Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_ARM_extension_345\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+pub struct ArmExtension345Fn {}
+unsafe impl Send for ArmExtension345Fn {}
+unsafe impl Sync for ArmExtension345Fn {}
+impl ::std::clone::Clone for ArmExtension345Fn {
+    fn clone(&self) -> Self {
+        ArmExtension345Fn {}
+    }
+}
+impl ArmExtension345Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        ArmExtension345Fn {}
+    }
+}
+impl NvExtension346Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_346\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+pub struct NvExtension346Fn {}
+unsafe impl Send for NvExtension346Fn {}
+unsafe impl Sync for NvExtension346Fn {}
+impl ::std::clone::Clone for NvExtension346Fn {
+    fn clone(&self) -> Self {
+        NvExtension346Fn {}
+    }
+}
+impl NvExtension346Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        NvExtension346Fn {}
+    }
+}
+impl ExtDirectfbSurfaceFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_directfb_surface\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 1u32;
+}
+#[allow(non_camel_case_types)]
+pub type PFN_vkCreateDirectFBSurfaceEXT = extern "system" fn(
+    instance: Instance,
+    p_create_info: *const DirectFBSurfaceCreateInfoEXT,
+    p_allocator: *const AllocationCallbacks,
+    p_surface: *mut SurfaceKHR,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetPhysicalDeviceDirectFBPresentationSupportEXT = extern "system" fn(
+    physical_device: PhysicalDevice,
+    queue_family_index: u32,
+    dfb: *mut IDirectFB,
+) -> Bool32;
+pub struct ExtDirectfbSurfaceFn {
+    pub create_direct_fb_surface_ext: extern "system" fn(
+        instance: Instance,
+        p_create_info: *const DirectFBSurfaceCreateInfoEXT,
+        p_allocator: *const AllocationCallbacks,
+        p_surface: *mut SurfaceKHR,
+    ) -> Result,
+    pub get_physical_device_direct_fb_presentation_support_ext: extern "system" fn(
+        physical_device: PhysicalDevice,
+        queue_family_index: u32,
+        dfb: *mut IDirectFB,
+    ) -> Bool32,
+}
+unsafe impl Send for ExtDirectfbSurfaceFn {}
+unsafe impl Sync for ExtDirectfbSurfaceFn {}
+impl ::std::clone::Clone for ExtDirectfbSurfaceFn {
+    fn clone(&self) -> Self {
+        ExtDirectfbSurfaceFn {
+            create_direct_fb_surface_ext: self.create_direct_fb_surface_ext,
+            get_physical_device_direct_fb_presentation_support_ext: self
+                .get_physical_device_direct_fb_presentation_support_ext,
+        }
+    }
+}
+impl ExtDirectfbSurfaceFn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        ExtDirectfbSurfaceFn {
+            create_direct_fb_surface_ext: unsafe {
+                extern "system" fn create_direct_fb_surface_ext(
+                    _instance: Instance,
+                    _p_create_info: *const DirectFBSurfaceCreateInfoEXT,
+                    _p_allocator: *const AllocationCallbacks,
+                    _p_surface: *mut SurfaceKHR,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(create_direct_fb_surface_ext)
+                    ))
+                }
+                let raw_name = stringify!(vkCreateDirectFBSurfaceEXT);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    create_direct_fb_surface_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_physical_device_direct_fb_presentation_support_ext: unsafe {
+                extern "system" fn get_physical_device_direct_fb_presentation_support_ext(
+                    _physical_device: PhysicalDevice,
+                    _queue_family_index: u32,
+                    _dfb: *mut IDirectFB,
+                ) -> Bool32 {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_physical_device_direct_fb_presentation_support_ext)
+                    ))
+                }
+                let raw_name = stringify!(vkGetPhysicalDeviceDirectFBPresentationSupportEXT);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    get_physical_device_direct_fb_presentation_support_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateDirectFBSurfaceEXT.html>"]
+    pub unsafe fn create_direct_fb_surface_ext(
+        &self,
+        instance: Instance,
+        p_create_info: *const DirectFBSurfaceCreateInfoEXT,
+        p_allocator: *const AllocationCallbacks,
+        p_surface: *mut SurfaceKHR,
+    ) -> Result {
+        (self.create_direct_fb_surface_ext)(instance, p_create_info, p_allocator, p_surface)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceDirectFBPresentationSupportEXT.html>"]
+    pub unsafe fn get_physical_device_direct_fb_presentation_support_ext(
+        &self,
+        physical_device: PhysicalDevice,
+        queue_family_index: u32,
+        dfb: *mut IDirectFB,
+    ) -> Bool32 {
+        (self.get_physical_device_direct_fb_presentation_support_ext)(
+            physical_device,
+            queue_family_index,
+            dfb,
+        )
+    }
+}
+#[doc = "Generated from \'VK_EXT_directfb_surface\'"]
+impl StructureType {
+    pub const DIRECTFB_SURFACE_CREATE_INFO_EXT: Self = Self(1_000_346_000);
+}
+impl KhrExtension350Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_extension_350\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+pub struct KhrExtension350Fn {}
+unsafe impl Send for KhrExtension350Fn {}
+unsafe impl Sync for KhrExtension350Fn {}
+impl ::std::clone::Clone for KhrExtension350Fn {
+    fn clone(&self) -> Self {
+        KhrExtension350Fn {}
+    }
+}
+impl KhrExtension350Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        KhrExtension350Fn {}
+    }
+}
+#[doc = "Generated from \'VK_KHR_extension_350\'"]
+impl PipelineCacheCreateFlags {
+    pub const RESERVED_2_EXT: Self = Self(0b100);
+}
+impl NvExtension351Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_351\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+pub struct NvExtension351Fn {}
+unsafe impl Send for NvExtension351Fn {}
+unsafe impl Sync for NvExtension351Fn {}
+impl ::std::clone::Clone for NvExtension351Fn {
+    fn clone(&self) -> Self {
+        NvExtension351Fn {}
+    }
+}
+impl NvExtension351Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        NvExtension351Fn {}
+    }
+}
+impl ExtExtension352Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_352\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+pub struct ExtExtension352Fn {}
+unsafe impl Send for ExtExtension352Fn {}
+unsafe impl Sync for ExtExtension352Fn {}
+impl ::std::clone::Clone for ExtExtension352Fn {
+    fn clone(&self) -> Self {
+        ExtExtension352Fn {}
+    }
+}
+impl ExtExtension352Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        ExtExtension352Fn {}
+    }
+}
+impl ExtExtension353Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_353\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+pub struct ExtExtension353Fn {}
+unsafe impl Send for ExtExtension353Fn {}
+unsafe impl Sync for ExtExtension353Fn {}
+impl ::std::clone::Clone for ExtExtension353Fn {
+    fn clone(&self) -> Self {
+        ExtExtension353Fn {}
+    }
+}
+impl ExtExtension353Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        ExtExtension353Fn {}
+    }
+}
+impl ExtExtension354Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_354\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+pub struct ExtExtension354Fn {}
+unsafe impl Send for ExtExtension354Fn {}
+unsafe impl Sync for ExtExtension354Fn {}
+impl ::std::clone::Clone for ExtExtension354Fn {
+    fn clone(&self) -> Self {
+        ExtExtension354Fn {}
+    }
+}
+impl ExtExtension354Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        ExtExtension354Fn {}
+    }
+}
+impl ExtExtension355Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_355\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+pub struct ExtExtension355Fn {}
+unsafe impl Send for ExtExtension355Fn {}
+unsafe impl Sync for ExtExtension355Fn {}
+impl ::std::clone::Clone for ExtExtension355Fn {
+    fn clone(&self) -> Self {
+        ExtExtension355Fn {}
+    }
+}
+impl ExtExtension355Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        ExtExtension355Fn {}
+    }
+}
+impl ExtVertexAttributeAliasingFn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_vertex_attribute_aliasing\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+pub struct ExtVertexAttributeAliasingFn {}
+unsafe impl Send for ExtVertexAttributeAliasingFn {}
+unsafe impl Sync for ExtVertexAttributeAliasingFn {}
+impl ::std::clone::Clone for ExtVertexAttributeAliasingFn {
+    fn clone(&self) -> Self {
+        ExtVertexAttributeAliasingFn {}
+    }
+}
+impl ExtVertexAttributeAliasingFn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        ExtVertexAttributeAliasingFn {}
+    }
+}
+impl ExtExtension357Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_357\0")
+            .expect("Wrong extension string")
+    }
+}
+pub struct ExtExtension357Fn {}
+unsafe impl Send for ExtExtension357Fn {}
+unsafe impl Sync for ExtExtension357Fn {}
+impl ::std::clone::Clone for ExtExtension357Fn {
+    fn clone(&self) -> Self {
+        ExtExtension357Fn {}
+    }
+}
+impl ExtExtension357Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        ExtExtension357Fn {}
+    }
+}
+impl KhrExtension358Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_extension_358\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+pub struct KhrExtension358Fn {}
+unsafe impl Send for KhrExtension358Fn {}
+unsafe impl Sync for KhrExtension358Fn {}
+impl ::std::clone::Clone for KhrExtension358Fn {
+    fn clone(&self) -> Self {
+        KhrExtension358Fn {}
+    }
+}
+impl KhrExtension358Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        KhrExtension358Fn {}
+    }
+}
+impl ExtExtension359Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_359\0")
+            .expect("Wrong extension string")
+    }
+}
+pub struct ExtExtension359Fn {}
+unsafe impl Send for ExtExtension359Fn {}
+unsafe impl Sync for ExtExtension359Fn {}
+impl ::std::clone::Clone for ExtExtension359Fn {
+    fn clone(&self) -> Self {
+        ExtExtension359Fn {}
+    }
+}
+impl ExtExtension359Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        ExtExtension359Fn {}
+    }
+}
+impl ExtExtension360Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_360\0")
+            .expect("Wrong extension string")
+    }
+}
+pub struct ExtExtension360Fn {}
+unsafe impl Send for ExtExtension360Fn {}
+unsafe impl Sync for ExtExtension360Fn {}
+impl ::std::clone::Clone for ExtExtension360Fn {
+    fn clone(&self) -> Self {
+        ExtExtension360Fn {}
+    }
+}
+impl ExtExtension360Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        ExtExtension360Fn {}
+    }
+}
+impl KhrExtension361Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_extension_361\0")
+            .expect("Wrong extension string")
+    }
+}
+pub struct KhrExtension361Fn {}
+unsafe impl Send for KhrExtension361Fn {}
+unsafe impl Sync for KhrExtension361Fn {}
+impl ::std::clone::Clone for KhrExtension361Fn {
+    fn clone(&self) -> Self {
+        KhrExtension361Fn {}
+    }
+}
+impl KhrExtension361Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        KhrExtension361Fn {}
+    }
+}
+impl ExtExtension362Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_362\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+pub struct ExtExtension362Fn {}
+unsafe impl Send for ExtExtension362Fn {}
+unsafe impl Sync for ExtExtension362Fn {}
+impl ::std::clone::Clone for ExtExtension362Fn {
+    fn clone(&self) -> Self {
+        ExtExtension362Fn {}
+    }
+}
+impl ExtExtension362Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        ExtExtension362Fn {}
+    }
+}
+impl ExtExtension363Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_363\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+pub struct ExtExtension363Fn {}
+unsafe impl Send for ExtExtension363Fn {}
+unsafe impl Sync for ExtExtension363Fn {}
+impl ::std::clone::Clone for ExtExtension363Fn {
+    fn clone(&self) -> Self {
+        ExtExtension363Fn {}
+    }
+}
+impl ExtExtension363Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        ExtExtension363Fn {}
+    }
+}
+impl FuchsiaExtension364Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_FUCHSIA_extension_364\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+pub struct FuchsiaExtension364Fn {}
+unsafe impl Send for FuchsiaExtension364Fn {}
+unsafe impl Sync for FuchsiaExtension364Fn {}
+impl ::std::clone::Clone for FuchsiaExtension364Fn {
+    fn clone(&self) -> Self {
+        FuchsiaExtension364Fn {}
+    }
+}
+impl FuchsiaExtension364Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        FuchsiaExtension364Fn {}
+    }
+}
+impl FuchsiaExtension365Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_FUCHSIA_extension_365\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+pub struct FuchsiaExtension365Fn {}
+unsafe impl Send for FuchsiaExtension365Fn {}
+unsafe impl Sync for FuchsiaExtension365Fn {}
+impl ::std::clone::Clone for FuchsiaExtension365Fn {
+    fn clone(&self) -> Self {
+        FuchsiaExtension365Fn {}
+    }
+}
+impl FuchsiaExtension365Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        FuchsiaExtension365Fn {}
+    }
+}
+impl FuchsiaExtension366Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_FUCHSIA_extension_366\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+pub struct FuchsiaExtension366Fn {}
+unsafe impl Send for FuchsiaExtension366Fn {}
+unsafe impl Sync for FuchsiaExtension366Fn {}
+impl ::std::clone::Clone for FuchsiaExtension366Fn {
+    fn clone(&self) -> Self {
+        FuchsiaExtension366Fn {}
+    }
+}
+impl FuchsiaExtension366Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        FuchsiaExtension366Fn {}
+    }
+}
+impl FuchsiaExtension367Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_FUCHSIA_extension_367\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+pub struct FuchsiaExtension367Fn {}
+unsafe impl Send for FuchsiaExtension367Fn {}
+unsafe impl Sync for FuchsiaExtension367Fn {}
+impl ::std::clone::Clone for FuchsiaExtension367Fn {
+    fn clone(&self) -> Self {
+        FuchsiaExtension367Fn {}
+    }
+}
+impl FuchsiaExtension367Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        FuchsiaExtension367Fn {}
+    }
+}
+impl FuchsiaExtension368Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_FUCHSIA_extension_368\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+pub struct FuchsiaExtension368Fn {}
+unsafe impl Send for FuchsiaExtension368Fn {}
+unsafe impl Sync for FuchsiaExtension368Fn {}
+impl ::std::clone::Clone for FuchsiaExtension368Fn {
+    fn clone(&self) -> Self {
+        FuchsiaExtension368Fn {}
+    }
+}
+impl FuchsiaExtension368Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        FuchsiaExtension368Fn {}
+    }
+}
+impl QcomExtension369Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_QCOM_extension_369\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+pub struct QcomExtension369Fn {}
+unsafe impl Send for QcomExtension369Fn {}
+unsafe impl Sync for QcomExtension369Fn {}
+impl ::std::clone::Clone for QcomExtension369Fn {
+    fn clone(&self) -> Self {
+        QcomExtension369Fn {}
+    }
+}
+impl QcomExtension369Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        QcomExtension369Fn {}
+    }
+}
+#[doc = "Generated from \'VK_QCOM_extension_369\'"]
+impl DescriptorBindingFlags {
+    pub const RESERVED_4_QCOM: Self = Self(0b1_0000);
+}
+impl HuaweiExtension370Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_HUAWEI_extension_370\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+pub struct HuaweiExtension370Fn {}
+unsafe impl Send for HuaweiExtension370Fn {}
+unsafe impl Sync for HuaweiExtension370Fn {}
+impl ::std::clone::Clone for HuaweiExtension370Fn {
+    fn clone(&self) -> Self {
+        HuaweiExtension370Fn {}
+    }
+}
+impl HuaweiExtension370Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        HuaweiExtension370Fn {}
+    }
+}
+impl HuaweiExtension371Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_HUAWEI_extension_371\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+pub struct HuaweiExtension371Fn {}
+unsafe impl Send for HuaweiExtension371Fn {}
+unsafe impl Sync for HuaweiExtension371Fn {}
+impl ::std::clone::Clone for HuaweiExtension371Fn {
+    fn clone(&self) -> Self {
+        HuaweiExtension371Fn {}
+    }
+}
+impl HuaweiExtension371Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        HuaweiExtension371Fn {}
+    }
+}
+impl NvExtension372Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_372\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+pub struct NvExtension372Fn {}
+unsafe impl Send for NvExtension372Fn {}
+unsafe impl Sync for NvExtension372Fn {}
+impl ::std::clone::Clone for NvExtension372Fn {
+    fn clone(&self) -> Self {
+        NvExtension372Fn {}
+    }
+}
+impl NvExtension372Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        NvExtension372Fn {}
+    }
+}
+#[doc = "Generated from \'VK_NV_extension_372\'"]
+impl BufferCreateFlags {
+    pub const RESERVED_5_NV: Self = Self(0b10_0000);
+}
+#[doc = "Generated from \'VK_NV_extension_372\'"]
+impl ImageCreateFlags {
+    pub const RESERVED_15_NV: Self = Self(0b1000_0000_0000_0000);
 }
