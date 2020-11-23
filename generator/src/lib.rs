@@ -1780,9 +1780,11 @@ pub fn derive_setters(
 
                         let mutable = if field.is_const { quote!() } else { quote!(mut) };
 
-                        let set_size_stmt = if array_size.contains("ename:") {
-                            // Should contain the same minus `ename:`-prefixed identifiers
-                            let array_size = field.c_size.as_ref().unwrap();
+                        // Apply some heuristics to determine whether the size is an expression.
+                        // If so, this is a pointer to a piece of memory with statically known size.
+                        let set_size_stmt = if array_size.contains("ename:") || array_size.contains('*') {
+                            // c_size should contain the same minus `ename:`-prefixed identifiers
+                            let array_size = field.c_size.as_ref().unwrap_or(array_size);
                             let c_size = convert_c_expression(array_size);
                             let inner_type = field.inner_type_tokens();
 
