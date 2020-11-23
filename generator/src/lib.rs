@@ -607,6 +607,13 @@ pub trait FieldExt {
     /// keywords
     fn param_ident(&self) -> Ident;
 
+    /// The inner type of this field, with one level of pointers removed
+    fn inner_type_tokens(&self) -> Tokens;
+
+    /// Returns reference-types wrapped in their safe variant. (Dynamic) arrays become
+    /// slices, pointers become Rust references.
+    fn safe_type_tokens(&self, lifetime: Tokens) -> Tokens;
+
     /// Returns the basetype ident and removes the 'Vk' prefix. When `is_ffi_param` is `true`
     /// array types (e.g. `[f32; 3]`) will be converted to pointer types (e.g. `&[f32; 3]`),
     /// which is needed for `C` function parameters. Set to `false` for struct definitions.
@@ -616,6 +623,8 @@ pub trait FieldExt {
 
 pub trait ToTokens {
     fn to_tokens(&self, is_const: bool) -> Tokens;
+    /// Returns the topmost pointer as safe reference
+    fn to_safe_tokens(&self, is_const: bool, lifetime: Tokens) -> Tokens;
 }
 impl ToTokens for vkxml::ReferenceType {
     fn to_tokens(&self, is_const: bool) -> Tokens {
@@ -623,6 +632,19 @@ impl ToTokens for vkxml::ReferenceType {
             quote!(*const)
         } else {
             quote!(*mut)
+        };
+        match self {
+            vkxml::ReferenceType::Pointer => quote!(#r),
+            vkxml::ReferenceType::PointerToPointer => quote!(#r *mut),
+            vkxml::ReferenceType::PointerToConstPointer => quote!(#r *const),
+        }
+    }
+
+    fn to_safe_tokens(&self, is_const: bool, lifetime: Tokens) -> Tokens {
+        let r = if is_const {
+            quote!(&#lifetime)
+        } else {
+            quote!(&#lifetime mut)
         };
         match self {
             vkxml::ReferenceType::Pointer => quote!(#r),
@@ -655,7 +677,7 @@ fn name_to_tokens(type_name: &str) -> Ident {
 }
 fn to_type_tokens(type_name: &str, reference: Option<&vkxml::ReferenceType>) -> Tokens {
     let new_name = name_to_tokens(type_name);
-    let ptr_name = reference.map(|r| r.to_tokens(false)).unwrap_or(quote! {});
+    let ptr_name = reference.map(|r| r.to_tokens(false));
     quote! {#ptr_name #new_name}
 }
 
@@ -697,6 +719,7 @@ impl FieldExt for vkxml::Field {
     fn is_clone(&self) -> bool {
         true
     }
+
     fn param_ident(&self) -> Ident {
         let name = self.name.as_deref().unwrap_or("field");
         let name_corrected = match name {
@@ -706,18 +729,41 @@ impl FieldExt for vkxml::Field {
         Ident::from(name_corrected.to_snake_case().as_str())
     }
 
+    fn inner_type_tokens(&self) -> Tokens {
+        let ty = name_to_tokens(&self.basetype);
+
+        match self.reference {
+            Some(vkxml::ReferenceType::PointerToPointer) => quote!(*mut #ty),
+            Some(vkxml::ReferenceType::PointerToConstPointer) => quote!(*const #ty),
+            _ => quote!(#ty),
+        }
+    }
+
+    fn safe_type_tokens(&self, lifetime: Tokens) -> Tokens {
+        match self.array {
+            // The outer type fn type_tokens() returns is [], which fits our "safe" prescription
+            Some(vkxml::ArrayType::Static) => self.type_tokens(false),
+            Some(vkxml::ArrayType::Dynamic) => {
+                let ty = self.inner_type_tokens();
+                quote!([#ty])
+            }
+            None => {
+                let ty = name_to_tokens(&self.basetype);
+                let pointer = self
+                    .reference
+                    .as_ref()
+                    .map(|r| r.to_safe_tokens(self.is_const, lifetime));
+                quote!(#pointer #ty)
+            }
+        }
+    }
+
     fn type_tokens(&self, is_ffi_param: bool) -> Tokens {
         let ty = name_to_tokens(&self.basetype);
-        let pointer = self
-            .reference
-            .as_ref()
-            .map(|r| r.to_tokens(self.is_const))
-            .unwrap_or(quote! {});
-        let pointer_ty = quote! {
-            #pointer #ty
-        };
-        let array = self.array.as_ref().and_then(|arraytype| match arraytype {
-            vkxml::ArrayType::Static => {
+
+        match self.array {
+            Some(vkxml::ArrayType::Static) => {
+                assert!(self.reference.is_none());
                 let size = self
                     .size
                     .as_ref()
@@ -729,18 +775,16 @@ impl FieldExt for vkxml::Field {
                 let size = Term::intern(&size);
                 // arrays in c are always passed as a pointer
                 if is_ffi_param {
-                    Some(quote! {
-                        &[#ty; #size]
-                    })
+                    quote!(&[#ty; #size])
                 } else {
-                    Some(quote! {
-                        [#ty; #size]
-                    })
+                    quote!([#ty; #size])
                 }
             }
-            _ => None,
-        });
-        array.unwrap_or(pointer_ty)
+            _ => {
+                let pointer = self.reference.as_ref().map(|r| r.to_tokens(self.is_const));
+                quote!(#pointer #ty)
+            }
+        }
     }
 }
 
@@ -1623,19 +1667,9 @@ pub fn derive_setters(
         _ => None,
     });
 
-    let (has_next, _is_next_const) = match members
+    let has_next = members
         .clone()
-        .find(|field| field.param_ident().as_ref() == "p_next")
-    {
-        Some(p_next) => {
-            if p_next.type_tokens(false).to_string().starts_with("*const") {
-                (true, true)
-            } else {
-                (true, false)
-            }
-        }
-        None => (false, false),
-    };
+        .any(|field| field.param_ident().as_ref() == "p_next");
 
     let nofilter_count_members = [
         "VkPipelineViewportStateCreateInfo.pViewports",
@@ -1672,7 +1706,6 @@ pub fn derive_setters(
     let setters = members.clone().filter_map(|field| {
         let param_ident = field.param_ident();
         let param_ty_tokens = field.type_tokens(false);
-        let param_ty_string = param_ty_tokens.to_string();
 
         let param_ident_string = param_ident.to_string();
         if param_ident_string == "s_type" || param_ident_string == "p_next" {
@@ -1714,14 +1747,14 @@ pub fn derive_setters(
 
         // TODO: Improve in future when https://github.com/rust-lang/rust/issues/53667 is merged id:6
         if param_ident_string.starts_with("p_") || param_ident_string.starts_with("pp_") {
-            if param_ty_string == "*const c_char" {
+            if field.basetype == "char" && matches!(field.reference, Some(vkxml::ReferenceType::Pointer)) {
                 assert!(field.null_terminate);
                 assert_eq!(field.size, None);
                 return Some(quote!{
-                        pub fn #param_ident_short(mut self, #param_ident_short: &'a ::std::ffi::CStr) -> #name_builder<'a> {
-                            self.inner.#param_ident = #param_ident_short.as_ptr();
-                            self
-                        }
+                    pub fn #param_ident_short(mut self, #param_ident_short: &'a ::std::ffi::CStr) -> #name_builder<'a> {
+                        self.inner.#param_ident = #param_ident_short.as_ptr();
+                        self
+                    }
                 });
             }
 
@@ -1730,34 +1763,26 @@ pub fn derive_setters(
                     if !array_size.starts_with("latexmath") {
                         let array_size_ident = Ident::from(array_size.to_snake_case().as_str());
 
-                        let param_ty = param_ty_string.splitn(2, ' ').collect_vec();
-                        assert_eq!(param_ty.len(), 2);
-                        let mutable = match param_ty[0] {
-                            "*const" => false,
-                            "*mut" => true,
-                            _ => unreachable!("Unexpected const-ness type: {}", param_ty[0]),
-                        };
-                        let mut slice_type = param_ty[1].parse::<TokenStream>().unwrap();
+                        let mut slice_param_ty_tokens = field.safe_type_tokens(quote!('a));
 
-                        let mut ptr = if mutable {
-                            quote!(.as_mut_ptr())
-                        } else {
+                        let mut ptr = if field.is_const {
                             quote!(.as_ptr())
+                        } else {
+                            quote!(.as_mut_ptr())
                         };
 
                         // Interpret void array as byte array
-                        if param_ty[1] == "c_void" {
-                            let mutable = if mutable { quote!(mut) } else { quote!(const) };
+                        if field.basetype == "void" {
+                            let mutable = if field.is_const { quote!(const) } else { quote!(mut) };
 
-                            slice_type = quote!(u8).into();
+                            slice_param_ty_tokens = quote!([u8]);
                             ptr = quote!(#ptr as *#mutable c_void);
                         };
 
-                        let mutable = if mutable { quote!(mut) } else { quote!() };
-                        let slice_param_ty_tokens = quote!(&'a #mutable [#slice_type]);
+                        let mutable = if field.is_const { quote!() } else { quote!(mut) };
 
                         return Some(quote! {
-                            pub fn #param_ident_short(mut self, #param_ident_short: #slice_param_ty_tokens) -> #name_builder<'a> {
+                            pub fn #param_ident_short(mut self, #param_ident_short: &'a #mutable #slice_param_ty_tokens) -> #name_builder<'a> {
                                 self.inner.#array_size_ident = #param_ident_short.len() as _;
                                 self.inner.#param_ident = #param_ident_short#ptr;
                                 self
@@ -1767,9 +1792,8 @@ pub fn derive_setters(
                 }
             }
 
-            if let Some(param_ty_string) = param_ty_string.strip_prefix("*const ") {
-                let slice_param_ty_tokens = param_ty_string.parse::<TokenStream>().unwrap();
-                let slice_param_ty_tokens = quote!(&'a #slice_param_ty_tokens);
+            if field.is_const {
+                let slice_param_ty_tokens = field.safe_type_tokens(quote!('a));
                 return Some(quote!{
                     pub fn #param_ident_short(mut self, #param_ident_short: #slice_param_ty_tokens) -> #name_builder<'a> {
                         self.inner.#param_ident = #param_ident_short;
@@ -1779,7 +1803,7 @@ pub fn derive_setters(
             }
         }
 
-        if param_ty_string == "Bool32" {
+        if field.basetype == "VkBool32" {
             return Some(quote!{
                 pub fn #param_ident_short(mut self, #param_ident_short: bool) -> #name_builder<'a> {
                     self.inner.#param_ident = #param_ident_short.into();
