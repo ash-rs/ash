@@ -20906,7 +20906,7 @@ impl<'a> IOSSurfaceCreateInfoMVKBuilder<'a> {
         self.inner.flags = flags;
         self
     }
-    pub fn view(mut self, view: &'a c_void) -> IOSSurfaceCreateInfoMVKBuilder<'a> {
+    pub fn view(mut self, view: *const c_void) -> IOSSurfaceCreateInfoMVKBuilder<'a> {
         self.inner.p_view = view;
         self
     }
@@ -20986,7 +20986,7 @@ impl<'a> MacOSSurfaceCreateInfoMVKBuilder<'a> {
         self.inner.flags = flags;
         self
     }
-    pub fn view(mut self, view: &'a c_void) -> MacOSSurfaceCreateInfoMVKBuilder<'a> {
+    pub fn view(mut self, view: *const c_void) -> MacOSSurfaceCreateInfoMVKBuilder<'a> {
         self.inner.p_view = view;
         self
     }
@@ -21066,7 +21066,7 @@ impl<'a> MetalSurfaceCreateInfoEXTBuilder<'a> {
         self.inner.flags = flags;
         self
     }
-    pub fn layer(mut self, layer: &'a CAMetalLayer) -> MetalSurfaceCreateInfoEXTBuilder<'a> {
+    pub fn layer(mut self, layer: *const CAMetalLayer) -> MetalSurfaceCreateInfoEXTBuilder<'a> {
         self.inner.p_layer = layer;
         self
     }
@@ -26273,7 +26273,7 @@ impl<'a> ::std::ops::DerefMut for NativeBufferANDROIDBuilder<'a> {
     }
 }
 impl<'a> NativeBufferANDROIDBuilder<'a> {
-    pub fn handle(mut self, handle: &'a c_void) -> NativeBufferANDROIDBuilder<'a> {
+    pub fn handle(mut self, handle: *const c_void) -> NativeBufferANDROIDBuilder<'a> {
         self.inner.handle = handle;
         self
     }
@@ -33208,7 +33208,7 @@ impl<'a> RayTracingShaderGroupCreateInfoKHRBuilder<'a> {
     }
     pub fn shader_group_capture_replay_handle(
         mut self,
-        shader_group_capture_replay_handle: &'a c_void,
+        shader_group_capture_replay_handle: *const c_void,
     ) -> RayTracingShaderGroupCreateInfoKHRBuilder<'a> {
         self.inner.p_shader_group_capture_replay_handle = shader_group_capture_replay_handle;
         self
@@ -37491,7 +37491,7 @@ impl<'a> ::std::ops::DerefMut for PipelineCreationFeedbackCreateInfoEXTBuilder<'
 impl<'a> PipelineCreationFeedbackCreateInfoEXTBuilder<'a> {
     pub fn pipeline_creation_feedback(
         mut self,
-        pipeline_creation_feedback: *mut PipelineCreationFeedbackEXT,
+        pipeline_creation_feedback: &'a mut PipelineCreationFeedbackEXT,
     ) -> PipelineCreationFeedbackCreateInfoEXTBuilder<'a> {
         self.inner.p_pipeline_creation_feedback = pipeline_creation_feedback;
         self

@@ -327,6 +327,20 @@ pub fn vk_bitflags_wrapped_macro() -> Tokens {
     }
 }
 
+fn is_opaque_type(ty: &str) -> bool {
+    matches!(
+        ty,
+        "void"
+            | "wl_display"
+            | "wl_surface"
+            | "Display"
+            | "xcb_connection_t"
+            | "ANativeWindow"
+            | "AHardwareBuffer"
+            | "CAMetalLayer"
+    )
+}
+
 pub fn platform_specific_types() -> Tokens {
     quote! {
         pub type RROutput = c_ulong;
@@ -1685,7 +1699,7 @@ pub fn derive_setters(
 
     let setters = members.clone().filter_map(|field| {
         let param_ident = field.param_ident();
-        let param_ty_tokens = field.type_tokens(false);
+        let param_ty_tokens = field.safe_type_tokens(quote!('a));
 
         let param_ident_string = param_ident.to_string();
         if param_ident_string == "s_type" || param_ident_string == "p_next" {
@@ -1785,16 +1799,6 @@ pub fn derive_setters(
                     }
                 }
             }
-
-            if field.is_const {
-                let slice_param_ty_tokens = field.safe_type_tokens(quote!('a));
-                return Some(quote!{
-                    pub fn #param_ident_short(mut self, #param_ident_short: #slice_param_ty_tokens) -> #name_builder<'a> {
-                        self.inner.#param_ident = #param_ident_short;
-                        self
-                    }
-                });
-            }
         }
 
         if field.basetype == "VkBool32" {
@@ -1805,6 +1809,13 @@ pub fn derive_setters(
                 }
             });
         }
+
+        let param_ty_tokens = if is_opaque_type(&field.basetype) {
+            //  Use raw pointers for void/opaque types
+            field.type_tokens(false)
+        } else {
+            param_ty_tokens
+        };
 
         Some(quote!{
             pub fn #param_ident_short(mut self, #param_ident_short: #param_ty_tokens) -> #name_builder<'a> {
