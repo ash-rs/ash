@@ -1747,7 +1747,7 @@ pub fn derive_setters(
         }
 
         // TODO: Improve in future when https://github.com/rust-lang/rust/issues/53667 is merged id:6
-        if param_ident_string.starts_with("p_") || param_ident_string.starts_with("pp_") {
+        if field.reference.is_some() {
             if field.basetype == "char" && matches!(field.reference, Some(vkxml::ReferenceType::Pointer)) {
                 assert!(field.null_terminate);
                 assert_eq!(field.size, None);

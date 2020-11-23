@@ -10527,8 +10527,11 @@ impl<'a> DisplayPropertiesKHRBuilder<'a> {
         self.inner.display = display;
         self
     }
-    pub fn display_name(mut self, display_name: *const c_char) -> DisplayPropertiesKHRBuilder<'a> {
-        self.inner.display_name = display_name;
+    pub fn display_name(
+        mut self,
+        display_name: &'a ::std::ffi::CStr,
+    ) -> DisplayPropertiesKHRBuilder<'a> {
+        self.inner.display_name = display_name.as_ptr();
         self
     }
     pub fn physical_dimensions(
@@ -26270,7 +26273,7 @@ impl<'a> ::std::ops::DerefMut for NativeBufferANDROIDBuilder<'a> {
     }
 }
 impl<'a> NativeBufferANDROIDBuilder<'a> {
-    pub fn handle(mut self, handle: *const c_void) -> NativeBufferANDROIDBuilder<'a> {
+    pub fn handle(mut self, handle: &'a c_void) -> NativeBufferANDROIDBuilder<'a> {
         self.inner.handle = handle;
         self
     }
@@ -44090,9 +44093,9 @@ impl<'a> ::std::ops::DerefMut for AccelerationStructureVersionKHRBuilder<'a> {
 impl<'a> AccelerationStructureVersionKHRBuilder<'a> {
     pub fn version_data(
         mut self,
-        version_data: *const u8,
+        version_data: &'a [u8; 2 * UUID_SIZE],
     ) -> AccelerationStructureVersionKHRBuilder<'a> {
-        self.inner.version_data = version_data;
+        self.inner.version_data = version_data.as_ptr();
         self
     }
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
