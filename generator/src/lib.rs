@@ -22,8 +22,8 @@ pub enum CType {
     Bool32,
 }
 
-impl CType {
-    fn to_tokens(self) -> Tokens {
+impl quote::ToTokens for CType {
+    fn to_tokens(&self, tokens: &mut Tokens) {
         let term = match self {
             CType::USize => Term::intern("usize"),
             CType::U32 => Term::intern("u32"),
@@ -31,7 +31,7 @@ impl CType {
             CType::Float => Term::intern("f32"),
             CType::Bool32 => Term::intern("Bool32"),
         };
-        quote! {#term}
+        term.to_tokens(tokens);
     }
 }
 
@@ -385,7 +385,6 @@ impl ConstVal {
 pub trait ConstantExt {
     fn constant(&self) -> Constant;
     fn variant_ident(&self, enum_name: &str) -> Ident;
-    fn to_tokens(&self) -> Tokens;
     fn notation(&self) -> Option<&str>;
 }
 
@@ -395,9 +394,6 @@ impl ConstantExt for vkxml::ExtensionEnum {
     }
     fn variant_ident(&self, enum_name: &str) -> Ident {
         variant_ident(enum_name, &self.name)
-    }
-    fn to_tokens(&self) -> Tokens {
-        Constant::from_extension_enum(self).expect("").to_tokens()
     }
     fn notation(&self) -> Option<&str> {
         self.notation.as_deref()
@@ -410,9 +406,6 @@ impl ConstantExt for vkxml::Constant {
     }
     fn variant_ident(&self, enum_name: &str) -> Ident {
         variant_ident(enum_name, &self.name)
-    }
-    fn to_tokens(&self) -> Tokens {
-        Constant::from_constant(self).to_tokens()
     }
     fn notation(&self) -> Option<&str> {
         self.notation.as_deref()
@@ -427,6 +420,36 @@ pub enum Constant {
     CExpr(vkxml::CExpression),
     Text(String),
     Alias(Ident, Ident),
+}
+
+impl quote::ToTokens for Constant {
+    fn to_tokens(&self, tokens: &mut Tokens) {
+        match *self {
+            Constant::Number(n) => {
+                let number = interleave_number('_', 3, &n.to_string());
+                let term = Term::intern(&number);
+                term.to_tokens(tokens);
+            }
+            Constant::Hex(ref s) => {
+                let number = interleave_number('_', 4, s);
+                let term = Term::intern(&format!("0x{}", number));
+                term.to_tokens(tokens);
+            }
+            Constant::Text(ref text) => text.to_tokens(tokens),
+            Constant::CExpr(ref expr) => {
+                let (_, (_, rexpr)) = cexpr(expr).expect("Unable to parse cexpr");
+                tokens.append_all(rexpr.parse::<TokenStream>());
+            }
+            Constant::BitPos(pos) => {
+                let value = 1 << pos;
+                let bit_string = format!("{:b}", value);
+                let bit_string = interleave_number('_', 4, &bit_string);
+                let term = Term::intern(&format!("0b{}", bit_string));
+                term.to_tokens(tokens);
+            }
+            Constant::Alias(ref base, ref value) => tokens.append_all(quote!(#base::#value)),
+        }
+    }
 }
 
 impl quote::ToTokens for ConstVal {
@@ -472,39 +495,6 @@ impl Constant {
                 ty
             }
             _ => unimplemented!(),
-        }
-    }
-
-    pub fn to_tokens(&self) -> Tokens {
-        match *self {
-            Constant::Number(n) => {
-                let number = interleave_number('_', 3, &n.to_string());
-                let term = Term::intern(&number);
-                quote! {#term}
-            }
-            Constant::Hex(ref s) => {
-                let number = interleave_number('_', 4, s);
-                let term = Term::intern(&format!("0x{}", number));
-                quote! {#term}
-            }
-            Constant::Text(ref text) => {
-                quote! {#text}
-            }
-            Constant::CExpr(ref expr) => {
-                let (_, (_, rexpr)) = cexpr(expr).expect("Unable to parse cexpr");
-                let term = Term::intern(rexpr.as_str());
-                quote! {#term}
-            }
-            Constant::BitPos(pos) => {
-                let value = 1 << pos;
-                let bit_string = format!("{:b}", value);
-                let bit_string = interleave_number('_', 4, &bit_string);
-                let term = Term::intern(&format!("0b{}", bit_string));
-                quote! {#term}
-            }
-            Constant::Alias(ref base, ref value) => {
-                quote! {#base::#value}
-            }
         }
     }
 
@@ -1005,9 +995,6 @@ impl<'a> ConstantExt for ExtensionConstant<'a> {
     fn variant_ident(&self, enum_name: &str) -> Ident {
         variant_ident(enum_name, self.name)
     }
-    fn to_tokens(&self) -> Tokens {
-        self.constant.to_tokens()
-    }
     fn notation(&self) -> Option<&str> {
         None
     }
@@ -1326,11 +1313,10 @@ pub fn bitflags_impl_block(
         .map(|constant| {
             let variant_ident = constant.variant_ident(enum_name);
             let constant = constant.constant();
-            let tokens = constant.to_tokens();
             let tokens = if let Constant::Alias(_, _) = &constant {
-                tokens
+                quote!(#constant)
             } else {
-                quote!(Self(#tokens))
+                quote!(Self(#constant))
             };
             (variant_ident, tokens)
         })
@@ -2229,15 +2215,13 @@ pub fn generate_constant<'a>(
     let c = Constant::from_constant(constant);
     let name = constant_name(&constant.name);
     let ident = Ident::from(name.as_str());
-    let value = c.to_tokens();
     let ty = if name == "TRUE" || name == "FALSE" {
         CType::Bool32
     } else {
         c.ty()
     };
-    let ty = ty.to_tokens();
     quote! {
-        pub const #ident: #ty = #value;
+        pub const #ident: #ty = #c;
     }
 }
 
