@@ -264,15 +264,15 @@ impl KhrSurfaceFn {
         )
     }
 }
-#[doc = "Generated from \'VK_KHR_surface\'"]
+#[doc = "Generated from 'VK_KHR_surface'"]
 impl Result {
-    pub const ERROR_SURFACE_LOST_KHR: Self = Self(-1_000_000_000);
+    pub const ERROR_SURFACE_LOST_KHR: Self = Self(-1000000000);
 }
-#[doc = "Generated from \'VK_KHR_surface\'"]
+#[doc = "Generated from 'VK_KHR_surface'"]
 impl Result {
-    pub const ERROR_NATIVE_WINDOW_IN_USE_KHR: Self = Self(-1_000_000_001);
+    pub const ERROR_NATIVE_WINDOW_IN_USE_KHR: Self = Self(-1000000001);
 }
-#[doc = "Generated from \'VK_KHR_surface\'"]
+#[doc = "Generated from 'VK_KHR_surface'"]
 impl ObjectType {
     pub const SURFACE_KHR: Self = Self(1_000_000_000);
 }
@@ -693,59 +693,59 @@ impl KhrSwapchainFn {
         (self.acquire_next_image2_khr)(device, p_acquire_info, p_image_index)
     }
 }
-#[doc = "Generated from \'VK_KHR_swapchain\'"]
+#[doc = "Generated from 'VK_KHR_swapchain'"]
 impl StructureType {
     pub const SWAPCHAIN_CREATE_INFO_KHR: Self = Self(1_000_001_000);
 }
-#[doc = "Generated from \'VK_KHR_swapchain\'"]
+#[doc = "Generated from 'VK_KHR_swapchain'"]
 impl StructureType {
     pub const PRESENT_INFO_KHR: Self = Self(1_000_001_001);
 }
-#[doc = "Generated from \'VK_KHR_swapchain\'"]
+#[doc = "Generated from 'VK_KHR_swapchain'"]
 impl ImageLayout {
     pub const PRESENT_SRC_KHR: Self = Self(1_000_001_002);
 }
-#[doc = "Generated from \'VK_KHR_swapchain\'"]
+#[doc = "Generated from 'VK_KHR_swapchain'"]
 impl Result {
     pub const SUBOPTIMAL_KHR: Self = Self(1_000_001_003);
 }
-#[doc = "Generated from \'VK_KHR_swapchain\'"]
+#[doc = "Generated from 'VK_KHR_swapchain'"]
 impl Result {
-    pub const ERROR_OUT_OF_DATE_KHR: Self = Self(-1_000_001_004);
+    pub const ERROR_OUT_OF_DATE_KHR: Self = Self(-1000001004);
 }
-#[doc = "Generated from \'VK_KHR_swapchain\'"]
+#[doc = "Generated from 'VK_KHR_swapchain'"]
 impl ObjectType {
     pub const SWAPCHAIN_KHR: Self = Self(1_000_001_000);
 }
-#[doc = "Generated from \'VK_KHR_swapchain\'"]
+#[doc = "Generated from 'VK_KHR_swapchain'"]
 impl StructureType {
     pub const DEVICE_GROUP_PRESENT_CAPABILITIES_KHR: Self = Self(1_000_060_007);
 }
-#[doc = "Generated from \'VK_KHR_swapchain\'"]
+#[doc = "Generated from 'VK_KHR_swapchain'"]
 impl StructureType {
     pub const IMAGE_SWAPCHAIN_CREATE_INFO_KHR: Self = Self(1_000_060_008);
 }
-#[doc = "Generated from \'VK_KHR_swapchain\'"]
+#[doc = "Generated from 'VK_KHR_swapchain'"]
 impl StructureType {
     pub const BIND_IMAGE_MEMORY_SWAPCHAIN_INFO_KHR: Self = Self(1_000_060_009);
 }
-#[doc = "Generated from \'VK_KHR_swapchain\'"]
+#[doc = "Generated from 'VK_KHR_swapchain'"]
 impl StructureType {
     pub const ACQUIRE_NEXT_IMAGE_INFO_KHR: Self = Self(1_000_060_010);
 }
-#[doc = "Generated from \'VK_KHR_swapchain\'"]
+#[doc = "Generated from 'VK_KHR_swapchain'"]
 impl StructureType {
     pub const DEVICE_GROUP_PRESENT_INFO_KHR: Self = Self(1_000_060_011);
 }
-#[doc = "Generated from \'VK_KHR_swapchain\'"]
+#[doc = "Generated from 'VK_KHR_swapchain'"]
 impl StructureType {
     pub const DEVICE_GROUP_SWAPCHAIN_CREATE_INFO_KHR: Self = Self(1_000_060_012);
 }
-#[doc = "Generated from \'VK_KHR_swapchain\'"]
+#[doc = "Generated from 'VK_KHR_swapchain'"]
 impl SwapchainCreateFlagsKHR {
     pub const SPLIT_INSTANCE_BIND_REGIONS: Self = Self(0b1);
 }
-#[doc = "Generated from \'VK_KHR_swapchain\'"]
+#[doc = "Generated from 'VK_KHR_swapchain'"]
 impl SwapchainCreateFlagsKHR {
     pub const PROTECTED: Self = Self(0b10);
 }
@@ -1110,19 +1110,19 @@ impl KhrDisplayFn {
         (self.create_display_plane_surface_khr)(instance, p_create_info, p_allocator, p_surface)
     }
 }
-#[doc = "Generated from \'VK_KHR_display\'"]
+#[doc = "Generated from 'VK_KHR_display'"]
 impl StructureType {
     pub const DISPLAY_MODE_CREATE_INFO_KHR: Self = Self(1_000_002_000);
 }
-#[doc = "Generated from \'VK_KHR_display\'"]
+#[doc = "Generated from 'VK_KHR_display'"]
 impl StructureType {
     pub const DISPLAY_SURFACE_CREATE_INFO_KHR: Self = Self(1_000_002_001);
 }
-#[doc = "Generated from \'VK_KHR_display\'"]
+#[doc = "Generated from 'VK_KHR_display'"]
 impl ObjectType {
     pub const DISPLAY_KHR: Self = Self(1_000_002_000);
 }
-#[doc = "Generated from \'VK_KHR_display\'"]
+#[doc = "Generated from 'VK_KHR_display'"]
 impl ObjectType {
     pub const DISPLAY_MODE_KHR: Self = Self(1_000_002_001);
 }
@@ -1207,13 +1207,13 @@ impl KhrDisplaySwapchainFn {
         )
     }
 }
-#[doc = "Generated from \'VK_KHR_display_swapchain\'"]
+#[doc = "Generated from 'VK_KHR_display_swapchain'"]
 impl StructureType {
     pub const DISPLAY_PRESENT_INFO_KHR: Self = Self(1_000_003_000);
 }
-#[doc = "Generated from \'VK_KHR_display_swapchain\'"]
+#[doc = "Generated from 'VK_KHR_display_swapchain'"]
 impl Result {
-    pub const ERROR_INCOMPATIBLE_DISPLAY_KHR: Self = Self(-1_000_003_001);
+    pub const ERROR_INCOMPATIBLE_DISPLAY_KHR: Self = Self(-1000003001);
 }
 impl KhrXlibSurfaceFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -1337,7 +1337,7 @@ impl KhrXlibSurfaceFn {
         )
     }
 }
-#[doc = "Generated from \'VK_KHR_xlib_surface\'"]
+#[doc = "Generated from 'VK_KHR_xlib_surface'"]
 impl StructureType {
     pub const XLIB_SURFACE_CREATE_INFO_KHR: Self = Self(1_000_004_000);
 }
@@ -1463,7 +1463,7 @@ impl KhrXcbSurfaceFn {
         )
     }
 }
-#[doc = "Generated from \'VK_KHR_xcb_surface\'"]
+#[doc = "Generated from 'VK_KHR_xcb_surface'"]
 impl StructureType {
     pub const XCB_SURFACE_CREATE_INFO_KHR: Self = Self(1_000_005_000);
 }
@@ -1584,7 +1584,7 @@ impl KhrWaylandSurfaceFn {
         )
     }
 }
-#[doc = "Generated from \'VK_KHR_wayland_surface\'"]
+#[doc = "Generated from 'VK_KHR_wayland_surface'"]
 impl StructureType {
     pub const WAYLAND_SURFACE_CREATE_INFO_KHR: Self = Self(1_000_006_000);
 }
@@ -1682,7 +1682,7 @@ impl KhrAndroidSurfaceFn {
         (self.create_android_surface_khr)(instance, p_create_info, p_allocator, p_surface)
     }
 }
-#[doc = "Generated from \'VK_KHR_android_surface\'"]
+#[doc = "Generated from 'VK_KHR_android_surface'"]
 impl StructureType {
     pub const ANDROID_SURFACE_CREATE_INFO_KHR: Self = Self(1_000_008_000);
 }
@@ -1794,7 +1794,7 @@ impl KhrWin32SurfaceFn {
         )
     }
 }
-#[doc = "Generated from \'VK_KHR_win32_surface\'"]
+#[doc = "Generated from 'VK_KHR_win32_surface'"]
 impl StructureType {
     pub const WIN32_SURFACE_CREATE_INFO_KHR: Self = Self(1_000_009_000);
 }
@@ -2033,15 +2033,15 @@ impl AndroidNativeBufferFn {
         )
     }
 }
-#[doc = "Generated from \'VK_ANDROID_native_buffer\'"]
+#[doc = "Generated from 'VK_ANDROID_native_buffer'"]
 impl StructureType {
     pub const NATIVE_BUFFER_ANDROID: Self = Self(1_000_010_000);
 }
-#[doc = "Generated from \'VK_ANDROID_native_buffer\'"]
+#[doc = "Generated from 'VK_ANDROID_native_buffer'"]
 impl StructureType {
     pub const SWAPCHAIN_IMAGE_CREATE_INFO_ANDROID: Self = Self(1_000_010_001);
 }
-#[doc = "Generated from \'VK_ANDROID_native_buffer\'"]
+#[doc = "Generated from 'VK_ANDROID_native_buffer'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_PRESENTATION_PROPERTIES_ANDROID: Self = Self(1_000_010_002);
 }
@@ -2227,28 +2227,28 @@ impl ExtDebugReportFn {
         )
     }
 }
-#[doc = "Generated from \'VK_EXT_debug_report\'"]
+#[doc = "Generated from 'VK_EXT_debug_report'"]
 impl StructureType {
     pub const DEBUG_REPORT_CALLBACK_CREATE_INFO_EXT: Self = Self(1_000_011_000);
 }
-#[doc = "Generated from \'VK_EXT_debug_report\'"]
+#[doc = "Generated from 'VK_EXT_debug_report'"]
 impl StructureType {
     pub const DEBUG_REPORT_CREATE_INFO_EXT: Self =
         StructureType::DEBUG_REPORT_CALLBACK_CREATE_INFO_EXT;
 }
-#[doc = "Generated from \'VK_EXT_debug_report\'"]
+#[doc = "Generated from 'VK_EXT_debug_report'"]
 impl Result {
-    pub const ERROR_VALIDATION_FAILED_EXT: Self = Self(-1_000_011_001);
+    pub const ERROR_VALIDATION_FAILED_EXT: Self = Self(-1000011001);
 }
-#[doc = "Generated from \'VK_EXT_debug_report\'"]
+#[doc = "Generated from 'VK_EXT_debug_report'"]
 impl ObjectType {
     pub const DEBUG_REPORT_CALLBACK_EXT: Self = Self(1_000_011_000);
 }
-#[doc = "Generated from \'VK_EXT_debug_report\'"]
+#[doc = "Generated from 'VK_EXT_debug_report'"]
 impl DebugReportObjectTypeEXT {
     pub const SAMPLER_YCBCR_CONVERSION: Self = Self(1_000_156_000);
 }
-#[doc = "Generated from \'VK_EXT_debug_report\'"]
+#[doc = "Generated from 'VK_EXT_debug_report'"]
 impl DebugReportObjectTypeEXT {
     pub const DESCRIPTOR_UPDATE_TEMPLATE: Self = Self(1_000_085_000);
 }
@@ -2275,9 +2275,9 @@ impl NvGlslShaderFn {
         NvGlslShaderFn {}
     }
 }
-#[doc = "Generated from \'VK_NV_glsl_shader\'"]
+#[doc = "Generated from 'VK_NV_glsl_shader'"]
 impl Result {
-    pub const ERROR_INVALID_SHADER_NV: Self = Self(-1_000_012_000);
+    pub const ERROR_INVALID_SHADER_NV: Self = Self(-1000012000);
 }
 impl ExtDepthRangeUnrestrictedFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -2325,11 +2325,11 @@ impl KhrSamplerMirrorClampToEdgeFn {
         KhrSamplerMirrorClampToEdgeFn {}
     }
 }
-#[doc = "Generated from \'VK_KHR_sampler_mirror_clamp_to_edge\'"]
+#[doc = "Generated from 'VK_KHR_sampler_mirror_clamp_to_edge'"]
 impl SamplerAddressMode {
     pub const MIRROR_CLAMP_TO_EDGE: Self = Self(4);
 }
-#[doc = "Generated from \'VK_KHR_sampler_mirror_clamp_to_edge\'"]
+#[doc = "Generated from 'VK_KHR_sampler_mirror_clamp_to_edge'"]
 impl SamplerAddressMode {
     pub const MIRROR_CLAMP_TO_EDGE_KHR: Self = SamplerAddressMode::MIRROR_CLAMP_TO_EDGE;
 }
@@ -2356,11 +2356,11 @@ impl ImgFilterCubicFn {
         ImgFilterCubicFn {}
     }
 }
-#[doc = "Generated from \'VK_IMG_filter_cubic\'"]
+#[doc = "Generated from 'VK_IMG_filter_cubic'"]
 impl Filter {
     pub const CUBIC_IMG: Self = Self(1_000_015_000);
 }
-#[doc = "Generated from \'VK_IMG_filter_cubic\'"]
+#[doc = "Generated from 'VK_IMG_filter_cubic'"]
 impl FormatFeatureFlags {
     pub const SAMPLED_IMAGE_FILTER_CUBIC_IMG: Self = Self(0b10_0000_0000_0000);
 }
@@ -2433,7 +2433,7 @@ impl AmdRasterizationOrderFn {
         AmdRasterizationOrderFn {}
     }
 }
-#[doc = "Generated from \'VK_AMD_rasterization_order\'"]
+#[doc = "Generated from 'VK_AMD_rasterization_order'"]
 impl StructureType {
     pub const PIPELINE_RASTERIZATION_STATE_RASTERIZATION_ORDER_AMD: Self = Self(1_000_018_000);
 }
@@ -2702,15 +2702,15 @@ impl ExtDebugMarkerFn {
         (self.cmd_debug_marker_insert_ext)(command_buffer, p_marker_info)
     }
 }
-#[doc = "Generated from \'VK_EXT_debug_marker\'"]
+#[doc = "Generated from 'VK_EXT_debug_marker'"]
 impl StructureType {
     pub const DEBUG_MARKER_OBJECT_NAME_INFO_EXT: Self = Self(1_000_022_000);
 }
-#[doc = "Generated from \'VK_EXT_debug_marker\'"]
+#[doc = "Generated from 'VK_EXT_debug_marker'"]
 impl StructureType {
     pub const DEBUG_MARKER_OBJECT_TAG_INFO_EXT: Self = Self(1_000_022_001);
 }
-#[doc = "Generated from \'VK_EXT_debug_marker\'"]
+#[doc = "Generated from 'VK_EXT_debug_marker'"]
 impl StructureType {
     pub const DEBUG_MARKER_MARKER_INFO_EXT: Self = Self(1_000_022_002);
 }
@@ -2737,47 +2737,47 @@ impl AmdExtension24Fn {
         AmdExtension24Fn {}
     }
 }
-#[doc = "Generated from \'VK_AMD_extension_24\'"]
+#[doc = "Generated from 'VK_AMD_extension_24'"]
 impl QueueFlags {
     pub const RESERVED_6_KHR: Self = Self(0b100_0000);
 }
-#[doc = "Generated from \'VK_AMD_extension_24\'"]
+#[doc = "Generated from 'VK_AMD_extension_24'"]
 impl PipelineStageFlags {
     pub const RESERVED_27_KHR: Self = Self(0b1000_0000_0000_0000_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_AMD_extension_24\'"]
+#[doc = "Generated from 'VK_AMD_extension_24'"]
 impl AccessFlags {
     pub const RESERVED_30_KHR: Self = Self(0b100_0000_0000_0000_0000_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_AMD_extension_24\'"]
+#[doc = "Generated from 'VK_AMD_extension_24'"]
 impl BufferUsageFlags {
     pub const RESERVED_15_KHR: Self = Self(0b1000_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_AMD_extension_24\'"]
+#[doc = "Generated from 'VK_AMD_extension_24'"]
 impl BufferUsageFlags {
     pub const RESERVED_16_KHR: Self = Self(0b1_0000_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_AMD_extension_24\'"]
+#[doc = "Generated from 'VK_AMD_extension_24'"]
 impl ImageUsageFlags {
     pub const RESERVED_13_KHR: Self = Self(0b10_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_AMD_extension_24\'"]
+#[doc = "Generated from 'VK_AMD_extension_24'"]
 impl ImageUsageFlags {
     pub const RESERVED_14_KHR: Self = Self(0b100_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_AMD_extension_24\'"]
+#[doc = "Generated from 'VK_AMD_extension_24'"]
 impl ImageUsageFlags {
     pub const RESERVED_15_KHR: Self = Self(0b1000_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_AMD_extension_24\'"]
+#[doc = "Generated from 'VK_AMD_extension_24'"]
 impl FormatFeatureFlags {
     pub const RESERVED_27_KHR: Self = Self(0b1000_0000_0000_0000_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_AMD_extension_24\'"]
+#[doc = "Generated from 'VK_AMD_extension_24'"]
 impl FormatFeatureFlags {
     pub const RESERVED_28_KHR: Self = Self(0b1_0000_0000_0000_0000_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_AMD_extension_24\'"]
+#[doc = "Generated from 'VK_AMD_extension_24'"]
 impl QueryType {
     pub const RESERVED_8: Self = Self(1_000_023_008);
 }
@@ -2804,51 +2804,51 @@ impl AmdExtension25Fn {
         AmdExtension25Fn {}
     }
 }
-#[doc = "Generated from \'VK_AMD_extension_25\'"]
+#[doc = "Generated from 'VK_AMD_extension_25'"]
 impl QueueFlags {
     pub const RESERVED_5_KHR: Self = Self(0b10_0000);
 }
-#[doc = "Generated from \'VK_AMD_extension_25\'"]
+#[doc = "Generated from 'VK_AMD_extension_25'"]
 impl PipelineStageFlags {
     pub const RESERVED_26_KHR: Self = Self(0b100_0000_0000_0000_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_AMD_extension_25\'"]
+#[doc = "Generated from 'VK_AMD_extension_25'"]
 impl AccessFlags {
     pub const RESERVED_28_KHR: Self = Self(0b1_0000_0000_0000_0000_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_AMD_extension_25\'"]
+#[doc = "Generated from 'VK_AMD_extension_25'"]
 impl AccessFlags {
     pub const RESERVED_29_KHR: Self = Self(0b10_0000_0000_0000_0000_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_AMD_extension_25\'"]
+#[doc = "Generated from 'VK_AMD_extension_25'"]
 impl BufferUsageFlags {
     pub const RESERVED_13_KHR: Self = Self(0b10_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_AMD_extension_25\'"]
+#[doc = "Generated from 'VK_AMD_extension_25'"]
 impl BufferUsageFlags {
     pub const RESERVED_14_KHR: Self = Self(0b100_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_AMD_extension_25\'"]
+#[doc = "Generated from 'VK_AMD_extension_25'"]
 impl ImageUsageFlags {
     pub const RESERVED_10_KHR: Self = Self(0b100_0000_0000);
 }
-#[doc = "Generated from \'VK_AMD_extension_25\'"]
+#[doc = "Generated from 'VK_AMD_extension_25'"]
 impl ImageUsageFlags {
     pub const RESERVED_11_KHR: Self = Self(0b1000_0000_0000);
 }
-#[doc = "Generated from \'VK_AMD_extension_25\'"]
+#[doc = "Generated from 'VK_AMD_extension_25'"]
 impl ImageUsageFlags {
     pub const RESERVED_12_KHR: Self = Self(0b1_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_AMD_extension_25\'"]
+#[doc = "Generated from 'VK_AMD_extension_25'"]
 impl FormatFeatureFlags {
     pub const RESERVED_25_KHR: Self = Self(0b10_0000_0000_0000_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_AMD_extension_25\'"]
+#[doc = "Generated from 'VK_AMD_extension_25'"]
 impl FormatFeatureFlags {
     pub const RESERVED_26_KHR: Self = Self(0b100_0000_0000_0000_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_AMD_extension_25\'"]
+#[doc = "Generated from 'VK_AMD_extension_25'"]
 impl QueryType {
     pub const RESERVED_4: Self = Self(1_000_024_004);
 }
@@ -2898,15 +2898,15 @@ impl NvDedicatedAllocationFn {
         NvDedicatedAllocationFn {}
     }
 }
-#[doc = "Generated from \'VK_NV_dedicated_allocation\'"]
+#[doc = "Generated from 'VK_NV_dedicated_allocation'"]
 impl StructureType {
     pub const DEDICATED_ALLOCATION_IMAGE_CREATE_INFO_NV: Self = Self(1_000_026_000);
 }
-#[doc = "Generated from \'VK_NV_dedicated_allocation\'"]
+#[doc = "Generated from 'VK_NV_dedicated_allocation'"]
 impl StructureType {
     pub const DEDICATED_ALLOCATION_BUFFER_CREATE_INFO_NV: Self = Self(1_000_026_001);
 }
-#[doc = "Generated from \'VK_NV_dedicated_allocation\'"]
+#[doc = "Generated from 'VK_NV_dedicated_allocation'"]
 impl StructureType {
     pub const DEDICATED_ALLOCATION_MEMORY_ALLOCATE_INFO_NV: Self = Self(1_000_026_002);
 }
@@ -3288,44 +3288,44 @@ impl ExtTransformFeedbackFn {
         )
     }
 }
-#[doc = "Generated from \'VK_EXT_transform_feedback\'"]
+#[doc = "Generated from 'VK_EXT_transform_feedback'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_TRANSFORM_FEEDBACK_FEATURES_EXT: Self = Self(1_000_028_000);
 }
-#[doc = "Generated from \'VK_EXT_transform_feedback\'"]
+#[doc = "Generated from 'VK_EXT_transform_feedback'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_TRANSFORM_FEEDBACK_PROPERTIES_EXT: Self = Self(1_000_028_001);
 }
-#[doc = "Generated from \'VK_EXT_transform_feedback\'"]
+#[doc = "Generated from 'VK_EXT_transform_feedback'"]
 impl StructureType {
     pub const PIPELINE_RASTERIZATION_STATE_STREAM_CREATE_INFO_EXT: Self = Self(1_000_028_002);
 }
-#[doc = "Generated from \'VK_EXT_transform_feedback\'"]
+#[doc = "Generated from 'VK_EXT_transform_feedback'"]
 impl QueryType {
     pub const TRANSFORM_FEEDBACK_STREAM_EXT: Self = Self(1_000_028_004);
 }
-#[doc = "Generated from \'VK_EXT_transform_feedback\'"]
+#[doc = "Generated from 'VK_EXT_transform_feedback'"]
 impl BufferUsageFlags {
     pub const TRANSFORM_FEEDBACK_BUFFER_EXT: Self = Self(0b1000_0000_0000);
 }
-#[doc = "Generated from \'VK_EXT_transform_feedback\'"]
+#[doc = "Generated from 'VK_EXT_transform_feedback'"]
 impl BufferUsageFlags {
     pub const TRANSFORM_FEEDBACK_COUNTER_BUFFER_EXT: Self = Self(0b1_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_EXT_transform_feedback\'"]
+#[doc = "Generated from 'VK_EXT_transform_feedback'"]
 impl AccessFlags {
     pub const TRANSFORM_FEEDBACK_WRITE_EXT: Self = Self(0b10_0000_0000_0000_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_EXT_transform_feedback\'"]
+#[doc = "Generated from 'VK_EXT_transform_feedback'"]
 impl AccessFlags {
     pub const TRANSFORM_FEEDBACK_COUNTER_READ_EXT: Self = Self(0b100_0000_0000_0000_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_EXT_transform_feedback\'"]
+#[doc = "Generated from 'VK_EXT_transform_feedback'"]
 impl AccessFlags {
     pub const TRANSFORM_FEEDBACK_COUNTER_WRITE_EXT: Self =
         Self(0b1000_0000_0000_0000_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_EXT_transform_feedback\'"]
+#[doc = "Generated from 'VK_EXT_transform_feedback'"]
 impl PipelineStageFlags {
     pub const TRANSFORM_FEEDBACK_EXT: Self = Self(0b1_0000_0000_0000_0000_0000_0000);
 }
@@ -3452,11 +3452,11 @@ impl NvxImageViewHandleFn {
         (self.get_image_view_address_nvx)(device, image_view, p_properties)
     }
 }
-#[doc = "Generated from \'VK_NVX_image_view_handle\'"]
+#[doc = "Generated from 'VK_NVX_image_view_handle'"]
 impl StructureType {
     pub const IMAGE_VIEW_HANDLE_INFO_NVX: Self = Self(1_000_030_000);
 }
-#[doc = "Generated from \'VK_NVX_image_view_handle\'"]
+#[doc = "Generated from 'VK_NVX_image_view_handle'"]
 impl StructureType {
     pub const IMAGE_VIEW_ADDRESS_PROPERTIES_NVX: Self = Self(1_000_030_001);
 }
@@ -3846,7 +3846,7 @@ impl AmdTextureGatherBiasLodFn {
         AmdTextureGatherBiasLodFn {}
     }
 }
-#[doc = "Generated from \'VK_AMD_texture_gather_bias_lod\'"]
+#[doc = "Generated from 'VK_AMD_texture_gather_bias_lod'"]
 impl StructureType {
     pub const TEXTURE_LOD_GATHER_FORMAT_PROPERTIES_AMD: Self = Self(1_000_041_000);
 }
@@ -4142,7 +4142,7 @@ impl GgpStreamDescriptorSurfaceFn {
         (self.create_stream_descriptor_surface_ggp)(instance, p_create_info, p_allocator, p_surface)
     }
 }
-#[doc = "Generated from \'VK_GGP_stream_descriptor_surface\'"]
+#[doc = "Generated from 'VK_GGP_stream_descriptor_surface'"]
 impl StructureType {
     pub const STREAM_DESCRIPTOR_SURFACE_CREATE_INFO_GGP: Self = Self(1_000_049_000);
 }
@@ -4169,11 +4169,11 @@ impl NvCornerSampledImageFn {
         NvCornerSampledImageFn {}
     }
 }
-#[doc = "Generated from \'VK_NV_corner_sampled_image\'"]
+#[doc = "Generated from 'VK_NV_corner_sampled_image'"]
 impl ImageCreateFlags {
     pub const CORNER_SAMPLED_NV: Self = Self(0b10_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_NV_corner_sampled_image\'"]
+#[doc = "Generated from 'VK_NV_corner_sampled_image'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_CORNER_SAMPLED_IMAGE_FEATURES_NV: Self = Self(1_000_050_000);
 }
@@ -4200,11 +4200,11 @@ impl NvExtension52Fn {
         NvExtension52Fn {}
     }
 }
-#[doc = "Generated from \'VK_NV_extension_52\'"]
+#[doc = "Generated from 'VK_NV_extension_52'"]
 impl ShaderModuleCreateFlags {
     pub const RESERVED_0_NV: Self = Self(0b1);
 }
-#[doc = "Generated from \'VK_NV_extension_52\'"]
+#[doc = "Generated from 'VK_NV_extension_52'"]
 impl PipelineShaderStageCreateFlags {
     pub const RESERVED_2_NV: Self = Self(0b100);
 }
@@ -4254,22 +4254,22 @@ impl KhrMultiviewFn {
         KhrMultiviewFn {}
     }
 }
-#[doc = "Generated from \'VK_KHR_multiview\'"]
+#[doc = "Generated from 'VK_KHR_multiview'"]
 impl StructureType {
     pub const RENDER_PASS_MULTIVIEW_CREATE_INFO_KHR: Self =
         StructureType::RENDER_PASS_MULTIVIEW_CREATE_INFO;
 }
-#[doc = "Generated from \'VK_KHR_multiview\'"]
+#[doc = "Generated from 'VK_KHR_multiview'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_MULTIVIEW_FEATURES_KHR: Self =
         StructureType::PHYSICAL_DEVICE_MULTIVIEW_FEATURES;
 }
-#[doc = "Generated from \'VK_KHR_multiview\'"]
+#[doc = "Generated from 'VK_KHR_multiview'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_MULTIVIEW_PROPERTIES_KHR: Self =
         StructureType::PHYSICAL_DEVICE_MULTIVIEW_PROPERTIES;
 }
-#[doc = "Generated from \'VK_KHR_multiview\'"]
+#[doc = "Generated from 'VK_KHR_multiview'"]
 impl DependencyFlags {
     pub const VIEW_LOCAL_KHR: Self = DependencyFlags::VIEW_LOCAL;
 }
@@ -4296,35 +4296,35 @@ impl ImgFormatPvrtcFn {
         ImgFormatPvrtcFn {}
     }
 }
-#[doc = "Generated from \'VK_IMG_format_pvrtc\'"]
+#[doc = "Generated from 'VK_IMG_format_pvrtc'"]
 impl Format {
     pub const PVRTC1_2BPP_UNORM_BLOCK_IMG: Self = Self(1_000_054_000);
 }
-#[doc = "Generated from \'VK_IMG_format_pvrtc\'"]
+#[doc = "Generated from 'VK_IMG_format_pvrtc'"]
 impl Format {
     pub const PVRTC1_4BPP_UNORM_BLOCK_IMG: Self = Self(1_000_054_001);
 }
-#[doc = "Generated from \'VK_IMG_format_pvrtc\'"]
+#[doc = "Generated from 'VK_IMG_format_pvrtc'"]
 impl Format {
     pub const PVRTC2_2BPP_UNORM_BLOCK_IMG: Self = Self(1_000_054_002);
 }
-#[doc = "Generated from \'VK_IMG_format_pvrtc\'"]
+#[doc = "Generated from 'VK_IMG_format_pvrtc'"]
 impl Format {
     pub const PVRTC2_4BPP_UNORM_BLOCK_IMG: Self = Self(1_000_054_003);
 }
-#[doc = "Generated from \'VK_IMG_format_pvrtc\'"]
+#[doc = "Generated from 'VK_IMG_format_pvrtc'"]
 impl Format {
     pub const PVRTC1_2BPP_SRGB_BLOCK_IMG: Self = Self(1_000_054_004);
 }
-#[doc = "Generated from \'VK_IMG_format_pvrtc\'"]
+#[doc = "Generated from 'VK_IMG_format_pvrtc'"]
 impl Format {
     pub const PVRTC1_4BPP_SRGB_BLOCK_IMG: Self = Self(1_000_054_005);
 }
-#[doc = "Generated from \'VK_IMG_format_pvrtc\'"]
+#[doc = "Generated from 'VK_IMG_format_pvrtc'"]
 impl Format {
     pub const PVRTC2_2BPP_SRGB_BLOCK_IMG: Self = Self(1_000_054_006);
 }
-#[doc = "Generated from \'VK_IMG_format_pvrtc\'"]
+#[doc = "Generated from 'VK_IMG_format_pvrtc'"]
 impl Format {
     pub const PVRTC2_4BPP_SRGB_BLOCK_IMG: Self = Self(1_000_054_007);
 }
@@ -4448,11 +4448,11 @@ impl NvExternalMemoryFn {
         NvExternalMemoryFn {}
     }
 }
-#[doc = "Generated from \'VK_NV_external_memory\'"]
+#[doc = "Generated from 'VK_NV_external_memory'"]
 impl StructureType {
     pub const EXTERNAL_MEMORY_IMAGE_CREATE_INFO_NV: Self = Self(1_000_056_000);
 }
-#[doc = "Generated from \'VK_NV_external_memory\'"]
+#[doc = "Generated from 'VK_NV_external_memory'"]
 impl StructureType {
     pub const EXPORT_MEMORY_ALLOCATE_INFO_NV: Self = Self(1_000_056_001);
 }
@@ -4527,11 +4527,11 @@ impl NvExternalMemoryWin32Fn {
         (self.get_memory_win32_handle_nv)(device, memory, handle_type, p_handle)
     }
 }
-#[doc = "Generated from \'VK_NV_external_memory_win32\'"]
+#[doc = "Generated from 'VK_NV_external_memory_win32'"]
 impl StructureType {
     pub const IMPORT_MEMORY_WIN32_HANDLE_INFO_NV: Self = Self(1_000_057_000);
 }
-#[doc = "Generated from \'VK_NV_external_memory_win32\'"]
+#[doc = "Generated from 'VK_NV_external_memory_win32'"]
 impl StructureType {
     pub const EXPORT_MEMORY_WIN32_HANDLE_INFO_NV: Self = Self(1_000_057_001);
 }
@@ -4558,7 +4558,7 @@ impl NvWin32KeyedMutexFn {
         NvWin32KeyedMutexFn {}
     }
 }
-#[doc = "Generated from \'VK_NV_win32_keyed_mutex\'"]
+#[doc = "Generated from 'VK_NV_win32_keyed_mutex'"]
 impl StructureType {
     pub const WIN32_KEYED_MUTEX_ACQUIRE_RELEASE_INFO_NV: Self = Self(1_000_058_000);
 }
@@ -4889,42 +4889,42 @@ impl KhrGetPhysicalDeviceProperties2Fn {
         )
     }
 }
-#[doc = "Generated from \'VK_KHR_get_physical_device_properties2\'"]
+#[doc = "Generated from 'VK_KHR_get_physical_device_properties2'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_FEATURES_2_KHR: Self = StructureType::PHYSICAL_DEVICE_FEATURES_2;
 }
-#[doc = "Generated from \'VK_KHR_get_physical_device_properties2\'"]
+#[doc = "Generated from 'VK_KHR_get_physical_device_properties2'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_PROPERTIES_2_KHR: Self = StructureType::PHYSICAL_DEVICE_PROPERTIES_2;
 }
-#[doc = "Generated from \'VK_KHR_get_physical_device_properties2\'"]
+#[doc = "Generated from 'VK_KHR_get_physical_device_properties2'"]
 impl StructureType {
     pub const FORMAT_PROPERTIES_2_KHR: Self = StructureType::FORMAT_PROPERTIES_2;
 }
-#[doc = "Generated from \'VK_KHR_get_physical_device_properties2\'"]
+#[doc = "Generated from 'VK_KHR_get_physical_device_properties2'"]
 impl StructureType {
     pub const IMAGE_FORMAT_PROPERTIES_2_KHR: Self = StructureType::IMAGE_FORMAT_PROPERTIES_2;
 }
-#[doc = "Generated from \'VK_KHR_get_physical_device_properties2\'"]
+#[doc = "Generated from 'VK_KHR_get_physical_device_properties2'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_IMAGE_FORMAT_INFO_2_KHR: Self =
         StructureType::PHYSICAL_DEVICE_IMAGE_FORMAT_INFO_2;
 }
-#[doc = "Generated from \'VK_KHR_get_physical_device_properties2\'"]
+#[doc = "Generated from 'VK_KHR_get_physical_device_properties2'"]
 impl StructureType {
     pub const QUEUE_FAMILY_PROPERTIES_2_KHR: Self = StructureType::QUEUE_FAMILY_PROPERTIES_2;
 }
-#[doc = "Generated from \'VK_KHR_get_physical_device_properties2\'"]
+#[doc = "Generated from 'VK_KHR_get_physical_device_properties2'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_MEMORY_PROPERTIES_2_KHR: Self =
         StructureType::PHYSICAL_DEVICE_MEMORY_PROPERTIES_2;
 }
-#[doc = "Generated from \'VK_KHR_get_physical_device_properties2\'"]
+#[doc = "Generated from 'VK_KHR_get_physical_device_properties2'"]
 impl StructureType {
     pub const SPARSE_IMAGE_FORMAT_PROPERTIES_2_KHR: Self =
         StructureType::SPARSE_IMAGE_FORMAT_PROPERTIES_2;
 }
-#[doc = "Generated from \'VK_KHR_get_physical_device_properties2\'"]
+#[doc = "Generated from 'VK_KHR_get_physical_device_properties2'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_SPARSE_IMAGE_FORMAT_INFO_2_KHR: Self =
         StructureType::PHYSICAL_DEVICE_SPARSE_IMAGE_FORMAT_INFO_2;
@@ -5260,69 +5260,69 @@ impl KhrDeviceGroupFn {
         (self.acquire_next_image2_khr)(device, p_acquire_info, p_image_index)
     }
 }
-#[doc = "Generated from \'VK_KHR_device_group\'"]
+#[doc = "Generated from 'VK_KHR_device_group'"]
 impl StructureType {
     pub const MEMORY_ALLOCATE_FLAGS_INFO_KHR: Self = StructureType::MEMORY_ALLOCATE_FLAGS_INFO;
 }
-#[doc = "Generated from \'VK_KHR_device_group\'"]
+#[doc = "Generated from 'VK_KHR_device_group'"]
 impl StructureType {
     pub const DEVICE_GROUP_RENDER_PASS_BEGIN_INFO_KHR: Self =
         StructureType::DEVICE_GROUP_RENDER_PASS_BEGIN_INFO;
 }
-#[doc = "Generated from \'VK_KHR_device_group\'"]
+#[doc = "Generated from 'VK_KHR_device_group'"]
 impl StructureType {
     pub const DEVICE_GROUP_COMMAND_BUFFER_BEGIN_INFO_KHR: Self =
         StructureType::DEVICE_GROUP_COMMAND_BUFFER_BEGIN_INFO;
 }
-#[doc = "Generated from \'VK_KHR_device_group\'"]
+#[doc = "Generated from 'VK_KHR_device_group'"]
 impl StructureType {
     pub const DEVICE_GROUP_SUBMIT_INFO_KHR: Self = StructureType::DEVICE_GROUP_SUBMIT_INFO;
 }
-#[doc = "Generated from \'VK_KHR_device_group\'"]
+#[doc = "Generated from 'VK_KHR_device_group'"]
 impl StructureType {
     pub const DEVICE_GROUP_BIND_SPARSE_INFO_KHR: Self =
         StructureType::DEVICE_GROUP_BIND_SPARSE_INFO;
 }
-#[doc = "Generated from \'VK_KHR_device_group\'"]
+#[doc = "Generated from 'VK_KHR_device_group'"]
 impl PeerMemoryFeatureFlags {
     pub const COPY_SRC_KHR: Self = PeerMemoryFeatureFlags::COPY_SRC;
 }
-#[doc = "Generated from \'VK_KHR_device_group\'"]
+#[doc = "Generated from 'VK_KHR_device_group'"]
 impl PeerMemoryFeatureFlags {
     pub const COPY_DST_KHR: Self = PeerMemoryFeatureFlags::COPY_DST;
 }
-#[doc = "Generated from \'VK_KHR_device_group\'"]
+#[doc = "Generated from 'VK_KHR_device_group'"]
 impl PeerMemoryFeatureFlags {
     pub const GENERIC_SRC_KHR: Self = PeerMemoryFeatureFlags::GENERIC_SRC;
 }
-#[doc = "Generated from \'VK_KHR_device_group\'"]
+#[doc = "Generated from 'VK_KHR_device_group'"]
 impl PeerMemoryFeatureFlags {
     pub const GENERIC_DST_KHR: Self = PeerMemoryFeatureFlags::GENERIC_DST;
 }
-#[doc = "Generated from \'VK_KHR_device_group\'"]
+#[doc = "Generated from 'VK_KHR_device_group'"]
 impl MemoryAllocateFlags {
     pub const DEVICE_MASK_KHR: Self = MemoryAllocateFlags::DEVICE_MASK;
 }
-#[doc = "Generated from \'VK_KHR_device_group\'"]
+#[doc = "Generated from 'VK_KHR_device_group'"]
 impl PipelineCreateFlags {
     pub const VIEW_INDEX_FROM_DEVICE_INDEX_KHR: Self =
         PipelineCreateFlags::VIEW_INDEX_FROM_DEVICE_INDEX;
 }
-#[doc = "Generated from \'VK_KHR_device_group\'"]
+#[doc = "Generated from 'VK_KHR_device_group'"]
 impl DependencyFlags {
     pub const DEVICE_GROUP_KHR: Self = DependencyFlags::DEVICE_GROUP;
 }
-#[doc = "Generated from \'VK_KHR_device_group\'"]
+#[doc = "Generated from 'VK_KHR_device_group'"]
 impl StructureType {
     pub const BIND_BUFFER_MEMORY_DEVICE_GROUP_INFO_KHR: Self =
         StructureType::BIND_BUFFER_MEMORY_DEVICE_GROUP_INFO;
 }
-#[doc = "Generated from \'VK_KHR_device_group\'"]
+#[doc = "Generated from 'VK_KHR_device_group'"]
 impl StructureType {
     pub const BIND_IMAGE_MEMORY_DEVICE_GROUP_INFO_KHR: Self =
         StructureType::BIND_IMAGE_MEMORY_DEVICE_GROUP_INFO;
 }
-#[doc = "Generated from \'VK_KHR_device_group\'"]
+#[doc = "Generated from 'VK_KHR_device_group'"]
 impl ImageCreateFlags {
     pub const SPLIT_INSTANCE_BIND_REGIONS_KHR: Self = ImageCreateFlags::SPLIT_INSTANCE_BIND_REGIONS;
 }
@@ -5349,7 +5349,7 @@ impl ExtValidationFlagsFn {
         ExtValidationFlagsFn {}
     }
 }
-#[doc = "Generated from \'VK_EXT_validation_flags\'"]
+#[doc = "Generated from 'VK_EXT_validation_flags'"]
 impl StructureType {
     pub const VALIDATION_FLAGS_EXT: Self = Self(1_000_061_000);
 }
@@ -5421,7 +5421,7 @@ impl NnViSurfaceFn {
         (self.create_vi_surface_nn)(instance, p_create_info, p_allocator, p_surface)
     }
 }
-#[doc = "Generated from \'VK_NN_vi_surface\'"]
+#[doc = "Generated from 'VK_NN_vi_surface'"]
 impl StructureType {
     pub const VI_SURFACE_CREATE_INFO_NN: Self = Self(1_000_062_000);
 }
@@ -5517,63 +5517,63 @@ impl ExtTextureCompressionAstcHdrFn {
         ExtTextureCompressionAstcHdrFn {}
     }
 }
-#[doc = "Generated from \'VK_EXT_texture_compression_astc_hdr\'"]
+#[doc = "Generated from 'VK_EXT_texture_compression_astc_hdr'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_TEXTURE_COMPRESSION_ASTC_HDR_FEATURES_EXT: Self = Self(1_000_066_000);
 }
-#[doc = "Generated from \'VK_EXT_texture_compression_astc_hdr\'"]
+#[doc = "Generated from 'VK_EXT_texture_compression_astc_hdr'"]
 impl Format {
     pub const ASTC_4X4_SFLOAT_BLOCK_EXT: Self = Self(1_000_066_000);
 }
-#[doc = "Generated from \'VK_EXT_texture_compression_astc_hdr\'"]
+#[doc = "Generated from 'VK_EXT_texture_compression_astc_hdr'"]
 impl Format {
     pub const ASTC_5X4_SFLOAT_BLOCK_EXT: Self = Self(1_000_066_001);
 }
-#[doc = "Generated from \'VK_EXT_texture_compression_astc_hdr\'"]
+#[doc = "Generated from 'VK_EXT_texture_compression_astc_hdr'"]
 impl Format {
     pub const ASTC_5X5_SFLOAT_BLOCK_EXT: Self = Self(1_000_066_002);
 }
-#[doc = "Generated from \'VK_EXT_texture_compression_astc_hdr\'"]
+#[doc = "Generated from 'VK_EXT_texture_compression_astc_hdr'"]
 impl Format {
     pub const ASTC_6X5_SFLOAT_BLOCK_EXT: Self = Self(1_000_066_003);
 }
-#[doc = "Generated from \'VK_EXT_texture_compression_astc_hdr\'"]
+#[doc = "Generated from 'VK_EXT_texture_compression_astc_hdr'"]
 impl Format {
     pub const ASTC_6X6_SFLOAT_BLOCK_EXT: Self = Self(1_000_066_004);
 }
-#[doc = "Generated from \'VK_EXT_texture_compression_astc_hdr\'"]
+#[doc = "Generated from 'VK_EXT_texture_compression_astc_hdr'"]
 impl Format {
     pub const ASTC_8X5_SFLOAT_BLOCK_EXT: Self = Self(1_000_066_005);
 }
-#[doc = "Generated from \'VK_EXT_texture_compression_astc_hdr\'"]
+#[doc = "Generated from 'VK_EXT_texture_compression_astc_hdr'"]
 impl Format {
     pub const ASTC_8X6_SFLOAT_BLOCK_EXT: Self = Self(1_000_066_006);
 }
-#[doc = "Generated from \'VK_EXT_texture_compression_astc_hdr\'"]
+#[doc = "Generated from 'VK_EXT_texture_compression_astc_hdr'"]
 impl Format {
     pub const ASTC_8X8_SFLOAT_BLOCK_EXT: Self = Self(1_000_066_007);
 }
-#[doc = "Generated from \'VK_EXT_texture_compression_astc_hdr\'"]
+#[doc = "Generated from 'VK_EXT_texture_compression_astc_hdr'"]
 impl Format {
     pub const ASTC_10X5_SFLOAT_BLOCK_EXT: Self = Self(1_000_066_008);
 }
-#[doc = "Generated from \'VK_EXT_texture_compression_astc_hdr\'"]
+#[doc = "Generated from 'VK_EXT_texture_compression_astc_hdr'"]
 impl Format {
     pub const ASTC_10X6_SFLOAT_BLOCK_EXT: Self = Self(1_000_066_009);
 }
-#[doc = "Generated from \'VK_EXT_texture_compression_astc_hdr\'"]
+#[doc = "Generated from 'VK_EXT_texture_compression_astc_hdr'"]
 impl Format {
     pub const ASTC_10X8_SFLOAT_BLOCK_EXT: Self = Self(1_000_066_010);
 }
-#[doc = "Generated from \'VK_EXT_texture_compression_astc_hdr\'"]
+#[doc = "Generated from 'VK_EXT_texture_compression_astc_hdr'"]
 impl Format {
     pub const ASTC_10X10_SFLOAT_BLOCK_EXT: Self = Self(1_000_066_011);
 }
-#[doc = "Generated from \'VK_EXT_texture_compression_astc_hdr\'"]
+#[doc = "Generated from 'VK_EXT_texture_compression_astc_hdr'"]
 impl Format {
     pub const ASTC_12X10_SFLOAT_BLOCK_EXT: Self = Self(1_000_066_012);
 }
-#[doc = "Generated from \'VK_EXT_texture_compression_astc_hdr\'"]
+#[doc = "Generated from 'VK_EXT_texture_compression_astc_hdr'"]
 impl Format {
     pub const ASTC_12X12_SFLOAT_BLOCK_EXT: Self = Self(1_000_066_013);
 }
@@ -5600,11 +5600,11 @@ impl ExtAstcDecodeModeFn {
         ExtAstcDecodeModeFn {}
     }
 }
-#[doc = "Generated from \'VK_EXT_astc_decode_mode\'"]
+#[doc = "Generated from 'VK_EXT_astc_decode_mode'"]
 impl StructureType {
     pub const IMAGE_VIEW_ASTC_DECODE_MODE_EXT: Self = Self(1_000_067_000);
 }
-#[doc = "Generated from \'VK_EXT_astc_decode_mode\'"]
+#[doc = "Generated from 'VK_EXT_astc_decode_mode'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_ASTC_DECODE_FEATURES_EXT: Self = Self(1_000_067_001);
 }
@@ -5698,19 +5698,19 @@ impl KhrMaintenance1Fn {
         (self.trim_command_pool_khr)(device, command_pool, flags)
     }
 }
-#[doc = "Generated from \'VK_KHR_maintenance1\'"]
+#[doc = "Generated from 'VK_KHR_maintenance1'"]
 impl Result {
     pub const ERROR_OUT_OF_POOL_MEMORY_KHR: Self = Result::ERROR_OUT_OF_POOL_MEMORY;
 }
-#[doc = "Generated from \'VK_KHR_maintenance1\'"]
+#[doc = "Generated from 'VK_KHR_maintenance1'"]
 impl FormatFeatureFlags {
     pub const TRANSFER_SRC_KHR: Self = FormatFeatureFlags::TRANSFER_SRC;
 }
-#[doc = "Generated from \'VK_KHR_maintenance1\'"]
+#[doc = "Generated from 'VK_KHR_maintenance1'"]
 impl FormatFeatureFlags {
     pub const TRANSFER_DST_KHR: Self = FormatFeatureFlags::TRANSFER_DST;
 }
-#[doc = "Generated from \'VK_KHR_maintenance1\'"]
+#[doc = "Generated from 'VK_KHR_maintenance1'"]
 impl ImageCreateFlags {
     pub const TYPE_2D_ARRAY_COMPATIBLE_KHR: Self = ImageCreateFlags::TYPE_2D_ARRAY_COMPATIBLE;
 }
@@ -5785,17 +5785,17 @@ impl KhrDeviceGroupCreationFn {
         )
     }
 }
-#[doc = "Generated from \'VK_KHR_device_group_creation\'"]
+#[doc = "Generated from 'VK_KHR_device_group_creation'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_GROUP_PROPERTIES_KHR: Self =
         StructureType::PHYSICAL_DEVICE_GROUP_PROPERTIES;
 }
-#[doc = "Generated from \'VK_KHR_device_group_creation\'"]
+#[doc = "Generated from 'VK_KHR_device_group_creation'"]
 impl StructureType {
     pub const DEVICE_GROUP_DEVICE_CREATE_INFO_KHR: Self =
         StructureType::DEVICE_GROUP_DEVICE_CREATE_INFO;
 }
-#[doc = "Generated from \'VK_KHR_device_group_creation\'"]
+#[doc = "Generated from 'VK_KHR_device_group_creation'"]
 impl MemoryHeapFlags {
     pub const MULTI_INSTANCE_KHR: Self = MemoryHeapFlags::MULTI_INSTANCE;
 }
@@ -5871,76 +5871,76 @@ impl KhrExternalMemoryCapabilitiesFn {
         )
     }
 }
-#[doc = "Generated from \'VK_KHR_external_memory_capabilities\'"]
+#[doc = "Generated from 'VK_KHR_external_memory_capabilities'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_EXTERNAL_IMAGE_FORMAT_INFO_KHR: Self =
         StructureType::PHYSICAL_DEVICE_EXTERNAL_IMAGE_FORMAT_INFO;
 }
-#[doc = "Generated from \'VK_KHR_external_memory_capabilities\'"]
+#[doc = "Generated from 'VK_KHR_external_memory_capabilities'"]
 impl StructureType {
     pub const EXTERNAL_IMAGE_FORMAT_PROPERTIES_KHR: Self =
         StructureType::EXTERNAL_IMAGE_FORMAT_PROPERTIES;
 }
-#[doc = "Generated from \'VK_KHR_external_memory_capabilities\'"]
+#[doc = "Generated from 'VK_KHR_external_memory_capabilities'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_EXTERNAL_BUFFER_INFO_KHR: Self =
         StructureType::PHYSICAL_DEVICE_EXTERNAL_BUFFER_INFO;
 }
-#[doc = "Generated from \'VK_KHR_external_memory_capabilities\'"]
+#[doc = "Generated from 'VK_KHR_external_memory_capabilities'"]
 impl StructureType {
     pub const EXTERNAL_BUFFER_PROPERTIES_KHR: Self = StructureType::EXTERNAL_BUFFER_PROPERTIES;
 }
-#[doc = "Generated from \'VK_KHR_external_memory_capabilities\'"]
+#[doc = "Generated from 'VK_KHR_external_memory_capabilities'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_ID_PROPERTIES_KHR: Self =
         StructureType::PHYSICAL_DEVICE_ID_PROPERTIES;
 }
-#[doc = "Generated from \'VK_KHR_external_memory_capabilities\'"]
+#[doc = "Generated from 'VK_KHR_external_memory_capabilities'"]
 impl ExternalMemoryHandleTypeFlags {
     pub const EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD_KHR: Self =
         ExternalMemoryHandleTypeFlags::EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD;
 }
-#[doc = "Generated from \'VK_KHR_external_memory_capabilities\'"]
+#[doc = "Generated from 'VK_KHR_external_memory_capabilities'"]
 impl ExternalMemoryHandleTypeFlags {
     pub const EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KHR: Self =
         ExternalMemoryHandleTypeFlags::EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32;
 }
-#[doc = "Generated from \'VK_KHR_external_memory_capabilities\'"]
+#[doc = "Generated from 'VK_KHR_external_memory_capabilities'"]
 impl ExternalMemoryHandleTypeFlags {
     pub const EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_KHR: Self =
         ExternalMemoryHandleTypeFlags::EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT;
 }
-#[doc = "Generated from \'VK_KHR_external_memory_capabilities\'"]
+#[doc = "Generated from 'VK_KHR_external_memory_capabilities'"]
 impl ExternalMemoryHandleTypeFlags {
     pub const EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KHR: Self =
         ExternalMemoryHandleTypeFlags::EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE;
 }
-#[doc = "Generated from \'VK_KHR_external_memory_capabilities\'"]
+#[doc = "Generated from 'VK_KHR_external_memory_capabilities'"]
 impl ExternalMemoryHandleTypeFlags {
     pub const EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT_KHR: Self =
         ExternalMemoryHandleTypeFlags::EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT;
 }
-#[doc = "Generated from \'VK_KHR_external_memory_capabilities\'"]
+#[doc = "Generated from 'VK_KHR_external_memory_capabilities'"]
 impl ExternalMemoryHandleTypeFlags {
     pub const EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP_KHR: Self =
         ExternalMemoryHandleTypeFlags::EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP;
 }
-#[doc = "Generated from \'VK_KHR_external_memory_capabilities\'"]
+#[doc = "Generated from 'VK_KHR_external_memory_capabilities'"]
 impl ExternalMemoryHandleTypeFlags {
     pub const EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE_KHR: Self =
         ExternalMemoryHandleTypeFlags::EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE;
 }
-#[doc = "Generated from \'VK_KHR_external_memory_capabilities\'"]
+#[doc = "Generated from 'VK_KHR_external_memory_capabilities'"]
 impl ExternalMemoryFeatureFlags {
     pub const EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_KHR: Self =
         ExternalMemoryFeatureFlags::EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY;
 }
-#[doc = "Generated from \'VK_KHR_external_memory_capabilities\'"]
+#[doc = "Generated from 'VK_KHR_external_memory_capabilities'"]
 impl ExternalMemoryFeatureFlags {
     pub const EXTERNAL_MEMORY_FEATURE_EXPORTABLE_KHR: Self =
         ExternalMemoryFeatureFlags::EXTERNAL_MEMORY_FEATURE_EXPORTABLE;
 }
-#[doc = "Generated from \'VK_KHR_external_memory_capabilities\'"]
+#[doc = "Generated from 'VK_KHR_external_memory_capabilities'"]
 impl ExternalMemoryFeatureFlags {
     pub const EXTERNAL_MEMORY_FEATURE_IMPORTABLE_KHR: Self =
         ExternalMemoryFeatureFlags::EXTERNAL_MEMORY_FEATURE_IMPORTABLE;
@@ -5968,21 +5968,21 @@ impl KhrExternalMemoryFn {
         KhrExternalMemoryFn {}
     }
 }
-#[doc = "Generated from \'VK_KHR_external_memory\'"]
+#[doc = "Generated from 'VK_KHR_external_memory'"]
 impl StructureType {
     pub const EXTERNAL_MEMORY_BUFFER_CREATE_INFO_KHR: Self =
         StructureType::EXTERNAL_MEMORY_BUFFER_CREATE_INFO;
 }
-#[doc = "Generated from \'VK_KHR_external_memory\'"]
+#[doc = "Generated from 'VK_KHR_external_memory'"]
 impl StructureType {
     pub const EXTERNAL_MEMORY_IMAGE_CREATE_INFO_KHR: Self =
         StructureType::EXTERNAL_MEMORY_IMAGE_CREATE_INFO;
 }
-#[doc = "Generated from \'VK_KHR_external_memory\'"]
+#[doc = "Generated from 'VK_KHR_external_memory'"]
 impl StructureType {
     pub const EXPORT_MEMORY_ALLOCATE_INFO_KHR: Self = StructureType::EXPORT_MEMORY_ALLOCATE_INFO;
 }
-#[doc = "Generated from \'VK_KHR_external_memory\'"]
+#[doc = "Generated from 'VK_KHR_external_memory'"]
 impl Result {
     pub const ERROR_INVALID_EXTERNAL_HANDLE_KHR: Self = Result::ERROR_INVALID_EXTERNAL_HANDLE;
 }
@@ -6103,19 +6103,19 @@ impl KhrExternalMemoryWin32Fn {
         )
     }
 }
-#[doc = "Generated from \'VK_KHR_external_memory_win32\'"]
+#[doc = "Generated from 'VK_KHR_external_memory_win32'"]
 impl StructureType {
     pub const IMPORT_MEMORY_WIN32_HANDLE_INFO_KHR: Self = Self(1_000_073_000);
 }
-#[doc = "Generated from \'VK_KHR_external_memory_win32\'"]
+#[doc = "Generated from 'VK_KHR_external_memory_win32'"]
 impl StructureType {
     pub const EXPORT_MEMORY_WIN32_HANDLE_INFO_KHR: Self = Self(1_000_073_001);
 }
-#[doc = "Generated from \'VK_KHR_external_memory_win32\'"]
+#[doc = "Generated from 'VK_KHR_external_memory_win32'"]
 impl StructureType {
     pub const MEMORY_WIN32_HANDLE_PROPERTIES_KHR: Self = Self(1_000_073_002);
 }
-#[doc = "Generated from \'VK_KHR_external_memory_win32\'"]
+#[doc = "Generated from 'VK_KHR_external_memory_win32'"]
 impl StructureType {
     pub const MEMORY_GET_WIN32_HANDLE_INFO_KHR: Self = Self(1_000_073_003);
 }
@@ -6228,15 +6228,15 @@ impl KhrExternalMemoryFdFn {
         (self.get_memory_fd_properties_khr)(device, handle_type, fd, p_memory_fd_properties)
     }
 }
-#[doc = "Generated from \'VK_KHR_external_memory_fd\'"]
+#[doc = "Generated from 'VK_KHR_external_memory_fd'"]
 impl StructureType {
     pub const IMPORT_MEMORY_FD_INFO_KHR: Self = Self(1_000_074_000);
 }
-#[doc = "Generated from \'VK_KHR_external_memory_fd\'"]
+#[doc = "Generated from 'VK_KHR_external_memory_fd'"]
 impl StructureType {
     pub const MEMORY_FD_PROPERTIES_KHR: Self = Self(1_000_074_001);
 }
-#[doc = "Generated from \'VK_KHR_external_memory_fd\'"]
+#[doc = "Generated from 'VK_KHR_external_memory_fd'"]
 impl StructureType {
     pub const MEMORY_GET_FD_INFO_KHR: Self = Self(1_000_074_002);
 }
@@ -6263,7 +6263,7 @@ impl KhrWin32KeyedMutexFn {
         KhrWin32KeyedMutexFn {}
     }
 }
-#[doc = "Generated from \'VK_KHR_win32_keyed_mutex\'"]
+#[doc = "Generated from 'VK_KHR_win32_keyed_mutex'"]
 impl StructureType {
     pub const WIN32_KEYED_MUTEX_ACQUIRE_RELEASE_INFO_KHR: Self = Self(1_000_075_000);
 }
@@ -6339,47 +6339,47 @@ impl KhrExternalSemaphoreCapabilitiesFn {
         )
     }
 }
-#[doc = "Generated from \'VK_KHR_external_semaphore_capabilities\'"]
+#[doc = "Generated from 'VK_KHR_external_semaphore_capabilities'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_EXTERNAL_SEMAPHORE_INFO_KHR: Self =
         StructureType::PHYSICAL_DEVICE_EXTERNAL_SEMAPHORE_INFO;
 }
-#[doc = "Generated from \'VK_KHR_external_semaphore_capabilities\'"]
+#[doc = "Generated from 'VK_KHR_external_semaphore_capabilities'"]
 impl StructureType {
     pub const EXTERNAL_SEMAPHORE_PROPERTIES_KHR: Self =
         StructureType::EXTERNAL_SEMAPHORE_PROPERTIES;
 }
-#[doc = "Generated from \'VK_KHR_external_semaphore_capabilities\'"]
+#[doc = "Generated from 'VK_KHR_external_semaphore_capabilities'"]
 impl ExternalSemaphoreHandleTypeFlags {
     pub const EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD_KHR: Self =
         ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD;
 }
-#[doc = "Generated from \'VK_KHR_external_semaphore_capabilities\'"]
+#[doc = "Generated from 'VK_KHR_external_semaphore_capabilities'"]
 impl ExternalSemaphoreHandleTypeFlags {
     pub const EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KHR: Self =
         ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32;
 }
-#[doc = "Generated from \'VK_KHR_external_semaphore_capabilities\'"]
+#[doc = "Generated from 'VK_KHR_external_semaphore_capabilities'"]
 impl ExternalSemaphoreHandleTypeFlags {
     pub const EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT_KHR: Self =
         ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT;
 }
-#[doc = "Generated from \'VK_KHR_external_semaphore_capabilities\'"]
+#[doc = "Generated from 'VK_KHR_external_semaphore_capabilities'"]
 impl ExternalSemaphoreHandleTypeFlags {
     pub const EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE_KHR: Self =
         ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE;
 }
-#[doc = "Generated from \'VK_KHR_external_semaphore_capabilities\'"]
+#[doc = "Generated from 'VK_KHR_external_semaphore_capabilities'"]
 impl ExternalSemaphoreHandleTypeFlags {
     pub const EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD_KHR: Self =
         ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD;
 }
-#[doc = "Generated from \'VK_KHR_external_semaphore_capabilities\'"]
+#[doc = "Generated from 'VK_KHR_external_semaphore_capabilities'"]
 impl ExternalSemaphoreFeatureFlags {
     pub const EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE_KHR: Self =
         ExternalSemaphoreFeatureFlags::EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE;
 }
-#[doc = "Generated from \'VK_KHR_external_semaphore_capabilities\'"]
+#[doc = "Generated from 'VK_KHR_external_semaphore_capabilities'"]
 impl ExternalSemaphoreFeatureFlags {
     pub const EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE_KHR: Self =
         ExternalSemaphoreFeatureFlags::EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE;
@@ -6407,11 +6407,11 @@ impl KhrExternalSemaphoreFn {
         KhrExternalSemaphoreFn {}
     }
 }
-#[doc = "Generated from \'VK_KHR_external_semaphore\'"]
+#[doc = "Generated from 'VK_KHR_external_semaphore'"]
 impl StructureType {
     pub const EXPORT_SEMAPHORE_CREATE_INFO_KHR: Self = StructureType::EXPORT_SEMAPHORE_CREATE_INFO;
 }
-#[doc = "Generated from \'VK_KHR_external_semaphore\'"]
+#[doc = "Generated from 'VK_KHR_external_semaphore'"]
 impl SemaphoreImportFlags {
     pub const TEMPORARY_KHR: Self = SemaphoreImportFlags::TEMPORARY;
 }
@@ -6519,19 +6519,19 @@ impl KhrExternalSemaphoreWin32Fn {
         (self.get_semaphore_win32_handle_khr)(device, p_get_win32_handle_info, p_handle)
     }
 }
-#[doc = "Generated from \'VK_KHR_external_semaphore_win32\'"]
+#[doc = "Generated from 'VK_KHR_external_semaphore_win32'"]
 impl StructureType {
     pub const IMPORT_SEMAPHORE_WIN32_HANDLE_INFO_KHR: Self = Self(1_000_078_000);
 }
-#[doc = "Generated from \'VK_KHR_external_semaphore_win32\'"]
+#[doc = "Generated from 'VK_KHR_external_semaphore_win32'"]
 impl StructureType {
     pub const EXPORT_SEMAPHORE_WIN32_HANDLE_INFO_KHR: Self = Self(1_000_078_001);
 }
-#[doc = "Generated from \'VK_KHR_external_semaphore_win32\'"]
+#[doc = "Generated from 'VK_KHR_external_semaphore_win32'"]
 impl StructureType {
     pub const D3D12_FENCE_SUBMIT_INFO_KHR: Self = Self(1_000_078_002);
 }
-#[doc = "Generated from \'VK_KHR_external_semaphore_win32\'"]
+#[doc = "Generated from 'VK_KHR_external_semaphore_win32'"]
 impl StructureType {
     pub const SEMAPHORE_GET_WIN32_HANDLE_INFO_KHR: Self = Self(1_000_078_003);
 }
@@ -6636,11 +6636,11 @@ impl KhrExternalSemaphoreFdFn {
         (self.get_semaphore_fd_khr)(device, p_get_fd_info, p_fd)
     }
 }
-#[doc = "Generated from \'VK_KHR_external_semaphore_fd\'"]
+#[doc = "Generated from 'VK_KHR_external_semaphore_fd'"]
 impl StructureType {
     pub const IMPORT_SEMAPHORE_FD_INFO_KHR: Self = Self(1_000_079_000);
 }
-#[doc = "Generated from \'VK_KHR_external_semaphore_fd\'"]
+#[doc = "Generated from 'VK_KHR_external_semaphore_fd'"]
 impl StructureType {
     pub const SEMAPHORE_GET_FD_INFO_KHR: Self = Self(1_000_079_001);
 }
@@ -6786,15 +6786,15 @@ impl KhrPushDescriptorFn {
         )
     }
 }
-#[doc = "Generated from \'VK_KHR_push_descriptor\'"]
+#[doc = "Generated from 'VK_KHR_push_descriptor'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_PUSH_DESCRIPTOR_PROPERTIES_KHR: Self = Self(1_000_080_000);
 }
-#[doc = "Generated from \'VK_KHR_push_descriptor\'"]
+#[doc = "Generated from 'VK_KHR_push_descriptor'"]
 impl DescriptorSetLayoutCreateFlags {
     pub const PUSH_DESCRIPTOR_KHR: Self = Self(0b1);
 }
-#[doc = "Generated from \'VK_KHR_push_descriptor\'"]
+#[doc = "Generated from 'VK_KHR_push_descriptor'"]
 impl DescriptorUpdateTemplateType {
     pub const PUSH_DESCRIPTORS_KHR: Self = Self(1);
 }
@@ -6892,27 +6892,27 @@ impl ExtConditionalRenderingFn {
         (self.cmd_end_conditional_rendering_ext)(command_buffer)
     }
 }
-#[doc = "Generated from \'VK_EXT_conditional_rendering\'"]
+#[doc = "Generated from 'VK_EXT_conditional_rendering'"]
 impl StructureType {
     pub const COMMAND_BUFFER_INHERITANCE_CONDITIONAL_RENDERING_INFO_EXT: Self = Self(1_000_081_000);
 }
-#[doc = "Generated from \'VK_EXT_conditional_rendering\'"]
+#[doc = "Generated from 'VK_EXT_conditional_rendering'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_CONDITIONAL_RENDERING_FEATURES_EXT: Self = Self(1_000_081_001);
 }
-#[doc = "Generated from \'VK_EXT_conditional_rendering\'"]
+#[doc = "Generated from 'VK_EXT_conditional_rendering'"]
 impl StructureType {
     pub const CONDITIONAL_RENDERING_BEGIN_INFO_EXT: Self = Self(1_000_081_002);
 }
-#[doc = "Generated from \'VK_EXT_conditional_rendering\'"]
+#[doc = "Generated from 'VK_EXT_conditional_rendering'"]
 impl AccessFlags {
     pub const CONDITIONAL_RENDERING_READ_EXT: Self = Self(0b1_0000_0000_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_EXT_conditional_rendering\'"]
+#[doc = "Generated from 'VK_EXT_conditional_rendering'"]
 impl BufferUsageFlags {
     pub const CONDITIONAL_RENDERING_EXT: Self = Self(0b10_0000_0000);
 }
-#[doc = "Generated from \'VK_EXT_conditional_rendering\'"]
+#[doc = "Generated from 'VK_EXT_conditional_rendering'"]
 impl PipelineStageFlags {
     pub const CONDITIONAL_RENDERING_EXT: Self = Self(0b100_0000_0000_0000_0000);
 }
@@ -6939,12 +6939,12 @@ impl KhrShaderFloat16Int8Fn {
         KhrShaderFloat16Int8Fn {}
     }
 }
-#[doc = "Generated from \'VK_KHR_shader_float16_int8\'"]
+#[doc = "Generated from 'VK_KHR_shader_float16_int8'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_FLOAT16_INT8_FEATURES_KHR: Self =
         StructureType::PHYSICAL_DEVICE_SHADER_FLOAT16_INT8_FEATURES;
 }
-#[doc = "Generated from \'VK_KHR_shader_float16_int8\'"]
+#[doc = "Generated from 'VK_KHR_shader_float16_int8'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_FLOAT16_INT8_FEATURES_KHR: Self =
         StructureType::PHYSICAL_DEVICE_SHADER_FLOAT16_INT8_FEATURES;
@@ -6972,7 +6972,7 @@ impl Khr16bitStorageFn {
         Khr16bitStorageFn {}
     }
 }
-#[doc = "Generated from \'VK_KHR_16bit_storage\'"]
+#[doc = "Generated from 'VK_KHR_16bit_storage'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_16BIT_STORAGE_FEATURES_KHR: Self =
         StructureType::PHYSICAL_DEVICE_16BIT_STORAGE_FEATURES;
@@ -7000,7 +7000,7 @@ impl KhrIncrementalPresentFn {
         KhrIncrementalPresentFn {}
     }
 }
-#[doc = "Generated from \'VK_KHR_incremental_present\'"]
+#[doc = "Generated from 'VK_KHR_incremental_present'"]
 impl StructureType {
     pub const PRESENT_REGIONS_KHR: Self = Self(1_000_084_000);
 }
@@ -7223,20 +7223,20 @@ impl KhrDescriptorUpdateTemplateFn {
         )
     }
 }
-#[doc = "Generated from \'VK_KHR_descriptor_update_template\'"]
+#[doc = "Generated from 'VK_KHR_descriptor_update_template'"]
 impl StructureType {
     pub const DESCRIPTOR_UPDATE_TEMPLATE_CREATE_INFO_KHR: Self =
         StructureType::DESCRIPTOR_UPDATE_TEMPLATE_CREATE_INFO;
 }
-#[doc = "Generated from \'VK_KHR_descriptor_update_template\'"]
+#[doc = "Generated from 'VK_KHR_descriptor_update_template'"]
 impl ObjectType {
     pub const DESCRIPTOR_UPDATE_TEMPLATE_KHR: Self = ObjectType::DESCRIPTOR_UPDATE_TEMPLATE;
 }
-#[doc = "Generated from \'VK_KHR_descriptor_update_template\'"]
+#[doc = "Generated from 'VK_KHR_descriptor_update_template'"]
 impl DescriptorUpdateTemplateType {
     pub const DESCRIPTOR_SET_KHR: Self = DescriptorUpdateTemplateType::DESCRIPTOR_SET;
 }
-#[doc = "Generated from \'VK_KHR_descriptor_update_template\'"]
+#[doc = "Generated from 'VK_KHR_descriptor_update_template'"]
 impl DebugReportObjectTypeEXT {
     pub const DESCRIPTOR_UPDATE_TEMPLATE_KHR: Self =
         DebugReportObjectTypeEXT::DESCRIPTOR_UPDATE_TEMPLATE;
@@ -7340,11 +7340,11 @@ impl NvClipSpaceWScalingFn {
         )
     }
 }
-#[doc = "Generated from \'VK_NV_clip_space_w_scaling\'"]
+#[doc = "Generated from 'VK_NV_clip_space_w_scaling'"]
 impl StructureType {
     pub const PIPELINE_VIEWPORT_W_SCALING_STATE_CREATE_INFO_NV: Self = Self(1_000_087_000);
 }
-#[doc = "Generated from \'VK_NV_clip_space_w_scaling\'"]
+#[doc = "Generated from 'VK_NV_clip_space_w_scaling'"]
 impl DynamicState {
     pub const VIEWPORT_W_SCALING_NV: Self = Self(1_000_087_000);
 }
@@ -7588,11 +7588,11 @@ impl ExtDisplaySurfaceCounterFn {
         )
     }
 }
-#[doc = "Generated from \'VK_EXT_display_surface_counter\'"]
+#[doc = "Generated from 'VK_EXT_display_surface_counter'"]
 impl StructureType {
     pub const SURFACE_CAPABILITIES_2_EXT: Self = Self(1_000_090_000);
 }
-#[doc = "Generated from \'VK_EXT_display_surface_counter\'"]
+#[doc = "Generated from 'VK_EXT_display_surface_counter'"]
 impl StructureType {
     pub const SURFACE_CAPABILITIES2_EXT: Self = StructureType::SURFACE_CAPABILITIES_2_EXT;
 }
@@ -7808,19 +7808,19 @@ impl ExtDisplayControlFn {
         (self.get_swapchain_counter_ext)(device, swapchain, counter, p_counter_value)
     }
 }
-#[doc = "Generated from \'VK_EXT_display_control\'"]
+#[doc = "Generated from 'VK_EXT_display_control'"]
 impl StructureType {
     pub const DISPLAY_POWER_INFO_EXT: Self = Self(1_000_091_000);
 }
-#[doc = "Generated from \'VK_EXT_display_control\'"]
+#[doc = "Generated from 'VK_EXT_display_control'"]
 impl StructureType {
     pub const DEVICE_EVENT_INFO_EXT: Self = Self(1_000_091_001);
 }
-#[doc = "Generated from \'VK_EXT_display_control\'"]
+#[doc = "Generated from 'VK_EXT_display_control'"]
 impl StructureType {
     pub const DISPLAY_EVENT_INFO_EXT: Self = Self(1_000_091_002);
 }
-#[doc = "Generated from \'VK_EXT_display_control\'"]
+#[doc = "Generated from 'VK_EXT_display_control'"]
 impl StructureType {
     pub const SWAPCHAIN_COUNTER_CREATE_INFO_EXT: Self = Self(1_000_091_003);
 }
@@ -7941,7 +7941,7 @@ impl GoogleDisplayTimingFn {
         )
     }
 }
-#[doc = "Generated from \'VK_GOOGLE_display_timing\'"]
+#[doc = "Generated from 'VK_GOOGLE_display_timing'"]
 impl StructureType {
     pub const PRESENT_TIMES_INFO_GOOGLE: Self = Self(1_000_092_000);
 }
@@ -8037,16 +8037,16 @@ impl NvxMultiviewPerViewAttributesFn {
         NvxMultiviewPerViewAttributesFn {}
     }
 }
-#[doc = "Generated from \'VK_NVX_multiview_per_view_attributes\'"]
+#[doc = "Generated from 'VK_NVX_multiview_per_view_attributes'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_MULTIVIEW_PER_VIEW_ATTRIBUTES_PROPERTIES_NVX: Self =
         Self(1_000_097_000);
 }
-#[doc = "Generated from \'VK_NVX_multiview_per_view_attributes\'"]
+#[doc = "Generated from 'VK_NVX_multiview_per_view_attributes'"]
 impl SubpassDescriptionFlags {
     pub const PER_VIEW_ATTRIBUTES_NVX: Self = Self(0b1);
 }
-#[doc = "Generated from \'VK_NVX_multiview_per_view_attributes\'"]
+#[doc = "Generated from 'VK_NVX_multiview_per_view_attributes'"]
 impl SubpassDescriptionFlags {
     pub const PER_VIEW_POSITION_X_ONLY_NVX: Self = Self(0b10);
 }
@@ -8073,7 +8073,7 @@ impl NvViewportSwizzleFn {
         NvViewportSwizzleFn {}
     }
 }
-#[doc = "Generated from \'VK_NV_viewport_swizzle\'"]
+#[doc = "Generated from 'VK_NV_viewport_swizzle'"]
 impl StructureType {
     pub const PIPELINE_VIEWPORT_SWIZZLE_STATE_CREATE_INFO_NV: Self = Self(1_000_098_000);
 }
@@ -8153,15 +8153,15 @@ impl ExtDiscardRectanglesFn {
         )
     }
 }
-#[doc = "Generated from \'VK_EXT_discard_rectangles\'"]
+#[doc = "Generated from 'VK_EXT_discard_rectangles'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_DISCARD_RECTANGLE_PROPERTIES_EXT: Self = Self(1_000_099_000);
 }
-#[doc = "Generated from \'VK_EXT_discard_rectangles\'"]
+#[doc = "Generated from 'VK_EXT_discard_rectangles'"]
 impl StructureType {
     pub const PIPELINE_DISCARD_RECTANGLE_STATE_CREATE_INFO_EXT: Self = Self(1_000_099_001);
 }
-#[doc = "Generated from \'VK_EXT_discard_rectangles\'"]
+#[doc = "Generated from 'VK_EXT_discard_rectangles'"]
 impl DynamicState {
     pub const DISCARD_RECTANGLE_EXT: Self = Self(1_000_099_000);
 }
@@ -8211,11 +8211,11 @@ impl ExtConservativeRasterizationFn {
         ExtConservativeRasterizationFn {}
     }
 }
-#[doc = "Generated from \'VK_EXT_conservative_rasterization\'"]
+#[doc = "Generated from 'VK_EXT_conservative_rasterization'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_CONSERVATIVE_RASTERIZATION_PROPERTIES_EXT: Self = Self(1_000_101_000);
 }
-#[doc = "Generated from \'VK_EXT_conservative_rasterization\'"]
+#[doc = "Generated from 'VK_EXT_conservative_rasterization'"]
 impl StructureType {
     pub const PIPELINE_RASTERIZATION_CONSERVATIVE_STATE_CREATE_INFO_EXT: Self = Self(1_000_101_001);
 }
@@ -8242,11 +8242,11 @@ impl ExtDepthClipEnableFn {
         ExtDepthClipEnableFn {}
     }
 }
-#[doc = "Generated from \'VK_EXT_depth_clip_enable\'"]
+#[doc = "Generated from 'VK_EXT_depth_clip_enable'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_DEPTH_CLIP_ENABLE_FEATURES_EXT: Self = Self(1_000_102_000);
 }
-#[doc = "Generated from \'VK_EXT_depth_clip_enable\'"]
+#[doc = "Generated from 'VK_EXT_depth_clip_enable'"]
 impl StructureType {
     pub const PIPELINE_RASTERIZATION_DEPTH_CLIP_STATE_CREATE_INFO_EXT: Self = Self(1_000_102_001);
 }
@@ -8296,63 +8296,63 @@ impl ExtSwapchainColorspaceFn {
         ExtSwapchainColorspaceFn {}
     }
 }
-#[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
+#[doc = "Generated from 'VK_EXT_swapchain_colorspace'"]
 impl ColorSpaceKHR {
     pub const DISPLAY_P3_NONLINEAR_EXT: Self = Self(1_000_104_001);
 }
-#[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
+#[doc = "Generated from 'VK_EXT_swapchain_colorspace'"]
 impl ColorSpaceKHR {
     pub const EXTENDED_SRGB_LINEAR_EXT: Self = Self(1_000_104_002);
 }
-#[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
+#[doc = "Generated from 'VK_EXT_swapchain_colorspace'"]
 impl ColorSpaceKHR {
     pub const DISPLAY_P3_LINEAR_EXT: Self = Self(1_000_104_003);
 }
-#[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
+#[doc = "Generated from 'VK_EXT_swapchain_colorspace'"]
 impl ColorSpaceKHR {
     pub const DCI_P3_NONLINEAR_EXT: Self = Self(1_000_104_004);
 }
-#[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
+#[doc = "Generated from 'VK_EXT_swapchain_colorspace'"]
 impl ColorSpaceKHR {
     pub const BT709_LINEAR_EXT: Self = Self(1_000_104_005);
 }
-#[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
+#[doc = "Generated from 'VK_EXT_swapchain_colorspace'"]
 impl ColorSpaceKHR {
     pub const BT709_NONLINEAR_EXT: Self = Self(1_000_104_006);
 }
-#[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
+#[doc = "Generated from 'VK_EXT_swapchain_colorspace'"]
 impl ColorSpaceKHR {
     pub const BT2020_LINEAR_EXT: Self = Self(1_000_104_007);
 }
-#[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
+#[doc = "Generated from 'VK_EXT_swapchain_colorspace'"]
 impl ColorSpaceKHR {
     pub const HDR10_ST2084_EXT: Self = Self(1_000_104_008);
 }
-#[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
+#[doc = "Generated from 'VK_EXT_swapchain_colorspace'"]
 impl ColorSpaceKHR {
     pub const DOLBYVISION_EXT: Self = Self(1_000_104_009);
 }
-#[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
+#[doc = "Generated from 'VK_EXT_swapchain_colorspace'"]
 impl ColorSpaceKHR {
     pub const HDR10_HLG_EXT: Self = Self(1_000_104_010);
 }
-#[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
+#[doc = "Generated from 'VK_EXT_swapchain_colorspace'"]
 impl ColorSpaceKHR {
     pub const ADOBERGB_LINEAR_EXT: Self = Self(1_000_104_011);
 }
-#[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
+#[doc = "Generated from 'VK_EXT_swapchain_colorspace'"]
 impl ColorSpaceKHR {
     pub const ADOBERGB_NONLINEAR_EXT: Self = Self(1_000_104_012);
 }
-#[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
+#[doc = "Generated from 'VK_EXT_swapchain_colorspace'"]
 impl ColorSpaceKHR {
     pub const PASS_THROUGH_EXT: Self = Self(1_000_104_013);
 }
-#[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
+#[doc = "Generated from 'VK_EXT_swapchain_colorspace'"]
 impl ColorSpaceKHR {
     pub const EXTENDED_SRGB_NONLINEAR_EXT: Self = Self(1_000_104_014);
 }
-#[doc = "Generated from \'VK_EXT_swapchain_colorspace\'"]
+#[doc = "Generated from 'VK_EXT_swapchain_colorspace'"]
 impl ColorSpaceKHR {
     pub const DCI_P3_LINEAR_EXT: Self = ColorSpaceKHR::DISPLAY_P3_LINEAR_EXT;
 }
@@ -8424,7 +8424,7 @@ impl ExtHdrMetadataFn {
         (self.set_hdr_metadata_ext)(device, swapchain_count, p_swapchains, p_metadata)
     }
 }
-#[doc = "Generated from \'VK_EXT_hdr_metadata\'"]
+#[doc = "Generated from 'VK_EXT_hdr_metadata'"]
 impl StructureType {
     pub const HDR_METADATA_EXT: Self = Self(1_000_105_000);
 }
@@ -8497,27 +8497,27 @@ impl KhrImagelessFramebufferFn {
         KhrImagelessFramebufferFn {}
     }
 }
-#[doc = "Generated from \'VK_KHR_imageless_framebuffer\'"]
+#[doc = "Generated from 'VK_KHR_imageless_framebuffer'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_IMAGELESS_FRAMEBUFFER_FEATURES_KHR: Self =
         StructureType::PHYSICAL_DEVICE_IMAGELESS_FRAMEBUFFER_FEATURES;
 }
-#[doc = "Generated from \'VK_KHR_imageless_framebuffer\'"]
+#[doc = "Generated from 'VK_KHR_imageless_framebuffer'"]
 impl StructureType {
     pub const FRAMEBUFFER_ATTACHMENTS_CREATE_INFO_KHR: Self =
         StructureType::FRAMEBUFFER_ATTACHMENTS_CREATE_INFO;
 }
-#[doc = "Generated from \'VK_KHR_imageless_framebuffer\'"]
+#[doc = "Generated from 'VK_KHR_imageless_framebuffer'"]
 impl StructureType {
     pub const FRAMEBUFFER_ATTACHMENT_IMAGE_INFO_KHR: Self =
         StructureType::FRAMEBUFFER_ATTACHMENT_IMAGE_INFO;
 }
-#[doc = "Generated from \'VK_KHR_imageless_framebuffer\'"]
+#[doc = "Generated from 'VK_KHR_imageless_framebuffer'"]
 impl StructureType {
     pub const RENDER_PASS_ATTACHMENT_BEGIN_INFO_KHR: Self =
         StructureType::RENDER_PASS_ATTACHMENT_BEGIN_INFO;
 }
-#[doc = "Generated from \'VK_KHR_imageless_framebuffer\'"]
+#[doc = "Generated from 'VK_KHR_imageless_framebuffer'"]
 impl FramebufferCreateFlags {
     pub const IMAGELESS_KHR: Self = FramebufferCreateFlags::IMAGELESS;
 }
@@ -8711,31 +8711,31 @@ impl KhrCreateRenderpass2Fn {
         (self.cmd_end_render_pass2_khr)(command_buffer, p_subpass_end_info)
     }
 }
-#[doc = "Generated from \'VK_KHR_create_renderpass2\'"]
+#[doc = "Generated from 'VK_KHR_create_renderpass2'"]
 impl StructureType {
     pub const ATTACHMENT_DESCRIPTION_2_KHR: Self = StructureType::ATTACHMENT_DESCRIPTION_2;
 }
-#[doc = "Generated from \'VK_KHR_create_renderpass2\'"]
+#[doc = "Generated from 'VK_KHR_create_renderpass2'"]
 impl StructureType {
     pub const ATTACHMENT_REFERENCE_2_KHR: Self = StructureType::ATTACHMENT_REFERENCE_2;
 }
-#[doc = "Generated from \'VK_KHR_create_renderpass2\'"]
+#[doc = "Generated from 'VK_KHR_create_renderpass2'"]
 impl StructureType {
     pub const SUBPASS_DESCRIPTION_2_KHR: Self = StructureType::SUBPASS_DESCRIPTION_2;
 }
-#[doc = "Generated from \'VK_KHR_create_renderpass2\'"]
+#[doc = "Generated from 'VK_KHR_create_renderpass2'"]
 impl StructureType {
     pub const SUBPASS_DEPENDENCY_2_KHR: Self = StructureType::SUBPASS_DEPENDENCY_2;
 }
-#[doc = "Generated from \'VK_KHR_create_renderpass2\'"]
+#[doc = "Generated from 'VK_KHR_create_renderpass2'"]
 impl StructureType {
     pub const RENDER_PASS_CREATE_INFO_2_KHR: Self = StructureType::RENDER_PASS_CREATE_INFO_2;
 }
-#[doc = "Generated from \'VK_KHR_create_renderpass2\'"]
+#[doc = "Generated from 'VK_KHR_create_renderpass2'"]
 impl StructureType {
     pub const SUBPASS_BEGIN_INFO_KHR: Self = StructureType::SUBPASS_BEGIN_INFO;
 }
-#[doc = "Generated from \'VK_KHR_create_renderpass2\'"]
+#[doc = "Generated from 'VK_KHR_create_renderpass2'"]
 impl StructureType {
     pub const SUBPASS_END_INFO_KHR: Self = StructureType::SUBPASS_END_INFO;
 }
@@ -8821,19 +8821,19 @@ impl KhrSharedPresentableImageFn {
         (self.get_swapchain_status_khr)(device, swapchain)
     }
 }
-#[doc = "Generated from \'VK_KHR_shared_presentable_image\'"]
+#[doc = "Generated from 'VK_KHR_shared_presentable_image'"]
 impl StructureType {
     pub const SHARED_PRESENT_SURFACE_CAPABILITIES_KHR: Self = Self(1_000_111_000);
 }
-#[doc = "Generated from \'VK_KHR_shared_presentable_image\'"]
+#[doc = "Generated from 'VK_KHR_shared_presentable_image'"]
 impl PresentModeKHR {
     pub const SHARED_DEMAND_REFRESH: Self = Self(1_000_111_000);
 }
-#[doc = "Generated from \'VK_KHR_shared_presentable_image\'"]
+#[doc = "Generated from 'VK_KHR_shared_presentable_image'"]
 impl PresentModeKHR {
     pub const SHARED_CONTINUOUS_REFRESH: Self = Self(1_000_111_001);
 }
-#[doc = "Generated from \'VK_KHR_shared_presentable_image\'"]
+#[doc = "Generated from 'VK_KHR_shared_presentable_image'"]
 impl ImageLayout {
     pub const SHARED_PRESENT_KHR: Self = Self(1_000_111_000);
 }
@@ -8909,41 +8909,41 @@ impl KhrExternalFenceCapabilitiesFn {
         )
     }
 }
-#[doc = "Generated from \'VK_KHR_external_fence_capabilities\'"]
+#[doc = "Generated from 'VK_KHR_external_fence_capabilities'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_EXTERNAL_FENCE_INFO_KHR: Self =
         StructureType::PHYSICAL_DEVICE_EXTERNAL_FENCE_INFO;
 }
-#[doc = "Generated from \'VK_KHR_external_fence_capabilities\'"]
+#[doc = "Generated from 'VK_KHR_external_fence_capabilities'"]
 impl StructureType {
     pub const EXTERNAL_FENCE_PROPERTIES_KHR: Self = StructureType::EXTERNAL_FENCE_PROPERTIES;
 }
-#[doc = "Generated from \'VK_KHR_external_fence_capabilities\'"]
+#[doc = "Generated from 'VK_KHR_external_fence_capabilities'"]
 impl ExternalFenceHandleTypeFlags {
     pub const EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD_KHR: Self =
         ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD;
 }
-#[doc = "Generated from \'VK_KHR_external_fence_capabilities\'"]
+#[doc = "Generated from 'VK_KHR_external_fence_capabilities'"]
 impl ExternalFenceHandleTypeFlags {
     pub const EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KHR: Self =
         ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32;
 }
-#[doc = "Generated from \'VK_KHR_external_fence_capabilities\'"]
+#[doc = "Generated from 'VK_KHR_external_fence_capabilities'"]
 impl ExternalFenceHandleTypeFlags {
     pub const EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT_KHR: Self =
         ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT;
 }
-#[doc = "Generated from \'VK_KHR_external_fence_capabilities\'"]
+#[doc = "Generated from 'VK_KHR_external_fence_capabilities'"]
 impl ExternalFenceHandleTypeFlags {
     pub const EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD_KHR: Self =
         ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD;
 }
-#[doc = "Generated from \'VK_KHR_external_fence_capabilities\'"]
+#[doc = "Generated from 'VK_KHR_external_fence_capabilities'"]
 impl ExternalFenceFeatureFlags {
     pub const EXTERNAL_FENCE_FEATURE_EXPORTABLE_KHR: Self =
         ExternalFenceFeatureFlags::EXTERNAL_FENCE_FEATURE_EXPORTABLE;
 }
-#[doc = "Generated from \'VK_KHR_external_fence_capabilities\'"]
+#[doc = "Generated from 'VK_KHR_external_fence_capabilities'"]
 impl ExternalFenceFeatureFlags {
     pub const EXTERNAL_FENCE_FEATURE_IMPORTABLE_KHR: Self =
         ExternalFenceFeatureFlags::EXTERNAL_FENCE_FEATURE_IMPORTABLE;
@@ -8971,11 +8971,11 @@ impl KhrExternalFenceFn {
         KhrExternalFenceFn {}
     }
 }
-#[doc = "Generated from \'VK_KHR_external_fence\'"]
+#[doc = "Generated from 'VK_KHR_external_fence'"]
 impl StructureType {
     pub const EXPORT_FENCE_CREATE_INFO_KHR: Self = StructureType::EXPORT_FENCE_CREATE_INFO;
 }
-#[doc = "Generated from \'VK_KHR_external_fence\'"]
+#[doc = "Generated from 'VK_KHR_external_fence'"]
 impl FenceImportFlags {
     pub const TEMPORARY_KHR: Self = FenceImportFlags::TEMPORARY;
 }
@@ -9083,15 +9083,15 @@ impl KhrExternalFenceWin32Fn {
         (self.get_fence_win32_handle_khr)(device, p_get_win32_handle_info, p_handle)
     }
 }
-#[doc = "Generated from \'VK_KHR_external_fence_win32\'"]
+#[doc = "Generated from 'VK_KHR_external_fence_win32'"]
 impl StructureType {
     pub const IMPORT_FENCE_WIN32_HANDLE_INFO_KHR: Self = Self(1_000_114_000);
 }
-#[doc = "Generated from \'VK_KHR_external_fence_win32\'"]
+#[doc = "Generated from 'VK_KHR_external_fence_win32'"]
 impl StructureType {
     pub const EXPORT_FENCE_WIN32_HANDLE_INFO_KHR: Self = Self(1_000_114_001);
 }
-#[doc = "Generated from \'VK_KHR_external_fence_win32\'"]
+#[doc = "Generated from 'VK_KHR_external_fence_win32'"]
 impl StructureType {
     pub const FENCE_GET_WIN32_HANDLE_INFO_KHR: Self = Self(1_000_114_002);
 }
@@ -9193,11 +9193,11 @@ impl KhrExternalFenceFdFn {
         (self.get_fence_fd_khr)(device, p_get_fd_info, p_fd)
     }
 }
-#[doc = "Generated from \'VK_KHR_external_fence_fd\'"]
+#[doc = "Generated from 'VK_KHR_external_fence_fd'"]
 impl StructureType {
     pub const IMPORT_FENCE_FD_INFO_KHR: Self = Self(1_000_115_000);
 }
-#[doc = "Generated from \'VK_KHR_external_fence_fd\'"]
+#[doc = "Generated from 'VK_KHR_external_fence_fd'"]
 impl StructureType {
     pub const FENCE_GET_FD_INFO_KHR: Self = Self(1_000_115_001);
 }
@@ -9393,35 +9393,35 @@ impl KhrPerformanceQueryFn {
         (self.release_profiling_lock_khr)(device)
     }
 }
-#[doc = "Generated from \'VK_KHR_performance_query\'"]
+#[doc = "Generated from 'VK_KHR_performance_query'"]
 impl QueryType {
     pub const PERFORMANCE_QUERY_KHR: Self = Self(1_000_116_000);
 }
-#[doc = "Generated from \'VK_KHR_performance_query\'"]
+#[doc = "Generated from 'VK_KHR_performance_query'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_PERFORMANCE_QUERY_FEATURES_KHR: Self = Self(1_000_116_000);
 }
-#[doc = "Generated from \'VK_KHR_performance_query\'"]
+#[doc = "Generated from 'VK_KHR_performance_query'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_PERFORMANCE_QUERY_PROPERTIES_KHR: Self = Self(1_000_116_001);
 }
-#[doc = "Generated from \'VK_KHR_performance_query\'"]
+#[doc = "Generated from 'VK_KHR_performance_query'"]
 impl StructureType {
     pub const QUERY_POOL_PERFORMANCE_CREATE_INFO_KHR: Self = Self(1_000_116_002);
 }
-#[doc = "Generated from \'VK_KHR_performance_query\'"]
+#[doc = "Generated from 'VK_KHR_performance_query'"]
 impl StructureType {
     pub const PERFORMANCE_QUERY_SUBMIT_INFO_KHR: Self = Self(1_000_116_003);
 }
-#[doc = "Generated from \'VK_KHR_performance_query\'"]
+#[doc = "Generated from 'VK_KHR_performance_query'"]
 impl StructureType {
     pub const ACQUIRE_PROFILING_LOCK_INFO_KHR: Self = Self(1_000_116_004);
 }
-#[doc = "Generated from \'VK_KHR_performance_query\'"]
+#[doc = "Generated from 'VK_KHR_performance_query'"]
 impl StructureType {
     pub const PERFORMANCE_COUNTER_KHR: Self = Self(1_000_116_005);
 }
-#[doc = "Generated from \'VK_KHR_performance_query\'"]
+#[doc = "Generated from 'VK_KHR_performance_query'"]
 impl StructureType {
     pub const PERFORMANCE_COUNTER_DESCRIPTION_KHR: Self = Self(1_000_116_006);
 }
@@ -9448,56 +9448,56 @@ impl KhrMaintenance2Fn {
         KhrMaintenance2Fn {}
     }
 }
-#[doc = "Generated from \'VK_KHR_maintenance2\'"]
+#[doc = "Generated from 'VK_KHR_maintenance2'"]
 impl ImageCreateFlags {
     pub const BLOCK_TEXEL_VIEW_COMPATIBLE_KHR: Self = ImageCreateFlags::BLOCK_TEXEL_VIEW_COMPATIBLE;
 }
-#[doc = "Generated from \'VK_KHR_maintenance2\'"]
+#[doc = "Generated from 'VK_KHR_maintenance2'"]
 impl ImageCreateFlags {
     pub const EXTENDED_USAGE_KHR: Self = ImageCreateFlags::EXTENDED_USAGE;
 }
-#[doc = "Generated from \'VK_KHR_maintenance2\'"]
+#[doc = "Generated from 'VK_KHR_maintenance2'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_POINT_CLIPPING_PROPERTIES_KHR: Self =
         StructureType::PHYSICAL_DEVICE_POINT_CLIPPING_PROPERTIES;
 }
-#[doc = "Generated from \'VK_KHR_maintenance2\'"]
+#[doc = "Generated from 'VK_KHR_maintenance2'"]
 impl StructureType {
     pub const RENDER_PASS_INPUT_ATTACHMENT_ASPECT_CREATE_INFO_KHR: Self =
         StructureType::RENDER_PASS_INPUT_ATTACHMENT_ASPECT_CREATE_INFO;
 }
-#[doc = "Generated from \'VK_KHR_maintenance2\'"]
+#[doc = "Generated from 'VK_KHR_maintenance2'"]
 impl StructureType {
     pub const IMAGE_VIEW_USAGE_CREATE_INFO_KHR: Self = StructureType::IMAGE_VIEW_USAGE_CREATE_INFO;
 }
-#[doc = "Generated from \'VK_KHR_maintenance2\'"]
+#[doc = "Generated from 'VK_KHR_maintenance2'"]
 impl StructureType {
     pub const PIPELINE_TESSELLATION_DOMAIN_ORIGIN_STATE_CREATE_INFO_KHR: Self =
         StructureType::PIPELINE_TESSELLATION_DOMAIN_ORIGIN_STATE_CREATE_INFO;
 }
-#[doc = "Generated from \'VK_KHR_maintenance2\'"]
+#[doc = "Generated from 'VK_KHR_maintenance2'"]
 impl ImageLayout {
     pub const DEPTH_READ_ONLY_STENCIL_ATTACHMENT_OPTIMAL_KHR: Self =
         ImageLayout::DEPTH_READ_ONLY_STENCIL_ATTACHMENT_OPTIMAL;
 }
-#[doc = "Generated from \'VK_KHR_maintenance2\'"]
+#[doc = "Generated from 'VK_KHR_maintenance2'"]
 impl ImageLayout {
     pub const DEPTH_ATTACHMENT_STENCIL_READ_ONLY_OPTIMAL_KHR: Self =
         ImageLayout::DEPTH_ATTACHMENT_STENCIL_READ_ONLY_OPTIMAL;
 }
-#[doc = "Generated from \'VK_KHR_maintenance2\'"]
+#[doc = "Generated from 'VK_KHR_maintenance2'"]
 impl PointClippingBehavior {
     pub const ALL_CLIP_PLANES_KHR: Self = PointClippingBehavior::ALL_CLIP_PLANES;
 }
-#[doc = "Generated from \'VK_KHR_maintenance2\'"]
+#[doc = "Generated from 'VK_KHR_maintenance2'"]
 impl PointClippingBehavior {
     pub const USER_CLIP_PLANES_ONLY_KHR: Self = PointClippingBehavior::USER_CLIP_PLANES_ONLY;
 }
-#[doc = "Generated from \'VK_KHR_maintenance2\'"]
+#[doc = "Generated from 'VK_KHR_maintenance2'"]
 impl TessellationDomainOrigin {
     pub const UPPER_LEFT_KHR: Self = TessellationDomainOrigin::UPPER_LEFT;
 }
-#[doc = "Generated from \'VK_KHR_maintenance2\'"]
+#[doc = "Generated from 'VK_KHR_maintenance2'"]
 impl TessellationDomainOrigin {
     pub const LOWER_LEFT_KHR: Self = TessellationDomainOrigin::LOWER_LEFT;
 }
@@ -9646,15 +9646,15 @@ impl KhrGetSurfaceCapabilities2Fn {
         )
     }
 }
-#[doc = "Generated from \'VK_KHR_get_surface_capabilities2\'"]
+#[doc = "Generated from 'VK_KHR_get_surface_capabilities2'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_SURFACE_INFO_2_KHR: Self = Self(1_000_119_000);
 }
-#[doc = "Generated from \'VK_KHR_get_surface_capabilities2\'"]
+#[doc = "Generated from 'VK_KHR_get_surface_capabilities2'"]
 impl StructureType {
     pub const SURFACE_CAPABILITIES_2_KHR: Self = Self(1_000_119_001);
 }
-#[doc = "Generated from \'VK_KHR_get_surface_capabilities2\'"]
+#[doc = "Generated from 'VK_KHR_get_surface_capabilities2'"]
 impl StructureType {
     pub const SURFACE_FORMAT_2_KHR: Self = Self(1_000_119_002);
 }
@@ -9681,12 +9681,12 @@ impl KhrVariablePointersFn {
         KhrVariablePointersFn {}
     }
 }
-#[doc = "Generated from \'VK_KHR_variable_pointers\'"]
+#[doc = "Generated from 'VK_KHR_variable_pointers'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_VARIABLE_POINTERS_FEATURES_KHR: Self =
         StructureType::PHYSICAL_DEVICE_VARIABLE_POINTERS_FEATURES;
 }
-#[doc = "Generated from \'VK_KHR_variable_pointers\'"]
+#[doc = "Generated from 'VK_KHR_variable_pointers'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_VARIABLE_POINTER_FEATURES_KHR: Self =
         StructureType::PHYSICAL_DEVICE_VARIABLE_POINTERS_FEATURES_KHR;
@@ -9904,23 +9904,23 @@ impl KhrGetDisplayProperties2Fn {
         )
     }
 }
-#[doc = "Generated from \'VK_KHR_get_display_properties2\'"]
+#[doc = "Generated from 'VK_KHR_get_display_properties2'"]
 impl StructureType {
     pub const DISPLAY_PROPERTIES_2_KHR: Self = Self(1_000_121_000);
 }
-#[doc = "Generated from \'VK_KHR_get_display_properties2\'"]
+#[doc = "Generated from 'VK_KHR_get_display_properties2'"]
 impl StructureType {
     pub const DISPLAY_PLANE_PROPERTIES_2_KHR: Self = Self(1_000_121_001);
 }
-#[doc = "Generated from \'VK_KHR_get_display_properties2\'"]
+#[doc = "Generated from 'VK_KHR_get_display_properties2'"]
 impl StructureType {
     pub const DISPLAY_MODE_PROPERTIES_2_KHR: Self = Self(1_000_121_002);
 }
-#[doc = "Generated from \'VK_KHR_get_display_properties2\'"]
+#[doc = "Generated from 'VK_KHR_get_display_properties2'"]
 impl StructureType {
     pub const DISPLAY_PLANE_INFO_2_KHR: Self = Self(1_000_121_003);
 }
-#[doc = "Generated from \'VK_KHR_get_display_properties2\'"]
+#[doc = "Generated from 'VK_KHR_get_display_properties2'"]
 impl StructureType {
     pub const DISPLAY_PLANE_CAPABILITIES_2_KHR: Self = Self(1_000_121_004);
 }
@@ -9995,7 +9995,7 @@ impl MvkIosSurfaceFn {
         (self.create_ios_surface_mvk)(instance, p_create_info, p_allocator, p_surface)
     }
 }
-#[doc = "Generated from \'VK_MVK_ios_surface\'"]
+#[doc = "Generated from 'VK_MVK_ios_surface'"]
 impl StructureType {
     pub const IOS_SURFACE_CREATE_INFO_M: Self = Self(1_000_122_000);
 }
@@ -10070,7 +10070,7 @@ impl MvkMacosSurfaceFn {
         (self.create_mac_os_surface_mvk)(instance, p_create_info, p_allocator, p_surface)
     }
 }
-#[doc = "Generated from \'VK_MVK_macos_surface\'"]
+#[doc = "Generated from 'VK_MVK_macos_surface'"]
 impl StructureType {
     pub const MACOS_SURFACE_CREATE_INFO_M: Self = Self(1_000_123_000);
 }
@@ -10119,7 +10119,7 @@ impl ExtExternalMemoryDmaBufFn {
         ExtExternalMemoryDmaBufFn {}
     }
 }
-#[doc = "Generated from \'VK_EXT_external_memory_dma_buf\'"]
+#[doc = "Generated from 'VK_EXT_external_memory_dma_buf'"]
 impl ExternalMemoryHandleTypeFlags {
     pub const EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF: Self = Self(0b10_0000_0000);
 }
@@ -10169,12 +10169,12 @@ impl KhrDedicatedAllocationFn {
         KhrDedicatedAllocationFn {}
     }
 }
-#[doc = "Generated from \'VK_KHR_dedicated_allocation\'"]
+#[doc = "Generated from 'VK_KHR_dedicated_allocation'"]
 impl StructureType {
     pub const MEMORY_DEDICATED_REQUIREMENTS_KHR: Self =
         StructureType::MEMORY_DEDICATED_REQUIREMENTS;
 }
-#[doc = "Generated from \'VK_KHR_dedicated_allocation\'"]
+#[doc = "Generated from 'VK_KHR_dedicated_allocation'"]
 impl StructureType {
     pub const MEMORY_DEDICATED_ALLOCATE_INFO_KHR: Self =
         StructureType::MEMORY_DEDICATED_ALLOCATE_INFO;
@@ -10600,27 +10600,27 @@ impl ExtDebugUtilsFn {
         )
     }
 }
-#[doc = "Generated from \'VK_EXT_debug_utils\'"]
+#[doc = "Generated from 'VK_EXT_debug_utils'"]
 impl StructureType {
     pub const DEBUG_UTILS_OBJECT_NAME_INFO_EXT: Self = Self(1_000_128_000);
 }
-#[doc = "Generated from \'VK_EXT_debug_utils\'"]
+#[doc = "Generated from 'VK_EXT_debug_utils'"]
 impl StructureType {
     pub const DEBUG_UTILS_OBJECT_TAG_INFO_EXT: Self = Self(1_000_128_001);
 }
-#[doc = "Generated from \'VK_EXT_debug_utils\'"]
+#[doc = "Generated from 'VK_EXT_debug_utils'"]
 impl StructureType {
     pub const DEBUG_UTILS_LABEL_EXT: Self = Self(1_000_128_002);
 }
-#[doc = "Generated from \'VK_EXT_debug_utils\'"]
+#[doc = "Generated from 'VK_EXT_debug_utils'"]
 impl StructureType {
     pub const DEBUG_UTILS_MESSENGER_CALLBACK_DATA_EXT: Self = Self(1_000_128_003);
 }
-#[doc = "Generated from \'VK_EXT_debug_utils\'"]
+#[doc = "Generated from 'VK_EXT_debug_utils'"]
 impl StructureType {
     pub const DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT: Self = Self(1_000_128_004);
 }
-#[doc = "Generated from \'VK_EXT_debug_utils\'"]
+#[doc = "Generated from 'VK_EXT_debug_utils'"]
 impl ObjectType {
     pub const DEBUG_UTILS_MESSENGER_EXT: Self = Self(1_000_128_000);
 }
@@ -10736,32 +10736,32 @@ impl AndroidExternalMemoryAndroidHardwareBufferFn {
         (self.get_memory_android_hardware_buffer_android)(device, p_info, p_buffer)
     }
 }
-#[doc = "Generated from \'VK_ANDROID_external_memory_android_hardware_buffer\'"]
+#[doc = "Generated from 'VK_ANDROID_external_memory_android_hardware_buffer'"]
 impl ExternalMemoryHandleTypeFlags {
     pub const EXTERNAL_MEMORY_HANDLE_TYPE_ANDROID_HARDWARE_BUFFER_ANDROID: Self =
         Self(0b100_0000_0000);
 }
-#[doc = "Generated from \'VK_ANDROID_external_memory_android_hardware_buffer\'"]
+#[doc = "Generated from 'VK_ANDROID_external_memory_android_hardware_buffer'"]
 impl StructureType {
     pub const ANDROID_HARDWARE_BUFFER_USAGE_ANDROID: Self = Self(1_000_129_000);
 }
-#[doc = "Generated from \'VK_ANDROID_external_memory_android_hardware_buffer\'"]
+#[doc = "Generated from 'VK_ANDROID_external_memory_android_hardware_buffer'"]
 impl StructureType {
     pub const ANDROID_HARDWARE_BUFFER_PROPERTIES_ANDROID: Self = Self(1_000_129_001);
 }
-#[doc = "Generated from \'VK_ANDROID_external_memory_android_hardware_buffer\'"]
+#[doc = "Generated from 'VK_ANDROID_external_memory_android_hardware_buffer'"]
 impl StructureType {
     pub const ANDROID_HARDWARE_BUFFER_FORMAT_PROPERTIES_ANDROID: Self = Self(1_000_129_002);
 }
-#[doc = "Generated from \'VK_ANDROID_external_memory_android_hardware_buffer\'"]
+#[doc = "Generated from 'VK_ANDROID_external_memory_android_hardware_buffer'"]
 impl StructureType {
     pub const IMPORT_ANDROID_HARDWARE_BUFFER_INFO_ANDROID: Self = Self(1_000_129_003);
 }
-#[doc = "Generated from \'VK_ANDROID_external_memory_android_hardware_buffer\'"]
+#[doc = "Generated from 'VK_ANDROID_external_memory_android_hardware_buffer'"]
 impl StructureType {
     pub const MEMORY_GET_ANDROID_HARDWARE_BUFFER_INFO_ANDROID: Self = Self(1_000_129_004);
 }
-#[doc = "Generated from \'VK_ANDROID_external_memory_android_hardware_buffer\'"]
+#[doc = "Generated from 'VK_ANDROID_external_memory_android_hardware_buffer'"]
 impl StructureType {
     pub const EXTERNAL_FORMAT_ANDROID: Self = Self(1_000_129_005);
 }
@@ -10788,30 +10788,30 @@ impl ExtSamplerFilterMinmaxFn {
         ExtSamplerFilterMinmaxFn {}
     }
 }
-#[doc = "Generated from \'VK_EXT_sampler_filter_minmax\'"]
+#[doc = "Generated from 'VK_EXT_sampler_filter_minmax'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_SAMPLER_FILTER_MINMAX_PROPERTIES_EXT: Self =
         StructureType::PHYSICAL_DEVICE_SAMPLER_FILTER_MINMAX_PROPERTIES;
 }
-#[doc = "Generated from \'VK_EXT_sampler_filter_minmax\'"]
+#[doc = "Generated from 'VK_EXT_sampler_filter_minmax'"]
 impl StructureType {
     pub const SAMPLER_REDUCTION_MODE_CREATE_INFO_EXT: Self =
         StructureType::SAMPLER_REDUCTION_MODE_CREATE_INFO;
 }
-#[doc = "Generated from \'VK_EXT_sampler_filter_minmax\'"]
+#[doc = "Generated from 'VK_EXT_sampler_filter_minmax'"]
 impl FormatFeatureFlags {
     pub const SAMPLED_IMAGE_FILTER_MINMAX_EXT: Self =
         FormatFeatureFlags::SAMPLED_IMAGE_FILTER_MINMAX;
 }
-#[doc = "Generated from \'VK_EXT_sampler_filter_minmax\'"]
+#[doc = "Generated from 'VK_EXT_sampler_filter_minmax'"]
 impl SamplerReductionMode {
     pub const WEIGHTED_AVERAGE_EXT: Self = SamplerReductionMode::WEIGHTED_AVERAGE;
 }
-#[doc = "Generated from \'VK_EXT_sampler_filter_minmax\'"]
+#[doc = "Generated from 'VK_EXT_sampler_filter_minmax'"]
 impl SamplerReductionMode {
     pub const MIN_EXT: Self = SamplerReductionMode::MIN;
 }
-#[doc = "Generated from \'VK_EXT_sampler_filter_minmax\'"]
+#[doc = "Generated from 'VK_EXT_sampler_filter_minmax'"]
 impl SamplerReductionMode {
     pub const MAX_EXT: Self = SamplerReductionMode::MAX;
 }
@@ -10999,23 +10999,23 @@ impl ExtInlineUniformBlockFn {
         ExtInlineUniformBlockFn {}
     }
 }
-#[doc = "Generated from \'VK_EXT_inline_uniform_block\'"]
+#[doc = "Generated from 'VK_EXT_inline_uniform_block'"]
 impl DescriptorType {
     pub const INLINE_UNIFORM_BLOCK_EXT: Self = Self(1_000_138_000);
 }
-#[doc = "Generated from \'VK_EXT_inline_uniform_block\'"]
+#[doc = "Generated from 'VK_EXT_inline_uniform_block'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_INLINE_UNIFORM_BLOCK_FEATURES_EXT: Self = Self(1_000_138_000);
 }
-#[doc = "Generated from \'VK_EXT_inline_uniform_block\'"]
+#[doc = "Generated from 'VK_EXT_inline_uniform_block'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_INLINE_UNIFORM_BLOCK_PROPERTIES_EXT: Self = Self(1_000_138_001);
 }
-#[doc = "Generated from \'VK_EXT_inline_uniform_block\'"]
+#[doc = "Generated from 'VK_EXT_inline_uniform_block'"]
 impl StructureType {
     pub const WRITE_DESCRIPTOR_SET_INLINE_UNIFORM_BLOCK_EXT: Self = Self(1_000_138_002);
 }
-#[doc = "Generated from \'VK_EXT_inline_uniform_block\'"]
+#[doc = "Generated from 'VK_EXT_inline_uniform_block'"]
 impl StructureType {
     pub const DESCRIPTOR_POOL_INLINE_UNIFORM_BLOCK_CREATE_INFO_EXT: Self = Self(1_000_138_003);
 }
@@ -11220,31 +11220,31 @@ impl ExtSampleLocationsFn {
         )
     }
 }
-#[doc = "Generated from \'VK_EXT_sample_locations\'"]
+#[doc = "Generated from 'VK_EXT_sample_locations'"]
 impl ImageCreateFlags {
     pub const SAMPLE_LOCATIONS_COMPATIBLE_DEPTH_EXT: Self = Self(0b1_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_EXT_sample_locations\'"]
+#[doc = "Generated from 'VK_EXT_sample_locations'"]
 impl StructureType {
     pub const SAMPLE_LOCATIONS_INFO_EXT: Self = Self(1_000_143_000);
 }
-#[doc = "Generated from \'VK_EXT_sample_locations\'"]
+#[doc = "Generated from 'VK_EXT_sample_locations'"]
 impl StructureType {
     pub const RENDER_PASS_SAMPLE_LOCATIONS_BEGIN_INFO_EXT: Self = Self(1_000_143_001);
 }
-#[doc = "Generated from \'VK_EXT_sample_locations\'"]
+#[doc = "Generated from 'VK_EXT_sample_locations'"]
 impl StructureType {
     pub const PIPELINE_SAMPLE_LOCATIONS_STATE_CREATE_INFO_EXT: Self = Self(1_000_143_002);
 }
-#[doc = "Generated from \'VK_EXT_sample_locations\'"]
+#[doc = "Generated from 'VK_EXT_sample_locations'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_SAMPLE_LOCATIONS_PROPERTIES_EXT: Self = Self(1_000_143_003);
 }
-#[doc = "Generated from \'VK_EXT_sample_locations\'"]
+#[doc = "Generated from 'VK_EXT_sample_locations'"]
 impl StructureType {
     pub const MULTISAMPLE_PROPERTIES_EXT: Self = Self(1_000_143_004);
 }
-#[doc = "Generated from \'VK_EXT_sample_locations\'"]
+#[doc = "Generated from 'VK_EXT_sample_locations'"]
 impl DynamicState {
     pub const SAMPLE_LOCATIONS_EXT: Self = Self(1_000_143_000);
 }
@@ -11430,26 +11430,26 @@ impl KhrGetMemoryRequirements2Fn {
         )
     }
 }
-#[doc = "Generated from \'VK_KHR_get_memory_requirements2\'"]
+#[doc = "Generated from 'VK_KHR_get_memory_requirements2'"]
 impl StructureType {
     pub const BUFFER_MEMORY_REQUIREMENTS_INFO_2_KHR: Self =
         StructureType::BUFFER_MEMORY_REQUIREMENTS_INFO_2;
 }
-#[doc = "Generated from \'VK_KHR_get_memory_requirements2\'"]
+#[doc = "Generated from 'VK_KHR_get_memory_requirements2'"]
 impl StructureType {
     pub const IMAGE_MEMORY_REQUIREMENTS_INFO_2_KHR: Self =
         StructureType::IMAGE_MEMORY_REQUIREMENTS_INFO_2;
 }
-#[doc = "Generated from \'VK_KHR_get_memory_requirements2\'"]
+#[doc = "Generated from 'VK_KHR_get_memory_requirements2'"]
 impl StructureType {
     pub const IMAGE_SPARSE_MEMORY_REQUIREMENTS_INFO_2_KHR: Self =
         StructureType::IMAGE_SPARSE_MEMORY_REQUIREMENTS_INFO_2;
 }
-#[doc = "Generated from \'VK_KHR_get_memory_requirements2\'"]
+#[doc = "Generated from 'VK_KHR_get_memory_requirements2'"]
 impl StructureType {
     pub const MEMORY_REQUIREMENTS_2_KHR: Self = StructureType::MEMORY_REQUIREMENTS_2;
 }
-#[doc = "Generated from \'VK_KHR_get_memory_requirements2\'"]
+#[doc = "Generated from 'VK_KHR_get_memory_requirements2'"]
 impl StructureType {
     pub const SPARSE_IMAGE_MEMORY_REQUIREMENTS_2_KHR: Self =
         StructureType::SPARSE_IMAGE_MEMORY_REQUIREMENTS_2;
@@ -11477,7 +11477,7 @@ impl KhrImageFormatListFn {
         KhrImageFormatListFn {}
     }
 }
-#[doc = "Generated from \'VK_KHR_image_format_list\'"]
+#[doc = "Generated from 'VK_KHR_image_format_list'"]
 impl StructureType {
     pub const IMAGE_FORMAT_LIST_CREATE_INFO_KHR: Self =
         StructureType::IMAGE_FORMAT_LIST_CREATE_INFO;
@@ -11505,203 +11505,203 @@ impl ExtBlendOperationAdvancedFn {
         ExtBlendOperationAdvancedFn {}
     }
 }
-#[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+#[doc = "Generated from 'VK_EXT_blend_operation_advanced'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_BLEND_OPERATION_ADVANCED_FEATURES_EXT: Self = Self(1_000_148_000);
 }
-#[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+#[doc = "Generated from 'VK_EXT_blend_operation_advanced'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_BLEND_OPERATION_ADVANCED_PROPERTIES_EXT: Self = Self(1_000_148_001);
 }
-#[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+#[doc = "Generated from 'VK_EXT_blend_operation_advanced'"]
 impl StructureType {
     pub const PIPELINE_COLOR_BLEND_ADVANCED_STATE_CREATE_INFO_EXT: Self = Self(1_000_148_002);
 }
-#[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+#[doc = "Generated from 'VK_EXT_blend_operation_advanced'"]
 impl BlendOp {
     pub const ZERO_EXT: Self = Self(1_000_148_000);
 }
-#[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+#[doc = "Generated from 'VK_EXT_blend_operation_advanced'"]
 impl BlendOp {
     pub const SRC_EXT: Self = Self(1_000_148_001);
 }
-#[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+#[doc = "Generated from 'VK_EXT_blend_operation_advanced'"]
 impl BlendOp {
     pub const DST_EXT: Self = Self(1_000_148_002);
 }
-#[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+#[doc = "Generated from 'VK_EXT_blend_operation_advanced'"]
 impl BlendOp {
     pub const SRC_OVER_EXT: Self = Self(1_000_148_003);
 }
-#[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+#[doc = "Generated from 'VK_EXT_blend_operation_advanced'"]
 impl BlendOp {
     pub const DST_OVER_EXT: Self = Self(1_000_148_004);
 }
-#[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+#[doc = "Generated from 'VK_EXT_blend_operation_advanced'"]
 impl BlendOp {
     pub const SRC_IN_EXT: Self = Self(1_000_148_005);
 }
-#[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+#[doc = "Generated from 'VK_EXT_blend_operation_advanced'"]
 impl BlendOp {
     pub const DST_IN_EXT: Self = Self(1_000_148_006);
 }
-#[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+#[doc = "Generated from 'VK_EXT_blend_operation_advanced'"]
 impl BlendOp {
     pub const SRC_OUT_EXT: Self = Self(1_000_148_007);
 }
-#[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+#[doc = "Generated from 'VK_EXT_blend_operation_advanced'"]
 impl BlendOp {
     pub const DST_OUT_EXT: Self = Self(1_000_148_008);
 }
-#[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+#[doc = "Generated from 'VK_EXT_blend_operation_advanced'"]
 impl BlendOp {
     pub const SRC_ATOP_EXT: Self = Self(1_000_148_009);
 }
-#[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+#[doc = "Generated from 'VK_EXT_blend_operation_advanced'"]
 impl BlendOp {
     pub const DST_ATOP_EXT: Self = Self(1_000_148_010);
 }
-#[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+#[doc = "Generated from 'VK_EXT_blend_operation_advanced'"]
 impl BlendOp {
     pub const XOR_EXT: Self = Self(1_000_148_011);
 }
-#[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+#[doc = "Generated from 'VK_EXT_blend_operation_advanced'"]
 impl BlendOp {
     pub const MULTIPLY_EXT: Self = Self(1_000_148_012);
 }
-#[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+#[doc = "Generated from 'VK_EXT_blend_operation_advanced'"]
 impl BlendOp {
     pub const SCREEN_EXT: Self = Self(1_000_148_013);
 }
-#[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+#[doc = "Generated from 'VK_EXT_blend_operation_advanced'"]
 impl BlendOp {
     pub const OVERLAY_EXT: Self = Self(1_000_148_014);
 }
-#[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+#[doc = "Generated from 'VK_EXT_blend_operation_advanced'"]
 impl BlendOp {
     pub const DARKEN_EXT: Self = Self(1_000_148_015);
 }
-#[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+#[doc = "Generated from 'VK_EXT_blend_operation_advanced'"]
 impl BlendOp {
     pub const LIGHTEN_EXT: Self = Self(1_000_148_016);
 }
-#[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+#[doc = "Generated from 'VK_EXT_blend_operation_advanced'"]
 impl BlendOp {
     pub const COLORDODGE_EXT: Self = Self(1_000_148_017);
 }
-#[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+#[doc = "Generated from 'VK_EXT_blend_operation_advanced'"]
 impl BlendOp {
     pub const COLORBURN_EXT: Self = Self(1_000_148_018);
 }
-#[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+#[doc = "Generated from 'VK_EXT_blend_operation_advanced'"]
 impl BlendOp {
     pub const HARDLIGHT_EXT: Self = Self(1_000_148_019);
 }
-#[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+#[doc = "Generated from 'VK_EXT_blend_operation_advanced'"]
 impl BlendOp {
     pub const SOFTLIGHT_EXT: Self = Self(1_000_148_020);
 }
-#[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+#[doc = "Generated from 'VK_EXT_blend_operation_advanced'"]
 impl BlendOp {
     pub const DIFFERENCE_EXT: Self = Self(1_000_148_021);
 }
-#[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+#[doc = "Generated from 'VK_EXT_blend_operation_advanced'"]
 impl BlendOp {
     pub const EXCLUSION_EXT: Self = Self(1_000_148_022);
 }
-#[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+#[doc = "Generated from 'VK_EXT_blend_operation_advanced'"]
 impl BlendOp {
     pub const INVERT_EXT: Self = Self(1_000_148_023);
 }
-#[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+#[doc = "Generated from 'VK_EXT_blend_operation_advanced'"]
 impl BlendOp {
     pub const INVERT_RGB_EXT: Self = Self(1_000_148_024);
 }
-#[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+#[doc = "Generated from 'VK_EXT_blend_operation_advanced'"]
 impl BlendOp {
     pub const LINEARDODGE_EXT: Self = Self(1_000_148_025);
 }
-#[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+#[doc = "Generated from 'VK_EXT_blend_operation_advanced'"]
 impl BlendOp {
     pub const LINEARBURN_EXT: Self = Self(1_000_148_026);
 }
-#[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+#[doc = "Generated from 'VK_EXT_blend_operation_advanced'"]
 impl BlendOp {
     pub const VIVIDLIGHT_EXT: Self = Self(1_000_148_027);
 }
-#[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+#[doc = "Generated from 'VK_EXT_blend_operation_advanced'"]
 impl BlendOp {
     pub const LINEARLIGHT_EXT: Self = Self(1_000_148_028);
 }
-#[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+#[doc = "Generated from 'VK_EXT_blend_operation_advanced'"]
 impl BlendOp {
     pub const PINLIGHT_EXT: Self = Self(1_000_148_029);
 }
-#[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+#[doc = "Generated from 'VK_EXT_blend_operation_advanced'"]
 impl BlendOp {
     pub const HARDMIX_EXT: Self = Self(1_000_148_030);
 }
-#[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+#[doc = "Generated from 'VK_EXT_blend_operation_advanced'"]
 impl BlendOp {
     pub const HSL_HUE_EXT: Self = Self(1_000_148_031);
 }
-#[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+#[doc = "Generated from 'VK_EXT_blend_operation_advanced'"]
 impl BlendOp {
     pub const HSL_SATURATION_EXT: Self = Self(1_000_148_032);
 }
-#[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+#[doc = "Generated from 'VK_EXT_blend_operation_advanced'"]
 impl BlendOp {
     pub const HSL_COLOR_EXT: Self = Self(1_000_148_033);
 }
-#[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+#[doc = "Generated from 'VK_EXT_blend_operation_advanced'"]
 impl BlendOp {
     pub const HSL_LUMINOSITY_EXT: Self = Self(1_000_148_034);
 }
-#[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+#[doc = "Generated from 'VK_EXT_blend_operation_advanced'"]
 impl BlendOp {
     pub const PLUS_EXT: Self = Self(1_000_148_035);
 }
-#[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+#[doc = "Generated from 'VK_EXT_blend_operation_advanced'"]
 impl BlendOp {
     pub const PLUS_CLAMPED_EXT: Self = Self(1_000_148_036);
 }
-#[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+#[doc = "Generated from 'VK_EXT_blend_operation_advanced'"]
 impl BlendOp {
     pub const PLUS_CLAMPED_ALPHA_EXT: Self = Self(1_000_148_037);
 }
-#[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+#[doc = "Generated from 'VK_EXT_blend_operation_advanced'"]
 impl BlendOp {
     pub const PLUS_DARKER_EXT: Self = Self(1_000_148_038);
 }
-#[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+#[doc = "Generated from 'VK_EXT_blend_operation_advanced'"]
 impl BlendOp {
     pub const MINUS_EXT: Self = Self(1_000_148_039);
 }
-#[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+#[doc = "Generated from 'VK_EXT_blend_operation_advanced'"]
 impl BlendOp {
     pub const MINUS_CLAMPED_EXT: Self = Self(1_000_148_040);
 }
-#[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+#[doc = "Generated from 'VK_EXT_blend_operation_advanced'"]
 impl BlendOp {
     pub const CONTRAST_EXT: Self = Self(1_000_148_041);
 }
-#[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+#[doc = "Generated from 'VK_EXT_blend_operation_advanced'"]
 impl BlendOp {
     pub const INVERT_OVG_EXT: Self = Self(1_000_148_042);
 }
-#[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+#[doc = "Generated from 'VK_EXT_blend_operation_advanced'"]
 impl BlendOp {
     pub const RED_EXT: Self = Self(1_000_148_043);
 }
-#[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+#[doc = "Generated from 'VK_EXT_blend_operation_advanced'"]
 impl BlendOp {
     pub const GREEN_EXT: Self = Self(1_000_148_044);
 }
-#[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+#[doc = "Generated from 'VK_EXT_blend_operation_advanced'"]
 impl BlendOp {
     pub const BLUE_EXT: Self = Self(1_000_148_045);
 }
-#[doc = "Generated from \'VK_EXT_blend_operation_advanced\'"]
+#[doc = "Generated from 'VK_EXT_blend_operation_advanced'"]
 impl AccessFlags {
     pub const COLOR_ATTACHMENT_READ_NONCOHERENT_EXT: Self = Self(0b1000_0000_0000_0000_0000);
 }
@@ -11728,7 +11728,7 @@ impl NvFragmentCoverageToColorFn {
         NvFragmentCoverageToColorFn {}
     }
 }
-#[doc = "Generated from \'VK_NV_fragment_coverage_to_color\'"]
+#[doc = "Generated from 'VK_NV_fragment_coverage_to_color'"]
 impl StructureType {
     pub const PIPELINE_COVERAGE_TO_COLOR_STATE_CREATE_INFO_NV: Self = Self(1_000_149_000);
 }
@@ -12520,113 +12520,113 @@ impl KhrAccelerationStructureFn {
         )
     }
 }
-#[doc = "Generated from \'VK_KHR_acceleration_structure\'"]
+#[doc = "Generated from 'VK_KHR_acceleration_structure'"]
 impl StructureType {
     pub const WRITE_DESCRIPTOR_SET_ACCELERATION_STRUCTURE_KHR: Self = Self(1_000_150_007);
 }
-#[doc = "Generated from \'VK_KHR_acceleration_structure\'"]
+#[doc = "Generated from 'VK_KHR_acceleration_structure'"]
 impl StructureType {
     pub const ACCELERATION_STRUCTURE_BUILD_GEOMETRY_INFO_KHR: Self = Self(1_000_150_000);
 }
-#[doc = "Generated from \'VK_KHR_acceleration_structure\'"]
+#[doc = "Generated from 'VK_KHR_acceleration_structure'"]
 impl StructureType {
     pub const ACCELERATION_STRUCTURE_DEVICE_ADDRESS_INFO_KHR: Self = Self(1_000_150_002);
 }
-#[doc = "Generated from \'VK_KHR_acceleration_structure\'"]
+#[doc = "Generated from 'VK_KHR_acceleration_structure'"]
 impl StructureType {
     pub const ACCELERATION_STRUCTURE_GEOMETRY_AABBS_DATA_KHR: Self = Self(1_000_150_003);
 }
-#[doc = "Generated from \'VK_KHR_acceleration_structure\'"]
+#[doc = "Generated from 'VK_KHR_acceleration_structure'"]
 impl StructureType {
     pub const ACCELERATION_STRUCTURE_GEOMETRY_INSTANCES_DATA_KHR: Self = Self(1_000_150_004);
 }
-#[doc = "Generated from \'VK_KHR_acceleration_structure\'"]
+#[doc = "Generated from 'VK_KHR_acceleration_structure'"]
 impl StructureType {
     pub const ACCELERATION_STRUCTURE_GEOMETRY_TRIANGLES_DATA_KHR: Self = Self(1_000_150_005);
 }
-#[doc = "Generated from \'VK_KHR_acceleration_structure\'"]
+#[doc = "Generated from 'VK_KHR_acceleration_structure'"]
 impl StructureType {
     pub const ACCELERATION_STRUCTURE_GEOMETRY_KHR: Self = Self(1_000_150_006);
 }
-#[doc = "Generated from \'VK_KHR_acceleration_structure\'"]
+#[doc = "Generated from 'VK_KHR_acceleration_structure'"]
 impl StructureType {
     pub const ACCELERATION_STRUCTURE_VERSION_INFO_KHR: Self = Self(1_000_150_009);
 }
-#[doc = "Generated from \'VK_KHR_acceleration_structure\'"]
+#[doc = "Generated from 'VK_KHR_acceleration_structure'"]
 impl StructureType {
     pub const COPY_ACCELERATION_STRUCTURE_INFO_KHR: Self = Self(1_000_150_010);
 }
-#[doc = "Generated from \'VK_KHR_acceleration_structure\'"]
+#[doc = "Generated from 'VK_KHR_acceleration_structure'"]
 impl StructureType {
     pub const COPY_ACCELERATION_STRUCTURE_TO_MEMORY_INFO_KHR: Self = Self(1_000_150_011);
 }
-#[doc = "Generated from \'VK_KHR_acceleration_structure\'"]
+#[doc = "Generated from 'VK_KHR_acceleration_structure'"]
 impl StructureType {
     pub const COPY_MEMORY_TO_ACCELERATION_STRUCTURE_INFO_KHR: Self = Self(1_000_150_012);
 }
-#[doc = "Generated from \'VK_KHR_acceleration_structure\'"]
+#[doc = "Generated from 'VK_KHR_acceleration_structure'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_ACCELERATION_STRUCTURE_FEATURES_KHR: Self = Self(1_000_150_013);
 }
-#[doc = "Generated from \'VK_KHR_acceleration_structure\'"]
+#[doc = "Generated from 'VK_KHR_acceleration_structure'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_ACCELERATION_STRUCTURE_PROPERTIES_KHR: Self = Self(1_000_150_014);
 }
-#[doc = "Generated from \'VK_KHR_acceleration_structure\'"]
+#[doc = "Generated from 'VK_KHR_acceleration_structure'"]
 impl StructureType {
     pub const ACCELERATION_STRUCTURE_CREATE_INFO_KHR: Self = Self(1_000_150_017);
 }
-#[doc = "Generated from \'VK_KHR_acceleration_structure\'"]
+#[doc = "Generated from 'VK_KHR_acceleration_structure'"]
 impl StructureType {
     pub const ACCELERATION_STRUCTURE_BUILD_SIZES_INFO_KHR: Self = Self(1_000_150_020);
 }
-#[doc = "Generated from \'VK_KHR_acceleration_structure\'"]
+#[doc = "Generated from 'VK_KHR_acceleration_structure'"]
 impl PipelineStageFlags {
     pub const ACCELERATION_STRUCTURE_BUILD_KHR: Self = Self(0b10_0000_0000_0000_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_KHR_acceleration_structure\'"]
+#[doc = "Generated from 'VK_KHR_acceleration_structure'"]
 impl DescriptorType {
     pub const ACCELERATION_STRUCTURE_KHR: Self = Self(1_000_150_000);
 }
-#[doc = "Generated from \'VK_KHR_acceleration_structure\'"]
+#[doc = "Generated from 'VK_KHR_acceleration_structure'"]
 impl AccessFlags {
     pub const ACCELERATION_STRUCTURE_READ_KHR: Self = Self(0b10_0000_0000_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_KHR_acceleration_structure\'"]
+#[doc = "Generated from 'VK_KHR_acceleration_structure'"]
 impl AccessFlags {
     pub const ACCELERATION_STRUCTURE_WRITE_KHR: Self = Self(0b100_0000_0000_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_KHR_acceleration_structure\'"]
+#[doc = "Generated from 'VK_KHR_acceleration_structure'"]
 impl QueryType {
     pub const ACCELERATION_STRUCTURE_COMPACTED_SIZE_KHR: Self = Self(1_000_150_000);
 }
-#[doc = "Generated from \'VK_KHR_acceleration_structure\'"]
+#[doc = "Generated from 'VK_KHR_acceleration_structure'"]
 impl QueryType {
     pub const ACCELERATION_STRUCTURE_SERIALIZATION_SIZE_KHR: Self = Self(1_000_150_001);
 }
-#[doc = "Generated from \'VK_KHR_acceleration_structure\'"]
+#[doc = "Generated from 'VK_KHR_acceleration_structure'"]
 impl ObjectType {
     pub const ACCELERATION_STRUCTURE_KHR: Self = Self(1_000_150_000);
 }
-#[doc = "Generated from \'VK_KHR_acceleration_structure\'"]
+#[doc = "Generated from 'VK_KHR_acceleration_structure'"]
 impl DebugReportObjectTypeEXT {
     pub const ACCELERATION_STRUCTURE_KHR: Self = Self(1_000_150_000);
 }
-#[doc = "Generated from \'VK_KHR_acceleration_structure\'"]
+#[doc = "Generated from 'VK_KHR_acceleration_structure'"]
 impl IndexType {
     pub const NONE_KHR: Self = Self(1_000_165_000);
 }
-#[doc = "Generated from \'VK_KHR_acceleration_structure\'"]
+#[doc = "Generated from 'VK_KHR_acceleration_structure'"]
 impl FormatFeatureFlags {
     pub const ACCELERATION_STRUCTURE_VERTEX_BUFFER_KHR: Self =
         Self(0b10_0000_0000_0000_0000_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_KHR_acceleration_structure\'"]
+#[doc = "Generated from 'VK_KHR_acceleration_structure'"]
 impl BufferUsageFlags {
     pub const ACCELERATION_STRUCTURE_BUILD_INPUT_READ_ONLY_KHR: Self =
         Self(0b1000_0000_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_KHR_acceleration_structure\'"]
+#[doc = "Generated from 'VK_KHR_acceleration_structure'"]
 impl BufferUsageFlags {
     pub const ACCELERATION_STRUCTURE_STORAGE_KHR: Self = Self(0b1_0000_0000_0000_0000_0000);
 }
@@ -13049,92 +13049,92 @@ impl KhrRayTracingPipelineFn {
         (self.cmd_set_ray_tracing_pipeline_stack_size_khr)(command_buffer, pipeline_stack_size)
     }
 }
-#[doc = "Generated from \'VK_KHR_ray_tracing_pipeline\'"]
+#[doc = "Generated from 'VK_KHR_ray_tracing_pipeline'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_RAY_TRACING_PIPELINE_FEATURES_KHR: Self = Self(1_000_347_000);
 }
-#[doc = "Generated from \'VK_KHR_ray_tracing_pipeline\'"]
+#[doc = "Generated from 'VK_KHR_ray_tracing_pipeline'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_RAY_TRACING_PIPELINE_PROPERTIES_KHR: Self = Self(1_000_347_001);
 }
-#[doc = "Generated from \'VK_KHR_ray_tracing_pipeline\'"]
+#[doc = "Generated from 'VK_KHR_ray_tracing_pipeline'"]
 impl StructureType {
     pub const RAY_TRACING_PIPELINE_CREATE_INFO_KHR: Self = Self(1_000_150_015);
 }
-#[doc = "Generated from \'VK_KHR_ray_tracing_pipeline\'"]
+#[doc = "Generated from 'VK_KHR_ray_tracing_pipeline'"]
 impl StructureType {
     pub const RAY_TRACING_SHADER_GROUP_CREATE_INFO_KHR: Self = Self(1_000_150_016);
 }
-#[doc = "Generated from \'VK_KHR_ray_tracing_pipeline\'"]
+#[doc = "Generated from 'VK_KHR_ray_tracing_pipeline'"]
 impl StructureType {
     pub const RAY_TRACING_PIPELINE_INTERFACE_CREATE_INFO_KHR: Self = Self(1_000_150_018);
 }
-#[doc = "Generated from \'VK_KHR_ray_tracing_pipeline\'"]
+#[doc = "Generated from 'VK_KHR_ray_tracing_pipeline'"]
 impl ShaderStageFlags {
     pub const RAYGEN_KHR: Self = Self(0b1_0000_0000);
 }
-#[doc = "Generated from \'VK_KHR_ray_tracing_pipeline\'"]
+#[doc = "Generated from 'VK_KHR_ray_tracing_pipeline'"]
 impl ShaderStageFlags {
     pub const ANY_HIT_KHR: Self = Self(0b10_0000_0000);
 }
-#[doc = "Generated from \'VK_KHR_ray_tracing_pipeline\'"]
+#[doc = "Generated from 'VK_KHR_ray_tracing_pipeline'"]
 impl ShaderStageFlags {
     pub const CLOSEST_HIT_KHR: Self = Self(0b100_0000_0000);
 }
-#[doc = "Generated from \'VK_KHR_ray_tracing_pipeline\'"]
+#[doc = "Generated from 'VK_KHR_ray_tracing_pipeline'"]
 impl ShaderStageFlags {
     pub const MISS_KHR: Self = Self(0b1000_0000_0000);
 }
-#[doc = "Generated from \'VK_KHR_ray_tracing_pipeline\'"]
+#[doc = "Generated from 'VK_KHR_ray_tracing_pipeline'"]
 impl ShaderStageFlags {
     pub const INTERSECTION_KHR: Self = Self(0b1_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_KHR_ray_tracing_pipeline\'"]
+#[doc = "Generated from 'VK_KHR_ray_tracing_pipeline'"]
 impl ShaderStageFlags {
     pub const CALLABLE_KHR: Self = Self(0b10_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_KHR_ray_tracing_pipeline\'"]
+#[doc = "Generated from 'VK_KHR_ray_tracing_pipeline'"]
 impl PipelineStageFlags {
     pub const RAY_TRACING_SHADER_KHR: Self = Self(0b10_0000_0000_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_KHR_ray_tracing_pipeline\'"]
+#[doc = "Generated from 'VK_KHR_ray_tracing_pipeline'"]
 impl BufferUsageFlags {
     pub const SHADER_BINDING_TABLE_KHR: Self = Self(0b100_0000_0000);
 }
-#[doc = "Generated from \'VK_KHR_ray_tracing_pipeline\'"]
+#[doc = "Generated from 'VK_KHR_ray_tracing_pipeline'"]
 impl PipelineBindPoint {
     pub const RAY_TRACING_KHR: Self = Self(1_000_165_000);
 }
-#[doc = "Generated from \'VK_KHR_ray_tracing_pipeline\'"]
+#[doc = "Generated from 'VK_KHR_ray_tracing_pipeline'"]
 impl PipelineCreateFlags {
     pub const RAY_TRACING_NO_NULL_ANY_HIT_SHADERS_KHR: Self = Self(0b100_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_KHR_ray_tracing_pipeline\'"]
+#[doc = "Generated from 'VK_KHR_ray_tracing_pipeline'"]
 impl PipelineCreateFlags {
     pub const RAY_TRACING_NO_NULL_CLOSEST_HIT_SHADERS_KHR: Self = Self(0b1000_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_KHR_ray_tracing_pipeline\'"]
+#[doc = "Generated from 'VK_KHR_ray_tracing_pipeline'"]
 impl PipelineCreateFlags {
     pub const RAY_TRACING_NO_NULL_MISS_SHADERS_KHR: Self = Self(0b1_0000_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_KHR_ray_tracing_pipeline\'"]
+#[doc = "Generated from 'VK_KHR_ray_tracing_pipeline'"]
 impl PipelineCreateFlags {
     pub const RAY_TRACING_NO_NULL_INTERSECTION_SHADERS_KHR: Self = Self(0b10_0000_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_KHR_ray_tracing_pipeline\'"]
+#[doc = "Generated from 'VK_KHR_ray_tracing_pipeline'"]
 impl PipelineCreateFlags {
     pub const RAY_TRACING_SKIP_TRIANGLES_KHR: Self = Self(0b1_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_KHR_ray_tracing_pipeline\'"]
+#[doc = "Generated from 'VK_KHR_ray_tracing_pipeline'"]
 impl PipelineCreateFlags {
     pub const RAY_TRACING_SKIP_AABBS_KHR: Self = Self(0b10_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_KHR_ray_tracing_pipeline\'"]
+#[doc = "Generated from 'VK_KHR_ray_tracing_pipeline'"]
 impl PipelineCreateFlags {
     pub const RAY_TRACING_SHADER_GROUP_HANDLE_CAPTURE_REPLAY_KHR: Self =
         Self(0b1000_0000_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_KHR_ray_tracing_pipeline\'"]
+#[doc = "Generated from 'VK_KHR_ray_tracing_pipeline'"]
 impl DynamicState {
     pub const RAY_TRACING_PIPELINE_STACK_SIZE_KHR: Self = Self(1_000_347_000);
 }
@@ -13161,7 +13161,7 @@ impl KhrRayQueryFn {
         KhrRayQueryFn {}
     }
 }
-#[doc = "Generated from \'VK_KHR_ray_query\'"]
+#[doc = "Generated from 'VK_KHR_ray_query'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_RAY_QUERY_FEATURES_KHR: Self = Self(1_000_348_013);
 }
@@ -13211,7 +13211,7 @@ impl NvFramebufferMixedSamplesFn {
         NvFramebufferMixedSamplesFn {}
     }
 }
-#[doc = "Generated from \'VK_NV_framebuffer_mixed_samples\'"]
+#[doc = "Generated from 'VK_NV_framebuffer_mixed_samples'"]
 impl StructureType {
     pub const PIPELINE_COVERAGE_MODULATION_STATE_CREATE_INFO_NV: Self = Self(1_000_152_000);
 }
@@ -13238,7 +13238,7 @@ impl NvFillRectangleFn {
         NvFillRectangleFn {}
     }
 }
-#[doc = "Generated from \'VK_NV_fill_rectangle\'"]
+#[doc = "Generated from 'VK_NV_fill_rectangle'"]
 impl PolygonMode {
     pub const FILL_RECTANGLE_NV: Self = Self(1_000_153_000);
 }
@@ -13265,11 +13265,11 @@ impl NvShaderSmBuiltinsFn {
         NvShaderSmBuiltinsFn {}
     }
 }
-#[doc = "Generated from \'VK_NV_shader_sm_builtins\'"]
+#[doc = "Generated from 'VK_NV_shader_sm_builtins'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_SM_BUILTINS_FEATURES_NV: Self = Self(1_000_154_000);
 }
-#[doc = "Generated from \'VK_NV_shader_sm_builtins\'"]
+#[doc = "Generated from 'VK_NV_shader_sm_builtins'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_SM_BUILTINS_PROPERTIES_NV: Self = Self(1_000_154_001);
 }
@@ -13413,277 +13413,277 @@ impl KhrSamplerYcbcrConversionFn {
         (self.destroy_sampler_ycbcr_conversion_khr)(device, ycbcr_conversion, p_allocator)
     }
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl StructureType {
     pub const SAMPLER_YCBCR_CONVERSION_CREATE_INFO_KHR: Self =
         StructureType::SAMPLER_YCBCR_CONVERSION_CREATE_INFO;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl StructureType {
     pub const SAMPLER_YCBCR_CONVERSION_INFO_KHR: Self =
         StructureType::SAMPLER_YCBCR_CONVERSION_INFO;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl StructureType {
     pub const BIND_IMAGE_PLANE_MEMORY_INFO_KHR: Self = StructureType::BIND_IMAGE_PLANE_MEMORY_INFO;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl StructureType {
     pub const IMAGE_PLANE_MEMORY_REQUIREMENTS_INFO_KHR: Self =
         StructureType::IMAGE_PLANE_MEMORY_REQUIREMENTS_INFO;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_SAMPLER_YCBCR_CONVERSION_FEATURES_KHR: Self =
         StructureType::PHYSICAL_DEVICE_SAMPLER_YCBCR_CONVERSION_FEATURES;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl StructureType {
     pub const SAMPLER_YCBCR_CONVERSION_IMAGE_FORMAT_PROPERTIES_KHR: Self =
         StructureType::SAMPLER_YCBCR_CONVERSION_IMAGE_FORMAT_PROPERTIES;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl DebugReportObjectTypeEXT {
     pub const SAMPLER_YCBCR_CONVERSION_KHR: Self =
         DebugReportObjectTypeEXT::SAMPLER_YCBCR_CONVERSION;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl ObjectType {
     pub const SAMPLER_YCBCR_CONVERSION_KHR: Self = ObjectType::SAMPLER_YCBCR_CONVERSION;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl Format {
     pub const G8B8G8R8_422_UNORM_KHR: Self = Format::G8B8G8R8_422_UNORM;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl Format {
     pub const B8G8R8G8_422_UNORM_KHR: Self = Format::B8G8R8G8_422_UNORM;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl Format {
     pub const G8_B8_R8_3PLANE_420_UNORM_KHR: Self = Format::G8_B8_R8_3PLANE_420_UNORM;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl Format {
     pub const G8_B8R8_2PLANE_420_UNORM_KHR: Self = Format::G8_B8R8_2PLANE_420_UNORM;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl Format {
     pub const G8_B8_R8_3PLANE_422_UNORM_KHR: Self = Format::G8_B8_R8_3PLANE_422_UNORM;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl Format {
     pub const G8_B8R8_2PLANE_422_UNORM_KHR: Self = Format::G8_B8R8_2PLANE_422_UNORM;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl Format {
     pub const G8_B8_R8_3PLANE_444_UNORM_KHR: Self = Format::G8_B8_R8_3PLANE_444_UNORM;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl Format {
     pub const R10X6_UNORM_PACK16_KHR: Self = Format::R10X6_UNORM_PACK16;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl Format {
     pub const R10X6G10X6_UNORM_2PACK16_KHR: Self = Format::R10X6G10X6_UNORM_2PACK16;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl Format {
     pub const R10X6G10X6B10X6A10X6_UNORM_4PACK16_KHR: Self =
         Format::R10X6G10X6B10X6A10X6_UNORM_4PACK16;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl Format {
     pub const G10X6B10X6G10X6R10X6_422_UNORM_4PACK16_KHR: Self =
         Format::G10X6B10X6G10X6R10X6_422_UNORM_4PACK16;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl Format {
     pub const B10X6G10X6R10X6G10X6_422_UNORM_4PACK16_KHR: Self =
         Format::B10X6G10X6R10X6G10X6_422_UNORM_4PACK16;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl Format {
     pub const G10X6_B10X6_R10X6_3PLANE_420_UNORM_3PACK16_KHR: Self =
         Format::G10X6_B10X6_R10X6_3PLANE_420_UNORM_3PACK16;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl Format {
     pub const G10X6_B10X6R10X6_2PLANE_420_UNORM_3PACK16_KHR: Self =
         Format::G10X6_B10X6R10X6_2PLANE_420_UNORM_3PACK16;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl Format {
     pub const G10X6_B10X6_R10X6_3PLANE_422_UNORM_3PACK16_KHR: Self =
         Format::G10X6_B10X6_R10X6_3PLANE_422_UNORM_3PACK16;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl Format {
     pub const G10X6_B10X6R10X6_2PLANE_422_UNORM_3PACK16_KHR: Self =
         Format::G10X6_B10X6R10X6_2PLANE_422_UNORM_3PACK16;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl Format {
     pub const G10X6_B10X6_R10X6_3PLANE_444_UNORM_3PACK16_KHR: Self =
         Format::G10X6_B10X6_R10X6_3PLANE_444_UNORM_3PACK16;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl Format {
     pub const R12X4_UNORM_PACK16_KHR: Self = Format::R12X4_UNORM_PACK16;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl Format {
     pub const R12X4G12X4_UNORM_2PACK16_KHR: Self = Format::R12X4G12X4_UNORM_2PACK16;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl Format {
     pub const R12X4G12X4B12X4A12X4_UNORM_4PACK16_KHR: Self =
         Format::R12X4G12X4B12X4A12X4_UNORM_4PACK16;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl Format {
     pub const G12X4B12X4G12X4R12X4_422_UNORM_4PACK16_KHR: Self =
         Format::G12X4B12X4G12X4R12X4_422_UNORM_4PACK16;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl Format {
     pub const B12X4G12X4R12X4G12X4_422_UNORM_4PACK16_KHR: Self =
         Format::B12X4G12X4R12X4G12X4_422_UNORM_4PACK16;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl Format {
     pub const G12X4_B12X4_R12X4_3PLANE_420_UNORM_3PACK16_KHR: Self =
         Format::G12X4_B12X4_R12X4_3PLANE_420_UNORM_3PACK16;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl Format {
     pub const G12X4_B12X4R12X4_2PLANE_420_UNORM_3PACK16_KHR: Self =
         Format::G12X4_B12X4R12X4_2PLANE_420_UNORM_3PACK16;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl Format {
     pub const G12X4_B12X4_R12X4_3PLANE_422_UNORM_3PACK16_KHR: Self =
         Format::G12X4_B12X4_R12X4_3PLANE_422_UNORM_3PACK16;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl Format {
     pub const G12X4_B12X4R12X4_2PLANE_422_UNORM_3PACK16_KHR: Self =
         Format::G12X4_B12X4R12X4_2PLANE_422_UNORM_3PACK16;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl Format {
     pub const G12X4_B12X4_R12X4_3PLANE_444_UNORM_3PACK16_KHR: Self =
         Format::G12X4_B12X4_R12X4_3PLANE_444_UNORM_3PACK16;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl Format {
     pub const G16B16G16R16_422_UNORM_KHR: Self = Format::G16B16G16R16_422_UNORM;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl Format {
     pub const B16G16R16G16_422_UNORM_KHR: Self = Format::B16G16R16G16_422_UNORM;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl Format {
     pub const G16_B16_R16_3PLANE_420_UNORM_KHR: Self = Format::G16_B16_R16_3PLANE_420_UNORM;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl Format {
     pub const G16_B16R16_2PLANE_420_UNORM_KHR: Self = Format::G16_B16R16_2PLANE_420_UNORM;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl Format {
     pub const G16_B16_R16_3PLANE_422_UNORM_KHR: Self = Format::G16_B16_R16_3PLANE_422_UNORM;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl Format {
     pub const G16_B16R16_2PLANE_422_UNORM_KHR: Self = Format::G16_B16R16_2PLANE_422_UNORM;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl Format {
     pub const G16_B16_R16_3PLANE_444_UNORM_KHR: Self = Format::G16_B16_R16_3PLANE_444_UNORM;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl ImageAspectFlags {
     pub const PLANE_0_KHR: Self = ImageAspectFlags::PLANE_0;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl ImageAspectFlags {
     pub const PLANE_1_KHR: Self = ImageAspectFlags::PLANE_1;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl ImageAspectFlags {
     pub const PLANE_2_KHR: Self = ImageAspectFlags::PLANE_2;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl ImageCreateFlags {
     pub const DISJOINT_KHR: Self = ImageCreateFlags::DISJOINT;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl FormatFeatureFlags {
     pub const MIDPOINT_CHROMA_SAMPLES_KHR: Self = FormatFeatureFlags::MIDPOINT_CHROMA_SAMPLES;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl FormatFeatureFlags {
     pub const SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER_KHR: Self =
         FormatFeatureFlags::SAMPLED_IMAGE_YCBCR_CONVERSION_LINEAR_FILTER;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl FormatFeatureFlags {
     pub const SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER_KHR: Self =
         FormatFeatureFlags::SAMPLED_IMAGE_YCBCR_CONVERSION_SEPARATE_RECONSTRUCTION_FILTER;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl FormatFeatureFlags {
     pub const SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_KHR: Self =
         FormatFeatureFlags::SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl FormatFeatureFlags {
     pub const SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE_KHR: Self =
         FormatFeatureFlags::SAMPLED_IMAGE_YCBCR_CONVERSION_CHROMA_RECONSTRUCTION_EXPLICIT_FORCEABLE;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl FormatFeatureFlags {
     pub const DISJOINT_KHR: Self = FormatFeatureFlags::DISJOINT;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl FormatFeatureFlags {
     pub const COSITED_CHROMA_SAMPLES_KHR: Self = FormatFeatureFlags::COSITED_CHROMA_SAMPLES;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl SamplerYcbcrModelConversion {
     pub const RGB_IDENTITY_KHR: Self = SamplerYcbcrModelConversion::RGB_IDENTITY;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl SamplerYcbcrModelConversion {
     pub const YCBCR_IDENTITY_KHR: Self = SamplerYcbcrModelConversion::YCBCR_IDENTITY;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl SamplerYcbcrModelConversion {
     pub const YCBCR_709_KHR: Self = SamplerYcbcrModelConversion::YCBCR_709;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl SamplerYcbcrModelConversion {
     pub const YCBCR_601_KHR: Self = SamplerYcbcrModelConversion::YCBCR_601;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl SamplerYcbcrModelConversion {
     pub const YCBCR_2020_KHR: Self = SamplerYcbcrModelConversion::YCBCR_2020;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl SamplerYcbcrRange {
     pub const ITU_FULL_KHR: Self = SamplerYcbcrRange::ITU_FULL;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl SamplerYcbcrRange {
     pub const ITU_NARROW_KHR: Self = SamplerYcbcrRange::ITU_NARROW;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl ChromaLocation {
     pub const COSITED_EVEN_KHR: Self = ChromaLocation::COSITED_EVEN;
 }
-#[doc = "Generated from \'VK_KHR_sampler_ycbcr_conversion\'"]
+#[doc = "Generated from 'VK_KHR_sampler_ycbcr_conversion'"]
 impl ChromaLocation {
     pub const MIDPOINT_KHR: Self = ChromaLocation::MIDPOINT;
 }
@@ -13795,15 +13795,15 @@ impl KhrBindMemory2Fn {
         (self.bind_image_memory2_khr)(device, bind_info_count, p_bind_infos)
     }
 }
-#[doc = "Generated from \'VK_KHR_bind_memory2\'"]
+#[doc = "Generated from 'VK_KHR_bind_memory2'"]
 impl StructureType {
     pub const BIND_BUFFER_MEMORY_INFO_KHR: Self = StructureType::BIND_BUFFER_MEMORY_INFO;
 }
-#[doc = "Generated from \'VK_KHR_bind_memory2\'"]
+#[doc = "Generated from 'VK_KHR_bind_memory2'"]
 impl StructureType {
     pub const BIND_IMAGE_MEMORY_INFO_KHR: Self = StructureType::BIND_IMAGE_MEMORY_INFO;
 }
-#[doc = "Generated from \'VK_KHR_bind_memory2\'"]
+#[doc = "Generated from 'VK_KHR_bind_memory2'"]
 impl ImageCreateFlags {
     pub const ALIAS_KHR: Self = ImageCreateFlags::ALIAS;
 }
@@ -13875,47 +13875,47 @@ impl ExtImageDrmFormatModifierFn {
         (self.get_image_drm_format_modifier_properties_ext)(device, image, p_properties)
     }
 }
-#[doc = "Generated from \'VK_EXT_image_drm_format_modifier\'"]
+#[doc = "Generated from 'VK_EXT_image_drm_format_modifier'"]
 impl Result {
-    pub const ERROR_INVALID_DRM_FORMAT_MODIFIER_PLANE_LAYOUT_EXT: Self = Self(-1_000_158_000);
+    pub const ERROR_INVALID_DRM_FORMAT_MODIFIER_PLANE_LAYOUT_EXT: Self = Self(-1000158000);
 }
-#[doc = "Generated from \'VK_EXT_image_drm_format_modifier\'"]
+#[doc = "Generated from 'VK_EXT_image_drm_format_modifier'"]
 impl StructureType {
     pub const DRM_FORMAT_MODIFIER_PROPERTIES_LIST_EXT: Self = Self(1_000_158_000);
 }
-#[doc = "Generated from \'VK_EXT_image_drm_format_modifier\'"]
+#[doc = "Generated from 'VK_EXT_image_drm_format_modifier'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_IMAGE_DRM_FORMAT_MODIFIER_INFO_EXT: Self = Self(1_000_158_002);
 }
-#[doc = "Generated from \'VK_EXT_image_drm_format_modifier\'"]
+#[doc = "Generated from 'VK_EXT_image_drm_format_modifier'"]
 impl StructureType {
     pub const IMAGE_DRM_FORMAT_MODIFIER_LIST_CREATE_INFO_EXT: Self = Self(1_000_158_003);
 }
-#[doc = "Generated from \'VK_EXT_image_drm_format_modifier\'"]
+#[doc = "Generated from 'VK_EXT_image_drm_format_modifier'"]
 impl StructureType {
     pub const IMAGE_DRM_FORMAT_MODIFIER_EXPLICIT_CREATE_INFO_EXT: Self = Self(1_000_158_004);
 }
-#[doc = "Generated from \'VK_EXT_image_drm_format_modifier\'"]
+#[doc = "Generated from 'VK_EXT_image_drm_format_modifier'"]
 impl StructureType {
     pub const IMAGE_DRM_FORMAT_MODIFIER_PROPERTIES_EXT: Self = Self(1_000_158_005);
 }
-#[doc = "Generated from \'VK_EXT_image_drm_format_modifier\'"]
+#[doc = "Generated from 'VK_EXT_image_drm_format_modifier'"]
 impl ImageTiling {
     pub const DRM_FORMAT_MODIFIER_EXT: Self = Self(1_000_158_000);
 }
-#[doc = "Generated from \'VK_EXT_image_drm_format_modifier\'"]
+#[doc = "Generated from 'VK_EXT_image_drm_format_modifier'"]
 impl ImageAspectFlags {
     pub const MEMORY_PLANE_0_EXT: Self = Self(0b1000_0000);
 }
-#[doc = "Generated from \'VK_EXT_image_drm_format_modifier\'"]
+#[doc = "Generated from 'VK_EXT_image_drm_format_modifier'"]
 impl ImageAspectFlags {
     pub const MEMORY_PLANE_1_EXT: Self = Self(0b1_0000_0000);
 }
-#[doc = "Generated from \'VK_EXT_image_drm_format_modifier\'"]
+#[doc = "Generated from 'VK_EXT_image_drm_format_modifier'"]
 impl ImageAspectFlags {
     pub const MEMORY_PLANE_2_EXT: Self = Self(0b10_0000_0000);
 }
-#[doc = "Generated from \'VK_EXT_image_drm_format_modifier\'"]
+#[doc = "Generated from 'VK_EXT_image_drm_format_modifier'"]
 impl ImageAspectFlags {
     pub const MEMORY_PLANE_3_EXT: Self = Self(0b100_0000_0000);
 }
@@ -14144,15 +14144,15 @@ impl ExtValidationCacheFn {
         (self.get_validation_cache_data_ext)(device, validation_cache, p_data_size, p_data)
     }
 }
-#[doc = "Generated from \'VK_EXT_validation_cache\'"]
+#[doc = "Generated from 'VK_EXT_validation_cache'"]
 impl StructureType {
     pub const VALIDATION_CACHE_CREATE_INFO_EXT: Self = Self(1_000_160_000);
 }
-#[doc = "Generated from \'VK_EXT_validation_cache\'"]
+#[doc = "Generated from 'VK_EXT_validation_cache'"]
 impl StructureType {
     pub const SHADER_MODULE_VALIDATION_CACHE_CREATE_INFO_EXT: Self = Self(1_000_160_001);
 }
-#[doc = "Generated from \'VK_EXT_validation_cache\'"]
+#[doc = "Generated from 'VK_EXT_validation_cache'"]
 impl ObjectType {
     pub const VALIDATION_CACHE_EXT: Self = Self(1_000_160_000);
 }
@@ -14179,59 +14179,59 @@ impl ExtDescriptorIndexingFn {
         ExtDescriptorIndexingFn {}
     }
 }
-#[doc = "Generated from \'VK_EXT_descriptor_indexing\'"]
+#[doc = "Generated from 'VK_EXT_descriptor_indexing'"]
 impl StructureType {
     pub const DESCRIPTOR_SET_LAYOUT_BINDING_FLAGS_CREATE_INFO_EXT: Self =
         StructureType::DESCRIPTOR_SET_LAYOUT_BINDING_FLAGS_CREATE_INFO;
 }
-#[doc = "Generated from \'VK_EXT_descriptor_indexing\'"]
+#[doc = "Generated from 'VK_EXT_descriptor_indexing'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_FEATURES_EXT: Self =
         StructureType::PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_FEATURES;
 }
-#[doc = "Generated from \'VK_EXT_descriptor_indexing\'"]
+#[doc = "Generated from 'VK_EXT_descriptor_indexing'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_PROPERTIES_EXT: Self =
         StructureType::PHYSICAL_DEVICE_DESCRIPTOR_INDEXING_PROPERTIES;
 }
-#[doc = "Generated from \'VK_EXT_descriptor_indexing\'"]
+#[doc = "Generated from 'VK_EXT_descriptor_indexing'"]
 impl StructureType {
     pub const DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_ALLOCATE_INFO_EXT: Self =
         StructureType::DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_ALLOCATE_INFO;
 }
-#[doc = "Generated from \'VK_EXT_descriptor_indexing\'"]
+#[doc = "Generated from 'VK_EXT_descriptor_indexing'"]
 impl StructureType {
     pub const DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_LAYOUT_SUPPORT_EXT: Self =
         StructureType::DESCRIPTOR_SET_VARIABLE_DESCRIPTOR_COUNT_LAYOUT_SUPPORT;
 }
-#[doc = "Generated from \'VK_EXT_descriptor_indexing\'"]
+#[doc = "Generated from 'VK_EXT_descriptor_indexing'"]
 impl DescriptorBindingFlags {
     pub const UPDATE_AFTER_BIND_EXT: Self = DescriptorBindingFlags::UPDATE_AFTER_BIND;
 }
-#[doc = "Generated from \'VK_EXT_descriptor_indexing\'"]
+#[doc = "Generated from 'VK_EXT_descriptor_indexing'"]
 impl DescriptorBindingFlags {
     pub const UPDATE_UNUSED_WHILE_PENDING_EXT: Self =
         DescriptorBindingFlags::UPDATE_UNUSED_WHILE_PENDING;
 }
-#[doc = "Generated from \'VK_EXT_descriptor_indexing\'"]
+#[doc = "Generated from 'VK_EXT_descriptor_indexing'"]
 impl DescriptorBindingFlags {
     pub const PARTIALLY_BOUND_EXT: Self = DescriptorBindingFlags::PARTIALLY_BOUND;
 }
-#[doc = "Generated from \'VK_EXT_descriptor_indexing\'"]
+#[doc = "Generated from 'VK_EXT_descriptor_indexing'"]
 impl DescriptorBindingFlags {
     pub const VARIABLE_DESCRIPTOR_COUNT_EXT: Self =
         DescriptorBindingFlags::VARIABLE_DESCRIPTOR_COUNT;
 }
-#[doc = "Generated from \'VK_EXT_descriptor_indexing\'"]
+#[doc = "Generated from 'VK_EXT_descriptor_indexing'"]
 impl DescriptorPoolCreateFlags {
     pub const UPDATE_AFTER_BIND_EXT: Self = DescriptorPoolCreateFlags::UPDATE_AFTER_BIND;
 }
-#[doc = "Generated from \'VK_EXT_descriptor_indexing\'"]
+#[doc = "Generated from 'VK_EXT_descriptor_indexing'"]
 impl DescriptorSetLayoutCreateFlags {
     pub const UPDATE_AFTER_BIND_POOL_EXT: Self =
         DescriptorSetLayoutCreateFlags::UPDATE_AFTER_BIND_POOL;
 }
-#[doc = "Generated from \'VK_EXT_descriptor_indexing\'"]
+#[doc = "Generated from 'VK_EXT_descriptor_indexing'"]
 impl Result {
     pub const ERROR_FRAGMENTATION_EXT: Self = Result::ERROR_FRAGMENTATION;
 }
@@ -14281,11 +14281,11 @@ impl KhrPortabilitySubsetFn {
         KhrPortabilitySubsetFn {}
     }
 }
-#[doc = "Generated from \'VK_KHR_portability_subset\'"]
+#[doc = "Generated from 'VK_KHR_portability_subset'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_PORTABILITY_SUBSET_FEATURES_KHR: Self = Self(1_000_163_000);
 }
-#[doc = "Generated from \'VK_KHR_portability_subset\'"]
+#[doc = "Generated from 'VK_KHR_portability_subset'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_PORTABILITY_SUBSET_PROPERTIES_KHR: Self = Self(1_000_163_001);
 }
@@ -14456,44 +14456,44 @@ impl NvShadingRateImageFn {
         )
     }
 }
-#[doc = "Generated from \'VK_NV_shading_rate_image\'"]
+#[doc = "Generated from 'VK_NV_shading_rate_image'"]
 impl StructureType {
     pub const PIPELINE_VIEWPORT_SHADING_RATE_IMAGE_STATE_CREATE_INFO_NV: Self = Self(1_000_164_000);
 }
-#[doc = "Generated from \'VK_NV_shading_rate_image\'"]
+#[doc = "Generated from 'VK_NV_shading_rate_image'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_SHADING_RATE_IMAGE_FEATURES_NV: Self = Self(1_000_164_001);
 }
-#[doc = "Generated from \'VK_NV_shading_rate_image\'"]
+#[doc = "Generated from 'VK_NV_shading_rate_image'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_SHADING_RATE_IMAGE_PROPERTIES_NV: Self = Self(1_000_164_002);
 }
-#[doc = "Generated from \'VK_NV_shading_rate_image\'"]
+#[doc = "Generated from 'VK_NV_shading_rate_image'"]
 impl ImageLayout {
     pub const SHADING_RATE_OPTIMAL_NV: Self = Self(1_000_164_003);
 }
-#[doc = "Generated from \'VK_NV_shading_rate_image\'"]
+#[doc = "Generated from 'VK_NV_shading_rate_image'"]
 impl DynamicState {
     pub const VIEWPORT_SHADING_RATE_PALETTE_NV: Self = Self(1_000_164_004);
 }
-#[doc = "Generated from \'VK_NV_shading_rate_image\'"]
+#[doc = "Generated from 'VK_NV_shading_rate_image'"]
 impl AccessFlags {
     pub const SHADING_RATE_IMAGE_READ_NV: Self = Self(0b1000_0000_0000_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_NV_shading_rate_image\'"]
+#[doc = "Generated from 'VK_NV_shading_rate_image'"]
 impl ImageUsageFlags {
     pub const SHADING_RATE_IMAGE_NV: Self = Self(0b1_0000_0000);
 }
-#[doc = "Generated from \'VK_NV_shading_rate_image\'"]
+#[doc = "Generated from 'VK_NV_shading_rate_image'"]
 impl PipelineStageFlags {
     pub const SHADING_RATE_IMAGE_NV: Self = Self(0b100_0000_0000_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_NV_shading_rate_image\'"]
+#[doc = "Generated from 'VK_NV_shading_rate_image'"]
 impl StructureType {
     pub const PIPELINE_VIEWPORT_COARSE_SAMPLE_ORDER_STATE_CREATE_INFO_NV: Self =
         Self(1_000_164_005);
 }
-#[doc = "Generated from \'VK_NV_shading_rate_image\'"]
+#[doc = "Generated from 'VK_NV_shading_rate_image'"]
 impl DynamicState {
     pub const VIEWPORT_COARSE_SAMPLE_ORDER_NV: Self = Self(1_000_164_006);
 }
@@ -15183,203 +15183,203 @@ impl NvRayTracingFn {
         (self.compile_deferred_nv)(device, pipeline, shader)
     }
 }
-#[doc = "Generated from \'VK_NV_ray_tracing\'"]
+#[doc = "Generated from 'VK_NV_ray_tracing'"]
 impl StructureType {
     pub const RAY_TRACING_PIPELINE_CREATE_INFO_NV: Self = Self(1_000_165_000);
 }
-#[doc = "Generated from \'VK_NV_ray_tracing\'"]
+#[doc = "Generated from 'VK_NV_ray_tracing'"]
 impl StructureType {
     pub const ACCELERATION_STRUCTURE_CREATE_INFO_NV: Self = Self(1_000_165_001);
 }
-#[doc = "Generated from \'VK_NV_ray_tracing\'"]
+#[doc = "Generated from 'VK_NV_ray_tracing'"]
 impl StructureType {
     pub const GEOMETRY_NV: Self = Self(1_000_165_003);
 }
-#[doc = "Generated from \'VK_NV_ray_tracing\'"]
+#[doc = "Generated from 'VK_NV_ray_tracing'"]
 impl StructureType {
     pub const GEOMETRY_TRIANGLES_NV: Self = Self(1_000_165_004);
 }
-#[doc = "Generated from \'VK_NV_ray_tracing\'"]
+#[doc = "Generated from 'VK_NV_ray_tracing'"]
 impl StructureType {
     pub const GEOMETRY_AABB_NV: Self = Self(1_000_165_005);
 }
-#[doc = "Generated from \'VK_NV_ray_tracing\'"]
+#[doc = "Generated from 'VK_NV_ray_tracing'"]
 impl StructureType {
     pub const BIND_ACCELERATION_STRUCTURE_MEMORY_INFO_NV: Self = Self(1_000_165_006);
 }
-#[doc = "Generated from \'VK_NV_ray_tracing\'"]
+#[doc = "Generated from 'VK_NV_ray_tracing'"]
 impl StructureType {
     pub const WRITE_DESCRIPTOR_SET_ACCELERATION_STRUCTURE_NV: Self = Self(1_000_165_007);
 }
-#[doc = "Generated from \'VK_NV_ray_tracing\'"]
+#[doc = "Generated from 'VK_NV_ray_tracing'"]
 impl StructureType {
     pub const ACCELERATION_STRUCTURE_MEMORY_REQUIREMENTS_INFO_NV: Self = Self(1_000_165_008);
 }
-#[doc = "Generated from \'VK_NV_ray_tracing\'"]
+#[doc = "Generated from 'VK_NV_ray_tracing'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_RAY_TRACING_PROPERTIES_NV: Self = Self(1_000_165_009);
 }
-#[doc = "Generated from \'VK_NV_ray_tracing\'"]
+#[doc = "Generated from 'VK_NV_ray_tracing'"]
 impl StructureType {
     pub const RAY_TRACING_SHADER_GROUP_CREATE_INFO_NV: Self = Self(1_000_165_011);
 }
-#[doc = "Generated from \'VK_NV_ray_tracing\'"]
+#[doc = "Generated from 'VK_NV_ray_tracing'"]
 impl StructureType {
     pub const ACCELERATION_STRUCTURE_INFO_NV: Self = Self(1_000_165_012);
 }
-#[doc = "Generated from \'VK_NV_ray_tracing\'"]
+#[doc = "Generated from 'VK_NV_ray_tracing'"]
 impl ShaderStageFlags {
     pub const RAYGEN_NV: Self = ShaderStageFlags::RAYGEN_KHR;
 }
-#[doc = "Generated from \'VK_NV_ray_tracing\'"]
+#[doc = "Generated from 'VK_NV_ray_tracing'"]
 impl ShaderStageFlags {
     pub const ANY_HIT_NV: Self = ShaderStageFlags::ANY_HIT_KHR;
 }
-#[doc = "Generated from \'VK_NV_ray_tracing\'"]
+#[doc = "Generated from 'VK_NV_ray_tracing'"]
 impl ShaderStageFlags {
     pub const CLOSEST_HIT_NV: Self = ShaderStageFlags::CLOSEST_HIT_KHR;
 }
-#[doc = "Generated from \'VK_NV_ray_tracing\'"]
+#[doc = "Generated from 'VK_NV_ray_tracing'"]
 impl ShaderStageFlags {
     pub const MISS_NV: Self = ShaderStageFlags::MISS_KHR;
 }
-#[doc = "Generated from \'VK_NV_ray_tracing\'"]
+#[doc = "Generated from 'VK_NV_ray_tracing'"]
 impl ShaderStageFlags {
     pub const INTERSECTION_NV: Self = ShaderStageFlags::INTERSECTION_KHR;
 }
-#[doc = "Generated from \'VK_NV_ray_tracing\'"]
+#[doc = "Generated from 'VK_NV_ray_tracing'"]
 impl ShaderStageFlags {
     pub const CALLABLE_NV: Self = ShaderStageFlags::CALLABLE_KHR;
 }
-#[doc = "Generated from \'VK_NV_ray_tracing\'"]
+#[doc = "Generated from 'VK_NV_ray_tracing'"]
 impl PipelineStageFlags {
     pub const RAY_TRACING_SHADER_NV: Self = PipelineStageFlags::RAY_TRACING_SHADER_KHR;
 }
-#[doc = "Generated from \'VK_NV_ray_tracing\'"]
+#[doc = "Generated from 'VK_NV_ray_tracing'"]
 impl PipelineStageFlags {
     pub const ACCELERATION_STRUCTURE_BUILD_NV: Self =
         PipelineStageFlags::ACCELERATION_STRUCTURE_BUILD_KHR;
 }
-#[doc = "Generated from \'VK_NV_ray_tracing\'"]
+#[doc = "Generated from 'VK_NV_ray_tracing'"]
 impl BufferUsageFlags {
     pub const RAY_TRACING_NV: Self = BufferUsageFlags::SHADER_BINDING_TABLE_KHR;
 }
-#[doc = "Generated from \'VK_NV_ray_tracing\'"]
+#[doc = "Generated from 'VK_NV_ray_tracing'"]
 impl PipelineBindPoint {
     pub const RAY_TRACING_NV: Self = PipelineBindPoint::RAY_TRACING_KHR;
 }
-#[doc = "Generated from \'VK_NV_ray_tracing\'"]
+#[doc = "Generated from 'VK_NV_ray_tracing'"]
 impl DescriptorType {
     pub const ACCELERATION_STRUCTURE_NV: Self = Self(1_000_165_000);
 }
-#[doc = "Generated from \'VK_NV_ray_tracing\'"]
+#[doc = "Generated from 'VK_NV_ray_tracing'"]
 impl AccessFlags {
     pub const ACCELERATION_STRUCTURE_READ_NV: Self = AccessFlags::ACCELERATION_STRUCTURE_READ_KHR;
 }
-#[doc = "Generated from \'VK_NV_ray_tracing\'"]
+#[doc = "Generated from 'VK_NV_ray_tracing'"]
 impl AccessFlags {
     pub const ACCELERATION_STRUCTURE_WRITE_NV: Self = AccessFlags::ACCELERATION_STRUCTURE_WRITE_KHR;
 }
-#[doc = "Generated from \'VK_NV_ray_tracing\'"]
+#[doc = "Generated from 'VK_NV_ray_tracing'"]
 impl QueryType {
     pub const ACCELERATION_STRUCTURE_COMPACTED_SIZE_NV: Self = Self(1_000_165_000);
 }
-#[doc = "Generated from \'VK_NV_ray_tracing\'"]
+#[doc = "Generated from 'VK_NV_ray_tracing'"]
 impl PipelineCreateFlags {
     pub const DEFER_COMPILE_NV: Self = Self(0b10_0000);
 }
-#[doc = "Generated from \'VK_NV_ray_tracing\'"]
+#[doc = "Generated from 'VK_NV_ray_tracing'"]
 impl ObjectType {
     pub const ACCELERATION_STRUCTURE_NV: Self = Self(1_000_165_000);
 }
-#[doc = "Generated from \'VK_NV_ray_tracing\'"]
+#[doc = "Generated from 'VK_NV_ray_tracing'"]
 impl DebugReportObjectTypeEXT {
     pub const ACCELERATION_STRUCTURE_NV: Self = Self(1_000_165_000);
 }
-#[doc = "Generated from \'VK_NV_ray_tracing\'"]
+#[doc = "Generated from 'VK_NV_ray_tracing'"]
 impl IndexType {
     pub const NONE_NV: Self = IndexType::NONE_KHR;
 }
-#[doc = "Generated from \'VK_NV_ray_tracing\'"]
+#[doc = "Generated from 'VK_NV_ray_tracing'"]
 impl RayTracingShaderGroupTypeKHR {
     pub const GENERAL_NV: Self = RayTracingShaderGroupTypeKHR::GENERAL;
 }
-#[doc = "Generated from \'VK_NV_ray_tracing\'"]
+#[doc = "Generated from 'VK_NV_ray_tracing'"]
 impl RayTracingShaderGroupTypeKHR {
     pub const TRIANGLES_HIT_GROUP_NV: Self = RayTracingShaderGroupTypeKHR::TRIANGLES_HIT_GROUP;
 }
-#[doc = "Generated from \'VK_NV_ray_tracing\'"]
+#[doc = "Generated from 'VK_NV_ray_tracing'"]
 impl RayTracingShaderGroupTypeKHR {
     pub const PROCEDURAL_HIT_GROUP_NV: Self = RayTracingShaderGroupTypeKHR::PROCEDURAL_HIT_GROUP;
 }
-#[doc = "Generated from \'VK_NV_ray_tracing\'"]
+#[doc = "Generated from 'VK_NV_ray_tracing'"]
 impl GeometryTypeKHR {
     pub const TRIANGLES_NV: Self = GeometryTypeKHR::TRIANGLES;
 }
-#[doc = "Generated from \'VK_NV_ray_tracing\'"]
+#[doc = "Generated from 'VK_NV_ray_tracing'"]
 impl GeometryTypeKHR {
     pub const AABBS_NV: Self = GeometryTypeKHR::AABBS;
 }
-#[doc = "Generated from \'VK_NV_ray_tracing\'"]
+#[doc = "Generated from 'VK_NV_ray_tracing'"]
 impl AccelerationStructureTypeKHR {
     pub const TOP_LEVEL_NV: Self = AccelerationStructureTypeKHR::TOP_LEVEL;
 }
-#[doc = "Generated from \'VK_NV_ray_tracing\'"]
+#[doc = "Generated from 'VK_NV_ray_tracing'"]
 impl AccelerationStructureTypeKHR {
     pub const BOTTOM_LEVEL_NV: Self = AccelerationStructureTypeKHR::BOTTOM_LEVEL;
 }
-#[doc = "Generated from \'VK_NV_ray_tracing\'"]
+#[doc = "Generated from 'VK_NV_ray_tracing'"]
 impl GeometryFlagsKHR {
     pub const OPAQUE_NV: Self = GeometryFlagsKHR::OPAQUE;
 }
-#[doc = "Generated from \'VK_NV_ray_tracing\'"]
+#[doc = "Generated from 'VK_NV_ray_tracing'"]
 impl GeometryFlagsKHR {
     pub const NO_DUPLICATE_ANY_HIT_INVOCATION_NV: Self =
         GeometryFlagsKHR::NO_DUPLICATE_ANY_HIT_INVOCATION;
 }
-#[doc = "Generated from \'VK_NV_ray_tracing\'"]
+#[doc = "Generated from 'VK_NV_ray_tracing'"]
 impl GeometryInstanceFlagsKHR {
     pub const TRIANGLE_CULL_DISABLE_NV: Self =
         GeometryInstanceFlagsKHR::TRIANGLE_FACING_CULL_DISABLE;
 }
-#[doc = "Generated from \'VK_NV_ray_tracing\'"]
+#[doc = "Generated from 'VK_NV_ray_tracing'"]
 impl GeometryInstanceFlagsKHR {
     pub const TRIANGLE_FRONT_COUNTERCLOCKWISE_NV: Self =
         GeometryInstanceFlagsKHR::TRIANGLE_FRONT_COUNTERCLOCKWISE;
 }
-#[doc = "Generated from \'VK_NV_ray_tracing\'"]
+#[doc = "Generated from 'VK_NV_ray_tracing'"]
 impl GeometryInstanceFlagsKHR {
     pub const FORCE_OPAQUE_NV: Self = GeometryInstanceFlagsKHR::FORCE_OPAQUE;
 }
-#[doc = "Generated from \'VK_NV_ray_tracing\'"]
+#[doc = "Generated from 'VK_NV_ray_tracing'"]
 impl GeometryInstanceFlagsKHR {
     pub const FORCE_NO_OPAQUE_NV: Self = GeometryInstanceFlagsKHR::FORCE_NO_OPAQUE;
 }
-#[doc = "Generated from \'VK_NV_ray_tracing\'"]
+#[doc = "Generated from 'VK_NV_ray_tracing'"]
 impl BuildAccelerationStructureFlagsKHR {
     pub const ALLOW_UPDATE_NV: Self = BuildAccelerationStructureFlagsKHR::ALLOW_UPDATE;
 }
-#[doc = "Generated from \'VK_NV_ray_tracing\'"]
+#[doc = "Generated from 'VK_NV_ray_tracing'"]
 impl BuildAccelerationStructureFlagsKHR {
     pub const ALLOW_COMPACTION_NV: Self = BuildAccelerationStructureFlagsKHR::ALLOW_COMPACTION;
 }
-#[doc = "Generated from \'VK_NV_ray_tracing\'"]
+#[doc = "Generated from 'VK_NV_ray_tracing'"]
 impl BuildAccelerationStructureFlagsKHR {
     pub const PREFER_FAST_TRACE_NV: Self = BuildAccelerationStructureFlagsKHR::PREFER_FAST_TRACE;
 }
-#[doc = "Generated from \'VK_NV_ray_tracing\'"]
+#[doc = "Generated from 'VK_NV_ray_tracing'"]
 impl BuildAccelerationStructureFlagsKHR {
     pub const PREFER_FAST_BUILD_NV: Self = BuildAccelerationStructureFlagsKHR::PREFER_FAST_BUILD;
 }
-#[doc = "Generated from \'VK_NV_ray_tracing\'"]
+#[doc = "Generated from 'VK_NV_ray_tracing'"]
 impl BuildAccelerationStructureFlagsKHR {
     pub const LOW_MEMORY_NV: Self = BuildAccelerationStructureFlagsKHR::LOW_MEMORY;
 }
-#[doc = "Generated from \'VK_NV_ray_tracing\'"]
+#[doc = "Generated from 'VK_NV_ray_tracing'"]
 impl CopyAccelerationStructureModeKHR {
     pub const CLONE_NV: Self = CopyAccelerationStructureModeKHR::CLONE;
 }
-#[doc = "Generated from \'VK_NV_ray_tracing\'"]
+#[doc = "Generated from 'VK_NV_ray_tracing'"]
 impl CopyAccelerationStructureModeKHR {
     pub const COMPACT_NV: Self = CopyAccelerationStructureModeKHR::COMPACT;
 }
@@ -15406,11 +15406,11 @@ impl NvRepresentativeFragmentTestFn {
         NvRepresentativeFragmentTestFn {}
     }
 }
-#[doc = "Generated from \'VK_NV_representative_fragment_test\'"]
+#[doc = "Generated from 'VK_NV_representative_fragment_test'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_REPRESENTATIVE_FRAGMENT_TEST_FEATURES_NV: Self = Self(1_000_166_000);
 }
-#[doc = "Generated from \'VK_NV_representative_fragment_test\'"]
+#[doc = "Generated from 'VK_NV_representative_fragment_test'"]
 impl StructureType {
     pub const PIPELINE_REPRESENTATIVE_FRAGMENT_TEST_STATE_CREATE_INFO_NV: Self =
         Self(1_000_166_001);
@@ -15505,12 +15505,12 @@ impl KhrMaintenance3Fn {
         (self.get_descriptor_set_layout_support_khr)(device, p_create_info, p_support)
     }
 }
-#[doc = "Generated from \'VK_KHR_maintenance3\'"]
+#[doc = "Generated from 'VK_KHR_maintenance3'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_MAINTENANCE_3_PROPERTIES_KHR: Self =
         StructureType::PHYSICAL_DEVICE_MAINTENANCE_3_PROPERTIES;
 }
-#[doc = "Generated from \'VK_KHR_maintenance3\'"]
+#[doc = "Generated from 'VK_KHR_maintenance3'"]
 impl StructureType {
     pub const DESCRIPTOR_SET_LAYOUT_SUPPORT_KHR: Self =
         StructureType::DESCRIPTOR_SET_LAYOUT_SUPPORT;
@@ -15674,20 +15674,20 @@ impl ExtFilterCubicFn {
         ExtFilterCubicFn {}
     }
 }
-#[doc = "Generated from \'VK_EXT_filter_cubic\'"]
+#[doc = "Generated from 'VK_EXT_filter_cubic'"]
 impl Filter {
     pub const CUBIC_EXT: Self = Filter::CUBIC_IMG;
 }
-#[doc = "Generated from \'VK_EXT_filter_cubic\'"]
+#[doc = "Generated from 'VK_EXT_filter_cubic'"]
 impl FormatFeatureFlags {
     pub const SAMPLED_IMAGE_FILTER_CUBIC_EXT: Self =
         FormatFeatureFlags::SAMPLED_IMAGE_FILTER_CUBIC_IMG;
 }
-#[doc = "Generated from \'VK_EXT_filter_cubic\'"]
+#[doc = "Generated from 'VK_EXT_filter_cubic'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_IMAGE_VIEW_IMAGE_FORMAT_INFO_EXT: Self = Self(1_000_170_000);
 }
-#[doc = "Generated from \'VK_EXT_filter_cubic\'"]
+#[doc = "Generated from 'VK_EXT_filter_cubic'"]
 impl StructureType {
     pub const FILTER_CUBIC_IMAGE_VIEW_IMAGE_FORMAT_PROPERTIES_EXT: Self = Self(1_000_170_001);
 }
@@ -15714,11 +15714,11 @@ impl QcomRenderPassShaderResolveFn {
         QcomRenderPassShaderResolveFn {}
     }
 }
-#[doc = "Generated from \'VK_QCOM_render_pass_shader_resolve\'"]
+#[doc = "Generated from 'VK_QCOM_render_pass_shader_resolve'"]
 impl SubpassDescriptionFlags {
     pub const FRAGMENT_REGION_QCOM: Self = Self(0b100);
 }
-#[doc = "Generated from \'VK_QCOM_render_pass_shader_resolve\'"]
+#[doc = "Generated from 'VK_QCOM_render_pass_shader_resolve'"]
 impl SubpassDescriptionFlags {
     pub const SHADER_RESOLVE_QCOM: Self = Self(0b1000);
 }
@@ -15745,15 +15745,15 @@ impl QcomExtension173Fn {
         QcomExtension173Fn {}
     }
 }
-#[doc = "Generated from \'VK_QCOM_extension_173\'"]
+#[doc = "Generated from 'VK_QCOM_extension_173'"]
 impl BufferUsageFlags {
     pub const RESERVED_18_QCOM: Self = Self(0b100_0000_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_QCOM_extension_173\'"]
+#[doc = "Generated from 'VK_QCOM_extension_173'"]
 impl ImageUsageFlags {
     pub const RESERVED_16_QCOM: Self = Self(0b1_0000_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_QCOM_extension_173\'"]
+#[doc = "Generated from 'VK_QCOM_extension_173'"]
 impl ImageUsageFlags {
     pub const RESERVED_17_QCOM: Self = Self(0b10_0000_0000_0000_0000);
 }
@@ -15803,13 +15803,13 @@ impl ExtGlobalPriorityFn {
         ExtGlobalPriorityFn {}
     }
 }
-#[doc = "Generated from \'VK_EXT_global_priority\'"]
+#[doc = "Generated from 'VK_EXT_global_priority'"]
 impl StructureType {
     pub const DEVICE_QUEUE_GLOBAL_PRIORITY_CREATE_INFO_EXT: Self = Self(1_000_174_000);
 }
-#[doc = "Generated from \'VK_EXT_global_priority\'"]
+#[doc = "Generated from 'VK_EXT_global_priority'"]
 impl Result {
-    pub const ERROR_NOT_PERMITTED_EXT: Self = Self(-1_000_174_001);
+    pub const ERROR_NOT_PERMITTED_EXT: Self = Self(-1000174001);
 }
 impl KhrShaderSubgroupExtendedTypesFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -15834,7 +15834,7 @@ impl KhrShaderSubgroupExtendedTypesFn {
         KhrShaderSubgroupExtendedTypesFn {}
     }
 }
-#[doc = "Generated from \'VK_KHR_shader_subgroup_extended_types\'"]
+#[doc = "Generated from 'VK_KHR_shader_subgroup_extended_types'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_SUBGROUP_EXTENDED_TYPES_FEATURES_KHR: Self =
         StructureType::PHYSICAL_DEVICE_SHADER_SUBGROUP_EXTENDED_TYPES_FEATURES;
@@ -15885,7 +15885,7 @@ impl Khr8bitStorageFn {
         Khr8bitStorageFn {}
     }
 }
-#[doc = "Generated from \'VK_KHR_8bit_storage\'"]
+#[doc = "Generated from 'VK_KHR_8bit_storage'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_8BIT_STORAGE_FEATURES_KHR: Self =
         StructureType::PHYSICAL_DEVICE_8BIT_STORAGE_FEATURES;
@@ -15966,23 +15966,23 @@ impl ExtExternalMemoryHostFn {
         )
     }
 }
-#[doc = "Generated from \'VK_EXT_external_memory_host\'"]
+#[doc = "Generated from 'VK_EXT_external_memory_host'"]
 impl StructureType {
     pub const IMPORT_MEMORY_HOST_POINTER_INFO_EXT: Self = Self(1_000_178_000);
 }
-#[doc = "Generated from \'VK_EXT_external_memory_host\'"]
+#[doc = "Generated from 'VK_EXT_external_memory_host'"]
 impl StructureType {
     pub const MEMORY_HOST_POINTER_PROPERTIES_EXT: Self = Self(1_000_178_001);
 }
-#[doc = "Generated from \'VK_EXT_external_memory_host\'"]
+#[doc = "Generated from 'VK_EXT_external_memory_host'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_EXTERNAL_MEMORY_HOST_PROPERTIES_EXT: Self = Self(1_000_178_002);
 }
-#[doc = "Generated from \'VK_EXT_external_memory_host\'"]
+#[doc = "Generated from 'VK_EXT_external_memory_host'"]
 impl ExternalMemoryHandleTypeFlags {
     pub const EXTERNAL_MEMORY_HANDLE_TYPE_HOST_ALLOCATION: Self = Self(0b1000_0000);
 }
-#[doc = "Generated from \'VK_EXT_external_memory_host\'"]
+#[doc = "Generated from 'VK_EXT_external_memory_host'"]
 impl ExternalMemoryHandleTypeFlags {
     pub const EXTERNAL_MEMORY_HANDLE_TYPE_HOST_MAPPED_FOREIGN_MEMORY: Self = Self(0b1_0000_0000);
 }
@@ -16090,7 +16090,7 @@ impl KhrShaderAtomicInt64Fn {
         KhrShaderAtomicInt64Fn {}
     }
 }
-#[doc = "Generated from \'VK_KHR_shader_atomic_int64\'"]
+#[doc = "Generated from 'VK_KHR_shader_atomic_int64'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_ATOMIC_INT64_FEATURES_KHR: Self =
         StructureType::PHYSICAL_DEVICE_SHADER_ATOMIC_INT64_FEATURES;
@@ -16118,7 +16118,7 @@ impl KhrShaderClockFn {
         KhrShaderClockFn {}
     }
 }
-#[doc = "Generated from \'VK_KHR_shader_clock\'"]
+#[doc = "Generated from 'VK_KHR_shader_clock'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_CLOCK_FEATURES_KHR: Self = Self(1_000_181_000);
 }
@@ -16168,7 +16168,7 @@ impl AmdPipelineCompilerControlFn {
         AmdPipelineCompilerControlFn {}
     }
 }
-#[doc = "Generated from \'VK_AMD_pipeline_compiler_control\'"]
+#[doc = "Generated from 'VK_AMD_pipeline_compiler_control'"]
 impl StructureType {
     pub const PIPELINE_COMPILER_CONTROL_CREATE_INFO_AMD: Self = Self(1_000_183_000);
 }
@@ -16299,7 +16299,7 @@ impl ExtCalibratedTimestampsFn {
         )
     }
 }
-#[doc = "Generated from \'VK_EXT_calibrated_timestamps\'"]
+#[doc = "Generated from 'VK_EXT_calibrated_timestamps'"]
 impl StructureType {
     pub const CALIBRATED_TIMESTAMP_INFO_EXT: Self = Self(1_000_184_000);
 }
@@ -16326,7 +16326,7 @@ impl AmdShaderCorePropertiesFn {
         AmdShaderCorePropertiesFn {}
     }
 }
-#[doc = "Generated from \'VK_AMD_shader_core_properties\'"]
+#[doc = "Generated from 'VK_AMD_shader_core_properties'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_AMD: Self = Self(1_000_185_000);
 }
@@ -16422,7 +16422,7 @@ impl AmdMemoryOverallocationBehaviorFn {
         AmdMemoryOverallocationBehaviorFn {}
     }
 }
-#[doc = "Generated from \'VK_AMD_memory_overallocation_behavior\'"]
+#[doc = "Generated from 'VK_AMD_memory_overallocation_behavior'"]
 impl StructureType {
     pub const DEVICE_MEMORY_OVERALLOCATION_CREATE_INFO_AMD: Self = Self(1_000_189_000);
 }
@@ -16449,15 +16449,15 @@ impl ExtVertexAttributeDivisorFn {
         ExtVertexAttributeDivisorFn {}
     }
 }
-#[doc = "Generated from \'VK_EXT_vertex_attribute_divisor\'"]
+#[doc = "Generated from 'VK_EXT_vertex_attribute_divisor'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_PROPERTIES_EXT: Self = Self(1_000_190_000);
 }
-#[doc = "Generated from \'VK_EXT_vertex_attribute_divisor\'"]
+#[doc = "Generated from 'VK_EXT_vertex_attribute_divisor'"]
 impl StructureType {
     pub const PIPELINE_VERTEX_INPUT_DIVISOR_STATE_CREATE_INFO_EXT: Self = Self(1_000_190_001);
 }
-#[doc = "Generated from \'VK_EXT_vertex_attribute_divisor\'"]
+#[doc = "Generated from 'VK_EXT_vertex_attribute_divisor'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_VERTEX_ATTRIBUTE_DIVISOR_FEATURES_EXT: Self = Self(1_000_190_002);
 }
@@ -16484,7 +16484,7 @@ impl GgpFrameTokenFn {
         GgpFrameTokenFn {}
     }
 }
-#[doc = "Generated from \'VK_GGP_frame_token\'"]
+#[doc = "Generated from 'VK_GGP_frame_token'"]
 impl StructureType {
     pub const PRESENT_FRAME_TOKEN_GGP: Self = Self(1_000_191_000);
 }
@@ -16511,7 +16511,7 @@ impl ExtPipelineCreationFeedbackFn {
         ExtPipelineCreationFeedbackFn {}
     }
 }
-#[doc = "Generated from \'VK_EXT_pipeline_creation_feedback\'"]
+#[doc = "Generated from 'VK_EXT_pipeline_creation_feedback'"]
 impl StructureType {
     pub const PIPELINE_CREATION_FEEDBACK_CREATE_INFO_EXT: Self = Self(1_000_192_000);
 }
@@ -16584,7 +16584,7 @@ impl GoogleExtension196Fn {
         GoogleExtension196Fn {}
     }
 }
-#[doc = "Generated from \'VK_GOOGLE_extension_196\'"]
+#[doc = "Generated from 'VK_GOOGLE_extension_196'"]
 impl PipelineCacheCreateFlags {
     pub const RESERVED_1_EXT: Self = Self(0b10);
 }
@@ -16611,56 +16611,56 @@ impl KhrDriverPropertiesFn {
         KhrDriverPropertiesFn {}
     }
 }
-#[doc = "Generated from \'VK_KHR_driver_properties\'"]
+#[doc = "Generated from 'VK_KHR_driver_properties'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_DRIVER_PROPERTIES_KHR: Self =
         StructureType::PHYSICAL_DEVICE_DRIVER_PROPERTIES;
 }
-#[doc = "Generated from \'VK_KHR_driver_properties\'"]
+#[doc = "Generated from 'VK_KHR_driver_properties'"]
 impl DriverId {
     pub const AMD_PROPRIETARY_KHR: Self = DriverId::AMD_PROPRIETARY;
 }
-#[doc = "Generated from \'VK_KHR_driver_properties\'"]
+#[doc = "Generated from 'VK_KHR_driver_properties'"]
 impl DriverId {
     pub const AMD_OPEN_SOURCE_KHR: Self = DriverId::AMD_OPEN_SOURCE;
 }
-#[doc = "Generated from \'VK_KHR_driver_properties\'"]
+#[doc = "Generated from 'VK_KHR_driver_properties'"]
 impl DriverId {
     pub const MESA_RADV_KHR: Self = DriverId::MESA_RADV;
 }
-#[doc = "Generated from \'VK_KHR_driver_properties\'"]
+#[doc = "Generated from 'VK_KHR_driver_properties'"]
 impl DriverId {
     pub const NVIDIA_PROPRIETARY_KHR: Self = DriverId::NVIDIA_PROPRIETARY;
 }
-#[doc = "Generated from \'VK_KHR_driver_properties\'"]
+#[doc = "Generated from 'VK_KHR_driver_properties'"]
 impl DriverId {
     pub const INTEL_PROPRIETARY_WINDOWS_KHR: Self = DriverId::INTEL_PROPRIETARY_WINDOWS;
 }
-#[doc = "Generated from \'VK_KHR_driver_properties\'"]
+#[doc = "Generated from 'VK_KHR_driver_properties'"]
 impl DriverId {
     pub const INTEL_OPEN_SOURCE_MESA_KHR: Self = DriverId::INTEL_OPEN_SOURCE_MESA;
 }
-#[doc = "Generated from \'VK_KHR_driver_properties\'"]
+#[doc = "Generated from 'VK_KHR_driver_properties'"]
 impl DriverId {
     pub const IMAGINATION_PROPRIETARY_KHR: Self = DriverId::IMAGINATION_PROPRIETARY;
 }
-#[doc = "Generated from \'VK_KHR_driver_properties\'"]
+#[doc = "Generated from 'VK_KHR_driver_properties'"]
 impl DriverId {
     pub const QUALCOMM_PROPRIETARY_KHR: Self = DriverId::QUALCOMM_PROPRIETARY;
 }
-#[doc = "Generated from \'VK_KHR_driver_properties\'"]
+#[doc = "Generated from 'VK_KHR_driver_properties'"]
 impl DriverId {
     pub const ARM_PROPRIETARY_KHR: Self = DriverId::ARM_PROPRIETARY;
 }
-#[doc = "Generated from \'VK_KHR_driver_properties\'"]
+#[doc = "Generated from 'VK_KHR_driver_properties'"]
 impl DriverId {
     pub const GOOGLE_SWIFTSHADER_KHR: Self = DriverId::GOOGLE_SWIFTSHADER;
 }
-#[doc = "Generated from \'VK_KHR_driver_properties\'"]
+#[doc = "Generated from 'VK_KHR_driver_properties'"]
 impl DriverId {
     pub const GGP_PROPRIETARY_KHR: Self = DriverId::GGP_PROPRIETARY;
 }
-#[doc = "Generated from \'VK_KHR_driver_properties\'"]
+#[doc = "Generated from 'VK_KHR_driver_properties'"]
 impl DriverId {
     pub const BROADCOM_PROPRIETARY_KHR: Self = DriverId::BROADCOM_PROPRIETARY;
 }
@@ -16687,20 +16687,20 @@ impl KhrShaderFloatControlsFn {
         KhrShaderFloatControlsFn {}
     }
 }
-#[doc = "Generated from \'VK_KHR_shader_float_controls\'"]
+#[doc = "Generated from 'VK_KHR_shader_float_controls'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_FLOAT_CONTROLS_PROPERTIES_KHR: Self =
         StructureType::PHYSICAL_DEVICE_FLOAT_CONTROLS_PROPERTIES;
 }
-#[doc = "Generated from \'VK_KHR_shader_float_controls\'"]
+#[doc = "Generated from 'VK_KHR_shader_float_controls'"]
 impl ShaderFloatControlsIndependence {
     pub const TYPE_32_ONLY_KHR: Self = ShaderFloatControlsIndependence::TYPE_32_ONLY;
 }
-#[doc = "Generated from \'VK_KHR_shader_float_controls\'"]
+#[doc = "Generated from 'VK_KHR_shader_float_controls'"]
 impl ShaderFloatControlsIndependence {
     pub const ALL_KHR: Self = ShaderFloatControlsIndependence::ALL;
 }
-#[doc = "Generated from \'VK_KHR_shader_float_controls\'"]
+#[doc = "Generated from 'VK_KHR_shader_float_controls'"]
 impl ShaderFloatControlsIndependence {
     pub const NONE_KHR: Self = ShaderFloatControlsIndependence::NONE;
 }
@@ -16727,7 +16727,7 @@ impl NvShaderSubgroupPartitionedFn {
         NvShaderSubgroupPartitionedFn {}
     }
 }
-#[doc = "Generated from \'VK_NV_shader_subgroup_partitioned\'"]
+#[doc = "Generated from 'VK_NV_shader_subgroup_partitioned'"]
 impl SubgroupFeatureFlags {
     pub const PARTITIONED_NV: Self = Self(0b1_0000_0000);
 }
@@ -16754,33 +16754,33 @@ impl KhrDepthStencilResolveFn {
         KhrDepthStencilResolveFn {}
     }
 }
-#[doc = "Generated from \'VK_KHR_depth_stencil_resolve\'"]
+#[doc = "Generated from 'VK_KHR_depth_stencil_resolve'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_DEPTH_STENCIL_RESOLVE_PROPERTIES_KHR: Self =
         StructureType::PHYSICAL_DEVICE_DEPTH_STENCIL_RESOLVE_PROPERTIES;
 }
-#[doc = "Generated from \'VK_KHR_depth_stencil_resolve\'"]
+#[doc = "Generated from 'VK_KHR_depth_stencil_resolve'"]
 impl StructureType {
     pub const SUBPASS_DESCRIPTION_DEPTH_STENCIL_RESOLVE_KHR: Self =
         StructureType::SUBPASS_DESCRIPTION_DEPTH_STENCIL_RESOLVE;
 }
-#[doc = "Generated from \'VK_KHR_depth_stencil_resolve\'"]
+#[doc = "Generated from 'VK_KHR_depth_stencil_resolve'"]
 impl ResolveModeFlags {
     pub const NONE_KHR: Self = ResolveModeFlags::NONE;
 }
-#[doc = "Generated from \'VK_KHR_depth_stencil_resolve\'"]
+#[doc = "Generated from 'VK_KHR_depth_stencil_resolve'"]
 impl ResolveModeFlags {
     pub const SAMPLE_ZERO_KHR: Self = ResolveModeFlags::SAMPLE_ZERO;
 }
-#[doc = "Generated from \'VK_KHR_depth_stencil_resolve\'"]
+#[doc = "Generated from 'VK_KHR_depth_stencil_resolve'"]
 impl ResolveModeFlags {
     pub const AVERAGE_KHR: Self = ResolveModeFlags::AVERAGE;
 }
-#[doc = "Generated from \'VK_KHR_depth_stencil_resolve\'"]
+#[doc = "Generated from 'VK_KHR_depth_stencil_resolve'"]
 impl ResolveModeFlags {
     pub const MIN_KHR: Self = ResolveModeFlags::MIN;
 }
-#[doc = "Generated from \'VK_KHR_depth_stencil_resolve\'"]
+#[doc = "Generated from 'VK_KHR_depth_stencil_resolve'"]
 impl ResolveModeFlags {
     pub const MAX_KHR: Self = ResolveModeFlags::MAX;
 }
@@ -16807,7 +16807,7 @@ impl KhrSwapchainMutableFormatFn {
         KhrSwapchainMutableFormatFn {}
     }
 }
-#[doc = "Generated from \'VK_KHR_swapchain_mutable_format\'"]
+#[doc = "Generated from 'VK_KHR_swapchain_mutable_format'"]
 impl SwapchainCreateFlagsKHR {
     pub const MUTABLE_FORMAT: Self = Self(0b100);
 }
@@ -16834,7 +16834,7 @@ impl NvComputeShaderDerivativesFn {
         NvComputeShaderDerivativesFn {}
     }
 }
-#[doc = "Generated from \'VK_NV_compute_shader_derivatives\'"]
+#[doc = "Generated from 'VK_NV_compute_shader_derivatives'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_COMPUTE_SHADER_DERIVATIVES_FEATURES_NV: Self = Self(1_000_201_000);
 }
@@ -17016,27 +17016,27 @@ impl NvMeshShaderFn {
         )
     }
 }
-#[doc = "Generated from \'VK_NV_mesh_shader\'"]
+#[doc = "Generated from 'VK_NV_mesh_shader'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_MESH_SHADER_FEATURES_NV: Self = Self(1_000_202_000);
 }
-#[doc = "Generated from \'VK_NV_mesh_shader\'"]
+#[doc = "Generated from 'VK_NV_mesh_shader'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_MESH_SHADER_PROPERTIES_NV: Self = Self(1_000_202_001);
 }
-#[doc = "Generated from \'VK_NV_mesh_shader\'"]
+#[doc = "Generated from 'VK_NV_mesh_shader'"]
 impl ShaderStageFlags {
     pub const TASK_NV: Self = Self(0b100_0000);
 }
-#[doc = "Generated from \'VK_NV_mesh_shader\'"]
+#[doc = "Generated from 'VK_NV_mesh_shader'"]
 impl ShaderStageFlags {
     pub const MESH_NV: Self = Self(0b1000_0000);
 }
-#[doc = "Generated from \'VK_NV_mesh_shader\'"]
+#[doc = "Generated from 'VK_NV_mesh_shader'"]
 impl PipelineStageFlags {
     pub const TASK_SHADER_NV: Self = Self(0b1000_0000_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_NV_mesh_shader\'"]
+#[doc = "Generated from 'VK_NV_mesh_shader'"]
 impl PipelineStageFlags {
     pub const MESH_SHADER_NV: Self = Self(0b1_0000_0000_0000_0000_0000);
 }
@@ -17063,7 +17063,7 @@ impl NvFragmentShaderBarycentricFn {
         NvFragmentShaderBarycentricFn {}
     }
 }
-#[doc = "Generated from \'VK_NV_fragment_shader_barycentric\'"]
+#[doc = "Generated from 'VK_NV_fragment_shader_barycentric'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_FRAGMENT_SHADER_BARYCENTRIC_FEATURES_NV: Self = Self(1_000_203_000);
 }
@@ -17090,7 +17090,7 @@ impl NvShaderImageFootprintFn {
         NvShaderImageFootprintFn {}
     }
 }
-#[doc = "Generated from \'VK_NV_shader_image_footprint\'"]
+#[doc = "Generated from 'VK_NV_shader_image_footprint'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_IMAGE_FOOTPRINT_FEATURES_NV: Self = Self(1_000_204_000);
 }
@@ -17170,15 +17170,15 @@ impl NvScissorExclusiveFn {
         )
     }
 }
-#[doc = "Generated from \'VK_NV_scissor_exclusive\'"]
+#[doc = "Generated from 'VK_NV_scissor_exclusive'"]
 impl StructureType {
     pub const PIPELINE_VIEWPORT_EXCLUSIVE_SCISSOR_STATE_CREATE_INFO_NV: Self = Self(1_000_205_000);
 }
-#[doc = "Generated from \'VK_NV_scissor_exclusive\'"]
+#[doc = "Generated from 'VK_NV_scissor_exclusive'"]
 impl DynamicState {
     pub const EXCLUSIVE_SCISSOR_NV: Self = Self(1_000_205_001);
 }
-#[doc = "Generated from \'VK_NV_scissor_exclusive\'"]
+#[doc = "Generated from 'VK_NV_scissor_exclusive'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_EXCLUSIVE_SCISSOR_FEATURES_NV: Self = Self(1_000_205_002);
 }
@@ -17284,11 +17284,11 @@ impl NvDeviceDiagnosticCheckpointsFn {
         (self.get_queue_checkpoint_data_nv)(queue, p_checkpoint_data_count, p_checkpoint_data)
     }
 }
-#[doc = "Generated from \'VK_NV_device_diagnostic_checkpoints\'"]
+#[doc = "Generated from 'VK_NV_device_diagnostic_checkpoints'"]
 impl StructureType {
     pub const CHECKPOINT_DATA_NV: Self = Self(1_000_206_000);
 }
-#[doc = "Generated from \'VK_NV_device_diagnostic_checkpoints\'"]
+#[doc = "Generated from 'VK_NV_device_diagnostic_checkpoints'"]
 impl StructureType {
     pub const QUEUE_FAMILY_CHECKPOINT_PROPERTIES_NV: Self = Self(1_000_206_001);
 }
@@ -17421,42 +17421,42 @@ impl KhrTimelineSemaphoreFn {
         (self.signal_semaphore_khr)(device, p_signal_info)
     }
 }
-#[doc = "Generated from \'VK_KHR_timeline_semaphore\'"]
+#[doc = "Generated from 'VK_KHR_timeline_semaphore'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_TIMELINE_SEMAPHORE_FEATURES_KHR: Self =
         StructureType::PHYSICAL_DEVICE_TIMELINE_SEMAPHORE_FEATURES;
 }
-#[doc = "Generated from \'VK_KHR_timeline_semaphore\'"]
+#[doc = "Generated from 'VK_KHR_timeline_semaphore'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_TIMELINE_SEMAPHORE_PROPERTIES_KHR: Self =
         StructureType::PHYSICAL_DEVICE_TIMELINE_SEMAPHORE_PROPERTIES;
 }
-#[doc = "Generated from \'VK_KHR_timeline_semaphore\'"]
+#[doc = "Generated from 'VK_KHR_timeline_semaphore'"]
 impl StructureType {
     pub const SEMAPHORE_TYPE_CREATE_INFO_KHR: Self = StructureType::SEMAPHORE_TYPE_CREATE_INFO;
 }
-#[doc = "Generated from \'VK_KHR_timeline_semaphore\'"]
+#[doc = "Generated from 'VK_KHR_timeline_semaphore'"]
 impl StructureType {
     pub const TIMELINE_SEMAPHORE_SUBMIT_INFO_KHR: Self =
         StructureType::TIMELINE_SEMAPHORE_SUBMIT_INFO;
 }
-#[doc = "Generated from \'VK_KHR_timeline_semaphore\'"]
+#[doc = "Generated from 'VK_KHR_timeline_semaphore'"]
 impl StructureType {
     pub const SEMAPHORE_WAIT_INFO_KHR: Self = StructureType::SEMAPHORE_WAIT_INFO;
 }
-#[doc = "Generated from \'VK_KHR_timeline_semaphore\'"]
+#[doc = "Generated from 'VK_KHR_timeline_semaphore'"]
 impl StructureType {
     pub const SEMAPHORE_SIGNAL_INFO_KHR: Self = StructureType::SEMAPHORE_SIGNAL_INFO;
 }
-#[doc = "Generated from \'VK_KHR_timeline_semaphore\'"]
+#[doc = "Generated from 'VK_KHR_timeline_semaphore'"]
 impl SemaphoreType {
     pub const BINARY_KHR: Self = SemaphoreType::BINARY;
 }
-#[doc = "Generated from \'VK_KHR_timeline_semaphore\'"]
+#[doc = "Generated from 'VK_KHR_timeline_semaphore'"]
 impl SemaphoreType {
     pub const TIMELINE_KHR: Self = SemaphoreType::TIMELINE;
 }
-#[doc = "Generated from \'VK_KHR_timeline_semaphore\'"]
+#[doc = "Generated from 'VK_KHR_timeline_semaphore'"]
 impl SemaphoreWaitFlags {
     pub const ANY_KHR: Self = SemaphoreWaitFlags::ANY;
 }
@@ -17506,7 +17506,7 @@ impl IntelShaderIntegerFunctions2Fn {
         IntelShaderIntegerFunctions2Fn {}
     }
 }
-#[doc = "Generated from \'VK_INTEL_shader_integer_functions2\'"]
+#[doc = "Generated from 'VK_INTEL_shader_integer_functions2'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_INTEGER_FUNCTIONS_2_FEATURES_INTEL: Self = Self(1_000_209_000);
 }
@@ -17857,40 +17857,40 @@ impl IntelPerformanceQueryFn {
         (self.get_performance_parameter_intel)(device, parameter, p_value)
     }
 }
-#[doc = "Generated from \'VK_INTEL_performance_query\'"]
+#[doc = "Generated from 'VK_INTEL_performance_query'"]
 impl StructureType {
     pub const QUERY_POOL_PERFORMANCE_QUERY_CREATE_INFO_INTEL: Self = Self(1_000_210_000);
 }
-#[doc = "Generated from \'VK_INTEL_performance_query\'"]
+#[doc = "Generated from 'VK_INTEL_performance_query'"]
 impl StructureType {
     pub const QUERY_POOL_CREATE_INFO_INTEL: Self =
         StructureType::QUERY_POOL_PERFORMANCE_QUERY_CREATE_INFO_INTEL;
 }
-#[doc = "Generated from \'VK_INTEL_performance_query\'"]
+#[doc = "Generated from 'VK_INTEL_performance_query'"]
 impl StructureType {
     pub const INITIALIZE_PERFORMANCE_API_INFO_INTEL: Self = Self(1_000_210_001);
 }
-#[doc = "Generated from \'VK_INTEL_performance_query\'"]
+#[doc = "Generated from 'VK_INTEL_performance_query'"]
 impl StructureType {
     pub const PERFORMANCE_MARKER_INFO_INTEL: Self = Self(1_000_210_002);
 }
-#[doc = "Generated from \'VK_INTEL_performance_query\'"]
+#[doc = "Generated from 'VK_INTEL_performance_query'"]
 impl StructureType {
     pub const PERFORMANCE_STREAM_MARKER_INFO_INTEL: Self = Self(1_000_210_003);
 }
-#[doc = "Generated from \'VK_INTEL_performance_query\'"]
+#[doc = "Generated from 'VK_INTEL_performance_query'"]
 impl StructureType {
     pub const PERFORMANCE_OVERRIDE_INFO_INTEL: Self = Self(1_000_210_004);
 }
-#[doc = "Generated from \'VK_INTEL_performance_query\'"]
+#[doc = "Generated from 'VK_INTEL_performance_query'"]
 impl StructureType {
     pub const PERFORMANCE_CONFIGURATION_ACQUIRE_INFO_INTEL: Self = Self(1_000_210_005);
 }
-#[doc = "Generated from \'VK_INTEL_performance_query\'"]
+#[doc = "Generated from 'VK_INTEL_performance_query'"]
 impl QueryType {
     pub const PERFORMANCE_QUERY_INTEL: Self = Self(1_000_210_000);
 }
-#[doc = "Generated from \'VK_INTEL_performance_query\'"]
+#[doc = "Generated from 'VK_INTEL_performance_query'"]
 impl ObjectType {
     pub const PERFORMANCE_CONFIGURATION_INTEL: Self = Self(1_000_210_000);
 }
@@ -17917,7 +17917,7 @@ impl KhrVulkanMemoryModelFn {
         KhrVulkanMemoryModelFn {}
     }
 }
-#[doc = "Generated from \'VK_KHR_vulkan_memory_model\'"]
+#[doc = "Generated from 'VK_KHR_vulkan_memory_model'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_VULKAN_MEMORY_MODEL_FEATURES_KHR: Self =
         StructureType::PHYSICAL_DEVICE_VULKAN_MEMORY_MODEL_FEATURES;
@@ -17945,7 +17945,7 @@ impl ExtPciBusInfoFn {
         ExtPciBusInfoFn {}
     }
 }
-#[doc = "Generated from \'VK_EXT_pci_bus_info\'"]
+#[doc = "Generated from 'VK_EXT_pci_bus_info'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_PCI_BUS_INFO_PROPERTIES_EXT: Self = Self(1_000_212_000);
 }
@@ -18016,15 +18016,15 @@ impl AmdDisplayNativeHdrFn {
         (self.set_local_dimming_amd)(device, swap_chain, local_dimming_enable)
     }
 }
-#[doc = "Generated from \'VK_AMD_display_native_hdr\'"]
+#[doc = "Generated from 'VK_AMD_display_native_hdr'"]
 impl StructureType {
     pub const DISPLAY_NATIVE_HDR_SURFACE_CAPABILITIES_AMD: Self = Self(1_000_213_000);
 }
-#[doc = "Generated from \'VK_AMD_display_native_hdr\'"]
+#[doc = "Generated from 'VK_AMD_display_native_hdr'"]
 impl StructureType {
     pub const SWAPCHAIN_DISPLAY_NATIVE_HDR_CREATE_INFO_AMD: Self = Self(1_000_213_001);
 }
-#[doc = "Generated from \'VK_AMD_display_native_hdr\'"]
+#[doc = "Generated from 'VK_AMD_display_native_hdr'"]
 impl ColorSpaceKHR {
     pub const DISPLAY_NATIVE_AMD: Self = Self(1_000_213_000);
 }
@@ -18099,7 +18099,7 @@ impl FuchsiaImagepipeSurfaceFn {
         (self.create_image_pipe_surface_fuchsia)(instance, p_create_info, p_allocator, p_surface)
     }
 }
-#[doc = "Generated from \'VK_FUCHSIA_imagepipe_surface\'"]
+#[doc = "Generated from 'VK_FUCHSIA_imagepipe_surface'"]
 impl StructureType {
     pub const IMAGEPIPE_SURFACE_CREATE_INFO_FUCHSIA: Self = Self(1_000_214_000);
 }
@@ -18126,7 +18126,7 @@ impl KhrShaderTerminateInvocationFn {
         KhrShaderTerminateInvocationFn {}
     }
 }
-#[doc = "Generated from \'VK_KHR_shader_terminate_invocation\'"]
+#[doc = "Generated from 'VK_KHR_shader_terminate_invocation'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_TERMINATE_INVOCATION_FEATURES_KHR: Self = Self(1_000_215_000);
 }
@@ -18224,7 +18224,7 @@ impl ExtMetalSurfaceFn {
         (self.create_metal_surface_ext)(instance, p_create_info, p_allocator, p_surface)
     }
 }
-#[doc = "Generated from \'VK_EXT_metal_surface\'"]
+#[doc = "Generated from 'VK_EXT_metal_surface'"]
 impl StructureType {
     pub const METAL_SURFACE_CREATE_INFO_EXT: Self = Self(1_000_217_000);
 }
@@ -18251,51 +18251,51 @@ impl ExtFragmentDensityMapFn {
         ExtFragmentDensityMapFn {}
     }
 }
-#[doc = "Generated from \'VK_EXT_fragment_density_map\'"]
+#[doc = "Generated from 'VK_EXT_fragment_density_map'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_FEATURES_EXT: Self = Self(1_000_218_000);
 }
-#[doc = "Generated from \'VK_EXT_fragment_density_map\'"]
+#[doc = "Generated from 'VK_EXT_fragment_density_map'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_PROPERTIES_EXT: Self = Self(1_000_218_001);
 }
-#[doc = "Generated from \'VK_EXT_fragment_density_map\'"]
+#[doc = "Generated from 'VK_EXT_fragment_density_map'"]
 impl StructureType {
     pub const RENDER_PASS_FRAGMENT_DENSITY_MAP_CREATE_INFO_EXT: Self = Self(1_000_218_002);
 }
-#[doc = "Generated from \'VK_EXT_fragment_density_map\'"]
+#[doc = "Generated from 'VK_EXT_fragment_density_map'"]
 impl ImageCreateFlags {
     pub const SUBSAMPLED_EXT: Self = Self(0b100_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_EXT_fragment_density_map\'"]
+#[doc = "Generated from 'VK_EXT_fragment_density_map'"]
 impl ImageLayout {
     pub const FRAGMENT_DENSITY_MAP_OPTIMAL_EXT: Self = Self(1_000_218_000);
 }
-#[doc = "Generated from \'VK_EXT_fragment_density_map\'"]
+#[doc = "Generated from 'VK_EXT_fragment_density_map'"]
 impl AccessFlags {
     pub const FRAGMENT_DENSITY_MAP_READ_EXT: Self = Self(0b1_0000_0000_0000_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_EXT_fragment_density_map\'"]
+#[doc = "Generated from 'VK_EXT_fragment_density_map'"]
 impl FormatFeatureFlags {
     pub const FRAGMENT_DENSITY_MAP_EXT: Self = Self(0b1_0000_0000_0000_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_EXT_fragment_density_map\'"]
+#[doc = "Generated from 'VK_EXT_fragment_density_map'"]
 impl ImageUsageFlags {
     pub const FRAGMENT_DENSITY_MAP_EXT: Self = Self(0b10_0000_0000);
 }
-#[doc = "Generated from \'VK_EXT_fragment_density_map\'"]
+#[doc = "Generated from 'VK_EXT_fragment_density_map'"]
 impl ImageViewCreateFlags {
     pub const FRAGMENT_DENSITY_MAP_DYNAMIC_EXT: Self = Self(0b1);
 }
-#[doc = "Generated from \'VK_EXT_fragment_density_map\'"]
+#[doc = "Generated from 'VK_EXT_fragment_density_map'"]
 impl PipelineStageFlags {
     pub const FRAGMENT_DENSITY_PROCESS_EXT: Self = Self(0b1000_0000_0000_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_EXT_fragment_density_map\'"]
+#[doc = "Generated from 'VK_EXT_fragment_density_map'"]
 impl SamplerCreateFlags {
     pub const SUBSAMPLED_EXT: Self = Self(0b1);
 }
-#[doc = "Generated from \'VK_EXT_fragment_density_map\'"]
+#[doc = "Generated from 'VK_EXT_fragment_density_map'"]
 impl SamplerCreateFlags {
     pub const SUBSAMPLED_COARSE_RECONSTRUCTION_EXT: Self = Self(0b10);
 }
@@ -18345,7 +18345,7 @@ impl KhrExtension221Fn {
         KhrExtension221Fn {}
     }
 }
-#[doc = "Generated from \'VK_KHR_extension_221\'"]
+#[doc = "Generated from 'VK_KHR_extension_221'"]
 impl RenderPassCreateFlags {
     pub const RESERVED_0_KHR: Self = Self(0b1);
 }
@@ -18372,7 +18372,7 @@ impl ExtScalarBlockLayoutFn {
         ExtScalarBlockLayoutFn {}
     }
 }
-#[doc = "Generated from \'VK_EXT_scalar_block_layout\'"]
+#[doc = "Generated from 'VK_EXT_scalar_block_layout'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_SCALAR_BLOCK_LAYOUT_FEATURES_EXT: Self =
         StructureType::PHYSICAL_DEVICE_SCALAR_BLOCK_LAYOUT_FEATURES;
@@ -18469,24 +18469,24 @@ impl ExtSubgroupSizeControlFn {
         ExtSubgroupSizeControlFn {}
     }
 }
-#[doc = "Generated from \'VK_EXT_subgroup_size_control\'"]
+#[doc = "Generated from 'VK_EXT_subgroup_size_control'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_SUBGROUP_SIZE_CONTROL_PROPERTIES_EXT: Self = Self(1_000_225_000);
 }
-#[doc = "Generated from \'VK_EXT_subgroup_size_control\'"]
+#[doc = "Generated from 'VK_EXT_subgroup_size_control'"]
 impl StructureType {
     pub const PIPELINE_SHADER_STAGE_REQUIRED_SUBGROUP_SIZE_CREATE_INFO_EXT: Self =
         Self(1_000_225_001);
 }
-#[doc = "Generated from \'VK_EXT_subgroup_size_control\'"]
+#[doc = "Generated from 'VK_EXT_subgroup_size_control'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_SUBGROUP_SIZE_CONTROL_FEATURES_EXT: Self = Self(1_000_225_002);
 }
-#[doc = "Generated from \'VK_EXT_subgroup_size_control\'"]
+#[doc = "Generated from 'VK_EXT_subgroup_size_control'"]
 impl PipelineShaderStageCreateFlags {
     pub const ALLOW_VARYING_SUBGROUP_SIZE_EXT: Self = Self(0b1);
 }
-#[doc = "Generated from \'VK_EXT_subgroup_size_control\'"]
+#[doc = "Generated from 'VK_EXT_subgroup_size_control'"]
 impl PipelineShaderStageCreateFlags {
     pub const REQUIRE_FULL_SUBGROUPS_EXT: Self = Self(0b10);
 }
@@ -18603,50 +18603,50 @@ impl KhrFragmentShadingRateFn {
         (self.cmd_set_fragment_shading_rate_khr)(command_buffer, p_fragment_size, combiner_ops)
     }
 }
-#[doc = "Generated from \'VK_KHR_fragment_shading_rate\'"]
+#[doc = "Generated from 'VK_KHR_fragment_shading_rate'"]
 impl ImageLayout {
     pub const FRAGMENT_SHADING_RATE_ATTACHMENT_OPTIMAL_KHR: Self =
         ImageLayout::SHADING_RATE_OPTIMAL_NV;
 }
-#[doc = "Generated from \'VK_KHR_fragment_shading_rate\'"]
+#[doc = "Generated from 'VK_KHR_fragment_shading_rate'"]
 impl DynamicState {
     pub const FRAGMENT_SHADING_RATE_KHR: Self = Self(1_000_226_000);
 }
-#[doc = "Generated from \'VK_KHR_fragment_shading_rate\'"]
+#[doc = "Generated from 'VK_KHR_fragment_shading_rate'"]
 impl StructureType {
     pub const FRAGMENT_SHADING_RATE_ATTACHMENT_INFO_KHR: Self = Self(1_000_226_000);
 }
-#[doc = "Generated from \'VK_KHR_fragment_shading_rate\'"]
+#[doc = "Generated from 'VK_KHR_fragment_shading_rate'"]
 impl StructureType {
     pub const PIPELINE_FRAGMENT_SHADING_RATE_STATE_CREATE_INFO_KHR: Self = Self(1_000_226_001);
 }
-#[doc = "Generated from \'VK_KHR_fragment_shading_rate\'"]
+#[doc = "Generated from 'VK_KHR_fragment_shading_rate'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_FRAGMENT_SHADING_RATE_PROPERTIES_KHR: Self = Self(1_000_226_002);
 }
-#[doc = "Generated from \'VK_KHR_fragment_shading_rate\'"]
+#[doc = "Generated from 'VK_KHR_fragment_shading_rate'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_FRAGMENT_SHADING_RATE_FEATURES_KHR: Self = Self(1_000_226_003);
 }
-#[doc = "Generated from \'VK_KHR_fragment_shading_rate\'"]
+#[doc = "Generated from 'VK_KHR_fragment_shading_rate'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_FRAGMENT_SHADING_RATE_KHR: Self = Self(1_000_226_004);
 }
-#[doc = "Generated from \'VK_KHR_fragment_shading_rate\'"]
+#[doc = "Generated from 'VK_KHR_fragment_shading_rate'"]
 impl AccessFlags {
     pub const FRAGMENT_SHADING_RATE_ATTACHMENT_READ_KHR: Self =
         AccessFlags::SHADING_RATE_IMAGE_READ_NV;
 }
-#[doc = "Generated from \'VK_KHR_fragment_shading_rate\'"]
+#[doc = "Generated from 'VK_KHR_fragment_shading_rate'"]
 impl ImageUsageFlags {
     pub const FRAGMENT_SHADING_RATE_ATTACHMENT_KHR: Self = ImageUsageFlags::SHADING_RATE_IMAGE_NV;
 }
-#[doc = "Generated from \'VK_KHR_fragment_shading_rate\'"]
+#[doc = "Generated from 'VK_KHR_fragment_shading_rate'"]
 impl PipelineStageFlags {
     pub const FRAGMENT_SHADING_RATE_ATTACHMENT_KHR: Self =
         PipelineStageFlags::SHADING_RATE_IMAGE_NV;
 }
-#[doc = "Generated from \'VK_KHR_fragment_shading_rate\'"]
+#[doc = "Generated from 'VK_KHR_fragment_shading_rate'"]
 impl FormatFeatureFlags {
     pub const FRAGMENT_SHADING_RATE_ATTACHMENT_KHR: Self =
         Self(0b100_0000_0000_0000_0000_0000_0000_0000);
@@ -18674,7 +18674,7 @@ impl AmdShaderCoreProperties2Fn {
         AmdShaderCoreProperties2Fn {}
     }
 }
-#[doc = "Generated from \'VK_AMD_shader_core_properties2\'"]
+#[doc = "Generated from 'VK_AMD_shader_core_properties2'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_CORE_PROPERTIES_2_AMD: Self = Self(1_000_227_000);
 }
@@ -18724,15 +18724,15 @@ impl AmdDeviceCoherentMemoryFn {
         AmdDeviceCoherentMemoryFn {}
     }
 }
-#[doc = "Generated from \'VK_AMD_device_coherent_memory\'"]
+#[doc = "Generated from 'VK_AMD_device_coherent_memory'"]
 impl MemoryPropertyFlags {
     pub const DEVICE_COHERENT_AMD: Self = Self(0b100_0000);
 }
-#[doc = "Generated from \'VK_AMD_device_coherent_memory\'"]
+#[doc = "Generated from 'VK_AMD_device_coherent_memory'"]
 impl MemoryPropertyFlags {
     pub const DEVICE_UNCACHED_AMD: Self = Self(0b1000_0000);
 }
-#[doc = "Generated from \'VK_AMD_device_coherent_memory\'"]
+#[doc = "Generated from 'VK_AMD_device_coherent_memory'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_COHERENT_MEMORY_FEATURES_AMD: Self = Self(1_000_229_000);
 }
@@ -18851,7 +18851,7 @@ impl ExtShaderImageAtomicInt64Fn {
         ExtShaderImageAtomicInt64Fn {}
     }
 }
-#[doc = "Generated from \'VK_EXT_shader_image_atomic_int64\'"]
+#[doc = "Generated from 'VK_EXT_shader_image_atomic_int64'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_IMAGE_ATOMIC_INT64_FEATURES_EXT: Self = Self(1_000_234_000);
 }
@@ -18924,7 +18924,7 @@ impl ExtMemoryBudgetFn {
         ExtMemoryBudgetFn {}
     }
 }
-#[doc = "Generated from \'VK_EXT_memory_budget\'"]
+#[doc = "Generated from 'VK_EXT_memory_budget'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_MEMORY_BUDGET_PROPERTIES_EXT: Self = Self(1_000_237_000);
 }
@@ -18951,11 +18951,11 @@ impl ExtMemoryPriorityFn {
         ExtMemoryPriorityFn {}
     }
 }
-#[doc = "Generated from \'VK_EXT_memory_priority\'"]
+#[doc = "Generated from 'VK_EXT_memory_priority'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_MEMORY_PRIORITY_FEATURES_EXT: Self = Self(1_000_238_000);
 }
-#[doc = "Generated from \'VK_EXT_memory_priority\'"]
+#[doc = "Generated from 'VK_EXT_memory_priority'"]
 impl StructureType {
     pub const MEMORY_PRIORITY_ALLOCATE_INFO_EXT: Self = Self(1_000_238_001);
 }
@@ -18982,7 +18982,7 @@ impl KhrSurfaceProtectedCapabilitiesFn {
         KhrSurfaceProtectedCapabilitiesFn {}
     }
 }
-#[doc = "Generated from \'VK_KHR_surface_protected_capabilities\'"]
+#[doc = "Generated from 'VK_KHR_surface_protected_capabilities'"]
 impl StructureType {
     pub const SURFACE_PROTECTED_CAPABILITIES_KHR: Self = Self(1_000_239_000);
 }
@@ -19009,7 +19009,7 @@ impl NvDedicatedAllocationImageAliasingFn {
         NvDedicatedAllocationImageAliasingFn {}
     }
 }
-#[doc = "Generated from \'VK_NV_dedicated_allocation_image_aliasing\'"]
+#[doc = "Generated from 'VK_NV_dedicated_allocation_image_aliasing'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_DEDICATED_ALLOCATION_IMAGE_ALIASING_FEATURES_NV: Self =
         Self(1_000_240_000);
@@ -19037,34 +19037,34 @@ impl KhrSeparateDepthStencilLayoutsFn {
         KhrSeparateDepthStencilLayoutsFn {}
     }
 }
-#[doc = "Generated from \'VK_KHR_separate_depth_stencil_layouts\'"]
+#[doc = "Generated from 'VK_KHR_separate_depth_stencil_layouts'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_SEPARATE_DEPTH_STENCIL_LAYOUTS_FEATURES_KHR: Self =
         StructureType::PHYSICAL_DEVICE_SEPARATE_DEPTH_STENCIL_LAYOUTS_FEATURES;
 }
-#[doc = "Generated from \'VK_KHR_separate_depth_stencil_layouts\'"]
+#[doc = "Generated from 'VK_KHR_separate_depth_stencil_layouts'"]
 impl StructureType {
     pub const ATTACHMENT_REFERENCE_STENCIL_LAYOUT_KHR: Self =
         StructureType::ATTACHMENT_REFERENCE_STENCIL_LAYOUT;
 }
-#[doc = "Generated from \'VK_KHR_separate_depth_stencil_layouts\'"]
+#[doc = "Generated from 'VK_KHR_separate_depth_stencil_layouts'"]
 impl StructureType {
     pub const ATTACHMENT_DESCRIPTION_STENCIL_LAYOUT_KHR: Self =
         StructureType::ATTACHMENT_DESCRIPTION_STENCIL_LAYOUT;
 }
-#[doc = "Generated from \'VK_KHR_separate_depth_stencil_layouts\'"]
+#[doc = "Generated from 'VK_KHR_separate_depth_stencil_layouts'"]
 impl ImageLayout {
     pub const DEPTH_ATTACHMENT_OPTIMAL_KHR: Self = ImageLayout::DEPTH_ATTACHMENT_OPTIMAL;
 }
-#[doc = "Generated from \'VK_KHR_separate_depth_stencil_layouts\'"]
+#[doc = "Generated from 'VK_KHR_separate_depth_stencil_layouts'"]
 impl ImageLayout {
     pub const DEPTH_READ_ONLY_OPTIMAL_KHR: Self = ImageLayout::DEPTH_READ_ONLY_OPTIMAL;
 }
-#[doc = "Generated from \'VK_KHR_separate_depth_stencil_layouts\'"]
+#[doc = "Generated from 'VK_KHR_separate_depth_stencil_layouts'"]
 impl ImageLayout {
     pub const STENCIL_ATTACHMENT_OPTIMAL_KHR: Self = ImageLayout::STENCIL_ATTACHMENT_OPTIMAL;
 }
-#[doc = "Generated from \'VK_KHR_separate_depth_stencil_layouts\'"]
+#[doc = "Generated from 'VK_KHR_separate_depth_stencil_layouts'"]
 impl ImageLayout {
     pub const STENCIL_READ_ONLY_OPTIMAL_KHR: Self = ImageLayout::STENCIL_READ_ONLY_OPTIMAL;
 }
@@ -19173,33 +19173,33 @@ impl ExtBufferDeviceAddressFn {
         (self.get_buffer_device_address_ext)(device, p_info)
     }
 }
-#[doc = "Generated from \'VK_EXT_buffer_device_address\'"]
+#[doc = "Generated from 'VK_EXT_buffer_device_address'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_BUFFER_DEVICE_ADDRESS_FEATURES_EXT: Self = Self(1_000_244_000);
 }
-#[doc = "Generated from \'VK_EXT_buffer_device_address\'"]
+#[doc = "Generated from 'VK_EXT_buffer_device_address'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_BUFFER_ADDRESS_FEATURES_EXT: Self =
         StructureType::PHYSICAL_DEVICE_BUFFER_DEVICE_ADDRESS_FEATURES_EXT;
 }
-#[doc = "Generated from \'VK_EXT_buffer_device_address\'"]
+#[doc = "Generated from 'VK_EXT_buffer_device_address'"]
 impl StructureType {
     pub const BUFFER_DEVICE_ADDRESS_INFO_EXT: Self = StructureType::BUFFER_DEVICE_ADDRESS_INFO;
 }
-#[doc = "Generated from \'VK_EXT_buffer_device_address\'"]
+#[doc = "Generated from 'VK_EXT_buffer_device_address'"]
 impl StructureType {
     pub const BUFFER_DEVICE_ADDRESS_CREATE_INFO_EXT: Self = Self(1_000_244_002);
 }
-#[doc = "Generated from \'VK_EXT_buffer_device_address\'"]
+#[doc = "Generated from 'VK_EXT_buffer_device_address'"]
 impl BufferUsageFlags {
     pub const SHADER_DEVICE_ADDRESS_EXT: Self = BufferUsageFlags::SHADER_DEVICE_ADDRESS;
 }
-#[doc = "Generated from \'VK_EXT_buffer_device_address\'"]
+#[doc = "Generated from 'VK_EXT_buffer_device_address'"]
 impl BufferCreateFlags {
     pub const DEVICE_ADDRESS_CAPTURE_REPLAY_EXT: Self =
         BufferCreateFlags::DEVICE_ADDRESS_CAPTURE_REPLAY;
 }
-#[doc = "Generated from \'VK_EXT_buffer_device_address\'"]
+#[doc = "Generated from 'VK_EXT_buffer_device_address'"]
 impl Result {
     pub const ERROR_INVALID_DEVICE_ADDRESS_EXT: Self = Result::ERROR_INVALID_OPAQUE_CAPTURE_ADDRESS;
 }
@@ -19274,15 +19274,15 @@ impl ExtToolingInfoFn {
         )
     }
 }
-#[doc = "Generated from \'VK_EXT_tooling_info\'"]
+#[doc = "Generated from 'VK_EXT_tooling_info'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_TOOL_PROPERTIES_EXT: Self = Self(1_000_245_000);
 }
-#[doc = "Generated from \'VK_EXT_tooling_info\'"]
+#[doc = "Generated from 'VK_EXT_tooling_info'"]
 impl ToolPurposeFlagsEXT {
     pub const DEBUG_REPORTING: Self = Self(0b10_0000);
 }
-#[doc = "Generated from \'VK_EXT_tooling_info\'"]
+#[doc = "Generated from 'VK_EXT_tooling_info'"]
 impl ToolPurposeFlagsEXT {
     pub const DEBUG_MARKERS: Self = Self(0b100_0000);
 }
@@ -19309,7 +19309,7 @@ impl ExtSeparateStencilUsageFn {
         ExtSeparateStencilUsageFn {}
     }
 }
-#[doc = "Generated from \'VK_EXT_separate_stencil_usage\'"]
+#[doc = "Generated from 'VK_EXT_separate_stencil_usage'"]
 impl StructureType {
     pub const IMAGE_STENCIL_USAGE_CREATE_INFO_EXT: Self =
         StructureType::IMAGE_STENCIL_USAGE_CREATE_INFO;
@@ -19337,7 +19337,7 @@ impl ExtValidationFeaturesFn {
         ExtValidationFeaturesFn {}
     }
 }
-#[doc = "Generated from \'VK_EXT_validation_features\'"]
+#[doc = "Generated from 'VK_EXT_validation_features'"]
 impl StructureType {
     pub const VALIDATION_FEATURES_EXT: Self = Self(1_000_247_000);
 }
@@ -19436,15 +19436,15 @@ impl NvCooperativeMatrixFn {
         )
     }
 }
-#[doc = "Generated from \'VK_NV_cooperative_matrix\'"]
+#[doc = "Generated from 'VK_NV_cooperative_matrix'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_COOPERATIVE_MATRIX_FEATURES_NV: Self = Self(1_000_249_000);
 }
-#[doc = "Generated from \'VK_NV_cooperative_matrix\'"]
+#[doc = "Generated from 'VK_NV_cooperative_matrix'"]
 impl StructureType {
     pub const COOPERATIVE_MATRIX_PROPERTIES_NV: Self = Self(1_000_249_001);
 }
-#[doc = "Generated from \'VK_NV_cooperative_matrix\'"]
+#[doc = "Generated from 'VK_NV_cooperative_matrix'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_COOPERATIVE_MATRIX_PROPERTIES_NV: Self = Self(1_000_249_002);
 }
@@ -19525,15 +19525,15 @@ impl NvCoverageReductionModeFn {
         )
     }
 }
-#[doc = "Generated from \'VK_NV_coverage_reduction_mode\'"]
+#[doc = "Generated from 'VK_NV_coverage_reduction_mode'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_COVERAGE_REDUCTION_MODE_FEATURES_NV: Self = Self(1_000_250_000);
 }
-#[doc = "Generated from \'VK_NV_coverage_reduction_mode\'"]
+#[doc = "Generated from 'VK_NV_coverage_reduction_mode'"]
 impl StructureType {
     pub const PIPELINE_COVERAGE_REDUCTION_STATE_CREATE_INFO_NV: Self = Self(1_000_250_001);
 }
-#[doc = "Generated from \'VK_NV_coverage_reduction_mode\'"]
+#[doc = "Generated from 'VK_NV_coverage_reduction_mode'"]
 impl StructureType {
     pub const FRAMEBUFFER_MIXED_SAMPLES_COMBINATION_NV: Self = Self(1_000_250_002);
 }
@@ -19560,7 +19560,7 @@ impl ExtFragmentShaderInterlockFn {
         ExtFragmentShaderInterlockFn {}
     }
 }
-#[doc = "Generated from \'VK_EXT_fragment_shader_interlock\'"]
+#[doc = "Generated from 'VK_EXT_fragment_shader_interlock'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_FRAGMENT_SHADER_INTERLOCK_FEATURES_EXT: Self = Self(1_000_251_000);
 }
@@ -19587,7 +19587,7 @@ impl ExtYcbcrImageArraysFn {
         ExtYcbcrImageArraysFn {}
     }
 }
-#[doc = "Generated from \'VK_EXT_ycbcr_image_arrays\'"]
+#[doc = "Generated from 'VK_EXT_ycbcr_image_arrays'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_YCBCR_IMAGE_ARRAYS_FEATURES_EXT: Self = Self(1_000_252_000);
 }
@@ -19614,7 +19614,7 @@ impl KhrUniformBufferStandardLayoutFn {
         KhrUniformBufferStandardLayoutFn {}
     }
 }
-#[doc = "Generated from \'VK_KHR_uniform_buffer_standard_layout\'"]
+#[doc = "Generated from 'VK_KHR_uniform_buffer_standard_layout'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_UNIFORM_BUFFER_STANDARD_LAYOUT_FEATURES_KHR: Self =
         StructureType::PHYSICAL_DEVICE_UNIFORM_BUFFER_STANDARD_LAYOUT_FEATURES;
@@ -19827,19 +19827,19 @@ impl ExtFullScreenExclusiveFn {
         (self.get_device_group_surface_present_modes2_ext)(device, p_surface_info, p_modes)
     }
 }
-#[doc = "Generated from \'VK_EXT_full_screen_exclusive\'"]
+#[doc = "Generated from 'VK_EXT_full_screen_exclusive'"]
 impl StructureType {
     pub const SURFACE_FULL_SCREEN_EXCLUSIVE_INFO_EXT: Self = Self(1_000_255_000);
 }
-#[doc = "Generated from \'VK_EXT_full_screen_exclusive\'"]
+#[doc = "Generated from 'VK_EXT_full_screen_exclusive'"]
 impl StructureType {
     pub const SURFACE_CAPABILITIES_FULL_SCREEN_EXCLUSIVE_EXT: Self = Self(1_000_255_002);
 }
-#[doc = "Generated from \'VK_EXT_full_screen_exclusive\'"]
+#[doc = "Generated from 'VK_EXT_full_screen_exclusive'"]
 impl Result {
-    pub const ERROR_FULL_SCREEN_EXCLUSIVE_MODE_LOST_EXT: Self = Self(-1_000_255_000);
+    pub const ERROR_FULL_SCREEN_EXCLUSIVE_MODE_LOST_EXT: Self = Self(-1000255000);
 }
-#[doc = "Generated from \'VK_EXT_full_screen_exclusive\'"]
+#[doc = "Generated from 'VK_EXT_full_screen_exclusive'"]
 impl StructureType {
     pub const SURFACE_FULL_SCREEN_EXCLUSIVE_WIN32_INFO_EXT: Self = Self(1_000_255_001);
 }
@@ -19914,7 +19914,7 @@ impl ExtHeadlessSurfaceFn {
         (self.create_headless_surface_ext)(instance, p_create_info, p_allocator, p_surface)
     }
 }
-#[doc = "Generated from \'VK_EXT_headless_surface\'"]
+#[doc = "Generated from 'VK_EXT_headless_surface'"]
 impl StructureType {
     pub const HEADLESS_SURFACE_CREATE_INFO_EXT: Self = Self(1_000_256_000);
 }
@@ -20043,49 +20043,49 @@ impl KhrBufferDeviceAddressFn {
         (self.get_device_memory_opaque_capture_address_khr)(device, p_info)
     }
 }
-#[doc = "Generated from \'VK_KHR_buffer_device_address\'"]
+#[doc = "Generated from 'VK_KHR_buffer_device_address'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_BUFFER_DEVICE_ADDRESS_FEATURES_KHR: Self =
         StructureType::PHYSICAL_DEVICE_BUFFER_DEVICE_ADDRESS_FEATURES;
 }
-#[doc = "Generated from \'VK_KHR_buffer_device_address\'"]
+#[doc = "Generated from 'VK_KHR_buffer_device_address'"]
 impl StructureType {
     pub const BUFFER_DEVICE_ADDRESS_INFO_KHR: Self = StructureType::BUFFER_DEVICE_ADDRESS_INFO;
 }
-#[doc = "Generated from \'VK_KHR_buffer_device_address\'"]
+#[doc = "Generated from 'VK_KHR_buffer_device_address'"]
 impl StructureType {
     pub const BUFFER_OPAQUE_CAPTURE_ADDRESS_CREATE_INFO_KHR: Self =
         StructureType::BUFFER_OPAQUE_CAPTURE_ADDRESS_CREATE_INFO;
 }
-#[doc = "Generated from \'VK_KHR_buffer_device_address\'"]
+#[doc = "Generated from 'VK_KHR_buffer_device_address'"]
 impl StructureType {
     pub const MEMORY_OPAQUE_CAPTURE_ADDRESS_ALLOCATE_INFO_KHR: Self =
         StructureType::MEMORY_OPAQUE_CAPTURE_ADDRESS_ALLOCATE_INFO;
 }
-#[doc = "Generated from \'VK_KHR_buffer_device_address\'"]
+#[doc = "Generated from 'VK_KHR_buffer_device_address'"]
 impl StructureType {
     pub const DEVICE_MEMORY_OPAQUE_CAPTURE_ADDRESS_INFO_KHR: Self =
         StructureType::DEVICE_MEMORY_OPAQUE_CAPTURE_ADDRESS_INFO;
 }
-#[doc = "Generated from \'VK_KHR_buffer_device_address\'"]
+#[doc = "Generated from 'VK_KHR_buffer_device_address'"]
 impl BufferUsageFlags {
     pub const SHADER_DEVICE_ADDRESS_KHR: Self = BufferUsageFlags::SHADER_DEVICE_ADDRESS;
 }
-#[doc = "Generated from \'VK_KHR_buffer_device_address\'"]
+#[doc = "Generated from 'VK_KHR_buffer_device_address'"]
 impl BufferCreateFlags {
     pub const DEVICE_ADDRESS_CAPTURE_REPLAY_KHR: Self =
         BufferCreateFlags::DEVICE_ADDRESS_CAPTURE_REPLAY;
 }
-#[doc = "Generated from \'VK_KHR_buffer_device_address\'"]
+#[doc = "Generated from 'VK_KHR_buffer_device_address'"]
 impl MemoryAllocateFlags {
     pub const DEVICE_ADDRESS_KHR: Self = MemoryAllocateFlags::DEVICE_ADDRESS;
 }
-#[doc = "Generated from \'VK_KHR_buffer_device_address\'"]
+#[doc = "Generated from 'VK_KHR_buffer_device_address'"]
 impl MemoryAllocateFlags {
     pub const DEVICE_ADDRESS_CAPTURE_REPLAY_KHR: Self =
         MemoryAllocateFlags::DEVICE_ADDRESS_CAPTURE_REPLAY;
 }
-#[doc = "Generated from \'VK_KHR_buffer_device_address\'"]
+#[doc = "Generated from 'VK_KHR_buffer_device_address'"]
 impl Result {
     pub const ERROR_INVALID_OPAQUE_CAPTURE_ADDRESS_KHR: Self =
         Result::ERROR_INVALID_OPAQUE_CAPTURE_ADDRESS;
@@ -20180,19 +20180,19 @@ impl ExtLineRasterizationFn {
         (self.cmd_set_line_stipple_ext)(command_buffer, line_stipple_factor, line_stipple_pattern)
     }
 }
-#[doc = "Generated from \'VK_EXT_line_rasterization\'"]
+#[doc = "Generated from 'VK_EXT_line_rasterization'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_LINE_RASTERIZATION_FEATURES_EXT: Self = Self(1_000_259_000);
 }
-#[doc = "Generated from \'VK_EXT_line_rasterization\'"]
+#[doc = "Generated from 'VK_EXT_line_rasterization'"]
 impl StructureType {
     pub const PIPELINE_RASTERIZATION_LINE_STATE_CREATE_INFO_EXT: Self = Self(1_000_259_001);
 }
-#[doc = "Generated from \'VK_EXT_line_rasterization\'"]
+#[doc = "Generated from 'VK_EXT_line_rasterization'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_LINE_RASTERIZATION_PROPERTIES_EXT: Self = Self(1_000_259_002);
 }
-#[doc = "Generated from \'VK_EXT_line_rasterization\'"]
+#[doc = "Generated from 'VK_EXT_line_rasterization'"]
 impl DynamicState {
     pub const LINE_STIPPLE_EXT: Self = Self(1_000_259_000);
 }
@@ -20219,7 +20219,7 @@ impl ExtShaderAtomicFloatFn {
         ExtShaderAtomicFloatFn {}
     }
 }
-#[doc = "Generated from \'VK_EXT_shader_atomic_float\'"]
+#[doc = "Generated from 'VK_EXT_shader_atomic_float'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_ATOMIC_FLOAT_FEATURES_EXT: Self = Self(1_000_260_000);
 }
@@ -20291,7 +20291,7 @@ impl ExtHostQueryResetFn {
         (self.reset_query_pool_ext)(device, query_pool, first_query, query_count)
     }
 }
-#[doc = "Generated from \'VK_EXT_host_query_reset\'"]
+#[doc = "Generated from 'VK_EXT_host_query_reset'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_HOST_QUERY_RESET_FEATURES_EXT: Self =
         StructureType::PHYSICAL_DEVICE_HOST_QUERY_RESET_FEATURES;
@@ -20388,11 +20388,11 @@ impl ExtIndexTypeUint8Fn {
         ExtIndexTypeUint8Fn {}
     }
 }
-#[doc = "Generated from \'VK_EXT_index_type_uint8\'"]
+#[doc = "Generated from 'VK_EXT_index_type_uint8'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_INDEX_TYPE_UINT8_FEATURES_EXT: Self = Self(1_000_265_000);
 }
-#[doc = "Generated from \'VK_EXT_index_type_uint8\'"]
+#[doc = "Generated from 'VK_EXT_index_type_uint8'"]
 impl IndexType {
     pub const UINT8_EXT: Self = Self(1_000_265_000);
 }
@@ -20922,55 +20922,55 @@ impl ExtExtendedDynamicStateFn {
         )
     }
 }
-#[doc = "Generated from \'VK_EXT_extended_dynamic_state\'"]
+#[doc = "Generated from 'VK_EXT_extended_dynamic_state'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_FEATURES_EXT: Self = Self(1_000_267_000);
 }
-#[doc = "Generated from \'VK_EXT_extended_dynamic_state\'"]
+#[doc = "Generated from 'VK_EXT_extended_dynamic_state'"]
 impl DynamicState {
     pub const CULL_MODE_EXT: Self = Self(1_000_267_000);
 }
-#[doc = "Generated from \'VK_EXT_extended_dynamic_state\'"]
+#[doc = "Generated from 'VK_EXT_extended_dynamic_state'"]
 impl DynamicState {
     pub const FRONT_FACE_EXT: Self = Self(1_000_267_001);
 }
-#[doc = "Generated from \'VK_EXT_extended_dynamic_state\'"]
+#[doc = "Generated from 'VK_EXT_extended_dynamic_state'"]
 impl DynamicState {
     pub const PRIMITIVE_TOPOLOGY_EXT: Self = Self(1_000_267_002);
 }
-#[doc = "Generated from \'VK_EXT_extended_dynamic_state\'"]
+#[doc = "Generated from 'VK_EXT_extended_dynamic_state'"]
 impl DynamicState {
     pub const VIEWPORT_WITH_COUNT_EXT: Self = Self(1_000_267_003);
 }
-#[doc = "Generated from \'VK_EXT_extended_dynamic_state\'"]
+#[doc = "Generated from 'VK_EXT_extended_dynamic_state'"]
 impl DynamicState {
     pub const SCISSOR_WITH_COUNT_EXT: Self = Self(1_000_267_004);
 }
-#[doc = "Generated from \'VK_EXT_extended_dynamic_state\'"]
+#[doc = "Generated from 'VK_EXT_extended_dynamic_state'"]
 impl DynamicState {
     pub const VERTEX_INPUT_BINDING_STRIDE_EXT: Self = Self(1_000_267_005);
 }
-#[doc = "Generated from \'VK_EXT_extended_dynamic_state\'"]
+#[doc = "Generated from 'VK_EXT_extended_dynamic_state'"]
 impl DynamicState {
     pub const DEPTH_TEST_ENABLE_EXT: Self = Self(1_000_267_006);
 }
-#[doc = "Generated from \'VK_EXT_extended_dynamic_state\'"]
+#[doc = "Generated from 'VK_EXT_extended_dynamic_state'"]
 impl DynamicState {
     pub const DEPTH_WRITE_ENABLE_EXT: Self = Self(1_000_267_007);
 }
-#[doc = "Generated from \'VK_EXT_extended_dynamic_state\'"]
+#[doc = "Generated from 'VK_EXT_extended_dynamic_state'"]
 impl DynamicState {
     pub const DEPTH_COMPARE_OP_EXT: Self = Self(1_000_267_008);
 }
-#[doc = "Generated from \'VK_EXT_extended_dynamic_state\'"]
+#[doc = "Generated from 'VK_EXT_extended_dynamic_state'"]
 impl DynamicState {
     pub const DEPTH_BOUNDS_TEST_ENABLE_EXT: Self = Self(1_000_267_009);
 }
-#[doc = "Generated from \'VK_EXT_extended_dynamic_state\'"]
+#[doc = "Generated from 'VK_EXT_extended_dynamic_state'"]
 impl DynamicState {
     pub const STENCIL_TEST_ENABLE_EXT: Self = Self(1_000_267_010);
 }
-#[doc = "Generated from \'VK_EXT_extended_dynamic_state\'"]
+#[doc = "Generated from 'VK_EXT_extended_dynamic_state'"]
 impl DynamicState {
     pub const STENCIL_OP_EXT: Self = Self(1_000_267_011);
 }
@@ -21182,23 +21182,23 @@ impl KhrDeferredHostOperationsFn {
         (self.deferred_operation_join_khr)(device, operation)
     }
 }
-#[doc = "Generated from \'VK_KHR_deferred_host_operations\'"]
+#[doc = "Generated from 'VK_KHR_deferred_host_operations'"]
 impl ObjectType {
     pub const DEFERRED_OPERATION_KHR: Self = Self(1_000_268_000);
 }
-#[doc = "Generated from \'VK_KHR_deferred_host_operations\'"]
+#[doc = "Generated from 'VK_KHR_deferred_host_operations'"]
 impl Result {
     pub const THREAD_IDLE_KHR: Self = Self(1_000_268_000);
 }
-#[doc = "Generated from \'VK_KHR_deferred_host_operations\'"]
+#[doc = "Generated from 'VK_KHR_deferred_host_operations'"]
 impl Result {
     pub const THREAD_DONE_KHR: Self = Self(1_000_268_001);
 }
-#[doc = "Generated from \'VK_KHR_deferred_host_operations\'"]
+#[doc = "Generated from 'VK_KHR_deferred_host_operations'"]
 impl Result {
     pub const OPERATION_DEFERRED_KHR: Self = Self(1_000_268_002);
 }
-#[doc = "Generated from \'VK_KHR_deferred_host_operations\'"]
+#[doc = "Generated from 'VK_KHR_deferred_host_operations'"]
 impl Result {
     pub const OPERATION_NOT_DEFERRED_KHR: Self = Self(1_000_268_003);
 }
@@ -21379,36 +21379,36 @@ impl KhrPipelineExecutablePropertiesFn {
         )
     }
 }
-#[doc = "Generated from \'VK_KHR_pipeline_executable_properties\'"]
+#[doc = "Generated from 'VK_KHR_pipeline_executable_properties'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_PIPELINE_EXECUTABLE_PROPERTIES_FEATURES_KHR: Self =
         Self(1_000_269_000);
 }
-#[doc = "Generated from \'VK_KHR_pipeline_executable_properties\'"]
+#[doc = "Generated from 'VK_KHR_pipeline_executable_properties'"]
 impl StructureType {
     pub const PIPELINE_INFO_KHR: Self = Self(1_000_269_001);
 }
-#[doc = "Generated from \'VK_KHR_pipeline_executable_properties\'"]
+#[doc = "Generated from 'VK_KHR_pipeline_executable_properties'"]
 impl StructureType {
     pub const PIPELINE_EXECUTABLE_PROPERTIES_KHR: Self = Self(1_000_269_002);
 }
-#[doc = "Generated from \'VK_KHR_pipeline_executable_properties\'"]
+#[doc = "Generated from 'VK_KHR_pipeline_executable_properties'"]
 impl StructureType {
     pub const PIPELINE_EXECUTABLE_INFO_KHR: Self = Self(1_000_269_003);
 }
-#[doc = "Generated from \'VK_KHR_pipeline_executable_properties\'"]
+#[doc = "Generated from 'VK_KHR_pipeline_executable_properties'"]
 impl StructureType {
     pub const PIPELINE_EXECUTABLE_STATISTIC_KHR: Self = Self(1_000_269_004);
 }
-#[doc = "Generated from \'VK_KHR_pipeline_executable_properties\'"]
+#[doc = "Generated from 'VK_KHR_pipeline_executable_properties'"]
 impl StructureType {
     pub const PIPELINE_EXECUTABLE_INTERNAL_REPRESENTATION_KHR: Self = Self(1_000_269_005);
 }
-#[doc = "Generated from \'VK_KHR_pipeline_executable_properties\'"]
+#[doc = "Generated from 'VK_KHR_pipeline_executable_properties'"]
 impl PipelineCreateFlags {
     pub const CAPTURE_STATISTICS_KHR: Self = Self(0b100_0000);
 }
-#[doc = "Generated from \'VK_KHR_pipeline_executable_properties\'"]
+#[doc = "Generated from 'VK_KHR_pipeline_executable_properties'"]
 impl PipelineCreateFlags {
     pub const CAPTURE_INTERNAL_REPRESENTATIONS_KHR: Self = Self(0b1000_0000);
 }
@@ -21573,7 +21573,7 @@ impl ExtShaderDemoteToHelperInvocationFn {
         ExtShaderDemoteToHelperInvocationFn {}
     }
 }
-#[doc = "Generated from \'VK_EXT_shader_demote_to_helper_invocation\'"]
+#[doc = "Generated from 'VK_EXT_shader_demote_to_helper_invocation'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_SHADER_DEMOTE_TO_HELPER_INVOCATION_FEATURES_EXT: Self =
         Self(1_000_276_000);
@@ -21869,55 +21869,55 @@ impl NvDeviceGeneratedCommandsFn {
         (self.destroy_indirect_commands_layout_nv)(device, indirect_commands_layout, p_allocator)
     }
 }
-#[doc = "Generated from \'VK_NV_device_generated_commands\'"]
+#[doc = "Generated from 'VK_NV_device_generated_commands'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_DEVICE_GENERATED_COMMANDS_PROPERTIES_NV: Self = Self(1_000_277_000);
 }
-#[doc = "Generated from \'VK_NV_device_generated_commands\'"]
+#[doc = "Generated from 'VK_NV_device_generated_commands'"]
 impl StructureType {
     pub const GRAPHICS_SHADER_GROUP_CREATE_INFO_NV: Self = Self(1_000_277_001);
 }
-#[doc = "Generated from \'VK_NV_device_generated_commands\'"]
+#[doc = "Generated from 'VK_NV_device_generated_commands'"]
 impl StructureType {
     pub const GRAPHICS_PIPELINE_SHADER_GROUPS_CREATE_INFO_NV: Self = Self(1_000_277_002);
 }
-#[doc = "Generated from \'VK_NV_device_generated_commands\'"]
+#[doc = "Generated from 'VK_NV_device_generated_commands'"]
 impl StructureType {
     pub const INDIRECT_COMMANDS_LAYOUT_TOKEN_NV: Self = Self(1_000_277_003);
 }
-#[doc = "Generated from \'VK_NV_device_generated_commands\'"]
+#[doc = "Generated from 'VK_NV_device_generated_commands'"]
 impl StructureType {
     pub const INDIRECT_COMMANDS_LAYOUT_CREATE_INFO_NV: Self = Self(1_000_277_004);
 }
-#[doc = "Generated from \'VK_NV_device_generated_commands\'"]
+#[doc = "Generated from 'VK_NV_device_generated_commands'"]
 impl StructureType {
     pub const GENERATED_COMMANDS_INFO_NV: Self = Self(1_000_277_005);
 }
-#[doc = "Generated from \'VK_NV_device_generated_commands\'"]
+#[doc = "Generated from 'VK_NV_device_generated_commands'"]
 impl StructureType {
     pub const GENERATED_COMMANDS_MEMORY_REQUIREMENTS_INFO_NV: Self = Self(1_000_277_006);
 }
-#[doc = "Generated from \'VK_NV_device_generated_commands\'"]
+#[doc = "Generated from 'VK_NV_device_generated_commands'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_DEVICE_GENERATED_COMMANDS_FEATURES_NV: Self = Self(1_000_277_007);
 }
-#[doc = "Generated from \'VK_NV_device_generated_commands\'"]
+#[doc = "Generated from 'VK_NV_device_generated_commands'"]
 impl PipelineCreateFlags {
     pub const INDIRECT_BINDABLE_NV: Self = Self(0b100_0000_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_NV_device_generated_commands\'"]
+#[doc = "Generated from 'VK_NV_device_generated_commands'"]
 impl PipelineStageFlags {
     pub const COMMAND_PREPROCESS_NV: Self = Self(0b10_0000_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_NV_device_generated_commands\'"]
+#[doc = "Generated from 'VK_NV_device_generated_commands'"]
 impl AccessFlags {
     pub const COMMAND_PREPROCESS_READ_NV: Self = Self(0b10_0000_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_NV_device_generated_commands\'"]
+#[doc = "Generated from 'VK_NV_device_generated_commands'"]
 impl AccessFlags {
     pub const COMMAND_PREPROCESS_WRITE_NV: Self = Self(0b100_0000_0000_0000_0000);
 }
-#[doc = "Generated from \'VK_NV_device_generated_commands\'"]
+#[doc = "Generated from 'VK_NV_device_generated_commands'"]
 impl ObjectType {
     pub const INDIRECT_COMMANDS_LAYOUT_NV: Self = Self(1_000_277_000);
 }
@@ -22013,11 +22013,11 @@ impl ExtTexelBufferAlignmentFn {
         ExtTexelBufferAlignmentFn {}
     }
 }
-#[doc = "Generated from \'VK_EXT_texel_buffer_alignment\'"]
+#[doc = "Generated from 'VK_EXT_texel_buffer_alignment'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_TEXEL_BUFFER_ALIGNMENT_FEATURES_EXT: Self = Self(1_000_281_000);
 }
-#[doc = "Generated from \'VK_EXT_texel_buffer_alignment\'"]
+#[doc = "Generated from 'VK_EXT_texel_buffer_alignment'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_TEXEL_BUFFER_ALIGNMENT_PROPERTIES_EXT: Self = Self(1_000_281_001);
 }
@@ -22044,16 +22044,16 @@ impl QcomRenderPassTransformFn {
         QcomRenderPassTransformFn {}
     }
 }
-#[doc = "Generated from \'VK_QCOM_render_pass_transform\'"]
+#[doc = "Generated from 'VK_QCOM_render_pass_transform'"]
 impl StructureType {
     pub const COMMAND_BUFFER_INHERITANCE_RENDER_PASS_TRANSFORM_INFO_QCOM: Self =
         Self(1_000_282_000);
 }
-#[doc = "Generated from \'VK_QCOM_render_pass_transform\'"]
+#[doc = "Generated from 'VK_QCOM_render_pass_transform'"]
 impl StructureType {
     pub const RENDER_PASS_TRANSFORM_BEGIN_INFO_QCOM: Self = Self(1_000_282_001);
 }
-#[doc = "Generated from \'VK_QCOM_render_pass_transform\'"]
+#[doc = "Generated from 'VK_QCOM_render_pass_transform'"]
 impl RenderPassCreateFlags {
     pub const TRANSFORM_QCOM: Self = Self(0b10);
 }
@@ -22103,15 +22103,15 @@ impl ExtDeviceMemoryReportFn {
         ExtDeviceMemoryReportFn {}
     }
 }
-#[doc = "Generated from \'VK_EXT_device_memory_report\'"]
+#[doc = "Generated from 'VK_EXT_device_memory_report'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_DEVICE_MEMORY_REPORT_FEATURES_EXT: Self = Self(1_000_284_000);
 }
-#[doc = "Generated from \'VK_EXT_device_memory_report\'"]
+#[doc = "Generated from 'VK_EXT_device_memory_report'"]
 impl StructureType {
     pub const DEVICE_DEVICE_MEMORY_REPORT_CREATE_INFO_EXT: Self = Self(1_000_284_001);
 }
-#[doc = "Generated from \'VK_EXT_device_memory_report\'"]
+#[doc = "Generated from 'VK_EXT_device_memory_report'"]
 impl StructureType {
     pub const DEVICE_MEMORY_REPORT_CALLBACK_DATA_EXT: Self = Self(1_000_284_002);
 }
@@ -22161,11 +22161,11 @@ impl ExtRobustness2Fn {
         ExtRobustness2Fn {}
     }
 }
-#[doc = "Generated from \'VK_EXT_robustness2\'"]
+#[doc = "Generated from 'VK_EXT_robustness2'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_ROBUSTNESS_2_FEATURES_EXT: Self = Self(1_000_286_000);
 }
-#[doc = "Generated from \'VK_EXT_robustness2\'"]
+#[doc = "Generated from 'VK_EXT_robustness2'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_ROBUSTNESS_2_PROPERTIES_EXT: Self = Self(1_000_286_001);
 }
@@ -22192,23 +22192,23 @@ impl ExtCustomBorderColorFn {
         ExtCustomBorderColorFn {}
     }
 }
-#[doc = "Generated from \'VK_EXT_custom_border_color\'"]
+#[doc = "Generated from 'VK_EXT_custom_border_color'"]
 impl StructureType {
     pub const SAMPLER_CUSTOM_BORDER_COLOR_CREATE_INFO_EXT: Self = Self(1_000_287_000);
 }
-#[doc = "Generated from \'VK_EXT_custom_border_color\'"]
+#[doc = "Generated from 'VK_EXT_custom_border_color'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_CUSTOM_BORDER_COLOR_PROPERTIES_EXT: Self = Self(1_000_287_001);
 }
-#[doc = "Generated from \'VK_EXT_custom_border_color\'"]
+#[doc = "Generated from 'VK_EXT_custom_border_color'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_CUSTOM_BORDER_COLOR_FEATURES_EXT: Self = Self(1_000_287_002);
 }
-#[doc = "Generated from \'VK_EXT_custom_border_color\'"]
+#[doc = "Generated from 'VK_EXT_custom_border_color'"]
 impl BorderColor {
     pub const FLOAT_CUSTOM_EXT: Self = Self(1_000_287_003);
 }
-#[doc = "Generated from \'VK_EXT_custom_border_color\'"]
+#[doc = "Generated from 'VK_EXT_custom_border_color'"]
 impl BorderColor {
     pub const INT_CUSTOM_EXT: Self = Self(1_000_287_004);
 }
@@ -22235,123 +22235,123 @@ impl ExtExtension289Fn {
         ExtExtension289Fn {}
     }
 }
-#[doc = "Generated from \'VK_EXT_extension_289\'"]
+#[doc = "Generated from 'VK_EXT_extension_289'"]
 impl Format {
     pub const ASTC_3X3X3_UNORM_BLOCK_EXT: Self = Self(1_000_288_000);
 }
-#[doc = "Generated from \'VK_EXT_extension_289\'"]
+#[doc = "Generated from 'VK_EXT_extension_289'"]
 impl Format {
     pub const ASTC_3X3X3_SRGB_BLOCK_EXT: Self = Self(1_000_288_001);
 }
-#[doc = "Generated from \'VK_EXT_extension_289\'"]
+#[doc = "Generated from 'VK_EXT_extension_289'"]
 impl Format {
     pub const ASTC_3X3X3_SFLOAT_BLOCK_EXT: Self = Self(1_000_288_002);
 }
-#[doc = "Generated from \'VK_EXT_extension_289\'"]
+#[doc = "Generated from 'VK_EXT_extension_289'"]
 impl Format {
     pub const ASTC_4X3X3_UNORM_BLOCK_EXT: Self = Self(1_000_288_003);
 }
-#[doc = "Generated from \'VK_EXT_extension_289\'"]
+#[doc = "Generated from 'VK_EXT_extension_289'"]
 impl Format {
     pub const ASTC_4X3X3_SRGB_BLOCK_EXT: Self = Self(1_000_288_004);
 }
-#[doc = "Generated from \'VK_EXT_extension_289\'"]
+#[doc = "Generated from 'VK_EXT_extension_289'"]
 impl Format {
     pub const ASTC_4X3X3_SFLOAT_BLOCK_EXT: Self = Self(1_000_288_005);
 }
-#[doc = "Generated from \'VK_EXT_extension_289\'"]
+#[doc = "Generated from 'VK_EXT_extension_289'"]
 impl Format {
     pub const ASTC_4X4X3_UNORM_BLOCK_EXT: Self = Self(1_000_288_006);
 }
-#[doc = "Generated from \'VK_EXT_extension_289\'"]
+#[doc = "Generated from 'VK_EXT_extension_289'"]
 impl Format {
     pub const ASTC_4X4X3_SRGB_BLOCK_EXT: Self = Self(1_000_288_007);
 }
-#[doc = "Generated from \'VK_EXT_extension_289\'"]
+#[doc = "Generated from 'VK_EXT_extension_289'"]
 impl Format {
     pub const ASTC_4X4X3_SFLOAT_BLOCK_EXT: Self = Self(1_000_288_008);
 }
-#[doc = "Generated from \'VK_EXT_extension_289\'"]
+#[doc = "Generated from 'VK_EXT_extension_289'"]
 impl Format {
     pub const ASTC_4X4X4_UNORM_BLOCK_EXT: Self = Self(1_000_288_009);
 }
-#[doc = "Generated from \'VK_EXT_extension_289\'"]
+#[doc = "Generated from 'VK_EXT_extension_289'"]
 impl Format {
     pub const ASTC_4X4X4_SRGB_BLOCK_EXT: Self = Self(1_000_288_010);
 }
-#[doc = "Generated from \'VK_EXT_extension_289\'"]
+#[doc = "Generated from 'VK_EXT_extension_289'"]
 impl Format {
     pub const ASTC_4X4X4_SFLOAT_BLOCK_EXT: Self = Self(1_000_288_011);
 }
-#[doc = "Generated from \'VK_EXT_extension_289\'"]
+#[doc = "Generated from 'VK_EXT_extension_289'"]
 impl Format {
     pub const ASTC_5X4X4_UNORM_BLOCK_EXT: Self = Self(1_000_288_012);
 }
-#[doc = "Generated from \'VK_EXT_extension_289\'"]
+#[doc = "Generated from 'VK_EXT_extension_289'"]
 impl Format {
     pub const ASTC_5X4X4_SRGB_BLOCK_EXT: Self = Self(1_000_288_013);
 }
-#[doc = "Generated from \'VK_EXT_extension_289\'"]
+#[doc = "Generated from 'VK_EXT_extension_289'"]
 impl Format {
     pub const ASTC_5X4X4_SFLOAT_BLOCK_EXT: Self = Self(1_000_288_014);
 }
-#[doc = "Generated from \'VK_EXT_extension_289\'"]
+#[doc = "Generated from 'VK_EXT_extension_289'"]
 impl Format {
     pub const ASTC_5X5X4_UNORM_BLOCK_EXT: Self = Self(1_000_288_015);
 }
-#[doc = "Generated from \'VK_EXT_extension_289\'"]
+#[doc = "Generated from 'VK_EXT_extension_289'"]
 impl Format {
     pub const ASTC_5X5X4_SRGB_BLOCK_EXT: Self = Self(1_000_288_016);
 }
-#[doc = "Generated from \'VK_EXT_extension_289\'"]
+#[doc = "Generated from 'VK_EXT_extension_289'"]
 impl Format {
     pub const ASTC_5X5X4_SFLOAT_BLOCK_EXT: Self = Self(1_000_288_017);
 }
-#[doc = "Generated from \'VK_EXT_extension_289\'"]
+#[doc = "Generated from 'VK_EXT_extension_289'"]
 impl Format {
     pub const ASTC_5X5X5_UNORM_BLOCK_EXT: Self = Self(1_000_288_018);
 }
-#[doc = "Generated from \'VK_EXT_extension_289\'"]
+#[doc = "Generated from 'VK_EXT_extension_289'"]
 impl Format {
     pub const ASTC_5X5X5_SRGB_BLOCK_EXT: Self = Self(1_000_288_019);
 }
-#[doc = "Generated from \'VK_EXT_extension_289\'"]
+#[doc = "Generated from 'VK_EXT_extension_289'"]
 impl Format {
     pub const ASTC_5X5X5_SFLOAT_BLOCK_EXT: Self = Self(1_000_288_020);
 }
-#[doc = "Generated from \'VK_EXT_extension_289\'"]
+#[doc = "Generated from 'VK_EXT_extension_289'"]
 impl Format {
     pub const ASTC_6X5X5_UNORM_BLOCK_EXT: Self = Self(1_000_288_021);
 }
-#[doc = "Generated from \'VK_EXT_extension_289\'"]
+#[doc = "Generated from 'VK_EXT_extension_289'"]
 impl Format {
     pub const ASTC_6X5X5_SRGB_BLOCK_EXT: Self = Self(1_000_288_022);
 }
-#[doc = "Generated from \'VK_EXT_extension_289\'"]
+#[doc = "Generated from 'VK_EXT_extension_289'"]
 impl Format {
     pub const ASTC_6X5X5_SFLOAT_BLOCK_EXT: Self = Self(1_000_288_023);
 }
-#[doc = "Generated from \'VK_EXT_extension_289\'"]
+#[doc = "Generated from 'VK_EXT_extension_289'"]
 impl Format {
     pub const ASTC_6X6X5_UNORM_BLOCK_EXT: Self = Self(1_000_288_024);
 }
-#[doc = "Generated from \'VK_EXT_extension_289\'"]
+#[doc = "Generated from 'VK_EXT_extension_289'"]
 impl Format {
     pub const ASTC_6X6X5_SRGB_BLOCK_EXT: Self = Self(1_000_288_025);
 }
-#[doc = "Generated from \'VK_EXT_extension_289\'"]
+#[doc = "Generated from 'VK_EXT_extension_289'"]
 impl Format {
     pub const ASTC_6X6X5_SFLOAT_BLOCK_EXT: Self = Self(1_000_288_026);
 }
-#[doc = "Generated from \'VK_EXT_extension_289\'"]
+#[doc = "Generated from 'VK_EXT_extension_289'"]
 impl Format {
     pub const ASTC_6X6X6_UNORM_BLOCK_EXT: Self = Self(1_000_288_027);
 }
-#[doc = "Generated from \'VK_EXT_extension_289\'"]
+#[doc = "Generated from 'VK_EXT_extension_289'"]
 impl Format {
     pub const ASTC_6X6X6_SRGB_BLOCK_EXT: Self = Self(1_000_288_028);
 }
-#[doc = "Generated from \'VK_EXT_extension_289\'"]
+#[doc = "Generated from 'VK_EXT_extension_289'"]
 impl Format {
     pub const ASTC_6X6X6_SFLOAT_BLOCK_EXT: Self = Self(1_000_288_029);
 }
@@ -22401,11 +22401,11 @@ impl KhrPipelineLibraryFn {
         KhrPipelineLibraryFn {}
     }
 }
-#[doc = "Generated from \'VK_KHR_pipeline_library\'"]
+#[doc = "Generated from 'VK_KHR_pipeline_library'"]
 impl PipelineCreateFlags {
     pub const LIBRARY_KHR: Self = Self(0b1000_0000_0000);
 }
-#[doc = "Generated from \'VK_KHR_pipeline_library\'"]
+#[doc = "Generated from 'VK_KHR_pipeline_library'"]
 impl StructureType {
     pub const PIPELINE_LIBRARY_CREATE_INFO_KHR: Self = Self(1_000_290_000);
 }
@@ -22711,19 +22711,19 @@ impl ExtPrivateDataFn {
         )
     }
 }
-#[doc = "Generated from \'VK_EXT_private_data\'"]
+#[doc = "Generated from 'VK_EXT_private_data'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_PRIVATE_DATA_FEATURES_EXT: Self = Self(1_000_295_000);
 }
-#[doc = "Generated from \'VK_EXT_private_data\'"]
+#[doc = "Generated from 'VK_EXT_private_data'"]
 impl StructureType {
     pub const DEVICE_PRIVATE_DATA_CREATE_INFO_EXT: Self = Self(1_000_295_001);
 }
-#[doc = "Generated from \'VK_EXT_private_data\'"]
+#[doc = "Generated from 'VK_EXT_private_data'"]
 impl StructureType {
     pub const PRIVATE_DATA_SLOT_CREATE_INFO_EXT: Self = Self(1_000_295_002);
 }
-#[doc = "Generated from \'VK_EXT_private_data\'"]
+#[doc = "Generated from 'VK_EXT_private_data'"]
 impl ObjectType {
     pub const PRIVATE_DATA_SLOT_EXT: Self = Self(1_000_295_000);
 }
@@ -22750,7 +22750,7 @@ impl KhrExtension297Fn {
         KhrExtension297Fn {}
     }
 }
-#[doc = "Generated from \'VK_KHR_extension_297\'"]
+#[doc = "Generated from 'VK_KHR_extension_297'"]
 impl PipelineShaderStageCreateFlags {
     pub const RESERVED_3_KHR: Self = Self(0b1000);
 }
@@ -22777,28 +22777,28 @@ impl ExtPipelineCreationCacheControlFn {
         ExtPipelineCreationCacheControlFn {}
     }
 }
-#[doc = "Generated from \'VK_EXT_pipeline_creation_cache_control\'"]
+#[doc = "Generated from 'VK_EXT_pipeline_creation_cache_control'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_PIPELINE_CREATION_CACHE_CONTROL_FEATURES_EXT: Self =
         Self(1_000_297_000);
 }
-#[doc = "Generated from \'VK_EXT_pipeline_creation_cache_control\'"]
+#[doc = "Generated from 'VK_EXT_pipeline_creation_cache_control'"]
 impl PipelineCreateFlags {
     pub const FAIL_ON_PIPELINE_COMPILE_REQUIRED_EXT: Self = Self(0b1_0000_0000);
 }
-#[doc = "Generated from \'VK_EXT_pipeline_creation_cache_control\'"]
+#[doc = "Generated from 'VK_EXT_pipeline_creation_cache_control'"]
 impl PipelineCreateFlags {
     pub const EARLY_RETURN_ON_FAILURE_EXT: Self = Self(0b10_0000_0000);
 }
-#[doc = "Generated from \'VK_EXT_pipeline_creation_cache_control\'"]
+#[doc = "Generated from 'VK_EXT_pipeline_creation_cache_control'"]
 impl Result {
     pub const PIPELINE_COMPILE_REQUIRED_EXT: Self = Self(1_000_297_000);
 }
-#[doc = "Generated from \'VK_EXT_pipeline_creation_cache_control\'"]
+#[doc = "Generated from 'VK_EXT_pipeline_creation_cache_control'"]
 impl Result {
     pub const ERROR_PIPELINE_COMPILE_REQUIRED_EXT: Self = Result::PIPELINE_COMPILE_REQUIRED_EXT;
 }
-#[doc = "Generated from \'VK_EXT_pipeline_creation_cache_control\'"]
+#[doc = "Generated from 'VK_EXT_pipeline_creation_cache_control'"]
 impl PipelineCacheCreateFlags {
     pub const EXTERNALLY_SYNCHRONIZED_EXT: Self = Self(0b1);
 }
@@ -22871,11 +22871,11 @@ impl NvDeviceDiagnosticsConfigFn {
         NvDeviceDiagnosticsConfigFn {}
     }
 }
-#[doc = "Generated from \'VK_NV_device_diagnostics_config\'"]
+#[doc = "Generated from 'VK_NV_device_diagnostics_config'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_DIAGNOSTICS_CONFIG_FEATURES_NV: Self = Self(1_000_300_000);
 }
-#[doc = "Generated from \'VK_NV_device_diagnostics_config\'"]
+#[doc = "Generated from 'VK_NV_device_diagnostics_config'"]
 impl StructureType {
     pub const DEVICE_DIAGNOSTICS_CONFIG_CREATE_INFO_NV: Self = Self(1_000_300_001);
 }
@@ -22902,7 +22902,7 @@ impl QcomRenderPassStoreOpsFn {
         QcomRenderPassStoreOpsFn {}
     }
 }
-#[doc = "Generated from \'VK_QCOM_render_pass_store_ops\'"]
+#[doc = "Generated from 'VK_QCOM_render_pass_store_ops'"]
 impl AttachmentStoreOp {
     pub const NONE_QCOM: Self = Self(1_000_301_000);
 }
@@ -23067,7 +23067,7 @@ impl KhrExtension309Fn {
         KhrExtension309Fn {}
     }
 }
-#[doc = "Generated from \'VK_KHR_extension_309\'"]
+#[doc = "Generated from 'VK_KHR_extension_309'"]
 impl MemoryHeapFlags {
     pub const RESERVED_2_KHR: Self = Self(0b100);
 }
@@ -23094,7 +23094,7 @@ impl QcomExtension310Fn {
         QcomExtension310Fn {}
     }
 }
-#[doc = "Generated from \'VK_QCOM_extension_310\'"]
+#[doc = "Generated from 'VK_QCOM_extension_310'"]
 impl StructureType {
     pub const RESERVED_QCOM: Self = Self(1_000_309_000);
 }
@@ -23533,15 +23533,15 @@ impl NvFragmentShadingRateEnumsFn {
         (self.cmd_set_fragment_shading_rate_enum_nv)(command_buffer, shading_rate, combiner_ops)
     }
 }
-#[doc = "Generated from \'VK_NV_fragment_shading_rate_enums\'"]
+#[doc = "Generated from 'VK_NV_fragment_shading_rate_enums'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_FRAGMENT_SHADING_RATE_ENUMS_PROPERTIES_NV: Self = Self(1_000_326_000);
 }
-#[doc = "Generated from \'VK_NV_fragment_shading_rate_enums\'"]
+#[doc = "Generated from 'VK_NV_fragment_shading_rate_enums'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_FRAGMENT_SHADING_RATE_ENUMS_FEATURES_NV: Self = Self(1_000_326_001);
 }
-#[doc = "Generated from \'VK_NV_fragment_shading_rate_enums\'"]
+#[doc = "Generated from 'VK_NV_fragment_shading_rate_enums'"]
 impl StructureType {
     pub const PIPELINE_FRAGMENT_SHADING_RATE_ENUM_STATE_CREATE_INFO_NV: Self = Self(1_000_326_002);
 }
@@ -23683,15 +23683,15 @@ impl ExtFragmentDensityMap2Fn {
         ExtFragmentDensityMap2Fn {}
     }
 }
-#[doc = "Generated from \'VK_EXT_fragment_density_map2\'"]
+#[doc = "Generated from 'VK_EXT_fragment_density_map2'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_2_FEATURES_EXT: Self = Self(1_000_332_000);
 }
-#[doc = "Generated from \'VK_EXT_fragment_density_map2\'"]
+#[doc = "Generated from 'VK_EXT_fragment_density_map2'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_FRAGMENT_DENSITY_MAP_2_PROPERTIES_EXT: Self = Self(1_000_332_001);
 }
-#[doc = "Generated from \'VK_EXT_fragment_density_map2\'"]
+#[doc = "Generated from 'VK_EXT_fragment_density_map2'"]
 impl ImageViewCreateFlags {
     pub const FRAGMENT_DENSITY_MAP_DEFERRED_EXT: Self = Self(0b10);
 }
@@ -23718,7 +23718,7 @@ impl QcomRotatedCopyCommandsFn {
         QcomRotatedCopyCommandsFn {}
     }
 }
-#[doc = "Generated from \'VK_QCOM_rotated_copy_commands\'"]
+#[doc = "Generated from 'VK_QCOM_rotated_copy_commands'"]
 impl StructureType {
     pub const COPY_COMMAND_TRANSFORM_INFO_QCOM: Self = Self(1_000_333_000);
 }
@@ -23768,7 +23768,7 @@ impl ExtImageRobustnessFn {
         ExtImageRobustnessFn {}
     }
 }
-#[doc = "Generated from \'VK_EXT_image_robustness\'"]
+#[doc = "Generated from 'VK_EXT_image_robustness'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_IMAGE_ROBUSTNESS_FEATURES_EXT: Self = Self(1_000_335_000);
 }
@@ -24034,47 +24034,47 @@ impl KhrCopyCommands2Fn {
         (self.cmd_resolve_image2_khr)(command_buffer, p_resolve_image_info)
     }
 }
-#[doc = "Generated from \'VK_KHR_copy_commands2\'"]
+#[doc = "Generated from 'VK_KHR_copy_commands2'"]
 impl StructureType {
     pub const COPY_BUFFER_INFO_2_KHR: Self = Self(1_000_337_000);
 }
-#[doc = "Generated from \'VK_KHR_copy_commands2\'"]
+#[doc = "Generated from 'VK_KHR_copy_commands2'"]
 impl StructureType {
     pub const COPY_IMAGE_INFO_2_KHR: Self = Self(1_000_337_001);
 }
-#[doc = "Generated from \'VK_KHR_copy_commands2\'"]
+#[doc = "Generated from 'VK_KHR_copy_commands2'"]
 impl StructureType {
     pub const COPY_BUFFER_TO_IMAGE_INFO_2_KHR: Self = Self(1_000_337_002);
 }
-#[doc = "Generated from \'VK_KHR_copy_commands2\'"]
+#[doc = "Generated from 'VK_KHR_copy_commands2'"]
 impl StructureType {
     pub const COPY_IMAGE_TO_BUFFER_INFO_2_KHR: Self = Self(1_000_337_003);
 }
-#[doc = "Generated from \'VK_KHR_copy_commands2\'"]
+#[doc = "Generated from 'VK_KHR_copy_commands2'"]
 impl StructureType {
     pub const BLIT_IMAGE_INFO_2_KHR: Self = Self(1_000_337_004);
 }
-#[doc = "Generated from \'VK_KHR_copy_commands2\'"]
+#[doc = "Generated from 'VK_KHR_copy_commands2'"]
 impl StructureType {
     pub const RESOLVE_IMAGE_INFO_2_KHR: Self = Self(1_000_337_005);
 }
-#[doc = "Generated from \'VK_KHR_copy_commands2\'"]
+#[doc = "Generated from 'VK_KHR_copy_commands2'"]
 impl StructureType {
     pub const BUFFER_COPY_2_KHR: Self = Self(1_000_337_006);
 }
-#[doc = "Generated from \'VK_KHR_copy_commands2\'"]
+#[doc = "Generated from 'VK_KHR_copy_commands2'"]
 impl StructureType {
     pub const IMAGE_COPY_2_KHR: Self = Self(1_000_337_007);
 }
-#[doc = "Generated from \'VK_KHR_copy_commands2\'"]
+#[doc = "Generated from 'VK_KHR_copy_commands2'"]
 impl StructureType {
     pub const IMAGE_BLIT_2_KHR: Self = Self(1_000_337_008);
 }
-#[doc = "Generated from \'VK_KHR_copy_commands2\'"]
+#[doc = "Generated from 'VK_KHR_copy_commands2'"]
 impl StructureType {
     pub const BUFFER_IMAGE_COPY_2_KHR: Self = Self(1_000_337_009);
 }
-#[doc = "Generated from \'VK_KHR_copy_commands2\'"]
+#[doc = "Generated from 'VK_KHR_copy_commands2'"]
 impl StructureType {
     pub const IMAGE_RESOLVE_2_KHR: Self = Self(1_000_337_010);
 }
@@ -24147,15 +24147,15 @@ impl Ext4444FormatsFn {
         Ext4444FormatsFn {}
     }
 }
-#[doc = "Generated from \'VK_EXT_4444_formats\'"]
+#[doc = "Generated from 'VK_EXT_4444_formats'"]
 impl StructureType {
     pub const PHYSICAL_DEVICE_4444_FORMATS_FEATURES_EXT: Self = Self(1_000_340_000);
 }
-#[doc = "Generated from \'VK_EXT_4444_formats\'"]
+#[doc = "Generated from 'VK_EXT_4444_formats'"]
 impl Format {
     pub const A4R4G4B4_UNORM_PACK16_EXT: Self = Self(1_000_340_000);
 }
-#[doc = "Generated from \'VK_EXT_4444_formats\'"]
+#[doc = "Generated from 'VK_EXT_4444_formats'"]
 impl Format {
     pub const A4B4G4R4_UNORM_PACK16_EXT: Self = Self(1_000_340_001);
 }
@@ -24391,7 +24391,7 @@ impl ExtDirectfbSurfaceFn {
         )
     }
 }
-#[doc = "Generated from \'VK_EXT_directfb_surface\'"]
+#[doc = "Generated from 'VK_EXT_directfb_surface'"]
 impl StructureType {
     pub const DIRECTFB_SURFACE_CREATE_INFO_EXT: Self = Self(1_000_346_000);
 }
@@ -24418,7 +24418,7 @@ impl KhrExtension350Fn {
         KhrExtension350Fn {}
     }
 }
-#[doc = "Generated from \'VK_KHR_extension_350\'"]
+#[doc = "Generated from 'VK_KHR_extension_350'"]
 impl PipelineCacheCreateFlags {
     pub const RESERVED_2_EXT: Self = Self(0b100);
 }
@@ -24855,7 +24855,7 @@ impl QcomExtension369Fn {
         QcomExtension369Fn {}
     }
 }
-#[doc = "Generated from \'VK_QCOM_extension_369\'"]
+#[doc = "Generated from 'VK_QCOM_extension_369'"]
 impl DescriptorBindingFlags {
     pub const RESERVED_4_QCOM: Self = Self(0b1_0000);
 }
@@ -24928,11 +24928,11 @@ impl NvExtension372Fn {
         NvExtension372Fn {}
     }
 }
-#[doc = "Generated from \'VK_NV_extension_372\'"]
+#[doc = "Generated from 'VK_NV_extension_372'"]
 impl BufferCreateFlags {
     pub const RESERVED_5_NV: Self = Self(0b10_0000);
 }
-#[doc = "Generated from \'VK_NV_extension_372\'"]
+#[doc = "Generated from 'VK_NV_extension_372'"]
 impl ImageCreateFlags {
     pub const RESERVED_15_NV: Self = Self(0b1000_0000_0000_0000);
 }

@@ -914,7 +914,7 @@ impl Result {
     pub const ERROR_TOO_MANY_OBJECTS: Self = Self(-10);
     #[doc = "Requested format is not supported on this device"]
     pub const ERROR_FORMAT_NOT_SUPPORTED: Self = Self(-11);
-    #[doc = "A requested pool allocation has failed due to fragmentation of the pool\'s memory"]
+    #[doc = "A requested pool allocation has failed due to fragmentation of the pool's memory"]
     pub const ERROR_FRAGMENTED_POOL: Self = Self(-12);
     #[doc = "An unknown error has occurred, due to an implementation or application bug"]
     pub const ERROR_UNKNOWN: Self = Self(-13);
@@ -948,7 +948,7 @@ impl ::std::error::Error for Result {
                 Some("Requested format is not supported on this device")
             }
             Result::ERROR_FRAGMENTED_POOL => Some(
-                "A requested pool allocation has failed due to fragmentation of the pool\'s memory",
+                "A requested pool allocation has failed due to fragmentation of the pool's memory",
             ),
             Result::ERROR_UNKNOWN => {
                 Some("An unknown error has occurred, due to an implementation or application bug")
@@ -987,7 +987,7 @@ impl fmt::Display for Result {
                 Some("Requested format is not supported on this device")
             }
             Result::ERROR_FRAGMENTED_POOL => Some(
-                "A requested pool allocation has failed due to fragmentation of the pool\'s memory",
+                "A requested pool allocation has failed due to fragmentation of the pool's memory",
             ),
             Result::ERROR_UNKNOWN => {
                 Some("An unknown error has occurred, due to an implementation or application bug")

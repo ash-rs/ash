@@ -269,7 +269,7 @@ define_handle!(
     INSTANCE,
     doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkInstance.html>"
 );
-define_handle ! ( PhysicalDevice , PHYSICAL_DEVICE , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPhysicalDevice.html>" ) ;
+define_handle ! (PhysicalDevice , PHYSICAL_DEVICE , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPhysicalDevice.html>") ;
 define_handle!(
     Device,
     DEVICE,
@@ -280,9 +280,9 @@ define_handle!(
     QUEUE,
     doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkQueue.html>"
 );
-define_handle ! ( CommandBuffer , COMMAND_BUFFER , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkCommandBuffer.html>" ) ;
-handle_nondispatchable ! ( DeviceMemory , DEVICE_MEMORY , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDeviceMemory.html>" ) ;
-handle_nondispatchable ! ( CommandPool , COMMAND_POOL , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkCommandPool.html>" ) ;
+define_handle ! (CommandBuffer , COMMAND_BUFFER , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkCommandBuffer.html>") ;
+handle_nondispatchable ! (DeviceMemory , DEVICE_MEMORY , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDeviceMemory.html>") ;
+handle_nondispatchable ! (CommandPool , COMMAND_POOL , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkCommandPool.html>") ;
 handle_nondispatchable!(
     Buffer,
     BUFFER,
@@ -305,21 +305,21 @@ handle_nondispatchable!(
     doc =
         "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkImageView.html>"
 );
-handle_nondispatchable ! ( ShaderModule , SHADER_MODULE , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkShaderModule.html>" ) ;
+handle_nondispatchable ! (ShaderModule , SHADER_MODULE , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkShaderModule.html>") ;
 handle_nondispatchable!(
     Pipeline,
     PIPELINE,
     doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPipeline.html>"
 );
-handle_nondispatchable ! ( PipelineLayout , PIPELINE_LAYOUT , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPipelineLayout.html>" ) ;
+handle_nondispatchable ! (PipelineLayout , PIPELINE_LAYOUT , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPipelineLayout.html>") ;
 handle_nondispatchable!(
     Sampler,
     SAMPLER,
     doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkSampler.html>"
 );
-handle_nondispatchable ! ( DescriptorSet , DESCRIPTOR_SET , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDescriptorSet.html>" ) ;
-handle_nondispatchable ! ( DescriptorSetLayout , DESCRIPTOR_SET_LAYOUT , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDescriptorSetLayout.html>" ) ;
-handle_nondispatchable ! ( DescriptorPool , DESCRIPTOR_POOL , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDescriptorPool.html>" ) ;
+handle_nondispatchable ! (DescriptorSet , DESCRIPTOR_SET , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDescriptorSet.html>") ;
+handle_nondispatchable ! (DescriptorSetLayout , DESCRIPTOR_SET_LAYOUT , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDescriptorSetLayout.html>") ;
+handle_nondispatchable ! (DescriptorPool , DESCRIPTOR_POOL , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDescriptorPool.html>") ;
 handle_nondispatchable!(
     Fence,
     FENCE,
@@ -342,39 +342,39 @@ handle_nondispatchable!(
     doc =
         "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkQueryPool.html>"
 );
-handle_nondispatchable ! ( Framebuffer , FRAMEBUFFER , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkFramebuffer.html>" ) ;
+handle_nondispatchable ! (Framebuffer , FRAMEBUFFER , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkFramebuffer.html>") ;
 handle_nondispatchable!(
     RenderPass,
     RENDER_PASS,
     doc =
         "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkRenderPass.html>"
 );
-handle_nondispatchable ! ( PipelineCache , PIPELINE_CACHE , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPipelineCache.html>" ) ;
-handle_nondispatchable ! ( IndirectCommandsLayoutNV , INDIRECT_COMMANDS_LAYOUT_NV , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkIndirectCommandsLayoutNV.html>" ) ;
-handle_nondispatchable ! ( DescriptorUpdateTemplate , DESCRIPTOR_UPDATE_TEMPLATE , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDescriptorUpdateTemplate.html>" ) ;
-handle_nondispatchable ! ( SamplerYcbcrConversion , SAMPLER_YCBCR_CONVERSION , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkSamplerYcbcrConversion.html>" ) ;
-handle_nondispatchable ! ( ValidationCacheEXT , VALIDATION_CACHE_EXT , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkValidationCacheEXT.html>" ) ;
-handle_nondispatchable ! ( AccelerationStructureKHR , ACCELERATION_STRUCTURE_KHR , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkAccelerationStructureKHR.html>" ) ;
-handle_nondispatchable ! ( AccelerationStructureNV , ACCELERATION_STRUCTURE_NV , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkAccelerationStructureNV.html>" ) ;
-handle_nondispatchable ! ( PerformanceConfigurationINTEL , PERFORMANCE_CONFIGURATION_INTEL , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPerformanceConfigurationINTEL.html>" ) ;
-handle_nondispatchable ! ( DeferredOperationKHR , DEFERRED_OPERATION_KHR , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDeferredOperationKHR.html>" ) ;
-handle_nondispatchable ! ( PrivateDataSlotEXT , PRIVATE_DATA_SLOT_EXT , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPrivateDataSlotEXT.html>" ) ;
+handle_nondispatchable ! (PipelineCache , PIPELINE_CACHE , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPipelineCache.html>") ;
+handle_nondispatchable ! (IndirectCommandsLayoutNV , INDIRECT_COMMANDS_LAYOUT_NV , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkIndirectCommandsLayoutNV.html>") ;
+handle_nondispatchable ! (DescriptorUpdateTemplate , DESCRIPTOR_UPDATE_TEMPLATE , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDescriptorUpdateTemplate.html>") ;
+handle_nondispatchable ! (SamplerYcbcrConversion , SAMPLER_YCBCR_CONVERSION , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkSamplerYcbcrConversion.html>") ;
+handle_nondispatchable ! (ValidationCacheEXT , VALIDATION_CACHE_EXT , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkValidationCacheEXT.html>") ;
+handle_nondispatchable ! (AccelerationStructureKHR , ACCELERATION_STRUCTURE_KHR , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkAccelerationStructureKHR.html>") ;
+handle_nondispatchable ! (AccelerationStructureNV , ACCELERATION_STRUCTURE_NV , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkAccelerationStructureNV.html>") ;
+handle_nondispatchable ! (PerformanceConfigurationINTEL , PERFORMANCE_CONFIGURATION_INTEL , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPerformanceConfigurationINTEL.html>") ;
+handle_nondispatchable ! (DeferredOperationKHR , DEFERRED_OPERATION_KHR , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDeferredOperationKHR.html>") ;
+handle_nondispatchable ! (PrivateDataSlotEXT , PRIVATE_DATA_SLOT_EXT , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPrivateDataSlotEXT.html>") ;
 handle_nondispatchable!(
     DisplayKHR,
     DISPLAY_KHR,
     doc =
         "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDisplayKHR.html>"
 );
-handle_nondispatchable ! ( DisplayModeKHR , DISPLAY_MODE_KHR , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDisplayModeKHR.html>" ) ;
+handle_nondispatchable ! (DisplayModeKHR , DISPLAY_MODE_KHR , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDisplayModeKHR.html>") ;
 handle_nondispatchable!(
     SurfaceKHR,
     SURFACE_KHR,
     doc =
         "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkSurfaceKHR.html>"
 );
-handle_nondispatchable ! ( SwapchainKHR , SWAPCHAIN_KHR , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkSwapchainKHR.html>" ) ;
-handle_nondispatchable ! ( DebugReportCallbackEXT , DEBUG_REPORT_CALLBACK_EXT , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDebugReportCallbackEXT.html>" ) ;
-handle_nondispatchable ! ( DebugUtilsMessengerEXT , DEBUG_UTILS_MESSENGER_EXT , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDebugUtilsMessengerEXT.html>" ) ;
+handle_nondispatchable ! (SwapchainKHR , SWAPCHAIN_KHR , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkSwapchainKHR.html>") ;
+handle_nondispatchable ! (DebugReportCallbackEXT , DEBUG_REPORT_CALLBACK_EXT , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDebugReportCallbackEXT.html>") ;
+handle_nondispatchable ! (DebugUtilsMessengerEXT , DEBUG_UTILS_MESSENGER_EXT , doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDebugUtilsMessengerEXT.html>") ;
 #[allow(non_camel_case_types)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/PFN_vkInternalAllocationNotification.html>"]
 pub type PFN_vkInternalAllocationNotification = Option<
