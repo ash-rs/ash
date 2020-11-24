@@ -673,7 +673,7 @@ fn to_type_tokens(type_name: &str, reference: Option<&vkxml::ReferenceType>) -> 
 fn map_identifier_to_rust(term: Term) -> Term {
     match term.as_str() {
         "VK_MAKE_VERSION" => Term::intern("crate::vk::make_version"),
-        s => Term::intern(&constant_name(&s)),
+        s => Term::intern(constant_name(s)),
     }
 }
 
@@ -761,8 +761,7 @@ impl FieldExt for vkxml::Field {
                     .expect("Should have size");
                 // Make sure we also rename the constant, that is
                 // used inside the static array
-                let size = constant_name(size);
-                let size = Term::intern(&size);
+                let size = Term::intern(constant_name(size));
                 // arrays in c are always passed as a pointer
                 if is_ffi_param {
                     quote!(&[#ty; #size])
@@ -1200,7 +1199,7 @@ pub fn generate_extension<'a>(
 }
 pub fn generate_define(define: &vkxml::Define) -> Tokens {
     let name = constant_name(&define.name);
-    let ident = Ident::from(name.as_str());
+    let ident = Ident::from(name);
     let deprecated = define
         .comment
         .as_ref()
@@ -2203,8 +2202,9 @@ pub fn generate_feature<'a>(
         #device
     }
 }
-pub fn constant_name(name: &str) -> String {
-    name.replace("VK_", "")
+
+pub fn constant_name(name: &str) -> &str {
+    name.strip_prefix("VK_").unwrap_or(name)
 }
 
 pub fn generate_constant<'a>(
@@ -2214,7 +2214,7 @@ pub fn generate_constant<'a>(
     cache.insert(constant.name.as_str());
     let c = Constant::from_constant(constant);
     let name = constant_name(&constant.name);
-    let ident = Ident::from(name.as_str());
+    let ident = Ident::from(name);
     let ty = if name == "TRUE" || name == "FALSE" {
         CType::Bool32
     } else {
