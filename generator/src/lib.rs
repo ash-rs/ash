@@ -6,7 +6,6 @@ use quote::*;
 use heck::{CamelCase, ShoutySnakeCase, SnakeCase};
 use itertools::Itertools;
 use proc_macro2::{Literal, Term, TokenNode, TokenStream, TokenTree};
-use quote::Tokens;
 use std::collections::{BTreeMap, HashMap, HashSet};
 use std::fmt::Display;
 use std::hash::BuildHasher;
