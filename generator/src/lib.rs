@@ -642,8 +642,22 @@ pub trait FieldExt {
     /// keywords
     fn param_ident(&self) -> Ident;
 
-    /// The inner type of this field, with one level of pointers removed
-    fn inner_type_tokens(&self) -> TokenStream;
+    /// Extracts an inner, sized type, and returns a new ReferenceType after consuming one or more levels
+    /// of pointer indirection.
+    ///
+    /// This function mainly exists to decrease duplication between safe and unsafe token conversion.
+    /// For example, a [`vkxml::ReferenceType::Pointer`] [`vkxml::ArrayType::Static`] field turns into
+    /// `[T; size]` with `None` reference as a result.
+    /// As of writing there is no static array with a `PointerTo*Pointer` reference type, but that
+    /// would result in `[* const/mut T; size]` with `Pointer` reference.
+    ///
+    /// A [`vkxml::ArrayType::Dynamic`] array however cannot be modeled in FFI (`[T]` is invalid), and
+    /// note that no level of indirection is consumed! Vkxml considers a dynamic array to be a pointer
+    /// as well. See the following examples on [`vkxml::ArrayType::Dynamic`] arrays, from C to vkxml to
+    /// the corresponding Rust safe type (the unsafe/FFI type is identical to C):
+    /// `*const T` -> [`vkxml::ReferenceType::Pointer`] -> `&[T]`
+    /// `*const *const T` -> [`vkxml::ReferenceType::PointerToConstPointer`] -> `&[*const T]`
+    fn inner_type_tokens(&self) -> (TokenStream, Option<vkxml::ReferenceType>);
 
     /// Returns reference-types wrapped in their safe variant. (Dynamic) arrays become
     /// slices, pointers become Rust references.
@@ -748,6 +762,37 @@ fn convert_c_expression(c_expr: &str) -> TokenStream {
     rewrite_token_stream(c_expr)
 }
 
+// TODO: vkxml should add Copy and Clone to enum `derive()` attributes
+trait MyClone {
+    fn clone(&self) -> Self;
+}
+
+impl MyClone for vkxml::ReferenceType {
+    fn clone(&self) -> Self {
+        match self {
+            Self::Pointer => Self::Pointer,
+            Self::PointerToPointer => Self::PointerToPointer,
+            Self::PointerToConstPointer => Self::PointerToConstPointer,
+        }
+    }
+}
+
+impl<T: MyClone> MyClone for Option<T> {
+    fn clone(&self) -> Self {
+        self.as_ref().map(|v| v.clone())
+    }
+}
+
+fn decrement_indirection(r: &Option<vkxml::ReferenceType>) -> Option<vkxml::ReferenceType> {
+    type Ref = vkxml::ReferenceType;
+    match r {
+        Some(Ref::PointerToPointer) => Some(Ref::Pointer),
+        Some(Ref::PointerToConstPointer) => Some(Ref::Pointer),
+        Some(Ref::Pointer) => None,
+        None => None,
+    }
+}
+
 impl FieldExt for vkxml::Field {
     fn is_clone(&self) -> bool {
         true
@@ -762,42 +807,22 @@ impl FieldExt for vkxml::Field {
         format_ident!("{}", name_corrected.to_snake_case().as_str())
     }
 
-    fn inner_type_tokens(&self) -> TokenStream {
+    fn inner_type_tokens(&self) -> (TokenStream, Option<vkxml::ReferenceType>) {
         assert!(!self.is_void());
         let ty = name_to_tokens(&self.basetype);
 
-        match self.reference {
-            Some(vkxml::ReferenceType::PointerToPointer) => quote!(*mut #ty),
-            Some(vkxml::ReferenceType::PointerToConstPointer) => quote!(*const #ty),
-            _ => quote!(#ty),
-        }
-    }
-
-    fn safe_type_tokens(&self, lifetime: TokenStream) -> TokenStream {
-        assert!(!self.is_void());
-        match self.array {
-            // The outer type fn type_tokens() returns is [], which fits our "safe" prescription
-            Some(vkxml::ArrayType::Static) => self.type_tokens(false),
-            Some(vkxml::ArrayType::Dynamic) => {
-                let ty = self.inner_type_tokens();
-                quote!([#ty])
+        let (ty, reference) = match self.reference {
+            Some(vkxml::ReferenceType::PointerToPointer) => {
+                (quote!(*mut #ty), decrement_indirection(&self.reference))
             }
-            None => {
-                let ty = name_to_tokens(&self.basetype);
-                let pointer = self
-                    .reference
-                    .as_ref()
-                    .map(|r| r.to_safe_tokens(self.is_const, lifetime));
-                quote!(#pointer #ty)
+            Some(vkxml::ReferenceType::PointerToConstPointer) => {
+                (quote!(*const #ty), decrement_indirection(&self.reference))
             }
-        }
-    }
-
-    fn type_tokens(&self, is_ffi_param: bool) -> TokenStream {
-        assert!(!self.is_void());
-        let ty = name_to_tokens(&self.basetype);
+            _ => (quote!(#ty), self.reference.clone()),
+        };
 
         match self.array {
+            // Only static arrays are sized
             Some(vkxml::ArrayType::Static) => {
                 let size = self
                     .size
@@ -808,20 +833,47 @@ impl FieldExt for vkxml::Field {
                 // Make sure we also rename the constant, that is
                 // used inside the static array
                 let size = convert_c_expression(&size);
-                // arrays in c are always passed as a pointer
-                if is_ffi_param {
-                    assert!(self.reference.is_none());
-                    quote!(*const [#ty; #size])
-                } else {
-                    let pointer = self.reference.as_ref().map(|r| r.to_tokens(self.is_const));
-                    quote!(#pointer [#ty; #size])
-                }
+                // Do not decrement the level of pointer-ism, as this is not
+                // counted for in static arrays
+                (quote!([#ty; #size]), reference)
             }
-            _ => {
-                let pointer = self.reference.as_ref().map(|r| r.to_tokens(self.is_const));
-                quote!(#pointer #ty)
+            Some(vkxml::ArrayType::Dynamic) => {
+                // As explained in the [`FieldExt::inner_type_tokens`] documentation
+                // above, Dynamic and Pointer represent the same level
+                // ie. this is always a *const/mut or &[] to `ty`
+                assert!(matches!(reference, Some(vkxml::ReferenceType::Pointer)));
+                (ty, reference)
             }
+            _ => (ty, reference),
         }
+    }
+
+    fn safe_type_tokens(&self, lifetime: TokenStream) -> TokenStream {
+        let (ty, reference) = self.inner_type_tokens();
+        let ty = match self.array {
+            Some(vkxml::ArrayType::Dynamic) => quote!([#ty]),
+            _ => ty,
+        };
+
+        let pointer = reference.map(|r| r.to_safe_tokens(self.is_const, lifetime));
+        quote!(#pointer #ty)
+    }
+
+    fn type_tokens(&self, is_ffi_param: bool) -> TokenStream {
+        let (ty, reference) = self.inner_type_tokens();
+
+        let ty = match self.array {
+            Some(vkxml::ArrayType::Static) if is_ffi_param => {
+                // Unused and untested, disallow this for now.
+                assert!(reference.is_none());
+                // arrays in c are always passed as a pointer
+                quote!(*const #ty)
+            }
+            _ => ty,
+        };
+
+        let pointer = reference.as_ref().map(|r| r.to_tokens(self.is_const));
+        quote!(#pointer #ty)
     }
 
     fn is_void(&self) -> bool {
@@ -1803,7 +1855,6 @@ pub fn derive_setters(
             }
         }
 
-        // TODO: Improve in future when https://github.com/rust-lang/rust/issues/53667 is merged id:6
         if field.reference.is_some() {
             if field.basetype == "char" && matches!(field.reference, Some(vkxml::ReferenceType::Pointer)) {
                 assert!(field.null_terminate);
@@ -1816,37 +1867,40 @@ pub fn derive_setters(
                 });
             }
 
-            if matches!(field.array, Some(vkxml::ArrayType::Dynamic)) {
-                if let Some(ref array_size) = field.size {
-                    if !array_size.starts_with("latexmath") {
+            if let Some(ref array_size) = field.size {
+                if !array_size.starts_with("latexmath") {
+                    let array_size_ident = if matches!(field.array, Some(vkxml::ArrayType::Dynamic)) {
                         let array_size_ident = format_ident!("{}", array_size.to_snake_case().as_str());
+                        quote!(self.inner.#array_size_ident = #param_ident_short.len() as _;)
+                    } else {
+                        quote!()
+                    };
 
-                        let mut slice_param_ty_tokens = field.safe_type_tokens(quote!('a));
+                    let mut slice_param_ty_tokens = field.safe_type_tokens(quote!('a));
 
-                        let mut ptr = if field.is_const {
-                            quote!(.as_ptr())
-                        } else {
-                            quote!(.as_mut_ptr())
-                        };
+                    let mut ptr = match field.array {
+                        Some(vkxml::ArrayType::Dynamic) if field.is_const => quote!(.as_ptr()),
+                        Some(vkxml::ArrayType::Dynamic) => quote!(.as_mut_ptr()),
+                        Some(vkxml::ArrayType::Static) if field.is_const => quote!(as *const _),
+                        Some(vkxml::ArrayType::Static) => quote!(as *mut _),
+                        _ => quote!(),
+                    };
 
-                        // Interpret void array as byte array
-                        if field.basetype == "void" {
-                            let mutable = if field.is_const { quote!(const) } else { quote!(mut) };
-
-                            slice_param_ty_tokens = quote!([u8]);
-                            ptr = quote!(#ptr as *#mutable c_void);
-                        };
-
+                    // Interpret void array as byte array
+                    if field.basetype == "void" {
                         let mutable = if field.is_const { quote!() } else { quote!(mut) };
+                        slice_param_ty_tokens = quote!(&'a #mutable [u8]);
+                        let mutable = if field.is_const { quote!(const) } else { quote!(mut) };
+                        ptr = quote!(#ptr as *#mutable c_void);
+                    };
 
-                        return Some(quote! {
-                            pub fn #param_ident_short(mut self, #param_ident_short: &'a #mutable #slice_param_ty_tokens) -> Self {
-                                self.inner.#array_size_ident = #param_ident_short.len() as _;
-                                self.inner.#param_ident = #param_ident_short#ptr;
-                                self
-                            }
-                        });
-                    }
+                    return Some(quote! {
+                        pub fn #param_ident_short(mut self, #param_ident_short: #slice_param_ty_tokens) -> Self {
+                            #array_size_ident
+                            self.inner.#param_ident = #param_ident_short#ptr;
+                            self
+                        }
+                    });
                 }
             }
         }

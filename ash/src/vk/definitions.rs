@@ -42538,8 +42538,8 @@ impl<'a> ::std::ops::DerefMut for AccelerationStructureVersionInfoKHRBuilder<'a>
     }
 }
 impl<'a> AccelerationStructureVersionInfoKHRBuilder<'a> {
-    pub fn version_data(mut self, version_data: *const [u8; 2 * UUID_SIZE]) -> Self {
-        self.inner.p_version_data = version_data;
+    pub fn version_data(mut self, version_data: &'a [u8; 2 * UUID_SIZE]) -> Self {
+        self.inner.p_version_data = version_data as *const _;
         self
     }
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
