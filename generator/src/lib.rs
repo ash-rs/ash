@@ -664,11 +664,6 @@ fn name_to_tokens(type_name: &str) -> Ident {
     let new_name = new_name.replace("FlagBits", "Flags");
     Ident::from(new_name.as_str())
 }
-fn to_type_tokens(type_name: &str, reference: Option<&vkxml::ReferenceType>) -> Tokens {
-    let new_name = name_to_tokens(type_name);
-    let ptr_name = reference.map(|r| r.to_tokens(false));
-    quote! {#ptr_name #new_name}
-}
 
 fn map_identifier_to_rust(term: Term) -> Term {
     match term.as_str() {
@@ -1226,8 +1221,8 @@ pub fn generate_typedef(typedef: &vkxml::Typedef) -> Tokens {
         // Ignore forward declarations
         quote! {}
     } else {
-        let typedef_name = to_type_tokens(&typedef.name, None);
-        let typedef_ty = to_type_tokens(&typedef.basetype, None);
+        let typedef_name = name_to_tokens(&typedef.name);
+        let typedef_ty = name_to_tokens(&typedef.basetype);
         let khronos_link = khronos_link(&typedef.name);
         quote! {
             #[doc = #khronos_link]
@@ -2059,7 +2054,7 @@ fn generate_funcptr(fnptr: &vkxml::FunctionPointer) -> Tokens {
 }
 
 fn generate_union(union: &vkxml::Union) -> Tokens {
-    let name = to_type_tokens(&union.name, None);
+    let name = name_to_tokens(&union.name);
     let fields = union.elements.iter().map(|field| {
         let name = field.param_ident();
         let ty = field.type_tokens(false);
