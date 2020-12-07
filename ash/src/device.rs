@@ -1452,10 +1452,6 @@ pub trait DeviceV1_0 {
     ) -> VkResult<()> {
         let data_length = query_count as usize;
         assert!(
-            mem::size_of::<T>() <= mem::size_of::<u64>(),
-            "T can not be bigger than an u64"
-        );
-        assert!(
             data_length <= data.len(),
             "query_count was higher than the length of the slice"
         );
