@@ -2472,7 +2472,30 @@ pub fn write_source_code<P: AsRef<Path>>(vk_xml: &Path, src_dir: P) {
         })
         .collect();
 
-    let spec = vk_parse::parse_file_as_vkxml(vk_xml).expect("Invalid xml file.");
+    let mut spec = vk_parse::parse_file_as_vkxml(vk_xml).expect("Invalid xml file.");
+
+    for elem in &mut spec.elements {
+        if let vkxml::RegistryElement::Definitions(definitions) = elem {
+            for el in &mut definitions.elements {
+                if let vkxml::DefinitionsElement::Struct(_struct) = el {
+                    for mem in &mut _struct.elements {
+                        if let vkxml::StructElement::Member(field) = mem {
+                            if matches!(field.array, Some(vkxml::ArrayType::Dynamic))
+                                && field
+                                    .size
+                                    .as_ref()
+                                    // TODO: Should rather check if no identifier is a member variable
+                                    .map_or(false, |s| s.contains('*'))
+                            {
+                                field.array = Some(vkxml::ArrayType::Static);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     let cmd_aliases: HashMap<String, String> = spec2
         .0
         .iter()
