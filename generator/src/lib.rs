@@ -799,20 +799,22 @@ impl FieldExt for vkxml::Field {
 
         match self.array {
             Some(vkxml::ArrayType::Static) => {
-                assert!(self.reference.is_none());
                 let size = self
                     .size
                     .as_ref()
                     .or_else(|| self.size_enumref.as_ref())
                     .expect("Should have size");
+                let size = size.replace("ename:", "");
                 // Make sure we also rename the constant, that is
                 // used inside the static array
-                let size: TokenStream = constant_name(size).parse().unwrap();
+                let size = convert_c_expression(&size);
                 // arrays in c are always passed as a pointer
                 if is_ffi_param {
+                    assert!(self.reference.is_none());
                     quote!(*const [#ty; #size])
                 } else {
-                    quote!([#ty; #size])
+                    let pointer = self.reference.as_ref().map(|r| r.to_tokens(self.is_const));
+                    quote!(#pointer [#ty; #size])
                 }
             }
             _ => {
