@@ -1817,6 +1817,8 @@ pub fn derive_setters(
             if matches!(field.array, Some(vkxml::ArrayType::Dynamic)) {
                 if let Some(ref array_size) = field.size {
                     if !array_size.starts_with("latexmath") {
+                        let array_size_ident = format_ident!("{}", array_size.to_snake_case().as_str());
+
                         let mut slice_param_ty_tokens = field.safe_type_tokens(quote!('a));
 
                         let mut ptr = if field.is_const {
@@ -1835,25 +1837,9 @@ pub fn derive_setters(
 
                         let mutable = if field.is_const { quote!() } else { quote!(mut) };
 
-                        // Apply some heuristics to determine whether the size is an expression.
-                        // If so, this is a pointer to a piece of memory with statically known size.
-                        let set_size_stmt = if array_size.contains("ename:") || array_size.contains('*') {
-                            // c_size should contain the same minus `ename:`-prefixed identifiers
-                            let array_size = field.c_size.as_ref().unwrap_or(array_size);
-                            let c_size = convert_c_expression(array_size);
-                            let inner_type = field.inner_type_tokens();
-
-                            slice_param_ty_tokens = quote!([#inner_type; #c_size]);
-
-                            quote!()
-                        } else {
-                            let array_size_ident = format_ident!("{}", array_size.to_snake_case().as_str());
-                            quote!(self.inner.#array_size_ident = #param_ident_short.len() as _;)
-                        };
-
                         return Some(quote! {
                             pub fn #param_ident_short(mut self, #param_ident_short: &'a #mutable #slice_param_ty_tokens) -> Self {
-                                #set_size_stmt
+                                self.inner.#array_size_ident = #param_ident_short.len() as _;
                                 self.inner.#param_ident = #param_ident_short#ptr;
                                 self
                             }
