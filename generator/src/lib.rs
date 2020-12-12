@@ -5,8 +5,7 @@ use quote::*;
 
 use heck::{CamelCase, ShoutySnakeCase, SnakeCase};
 use itertools::Itertools;
-use proc_macro2::{Literal, Term};
-use quote::Tokens;
+use proc_macro2::{Literal, Term, TokenNode, TokenStream, TokenTree};
 use std::collections::{BTreeMap, HashMap, HashSet};
 use std::fmt::Display;
 use std::hash::BuildHasher;
@@ -23,8 +22,8 @@ pub enum CType {
     Bool32,
 }
 
-impl CType {
-    fn to_tokens(self) -> Tokens {
+impl quote::ToTokens for CType {
+    fn to_tokens(&self, tokens: &mut Tokens) {
         let term = match self {
             CType::USize => Term::intern("usize"),
             CType::U32 => Term::intern("u32"),
@@ -32,7 +31,7 @@ impl CType {
             CType::Float => Term::intern("f32"),
             CType::Bool32 => Term::intern("Bool32"),
         };
-        quote! {#term}
+        term.to_tokens(tokens);
     }
 }
 
@@ -78,7 +77,7 @@ named!(inverse_number<&str, (CType, String)>,
 );
 
 named!(cfloat<&str, f32>,
-    terminated!(nom::float, char!('f'))
+    terminated!(nom::number::complete::float, char!('f'))
 );
 
 fn khronos_link<S: Display>(name: &S) -> Literal {
@@ -328,6 +327,20 @@ pub fn vk_bitflags_wrapped_macro() -> Tokens {
     }
 }
 
+fn is_opaque_type(ty: &str) -> bool {
+    matches!(
+        ty,
+        "void"
+            | "wl_display"
+            | "wl_surface"
+            | "Display"
+            | "xcb_connection_t"
+            | "ANativeWindow"
+            | "AHardwareBuffer"
+            | "CAMetalLayer"
+    )
+}
+
 pub fn platform_specific_types() -> Tokens {
     quote! {
         pub type RROutput = c_ulong;
@@ -359,7 +372,7 @@ pub fn platform_specific_types() -> Tokens {
         // typedefs are only here so that the code compiles for now
         #[allow(non_camel_case_types)]
         pub type SECURITY_ATTRIBUTES = ();
-        // Opage types
+        // Opaque types
         pub type ANativeWindow = c_void;
         pub type AHardwareBuffer = c_void;
         pub type CAMetalLayer = c_void;
@@ -386,7 +399,6 @@ impl ConstVal {
 pub trait ConstantExt {
     fn constant(&self) -> Constant;
     fn variant_ident(&self, enum_name: &str) -> Ident;
-    fn to_tokens(&self) -> Tokens;
     fn notation(&self) -> Option<&str>;
 }
 
@@ -396,9 +408,6 @@ impl ConstantExt for vkxml::ExtensionEnum {
     }
     fn variant_ident(&self, enum_name: &str) -> Ident {
         variant_ident(enum_name, &self.name)
-    }
-    fn to_tokens(&self) -> Tokens {
-        Constant::from_extension_enum(self).expect("").to_tokens()
     }
     fn notation(&self) -> Option<&str> {
         self.notation.as_deref()
@@ -411,9 +420,6 @@ impl ConstantExt for vkxml::Constant {
     }
     fn variant_ident(&self, enum_name: &str) -> Ident {
         variant_ident(enum_name, &self.name)
-    }
-    fn to_tokens(&self) -> Tokens {
-        Constant::from_constant(self).to_tokens()
     }
     fn notation(&self) -> Option<&str> {
         self.notation.as_deref()
@@ -428,6 +434,36 @@ pub enum Constant {
     CExpr(vkxml::CExpression),
     Text(String),
     Alias(Ident, Ident),
+}
+
+impl quote::ToTokens for Constant {
+    fn to_tokens(&self, tokens: &mut Tokens) {
+        match *self {
+            Constant::Number(n) => {
+                let number = interleave_number('_', 3, &n.to_string());
+                let term = Term::intern(&number);
+                term.to_tokens(tokens);
+            }
+            Constant::Hex(ref s) => {
+                let number = interleave_number('_', 4, s);
+                let term = Term::intern(&format!("0x{}", number));
+                term.to_tokens(tokens);
+            }
+            Constant::Text(ref text) => text.to_tokens(tokens),
+            Constant::CExpr(ref expr) => {
+                let (_, (_, rexpr)) = cexpr(expr).expect("Unable to parse cexpr");
+                tokens.append_all(rexpr.parse::<TokenStream>());
+            }
+            Constant::BitPos(pos) => {
+                let value = 1 << pos;
+                let bit_string = format!("{:b}", value);
+                let bit_string = interleave_number('_', 4, &bit_string);
+                let term = Term::intern(&format!("0b{}", bit_string));
+                term.to_tokens(tokens);
+            }
+            Constant::Alias(ref base, ref value) => tokens.append_all(quote!(#base::#value)),
+        }
+    }
 }
 
 impl quote::ToTokens for ConstVal {
@@ -476,39 +512,6 @@ impl Constant {
         }
     }
 
-    pub fn to_tokens(&self) -> Tokens {
-        match *self {
-            Constant::Number(n) => {
-                let number = interleave_number('_', 3, &n.to_string());
-                let term = Term::intern(&number);
-                quote! {#term}
-            }
-            Constant::Hex(ref s) => {
-                let number = interleave_number('_', 4, s);
-                let term = Term::intern(&format!("0x{}", number));
-                quote! {#term}
-            }
-            Constant::Text(ref text) => {
-                quote! {#text}
-            }
-            Constant::CExpr(ref expr) => {
-                let (_, (_, rexpr)) = cexpr(expr).expect("Unable to parse cexpr");
-                let term = Term::intern(rexpr.as_str());
-                quote! {#term}
-            }
-            Constant::BitPos(pos) => {
-                let value = 1 << pos;
-                let bit_string = format!("{:b}", value);
-                let bit_string = interleave_number('_', 4, &bit_string);
-                let term = Term::intern(&format!("0b{}", bit_string));
-                quote! {#term}
-            }
-            Constant::Alias(ref base, ref value) => {
-                quote! {#base::#value}
-            }
-        }
-    }
-
     pub fn from_extension_enum(constant: &vkxml::ExtensionEnum) -> Option<Self> {
         let number = constant.number.map(Constant::Number);
         let hex = constant.hex.as_ref().map(|hex| Constant::Hex(hex.clone()));
@@ -547,6 +550,7 @@ impl FeatureExt for vkxml::Feature {
         if version.len() == 1 {
             version = format!("{}_0", version)
         }
+
         version.replace(".", "_")
     }
 }
@@ -602,9 +606,16 @@ impl CommandExt for vkxml::Command {
 }
 
 pub trait FieldExt {
-    /// Returns the name of the paramter that doesn't clash with Rusts resevered
+    /// Returns the name of the parameter that doesn't clash with Rusts reserved
     /// keywords
     fn param_ident(&self) -> Ident;
+
+    /// The inner type of this field, with one level of pointers removed
+    fn inner_type_tokens(&self) -> Tokens;
+
+    /// Returns reference-types wrapped in their safe variant. (Dynamic) arrays become
+    /// slices, pointers become Rust references.
+    fn safe_type_tokens(&self, lifetime: Tokens) -> Tokens;
 
     /// Returns the basetype ident and removes the 'Vk' prefix. When `is_ffi_param` is `true`
     /// array types (e.g. `[f32; 3]`) will be converted to pointer types (e.g. `&[f32; 3]`),
@@ -615,29 +626,33 @@ pub trait FieldExt {
 
 pub trait ToTokens {
     fn to_tokens(&self, is_const: bool) -> Tokens;
+    /// Returns the topmost pointer as safe reference
+    fn to_safe_tokens(&self, is_const: bool, lifetime: Tokens) -> Tokens;
 }
 impl ToTokens for vkxml::ReferenceType {
     fn to_tokens(&self, is_const: bool) -> Tokens {
-        let ptr_name = match self {
-            vkxml::ReferenceType::Pointer => {
-                if is_const {
-                    "*const"
-                } else {
-                    "*mut"
-                }
-            }
-            vkxml::ReferenceType::PointerToPointer => "*mut *mut",
-            vkxml::ReferenceType::PointerToConstPointer => {
-                if is_const {
-                    "*const *const"
-                } else {
-                    "*mut *const"
-                }
-            }
+        let r = if is_const {
+            quote!(*const)
+        } else {
+            quote!(*mut)
         };
-        let ident = Term::intern(ptr_name);
-        quote! {
-            #ident
+        match self {
+            vkxml::ReferenceType::Pointer => quote!(#r),
+            vkxml::ReferenceType::PointerToPointer => quote!(#r *mut),
+            vkxml::ReferenceType::PointerToConstPointer => quote!(#r *const),
+        }
+    }
+
+    fn to_safe_tokens(&self, is_const: bool, lifetime: Tokens) -> Tokens {
+        let r = if is_const {
+            quote!(&#lifetime)
+        } else {
+            quote!(&#lifetime mut)
+        };
+        match self {
+            vkxml::ReferenceType::Pointer => quote!(#r),
+            vkxml::ReferenceType::PointerToPointer => quote!(#r *mut),
+            vkxml::ReferenceType::PointerToConstPointer => quote!(#r *const),
         }
     }
 }
@@ -658,27 +673,52 @@ fn name_to_tokens(type_name: &str) -> Ident {
         "float" => "f32",
         "double" => "f64",
         "long" => "c_ulong",
-        _ => {
-            if type_name.starts_with("Vk") {
-                &type_name[2..]
-            } else {
-                type_name
-            }
-        }
+        _ => type_name.strip_prefix("Vk").unwrap_or(type_name),
     };
     let new_name = new_name.replace("FlagBits", "Flags");
     Ident::from(new_name.as_str())
 }
-fn to_type_tokens(type_name: &str, reference: Option<&vkxml::ReferenceType>) -> Tokens {
-    let new_name = name_to_tokens(type_name);
-    let ptr_name = reference.map(|r| r.to_tokens(false)).unwrap_or(quote! {});
-    quote! {#ptr_name #new_name}
+
+fn map_identifier_to_rust(term: Term) -> Term {
+    match term.as_str() {
+        "VK_MAKE_VERSION" => Term::intern("crate::vk::make_version"),
+        s => Term::intern(constant_name(s)),
+    }
+}
+
+/// Parse and yield a C expression that is valid to write in Rust
+/// Identifiers are replaced with their Rust vk equivalent.
+///
+/// Examples:
+/// - `VK_MAKE_VERSION(1, 2, VK_HEADER_VERSION)` -> `crate::vk::make_version(1, 2, HEADER_VERSION)`
+/// - `2*VK_UUID_SIZE` -> `2 * UUID_SIZE`
+fn convert_c_expression(c_expr: &str) -> TokenStream {
+    fn rewrite_token_stream(stream: TokenStream) -> TokenStream {
+        stream
+            .into_iter()
+            .map(|tok| TokenTree {
+                kind: rewrite_token_node(tok.kind),
+                ..tok
+            })
+            .collect::<TokenStream>()
+    }
+    fn rewrite_token_node(node: TokenNode) -> TokenNode {
+        match node {
+            TokenNode::Group(d, stream) => TokenNode::Group(d, rewrite_token_stream(stream)),
+            TokenNode::Term(term) => TokenNode::Term(map_identifier_to_rust(term)),
+            _ => node,
+        }
+    }
+
+    let c_expr = c_expr.parse().unwrap();
+    rewrite_token_stream(c_expr)
 }
 
 impl FieldExt for vkxml::Field {
     fn is_clone(&self) -> bool {
         true
     }
+
     fn param_ident(&self) -> Ident {
         let name = self.name.as_deref().unwrap_or("field");
         let name_corrected = match name {
@@ -688,18 +728,41 @@ impl FieldExt for vkxml::Field {
         Ident::from(name_corrected.to_snake_case().as_str())
     }
 
+    fn inner_type_tokens(&self) -> Tokens {
+        let ty = name_to_tokens(&self.basetype);
+
+        match self.reference {
+            Some(vkxml::ReferenceType::PointerToPointer) => quote!(*mut #ty),
+            Some(vkxml::ReferenceType::PointerToConstPointer) => quote!(*const #ty),
+            _ => quote!(#ty),
+        }
+    }
+
+    fn safe_type_tokens(&self, lifetime: Tokens) -> Tokens {
+        match self.array {
+            // The outer type fn type_tokens() returns is [], which fits our "safe" prescription
+            Some(vkxml::ArrayType::Static) => self.type_tokens(false),
+            Some(vkxml::ArrayType::Dynamic) => {
+                let ty = self.inner_type_tokens();
+                quote!([#ty])
+            }
+            None => {
+                let ty = name_to_tokens(&self.basetype);
+                let pointer = self
+                    .reference
+                    .as_ref()
+                    .map(|r| r.to_safe_tokens(self.is_const, lifetime));
+                quote!(#pointer #ty)
+            }
+        }
+    }
+
     fn type_tokens(&self, is_ffi_param: bool) -> Tokens {
         let ty = name_to_tokens(&self.basetype);
-        let pointer = self
-            .reference
-            .as_ref()
-            .map(|r| r.to_tokens(self.is_const))
-            .unwrap_or(quote! {});
-        let pointer_ty = quote! {
-            #pointer #ty
-        };
-        let array = self.array.as_ref().and_then(|arraytype| match arraytype {
-            vkxml::ArrayType::Static => {
+
+        match self.array {
+            Some(vkxml::ArrayType::Static) => {
+                assert!(self.reference.is_none());
                 let size = self
                     .size
                     .as_ref()
@@ -707,22 +770,19 @@ impl FieldExt for vkxml::Field {
                     .expect("Should have size");
                 // Make sure we also rename the constant, that is
                 // used inside the static array
-                let size = constant_name(size);
-                let size = Term::intern(&size);
+                let size = Term::intern(constant_name(size));
                 // arrays in c are always passed as a pointer
                 if is_ffi_param {
-                    Some(quote! {
-                        &[#ty; #size]
-                    })
+                    quote!(&[#ty; #size])
                 } else {
-                    Some(quote! {
-                        [#ty; #size]
-                    })
+                    quote!([#ty; #size])
                 }
             }
-            _ => None,
-        });
-        array.unwrap_or(pointer_ty)
+            _ => {
+                let pointer = self.reference.as_ref().map(|r| r.to_tokens(self.is_const));
+                quote!(#pointer #ty)
+            }
+        }
     }
 }
 
@@ -943,9 +1003,6 @@ impl<'a> ConstantExt for ExtensionConstant<'a> {
     fn variant_ident(&self, enum_name: &str) -> Ident {
         variant_ident(enum_name, self.name)
     }
-    fn to_tokens(&self) -> Tokens {
-        self.constant.to_tokens()
-    }
     fn notation(&self) -> Option<&str> {
         None
     }
@@ -971,6 +1028,7 @@ pub fn generate_extension_constants<'a>(
             if const_cache.contains(_enum.name.as_str()) {
                 return None;
             }
+
             let (constant, extends, is_alias) = match &_enum.spec {
                 EnumSpec::Bitpos { bitpos, extends } => {
                     Some((Constant::BitPos(*bitpos as u32), extends.clone(), false))
@@ -1150,7 +1208,7 @@ pub fn generate_extension<'a>(
 }
 pub fn generate_define(define: &vkxml::Define) -> Tokens {
     let name = constant_name(&define.name);
-    let ident = Ident::from(name.as_str());
+    let ident = Ident::from(name);
     let deprecated = define
         .comment
         .as_ref()
@@ -1162,11 +1220,8 @@ pub fn generate_define(define: &vkxml::Define) -> Tokens {
         str::parse::<u32>(value).map_or(quote!(), |v| quote!(pub const #ident: u32 = #v;))
     } else if let Some(c_expr) = &define.c_expression {
         if define.defref.contains(&"VK_MAKE_VERSION".to_string()) {
-            let c_expr = c_expr.replace("VK_", "");
-            let c_expr = c_expr.replace("MAKE_VERSION", "crate::vk::make_version");
-            use proc_macro2::TokenStream;
-            use std::str::FromStr;
-            let c_expr = TokenStream::from_str(&c_expr).unwrap();
+            let c_expr = convert_c_expression(c_expr);
+
             quote!(pub const #ident: u32 = #c_expr;)
         } else {
             quote!()
@@ -1176,12 +1231,17 @@ pub fn generate_define(define: &vkxml::Define) -> Tokens {
     }
 }
 pub fn generate_typedef(typedef: &vkxml::Typedef) -> Tokens {
-    let typedef_name = to_type_tokens(&typedef.name, None);
-    let typedef_ty = to_type_tokens(&typedef.basetype, None);
-    let khronos_link = khronos_link(&typedef.name);
-    quote! {
-        #[doc = #khronos_link]
-        pub type #typedef_name = #typedef_ty;
+    if typedef.basetype.is_empty() {
+        // Ignore forward declarations
+        quote! {}
+    } else {
+        let typedef_name = name_to_tokens(&typedef.name);
+        let typedef_ty = name_to_tokens(&typedef.basetype);
+        let khronos_link = khronos_link(&typedef.name);
+        quote! {
+            #[doc = #khronos_link]
+            pub type #typedef_name = #typedef_ty;
+        }
     }
 }
 pub fn generate_bitmask(
@@ -1261,11 +1321,10 @@ pub fn bitflags_impl_block(
         .map(|constant| {
             let variant_ident = constant.variant_ident(enum_name);
             let constant = constant.constant();
-            let tokens = constant.to_tokens();
             let tokens = if let Constant::Alias(_, _) = &constant {
-                tokens
+                quote!(#constant)
             } else {
-                quote!(Self(#tokens))
+                quote!(Self(#constant))
             };
             (variant_ident, tokens)
         })
@@ -1351,24 +1410,24 @@ pub fn generate_enum<'a>(
             EnumType::Bitflags(q)
         }
     } else {
+        let (struct_attribute, special_quote) = match _name.as_str() {
+            //"StructureType" => generate_structure_type(&_name, _enum, create_info_constants),
+            "Result" => (quote!(#[must_use]), generate_result(ident, _enum)),
+            _ => (quote!(), quote!()),
+        };
+
         let impl_block = bitflags_impl_block(ident, &_enum.name, &constants);
         let enum_quote = quote! {
             #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
             #[repr(transparent)]
             #[doc = #khronos_link]
+            #struct_attribute
             pub struct #ident(pub(crate) i32);
             impl #ident {
                 pub const fn from_raw(x: i32) -> Self { #ident(x) }
                 pub const fn as_raw(self) -> i32 { self.0 }
             }
             #impl_block
-        };
-        let special_quote = match _name.as_str() {
-            //"StructureType" => generate_structure_type(&_name, _enum, create_info_constants),
-            "Result" => generate_result(ident, _enum),
-            _ => {
-                quote! {}
-            }
         };
         let q = quote! {
             #enum_quote
@@ -1443,9 +1502,9 @@ pub fn derive_default(_struct: &vkxml::Struct) -> Option<Tokens> {
     // also doesn't mark them as pointers
     let handles = ["LPCWSTR", "HANDLE", "HINSTANCE", "HWND", "HMONITOR"];
     let contains_ptr = members.clone().any(|field| field.reference.is_some());
-    let contains_strucutre_type = members.clone().any(is_structure_type);
+    let contains_structure_type = members.clone().any(is_structure_type);
     let contains_static_array = members.clone().any(is_static_array);
-    if !(contains_ptr || contains_strucutre_type || contains_static_array) {
+    if !(contains_ptr || contains_structure_type || contains_static_array) {
         return None;
     };
     let default_fields = members.clone().map(|field| {
@@ -1602,19 +1661,9 @@ pub fn derive_setters(
         _ => None,
     });
 
-    let (has_next, _is_next_const) = match members
+    let has_next = members
         .clone()
-        .find(|field| field.param_ident().as_ref() == "p_next")
-    {
-        Some(p_next) => {
-            if p_next.type_tokens(false).to_string().starts_with("*const") {
-                (true, true)
-            } else {
-                (true, false)
-            }
-        }
-        None => (false, false),
-    };
+        .any(|field| field.param_ident().as_ref() == "p_next");
 
     let nofilter_count_members = [
         "VkPipelineViewportStateCreateInfo.pViewports",
@@ -1650,21 +1699,17 @@ pub fn derive_setters(
 
     let setters = members.clone().filter_map(|field| {
         let param_ident = field.param_ident();
-        let param_ty_tokens = field.type_tokens(false);
-        let param_ty_string = param_ty_tokens.to_string();
+        let param_ty_tokens = field.safe_type_tokens(quote!('a));
 
         let param_ident_string = param_ident.to_string();
         if param_ident_string == "s_type" || param_ident_string == "p_next" {
             return None;
         }
 
-        let mut param_ident_short = param_ident_string.as_str();
-        if param_ident_string.starts_with("p_") {
-            param_ident_short = &param_ident_string[2..];
-        };
-        if param_ident_string.starts_with("pp_") {
-            param_ident_short = &param_ident_string[3..];
-        };
+        let param_ident_short = param_ident_string
+            .strip_prefix("p_")
+            .or_else(|| param_ident_string.strip_prefix("pp_"))
+            .unwrap_or_else(|| param_ident_string.as_str());
         let param_ident_short = Term::intern(&param_ident_short);
 
         if let Some(name) = field.name.as_ref() {
@@ -1695,81 +1740,68 @@ pub fn derive_setters(
         }
 
         // TODO: Improve in future when https://github.com/rust-lang/rust/issues/53667 is merged id:6
-        if param_ident_string.starts_with("p_") || param_ident_string.starts_with("pp_") {
-            if param_ty_string == "*const c_char" {
+        if field.reference.is_some() {
+            if field.basetype == "char" && matches!(field.reference, Some(vkxml::ReferenceType::Pointer)) {
+                assert!(field.null_terminate);
+                assert_eq!(field.size, None);
                 return Some(quote!{
-                        pub fn #param_ident_short(mut self, #param_ident_short: &'a ::std::ffi::CStr) -> #name_builder<'a> {
-                            self.inner.#param_ident = #param_ident_short.as_ptr();
-                            self
-                        }
+                    pub fn #param_ident_short(mut self, #param_ident_short: &'a ::std::ffi::CStr) -> #name_builder<'a> {
+                        self.inner.#param_ident = #param_ident_short.as_ptr();
+                        self
+                    }
                 });
             }
 
-            if let Some(ref array_type) = field.array {
+            if matches!(field.array, Some(vkxml::ArrayType::Dynamic)) {
                 if let Some(ref array_size) = field.size {
                     if !array_size.starts_with("latexmath") {
-                        let array_size_ident = Ident::from(array_size.to_snake_case().as_str());
-                        if param_ty_string == "*const *const c_char" {
-                            return Some(quote!{
-                                    pub fn #param_ident_short(mut self, #param_ident_short: &'a [*const c_char]) -> #name_builder<'a> {
-                                        self.inner.#param_ident = #param_ident_short.as_ptr();
-                                        self.inner.#array_size_ident = #param_ident_short.len() as _;
-                                        self
-                                    }
-                            });
-                        }
+                        let mut slice_param_ty_tokens = field.safe_type_tokens(quote!('a));
 
-                        let slice_param_ty_tokens;
-                        let ptr;
-                        if param_ty_string.starts_with("*const ") {
-                            let slice_type = &param_ty_string[7..];
-                            if slice_type == "c_void" {
-                                slice_param_ty_tokens = "&'a [u8]".to_string();
-                                ptr = ".as_ptr() as *const c_void";
-                            } else {
-                                slice_param_ty_tokens = "&'a [".to_string() + slice_type + "]";
-                                ptr = ".as_ptr()";
-                            }
+                        let mut ptr = if field.is_const {
+                            quote!(.as_ptr())
                         } else {
-                            // *mut
-                            let slice_type = &param_ty_string[5..];
-                            if slice_type == "c_void" {
-                                slice_param_ty_tokens = "&'a mut [u8]".to_string();
-                                ptr = ".as_mut_ptr() as *mut c_void";
-                            } else {
-                                slice_param_ty_tokens = "&'a mut [".to_string() + slice_type + "]";
-                                ptr = ".as_mut_ptr()";
-                            }
-                        }
-                        let slice_param_ty_tokens = Term::intern(&slice_param_ty_tokens);
-                        let ptr = Term::intern(ptr);
+                            quote!(.as_mut_ptr())
+                        };
 
-                        if let vkxml::ArrayType::Dynamic = array_type {
-                                return Some(quote!{
-                                    pub fn #param_ident_short(mut self, #param_ident_short: #slice_param_ty_tokens) -> #name_builder<'a> {
-                                        self.inner.#array_size_ident = #param_ident_short.len() as _;
-                                        self.inner.#param_ident = #param_ident_short#ptr;
-                                        self
-                                    }
-                                });
-                        }
+                        // Interpret void array as byte array
+                        if field.basetype == "void" {
+                            let mutable = if field.is_const { quote!(const) } else { quote!(mut) };
+
+                            slice_param_ty_tokens = quote!([u8]);
+                            ptr = quote!(#ptr as *#mutable c_void);
+                        };
+
+                        let mutable = if field.is_const { quote!() } else { quote!(mut) };
+
+                        // Apply some heuristics to determine whether the size is an expression.
+                        // If so, this is a pointer to a piece of memory with statically known size.
+                        let set_size_stmt = if array_size.contains("ename:") || array_size.contains('*') {
+                            // c_size should contain the same minus `ename:`-prefixed identifiers
+                            let array_size = field.c_size.as_ref().unwrap_or(array_size);
+                            let c_size = convert_c_expression(array_size);
+                            let inner_type = field.inner_type_tokens();
+
+                            slice_param_ty_tokens = quote!([#inner_type; #c_size]);
+
+                            quote!()
+                        } else {
+                            let array_size_ident = Ident::from(array_size.to_snake_case().as_str());
+                            quote!(self.inner.#array_size_ident = #param_ident_short.len() as _;)
+                        };
+
+                        return Some(quote! {
+                            pub fn #param_ident_short(mut self, #param_ident_short: &'a #mutable #slice_param_ty_tokens) -> #name_builder<'a> {
+                                #set_size_stmt
+                                self.inner.#param_ident = #param_ident_short#ptr;
+                                self
+                            }
+                        });
                     }
                 }
             }
-
-            if param_ty_string.starts_with("*const ") {
-                let slice_param_ty_tokens = "&'a ".to_string() + &param_ty_string[7..];
-                let slice_param_ty_tokens = Term::intern(&slice_param_ty_tokens);
-                return Some(quote!{
-                        pub fn #param_ident_short(mut self, #param_ident_short: #slice_param_ty_tokens) -> #name_builder<'a> {
-                            self.inner.#param_ident = #param_ident_short;
-                            self
-                        }
-                });
-            }
         }
 
-        if param_ty_string == "Bool32" {
+        if field.basetype == "VkBool32" {
             return Some(quote!{
                 pub fn #param_ident_short(mut self, #param_ident_short: bool) -> #name_builder<'a> {
                     self.inner.#param_ident = #param_ident_short.into();
@@ -1777,6 +1809,13 @@ pub fn derive_setters(
                 }
             });
         }
+
+        let param_ty_tokens = if is_opaque_type(&field.basetype) {
+            //  Use raw pointers for void/opaque types
+            field.type_tokens(false)
+        } else {
+            param_ty_tokens
+        };
 
         Some(quote!{
             pub fn #param_ident_short(mut self, #param_ident_short: #param_ty_tokens) -> #name_builder<'a> {
@@ -1983,7 +2022,7 @@ pub fn generate_struct(
 }
 
 pub fn generate_handle(handle: &vkxml::Handle) -> Option<Tokens> {
-    if handle.name == "" {
+    if handle.name.is_empty() {
         return None;
     }
     let khronos_link = khronos_link(&handle.name);
@@ -2026,7 +2065,7 @@ fn generate_funcptr(fnptr: &vkxml::FunctionPointer) -> Tokens {
 }
 
 fn generate_union(union: &vkxml::Union) -> Tokens {
-    let name = to_type_tokens(&union.name, None);
+    let name = name_to_tokens(&union.name);
     let fields = union.elements.iter().map(|field| {
         let name = field.param_ident();
         let ty = field.type_tokens(false);
@@ -2169,8 +2208,9 @@ pub fn generate_feature<'a>(
         #device
     }
 }
-pub fn constant_name(name: &str) -> String {
-    name.replace("VK_", "")
+
+pub fn constant_name(name: &str) -> &str {
+    name.strip_prefix("VK_").unwrap_or(name)
 }
 
 pub fn generate_constant<'a>(
@@ -2180,16 +2220,14 @@ pub fn generate_constant<'a>(
     cache.insert(constant.name.as_str());
     let c = Constant::from_constant(constant);
     let name = constant_name(&constant.name);
-    let ident = Ident::from(name.as_str());
-    let value = c.to_tokens();
+    let ident = Ident::from(name);
     let ty = if name == "TRUE" || name == "FALSE" {
         CType::Bool32
     } else {
         c.ty()
     };
-    let ty = ty.to_tokens();
     quote! {
-        pub const #ident: #ty = #value;
+        pub const #ident: #ty = #c;
     }
 }
 
@@ -2287,8 +2325,8 @@ pub fn generate_const_debugs(const_values: &BTreeMap<Ident, Vec<ConstantMatchInf
         #(#impls)*
     }
 }
-pub fn generate_aliases_of_types<'a>(
-    types: &'a vk_parse::Types,
+pub fn generate_aliases_of_types(
+    types: &vk_parse::Types,
     ty_cache: &mut HashSet<Ident, impl BuildHasher>,
 ) -> Tokens {
     let aliases = types

@@ -7,7 +7,7 @@ edition = "2018"
 [dependencies]
 vk-parse = { version = "0.5.0", features = ["vkxml-convert"] }
 vkxml = "0.3"
-nom = "4.0"
+nom = "6.0"
 heck = "0.3"
 proc-macro2 = "0.2"
 itertools = "0.9"

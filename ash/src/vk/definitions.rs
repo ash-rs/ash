@@ -1543,16 +1543,16 @@ impl<'a> DeviceCreateInfoBuilder<'a> {
         mut self,
         enabled_layer_names: &'a [*const c_char],
     ) -> DeviceCreateInfoBuilder<'a> {
-        self.inner.pp_enabled_layer_names = enabled_layer_names.as_ptr();
         self.inner.enabled_layer_count = enabled_layer_names.len() as _;
+        self.inner.pp_enabled_layer_names = enabled_layer_names.as_ptr();
         self
     }
     pub fn enabled_extension_names(
         mut self,
         enabled_extension_names: &'a [*const c_char],
     ) -> DeviceCreateInfoBuilder<'a> {
-        self.inner.pp_enabled_extension_names = enabled_extension_names.as_ptr();
         self.inner.enabled_extension_count = enabled_extension_names.len() as _;
+        self.inner.pp_enabled_extension_names = enabled_extension_names.as_ptr();
         self
     }
     pub fn enabled_features(
@@ -1654,16 +1654,16 @@ impl<'a> InstanceCreateInfoBuilder<'a> {
         mut self,
         enabled_layer_names: &'a [*const c_char],
     ) -> InstanceCreateInfoBuilder<'a> {
-        self.inner.pp_enabled_layer_names = enabled_layer_names.as_ptr();
         self.inner.enabled_layer_count = enabled_layer_names.len() as _;
+        self.inner.pp_enabled_layer_names = enabled_layer_names.as_ptr();
         self
     }
     pub fn enabled_extension_names(
         mut self,
         enabled_extension_names: &'a [*const c_char],
     ) -> InstanceCreateInfoBuilder<'a> {
-        self.inner.pp_enabled_extension_names = enabled_extension_names.as_ptr();
         self.inner.enabled_extension_count = enabled_extension_names.len() as _;
+        self.inner.pp_enabled_extension_names = enabled_extension_names.as_ptr();
         self
     }
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
@@ -10527,8 +10527,11 @@ impl<'a> DisplayPropertiesKHRBuilder<'a> {
         self.inner.display = display;
         self
     }
-    pub fn display_name(mut self, display_name: *const c_char) -> DisplayPropertiesKHRBuilder<'a> {
-        self.inner.display_name = display_name;
+    pub fn display_name(
+        mut self,
+        display_name: &'a ::std::ffi::CStr,
+    ) -> DisplayPropertiesKHRBuilder<'a> {
+        self.inner.display_name = display_name.as_ptr();
         self
     }
     pub fn physical_dimensions(
@@ -20903,7 +20906,7 @@ impl<'a> IOSSurfaceCreateInfoMVKBuilder<'a> {
         self.inner.flags = flags;
         self
     }
-    pub fn view(mut self, view: &'a c_void) -> IOSSurfaceCreateInfoMVKBuilder<'a> {
+    pub fn view(mut self, view: *const c_void) -> IOSSurfaceCreateInfoMVKBuilder<'a> {
         self.inner.p_view = view;
         self
     }
@@ -20983,7 +20986,7 @@ impl<'a> MacOSSurfaceCreateInfoMVKBuilder<'a> {
         self.inner.flags = flags;
         self
     }
-    pub fn view(mut self, view: &'a c_void) -> MacOSSurfaceCreateInfoMVKBuilder<'a> {
+    pub fn view(mut self, view: *const c_void) -> MacOSSurfaceCreateInfoMVKBuilder<'a> {
         self.inner.p_view = view;
         self
     }
@@ -21063,7 +21066,7 @@ impl<'a> MetalSurfaceCreateInfoEXTBuilder<'a> {
         self.inner.flags = flags;
         self
     }
-    pub fn layer(mut self, layer: &'a CAMetalLayer) -> MetalSurfaceCreateInfoEXTBuilder<'a> {
+    pub fn layer(mut self, layer: *const CAMetalLayer) -> MetalSurfaceCreateInfoEXTBuilder<'a> {
         self.inner.p_layer = layer;
         self
     }
@@ -33205,7 +33208,7 @@ impl<'a> RayTracingShaderGroupCreateInfoKHRBuilder<'a> {
     }
     pub fn shader_group_capture_replay_handle(
         mut self,
-        shader_group_capture_replay_handle: &'a c_void,
+        shader_group_capture_replay_handle: *const c_void,
     ) -> RayTracingShaderGroupCreateInfoKHRBuilder<'a> {
         self.inner.p_shader_group_capture_replay_handle = shader_group_capture_replay_handle;
         self
@@ -37488,7 +37491,7 @@ impl<'a> ::std::ops::DerefMut for PipelineCreationFeedbackCreateInfoEXTBuilder<'
 impl<'a> PipelineCreationFeedbackCreateInfoEXTBuilder<'a> {
     pub fn pipeline_creation_feedback(
         mut self,
-        pipeline_creation_feedback: *mut PipelineCreationFeedbackEXT,
+        pipeline_creation_feedback: &'a mut PipelineCreationFeedbackEXT,
     ) -> PipelineCreationFeedbackCreateInfoEXTBuilder<'a> {
         self.inner.p_pipeline_creation_feedback = pipeline_creation_feedback;
         self
@@ -44090,9 +44093,9 @@ impl<'a> ::std::ops::DerefMut for AccelerationStructureVersionKHRBuilder<'a> {
 impl<'a> AccelerationStructureVersionKHRBuilder<'a> {
     pub fn version_data(
         mut self,
-        version_data: *const u8,
+        version_data: &'a [u8; 2 * UUID_SIZE],
     ) -> AccelerationStructureVersionKHRBuilder<'a> {
-        self.inner.version_data = version_data;
+        self.inner.version_data = version_data.as_ptr();
         self
     }
     #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]

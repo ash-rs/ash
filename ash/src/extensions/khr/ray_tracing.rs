@@ -42,16 +42,14 @@ impl RayTracing {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::AccelerationStructureKHR> {
         let mut accel_struct = mem::zeroed();
-        let err_code = self.ray_tracing_fn.create_acceleration_structure_khr(
-            self.handle,
-            create_info,
-            allocation_callbacks.as_raw_ptr(),
-            &mut accel_struct,
-        );
-        match err_code {
-            vk::Result::SUCCESS => Ok(accel_struct),
-            _ => Err(err_code),
-        }
+        self.ray_tracing_fn
+            .create_acceleration_structure_khr(
+                self.handle,
+                create_info,
+                allocation_callbacks.as_raw_ptr(),
+                &mut accel_struct,
+            )
+            .result_with_success(accel_struct)
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkDestroyAccelerationStructureKHR.html>"]
@@ -87,15 +85,13 @@ impl RayTracing {
         &self,
         bind_info: &[vk::BindAccelerationStructureMemoryInfoKHR],
     ) -> VkResult<()> {
-        let err_code = self.ray_tracing_fn.bind_acceleration_structure_memory_khr(
-            self.handle,
-            bind_info.len() as u32,
-            bind_info.as_ptr(),
-        );
-        match err_code {
-            vk::Result::SUCCESS => Ok(()),
-            _ => Err(err_code),
-        }
+        self.ray_tracing_fn
+            .bind_acceleration_structure_memory_khr(
+                self.handle,
+                bind_info.len() as u32,
+                bind_info.as_ptr(),
+            )
+            .into()
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdBuildAccelerationStructureKHR.html>"]
@@ -160,18 +156,16 @@ impl RayTracing {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<Vec<vk::Pipeline>> {
         let mut pipelines = vec![mem::zeroed(); create_info.len()];
-        let err_code = self.ray_tracing_fn.create_ray_tracing_pipelines_khr(
-            self.handle,
-            pipeline_cache,
-            create_info.len() as u32,
-            create_info.as_ptr(),
-            allocation_callbacks.as_raw_ptr(),
-            pipelines.as_mut_ptr(),
-        );
-        match err_code {
-            vk::Result::SUCCESS => Ok(pipelines),
-            _ => Err(err_code),
-        }
+        self.ray_tracing_fn
+            .create_ray_tracing_pipelines_khr(
+                self.handle,
+                pipeline_cache,
+                create_info.len() as u32,
+                create_info.as_ptr(),
+                allocation_callbacks.as_raw_ptr(),
+                pipelines.as_mut_ptr(),
+            )
+            .result_with_success(pipelines)
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetRayTracingShaderGroupHandlesKHR.html>"]
@@ -180,8 +174,9 @@ impl RayTracing {
         pipeline: vk::Pipeline,
         first_group: u32,
         group_count: u32,
-        data: &mut [u8],
-    ) -> VkResult<()> {
+        data_size: usize,
+    ) -> VkResult<Vec<u8>> {
+        let mut data = Vec::<u8>::with_capacity(data_size);
         let err_code = self
             .ray_tracing_fn
             .get_ray_tracing_shader_group_handles_khr(
@@ -189,13 +184,11 @@ impl RayTracing {
                 pipeline,
                 first_group,
                 group_count,
-                data.len(),
+                data_size,
                 data.as_mut_ptr() as *mut std::ffi::c_void,
             );
-        match err_code {
-            vk::Result::SUCCESS => Ok(()),
-            _ => Err(err_code),
-        }
+        data.set_len(data_size);
+        err_code.result_with_success(data)
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetAccelerationStructureHandleKHR.html>"]
@@ -250,13 +243,9 @@ impl RayTracing {
         device: vk::Device,
         info: &vk::CopyAccelerationStructureToMemoryInfoKHR,
     ) -> VkResult<()> {
-        let err_code = self
-            .ray_tracing_fn
-            .copy_acceleration_structure_to_memory_khr(device, info);
-        match err_code {
-            vk::Result::SUCCESS => Ok(()),
-            _ => Err(err_code),
-        }
+        self.ray_tracing_fn
+            .copy_acceleration_structure_to_memory_khr(device, info)
+            .into()
     }
 
     pub unsafe fn copy_memory_to_acceleration_structure(
@@ -264,14 +253,9 @@ impl RayTracing {
         device: vk::Device,
         info: &vk::CopyMemoryToAccelerationStructureInfoKHR,
     ) -> VkResult<()> {
-        let err_code = self
-            .ray_tracing_fn
-            .copy_memory_to_acceleration_structure_khr(device, info);
-
-        match err_code {
-            vk::Result::SUCCESS => Ok(()),
-            _ => Err(err_code),
-        }
+        self.ray_tracing_fn
+            .copy_memory_to_acceleration_structure_khr(device, info)
+            .into()
     }
 
     pub unsafe fn cmd_copy_acceleration_structure_to_memory(
@@ -302,8 +286,7 @@ impl RayTracing {
     ) -> VkResult<Vec<u8>> {
         let mut data: Vec<u8> = Vec::with_capacity(data_size);
 
-        let err_code = self
-            .ray_tracing_fn
+        self.ray_tracing_fn
             .get_ray_tracing_capture_replay_shader_group_handles_khr(
                 device,
                 pipeline,
@@ -311,12 +294,8 @@ impl RayTracing {
                 group_count,
                 data_size,
                 data.as_mut_ptr() as *mut _,
-            );
-
-        match err_code {
-            vk::Result::SUCCESS => Ok(data),
-            _ => Err(err_code),
-        }
+            )
+            .result_with_success(data)
     }
 
     pub unsafe fn cmd_trace_rays_indirect(
@@ -345,14 +324,9 @@ impl RayTracing {
         device: vk::Device,
         version: &vk::AccelerationStructureVersionKHR,
     ) -> VkResult<()> {
-        let err_code = self
-            .ray_tracing_fn
-            .get_device_acceleration_structure_compatibility_khr(device, version);
-
-        match err_code {
-            vk::Result::SUCCESS => Ok(()),
-            _ => Err(err_code),
-        }
+        self.ray_tracing_fn
+            .get_device_acceleration_structure_compatibility_khr(device, version)
+            .into()
     }
 
     pub fn name() -> &'static CStr {
