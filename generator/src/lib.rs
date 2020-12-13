@@ -338,6 +338,8 @@ fn is_opaque_type(ty: &str) -> bool {
             | "ANativeWindow"
             | "AHardwareBuffer"
             | "CAMetalLayer"
+            | "IDirectFB"
+            | "IDirectFBSurface"
     )
 }
 
