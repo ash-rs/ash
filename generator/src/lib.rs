@@ -380,6 +380,8 @@ pub fn platform_specific_types() -> Tokens {
         // https://github.com/google/gapid/commit/22aafebec4638c6aaa77667096bca30f6e842d95#diff-ab3ab4a7d89b4fc8a344ff4e9332865f268ea1669ee379c1b516a954ecc2e7a6R20-R21
         pub type GgpStreamDescriptor = u32;
         pub type GgpFrameToken = u64;
+        pub type IDirectFB = c_void;
+        pub type IDirectFBSurface = c_void;
     }
 }
 #[derive(Debug, Copy, Clone)]
@@ -1721,20 +1723,30 @@ pub fn derive_setters(
             // Unique cases
             if name == "pCode" {
                 return Some(quote!{
-                        pub fn code(mut self, code: &'a [u32]) -> #name_builder<'a> {
-                            self.inner.code_size = code.len() * 4;
-                            self.inner.p_code = code.as_ptr() as *const u32;
-                            self
-                        }
+                    pub fn code(mut self, code: &'a [u32]) -> #name_builder<'a> {
+                        self.inner.code_size = code.len() * 4;
+                        self.inner.p_code = code.as_ptr() as *const u32;
+                        self
+                    }
                 });
             }
 
             if name == "pSampleMask" {
                 return Some(quote!{
-                        pub fn sample_mask(mut self, sample_mask: &'a [SampleMask]) -> #name_builder<'a> {
-                            self.inner.p_sample_mask = sample_mask.as_ptr() as *const SampleMask;
-                            self
-                        }
+                    pub fn sample_mask(mut self, sample_mask: &'a [SampleMask]) -> #name_builder<'a> {
+                        self.inner.p_sample_mask = sample_mask.as_ptr() as *const SampleMask;
+                        self
+                    }
+                });
+            }
+
+            if name == "ppGeometries" {
+                return Some(quote!{
+                    pub fn geometries_ptrs(mut self, geometries: &'a [*const AccelerationStructureGeometryKHR]) -> #name_builder<'a> {
+                        self.inner.geometry_count = geometries.len() as _;
+                        self.inner.pp_geometries = geometries.as_ptr();
+                        self
+                    }
                 });
             }
         }
@@ -1973,11 +1985,17 @@ pub fn generate_struct(
         return quote! {
             #[repr(C)]
             #[derive(Copy, Clone)]
+            pub union AccelerationStructureReferenceKHR {
+                pub device_handle: DeviceAddress,
+                pub host_handle: AccelerationStructureKHR,
+            }
+            #[repr(C)]
+            #[derive(Copy, Clone)]
             pub struct AccelerationStructureInstanceKHR {
                 pub transform: TransformMatrixKHR,
                 pub instance_custom_index_and_mask: u32,
                 pub instance_shader_binding_table_record_offset_and_flags: u32,
-                pub acceleration_structure_reference: u64,
+                pub acceleration_structure_reference: AccelerationStructureReferenceKHR,
             }
         };
     }
