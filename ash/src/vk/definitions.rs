@@ -9,7 +9,7 @@ use std::os::raw::*;
 pub const API_VERSION_1_0: u32 = crate::vk::make_version(1, 0, 0);
 pub const API_VERSION_1_1: u32 = crate::vk::make_version(1, 1, 0);
 pub const API_VERSION_1_2: u32 = crate::vk::make_version(1, 2, 0);
-pub const HEADER_VERSION: u32 = 162u32;
+pub const HEADER_VERSION: u32 = 165u32;
 pub const HEADER_VERSION_COMPLETE: u32 = crate::vk::make_version(1, 2, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkSampleMask.html>"]
 pub type SampleMask = u32;
@@ -48779,6 +48779,188 @@ impl<'a> AccelerationStructureBuildSizesInfoKHRBuilder<'a> {
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> AccelerationStructureBuildSizesInfoKHR {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPhysicalDeviceMutableDescriptorTypeFeaturesVALVE.html>"]
+pub struct PhysicalDeviceMutableDescriptorTypeFeaturesVALVE {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub mutable_descriptor_type: Bool32,
+}
+impl ::std::default::Default for PhysicalDeviceMutableDescriptorTypeFeaturesVALVE {
+    fn default() -> PhysicalDeviceMutableDescriptorTypeFeaturesVALVE {
+        PhysicalDeviceMutableDescriptorTypeFeaturesVALVE {
+            s_type: StructureType::PHYSICAL_DEVICE_MUTABLE_DESCRIPTOR_TYPE_FEATURES_VALVE,
+            p_next: ::std::ptr::null_mut(),
+            mutable_descriptor_type: Bool32::default(),
+        }
+    }
+}
+impl PhysicalDeviceMutableDescriptorTypeFeaturesVALVE {
+    pub fn builder<'a>() -> PhysicalDeviceMutableDescriptorTypeFeaturesVALVEBuilder<'a> {
+        PhysicalDeviceMutableDescriptorTypeFeaturesVALVEBuilder {
+            inner: PhysicalDeviceMutableDescriptorTypeFeaturesVALVE::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct PhysicalDeviceMutableDescriptorTypeFeaturesVALVEBuilder<'a> {
+    inner: PhysicalDeviceMutableDescriptorTypeFeaturesVALVE,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsDeviceCreateInfo
+    for PhysicalDeviceMutableDescriptorTypeFeaturesVALVEBuilder<'_>
+{
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceMutableDescriptorTypeFeaturesVALVE {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceMutableDescriptorTypeFeaturesVALVEBuilder<'a> {
+    type Target = PhysicalDeviceMutableDescriptorTypeFeaturesVALVE;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceMutableDescriptorTypeFeaturesVALVEBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> PhysicalDeviceMutableDescriptorTypeFeaturesVALVEBuilder<'a> {
+    pub fn mutable_descriptor_type(
+        mut self,
+        mutable_descriptor_type: bool,
+    ) -> PhysicalDeviceMutableDescriptorTypeFeaturesVALVEBuilder<'a> {
+        self.inner.mutable_descriptor_type = mutable_descriptor_type.into();
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> PhysicalDeviceMutableDescriptorTypeFeaturesVALVE {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkMutableDescriptorTypeListVALVE.html>"]
+pub struct MutableDescriptorTypeListVALVE {
+    pub descriptor_type_count: u32,
+    pub p_descriptor_types: *const DescriptorType,
+}
+impl ::std::default::Default for MutableDescriptorTypeListVALVE {
+    fn default() -> MutableDescriptorTypeListVALVE {
+        MutableDescriptorTypeListVALVE {
+            descriptor_type_count: u32::default(),
+            p_descriptor_types: ::std::ptr::null(),
+        }
+    }
+}
+impl MutableDescriptorTypeListVALVE {
+    pub fn builder<'a>() -> MutableDescriptorTypeListVALVEBuilder<'a> {
+        MutableDescriptorTypeListVALVEBuilder {
+            inner: MutableDescriptorTypeListVALVE::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct MutableDescriptorTypeListVALVEBuilder<'a> {
+    inner: MutableDescriptorTypeListVALVE,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+impl<'a> ::std::ops::Deref for MutableDescriptorTypeListVALVEBuilder<'a> {
+    type Target = MutableDescriptorTypeListVALVE;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for MutableDescriptorTypeListVALVEBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> MutableDescriptorTypeListVALVEBuilder<'a> {
+    pub fn descriptor_types(
+        mut self,
+        descriptor_types: &'a [DescriptorType],
+    ) -> MutableDescriptorTypeListVALVEBuilder<'a> {
+        self.inner.descriptor_type_count = descriptor_types.len() as _;
+        self.inner.p_descriptor_types = descriptor_types.as_ptr();
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> MutableDescriptorTypeListVALVE {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkMutableDescriptorTypeCreateInfoVALVE.html>"]
+pub struct MutableDescriptorTypeCreateInfoVALVE {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub mutable_descriptor_type_list_count: u32,
+    pub p_mutable_descriptor_type_lists: *const MutableDescriptorTypeListVALVE,
+}
+impl ::std::default::Default for MutableDescriptorTypeCreateInfoVALVE {
+    fn default() -> MutableDescriptorTypeCreateInfoVALVE {
+        MutableDescriptorTypeCreateInfoVALVE {
+            s_type: StructureType::MUTABLE_DESCRIPTOR_TYPE_CREATE_INFO_VALVE,
+            p_next: ::std::ptr::null(),
+            mutable_descriptor_type_list_count: u32::default(),
+            p_mutable_descriptor_type_lists: ::std::ptr::null(),
+        }
+    }
+}
+impl MutableDescriptorTypeCreateInfoVALVE {
+    pub fn builder<'a>() -> MutableDescriptorTypeCreateInfoVALVEBuilder<'a> {
+        MutableDescriptorTypeCreateInfoVALVEBuilder {
+            inner: MutableDescriptorTypeCreateInfoVALVE::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct MutableDescriptorTypeCreateInfoVALVEBuilder<'a> {
+    inner: MutableDescriptorTypeCreateInfoVALVE,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsDescriptorSetLayoutCreateInfo
+    for MutableDescriptorTypeCreateInfoVALVEBuilder<'_>
+{
+}
+unsafe impl ExtendsDescriptorSetLayoutCreateInfo for MutableDescriptorTypeCreateInfoVALVE {}
+unsafe impl ExtendsDescriptorPoolCreateInfo for MutableDescriptorTypeCreateInfoVALVEBuilder<'_> {}
+unsafe impl ExtendsDescriptorPoolCreateInfo for MutableDescriptorTypeCreateInfoVALVE {}
+impl<'a> ::std::ops::Deref for MutableDescriptorTypeCreateInfoVALVEBuilder<'a> {
+    type Target = MutableDescriptorTypeCreateInfoVALVE;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for MutableDescriptorTypeCreateInfoVALVEBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> MutableDescriptorTypeCreateInfoVALVEBuilder<'a> {
+    pub fn mutable_descriptor_type_lists(
+        mut self,
+        mutable_descriptor_type_lists: &'a [MutableDescriptorTypeListVALVE],
+    ) -> MutableDescriptorTypeCreateInfoVALVEBuilder<'a> {
+        self.inner.mutable_descriptor_type_list_count = mutable_descriptor_type_lists.len() as _;
+        self.inner.p_mutable_descriptor_type_lists = mutable_descriptor_type_lists.as_ptr();
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> MutableDescriptorTypeCreateInfoVALVE {
         self.inner
     }
 }

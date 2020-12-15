@@ -24251,27 +24251,101 @@ impl ArmExtension345Fn {
         ArmExtension345Fn {}
     }
 }
-impl NvExtension346Fn {
+impl NvAcquireWinrtDisplayFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_346\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_acquire_winrt_display\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
-pub struct NvExtension346Fn {}
-unsafe impl Send for NvExtension346Fn {}
-unsafe impl Sync for NvExtension346Fn {}
-impl ::std::clone::Clone for NvExtension346Fn {
+#[allow(non_camel_case_types)]
+pub type PFN_vkAcquireWinrtDisplayNV =
+    extern "system" fn(physical_device: PhysicalDevice, display: DisplayKHR) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetWinrtDisplayNV = extern "system" fn(
+    physical_device: PhysicalDevice,
+    device_relative_id: u32,
+    p_display: *mut DisplayKHR,
+) -> Result;
+pub struct NvAcquireWinrtDisplayFn {
+    pub acquire_winrt_display_nv:
+        extern "system" fn(physical_device: PhysicalDevice, display: DisplayKHR) -> Result,
+    pub get_winrt_display_nv: extern "system" fn(
+        physical_device: PhysicalDevice,
+        device_relative_id: u32,
+        p_display: *mut DisplayKHR,
+    ) -> Result,
+}
+unsafe impl Send for NvAcquireWinrtDisplayFn {}
+unsafe impl Sync for NvAcquireWinrtDisplayFn {}
+impl ::std::clone::Clone for NvAcquireWinrtDisplayFn {
     fn clone(&self) -> Self {
-        NvExtension346Fn {}
+        NvAcquireWinrtDisplayFn {
+            acquire_winrt_display_nv: self.acquire_winrt_display_nv,
+            get_winrt_display_nv: self.get_winrt_display_nv,
+        }
     }
 }
-impl NvExtension346Fn {
+impl NvAcquireWinrtDisplayFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvExtension346Fn {}
+        NvAcquireWinrtDisplayFn {
+            acquire_winrt_display_nv: unsafe {
+                extern "system" fn acquire_winrt_display_nv(
+                    _physical_device: PhysicalDevice,
+                    _display: DisplayKHR,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(acquire_winrt_display_nv)
+                    ))
+                }
+                let raw_name = stringify!(vkAcquireWinrtDisplayNV);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    acquire_winrt_display_nv
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_winrt_display_nv: unsafe {
+                extern "system" fn get_winrt_display_nv(
+                    _physical_device: PhysicalDevice,
+                    _device_relative_id: u32,
+                    _p_display: *mut DisplayKHR,
+                ) -> Result {
+                    panic!(concat!("Unable to load ", stringify!(get_winrt_display_nv)))
+                }
+                let raw_name = stringify!(vkGetWinrtDisplayNV);
+                let cname = ::std::ffi::CString::new(raw_name).unwrap();
+                let val = _f(&cname);
+                if val.is_null() {
+                    get_winrt_display_nv
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkAcquireWinrtDisplayNV.html>"]
+    pub unsafe fn acquire_winrt_display_nv(
+        &self,
+        physical_device: PhysicalDevice,
+        display: DisplayKHR,
+    ) -> Result {
+        (self.acquire_winrt_display_nv)(physical_device, display)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetWinrtDisplayNV.html>"]
+    pub unsafe fn get_winrt_display_nv(
+        &self,
+        physical_device: PhysicalDevice,
+        device_relative_id: u32,
+        p_display: *mut DisplayKHR,
+    ) -> Result {
+        (self.get_winrt_display_nv)(physical_device, device_relative_id, p_display)
     }
 }
 impl ExtDirectfbSurfaceFn {
@@ -24445,28 +24519,48 @@ impl NvExtension351Fn {
         NvExtension351Fn {}
     }
 }
-impl ExtExtension352Fn {
+impl ValveMutableDescriptorTypeFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_352\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_VALVE_mutable_descriptor_type\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
-pub struct ExtExtension352Fn {}
-unsafe impl Send for ExtExtension352Fn {}
-unsafe impl Sync for ExtExtension352Fn {}
-impl ::std::clone::Clone for ExtExtension352Fn {
+pub struct ValveMutableDescriptorTypeFn {}
+unsafe impl Send for ValveMutableDescriptorTypeFn {}
+unsafe impl Sync for ValveMutableDescriptorTypeFn {}
+impl ::std::clone::Clone for ValveMutableDescriptorTypeFn {
     fn clone(&self) -> Self {
-        ExtExtension352Fn {}
+        ValveMutableDescriptorTypeFn {}
     }
 }
-impl ExtExtension352Fn {
+impl ValveMutableDescriptorTypeFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtExtension352Fn {}
+        ValveMutableDescriptorTypeFn {}
     }
+}
+#[doc = "Generated from 'VK_VALVE_mutable_descriptor_type'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_MUTABLE_DESCRIPTOR_TYPE_FEATURES_VALVE: Self = Self(1_000_351_000);
+}
+#[doc = "Generated from 'VK_VALVE_mutable_descriptor_type'"]
+impl StructureType {
+    pub const MUTABLE_DESCRIPTOR_TYPE_CREATE_INFO_VALVE: Self = Self(1_000_351_002);
+}
+#[doc = "Generated from 'VK_VALVE_mutable_descriptor_type'"]
+impl DescriptorType {
+    pub const MUTABLE_VALVE: Self = Self(1_000_351_000);
+}
+#[doc = "Generated from 'VK_VALVE_mutable_descriptor_type'"]
+impl DescriptorPoolCreateFlags {
+    pub const HOST_ONLY_VALVE: Self = Self(0b100);
+}
+#[doc = "Generated from 'VK_VALVE_mutable_descriptor_type'"]
+impl DescriptorSetLayoutCreateFlags {
+    pub const HOST_ONLY_POOL_VALVE: Self = Self(0b100);
 }
 impl ExtExtension353Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -24935,4 +25029,142 @@ impl BufferCreateFlags {
 #[doc = "Generated from 'VK_NV_extension_372'"]
 impl ImageCreateFlags {
     pub const RESERVED_15_NV: Self = Self(0b1000_0000_0000_0000);
+}
+impl NvExtension373Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_373\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+pub struct NvExtension373Fn {}
+unsafe impl Send for NvExtension373Fn {}
+unsafe impl Sync for NvExtension373Fn {}
+impl ::std::clone::Clone for NvExtension373Fn {
+    fn clone(&self) -> Self {
+        NvExtension373Fn {}
+    }
+}
+impl NvExtension373Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        NvExtension373Fn {}
+    }
+}
+impl NvExtension374Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_374\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+pub struct NvExtension374Fn {}
+unsafe impl Send for NvExtension374Fn {}
+unsafe impl Sync for NvExtension374Fn {}
+impl ::std::clone::Clone for NvExtension374Fn {
+    fn clone(&self) -> Self {
+        NvExtension374Fn {}
+    }
+}
+impl NvExtension374Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        NvExtension374Fn {}
+    }
+}
+impl NvExtension375Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_375\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+pub struct NvExtension375Fn {}
+unsafe impl Send for NvExtension375Fn {}
+unsafe impl Sync for NvExtension375Fn {}
+impl ::std::clone::Clone for NvExtension375Fn {
+    fn clone(&self) -> Self {
+        NvExtension375Fn {}
+    }
+}
+impl NvExtension375Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        NvExtension375Fn {}
+    }
+}
+impl ExtExtension376Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_376\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+pub struct ExtExtension376Fn {}
+unsafe impl Send for ExtExtension376Fn {}
+unsafe impl Sync for ExtExtension376Fn {}
+impl ::std::clone::Clone for ExtExtension376Fn {
+    fn clone(&self) -> Self {
+        ExtExtension376Fn {}
+    }
+}
+impl ExtExtension376Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        ExtExtension376Fn {}
+    }
+}
+impl ExtExtension377Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_377\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+pub struct ExtExtension377Fn {}
+unsafe impl Send for ExtExtension377Fn {}
+unsafe impl Sync for ExtExtension377Fn {}
+impl ::std::clone::Clone for ExtExtension377Fn {
+    fn clone(&self) -> Self {
+        ExtExtension377Fn {}
+    }
+}
+impl ExtExtension377Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        ExtExtension377Fn {}
+    }
+}
+impl NvExtension378Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_378\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+pub struct NvExtension378Fn {}
+unsafe impl Send for NvExtension378Fn {}
+unsafe impl Sync for NvExtension378Fn {}
+impl ::std::clone::Clone for NvExtension378Fn {
+    fn clone(&self) -> Self {
+        NvExtension378Fn {}
+    }
+}
+impl NvExtension378Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        NvExtension378Fn {}
+    }
 }
