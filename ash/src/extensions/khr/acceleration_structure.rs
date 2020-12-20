@@ -266,6 +266,7 @@ impl AccelerationStructure {
             );
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetDeviceAccelerationStructureCompatibilityKHR.html>"]
     pub unsafe fn get_device_acceleration_structure_compatibility(
         &self,
         device: vk::Device,
