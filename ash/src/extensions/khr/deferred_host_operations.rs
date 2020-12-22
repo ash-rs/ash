@@ -3,6 +3,7 @@ use crate::prelude::*;
 use crate::version::{DeviceV1_0, InstanceV1_0};
 use crate::vk;
 use crate::RawPtr;
+use std::ffi::CStr;
 use std::mem;
 
 #[derive(Clone)]
