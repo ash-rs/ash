@@ -79,4 +79,16 @@ impl DeferredHostOperations {
             .get_deferred_operation_result_khr(self.handle, operation)
             .result()
     }
+
+    pub fn name() -> &'static CStr {
+        vk::KhrDeferredHostOperationsFn::name()
+    }
+
+    pub fn fp(&self) -> &vk::KhrDeferredHostOperationsFn {
+        &self.deferred_host_operations_fn
+    }
+
+    pub fn device(&self) -> vk::Device {
+        self.handle
+    }
 }
