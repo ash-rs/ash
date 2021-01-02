@@ -837,31 +837,15 @@ fn generate_function_pointers<'a>(
 ) -> TokenStream {
     // Commands can have duplicates inside them because they are declared per features. But we only
     // really want to generate one function pointer.
-    let commands = {
-        let mut cache = HashSet::new();
-        let mut cmd_vec: Vec<&vkxml::Command> = Vec::new();
-        for cmd in commands {
-            let name = cmd.name.as_str();
-            if !cache.contains(name) {
-                cmd_vec.push(cmd);
-                cache.insert(name);
-            }
-        }
-        cmd_vec
-    };
+    let commands = commands
+        .iter()
+        .unique_by(|cmd| cmd.name.as_str())
+        .collect::<Vec<_>>();
     // PFN function pointers are global and can not have duplicates. This can happen because there
     // are aliases to commands
     let commands_pfn: Vec<_> = commands
         .iter()
-        .filter(|cmd| {
-            let ident = cmd.name.as_str();
-            if !fn_cache.contains(ident) {
-                fn_cache.insert(ident);
-                true
-            } else {
-                false
-            }
-        })
+        .filter(|cmd| fn_cache.insert(cmd.name.as_str()))
         .collect();
 
     let function_name_raw = |name: &str| -> String {
@@ -1065,7 +1049,7 @@ pub fn generate_extension_constants<'a>(
         .flat_map(|iter| iter);
     let enum_tokens = items.filter_map(|item| match item {
         vk_parse::InterfaceItem::Enum(enum_) => {
-            if const_cache.contains(enum_.name.as_str()) {
+            if !const_cache.insert(enum_.name.as_str()) {
                 return None;
             }
 
@@ -1092,7 +1076,6 @@ pub fn generate_extension_constants<'a>(
                 #impl_block
             };
 
-            const_cache.insert(enum_.name.as_str());
             Some(q)
         }
         _ => None,
@@ -1263,10 +1246,9 @@ pub fn generate_bitmask(
 
     let name = &bitmask.name[2..];
     let ident = format_ident!("{}", name);
-    if bitflags_cache.contains(&ident) {
+    if !bitflags_cache.insert(ident.clone()) {
         return None;
     };
-    bitflags_cache.insert(ident.clone());
     const_values.insert(ident.clone(), Default::default());
     let khronos_link = khronos_link(&bitmask.name);
     let type_ = name_to_tokens(&bitmask.basetype);
@@ -1460,11 +1442,10 @@ pub fn generate_enum<'a>(
         let bit_string = interleave_number('_', 4, &bit_string);
         let all_bits_term = syn::LitInt::new(&format!("0b{}", bit_string), Span::call_site());
 
-        if bitflags_cache.contains(&ident) {
+        if !bitflags_cache.insert(ident.clone()) {
             EnumType::Bitflags(quote! {})
         } else {
             let impl_bitflags = bitflags_impl_block(ident.clone(), name, &constants);
-            bitflags_cache.insert(ident.clone());
             let q = quote! {
                 #[repr(transparent)]
                 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -2448,10 +2429,9 @@ pub fn generate_aliases_of_types(
         })
         .filter_map(|(name, alias)| {
             let name_ident = name_to_tokens(name);
-            if ty_cache.contains(&name_ident) {
+            if !ty_cache.insert(name_ident.clone()) {
                 return None;
             };
-            ty_cache.insert(name_ident.clone());
             let alias_ident = name_to_tokens(alias);
             let tokens = quote! {
                 pub type #name_ident = #alias_ident;
