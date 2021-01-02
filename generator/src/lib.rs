@@ -862,14 +862,14 @@ impl FieldExt for vkxml::Field {
     fn type_tokens(&self, is_ffi_param: bool) -> TokenStream {
         let (ty, reference) = self.inner_type_tokens();
 
-        let ty = match self.array {
+        let reference = match self.array {
             Some(vkxml::ArrayType::Static) if is_ffi_param => {
-                // Unused and untested, disallow this for now.
+                // Needs `increment_indirection`:
                 assert!(reference.is_none());
                 // arrays in c are always passed as a pointer
-                quote!(*const #ty)
+                Some(vkxml::ReferenceType::Pointer)
             }
-            _ => ty,
+            _ => reference,
         };
 
         let pointer = reference.as_ref().map(|r| r.to_tokens(self.is_const));
