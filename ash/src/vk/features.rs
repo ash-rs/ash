@@ -1268,7 +1268,7 @@ pub type PFN_vkCmdSetDepthBias = extern "system" fn(
 ) -> c_void;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetBlendConstants =
-    extern "system" fn(command_buffer: CommandBuffer, blend_constants: &[f32; 4]) -> c_void;
+    extern "system" fn(command_buffer: CommandBuffer, blend_constants: *const [f32; 4]) -> c_void;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetDepthBounds = extern "system" fn(
     command_buffer: CommandBuffer,
@@ -1972,8 +1972,10 @@ pub struct DeviceFnV1_0 {
         depth_bias_clamp: f32,
         depth_bias_slope_factor: f32,
     ) -> c_void,
-    pub cmd_set_blend_constants:
-        extern "system" fn(command_buffer: CommandBuffer, blend_constants: &[f32; 4]) -> c_void,
+    pub cmd_set_blend_constants: extern "system" fn(
+        command_buffer: CommandBuffer,
+        blend_constants: *const [f32; 4],
+    ) -> c_void,
     pub cmd_set_depth_bounds: extern "system" fn(
         command_buffer: CommandBuffer,
         min_depth_bounds: f32,
@@ -3841,7 +3843,7 @@ impl DeviceFnV1_0 {
             cmd_set_blend_constants: unsafe {
                 extern "system" fn cmd_set_blend_constants(
                     _command_buffer: CommandBuffer,
-                    _blend_constants: &[f32; 4],
+                    _blend_constants: *const [f32; 4],
                 ) -> c_void {
                     panic!(concat!(
                         "Unable to load ",
@@ -5410,7 +5412,7 @@ impl DeviceFnV1_0 {
     pub unsafe fn cmd_set_blend_constants(
         &self,
         command_buffer: CommandBuffer,
-        blend_constants: &[f32; 4],
+        blend_constants: *const [f32; 4],
     ) -> c_void {
         (self.cmd_set_blend_constants)(command_buffer, blend_constants)
     }
