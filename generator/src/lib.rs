@@ -773,7 +773,7 @@ impl FieldExt for vkxml::Field {
                 let size: TokenStream = constant_name(size).parse().unwrap();
                 // arrays in c are always passed as a pointer
                 if is_ffi_param {
-                    quote!(&[#ty; #size])
+                    quote!(*const [#ty; #size])
                 } else {
                     quote!([#ty; #size])
                 }
