@@ -10,7 +10,7 @@ vkxml = "0.3"
 nom = "6.0"
 heck = "0.3"
 proc-macro2 = "1.0"
-itertools = "0.9"
+itertools = "0.10"
 quote = "1.0"
 
 [dependencies.syn]
