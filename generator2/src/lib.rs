@@ -1,5 +1,13 @@
+#[macro_export]
+macro_rules! source_code {
+     ($($arg:tt)*) => {
+         $crate::remove_ident_from_string(&format!($($arg)*));
+     };
+}
+
 mod constants;
 mod enums;
+mod extensions;
 mod parse;
 mod template;
 
@@ -10,6 +18,22 @@ use std::{
     io::{BufWriter, Write},
     path::Path,
 };
+
+pub fn remove_ident_from_string(code: &str) -> String {
+    let mut output = String::new();
+    let count_ws = |s: &str| s.chars().take_while(|c| c.is_whitespace()).count();
+    let root_ws = count_ws(&code);
+    for line in code.lines() {
+        if line.is_empty() {
+            continue;
+        }
+        let ws = count_ws(line);
+        let start = usize::min(ws, root_ws);
+        output.push_str(&line[start..]);
+        output.push('\n');
+    }
+    output
+}
 
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 pub enum EnumKind {
@@ -55,10 +79,11 @@ pub struct Context<'spec> {
     pub enums_by_name: BTreeMap<&'spec str, &'spec vk::Enums>,
     pub tags: HashSet<&'spec str>,
     pub extension_enums: BTreeMap<&'spec str, ExtensionEnum<'spec>>,
+    pub output_path: &'spec Path,
 }
 
 impl<'spec> Context<'spec> {
-    pub fn from_registry(registry: &'spec vk::Registry) -> Result<Self, Error> {
+    pub fn from_registry(output_path: &'spec Path, registry: &'spec vk::Registry) -> Result<Self, Error> {
         let mut ctx = Context {
             registry,
             extension_by_name: BTreeMap::new(),
@@ -66,6 +91,7 @@ impl<'spec> Context<'spec> {
             enums_by_name: BTreeMap::new(),
             extension_enums: BTreeMap::new(),
             tags: HashSet::new(),
+            output_path,
         };
         ctx.collect_extensions();
         ctx.collect_enums();
@@ -73,7 +99,8 @@ impl<'spec> Context<'spec> {
         ctx.collect_extended_enums();
         let mut writer = BufWriter::new(File::create("enums.rs")?);
 
-        crate::enums::write_enums(&ctx, &mut writer);
+        // crate::enums::write_enums(&ctx, &mut writer);
+        crate::extensions::generate_extensions(&ctx);
 
         Ok(ctx)
     }
@@ -156,18 +183,28 @@ impl<'spec> Context<'spec> {
                 let _ = name_str.pop();
             }
         }
-        // Remove vendor ext
+
+        // Remove trailing BIT
         if let Some(&"BIT") = name_str.last() {
             let _ = name_str.pop();
         }
-        name_str.join("_")
+        
+        let variant = name_str.join("_");
+
+        if  variant.chars().next().iter().any(|c| c.is_digit(10)) {
+            format!("TYPE_{}", variant)
+        }
+        else {
+            variant
+        }
     }
 }
 
-pub fn generate(path: impl AsRef<Path>) -> Result<(), Error> {
-    let (registry, errors) = vk::parse_file(path.as_ref()).unwrap();
+pub fn generate(output: impl AsRef<Path>, path: impl AsRef<Path>) -> Result<(), Error> {
+    let path = path.as_ref();
+    let (registry, errors) = vk::parse_file(path).unwrap();
 
-    let mut generator = Context::from_registry(&registry)?;
+    let mut generator = Context::from_registry(output.as_ref(), &registry)?;
 
     Ok(())
 }
