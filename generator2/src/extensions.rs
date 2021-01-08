@@ -25,9 +25,8 @@ pub fn generate_extension(
     let extension_path = dir.join(extension_name_path).with_extension("rs");
     let mut file = File::create(extension_path)?;
 
-    for enums in extensions_types_iter(extension).filter_map(|name| ctx.enums_by_name.get(name))
-    {
-        crate::enums::write_enums(ctx, enums,  &mut file);
+    for enums in extensions_types_iter(extension).filter_map(|name| ctx.enums_by_name.get(name)) {
+        crate::enums::write_enum_definitions(ctx, enums, &mut file);
     }
 
     // if let Some(extend_enums) = ctx.extension_enums.get(extension.name.as_str()) {

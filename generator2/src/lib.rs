@@ -83,7 +83,10 @@ pub struct Context<'spec> {
 }
 
 impl<'spec> Context<'spec> {
-    pub fn from_registry(output_path: &'spec Path, registry: &'spec vk::Registry) -> Result<Self, Error> {
+    pub fn from_registry(
+        output_path: &'spec Path,
+        registry: &'spec vk::Registry,
+    ) -> Result<Self, Error> {
         let mut ctx = Context {
             registry,
             extension_by_name: BTreeMap::new(),
@@ -188,13 +191,12 @@ impl<'spec> Context<'spec> {
         if let Some(&"BIT") = name_str.last() {
             let _ = name_str.pop();
         }
-        
+
         let variant = name_str.join("_");
 
-        if  variant.chars().next().iter().any(|c| c.is_digit(10)) {
+        if variant.chars().next().iter().any(|c| c.is_digit(10)) {
             format!("TYPE_{}", variant)
-        }
-        else {
+        } else {
             variant
         }
     }
@@ -217,4 +219,11 @@ pub fn get_extends_from_enum(e: &vk::Enum) -> Option<&str> {
         vk::EnumSpec::Offset { extends, .. } => Some(extends.as_str()),
         _ => None,
     }
+}
+
+pub fn documentation_link(name: &str) -> String {
+    format!(
+        "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/{}.html>",
+        name
+    )
 }

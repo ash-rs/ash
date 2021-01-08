@@ -2,32 +2,11 @@ use crate::{constants, template, Context, EnumExt, EnumKind, Error};
 use heck::ShoutySnakeCase;
 use std::io::Write;
 
-pub fn write_enum(ctx: &Context<'_>, _enum: &vk::Enum, w: &mut dyn Write) -> Result<(), Error> {
-    // let vk_name = &_enum.name;
-
-    // let kind = ctx
-    //     .enums_by_name
-    //     .get(vk_name.as_str())
-    //     .expect("enum kind")
-    //     .enum_kind();
-
-    // let rust_name = match kind {
-    //     EnumKind::Bitflag => ctx.rust_bitflag_type_name(vk_name),
-    //     EnumKind::Enum => ctx.rust_type_name(vk_name).to_string(),
-    //     _ => unimplemented!(),
-    // };
-
-    // write_enum_header(&rust_name, w)?;
-    // writeln!(w, "impl {} {{", rust_name);
-    // for child in &enums.children {
-    //     if let vk::EnumsChild::Enum(e) = &child {
-    //         write_enum_variant(ctx, vk_name, e, w);
-    //     }
-    // }
-
-    Ok(())
-}
-pub fn write_enums(ctx: &Context<'_>, enums: &vk::Enums, w: &mut dyn Write) -> Result<(), Error> {
+pub fn write_enum_definitions(
+    ctx: &Context<'_>,
+    enums: &vk::Enums,
+    w: &mut dyn Write,
+) -> Result<(), Error> {
     if let Some(name) = enums.name.as_ref() {
         let vk_name = name.as_str();
         let kind = enums.enum_kind();
@@ -37,7 +16,8 @@ pub fn write_enums(ctx: &Context<'_>, enums: &vk::Enums, w: &mut dyn Write) -> R
             _ => unimplemented!(),
         };
 
-        let header = enum_template(&rust_name, kind);
+        let header = enum_definition(&rust_name, kind);
+        writeln!(w, "/// {}", crate::documentation_link(vk_name));
         writeln!(w, "{}", header);
         writeln!(w, "impl {} {{", rust_name);
         for child in &enums.children {
@@ -60,6 +40,9 @@ pub fn write_enums(ctx: &Context<'_>, enums: &vk::Enums, w: &mut dyn Write) -> R
 fn write_enum_variant(ctx: &Context<'_>, enum_name: &str, e: &vk::Enum, w: &mut dyn Write) {
     let name = ctx.rust_enum_variant_name(enum_name, &e.name);
     let value = enum_variant_value(ctx, e);
+    if let Some(comment) = &e.comment {
+        writeln!(w, "    /// {}", comment);
+    }
     match value {
         VariantValue::Alias(alias) => {
             let rust_alias = ctx.rust_enum_variant_name(enum_name, &alias);
@@ -111,7 +94,7 @@ pub enum VariantValue<'spec> {
     Alias(&'spec str),
 }
 
-fn enum_template(name: &str, kind: EnumKind) -> String {
+fn enum_definition(name: &str, kind: EnumKind) -> String {
     let ty = match kind {
         EnumKind::Bitflag => "u32",
         EnumKind::Enum => "i32",
@@ -142,6 +125,4 @@ fn enum_template(name: &str, kind: EnumKind) -> String {
     }
 
     code
-
-
 }
