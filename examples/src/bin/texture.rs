@@ -654,49 +654,12 @@ fn main() {
 
         let graphics_pipeline = graphics_pipelines[0];
 
-        let mut can_render = true;
-
         event_loop.run(move |event, _, control_flow| {
             *control_flow = ControlFlow::Wait;
             match event {
                 Event::WindowEvent { event, .. } => match event {
                     WindowEvent::CloseRequested => {
-                        base.device.device_wait_idle().unwrap();
-
-                        for &pipeline in graphics_pipelines.iter() {
-                            base.device.destroy_pipeline(pipeline, None);
-                        }
-                        base.device.destroy_pipeline_layout(pipeline_layout, None);
-
-                        base.device
-                            .destroy_shader_module(vertex_shader_module, None);
-                        base.device
-                            .destroy_shader_module(fragment_shader_module, None);
-
-                        base.device.destroy_buffer(image_buffer, None);
-                        base.device.free_memory(image_buffer_memory, None);
-
-                        base.device.destroy_image_view(tex_image_view, None);
-                        base.device.destroy_image(texture_image, None);
-                        base.device.free_memory(texture_memory, None);
-
-                        base.device.destroy_buffer(index_buffer, None);
-                        base.device.free_memory(index_buffer_memory, None);
-
-                        base.device.destroy_buffer(uniform_color_buffer, None);
-                        base.device.free_memory(uniform_color_buffer_memory, None);
-
-                        base.device.destroy_buffer(vertex_input_buffer, None);
-                        base.device.free_memory(vertex_input_buffer_memory, None);
-                        for &descriptor_set_layout in desc_set_layouts.iter() {
-                            base.device
-                                .destroy_descriptor_set_layout(descriptor_set_layout, None);
-                        }
-                        base.device.destroy_descriptor_pool(descriptor_pool, None);
-                        base.device.destroy_sampler(sampler, None);
-
                         *control_flow = ControlFlow::Exit;
-                        can_render = false;
                     },
                     WindowEvent::KeyboardInput {
                         input:
@@ -718,18 +681,52 @@ fn main() {
                     },
                     _ => (),
                 },
-                Event::RedrawEventsCleared => {
-                    if can_render {
-                        base.render_texture(
-                            &descriptor_sets,
-                            graphics_pipeline,
-                            index_buffer,
-                            index_buffer_data,
-                            pipeline_layout,
-                            vertex_input_buffer
-                        );
-                    }
+                Event::MainEventsCleared => {
+                    base.render_texture(
+                        &descriptor_sets,
+                        graphics_pipeline,
+                        index_buffer,
+                        index_buffer_data,
+                        pipeline_layout,
+                        vertex_input_buffer
+                    );
+
                 },
+                Event::LoopDestroyed => {
+                    base.device.device_wait_idle().unwrap();
+
+                    for &pipeline in graphics_pipelines.iter() {
+                        base.device.destroy_pipeline(pipeline, None);
+                    }
+                    base.device.destroy_pipeline_layout(pipeline_layout, None);
+
+                    base.device
+                        .destroy_shader_module(vertex_shader_module, None);
+                    base.device
+                        .destroy_shader_module(fragment_shader_module, None);
+
+                    base.device.destroy_buffer(image_buffer, None);
+                    base.device.free_memory(image_buffer_memory, None);
+
+                    base.device.destroy_image_view(tex_image_view, None);
+                    base.device.destroy_image(texture_image, None);
+                    base.device.free_memory(texture_memory, None);
+
+                    base.device.destroy_buffer(index_buffer, None);
+                    base.device.free_memory(index_buffer_memory, None);
+
+                    base.device.destroy_buffer(uniform_color_buffer, None);
+                    base.device.free_memory(uniform_color_buffer_memory, None);
+
+                    base.device.destroy_buffer(vertex_input_buffer, None);
+                    base.device.free_memory(vertex_input_buffer_memory, None);
+                    for &descriptor_set_layout in desc_set_layouts.iter() {
+                        base.device
+                            .destroy_descriptor_set_layout(descriptor_set_layout, None);
+                    }
+                    base.device.destroy_descriptor_pool(descriptor_pool, None);
+                    base.device.destroy_sampler(sampler, None);
+                }
                 _ => (),
             }
         });

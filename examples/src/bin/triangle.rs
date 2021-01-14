@@ -311,33 +311,12 @@ fn main() {
 
         let graphics_pipeline = graphics_pipelines[0];
 
-        let mut can_render = true;
-
         event_loop.run(move |event, _, control_flow| {
             *control_flow = ControlFlow::Wait;
             match event {
                 Event::WindowEvent { event, .. } => match event {
                     WindowEvent::CloseRequested => {
-                        base.device.device_wait_idle().unwrap();
-
-                        for pipeline in &graphics_pipelines {
-                            base.device.destroy_pipeline(*pipeline, None);
-                        }
-                        base.device.destroy_pipeline_layout(pipeline_layout, None);
-
-                        base.device
-                            .destroy_shader_module(vertex_shader_module, None);
-                        base.device
-                            .destroy_shader_module(fragment_shader_module, None);
-
-                        base.device.destroy_buffer(index_buffer, None);
-                        base.device.free_memory(index_buffer_memory, None);
-
-                        base.device.destroy_buffer(vertex_input_buffer, None);
-                        base.device.free_memory(vertex_input_buffer_memory, None);
-
                         *control_flow = ControlFlow::Exit;
-                        can_render = false;
                     },
                     WindowEvent::KeyboardInput {
                         input:
@@ -359,16 +338,34 @@ fn main() {
                     },
                     _ => (),
                 },
-                Event::RedrawEventsCleared => {
-                    if can_render {
-                        base.render_triangle(
-                            vertex_input_buffer,
-                            index_buffer,
-                            index_buffer_data,
-                            graphics_pipeline
-                        );
-                    }
+                Event::MainEventsCleared => {
+                    base.render_triangle(
+                        vertex_input_buffer,
+                        index_buffer,
+                        index_buffer_data,
+                        graphics_pipeline
+                    );
+
                 },
+                Event::LoopDestroyed => {
+                    base.device.device_wait_idle().unwrap();
+
+                    for pipeline in &graphics_pipelines {
+                        base.device.destroy_pipeline(*pipeline, None);
+                    }
+                    base.device.destroy_pipeline_layout(pipeline_layout, None);
+
+                    base.device
+                        .destroy_shader_module(vertex_shader_module, None);
+                    base.device
+                        .destroy_shader_module(fragment_shader_module, None);
+
+                    base.device.destroy_buffer(index_buffer, None);
+                    base.device.free_memory(index_buffer_memory, None);
+
+                    base.device.destroy_buffer(vertex_input_buffer, None);
+                    base.device.free_memory(vertex_input_buffer_memory, None);
+                }
                 _ => (),
             }
         });
