@@ -17,12 +17,12 @@ pub fn write_enum_definitions(
         };
 
         let header = enum_definition(&rust_name, kind);
-        writeln!(w, "/// {}", crate::documentation_link(vk_name));
-        writeln!(w, "{}", header);
-        writeln!(w, "impl {} {{", rust_name);
+        writeln!(w, "/// {}", crate::documentation_link(vk_name))?;
+        writeln!(w, "{}", header)?;
+        writeln!(w, "impl {} {{", rust_name)?;
         for child in &enums.children {
             if let vk::EnumsChild::Enum(e) = &child {
-                write_enum_variant(ctx, vk_name, e, w);
+                write_enum_variant(ctx, vk_name, e, w)?;
             }
         }
 
@@ -32,16 +32,21 @@ pub fn write_enum_definitions(
         //         write_enum_variant(ctx, vk_name, e, w);
         //     }
         // }
-        writeln!(w, "}}");
+        writeln!(w, "}}")?;
     }
     Ok(())
 }
 
-fn write_enum_variant(ctx: &Context<'_>, enum_name: &str, e: &vk::Enum, w: &mut dyn Write) {
+pub fn write_enum_variant(
+    ctx: &Context<'_>,
+    enum_name: &str,
+    e: &vk::Enum,
+    w: &mut dyn Write,
+) -> Result<(), Error> {
     let name = ctx.rust_enum_variant_name(enum_name, &e.name);
     let value = enum_variant_value(ctx, e);
     if let Some(comment) = &e.comment {
-        writeln!(w, "    /// {}", comment);
+        writeln!(w, "    /// {}", comment)?;
     }
     match value {
         VariantValue::Alias(alias) => {
@@ -51,7 +56,7 @@ fn write_enum_variant(ctx: &Context<'_>, enum_name: &str, e: &vk::Enum, w: &mut 
                 "    pub const {name}: Self = Self::{alias};",
                 name = name,
                 alias = rust_alias
-            );
+            )?;
         }
         VariantValue::Value(value) => {
             writeln!(
@@ -59,9 +64,10 @@ fn write_enum_variant(ctx: &Context<'_>, enum_name: &str, e: &vk::Enum, w: &mut 
                 "    pub const {name}: Self = Self({value});",
                 name = name,
                 value = value
-            );
+            )?;
         }
     };
+    Ok(())
 }
 
 pub fn enum_variant_value<'spec>(ctx: &Context<'spec>, e: &'spec vk::Enum) -> VariantValue<'spec> {

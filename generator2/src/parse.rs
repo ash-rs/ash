@@ -4,7 +4,7 @@ use nom::{
     character::complete::{char, digit1, hex_digit1, multispace0},
     combinator::{all_consuming, map, map_res, not, opt, peek},
     error::VerboseError,
-    multi::separated_nonempty_list,
+    multi::separated_list1,
     number::complete::float,
     sequence::{delimited, preceded, separated_pair, terminated, tuple},
     IResult,
@@ -24,6 +24,8 @@ pub struct CType<'a> {
     pub name: &'a str,
     pub decoration: CDecoration,
     pub array_size: Option<&'a str>,
+    pub array_size2: Option<&'a str>,
+    pub bitfield: Option<i32>,
 }
 
 #[derive(Debug)]
@@ -95,11 +97,11 @@ fn ident(i: &str) -> Res<&str> {
     preceded(multispace0, take_while1(is_ident))(i)
 }
 
-fn keyword<'a>(k: &'static str) -> impl Fn(&'a str) -> Res<'a, &str> {
+fn keyword<'a>(k: &'static str) -> impl FnMut(&'a str) -> Res<'a, &str> {
     delimited(multispace0, tag(k), not(peek(take_while1(is_ident))))
 }
 
-fn op<'a>(c: char) -> impl Fn(&'a str) -> Res<'a, char> {
+fn op<'a>(c: char) -> impl FnMut(&'a str) -> Res<'a, char> {
     preceded(multispace0, char(c))
 }
 
@@ -111,7 +113,9 @@ fn variable_decl(i: &str) -> Res<CVariableDecl> {
     let (i, const1) = opt(keyword("const"))(i)?;
     let (i, ptr1) = opt(op('*'))(i)?;
     let (i, var_name) = ident(i)?;
+    let (i, bitfield) = opt(preceded(tag(":"), parse_i32))(i)?;
     let (i, array_size) = opt(delimited(op('['), ident, op(']')))(i)?;
+    let (i, array_size2) = opt(delimited(op('['), ident, op(']')))(i)?;
     Ok((
         i,
         CVariableDecl {
@@ -132,6 +136,8 @@ fn variable_decl(i: &str) -> Res<CVariableDecl> {
                     v => panic!("unsupported decoration {:?}", v),
                 },
                 array_size,
+                array_size2,
+                bitfield,
             },
         },
     ))
@@ -156,7 +162,7 @@ fn function_decl(i: &str) -> Res<CFunctionDecl> {
     let (i, parameters) = delimited(
         op('('),
         alt((
-            separated_nonempty_list(op(','), variable_decl),
+            separated_list1(op(','), variable_decl),
             map(keyword("void"), |_| Vec::new()),
         )),
         tuple((op(')'), op(';'))),
@@ -174,6 +180,8 @@ fn function_decl(i: &str) -> Res<CFunctionDecl> {
                         CDecoration::None
                     },
                     array_size: None,
+                    array_size2: None,
+                    bitfield: None,
                 },
             },
             parameters,
@@ -198,7 +206,7 @@ fn function_ptr_typedef<'a>(i: &'a str) -> Res<'a, CFunctionDecl> {
     let (i, parameters) = delimited(
         op('('),
         alt((
-            separated_nonempty_list(op(','), variable_decl),
+            separated_list1(op(','), variable_decl),
             map(keyword("void"), |_| Vec::new()),
         )),
         tuple((op(')'), op(';'))),
@@ -216,6 +224,8 @@ fn function_ptr_typedef<'a>(i: &'a str) -> Res<'a, CFunctionDecl> {
                         CDecoration::None
                     },
                     array_size: None,
+                    array_size2: None,
+                    bitfield: None,
                 },
             },
             parameters,
@@ -240,6 +250,8 @@ fn typedef(i: &str) -> Res<CVariableDecl> {
                 name: type_name,
                 decoration: CDecoration::None,
                 array_size: None,
+                array_size2: None,
+                bitfield: None,
             },
         },
     ))

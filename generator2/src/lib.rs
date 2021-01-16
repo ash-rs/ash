@@ -1,21 +1,23 @@
 #[macro_export]
 macro_rules! source_code {
      ($($arg:tt)*) => {
-         $crate::remove_ident_from_string(&format!($($arg)*));
+         $crate::remove_ident_from_string(&format!($($arg)*))
      };
 }
 
-mod constants;
-mod enums;
-mod extensions;
-mod parse;
-mod template;
+pub mod constants;
+pub mod enums;
+pub mod extensions;
+pub mod parse;
+pub mod structs;
+pub mod template;
 
-use heck::ShoutySnakeCase;
+use heck::{ShoutySnakeCase, SnakeCase};
 use std::{
     collections::{BTreeMap, HashSet},
+    fmt::Write,
     fs::File,
-    io::{BufWriter, Write},
+    // io::{BufWriter, Write},
     path::Path,
 };
 
@@ -75,7 +77,7 @@ pub struct ExtensionEnum<'spec> {
 pub struct Context<'spec> {
     pub registry: &'spec vk::Registry,
     pub extension_by_name: BTreeMap<&'spec str, &'spec vk::Extension>,
-    pub type_by_name: BTreeMap<&'spec str, &'spec vk::Type>,
+    pub type_by_name: BTreeMap<&'spec str, crate::structs::Type<'spec>>,
     pub enums_by_name: BTreeMap<&'spec str, &'spec vk::Enums>,
     pub tags: HashSet<&'spec str>,
     pub extension_enums: BTreeMap<&'spec str, ExtensionEnum<'spec>>,
@@ -100,14 +102,35 @@ impl<'spec> Context<'spec> {
         ctx.collect_enums();
         ctx.collect_tags();
         ctx.collect_extended_enums();
-        let mut writer = BufWriter::new(File::create("enums.rs")?);
+        ctx.collect_types();
+        // let mut writer = BufWriter::new(File::create("enums.rs")?);
 
         // crate::enums::write_enums(&ctx, &mut writer);
-        crate::extensions::generate_extensions(&ctx);
+        crate::extensions::generate_extensions(&ctx)?;
 
         Ok(ctx)
     }
 
+    fn collect_types(&mut self) {
+        for registry_child in &self.registry.0 {
+            if let vk::RegistryChild::Types(types) = registry_child {
+                for ty in &types.children {
+                    if let vk::TypesChild::Type(ty) = ty {
+                        use crate::structs::TypeDefinition;
+                        if let Some(ty) = crate::structs::to_ty(ty) {
+                            match ty {
+                                TypeDefinition::Type(ty) => {
+                                    self.type_by_name.insert(ty.name, ty);
+                                }
+                                TypeDefinition::Alias(alias, name) => {}
+                                TypeDefinition::Define => {}
+                            };
+                        }
+                    }
+                }
+            }
+        }
+    }
     fn collect_tags(&mut self) {
         for registry_child in &self.registry.0 {
             if let vk::RegistryChild::Tags(tags) = registry_child {
@@ -163,6 +186,9 @@ impl<'spec> Context<'spec> {
         }
     }
 
+    pub fn rust_field_name<'a>(&self, name: &'a str) -> String {
+        name.to_snake_case().replace("type", "ty")
+    }
     pub fn rust_type_name<'a>(&self, name: &'a str) -> &'a str {
         name.trim_start_matches(constants::TYPE_PREFIX)
     }
@@ -226,4 +252,14 @@ pub fn documentation_link(name: &str) -> String {
         "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/{}.html>",
         name
     )
+}
+
+pub struct Ident(pub u32);
+impl std::fmt::Display for Ident {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        for _ in 0..self.0 {
+            write!(f, "    ")?;
+        }
+        Ok(())
+    }
 }

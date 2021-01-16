@@ -10,4 +10,4 @@ edition = "2018"
 vk = { package = "vk-parse", version = "0.5" }
 heck = "0.3"
 
-nom = "5"
+nom = "6"
