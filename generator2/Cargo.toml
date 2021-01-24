@@ -9,5 +9,5 @@ edition = "2018"
 [dependencies]
 vk = { package = "vk-parse", version = "0.5" }
 heck = "0.3"
-
+itertools = "0.10"
 nom = "6"

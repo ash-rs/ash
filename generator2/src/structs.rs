@@ -25,8 +25,10 @@ pub fn type_member_iter<'spec>(
 }
 
 pub fn to_ty<'spec>(ty: &'spec vk::Type) -> Option<TypeDefinition<'spec>> {
-    match ty.category.as_ref().map(String::as_str).unwrap_or("") {
-        "struct" => {
+    let category = ty.category.as_ref().map(String::as_str).unwrap_or("");
+    match category {
+        "struct" | "union" => {
+            let category = Category::from_str(category).unwrap();
             let name = ty.name.as_ref().expect("name");
             let fields = type_member_iter(ty)
                 .map(|member| Field {
@@ -37,6 +39,7 @@ pub fn to_ty<'spec>(ty: &'spec vk::Type) -> Option<TypeDefinition<'spec>> {
             let ty = Type {
                 name: name.as_str(),
                 fields,
+                category,
             };
             Some(TypeDefinition::Type(ty))
         }
@@ -55,13 +58,33 @@ pub enum TypeDefinition<'spec> {
     Alias(&'spec str, &'spec str),
     Define,
 }
+
+#[derive(Debug, Copy, Clone)]
+pub enum Category {
+    Union,
+    Struct,
+}
+
+impl Category {
+    pub fn from_str(s: &str) -> Option<Self> {
+        match s {
+            "struct" => Some(Self::Struct),
+            "union" => Some(Self::Union),
+            _ => None,
+        }
+    }
+}
 #[derive(Debug)]
 pub struct Type<'spec> {
     pub name: &'spec str,
     pub fields: Vec<Field<'spec>>,
+    pub category: Category,
 }
 
 impl Type<'_> {
+    pub fn is_union(&self) -> bool {
+        matches!(self.category, Category::Union)
+    }
     /// Returns true if this type contains bitfields. We need this because Rust doesn't support
     /// bitfields in ffi and we need to generate those types by hand
     pub fn contains_bitfields(&self) -> bool {
@@ -82,36 +105,56 @@ pub fn write_type<'spec>(
     ty: &'spec Type<'spec>,
     w: &mut dyn Write,
 ) -> Result<(), Error> {
-    writeln!(w, "pub struct {} {{", ctx.rust_type_name(ty.name))?;
+    let keyword = match ty.category {
+        Category::Struct => "struct",
+        Category::Union => "union",
+    };
 
-    for field in &ty.fields {
-        let name = ctx.rust_field_name(field.variable.name);
+    let fields: Vec<_> = ty
+        .fields
+        .iter()
+        .map(|field| {
+            let name = ctx.rust_field_name(field.variable.name);
 
-        let pointer = match field.variable.ty.decoration {
-            CDecoration::Pointer => "*mut",
-            CDecoration::PointerToConst => "*const",
-            CDecoration::PointerToPointer => "*mut *mut",
-            CDecoration::PointerToConstPointerToConst => "*const *const",
-            CDecoration::None => "",
-        };
+            let pointer = match field.variable.ty.decoration {
+                CDecoration::Pointer => "*mut",
+                CDecoration::PointerToConst => "*const",
+                CDecoration::PointerToPointer => "*mut *mut",
+                CDecoration::PointerToConstPointerToConst => "*const *const",
+                CDecoration::None => "",
+            };
 
-        let rust_ty = ctx.rust_type_name(field.variable.ty.name);
+            let rust_ty = ctx.rust_type_name(field.variable.ty.name);
 
-        let rust_ty = match (field.variable.ty.array_size, field.variable.ty.array_size2) {
-            (Some(n), None) => format!("[{}; {}]", rust_ty, n),
-            (Some(n), Some(m)) => format!("[[{}; {}]; {}]", rust_ty, n, m),
-            _ => rust_ty.to_owned(),
-        };
+            let rust_ty = match (field.variable.ty.array_size, field.variable.ty.array_size2) {
+                (Some(n), None) => format!("[{}; {}]", rust_ty, n),
+                (Some(n), Some(m)) => format!("[[{}; {}]; {}]", rust_ty, n, m),
+                _ => rust_ty.to_owned(),
+            };
 
-        writeln!(
-            w,
-            "    {name}: {pointer} {rust_ty}, ",
-            name = name,
-            pointer = pointer,
-            rust_ty = rust_ty,
-        )?;
-    }
-    writeln!(w, "}}")?;
+            format!(
+                "pub {name}: {pointer} {rust_ty}, ",
+                name = name,
+                pointer = pointer,
+                rust_ty = rust_ty,
+            )
+        })
+        .collect();
+
+    let name = ctx.rust_type_name(ty.name);
+
+    let source = crate::source!(
+        "
+        pub #keyword# #name# {
+            #fields#
+        }
+        ",
+        keyword = keyword,
+        name = name,
+        fields = fields,
+    );
+
+    write!(w, "{}", source);
 
     Ok(())
 }
@@ -142,30 +185,72 @@ pub fn derive_debug(ctx: &Context, ty: &Type<'_>, w: &mut dyn Write) -> Result<(
     Ok(())
 }
 
-pub fn derive_default(ctx: &Context, ty: &Type<'_>, w: &mut dyn Write) -> Result<(), Error> {
-    let name = ctx.rust_type_name(ty.name);
-    writeln!(w, "impl std::default::Default for {} {{", name)?;
-    writeln!(
-        w,
-        "{ident}fn default() -> {} {{",
-        name,
-        ident = Ident(1),
-    )?;
-    writeln!(w, "{ident}{} {{", name, ident = Ident(2))?;
-
-    for field in &ty.fields {
-        let field_name = ctx.rust_field_name(field.variable.name);
-        writeln!(
-            w,
-            "{ident}{name}: {ty}::default(),",
-            name = field_name,
-            ident = Ident(3),
-            ty = ctx.rust_type_name(field.variable.ty.name),
-        )?;
+pub fn derive_debug2(ctx: &Context, ty: &Type<'_>, w: &mut dyn Write) -> Result<(), Error> {
+    if ty.is_union() {
+        return Ok(());
     }
-    writeln!(w, "{ident}}}", ident = Ident(2))?;
-    writeln!(w, "{ident}}}", ident = Ident(1))?;
-    writeln!(w, "}}")?;
 
+    let name = ctx.rust_type_name(ty.name);
+    let fields: Vec<String> = ty
+        .fields
+        .iter()
+        .map(|field| {
+            let field_name = ctx.rust_field_name(field.variable.name);
+            format!(".field(\"{name}\", &self.{name})", name = field_name,)
+        })
+        .collect();
+
+    let code = crate::source! {
+        "
+        impl std::debug::Debug for #name# {{
+            fn fmt(&self, fmt: &mut std::fmt::Formatter) -> std::fmt::Result
+                fmt.debug_struct(\"#name#\")
+                    #fields#
+                }
+            }
+        }
+        ",
+        name = name,
+        fields = fields,
+    };
+
+    writeln!(w, "{}", code)?;
+    Ok(())
+}
+
+pub fn derive_default2(ctx: &Context, ty: &Type<'_>, w: &mut dyn Write) -> Result<(), Error> {
+    if ty.is_union() {
+        return Ok(());
+    }
+
+    let name = ctx.rust_type_name(ty.name);
+    let fields: Vec<String> = ty
+        .fields
+        .iter()
+        .map(|field| {
+            let field_name = ctx.rust_field_name(field.variable.name);
+            format!(
+                "{name}: {ty}::default(),",
+                name = field_name,
+                ty = ctx.rust_type_name(field.variable.ty.name),
+            )
+        })
+        .collect();
+
+    let code = crate::source! {
+        "
+        impl std::default::Default for #name# {{
+            fn default() -> #name# {
+                Self {
+                    #fields#
+                }
+            }
+        }
+        ",
+        name = name,
+        fields = fields,
+    };
+
+    writeln!(w, "{}", code)?;
     Ok(())
 }

@@ -64,8 +64,8 @@ pub fn generate_extension(
             writeln!(w, "{}", code)?;
         } else {
             crate::structs::write_type(ctx, ty, &mut w)?;
-            crate::structs::derive_debug(ctx, ty, &mut w)?;
-            crate::structs::derive_default(ctx, ty, &mut w)?;
+            crate::structs::derive_debug2(ctx, ty, &mut w)?;
+            crate::structs::derive_default2(ctx, ty, &mut w)?;
         }
     }
 
