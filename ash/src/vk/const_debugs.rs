@@ -907,6 +907,10 @@ impl fmt::Debug for DescriptorPoolCreateFlags {
                 "FREE_DESCRIPTOR_SET",
             ),
             (
+                DescriptorPoolCreateFlags::HOST_ONLY_VALVE.0,
+                "HOST_ONLY_VALVE",
+            ),
+            (
                 DescriptorPoolCreateFlags::UPDATE_AFTER_BIND.0,
                 "UPDATE_AFTER_BIND",
             ),
@@ -926,6 +930,10 @@ impl fmt::Debug for DescriptorSetLayoutCreateFlags {
             (
                 DescriptorSetLayoutCreateFlags::PUSH_DESCRIPTOR_KHR.0,
                 "PUSH_DESCRIPTOR_KHR",
+            ),
+            (
+                DescriptorSetLayoutCreateFlags::HOST_ONLY_POOL_VALVE.0,
+                "HOST_ONLY_POOL_VALVE",
             ),
             (
                 DescriptorSetLayoutCreateFlags::UPDATE_AFTER_BIND_POOL.0,
@@ -952,6 +960,7 @@ impl fmt::Debug for DescriptorType {
             Self::INLINE_UNIFORM_BLOCK_EXT => Some("INLINE_UNIFORM_BLOCK_EXT"),
             Self::ACCELERATION_STRUCTURE_KHR => Some("ACCELERATION_STRUCTURE_KHR"),
             Self::ACCELERATION_STRUCTURE_NV => Some("ACCELERATION_STRUCTURE_NV"),
+            Self::MUTABLE_VALVE => Some("MUTABLE_VALVE"),
             _ => None,
         };
         if let Some(x) = name {
@@ -4284,6 +4293,12 @@ impl fmt::Debug for StructureType {
                 Some("PHYSICAL_DEVICE_4444_FORMATS_FEATURES_EXT")
             }
             Self::DIRECTFB_SURFACE_CREATE_INFO_EXT => Some("DIRECTFB_SURFACE_CREATE_INFO_EXT"),
+            Self::PHYSICAL_DEVICE_MUTABLE_DESCRIPTOR_TYPE_FEATURES_VALVE => {
+                Some("PHYSICAL_DEVICE_MUTABLE_DESCRIPTOR_TYPE_FEATURES_VALVE")
+            }
+            Self::MUTABLE_DESCRIPTOR_TYPE_CREATE_INFO_VALVE => {
+                Some("MUTABLE_DESCRIPTOR_TYPE_CREATE_INFO_VALVE")
+            }
             Self::PHYSICAL_DEVICE_SUBGROUP_PROPERTIES => {
                 Some("PHYSICAL_DEVICE_SUBGROUP_PROPERTIES")
             }
@@ -4778,6 +4793,7 @@ impl fmt::Debug for VendorId {
             Self::KAZAN => Some("KAZAN"),
             Self::CODEPLAY => Some("CODEPLAY"),
             Self::MESA => Some("MESA"),
+            Self::POCL => Some("POCL"),
             _ => None,
         };
         if let Some(x) = name {
