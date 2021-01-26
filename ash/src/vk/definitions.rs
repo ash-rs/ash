@@ -9,7 +9,7 @@ use std::os::raw::*;
 pub const API_VERSION_1_0: u32 = crate::vk::make_version(1, 0, 0);
 pub const API_VERSION_1_1: u32 = crate::vk::make_version(1, 1, 0);
 pub const API_VERSION_1_2: u32 = crate::vk::make_version(1, 2, 0);
-pub const HEADER_VERSION: u32 = 166u32;
+pub const HEADER_VERSION: u32 = 168u32;
 pub const HEADER_VERSION_COMPLETE: u32 = crate::vk::make_version(1, 2, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkSampleMask.html>"]
 pub type SampleMask = u32;
@@ -46217,6 +46217,70 @@ impl<'a> DeviceDiagnosticsConfigCreateInfoNVBuilder<'a> {
 }
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHR.html>"]
+pub struct PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHR {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub shader_zero_initialize_workgroup_memory: Bool32,
+}
+impl ::std::default::Default for PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHR {
+    fn default() -> PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHR {
+        PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHR {
+            s_type: StructureType::PHYSICAL_DEVICE_ZERO_INITIALIZE_WORKGROUP_MEMORY_FEATURES_KHR,
+            p_next: ::std::ptr::null_mut(),
+            shader_zero_initialize_workgroup_memory: Bool32::default(),
+        }
+    }
+}
+impl PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHR {
+    pub fn builder<'a>() -> PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHRBuilder<'a> {
+        PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHRBuilder {
+            inner: PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHR::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHRBuilder<'a> {
+    inner: PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHR,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsDeviceCreateInfo
+    for PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHRBuilder<'_>
+{
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHR {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHRBuilder<'a> {
+    type Target = PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHR;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut
+    for PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHRBuilder<'a>
+{
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHRBuilder<'a> {
+    pub fn shader_zero_initialize_workgroup_memory(
+        mut self,
+        shader_zero_initialize_workgroup_memory: bool,
+    ) -> PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHRBuilder<'a> {
+        self.inner.shader_zero_initialize_workgroup_memory =
+            shader_zero_initialize_workgroup_memory.into();
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> PhysicalDeviceZeroInitializeWorkgroupMemoryFeaturesKHR {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPhysicalDeviceRobustness2FeaturesEXT.html>"]
 pub struct PhysicalDeviceRobustness2FeaturesEXT {
     pub s_type: StructureType,
@@ -46415,6 +46479,100 @@ impl<'a> PhysicalDeviceImageRobustnessFeaturesEXTBuilder<'a> {
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceImageRobustnessFeaturesEXT {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR.html>"]
+pub struct PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub workgroup_memory_explicit_layout: Bool32,
+    pub workgroup_memory_explicit_layout_scalar_block_layout: Bool32,
+    pub workgroup_memory_explicit_layout8_bit_access: Bool32,
+    pub workgroup_memory_explicit_layout16_bit_access: Bool32,
+}
+impl ::std::default::Default for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR {
+    fn default() -> PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR {
+        PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR {
+            s_type: StructureType::PHYSICAL_DEVICE_WORKGROUP_MEMORY_EXPLICIT_LAYOUT_FEATURES_KHR,
+            p_next: ::std::ptr::null_mut(),
+            workgroup_memory_explicit_layout: Bool32::default(),
+            workgroup_memory_explicit_layout_scalar_block_layout: Bool32::default(),
+            workgroup_memory_explicit_layout8_bit_access: Bool32::default(),
+            workgroup_memory_explicit_layout16_bit_access: Bool32::default(),
+        }
+    }
+}
+impl PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR {
+    pub fn builder<'a>() -> PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHRBuilder<'a> {
+        PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHRBuilder {
+            inner: PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHRBuilder<'a> {
+    inner: PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsDeviceCreateInfo
+    for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHRBuilder<'_>
+{
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHRBuilder<'a> {
+    type Target = PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut
+    for PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHRBuilder<'a>
+{
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHRBuilder<'a> {
+    pub fn workgroup_memory_explicit_layout(
+        mut self,
+        workgroup_memory_explicit_layout: bool,
+    ) -> PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHRBuilder<'a> {
+        self.inner.workgroup_memory_explicit_layout = workgroup_memory_explicit_layout.into();
+        self
+    }
+    pub fn workgroup_memory_explicit_layout_scalar_block_layout(
+        mut self,
+        workgroup_memory_explicit_layout_scalar_block_layout: bool,
+    ) -> PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHRBuilder<'a> {
+        self.inner
+            .workgroup_memory_explicit_layout_scalar_block_layout =
+            workgroup_memory_explicit_layout_scalar_block_layout.into();
+        self
+    }
+    pub fn workgroup_memory_explicit_layout8_bit_access(
+        mut self,
+        workgroup_memory_explicit_layout8_bit_access: bool,
+    ) -> PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHRBuilder<'a> {
+        self.inner.workgroup_memory_explicit_layout8_bit_access =
+            workgroup_memory_explicit_layout8_bit_access.into();
+        self
+    }
+    pub fn workgroup_memory_explicit_layout16_bit_access(
+        mut self,
+        workgroup_memory_explicit_layout16_bit_access: bool,
+    ) -> PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHRBuilder<'a> {
+        self.inner.workgroup_memory_explicit_layout16_bit_access =
+            workgroup_memory_explicit_layout16_bit_access.into();
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> PhysicalDeviceWorkgroupMemoryExplicitLayoutFeaturesKHR {
         self.inner
     }
 }

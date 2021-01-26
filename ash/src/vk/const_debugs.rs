@@ -58,10 +58,16 @@ impl fmt::Debug for AccelerationStructureCompatibilityKHR {
 }
 impl fmt::Debug for AccelerationStructureCreateFlagsKHR {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(
-            AccelerationStructureCreateFlagsKHR::DEVICE_ADDRESS_CAPTURE_REPLAY.0,
-            "DEVICE_ADDRESS_CAPTURE_REPLAY",
-        )];
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                AccelerationStructureCreateFlagsKHR::DEVICE_ADDRESS_CAPTURE_REPLAY.0,
+                "DEVICE_ADDRESS_CAPTURE_REPLAY",
+            ),
+            (
+                AccelerationStructureCreateFlagsKHR::RESERVED_2_NV.0,
+                "RESERVED_2_NV",
+            ),
+        ];
         debug_flags(f, KNOWN, self.0)
     }
 }
@@ -463,6 +469,10 @@ impl fmt::Debug for BuildAccelerationStructureFlagsKHR {
             (
                 BuildAccelerationStructureFlagsKHR::LOW_MEMORY.0,
                 "LOW_MEMORY",
+            ),
+            (
+                BuildAccelerationStructureFlagsKHR::RESERVED_5_NV.0,
+                "RESERVED_5_NV",
             ),
         ];
         debug_flags(f, KNOWN, self.0)
@@ -1255,6 +1265,14 @@ impl fmt::Debug for ExternalFenceHandleTypeFlags {
                 ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD.0,
                 "EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD",
             ),
+            (
+                ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_RESERVED_4_NV.0,
+                "EXTERNAL_FENCE_HANDLE_TYPE_RESERVED_4_NV",
+            ),
+            (
+                ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_RESERVED_5_NV.0,
+                "EXTERNAL_FENCE_HANDLE_TYPE_RESERVED_5_NV",
+            ),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -1363,6 +1381,14 @@ impl fmt::Debug for ExternalSemaphoreHandleTypeFlags {
             (
                 ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD.0,
                 "EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD",
+            ),
+            (
+                ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_RESERVED_5_NV.0,
+                "EXTERNAL_SEMAPHORE_HANDLE_TYPE_RESERVED_5_NV",
+            ),
+            (
+                ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_RESERVED_6_NV.0,
+                "EXTERNAL_SEMAPHORE_HANDLE_TYPE_RESERVED_6_NV",
             ),
         ];
         debug_flags(f, KNOWN, self.0)
@@ -4259,6 +4285,9 @@ impl fmt::Debug for StructureType {
                 Some("DEVICE_DIAGNOSTICS_CONFIG_CREATE_INFO_NV")
             }
             Self::RESERVED_QCOM => Some("RESERVED_QCOM"),
+            Self::PHYSICAL_DEVICE_ZERO_INITIALIZE_WORKGROUP_MEMORY_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_ZERO_INITIALIZE_WORKGROUP_MEMORY_FEATURES_KHR")
+            }
             Self::PHYSICAL_DEVICE_FRAGMENT_SHADING_RATE_ENUMS_PROPERTIES_NV => {
                 Some("PHYSICAL_DEVICE_FRAGMENT_SHADING_RATE_ENUMS_PROPERTIES_NV")
             }
@@ -4277,6 +4306,9 @@ impl fmt::Debug for StructureType {
             Self::COPY_COMMAND_TRANSFORM_INFO_QCOM => Some("COPY_COMMAND_TRANSFORM_INFO_QCOM"),
             Self::PHYSICAL_DEVICE_IMAGE_ROBUSTNESS_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_IMAGE_ROBUSTNESS_FEATURES_EXT")
+            }
+            Self::PHYSICAL_DEVICE_WORKGROUP_MEMORY_EXPLICIT_LAYOUT_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_WORKGROUP_MEMORY_EXPLICIT_LAYOUT_FEATURES_KHR")
             }
             Self::COPY_BUFFER_INFO_2_KHR => Some("COPY_BUFFER_INFO_2_KHR"),
             Self::COPY_IMAGE_INFO_2_KHR => Some("COPY_IMAGE_INFO_2_KHR"),
@@ -4299,6 +4331,7 @@ impl fmt::Debug for StructureType {
             Self::MUTABLE_DESCRIPTOR_TYPE_CREATE_INFO_VALVE => {
                 Some("MUTABLE_DESCRIPTOR_TYPE_CREATE_INFO_VALVE")
             }
+            Self::SCREEN_SURFACE_CREATE_INFO_QNX => Some("SCREEN_SURFACE_CREATE_INFO_QNX"),
             Self::PHYSICAL_DEVICE_SUBGROUP_PROPERTIES => {
                 Some("PHYSICAL_DEVICE_SUBGROUP_PROPERTIES")
             }
