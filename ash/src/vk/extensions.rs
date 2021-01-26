@@ -15,7 +15,7 @@ pub type PFN_vkDestroySurfaceKHR = extern "system" fn(
     instance: Instance,
     surface: SurfaceKHR,
     p_allocator: *const AllocationCallbacks,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceSurfaceSupportKHR = extern "system" fn(
     physical_device: PhysicalDevice,
@@ -48,7 +48,7 @@ pub struct KhrSurfaceFn {
         instance: Instance,
         surface: SurfaceKHR,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void,
+    ),
     pub get_physical_device_surface_support_khr: extern "system" fn(
         physical_device: PhysicalDevice,
         queue_family_index: u32,
@@ -99,7 +99,7 @@ impl KhrSurfaceFn {
                     _instance: Instance,
                     _surface: SurfaceKHR,
                     _p_allocator: *const AllocationCallbacks,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_surface_khr)))
                 }
                 let raw_name = stringify!(vkDestroySurfaceKHR);
@@ -202,7 +202,7 @@ impl KhrSurfaceFn {
         instance: Instance,
         surface: SurfaceKHR,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void {
+    ) {
         (self.destroy_surface_khr)(instance, surface, p_allocator)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceSurfaceSupportKHR.html>"]
@@ -295,7 +295,7 @@ pub type PFN_vkDestroySwapchainKHR = extern "system" fn(
     device: Device,
     swapchain: SwapchainKHR,
     p_allocator: *const AllocationCallbacks,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetSwapchainImagesKHR = extern "system" fn(
     device: Device,
@@ -350,7 +350,7 @@ pub struct KhrSwapchainFn {
         device: Device,
         swapchain: SwapchainKHR,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void,
+    ),
     pub get_swapchain_images_khr: extern "system" fn(
         device: Device,
         swapchain: SwapchainKHR,
@@ -437,7 +437,7 @@ impl KhrSwapchainFn {
                     _device: Device,
                     _swapchain: SwapchainKHR,
                     _p_allocator: *const AllocationCallbacks,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(destroy_swapchain_khr)
@@ -610,7 +610,7 @@ impl KhrSwapchainFn {
         device: Device,
         swapchain: SwapchainKHR,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void {
+    ) {
         (self.destroy_swapchain_khr)(device, swapchain, p_allocator)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetSwapchainImagesKHR.html>"]
@@ -2064,7 +2064,7 @@ pub type PFN_vkDestroyDebugReportCallbackEXT = extern "system" fn(
     instance: Instance,
     callback: DebugReportCallbackEXT,
     p_allocator: *const AllocationCallbacks,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkDebugReportMessageEXT = extern "system" fn(
     instance: Instance,
@@ -2075,7 +2075,7 @@ pub type PFN_vkDebugReportMessageEXT = extern "system" fn(
     message_code: i32,
     p_layer_prefix: *const c_char,
     p_message: *const c_char,
-) -> c_void;
+);
 pub struct ExtDebugReportFn {
     pub create_debug_report_callback_ext: extern "system" fn(
         instance: Instance,
@@ -2087,7 +2087,7 @@ pub struct ExtDebugReportFn {
         instance: Instance,
         callback: DebugReportCallbackEXT,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void,
+    ),
     pub debug_report_message_ext: extern "system" fn(
         instance: Instance,
         flags: DebugReportFlagsEXT,
@@ -2097,7 +2097,7 @@ pub struct ExtDebugReportFn {
         message_code: i32,
         p_layer_prefix: *const c_char,
         p_message: *const c_char,
-    ) -> c_void,
+    ),
 }
 unsafe impl Send for ExtDebugReportFn {}
 unsafe impl Sync for ExtDebugReportFn {}
@@ -2142,7 +2142,7 @@ impl ExtDebugReportFn {
                     _instance: Instance,
                     _callback: DebugReportCallbackEXT,
                     _p_allocator: *const AllocationCallbacks,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(destroy_debug_report_callback_ext)
@@ -2167,7 +2167,7 @@ impl ExtDebugReportFn {
                     _message_code: i32,
                     _p_layer_prefix: *const c_char,
                     _p_message: *const c_char,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(debug_report_message_ext)
@@ -2200,7 +2200,7 @@ impl ExtDebugReportFn {
         instance: Instance,
         callback: DebugReportCallbackEXT,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void {
+    ) {
         (self.destroy_debug_report_callback_ext)(instance, callback, p_allocator)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkDebugReportMessageEXT.html>"]
@@ -2214,7 +2214,7 @@ impl ExtDebugReportFn {
         message_code: i32,
         p_layer_prefix: *const c_char,
         p_message: *const c_char,
-    ) -> c_void {
+    ) {
         (self.debug_report_message_ext)(
             instance,
             flags,
@@ -2523,14 +2523,14 @@ pub type PFN_vkDebugMarkerSetObjectNameEXT =
 pub type PFN_vkCmdDebugMarkerBeginEXT = extern "system" fn(
     command_buffer: CommandBuffer,
     p_marker_info: *const DebugMarkerMarkerInfoEXT,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdDebugMarkerEndEXT = extern "system" fn(command_buffer: CommandBuffer) -> c_void;
+pub type PFN_vkCmdDebugMarkerEndEXT = extern "system" fn(command_buffer: CommandBuffer);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdDebugMarkerInsertEXT = extern "system" fn(
     command_buffer: CommandBuffer,
     p_marker_info: *const DebugMarkerMarkerInfoEXT,
-) -> c_void;
+);
 pub struct ExtDebugMarkerFn {
     pub debug_marker_set_object_tag_ext: extern "system" fn(
         device: Device,
@@ -2543,12 +2543,12 @@ pub struct ExtDebugMarkerFn {
     pub cmd_debug_marker_begin_ext: extern "system" fn(
         command_buffer: CommandBuffer,
         p_marker_info: *const DebugMarkerMarkerInfoEXT,
-    ) -> c_void,
-    pub cmd_debug_marker_end_ext: extern "system" fn(command_buffer: CommandBuffer) -> c_void,
+    ),
+    pub cmd_debug_marker_end_ext: extern "system" fn(command_buffer: CommandBuffer),
     pub cmd_debug_marker_insert_ext: extern "system" fn(
         command_buffer: CommandBuffer,
         p_marker_info: *const DebugMarkerMarkerInfoEXT,
-    ) -> c_void,
+    ),
 }
 unsafe impl Send for ExtDebugMarkerFn {}
 unsafe impl Sync for ExtDebugMarkerFn {}
@@ -2611,7 +2611,7 @@ impl ExtDebugMarkerFn {
                 extern "system" fn cmd_debug_marker_begin_ext(
                     _command_buffer: CommandBuffer,
                     _p_marker_info: *const DebugMarkerMarkerInfoEXT,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_debug_marker_begin_ext)
@@ -2627,9 +2627,7 @@ impl ExtDebugMarkerFn {
                 }
             },
             cmd_debug_marker_end_ext: unsafe {
-                extern "system" fn cmd_debug_marker_end_ext(
-                    _command_buffer: CommandBuffer,
-                ) -> c_void {
+                extern "system" fn cmd_debug_marker_end_ext(_command_buffer: CommandBuffer) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_debug_marker_end_ext)
@@ -2648,7 +2646,7 @@ impl ExtDebugMarkerFn {
                 extern "system" fn cmd_debug_marker_insert_ext(
                     _command_buffer: CommandBuffer,
                     _p_marker_info: *const DebugMarkerMarkerInfoEXT,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_debug_marker_insert_ext)
@@ -2686,11 +2684,11 @@ impl ExtDebugMarkerFn {
         &self,
         command_buffer: CommandBuffer,
         p_marker_info: *const DebugMarkerMarkerInfoEXT,
-    ) -> c_void {
+    ) {
         (self.cmd_debug_marker_begin_ext)(command_buffer, p_marker_info)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdDebugMarkerEndEXT.html>"]
-    pub unsafe fn cmd_debug_marker_end_ext(&self, command_buffer: CommandBuffer) -> c_void {
+    pub unsafe fn cmd_debug_marker_end_ext(&self, command_buffer: CommandBuffer) {
         (self.cmd_debug_marker_end_ext)(command_buffer)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdDebugMarkerInsertEXT.html>"]
@@ -2698,7 +2696,7 @@ impl ExtDebugMarkerFn {
         &self,
         command_buffer: CommandBuffer,
         p_marker_info: *const DebugMarkerMarkerInfoEXT,
-    ) -> c_void {
+    ) {
         (self.cmd_debug_marker_insert_ext)(command_buffer, p_marker_info)
     }
 }
@@ -2948,7 +2946,7 @@ pub type PFN_vkCmdBindTransformFeedbackBuffersEXT = extern "system" fn(
     p_buffers: *const Buffer,
     p_offsets: *const DeviceSize,
     p_sizes: *const DeviceSize,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdBeginTransformFeedbackEXT = extern "system" fn(
     command_buffer: CommandBuffer,
@@ -2956,7 +2954,7 @@ pub type PFN_vkCmdBeginTransformFeedbackEXT = extern "system" fn(
     counter_buffer_count: u32,
     p_counter_buffers: *const Buffer,
     p_counter_buffer_offsets: *const DeviceSize,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdEndTransformFeedbackEXT = extern "system" fn(
     command_buffer: CommandBuffer,
@@ -2964,7 +2962,7 @@ pub type PFN_vkCmdEndTransformFeedbackEXT = extern "system" fn(
     counter_buffer_count: u32,
     p_counter_buffers: *const Buffer,
     p_counter_buffer_offsets: *const DeviceSize,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdBeginQueryIndexedEXT = extern "system" fn(
     command_buffer: CommandBuffer,
@@ -2972,14 +2970,14 @@ pub type PFN_vkCmdBeginQueryIndexedEXT = extern "system" fn(
     query: u32,
     flags: QueryControlFlags,
     index: u32,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdEndQueryIndexedEXT = extern "system" fn(
     command_buffer: CommandBuffer,
     query_pool: QueryPool,
     query: u32,
     index: u32,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdDrawIndirectByteCountEXT = extern "system" fn(
     command_buffer: CommandBuffer,
@@ -2989,7 +2987,7 @@ pub type PFN_vkCmdDrawIndirectByteCountEXT = extern "system" fn(
     counter_buffer_offset: DeviceSize,
     counter_offset: u32,
     vertex_stride: u32,
-) -> c_void;
+);
 pub struct ExtTransformFeedbackFn {
     pub cmd_bind_transform_feedback_buffers_ext: extern "system" fn(
         command_buffer: CommandBuffer,
@@ -2998,34 +2996,34 @@ pub struct ExtTransformFeedbackFn {
         p_buffers: *const Buffer,
         p_offsets: *const DeviceSize,
         p_sizes: *const DeviceSize,
-    ) -> c_void,
+    ),
     pub cmd_begin_transform_feedback_ext: extern "system" fn(
         command_buffer: CommandBuffer,
         first_counter_buffer: u32,
         counter_buffer_count: u32,
         p_counter_buffers: *const Buffer,
         p_counter_buffer_offsets: *const DeviceSize,
-    ) -> c_void,
+    ),
     pub cmd_end_transform_feedback_ext: extern "system" fn(
         command_buffer: CommandBuffer,
         first_counter_buffer: u32,
         counter_buffer_count: u32,
         p_counter_buffers: *const Buffer,
         p_counter_buffer_offsets: *const DeviceSize,
-    ) -> c_void,
+    ),
     pub cmd_begin_query_indexed_ext: extern "system" fn(
         command_buffer: CommandBuffer,
         query_pool: QueryPool,
         query: u32,
         flags: QueryControlFlags,
         index: u32,
-    ) -> c_void,
+    ),
     pub cmd_end_query_indexed_ext: extern "system" fn(
         command_buffer: CommandBuffer,
         query_pool: QueryPool,
         query: u32,
         index: u32,
-    ) -> c_void,
+    ),
     pub cmd_draw_indirect_byte_count_ext: extern "system" fn(
         command_buffer: CommandBuffer,
         instance_count: u32,
@@ -3034,7 +3032,7 @@ pub struct ExtTransformFeedbackFn {
         counter_buffer_offset: DeviceSize,
         counter_offset: u32,
         vertex_stride: u32,
-    ) -> c_void,
+    ),
 }
 unsafe impl Send for ExtTransformFeedbackFn {}
 unsafe impl Sync for ExtTransformFeedbackFn {}
@@ -3064,7 +3062,7 @@ impl ExtTransformFeedbackFn {
                     _p_buffers: *const Buffer,
                     _p_offsets: *const DeviceSize,
                     _p_sizes: *const DeviceSize,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_bind_transform_feedback_buffers_ext)
@@ -3086,7 +3084,7 @@ impl ExtTransformFeedbackFn {
                     _counter_buffer_count: u32,
                     _p_counter_buffers: *const Buffer,
                     _p_counter_buffer_offsets: *const DeviceSize,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_begin_transform_feedback_ext)
@@ -3108,7 +3106,7 @@ impl ExtTransformFeedbackFn {
                     _counter_buffer_count: u32,
                     _p_counter_buffers: *const Buffer,
                     _p_counter_buffer_offsets: *const DeviceSize,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_end_transform_feedback_ext)
@@ -3130,7 +3128,7 @@ impl ExtTransformFeedbackFn {
                     _query: u32,
                     _flags: QueryControlFlags,
                     _index: u32,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_begin_query_indexed_ext)
@@ -3151,7 +3149,7 @@ impl ExtTransformFeedbackFn {
                     _query_pool: QueryPool,
                     _query: u32,
                     _index: u32,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_end_query_indexed_ext)
@@ -3175,7 +3173,7 @@ impl ExtTransformFeedbackFn {
                     _counter_buffer_offset: DeviceSize,
                     _counter_offset: u32,
                     _vertex_stride: u32,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_draw_indirect_byte_count_ext)
@@ -3201,7 +3199,7 @@ impl ExtTransformFeedbackFn {
         p_buffers: *const Buffer,
         p_offsets: *const DeviceSize,
         p_sizes: *const DeviceSize,
-    ) -> c_void {
+    ) {
         (self.cmd_bind_transform_feedback_buffers_ext)(
             command_buffer,
             first_binding,
@@ -3219,7 +3217,7 @@ impl ExtTransformFeedbackFn {
         counter_buffer_count: u32,
         p_counter_buffers: *const Buffer,
         p_counter_buffer_offsets: *const DeviceSize,
-    ) -> c_void {
+    ) {
         (self.cmd_begin_transform_feedback_ext)(
             command_buffer,
             first_counter_buffer,
@@ -3236,7 +3234,7 @@ impl ExtTransformFeedbackFn {
         counter_buffer_count: u32,
         p_counter_buffers: *const Buffer,
         p_counter_buffer_offsets: *const DeviceSize,
-    ) -> c_void {
+    ) {
         (self.cmd_end_transform_feedback_ext)(
             command_buffer,
             first_counter_buffer,
@@ -3253,7 +3251,7 @@ impl ExtTransformFeedbackFn {
         query: u32,
         flags: QueryControlFlags,
         index: u32,
-    ) -> c_void {
+    ) {
         (self.cmd_begin_query_indexed_ext)(command_buffer, query_pool, query, flags, index)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdEndQueryIndexedEXT.html>"]
@@ -3263,7 +3261,7 @@ impl ExtTransformFeedbackFn {
         query_pool: QueryPool,
         query: u32,
         index: u32,
-    ) -> c_void {
+    ) {
         (self.cmd_end_query_indexed_ext)(command_buffer, query_pool, query, index)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdDrawIndirectByteCountEXT.html>"]
@@ -3276,7 +3274,7 @@ impl ExtTransformFeedbackFn {
         counter_buffer_offset: DeviceSize,
         counter_offset: u32,
         vertex_stride: u32,
-    ) -> c_void {
+    ) {
         (self.cmd_draw_indirect_byte_count_ext)(
             command_buffer,
             instance_count,
@@ -3522,7 +3520,7 @@ pub type PFN_vkCmdDrawIndirectCount = extern "system" fn(
     count_buffer_offset: DeviceSize,
     max_draw_count: u32,
     stride: u32,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdDrawIndexedIndirectCount = extern "system" fn(
     command_buffer: CommandBuffer,
@@ -3532,7 +3530,7 @@ pub type PFN_vkCmdDrawIndexedIndirectCount = extern "system" fn(
     count_buffer_offset: DeviceSize,
     max_draw_count: u32,
     stride: u32,
-) -> c_void;
+);
 pub struct AmdDrawIndirectCountFn {
     pub cmd_draw_indirect_count_amd: extern "system" fn(
         command_buffer: CommandBuffer,
@@ -3542,7 +3540,7 @@ pub struct AmdDrawIndirectCountFn {
         count_buffer_offset: DeviceSize,
         max_draw_count: u32,
         stride: u32,
-    ) -> c_void,
+    ),
     pub cmd_draw_indexed_indirect_count_amd: extern "system" fn(
         command_buffer: CommandBuffer,
         buffer: Buffer,
@@ -3551,7 +3549,7 @@ pub struct AmdDrawIndirectCountFn {
         count_buffer_offset: DeviceSize,
         max_draw_count: u32,
         stride: u32,
-    ) -> c_void,
+    ),
 }
 unsafe impl Send for AmdDrawIndirectCountFn {}
 unsafe impl Sync for AmdDrawIndirectCountFn {}
@@ -3578,7 +3576,7 @@ impl AmdDrawIndirectCountFn {
                     _count_buffer_offset: DeviceSize,
                     _max_draw_count: u32,
                     _stride: u32,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_draw_indirect_count_amd)
@@ -3602,7 +3600,7 @@ impl AmdDrawIndirectCountFn {
                     _count_buffer_offset: DeviceSize,
                     _max_draw_count: u32,
                     _stride: u32,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_draw_indexed_indirect_count_amd)
@@ -3629,7 +3627,7 @@ impl AmdDrawIndirectCountFn {
         count_buffer_offset: DeviceSize,
         max_draw_count: u32,
         stride: u32,
-    ) -> c_void {
+    ) {
         (self.cmd_draw_indirect_count_amd)(
             command_buffer,
             buffer,
@@ -3650,7 +3648,7 @@ impl AmdDrawIndirectCountFn {
         count_buffer_offset: DeviceSize,
         max_draw_count: u32,
         stride: u32,
-    ) -> c_void {
+    ) {
         (self.cmd_draw_indexed_indirect_count_amd)(
             command_buffer,
             buffer,
@@ -4570,21 +4568,19 @@ impl KhrGetPhysicalDeviceProperties2Fn {
     pub const SPEC_VERSION: u32 = 2u32;
 }
 #[allow(non_camel_case_types)]
-pub type PFN_vkGetPhysicalDeviceFeatures2 = extern "system" fn(
-    physical_device: PhysicalDevice,
-    p_features: *mut PhysicalDeviceFeatures2,
-) -> c_void;
+pub type PFN_vkGetPhysicalDeviceFeatures2 =
+    extern "system" fn(physical_device: PhysicalDevice, p_features: *mut PhysicalDeviceFeatures2);
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceProperties2 = extern "system" fn(
     physical_device: PhysicalDevice,
     p_properties: *mut PhysicalDeviceProperties2,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceFormatProperties2 = extern "system" fn(
     physical_device: PhysicalDevice,
     format: Format,
     p_format_properties: *mut FormatProperties2,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceImageFormatProperties2 = extern "system" fn(
     physical_device: PhysicalDevice,
@@ -4596,33 +4592,33 @@ pub type PFN_vkGetPhysicalDeviceQueueFamilyProperties2 = extern "system" fn(
     physical_device: PhysicalDevice,
     p_queue_family_property_count: *mut u32,
     p_queue_family_properties: *mut QueueFamilyProperties2,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceMemoryProperties2 = extern "system" fn(
     physical_device: PhysicalDevice,
     p_memory_properties: *mut PhysicalDeviceMemoryProperties2,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceSparseImageFormatProperties2 = extern "system" fn(
     physical_device: PhysicalDevice,
     p_format_info: *const PhysicalDeviceSparseImageFormatInfo2,
     p_property_count: *mut u32,
     p_properties: *mut SparseImageFormatProperties2,
-) -> c_void;
+);
 pub struct KhrGetPhysicalDeviceProperties2Fn {
     pub get_physical_device_features2_khr: extern "system" fn(
         physical_device: PhysicalDevice,
         p_features: *mut PhysicalDeviceFeatures2,
-    ) -> c_void,
+    ),
     pub get_physical_device_properties2_khr: extern "system" fn(
         physical_device: PhysicalDevice,
         p_properties: *mut PhysicalDeviceProperties2,
-    ) -> c_void,
+    ),
     pub get_physical_device_format_properties2_khr: extern "system" fn(
         physical_device: PhysicalDevice,
         format: Format,
         p_format_properties: *mut FormatProperties2,
-    ) -> c_void,
+    ),
     pub get_physical_device_image_format_properties2_khr: extern "system" fn(
         physical_device: PhysicalDevice,
         p_image_format_info: *const PhysicalDeviceImageFormatInfo2,
@@ -4632,17 +4628,17 @@ pub struct KhrGetPhysicalDeviceProperties2Fn {
         physical_device: PhysicalDevice,
         p_queue_family_property_count: *mut u32,
         p_queue_family_properties: *mut QueueFamilyProperties2,
-    ) -> c_void,
+    ),
     pub get_physical_device_memory_properties2_khr: extern "system" fn(
         physical_device: PhysicalDevice,
         p_memory_properties: *mut PhysicalDeviceMemoryProperties2,
-    ) -> c_void,
+    ),
     pub get_physical_device_sparse_image_format_properties2_khr: extern "system" fn(
         physical_device: PhysicalDevice,
         p_format_info: *const PhysicalDeviceSparseImageFormatInfo2,
         p_property_count: *mut u32,
         p_properties: *mut SparseImageFormatProperties2,
-    ) -> c_void,
+    ),
 }
 unsafe impl Send for KhrGetPhysicalDeviceProperties2Fn {}
 unsafe impl Sync for KhrGetPhysicalDeviceProperties2Fn {}
@@ -4674,7 +4670,7 @@ impl KhrGetPhysicalDeviceProperties2Fn {
                 extern "system" fn get_physical_device_features2_khr(
                     _physical_device: PhysicalDevice,
                     _p_features: *mut PhysicalDeviceFeatures2,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(get_physical_device_features2_khr)
@@ -4693,7 +4689,7 @@ impl KhrGetPhysicalDeviceProperties2Fn {
                 extern "system" fn get_physical_device_properties2_khr(
                     _physical_device: PhysicalDevice,
                     _p_properties: *mut PhysicalDeviceProperties2,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(get_physical_device_properties2_khr)
@@ -4713,7 +4709,7 @@ impl KhrGetPhysicalDeviceProperties2Fn {
                     _physical_device: PhysicalDevice,
                     _format: Format,
                     _p_format_properties: *mut FormatProperties2,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(get_physical_device_format_properties2_khr)
@@ -4753,7 +4749,7 @@ impl KhrGetPhysicalDeviceProperties2Fn {
                     _physical_device: PhysicalDevice,
                     _p_queue_family_property_count: *mut u32,
                     _p_queue_family_properties: *mut QueueFamilyProperties2,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(get_physical_device_queue_family_properties2_khr)
@@ -4772,7 +4768,7 @@ impl KhrGetPhysicalDeviceProperties2Fn {
                 extern "system" fn get_physical_device_memory_properties2_khr(
                     _physical_device: PhysicalDevice,
                     _p_memory_properties: *mut PhysicalDeviceMemoryProperties2,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(get_physical_device_memory_properties2_khr)
@@ -4793,7 +4789,7 @@ impl KhrGetPhysicalDeviceProperties2Fn {
                     _p_format_info: *const PhysicalDeviceSparseImageFormatInfo2,
                     _p_property_count: *mut u32,
                     _p_properties: *mut SparseImageFormatProperties2,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(get_physical_device_sparse_image_format_properties2_khr)
@@ -4815,7 +4811,7 @@ impl KhrGetPhysicalDeviceProperties2Fn {
         &self,
         physical_device: PhysicalDevice,
         p_features: *mut PhysicalDeviceFeatures2,
-    ) -> c_void {
+    ) {
         (self.get_physical_device_features2_khr)(physical_device, p_features)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceProperties2KHR.html>"]
@@ -4823,7 +4819,7 @@ impl KhrGetPhysicalDeviceProperties2Fn {
         &self,
         physical_device: PhysicalDevice,
         p_properties: *mut PhysicalDeviceProperties2,
-    ) -> c_void {
+    ) {
         (self.get_physical_device_properties2_khr)(physical_device, p_properties)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceFormatProperties2KHR.html>"]
@@ -4832,7 +4828,7 @@ impl KhrGetPhysicalDeviceProperties2Fn {
         physical_device: PhysicalDevice,
         format: Format,
         p_format_properties: *mut FormatProperties2,
-    ) -> c_void {
+    ) {
         (self.get_physical_device_format_properties2_khr)(
             physical_device,
             format,
@@ -4858,7 +4854,7 @@ impl KhrGetPhysicalDeviceProperties2Fn {
         physical_device: PhysicalDevice,
         p_queue_family_property_count: *mut u32,
         p_queue_family_properties: *mut QueueFamilyProperties2,
-    ) -> c_void {
+    ) {
         (self.get_physical_device_queue_family_properties2_khr)(
             physical_device,
             p_queue_family_property_count,
@@ -4870,7 +4866,7 @@ impl KhrGetPhysicalDeviceProperties2Fn {
         &self,
         physical_device: PhysicalDevice,
         p_memory_properties: *mut PhysicalDeviceMemoryProperties2,
-    ) -> c_void {
+    ) {
         (self.get_physical_device_memory_properties2_khr)(physical_device, p_memory_properties)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceSparseImageFormatProperties2KHR.html>"]
@@ -4880,7 +4876,7 @@ impl KhrGetPhysicalDeviceProperties2Fn {
         p_format_info: *const PhysicalDeviceSparseImageFormatInfo2,
         p_property_count: *mut u32,
         p_properties: *mut SparseImageFormatProperties2,
-    ) -> c_void {
+    ) {
         (self.get_physical_device_sparse_image_format_properties2_khr)(
             physical_device,
             p_format_info,
@@ -4943,10 +4939,10 @@ pub type PFN_vkGetDeviceGroupPeerMemoryFeatures = extern "system" fn(
     local_device_index: u32,
     remote_device_index: u32,
     p_peer_memory_features: *mut PeerMemoryFeatureFlags,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetDeviceMask =
-    extern "system" fn(command_buffer: CommandBuffer, device_mask: u32) -> c_void;
+    extern "system" fn(command_buffer: CommandBuffer, device_mask: u32);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdDispatchBase = extern "system" fn(
     command_buffer: CommandBuffer,
@@ -4956,7 +4952,7 @@ pub type PFN_vkCmdDispatchBase = extern "system" fn(
     group_count_x: u32,
     group_count_y: u32,
     group_count_z: u32,
-) -> c_void;
+);
 pub struct KhrDeviceGroupFn {
     pub get_device_group_peer_memory_features_khr: extern "system" fn(
         device: Device,
@@ -4964,9 +4960,9 @@ pub struct KhrDeviceGroupFn {
         local_device_index: u32,
         remote_device_index: u32,
         p_peer_memory_features: *mut PeerMemoryFeatureFlags,
-    ) -> c_void,
+    ),
     pub cmd_set_device_mask_khr:
-        extern "system" fn(command_buffer: CommandBuffer, device_mask: u32) -> c_void,
+        extern "system" fn(command_buffer: CommandBuffer, device_mask: u32),
     pub cmd_dispatch_base_khr: extern "system" fn(
         command_buffer: CommandBuffer,
         base_group_x: u32,
@@ -4975,7 +4971,7 @@ pub struct KhrDeviceGroupFn {
         group_count_x: u32,
         group_count_y: u32,
         group_count_z: u32,
-    ) -> c_void,
+    ),
     pub get_device_group_present_capabilities_khr: extern "system" fn(
         device: Device,
         p_device_group_present_capabilities: *mut DeviceGroupPresentCapabilitiesKHR,
@@ -5029,7 +5025,7 @@ impl KhrDeviceGroupFn {
                     _local_device_index: u32,
                     _remote_device_index: u32,
                     _p_peer_memory_features: *mut PeerMemoryFeatureFlags,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(get_device_group_peer_memory_features_khr)
@@ -5048,7 +5044,7 @@ impl KhrDeviceGroupFn {
                 extern "system" fn cmd_set_device_mask_khr(
                     _command_buffer: CommandBuffer,
                     _device_mask: u32,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_set_device_mask_khr)
@@ -5072,7 +5068,7 @@ impl KhrDeviceGroupFn {
                     _group_count_x: u32,
                     _group_count_y: u32,
                     _group_count_z: u32,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_dispatch_base_khr)
@@ -5177,7 +5173,7 @@ impl KhrDeviceGroupFn {
         local_device_index: u32,
         remote_device_index: u32,
         p_peer_memory_features: *mut PeerMemoryFeatureFlags,
-    ) -> c_void {
+    ) {
         (self.get_device_group_peer_memory_features_khr)(
             device,
             heap_index,
@@ -5187,11 +5183,7 @@ impl KhrDeviceGroupFn {
         )
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetDeviceMaskKHR.html>"]
-    pub unsafe fn cmd_set_device_mask_khr(
-        &self,
-        command_buffer: CommandBuffer,
-        device_mask: u32,
-    ) -> c_void {
+    pub unsafe fn cmd_set_device_mask_khr(&self, command_buffer: CommandBuffer, device_mask: u32) {
         (self.cmd_set_device_mask_khr)(command_buffer, device_mask)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdDispatchBaseKHR.html>"]
@@ -5204,7 +5196,7 @@ impl KhrDeviceGroupFn {
         group_count_x: u32,
         group_count_y: u32,
         group_count_z: u32,
-    ) -> c_void {
+    ) {
         (self.cmd_dispatch_base_khr)(
             command_buffer,
             base_group_x,
@@ -5639,17 +5631,11 @@ impl KhrMaintenance1Fn {
     pub const SPEC_VERSION: u32 = 2u32;
 }
 #[allow(non_camel_case_types)]
-pub type PFN_vkTrimCommandPool = extern "system" fn(
-    device: Device,
-    command_pool: CommandPool,
-    flags: CommandPoolTrimFlags,
-) -> c_void;
+pub type PFN_vkTrimCommandPool =
+    extern "system" fn(device: Device, command_pool: CommandPool, flags: CommandPoolTrimFlags);
 pub struct KhrMaintenance1Fn {
-    pub trim_command_pool_khr: extern "system" fn(
-        device: Device,
-        command_pool: CommandPool,
-        flags: CommandPoolTrimFlags,
-    ) -> c_void,
+    pub trim_command_pool_khr:
+        extern "system" fn(device: Device, command_pool: CommandPool, flags: CommandPoolTrimFlags),
 }
 unsafe impl Send for KhrMaintenance1Fn {}
 unsafe impl Sync for KhrMaintenance1Fn {}
@@ -5671,7 +5657,7 @@ impl KhrMaintenance1Fn {
                     _device: Device,
                     _command_pool: CommandPool,
                     _flags: CommandPoolTrimFlags,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(trim_command_pool_khr)
@@ -5694,7 +5680,7 @@ impl KhrMaintenance1Fn {
         device: Device,
         command_pool: CommandPool,
         flags: CommandPoolTrimFlags,
-    ) -> c_void {
+    ) {
         (self.trim_command_pool_khr)(device, command_pool, flags)
     }
 }
@@ -5811,13 +5797,13 @@ pub type PFN_vkGetPhysicalDeviceExternalBufferProperties = extern "system" fn(
     physical_device: PhysicalDevice,
     p_external_buffer_info: *const PhysicalDeviceExternalBufferInfo,
     p_external_buffer_properties: *mut ExternalBufferProperties,
-) -> c_void;
+);
 pub struct KhrExternalMemoryCapabilitiesFn {
     pub get_physical_device_external_buffer_properties_khr: extern "system" fn(
         physical_device: PhysicalDevice,
         p_external_buffer_info: *const PhysicalDeviceExternalBufferInfo,
         p_external_buffer_properties: *mut ExternalBufferProperties,
-    ) -> c_void,
+    ),
 }
 unsafe impl Send for KhrExternalMemoryCapabilitiesFn {}
 unsafe impl Sync for KhrExternalMemoryCapabilitiesFn {}
@@ -5840,7 +5826,7 @@ impl KhrExternalMemoryCapabilitiesFn {
                     _physical_device: PhysicalDevice,
                     _p_external_buffer_info: *const PhysicalDeviceExternalBufferInfo,
                     _p_external_buffer_properties: *mut ExternalBufferProperties,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(get_physical_device_external_buffer_properties_khr)
@@ -5863,7 +5849,7 @@ impl KhrExternalMemoryCapabilitiesFn {
         physical_device: PhysicalDevice,
         p_external_buffer_info: *const PhysicalDeviceExternalBufferInfo,
         p_external_buffer_properties: *mut ExternalBufferProperties,
-    ) -> c_void {
+    ) {
         (self.get_physical_device_external_buffer_properties_khr)(
             physical_device,
             p_external_buffer_info,
@@ -6279,13 +6265,13 @@ pub type PFN_vkGetPhysicalDeviceExternalSemaphoreProperties = extern "system" fn
     physical_device: PhysicalDevice,
     p_external_semaphore_info: *const PhysicalDeviceExternalSemaphoreInfo,
     p_external_semaphore_properties: *mut ExternalSemaphoreProperties,
-) -> c_void;
+);
 pub struct KhrExternalSemaphoreCapabilitiesFn {
     pub get_physical_device_external_semaphore_properties_khr: extern "system" fn(
         physical_device: PhysicalDevice,
         p_external_semaphore_info: *const PhysicalDeviceExternalSemaphoreInfo,
         p_external_semaphore_properties: *mut ExternalSemaphoreProperties,
-    ) -> c_void,
+    ),
 }
 unsafe impl Send for KhrExternalSemaphoreCapabilitiesFn {}
 unsafe impl Sync for KhrExternalSemaphoreCapabilitiesFn {}
@@ -6308,7 +6294,7 @@ impl KhrExternalSemaphoreCapabilitiesFn {
                     _physical_device: PhysicalDevice,
                     _p_external_semaphore_info: *const PhysicalDeviceExternalSemaphoreInfo,
                     _p_external_semaphore_properties: *mut ExternalSemaphoreProperties,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(get_physical_device_external_semaphore_properties_khr)
@@ -6331,7 +6317,7 @@ impl KhrExternalSemaphoreCapabilitiesFn {
         physical_device: PhysicalDevice,
         p_external_semaphore_info: *const PhysicalDeviceExternalSemaphoreInfo,
         p_external_semaphore_properties: *mut ExternalSemaphoreProperties,
-    ) -> c_void {
+    ) {
         (self.get_physical_device_external_semaphore_properties_khr)(
             physical_device,
             p_external_semaphore_info,
@@ -6659,7 +6645,7 @@ pub type PFN_vkCmdPushDescriptorSetKHR = extern "system" fn(
     set: u32,
     descriptor_write_count: u32,
     p_descriptor_writes: *const WriteDescriptorSet,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdPushDescriptorSetWithTemplateKHR = extern "system" fn(
     command_buffer: CommandBuffer,
@@ -6667,7 +6653,7 @@ pub type PFN_vkCmdPushDescriptorSetWithTemplateKHR = extern "system" fn(
     layout: PipelineLayout,
     set: u32,
     p_data: *const c_void,
-) -> c_void;
+);
 pub struct KhrPushDescriptorFn {
     pub cmd_push_descriptor_set_khr: extern "system" fn(
         command_buffer: CommandBuffer,
@@ -6676,14 +6662,14 @@ pub struct KhrPushDescriptorFn {
         set: u32,
         descriptor_write_count: u32,
         p_descriptor_writes: *const WriteDescriptorSet,
-    ) -> c_void,
+    ),
     pub cmd_push_descriptor_set_with_template_khr: extern "system" fn(
         command_buffer: CommandBuffer,
         descriptor_update_template: DescriptorUpdateTemplate,
         layout: PipelineLayout,
         set: u32,
         p_data: *const c_void,
-    ) -> c_void,
+    ),
 }
 unsafe impl Send for KhrPushDescriptorFn {}
 unsafe impl Sync for KhrPushDescriptorFn {}
@@ -6710,7 +6696,7 @@ impl KhrPushDescriptorFn {
                     _set: u32,
                     _descriptor_write_count: u32,
                     _p_descriptor_writes: *const WriteDescriptorSet,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_push_descriptor_set_khr)
@@ -6732,7 +6718,7 @@ impl KhrPushDescriptorFn {
                     _layout: PipelineLayout,
                     _set: u32,
                     _p_data: *const c_void,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_push_descriptor_set_with_template_khr)
@@ -6758,7 +6744,7 @@ impl KhrPushDescriptorFn {
         set: u32,
         descriptor_write_count: u32,
         p_descriptor_writes: *const WriteDescriptorSet,
-    ) -> c_void {
+    ) {
         (self.cmd_push_descriptor_set_khr)(
             command_buffer,
             pipeline_bind_point,
@@ -6776,7 +6762,7 @@ impl KhrPushDescriptorFn {
         layout: PipelineLayout,
         set: u32,
         p_data: *const c_void,
-    ) -> c_void {
+    ) {
         (self.cmd_push_descriptor_set_with_template_khr)(
             command_buffer,
             descriptor_update_template,
@@ -6809,17 +6795,15 @@ impl ExtConditionalRenderingFn {
 pub type PFN_vkCmdBeginConditionalRenderingEXT = extern "system" fn(
     command_buffer: CommandBuffer,
     p_conditional_rendering_begin: *const ConditionalRenderingBeginInfoEXT,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdEndConditionalRenderingEXT =
-    extern "system" fn(command_buffer: CommandBuffer) -> c_void;
+pub type PFN_vkCmdEndConditionalRenderingEXT = extern "system" fn(command_buffer: CommandBuffer);
 pub struct ExtConditionalRenderingFn {
     pub cmd_begin_conditional_rendering_ext: extern "system" fn(
         command_buffer: CommandBuffer,
         p_conditional_rendering_begin: *const ConditionalRenderingBeginInfoEXT,
-    ) -> c_void,
-    pub cmd_end_conditional_rendering_ext:
-        extern "system" fn(command_buffer: CommandBuffer) -> c_void,
+    ),
+    pub cmd_end_conditional_rendering_ext: extern "system" fn(command_buffer: CommandBuffer),
 }
 unsafe impl Send for ExtConditionalRenderingFn {}
 unsafe impl Sync for ExtConditionalRenderingFn {}
@@ -6841,7 +6825,7 @@ impl ExtConditionalRenderingFn {
                 extern "system" fn cmd_begin_conditional_rendering_ext(
                     _command_buffer: CommandBuffer,
                     _p_conditional_rendering_begin: *const ConditionalRenderingBeginInfoEXT,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_begin_conditional_rendering_ext)
@@ -6859,7 +6843,7 @@ impl ExtConditionalRenderingFn {
             cmd_end_conditional_rendering_ext: unsafe {
                 extern "system" fn cmd_end_conditional_rendering_ext(
                     _command_buffer: CommandBuffer,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_end_conditional_rendering_ext)
@@ -6881,14 +6865,11 @@ impl ExtConditionalRenderingFn {
         &self,
         command_buffer: CommandBuffer,
         p_conditional_rendering_begin: *const ConditionalRenderingBeginInfoEXT,
-    ) -> c_void {
+    ) {
         (self.cmd_begin_conditional_rendering_ext)(command_buffer, p_conditional_rendering_begin)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdEndConditionalRenderingEXT.html>"]
-    pub unsafe fn cmd_end_conditional_rendering_ext(
-        &self,
-        command_buffer: CommandBuffer,
-    ) -> c_void {
+    pub unsafe fn cmd_end_conditional_rendering_ext(&self, command_buffer: CommandBuffer) {
         (self.cmd_end_conditional_rendering_ext)(command_buffer)
     }
 }
@@ -7023,14 +7004,14 @@ pub type PFN_vkDestroyDescriptorUpdateTemplate = extern "system" fn(
     device: Device,
     descriptor_update_template: DescriptorUpdateTemplate,
     p_allocator: *const AllocationCallbacks,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkUpdateDescriptorSetWithTemplate = extern "system" fn(
     device: Device,
     descriptor_set: DescriptorSet,
     descriptor_update_template: DescriptorUpdateTemplate,
     p_data: *const c_void,
-) -> c_void;
+);
 pub struct KhrDescriptorUpdateTemplateFn {
     pub create_descriptor_update_template_khr: extern "system" fn(
         device: Device,
@@ -7042,20 +7023,20 @@ pub struct KhrDescriptorUpdateTemplateFn {
         device: Device,
         descriptor_update_template: DescriptorUpdateTemplate,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void,
+    ),
     pub update_descriptor_set_with_template_khr: extern "system" fn(
         device: Device,
         descriptor_set: DescriptorSet,
         descriptor_update_template: DescriptorUpdateTemplate,
         p_data: *const c_void,
-    ) -> c_void,
+    ),
     pub cmd_push_descriptor_set_with_template_khr: extern "system" fn(
         command_buffer: CommandBuffer,
         descriptor_update_template: DescriptorUpdateTemplate,
         layout: PipelineLayout,
         set: u32,
         p_data: *const c_void,
-    ) -> c_void,
+    ),
 }
 unsafe impl Send for KhrDescriptorUpdateTemplateFn {}
 unsafe impl Sync for KhrDescriptorUpdateTemplateFn {}
@@ -7102,7 +7083,7 @@ impl KhrDescriptorUpdateTemplateFn {
                     _device: Device,
                     _descriptor_update_template: DescriptorUpdateTemplate,
                     _p_allocator: *const AllocationCallbacks,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(destroy_descriptor_update_template_khr)
@@ -7123,7 +7104,7 @@ impl KhrDescriptorUpdateTemplateFn {
                     _descriptor_set: DescriptorSet,
                     _descriptor_update_template: DescriptorUpdateTemplate,
                     _p_data: *const c_void,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(update_descriptor_set_with_template_khr)
@@ -7145,7 +7126,7 @@ impl KhrDescriptorUpdateTemplateFn {
                     _layout: PipelineLayout,
                     _set: u32,
                     _p_data: *const c_void,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_push_descriptor_set_with_template_khr)
@@ -7183,7 +7164,7 @@ impl KhrDescriptorUpdateTemplateFn {
         device: Device,
         descriptor_update_template: DescriptorUpdateTemplate,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void {
+    ) {
         (self.destroy_descriptor_update_template_khr)(
             device,
             descriptor_update_template,
@@ -7197,7 +7178,7 @@ impl KhrDescriptorUpdateTemplateFn {
         descriptor_set: DescriptorSet,
         descriptor_update_template: DescriptorUpdateTemplate,
         p_data: *const c_void,
-    ) -> c_void {
+    ) {
         (self.update_descriptor_set_with_template_khr)(
             device,
             descriptor_set,
@@ -7213,7 +7194,7 @@ impl KhrDescriptorUpdateTemplateFn {
         layout: PipelineLayout,
         set: u32,
         p_data: *const c_void,
-    ) -> c_void {
+    ) {
         (self.cmd_push_descriptor_set_with_template_khr)(
             command_buffer,
             descriptor_update_template,
@@ -7277,14 +7258,14 @@ pub type PFN_vkCmdSetViewportWScalingNV = extern "system" fn(
     first_viewport: u32,
     viewport_count: u32,
     p_viewport_w_scalings: *const ViewportWScalingNV,
-) -> c_void;
+);
 pub struct NvClipSpaceWScalingFn {
     pub cmd_set_viewport_w_scaling_nv: extern "system" fn(
         command_buffer: CommandBuffer,
         first_viewport: u32,
         viewport_count: u32,
         p_viewport_w_scalings: *const ViewportWScalingNV,
-    ) -> c_void,
+    ),
 }
 unsafe impl Send for NvClipSpaceWScalingFn {}
 unsafe impl Sync for NvClipSpaceWScalingFn {}
@@ -7307,7 +7288,7 @@ impl NvClipSpaceWScalingFn {
                     _first_viewport: u32,
                     _viewport_count: u32,
                     _p_viewport_w_scalings: *const ViewportWScalingNV,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_set_viewport_w_scaling_nv)
@@ -7331,7 +7312,7 @@ impl NvClipSpaceWScalingFn {
         first_viewport: u32,
         viewport_count: u32,
         p_viewport_w_scalings: *const ViewportWScalingNV,
-    ) -> c_void {
+    ) {
         (self.cmd_set_viewport_w_scaling_nv)(
             command_buffer,
             first_viewport,
@@ -8090,14 +8071,14 @@ pub type PFN_vkCmdSetDiscardRectangleEXT = extern "system" fn(
     first_discard_rectangle: u32,
     discard_rectangle_count: u32,
     p_discard_rectangles: *const Rect2D,
-) -> c_void;
+);
 pub struct ExtDiscardRectanglesFn {
     pub cmd_set_discard_rectangle_ext: extern "system" fn(
         command_buffer: CommandBuffer,
         first_discard_rectangle: u32,
         discard_rectangle_count: u32,
         p_discard_rectangles: *const Rect2D,
-    ) -> c_void,
+    ),
 }
 unsafe impl Send for ExtDiscardRectanglesFn {}
 unsafe impl Sync for ExtDiscardRectanglesFn {}
@@ -8120,7 +8101,7 @@ impl ExtDiscardRectanglesFn {
                     _first_discard_rectangle: u32,
                     _discard_rectangle_count: u32,
                     _p_discard_rectangles: *const Rect2D,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_set_discard_rectangle_ext)
@@ -8144,7 +8125,7 @@ impl ExtDiscardRectanglesFn {
         first_discard_rectangle: u32,
         discard_rectangle_count: u32,
         p_discard_rectangles: *const Rect2D,
-    ) -> c_void {
+    ) {
         (self.cmd_set_discard_rectangle_ext)(
             command_buffer,
             first_discard_rectangle,
@@ -8369,14 +8350,14 @@ pub type PFN_vkSetHdrMetadataEXT = extern "system" fn(
     swapchain_count: u32,
     p_swapchains: *const SwapchainKHR,
     p_metadata: *const HdrMetadataEXT,
-) -> c_void;
+);
 pub struct ExtHdrMetadataFn {
     pub set_hdr_metadata_ext: extern "system" fn(
         device: Device,
         swapchain_count: u32,
         p_swapchains: *const SwapchainKHR,
         p_metadata: *const HdrMetadataEXT,
-    ) -> c_void,
+    ),
 }
 unsafe impl Send for ExtHdrMetadataFn {}
 unsafe impl Sync for ExtHdrMetadataFn {}
@@ -8399,7 +8380,7 @@ impl ExtHdrMetadataFn {
                     _swapchain_count: u32,
                     _p_swapchains: *const SwapchainKHR,
                     _p_metadata: *const HdrMetadataEXT,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(set_hdr_metadata_ext)))
                 }
                 let raw_name = stringify!(vkSetHdrMetadataEXT);
@@ -8420,7 +8401,7 @@ impl ExtHdrMetadataFn {
         swapchain_count: u32,
         p_swapchains: *const SwapchainKHR,
         p_metadata: *const HdrMetadataEXT,
-    ) -> c_void {
+    ) {
         (self.set_hdr_metadata_ext)(device, swapchain_count, p_swapchains, p_metadata)
     }
 }
@@ -8540,18 +8521,16 @@ pub type PFN_vkCmdBeginRenderPass2 = extern "system" fn(
     command_buffer: CommandBuffer,
     p_render_pass_begin: *const RenderPassBeginInfo,
     p_subpass_begin_info: *const SubpassBeginInfo,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdNextSubpass2 = extern "system" fn(
     command_buffer: CommandBuffer,
     p_subpass_begin_info: *const SubpassBeginInfo,
     p_subpass_end_info: *const SubpassEndInfo,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdEndRenderPass2 = extern "system" fn(
-    command_buffer: CommandBuffer,
-    p_subpass_end_info: *const SubpassEndInfo,
-) -> c_void;
+pub type PFN_vkCmdEndRenderPass2 =
+    extern "system" fn(command_buffer: CommandBuffer, p_subpass_end_info: *const SubpassEndInfo);
 pub struct KhrCreateRenderpass2Fn {
     pub create_render_pass2_khr: extern "system" fn(
         device: Device,
@@ -8563,16 +8542,16 @@ pub struct KhrCreateRenderpass2Fn {
         command_buffer: CommandBuffer,
         p_render_pass_begin: *const RenderPassBeginInfo,
         p_subpass_begin_info: *const SubpassBeginInfo,
-    ) -> c_void,
+    ),
     pub cmd_next_subpass2_khr: extern "system" fn(
         command_buffer: CommandBuffer,
         p_subpass_begin_info: *const SubpassBeginInfo,
         p_subpass_end_info: *const SubpassEndInfo,
-    ) -> c_void,
+    ),
     pub cmd_end_render_pass2_khr: extern "system" fn(
         command_buffer: CommandBuffer,
         p_subpass_end_info: *const SubpassEndInfo,
-    ) -> c_void,
+    ),
 }
 unsafe impl Send for KhrCreateRenderpass2Fn {}
 unsafe impl Sync for KhrCreateRenderpass2Fn {}
@@ -8618,7 +8597,7 @@ impl KhrCreateRenderpass2Fn {
                     _command_buffer: CommandBuffer,
                     _p_render_pass_begin: *const RenderPassBeginInfo,
                     _p_subpass_begin_info: *const SubpassBeginInfo,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_begin_render_pass2_khr)
@@ -8638,7 +8617,7 @@ impl KhrCreateRenderpass2Fn {
                     _command_buffer: CommandBuffer,
                     _p_subpass_begin_info: *const SubpassBeginInfo,
                     _p_subpass_end_info: *const SubpassEndInfo,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_next_subpass2_khr)
@@ -8657,7 +8636,7 @@ impl KhrCreateRenderpass2Fn {
                 extern "system" fn cmd_end_render_pass2_khr(
                     _command_buffer: CommandBuffer,
                     _p_subpass_end_info: *const SubpassEndInfo,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_end_render_pass2_khr)
@@ -8690,7 +8669,7 @@ impl KhrCreateRenderpass2Fn {
         command_buffer: CommandBuffer,
         p_render_pass_begin: *const RenderPassBeginInfo,
         p_subpass_begin_info: *const SubpassBeginInfo,
-    ) -> c_void {
+    ) {
         (self.cmd_begin_render_pass2_khr)(command_buffer, p_render_pass_begin, p_subpass_begin_info)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdNextSubpass2KHR.html>"]
@@ -8699,7 +8678,7 @@ impl KhrCreateRenderpass2Fn {
         command_buffer: CommandBuffer,
         p_subpass_begin_info: *const SubpassBeginInfo,
         p_subpass_end_info: *const SubpassEndInfo,
-    ) -> c_void {
+    ) {
         (self.cmd_next_subpass2_khr)(command_buffer, p_subpass_begin_info, p_subpass_end_info)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdEndRenderPass2KHR.html>"]
@@ -8707,7 +8686,7 @@ impl KhrCreateRenderpass2Fn {
         &self,
         command_buffer: CommandBuffer,
         p_subpass_end_info: *const SubpassEndInfo,
-    ) -> c_void {
+    ) {
         (self.cmd_end_render_pass2_khr)(command_buffer, p_subpass_end_info)
     }
 }
@@ -8849,13 +8828,13 @@ pub type PFN_vkGetPhysicalDeviceExternalFenceProperties = extern "system" fn(
     physical_device: PhysicalDevice,
     p_external_fence_info: *const PhysicalDeviceExternalFenceInfo,
     p_external_fence_properties: *mut ExternalFenceProperties,
-) -> c_void;
+);
 pub struct KhrExternalFenceCapabilitiesFn {
     pub get_physical_device_external_fence_properties_khr: extern "system" fn(
         physical_device: PhysicalDevice,
         p_external_fence_info: *const PhysicalDeviceExternalFenceInfo,
         p_external_fence_properties: *mut ExternalFenceProperties,
-    ) -> c_void,
+    ),
 }
 unsafe impl Send for KhrExternalFenceCapabilitiesFn {}
 unsafe impl Sync for KhrExternalFenceCapabilitiesFn {}
@@ -8878,7 +8857,7 @@ impl KhrExternalFenceCapabilitiesFn {
                     _physical_device: PhysicalDevice,
                     _p_external_fence_info: *const PhysicalDeviceExternalFenceInfo,
                     _p_external_fence_properties: *mut ExternalFenceProperties,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(get_physical_device_external_fence_properties_khr)
@@ -8901,7 +8880,7 @@ impl KhrExternalFenceCapabilitiesFn {
         physical_device: PhysicalDevice,
         p_external_fence_info: *const PhysicalDeviceExternalFenceInfo,
         p_external_fence_properties: *mut ExternalFenceProperties,
-    ) -> c_void {
+    ) {
         (self.get_physical_device_external_fence_properties_khr)(
             physical_device,
             p_external_fence_info,
@@ -9222,13 +9201,12 @@ pub type PFN_vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR = extern "s
     physical_device: PhysicalDevice,
     p_performance_query_create_info: *const QueryPoolPerformanceCreateInfoKHR,
     p_num_passes: *mut u32,
-)
-    -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkAcquireProfilingLockKHR =
     extern "system" fn(device: Device, p_info: *const AcquireProfilingLockInfoKHR) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkReleaseProfilingLockKHR = extern "system" fn(device: Device) -> c_void;
+pub type PFN_vkReleaseProfilingLockKHR = extern "system" fn(device: Device);
 pub struct KhrPerformanceQueryFn {
     pub enumerate_physical_device_queue_family_performance_query_counters_khr:
         extern "system" fn(
@@ -9242,11 +9220,10 @@ pub struct KhrPerformanceQueryFn {
         physical_device: PhysicalDevice,
         p_performance_query_create_info: *const QueryPoolPerformanceCreateInfoKHR,
         p_num_passes: *mut u32,
-    )
-        -> c_void,
+    ),
     pub acquire_profiling_lock_khr:
         extern "system" fn(device: Device, p_info: *const AcquireProfilingLockInfoKHR) -> Result,
-    pub release_profiling_lock_khr: extern "system" fn(device: Device) -> c_void,
+    pub release_profiling_lock_khr: extern "system" fn(device: Device),
 }
 unsafe impl Send for KhrPerformanceQueryFn {}
 unsafe impl Sync for KhrPerformanceQueryFn {}
@@ -9298,7 +9275,7 @@ impl KhrPerformanceQueryFn {
                     _physical_device: PhysicalDevice,
                     _p_performance_query_create_info: *const QueryPoolPerformanceCreateInfoKHR,
                     _p_num_passes: *mut u32,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(get_physical_device_queue_family_performance_query_passes_khr)
@@ -9333,7 +9310,7 @@ impl KhrPerformanceQueryFn {
                 }
             },
             release_profiling_lock_khr: unsafe {
-                extern "system" fn release_profiling_lock_khr(_device: Device) -> c_void {
+                extern "system" fn release_profiling_lock_khr(_device: Device) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(release_profiling_lock_khr)
@@ -9373,7 +9350,7 @@ impl KhrPerformanceQueryFn {
         physical_device: PhysicalDevice,
         p_performance_query_create_info: *const QueryPoolPerformanceCreateInfoKHR,
         p_num_passes: *mut u32,
-    ) -> c_void {
+    ) {
         (self.get_physical_device_queue_family_performance_query_passes_khr)(
             physical_device,
             p_performance_query_create_info,
@@ -9389,7 +9366,7 @@ impl KhrPerformanceQueryFn {
         (self.acquire_profiling_lock_khr)(device, p_info)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkReleaseProfilingLockKHR.html>"]
-    pub unsafe fn release_profiling_lock_khr(&self, device: Device) -> c_void {
+    pub unsafe fn release_profiling_lock_khr(&self, device: Device) {
         (self.release_profiling_lock_khr)(device)
     }
 }
@@ -10194,25 +10171,20 @@ pub type PFN_vkSetDebugUtilsObjectTagEXT =
     extern "system" fn(device: Device, p_tag_info: *const DebugUtilsObjectTagInfoEXT) -> Result;
 #[allow(non_camel_case_types)]
 pub type PFN_vkQueueBeginDebugUtilsLabelEXT =
-    extern "system" fn(queue: Queue, p_label_info: *const DebugUtilsLabelEXT) -> c_void;
+    extern "system" fn(queue: Queue, p_label_info: *const DebugUtilsLabelEXT);
 #[allow(non_camel_case_types)]
-pub type PFN_vkQueueEndDebugUtilsLabelEXT = extern "system" fn(queue: Queue) -> c_void;
+pub type PFN_vkQueueEndDebugUtilsLabelEXT = extern "system" fn(queue: Queue);
 #[allow(non_camel_case_types)]
 pub type PFN_vkQueueInsertDebugUtilsLabelEXT =
-    extern "system" fn(queue: Queue, p_label_info: *const DebugUtilsLabelEXT) -> c_void;
+    extern "system" fn(queue: Queue, p_label_info: *const DebugUtilsLabelEXT);
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdBeginDebugUtilsLabelEXT = extern "system" fn(
-    command_buffer: CommandBuffer,
-    p_label_info: *const DebugUtilsLabelEXT,
-) -> c_void;
+pub type PFN_vkCmdBeginDebugUtilsLabelEXT =
+    extern "system" fn(command_buffer: CommandBuffer, p_label_info: *const DebugUtilsLabelEXT);
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdEndDebugUtilsLabelEXT =
-    extern "system" fn(command_buffer: CommandBuffer) -> c_void;
+pub type PFN_vkCmdEndDebugUtilsLabelEXT = extern "system" fn(command_buffer: CommandBuffer);
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdInsertDebugUtilsLabelEXT = extern "system" fn(
-    command_buffer: CommandBuffer,
-    p_label_info: *const DebugUtilsLabelEXT,
-) -> c_void;
+pub type PFN_vkCmdInsertDebugUtilsLabelEXT =
+    extern "system" fn(command_buffer: CommandBuffer, p_label_info: *const DebugUtilsLabelEXT);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateDebugUtilsMessengerEXT = extern "system" fn(
     instance: Instance,
@@ -10225,14 +10197,14 @@ pub type PFN_vkDestroyDebugUtilsMessengerEXT = extern "system" fn(
     instance: Instance,
     messenger: DebugUtilsMessengerEXT,
     p_allocator: *const AllocationCallbacks,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkSubmitDebugUtilsMessageEXT = extern "system" fn(
     instance: Instance,
     message_severity: DebugUtilsMessageSeverityFlagsEXT,
     message_types: DebugUtilsMessageTypeFlagsEXT,
     p_callback_data: *const DebugUtilsMessengerCallbackDataEXT,
-) -> c_void;
+);
 pub struct ExtDebugUtilsFn {
     pub set_debug_utils_object_name_ext: extern "system" fn(
         device: Device,
@@ -10241,19 +10213,15 @@ pub struct ExtDebugUtilsFn {
     pub set_debug_utils_object_tag_ext:
         extern "system" fn(device: Device, p_tag_info: *const DebugUtilsObjectTagInfoEXT) -> Result,
     pub queue_begin_debug_utils_label_ext:
-        extern "system" fn(queue: Queue, p_label_info: *const DebugUtilsLabelEXT) -> c_void,
-    pub queue_end_debug_utils_label_ext: extern "system" fn(queue: Queue) -> c_void,
+        extern "system" fn(queue: Queue, p_label_info: *const DebugUtilsLabelEXT),
+    pub queue_end_debug_utils_label_ext: extern "system" fn(queue: Queue),
     pub queue_insert_debug_utils_label_ext:
-        extern "system" fn(queue: Queue, p_label_info: *const DebugUtilsLabelEXT) -> c_void,
-    pub cmd_begin_debug_utils_label_ext: extern "system" fn(
-        command_buffer: CommandBuffer,
-        p_label_info: *const DebugUtilsLabelEXT,
-    ) -> c_void,
-    pub cmd_end_debug_utils_label_ext: extern "system" fn(command_buffer: CommandBuffer) -> c_void,
-    pub cmd_insert_debug_utils_label_ext: extern "system" fn(
-        command_buffer: CommandBuffer,
-        p_label_info: *const DebugUtilsLabelEXT,
-    ) -> c_void,
+        extern "system" fn(queue: Queue, p_label_info: *const DebugUtilsLabelEXT),
+    pub cmd_begin_debug_utils_label_ext:
+        extern "system" fn(command_buffer: CommandBuffer, p_label_info: *const DebugUtilsLabelEXT),
+    pub cmd_end_debug_utils_label_ext: extern "system" fn(command_buffer: CommandBuffer),
+    pub cmd_insert_debug_utils_label_ext:
+        extern "system" fn(command_buffer: CommandBuffer, p_label_info: *const DebugUtilsLabelEXT),
     pub create_debug_utils_messenger_ext: extern "system" fn(
         instance: Instance,
         p_create_info: *const DebugUtilsMessengerCreateInfoEXT,
@@ -10264,13 +10232,13 @@ pub struct ExtDebugUtilsFn {
         instance: Instance,
         messenger: DebugUtilsMessengerEXT,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void,
+    ),
     pub submit_debug_utils_message_ext: extern "system" fn(
         instance: Instance,
         message_severity: DebugUtilsMessageSeverityFlagsEXT,
         message_types: DebugUtilsMessageTypeFlagsEXT,
         p_callback_data: *const DebugUtilsMessengerCallbackDataEXT,
-    ) -> c_void,
+    ),
 }
 unsafe impl Send for ExtDebugUtilsFn {}
 unsafe impl Sync for ExtDebugUtilsFn {}
@@ -10339,7 +10307,7 @@ impl ExtDebugUtilsFn {
                 extern "system" fn queue_begin_debug_utils_label_ext(
                     _queue: Queue,
                     _p_label_info: *const DebugUtilsLabelEXT,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(queue_begin_debug_utils_label_ext)
@@ -10355,7 +10323,7 @@ impl ExtDebugUtilsFn {
                 }
             },
             queue_end_debug_utils_label_ext: unsafe {
-                extern "system" fn queue_end_debug_utils_label_ext(_queue: Queue) -> c_void {
+                extern "system" fn queue_end_debug_utils_label_ext(_queue: Queue) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(queue_end_debug_utils_label_ext)
@@ -10374,7 +10342,7 @@ impl ExtDebugUtilsFn {
                 extern "system" fn queue_insert_debug_utils_label_ext(
                     _queue: Queue,
                     _p_label_info: *const DebugUtilsLabelEXT,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(queue_insert_debug_utils_label_ext)
@@ -10393,7 +10361,7 @@ impl ExtDebugUtilsFn {
                 extern "system" fn cmd_begin_debug_utils_label_ext(
                     _command_buffer: CommandBuffer,
                     _p_label_info: *const DebugUtilsLabelEXT,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_begin_debug_utils_label_ext)
@@ -10409,9 +10377,7 @@ impl ExtDebugUtilsFn {
                 }
             },
             cmd_end_debug_utils_label_ext: unsafe {
-                extern "system" fn cmd_end_debug_utils_label_ext(
-                    _command_buffer: CommandBuffer,
-                ) -> c_void {
+                extern "system" fn cmd_end_debug_utils_label_ext(_command_buffer: CommandBuffer) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_end_debug_utils_label_ext)
@@ -10430,7 +10396,7 @@ impl ExtDebugUtilsFn {
                 extern "system" fn cmd_insert_debug_utils_label_ext(
                     _command_buffer: CommandBuffer,
                     _p_label_info: *const DebugUtilsLabelEXT,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_insert_debug_utils_label_ext)
@@ -10471,7 +10437,7 @@ impl ExtDebugUtilsFn {
                     _instance: Instance,
                     _messenger: DebugUtilsMessengerEXT,
                     _p_allocator: *const AllocationCallbacks,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(destroy_debug_utils_messenger_ext)
@@ -10492,7 +10458,7 @@ impl ExtDebugUtilsFn {
                     _message_severity: DebugUtilsMessageSeverityFlagsEXT,
                     _message_types: DebugUtilsMessageTypeFlagsEXT,
                     _p_callback_data: *const DebugUtilsMessengerCallbackDataEXT,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(submit_debug_utils_message_ext)
@@ -10530,11 +10496,11 @@ impl ExtDebugUtilsFn {
         &self,
         queue: Queue,
         p_label_info: *const DebugUtilsLabelEXT,
-    ) -> c_void {
+    ) {
         (self.queue_begin_debug_utils_label_ext)(queue, p_label_info)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkQueueEndDebugUtilsLabelEXT.html>"]
-    pub unsafe fn queue_end_debug_utils_label_ext(&self, queue: Queue) -> c_void {
+    pub unsafe fn queue_end_debug_utils_label_ext(&self, queue: Queue) {
         (self.queue_end_debug_utils_label_ext)(queue)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkQueueInsertDebugUtilsLabelEXT.html>"]
@@ -10542,7 +10508,7 @@ impl ExtDebugUtilsFn {
         &self,
         queue: Queue,
         p_label_info: *const DebugUtilsLabelEXT,
-    ) -> c_void {
+    ) {
         (self.queue_insert_debug_utils_label_ext)(queue, p_label_info)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdBeginDebugUtilsLabelEXT.html>"]
@@ -10550,11 +10516,11 @@ impl ExtDebugUtilsFn {
         &self,
         command_buffer: CommandBuffer,
         p_label_info: *const DebugUtilsLabelEXT,
-    ) -> c_void {
+    ) {
         (self.cmd_begin_debug_utils_label_ext)(command_buffer, p_label_info)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdEndDebugUtilsLabelEXT.html>"]
-    pub unsafe fn cmd_end_debug_utils_label_ext(&self, command_buffer: CommandBuffer) -> c_void {
+    pub unsafe fn cmd_end_debug_utils_label_ext(&self, command_buffer: CommandBuffer) {
         (self.cmd_end_debug_utils_label_ext)(command_buffer)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdInsertDebugUtilsLabelEXT.html>"]
@@ -10562,7 +10528,7 @@ impl ExtDebugUtilsFn {
         &self,
         command_buffer: CommandBuffer,
         p_label_info: *const DebugUtilsLabelEXT,
-    ) -> c_void {
+    ) {
         (self.cmd_insert_debug_utils_label_ext)(command_buffer, p_label_info)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateDebugUtilsMessengerEXT.html>"]
@@ -10581,7 +10547,7 @@ impl ExtDebugUtilsFn {
         instance: Instance,
         messenger: DebugUtilsMessengerEXT,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void {
+    ) {
         (self.destroy_debug_utils_messenger_ext)(instance, messenger, p_allocator)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkSubmitDebugUtilsMessageEXT.html>"]
@@ -10591,7 +10557,7 @@ impl ExtDebugUtilsFn {
         message_severity: DebugUtilsMessageSeverityFlagsEXT,
         message_types: DebugUtilsMessageTypeFlagsEXT,
         p_callback_data: *const DebugUtilsMessengerCallbackDataEXT,
-    ) -> c_void {
+    ) {
         (self.submit_debug_utils_message_ext)(
             instance,
             message_severity,
@@ -11122,23 +11088,23 @@ impl ExtSampleLocationsFn {
 pub type PFN_vkCmdSetSampleLocationsEXT = extern "system" fn(
     command_buffer: CommandBuffer,
     p_sample_locations_info: *const SampleLocationsInfoEXT,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceMultisamplePropertiesEXT = extern "system" fn(
     physical_device: PhysicalDevice,
     samples: SampleCountFlags,
     p_multisample_properties: *mut MultisamplePropertiesEXT,
-) -> c_void;
+);
 pub struct ExtSampleLocationsFn {
     pub cmd_set_sample_locations_ext: extern "system" fn(
         command_buffer: CommandBuffer,
         p_sample_locations_info: *const SampleLocationsInfoEXT,
-    ) -> c_void,
+    ),
     pub get_physical_device_multisample_properties_ext: extern "system" fn(
         physical_device: PhysicalDevice,
         samples: SampleCountFlags,
         p_multisample_properties: *mut MultisamplePropertiesEXT,
-    ) -> c_void,
+    ),
 }
 unsafe impl Send for ExtSampleLocationsFn {}
 unsafe impl Sync for ExtSampleLocationsFn {}
@@ -11161,7 +11127,7 @@ impl ExtSampleLocationsFn {
                 extern "system" fn cmd_set_sample_locations_ext(
                     _command_buffer: CommandBuffer,
                     _p_sample_locations_info: *const SampleLocationsInfoEXT,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_set_sample_locations_ext)
@@ -11181,7 +11147,7 @@ impl ExtSampleLocationsFn {
                     _physical_device: PhysicalDevice,
                     _samples: SampleCountFlags,
                     _p_multisample_properties: *mut MultisamplePropertiesEXT,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(get_physical_device_multisample_properties_ext)
@@ -11203,7 +11169,7 @@ impl ExtSampleLocationsFn {
         &self,
         command_buffer: CommandBuffer,
         p_sample_locations_info: *const SampleLocationsInfoEXT,
-    ) -> c_void {
+    ) {
         (self.cmd_set_sample_locations_ext)(command_buffer, p_sample_locations_info)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceMultisamplePropertiesEXT.html>"]
@@ -11212,7 +11178,7 @@ impl ExtSampleLocationsFn {
         physical_device: PhysicalDevice,
         samples: SampleCountFlags,
         p_multisample_properties: *mut MultisamplePropertiesEXT,
-    ) -> c_void {
+    ) {
         (self.get_physical_device_multisample_properties_ext)(
             physical_device,
             samples,
@@ -11283,37 +11249,37 @@ pub type PFN_vkGetImageMemoryRequirements2 = extern "system" fn(
     device: Device,
     p_info: *const ImageMemoryRequirementsInfo2,
     p_memory_requirements: *mut MemoryRequirements2,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetBufferMemoryRequirements2 = extern "system" fn(
     device: Device,
     p_info: *const BufferMemoryRequirementsInfo2,
     p_memory_requirements: *mut MemoryRequirements2,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetImageSparseMemoryRequirements2 = extern "system" fn(
     device: Device,
     p_info: *const ImageSparseMemoryRequirementsInfo2,
     p_sparse_memory_requirement_count: *mut u32,
     p_sparse_memory_requirements: *mut SparseImageMemoryRequirements2,
-) -> c_void;
+);
 pub struct KhrGetMemoryRequirements2Fn {
     pub get_image_memory_requirements2_khr: extern "system" fn(
         device: Device,
         p_info: *const ImageMemoryRequirementsInfo2,
         p_memory_requirements: *mut MemoryRequirements2,
-    ) -> c_void,
+    ),
     pub get_buffer_memory_requirements2_khr: extern "system" fn(
         device: Device,
         p_info: *const BufferMemoryRequirementsInfo2,
         p_memory_requirements: *mut MemoryRequirements2,
-    ) -> c_void,
+    ),
     pub get_image_sparse_memory_requirements2_khr: extern "system" fn(
         device: Device,
         p_info: *const ImageSparseMemoryRequirementsInfo2,
         p_sparse_memory_requirement_count: *mut u32,
         p_sparse_memory_requirements: *mut SparseImageMemoryRequirements2,
-    ) -> c_void,
+    ),
 }
 unsafe impl Send for KhrGetMemoryRequirements2Fn {}
 unsafe impl Sync for KhrGetMemoryRequirements2Fn {}
@@ -11338,7 +11304,7 @@ impl KhrGetMemoryRequirements2Fn {
                     _device: Device,
                     _p_info: *const ImageMemoryRequirementsInfo2,
                     _p_memory_requirements: *mut MemoryRequirements2,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(get_image_memory_requirements2_khr)
@@ -11358,7 +11324,7 @@ impl KhrGetMemoryRequirements2Fn {
                     _device: Device,
                     _p_info: *const BufferMemoryRequirementsInfo2,
                     _p_memory_requirements: *mut MemoryRequirements2,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(get_buffer_memory_requirements2_khr)
@@ -11379,7 +11345,7 @@ impl KhrGetMemoryRequirements2Fn {
                     _p_info: *const ImageSparseMemoryRequirementsInfo2,
                     _p_sparse_memory_requirement_count: *mut u32,
                     _p_sparse_memory_requirements: *mut SparseImageMemoryRequirements2,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(get_image_sparse_memory_requirements2_khr)
@@ -11402,7 +11368,7 @@ impl KhrGetMemoryRequirements2Fn {
         device: Device,
         p_info: *const ImageMemoryRequirementsInfo2,
         p_memory_requirements: *mut MemoryRequirements2,
-    ) -> c_void {
+    ) {
         (self.get_image_memory_requirements2_khr)(device, p_info, p_memory_requirements)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetBufferMemoryRequirements2KHR.html>"]
@@ -11411,7 +11377,7 @@ impl KhrGetMemoryRequirements2Fn {
         device: Device,
         p_info: *const BufferMemoryRequirementsInfo2,
         p_memory_requirements: *mut MemoryRequirements2,
-    ) -> c_void {
+    ) {
         (self.get_buffer_memory_requirements2_khr)(device, p_info, p_memory_requirements)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetImageSparseMemoryRequirements2KHR.html>"]
@@ -11421,7 +11387,7 @@ impl KhrGetMemoryRequirements2Fn {
         p_info: *const ImageSparseMemoryRequirementsInfo2,
         p_sparse_memory_requirement_count: *mut u32,
         p_sparse_memory_requirements: *mut SparseImageMemoryRequirements2,
-    ) -> c_void {
+    ) {
         (self.get_image_sparse_memory_requirements2_khr)(
             device,
             p_info,
@@ -11751,14 +11717,14 @@ pub type PFN_vkDestroyAccelerationStructureKHR = extern "system" fn(
     device: Device,
     acceleration_structure: AccelerationStructureKHR,
     p_allocator: *const AllocationCallbacks,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdBuildAccelerationStructuresKHR = extern "system" fn(
     command_buffer: CommandBuffer,
     info_count: u32,
     p_infos: *const AccelerationStructureBuildGeometryInfoKHR,
     pp_build_range_infos: *const *const AccelerationStructureBuildRangeInfoKHR,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdBuildAccelerationStructuresIndirectKHR = extern "system" fn(
     command_buffer: CommandBuffer,
@@ -11767,7 +11733,7 @@ pub type PFN_vkCmdBuildAccelerationStructuresIndirectKHR = extern "system" fn(
     p_indirect_device_addresses: *const DeviceAddress,
     p_indirect_strides: *const u32,
     pp_max_primitive_counts: *const *const u32,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkBuildAccelerationStructuresKHR = extern "system" fn(
     device: Device,
@@ -11808,17 +11774,17 @@ pub type PFN_vkWriteAccelerationStructuresPropertiesKHR = extern "system" fn(
 pub type PFN_vkCmdCopyAccelerationStructureKHR = extern "system" fn(
     command_buffer: CommandBuffer,
     p_info: *const CopyAccelerationStructureInfoKHR,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdCopyAccelerationStructureToMemoryKHR = extern "system" fn(
     command_buffer: CommandBuffer,
     p_info: *const CopyAccelerationStructureToMemoryInfoKHR,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdCopyMemoryToAccelerationStructureKHR = extern "system" fn(
     command_buffer: CommandBuffer,
     p_info: *const CopyMemoryToAccelerationStructureInfoKHR,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetAccelerationStructureDeviceAddressKHR = extern "system" fn(
     device: Device,
@@ -11832,13 +11798,13 @@ pub type PFN_vkCmdWriteAccelerationStructuresPropertiesKHR = extern "system" fn(
     query_type: QueryType,
     query_pool: QueryPool,
     first_query: u32,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetDeviceAccelerationStructureCompatibilityKHR = extern "system" fn(
     device: Device,
     p_version_info: *const AccelerationStructureVersionInfoKHR,
     p_compatibility: *mut AccelerationStructureCompatibilityKHR,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetAccelerationStructureBuildSizesKHR = extern "system" fn(
     device: Device,
@@ -11846,7 +11812,7 @@ pub type PFN_vkGetAccelerationStructureBuildSizesKHR = extern "system" fn(
     p_build_info: *const AccelerationStructureBuildGeometryInfoKHR,
     p_max_primitive_counts: *const u32,
     p_size_info: *mut AccelerationStructureBuildSizesInfoKHR,
-) -> c_void;
+);
 pub struct KhrAccelerationStructureFn {
     pub create_acceleration_structure_khr: extern "system" fn(
         device: Device,
@@ -11858,13 +11824,13 @@ pub struct KhrAccelerationStructureFn {
         device: Device,
         acceleration_structure: AccelerationStructureKHR,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void,
+    ),
     pub cmd_build_acceleration_structures_khr: extern "system" fn(
         command_buffer: CommandBuffer,
         info_count: u32,
         p_infos: *const AccelerationStructureBuildGeometryInfoKHR,
         pp_build_range_infos: *const *const AccelerationStructureBuildRangeInfoKHR,
-    ) -> c_void,
+    ),
     pub cmd_build_acceleration_structures_indirect_khr: extern "system" fn(
         command_buffer: CommandBuffer,
         info_count: u32,
@@ -11872,7 +11838,7 @@ pub struct KhrAccelerationStructureFn {
         p_indirect_device_addresses: *const DeviceAddress,
         p_indirect_strides: *const u32,
         pp_max_primitive_counts: *const *const u32,
-    ) -> c_void,
+    ),
     pub build_acceleration_structures_khr: extern "system" fn(
         device: Device,
         deferred_operation: DeferredOperationKHR,
@@ -11907,15 +11873,15 @@ pub struct KhrAccelerationStructureFn {
     pub cmd_copy_acceleration_structure_khr: extern "system" fn(
         command_buffer: CommandBuffer,
         p_info: *const CopyAccelerationStructureInfoKHR,
-    ) -> c_void,
+    ),
     pub cmd_copy_acceleration_structure_to_memory_khr: extern "system" fn(
         command_buffer: CommandBuffer,
         p_info: *const CopyAccelerationStructureToMemoryInfoKHR,
-    ) -> c_void,
+    ),
     pub cmd_copy_memory_to_acceleration_structure_khr: extern "system" fn(
         command_buffer: CommandBuffer,
         p_info: *const CopyMemoryToAccelerationStructureInfoKHR,
-    ) -> c_void,
+    ),
     pub get_acceleration_structure_device_address_khr: extern "system" fn(
         device: Device,
         p_info: *const AccelerationStructureDeviceAddressInfoKHR,
@@ -11927,19 +11893,19 @@ pub struct KhrAccelerationStructureFn {
         query_type: QueryType,
         query_pool: QueryPool,
         first_query: u32,
-    ) -> c_void,
+    ),
     pub get_device_acceleration_structure_compatibility_khr: extern "system" fn(
         device: Device,
         p_version_info: *const AccelerationStructureVersionInfoKHR,
         p_compatibility: *mut AccelerationStructureCompatibilityKHR,
-    ) -> c_void,
+    ),
     pub get_acceleration_structure_build_sizes_khr: extern "system" fn(
         device: Device,
         build_type: AccelerationStructureBuildTypeKHR,
         p_build_info: *const AccelerationStructureBuildGeometryInfoKHR,
         p_max_primitive_counts: *const u32,
         p_size_info: *mut AccelerationStructureBuildSizesInfoKHR,
-    ) -> c_void,
+    ),
 }
 unsafe impl Send for KhrAccelerationStructureFn {}
 unsafe impl Sync for KhrAccelerationStructureFn {}
@@ -12007,7 +11973,7 @@ impl KhrAccelerationStructureFn {
                     _device: Device,
                     _acceleration_structure: AccelerationStructureKHR,
                     _p_allocator: *const AllocationCallbacks,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(destroy_acceleration_structure_khr)
@@ -12028,7 +11994,7 @@ impl KhrAccelerationStructureFn {
                     _info_count: u32,
                     _p_infos: *const AccelerationStructureBuildGeometryInfoKHR,
                     _pp_build_range_infos: *const *const AccelerationStructureBuildRangeInfoKHR,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_build_acceleration_structures_khr)
@@ -12051,7 +12017,7 @@ impl KhrAccelerationStructureFn {
                     _p_indirect_device_addresses: *const DeviceAddress,
                     _p_indirect_strides: *const u32,
                     _pp_max_primitive_counts: *const *const u32,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_build_acceleration_structures_indirect_khr)
@@ -12176,7 +12142,7 @@ impl KhrAccelerationStructureFn {
                 extern "system" fn cmd_copy_acceleration_structure_khr(
                     _command_buffer: CommandBuffer,
                     _p_info: *const CopyAccelerationStructureInfoKHR,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_copy_acceleration_structure_khr)
@@ -12195,7 +12161,7 @@ impl KhrAccelerationStructureFn {
                 extern "system" fn cmd_copy_acceleration_structure_to_memory_khr(
                     _command_buffer: CommandBuffer,
                     _p_info: *const CopyAccelerationStructureToMemoryInfoKHR,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_copy_acceleration_structure_to_memory_khr)
@@ -12214,7 +12180,7 @@ impl KhrAccelerationStructureFn {
                 extern "system" fn cmd_copy_memory_to_acceleration_structure_khr(
                     _command_buffer: CommandBuffer,
                     _p_info: *const CopyMemoryToAccelerationStructureInfoKHR,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_copy_memory_to_acceleration_structure_khr)
@@ -12256,7 +12222,7 @@ impl KhrAccelerationStructureFn {
                     _query_type: QueryType,
                     _query_pool: QueryPool,
                     _first_query: u32,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_write_acceleration_structures_properties_khr)
@@ -12276,7 +12242,7 @@ impl KhrAccelerationStructureFn {
                     _device: Device,
                     _p_version_info: *const AccelerationStructureVersionInfoKHR,
                     _p_compatibility: *mut AccelerationStructureCompatibilityKHR,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(get_device_acceleration_structure_compatibility_khr)
@@ -12298,7 +12264,7 @@ impl KhrAccelerationStructureFn {
                     _p_build_info: *const AccelerationStructureBuildGeometryInfoKHR,
                     _p_max_primitive_counts: *const u32,
                     _p_size_info: *mut AccelerationStructureBuildSizesInfoKHR,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(get_acceleration_structure_build_sizes_khr)
@@ -12336,7 +12302,7 @@ impl KhrAccelerationStructureFn {
         device: Device,
         acceleration_structure: AccelerationStructureKHR,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void {
+    ) {
         (self.destroy_acceleration_structure_khr)(device, acceleration_structure, p_allocator)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdBuildAccelerationStructuresKHR.html>"]
@@ -12346,7 +12312,7 @@ impl KhrAccelerationStructureFn {
         info_count: u32,
         p_infos: *const AccelerationStructureBuildGeometryInfoKHR,
         pp_build_range_infos: *const *const AccelerationStructureBuildRangeInfoKHR,
-    ) -> c_void {
+    ) {
         (self.cmd_build_acceleration_structures_khr)(
             command_buffer,
             info_count,
@@ -12363,7 +12329,7 @@ impl KhrAccelerationStructureFn {
         p_indirect_device_addresses: *const DeviceAddress,
         p_indirect_strides: *const u32,
         pp_max_primitive_counts: *const *const u32,
-    ) -> c_void {
+    ) {
         (self.cmd_build_acceleration_structures_indirect_khr)(
             command_buffer,
             info_count,
@@ -12443,7 +12409,7 @@ impl KhrAccelerationStructureFn {
         &self,
         command_buffer: CommandBuffer,
         p_info: *const CopyAccelerationStructureInfoKHR,
-    ) -> c_void {
+    ) {
         (self.cmd_copy_acceleration_structure_khr)(command_buffer, p_info)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdCopyAccelerationStructureToMemoryKHR.html>"]
@@ -12451,7 +12417,7 @@ impl KhrAccelerationStructureFn {
         &self,
         command_buffer: CommandBuffer,
         p_info: *const CopyAccelerationStructureToMemoryInfoKHR,
-    ) -> c_void {
+    ) {
         (self.cmd_copy_acceleration_structure_to_memory_khr)(command_buffer, p_info)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdCopyMemoryToAccelerationStructureKHR.html>"]
@@ -12459,7 +12425,7 @@ impl KhrAccelerationStructureFn {
         &self,
         command_buffer: CommandBuffer,
         p_info: *const CopyMemoryToAccelerationStructureInfoKHR,
-    ) -> c_void {
+    ) {
         (self.cmd_copy_memory_to_acceleration_structure_khr)(command_buffer, p_info)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetAccelerationStructureDeviceAddressKHR.html>"]
@@ -12479,7 +12445,7 @@ impl KhrAccelerationStructureFn {
         query_type: QueryType,
         query_pool: QueryPool,
         first_query: u32,
-    ) -> c_void {
+    ) {
         (self.cmd_write_acceleration_structures_properties_khr)(
             command_buffer,
             acceleration_structure_count,
@@ -12495,7 +12461,7 @@ impl KhrAccelerationStructureFn {
         device: Device,
         p_version_info: *const AccelerationStructureVersionInfoKHR,
         p_compatibility: *mut AccelerationStructureCompatibilityKHR,
-    ) -> c_void {
+    ) {
         (self.get_device_acceleration_structure_compatibility_khr)(
             device,
             p_version_info,
@@ -12510,7 +12476,7 @@ impl KhrAccelerationStructureFn {
         p_build_info: *const AccelerationStructureBuildGeometryInfoKHR,
         p_max_primitive_counts: *const u32,
         p_size_info: *mut AccelerationStructureBuildSizesInfoKHR,
-    ) -> c_void {
+    ) {
         (self.get_acceleration_structure_build_sizes_khr)(
             device,
             build_type,
@@ -12647,7 +12613,7 @@ pub type PFN_vkCmdTraceRaysKHR = extern "system" fn(
     width: u32,
     height: u32,
     depth: u32,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateRayTracingPipelinesKHR = extern "system" fn(
     device: Device,
@@ -12684,7 +12650,7 @@ pub type PFN_vkCmdTraceRaysIndirectKHR = extern "system" fn(
     p_hit_shader_binding_table: *const StridedDeviceAddressRegionKHR,
     p_callable_shader_binding_table: *const StridedDeviceAddressRegionKHR,
     indirect_device_address: DeviceAddress,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetRayTracingShaderGroupStackSizeKHR = extern "system" fn(
     device: Device,
@@ -12694,7 +12660,7 @@ pub type PFN_vkGetRayTracingShaderGroupStackSizeKHR = extern "system" fn(
 ) -> DeviceSize;
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetRayTracingPipelineStackSizeKHR =
-    extern "system" fn(command_buffer: CommandBuffer, pipeline_stack_size: u32) -> c_void;
+    extern "system" fn(command_buffer: CommandBuffer, pipeline_stack_size: u32);
 pub struct KhrRayTracingPipelineFn {
     pub cmd_trace_rays_khr: extern "system" fn(
         command_buffer: CommandBuffer,
@@ -12705,7 +12671,7 @@ pub struct KhrRayTracingPipelineFn {
         width: u32,
         height: u32,
         depth: u32,
-    ) -> c_void,
+    ),
     pub create_ray_tracing_pipelines_khr: extern "system" fn(
         device: Device,
         deferred_operation: DeferredOperationKHR,
@@ -12738,7 +12704,7 @@ pub struct KhrRayTracingPipelineFn {
         p_hit_shader_binding_table: *const StridedDeviceAddressRegionKHR,
         p_callable_shader_binding_table: *const StridedDeviceAddressRegionKHR,
         indirect_device_address: DeviceAddress,
-    ) -> c_void,
+    ),
     pub get_ray_tracing_shader_group_stack_size_khr: extern "system" fn(
         device: Device,
         pipeline: Pipeline,
@@ -12746,7 +12712,7 @@ pub struct KhrRayTracingPipelineFn {
         group_shader: ShaderGroupShaderKHR,
     ) -> DeviceSize,
     pub cmd_set_ray_tracing_pipeline_stack_size_khr:
-        extern "system" fn(command_buffer: CommandBuffer, pipeline_stack_size: u32) -> c_void,
+        extern "system" fn(command_buffer: CommandBuffer, pipeline_stack_size: u32),
 }
 unsafe impl Send for KhrRayTracingPipelineFn {}
 unsafe impl Sync for KhrRayTracingPipelineFn {}
@@ -12782,7 +12748,7 @@ impl KhrRayTracingPipelineFn {
                     _width: u32,
                     _height: u32,
                     _depth: u32,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_trace_rays_khr)))
                 }
                 let raw_name = stringify!(vkCmdTraceRaysKHR);
@@ -12872,7 +12838,7 @@ impl KhrRayTracingPipelineFn {
                     _p_hit_shader_binding_table: *const StridedDeviceAddressRegionKHR,
                     _p_callable_shader_binding_table: *const StridedDeviceAddressRegionKHR,
                     _indirect_device_address: DeviceAddress,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_trace_rays_indirect_khr)
@@ -12912,7 +12878,7 @@ impl KhrRayTracingPipelineFn {
                 extern "system" fn cmd_set_ray_tracing_pipeline_stack_size_khr(
                     _command_buffer: CommandBuffer,
                     _pipeline_stack_size: u32,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_set_ray_tracing_pipeline_stack_size_khr)
@@ -12940,7 +12906,7 @@ impl KhrRayTracingPipelineFn {
         width: u32,
         height: u32,
         depth: u32,
-    ) -> c_void {
+    ) {
         (self.cmd_trace_rays_khr)(
             command_buffer,
             p_raygen_shader_binding_table,
@@ -13020,7 +12986,7 @@ impl KhrRayTracingPipelineFn {
         p_hit_shader_binding_table: *const StridedDeviceAddressRegionKHR,
         p_callable_shader_binding_table: *const StridedDeviceAddressRegionKHR,
         indirect_device_address: DeviceAddress,
-    ) -> c_void {
+    ) {
         (self.cmd_trace_rays_indirect_khr)(
             command_buffer,
             p_raygen_shader_binding_table,
@@ -13045,7 +13011,7 @@ impl KhrRayTracingPipelineFn {
         &self,
         command_buffer: CommandBuffer,
         pipeline_stack_size: u32,
-    ) -> c_void {
+    ) {
         (self.cmd_set_ray_tracing_pipeline_stack_size_khr)(command_buffer, pipeline_stack_size)
     }
 }
@@ -13315,7 +13281,7 @@ pub type PFN_vkDestroySamplerYcbcrConversion = extern "system" fn(
     device: Device,
     ycbcr_conversion: SamplerYcbcrConversion,
     p_allocator: *const AllocationCallbacks,
-) -> c_void;
+);
 pub struct KhrSamplerYcbcrConversionFn {
     pub create_sampler_ycbcr_conversion_khr: extern "system" fn(
         device: Device,
@@ -13327,7 +13293,7 @@ pub struct KhrSamplerYcbcrConversionFn {
         device: Device,
         ycbcr_conversion: SamplerYcbcrConversion,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void,
+    ),
 }
 unsafe impl Send for KhrSamplerYcbcrConversionFn {}
 unsafe impl Sync for KhrSamplerYcbcrConversionFn {}
@@ -13371,7 +13337,7 @@ impl KhrSamplerYcbcrConversionFn {
                     _device: Device,
                     _ycbcr_conversion: SamplerYcbcrConversion,
                     _p_allocator: *const AllocationCallbacks,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(destroy_sampler_ycbcr_conversion_khr)
@@ -13409,7 +13375,7 @@ impl KhrSamplerYcbcrConversionFn {
         device: Device,
         ycbcr_conversion: SamplerYcbcrConversion,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void {
+    ) {
         (self.destroy_sampler_ycbcr_conversion_khr)(device, ycbcr_conversion, p_allocator)
     }
 }
@@ -13961,7 +13927,7 @@ pub type PFN_vkDestroyValidationCacheEXT = extern "system" fn(
     device: Device,
     validation_cache: ValidationCacheEXT,
     p_allocator: *const AllocationCallbacks,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkMergeValidationCachesEXT = extern "system" fn(
     device: Device,
@@ -13987,7 +13953,7 @@ pub struct ExtValidationCacheFn {
         device: Device,
         validation_cache: ValidationCacheEXT,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void,
+    ),
     pub merge_validation_caches_ext: extern "system" fn(
         device: Device,
         dst_cache: ValidationCacheEXT,
@@ -14045,7 +14011,7 @@ impl ExtValidationCacheFn {
                     _device: Device,
                     _validation_cache: ValidationCacheEXT,
                     _p_allocator: *const AllocationCallbacks,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(destroy_validation_cache_ext)
@@ -14120,7 +14086,7 @@ impl ExtValidationCacheFn {
         device: Device,
         validation_cache: ValidationCacheEXT,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void {
+    ) {
         (self.destroy_validation_cache_ext)(device, validation_cache, p_allocator)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkMergeValidationCachesEXT.html>"]
@@ -14301,39 +14267,39 @@ pub type PFN_vkCmdBindShadingRateImageNV = extern "system" fn(
     command_buffer: CommandBuffer,
     image_view: ImageView,
     image_layout: ImageLayout,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetViewportShadingRatePaletteNV = extern "system" fn(
     command_buffer: CommandBuffer,
     first_viewport: u32,
     viewport_count: u32,
     p_shading_rate_palettes: *const ShadingRatePaletteNV,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetCoarseSampleOrderNV = extern "system" fn(
     command_buffer: CommandBuffer,
     sample_order_type: CoarseSampleOrderTypeNV,
     custom_sample_order_count: u32,
     p_custom_sample_orders: *const CoarseSampleOrderCustomNV,
-) -> c_void;
+);
 pub struct NvShadingRateImageFn {
     pub cmd_bind_shading_rate_image_nv: extern "system" fn(
         command_buffer: CommandBuffer,
         image_view: ImageView,
         image_layout: ImageLayout,
-    ) -> c_void,
+    ),
     pub cmd_set_viewport_shading_rate_palette_nv: extern "system" fn(
         command_buffer: CommandBuffer,
         first_viewport: u32,
         viewport_count: u32,
         p_shading_rate_palettes: *const ShadingRatePaletteNV,
-    ) -> c_void,
+    ),
     pub cmd_set_coarse_sample_order_nv: extern "system" fn(
         command_buffer: CommandBuffer,
         sample_order_type: CoarseSampleOrderTypeNV,
         custom_sample_order_count: u32,
         p_custom_sample_orders: *const CoarseSampleOrderCustomNV,
-    ) -> c_void,
+    ),
 }
 unsafe impl Send for NvShadingRateImageFn {}
 unsafe impl Sync for NvShadingRateImageFn {}
@@ -14357,7 +14323,7 @@ impl NvShadingRateImageFn {
                     _command_buffer: CommandBuffer,
                     _image_view: ImageView,
                     _image_layout: ImageLayout,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_bind_shading_rate_image_nv)
@@ -14378,7 +14344,7 @@ impl NvShadingRateImageFn {
                     _first_viewport: u32,
                     _viewport_count: u32,
                     _p_shading_rate_palettes: *const ShadingRatePaletteNV,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_set_viewport_shading_rate_palette_nv)
@@ -14399,7 +14365,7 @@ impl NvShadingRateImageFn {
                     _sample_order_type: CoarseSampleOrderTypeNV,
                     _custom_sample_order_count: u32,
                     _p_custom_sample_orders: *const CoarseSampleOrderCustomNV,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_set_coarse_sample_order_nv)
@@ -14422,7 +14388,7 @@ impl NvShadingRateImageFn {
         command_buffer: CommandBuffer,
         image_view: ImageView,
         image_layout: ImageLayout,
-    ) -> c_void {
+    ) {
         (self.cmd_bind_shading_rate_image_nv)(command_buffer, image_view, image_layout)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetViewportShadingRatePaletteNV.html>"]
@@ -14432,7 +14398,7 @@ impl NvShadingRateImageFn {
         first_viewport: u32,
         viewport_count: u32,
         p_shading_rate_palettes: *const ShadingRatePaletteNV,
-    ) -> c_void {
+    ) {
         (self.cmd_set_viewport_shading_rate_palette_nv)(
             command_buffer,
             first_viewport,
@@ -14447,7 +14413,7 @@ impl NvShadingRateImageFn {
         sample_order_type: CoarseSampleOrderTypeNV,
         custom_sample_order_count: u32,
         p_custom_sample_orders: *const CoarseSampleOrderCustomNV,
-    ) -> c_void {
+    ) {
         (self.cmd_set_coarse_sample_order_nv)(
             command_buffer,
             sample_order_type,
@@ -14516,13 +14482,13 @@ pub type PFN_vkDestroyAccelerationStructureNV = extern "system" fn(
     device: Device,
     acceleration_structure: AccelerationStructureNV,
     p_allocator: *const AllocationCallbacks,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetAccelerationStructureMemoryRequirementsNV = extern "system" fn(
     device: Device,
     p_info: *const AccelerationStructureMemoryRequirementsInfoNV,
     p_memory_requirements: *mut MemoryRequirements2KHR,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkBindAccelerationStructureMemoryNV = extern "system" fn(
     device: Device,
@@ -14540,14 +14506,14 @@ pub type PFN_vkCmdBuildAccelerationStructureNV = extern "system" fn(
     src: AccelerationStructureNV,
     scratch: Buffer,
     scratch_offset: DeviceSize,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdCopyAccelerationStructureNV = extern "system" fn(
     command_buffer: CommandBuffer,
     dst: AccelerationStructureNV,
     src: AccelerationStructureNV,
     mode: CopyAccelerationStructureModeKHR,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdTraceRaysNV = extern "system" fn(
     command_buffer: CommandBuffer,
@@ -14565,7 +14531,7 @@ pub type PFN_vkCmdTraceRaysNV = extern "system" fn(
     width: u32,
     height: u32,
     depth: u32,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateRayTracingPipelinesNV = extern "system" fn(
     device: Device,
@@ -14599,7 +14565,7 @@ pub type PFN_vkCompileDeferredNV = extern "system" fn(
     query_type: QueryType,
     query_pool: QueryPool,
     first_query: u32,
-) -> c_void;
+);
 pub struct NvRayTracingFn {
     pub create_acceleration_structure_nv: extern "system" fn(
         device: Device,
@@ -14611,12 +14577,12 @@ pub struct NvRayTracingFn {
         device: Device,
         acceleration_structure: AccelerationStructureNV,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void,
+    ),
     pub get_acceleration_structure_memory_requirements_nv: extern "system" fn(
         device: Device,
         p_info: *const AccelerationStructureMemoryRequirementsInfoNV,
         p_memory_requirements: *mut MemoryRequirements2KHR,
-    ) -> c_void,
+    ),
     pub bind_acceleration_structure_memory_nv: extern "system" fn(
         device: Device,
         bind_info_count: u32,
@@ -14632,13 +14598,13 @@ pub struct NvRayTracingFn {
         src: AccelerationStructureNV,
         scratch: Buffer,
         scratch_offset: DeviceSize,
-    ) -> c_void,
+    ),
     pub cmd_copy_acceleration_structure_nv: extern "system" fn(
         command_buffer: CommandBuffer,
         dst: AccelerationStructureNV,
         src: AccelerationStructureNV,
         mode: CopyAccelerationStructureModeKHR,
-    ) -> c_void,
+    ),
     pub cmd_trace_rays_nv: extern "system" fn(
         command_buffer: CommandBuffer,
         raygen_shader_binding_table_buffer: Buffer,
@@ -14655,7 +14621,7 @@ pub struct NvRayTracingFn {
         width: u32,
         height: u32,
         depth: u32,
-    ) -> c_void,
+    ),
     pub create_ray_tracing_pipelines_nv: extern "system" fn(
         device: Device,
         pipeline_cache: PipelineCache,
@@ -14685,7 +14651,7 @@ pub struct NvRayTracingFn {
         query_type: QueryType,
         query_pool: QueryPool,
         first_query: u32,
-    ) -> c_void,
+    ),
     pub compile_deferred_nv:
         extern "system" fn(device: Device, pipeline: Pipeline, shader: u32) -> Result,
 }
@@ -14743,7 +14709,7 @@ impl NvRayTracingFn {
                     _device: Device,
                     _acceleration_structure: AccelerationStructureNV,
                     _p_allocator: *const AllocationCallbacks,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(destroy_acceleration_structure_nv)
@@ -14763,7 +14729,7 @@ impl NvRayTracingFn {
                     _device: Device,
                     _p_info: *const AccelerationStructureMemoryRequirementsInfoNV,
                     _p_memory_requirements: *mut MemoryRequirements2KHR,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(get_acceleration_structure_memory_requirements_nv)
@@ -14809,7 +14775,7 @@ impl NvRayTracingFn {
                     _src: AccelerationStructureNV,
                     _scratch: Buffer,
                     _scratch_offset: DeviceSize,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_build_acceleration_structure_nv)
@@ -14830,7 +14796,7 @@ impl NvRayTracingFn {
                     _dst: AccelerationStructureNV,
                     _src: AccelerationStructureNV,
                     _mode: CopyAccelerationStructureModeKHR,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_copy_acceleration_structure_nv)
@@ -14862,7 +14828,7 @@ impl NvRayTracingFn {
                     _width: u32,
                     _height: u32,
                     _depth: u32,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_trace_rays_nv)))
                 }
                 let raw_name = stringify!(vkCmdTraceRaysNV);
@@ -14949,7 +14915,7 @@ impl NvRayTracingFn {
                     _query_type: QueryType,
                     _query_pool: QueryPool,
                     _first_query: u32,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_write_acceleration_structures_properties_nv)
@@ -15004,7 +14970,7 @@ impl NvRayTracingFn {
         device: Device,
         acceleration_structure: AccelerationStructureNV,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void {
+    ) {
         (self.destroy_acceleration_structure_nv)(device, acceleration_structure, p_allocator)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetAccelerationStructureMemoryRequirementsNV.html>"]
@@ -15013,7 +14979,7 @@ impl NvRayTracingFn {
         device: Device,
         p_info: *const AccelerationStructureMemoryRequirementsInfoNV,
         p_memory_requirements: *mut MemoryRequirements2KHR,
-    ) -> c_void {
+    ) {
         (self.get_acceleration_structure_memory_requirements_nv)(
             device,
             p_info,
@@ -15041,7 +15007,7 @@ impl NvRayTracingFn {
         src: AccelerationStructureNV,
         scratch: Buffer,
         scratch_offset: DeviceSize,
-    ) -> c_void {
+    ) {
         (self.cmd_build_acceleration_structure_nv)(
             command_buffer,
             p_info,
@@ -15061,7 +15027,7 @@ impl NvRayTracingFn {
         dst: AccelerationStructureNV,
         src: AccelerationStructureNV,
         mode: CopyAccelerationStructureModeKHR,
-    ) -> c_void {
+    ) {
         (self.cmd_copy_acceleration_structure_nv)(command_buffer, dst, src, mode)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdTraceRaysNV.html>"]
@@ -15082,7 +15048,7 @@ impl NvRayTracingFn {
         width: u32,
         height: u32,
         depth: u32,
-    ) -> c_void {
+    ) {
         (self.cmd_trace_rays_nv)(
             command_buffer,
             raygen_shader_binding_table_buffer,
@@ -15163,7 +15129,7 @@ impl NvRayTracingFn {
         query_type: QueryType,
         query_pool: QueryPool,
         first_query: u32,
-    ) -> c_void {
+    ) {
         (self.cmd_write_acceleration_structures_properties_nv)(
             command_buffer,
             acceleration_structure_count,
@@ -15450,13 +15416,13 @@ pub type PFN_vkGetDescriptorSetLayoutSupport = extern "system" fn(
     device: Device,
     p_create_info: *const DescriptorSetLayoutCreateInfo,
     p_support: *mut DescriptorSetLayoutSupport,
-) -> c_void;
+);
 pub struct KhrMaintenance3Fn {
     pub get_descriptor_set_layout_support_khr: extern "system" fn(
         device: Device,
         p_create_info: *const DescriptorSetLayoutCreateInfo,
         p_support: *mut DescriptorSetLayoutSupport,
-    ) -> c_void,
+    ),
 }
 unsafe impl Send for KhrMaintenance3Fn {}
 unsafe impl Sync for KhrMaintenance3Fn {}
@@ -15478,7 +15444,7 @@ impl KhrMaintenance3Fn {
                     _device: Device,
                     _p_create_info: *const DescriptorSetLayoutCreateInfo,
                     _p_support: *mut DescriptorSetLayoutSupport,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(get_descriptor_set_layout_support_khr)
@@ -15501,7 +15467,7 @@ impl KhrMaintenance3Fn {
         device: Device,
         p_create_info: *const DescriptorSetLayoutCreateInfo,
         p_support: *mut DescriptorSetLayoutSupport,
-    ) -> c_void {
+    ) {
         (self.get_descriptor_set_layout_support_khr)(device, p_create_info, p_support)
     }
 }
@@ -15531,7 +15497,7 @@ pub struct KhrDrawIndirectCountFn {
         count_buffer_offset: DeviceSize,
         max_draw_count: u32,
         stride: u32,
-    ) -> c_void,
+    ),
     pub cmd_draw_indexed_indirect_count_khr: extern "system" fn(
         command_buffer: CommandBuffer,
         buffer: Buffer,
@@ -15540,7 +15506,7 @@ pub struct KhrDrawIndirectCountFn {
         count_buffer_offset: DeviceSize,
         max_draw_count: u32,
         stride: u32,
-    ) -> c_void,
+    ),
 }
 unsafe impl Send for KhrDrawIndirectCountFn {}
 unsafe impl Sync for KhrDrawIndirectCountFn {}
@@ -15567,7 +15533,7 @@ impl KhrDrawIndirectCountFn {
                     _count_buffer_offset: DeviceSize,
                     _max_draw_count: u32,
                     _stride: u32,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_draw_indirect_count_khr)
@@ -15591,7 +15557,7 @@ impl KhrDrawIndirectCountFn {
                     _count_buffer_offset: DeviceSize,
                     _max_draw_count: u32,
                     _stride: u32,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_draw_indexed_indirect_count_khr)
@@ -15618,7 +15584,7 @@ impl KhrDrawIndirectCountFn {
         count_buffer_offset: DeviceSize,
         max_draw_count: u32,
         stride: u32,
-    ) -> c_void {
+    ) {
         (self.cmd_draw_indirect_count_khr)(
             command_buffer,
             buffer,
@@ -15639,7 +15605,7 @@ impl KhrDrawIndirectCountFn {
         count_buffer_offset: DeviceSize,
         max_draw_count: u32,
         stride: u32,
-    ) -> c_void {
+    ) {
         (self.cmd_draw_indexed_indirect_count_khr)(
             command_buffer,
             buffer,
@@ -16000,7 +15966,7 @@ pub type PFN_vkCmdWriteBufferMarkerAMD = extern "system" fn(
     dst_buffer: Buffer,
     dst_offset: DeviceSize,
     marker: u32,
-) -> c_void;
+);
 pub struct AmdBufferMarkerFn {
     pub cmd_write_buffer_marker_amd: extern "system" fn(
         command_buffer: CommandBuffer,
@@ -16008,7 +15974,7 @@ pub struct AmdBufferMarkerFn {
         dst_buffer: Buffer,
         dst_offset: DeviceSize,
         marker: u32,
-    ) -> c_void,
+    ),
 }
 unsafe impl Send for AmdBufferMarkerFn {}
 unsafe impl Sync for AmdBufferMarkerFn {}
@@ -16032,7 +15998,7 @@ impl AmdBufferMarkerFn {
                     _dst_buffer: Buffer,
                     _dst_offset: DeviceSize,
                     _marker: u32,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_write_buffer_marker_amd)
@@ -16057,7 +16023,7 @@ impl AmdBufferMarkerFn {
         dst_buffer: Buffer,
         dst_offset: DeviceSize,
         marker: u32,
-    ) -> c_void {
+    ) {
         (self.cmd_write_buffer_marker_amd)(
             command_buffer,
             pipeline_stage,
@@ -16847,7 +16813,7 @@ impl NvMeshShaderFn {
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdDrawMeshTasksNV =
-    extern "system" fn(command_buffer: CommandBuffer, task_count: u32, first_task: u32) -> c_void;
+    extern "system" fn(command_buffer: CommandBuffer, task_count: u32, first_task: u32);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdDrawMeshTasksIndirectNV = extern "system" fn(
     command_buffer: CommandBuffer,
@@ -16855,7 +16821,7 @@ pub type PFN_vkCmdDrawMeshTasksIndirectNV = extern "system" fn(
     offset: DeviceSize,
     draw_count: u32,
     stride: u32,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdDrawMeshTasksIndirectCountNV = extern "system" fn(
     command_buffer: CommandBuffer,
@@ -16865,20 +16831,17 @@ pub type PFN_vkCmdDrawMeshTasksIndirectCountNV = extern "system" fn(
     count_buffer_offset: DeviceSize,
     max_draw_count: u32,
     stride: u32,
-) -> c_void;
+);
 pub struct NvMeshShaderFn {
-    pub cmd_draw_mesh_tasks_nv: extern "system" fn(
-        command_buffer: CommandBuffer,
-        task_count: u32,
-        first_task: u32,
-    ) -> c_void,
+    pub cmd_draw_mesh_tasks_nv:
+        extern "system" fn(command_buffer: CommandBuffer, task_count: u32, first_task: u32),
     pub cmd_draw_mesh_tasks_indirect_nv: extern "system" fn(
         command_buffer: CommandBuffer,
         buffer: Buffer,
         offset: DeviceSize,
         draw_count: u32,
         stride: u32,
-    ) -> c_void,
+    ),
     pub cmd_draw_mesh_tasks_indirect_count_nv: extern "system" fn(
         command_buffer: CommandBuffer,
         buffer: Buffer,
@@ -16887,7 +16850,7 @@ pub struct NvMeshShaderFn {
         count_buffer_offset: DeviceSize,
         max_draw_count: u32,
         stride: u32,
-    ) -> c_void,
+    ),
 }
 unsafe impl Send for NvMeshShaderFn {}
 unsafe impl Sync for NvMeshShaderFn {}
@@ -16911,7 +16874,7 @@ impl NvMeshShaderFn {
                     _command_buffer: CommandBuffer,
                     _task_count: u32,
                     _first_task: u32,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_draw_mesh_tasks_nv)
@@ -16933,7 +16896,7 @@ impl NvMeshShaderFn {
                     _offset: DeviceSize,
                     _draw_count: u32,
                     _stride: u32,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_draw_mesh_tasks_indirect_nv)
@@ -16957,7 +16920,7 @@ impl NvMeshShaderFn {
                     _count_buffer_offset: DeviceSize,
                     _max_draw_count: u32,
                     _stride: u32,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_draw_mesh_tasks_indirect_count_nv)
@@ -16980,7 +16943,7 @@ impl NvMeshShaderFn {
         command_buffer: CommandBuffer,
         task_count: u32,
         first_task: u32,
-    ) -> c_void {
+    ) {
         (self.cmd_draw_mesh_tasks_nv)(command_buffer, task_count, first_task)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdDrawMeshTasksIndirectNV.html>"]
@@ -16991,7 +16954,7 @@ impl NvMeshShaderFn {
         offset: DeviceSize,
         draw_count: u32,
         stride: u32,
-    ) -> c_void {
+    ) {
         (self.cmd_draw_mesh_tasks_indirect_nv)(command_buffer, buffer, offset, draw_count, stride)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdDrawMeshTasksIndirectCountNV.html>"]
@@ -17004,7 +16967,7 @@ impl NvMeshShaderFn {
         count_buffer_offset: DeviceSize,
         max_draw_count: u32,
         stride: u32,
-    ) -> c_void {
+    ) {
         (self.cmd_draw_mesh_tasks_indirect_count_nv)(
             command_buffer,
             buffer,
@@ -17107,14 +17070,14 @@ pub type PFN_vkCmdSetExclusiveScissorNV = extern "system" fn(
     first_exclusive_scissor: u32,
     exclusive_scissor_count: u32,
     p_exclusive_scissors: *const Rect2D,
-) -> c_void;
+);
 pub struct NvScissorExclusiveFn {
     pub cmd_set_exclusive_scissor_nv: extern "system" fn(
         command_buffer: CommandBuffer,
         first_exclusive_scissor: u32,
         exclusive_scissor_count: u32,
         p_exclusive_scissors: *const Rect2D,
-    ) -> c_void,
+    ),
 }
 unsafe impl Send for NvScissorExclusiveFn {}
 unsafe impl Sync for NvScissorExclusiveFn {}
@@ -17137,7 +17100,7 @@ impl NvScissorExclusiveFn {
                     _first_exclusive_scissor: u32,
                     _exclusive_scissor_count: u32,
                     _p_exclusive_scissors: *const Rect2D,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_set_exclusive_scissor_nv)
@@ -17161,7 +17124,7 @@ impl NvScissorExclusiveFn {
         first_exclusive_scissor: u32,
         exclusive_scissor_count: u32,
         p_exclusive_scissors: *const Rect2D,
-    ) -> c_void {
+    ) {
         (self.cmd_set_exclusive_scissor_nv)(
             command_buffer,
             first_exclusive_scissor,
@@ -17191,23 +17154,21 @@ impl NvDeviceDiagnosticCheckpointsFn {
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetCheckpointNV =
-    extern "system" fn(command_buffer: CommandBuffer, p_checkpoint_marker: *const c_void) -> c_void;
+    extern "system" fn(command_buffer: CommandBuffer, p_checkpoint_marker: *const c_void);
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetQueueCheckpointDataNV = extern "system" fn(
     queue: Queue,
     p_checkpoint_data_count: *mut u32,
     p_checkpoint_data: *mut CheckpointDataNV,
-) -> c_void;
+);
 pub struct NvDeviceDiagnosticCheckpointsFn {
-    pub cmd_set_checkpoint_nv: extern "system" fn(
-        command_buffer: CommandBuffer,
-        p_checkpoint_marker: *const c_void,
-    ) -> c_void,
+    pub cmd_set_checkpoint_nv:
+        extern "system" fn(command_buffer: CommandBuffer, p_checkpoint_marker: *const c_void),
     pub get_queue_checkpoint_data_nv: extern "system" fn(
         queue: Queue,
         p_checkpoint_data_count: *mut u32,
         p_checkpoint_data: *mut CheckpointDataNV,
-    ) -> c_void,
+    ),
 }
 unsafe impl Send for NvDeviceDiagnosticCheckpointsFn {}
 unsafe impl Sync for NvDeviceDiagnosticCheckpointsFn {}
@@ -17229,7 +17190,7 @@ impl NvDeviceDiagnosticCheckpointsFn {
                 extern "system" fn cmd_set_checkpoint_nv(
                     _command_buffer: CommandBuffer,
                     _p_checkpoint_marker: *const c_void,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_set_checkpoint_nv)
@@ -17249,7 +17210,7 @@ impl NvDeviceDiagnosticCheckpointsFn {
                     _queue: Queue,
                     _p_checkpoint_data_count: *mut u32,
                     _p_checkpoint_data: *mut CheckpointDataNV,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(get_queue_checkpoint_data_nv)
@@ -17271,7 +17232,7 @@ impl NvDeviceDiagnosticCheckpointsFn {
         &self,
         command_buffer: CommandBuffer,
         p_checkpoint_marker: *const c_void,
-    ) -> c_void {
+    ) {
         (self.cmd_set_checkpoint_nv)(command_buffer, p_checkpoint_marker)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetQueueCheckpointDataNV.html>"]
@@ -17280,7 +17241,7 @@ impl NvDeviceDiagnosticCheckpointsFn {
         queue: Queue,
         p_checkpoint_data_count: *mut u32,
         p_checkpoint_data: *mut CheckpointDataNV,
-    ) -> c_void {
+    ) {
         (self.get_queue_checkpoint_data_nv)(queue, p_checkpoint_data_count, p_checkpoint_data)
     }
 }
@@ -17523,7 +17484,7 @@ pub type PFN_vkInitializePerformanceApiINTEL = extern "system" fn(
     p_initialize_info: *const InitializePerformanceApiInfoINTEL,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkUninitializePerformanceApiINTEL = extern "system" fn(device: Device) -> c_void;
+pub type PFN_vkUninitializePerformanceApiINTEL = extern "system" fn(device: Device);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetPerformanceMarkerINTEL = extern "system" fn(
     command_buffer: CommandBuffer,
@@ -17562,7 +17523,7 @@ pub struct IntelPerformanceQueryFn {
         device: Device,
         p_initialize_info: *const InitializePerformanceApiInfoINTEL,
     ) -> Result,
-    pub uninitialize_performance_api_intel: extern "system" fn(device: Device) -> c_void,
+    pub uninitialize_performance_api_intel: extern "system" fn(device: Device),
     pub cmd_set_performance_marker_intel: extern "system" fn(
         command_buffer: CommandBuffer,
         p_marker_info: *const PerformanceMarkerInfoINTEL,
@@ -17634,7 +17595,7 @@ impl IntelPerformanceQueryFn {
                 }
             },
             uninitialize_performance_api_intel: unsafe {
-                extern "system" fn uninitialize_performance_api_intel(_device: Device) -> c_void {
+                extern "system" fn uninitialize_performance_api_intel(_device: Device) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(uninitialize_performance_api_intel)
@@ -17795,7 +17756,7 @@ impl IntelPerformanceQueryFn {
         (self.initialize_performance_api_intel)(device, p_initialize_info)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkUninitializePerformanceApiINTEL.html>"]
-    pub unsafe fn uninitialize_performance_api_intel(&self, device: Device) -> c_void {
+    pub unsafe fn uninitialize_performance_api_intel(&self, device: Device) {
         (self.uninitialize_performance_api_intel)(device)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetPerformanceMarkerINTEL.html>"]
@@ -17957,17 +17918,11 @@ impl AmdDisplayNativeHdrFn {
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
-pub type PFN_vkSetLocalDimmingAMD = extern "system" fn(
-    device: Device,
-    swap_chain: SwapchainKHR,
-    local_dimming_enable: Bool32,
-) -> c_void;
+pub type PFN_vkSetLocalDimmingAMD =
+    extern "system" fn(device: Device, swap_chain: SwapchainKHR, local_dimming_enable: Bool32);
 pub struct AmdDisplayNativeHdrFn {
-    pub set_local_dimming_amd: extern "system" fn(
-        device: Device,
-        swap_chain: SwapchainKHR,
-        local_dimming_enable: Bool32,
-    ) -> c_void,
+    pub set_local_dimming_amd:
+        extern "system" fn(device: Device, swap_chain: SwapchainKHR, local_dimming_enable: Bool32),
 }
 unsafe impl Send for AmdDisplayNativeHdrFn {}
 unsafe impl Sync for AmdDisplayNativeHdrFn {}
@@ -17989,7 +17944,7 @@ impl AmdDisplayNativeHdrFn {
                     _device: Device,
                     _swap_chain: SwapchainKHR,
                     _local_dimming_enable: Bool32,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(set_local_dimming_amd)
@@ -18012,7 +17967,7 @@ impl AmdDisplayNativeHdrFn {
         device: Device,
         swap_chain: SwapchainKHR,
         local_dimming_enable: Bool32,
-    ) -> c_void {
+    ) {
         (self.set_local_dimming_amd)(device, swap_chain, local_dimming_enable)
     }
 }
@@ -18508,7 +18463,7 @@ pub type PFN_vkCmdSetFragmentShadingRateKHR = extern "system" fn(
     command_buffer: CommandBuffer,
     p_fragment_size: *const Extent2D,
     combiner_ops: *const [FragmentShadingRateCombinerOpKHR; 2],
-) -> c_void;
+);
 pub struct KhrFragmentShadingRateFn {
     pub get_physical_device_fragment_shading_rates_khr: extern "system" fn(
         physical_device: PhysicalDevice,
@@ -18519,7 +18474,7 @@ pub struct KhrFragmentShadingRateFn {
         command_buffer: CommandBuffer,
         p_fragment_size: *const Extent2D,
         combiner_ops: *const [FragmentShadingRateCombinerOpKHR; 2],
-    ) -> c_void,
+    ),
 }
 unsafe impl Send for KhrFragmentShadingRateFn {}
 unsafe impl Sync for KhrFragmentShadingRateFn {}
@@ -18563,7 +18518,7 @@ impl KhrFragmentShadingRateFn {
                     _command_buffer: CommandBuffer,
                     _p_fragment_size: *const Extent2D,
                     _combiner_ops: *const [FragmentShadingRateCombinerOpKHR; 2],
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_set_fragment_shading_rate_khr)
@@ -18599,7 +18554,7 @@ impl KhrFragmentShadingRateFn {
         command_buffer: CommandBuffer,
         p_fragment_size: *const Extent2D,
         combiner_ops: *const [FragmentShadingRateCombinerOpKHR; 2],
-    ) -> c_void {
+    ) {
         (self.cmd_set_fragment_shading_rate_khr)(command_buffer, p_fragment_size, combiner_ops)
     }
 }
@@ -20125,13 +20080,13 @@ pub type PFN_vkCmdSetLineStippleEXT = extern "system" fn(
     command_buffer: CommandBuffer,
     line_stipple_factor: u32,
     line_stipple_pattern: u16,
-) -> c_void;
+);
 pub struct ExtLineRasterizationFn {
     pub cmd_set_line_stipple_ext: extern "system" fn(
         command_buffer: CommandBuffer,
         line_stipple_factor: u32,
         line_stipple_pattern: u16,
-    ) -> c_void,
+    ),
 }
 unsafe impl Send for ExtLineRasterizationFn {}
 unsafe impl Sync for ExtLineRasterizationFn {}
@@ -20153,7 +20108,7 @@ impl ExtLineRasterizationFn {
                     _command_buffer: CommandBuffer,
                     _line_stipple_factor: u32,
                     _line_stipple_pattern: u16,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_set_line_stipple_ext)
@@ -20176,7 +20131,7 @@ impl ExtLineRasterizationFn {
         command_buffer: CommandBuffer,
         line_stipple_factor: u32,
         line_stipple_pattern: u16,
-    ) -> c_void {
+    ) {
         (self.cmd_set_line_stipple_ext)(command_buffer, line_stipple_factor, line_stipple_pattern)
     }
 }
@@ -20231,19 +20186,15 @@ impl ExtHostQueryResetFn {
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
-pub type PFN_vkResetQueryPool = extern "system" fn(
-    device: Device,
-    query_pool: QueryPool,
-    first_query: u32,
-    query_count: u32,
-) -> c_void;
+pub type PFN_vkResetQueryPool =
+    extern "system" fn(device: Device, query_pool: QueryPool, first_query: u32, query_count: u32);
 pub struct ExtHostQueryResetFn {
     pub reset_query_pool_ext: extern "system" fn(
         device: Device,
         query_pool: QueryPool,
         first_query: u32,
         query_count: u32,
-    ) -> c_void,
+    ),
 }
 unsafe impl Send for ExtHostQueryResetFn {}
 unsafe impl Sync for ExtHostQueryResetFn {}
@@ -20266,7 +20217,7 @@ impl ExtHostQueryResetFn {
                     _query_pool: QueryPool,
                     _first_query: u32,
                     _query_count: u32,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(reset_query_pool_ext)))
                 }
                 let raw_name = stringify!(vkResetQueryPoolEXT);
@@ -20287,7 +20238,7 @@ impl ExtHostQueryResetFn {
         query_pool: QueryPool,
         first_query: u32,
         query_count: u32,
-    ) -> c_void {
+    ) {
         (self.reset_query_pool_ext)(device, query_pool, first_query, query_count)
     }
 }
@@ -20428,27 +20379,25 @@ impl ExtExtendedDynamicStateFn {
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetCullModeEXT =
-    extern "system" fn(command_buffer: CommandBuffer, cull_mode: CullModeFlags) -> c_void;
+    extern "system" fn(command_buffer: CommandBuffer, cull_mode: CullModeFlags);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetFrontFaceEXT =
-    extern "system" fn(command_buffer: CommandBuffer, front_face: FrontFace) -> c_void;
+    extern "system" fn(command_buffer: CommandBuffer, front_face: FrontFace);
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdSetPrimitiveTopologyEXT = extern "system" fn(
-    command_buffer: CommandBuffer,
-    primitive_topology: PrimitiveTopology,
-) -> c_void;
+pub type PFN_vkCmdSetPrimitiveTopologyEXT =
+    extern "system" fn(command_buffer: CommandBuffer, primitive_topology: PrimitiveTopology);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetViewportWithCountEXT = extern "system" fn(
     command_buffer: CommandBuffer,
     viewport_count: u32,
     p_viewports: *const Viewport,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetScissorWithCountEXT = extern "system" fn(
     command_buffer: CommandBuffer,
     scissor_count: u32,
     p_scissors: *const Rect2D,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdBindVertexBuffers2EXT = extern "system" fn(
     command_buffer: CommandBuffer,
@@ -20458,22 +20407,22 @@ pub type PFN_vkCmdBindVertexBuffers2EXT = extern "system" fn(
     p_offsets: *const DeviceSize,
     p_sizes: *const DeviceSize,
     p_strides: *const DeviceSize,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetDepthTestEnableEXT =
-    extern "system" fn(command_buffer: CommandBuffer, depth_test_enable: Bool32) -> c_void;
+    extern "system" fn(command_buffer: CommandBuffer, depth_test_enable: Bool32);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetDepthWriteEnableEXT =
-    extern "system" fn(command_buffer: CommandBuffer, depth_write_enable: Bool32) -> c_void;
+    extern "system" fn(command_buffer: CommandBuffer, depth_write_enable: Bool32);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetDepthCompareOpEXT =
-    extern "system" fn(command_buffer: CommandBuffer, depth_compare_op: CompareOp) -> c_void;
+    extern "system" fn(command_buffer: CommandBuffer, depth_compare_op: CompareOp);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetDepthBoundsTestEnableEXT =
-    extern "system" fn(command_buffer: CommandBuffer, depth_bounds_test_enable: Bool32) -> c_void;
+    extern "system" fn(command_buffer: CommandBuffer, depth_bounds_test_enable: Bool32);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetStencilTestEnableEXT =
-    extern "system" fn(command_buffer: CommandBuffer, stencil_test_enable: Bool32) -> c_void;
+    extern "system" fn(command_buffer: CommandBuffer, stencil_test_enable: Bool32);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetStencilOpEXT = extern "system" fn(
     command_buffer: CommandBuffer,
@@ -20482,26 +20431,24 @@ pub type PFN_vkCmdSetStencilOpEXT = extern "system" fn(
     pass_op: StencilOp,
     depth_fail_op: StencilOp,
     compare_op: CompareOp,
-) -> c_void;
+);
 pub struct ExtExtendedDynamicStateFn {
     pub cmd_set_cull_mode_ext:
-        extern "system" fn(command_buffer: CommandBuffer, cull_mode: CullModeFlags) -> c_void,
+        extern "system" fn(command_buffer: CommandBuffer, cull_mode: CullModeFlags),
     pub cmd_set_front_face_ext:
-        extern "system" fn(command_buffer: CommandBuffer, front_face: FrontFace) -> c_void,
-    pub cmd_set_primitive_topology_ext: extern "system" fn(
-        command_buffer: CommandBuffer,
-        primitive_topology: PrimitiveTopology,
-    ) -> c_void,
+        extern "system" fn(command_buffer: CommandBuffer, front_face: FrontFace),
+    pub cmd_set_primitive_topology_ext:
+        extern "system" fn(command_buffer: CommandBuffer, primitive_topology: PrimitiveTopology),
     pub cmd_set_viewport_with_count_ext: extern "system" fn(
         command_buffer: CommandBuffer,
         viewport_count: u32,
         p_viewports: *const Viewport,
-    ) -> c_void,
+    ),
     pub cmd_set_scissor_with_count_ext: extern "system" fn(
         command_buffer: CommandBuffer,
         scissor_count: u32,
         p_scissors: *const Rect2D,
-    ) -> c_void,
+    ),
     pub cmd_bind_vertex_buffers2_ext: extern "system" fn(
         command_buffer: CommandBuffer,
         first_binding: u32,
@@ -20510,19 +20457,17 @@ pub struct ExtExtendedDynamicStateFn {
         p_offsets: *const DeviceSize,
         p_sizes: *const DeviceSize,
         p_strides: *const DeviceSize,
-    ) -> c_void,
+    ),
     pub cmd_set_depth_test_enable_ext:
-        extern "system" fn(command_buffer: CommandBuffer, depth_test_enable: Bool32) -> c_void,
+        extern "system" fn(command_buffer: CommandBuffer, depth_test_enable: Bool32),
     pub cmd_set_depth_write_enable_ext:
-        extern "system" fn(command_buffer: CommandBuffer, depth_write_enable: Bool32) -> c_void,
+        extern "system" fn(command_buffer: CommandBuffer, depth_write_enable: Bool32),
     pub cmd_set_depth_compare_op_ext:
-        extern "system" fn(command_buffer: CommandBuffer, depth_compare_op: CompareOp) -> c_void,
-    pub cmd_set_depth_bounds_test_enable_ext: extern "system" fn(
-        command_buffer: CommandBuffer,
-        depth_bounds_test_enable: Bool32,
-    ) -> c_void,
+        extern "system" fn(command_buffer: CommandBuffer, depth_compare_op: CompareOp),
+    pub cmd_set_depth_bounds_test_enable_ext:
+        extern "system" fn(command_buffer: CommandBuffer, depth_bounds_test_enable: Bool32),
     pub cmd_set_stencil_test_enable_ext:
-        extern "system" fn(command_buffer: CommandBuffer, stencil_test_enable: Bool32) -> c_void,
+        extern "system" fn(command_buffer: CommandBuffer, stencil_test_enable: Bool32),
     pub cmd_set_stencil_op_ext: extern "system" fn(
         command_buffer: CommandBuffer,
         face_mask: StencilFaceFlags,
@@ -20530,7 +20475,7 @@ pub struct ExtExtendedDynamicStateFn {
         pass_op: StencilOp,
         depth_fail_op: StencilOp,
         compare_op: CompareOp,
-    ) -> c_void,
+    ),
 }
 unsafe impl Send for ExtExtendedDynamicStateFn {}
 unsafe impl Sync for ExtExtendedDynamicStateFn {}
@@ -20562,7 +20507,7 @@ impl ExtExtendedDynamicStateFn {
                 extern "system" fn cmd_set_cull_mode_ext(
                     _command_buffer: CommandBuffer,
                     _cull_mode: CullModeFlags,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_set_cull_mode_ext)
@@ -20581,7 +20526,7 @@ impl ExtExtendedDynamicStateFn {
                 extern "system" fn cmd_set_front_face_ext(
                     _command_buffer: CommandBuffer,
                     _front_face: FrontFace,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_set_front_face_ext)
@@ -20600,7 +20545,7 @@ impl ExtExtendedDynamicStateFn {
                 extern "system" fn cmd_set_primitive_topology_ext(
                     _command_buffer: CommandBuffer,
                     _primitive_topology: PrimitiveTopology,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_set_primitive_topology_ext)
@@ -20620,7 +20565,7 @@ impl ExtExtendedDynamicStateFn {
                     _command_buffer: CommandBuffer,
                     _viewport_count: u32,
                     _p_viewports: *const Viewport,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_set_viewport_with_count_ext)
@@ -20640,7 +20585,7 @@ impl ExtExtendedDynamicStateFn {
                     _command_buffer: CommandBuffer,
                     _scissor_count: u32,
                     _p_scissors: *const Rect2D,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_set_scissor_with_count_ext)
@@ -20664,7 +20609,7 @@ impl ExtExtendedDynamicStateFn {
                     _p_offsets: *const DeviceSize,
                     _p_sizes: *const DeviceSize,
                     _p_strides: *const DeviceSize,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_bind_vertex_buffers2_ext)
@@ -20683,7 +20628,7 @@ impl ExtExtendedDynamicStateFn {
                 extern "system" fn cmd_set_depth_test_enable_ext(
                     _command_buffer: CommandBuffer,
                     _depth_test_enable: Bool32,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_set_depth_test_enable_ext)
@@ -20702,7 +20647,7 @@ impl ExtExtendedDynamicStateFn {
                 extern "system" fn cmd_set_depth_write_enable_ext(
                     _command_buffer: CommandBuffer,
                     _depth_write_enable: Bool32,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_set_depth_write_enable_ext)
@@ -20721,7 +20666,7 @@ impl ExtExtendedDynamicStateFn {
                 extern "system" fn cmd_set_depth_compare_op_ext(
                     _command_buffer: CommandBuffer,
                     _depth_compare_op: CompareOp,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_set_depth_compare_op_ext)
@@ -20740,7 +20685,7 @@ impl ExtExtendedDynamicStateFn {
                 extern "system" fn cmd_set_depth_bounds_test_enable_ext(
                     _command_buffer: CommandBuffer,
                     _depth_bounds_test_enable: Bool32,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_set_depth_bounds_test_enable_ext)
@@ -20759,7 +20704,7 @@ impl ExtExtendedDynamicStateFn {
                 extern "system" fn cmd_set_stencil_test_enable_ext(
                     _command_buffer: CommandBuffer,
                     _stencil_test_enable: Bool32,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_set_stencil_test_enable_ext)
@@ -20782,7 +20727,7 @@ impl ExtExtendedDynamicStateFn {
                     _pass_op: StencilOp,
                     _depth_fail_op: StencilOp,
                     _compare_op: CompareOp,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_set_stencil_op_ext)
@@ -20804,7 +20749,7 @@ impl ExtExtendedDynamicStateFn {
         &self,
         command_buffer: CommandBuffer,
         cull_mode: CullModeFlags,
-    ) -> c_void {
+    ) {
         (self.cmd_set_cull_mode_ext)(command_buffer, cull_mode)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetFrontFaceEXT.html>"]
@@ -20812,7 +20757,7 @@ impl ExtExtendedDynamicStateFn {
         &self,
         command_buffer: CommandBuffer,
         front_face: FrontFace,
-    ) -> c_void {
+    ) {
         (self.cmd_set_front_face_ext)(command_buffer, front_face)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetPrimitiveTopologyEXT.html>"]
@@ -20820,7 +20765,7 @@ impl ExtExtendedDynamicStateFn {
         &self,
         command_buffer: CommandBuffer,
         primitive_topology: PrimitiveTopology,
-    ) -> c_void {
+    ) {
         (self.cmd_set_primitive_topology_ext)(command_buffer, primitive_topology)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetViewportWithCountEXT.html>"]
@@ -20829,7 +20774,7 @@ impl ExtExtendedDynamicStateFn {
         command_buffer: CommandBuffer,
         viewport_count: u32,
         p_viewports: *const Viewport,
-    ) -> c_void {
+    ) {
         (self.cmd_set_viewport_with_count_ext)(command_buffer, viewport_count, p_viewports)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetScissorWithCountEXT.html>"]
@@ -20838,7 +20783,7 @@ impl ExtExtendedDynamicStateFn {
         command_buffer: CommandBuffer,
         scissor_count: u32,
         p_scissors: *const Rect2D,
-    ) -> c_void {
+    ) {
         (self.cmd_set_scissor_with_count_ext)(command_buffer, scissor_count, p_scissors)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdBindVertexBuffers2EXT.html>"]
@@ -20851,7 +20796,7 @@ impl ExtExtendedDynamicStateFn {
         p_offsets: *const DeviceSize,
         p_sizes: *const DeviceSize,
         p_strides: *const DeviceSize,
-    ) -> c_void {
+    ) {
         (self.cmd_bind_vertex_buffers2_ext)(
             command_buffer,
             first_binding,
@@ -20867,7 +20812,7 @@ impl ExtExtendedDynamicStateFn {
         &self,
         command_buffer: CommandBuffer,
         depth_test_enable: Bool32,
-    ) -> c_void {
+    ) {
         (self.cmd_set_depth_test_enable_ext)(command_buffer, depth_test_enable)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetDepthWriteEnableEXT.html>"]
@@ -20875,7 +20820,7 @@ impl ExtExtendedDynamicStateFn {
         &self,
         command_buffer: CommandBuffer,
         depth_write_enable: Bool32,
-    ) -> c_void {
+    ) {
         (self.cmd_set_depth_write_enable_ext)(command_buffer, depth_write_enable)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetDepthCompareOpEXT.html>"]
@@ -20883,7 +20828,7 @@ impl ExtExtendedDynamicStateFn {
         &self,
         command_buffer: CommandBuffer,
         depth_compare_op: CompareOp,
-    ) -> c_void {
+    ) {
         (self.cmd_set_depth_compare_op_ext)(command_buffer, depth_compare_op)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetDepthBoundsTestEnableEXT.html>"]
@@ -20891,7 +20836,7 @@ impl ExtExtendedDynamicStateFn {
         &self,
         command_buffer: CommandBuffer,
         depth_bounds_test_enable: Bool32,
-    ) -> c_void {
+    ) {
         (self.cmd_set_depth_bounds_test_enable_ext)(command_buffer, depth_bounds_test_enable)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetStencilTestEnableEXT.html>"]
@@ -20899,7 +20844,7 @@ impl ExtExtendedDynamicStateFn {
         &self,
         command_buffer: CommandBuffer,
         stencil_test_enable: Bool32,
-    ) -> c_void {
+    ) {
         (self.cmd_set_stencil_test_enable_ext)(command_buffer, stencil_test_enable)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetStencilOpEXT.html>"]
@@ -20911,7 +20856,7 @@ impl ExtExtendedDynamicStateFn {
         pass_op: StencilOp,
         depth_fail_op: StencilOp,
         compare_op: CompareOp,
-    ) -> c_void {
+    ) {
         (self.cmd_set_stencil_op_ext)(
             command_buffer,
             face_mask,
@@ -20992,7 +20937,7 @@ pub type PFN_vkDestroyDeferredOperationKHR = extern "system" fn(
     device: Device,
     operation: DeferredOperationKHR,
     p_allocator: *const AllocationCallbacks,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetDeferredOperationMaxConcurrencyKHR =
     extern "system" fn(device: Device, operation: DeferredOperationKHR) -> u32;
@@ -21012,7 +20957,7 @@ pub struct KhrDeferredHostOperationsFn {
         device: Device,
         operation: DeferredOperationKHR,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void,
+    ),
     pub get_deferred_operation_max_concurrency_khr:
         extern "system" fn(device: Device, operation: DeferredOperationKHR) -> u32,
     pub get_deferred_operation_result_khr:
@@ -21065,7 +21010,7 @@ impl KhrDeferredHostOperationsFn {
                     _device: Device,
                     _operation: DeferredOperationKHR,
                     _p_allocator: *const AllocationCallbacks,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(destroy_deferred_operation_khr)
@@ -21154,7 +21099,7 @@ impl KhrDeferredHostOperationsFn {
         device: Device,
         operation: DeferredOperationKHR,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void {
+    ) {
         (self.destroy_deferred_operation_khr)(device, operation, p_allocator)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetDeferredOperationMaxConcurrencyKHR.html>"]
@@ -21590,25 +21535,25 @@ pub type PFN_vkGetGeneratedCommandsMemoryRequirementsNV = extern "system" fn(
     device: Device,
     p_info: *const GeneratedCommandsMemoryRequirementsInfoNV,
     p_memory_requirements: *mut MemoryRequirements2,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdPreprocessGeneratedCommandsNV = extern "system" fn(
     command_buffer: CommandBuffer,
     p_generated_commands_info: *const GeneratedCommandsInfoNV,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdExecuteGeneratedCommandsNV = extern "system" fn(
     command_buffer: CommandBuffer,
     is_preprocessed: Bool32,
     p_generated_commands_info: *const GeneratedCommandsInfoNV,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdBindPipelineShaderGroupNV = extern "system" fn(
     command_buffer: CommandBuffer,
     pipeline_bind_point: PipelineBindPoint,
     pipeline: Pipeline,
     group_index: u32,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateIndirectCommandsLayoutNV = extern "system" fn(
     device: Device,
@@ -21621,28 +21566,28 @@ pub type PFN_vkDestroyIndirectCommandsLayoutNV = extern "system" fn(
     device: Device,
     indirect_commands_layout: IndirectCommandsLayoutNV,
     p_allocator: *const AllocationCallbacks,
-) -> c_void;
+);
 pub struct NvDeviceGeneratedCommandsFn {
     pub get_generated_commands_memory_requirements_nv: extern "system" fn(
         device: Device,
         p_info: *const GeneratedCommandsMemoryRequirementsInfoNV,
         p_memory_requirements: *mut MemoryRequirements2,
-    ) -> c_void,
+    ),
     pub cmd_preprocess_generated_commands_nv: extern "system" fn(
         command_buffer: CommandBuffer,
         p_generated_commands_info: *const GeneratedCommandsInfoNV,
-    ) -> c_void,
+    ),
     pub cmd_execute_generated_commands_nv: extern "system" fn(
         command_buffer: CommandBuffer,
         is_preprocessed: Bool32,
         p_generated_commands_info: *const GeneratedCommandsInfoNV,
-    ) -> c_void,
+    ),
     pub cmd_bind_pipeline_shader_group_nv: extern "system" fn(
         command_buffer: CommandBuffer,
         pipeline_bind_point: PipelineBindPoint,
         pipeline: Pipeline,
         group_index: u32,
-    ) -> c_void,
+    ),
     pub create_indirect_commands_layout_nv: extern "system" fn(
         device: Device,
         p_create_info: *const IndirectCommandsLayoutCreateInfoNV,
@@ -21653,7 +21598,7 @@ pub struct NvDeviceGeneratedCommandsFn {
         device: Device,
         indirect_commands_layout: IndirectCommandsLayoutNV,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void,
+    ),
 }
 unsafe impl Send for NvDeviceGeneratedCommandsFn {}
 unsafe impl Sync for NvDeviceGeneratedCommandsFn {}
@@ -21681,7 +21626,7 @@ impl NvDeviceGeneratedCommandsFn {
                     _device: Device,
                     _p_info: *const GeneratedCommandsMemoryRequirementsInfoNV,
                     _p_memory_requirements: *mut MemoryRequirements2,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(get_generated_commands_memory_requirements_nv)
@@ -21700,7 +21645,7 @@ impl NvDeviceGeneratedCommandsFn {
                 extern "system" fn cmd_preprocess_generated_commands_nv(
                     _command_buffer: CommandBuffer,
                     _p_generated_commands_info: *const GeneratedCommandsInfoNV,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_preprocess_generated_commands_nv)
@@ -21720,7 +21665,7 @@ impl NvDeviceGeneratedCommandsFn {
                     _command_buffer: CommandBuffer,
                     _is_preprocessed: Bool32,
                     _p_generated_commands_info: *const GeneratedCommandsInfoNV,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_execute_generated_commands_nv)
@@ -21741,7 +21686,7 @@ impl NvDeviceGeneratedCommandsFn {
                     _pipeline_bind_point: PipelineBindPoint,
                     _pipeline: Pipeline,
                     _group_index: u32,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_bind_pipeline_shader_group_nv)
@@ -21782,7 +21727,7 @@ impl NvDeviceGeneratedCommandsFn {
                     _device: Device,
                     _indirect_commands_layout: IndirectCommandsLayoutNV,
                     _p_allocator: *const AllocationCallbacks,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(destroy_indirect_commands_layout_nv)
@@ -21805,7 +21750,7 @@ impl NvDeviceGeneratedCommandsFn {
         device: Device,
         p_info: *const GeneratedCommandsMemoryRequirementsInfoNV,
         p_memory_requirements: *mut MemoryRequirements2,
-    ) -> c_void {
+    ) {
         (self.get_generated_commands_memory_requirements_nv)(device, p_info, p_memory_requirements)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdPreprocessGeneratedCommandsNV.html>"]
@@ -21813,7 +21758,7 @@ impl NvDeviceGeneratedCommandsFn {
         &self,
         command_buffer: CommandBuffer,
         p_generated_commands_info: *const GeneratedCommandsInfoNV,
-    ) -> c_void {
+    ) {
         (self.cmd_preprocess_generated_commands_nv)(command_buffer, p_generated_commands_info)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdExecuteGeneratedCommandsNV.html>"]
@@ -21822,7 +21767,7 @@ impl NvDeviceGeneratedCommandsFn {
         command_buffer: CommandBuffer,
         is_preprocessed: Bool32,
         p_generated_commands_info: *const GeneratedCommandsInfoNV,
-    ) -> c_void {
+    ) {
         (self.cmd_execute_generated_commands_nv)(
             command_buffer,
             is_preprocessed,
@@ -21836,7 +21781,7 @@ impl NvDeviceGeneratedCommandsFn {
         pipeline_bind_point: PipelineBindPoint,
         pipeline: Pipeline,
         group_index: u32,
-    ) -> c_void {
+    ) {
         (self.cmd_bind_pipeline_shader_group_nv)(
             command_buffer,
             pipeline_bind_point,
@@ -21865,7 +21810,7 @@ impl NvDeviceGeneratedCommandsFn {
         device: Device,
         indirect_commands_layout: IndirectCommandsLayoutNV,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void {
+    ) {
         (self.destroy_indirect_commands_layout_nv)(device, indirect_commands_layout, p_allocator)
     }
 }
@@ -22520,7 +22465,7 @@ pub type PFN_vkDestroyPrivateDataSlotEXT = extern "system" fn(
     device: Device,
     private_data_slot: PrivateDataSlotEXT,
     p_allocator: *const AllocationCallbacks,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkSetPrivateDataEXT = extern "system" fn(
     device: Device,
@@ -22536,7 +22481,7 @@ pub type PFN_vkGetPrivateDataEXT = extern "system" fn(
     object_handle: u64,
     private_data_slot: PrivateDataSlotEXT,
     p_data: *mut u64,
-) -> c_void;
+);
 pub struct ExtPrivateDataFn {
     pub create_private_data_slot_ext: extern "system" fn(
         device: Device,
@@ -22548,7 +22493,7 @@ pub struct ExtPrivateDataFn {
         device: Device,
         private_data_slot: PrivateDataSlotEXT,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void,
+    ),
     pub set_private_data_ext: extern "system" fn(
         device: Device,
         object_type: ObjectType,
@@ -22562,7 +22507,7 @@ pub struct ExtPrivateDataFn {
         object_handle: u64,
         private_data_slot: PrivateDataSlotEXT,
         p_data: *mut u64,
-    ) -> c_void,
+    ),
 }
 unsafe impl Send for ExtPrivateDataFn {}
 unsafe impl Sync for ExtPrivateDataFn {}
@@ -22608,7 +22553,7 @@ impl ExtPrivateDataFn {
                     _device: Device,
                     _private_data_slot: PrivateDataSlotEXT,
                     _p_allocator: *const AllocationCallbacks,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(destroy_private_data_slot_ext)
@@ -22649,7 +22594,7 @@ impl ExtPrivateDataFn {
                     _object_handle: u64,
                     _private_data_slot: PrivateDataSlotEXT,
                     _p_data: *mut u64,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(get_private_data_ext)))
                 }
                 let raw_name = stringify!(vkGetPrivateDataEXT);
@@ -22679,7 +22624,7 @@ impl ExtPrivateDataFn {
         device: Device,
         private_data_slot: PrivateDataSlotEXT,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void {
+    ) {
         (self.destroy_private_data_slot_ext)(device, private_data_slot, p_allocator)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkSetPrivateDataEXT.html>"]
@@ -22701,7 +22646,7 @@ impl ExtPrivateDataFn {
         object_handle: u64,
         private_data_slot: PrivateDataSlotEXT,
         p_data: *mut u64,
-    ) -> c_void {
+    ) {
         (self.get_private_data_ext)(
             device,
             object_type,
@@ -23478,13 +23423,13 @@ pub type PFN_vkCmdSetFragmentShadingRateEnumNV = extern "system" fn(
     command_buffer: CommandBuffer,
     shading_rate: FragmentShadingRateNV,
     combiner_ops: *const [FragmentShadingRateCombinerOpKHR; 2],
-) -> c_void;
+);
 pub struct NvFragmentShadingRateEnumsFn {
     pub cmd_set_fragment_shading_rate_enum_nv: extern "system" fn(
         command_buffer: CommandBuffer,
         shading_rate: FragmentShadingRateNV,
         combiner_ops: *const [FragmentShadingRateCombinerOpKHR; 2],
-    ) -> c_void,
+    ),
 }
 unsafe impl Send for NvFragmentShadingRateEnumsFn {}
 unsafe impl Sync for NvFragmentShadingRateEnumsFn {}
@@ -23506,7 +23451,7 @@ impl NvFragmentShadingRateEnumsFn {
                     _command_buffer: CommandBuffer,
                     _shading_rate: FragmentShadingRateNV,
                     _combiner_ops: *const [FragmentShadingRateCombinerOpKHR; 2],
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_set_fragment_shading_rate_enum_nv)
@@ -23529,7 +23474,7 @@ impl NvFragmentShadingRateEnumsFn {
         command_buffer: CommandBuffer,
         shading_rate: FragmentShadingRateNV,
         combiner_ops: *const [FragmentShadingRateCombinerOpKHR; 2],
-    ) -> c_void {
+    ) {
         (self.cmd_set_fragment_shading_rate_enum_nv)(command_buffer, shading_rate, combiner_ops)
     }
 }
@@ -23806,57 +23751,53 @@ impl KhrCopyCommands2Fn {
 pub type PFN_vkCmdCopyBuffer2KHR = extern "system" fn(
     command_buffer: CommandBuffer,
     p_copy_buffer_info: *const CopyBufferInfo2KHR,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdCopyImage2KHR = extern "system" fn(
-    command_buffer: CommandBuffer,
-    p_copy_image_info: *const CopyImageInfo2KHR,
-) -> c_void;
+pub type PFN_vkCmdCopyImage2KHR =
+    extern "system" fn(command_buffer: CommandBuffer, p_copy_image_info: *const CopyImageInfo2KHR);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdCopyBufferToImage2KHR = extern "system" fn(
     command_buffer: CommandBuffer,
     p_copy_buffer_to_image_info: *const CopyBufferToImageInfo2KHR,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdCopyImageToBuffer2KHR = extern "system" fn(
     command_buffer: CommandBuffer,
     p_copy_image_to_buffer_info: *const CopyImageToBufferInfo2KHR,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdBlitImage2KHR = extern "system" fn(
-    command_buffer: CommandBuffer,
-    p_blit_image_info: *const BlitImageInfo2KHR,
-) -> c_void;
+pub type PFN_vkCmdBlitImage2KHR =
+    extern "system" fn(command_buffer: CommandBuffer, p_blit_image_info: *const BlitImageInfo2KHR);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdResolveImage2KHR = extern "system" fn(
     command_buffer: CommandBuffer,
     p_resolve_image_info: *const ResolveImageInfo2KHR,
-) -> c_void;
+);
 pub struct KhrCopyCommands2Fn {
     pub cmd_copy_buffer2_khr: extern "system" fn(
         command_buffer: CommandBuffer,
         p_copy_buffer_info: *const CopyBufferInfo2KHR,
-    ) -> c_void,
+    ),
     pub cmd_copy_image2_khr: extern "system" fn(
         command_buffer: CommandBuffer,
         p_copy_image_info: *const CopyImageInfo2KHR,
-    ) -> c_void,
+    ),
     pub cmd_copy_buffer_to_image2_khr: extern "system" fn(
         command_buffer: CommandBuffer,
         p_copy_buffer_to_image_info: *const CopyBufferToImageInfo2KHR,
-    ) -> c_void,
+    ),
     pub cmd_copy_image_to_buffer2_khr: extern "system" fn(
         command_buffer: CommandBuffer,
         p_copy_image_to_buffer_info: *const CopyImageToBufferInfo2KHR,
-    ) -> c_void,
+    ),
     pub cmd_blit_image2_khr: extern "system" fn(
         command_buffer: CommandBuffer,
         p_blit_image_info: *const BlitImageInfo2KHR,
-    ) -> c_void,
+    ),
     pub cmd_resolve_image2_khr: extern "system" fn(
         command_buffer: CommandBuffer,
         p_resolve_image_info: *const ResolveImageInfo2KHR,
-    ) -> c_void,
+    ),
 }
 unsafe impl Send for KhrCopyCommands2Fn {}
 unsafe impl Sync for KhrCopyCommands2Fn {}
@@ -23882,7 +23823,7 @@ impl KhrCopyCommands2Fn {
                 extern "system" fn cmd_copy_buffer2_khr(
                     _command_buffer: CommandBuffer,
                     _p_copy_buffer_info: *const CopyBufferInfo2KHR,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_copy_buffer2_khr)))
                 }
                 let raw_name = stringify!(vkCmdCopyBuffer2KHR);
@@ -23898,7 +23839,7 @@ impl KhrCopyCommands2Fn {
                 extern "system" fn cmd_copy_image2_khr(
                     _command_buffer: CommandBuffer,
                     _p_copy_image_info: *const CopyImageInfo2KHR,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_copy_image2_khr)))
                 }
                 let raw_name = stringify!(vkCmdCopyImage2KHR);
@@ -23914,7 +23855,7 @@ impl KhrCopyCommands2Fn {
                 extern "system" fn cmd_copy_buffer_to_image2_khr(
                     _command_buffer: CommandBuffer,
                     _p_copy_buffer_to_image_info: *const CopyBufferToImageInfo2KHR,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_copy_buffer_to_image2_khr)
@@ -23933,7 +23874,7 @@ impl KhrCopyCommands2Fn {
                 extern "system" fn cmd_copy_image_to_buffer2_khr(
                     _command_buffer: CommandBuffer,
                     _p_copy_image_to_buffer_info: *const CopyImageToBufferInfo2KHR,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_copy_image_to_buffer2_khr)
@@ -23952,7 +23893,7 @@ impl KhrCopyCommands2Fn {
                 extern "system" fn cmd_blit_image2_khr(
                     _command_buffer: CommandBuffer,
                     _p_blit_image_info: *const BlitImageInfo2KHR,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_blit_image2_khr)))
                 }
                 let raw_name = stringify!(vkCmdBlitImage2KHR);
@@ -23968,7 +23909,7 @@ impl KhrCopyCommands2Fn {
                 extern "system" fn cmd_resolve_image2_khr(
                     _command_buffer: CommandBuffer,
                     _p_resolve_image_info: *const ResolveImageInfo2KHR,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_resolve_image2_khr)
@@ -23990,7 +23931,7 @@ impl KhrCopyCommands2Fn {
         &self,
         command_buffer: CommandBuffer,
         p_copy_buffer_info: *const CopyBufferInfo2KHR,
-    ) -> c_void {
+    ) {
         (self.cmd_copy_buffer2_khr)(command_buffer, p_copy_buffer_info)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdCopyImage2KHR.html>"]
@@ -23998,7 +23939,7 @@ impl KhrCopyCommands2Fn {
         &self,
         command_buffer: CommandBuffer,
         p_copy_image_info: *const CopyImageInfo2KHR,
-    ) -> c_void {
+    ) {
         (self.cmd_copy_image2_khr)(command_buffer, p_copy_image_info)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdCopyBufferToImage2KHR.html>"]
@@ -24006,7 +23947,7 @@ impl KhrCopyCommands2Fn {
         &self,
         command_buffer: CommandBuffer,
         p_copy_buffer_to_image_info: *const CopyBufferToImageInfo2KHR,
-    ) -> c_void {
+    ) {
         (self.cmd_copy_buffer_to_image2_khr)(command_buffer, p_copy_buffer_to_image_info)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdCopyImageToBuffer2KHR.html>"]
@@ -24014,7 +23955,7 @@ impl KhrCopyCommands2Fn {
         &self,
         command_buffer: CommandBuffer,
         p_copy_image_to_buffer_info: *const CopyImageToBufferInfo2KHR,
-    ) -> c_void {
+    ) {
         (self.cmd_copy_image_to_buffer2_khr)(command_buffer, p_copy_image_to_buffer_info)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdBlitImage2KHR.html>"]
@@ -24022,7 +23963,7 @@ impl KhrCopyCommands2Fn {
         &self,
         command_buffer: CommandBuffer,
         p_blit_image_info: *const BlitImageInfo2KHR,
-    ) -> c_void {
+    ) {
         (self.cmd_blit_image2_khr)(command_buffer, p_blit_image_info)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdResolveImage2KHR.html>"]
@@ -24030,7 +23971,7 @@ impl KhrCopyCommands2Fn {
         &self,
         command_buffer: CommandBuffer,
         p_resolve_image_info: *const ResolveImageInfo2KHR,
-    ) -> c_void {
+    ) {
         (self.cmd_resolve_image2_khr)(command_buffer, p_resolve_image_info)
     }
 }
