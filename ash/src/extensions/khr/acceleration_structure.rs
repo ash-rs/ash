@@ -82,7 +82,7 @@ impl AccelerationStructure {
         let build_range_infos = build_range_infos
             .iter()
             .map(|slice| slice.as_ptr())
-            .collect::<Vec<*const _>>();
+            .collect::<Vec<_>>();
 
         self.acceleration_structure_fn
             .cmd_build_acceleration_structures_khr(
@@ -100,7 +100,7 @@ impl AccelerationStructure {
         infos: &[vk::AccelerationStructureBuildGeometryInfoKHR],
         indirect_device_addresses: &[vk::DeviceAddress],
         indirect_strides: &[u32],
-        max_primitive_counts: &[&u32],
+        max_primitive_counts: &[&[u32]],
     ) {
         assert_eq!(infos.len(), indirect_device_addresses.len());
         assert_eq!(infos.len(), indirect_strides.len());
@@ -108,7 +108,7 @@ impl AccelerationStructure {
 
         let max_primitive_counts = max_primitive_counts
             .iter()
-            .map(|cnt| *cnt as *const _)
+            .map(|cnt| cnt.as_ptr())
             .collect::<Vec<_>>();
 
         self.acceleration_structure_fn
@@ -134,7 +134,7 @@ impl AccelerationStructure {
         let build_range_infos = build_range_infos
             .iter()
             .map(|slice| slice.as_ptr())
-            .collect::<Vec<*const _>>();
+            .collect::<Vec<_>>();
 
         self.acceleration_structure_fn
             .build_acceleration_structures_khr(
