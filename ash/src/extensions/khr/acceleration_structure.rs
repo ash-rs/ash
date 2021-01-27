@@ -42,18 +42,14 @@ impl AccelerationStructure {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::AccelerationStructureKHR> {
         let mut accel_struct = mem::zeroed();
-        let err_code = self
-            .acceleration_structure_fn
+        self.acceleration_structure_fn
             .create_acceleration_structure_khr(
                 self.handle,
                 create_info,
                 allocation_callbacks.as_raw_ptr(),
                 &mut accel_struct,
-            );
-        match err_code {
-            vk::Result::SUCCESS => Ok(accel_struct),
-            _ => Err(err_code),
-        }
+            )
+            .result_with_success(accel_struct)
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkDestroyAccelerationStructureKHR.html>"]
@@ -81,7 +77,11 @@ impl AccelerationStructure {
 
         let build_range_infos = build_range_infos
             .iter()
-            .map(|slice| slice.as_ptr())
+            .zip(infos.iter())
+            .map(|(range_info, info)| {
+                assert_eq!(range_info.len(), info.geometry_count as usize);
+                range_info.as_ptr()
+            })
             .collect::<Vec<_>>();
 
         self.acceleration_structure_fn
@@ -108,7 +108,11 @@ impl AccelerationStructure {
 
         let max_primitive_counts = max_primitive_counts
             .iter()
-            .map(|cnt| cnt.as_ptr())
+            .zip(infos.iter())
+            .map(|(cnt, info)| {
+                assert_eq!(cnt.len(), info.geometry_count as usize);
+                cnt.as_ptr()
+            })
             .collect::<Vec<_>>();
 
         self.acceleration_structure_fn
@@ -133,7 +137,11 @@ impl AccelerationStructure {
 
         let build_range_infos = build_range_infos
             .iter()
-            .map(|slice| slice.as_ptr())
+            .zip(infos.iter())
+            .map(|(range_info, info)| {
+                assert_eq!(range_info.len(), info.geometry_count as usize);
+                range_info.as_ptr()
+            })
             .collect::<Vec<_>>();
 
         self.acceleration_structure_fn
