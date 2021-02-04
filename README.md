@@ -216,8 +216,8 @@ Make sure that you have a Vulkan ready driver and install the [LunarG Vulkan SDK
 Install the [LunarG Vulkan SDK](https://lunarg.com/vulkan-sdk/). This basically entails extracting the downloaded tarball to any location you choose and then setting a few environment variables. Specifically, if `SDK_PATH` is set to the root extracted SDK directory,
 
 * `DYLD_LIBRARY_PATH = $SDK_PATH/macOS/lib`
-* `VK_ICD_FILENAMES = $SDK_PATH/macOS/etc/vulkan/icd.d/MoltenVK_icd.json`
-* `VK_LAYER_PATH = $SDK_PATH/macOS/etc/vulkan/explicit_layer.d`
+* `VK_ICD_FILENAMES = $SDK_PATH/MoltenVK/dylib/macOS/MoltenVK_icd.json`
+* `VK_LAYER_PATH = $SDK_PATH/macOS/share/vulkan/explicit_layer.d`
 
 ### [Triangle](https://github.com/MaikKlein/ash/blob/master/examples/src/bin/triangle.rs)
 Displays a triangle with vertex colors.
