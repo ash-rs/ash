@@ -604,7 +604,7 @@ pub trait CommandExt {
 
 impl CommandExt for vkxml::Command {
     fn command_ident(&self) -> Ident {
-        format_ident!("{}", &self.name[2..].to_snake_case())
+        format_ident!("{}", self.name.strip_prefix("vk").unwrap().to_snake_case())
     }
 
     fn function_type(&self) -> FunctionType {
@@ -856,8 +856,11 @@ fn generate_function_pointers<'a>(
         }
     };
     let function_name = |name: &str| -> Ident {
-        let fn_name = function_name_raw(&name);
-        format_ident!("{}", fn_name[2..].to_snake_case().as_str())
+        let fn_name = function_name_raw(name);
+        format_ident!(
+            "{}",
+            fn_name.strip_prefix("vk").unwrap().to_snake_case().as_str()
+        )
     };
     let names: Vec<_> = commands
         .iter()
@@ -1117,8 +1120,10 @@ pub fn generate_extension_commands<'a>(
             }
         });
 
-    let name = format!("{}Fn", extension_name.to_camel_case());
-    let ident = format_ident!("{}", &name[2..]);
+    let ident = format_ident!(
+        "{}Fn",
+        extension_name.to_camel_case().strip_prefix("Vk").unwrap()
+    );
     let fp = generate_function_pointers(ident.clone(), &commands, &aliases, fn_cache);
     let byte_name = format!("{}\0", extension_name);
 
@@ -1244,7 +1249,7 @@ pub fn generate_bitmask(
         return None;
     }
 
-    let name = &bitmask.name[2..];
+    let name = bitmask.name.strip_prefix("Vk").unwrap();
     let ident = format_ident!("{}", name);
     if !bitflags_cache.insert(ident.clone()) {
         return None;
@@ -2091,7 +2096,7 @@ pub fn generate_handle(handle: &vkxml::Handle) -> Option<TokenStream> {
     let khronos_link = khronos_link(&handle.name);
     let tokens = match handle.ty {
         vkxml::HandleType::Dispatch => {
-            let name = &handle.name[2..];
+            let name = handle.name.strip_prefix("Vk").unwrap();
             let ty = format_ident!("{}", name.to_shouty_snake_case());
             let name = format_ident!("{}", name);
             quote! {
@@ -2099,7 +2104,7 @@ pub fn generate_handle(handle: &vkxml::Handle) -> Option<TokenStream> {
             }
         }
         vkxml::HandleType::NoDispatch => {
-            let name = &handle.name[2..];
+            let name = handle.name.strip_prefix("Vk").unwrap();
             let ty = format_ident!("{}", name.to_shouty_snake_case());
             let name = format_ident!("{}", name);
             quote! {
