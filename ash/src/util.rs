@@ -61,6 +61,9 @@ impl<T> Align<T> {
     }
 
     pub unsafe fn index(&self, index: Range<usize>) -> Align<T> {
+        if index.end<index.start {
+            panic!();
+        }
         Align {
             ptr: (self.ptr as *mut u8).offset((index.start as u64 * self.elem_size) as isize) as *mut c_void,
             elem_size: self.elem_size,
