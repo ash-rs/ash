@@ -76,7 +76,7 @@ impl<T> Align<T> {
         }
     }
 
-    pub fn len(self) -> u64 {
+    pub fn len(&self) -> u64 {
         assert_eq!(self.size % self.elem_size, 0);
         self.size / self.elem_size
     }
