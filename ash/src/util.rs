@@ -4,6 +4,7 @@ use std::marker::PhantomData;
 use std::mem::size_of;
 use std::os::raw::c_void;
 use std::{io, slice};
+use std::ops::Range;
 
 /// `Align` handles dynamic alignment. The is useful for dynamic uniform buffers where
 /// the alignment might be different. For example a 4x4 f32 matrix has a size of 64 bytes
