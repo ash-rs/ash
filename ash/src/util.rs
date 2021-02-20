@@ -41,11 +41,6 @@ impl<T: Copy> Align<T> {
             }
         }
     }
-
-    pub fn len(self) -> u64 {
-        assert_eq!(self.size % self.elem_size, 0);
-        self.size / self.elem_size
-    }
 }
 
 fn calc_padding(adr: vk::DeviceSize, align: vk::DeviceSize) -> vk::DeviceSize {
@@ -79,6 +74,11 @@ impl<T> Align<T> {
             current: 0,
             align: self,
         }
+    }
+
+    pub fn len(self) -> u64 {
+        assert_eq!(self.size % self.elem_size, 0);
+        self.size / self.elem_size
     }
 }
 
