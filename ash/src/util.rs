@@ -59,6 +59,15 @@ impl<T> Align<T> {
         }
     }
 
+    pub unsafe fn index(&self, index: Range<usize>) -> Align<T> {
+        Align {
+            ptr: (self.ptr as *mut u8).offset((index.start as u64 * self.elem_size) as isize) as *mut c_void,
+            elem_size: self.elem_size,
+            size: (index.end - index.start) as u64 * self.elem_size as u64,
+            _m: self._m,
+        }
+    }
+
     pub fn iter_mut(&mut self) -> AlignIter<T> {
         AlignIter {
             current: 0,
