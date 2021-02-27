@@ -107,7 +107,6 @@ impl RayTracingPipeline {
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetRayTracingCaptureReplayShaderGroupHandlesKHR.html>"]
     pub unsafe fn get_ray_tracing_capture_replay_shader_group_handles(
         &self,
-        device: vk::Device,
         pipeline: vk::Pipeline,
         first_group: u32,
         group_count: u32,
@@ -117,7 +116,7 @@ impl RayTracingPipeline {
 
         self.ray_tracing_fn
             .get_ray_tracing_capture_replay_shader_group_handles_khr(
-                device,
+                self.handle,
                 pipeline,
                 first_group,
                 group_count,
@@ -150,13 +149,12 @@ impl RayTracingPipeline {
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetRayTracingShaderGroupStackSizeKHR.html>"]
     pub unsafe fn get_ray_tracing_shader_group_stack_size(
         &self,
-        device: vk::Device,
         pipeline: vk::Pipeline,
         group: u32,
         group_shader: vk::ShaderGroupShaderKHR,
     ) -> vk::DeviceSize {
         self.ray_tracing_fn
-            .get_ray_tracing_shader_group_stack_size_khr(device, pipeline, group, group_shader)
+            .get_ray_tracing_shader_group_stack_size_khr(self.handle, pipeline, group, group_shader)
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetRayTracingPipelineStackSizeKHR.html>"]
