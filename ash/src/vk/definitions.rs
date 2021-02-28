@@ -383,7 +383,7 @@ pub type PFN_vkInternalAllocationNotification = Option<
         size: usize,
         allocation_type: InternalAllocationType,
         allocation_scope: SystemAllocationScope,
-    ) -> c_void,
+    ),
 >;
 #[allow(non_camel_case_types)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/PFN_vkInternalFreeNotification.html>"]
@@ -393,7 +393,7 @@ pub type PFN_vkInternalFreeNotification = Option<
         size: usize,
         allocation_type: InternalAllocationType,
         allocation_scope: SystemAllocationScope,
-    ) -> c_void,
+    ),
 >;
 #[allow(non_camel_case_types)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/PFN_vkReallocationFunction.html>"]
@@ -419,10 +419,10 @@ pub type PFN_vkAllocationFunction = Option<
 #[allow(non_camel_case_types)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/PFN_vkFreeFunction.html>"]
 pub type PFN_vkFreeFunction =
-    Option<unsafe extern "system" fn(p_user_data: *mut c_void, p_memory: *mut c_void) -> c_void>;
+    Option<unsafe extern "system" fn(p_user_data: *mut c_void, p_memory: *mut c_void)>;
 #[allow(non_camel_case_types)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/PFN_vkVoidFunction.html>"]
-pub type PFN_vkVoidFunction = Option<unsafe extern "system" fn() -> c_void>;
+pub type PFN_vkVoidFunction = Option<unsafe extern "system" fn()>;
 #[allow(non_camel_case_types)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/PFN_vkDebugReportCallbackEXT.html>"]
 pub type PFN_vkDebugReportCallbackEXT = Option<
@@ -453,7 +453,7 @@ pub type PFN_vkDeviceMemoryReportCallbackEXT = Option<
     unsafe extern "system" fn(
         p_callback_data: *const DeviceMemoryReportCallbackDataEXT,
         p_user_data: *mut c_void,
-    ) -> c_void,
+    ),
 >;
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]

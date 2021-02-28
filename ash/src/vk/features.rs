@@ -189,7 +189,7 @@ impl EntryFnV1_0 {
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyInstance =
-    extern "system" fn(instance: Instance, p_allocator: *const AllocationCallbacks) -> c_void;
+    extern "system" fn(instance: Instance, p_allocator: *const AllocationCallbacks);
 #[allow(non_camel_case_types)]
 pub type PFN_vkEnumeratePhysicalDevices = extern "system" fn(
     instance: Instance,
@@ -197,16 +197,14 @@ pub type PFN_vkEnumeratePhysicalDevices = extern "system" fn(
     p_physical_devices: *mut PhysicalDevice,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkGetPhysicalDeviceFeatures = extern "system" fn(
-    physical_device: PhysicalDevice,
-    p_features: *mut PhysicalDeviceFeatures,
-) -> c_void;
+pub type PFN_vkGetPhysicalDeviceFeatures =
+    extern "system" fn(physical_device: PhysicalDevice, p_features: *mut PhysicalDeviceFeatures);
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceFormatProperties = extern "system" fn(
     physical_device: PhysicalDevice,
     format: Format,
     p_format_properties: *mut FormatProperties,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceImageFormatProperties = extern "system" fn(
     physical_device: PhysicalDevice,
@@ -221,18 +219,18 @@ pub type PFN_vkGetPhysicalDeviceImageFormatProperties = extern "system" fn(
 pub type PFN_vkGetPhysicalDeviceProperties = extern "system" fn(
     physical_device: PhysicalDevice,
     p_properties: *mut PhysicalDeviceProperties,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceQueueFamilyProperties = extern "system" fn(
     physical_device: PhysicalDevice,
     p_queue_family_property_count: *mut u32,
     p_queue_family_properties: *mut QueueFamilyProperties,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceMemoryProperties = extern "system" fn(
     physical_device: PhysicalDevice,
     p_memory_properties: *mut PhysicalDeviceMemoryProperties,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetDeviceProcAddr =
     extern "system" fn(device: Device, p_name: *const c_char) -> PFN_vkVoidFunction;
@@ -266,10 +264,10 @@ pub type PFN_vkGetPhysicalDeviceSparseImageFormatProperties = extern "system" fn
     tiling: ImageTiling,
     p_property_count: *mut u32,
     p_properties: *mut SparseImageFormatProperties,
-) -> c_void;
+);
 pub struct InstanceFnV1_0 {
     pub destroy_instance:
-        extern "system" fn(instance: Instance, p_allocator: *const AllocationCallbacks) -> c_void,
+        extern "system" fn(instance: Instance, p_allocator: *const AllocationCallbacks),
     pub enumerate_physical_devices: extern "system" fn(
         instance: Instance,
         p_physical_device_count: *mut u32,
@@ -278,12 +276,12 @@ pub struct InstanceFnV1_0 {
     pub get_physical_device_features: extern "system" fn(
         physical_device: PhysicalDevice,
         p_features: *mut PhysicalDeviceFeatures,
-    ) -> c_void,
+    ),
     pub get_physical_device_format_properties: extern "system" fn(
         physical_device: PhysicalDevice,
         format: Format,
         p_format_properties: *mut FormatProperties,
-    ) -> c_void,
+    ),
     pub get_physical_device_image_format_properties: extern "system" fn(
         physical_device: PhysicalDevice,
         format: Format,
@@ -296,16 +294,16 @@ pub struct InstanceFnV1_0 {
     pub get_physical_device_properties: extern "system" fn(
         physical_device: PhysicalDevice,
         p_properties: *mut PhysicalDeviceProperties,
-    ) -> c_void,
+    ),
     pub get_physical_device_queue_family_properties: extern "system" fn(
         physical_device: PhysicalDevice,
         p_queue_family_property_count: *mut u32,
         p_queue_family_properties: *mut QueueFamilyProperties,
-    ) -> c_void,
+    ),
     pub get_physical_device_memory_properties: extern "system" fn(
         physical_device: PhysicalDevice,
         p_memory_properties: *mut PhysicalDeviceMemoryProperties,
-    ) -> c_void,
+    ),
     pub get_device_proc_addr:
         extern "system" fn(device: Device, p_name: *const c_char) -> PFN_vkVoidFunction,
     pub create_device: extern "system" fn(
@@ -334,7 +332,7 @@ pub struct InstanceFnV1_0 {
         tiling: ImageTiling,
         p_property_count: *mut u32,
         p_properties: *mut SparseImageFormatProperties,
-    ) -> c_void,
+    ),
 }
 unsafe impl Send for InstanceFnV1_0 {}
 unsafe impl Sync for InstanceFnV1_0 {}
@@ -370,7 +368,7 @@ impl InstanceFnV1_0 {
                 extern "system" fn destroy_instance(
                     _instance: Instance,
                     _p_allocator: *const AllocationCallbacks,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_instance)))
                 }
                 let raw_name = stringify!(vkDestroyInstance);
@@ -406,7 +404,7 @@ impl InstanceFnV1_0 {
                 extern "system" fn get_physical_device_features(
                     _physical_device: PhysicalDevice,
                     _p_features: *mut PhysicalDeviceFeatures,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(get_physical_device_features)
@@ -426,7 +424,7 @@ impl InstanceFnV1_0 {
                     _physical_device: PhysicalDevice,
                     _format: Format,
                     _p_format_properties: *mut FormatProperties,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(get_physical_device_format_properties)
@@ -469,7 +467,7 @@ impl InstanceFnV1_0 {
                 extern "system" fn get_physical_device_properties(
                     _physical_device: PhysicalDevice,
                     _p_properties: *mut PhysicalDeviceProperties,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(get_physical_device_properties)
@@ -489,7 +487,7 @@ impl InstanceFnV1_0 {
                     _physical_device: PhysicalDevice,
                     _p_queue_family_property_count: *mut u32,
                     _p_queue_family_properties: *mut QueueFamilyProperties,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(get_physical_device_queue_family_properties)
@@ -508,7 +506,7 @@ impl InstanceFnV1_0 {
                 extern "system" fn get_physical_device_memory_properties(
                     _physical_device: PhysicalDevice,
                     _p_memory_properties: *mut PhysicalDeviceMemoryProperties,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(get_physical_device_memory_properties)
@@ -608,7 +606,7 @@ impl InstanceFnV1_0 {
                     _tiling: ImageTiling,
                     _p_property_count: *mut u32,
                     _p_properties: *mut SparseImageFormatProperties,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(get_physical_device_sparse_image_format_properties)
@@ -630,7 +628,7 @@ impl InstanceFnV1_0 {
         &self,
         instance: Instance,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void {
+    ) {
         (self.destroy_instance)(instance, p_allocator)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkEnumeratePhysicalDevices.html>"]
@@ -647,7 +645,7 @@ impl InstanceFnV1_0 {
         &self,
         physical_device: PhysicalDevice,
         p_features: *mut PhysicalDeviceFeatures,
-    ) -> c_void {
+    ) {
         (self.get_physical_device_features)(physical_device, p_features)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceFormatProperties.html>"]
@@ -656,7 +654,7 @@ impl InstanceFnV1_0 {
         physical_device: PhysicalDevice,
         format: Format,
         p_format_properties: *mut FormatProperties,
-    ) -> c_void {
+    ) {
         (self.get_physical_device_format_properties)(physical_device, format, p_format_properties)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceImageFormatProperties.html>"]
@@ -685,7 +683,7 @@ impl InstanceFnV1_0 {
         &self,
         physical_device: PhysicalDevice,
         p_properties: *mut PhysicalDeviceProperties,
-    ) -> c_void {
+    ) {
         (self.get_physical_device_properties)(physical_device, p_properties)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceQueueFamilyProperties.html>"]
@@ -694,7 +692,7 @@ impl InstanceFnV1_0 {
         physical_device: PhysicalDevice,
         p_queue_family_property_count: *mut u32,
         p_queue_family_properties: *mut QueueFamilyProperties,
-    ) -> c_void {
+    ) {
         (self.get_physical_device_queue_family_properties)(
             physical_device,
             p_queue_family_property_count,
@@ -706,7 +704,7 @@ impl InstanceFnV1_0 {
         &self,
         physical_device: PhysicalDevice,
         p_memory_properties: *mut PhysicalDeviceMemoryProperties,
-    ) -> c_void {
+    ) {
         (self.get_physical_device_memory_properties)(physical_device, p_memory_properties)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetDeviceProcAddr.html>"]
@@ -762,7 +760,7 @@ impl InstanceFnV1_0 {
         tiling: ImageTiling,
         p_property_count: *mut u32,
         p_properties: *mut SparseImageFormatProperties,
-    ) -> c_void {
+    ) {
         (self.get_physical_device_sparse_image_format_properties)(
             physical_device,
             format,
@@ -777,14 +775,14 @@ impl InstanceFnV1_0 {
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyDevice =
-    extern "system" fn(device: Device, p_allocator: *const AllocationCallbacks) -> c_void;
+    extern "system" fn(device: Device, p_allocator: *const AllocationCallbacks);
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetDeviceQueue = extern "system" fn(
     device: Device,
     queue_family_index: u32,
     queue_index: u32,
     p_queue: *mut Queue,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkQueueSubmit = extern "system" fn(
     queue: Queue,
@@ -808,7 +806,7 @@ pub type PFN_vkFreeMemory = extern "system" fn(
     device: Device,
     memory: DeviceMemory,
     p_allocator: *const AllocationCallbacks,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkMapMemory = extern "system" fn(
     device: Device,
@@ -819,7 +817,7 @@ pub type PFN_vkMapMemory = extern "system" fn(
     pp_data: *mut *mut c_void,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkUnmapMemory = extern "system" fn(device: Device, memory: DeviceMemory) -> c_void;
+pub type PFN_vkUnmapMemory = extern "system" fn(device: Device, memory: DeviceMemory);
 #[allow(non_camel_case_types)]
 pub type PFN_vkFlushMappedMemoryRanges = extern "system" fn(
     device: Device,
@@ -837,7 +835,7 @@ pub type PFN_vkGetDeviceMemoryCommitment = extern "system" fn(
     device: Device,
     memory: DeviceMemory,
     p_committed_memory_in_bytes: *mut DeviceSize,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkBindBufferMemory = extern "system" fn(
     device: Device,
@@ -857,20 +855,20 @@ pub type PFN_vkGetBufferMemoryRequirements = extern "system" fn(
     device: Device,
     buffer: Buffer,
     p_memory_requirements: *mut MemoryRequirements,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetImageMemoryRequirements = extern "system" fn(
     device: Device,
     image: Image,
     p_memory_requirements: *mut MemoryRequirements,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetImageSparseMemoryRequirements = extern "system" fn(
     device: Device,
     image: Image,
     p_sparse_memory_requirement_count: *mut u32,
     p_sparse_memory_requirements: *mut SparseImageMemoryRequirements,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkQueueBindSparse = extern "system" fn(
     queue: Queue,
@@ -886,11 +884,8 @@ pub type PFN_vkCreateFence = extern "system" fn(
     p_fence: *mut Fence,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkDestroyFence = extern "system" fn(
-    device: Device,
-    fence: Fence,
-    p_allocator: *const AllocationCallbacks,
-) -> c_void;
+pub type PFN_vkDestroyFence =
+    extern "system" fn(device: Device, fence: Fence, p_allocator: *const AllocationCallbacks);
 #[allow(non_camel_case_types)]
 pub type PFN_vkResetFences =
     extern "system" fn(device: Device, fence_count: u32, p_fences: *const Fence) -> Result;
@@ -916,7 +911,7 @@ pub type PFN_vkDestroySemaphore = extern "system" fn(
     device: Device,
     semaphore: Semaphore,
     p_allocator: *const AllocationCallbacks,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateEvent = extern "system" fn(
     device: Device,
@@ -925,11 +920,8 @@ pub type PFN_vkCreateEvent = extern "system" fn(
     p_event: *mut Event,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkDestroyEvent = extern "system" fn(
-    device: Device,
-    event: Event,
-    p_allocator: *const AllocationCallbacks,
-) -> c_void;
+pub type PFN_vkDestroyEvent =
+    extern "system" fn(device: Device, event: Event, p_allocator: *const AllocationCallbacks);
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetEventStatus = extern "system" fn(device: Device, event: Event) -> Result;
 #[allow(non_camel_case_types)]
@@ -948,7 +940,7 @@ pub type PFN_vkDestroyQueryPool = extern "system" fn(
     device: Device,
     query_pool: QueryPool,
     p_allocator: *const AllocationCallbacks,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetQueryPoolResults = extern "system" fn(
     device: Device,
@@ -968,11 +960,8 @@ pub type PFN_vkCreateBuffer = extern "system" fn(
     p_buffer: *mut Buffer,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkDestroyBuffer = extern "system" fn(
-    device: Device,
-    buffer: Buffer,
-    p_allocator: *const AllocationCallbacks,
-) -> c_void;
+pub type PFN_vkDestroyBuffer =
+    extern "system" fn(device: Device, buffer: Buffer, p_allocator: *const AllocationCallbacks);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateBufferView = extern "system" fn(
     device: Device,
@@ -985,7 +974,7 @@ pub type PFN_vkDestroyBufferView = extern "system" fn(
     device: Device,
     buffer_view: BufferView,
     p_allocator: *const AllocationCallbacks,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateImage = extern "system" fn(
     device: Device,
@@ -994,18 +983,15 @@ pub type PFN_vkCreateImage = extern "system" fn(
     p_image: *mut Image,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkDestroyImage = extern "system" fn(
-    device: Device,
-    image: Image,
-    p_allocator: *const AllocationCallbacks,
-) -> c_void;
+pub type PFN_vkDestroyImage =
+    extern "system" fn(device: Device, image: Image, p_allocator: *const AllocationCallbacks);
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetImageSubresourceLayout = extern "system" fn(
     device: Device,
     image: Image,
     p_subresource: *const ImageSubresource,
     p_layout: *mut SubresourceLayout,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateImageView = extern "system" fn(
     device: Device,
@@ -1018,7 +1004,7 @@ pub type PFN_vkDestroyImageView = extern "system" fn(
     device: Device,
     image_view: ImageView,
     p_allocator: *const AllocationCallbacks,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateShaderModule = extern "system" fn(
     device: Device,
@@ -1031,7 +1017,7 @@ pub type PFN_vkDestroyShaderModule = extern "system" fn(
     device: Device,
     shader_module: ShaderModule,
     p_allocator: *const AllocationCallbacks,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreatePipelineCache = extern "system" fn(
     device: Device,
@@ -1044,7 +1030,7 @@ pub type PFN_vkDestroyPipelineCache = extern "system" fn(
     device: Device,
     pipeline_cache: PipelineCache,
     p_allocator: *const AllocationCallbacks,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPipelineCacheData = extern "system" fn(
     device: Device,
@@ -1078,11 +1064,8 @@ pub type PFN_vkCreateComputePipelines = extern "system" fn(
     p_pipelines: *mut Pipeline,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkDestroyPipeline = extern "system" fn(
-    device: Device,
-    pipeline: Pipeline,
-    p_allocator: *const AllocationCallbacks,
-) -> c_void;
+pub type PFN_vkDestroyPipeline =
+    extern "system" fn(device: Device, pipeline: Pipeline, p_allocator: *const AllocationCallbacks);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreatePipelineLayout = extern "system" fn(
     device: Device,
@@ -1095,7 +1078,7 @@ pub type PFN_vkDestroyPipelineLayout = extern "system" fn(
     device: Device,
     pipeline_layout: PipelineLayout,
     p_allocator: *const AllocationCallbacks,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateSampler = extern "system" fn(
     device: Device,
@@ -1104,11 +1087,8 @@ pub type PFN_vkCreateSampler = extern "system" fn(
     p_sampler: *mut Sampler,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkDestroySampler = extern "system" fn(
-    device: Device,
-    sampler: Sampler,
-    p_allocator: *const AllocationCallbacks,
-) -> c_void;
+pub type PFN_vkDestroySampler =
+    extern "system" fn(device: Device, sampler: Sampler, p_allocator: *const AllocationCallbacks);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateDescriptorSetLayout = extern "system" fn(
     device: Device,
@@ -1121,7 +1101,7 @@ pub type PFN_vkDestroyDescriptorSetLayout = extern "system" fn(
     device: Device,
     descriptor_set_layout: DescriptorSetLayout,
     p_allocator: *const AllocationCallbacks,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateDescriptorPool = extern "system" fn(
     device: Device,
@@ -1134,7 +1114,7 @@ pub type PFN_vkDestroyDescriptorPool = extern "system" fn(
     device: Device,
     descriptor_pool: DescriptorPool,
     p_allocator: *const AllocationCallbacks,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkResetDescriptorPool = extern "system" fn(
     device: Device,
@@ -1161,7 +1141,7 @@ pub type PFN_vkUpdateDescriptorSets = extern "system" fn(
     p_descriptor_writes: *const WriteDescriptorSet,
     descriptor_copy_count: u32,
     p_descriptor_copies: *const CopyDescriptorSet,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateFramebuffer = extern "system" fn(
     device: Device,
@@ -1174,7 +1154,7 @@ pub type PFN_vkDestroyFramebuffer = extern "system" fn(
     device: Device,
     framebuffer: Framebuffer,
     p_allocator: *const AllocationCallbacks,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateRenderPass = extern "system" fn(
     device: Device,
@@ -1187,13 +1167,10 @@ pub type PFN_vkDestroyRenderPass = extern "system" fn(
     device: Device,
     render_pass: RenderPass,
     p_allocator: *const AllocationCallbacks,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
-pub type PFN_vkGetRenderAreaGranularity = extern "system" fn(
-    device: Device,
-    render_pass: RenderPass,
-    p_granularity: *mut Extent2D,
-) -> c_void;
+pub type PFN_vkGetRenderAreaGranularity =
+    extern "system" fn(device: Device, render_pass: RenderPass, p_granularity: *mut Extent2D);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateCommandPool = extern "system" fn(
     device: Device,
@@ -1206,7 +1183,7 @@ pub type PFN_vkDestroyCommandPool = extern "system" fn(
     device: Device,
     command_pool: CommandPool,
     p_allocator: *const AllocationCallbacks,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkResetCommandPool = extern "system" fn(
     device: Device,
@@ -1225,7 +1202,7 @@ pub type PFN_vkFreeCommandBuffers = extern "system" fn(
     command_pool: CommandPool,
     command_buffer_count: u32,
     p_command_buffers: *const CommandBuffer,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkBeginCommandBuffer = extern "system" fn(
     command_buffer: CommandBuffer,
@@ -1241,58 +1218,48 @@ pub type PFN_vkCmdBindPipeline = extern "system" fn(
     command_buffer: CommandBuffer,
     pipeline_bind_point: PipelineBindPoint,
     pipeline: Pipeline,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetViewport = extern "system" fn(
     command_buffer: CommandBuffer,
     first_viewport: u32,
     viewport_count: u32,
     p_viewports: *const Viewport,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetScissor = extern "system" fn(
     command_buffer: CommandBuffer,
     first_scissor: u32,
     scissor_count: u32,
     p_scissors: *const Rect2D,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdSetLineWidth =
-    extern "system" fn(command_buffer: CommandBuffer, line_width: f32) -> c_void;
+pub type PFN_vkCmdSetLineWidth = extern "system" fn(command_buffer: CommandBuffer, line_width: f32);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetDepthBias = extern "system" fn(
     command_buffer: CommandBuffer,
     depth_bias_constant_factor: f32,
     depth_bias_clamp: f32,
     depth_bias_slope_factor: f32,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetBlendConstants =
-    extern "system" fn(command_buffer: CommandBuffer, blend_constants: *const [f32; 4]) -> c_void;
+    extern "system" fn(command_buffer: CommandBuffer, blend_constants: *const [f32; 4]);
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdSetDepthBounds = extern "system" fn(
-    command_buffer: CommandBuffer,
-    min_depth_bounds: f32,
-    max_depth_bounds: f32,
-) -> c_void;
+pub type PFN_vkCmdSetDepthBounds =
+    extern "system" fn(command_buffer: CommandBuffer, min_depth_bounds: f32, max_depth_bounds: f32);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetStencilCompareMask = extern "system" fn(
     command_buffer: CommandBuffer,
     face_mask: StencilFaceFlags,
     compare_mask: u32,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdSetStencilWriteMask = extern "system" fn(
-    command_buffer: CommandBuffer,
-    face_mask: StencilFaceFlags,
-    write_mask: u32,
-) -> c_void;
+pub type PFN_vkCmdSetStencilWriteMask =
+    extern "system" fn(command_buffer: CommandBuffer, face_mask: StencilFaceFlags, write_mask: u32);
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdSetStencilReference = extern "system" fn(
-    command_buffer: CommandBuffer,
-    face_mask: StencilFaceFlags,
-    reference: u32,
-) -> c_void;
+pub type PFN_vkCmdSetStencilReference =
+    extern "system" fn(command_buffer: CommandBuffer, face_mask: StencilFaceFlags, reference: u32);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdBindDescriptorSets = extern "system" fn(
     command_buffer: CommandBuffer,
@@ -1303,14 +1270,14 @@ pub type PFN_vkCmdBindDescriptorSets = extern "system" fn(
     p_descriptor_sets: *const DescriptorSet,
     dynamic_offset_count: u32,
     p_dynamic_offsets: *const u32,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdBindIndexBuffer = extern "system" fn(
     command_buffer: CommandBuffer,
     buffer: Buffer,
     offset: DeviceSize,
     index_type: IndexType,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdBindVertexBuffers = extern "system" fn(
     command_buffer: CommandBuffer,
@@ -1318,7 +1285,7 @@ pub type PFN_vkCmdBindVertexBuffers = extern "system" fn(
     binding_count: u32,
     p_buffers: *const Buffer,
     p_offsets: *const DeviceSize,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdDraw = extern "system" fn(
     command_buffer: CommandBuffer,
@@ -1326,7 +1293,7 @@ pub type PFN_vkCmdDraw = extern "system" fn(
     instance_count: u32,
     first_vertex: u32,
     first_instance: u32,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdDrawIndexed = extern "system" fn(
     command_buffer: CommandBuffer,
@@ -1335,7 +1302,7 @@ pub type PFN_vkCmdDrawIndexed = extern "system" fn(
     first_index: u32,
     vertex_offset: i32,
     first_instance: u32,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdDrawIndirect = extern "system" fn(
     command_buffer: CommandBuffer,
@@ -1343,7 +1310,7 @@ pub type PFN_vkCmdDrawIndirect = extern "system" fn(
     offset: DeviceSize,
     draw_count: u32,
     stride: u32,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdDrawIndexedIndirect = extern "system" fn(
     command_buffer: CommandBuffer,
@@ -1351,17 +1318,17 @@ pub type PFN_vkCmdDrawIndexedIndirect = extern "system" fn(
     offset: DeviceSize,
     draw_count: u32,
     stride: u32,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdDispatch = extern "system" fn(
     command_buffer: CommandBuffer,
     group_count_x: u32,
     group_count_y: u32,
     group_count_z: u32,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdDispatchIndirect =
-    extern "system" fn(command_buffer: CommandBuffer, buffer: Buffer, offset: DeviceSize) -> c_void;
+    extern "system" fn(command_buffer: CommandBuffer, buffer: Buffer, offset: DeviceSize);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdCopyBuffer = extern "system" fn(
     command_buffer: CommandBuffer,
@@ -1369,7 +1336,7 @@ pub type PFN_vkCmdCopyBuffer = extern "system" fn(
     dst_buffer: Buffer,
     region_count: u32,
     p_regions: *const BufferCopy,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdCopyImage = extern "system" fn(
     command_buffer: CommandBuffer,
@@ -1379,7 +1346,7 @@ pub type PFN_vkCmdCopyImage = extern "system" fn(
     dst_image_layout: ImageLayout,
     region_count: u32,
     p_regions: *const ImageCopy,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdBlitImage = extern "system" fn(
     command_buffer: CommandBuffer,
@@ -1390,7 +1357,7 @@ pub type PFN_vkCmdBlitImage = extern "system" fn(
     region_count: u32,
     p_regions: *const ImageBlit,
     filter: Filter,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdCopyBufferToImage = extern "system" fn(
     command_buffer: CommandBuffer,
@@ -1399,7 +1366,7 @@ pub type PFN_vkCmdCopyBufferToImage = extern "system" fn(
     dst_image_layout: ImageLayout,
     region_count: u32,
     p_regions: *const BufferImageCopy,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdCopyImageToBuffer = extern "system" fn(
     command_buffer: CommandBuffer,
@@ -1408,7 +1375,7 @@ pub type PFN_vkCmdCopyImageToBuffer = extern "system" fn(
     dst_buffer: Buffer,
     region_count: u32,
     p_regions: *const BufferImageCopy,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdUpdateBuffer = extern "system" fn(
     command_buffer: CommandBuffer,
@@ -1416,7 +1383,7 @@ pub type PFN_vkCmdUpdateBuffer = extern "system" fn(
     dst_offset: DeviceSize,
     data_size: DeviceSize,
     p_data: *const c_void,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdFillBuffer = extern "system" fn(
     command_buffer: CommandBuffer,
@@ -1424,7 +1391,7 @@ pub type PFN_vkCmdFillBuffer = extern "system" fn(
     dst_offset: DeviceSize,
     size: DeviceSize,
     data: u32,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdClearColorImage = extern "system" fn(
     command_buffer: CommandBuffer,
@@ -1433,7 +1400,7 @@ pub type PFN_vkCmdClearColorImage = extern "system" fn(
     p_color: *const ClearColorValue,
     range_count: u32,
     p_ranges: *const ImageSubresourceRange,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdClearDepthStencilImage = extern "system" fn(
     command_buffer: CommandBuffer,
@@ -1442,7 +1409,7 @@ pub type PFN_vkCmdClearDepthStencilImage = extern "system" fn(
     p_depth_stencil: *const ClearDepthStencilValue,
     range_count: u32,
     p_ranges: *const ImageSubresourceRange,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdClearAttachments = extern "system" fn(
     command_buffer: CommandBuffer,
@@ -1450,7 +1417,7 @@ pub type PFN_vkCmdClearAttachments = extern "system" fn(
     p_attachments: *const ClearAttachment,
     rect_count: u32,
     p_rects: *const ClearRect,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdResolveImage = extern "system" fn(
     command_buffer: CommandBuffer,
@@ -1460,19 +1427,13 @@ pub type PFN_vkCmdResolveImage = extern "system" fn(
     dst_image_layout: ImageLayout,
     region_count: u32,
     p_regions: *const ImageResolve,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdSetEvent = extern "system" fn(
-    command_buffer: CommandBuffer,
-    event: Event,
-    stage_mask: PipelineStageFlags,
-) -> c_void;
+pub type PFN_vkCmdSetEvent =
+    extern "system" fn(command_buffer: CommandBuffer, event: Event, stage_mask: PipelineStageFlags);
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdResetEvent = extern "system" fn(
-    command_buffer: CommandBuffer,
-    event: Event,
-    stage_mask: PipelineStageFlags,
-) -> c_void;
+pub type PFN_vkCmdResetEvent =
+    extern "system" fn(command_buffer: CommandBuffer, event: Event, stage_mask: PipelineStageFlags);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdWaitEvents = extern "system" fn(
     command_buffer: CommandBuffer,
@@ -1486,7 +1447,7 @@ pub type PFN_vkCmdWaitEvents = extern "system" fn(
     p_buffer_memory_barriers: *const BufferMemoryBarrier,
     image_memory_barrier_count: u32,
     p_image_memory_barriers: *const ImageMemoryBarrier,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdPipelineBarrier = extern "system" fn(
     command_buffer: CommandBuffer,
@@ -1499,31 +1460,31 @@ pub type PFN_vkCmdPipelineBarrier = extern "system" fn(
     p_buffer_memory_barriers: *const BufferMemoryBarrier,
     image_memory_barrier_count: u32,
     p_image_memory_barriers: *const ImageMemoryBarrier,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdBeginQuery = extern "system" fn(
     command_buffer: CommandBuffer,
     query_pool: QueryPool,
     query: u32,
     flags: QueryControlFlags,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdEndQuery =
-    extern "system" fn(command_buffer: CommandBuffer, query_pool: QueryPool, query: u32) -> c_void;
+    extern "system" fn(command_buffer: CommandBuffer, query_pool: QueryPool, query: u32);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdResetQueryPool = extern "system" fn(
     command_buffer: CommandBuffer,
     query_pool: QueryPool,
     first_query: u32,
     query_count: u32,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdWriteTimestamp = extern "system" fn(
     command_buffer: CommandBuffer,
     pipeline_stage: PipelineStageFlags,
     query_pool: QueryPool,
     query: u32,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdCopyQueryPoolResults = extern "system" fn(
     command_buffer: CommandBuffer,
@@ -1534,7 +1495,7 @@ pub type PFN_vkCmdCopyQueryPoolResults = extern "system" fn(
     dst_offset: DeviceSize,
     stride: DeviceSize,
     flags: QueryResultFlags,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdPushConstants = extern "system" fn(
     command_buffer: CommandBuffer,
@@ -1543,33 +1504,32 @@ pub type PFN_vkCmdPushConstants = extern "system" fn(
     offset: u32,
     size: u32,
     p_values: *const c_void,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdBeginRenderPass = extern "system" fn(
     command_buffer: CommandBuffer,
     p_render_pass_begin: *const RenderPassBeginInfo,
     contents: SubpassContents,
-) -> c_void;
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdNextSubpass =
-    extern "system" fn(command_buffer: CommandBuffer, contents: SubpassContents) -> c_void;
+    extern "system" fn(command_buffer: CommandBuffer, contents: SubpassContents);
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdEndRenderPass = extern "system" fn(command_buffer: CommandBuffer) -> c_void;
+pub type PFN_vkCmdEndRenderPass = extern "system" fn(command_buffer: CommandBuffer);
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdExecuteCommands = extern "system" fn(
     command_buffer: CommandBuffer,
     command_buffer_count: u32,
     p_command_buffers: *const CommandBuffer,
-) -> c_void;
+);
 pub struct DeviceFnV1_0 {
-    pub destroy_device:
-        extern "system" fn(device: Device, p_allocator: *const AllocationCallbacks) -> c_void,
+    pub destroy_device: extern "system" fn(device: Device, p_allocator: *const AllocationCallbacks),
     pub get_device_queue: extern "system" fn(
         device: Device,
         queue_family_index: u32,
         queue_index: u32,
         p_queue: *mut Queue,
-    ) -> c_void,
+    ),
     pub queue_submit: extern "system" fn(
         queue: Queue,
         submit_count: u32,
@@ -1588,7 +1548,7 @@ pub struct DeviceFnV1_0 {
         device: Device,
         memory: DeviceMemory,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void,
+    ),
     pub map_memory: extern "system" fn(
         device: Device,
         memory: DeviceMemory,
@@ -1597,7 +1557,7 @@ pub struct DeviceFnV1_0 {
         flags: MemoryMapFlags,
         pp_data: *mut *mut c_void,
     ) -> Result,
-    pub unmap_memory: extern "system" fn(device: Device, memory: DeviceMemory) -> c_void,
+    pub unmap_memory: extern "system" fn(device: Device, memory: DeviceMemory),
     pub flush_mapped_memory_ranges: extern "system" fn(
         device: Device,
         memory_range_count: u32,
@@ -1612,7 +1572,7 @@ pub struct DeviceFnV1_0 {
         device: Device,
         memory: DeviceMemory,
         p_committed_memory_in_bytes: *mut DeviceSize,
-    ) -> c_void,
+    ),
     pub bind_buffer_memory: extern "system" fn(
         device: Device,
         buffer: Buffer,
@@ -1629,18 +1589,18 @@ pub struct DeviceFnV1_0 {
         device: Device,
         buffer: Buffer,
         p_memory_requirements: *mut MemoryRequirements,
-    ) -> c_void,
+    ),
     pub get_image_memory_requirements: extern "system" fn(
         device: Device,
         image: Image,
         p_memory_requirements: *mut MemoryRequirements,
-    ) -> c_void,
+    ),
     pub get_image_sparse_memory_requirements: extern "system" fn(
         device: Device,
         image: Image,
         p_sparse_memory_requirement_count: *mut u32,
         p_sparse_memory_requirements: *mut SparseImageMemoryRequirements,
-    ) -> c_void,
+    ),
     pub queue_bind_sparse: extern "system" fn(
         queue: Queue,
         bind_info_count: u32,
@@ -1653,11 +1613,8 @@ pub struct DeviceFnV1_0 {
         p_allocator: *const AllocationCallbacks,
         p_fence: *mut Fence,
     ) -> Result,
-    pub destroy_fence: extern "system" fn(
-        device: Device,
-        fence: Fence,
-        p_allocator: *const AllocationCallbacks,
-    ) -> c_void,
+    pub destroy_fence:
+        extern "system" fn(device: Device, fence: Fence, p_allocator: *const AllocationCallbacks),
     pub reset_fences:
         extern "system" fn(device: Device, fence_count: u32, p_fences: *const Fence) -> Result,
     pub get_fence_status: extern "system" fn(device: Device, fence: Fence) -> Result,
@@ -1678,18 +1635,15 @@ pub struct DeviceFnV1_0 {
         device: Device,
         semaphore: Semaphore,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void,
+    ),
     pub create_event: extern "system" fn(
         device: Device,
         p_create_info: *const EventCreateInfo,
         p_allocator: *const AllocationCallbacks,
         p_event: *mut Event,
     ) -> Result,
-    pub destroy_event: extern "system" fn(
-        device: Device,
-        event: Event,
-        p_allocator: *const AllocationCallbacks,
-    ) -> c_void,
+    pub destroy_event:
+        extern "system" fn(device: Device, event: Event, p_allocator: *const AllocationCallbacks),
     pub get_event_status: extern "system" fn(device: Device, event: Event) -> Result,
     pub set_event: extern "system" fn(device: Device, event: Event) -> Result,
     pub reset_event: extern "system" fn(device: Device, event: Event) -> Result,
@@ -1703,7 +1657,7 @@ pub struct DeviceFnV1_0 {
         device: Device,
         query_pool: QueryPool,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void,
+    ),
     pub get_query_pool_results: extern "system" fn(
         device: Device,
         query_pool: QueryPool,
@@ -1720,11 +1674,8 @@ pub struct DeviceFnV1_0 {
         p_allocator: *const AllocationCallbacks,
         p_buffer: *mut Buffer,
     ) -> Result,
-    pub destroy_buffer: extern "system" fn(
-        device: Device,
-        buffer: Buffer,
-        p_allocator: *const AllocationCallbacks,
-    ) -> c_void,
+    pub destroy_buffer:
+        extern "system" fn(device: Device, buffer: Buffer, p_allocator: *const AllocationCallbacks),
     pub create_buffer_view: extern "system" fn(
         device: Device,
         p_create_info: *const BufferViewCreateInfo,
@@ -1735,24 +1686,21 @@ pub struct DeviceFnV1_0 {
         device: Device,
         buffer_view: BufferView,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void,
+    ),
     pub create_image: extern "system" fn(
         device: Device,
         p_create_info: *const ImageCreateInfo,
         p_allocator: *const AllocationCallbacks,
         p_image: *mut Image,
     ) -> Result,
-    pub destroy_image: extern "system" fn(
-        device: Device,
-        image: Image,
-        p_allocator: *const AllocationCallbacks,
-    ) -> c_void,
+    pub destroy_image:
+        extern "system" fn(device: Device, image: Image, p_allocator: *const AllocationCallbacks),
     pub get_image_subresource_layout: extern "system" fn(
         device: Device,
         image: Image,
         p_subresource: *const ImageSubresource,
         p_layout: *mut SubresourceLayout,
-    ) -> c_void,
+    ),
     pub create_image_view: extern "system" fn(
         device: Device,
         p_create_info: *const ImageViewCreateInfo,
@@ -1763,7 +1711,7 @@ pub struct DeviceFnV1_0 {
         device: Device,
         image_view: ImageView,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void,
+    ),
     pub create_shader_module: extern "system" fn(
         device: Device,
         p_create_info: *const ShaderModuleCreateInfo,
@@ -1774,7 +1722,7 @@ pub struct DeviceFnV1_0 {
         device: Device,
         shader_module: ShaderModule,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void,
+    ),
     pub create_pipeline_cache: extern "system" fn(
         device: Device,
         p_create_info: *const PipelineCacheCreateInfo,
@@ -1785,7 +1733,7 @@ pub struct DeviceFnV1_0 {
         device: Device,
         pipeline_cache: PipelineCache,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void,
+    ),
     pub get_pipeline_cache_data: extern "system" fn(
         device: Device,
         pipeline_cache: PipelineCache,
@@ -1818,7 +1766,7 @@ pub struct DeviceFnV1_0 {
         device: Device,
         pipeline: Pipeline,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void,
+    ),
     pub create_pipeline_layout: extern "system" fn(
         device: Device,
         p_create_info: *const PipelineLayoutCreateInfo,
@@ -1829,7 +1777,7 @@ pub struct DeviceFnV1_0 {
         device: Device,
         pipeline_layout: PipelineLayout,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void,
+    ),
     pub create_sampler: extern "system" fn(
         device: Device,
         p_create_info: *const SamplerCreateInfo,
@@ -1840,7 +1788,7 @@ pub struct DeviceFnV1_0 {
         device: Device,
         sampler: Sampler,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void,
+    ),
     pub create_descriptor_set_layout: extern "system" fn(
         device: Device,
         p_create_info: *const DescriptorSetLayoutCreateInfo,
@@ -1851,7 +1799,7 @@ pub struct DeviceFnV1_0 {
         device: Device,
         descriptor_set_layout: DescriptorSetLayout,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void,
+    ),
     pub create_descriptor_pool: extern "system" fn(
         device: Device,
         p_create_info: *const DescriptorPoolCreateInfo,
@@ -1862,7 +1810,7 @@ pub struct DeviceFnV1_0 {
         device: Device,
         descriptor_pool: DescriptorPool,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void,
+    ),
     pub reset_descriptor_pool: extern "system" fn(
         device: Device,
         descriptor_pool: DescriptorPool,
@@ -1885,7 +1833,7 @@ pub struct DeviceFnV1_0 {
         p_descriptor_writes: *const WriteDescriptorSet,
         descriptor_copy_count: u32,
         p_descriptor_copies: *const CopyDescriptorSet,
-    ) -> c_void,
+    ),
     pub create_framebuffer: extern "system" fn(
         device: Device,
         p_create_info: *const FramebufferCreateInfo,
@@ -1896,7 +1844,7 @@ pub struct DeviceFnV1_0 {
         device: Device,
         framebuffer: Framebuffer,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void,
+    ),
     pub create_render_pass: extern "system" fn(
         device: Device,
         p_create_info: *const RenderPassCreateInfo,
@@ -1907,12 +1855,9 @@ pub struct DeviceFnV1_0 {
         device: Device,
         render_pass: RenderPass,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void,
-    pub get_render_area_granularity: extern "system" fn(
-        device: Device,
-        render_pass: RenderPass,
-        p_granularity: *mut Extent2D,
-    ) -> c_void,
+    ),
+    pub get_render_area_granularity:
+        extern "system" fn(device: Device, render_pass: RenderPass, p_granularity: *mut Extent2D),
     pub create_command_pool: extern "system" fn(
         device: Device,
         p_create_info: *const CommandPoolCreateInfo,
@@ -1923,7 +1868,7 @@ pub struct DeviceFnV1_0 {
         device: Device,
         command_pool: CommandPool,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void,
+    ),
     pub reset_command_pool: extern "system" fn(
         device: Device,
         command_pool: CommandPool,
@@ -1939,7 +1884,7 @@ pub struct DeviceFnV1_0 {
         command_pool: CommandPool,
         command_buffer_count: u32,
         p_command_buffers: *const CommandBuffer,
-    ) -> c_void,
+    ),
     pub begin_command_buffer: extern "system" fn(
         command_buffer: CommandBuffer,
         p_begin_info: *const CommandBufferBeginInfo,
@@ -1951,51 +1896,48 @@ pub struct DeviceFnV1_0 {
         command_buffer: CommandBuffer,
         pipeline_bind_point: PipelineBindPoint,
         pipeline: Pipeline,
-    ) -> c_void,
+    ),
     pub cmd_set_viewport: extern "system" fn(
         command_buffer: CommandBuffer,
         first_viewport: u32,
         viewport_count: u32,
         p_viewports: *const Viewport,
-    ) -> c_void,
+    ),
     pub cmd_set_scissor: extern "system" fn(
         command_buffer: CommandBuffer,
         first_scissor: u32,
         scissor_count: u32,
         p_scissors: *const Rect2D,
-    ) -> c_void,
-    pub cmd_set_line_width:
-        extern "system" fn(command_buffer: CommandBuffer, line_width: f32) -> c_void,
+    ),
+    pub cmd_set_line_width: extern "system" fn(command_buffer: CommandBuffer, line_width: f32),
     pub cmd_set_depth_bias: extern "system" fn(
         command_buffer: CommandBuffer,
         depth_bias_constant_factor: f32,
         depth_bias_clamp: f32,
         depth_bias_slope_factor: f32,
-    ) -> c_void,
-    pub cmd_set_blend_constants: extern "system" fn(
-        command_buffer: CommandBuffer,
-        blend_constants: *const [f32; 4],
-    ) -> c_void,
+    ),
+    pub cmd_set_blend_constants:
+        extern "system" fn(command_buffer: CommandBuffer, blend_constants: *const [f32; 4]),
     pub cmd_set_depth_bounds: extern "system" fn(
         command_buffer: CommandBuffer,
         min_depth_bounds: f32,
         max_depth_bounds: f32,
-    ) -> c_void,
+    ),
     pub cmd_set_stencil_compare_mask: extern "system" fn(
         command_buffer: CommandBuffer,
         face_mask: StencilFaceFlags,
         compare_mask: u32,
-    ) -> c_void,
+    ),
     pub cmd_set_stencil_write_mask: extern "system" fn(
         command_buffer: CommandBuffer,
         face_mask: StencilFaceFlags,
         write_mask: u32,
-    ) -> c_void,
+    ),
     pub cmd_set_stencil_reference: extern "system" fn(
         command_buffer: CommandBuffer,
         face_mask: StencilFaceFlags,
         reference: u32,
-    ) -> c_void,
+    ),
     pub cmd_bind_descriptor_sets: extern "system" fn(
         command_buffer: CommandBuffer,
         pipeline_bind_point: PipelineBindPoint,
@@ -2005,27 +1947,27 @@ pub struct DeviceFnV1_0 {
         p_descriptor_sets: *const DescriptorSet,
         dynamic_offset_count: u32,
         p_dynamic_offsets: *const u32,
-    ) -> c_void,
+    ),
     pub cmd_bind_index_buffer: extern "system" fn(
         command_buffer: CommandBuffer,
         buffer: Buffer,
         offset: DeviceSize,
         index_type: IndexType,
-    ) -> c_void,
+    ),
     pub cmd_bind_vertex_buffers: extern "system" fn(
         command_buffer: CommandBuffer,
         first_binding: u32,
         binding_count: u32,
         p_buffers: *const Buffer,
         p_offsets: *const DeviceSize,
-    ) -> c_void,
+    ),
     pub cmd_draw: extern "system" fn(
         command_buffer: CommandBuffer,
         vertex_count: u32,
         instance_count: u32,
         first_vertex: u32,
         first_instance: u32,
-    ) -> c_void,
+    ),
     pub cmd_draw_indexed: extern "system" fn(
         command_buffer: CommandBuffer,
         index_count: u32,
@@ -2033,39 +1975,36 @@ pub struct DeviceFnV1_0 {
         first_index: u32,
         vertex_offset: i32,
         first_instance: u32,
-    ) -> c_void,
+    ),
     pub cmd_draw_indirect: extern "system" fn(
         command_buffer: CommandBuffer,
         buffer: Buffer,
         offset: DeviceSize,
         draw_count: u32,
         stride: u32,
-    ) -> c_void,
+    ),
     pub cmd_draw_indexed_indirect: extern "system" fn(
         command_buffer: CommandBuffer,
         buffer: Buffer,
         offset: DeviceSize,
         draw_count: u32,
         stride: u32,
-    ) -> c_void,
+    ),
     pub cmd_dispatch: extern "system" fn(
         command_buffer: CommandBuffer,
         group_count_x: u32,
         group_count_y: u32,
         group_count_z: u32,
-    ) -> c_void,
-    pub cmd_dispatch_indirect: extern "system" fn(
-        command_buffer: CommandBuffer,
-        buffer: Buffer,
-        offset: DeviceSize,
-    ) -> c_void,
+    ),
+    pub cmd_dispatch_indirect:
+        extern "system" fn(command_buffer: CommandBuffer, buffer: Buffer, offset: DeviceSize),
     pub cmd_copy_buffer: extern "system" fn(
         command_buffer: CommandBuffer,
         src_buffer: Buffer,
         dst_buffer: Buffer,
         region_count: u32,
         p_regions: *const BufferCopy,
-    ) -> c_void,
+    ),
     pub cmd_copy_image: extern "system" fn(
         command_buffer: CommandBuffer,
         src_image: Image,
@@ -2074,7 +2013,7 @@ pub struct DeviceFnV1_0 {
         dst_image_layout: ImageLayout,
         region_count: u32,
         p_regions: *const ImageCopy,
-    ) -> c_void,
+    ),
     pub cmd_blit_image: extern "system" fn(
         command_buffer: CommandBuffer,
         src_image: Image,
@@ -2084,7 +2023,7 @@ pub struct DeviceFnV1_0 {
         region_count: u32,
         p_regions: *const ImageBlit,
         filter: Filter,
-    ) -> c_void,
+    ),
     pub cmd_copy_buffer_to_image: extern "system" fn(
         command_buffer: CommandBuffer,
         src_buffer: Buffer,
@@ -2092,7 +2031,7 @@ pub struct DeviceFnV1_0 {
         dst_image_layout: ImageLayout,
         region_count: u32,
         p_regions: *const BufferImageCopy,
-    ) -> c_void,
+    ),
     pub cmd_copy_image_to_buffer: extern "system" fn(
         command_buffer: CommandBuffer,
         src_image: Image,
@@ -2100,21 +2039,21 @@ pub struct DeviceFnV1_0 {
         dst_buffer: Buffer,
         region_count: u32,
         p_regions: *const BufferImageCopy,
-    ) -> c_void,
+    ),
     pub cmd_update_buffer: extern "system" fn(
         command_buffer: CommandBuffer,
         dst_buffer: Buffer,
         dst_offset: DeviceSize,
         data_size: DeviceSize,
         p_data: *const c_void,
-    ) -> c_void,
+    ),
     pub cmd_fill_buffer: extern "system" fn(
         command_buffer: CommandBuffer,
         dst_buffer: Buffer,
         dst_offset: DeviceSize,
         size: DeviceSize,
         data: u32,
-    ) -> c_void,
+    ),
     pub cmd_clear_color_image: extern "system" fn(
         command_buffer: CommandBuffer,
         image: Image,
@@ -2122,7 +2061,7 @@ pub struct DeviceFnV1_0 {
         p_color: *const ClearColorValue,
         range_count: u32,
         p_ranges: *const ImageSubresourceRange,
-    ) -> c_void,
+    ),
     pub cmd_clear_depth_stencil_image: extern "system" fn(
         command_buffer: CommandBuffer,
         image: Image,
@@ -2130,14 +2069,14 @@ pub struct DeviceFnV1_0 {
         p_depth_stencil: *const ClearDepthStencilValue,
         range_count: u32,
         p_ranges: *const ImageSubresourceRange,
-    ) -> c_void,
+    ),
     pub cmd_clear_attachments: extern "system" fn(
         command_buffer: CommandBuffer,
         attachment_count: u32,
         p_attachments: *const ClearAttachment,
         rect_count: u32,
         p_rects: *const ClearRect,
-    ) -> c_void,
+    ),
     pub cmd_resolve_image: extern "system" fn(
         command_buffer: CommandBuffer,
         src_image: Image,
@@ -2146,17 +2085,17 @@ pub struct DeviceFnV1_0 {
         dst_image_layout: ImageLayout,
         region_count: u32,
         p_regions: *const ImageResolve,
-    ) -> c_void,
+    ),
     pub cmd_set_event: extern "system" fn(
         command_buffer: CommandBuffer,
         event: Event,
         stage_mask: PipelineStageFlags,
-    ) -> c_void,
+    ),
     pub cmd_reset_event: extern "system" fn(
         command_buffer: CommandBuffer,
         event: Event,
         stage_mask: PipelineStageFlags,
-    ) -> c_void,
+    ),
     pub cmd_wait_events: extern "system" fn(
         command_buffer: CommandBuffer,
         event_count: u32,
@@ -2169,7 +2108,7 @@ pub struct DeviceFnV1_0 {
         p_buffer_memory_barriers: *const BufferMemoryBarrier,
         image_memory_barrier_count: u32,
         p_image_memory_barriers: *const ImageMemoryBarrier,
-    ) -> c_void,
+    ),
     pub cmd_pipeline_barrier: extern "system" fn(
         command_buffer: CommandBuffer,
         src_stage_mask: PipelineStageFlags,
@@ -2181,30 +2120,27 @@ pub struct DeviceFnV1_0 {
         p_buffer_memory_barriers: *const BufferMemoryBarrier,
         image_memory_barrier_count: u32,
         p_image_memory_barriers: *const ImageMemoryBarrier,
-    ) -> c_void,
+    ),
     pub cmd_begin_query: extern "system" fn(
         command_buffer: CommandBuffer,
         query_pool: QueryPool,
         query: u32,
         flags: QueryControlFlags,
-    ) -> c_void,
-    pub cmd_end_query: extern "system" fn(
-        command_buffer: CommandBuffer,
-        query_pool: QueryPool,
-        query: u32,
-    ) -> c_void,
+    ),
+    pub cmd_end_query:
+        extern "system" fn(command_buffer: CommandBuffer, query_pool: QueryPool, query: u32),
     pub cmd_reset_query_pool: extern "system" fn(
         command_buffer: CommandBuffer,
         query_pool: QueryPool,
         first_query: u32,
         query_count: u32,
-    ) -> c_void,
+    ),
     pub cmd_write_timestamp: extern "system" fn(
         command_buffer: CommandBuffer,
         pipeline_stage: PipelineStageFlags,
         query_pool: QueryPool,
         query: u32,
-    ) -> c_void,
+    ),
     pub cmd_copy_query_pool_results: extern "system" fn(
         command_buffer: CommandBuffer,
         query_pool: QueryPool,
@@ -2214,7 +2150,7 @@ pub struct DeviceFnV1_0 {
         dst_offset: DeviceSize,
         stride: DeviceSize,
         flags: QueryResultFlags,
-    ) -> c_void,
+    ),
     pub cmd_push_constants: extern "system" fn(
         command_buffer: CommandBuffer,
         layout: PipelineLayout,
@@ -2222,20 +2158,20 @@ pub struct DeviceFnV1_0 {
         offset: u32,
         size: u32,
         p_values: *const c_void,
-    ) -> c_void,
+    ),
     pub cmd_begin_render_pass: extern "system" fn(
         command_buffer: CommandBuffer,
         p_render_pass_begin: *const RenderPassBeginInfo,
         contents: SubpassContents,
-    ) -> c_void,
+    ),
     pub cmd_next_subpass:
-        extern "system" fn(command_buffer: CommandBuffer, contents: SubpassContents) -> c_void,
-    pub cmd_end_render_pass: extern "system" fn(command_buffer: CommandBuffer) -> c_void,
+        extern "system" fn(command_buffer: CommandBuffer, contents: SubpassContents),
+    pub cmd_end_render_pass: extern "system" fn(command_buffer: CommandBuffer),
     pub cmd_execute_commands: extern "system" fn(
         command_buffer: CommandBuffer,
         command_buffer_count: u32,
         p_command_buffers: *const CommandBuffer,
-    ) -> c_void,
+    ),
 }
 unsafe impl Send for DeviceFnV1_0 {}
 unsafe impl Sync for DeviceFnV1_0 {}
@@ -2375,7 +2311,7 @@ impl DeviceFnV1_0 {
                 extern "system" fn destroy_device(
                     _device: Device,
                     _p_allocator: *const AllocationCallbacks,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_device)))
                 }
                 let raw_name = stringify!(vkDestroyDevice);
@@ -2393,7 +2329,7 @@ impl DeviceFnV1_0 {
                     _queue_family_index: u32,
                     _queue_index: u32,
                     _p_queue: *mut Queue,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(get_device_queue)))
                 }
                 let raw_name = stringify!(vkGetDeviceQueue);
@@ -2472,7 +2408,7 @@ impl DeviceFnV1_0 {
                     _device: Device,
                     _memory: DeviceMemory,
                     _p_allocator: *const AllocationCallbacks,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(free_memory)))
                 }
                 let raw_name = stringify!(vkFreeMemory);
@@ -2505,7 +2441,7 @@ impl DeviceFnV1_0 {
                 }
             },
             unmap_memory: unsafe {
-                extern "system" fn unmap_memory(_device: Device, _memory: DeviceMemory) -> c_void {
+                extern "system" fn unmap_memory(_device: Device, _memory: DeviceMemory) {
                     panic!(concat!("Unable to load ", stringify!(unmap_memory)))
                 }
                 let raw_name = stringify!(vkUnmapMemory);
@@ -2562,7 +2498,7 @@ impl DeviceFnV1_0 {
                     _device: Device,
                     _memory: DeviceMemory,
                     _p_committed_memory_in_bytes: *mut DeviceSize,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(get_device_memory_commitment)
@@ -2618,7 +2554,7 @@ impl DeviceFnV1_0 {
                     _device: Device,
                     _buffer: Buffer,
                     _p_memory_requirements: *mut MemoryRequirements,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(get_buffer_memory_requirements)
@@ -2638,7 +2574,7 @@ impl DeviceFnV1_0 {
                     _device: Device,
                     _image: Image,
                     _p_memory_requirements: *mut MemoryRequirements,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(get_image_memory_requirements)
@@ -2659,7 +2595,7 @@ impl DeviceFnV1_0 {
                     _image: Image,
                     _p_sparse_memory_requirement_count: *mut u32,
                     _p_sparse_memory_requirements: *mut SparseImageMemoryRequirements,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(get_image_sparse_memory_requirements)
@@ -2715,7 +2651,7 @@ impl DeviceFnV1_0 {
                     _device: Device,
                     _fence: Fence,
                     _p_allocator: *const AllocationCallbacks,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_fence)))
                 }
                 let raw_name = stringify!(vkDestroyFence);
@@ -2799,7 +2735,7 @@ impl DeviceFnV1_0 {
                     _device: Device,
                     _semaphore: Semaphore,
                     _p_allocator: *const AllocationCallbacks,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_semaphore)))
                 }
                 let raw_name = stringify!(vkDestroySemaphore);
@@ -2834,7 +2770,7 @@ impl DeviceFnV1_0 {
                     _device: Device,
                     _event: Event,
                     _p_allocator: *const AllocationCallbacks,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_event)))
                 }
                 let raw_name = stringify!(vkDestroyEvent);
@@ -2908,7 +2844,7 @@ impl DeviceFnV1_0 {
                     _device: Device,
                     _query_pool: QueryPool,
                     _p_allocator: *const AllocationCallbacks,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_query_pool)))
                 }
                 let raw_name = stringify!(vkDestroyQueryPool);
@@ -2968,7 +2904,7 @@ impl DeviceFnV1_0 {
                     _device: Device,
                     _buffer: Buffer,
                     _p_allocator: *const AllocationCallbacks,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_buffer)))
                 }
                 let raw_name = stringify!(vkDestroyBuffer);
@@ -3003,7 +2939,7 @@ impl DeviceFnV1_0 {
                     _device: Device,
                     _buffer_view: BufferView,
                     _p_allocator: *const AllocationCallbacks,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_buffer_view)))
                 }
                 let raw_name = stringify!(vkDestroyBufferView);
@@ -3038,7 +2974,7 @@ impl DeviceFnV1_0 {
                     _device: Device,
                     _image: Image,
                     _p_allocator: *const AllocationCallbacks,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_image)))
                 }
                 let raw_name = stringify!(vkDestroyImage);
@@ -3056,7 +2992,7 @@ impl DeviceFnV1_0 {
                     _image: Image,
                     _p_subresource: *const ImageSubresource,
                     _p_layout: *mut SubresourceLayout,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(get_image_subresource_layout)
@@ -3094,7 +3030,7 @@ impl DeviceFnV1_0 {
                     _device: Device,
                     _image_view: ImageView,
                     _p_allocator: *const AllocationCallbacks,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_image_view)))
                 }
                 let raw_name = stringify!(vkDestroyImageView);
@@ -3129,7 +3065,7 @@ impl DeviceFnV1_0 {
                     _device: Device,
                     _shader_module: ShaderModule,
                     _p_allocator: *const AllocationCallbacks,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(destroy_shader_module)
@@ -3170,7 +3106,7 @@ impl DeviceFnV1_0 {
                     _device: Device,
                     _pipeline_cache: PipelineCache,
                     _p_allocator: *const AllocationCallbacks,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(destroy_pipeline_cache)
@@ -3278,7 +3214,7 @@ impl DeviceFnV1_0 {
                     _device: Device,
                     _pipeline: Pipeline,
                     _p_allocator: *const AllocationCallbacks,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_pipeline)))
                 }
                 let raw_name = stringify!(vkDestroyPipeline);
@@ -3316,7 +3252,7 @@ impl DeviceFnV1_0 {
                     _device: Device,
                     _pipeline_layout: PipelineLayout,
                     _p_allocator: *const AllocationCallbacks,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(destroy_pipeline_layout)
@@ -3354,7 +3290,7 @@ impl DeviceFnV1_0 {
                     _device: Device,
                     _sampler: Sampler,
                     _p_allocator: *const AllocationCallbacks,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_sampler)))
                 }
                 let raw_name = stringify!(vkDestroySampler);
@@ -3392,7 +3328,7 @@ impl DeviceFnV1_0 {
                     _device: Device,
                     _descriptor_set_layout: DescriptorSetLayout,
                     _p_allocator: *const AllocationCallbacks,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(destroy_descriptor_set_layout)
@@ -3433,7 +3369,7 @@ impl DeviceFnV1_0 {
                     _device: Device,
                     _descriptor_pool: DescriptorPool,
                     _p_allocator: *const AllocationCallbacks,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(destroy_descriptor_pool)
@@ -3513,7 +3449,7 @@ impl DeviceFnV1_0 {
                     _p_descriptor_writes: *const WriteDescriptorSet,
                     _descriptor_copy_count: u32,
                     _p_descriptor_copies: *const CopyDescriptorSet,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(update_descriptor_sets)
@@ -3551,7 +3487,7 @@ impl DeviceFnV1_0 {
                     _device: Device,
                     _framebuffer: Framebuffer,
                     _p_allocator: *const AllocationCallbacks,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_framebuffer)))
                 }
                 let raw_name = stringify!(vkDestroyFramebuffer);
@@ -3586,7 +3522,7 @@ impl DeviceFnV1_0 {
                     _device: Device,
                     _render_pass: RenderPass,
                     _p_allocator: *const AllocationCallbacks,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_render_pass)))
                 }
                 let raw_name = stringify!(vkDestroyRenderPass);
@@ -3603,7 +3539,7 @@ impl DeviceFnV1_0 {
                     _device: Device,
                     _render_pass: RenderPass,
                     _p_granularity: *mut Extent2D,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(get_render_area_granularity)
@@ -3641,7 +3577,7 @@ impl DeviceFnV1_0 {
                     _device: Device,
                     _command_pool: CommandPool,
                     _p_allocator: *const AllocationCallbacks,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(destroy_command_pool)))
                 }
                 let raw_name = stringify!(vkDestroyCommandPool);
@@ -3696,7 +3632,7 @@ impl DeviceFnV1_0 {
                     _command_pool: CommandPool,
                     _command_buffer_count: u32,
                     _p_command_buffers: *const CommandBuffer,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(free_command_buffers)))
                 }
                 let raw_name = stringify!(vkFreeCommandBuffers);
@@ -3758,7 +3694,7 @@ impl DeviceFnV1_0 {
                     _command_buffer: CommandBuffer,
                     _pipeline_bind_point: PipelineBindPoint,
                     _pipeline: Pipeline,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_bind_pipeline)))
                 }
                 let raw_name = stringify!(vkCmdBindPipeline);
@@ -3776,7 +3712,7 @@ impl DeviceFnV1_0 {
                     _first_viewport: u32,
                     _viewport_count: u32,
                     _p_viewports: *const Viewport,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_set_viewport)))
                 }
                 let raw_name = stringify!(vkCmdSetViewport);
@@ -3794,7 +3730,7 @@ impl DeviceFnV1_0 {
                     _first_scissor: u32,
                     _scissor_count: u32,
                     _p_scissors: *const Rect2D,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_set_scissor)))
                 }
                 let raw_name = stringify!(vkCmdSetScissor);
@@ -3810,7 +3746,7 @@ impl DeviceFnV1_0 {
                 extern "system" fn cmd_set_line_width(
                     _command_buffer: CommandBuffer,
                     _line_width: f32,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_set_line_width)))
                 }
                 let raw_name = stringify!(vkCmdSetLineWidth);
@@ -3828,7 +3764,7 @@ impl DeviceFnV1_0 {
                     _depth_bias_constant_factor: f32,
                     _depth_bias_clamp: f32,
                     _depth_bias_slope_factor: f32,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_set_depth_bias)))
                 }
                 let raw_name = stringify!(vkCmdSetDepthBias);
@@ -3844,7 +3780,7 @@ impl DeviceFnV1_0 {
                 extern "system" fn cmd_set_blend_constants(
                     _command_buffer: CommandBuffer,
                     _blend_constants: *const [f32; 4],
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_set_blend_constants)
@@ -3864,7 +3800,7 @@ impl DeviceFnV1_0 {
                     _command_buffer: CommandBuffer,
                     _min_depth_bounds: f32,
                     _max_depth_bounds: f32,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_set_depth_bounds)))
                 }
                 let raw_name = stringify!(vkCmdSetDepthBounds);
@@ -3881,7 +3817,7 @@ impl DeviceFnV1_0 {
                     _command_buffer: CommandBuffer,
                     _face_mask: StencilFaceFlags,
                     _compare_mask: u32,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_set_stencil_compare_mask)
@@ -3901,7 +3837,7 @@ impl DeviceFnV1_0 {
                     _command_buffer: CommandBuffer,
                     _face_mask: StencilFaceFlags,
                     _write_mask: u32,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_set_stencil_write_mask)
@@ -3921,7 +3857,7 @@ impl DeviceFnV1_0 {
                     _command_buffer: CommandBuffer,
                     _face_mask: StencilFaceFlags,
                     _reference: u32,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_set_stencil_reference)
@@ -3946,7 +3882,7 @@ impl DeviceFnV1_0 {
                     _p_descriptor_sets: *const DescriptorSet,
                     _dynamic_offset_count: u32,
                     _p_dynamic_offsets: *const u32,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_bind_descriptor_sets)
@@ -3967,7 +3903,7 @@ impl DeviceFnV1_0 {
                     _buffer: Buffer,
                     _offset: DeviceSize,
                     _index_type: IndexType,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_bind_index_buffer)
@@ -3989,7 +3925,7 @@ impl DeviceFnV1_0 {
                     _binding_count: u32,
                     _p_buffers: *const Buffer,
                     _p_offsets: *const DeviceSize,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_bind_vertex_buffers)
@@ -4011,7 +3947,7 @@ impl DeviceFnV1_0 {
                     _instance_count: u32,
                     _first_vertex: u32,
                     _first_instance: u32,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_draw)))
                 }
                 let raw_name = stringify!(vkCmdDraw);
@@ -4031,7 +3967,7 @@ impl DeviceFnV1_0 {
                     _first_index: u32,
                     _vertex_offset: i32,
                     _first_instance: u32,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_draw_indexed)))
                 }
                 let raw_name = stringify!(vkCmdDrawIndexed);
@@ -4050,7 +3986,7 @@ impl DeviceFnV1_0 {
                     _offset: DeviceSize,
                     _draw_count: u32,
                     _stride: u32,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_draw_indirect)))
                 }
                 let raw_name = stringify!(vkCmdDrawIndirect);
@@ -4069,7 +4005,7 @@ impl DeviceFnV1_0 {
                     _offset: DeviceSize,
                     _draw_count: u32,
                     _stride: u32,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_draw_indexed_indirect)
@@ -4090,7 +4026,7 @@ impl DeviceFnV1_0 {
                     _group_count_x: u32,
                     _group_count_y: u32,
                     _group_count_z: u32,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_dispatch)))
                 }
                 let raw_name = stringify!(vkCmdDispatch);
@@ -4107,7 +4043,7 @@ impl DeviceFnV1_0 {
                     _command_buffer: CommandBuffer,
                     _buffer: Buffer,
                     _offset: DeviceSize,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_dispatch_indirect)
@@ -4129,7 +4065,7 @@ impl DeviceFnV1_0 {
                     _dst_buffer: Buffer,
                     _region_count: u32,
                     _p_regions: *const BufferCopy,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_copy_buffer)))
                 }
                 let raw_name = stringify!(vkCmdCopyBuffer);
@@ -4150,7 +4086,7 @@ impl DeviceFnV1_0 {
                     _dst_image_layout: ImageLayout,
                     _region_count: u32,
                     _p_regions: *const ImageCopy,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_copy_image)))
                 }
                 let raw_name = stringify!(vkCmdCopyImage);
@@ -4172,7 +4108,7 @@ impl DeviceFnV1_0 {
                     _region_count: u32,
                     _p_regions: *const ImageBlit,
                     _filter: Filter,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_blit_image)))
                 }
                 let raw_name = stringify!(vkCmdBlitImage);
@@ -4192,7 +4128,7 @@ impl DeviceFnV1_0 {
                     _dst_image_layout: ImageLayout,
                     _region_count: u32,
                     _p_regions: *const BufferImageCopy,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_copy_buffer_to_image)
@@ -4215,7 +4151,7 @@ impl DeviceFnV1_0 {
                     _dst_buffer: Buffer,
                     _region_count: u32,
                     _p_regions: *const BufferImageCopy,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_copy_image_to_buffer)
@@ -4237,7 +4173,7 @@ impl DeviceFnV1_0 {
                     _dst_offset: DeviceSize,
                     _data_size: DeviceSize,
                     _p_data: *const c_void,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_update_buffer)))
                 }
                 let raw_name = stringify!(vkCmdUpdateBuffer);
@@ -4256,7 +4192,7 @@ impl DeviceFnV1_0 {
                     _dst_offset: DeviceSize,
                     _size: DeviceSize,
                     _data: u32,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_fill_buffer)))
                 }
                 let raw_name = stringify!(vkCmdFillBuffer);
@@ -4276,7 +4212,7 @@ impl DeviceFnV1_0 {
                     _p_color: *const ClearColorValue,
                     _range_count: u32,
                     _p_ranges: *const ImageSubresourceRange,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_clear_color_image)
@@ -4299,7 +4235,7 @@ impl DeviceFnV1_0 {
                     _p_depth_stencil: *const ClearDepthStencilValue,
                     _range_count: u32,
                     _p_ranges: *const ImageSubresourceRange,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_clear_depth_stencil_image)
@@ -4321,7 +4257,7 @@ impl DeviceFnV1_0 {
                     _p_attachments: *const ClearAttachment,
                     _rect_count: u32,
                     _p_rects: *const ClearRect,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_clear_attachments)
@@ -4345,7 +4281,7 @@ impl DeviceFnV1_0 {
                     _dst_image_layout: ImageLayout,
                     _region_count: u32,
                     _p_regions: *const ImageResolve,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_resolve_image)))
                 }
                 let raw_name = stringify!(vkCmdResolveImage);
@@ -4362,7 +4298,7 @@ impl DeviceFnV1_0 {
                     _command_buffer: CommandBuffer,
                     _event: Event,
                     _stage_mask: PipelineStageFlags,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_set_event)))
                 }
                 let raw_name = stringify!(vkCmdSetEvent);
@@ -4379,7 +4315,7 @@ impl DeviceFnV1_0 {
                     _command_buffer: CommandBuffer,
                     _event: Event,
                     _stage_mask: PipelineStageFlags,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_reset_event)))
                 }
                 let raw_name = stringify!(vkCmdResetEvent);
@@ -4404,7 +4340,7 @@ impl DeviceFnV1_0 {
                     _p_buffer_memory_barriers: *const BufferMemoryBarrier,
                     _image_memory_barrier_count: u32,
                     _p_image_memory_barriers: *const ImageMemoryBarrier,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_wait_events)))
                 }
                 let raw_name = stringify!(vkCmdWaitEvents);
@@ -4428,7 +4364,7 @@ impl DeviceFnV1_0 {
                     _p_buffer_memory_barriers: *const BufferMemoryBarrier,
                     _image_memory_barrier_count: u32,
                     _p_image_memory_barriers: *const ImageMemoryBarrier,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_pipeline_barrier)))
                 }
                 let raw_name = stringify!(vkCmdPipelineBarrier);
@@ -4446,7 +4382,7 @@ impl DeviceFnV1_0 {
                     _query_pool: QueryPool,
                     _query: u32,
                     _flags: QueryControlFlags,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_begin_query)))
                 }
                 let raw_name = stringify!(vkCmdBeginQuery);
@@ -4463,7 +4399,7 @@ impl DeviceFnV1_0 {
                     _command_buffer: CommandBuffer,
                     _query_pool: QueryPool,
                     _query: u32,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_end_query)))
                 }
                 let raw_name = stringify!(vkCmdEndQuery);
@@ -4481,7 +4417,7 @@ impl DeviceFnV1_0 {
                     _query_pool: QueryPool,
                     _first_query: u32,
                     _query_count: u32,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_reset_query_pool)))
                 }
                 let raw_name = stringify!(vkCmdResetQueryPool);
@@ -4499,7 +4435,7 @@ impl DeviceFnV1_0 {
                     _pipeline_stage: PipelineStageFlags,
                     _query_pool: QueryPool,
                     _query: u32,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_write_timestamp)))
                 }
                 let raw_name = stringify!(vkCmdWriteTimestamp);
@@ -4521,7 +4457,7 @@ impl DeviceFnV1_0 {
                     _dst_offset: DeviceSize,
                     _stride: DeviceSize,
                     _flags: QueryResultFlags,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_copy_query_pool_results)
@@ -4544,7 +4480,7 @@ impl DeviceFnV1_0 {
                     _offset: u32,
                     _size: u32,
                     _p_values: *const c_void,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_push_constants)))
                 }
                 let raw_name = stringify!(vkCmdPushConstants);
@@ -4561,7 +4497,7 @@ impl DeviceFnV1_0 {
                     _command_buffer: CommandBuffer,
                     _p_render_pass_begin: *const RenderPassBeginInfo,
                     _contents: SubpassContents,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_begin_render_pass)
@@ -4580,7 +4516,7 @@ impl DeviceFnV1_0 {
                 extern "system" fn cmd_next_subpass(
                     _command_buffer: CommandBuffer,
                     _contents: SubpassContents,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_next_subpass)))
                 }
                 let raw_name = stringify!(vkCmdNextSubpass);
@@ -4593,7 +4529,7 @@ impl DeviceFnV1_0 {
                 }
             },
             cmd_end_render_pass: unsafe {
-                extern "system" fn cmd_end_render_pass(_command_buffer: CommandBuffer) -> c_void {
+                extern "system" fn cmd_end_render_pass(_command_buffer: CommandBuffer) {
                     panic!(concat!("Unable to load ", stringify!(cmd_end_render_pass)))
                 }
                 let raw_name = stringify!(vkCmdEndRenderPass);
@@ -4610,7 +4546,7 @@ impl DeviceFnV1_0 {
                     _command_buffer: CommandBuffer,
                     _command_buffer_count: u32,
                     _p_command_buffers: *const CommandBuffer,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_execute_commands)))
                 }
                 let raw_name = stringify!(vkCmdExecuteCommands);
@@ -4625,11 +4561,7 @@ impl DeviceFnV1_0 {
         }
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkDestroyDevice.html>"]
-    pub unsafe fn destroy_device(
-        &self,
-        device: Device,
-        p_allocator: *const AllocationCallbacks,
-    ) -> c_void {
+    pub unsafe fn destroy_device(&self, device: Device, p_allocator: *const AllocationCallbacks) {
         (self.destroy_device)(device, p_allocator)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetDeviceQueue.html>"]
@@ -4639,7 +4571,7 @@ impl DeviceFnV1_0 {
         queue_family_index: u32,
         queue_index: u32,
         p_queue: *mut Queue,
-    ) -> c_void {
+    ) {
         (self.get_device_queue)(device, queue_family_index, queue_index, p_queue)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkQueueSubmit.html>"]
@@ -4676,7 +4608,7 @@ impl DeviceFnV1_0 {
         device: Device,
         memory: DeviceMemory,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void {
+    ) {
         (self.free_memory)(device, memory, p_allocator)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkMapMemory.html>"]
@@ -4692,7 +4624,7 @@ impl DeviceFnV1_0 {
         (self.map_memory)(device, memory, offset, size, flags, pp_data)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkUnmapMemory.html>"]
-    pub unsafe fn unmap_memory(&self, device: Device, memory: DeviceMemory) -> c_void {
+    pub unsafe fn unmap_memory(&self, device: Device, memory: DeviceMemory) {
         (self.unmap_memory)(device, memory)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkFlushMappedMemoryRanges.html>"]
@@ -4719,7 +4651,7 @@ impl DeviceFnV1_0 {
         device: Device,
         memory: DeviceMemory,
         p_committed_memory_in_bytes: *mut DeviceSize,
-    ) -> c_void {
+    ) {
         (self.get_device_memory_commitment)(device, memory, p_committed_memory_in_bytes)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkBindBufferMemory.html>"]
@@ -4748,7 +4680,7 @@ impl DeviceFnV1_0 {
         device: Device,
         buffer: Buffer,
         p_memory_requirements: *mut MemoryRequirements,
-    ) -> c_void {
+    ) {
         (self.get_buffer_memory_requirements)(device, buffer, p_memory_requirements)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetImageMemoryRequirements.html>"]
@@ -4757,7 +4689,7 @@ impl DeviceFnV1_0 {
         device: Device,
         image: Image,
         p_memory_requirements: *mut MemoryRequirements,
-    ) -> c_void {
+    ) {
         (self.get_image_memory_requirements)(device, image, p_memory_requirements)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetImageSparseMemoryRequirements.html>"]
@@ -4767,7 +4699,7 @@ impl DeviceFnV1_0 {
         image: Image,
         p_sparse_memory_requirement_count: *mut u32,
         p_sparse_memory_requirements: *mut SparseImageMemoryRequirements,
-    ) -> c_void {
+    ) {
         (self.get_image_sparse_memory_requirements)(
             device,
             image,
@@ -4801,7 +4733,7 @@ impl DeviceFnV1_0 {
         device: Device,
         fence: Fence,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void {
+    ) {
         (self.destroy_fence)(device, fence, p_allocator)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkResetFences.html>"]
@@ -4844,7 +4776,7 @@ impl DeviceFnV1_0 {
         device: Device,
         semaphore: Semaphore,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void {
+    ) {
         (self.destroy_semaphore)(device, semaphore, p_allocator)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateEvent.html>"]
@@ -4863,7 +4795,7 @@ impl DeviceFnV1_0 {
         device: Device,
         event: Event,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void {
+    ) {
         (self.destroy_event)(device, event, p_allocator)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetEventStatus.html>"]
@@ -4894,7 +4826,7 @@ impl DeviceFnV1_0 {
         device: Device,
         query_pool: QueryPool,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void {
+    ) {
         (self.destroy_query_pool)(device, query_pool, p_allocator)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetQueryPoolResults.html>"]
@@ -4936,7 +4868,7 @@ impl DeviceFnV1_0 {
         device: Device,
         buffer: Buffer,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void {
+    ) {
         (self.destroy_buffer)(device, buffer, p_allocator)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateBufferView.html>"]
@@ -4955,7 +4887,7 @@ impl DeviceFnV1_0 {
         device: Device,
         buffer_view: BufferView,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void {
+    ) {
         (self.destroy_buffer_view)(device, buffer_view, p_allocator)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateImage.html>"]
@@ -4974,7 +4906,7 @@ impl DeviceFnV1_0 {
         device: Device,
         image: Image,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void {
+    ) {
         (self.destroy_image)(device, image, p_allocator)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetImageSubresourceLayout.html>"]
@@ -4984,7 +4916,7 @@ impl DeviceFnV1_0 {
         image: Image,
         p_subresource: *const ImageSubresource,
         p_layout: *mut SubresourceLayout,
-    ) -> c_void {
+    ) {
         (self.get_image_subresource_layout)(device, image, p_subresource, p_layout)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateImageView.html>"]
@@ -5003,7 +4935,7 @@ impl DeviceFnV1_0 {
         device: Device,
         image_view: ImageView,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void {
+    ) {
         (self.destroy_image_view)(device, image_view, p_allocator)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateShaderModule.html>"]
@@ -5022,7 +4954,7 @@ impl DeviceFnV1_0 {
         device: Device,
         shader_module: ShaderModule,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void {
+    ) {
         (self.destroy_shader_module)(device, shader_module, p_allocator)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreatePipelineCache.html>"]
@@ -5041,7 +4973,7 @@ impl DeviceFnV1_0 {
         device: Device,
         pipeline_cache: PipelineCache,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void {
+    ) {
         (self.destroy_pipeline_cache)(device, pipeline_cache, p_allocator)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPipelineCacheData.html>"]
@@ -5108,7 +5040,7 @@ impl DeviceFnV1_0 {
         device: Device,
         pipeline: Pipeline,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void {
+    ) {
         (self.destroy_pipeline)(device, pipeline, p_allocator)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreatePipelineLayout.html>"]
@@ -5127,7 +5059,7 @@ impl DeviceFnV1_0 {
         device: Device,
         pipeline_layout: PipelineLayout,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void {
+    ) {
         (self.destroy_pipeline_layout)(device, pipeline_layout, p_allocator)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateSampler.html>"]
@@ -5146,7 +5078,7 @@ impl DeviceFnV1_0 {
         device: Device,
         sampler: Sampler,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void {
+    ) {
         (self.destroy_sampler)(device, sampler, p_allocator)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateDescriptorSetLayout.html>"]
@@ -5165,7 +5097,7 @@ impl DeviceFnV1_0 {
         device: Device,
         descriptor_set_layout: DescriptorSetLayout,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void {
+    ) {
         (self.destroy_descriptor_set_layout)(device, descriptor_set_layout, p_allocator)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateDescriptorPool.html>"]
@@ -5184,7 +5116,7 @@ impl DeviceFnV1_0 {
         device: Device,
         descriptor_pool: DescriptorPool,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void {
+    ) {
         (self.destroy_descriptor_pool)(device, descriptor_pool, p_allocator)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkResetDescriptorPool.html>"]
@@ -5228,7 +5160,7 @@ impl DeviceFnV1_0 {
         p_descriptor_writes: *const WriteDescriptorSet,
         descriptor_copy_count: u32,
         p_descriptor_copies: *const CopyDescriptorSet,
-    ) -> c_void {
+    ) {
         (self.update_descriptor_sets)(
             device,
             descriptor_write_count,
@@ -5253,7 +5185,7 @@ impl DeviceFnV1_0 {
         device: Device,
         framebuffer: Framebuffer,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void {
+    ) {
         (self.destroy_framebuffer)(device, framebuffer, p_allocator)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateRenderPass.html>"]
@@ -5272,7 +5204,7 @@ impl DeviceFnV1_0 {
         device: Device,
         render_pass: RenderPass,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void {
+    ) {
         (self.destroy_render_pass)(device, render_pass, p_allocator)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetRenderAreaGranularity.html>"]
@@ -5281,7 +5213,7 @@ impl DeviceFnV1_0 {
         device: Device,
         render_pass: RenderPass,
         p_granularity: *mut Extent2D,
-    ) -> c_void {
+    ) {
         (self.get_render_area_granularity)(device, render_pass, p_granularity)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateCommandPool.html>"]
@@ -5300,7 +5232,7 @@ impl DeviceFnV1_0 {
         device: Device,
         command_pool: CommandPool,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void {
+    ) {
         (self.destroy_command_pool)(device, command_pool, p_allocator)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkResetCommandPool.html>"]
@@ -5328,7 +5260,7 @@ impl DeviceFnV1_0 {
         command_pool: CommandPool,
         command_buffer_count: u32,
         p_command_buffers: *const CommandBuffer,
-    ) -> c_void {
+    ) {
         (self.free_command_buffers)(
             device,
             command_pool,
@@ -5362,7 +5294,7 @@ impl DeviceFnV1_0 {
         command_buffer: CommandBuffer,
         pipeline_bind_point: PipelineBindPoint,
         pipeline: Pipeline,
-    ) -> c_void {
+    ) {
         (self.cmd_bind_pipeline)(command_buffer, pipeline_bind_point, pipeline)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetViewport.html>"]
@@ -5372,7 +5304,7 @@ impl DeviceFnV1_0 {
         first_viewport: u32,
         viewport_count: u32,
         p_viewports: *const Viewport,
-    ) -> c_void {
+    ) {
         (self.cmd_set_viewport)(command_buffer, first_viewport, viewport_count, p_viewports)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetScissor.html>"]
@@ -5382,15 +5314,11 @@ impl DeviceFnV1_0 {
         first_scissor: u32,
         scissor_count: u32,
         p_scissors: *const Rect2D,
-    ) -> c_void {
+    ) {
         (self.cmd_set_scissor)(command_buffer, first_scissor, scissor_count, p_scissors)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetLineWidth.html>"]
-    pub unsafe fn cmd_set_line_width(
-        &self,
-        command_buffer: CommandBuffer,
-        line_width: f32,
-    ) -> c_void {
+    pub unsafe fn cmd_set_line_width(&self, command_buffer: CommandBuffer, line_width: f32) {
         (self.cmd_set_line_width)(command_buffer, line_width)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetDepthBias.html>"]
@@ -5400,7 +5328,7 @@ impl DeviceFnV1_0 {
         depth_bias_constant_factor: f32,
         depth_bias_clamp: f32,
         depth_bias_slope_factor: f32,
-    ) -> c_void {
+    ) {
         (self.cmd_set_depth_bias)(
             command_buffer,
             depth_bias_constant_factor,
@@ -5413,7 +5341,7 @@ impl DeviceFnV1_0 {
         &self,
         command_buffer: CommandBuffer,
         blend_constants: *const [f32; 4],
-    ) -> c_void {
+    ) {
         (self.cmd_set_blend_constants)(command_buffer, blend_constants)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetDepthBounds.html>"]
@@ -5422,7 +5350,7 @@ impl DeviceFnV1_0 {
         command_buffer: CommandBuffer,
         min_depth_bounds: f32,
         max_depth_bounds: f32,
-    ) -> c_void {
+    ) {
         (self.cmd_set_depth_bounds)(command_buffer, min_depth_bounds, max_depth_bounds)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetStencilCompareMask.html>"]
@@ -5431,7 +5359,7 @@ impl DeviceFnV1_0 {
         command_buffer: CommandBuffer,
         face_mask: StencilFaceFlags,
         compare_mask: u32,
-    ) -> c_void {
+    ) {
         (self.cmd_set_stencil_compare_mask)(command_buffer, face_mask, compare_mask)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetStencilWriteMask.html>"]
@@ -5440,7 +5368,7 @@ impl DeviceFnV1_0 {
         command_buffer: CommandBuffer,
         face_mask: StencilFaceFlags,
         write_mask: u32,
-    ) -> c_void {
+    ) {
         (self.cmd_set_stencil_write_mask)(command_buffer, face_mask, write_mask)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetStencilReference.html>"]
@@ -5449,7 +5377,7 @@ impl DeviceFnV1_0 {
         command_buffer: CommandBuffer,
         face_mask: StencilFaceFlags,
         reference: u32,
-    ) -> c_void {
+    ) {
         (self.cmd_set_stencil_reference)(command_buffer, face_mask, reference)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdBindDescriptorSets.html>"]
@@ -5463,7 +5391,7 @@ impl DeviceFnV1_0 {
         p_descriptor_sets: *const DescriptorSet,
         dynamic_offset_count: u32,
         p_dynamic_offsets: *const u32,
-    ) -> c_void {
+    ) {
         (self.cmd_bind_descriptor_sets)(
             command_buffer,
             pipeline_bind_point,
@@ -5482,7 +5410,7 @@ impl DeviceFnV1_0 {
         buffer: Buffer,
         offset: DeviceSize,
         index_type: IndexType,
-    ) -> c_void {
+    ) {
         (self.cmd_bind_index_buffer)(command_buffer, buffer, offset, index_type)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdBindVertexBuffers.html>"]
@@ -5493,7 +5421,7 @@ impl DeviceFnV1_0 {
         binding_count: u32,
         p_buffers: *const Buffer,
         p_offsets: *const DeviceSize,
-    ) -> c_void {
+    ) {
         (self.cmd_bind_vertex_buffers)(
             command_buffer,
             first_binding,
@@ -5510,7 +5438,7 @@ impl DeviceFnV1_0 {
         instance_count: u32,
         first_vertex: u32,
         first_instance: u32,
-    ) -> c_void {
+    ) {
         (self.cmd_draw)(
             command_buffer,
             vertex_count,
@@ -5528,7 +5456,7 @@ impl DeviceFnV1_0 {
         first_index: u32,
         vertex_offset: i32,
         first_instance: u32,
-    ) -> c_void {
+    ) {
         (self.cmd_draw_indexed)(
             command_buffer,
             index_count,
@@ -5546,7 +5474,7 @@ impl DeviceFnV1_0 {
         offset: DeviceSize,
         draw_count: u32,
         stride: u32,
-    ) -> c_void {
+    ) {
         (self.cmd_draw_indirect)(command_buffer, buffer, offset, draw_count, stride)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdDrawIndexedIndirect.html>"]
@@ -5557,7 +5485,7 @@ impl DeviceFnV1_0 {
         offset: DeviceSize,
         draw_count: u32,
         stride: u32,
-    ) -> c_void {
+    ) {
         (self.cmd_draw_indexed_indirect)(command_buffer, buffer, offset, draw_count, stride)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdDispatch.html>"]
@@ -5567,7 +5495,7 @@ impl DeviceFnV1_0 {
         group_count_x: u32,
         group_count_y: u32,
         group_count_z: u32,
-    ) -> c_void {
+    ) {
         (self.cmd_dispatch)(command_buffer, group_count_x, group_count_y, group_count_z)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdDispatchIndirect.html>"]
@@ -5576,7 +5504,7 @@ impl DeviceFnV1_0 {
         command_buffer: CommandBuffer,
         buffer: Buffer,
         offset: DeviceSize,
-    ) -> c_void {
+    ) {
         (self.cmd_dispatch_indirect)(command_buffer, buffer, offset)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdCopyBuffer.html>"]
@@ -5587,7 +5515,7 @@ impl DeviceFnV1_0 {
         dst_buffer: Buffer,
         region_count: u32,
         p_regions: *const BufferCopy,
-    ) -> c_void {
+    ) {
         (self.cmd_copy_buffer)(
             command_buffer,
             src_buffer,
@@ -5606,7 +5534,7 @@ impl DeviceFnV1_0 {
         dst_image_layout: ImageLayout,
         region_count: u32,
         p_regions: *const ImageCopy,
-    ) -> c_void {
+    ) {
         (self.cmd_copy_image)(
             command_buffer,
             src_image,
@@ -5628,7 +5556,7 @@ impl DeviceFnV1_0 {
         region_count: u32,
         p_regions: *const ImageBlit,
         filter: Filter,
-    ) -> c_void {
+    ) {
         (self.cmd_blit_image)(
             command_buffer,
             src_image,
@@ -5649,7 +5577,7 @@ impl DeviceFnV1_0 {
         dst_image_layout: ImageLayout,
         region_count: u32,
         p_regions: *const BufferImageCopy,
-    ) -> c_void {
+    ) {
         (self.cmd_copy_buffer_to_image)(
             command_buffer,
             src_buffer,
@@ -5668,7 +5596,7 @@ impl DeviceFnV1_0 {
         dst_buffer: Buffer,
         region_count: u32,
         p_regions: *const BufferImageCopy,
-    ) -> c_void {
+    ) {
         (self.cmd_copy_image_to_buffer)(
             command_buffer,
             src_image,
@@ -5686,7 +5614,7 @@ impl DeviceFnV1_0 {
         dst_offset: DeviceSize,
         data_size: DeviceSize,
         p_data: *const c_void,
-    ) -> c_void {
+    ) {
         (self.cmd_update_buffer)(command_buffer, dst_buffer, dst_offset, data_size, p_data)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdFillBuffer.html>"]
@@ -5697,7 +5625,7 @@ impl DeviceFnV1_0 {
         dst_offset: DeviceSize,
         size: DeviceSize,
         data: u32,
-    ) -> c_void {
+    ) {
         (self.cmd_fill_buffer)(command_buffer, dst_buffer, dst_offset, size, data)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdClearColorImage.html>"]
@@ -5709,7 +5637,7 @@ impl DeviceFnV1_0 {
         p_color: *const ClearColorValue,
         range_count: u32,
         p_ranges: *const ImageSubresourceRange,
-    ) -> c_void {
+    ) {
         (self.cmd_clear_color_image)(
             command_buffer,
             image,
@@ -5728,7 +5656,7 @@ impl DeviceFnV1_0 {
         p_depth_stencil: *const ClearDepthStencilValue,
         range_count: u32,
         p_ranges: *const ImageSubresourceRange,
-    ) -> c_void {
+    ) {
         (self.cmd_clear_depth_stencil_image)(
             command_buffer,
             image,
@@ -5746,7 +5674,7 @@ impl DeviceFnV1_0 {
         p_attachments: *const ClearAttachment,
         rect_count: u32,
         p_rects: *const ClearRect,
-    ) -> c_void {
+    ) {
         (self.cmd_clear_attachments)(
             command_buffer,
             attachment_count,
@@ -5765,7 +5693,7 @@ impl DeviceFnV1_0 {
         dst_image_layout: ImageLayout,
         region_count: u32,
         p_regions: *const ImageResolve,
-    ) -> c_void {
+    ) {
         (self.cmd_resolve_image)(
             command_buffer,
             src_image,
@@ -5782,7 +5710,7 @@ impl DeviceFnV1_0 {
         command_buffer: CommandBuffer,
         event: Event,
         stage_mask: PipelineStageFlags,
-    ) -> c_void {
+    ) {
         (self.cmd_set_event)(command_buffer, event, stage_mask)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdResetEvent.html>"]
@@ -5791,7 +5719,7 @@ impl DeviceFnV1_0 {
         command_buffer: CommandBuffer,
         event: Event,
         stage_mask: PipelineStageFlags,
-    ) -> c_void {
+    ) {
         (self.cmd_reset_event)(command_buffer, event, stage_mask)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdWaitEvents.html>"]
@@ -5808,7 +5736,7 @@ impl DeviceFnV1_0 {
         p_buffer_memory_barriers: *const BufferMemoryBarrier,
         image_memory_barrier_count: u32,
         p_image_memory_barriers: *const ImageMemoryBarrier,
-    ) -> c_void {
+    ) {
         (self.cmd_wait_events)(
             command_buffer,
             event_count,
@@ -5836,7 +5764,7 @@ impl DeviceFnV1_0 {
         p_buffer_memory_barriers: *const BufferMemoryBarrier,
         image_memory_barrier_count: u32,
         p_image_memory_barriers: *const ImageMemoryBarrier,
-    ) -> c_void {
+    ) {
         (self.cmd_pipeline_barrier)(
             command_buffer,
             src_stage_mask,
@@ -5857,7 +5785,7 @@ impl DeviceFnV1_0 {
         query_pool: QueryPool,
         query: u32,
         flags: QueryControlFlags,
-    ) -> c_void {
+    ) {
         (self.cmd_begin_query)(command_buffer, query_pool, query, flags)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdEndQuery.html>"]
@@ -5866,7 +5794,7 @@ impl DeviceFnV1_0 {
         command_buffer: CommandBuffer,
         query_pool: QueryPool,
         query: u32,
-    ) -> c_void {
+    ) {
         (self.cmd_end_query)(command_buffer, query_pool, query)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdResetQueryPool.html>"]
@@ -5876,7 +5804,7 @@ impl DeviceFnV1_0 {
         query_pool: QueryPool,
         first_query: u32,
         query_count: u32,
-    ) -> c_void {
+    ) {
         (self.cmd_reset_query_pool)(command_buffer, query_pool, first_query, query_count)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdWriteTimestamp.html>"]
@@ -5886,7 +5814,7 @@ impl DeviceFnV1_0 {
         pipeline_stage: PipelineStageFlags,
         query_pool: QueryPool,
         query: u32,
-    ) -> c_void {
+    ) {
         (self.cmd_write_timestamp)(command_buffer, pipeline_stage, query_pool, query)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdCopyQueryPoolResults.html>"]
@@ -5900,7 +5828,7 @@ impl DeviceFnV1_0 {
         dst_offset: DeviceSize,
         stride: DeviceSize,
         flags: QueryResultFlags,
-    ) -> c_void {
+    ) {
         (self.cmd_copy_query_pool_results)(
             command_buffer,
             query_pool,
@@ -5921,7 +5849,7 @@ impl DeviceFnV1_0 {
         offset: u32,
         size: u32,
         p_values: *const c_void,
-    ) -> c_void {
+    ) {
         (self.cmd_push_constants)(command_buffer, layout, stage_flags, offset, size, p_values)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdBeginRenderPass.html>"]
@@ -5930,7 +5858,7 @@ impl DeviceFnV1_0 {
         command_buffer: CommandBuffer,
         p_render_pass_begin: *const RenderPassBeginInfo,
         contents: SubpassContents,
-    ) -> c_void {
+    ) {
         (self.cmd_begin_render_pass)(command_buffer, p_render_pass_begin, contents)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdNextSubpass.html>"]
@@ -5938,11 +5866,11 @@ impl DeviceFnV1_0 {
         &self,
         command_buffer: CommandBuffer,
         contents: SubpassContents,
-    ) -> c_void {
+    ) {
         (self.cmd_next_subpass)(command_buffer, contents)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdEndRenderPass.html>"]
-    pub unsafe fn cmd_end_render_pass(&self, command_buffer: CommandBuffer) -> c_void {
+    pub unsafe fn cmd_end_render_pass(&self, command_buffer: CommandBuffer) {
         (self.cmd_end_render_pass)(command_buffer)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdExecuteCommands.html>"]
@@ -5951,7 +5879,7 @@ impl DeviceFnV1_0 {
         command_buffer: CommandBuffer,
         command_buffer_count: u32,
         p_command_buffers: *const CommandBuffer,
-    ) -> c_void {
+    ) {
         (self.cmd_execute_commands)(command_buffer, command_buffer_count, p_command_buffers)
     }
 }
@@ -6007,16 +5935,16 @@ pub struct InstanceFnV1_1 {
     pub get_physical_device_features2: extern "system" fn(
         physical_device: PhysicalDevice,
         p_features: *mut PhysicalDeviceFeatures2,
-    ) -> c_void,
+    ),
     pub get_physical_device_properties2: extern "system" fn(
         physical_device: PhysicalDevice,
         p_properties: *mut PhysicalDeviceProperties2,
-    ) -> c_void,
+    ),
     pub get_physical_device_format_properties2: extern "system" fn(
         physical_device: PhysicalDevice,
         format: Format,
         p_format_properties: *mut FormatProperties2,
-    ) -> c_void,
+    ),
     pub get_physical_device_image_format_properties2: extern "system" fn(
         physical_device: PhysicalDevice,
         p_image_format_info: *const PhysicalDeviceImageFormatInfo2,
@@ -6026,32 +5954,32 @@ pub struct InstanceFnV1_1 {
         physical_device: PhysicalDevice,
         p_queue_family_property_count: *mut u32,
         p_queue_family_properties: *mut QueueFamilyProperties2,
-    ) -> c_void,
+    ),
     pub get_physical_device_memory_properties2: extern "system" fn(
         physical_device: PhysicalDevice,
         p_memory_properties: *mut PhysicalDeviceMemoryProperties2,
-    ) -> c_void,
+    ),
     pub get_physical_device_sparse_image_format_properties2: extern "system" fn(
         physical_device: PhysicalDevice,
         p_format_info: *const PhysicalDeviceSparseImageFormatInfo2,
         p_property_count: *mut u32,
         p_properties: *mut SparseImageFormatProperties2,
-    ) -> c_void,
+    ),
     pub get_physical_device_external_buffer_properties: extern "system" fn(
         physical_device: PhysicalDevice,
         p_external_buffer_info: *const PhysicalDeviceExternalBufferInfo,
         p_external_buffer_properties: *mut ExternalBufferProperties,
-    ) -> c_void,
+    ),
     pub get_physical_device_external_fence_properties: extern "system" fn(
         physical_device: PhysicalDevice,
         p_external_fence_info: *const PhysicalDeviceExternalFenceInfo,
         p_external_fence_properties: *mut ExternalFenceProperties,
-    ) -> c_void,
+    ),
     pub get_physical_device_external_semaphore_properties: extern "system" fn(
         physical_device: PhysicalDevice,
         p_external_semaphore_info: *const PhysicalDeviceExternalSemaphoreInfo,
         p_external_semaphore_properties: *mut ExternalSemaphoreProperties,
-    ) -> c_void,
+    ),
 }
 unsafe impl Send for InstanceFnV1_1 {}
 unsafe impl Sync for InstanceFnV1_1 {}
@@ -6108,7 +6036,7 @@ impl InstanceFnV1_1 {
                 extern "system" fn get_physical_device_features2(
                     _physical_device: PhysicalDevice,
                     _p_features: *mut PhysicalDeviceFeatures2,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(get_physical_device_features2)
@@ -6127,7 +6055,7 @@ impl InstanceFnV1_1 {
                 extern "system" fn get_physical_device_properties2(
                     _physical_device: PhysicalDevice,
                     _p_properties: *mut PhysicalDeviceProperties2,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(get_physical_device_properties2)
@@ -6147,7 +6075,7 @@ impl InstanceFnV1_1 {
                     _physical_device: PhysicalDevice,
                     _format: Format,
                     _p_format_properties: *mut FormatProperties2,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(get_physical_device_format_properties2)
@@ -6187,7 +6115,7 @@ impl InstanceFnV1_1 {
                     _physical_device: PhysicalDevice,
                     _p_queue_family_property_count: *mut u32,
                     _p_queue_family_properties: *mut QueueFamilyProperties2,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(get_physical_device_queue_family_properties2)
@@ -6206,7 +6134,7 @@ impl InstanceFnV1_1 {
                 extern "system" fn get_physical_device_memory_properties2(
                     _physical_device: PhysicalDevice,
                     _p_memory_properties: *mut PhysicalDeviceMemoryProperties2,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(get_physical_device_memory_properties2)
@@ -6227,7 +6155,7 @@ impl InstanceFnV1_1 {
                     _p_format_info: *const PhysicalDeviceSparseImageFormatInfo2,
                     _p_property_count: *mut u32,
                     _p_properties: *mut SparseImageFormatProperties2,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(get_physical_device_sparse_image_format_properties2)
@@ -6247,7 +6175,7 @@ impl InstanceFnV1_1 {
                     _physical_device: PhysicalDevice,
                     _p_external_buffer_info: *const PhysicalDeviceExternalBufferInfo,
                     _p_external_buffer_properties: *mut ExternalBufferProperties,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(get_physical_device_external_buffer_properties)
@@ -6267,7 +6195,7 @@ impl InstanceFnV1_1 {
                     _physical_device: PhysicalDevice,
                     _p_external_fence_info: *const PhysicalDeviceExternalFenceInfo,
                     _p_external_fence_properties: *mut ExternalFenceProperties,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(get_physical_device_external_fence_properties)
@@ -6287,7 +6215,7 @@ impl InstanceFnV1_1 {
                     _physical_device: PhysicalDevice,
                     _p_external_semaphore_info: *const PhysicalDeviceExternalSemaphoreInfo,
                     _p_external_semaphore_properties: *mut ExternalSemaphoreProperties,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(get_physical_device_external_semaphore_properties)
@@ -6322,7 +6250,7 @@ impl InstanceFnV1_1 {
         &self,
         physical_device: PhysicalDevice,
         p_features: *mut PhysicalDeviceFeatures2,
-    ) -> c_void {
+    ) {
         (self.get_physical_device_features2)(physical_device, p_features)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceProperties2.html>"]
@@ -6330,7 +6258,7 @@ impl InstanceFnV1_1 {
         &self,
         physical_device: PhysicalDevice,
         p_properties: *mut PhysicalDeviceProperties2,
-    ) -> c_void {
+    ) {
         (self.get_physical_device_properties2)(physical_device, p_properties)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceFormatProperties2.html>"]
@@ -6339,7 +6267,7 @@ impl InstanceFnV1_1 {
         physical_device: PhysicalDevice,
         format: Format,
         p_format_properties: *mut FormatProperties2,
-    ) -> c_void {
+    ) {
         (self.get_physical_device_format_properties2)(physical_device, format, p_format_properties)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceImageFormatProperties2.html>"]
@@ -6361,7 +6289,7 @@ impl InstanceFnV1_1 {
         physical_device: PhysicalDevice,
         p_queue_family_property_count: *mut u32,
         p_queue_family_properties: *mut QueueFamilyProperties2,
-    ) -> c_void {
+    ) {
         (self.get_physical_device_queue_family_properties2)(
             physical_device,
             p_queue_family_property_count,
@@ -6373,7 +6301,7 @@ impl InstanceFnV1_1 {
         &self,
         physical_device: PhysicalDevice,
         p_memory_properties: *mut PhysicalDeviceMemoryProperties2,
-    ) -> c_void {
+    ) {
         (self.get_physical_device_memory_properties2)(physical_device, p_memory_properties)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceSparseImageFormatProperties2.html>"]
@@ -6383,7 +6311,7 @@ impl InstanceFnV1_1 {
         p_format_info: *const PhysicalDeviceSparseImageFormatInfo2,
         p_property_count: *mut u32,
         p_properties: *mut SparseImageFormatProperties2,
-    ) -> c_void {
+    ) {
         (self.get_physical_device_sparse_image_format_properties2)(
             physical_device,
             p_format_info,
@@ -6397,7 +6325,7 @@ impl InstanceFnV1_1 {
         physical_device: PhysicalDevice,
         p_external_buffer_info: *const PhysicalDeviceExternalBufferInfo,
         p_external_buffer_properties: *mut ExternalBufferProperties,
-    ) -> c_void {
+    ) {
         (self.get_physical_device_external_buffer_properties)(
             physical_device,
             p_external_buffer_info,
@@ -6410,7 +6338,7 @@ impl InstanceFnV1_1 {
         physical_device: PhysicalDevice,
         p_external_fence_info: *const PhysicalDeviceExternalFenceInfo,
         p_external_fence_properties: *mut ExternalFenceProperties,
-    ) -> c_void {
+    ) {
         (self.get_physical_device_external_fence_properties)(
             physical_device,
             p_external_fence_info,
@@ -6423,7 +6351,7 @@ impl InstanceFnV1_1 {
         physical_device: PhysicalDevice,
         p_external_semaphore_info: *const PhysicalDeviceExternalSemaphoreInfo,
         p_external_semaphore_properties: *mut ExternalSemaphoreProperties,
-    ) -> c_void {
+    ) {
         (self.get_physical_device_external_semaphore_properties)(
             physical_device,
             p_external_semaphore_info,
@@ -6454,9 +6382,8 @@ pub struct DeviceFnV1_1 {
         local_device_index: u32,
         remote_device_index: u32,
         p_peer_memory_features: *mut PeerMemoryFeatureFlags,
-    ) -> c_void,
-    pub cmd_set_device_mask:
-        extern "system" fn(command_buffer: CommandBuffer, device_mask: u32) -> c_void,
+    ),
+    pub cmd_set_device_mask: extern "system" fn(command_buffer: CommandBuffer, device_mask: u32),
     pub cmd_dispatch_base: extern "system" fn(
         command_buffer: CommandBuffer,
         base_group_x: u32,
@@ -6465,33 +6392,30 @@ pub struct DeviceFnV1_1 {
         group_count_x: u32,
         group_count_y: u32,
         group_count_z: u32,
-    ) -> c_void,
+    ),
     pub get_image_memory_requirements2: extern "system" fn(
         device: Device,
         p_info: *const ImageMemoryRequirementsInfo2,
         p_memory_requirements: *mut MemoryRequirements2,
-    ) -> c_void,
+    ),
     pub get_buffer_memory_requirements2: extern "system" fn(
         device: Device,
         p_info: *const BufferMemoryRequirementsInfo2,
         p_memory_requirements: *mut MemoryRequirements2,
-    ) -> c_void,
+    ),
     pub get_image_sparse_memory_requirements2: extern "system" fn(
         device: Device,
         p_info: *const ImageSparseMemoryRequirementsInfo2,
         p_sparse_memory_requirement_count: *mut u32,
         p_sparse_memory_requirements: *mut SparseImageMemoryRequirements2,
-    ) -> c_void,
-    pub trim_command_pool: extern "system" fn(
-        device: Device,
-        command_pool: CommandPool,
-        flags: CommandPoolTrimFlags,
-    ) -> c_void,
+    ),
+    pub trim_command_pool:
+        extern "system" fn(device: Device, command_pool: CommandPool, flags: CommandPoolTrimFlags),
     pub get_device_queue2: extern "system" fn(
         device: Device,
         p_queue_info: *const DeviceQueueInfo2,
         p_queue: *mut Queue,
-    ) -> c_void,
+    ),
     pub create_sampler_ycbcr_conversion: extern "system" fn(
         device: Device,
         p_create_info: *const SamplerYcbcrConversionCreateInfo,
@@ -6502,7 +6426,7 @@ pub struct DeviceFnV1_1 {
         device: Device,
         ycbcr_conversion: SamplerYcbcrConversion,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void,
+    ),
     pub create_descriptor_update_template: extern "system" fn(
         device: Device,
         p_create_info: *const DescriptorUpdateTemplateCreateInfo,
@@ -6513,18 +6437,18 @@ pub struct DeviceFnV1_1 {
         device: Device,
         descriptor_update_template: DescriptorUpdateTemplate,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void,
+    ),
     pub update_descriptor_set_with_template: extern "system" fn(
         device: Device,
         descriptor_set: DescriptorSet,
         descriptor_update_template: DescriptorUpdateTemplate,
         p_data: *const c_void,
-    ) -> c_void,
+    ),
     pub get_descriptor_set_layout_support: extern "system" fn(
         device: Device,
         p_create_info: *const DescriptorSetLayoutCreateInfo,
         p_support: *mut DescriptorSetLayoutSupport,
-    ) -> c_void,
+    ),
 }
 unsafe impl Send for DeviceFnV1_1 {}
 unsafe impl Sync for DeviceFnV1_1 {}
@@ -6597,7 +6521,7 @@ impl DeviceFnV1_1 {
                     _local_device_index: u32,
                     _remote_device_index: u32,
                     _p_peer_memory_features: *mut PeerMemoryFeatureFlags,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(get_device_group_peer_memory_features)
@@ -6616,7 +6540,7 @@ impl DeviceFnV1_1 {
                 extern "system" fn cmd_set_device_mask(
                     _command_buffer: CommandBuffer,
                     _device_mask: u32,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_set_device_mask)))
                 }
                 let raw_name = stringify!(vkCmdSetDeviceMask);
@@ -6637,7 +6561,7 @@ impl DeviceFnV1_1 {
                     _group_count_x: u32,
                     _group_count_y: u32,
                     _group_count_z: u32,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_dispatch_base)))
                 }
                 let raw_name = stringify!(vkCmdDispatchBase);
@@ -6654,7 +6578,7 @@ impl DeviceFnV1_1 {
                     _device: Device,
                     _p_info: *const ImageMemoryRequirementsInfo2,
                     _p_memory_requirements: *mut MemoryRequirements2,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(get_image_memory_requirements2)
@@ -6674,7 +6598,7 @@ impl DeviceFnV1_1 {
                     _device: Device,
                     _p_info: *const BufferMemoryRequirementsInfo2,
                     _p_memory_requirements: *mut MemoryRequirements2,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(get_buffer_memory_requirements2)
@@ -6695,7 +6619,7 @@ impl DeviceFnV1_1 {
                     _p_info: *const ImageSparseMemoryRequirementsInfo2,
                     _p_sparse_memory_requirement_count: *mut u32,
                     _p_sparse_memory_requirements: *mut SparseImageMemoryRequirements2,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(get_image_sparse_memory_requirements2)
@@ -6715,7 +6639,7 @@ impl DeviceFnV1_1 {
                     _device: Device,
                     _command_pool: CommandPool,
                     _flags: CommandPoolTrimFlags,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(trim_command_pool)))
                 }
                 let raw_name = stringify!(vkTrimCommandPool);
@@ -6732,7 +6656,7 @@ impl DeviceFnV1_1 {
                     _device: Device,
                     _p_queue_info: *const DeviceQueueInfo2,
                     _p_queue: *mut Queue,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(get_device_queue2)))
                 }
                 let raw_name = stringify!(vkGetDeviceQueue2);
@@ -6770,7 +6694,7 @@ impl DeviceFnV1_1 {
                     _device: Device,
                     _ycbcr_conversion: SamplerYcbcrConversion,
                     _p_allocator: *const AllocationCallbacks,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(destroy_sampler_ycbcr_conversion)
@@ -6811,7 +6735,7 @@ impl DeviceFnV1_1 {
                     _device: Device,
                     _descriptor_update_template: DescriptorUpdateTemplate,
                     _p_allocator: *const AllocationCallbacks,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(destroy_descriptor_update_template)
@@ -6832,7 +6756,7 @@ impl DeviceFnV1_1 {
                     _descriptor_set: DescriptorSet,
                     _descriptor_update_template: DescriptorUpdateTemplate,
                     _p_data: *const c_void,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(update_descriptor_set_with_template)
@@ -6852,7 +6776,7 @@ impl DeviceFnV1_1 {
                     _device: Device,
                     _p_create_info: *const DescriptorSetLayoutCreateInfo,
                     _p_support: *mut DescriptorSetLayoutSupport,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(get_descriptor_set_layout_support)
@@ -6895,7 +6819,7 @@ impl DeviceFnV1_1 {
         local_device_index: u32,
         remote_device_index: u32,
         p_peer_memory_features: *mut PeerMemoryFeatureFlags,
-    ) -> c_void {
+    ) {
         (self.get_device_group_peer_memory_features)(
             device,
             heap_index,
@@ -6905,11 +6829,7 @@ impl DeviceFnV1_1 {
         )
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetDeviceMask.html>"]
-    pub unsafe fn cmd_set_device_mask(
-        &self,
-        command_buffer: CommandBuffer,
-        device_mask: u32,
-    ) -> c_void {
+    pub unsafe fn cmd_set_device_mask(&self, command_buffer: CommandBuffer, device_mask: u32) {
         (self.cmd_set_device_mask)(command_buffer, device_mask)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdDispatchBase.html>"]
@@ -6922,7 +6842,7 @@ impl DeviceFnV1_1 {
         group_count_x: u32,
         group_count_y: u32,
         group_count_z: u32,
-    ) -> c_void {
+    ) {
         (self.cmd_dispatch_base)(
             command_buffer,
             base_group_x,
@@ -6939,7 +6859,7 @@ impl DeviceFnV1_1 {
         device: Device,
         p_info: *const ImageMemoryRequirementsInfo2,
         p_memory_requirements: *mut MemoryRequirements2,
-    ) -> c_void {
+    ) {
         (self.get_image_memory_requirements2)(device, p_info, p_memory_requirements)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetBufferMemoryRequirements2.html>"]
@@ -6948,7 +6868,7 @@ impl DeviceFnV1_1 {
         device: Device,
         p_info: *const BufferMemoryRequirementsInfo2,
         p_memory_requirements: *mut MemoryRequirements2,
-    ) -> c_void {
+    ) {
         (self.get_buffer_memory_requirements2)(device, p_info, p_memory_requirements)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetImageSparseMemoryRequirements2.html>"]
@@ -6958,7 +6878,7 @@ impl DeviceFnV1_1 {
         p_info: *const ImageSparseMemoryRequirementsInfo2,
         p_sparse_memory_requirement_count: *mut u32,
         p_sparse_memory_requirements: *mut SparseImageMemoryRequirements2,
-    ) -> c_void {
+    ) {
         (self.get_image_sparse_memory_requirements2)(
             device,
             p_info,
@@ -6972,7 +6892,7 @@ impl DeviceFnV1_1 {
         device: Device,
         command_pool: CommandPool,
         flags: CommandPoolTrimFlags,
-    ) -> c_void {
+    ) {
         (self.trim_command_pool)(device, command_pool, flags)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetDeviceQueue2.html>"]
@@ -6981,7 +6901,7 @@ impl DeviceFnV1_1 {
         device: Device,
         p_queue_info: *const DeviceQueueInfo2,
         p_queue: *mut Queue,
-    ) -> c_void {
+    ) {
         (self.get_device_queue2)(device, p_queue_info, p_queue)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateSamplerYcbcrConversion.html>"]
@@ -7005,7 +6925,7 @@ impl DeviceFnV1_1 {
         device: Device,
         ycbcr_conversion: SamplerYcbcrConversion,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void {
+    ) {
         (self.destroy_sampler_ycbcr_conversion)(device, ycbcr_conversion, p_allocator)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateDescriptorUpdateTemplate.html>"]
@@ -7029,7 +6949,7 @@ impl DeviceFnV1_1 {
         device: Device,
         descriptor_update_template: DescriptorUpdateTemplate,
         p_allocator: *const AllocationCallbacks,
-    ) -> c_void {
+    ) {
         (self.destroy_descriptor_update_template)(device, descriptor_update_template, p_allocator)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkUpdateDescriptorSetWithTemplate.html>"]
@@ -7039,7 +6959,7 @@ impl DeviceFnV1_1 {
         descriptor_set: DescriptorSet,
         descriptor_update_template: DescriptorUpdateTemplate,
         p_data: *const c_void,
-    ) -> c_void {
+    ) {
         (self.update_descriptor_set_with_template)(
             device,
             descriptor_set,
@@ -7053,7 +6973,7 @@ impl DeviceFnV1_1 {
         device: Device,
         p_create_info: *const DescriptorSetLayoutCreateInfo,
         p_support: *mut DescriptorSetLayoutSupport,
-    ) -> c_void {
+    ) {
         (self.get_descriptor_set_layout_support)(device, p_create_info, p_support)
     }
 }
@@ -7098,7 +7018,7 @@ pub struct DeviceFnV1_2 {
         count_buffer_offset: DeviceSize,
         max_draw_count: u32,
         stride: u32,
-    ) -> c_void,
+    ),
     pub cmd_draw_indexed_indirect_count: extern "system" fn(
         command_buffer: CommandBuffer,
         buffer: Buffer,
@@ -7107,7 +7027,7 @@ pub struct DeviceFnV1_2 {
         count_buffer_offset: DeviceSize,
         max_draw_count: u32,
         stride: u32,
-    ) -> c_void,
+    ),
     pub create_render_pass2: extern "system" fn(
         device: Device,
         p_create_info: *const RenderPassCreateInfo2,
@@ -7118,22 +7038,22 @@ pub struct DeviceFnV1_2 {
         command_buffer: CommandBuffer,
         p_render_pass_begin: *const RenderPassBeginInfo,
         p_subpass_begin_info: *const SubpassBeginInfo,
-    ) -> c_void,
+    ),
     pub cmd_next_subpass2: extern "system" fn(
         command_buffer: CommandBuffer,
         p_subpass_begin_info: *const SubpassBeginInfo,
         p_subpass_end_info: *const SubpassEndInfo,
-    ) -> c_void,
+    ),
     pub cmd_end_render_pass2: extern "system" fn(
         command_buffer: CommandBuffer,
         p_subpass_end_info: *const SubpassEndInfo,
-    ) -> c_void,
+    ),
     pub reset_query_pool: extern "system" fn(
         device: Device,
         query_pool: QueryPool,
         first_query: u32,
         query_count: u32,
-    ) -> c_void,
+    ),
     pub get_semaphore_counter_value:
         extern "system" fn(device: Device, semaphore: Semaphore, p_value: *mut u64) -> Result,
     pub wait_semaphores: extern "system" fn(
@@ -7188,7 +7108,7 @@ impl DeviceFnV1_2 {
                     _count_buffer_offset: DeviceSize,
                     _max_draw_count: u32,
                     _stride: u32,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_draw_indirect_count)
@@ -7212,7 +7132,7 @@ impl DeviceFnV1_2 {
                     _count_buffer_offset: DeviceSize,
                     _max_draw_count: u32,
                     _stride: u32,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_draw_indexed_indirect_count)
@@ -7250,7 +7170,7 @@ impl DeviceFnV1_2 {
                     _command_buffer: CommandBuffer,
                     _p_render_pass_begin: *const RenderPassBeginInfo,
                     _p_subpass_begin_info: *const SubpassBeginInfo,
-                ) -> c_void {
+                ) {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(cmd_begin_render_pass2)
@@ -7270,7 +7190,7 @@ impl DeviceFnV1_2 {
                     _command_buffer: CommandBuffer,
                     _p_subpass_begin_info: *const SubpassBeginInfo,
                     _p_subpass_end_info: *const SubpassEndInfo,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_next_subpass2)))
                 }
                 let raw_name = stringify!(vkCmdNextSubpass2);
@@ -7286,7 +7206,7 @@ impl DeviceFnV1_2 {
                 extern "system" fn cmd_end_render_pass2(
                     _command_buffer: CommandBuffer,
                     _p_subpass_end_info: *const SubpassEndInfo,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(cmd_end_render_pass2)))
                 }
                 let raw_name = stringify!(vkCmdEndRenderPass2);
@@ -7304,7 +7224,7 @@ impl DeviceFnV1_2 {
                     _query_pool: QueryPool,
                     _first_query: u32,
                     _query_count: u32,
-                ) -> c_void {
+                ) {
                     panic!(concat!("Unable to load ", stringify!(reset_query_pool)))
                 }
                 let raw_name = stringify!(vkResetQueryPool);
@@ -7438,7 +7358,7 @@ impl DeviceFnV1_2 {
         count_buffer_offset: DeviceSize,
         max_draw_count: u32,
         stride: u32,
-    ) -> c_void {
+    ) {
         (self.cmd_draw_indirect_count)(
             command_buffer,
             buffer,
@@ -7459,7 +7379,7 @@ impl DeviceFnV1_2 {
         count_buffer_offset: DeviceSize,
         max_draw_count: u32,
         stride: u32,
-    ) -> c_void {
+    ) {
         (self.cmd_draw_indexed_indirect_count)(
             command_buffer,
             buffer,
@@ -7486,7 +7406,7 @@ impl DeviceFnV1_2 {
         command_buffer: CommandBuffer,
         p_render_pass_begin: *const RenderPassBeginInfo,
         p_subpass_begin_info: *const SubpassBeginInfo,
-    ) -> c_void {
+    ) {
         (self.cmd_begin_render_pass2)(command_buffer, p_render_pass_begin, p_subpass_begin_info)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdNextSubpass2.html>"]
@@ -7495,7 +7415,7 @@ impl DeviceFnV1_2 {
         command_buffer: CommandBuffer,
         p_subpass_begin_info: *const SubpassBeginInfo,
         p_subpass_end_info: *const SubpassEndInfo,
-    ) -> c_void {
+    ) {
         (self.cmd_next_subpass2)(command_buffer, p_subpass_begin_info, p_subpass_end_info)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdEndRenderPass2.html>"]
@@ -7503,7 +7423,7 @@ impl DeviceFnV1_2 {
         &self,
         command_buffer: CommandBuffer,
         p_subpass_end_info: *const SubpassEndInfo,
-    ) -> c_void {
+    ) {
         (self.cmd_end_render_pass2)(command_buffer, p_subpass_end_info)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkResetQueryPool.html>"]
@@ -7513,7 +7433,7 @@ impl DeviceFnV1_2 {
         query_pool: QueryPool,
         first_query: u32,
         query_count: u32,
-    ) -> c_void {
+    ) {
         (self.reset_query_pool)(device, query_pool, first_query, query_count)
     }
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetSemaphoreCounterValue.html>"]

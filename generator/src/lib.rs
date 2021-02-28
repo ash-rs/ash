@@ -623,6 +623,9 @@ pub trait FieldExt {
     /// which is needed for `C` function parameters. Set to `false` for struct definitions.
     fn type_tokens(&self, is_ffi_param: bool) -> TokenStream;
     fn is_clone(&self) -> bool;
+
+    /// Whether this is C's `void` type (not to be mistaken with a void _pointer_!)
+    fn is_void(&self) -> bool;
 }
 
 pub trait ToTokens {
@@ -729,6 +732,7 @@ impl FieldExt for vkxml::Field {
     }
 
     fn inner_type_tokens(&self) -> TokenStream {
+        assert!(!self.is_void());
         let ty = name_to_tokens(&self.basetype);
 
         match self.reference {
@@ -739,6 +743,7 @@ impl FieldExt for vkxml::Field {
     }
 
     fn safe_type_tokens(&self, lifetime: TokenStream) -> TokenStream {
+        assert!(!self.is_void());
         match self.array {
             // The outer type fn type_tokens() returns is [], which fits our "safe" prescription
             Some(vkxml::ArrayType::Static) => self.type_tokens(false),
@@ -758,6 +763,7 @@ impl FieldExt for vkxml::Field {
     }
 
     fn type_tokens(&self, is_ffi_param: bool) -> TokenStream {
+        assert!(!self.is_void());
         let ty = name_to_tokens(&self.basetype);
 
         match self.array {
@@ -783,6 +789,10 @@ impl FieldExt for vkxml::Field {
                 quote!(#pointer #ty)
             }
         }
+    }
+
+    fn is_void(&self) -> bool {
+        self.basetype == "void" && self.reference.is_none()
     }
 }
 
@@ -901,12 +911,6 @@ fn generate_function_pointers<'a>(
         .collect();
     let expanded_params_ref = &expanded_params;
 
-    let return_types: Vec<_> = commands
-        .iter()
-        .map(|cmd| cmd.return_type.type_tokens(true))
-        .collect();
-    let return_types_ref = &return_types;
-
     let pfn_names: Vec<_> = commands_pfn
         .iter()
         .map(|cmd| format_ident!("{}", format!("PFN_{}", cmd.name.as_str())))
@@ -930,21 +934,28 @@ fn generate_function_pointers<'a>(
         .collect();
     let signature_params_ref = &signature_params;
 
-    let pfn_return_types: Vec<_> = commands
+    let return_types: Vec<_> = commands
         .iter()
-        .map(|cmd| cmd.return_type.type_tokens(true))
+        .map(|cmd| {
+            if cmd.return_type.is_void() {
+                quote!()
+            } else {
+                let ret_ty_tokens = cmd.return_type.type_tokens(true);
+                quote!(-> #ret_ty_tokens)
+            }
+        })
         .collect();
-    let pfn_return_types_ref = &pfn_return_types;
+    let return_types_ref = &return_types;
 
     quote! {
         #(
             #[allow(non_camel_case_types)]
-            pub type #pfn_names_ref = extern "system" fn(#(#signature_params_ref),*) -> #pfn_return_types_ref;
+            pub type #pfn_names_ref = extern "system" fn(#(#signature_params_ref),*) #return_types_ref;
         )*
 
         pub struct #ident {
             #(
-                pub #names_ref: extern "system" fn(#expanded_params_ref) -> #return_types_ref,
+                pub #names_ref: extern "system" fn(#expanded_params_ref) #return_types_ref,
             )*
         }
 
@@ -966,7 +977,7 @@ fn generate_function_pointers<'a>(
                     #(
                         #names_ref: unsafe {
 
-                            extern "system" fn #names_ref1 (#expanded_params_unused) -> #return_types_ref {
+                            extern "system" fn #names_ref1 (#expanded_params_unused) #return_types_ref {
                                 panic!(concat!("Unable to load ", stringify!(#names_ref2)))
                             }
                             let raw_name = stringify!(#raw_names_ref);
@@ -984,7 +995,7 @@ fn generate_function_pointers<'a>(
             }
             #(
                 #[doc = #khronos_links]
-                pub unsafe fn #names_ref(&self, #expanded_params_ref) -> #return_types_ref {
+                pub unsafe fn #names_ref(&self, #expanded_params_ref) #return_types_ref {
                     (self.#names_left)(#(#params_names,)*)
                 }
             )*
@@ -2060,7 +2071,12 @@ pub fn generate_handle(handle: &vkxml::Handle) -> Option<TokenStream> {
 }
 fn generate_funcptr(fnptr: &vkxml::FunctionPointer) -> TokenStream {
     let name = format_ident!("{}", fnptr.name.as_str());
-    let ret_ty_tokens = fnptr.return_type.type_tokens(true);
+    let ret_ty_tokens = if fnptr.return_type.is_void() {
+        quote!()
+    } else {
+        let ret_ty_tokens = fnptr.return_type.type_tokens(true);
+        quote!(-> #ret_ty_tokens)
+    };
     let params = fnptr.param.iter().map(|field| {
         let ident = field.param_ident();
         let type_tokens = field.type_tokens(true);
@@ -2072,7 +2088,7 @@ fn generate_funcptr(fnptr: &vkxml::FunctionPointer) -> TokenStream {
     quote! {
         #[allow(non_camel_case_types)]
         #[doc = #khronos_link]
-        pub type #name = Option<unsafe extern "system" fn(#(#params),*) -> #ret_ty_tokens>;
+        pub type #name = Option<unsafe extern "system" fn(#(#params),*) #ret_ty_tokens>;
     }
 }
 
