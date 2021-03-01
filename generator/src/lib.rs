@@ -80,7 +80,7 @@ named!(cfloat<&str, f32>,
     terminated!(nom::number::complete::float, char!('f'))
 );
 
-fn khronos_link<S: Display>(name: &S) -> Literal {
+fn khronos_link<S: Display + ?Sized>(name: &S) -> Literal {
     Literal::string(&format!(
         "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/{name}.html>",
         name = name
@@ -849,17 +849,18 @@ fn generate_function_pointers<'a>(
         .map(|cmd| function_name(&cmd.name))
         .collect();
     let names_ref = &names;
-    let names_ref1 = &names;
-    let names_ref2 = &names;
-    let names_ref3 = &names;
     let raw_names: Vec<_> = commands
         .iter()
-        .map(|cmd| format_ident!("{}", function_name_raw(cmd.name.as_str()).as_str()))
+        .map(|cmd| {
+            let byt = std::ffi::CString::new(function_name_raw(cmd.name.as_str())).unwrap();
+            Literal::byte_string(byt.to_bytes_with_nul())
+        })
         .collect();
     let raw_names_ref = &raw_names;
-    let names_left = &names;
-    let names_right = &names;
-    let khronos_links: Vec<_> = raw_names.iter().map(|name| khronos_link(name)).collect();
+    let khronos_links: Vec<_> = commands
+        .iter()
+        .map(|cmd| khronos_link(&function_name_raw(cmd.name.as_str())))
+        .collect();
 
     let params: Vec<Vec<(Ident, TokenStream)>> = commands
         .iter()
@@ -965,7 +966,7 @@ fn generate_function_pointers<'a>(
         impl ::std::clone::Clone for #ident {
             fn clone(&self) -> Self {
                 #ident{
-                    #(#names_left: self.#names_right,)*
+                    #(#names: self.#names,)*
                 }
             }
         }
@@ -977,14 +978,13 @@ fn generate_function_pointers<'a>(
                     #(
                         #names_ref: unsafe {
 
-                            extern "system" fn #names_ref1 (#expanded_params_unused) #return_types_ref {
-                                panic!(concat!("Unable to load ", stringify!(#names_ref2)))
+                            extern "system" fn #names_ref (#expanded_params_unused) #return_types_ref {
+                                panic!(concat!("Unable to load ", stringify!(#names_ref)))
                             }
-                            let raw_name = stringify!(#raw_names_ref);
-                            let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                            let val = _f(&cname);
+                            let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(#raw_names_ref);
+                            let val = _f(cname);
                             if val.is_null(){
-                                #names_ref3
+                                #names_ref
                             }
                             else{
                                 ::std::mem::transmute(val)
@@ -996,7 +996,7 @@ fn generate_function_pointers<'a>(
             #(
                 #[doc = #khronos_links]
                 pub unsafe fn #names_ref(&self, #expanded_params_ref) #return_types_ref {
-                    (self.#names_left)(#(#params_names,)*)
+                    (self.#names)(#(#params_names,)*)
                 }
             )*
         }
