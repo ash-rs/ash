@@ -5,7 +5,7 @@ authors = ["Maik Klein <maikklein@googlemail.com>"]
 edition = "2018"
 
 [dependencies]
-vk-parse = { version = "0.5.0", features = ["vkxml-convert"] }
+vk-parse = { git = "https://github.com/krolli/vk-parse", rev = "a133cbb330deeb5c8cea63574cb309075e43a231", features = ["vkxml-convert"] }
 vkxml = "0.3"
 nom = "6.0"
 heck = "0.3"
