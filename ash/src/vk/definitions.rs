@@ -9,7 +9,7 @@ use std::os::raw::*;
 pub const API_VERSION_1_0: u32 = crate::vk::make_version(1, 0, 0);
 pub const API_VERSION_1_1: u32 = crate::vk::make_version(1, 1, 0);
 pub const API_VERSION_1_2: u32 = crate::vk::make_version(1, 2, 0);
-pub const HEADER_VERSION: u32 = 169u32;
+pub const HEADER_VERSION: u32 = 170u32;
 pub const HEADER_VERSION_COMPLETE: u32 = crate::vk::make_version(1, 2, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkSampleMask.html>"]
 pub type SampleMask = u32;
@@ -17,6 +17,8 @@ pub type SampleMask = u32;
 pub type Bool32 = u32;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkFlags.html>"]
 pub type Flags = u32;
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkFlags64.html>"]
+pub type Flags64 = u64;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDeviceSize.html>"]
 pub type DeviceSize = u64;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDeviceAddress.html>"]
@@ -96,11 +98,6 @@ vk_bitflags_wrapped!(DeviceCreateFlags, 0b0, Flags);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkSemaphoreCreateFlags.html>"]
 pub struct SemaphoreCreateFlags(pub(crate) Flags);
 vk_bitflags_wrapped!(SemaphoreCreateFlags, 0b0, Flags);
-#[repr(transparent)]
-#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkEventCreateFlags.html>"]
-pub struct EventCreateFlags(pub(crate) Flags);
-vk_bitflags_wrapped!(EventCreateFlags, 0b0, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkMemoryMapFlags.html>"]
@@ -12244,6 +12241,8 @@ pub struct Win32KeyedMutexAcquireReleaseInfoNVBuilder<'a> {
 }
 unsafe impl ExtendsSubmitInfo for Win32KeyedMutexAcquireReleaseInfoNVBuilder<'_> {}
 unsafe impl ExtendsSubmitInfo for Win32KeyedMutexAcquireReleaseInfoNV {}
+unsafe impl ExtendsSubmitInfo2KHR for Win32KeyedMutexAcquireReleaseInfoNVBuilder<'_> {}
+unsafe impl ExtendsSubmitInfo2KHR for Win32KeyedMutexAcquireReleaseInfoNV {}
 impl<'a> ::std::ops::Deref for Win32KeyedMutexAcquireReleaseInfoNVBuilder<'a> {
     type Target = Win32KeyedMutexAcquireReleaseInfoNV;
     fn deref(&self) -> &Self::Target {
@@ -15700,6 +15699,8 @@ pub struct Win32KeyedMutexAcquireReleaseInfoKHRBuilder<'a> {
 }
 unsafe impl ExtendsSubmitInfo for Win32KeyedMutexAcquireReleaseInfoKHRBuilder<'_> {}
 unsafe impl ExtendsSubmitInfo for Win32KeyedMutexAcquireReleaseInfoKHR {}
+unsafe impl ExtendsSubmitInfo2KHR for Win32KeyedMutexAcquireReleaseInfoKHRBuilder<'_> {}
+unsafe impl ExtendsSubmitInfo2KHR for Win32KeyedMutexAcquireReleaseInfoKHR {}
 impl<'a> ::std::ops::Deref for Win32KeyedMutexAcquireReleaseInfoKHRBuilder<'a> {
     type Target = Win32KeyedMutexAcquireReleaseInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -22685,6 +22686,8 @@ pub struct SampleLocationsInfoEXTBuilder<'a> {
 }
 unsafe impl ExtendsImageMemoryBarrier for SampleLocationsInfoEXTBuilder<'_> {}
 unsafe impl ExtendsImageMemoryBarrier for SampleLocationsInfoEXT {}
+unsafe impl ExtendsImageMemoryBarrier2KHR for SampleLocationsInfoEXTBuilder<'_> {}
+unsafe impl ExtendsImageMemoryBarrier2KHR for SampleLocationsInfoEXT {}
 impl<'a> ::std::ops::Deref for SampleLocationsInfoEXTBuilder<'a> {
     type Target = SampleLocationsInfoEXT;
     fn deref(&self) -> &Self::Target {
@@ -36555,6 +36558,8 @@ pub struct PerformanceQuerySubmitInfoKHRBuilder<'a> {
 }
 unsafe impl ExtendsSubmitInfo for PerformanceQuerySubmitInfoKHRBuilder<'_> {}
 unsafe impl ExtendsSubmitInfo for PerformanceQuerySubmitInfoKHR {}
+unsafe impl ExtendsSubmitInfo2KHR for PerformanceQuerySubmitInfoKHRBuilder<'_> {}
+unsafe impl ExtendsSubmitInfo2KHR for PerformanceQuerySubmitInfoKHR {}
 impl<'a> ::std::ops::Deref for PerformanceQuerySubmitInfoKHRBuilder<'a> {
     type Target = PerformanceQuerySubmitInfoKHR;
     fn deref(&self) -> &Self::Target {
@@ -45570,6 +45575,869 @@ impl<'a> MutableDescriptorTypeCreateInfoVALVEBuilder<'a> {
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> MutableDescriptorTypeCreateInfoVALVE {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkMemoryBarrier2KHR.html>"]
+pub struct MemoryBarrier2KHR {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub src_stage_mask: PipelineStageFlags2KHR,
+    pub src_access_mask: AccessFlags2KHR,
+    pub dst_stage_mask: PipelineStageFlags2KHR,
+    pub dst_access_mask: AccessFlags2KHR,
+}
+impl ::std::default::Default for MemoryBarrier2KHR {
+    fn default() -> MemoryBarrier2KHR {
+        MemoryBarrier2KHR {
+            s_type: StructureType::MEMORY_BARRIER_2_KHR,
+            p_next: ::std::ptr::null(),
+            src_stage_mask: PipelineStageFlags2KHR::default(),
+            src_access_mask: AccessFlags2KHR::default(),
+            dst_stage_mask: PipelineStageFlags2KHR::default(),
+            dst_access_mask: AccessFlags2KHR::default(),
+        }
+    }
+}
+impl MemoryBarrier2KHR {
+    pub fn builder<'a>() -> MemoryBarrier2KHRBuilder<'a> {
+        MemoryBarrier2KHRBuilder {
+            inner: MemoryBarrier2KHR::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct MemoryBarrier2KHRBuilder<'a> {
+    inner: MemoryBarrier2KHR,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsSubpassDependency2 for MemoryBarrier2KHRBuilder<'_> {}
+unsafe impl ExtendsSubpassDependency2 for MemoryBarrier2KHR {}
+impl<'a> ::std::ops::Deref for MemoryBarrier2KHRBuilder<'a> {
+    type Target = MemoryBarrier2KHR;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for MemoryBarrier2KHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> MemoryBarrier2KHRBuilder<'a> {
+    pub fn src_stage_mask(mut self, src_stage_mask: PipelineStageFlags2KHR) -> Self {
+        self.inner.src_stage_mask = src_stage_mask;
+        self
+    }
+    pub fn src_access_mask(mut self, src_access_mask: AccessFlags2KHR) -> Self {
+        self.inner.src_access_mask = src_access_mask;
+        self
+    }
+    pub fn dst_stage_mask(mut self, dst_stage_mask: PipelineStageFlags2KHR) -> Self {
+        self.inner.dst_stage_mask = dst_stage_mask;
+        self
+    }
+    pub fn dst_access_mask(mut self, dst_access_mask: AccessFlags2KHR) -> Self {
+        self.inner.dst_access_mask = dst_access_mask;
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> MemoryBarrier2KHR {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkImageMemoryBarrier2KHR.html>"]
+pub struct ImageMemoryBarrier2KHR {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub src_stage_mask: PipelineStageFlags2KHR,
+    pub src_access_mask: AccessFlags2KHR,
+    pub dst_stage_mask: PipelineStageFlags2KHR,
+    pub dst_access_mask: AccessFlags2KHR,
+    pub old_layout: ImageLayout,
+    pub new_layout: ImageLayout,
+    pub src_queue_family_index: u32,
+    pub dst_queue_family_index: u32,
+    pub image: Image,
+    pub subresource_range: ImageSubresourceRange,
+}
+impl ::std::default::Default for ImageMemoryBarrier2KHR {
+    fn default() -> ImageMemoryBarrier2KHR {
+        ImageMemoryBarrier2KHR {
+            s_type: StructureType::IMAGE_MEMORY_BARRIER_2_KHR,
+            p_next: ::std::ptr::null(),
+            src_stage_mask: PipelineStageFlags2KHR::default(),
+            src_access_mask: AccessFlags2KHR::default(),
+            dst_stage_mask: PipelineStageFlags2KHR::default(),
+            dst_access_mask: AccessFlags2KHR::default(),
+            old_layout: ImageLayout::default(),
+            new_layout: ImageLayout::default(),
+            src_queue_family_index: u32::default(),
+            dst_queue_family_index: u32::default(),
+            image: Image::default(),
+            subresource_range: ImageSubresourceRange::default(),
+        }
+    }
+}
+impl ImageMemoryBarrier2KHR {
+    pub fn builder<'a>() -> ImageMemoryBarrier2KHRBuilder<'a> {
+        ImageMemoryBarrier2KHRBuilder {
+            inner: ImageMemoryBarrier2KHR::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct ImageMemoryBarrier2KHRBuilder<'a> {
+    inner: ImageMemoryBarrier2KHR,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+pub unsafe trait ExtendsImageMemoryBarrier2KHR {}
+impl<'a> ::std::ops::Deref for ImageMemoryBarrier2KHRBuilder<'a> {
+    type Target = ImageMemoryBarrier2KHR;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ImageMemoryBarrier2KHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> ImageMemoryBarrier2KHRBuilder<'a> {
+    pub fn src_stage_mask(mut self, src_stage_mask: PipelineStageFlags2KHR) -> Self {
+        self.inner.src_stage_mask = src_stage_mask;
+        self
+    }
+    pub fn src_access_mask(mut self, src_access_mask: AccessFlags2KHR) -> Self {
+        self.inner.src_access_mask = src_access_mask;
+        self
+    }
+    pub fn dst_stage_mask(mut self, dst_stage_mask: PipelineStageFlags2KHR) -> Self {
+        self.inner.dst_stage_mask = dst_stage_mask;
+        self
+    }
+    pub fn dst_access_mask(mut self, dst_access_mask: AccessFlags2KHR) -> Self {
+        self.inner.dst_access_mask = dst_access_mask;
+        self
+    }
+    pub fn old_layout(mut self, old_layout: ImageLayout) -> Self {
+        self.inner.old_layout = old_layout;
+        self
+    }
+    pub fn new_layout(mut self, new_layout: ImageLayout) -> Self {
+        self.inner.new_layout = new_layout;
+        self
+    }
+    pub fn src_queue_family_index(mut self, src_queue_family_index: u32) -> Self {
+        self.inner.src_queue_family_index = src_queue_family_index;
+        self
+    }
+    pub fn dst_queue_family_index(mut self, dst_queue_family_index: u32) -> Self {
+        self.inner.dst_queue_family_index = dst_queue_family_index;
+        self
+    }
+    pub fn image(mut self, image: Image) -> Self {
+        self.inner.image = image;
+        self
+    }
+    pub fn subresource_range(mut self, subresource_range: ImageSubresourceRange) -> Self {
+        self.inner.subresource_range = subresource_range;
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsImageMemoryBarrier2KHR>(mut self, next: &'a mut T) -> Self {
+        unsafe {
+            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> ImageMemoryBarrier2KHR {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkBufferMemoryBarrier2KHR.html>"]
+pub struct BufferMemoryBarrier2KHR {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub src_stage_mask: PipelineStageFlags2KHR,
+    pub src_access_mask: AccessFlags2KHR,
+    pub dst_stage_mask: PipelineStageFlags2KHR,
+    pub dst_access_mask: AccessFlags2KHR,
+    pub src_queue_family_index: u32,
+    pub dst_queue_family_index: u32,
+    pub buffer: Buffer,
+    pub offset: DeviceSize,
+    pub size: DeviceSize,
+}
+impl ::std::default::Default for BufferMemoryBarrier2KHR {
+    fn default() -> BufferMemoryBarrier2KHR {
+        BufferMemoryBarrier2KHR {
+            s_type: StructureType::BUFFER_MEMORY_BARRIER_2_KHR,
+            p_next: ::std::ptr::null(),
+            src_stage_mask: PipelineStageFlags2KHR::default(),
+            src_access_mask: AccessFlags2KHR::default(),
+            dst_stage_mask: PipelineStageFlags2KHR::default(),
+            dst_access_mask: AccessFlags2KHR::default(),
+            src_queue_family_index: u32::default(),
+            dst_queue_family_index: u32::default(),
+            buffer: Buffer::default(),
+            offset: DeviceSize::default(),
+            size: DeviceSize::default(),
+        }
+    }
+}
+impl BufferMemoryBarrier2KHR {
+    pub fn builder<'a>() -> BufferMemoryBarrier2KHRBuilder<'a> {
+        BufferMemoryBarrier2KHRBuilder {
+            inner: BufferMemoryBarrier2KHR::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct BufferMemoryBarrier2KHRBuilder<'a> {
+    inner: BufferMemoryBarrier2KHR,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+pub unsafe trait ExtendsBufferMemoryBarrier2KHR {}
+impl<'a> ::std::ops::Deref for BufferMemoryBarrier2KHRBuilder<'a> {
+    type Target = BufferMemoryBarrier2KHR;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for BufferMemoryBarrier2KHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> BufferMemoryBarrier2KHRBuilder<'a> {
+    pub fn src_stage_mask(mut self, src_stage_mask: PipelineStageFlags2KHR) -> Self {
+        self.inner.src_stage_mask = src_stage_mask;
+        self
+    }
+    pub fn src_access_mask(mut self, src_access_mask: AccessFlags2KHR) -> Self {
+        self.inner.src_access_mask = src_access_mask;
+        self
+    }
+    pub fn dst_stage_mask(mut self, dst_stage_mask: PipelineStageFlags2KHR) -> Self {
+        self.inner.dst_stage_mask = dst_stage_mask;
+        self
+    }
+    pub fn dst_access_mask(mut self, dst_access_mask: AccessFlags2KHR) -> Self {
+        self.inner.dst_access_mask = dst_access_mask;
+        self
+    }
+    pub fn src_queue_family_index(mut self, src_queue_family_index: u32) -> Self {
+        self.inner.src_queue_family_index = src_queue_family_index;
+        self
+    }
+    pub fn dst_queue_family_index(mut self, dst_queue_family_index: u32) -> Self {
+        self.inner.dst_queue_family_index = dst_queue_family_index;
+        self
+    }
+    pub fn buffer(mut self, buffer: Buffer) -> Self {
+        self.inner.buffer = buffer;
+        self
+    }
+    pub fn offset(mut self, offset: DeviceSize) -> Self {
+        self.inner.offset = offset;
+        self
+    }
+    pub fn size(mut self, size: DeviceSize) -> Self {
+        self.inner.size = size;
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsBufferMemoryBarrier2KHR>(mut self, next: &'a mut T) -> Self {
+        unsafe {
+            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> BufferMemoryBarrier2KHR {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkDependencyInfoKHR.html>"]
+pub struct DependencyInfoKHR {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub dependency_flags: DependencyFlags,
+    pub memory_barrier_count: u32,
+    pub p_memory_barriers: *const MemoryBarrier2KHR,
+    pub buffer_memory_barrier_count: u32,
+    pub p_buffer_memory_barriers: *const BufferMemoryBarrier2KHR,
+    pub image_memory_barrier_count: u32,
+    pub p_image_memory_barriers: *const ImageMemoryBarrier2KHR,
+}
+impl ::std::default::Default for DependencyInfoKHR {
+    fn default() -> DependencyInfoKHR {
+        DependencyInfoKHR {
+            s_type: StructureType::DEPENDENCY_INFO_KHR,
+            p_next: ::std::ptr::null(),
+            dependency_flags: DependencyFlags::default(),
+            memory_barrier_count: u32::default(),
+            p_memory_barriers: ::std::ptr::null(),
+            buffer_memory_barrier_count: u32::default(),
+            p_buffer_memory_barriers: ::std::ptr::null(),
+            image_memory_barrier_count: u32::default(),
+            p_image_memory_barriers: ::std::ptr::null(),
+        }
+    }
+}
+impl DependencyInfoKHR {
+    pub fn builder<'a>() -> DependencyInfoKHRBuilder<'a> {
+        DependencyInfoKHRBuilder {
+            inner: DependencyInfoKHR::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct DependencyInfoKHRBuilder<'a> {
+    inner: DependencyInfoKHR,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+pub unsafe trait ExtendsDependencyInfoKHR {}
+impl<'a> ::std::ops::Deref for DependencyInfoKHRBuilder<'a> {
+    type Target = DependencyInfoKHR;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for DependencyInfoKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> DependencyInfoKHRBuilder<'a> {
+    pub fn dependency_flags(mut self, dependency_flags: DependencyFlags) -> Self {
+        self.inner.dependency_flags = dependency_flags;
+        self
+    }
+    pub fn memory_barriers(mut self, memory_barriers: &'a [MemoryBarrier2KHR]) -> Self {
+        self.inner.memory_barrier_count = memory_barriers.len() as _;
+        self.inner.p_memory_barriers = memory_barriers.as_ptr();
+        self
+    }
+    pub fn buffer_memory_barriers(
+        mut self,
+        buffer_memory_barriers: &'a [BufferMemoryBarrier2KHR],
+    ) -> Self {
+        self.inner.buffer_memory_barrier_count = buffer_memory_barriers.len() as _;
+        self.inner.p_buffer_memory_barriers = buffer_memory_barriers.as_ptr();
+        self
+    }
+    pub fn image_memory_barriers(
+        mut self,
+        image_memory_barriers: &'a [ImageMemoryBarrier2KHR],
+    ) -> Self {
+        self.inner.image_memory_barrier_count = image_memory_barriers.len() as _;
+        self.inner.p_image_memory_barriers = image_memory_barriers.as_ptr();
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsDependencyInfoKHR>(mut self, next: &'a mut T) -> Self {
+        unsafe {
+            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> DependencyInfoKHR {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkSemaphoreSubmitInfoKHR.html>"]
+pub struct SemaphoreSubmitInfoKHR {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub semaphore: Semaphore,
+    pub value: u64,
+    pub stage_mask: PipelineStageFlags2KHR,
+    pub device_index: u32,
+}
+impl ::std::default::Default for SemaphoreSubmitInfoKHR {
+    fn default() -> SemaphoreSubmitInfoKHR {
+        SemaphoreSubmitInfoKHR {
+            s_type: StructureType::SEMAPHORE_SUBMIT_INFO_KHR,
+            p_next: ::std::ptr::null(),
+            semaphore: Semaphore::default(),
+            value: u64::default(),
+            stage_mask: PipelineStageFlags2KHR::default(),
+            device_index: u32::default(),
+        }
+    }
+}
+impl SemaphoreSubmitInfoKHR {
+    pub fn builder<'a>() -> SemaphoreSubmitInfoKHRBuilder<'a> {
+        SemaphoreSubmitInfoKHRBuilder {
+            inner: SemaphoreSubmitInfoKHR::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct SemaphoreSubmitInfoKHRBuilder<'a> {
+    inner: SemaphoreSubmitInfoKHR,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+pub unsafe trait ExtendsSemaphoreSubmitInfoKHR {}
+impl<'a> ::std::ops::Deref for SemaphoreSubmitInfoKHRBuilder<'a> {
+    type Target = SemaphoreSubmitInfoKHR;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for SemaphoreSubmitInfoKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> SemaphoreSubmitInfoKHRBuilder<'a> {
+    pub fn semaphore(mut self, semaphore: Semaphore) -> Self {
+        self.inner.semaphore = semaphore;
+        self
+    }
+    pub fn value(mut self, value: u64) -> Self {
+        self.inner.value = value;
+        self
+    }
+    pub fn stage_mask(mut self, stage_mask: PipelineStageFlags2KHR) -> Self {
+        self.inner.stage_mask = stage_mask;
+        self
+    }
+    pub fn device_index(mut self, device_index: u32) -> Self {
+        self.inner.device_index = device_index;
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsSemaphoreSubmitInfoKHR>(mut self, next: &'a mut T) -> Self {
+        unsafe {
+            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> SemaphoreSubmitInfoKHR {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkCommandBufferSubmitInfoKHR.html>"]
+pub struct CommandBufferSubmitInfoKHR {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub command_buffer: CommandBuffer,
+    pub device_mask: u32,
+}
+impl ::std::default::Default for CommandBufferSubmitInfoKHR {
+    fn default() -> CommandBufferSubmitInfoKHR {
+        CommandBufferSubmitInfoKHR {
+            s_type: StructureType::COMMAND_BUFFER_SUBMIT_INFO_KHR,
+            p_next: ::std::ptr::null(),
+            command_buffer: CommandBuffer::default(),
+            device_mask: u32::default(),
+        }
+    }
+}
+impl CommandBufferSubmitInfoKHR {
+    pub fn builder<'a>() -> CommandBufferSubmitInfoKHRBuilder<'a> {
+        CommandBufferSubmitInfoKHRBuilder {
+            inner: CommandBufferSubmitInfoKHR::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct CommandBufferSubmitInfoKHRBuilder<'a> {
+    inner: CommandBufferSubmitInfoKHR,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+pub unsafe trait ExtendsCommandBufferSubmitInfoKHR {}
+impl<'a> ::std::ops::Deref for CommandBufferSubmitInfoKHRBuilder<'a> {
+    type Target = CommandBufferSubmitInfoKHR;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for CommandBufferSubmitInfoKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> CommandBufferSubmitInfoKHRBuilder<'a> {
+    pub fn command_buffer(mut self, command_buffer: CommandBuffer) -> Self {
+        self.inner.command_buffer = command_buffer;
+        self
+    }
+    pub fn device_mask(mut self, device_mask: u32) -> Self {
+        self.inner.device_mask = device_mask;
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsCommandBufferSubmitInfoKHR>(mut self, next: &'a mut T) -> Self {
+        unsafe {
+            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> CommandBufferSubmitInfoKHR {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkSubmitInfo2KHR.html>"]
+pub struct SubmitInfo2KHR {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub flags: SubmitFlagsKHR,
+    pub wait_semaphore_info_count: u32,
+    pub p_wait_semaphore_infos: *const SemaphoreSubmitInfoKHR,
+    pub command_buffer_info_count: u32,
+    pub p_command_buffer_infos: *const CommandBufferSubmitInfoKHR,
+    pub signal_semaphore_info_count: u32,
+    pub p_signal_semaphore_infos: *const SemaphoreSubmitInfoKHR,
+}
+impl ::std::default::Default for SubmitInfo2KHR {
+    fn default() -> SubmitInfo2KHR {
+        SubmitInfo2KHR {
+            s_type: StructureType::SUBMIT_INFO_2_KHR,
+            p_next: ::std::ptr::null(),
+            flags: SubmitFlagsKHR::default(),
+            wait_semaphore_info_count: u32::default(),
+            p_wait_semaphore_infos: ::std::ptr::null(),
+            command_buffer_info_count: u32::default(),
+            p_command_buffer_infos: ::std::ptr::null(),
+            signal_semaphore_info_count: u32::default(),
+            p_signal_semaphore_infos: ::std::ptr::null(),
+        }
+    }
+}
+impl SubmitInfo2KHR {
+    pub fn builder<'a>() -> SubmitInfo2KHRBuilder<'a> {
+        SubmitInfo2KHRBuilder {
+            inner: SubmitInfo2KHR::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct SubmitInfo2KHRBuilder<'a> {
+    inner: SubmitInfo2KHR,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+pub unsafe trait ExtendsSubmitInfo2KHR {}
+impl<'a> ::std::ops::Deref for SubmitInfo2KHRBuilder<'a> {
+    type Target = SubmitInfo2KHR;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for SubmitInfo2KHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> SubmitInfo2KHRBuilder<'a> {
+    pub fn flags(mut self, flags: SubmitFlagsKHR) -> Self {
+        self.inner.flags = flags;
+        self
+    }
+    pub fn wait_semaphore_infos(
+        mut self,
+        wait_semaphore_infos: &'a [SemaphoreSubmitInfoKHR],
+    ) -> Self {
+        self.inner.wait_semaphore_info_count = wait_semaphore_infos.len() as _;
+        self.inner.p_wait_semaphore_infos = wait_semaphore_infos.as_ptr();
+        self
+    }
+    pub fn command_buffer_infos(
+        mut self,
+        command_buffer_infos: &'a [CommandBufferSubmitInfoKHR],
+    ) -> Self {
+        self.inner.command_buffer_info_count = command_buffer_infos.len() as _;
+        self.inner.p_command_buffer_infos = command_buffer_infos.as_ptr();
+        self
+    }
+    pub fn signal_semaphore_infos(
+        mut self,
+        signal_semaphore_infos: &'a [SemaphoreSubmitInfoKHR],
+    ) -> Self {
+        self.inner.signal_semaphore_info_count = signal_semaphore_infos.len() as _;
+        self.inner.p_signal_semaphore_infos = signal_semaphore_infos.as_ptr();
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsSubmitInfo2KHR>(mut self, next: &'a mut T) -> Self {
+        unsafe {
+            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> SubmitInfo2KHR {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkQueueFamilyCheckpointProperties2NV.html>"]
+pub struct QueueFamilyCheckpointProperties2NV {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub checkpoint_execution_stage_mask: PipelineStageFlags2KHR,
+}
+impl ::std::default::Default for QueueFamilyCheckpointProperties2NV {
+    fn default() -> QueueFamilyCheckpointProperties2NV {
+        QueueFamilyCheckpointProperties2NV {
+            s_type: StructureType::QUEUE_FAMILY_CHECKPOINT_PROPERTIES_2_NV,
+            p_next: ::std::ptr::null_mut(),
+            checkpoint_execution_stage_mask: PipelineStageFlags2KHR::default(),
+        }
+    }
+}
+impl QueueFamilyCheckpointProperties2NV {
+    pub fn builder<'a>() -> QueueFamilyCheckpointProperties2NVBuilder<'a> {
+        QueueFamilyCheckpointProperties2NVBuilder {
+            inner: QueueFamilyCheckpointProperties2NV::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct QueueFamilyCheckpointProperties2NVBuilder<'a> {
+    inner: QueueFamilyCheckpointProperties2NV,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsQueueFamilyProperties2 for QueueFamilyCheckpointProperties2NVBuilder<'_> {}
+unsafe impl ExtendsQueueFamilyProperties2 for QueueFamilyCheckpointProperties2NV {}
+impl<'a> ::std::ops::Deref for QueueFamilyCheckpointProperties2NVBuilder<'a> {
+    type Target = QueueFamilyCheckpointProperties2NV;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for QueueFamilyCheckpointProperties2NVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> QueueFamilyCheckpointProperties2NVBuilder<'a> {
+    pub fn checkpoint_execution_stage_mask(
+        mut self,
+        checkpoint_execution_stage_mask: PipelineStageFlags2KHR,
+    ) -> Self {
+        self.inner.checkpoint_execution_stage_mask = checkpoint_execution_stage_mask;
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> QueueFamilyCheckpointProperties2NV {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkCheckpointData2NV.html>"]
+pub struct CheckpointData2NV {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub stage: PipelineStageFlags2KHR,
+    pub p_checkpoint_marker: *mut c_void,
+}
+impl ::std::default::Default for CheckpointData2NV {
+    fn default() -> CheckpointData2NV {
+        CheckpointData2NV {
+            s_type: StructureType::CHECKPOINT_DATA_2_NV,
+            p_next: ::std::ptr::null_mut(),
+            stage: PipelineStageFlags2KHR::default(),
+            p_checkpoint_marker: ::std::ptr::null_mut(),
+        }
+    }
+}
+impl CheckpointData2NV {
+    pub fn builder<'a>() -> CheckpointData2NVBuilder<'a> {
+        CheckpointData2NVBuilder {
+            inner: CheckpointData2NV::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct CheckpointData2NVBuilder<'a> {
+    inner: CheckpointData2NV,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+pub unsafe trait ExtendsCheckpointData2NV {}
+impl<'a> ::std::ops::Deref for CheckpointData2NVBuilder<'a> {
+    type Target = CheckpointData2NV;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for CheckpointData2NVBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> CheckpointData2NVBuilder<'a> {
+    pub fn stage(mut self, stage: PipelineStageFlags2KHR) -> Self {
+        self.inner.stage = stage;
+        self
+    }
+    pub fn checkpoint_marker(mut self, checkpoint_marker: *mut c_void) -> Self {
+        self.inner.p_checkpoint_marker = checkpoint_marker;
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsCheckpointData2NV>(mut self, next: &'a mut T) -> Self {
+        unsafe {
+            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> CheckpointData2NV {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPhysicalDeviceSynchronization2FeaturesKHR.html>"]
+pub struct PhysicalDeviceSynchronization2FeaturesKHR {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub synchronization2: Bool32,
+}
+impl ::std::default::Default for PhysicalDeviceSynchronization2FeaturesKHR {
+    fn default() -> PhysicalDeviceSynchronization2FeaturesKHR {
+        PhysicalDeviceSynchronization2FeaturesKHR {
+            s_type: StructureType::PHYSICAL_DEVICE_SYNCHRONIZATION_2_FEATURES_KHR,
+            p_next: ::std::ptr::null_mut(),
+            synchronization2: Bool32::default(),
+        }
+    }
+}
+impl PhysicalDeviceSynchronization2FeaturesKHR {
+    pub fn builder<'a>() -> PhysicalDeviceSynchronization2FeaturesKHRBuilder<'a> {
+        PhysicalDeviceSynchronization2FeaturesKHRBuilder {
+            inner: PhysicalDeviceSynchronization2FeaturesKHR::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct PhysicalDeviceSynchronization2FeaturesKHRBuilder<'a> {
+    inner: PhysicalDeviceSynchronization2FeaturesKHR,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceSynchronization2FeaturesKHRBuilder<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceSynchronization2FeaturesKHR {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceSynchronization2FeaturesKHRBuilder<'a> {
+    type Target = PhysicalDeviceSynchronization2FeaturesKHR;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceSynchronization2FeaturesKHRBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> PhysicalDeviceSynchronization2FeaturesKHRBuilder<'a> {
+    pub fn synchronization2(mut self, synchronization2: bool) -> Self {
+        self.inner.synchronization2 = synchronization2.into();
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> PhysicalDeviceSynchronization2FeaturesKHR {
         self.inner
     }
 }
