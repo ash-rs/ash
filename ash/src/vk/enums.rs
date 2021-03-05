@@ -1681,7 +1681,7 @@ impl DriverId {
     #[doc = "Mesa"]
     pub const MESA_LLVMPIPE: Self = Self(13);
     #[doc = "MoltenVK"]
-    pub const MOLTEN: Self = Self(14);
+    pub const MOLTENVK: Self = Self(14);
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]

@@ -1171,7 +1171,7 @@ impl fmt::Debug for DriverId {
             Self::GGP_PROPRIETARY => Some("GGP_PROPRIETARY"),
             Self::BROADCOM_PROPRIETARY => Some("BROADCOM_PROPRIETARY"),
             Self::MESA_LLVMPIPE => Some("MESA_LLVMPIPE"),
-            Self::MOLTEN => Some("MOLTEN"),
+            Self::MOLTENVK => Some("MOLTENVK"),
             _ => None,
         };
         if let Some(x) = name {
@@ -3780,8 +3780,8 @@ impl fmt::Debug for StructureType {
             Self::DISPLAY_MODE_PROPERTIES_2_KHR => Some("DISPLAY_MODE_PROPERTIES_2_KHR"),
             Self::DISPLAY_PLANE_INFO_2_KHR => Some("DISPLAY_PLANE_INFO_2_KHR"),
             Self::DISPLAY_PLANE_CAPABILITIES_2_KHR => Some("DISPLAY_PLANE_CAPABILITIES_2_KHR"),
-            Self::IOS_SURFACE_CREATE_INFO_M => Some("IOS_SURFACE_CREATE_INFO_M"),
-            Self::MACOS_SURFACE_CREATE_INFO_M => Some("MACOS_SURFACE_CREATE_INFO_M"),
+            Self::IOS_SURFACE_CREATE_INFO_MVK => Some("IOS_SURFACE_CREATE_INFO_MVK"),
+            Self::MACOS_SURFACE_CREATE_INFO_MVK => Some("MACOS_SURFACE_CREATE_INFO_MVK"),
             Self::DEBUG_UTILS_OBJECT_NAME_INFO_EXT => Some("DEBUG_UTILS_OBJECT_NAME_INFO_EXT"),
             Self::DEBUG_UTILS_OBJECT_TAG_INFO_EXT => Some("DEBUG_UTILS_OBJECT_TAG_INFO_EXT"),
             Self::DEBUG_UTILS_LABEL_EXT => Some("DEBUG_UTILS_LABEL_EXT"),
