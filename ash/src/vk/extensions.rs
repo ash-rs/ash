@@ -5927,53 +5927,43 @@ impl StructureType {
 }
 #[doc = "Generated from 'VK_KHR_external_memory_capabilities'"]
 impl ExternalMemoryHandleTypeFlags {
-    pub const EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD_KHR: Self =
-        ExternalMemoryHandleTypeFlags::EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD;
+    pub const OPAQUE_FD_KHR: Self = ExternalMemoryHandleTypeFlags::OPAQUE_FD;
 }
 #[doc = "Generated from 'VK_KHR_external_memory_capabilities'"]
 impl ExternalMemoryHandleTypeFlags {
-    pub const EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KHR: Self =
-        ExternalMemoryHandleTypeFlags::EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32;
+    pub const OPAQUE_WIN32_KHR: Self = ExternalMemoryHandleTypeFlags::OPAQUE_WIN32;
 }
 #[doc = "Generated from 'VK_KHR_external_memory_capabilities'"]
 impl ExternalMemoryHandleTypeFlags {
-    pub const EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_KHR: Self =
-        ExternalMemoryHandleTypeFlags::EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT;
+    pub const OPAQUE_WIN32_KMT_KHR: Self = ExternalMemoryHandleTypeFlags::OPAQUE_WIN32_KMT;
 }
 #[doc = "Generated from 'VK_KHR_external_memory_capabilities'"]
 impl ExternalMemoryHandleTypeFlags {
-    pub const EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KHR: Self =
-        ExternalMemoryHandleTypeFlags::EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE;
+    pub const D3D11_TEXTURE_KHR: Self = ExternalMemoryHandleTypeFlags::D3D11_TEXTURE;
 }
 #[doc = "Generated from 'VK_KHR_external_memory_capabilities'"]
 impl ExternalMemoryHandleTypeFlags {
-    pub const EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT_KHR: Self =
-        ExternalMemoryHandleTypeFlags::EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT;
+    pub const D3D11_TEXTURE_KMT_KHR: Self = ExternalMemoryHandleTypeFlags::D3D11_TEXTURE_KMT;
 }
 #[doc = "Generated from 'VK_KHR_external_memory_capabilities'"]
 impl ExternalMemoryHandleTypeFlags {
-    pub const EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP_KHR: Self =
-        ExternalMemoryHandleTypeFlags::EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP;
+    pub const D3D12_HEAP_KHR: Self = ExternalMemoryHandleTypeFlags::D3D12_HEAP;
 }
 #[doc = "Generated from 'VK_KHR_external_memory_capabilities'"]
 impl ExternalMemoryHandleTypeFlags {
-    pub const EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE_KHR: Self =
-        ExternalMemoryHandleTypeFlags::EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE;
+    pub const D3D12_RESOURCE_KHR: Self = ExternalMemoryHandleTypeFlags::D3D12_RESOURCE;
 }
 #[doc = "Generated from 'VK_KHR_external_memory_capabilities'"]
 impl ExternalMemoryFeatureFlags {
-    pub const EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_KHR: Self =
-        ExternalMemoryFeatureFlags::EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY;
+    pub const DEDICATED_ONLY_KHR: Self = ExternalMemoryFeatureFlags::DEDICATED_ONLY;
 }
 #[doc = "Generated from 'VK_KHR_external_memory_capabilities'"]
 impl ExternalMemoryFeatureFlags {
-    pub const EXTERNAL_MEMORY_FEATURE_EXPORTABLE_KHR: Self =
-        ExternalMemoryFeatureFlags::EXTERNAL_MEMORY_FEATURE_EXPORTABLE;
+    pub const EXPORTABLE_KHR: Self = ExternalMemoryFeatureFlags::EXPORTABLE;
 }
 #[doc = "Generated from 'VK_KHR_external_memory_capabilities'"]
 impl ExternalMemoryFeatureFlags {
-    pub const EXTERNAL_MEMORY_FEATURE_IMPORTABLE_KHR: Self =
-        ExternalMemoryFeatureFlags::EXTERNAL_MEMORY_FEATURE_IMPORTABLE;
+    pub const IMPORTABLE_KHR: Self = ExternalMemoryFeatureFlags::IMPORTABLE;
 }
 impl KhrExternalMemoryFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -6383,38 +6373,31 @@ impl StructureType {
 }
 #[doc = "Generated from 'VK_KHR_external_semaphore_capabilities'"]
 impl ExternalSemaphoreHandleTypeFlags {
-    pub const EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD_KHR: Self =
-        ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD;
+    pub const OPAQUE_FD_KHR: Self = ExternalSemaphoreHandleTypeFlags::OPAQUE_FD;
 }
 #[doc = "Generated from 'VK_KHR_external_semaphore_capabilities'"]
 impl ExternalSemaphoreHandleTypeFlags {
-    pub const EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KHR: Self =
-        ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32;
+    pub const OPAQUE_WIN32_KHR: Self = ExternalSemaphoreHandleTypeFlags::OPAQUE_WIN32;
 }
 #[doc = "Generated from 'VK_KHR_external_semaphore_capabilities'"]
 impl ExternalSemaphoreHandleTypeFlags {
-    pub const EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT_KHR: Self =
-        ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT;
+    pub const OPAQUE_WIN32_KMT_KHR: Self = ExternalSemaphoreHandleTypeFlags::OPAQUE_WIN32_KMT;
 }
 #[doc = "Generated from 'VK_KHR_external_semaphore_capabilities'"]
 impl ExternalSemaphoreHandleTypeFlags {
-    pub const EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE_KHR: Self =
-        ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE;
+    pub const D3D12_FENCE_KHR: Self = ExternalSemaphoreHandleTypeFlags::D3D12_FENCE;
 }
 #[doc = "Generated from 'VK_KHR_external_semaphore_capabilities'"]
 impl ExternalSemaphoreHandleTypeFlags {
-    pub const EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD_KHR: Self =
-        ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD;
+    pub const SYNC_FD_KHR: Self = ExternalSemaphoreHandleTypeFlags::SYNC_FD;
 }
 #[doc = "Generated from 'VK_KHR_external_semaphore_capabilities'"]
 impl ExternalSemaphoreFeatureFlags {
-    pub const EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE_KHR: Self =
-        ExternalSemaphoreFeatureFlags::EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE;
+    pub const EXPORTABLE_KHR: Self = ExternalSemaphoreFeatureFlags::EXPORTABLE;
 }
 #[doc = "Generated from 'VK_KHR_external_semaphore_capabilities'"]
 impl ExternalSemaphoreFeatureFlags {
-    pub const EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE_KHR: Self =
-        ExternalSemaphoreFeatureFlags::EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE;
+    pub const IMPORTABLE_KHR: Self = ExternalSemaphoreFeatureFlags::IMPORTABLE;
 }
 impl KhrExternalSemaphoreFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -8961,33 +8944,27 @@ impl StructureType {
 }
 #[doc = "Generated from 'VK_KHR_external_fence_capabilities'"]
 impl ExternalFenceHandleTypeFlags {
-    pub const EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD_KHR: Self =
-        ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD;
+    pub const OPAQUE_FD_KHR: Self = ExternalFenceHandleTypeFlags::OPAQUE_FD;
 }
 #[doc = "Generated from 'VK_KHR_external_fence_capabilities'"]
 impl ExternalFenceHandleTypeFlags {
-    pub const EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KHR: Self =
-        ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32;
+    pub const OPAQUE_WIN32_KHR: Self = ExternalFenceHandleTypeFlags::OPAQUE_WIN32;
 }
 #[doc = "Generated from 'VK_KHR_external_fence_capabilities'"]
 impl ExternalFenceHandleTypeFlags {
-    pub const EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT_KHR: Self =
-        ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT;
+    pub const OPAQUE_WIN32_KMT_KHR: Self = ExternalFenceHandleTypeFlags::OPAQUE_WIN32_KMT;
 }
 #[doc = "Generated from 'VK_KHR_external_fence_capabilities'"]
 impl ExternalFenceHandleTypeFlags {
-    pub const EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD_KHR: Self =
-        ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD;
+    pub const SYNC_FD_KHR: Self = ExternalFenceHandleTypeFlags::SYNC_FD;
 }
 #[doc = "Generated from 'VK_KHR_external_fence_capabilities'"]
 impl ExternalFenceFeatureFlags {
-    pub const EXTERNAL_FENCE_FEATURE_EXPORTABLE_KHR: Self =
-        ExternalFenceFeatureFlags::EXTERNAL_FENCE_FEATURE_EXPORTABLE;
+    pub const EXPORTABLE_KHR: Self = ExternalFenceFeatureFlags::EXPORTABLE;
 }
 #[doc = "Generated from 'VK_KHR_external_fence_capabilities'"]
 impl ExternalFenceFeatureFlags {
-    pub const EXTERNAL_FENCE_FEATURE_IMPORTABLE_KHR: Self =
-        ExternalFenceFeatureFlags::EXTERNAL_FENCE_FEATURE_IMPORTABLE;
+    pub const IMPORTABLE_KHR: Self = ExternalFenceFeatureFlags::IMPORTABLE;
 }
 impl KhrExternalFenceFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -10167,7 +10144,7 @@ impl ExtExternalMemoryDmaBufFn {
 }
 #[doc = "Generated from 'VK_EXT_external_memory_dma_buf'"]
 impl ExternalMemoryHandleTypeFlags {
-    pub const EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF: Self = Self(0b10_0000_0000);
+    pub const DMA_BUF_EXT: Self = Self(0b10_0000_0000);
 }
 impl ExtQueueFamilyForeignFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -10786,8 +10763,7 @@ impl AndroidExternalMemoryAndroidHardwareBufferFn {
 }
 #[doc = "Generated from 'VK_ANDROID_external_memory_android_hardware_buffer'"]
 impl ExternalMemoryHandleTypeFlags {
-    pub const EXTERNAL_MEMORY_HANDLE_TYPE_ANDROID_HARDWARE_BUFFER_ANDROID: Self =
-        Self(0b100_0000_0000);
+    pub const ANDROID_HARDWARE_BUFFER_ANDROID: Self = Self(0b100_0000_0000);
 }
 #[doc = "Generated from 'VK_ANDROID_external_memory_android_hardware_buffer'"]
 impl StructureType {
@@ -16075,11 +16051,11 @@ impl StructureType {
 }
 #[doc = "Generated from 'VK_EXT_external_memory_host'"]
 impl ExternalMemoryHandleTypeFlags {
-    pub const EXTERNAL_MEMORY_HANDLE_TYPE_HOST_ALLOCATION: Self = Self(0b1000_0000);
+    pub const HOST_ALLOCATION_EXT: Self = Self(0b1000_0000);
 }
 #[doc = "Generated from 'VK_EXT_external_memory_host'"]
 impl ExternalMemoryHandleTypeFlags {
-    pub const EXTERNAL_MEMORY_HANDLE_TYPE_HOST_MAPPED_FOREIGN_MEMORY: Self = Self(0b1_0000_0000);
+    pub const HOST_MAPPED_FOREIGN_MEMORY_EXT: Self = Self(0b1_0000_0000);
 }
 impl AmdBufferMarkerFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -25225,11 +25201,11 @@ impl NvExtension374Fn {
 }
 #[doc = "Generated from 'VK_NV_extension_374'"]
 impl ExternalFenceHandleTypeFlags {
-    pub const EXTERNAL_FENCE_HANDLE_TYPE_RESERVED_4_NV: Self = Self(0b1_0000);
+    pub const RESERVED_4_NV: Self = Self(0b1_0000);
 }
 #[doc = "Generated from 'VK_NV_extension_374'"]
 impl ExternalFenceHandleTypeFlags {
-    pub const EXTERNAL_FENCE_HANDLE_TYPE_RESERVED_5_NV: Self = Self(0b10_0000);
+    pub const RESERVED_5_NV: Self = Self(0b10_0000);
 }
 impl NvExtension375Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -25256,11 +25232,11 @@ impl NvExtension375Fn {
 }
 #[doc = "Generated from 'VK_NV_extension_375'"]
 impl ExternalSemaphoreHandleTypeFlags {
-    pub const EXTERNAL_SEMAPHORE_HANDLE_TYPE_RESERVED_5_NV: Self = Self(0b10_0000);
+    pub const RESERVED_5_NV: Self = Self(0b10_0000);
 }
 #[doc = "Generated from 'VK_NV_extension_375'"]
 impl ExternalSemaphoreHandleTypeFlags {
-    pub const EXTERNAL_SEMAPHORE_HANDLE_TYPE_RESERVED_6_NV: Self = Self(0b100_0000);
+    pub const RESERVED_6_NV: Self = Self(0b100_0000);
 }
 impl ExtExtension376Fn {
     pub fn name() -> &'static ::std::ffi::CStr {

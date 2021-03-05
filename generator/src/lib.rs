@@ -1295,13 +1295,13 @@ pub fn variant_ident(enum_name: &str, variant_name: &str) -> Ident {
     // TODO: Also needs to be more robust, vendor names can be substrings from itself, id:4
     // like NVX and NV
     let vendors = ["_NVX", "_KHR", "_EXT", "_NV", "_AMD", "_ANDROID", "_GOOGLE"];
-    let mut struct_name = _name.to_shouty_snake_case();
+    let struct_name = _name.to_shouty_snake_case();
     let vendor = vendors
         .iter()
-        .find(|&vendor| struct_name.contains(vendor))
+        .find(|&vendor| struct_name.ends_with(vendor))
         .cloned()
         .unwrap_or("");
-    struct_name = struct_name.replace(vendor, "");
+    let struct_name = struct_name.strip_suffix(vendor).unwrap();
     let new_variant_name = variant_name.replace(&struct_name, "").replace("VK", "");
     let new_variant_name = new_variant_name
         .trim_matches('_')
