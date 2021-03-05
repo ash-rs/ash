@@ -1234,14 +1234,8 @@ impl fmt::Debug for EventCreateFlags {
 impl fmt::Debug for ExternalFenceFeatureFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
-            (
-                ExternalFenceFeatureFlags::EXTERNAL_FENCE_FEATURE_EXPORTABLE.0,
-                "EXTERNAL_FENCE_FEATURE_EXPORTABLE",
-            ),
-            (
-                ExternalFenceFeatureFlags::EXTERNAL_FENCE_FEATURE_IMPORTABLE.0,
-                "EXTERNAL_FENCE_FEATURE_IMPORTABLE",
-            ),
+            (ExternalFenceFeatureFlags::EXPORTABLE.0, "EXPORTABLE"),
+            (ExternalFenceFeatureFlags::IMPORTABLE.0, "IMPORTABLE"),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -1249,29 +1243,20 @@ impl fmt::Debug for ExternalFenceFeatureFlags {
 impl fmt::Debug for ExternalFenceHandleTypeFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
+            (ExternalFenceHandleTypeFlags::OPAQUE_FD.0, "OPAQUE_FD"),
+            (ExternalFenceHandleTypeFlags::OPAQUE_WIN32.0, "OPAQUE_WIN32"),
             (
-                ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD.0,
-                "EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD",
+                ExternalFenceHandleTypeFlags::OPAQUE_WIN32_KMT.0,
+                "OPAQUE_WIN32_KMT",
+            ),
+            (ExternalFenceHandleTypeFlags::SYNC_FD.0, "SYNC_FD"),
+            (
+                ExternalFenceHandleTypeFlags::RESERVED_4_NV.0,
+                "RESERVED_4_NV",
             ),
             (
-                ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32.0,
-                "EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32",
-            ),
-            (
-                ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT.0,
-                "EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT",
-            ),
-            (
-                ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD.0,
-                "EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD",
-            ),
-            (
-                ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_RESERVED_4_NV.0,
-                "EXTERNAL_FENCE_HANDLE_TYPE_RESERVED_4_NV",
-            ),
-            (
-                ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_RESERVED_5_NV.0,
-                "EXTERNAL_FENCE_HANDLE_TYPE_RESERVED_5_NV",
+                ExternalFenceHandleTypeFlags::RESERVED_5_NV.0,
+                "RESERVED_5_NV",
             ),
         ];
         debug_flags(f, KNOWN, self.0)
@@ -1281,17 +1266,11 @@ impl fmt::Debug for ExternalMemoryFeatureFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (
-                ExternalMemoryFeatureFlags::EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY.0,
-                "EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY",
+                ExternalMemoryFeatureFlags::DEDICATED_ONLY.0,
+                "DEDICATED_ONLY",
             ),
-            (
-                ExternalMemoryFeatureFlags::EXTERNAL_MEMORY_FEATURE_EXPORTABLE.0,
-                "EXTERNAL_MEMORY_FEATURE_EXPORTABLE",
-            ),
-            (
-                ExternalMemoryFeatureFlags::EXTERNAL_MEMORY_FEATURE_IMPORTABLE.0,
-                "EXTERNAL_MEMORY_FEATURE_IMPORTABLE",
-            ),
+            (ExternalMemoryFeatureFlags::EXPORTABLE.0, "EXPORTABLE"),
+            (ExternalMemoryFeatureFlags::IMPORTABLE.0, "IMPORTABLE"),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -1300,24 +1279,54 @@ impl fmt::Debug for ExternalMemoryFeatureFlagsNV {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (
-                ExternalMemoryFeatureFlagsNV::EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_NV.0,
-                "EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_NV",
+                ExternalMemoryFeatureFlagsNV::DEDICATED_ONLY.0,
+                "DEDICATED_ONLY",
             ),
-            (
-                ExternalMemoryFeatureFlagsNV::EXTERNAL_MEMORY_FEATURE_EXPORTABLE_NV.0,
-                "EXTERNAL_MEMORY_FEATURE_EXPORTABLE_NV",
-            ),
-            (
-                ExternalMemoryFeatureFlagsNV::EXTERNAL_MEMORY_FEATURE_IMPORTABLE_NV.0,
-                "EXTERNAL_MEMORY_FEATURE_IMPORTABLE_NV",
-            ),
+            (ExternalMemoryFeatureFlagsNV::EXPORTABLE.0, "EXPORTABLE"),
+            (ExternalMemoryFeatureFlagsNV::IMPORTABLE.0, "IMPORTABLE"),
         ];
         debug_flags(f, KNOWN, self.0)
     }
 }
 impl fmt::Debug for ExternalMemoryHandleTypeFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN : & [(Flags , & str)] = & [(ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD") , (ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32 . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32") , (ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT") , (ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE") , (ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT") , (ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP") , (ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE") , (ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF") , (ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_ANDROID_HARDWARE_BUFFER_ANDROID . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_ANDROID_HARDWARE_BUFFER_ANDROID") , (ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_HOST_ALLOCATION . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_HOST_ALLOCATION") , (ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_HOST_MAPPED_FOREIGN_MEMORY . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_HOST_MAPPED_FOREIGN_MEMORY")] ;
+        const KNOWN: &[(Flags, &str)] = &[
+            (ExternalMemoryHandleTypeFlags::OPAQUE_FD.0, "OPAQUE_FD"),
+            (
+                ExternalMemoryHandleTypeFlags::OPAQUE_WIN32.0,
+                "OPAQUE_WIN32",
+            ),
+            (
+                ExternalMemoryHandleTypeFlags::OPAQUE_WIN32_KMT.0,
+                "OPAQUE_WIN32_KMT",
+            ),
+            (
+                ExternalMemoryHandleTypeFlags::D3D11_TEXTURE.0,
+                "D3D11_TEXTURE",
+            ),
+            (
+                ExternalMemoryHandleTypeFlags::D3D11_TEXTURE_KMT.0,
+                "D3D11_TEXTURE_KMT",
+            ),
+            (ExternalMemoryHandleTypeFlags::D3D12_HEAP.0, "D3D12_HEAP"),
+            (
+                ExternalMemoryHandleTypeFlags::D3D12_RESOURCE.0,
+                "D3D12_RESOURCE",
+            ),
+            (ExternalMemoryHandleTypeFlags::DMA_BUF_EXT.0, "DMA_BUF_EXT"),
+            (
+                ExternalMemoryHandleTypeFlags::ANDROID_HARDWARE_BUFFER_ANDROID.0,
+                "ANDROID_HARDWARE_BUFFER_ANDROID",
+            ),
+            (
+                ExternalMemoryHandleTypeFlags::HOST_ALLOCATION_EXT.0,
+                "HOST_ALLOCATION_EXT",
+            ),
+            (
+                ExternalMemoryHandleTypeFlags::HOST_MAPPED_FOREIGN_MEMORY_EXT.0,
+                "HOST_MAPPED_FOREIGN_MEMORY_EXT",
+            ),
+        ];
         debug_flags(f, KNOWN, self.0)
     }
 }
@@ -1325,20 +1334,20 @@ impl fmt::Debug for ExternalMemoryHandleTypeFlagsNV {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (
-                ExternalMemoryHandleTypeFlagsNV::EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_NV.0,
-                "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_NV",
+                ExternalMemoryHandleTypeFlagsNV::OPAQUE_WIN32.0,
+                "OPAQUE_WIN32",
             ),
             (
-                ExternalMemoryHandleTypeFlagsNV::EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_NV.0,
-                "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_NV",
+                ExternalMemoryHandleTypeFlagsNV::OPAQUE_WIN32_KMT.0,
+                "OPAQUE_WIN32_KMT",
             ),
             (
-                ExternalMemoryHandleTypeFlagsNV::EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_NV.0,
-                "EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_NV",
+                ExternalMemoryHandleTypeFlagsNV::D3D11_IMAGE.0,
+                "D3D11_IMAGE",
             ),
             (
-                ExternalMemoryHandleTypeFlagsNV::EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_NV.0,
-                "EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_NV",
+                ExternalMemoryHandleTypeFlagsNV::D3D11_IMAGE_KMT.0,
+                "D3D11_IMAGE_KMT",
             ),
         ];
         debug_flags(f, KNOWN, self.0)
@@ -1347,14 +1356,8 @@ impl fmt::Debug for ExternalMemoryHandleTypeFlagsNV {
 impl fmt::Debug for ExternalSemaphoreFeatureFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
-            (
-                ExternalSemaphoreFeatureFlags::EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE.0,
-                "EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE",
-            ),
-            (
-                ExternalSemaphoreFeatureFlags::EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE.0,
-                "EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE",
-            ),
+            (ExternalSemaphoreFeatureFlags::EXPORTABLE.0, "EXPORTABLE"),
+            (ExternalSemaphoreFeatureFlags::IMPORTABLE.0, "IMPORTABLE"),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -1362,33 +1365,27 @@ impl fmt::Debug for ExternalSemaphoreFeatureFlags {
 impl fmt::Debug for ExternalSemaphoreHandleTypeFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
+            (ExternalSemaphoreHandleTypeFlags::OPAQUE_FD.0, "OPAQUE_FD"),
             (
-                ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD.0,
-                "EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD",
+                ExternalSemaphoreHandleTypeFlags::OPAQUE_WIN32.0,
+                "OPAQUE_WIN32",
             ),
             (
-                ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32.0,
-                "EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32",
+                ExternalSemaphoreHandleTypeFlags::OPAQUE_WIN32_KMT.0,
+                "OPAQUE_WIN32_KMT",
             ),
             (
-                ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT.0,
-                "EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT",
+                ExternalSemaphoreHandleTypeFlags::D3D12_FENCE.0,
+                "D3D12_FENCE",
+            ),
+            (ExternalSemaphoreHandleTypeFlags::SYNC_FD.0, "SYNC_FD"),
+            (
+                ExternalSemaphoreHandleTypeFlags::RESERVED_5_NV.0,
+                "RESERVED_5_NV",
             ),
             (
-                ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE.0,
-                "EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE",
-            ),
-            (
-                ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD.0,
-                "EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD",
-            ),
-            (
-                ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_RESERVED_5_NV.0,
-                "EXTERNAL_SEMAPHORE_HANDLE_TYPE_RESERVED_5_NV",
-            ),
-            (
-                ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_RESERVED_6_NV.0,
-                "EXTERNAL_SEMAPHORE_HANDLE_TYPE_RESERVED_6_NV",
+                ExternalSemaphoreHandleTypeFlags::RESERVED_6_NV.0,
+                "RESERVED_6_NV",
             ),
         ];
         debug_flags(f, KNOWN, self.0)
