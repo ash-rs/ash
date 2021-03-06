@@ -6,7 +6,7 @@ use std::fmt::Write;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let name = "Foo";
-    let fields = vec!{"x: 32,", "y: 32", "z: 32"};
+    let fields = vec!["x: 32,", "y: 32", "z: 32"];
     generator2::source!(
         "
         pub struct #ident# {

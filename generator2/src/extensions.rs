@@ -64,10 +64,17 @@ pub fn generate_extension(
             writeln!(w, "{}", code)?;
         } else {
             crate::structs::write_type(ctx, ty, &mut w)?;
-            crate::structs::derive_debug2(ctx, ty, &mut w)?;
-            crate::structs::derive_default2(ctx, ty, &mut w)?;
+            crate::structs::derive_debug(ctx, ty, &mut w)?;
+            crate::structs::derive_default(ctx, ty, &mut w)?;
         }
     }
+
+    extensions_command_iter(extension).filter_map(|(name, comment)| {
+        let cmd = ctx.commands_by_name.get(name)?;
+        Some((cmd, comment))
+    }).for_each(|(cmd, comment)|{
+        println!("{:#?}", cmd);
+    });
 
     Ok(())
 }
@@ -120,7 +127,7 @@ fn extensions_enum_iter<'spec>(
         .flatten()
 }
 
-// Helper function to access all the enums in the extension
+// Helper function to access all the commands in the extension
 fn extensions_command_iter<'spec>(
     extension: &'spec vk::Extension,
 ) -> impl Iterator<Item = (&'spec str, Option<&'spec str>)> + 'spec {

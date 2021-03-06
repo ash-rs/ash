@@ -1,6 +1,6 @@
 use crate::{
     parse::{c_parse_variable_decl, CDecoration, CType, CVariableDecl},
-    Context, Error, Ident,
+    Context, Error,
 };
 use std::io::Write;
 pub fn type_member_iter<'spec>(
@@ -117,10 +117,10 @@ pub fn write_type<'spec>(
             let name = ctx.rust_field_name(field.variable.name);
 
             let pointer = match field.variable.ty.decoration {
-                CDecoration::Pointer => "*mut",
-                CDecoration::PointerToConst => "*const",
-                CDecoration::PointerToPointer => "*mut *mut",
-                CDecoration::PointerToConstPointerToConst => "*const *const",
+                CDecoration::Pointer => "*mut ",
+                CDecoration::PointerToConst => "*const ",
+                CDecoration::PointerToPointer => "*mut *mut ",
+                CDecoration::PointerToConstPointerToConst => "*const *const ",
                 CDecoration::None => "",
             };
 
@@ -133,7 +133,7 @@ pub fn write_type<'spec>(
             };
 
             format!(
-                "pub {name}: {pointer} {rust_ty}, ",
+                "pub {name}: {pointer}{rust_ty}, ",
                 name = name,
                 pointer = pointer,
                 rust_ty = rust_ty,
@@ -160,32 +160,6 @@ pub fn write_type<'spec>(
 }
 
 pub fn derive_debug(ctx: &Context, ty: &Type<'_>, w: &mut dyn Write) -> Result<(), Error> {
-    let name = ctx.rust_type_name(ty.name);
-
-    writeln!(w, "impl std::fmt::Debug for {} {{", name)?;
-    writeln!(
-        w,
-        "{ident}fn fmt(&self, fmt: &mut std::fmt::Formatter) -> std::fmt::Result {{",
-        ident = Ident(1),
-    )?;
-    writeln!(w, "{ident}fmt.debug_struct(\"{}\")", name, ident = Ident(2))?;
-
-    for field in &ty.fields {
-        let field_name = ctx.rust_field_name(field.variable.name);
-        writeln!(
-            w,
-            "{ident}.field(\"{name}\", &self.{name})",
-            name = field_name,
-            ident = Ident(3),
-        )?;
-    }
-    writeln!(w, "{ident}.finish()", ident = Ident(3))?;
-    writeln!(w, "{ident}}}", ident = Ident(1))?;
-    writeln!(w, "}}")?;
-    Ok(())
-}
-
-pub fn derive_debug2(ctx: &Context, ty: &Type<'_>, w: &mut dyn Write) -> Result<(), Error> {
     if ty.is_union() {
         return Ok(());
     }
@@ -218,7 +192,7 @@ pub fn derive_debug2(ctx: &Context, ty: &Type<'_>, w: &mut dyn Write) -> Result<
     Ok(())
 }
 
-pub fn derive_default2(ctx: &Context, ty: &Type<'_>, w: &mut dyn Write) -> Result<(), Error> {
+pub fn derive_default(ctx: &Context, ty: &Type<'_>, w: &mut dyn Write) -> Result<(), Error> {
     if ty.is_union() {
         return Ok(());
     }
@@ -239,7 +213,7 @@ pub fn derive_default2(ctx: &Context, ty: &Type<'_>, w: &mut dyn Write) -> Resul
 
     let code = crate::source! {
         "
-        impl std::default::Default for #name# {{
+        impl std::default::Default for #name# {
             fn default() -> #name# {
                 Self {
                     #fields#

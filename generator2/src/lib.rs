@@ -11,6 +11,7 @@ pub mod extensions;
 pub mod parse;
 pub mod structs;
 pub mod template;
+pub mod functions;
 
 use heck::{ShoutySnakeCase, SnakeCase};
 use std::{
@@ -79,6 +80,7 @@ pub struct Context<'spec> {
     pub extension_by_name: BTreeMap<&'spec str, &'spec vk::Extension>,
     pub type_by_name: BTreeMap<&'spec str, crate::structs::Type<'spec>>,
     pub enums_by_name: BTreeMap<&'spec str, &'spec vk::Enums>,
+    pub commands_by_name: BTreeMap<&'spec str, &'spec vk::CommandDefinition>,
     pub tags: HashSet<&'spec str>,
     pub extension_enums: BTreeMap<&'spec str, ExtensionEnum<'spec>>,
     pub output_path: &'spec Path,
@@ -94,6 +96,7 @@ impl<'spec> Context<'spec> {
             extension_by_name: BTreeMap::new(),
             type_by_name: BTreeMap::new(),
             enums_by_name: BTreeMap::new(),
+            commands_by_name: BTreeMap::new(),
             extension_enums: BTreeMap::new(),
             tags: HashSet::new(),
             output_path,
@@ -103,6 +106,7 @@ impl<'spec> Context<'spec> {
         ctx.collect_tags();
         ctx.collect_extended_enums();
         ctx.collect_types();
+        ctx.collect_commands();
         // let mut writer = BufWriter::new(File::create("enums.rs")?);
 
         // crate::enums::write_enums(&ctx, &mut writer);
@@ -136,6 +140,20 @@ impl<'spec> Context<'spec> {
             if let vk::RegistryChild::Tags(tags) = registry_child {
                 for tag in &tags.children {
                     self.tags.insert(&tag.name);
+                }
+            }
+        }
+    }
+    fn collect_commands(&mut self) {
+        for registry_child in &self.registry.0 {
+            if let vk::RegistryChild::Commands(cmds) = registry_child {
+                for cmd in &cmds.children {
+                    match cmd {
+                        vk::Command::Definition(def) => {
+                            self.commands_by_name.insert(def.proto.name.as_str(), def);
+                        }
+                        _ => {}
+                    }
                 }
             }
         }
@@ -252,14 +270,4 @@ pub fn documentation_link(name: &str) -> String {
         "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/{}.html>",
         name
     )
-}
-
-pub struct Ident(pub u32);
-impl std::fmt::Display for Ident {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        for _ in 0..self.0 {
-            write!(f, "    ")?;
-        }
-        Ok(())
-    }
 }

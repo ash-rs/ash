@@ -135,7 +135,6 @@ pub fn source(src: &str, map: &HashMap<&str, &dyn Sourcecode>) -> String {
     crate::remove_ident_from_string(&fmt.build())
 }
 
-
 #[macro_export]
 macro_rules! source {
     ($code: expr, $($ident: ident = $value: ident,)*) => {
