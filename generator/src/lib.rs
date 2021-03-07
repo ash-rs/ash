@@ -1290,6 +1290,7 @@ pub enum EnumType {
 }
 
 pub fn variant_ident(enum_name: &str, variant_name: &str) -> Ident {
+    let variant_name = variant_name.to_uppercase();
     let _name = enum_name.replace("FlagBits", "");
     // TODO: Should be read from vk.xml id:2
     // TODO: Also needs to be more robust, vendor names can be substrings from itself, id:4
@@ -1302,12 +1303,17 @@ pub fn variant_ident(enum_name: &str, variant_name: &str) -> Ident {
         .cloned()
         .unwrap_or("");
     let struct_name = struct_name.strip_suffix(vendor).unwrap();
-    let new_variant_name = variant_name.replace(&struct_name, "").replace("VK", "");
+    let new_variant_name = variant_name
+        .strip_prefix(struct_name)
+        .unwrap_or_else(|| variant_name.strip_prefix("VK").unwrap());
+    // Both of the above strip_prefix leave a leading `_`:
+    let new_variant_name = new_variant_name.strip_prefix("_").unwrap();
     let new_variant_name = new_variant_name
-        .trim_matches('_')
-        .to_shouty_snake_case()
-        .replace("_BIT", "")
-        .replace(vendor, "");
+        .strip_suffix(vendor)
+        .unwrap_or(new_variant_name);
+    // Replace _BIT anywhere in the string, also works when there's a trailing
+    // vendor extension in the variant name that's not in the enum/type name:
+    let new_variant_name = new_variant_name.replace("_BIT", "");
     let is_digit = new_variant_name
         .chars()
         .next()

@@ -1188,10 +1188,10 @@ impl DebugReportObjectTypeEXT {
     pub const COMMAND_POOL: Self = Self(25);
     pub const SURFACE_KHR: Self = Self(26);
     pub const SWAPCHAIN_KHR: Self = Self(27);
-    pub const DEBUG_REPORT_CALLBACK: Self = Self(28);
+    pub const DEBUG_REPORT_CALLBACK_EXT: Self = Self(28);
     pub const DISPLAY_KHR: Self = Self(29);
     pub const DISPLAY_MODE_KHR: Self = Self(30);
-    pub const VALIDATION_CACHE: Self = Self(33);
+    pub const VALIDATION_CACHE_EXT: Self = Self(33);
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
@@ -1681,7 +1681,7 @@ impl DriverId {
     #[doc = "Mesa"]
     pub const MESA_LLVMPIPE: Self = Self(13);
     #[doc = "MoltenVK"]
-    pub const MOLTEN: Self = Self(14);
+    pub const MOLTENVK: Self = Self(14);
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]

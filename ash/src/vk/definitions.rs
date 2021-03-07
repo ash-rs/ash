@@ -21173,7 +21173,7 @@ pub struct IOSSurfaceCreateInfoMVK {
 impl ::std::default::Default for IOSSurfaceCreateInfoMVK {
     fn default() -> IOSSurfaceCreateInfoMVK {
         IOSSurfaceCreateInfoMVK {
-            s_type: StructureType::IOS_SURFACE_CREATE_INFO_M,
+            s_type: StructureType::IOS_SURFACE_CREATE_INFO_MVK,
             p_next: ::std::ptr::null(),
             flags: IOSSurfaceCreateFlagsMVK::default(),
             p_view: ::std::ptr::null(),
@@ -21250,7 +21250,7 @@ pub struct MacOSSurfaceCreateInfoMVK {
 impl ::std::default::Default for MacOSSurfaceCreateInfoMVK {
     fn default() -> MacOSSurfaceCreateInfoMVK {
         MacOSSurfaceCreateInfoMVK {
-            s_type: StructureType::MACOS_SURFACE_CREATE_INFO_M,
+            s_type: StructureType::MACOS_SURFACE_CREATE_INFO_MVK,
             p_next: ::std::ptr::null(),
             flags: MacOSSurfaceCreateFlagsMVK::default(),
             p_view: ::std::ptr::null(),

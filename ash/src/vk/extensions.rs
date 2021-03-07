@@ -10020,7 +10020,7 @@ impl MvkIosSurfaceFn {
 }
 #[doc = "Generated from 'VK_MVK_ios_surface'"]
 impl StructureType {
-    pub const IOS_SURFACE_CREATE_INFO_M: Self = Self(1_000_122_000);
+    pub const IOS_SURFACE_CREATE_INFO_MVK: Self = Self(1_000_122_000);
 }
 impl MvkMacosSurfaceFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -10095,7 +10095,7 @@ impl MvkMacosSurfaceFn {
 }
 #[doc = "Generated from 'VK_MVK_macos_surface'"]
 impl StructureType {
-    pub const MACOS_SURFACE_CREATE_INFO_M: Self = Self(1_000_123_000);
+    pub const MACOS_SURFACE_CREATE_INFO_MVK: Self = Self(1_000_123_000);
 }
 impl MvkMoltenvkFn {
     pub fn name() -> &'static ::std::ffi::CStr {
