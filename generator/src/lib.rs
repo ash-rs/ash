@@ -1308,7 +1308,9 @@ pub fn variant_ident(enum_name: &str, variant_name: &str) -> Ident {
         .unwrap_or_else(|| variant_name.strip_prefix("VK").unwrap());
     // Both of the above strip_prefix leave a leading `_`:
     let new_variant_name = new_variant_name.strip_prefix("_").unwrap();
-    let new_variant_name = new_variant_name.trim_end_matches(vendor);
+    let new_variant_name = new_variant_name
+        .strip_suffix(vendor)
+        .unwrap_or(new_variant_name);
     // Replace _BIT anywhere in the string, also works when there's a trailing
     // vendor extension in the variant name that's not in the enum/type name:
     let new_variant_name = new_variant_name.replace("_BIT", "");
