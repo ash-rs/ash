@@ -18,6 +18,31 @@ jobs:
           command: check
           args: --workspace --all-targets
 
+  generated:
+    name: Generated
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          submodules: true
+      - uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+      - name: Run generator
+        uses: actions-rs/cargo@v1
+        with:
+          command: run
+          args: -p generator
+      - name: Format generated results
+        uses: actions-rs/cargo@v1
+        with:
+          command: fmt
+          args: -p ash
+      - name: Diff autogen result
+        run: git diff --quiet || (echo "::error::Generated files are different, please regenerate with cargo run -p generator!"; git diff; false)
+
   test:
     name: Test Suite
     runs-on: ubuntu-latest
