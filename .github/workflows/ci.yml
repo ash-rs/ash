@@ -28,10 +28,16 @@ jobs:
           profile: minimal
           toolchain: stable
           override: true
-      - uses: actions-rs/cargo@v1
+      - name: Test all targets
+        uses: actions-rs/cargo@v1
         with:
           command: test
           args: --workspace --all-targets
+      - name: Test docs
+        uses: actions-rs/cargo@v1
+        with:
+          command: test
+          args: --workspace --doc
 
   fmt:
     name: Rustfmt
