@@ -171,20 +171,8 @@ impl<L> EntryCustom<L> {
     where
         Load: FnMut(&mut L, &::std::ffi::CStr) -> *const c_void,
     {
-        // TODO: Make this a &'static CStr once CStr::from_bytes_with_nul_unchecked is const
-        static ENTRY_POINT: &'static [u8] = b"vkGetInstanceProcAddr\0";
-
         // Bypass the normal StaticFn::load so we can return an error
-        let static_fn = vk::StaticFn {
-            get_instance_proc_addr: unsafe {
-                let val = load(&mut lib, CStr::from_bytes_with_nul_unchecked(ENTRY_POINT));
-                if val.is_null() {
-                    return Err(MissingEntryPoint(&ENTRY_POINT[..ENTRY_POINT.len() - 1]));
-                } else {
-                    ::std::mem::transmute(val)
-                }
-            },
-        };
+        let static_fn = vk::StaticFn::load_checked(|name| load(&mut lib, name))?;
 
         let entry_fn_1_0 = vk::EntryFnV1_0::load(|name| unsafe {
             mem::transmute(static_fn.get_instance_proc_addr(vk::Instance::null(), name.as_ptr()))
@@ -241,6 +229,28 @@ impl<L> EntryCustom<L> {
                 Ok(None)
             }
         }
+    }
+}
+
+impl vk::StaticFn {
+    pub fn load_checked<F>(mut _f: F) -> Result<Self, MissingEntryPoint>
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        // TODO: Make this a &'static CStr once CStr::from_bytes_with_nul_unchecked is const
+        static ENTRY_POINT: &[u8] = b"vkGetInstanceProcAddr\0";
+
+        Ok(vk::StaticFn {
+            get_instance_proc_addr: unsafe {
+                let cname = CStr::from_bytes_with_nul_unchecked(ENTRY_POINT);
+                let val = _f(cname);
+                if val.is_null() {
+                    return Err(MissingEntryPoint(&ENTRY_POINT[..ENTRY_POINT.len() - 1]));
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        })
     }
 }
 
