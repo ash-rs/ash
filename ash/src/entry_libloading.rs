@@ -1,4 +1,5 @@
 use crate::entry::EntryCustom;
+use crate::entry::MissingEntryPoint;
 use libloading::Library;
 use std::error::Error;
 use std::ffi::OsStr;
@@ -25,17 +26,32 @@ const LIB_PATH: &str = "libvulkan.dylib";
 pub type Entry = EntryCustom<Arc<Library>>;
 
 #[derive(Debug)]
-pub struct LoadingError(libloading::Error);
+pub enum LoadingError {
+    LibraryLoadFailure(libloading::Error),
+    MissingEntryPoint(MissingEntryPoint),
+}
 
 impl fmt::Display for LoadingError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        fmt::Display::fmt(&self.0, f)
+        match self {
+            LoadingError::LibraryLoadFailure(err) => fmt::Display::fmt(err, f),
+            LoadingError::MissingEntryPoint(err) => fmt::Display::fmt(err, f),
+        }
     }
 }
 
 impl Error for LoadingError {
     fn source(&self) -> Option<&(dyn Error + 'static)> {
-        Error::source(&self.0)
+        Some(match self {
+            LoadingError::LibraryLoadFailure(err) => err,
+            LoadingError::MissingEntryPoint(err) => err,
+        })
+    }
+}
+
+impl From<MissingEntryPoint> for LoadingError {
+    fn from(err: MissingEntryPoint) -> Self {
+        LoadingError::MissingEntryPoint(err)
     }
 }
 
@@ -49,7 +65,7 @@ impl EntryCustom<Arc<Library>> {
     /// ```rust,no_run
     /// use ash::{vk, Entry, version::EntryV1_0};
     /// # fn main() -> Result<(), Box<std::error::Error>> {
-    /// let entry = Entry::new()?;
+    /// let entry = unsafe { Entry::new()? };
     /// let app_info = vk::ApplicationInfo {
     ///     api_version: vk::make_version(1, 0, 0),
     ///     ..Default::default()
@@ -70,14 +86,16 @@ impl EntryCustom<Arc<Library>> {
     /// # Safety
     /// `dlopen`ing native libraries is inherently unsafe. The safety guidelines
     /// for [`Library::new`] and [`Library::get`] apply here.
-    pub unsafe fn with_library(path: &impl AsRef<OsStr>) -> Result<Entry, LoadingError> {
-        let lib = Library::new(path).map_err(LoadingError).map(Arc::new)?;
+    pub unsafe fn with_library(path: impl AsRef<OsStr>) -> Result<Entry, LoadingError> {
+        let lib = Library::new(path)
+            .map_err(LoadingError::LibraryLoadFailure)
+            .map(Arc::new)?;
 
         Ok(Self::new_custom(lib, |vk_lib, name| {
             vk_lib
                 .get(name.to_bytes_with_nul())
                 .map(|symbol| *symbol)
                 .unwrap_or(ptr::null_mut())
-        }))
+        })?)
     }
 }

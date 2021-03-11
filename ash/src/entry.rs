@@ -3,6 +3,7 @@ use crate::prelude::*;
 use crate::vk;
 use crate::RawPtr;
 use std::error::Error;
+use std::ffi::CStr;
 use std::fmt;
 use std::mem;
 use std::os::raw::c_char;
@@ -163,11 +164,27 @@ impl<L> EntryV1_2 for EntryCustom<L> {
 }
 
 impl<L> EntryCustom<L> {
-    pub fn new_custom<Load>(mut lib: L, mut load: Load) -> Self
+    pub fn new_custom<Load>(
+        mut lib: L,
+        mut load: Load,
+    ) -> std::result::Result<Self, MissingEntryPoint>
     where
         Load: FnMut(&mut L, &::std::ffi::CStr) -> *const c_void,
     {
-        let static_fn = vk::StaticFn::load(|name| load(&mut lib, name));
+        // TODO: Make this a &'static CStr once CStr::from_bytes_with_nul_unchecked is const
+        static ENTRY_POINT: &'static [u8] = b"vkGetInstanceProcAddr\0";
+
+        // Bypass the normal StaticFn::load so we can return an error
+        let static_fn = vk::StaticFn {
+            get_instance_proc_addr: unsafe {
+                let val = load(&mut lib, CStr::from_bytes_with_nul_unchecked(ENTRY_POINT));
+                if val.is_null() {
+                    return Err(MissingEntryPoint(&ENTRY_POINT[..ENTRY_POINT.len() - 1]));
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        };
 
         let entry_fn_1_0 = vk::EntryFnV1_0::load(|name| unsafe {
             mem::transmute(static_fn.get_instance_proc_addr(vk::Instance::null(), name.as_ptr()))
@@ -181,20 +198,20 @@ impl<L> EntryCustom<L> {
             mem::transmute(static_fn.get_instance_proc_addr(vk::Instance::null(), name.as_ptr()))
         });
 
-        EntryCustom {
+        Ok(EntryCustom {
             static_fn,
             entry_fn_1_0,
             entry_fn_1_1,
             entry_fn_1_2,
             lib,
-        }
+        })
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkEnumerateInstanceVersion.html>"]
     /// ```rust,no_run
     /// # use ash::{Entry, vk};
     /// # fn main() -> Result<(), Box<std::error::Error>> {
-    /// let entry = Entry::new()?;
+    /// let entry = unsafe { Entry::new()? };
     /// match entry.try_enumerate_instance_version()? {
     ///     // Vulkan 1.1+
     ///     Some(version) => {
@@ -226,3 +243,18 @@ impl<L> EntryCustom<L> {
         }
     }
 }
+
+#[derive(Clone, Debug)]
+pub struct MissingEntryPoint(&'static [u8]); // Slice without the NUL terminator
+impl std::fmt::Display for MissingEntryPoint {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::result::Result<(), std::fmt::Error> {
+        unsafe {
+            write!(
+                f,
+                "missing Vulkan entry point: {}",
+                std::str::from_utf8_unchecked(self.0)
+            )
+        }
+    }
+}
+impl std::error::Error for MissingEntryPoint {}
