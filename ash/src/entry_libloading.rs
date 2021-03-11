@@ -78,7 +78,7 @@ impl EntryCustom<Arc<Library>> {
     /// # Ok(()) }
     /// ```
     pub unsafe fn new() -> Result<Entry, LoadingError> {
-        Self::with_library(&LIB_PATH)
+        Self::with_library(LIB_PATH)
     }
 
     /// Load Vulkan library at `path`
