@@ -40,7 +40,7 @@ impl ExternalMemoryFd {
         handle_type: vk::ExternalMemoryHandleTypeFlags,
         fd: i32,
     ) -> VkResult<vk::MemoryFdPropertiesKHR> {
-        let mut memory_fd_properties = mem::zeroed();
+        let mut memory_fd_properties = Default::default();
         self.external_memory_fd_fn
             .get_memory_fd_properties_khr(self.handle, handle_type, fd, &mut memory_fd_properties)
             .result_with_success(memory_fd_properties)
