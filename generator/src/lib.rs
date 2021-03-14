@@ -80,7 +80,7 @@ named!(cfloat<&str, f32>,
     terminated!(nom::number::complete::float, char!('f'))
 );
 
-fn khronos_link<S: Display>(name: &S) -> Literal {
+fn khronos_link<S: Display + ?Sized>(name: &S) -> Literal {
     Literal::string(&format!(
         "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/{name}.html>",
         name = name
@@ -623,6 +623,9 @@ pub trait FieldExt {
     /// which is needed for `C` function parameters. Set to `false` for struct definitions.
     fn type_tokens(&self, is_ffi_param: bool) -> TokenStream;
     fn is_clone(&self) -> bool;
+
+    /// Whether this is C's `void` type (not to be mistaken with a void _pointer_!)
+    fn is_void(&self) -> bool;
 }
 
 pub trait ToTokens {
@@ -729,6 +732,7 @@ impl FieldExt for vkxml::Field {
     }
 
     fn inner_type_tokens(&self) -> TokenStream {
+        assert!(!self.is_void());
         let ty = name_to_tokens(&self.basetype);
 
         match self.reference {
@@ -739,6 +743,7 @@ impl FieldExt for vkxml::Field {
     }
 
     fn safe_type_tokens(&self, lifetime: TokenStream) -> TokenStream {
+        assert!(!self.is_void());
         match self.array {
             // The outer type fn type_tokens() returns is [], which fits our "safe" prescription
             Some(vkxml::ArrayType::Static) => self.type_tokens(false),
@@ -758,6 +763,7 @@ impl FieldExt for vkxml::Field {
     }
 
     fn type_tokens(&self, is_ffi_param: bool) -> TokenStream {
+        assert!(!self.is_void());
         let ty = name_to_tokens(&self.basetype);
 
         match self.array {
@@ -783,6 +789,10 @@ impl FieldExt for vkxml::Field {
                 quote!(#pointer #ty)
             }
         }
+    }
+
+    fn is_void(&self) -> bool {
+        self.basetype == "void" && self.reference.is_none()
     }
 }
 
@@ -839,17 +849,18 @@ fn generate_function_pointers<'a>(
         .map(|cmd| function_name(&cmd.name))
         .collect();
     let names_ref = &names;
-    let names_ref1 = &names;
-    let names_ref2 = &names;
-    let names_ref3 = &names;
     let raw_names: Vec<_> = commands
         .iter()
-        .map(|cmd| format_ident!("{}", function_name_raw(cmd.name.as_str()).as_str()))
+        .map(|cmd| {
+            let byt = std::ffi::CString::new(function_name_raw(cmd.name.as_str())).unwrap();
+            Literal::byte_string(byt.to_bytes_with_nul())
+        })
         .collect();
     let raw_names_ref = &raw_names;
-    let names_left = &names;
-    let names_right = &names;
-    let khronos_links: Vec<_> = raw_names.iter().map(|name| khronos_link(name)).collect();
+    let khronos_links: Vec<_> = commands
+        .iter()
+        .map(|cmd| khronos_link(&function_name_raw(cmd.name.as_str())))
+        .collect();
 
     let params: Vec<Vec<(Ident, TokenStream)>> = commands
         .iter()
@@ -901,12 +912,6 @@ fn generate_function_pointers<'a>(
         .collect();
     let expanded_params_ref = &expanded_params;
 
-    let return_types: Vec<_> = commands
-        .iter()
-        .map(|cmd| cmd.return_type.type_tokens(true))
-        .collect();
-    let return_types_ref = &return_types;
-
     let pfn_names: Vec<_> = commands_pfn
         .iter()
         .map(|cmd| format_ident!("{}", format!("PFN_{}", cmd.name.as_str())))
@@ -930,21 +935,28 @@ fn generate_function_pointers<'a>(
         .collect();
     let signature_params_ref = &signature_params;
 
-    let pfn_return_types: Vec<_> = commands
+    let return_types: Vec<_> = commands
         .iter()
-        .map(|cmd| cmd.return_type.type_tokens(true))
+        .map(|cmd| {
+            if cmd.return_type.is_void() {
+                quote!()
+            } else {
+                let ret_ty_tokens = cmd.return_type.type_tokens(true);
+                quote!(-> #ret_ty_tokens)
+            }
+        })
         .collect();
-    let pfn_return_types_ref = &pfn_return_types;
+    let return_types_ref = &return_types;
 
     quote! {
         #(
             #[allow(non_camel_case_types)]
-            pub type #pfn_names_ref = extern "system" fn(#(#signature_params_ref),*) -> #pfn_return_types_ref;
+            pub type #pfn_names_ref = extern "system" fn(#(#signature_params_ref),*) #return_types_ref;
         )*
 
         pub struct #ident {
             #(
-                pub #names_ref: extern "system" fn(#expanded_params_ref) -> #return_types_ref,
+                pub #names_ref: extern "system" fn(#expanded_params_ref) #return_types_ref,
             )*
         }
 
@@ -954,7 +966,7 @@ fn generate_function_pointers<'a>(
         impl ::std::clone::Clone for #ident {
             fn clone(&self) -> Self {
                 #ident{
-                    #(#names_left: self.#names_right,)*
+                    #(#names: self.#names,)*
                 }
             }
         }
@@ -966,14 +978,13 @@ fn generate_function_pointers<'a>(
                     #(
                         #names_ref: unsafe {
 
-                            extern "system" fn #names_ref1 (#expanded_params_unused) -> #return_types_ref {
-                                panic!(concat!("Unable to load ", stringify!(#names_ref2)))
+                            extern "system" fn #names_ref (#expanded_params_unused) #return_types_ref {
+                                panic!(concat!("Unable to load ", stringify!(#names_ref)))
                             }
-                            let raw_name = stringify!(#raw_names_ref);
-                            let cname = ::std::ffi::CString::new(raw_name).unwrap();
-                            let val = _f(&cname);
+                            let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(#raw_names_ref);
+                            let val = _f(cname);
                             if val.is_null(){
-                                #names_ref3
+                                #names_ref
                             }
                             else{
                                 ::std::mem::transmute(val)
@@ -984,8 +995,8 @@ fn generate_function_pointers<'a>(
             }
             #(
                 #[doc = #khronos_links]
-                pub unsafe fn #names_ref(&self, #expanded_params_ref) -> #return_types_ref {
-                    (self.#names_left)(#(#params_names,)*)
+                pub unsafe fn #names_ref(&self, #expanded_params_ref) #return_types_ref {
+                    (self.#names)(#(#params_names,)*)
                 }
             )*
         }
@@ -1279,24 +1290,30 @@ pub enum EnumType {
 }
 
 pub fn variant_ident(enum_name: &str, variant_name: &str) -> Ident {
+    let variant_name = variant_name.to_uppercase();
     let _name = enum_name.replace("FlagBits", "");
     // TODO: Should be read from vk.xml id:2
     // TODO: Also needs to be more robust, vendor names can be substrings from itself, id:4
     // like NVX and NV
     let vendors = ["_NVX", "_KHR", "_EXT", "_NV", "_AMD", "_ANDROID", "_GOOGLE"];
-    let mut struct_name = _name.to_shouty_snake_case();
+    let struct_name = _name.to_shouty_snake_case();
     let vendor = vendors
         .iter()
-        .find(|&vendor| struct_name.contains(vendor))
+        .find(|&vendor| struct_name.ends_with(vendor))
         .cloned()
         .unwrap_or("");
-    struct_name = struct_name.replace(vendor, "");
-    let new_variant_name = variant_name.replace(&struct_name, "").replace("VK", "");
+    let struct_name = struct_name.strip_suffix(vendor).unwrap();
+    let new_variant_name = variant_name
+        .strip_prefix(struct_name)
+        .unwrap_or_else(|| variant_name.strip_prefix("VK").unwrap());
+    // Both of the above strip_prefix leave a leading `_`:
+    let new_variant_name = new_variant_name.strip_prefix("_").unwrap();
     let new_variant_name = new_variant_name
-        .trim_matches('_')
-        .to_shouty_snake_case()
-        .replace("_BIT", "")
-        .replace(vendor, "");
+        .strip_suffix(vendor)
+        .unwrap_or(new_variant_name);
+    // Replace _BIT anywhere in the string, also works when there's a trailing
+    // vendor extension in the variant name that's not in the enum/type name:
+    let new_variant_name = new_variant_name.replace("_BIT", "");
     let is_digit = new_variant_name
         .chars()
         .next()
@@ -2060,7 +2077,12 @@ pub fn generate_handle(handle: &vkxml::Handle) -> Option<TokenStream> {
 }
 fn generate_funcptr(fnptr: &vkxml::FunctionPointer) -> TokenStream {
     let name = format_ident!("{}", fnptr.name.as_str());
-    let ret_ty_tokens = fnptr.return_type.type_tokens(true);
+    let ret_ty_tokens = if fnptr.return_type.is_void() {
+        quote!()
+    } else {
+        let ret_ty_tokens = fnptr.return_type.type_tokens(true);
+        quote!(-> #ret_ty_tokens)
+    };
     let params = fnptr.param.iter().map(|field| {
         let ident = field.param_ident();
         let type_tokens = field.type_tokens(true);
@@ -2072,7 +2094,7 @@ fn generate_funcptr(fnptr: &vkxml::FunctionPointer) -> TokenStream {
     quote! {
         #[allow(non_camel_case_types)]
         #[doc = #khronos_link]
-        pub type #name = Option<unsafe extern "system" fn(#(#params),*) -> #ret_ty_tokens>;
+        pub type #name = Option<unsafe extern "system" fn(#(#params),*) #ret_ty_tokens>;
     }
 }
 

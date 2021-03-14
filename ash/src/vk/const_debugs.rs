@@ -58,10 +58,16 @@ impl fmt::Debug for AccelerationStructureCompatibilityKHR {
 }
 impl fmt::Debug for AccelerationStructureCreateFlagsKHR {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[(
-            AccelerationStructureCreateFlagsKHR::DEVICE_ADDRESS_CAPTURE_REPLAY.0,
-            "DEVICE_ADDRESS_CAPTURE_REPLAY",
-        )];
+        const KNOWN: &[(Flags, &str)] = &[
+            (
+                AccelerationStructureCreateFlagsKHR::DEVICE_ADDRESS_CAPTURE_REPLAY.0,
+                "DEVICE_ADDRESS_CAPTURE_REPLAY",
+            ),
+            (
+                AccelerationStructureCreateFlagsKHR::RESERVED_2_NV.0,
+                "RESERVED_2_NV",
+            ),
+        ];
         debug_flags(f, KNOWN, self.0)
     }
 }
@@ -464,6 +470,10 @@ impl fmt::Debug for BuildAccelerationStructureFlagsKHR {
                 BuildAccelerationStructureFlagsKHR::LOW_MEMORY.0,
                 "LOW_MEMORY",
             ),
+            (
+                BuildAccelerationStructureFlagsKHR::RESERVED_5_NV.0,
+                "RESERVED_5_NV",
+            ),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -818,10 +828,10 @@ impl fmt::Debug for DebugReportObjectTypeEXT {
             Self::COMMAND_POOL => Some("COMMAND_POOL"),
             Self::SURFACE_KHR => Some("SURFACE_KHR"),
             Self::SWAPCHAIN_KHR => Some("SWAPCHAIN_KHR"),
-            Self::DEBUG_REPORT_CALLBACK => Some("DEBUG_REPORT_CALLBACK"),
+            Self::DEBUG_REPORT_CALLBACK_EXT => Some("DEBUG_REPORT_CALLBACK_EXT"),
             Self::DISPLAY_KHR => Some("DISPLAY_KHR"),
             Self::DISPLAY_MODE_KHR => Some("DISPLAY_MODE_KHR"),
-            Self::VALIDATION_CACHE => Some("VALIDATION_CACHE"),
+            Self::VALIDATION_CACHE_EXT => Some("VALIDATION_CACHE_EXT"),
             Self::SAMPLER_YCBCR_CONVERSION => Some("SAMPLER_YCBCR_CONVERSION"),
             Self::DESCRIPTOR_UPDATE_TEMPLATE => Some("DESCRIPTOR_UPDATE_TEMPLATE"),
             Self::ACCELERATION_STRUCTURE_KHR => Some("ACCELERATION_STRUCTURE_KHR"),
@@ -907,6 +917,10 @@ impl fmt::Debug for DescriptorPoolCreateFlags {
                 "FREE_DESCRIPTOR_SET",
             ),
             (
+                DescriptorPoolCreateFlags::HOST_ONLY_VALVE.0,
+                "HOST_ONLY_VALVE",
+            ),
+            (
                 DescriptorPoolCreateFlags::UPDATE_AFTER_BIND.0,
                 "UPDATE_AFTER_BIND",
             ),
@@ -926,6 +940,10 @@ impl fmt::Debug for DescriptorSetLayoutCreateFlags {
             (
                 DescriptorSetLayoutCreateFlags::PUSH_DESCRIPTOR_KHR.0,
                 "PUSH_DESCRIPTOR_KHR",
+            ),
+            (
+                DescriptorSetLayoutCreateFlags::HOST_ONLY_POOL_VALVE.0,
+                "HOST_ONLY_POOL_VALVE",
             ),
             (
                 DescriptorSetLayoutCreateFlags::UPDATE_AFTER_BIND_POOL.0,
@@ -952,6 +970,7 @@ impl fmt::Debug for DescriptorType {
             Self::INLINE_UNIFORM_BLOCK_EXT => Some("INLINE_UNIFORM_BLOCK_EXT"),
             Self::ACCELERATION_STRUCTURE_KHR => Some("ACCELERATION_STRUCTURE_KHR"),
             Self::ACCELERATION_STRUCTURE_NV => Some("ACCELERATION_STRUCTURE_NV"),
+            Self::MUTABLE_VALVE => Some("MUTABLE_VALVE"),
             _ => None,
         };
         if let Some(x) = name {
@@ -1152,7 +1171,7 @@ impl fmt::Debug for DriverId {
             Self::GGP_PROPRIETARY => Some("GGP_PROPRIETARY"),
             Self::BROADCOM_PROPRIETARY => Some("BROADCOM_PROPRIETARY"),
             Self::MESA_LLVMPIPE => Some("MESA_LLVMPIPE"),
-            Self::MOLTEN => Some("MOLTEN"),
+            Self::MOLTENVK => Some("MOLTENVK"),
             _ => None,
         };
         if let Some(x) = name {
@@ -1215,14 +1234,8 @@ impl fmt::Debug for EventCreateFlags {
 impl fmt::Debug for ExternalFenceFeatureFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
-            (
-                ExternalFenceFeatureFlags::EXTERNAL_FENCE_FEATURE_EXPORTABLE.0,
-                "EXTERNAL_FENCE_FEATURE_EXPORTABLE",
-            ),
-            (
-                ExternalFenceFeatureFlags::EXTERNAL_FENCE_FEATURE_IMPORTABLE.0,
-                "EXTERNAL_FENCE_FEATURE_IMPORTABLE",
-            ),
+            (ExternalFenceFeatureFlags::EXPORTABLE.0, "EXPORTABLE"),
+            (ExternalFenceFeatureFlags::IMPORTABLE.0, "IMPORTABLE"),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -1230,21 +1243,20 @@ impl fmt::Debug for ExternalFenceFeatureFlags {
 impl fmt::Debug for ExternalFenceHandleTypeFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
+            (ExternalFenceHandleTypeFlags::OPAQUE_FD.0, "OPAQUE_FD"),
+            (ExternalFenceHandleTypeFlags::OPAQUE_WIN32.0, "OPAQUE_WIN32"),
             (
-                ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD.0,
-                "EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD",
+                ExternalFenceHandleTypeFlags::OPAQUE_WIN32_KMT.0,
+                "OPAQUE_WIN32_KMT",
+            ),
+            (ExternalFenceHandleTypeFlags::SYNC_FD.0, "SYNC_FD"),
+            (
+                ExternalFenceHandleTypeFlags::RESERVED_4_NV.0,
+                "RESERVED_4_NV",
             ),
             (
-                ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32.0,
-                "EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32",
-            ),
-            (
-                ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT.0,
-                "EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT",
-            ),
-            (
-                ExternalFenceHandleTypeFlags::EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD.0,
-                "EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD",
+                ExternalFenceHandleTypeFlags::RESERVED_5_NV.0,
+                "RESERVED_5_NV",
             ),
         ];
         debug_flags(f, KNOWN, self.0)
@@ -1254,17 +1266,11 @@ impl fmt::Debug for ExternalMemoryFeatureFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (
-                ExternalMemoryFeatureFlags::EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY.0,
-                "EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY",
+                ExternalMemoryFeatureFlags::DEDICATED_ONLY.0,
+                "DEDICATED_ONLY",
             ),
-            (
-                ExternalMemoryFeatureFlags::EXTERNAL_MEMORY_FEATURE_EXPORTABLE.0,
-                "EXTERNAL_MEMORY_FEATURE_EXPORTABLE",
-            ),
-            (
-                ExternalMemoryFeatureFlags::EXTERNAL_MEMORY_FEATURE_IMPORTABLE.0,
-                "EXTERNAL_MEMORY_FEATURE_IMPORTABLE",
-            ),
+            (ExternalMemoryFeatureFlags::EXPORTABLE.0, "EXPORTABLE"),
+            (ExternalMemoryFeatureFlags::IMPORTABLE.0, "IMPORTABLE"),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -1273,24 +1279,54 @@ impl fmt::Debug for ExternalMemoryFeatureFlagsNV {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (
-                ExternalMemoryFeatureFlagsNV::EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_NV.0,
-                "EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_NV",
+                ExternalMemoryFeatureFlagsNV::DEDICATED_ONLY.0,
+                "DEDICATED_ONLY",
             ),
-            (
-                ExternalMemoryFeatureFlagsNV::EXTERNAL_MEMORY_FEATURE_EXPORTABLE_NV.0,
-                "EXTERNAL_MEMORY_FEATURE_EXPORTABLE_NV",
-            ),
-            (
-                ExternalMemoryFeatureFlagsNV::EXTERNAL_MEMORY_FEATURE_IMPORTABLE_NV.0,
-                "EXTERNAL_MEMORY_FEATURE_IMPORTABLE_NV",
-            ),
+            (ExternalMemoryFeatureFlagsNV::EXPORTABLE.0, "EXPORTABLE"),
+            (ExternalMemoryFeatureFlagsNV::IMPORTABLE.0, "IMPORTABLE"),
         ];
         debug_flags(f, KNOWN, self.0)
     }
 }
 impl fmt::Debug for ExternalMemoryHandleTypeFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN : & [(Flags , & str)] = & [(ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD") , (ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32 . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32") , (ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT") , (ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE") , (ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT") , (ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP") , (ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE") , (ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_DMA_BUF") , (ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_ANDROID_HARDWARE_BUFFER_ANDROID . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_ANDROID_HARDWARE_BUFFER_ANDROID") , (ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_HOST_ALLOCATION . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_HOST_ALLOCATION") , (ExternalMemoryHandleTypeFlags :: EXTERNAL_MEMORY_HANDLE_TYPE_HOST_MAPPED_FOREIGN_MEMORY . 0 , "EXTERNAL_MEMORY_HANDLE_TYPE_HOST_MAPPED_FOREIGN_MEMORY")] ;
+        const KNOWN: &[(Flags, &str)] = &[
+            (ExternalMemoryHandleTypeFlags::OPAQUE_FD.0, "OPAQUE_FD"),
+            (
+                ExternalMemoryHandleTypeFlags::OPAQUE_WIN32.0,
+                "OPAQUE_WIN32",
+            ),
+            (
+                ExternalMemoryHandleTypeFlags::OPAQUE_WIN32_KMT.0,
+                "OPAQUE_WIN32_KMT",
+            ),
+            (
+                ExternalMemoryHandleTypeFlags::D3D11_TEXTURE.0,
+                "D3D11_TEXTURE",
+            ),
+            (
+                ExternalMemoryHandleTypeFlags::D3D11_TEXTURE_KMT.0,
+                "D3D11_TEXTURE_KMT",
+            ),
+            (ExternalMemoryHandleTypeFlags::D3D12_HEAP.0, "D3D12_HEAP"),
+            (
+                ExternalMemoryHandleTypeFlags::D3D12_RESOURCE.0,
+                "D3D12_RESOURCE",
+            ),
+            (ExternalMemoryHandleTypeFlags::DMA_BUF_EXT.0, "DMA_BUF_EXT"),
+            (
+                ExternalMemoryHandleTypeFlags::ANDROID_HARDWARE_BUFFER_ANDROID.0,
+                "ANDROID_HARDWARE_BUFFER_ANDROID",
+            ),
+            (
+                ExternalMemoryHandleTypeFlags::HOST_ALLOCATION_EXT.0,
+                "HOST_ALLOCATION_EXT",
+            ),
+            (
+                ExternalMemoryHandleTypeFlags::HOST_MAPPED_FOREIGN_MEMORY_EXT.0,
+                "HOST_MAPPED_FOREIGN_MEMORY_EXT",
+            ),
+        ];
         debug_flags(f, KNOWN, self.0)
     }
 }
@@ -1298,20 +1334,20 @@ impl fmt::Debug for ExternalMemoryHandleTypeFlagsNV {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
             (
-                ExternalMemoryHandleTypeFlagsNV::EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_NV.0,
-                "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_NV",
+                ExternalMemoryHandleTypeFlagsNV::OPAQUE_WIN32.0,
+                "OPAQUE_WIN32",
             ),
             (
-                ExternalMemoryHandleTypeFlagsNV::EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_NV.0,
-                "EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_NV",
+                ExternalMemoryHandleTypeFlagsNV::OPAQUE_WIN32_KMT.0,
+                "OPAQUE_WIN32_KMT",
             ),
             (
-                ExternalMemoryHandleTypeFlagsNV::EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_NV.0,
-                "EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_NV",
+                ExternalMemoryHandleTypeFlagsNV::D3D11_IMAGE.0,
+                "D3D11_IMAGE",
             ),
             (
-                ExternalMemoryHandleTypeFlagsNV::EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_NV.0,
-                "EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_NV",
+                ExternalMemoryHandleTypeFlagsNV::D3D11_IMAGE_KMT.0,
+                "D3D11_IMAGE_KMT",
             ),
         ];
         debug_flags(f, KNOWN, self.0)
@@ -1320,14 +1356,8 @@ impl fmt::Debug for ExternalMemoryHandleTypeFlagsNV {
 impl fmt::Debug for ExternalSemaphoreFeatureFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
-            (
-                ExternalSemaphoreFeatureFlags::EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE.0,
-                "EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE",
-            ),
-            (
-                ExternalSemaphoreFeatureFlags::EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE.0,
-                "EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE",
-            ),
+            (ExternalSemaphoreFeatureFlags::EXPORTABLE.0, "EXPORTABLE"),
+            (ExternalSemaphoreFeatureFlags::IMPORTABLE.0, "IMPORTABLE"),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -1335,25 +1365,27 @@ impl fmt::Debug for ExternalSemaphoreFeatureFlags {
 impl fmt::Debug for ExternalSemaphoreHandleTypeFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[
+            (ExternalSemaphoreHandleTypeFlags::OPAQUE_FD.0, "OPAQUE_FD"),
             (
-                ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD.0,
-                "EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD",
+                ExternalSemaphoreHandleTypeFlags::OPAQUE_WIN32.0,
+                "OPAQUE_WIN32",
             ),
             (
-                ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32.0,
-                "EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32",
+                ExternalSemaphoreHandleTypeFlags::OPAQUE_WIN32_KMT.0,
+                "OPAQUE_WIN32_KMT",
             ),
             (
-                ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT.0,
-                "EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT",
+                ExternalSemaphoreHandleTypeFlags::D3D12_FENCE.0,
+                "D3D12_FENCE",
+            ),
+            (ExternalSemaphoreHandleTypeFlags::SYNC_FD.0, "SYNC_FD"),
+            (
+                ExternalSemaphoreHandleTypeFlags::RESERVED_5_NV.0,
+                "RESERVED_5_NV",
             ),
             (
-                ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE.0,
-                "EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE",
-            ),
-            (
-                ExternalSemaphoreHandleTypeFlags::EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD.0,
-                "EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD",
+                ExternalSemaphoreHandleTypeFlags::RESERVED_6_NV.0,
+                "RESERVED_6_NV",
             ),
         ];
         debug_flags(f, KNOWN, self.0)
@@ -3748,8 +3780,8 @@ impl fmt::Debug for StructureType {
             Self::DISPLAY_MODE_PROPERTIES_2_KHR => Some("DISPLAY_MODE_PROPERTIES_2_KHR"),
             Self::DISPLAY_PLANE_INFO_2_KHR => Some("DISPLAY_PLANE_INFO_2_KHR"),
             Self::DISPLAY_PLANE_CAPABILITIES_2_KHR => Some("DISPLAY_PLANE_CAPABILITIES_2_KHR"),
-            Self::IOS_SURFACE_CREATE_INFO_M => Some("IOS_SURFACE_CREATE_INFO_M"),
-            Self::MACOS_SURFACE_CREATE_INFO_M => Some("MACOS_SURFACE_CREATE_INFO_M"),
+            Self::IOS_SURFACE_CREATE_INFO_MVK => Some("IOS_SURFACE_CREATE_INFO_MVK"),
+            Self::MACOS_SURFACE_CREATE_INFO_MVK => Some("MACOS_SURFACE_CREATE_INFO_MVK"),
             Self::DEBUG_UTILS_OBJECT_NAME_INFO_EXT => Some("DEBUG_UTILS_OBJECT_NAME_INFO_EXT"),
             Self::DEBUG_UTILS_OBJECT_TAG_INFO_EXT => Some("DEBUG_UTILS_OBJECT_TAG_INFO_EXT"),
             Self::DEBUG_UTILS_LABEL_EXT => Some("DEBUG_UTILS_LABEL_EXT"),
@@ -4250,6 +4282,9 @@ impl fmt::Debug for StructureType {
                 Some("DEVICE_DIAGNOSTICS_CONFIG_CREATE_INFO_NV")
             }
             Self::RESERVED_QCOM => Some("RESERVED_QCOM"),
+            Self::PHYSICAL_DEVICE_ZERO_INITIALIZE_WORKGROUP_MEMORY_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_ZERO_INITIALIZE_WORKGROUP_MEMORY_FEATURES_KHR")
+            }
             Self::PHYSICAL_DEVICE_FRAGMENT_SHADING_RATE_ENUMS_PROPERTIES_NV => {
                 Some("PHYSICAL_DEVICE_FRAGMENT_SHADING_RATE_ENUMS_PROPERTIES_NV")
             }
@@ -4269,6 +4304,9 @@ impl fmt::Debug for StructureType {
             Self::PHYSICAL_DEVICE_IMAGE_ROBUSTNESS_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_IMAGE_ROBUSTNESS_FEATURES_EXT")
             }
+            Self::PHYSICAL_DEVICE_WORKGROUP_MEMORY_EXPLICIT_LAYOUT_FEATURES_KHR => {
+                Some("PHYSICAL_DEVICE_WORKGROUP_MEMORY_EXPLICIT_LAYOUT_FEATURES_KHR")
+            }
             Self::COPY_BUFFER_INFO_2_KHR => Some("COPY_BUFFER_INFO_2_KHR"),
             Self::COPY_IMAGE_INFO_2_KHR => Some("COPY_IMAGE_INFO_2_KHR"),
             Self::COPY_BUFFER_TO_IMAGE_INFO_2_KHR => Some("COPY_BUFFER_TO_IMAGE_INFO_2_KHR"),
@@ -4284,6 +4322,13 @@ impl fmt::Debug for StructureType {
                 Some("PHYSICAL_DEVICE_4444_FORMATS_FEATURES_EXT")
             }
             Self::DIRECTFB_SURFACE_CREATE_INFO_EXT => Some("DIRECTFB_SURFACE_CREATE_INFO_EXT"),
+            Self::PHYSICAL_DEVICE_MUTABLE_DESCRIPTOR_TYPE_FEATURES_VALVE => {
+                Some("PHYSICAL_DEVICE_MUTABLE_DESCRIPTOR_TYPE_FEATURES_VALVE")
+            }
+            Self::MUTABLE_DESCRIPTOR_TYPE_CREATE_INFO_VALVE => {
+                Some("MUTABLE_DESCRIPTOR_TYPE_CREATE_INFO_VALVE")
+            }
+            Self::SCREEN_SURFACE_CREATE_INFO_QNX => Some("SCREEN_SURFACE_CREATE_INFO_QNX"),
             Self::PHYSICAL_DEVICE_SUBGROUP_PROPERTIES => {
                 Some("PHYSICAL_DEVICE_SUBGROUP_PROPERTIES")
             }
@@ -4778,6 +4823,7 @@ impl fmt::Debug for VendorId {
             Self::KAZAN => Some("KAZAN"),
             Self::CODEPLAY => Some("CODEPLAY"),
             Self::MESA => Some("MESA"),
+            Self::POCL => Some("POCL"),
             _ => None,
         };
         if let Some(x) = name {

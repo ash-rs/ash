@@ -1,6 +1,6 @@
 [package]
 name = "ash-window"
-version = "0.5.0"
+version = "0.6.0"
 authors = ["msiglreith <m.siglreith@gmail.com>"]
 edition = "2018"
 license = "MIT OR Apache-2.0"
@@ -14,7 +14,7 @@ exclude = [".github/*"]
 workspace = ".."
 
 [dependencies]
-ash = { path = "../ash", version = "0.31" }
+ash = { path = "../ash", version = "0.32" }
 raw-window-handle = "0.3"
 
 [target.'cfg(any(target_os = "macos", target_os = "ios"))'.dependencies]

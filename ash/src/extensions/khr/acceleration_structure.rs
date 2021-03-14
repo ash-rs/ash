@@ -42,18 +42,14 @@ impl AccelerationStructure {
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::AccelerationStructureKHR> {
         let mut accel_struct = mem::zeroed();
-        let err_code = self
-            .acceleration_structure_fn
+        self.acceleration_structure_fn
             .create_acceleration_structure_khr(
                 self.handle,
                 create_info,
                 allocation_callbacks.as_raw_ptr(),
                 &mut accel_struct,
-            );
-        match err_code {
-            vk::Result::SUCCESS => Ok(accel_struct),
-            _ => Err(err_code),
-        }
+            )
+            .result_with_success(accel_struct)
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkDestroyAccelerationStructureKHR.html>"]
@@ -81,8 +77,12 @@ impl AccelerationStructure {
 
         let build_range_infos = build_range_infos
             .iter()
-            .map(|slice| slice.as_ptr())
-            .collect::<Vec<*const _>>();
+            .zip(infos.iter())
+            .map(|(range_info, info)| {
+                assert_eq!(range_info.len(), info.geometry_count as usize);
+                range_info.as_ptr()
+            })
+            .collect::<Vec<_>>();
 
         self.acceleration_structure_fn
             .cmd_build_acceleration_structures_khr(
@@ -100,7 +100,7 @@ impl AccelerationStructure {
         infos: &[vk::AccelerationStructureBuildGeometryInfoKHR],
         indirect_device_addresses: &[vk::DeviceAddress],
         indirect_strides: &[u32],
-        max_primitive_counts: &[&u32],
+        max_primitive_counts: &[&[u32]],
     ) {
         assert_eq!(infos.len(), indirect_device_addresses.len());
         assert_eq!(infos.len(), indirect_strides.len());
@@ -108,7 +108,11 @@ impl AccelerationStructure {
 
         let max_primitive_counts = max_primitive_counts
             .iter()
-            .map(|cnt| *cnt as *const _)
+            .zip(infos.iter())
+            .map(|(cnt, info)| {
+                assert_eq!(cnt.len(), info.geometry_count as usize);
+                cnt.as_ptr()
+            })
             .collect::<Vec<_>>();
 
         self.acceleration_structure_fn
@@ -125,7 +129,6 @@ impl AccelerationStructure {
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkBuildAccelerationStructuresKHR.html>"]
     pub unsafe fn build_acceleration_structures(
         &self,
-        device: vk::Device,
         deferred_operation: vk::DeferredOperationKHR,
         infos: &[vk::AccelerationStructureBuildGeometryInfoKHR],
         build_range_infos: &[&[vk::AccelerationStructureBuildRangeInfoKHR]],
@@ -134,12 +137,16 @@ impl AccelerationStructure {
 
         let build_range_infos = build_range_infos
             .iter()
-            .map(|slice| slice.as_ptr())
-            .collect::<Vec<*const _>>();
+            .zip(infos.iter())
+            .map(|(range_info, info)| {
+                assert_eq!(range_info.len(), info.geometry_count as usize);
+                range_info.as_ptr()
+            })
+            .collect::<Vec<_>>();
 
         self.acceleration_structure_fn
             .build_acceleration_structures_khr(
-                device,
+                self.handle,
                 deferred_operation,
                 infos.len() as _,
                 infos.as_ptr(),
@@ -151,43 +158,47 @@ impl AccelerationStructure {
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCopyAccelerationStructureKHR.html>"]
     pub unsafe fn copy_acceleration_structure(
         &self,
-        device: vk::Device,
         deferred_operation: vk::DeferredOperationKHR,
         info: &vk::CopyAccelerationStructureInfoKHR,
     ) -> VkResult<()> {
         self.acceleration_structure_fn
-            .copy_acceleration_structure_khr(device, deferred_operation, info as *const _)
+            .copy_acceleration_structure_khr(self.handle, deferred_operation, info as *const _)
             .into()
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCopyAccelerationStructureToMemoryKHR.html>"]
     pub unsafe fn copy_acceleration_structure_to_memory(
         &self,
-        device: vk::Device,
         deferred_operation: vk::DeferredOperationKHR,
         info: &vk::CopyAccelerationStructureToMemoryInfoKHR,
     ) -> VkResult<()> {
         self.acceleration_structure_fn
-            .copy_acceleration_structure_to_memory_khr(device, deferred_operation, info as *const _)
+            .copy_acceleration_structure_to_memory_khr(
+                self.handle,
+                deferred_operation,
+                info as *const _,
+            )
             .into()
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCopyMemoryToAccelerationStructureKHR.html>"]
     pub unsafe fn copy_memory_to_acceleration_structure(
         &self,
-        device: vk::Device,
         deferred_operation: vk::DeferredOperationKHR,
         info: &vk::CopyMemoryToAccelerationStructureInfoKHR,
     ) -> VkResult<()> {
         self.acceleration_structure_fn
-            .copy_memory_to_acceleration_structure_khr(device, deferred_operation, info as *const _)
+            .copy_memory_to_acceleration_structure_khr(
+                self.handle,
+                deferred_operation,
+                info as *const _,
+            )
             .into()
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkWriteAccelerationStructuresPropertiesKHR.html>"]
     pub unsafe fn write_acceleration_structures_properties(
         &self,
-        device: vk::Device,
         acceleration_structures: &[vk::AccelerationStructureKHR],
         query_type: vk::QueryType,
         data: &mut [u8],
@@ -195,7 +206,7 @@ impl AccelerationStructure {
     ) -> VkResult<()> {
         self.acceleration_structure_fn
             .write_acceleration_structures_properties_khr(
-                device,
+                self.handle,
                 acceleration_structures.len() as _,
                 acceleration_structures.as_ptr(),
                 query_type,
@@ -239,11 +250,10 @@ impl AccelerationStructure {
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetAccelerationStructureHandleKHR.html>"]
     pub unsafe fn get_acceleration_structure_device_address(
         &self,
-        device: vk::Device,
         info: &vk::AccelerationStructureDeviceAddressInfoKHR,
     ) -> vk::DeviceAddress {
         self.acceleration_structure_fn
-            .get_acceleration_structure_device_address_khr(device, info as *const _)
+            .get_acceleration_structure_device_address_khr(self.handle, info as *const _)
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdWriteAccelerationStructuresPropertiesKHR.html>"]
@@ -269,14 +279,13 @@ impl AccelerationStructure {
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetDeviceAccelerationStructureCompatibilityKHR.html>"]
     pub unsafe fn get_device_acceleration_structure_compatibility(
         &self,
-        device: vk::Device,
         version: &vk::AccelerationStructureVersionInfoKHR,
     ) -> vk::AccelerationStructureCompatibilityKHR {
         let mut compatibility = vk::AccelerationStructureCompatibilityKHR::default();
 
         self.acceleration_structure_fn
             .get_device_acceleration_structure_compatibility_khr(
-                device,
+                self.handle,
                 version,
                 &mut compatibility as *mut _,
             );
@@ -287,7 +296,6 @@ impl AccelerationStructure {
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetAccelerationStructureBuildSizesKHR.html>"]
     pub unsafe fn get_acceleration_structure_build_sizes(
         &self,
-        device: vk::Device,
         build_type: vk::AccelerationStructureBuildTypeKHR,
         build_info: &vk::AccelerationStructureBuildGeometryInfoKHR,
         max_primitive_counts: &[u32],
@@ -298,7 +306,7 @@ impl AccelerationStructure {
 
         self.acceleration_structure_fn
             .get_acceleration_structure_build_sizes_khr(
-                device,
+                self.handle,
                 build_type,
                 build_info as *const _,
                 max_primitive_counts.as_ptr(),

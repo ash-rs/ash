@@ -587,10 +587,10 @@ impl DebugReportFlagsEXT {
 pub struct ExternalMemoryHandleTypeFlagsNV(pub(crate) Flags);
 vk_bitflags_wrapped!(ExternalMemoryHandleTypeFlagsNV, 0b1111, Flags);
 impl ExternalMemoryHandleTypeFlagsNV {
-    pub const EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_NV: Self = Self(0b1);
-    pub const EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT_NV: Self = Self(0b10);
-    pub const EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_NV: Self = Self(0b100);
-    pub const EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_IMAGE_KMT_NV: Self = Self(0b1000);
+    pub const OPAQUE_WIN32: Self = Self(0b1);
+    pub const OPAQUE_WIN32_KMT: Self = Self(0b10);
+    pub const D3D11_IMAGE: Self = Self(0b100);
+    pub const D3D11_IMAGE_KMT: Self = Self(0b1000);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -598,9 +598,9 @@ impl ExternalMemoryHandleTypeFlagsNV {
 pub struct ExternalMemoryFeatureFlagsNV(pub(crate) Flags);
 vk_bitflags_wrapped!(ExternalMemoryFeatureFlagsNV, 0b111, Flags);
 impl ExternalMemoryFeatureFlagsNV {
-    pub const EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY_NV: Self = Self(0b1);
-    pub const EXTERNAL_MEMORY_FEATURE_EXPORTABLE_NV: Self = Self(0b10);
-    pub const EXTERNAL_MEMORY_FEATURE_IMPORTABLE_NV: Self = Self(0b100);
+    pub const DEDICATED_ONLY: Self = Self(0b1);
+    pub const EXPORTABLE: Self = Self(0b10);
+    pub const IMPORTABLE: Self = Self(0b100);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -661,13 +661,13 @@ impl DescriptorSetLayoutCreateFlags {}
 pub struct ExternalMemoryHandleTypeFlags(pub(crate) Flags);
 vk_bitflags_wrapped!(ExternalMemoryHandleTypeFlags, 0b111_1111, Flags);
 impl ExternalMemoryHandleTypeFlags {
-    pub const EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_FD: Self = Self(0b1);
-    pub const EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32: Self = Self(0b10);
-    pub const EXTERNAL_MEMORY_HANDLE_TYPE_OPAQUE_WIN32_KMT: Self = Self(0b100);
-    pub const EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE: Self = Self(0b1000);
-    pub const EXTERNAL_MEMORY_HANDLE_TYPE_D3D11_TEXTURE_KMT: Self = Self(0b1_0000);
-    pub const EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_HEAP: Self = Self(0b10_0000);
-    pub const EXTERNAL_MEMORY_HANDLE_TYPE_D3D12_RESOURCE: Self = Self(0b100_0000);
+    pub const OPAQUE_FD: Self = Self(0b1);
+    pub const OPAQUE_WIN32: Self = Self(0b10);
+    pub const OPAQUE_WIN32_KMT: Self = Self(0b100);
+    pub const D3D11_TEXTURE: Self = Self(0b1000);
+    pub const D3D11_TEXTURE_KMT: Self = Self(0b1_0000);
+    pub const D3D12_HEAP: Self = Self(0b10_0000);
+    pub const D3D12_RESOURCE: Self = Self(0b100_0000);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -675,9 +675,9 @@ impl ExternalMemoryHandleTypeFlags {
 pub struct ExternalMemoryFeatureFlags(pub(crate) Flags);
 vk_bitflags_wrapped!(ExternalMemoryFeatureFlags, 0b111, Flags);
 impl ExternalMemoryFeatureFlags {
-    pub const EXTERNAL_MEMORY_FEATURE_DEDICATED_ONLY: Self = Self(0b1);
-    pub const EXTERNAL_MEMORY_FEATURE_EXPORTABLE: Self = Self(0b10);
-    pub const EXTERNAL_MEMORY_FEATURE_IMPORTABLE: Self = Self(0b100);
+    pub const DEDICATED_ONLY: Self = Self(0b1);
+    pub const EXPORTABLE: Self = Self(0b10);
+    pub const IMPORTABLE: Self = Self(0b100);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -685,11 +685,11 @@ impl ExternalMemoryFeatureFlags {
 pub struct ExternalSemaphoreHandleTypeFlags(pub(crate) Flags);
 vk_bitflags_wrapped!(ExternalSemaphoreHandleTypeFlags, 0b1_1111, Flags);
 impl ExternalSemaphoreHandleTypeFlags {
-    pub const EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_FD: Self = Self(0b1);
-    pub const EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32: Self = Self(0b10);
-    pub const EXTERNAL_SEMAPHORE_HANDLE_TYPE_OPAQUE_WIN32_KMT: Self = Self(0b100);
-    pub const EXTERNAL_SEMAPHORE_HANDLE_TYPE_D3D12_FENCE: Self = Self(0b1000);
-    pub const EXTERNAL_SEMAPHORE_HANDLE_TYPE_SYNC_FD: Self = Self(0b1_0000);
+    pub const OPAQUE_FD: Self = Self(0b1);
+    pub const OPAQUE_WIN32: Self = Self(0b10);
+    pub const OPAQUE_WIN32_KMT: Self = Self(0b100);
+    pub const D3D12_FENCE: Self = Self(0b1000);
+    pub const SYNC_FD: Self = Self(0b1_0000);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -697,8 +697,8 @@ impl ExternalSemaphoreHandleTypeFlags {
 pub struct ExternalSemaphoreFeatureFlags(pub(crate) Flags);
 vk_bitflags_wrapped!(ExternalSemaphoreFeatureFlags, 0b11, Flags);
 impl ExternalSemaphoreFeatureFlags {
-    pub const EXTERNAL_SEMAPHORE_FEATURE_EXPORTABLE: Self = Self(0b1);
-    pub const EXTERNAL_SEMAPHORE_FEATURE_IMPORTABLE: Self = Self(0b10);
+    pub const EXPORTABLE: Self = Self(0b1);
+    pub const IMPORTABLE: Self = Self(0b10);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -714,10 +714,10 @@ impl SemaphoreImportFlags {
 pub struct ExternalFenceHandleTypeFlags(pub(crate) Flags);
 vk_bitflags_wrapped!(ExternalFenceHandleTypeFlags, 0b1111, Flags);
 impl ExternalFenceHandleTypeFlags {
-    pub const EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_FD: Self = Self(0b1);
-    pub const EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32: Self = Self(0b10);
-    pub const EXTERNAL_FENCE_HANDLE_TYPE_OPAQUE_WIN32_KMT: Self = Self(0b100);
-    pub const EXTERNAL_FENCE_HANDLE_TYPE_SYNC_FD: Self = Self(0b1000);
+    pub const OPAQUE_FD: Self = Self(0b1);
+    pub const OPAQUE_WIN32: Self = Self(0b10);
+    pub const OPAQUE_WIN32_KMT: Self = Self(0b100);
+    pub const SYNC_FD: Self = Self(0b1000);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -725,8 +725,8 @@ impl ExternalFenceHandleTypeFlags {
 pub struct ExternalFenceFeatureFlags(pub(crate) Flags);
 vk_bitflags_wrapped!(ExternalFenceFeatureFlags, 0b11, Flags);
 impl ExternalFenceFeatureFlags {
-    pub const EXTERNAL_FENCE_FEATURE_EXPORTABLE: Self = Self(0b1);
-    pub const EXTERNAL_FENCE_FEATURE_IMPORTABLE: Self = Self(0b10);
+    pub const EXPORTABLE: Self = Self(0b1);
+    pub const IMPORTABLE: Self = Self(0b10);
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]

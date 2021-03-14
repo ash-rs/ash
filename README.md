@@ -78,7 +78,7 @@ let queue_info = [vk::DeviceQueueCreateInfo::builder()
     .queue_priorities(&priorities)
     .build()];
 
-// We don't need to call build here because builders implement `Deref`.
+// We don't need to call `.build()` here because builders implement `Deref`.
 let device_create_info = vk::DeviceCreateInfo::builder()
     .queue_create_infos(&queue_info)
     .enabled_extension_names(&device_extension_names_raw)
@@ -87,6 +87,18 @@ let device_create_info = vk::DeviceCreateInfo::builder()
 let device: Device = instance
     .create_device(pdevice, &device_create_info, None)
     .unwrap();
+```
+
+To not lose this lifetime single items can be "cast" to a slice of length _one_ with `std::slice::from_ref` while still taking advantage of `Deref`:
+
+```rust
+let queue_info = vk::DeviceQueueCreateInfo::builder()
+    .queue_family_index(queue_family_index)
+    .queue_priorities(&priorities);
+
+let device_create_info = vk::DeviceCreateInfo::builder()
+    .queue_create_infos(std::slice::from_ref(&queue_info))
+    ...;
 ```
 
 Builders have an explicit lifetime, and are marked as `#[repr(transparent)]`.

@@ -191,10 +191,10 @@ impl<L> EntryCustom<L> {
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkEnumerateInstanceVersion.html>"]
-    /// ```rust,no_run
+    /// ```no_run
     /// # use ash::{Entry, vk};
-    /// # fn main() -> Result<(), Box<std::error::Error>> {
-    /// let entry = Entry::new()?;
+    /// # fn main() -> Result<(), Box<dyn std::error::Error>> {
+    /// let entry = unsafe { Entry::new() }?;
     /// match entry.try_enumerate_instance_version()? {
     ///     // Vulkan 1.1+
     ///     Some(version) => {

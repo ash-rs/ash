@@ -1054,55 +1054,30 @@ impl ObjectType {
 }
 impl ObjectType {
     pub const UNKNOWN: Self = Self(0);
-    #[doc = "VkInstance"]
     pub const INSTANCE: Self = Self(1);
-    #[doc = "VkPhysicalDevice"]
     pub const PHYSICAL_DEVICE: Self = Self(2);
-    #[doc = "VkDevice"]
     pub const DEVICE: Self = Self(3);
-    #[doc = "VkQueue"]
     pub const QUEUE: Self = Self(4);
-    #[doc = "VkSemaphore"]
     pub const SEMAPHORE: Self = Self(5);
-    #[doc = "VkCommandBuffer"]
     pub const COMMAND_BUFFER: Self = Self(6);
-    #[doc = "VkFence"]
     pub const FENCE: Self = Self(7);
-    #[doc = "VkDeviceMemory"]
     pub const DEVICE_MEMORY: Self = Self(8);
-    #[doc = "VkBuffer"]
     pub const BUFFER: Self = Self(9);
-    #[doc = "VkImage"]
     pub const IMAGE: Self = Self(10);
-    #[doc = "VkEvent"]
     pub const EVENT: Self = Self(11);
-    #[doc = "VkQueryPool"]
     pub const QUERY_POOL: Self = Self(12);
-    #[doc = "VkBufferView"]
     pub const BUFFER_VIEW: Self = Self(13);
-    #[doc = "VkImageView"]
     pub const IMAGE_VIEW: Self = Self(14);
-    #[doc = "VkShaderModule"]
     pub const SHADER_MODULE: Self = Self(15);
-    #[doc = "VkPipelineCache"]
     pub const PIPELINE_CACHE: Self = Self(16);
-    #[doc = "VkPipelineLayout"]
     pub const PIPELINE_LAYOUT: Self = Self(17);
-    #[doc = "VkRenderPass"]
     pub const RENDER_PASS: Self = Self(18);
-    #[doc = "VkPipeline"]
     pub const PIPELINE: Self = Self(19);
-    #[doc = "VkDescriptorSetLayout"]
     pub const DESCRIPTOR_SET_LAYOUT: Self = Self(20);
-    #[doc = "VkSampler"]
     pub const SAMPLER: Self = Self(21);
-    #[doc = "VkDescriptorPool"]
     pub const DESCRIPTOR_POOL: Self = Self(22);
-    #[doc = "VkDescriptorSet"]
     pub const DESCRIPTOR_SET: Self = Self(23);
-    #[doc = "VkFramebuffer"]
     pub const FRAMEBUFFER: Self = Self(24);
-    #[doc = "VkCommandPool"]
     pub const COMMAND_POOL: Self = Self(25);
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
@@ -1213,10 +1188,10 @@ impl DebugReportObjectTypeEXT {
     pub const COMMAND_POOL: Self = Self(25);
     pub const SURFACE_KHR: Self = Self(26);
     pub const SWAPCHAIN_KHR: Self = Self(27);
-    pub const DEBUG_REPORT_CALLBACK: Self = Self(28);
+    pub const DEBUG_REPORT_CALLBACK_EXT: Self = Self(28);
     pub const DISPLAY_KHR: Self = Self(29);
     pub const DISPLAY_MODE_KHR: Self = Self(30);
-    pub const VALIDATION_CACHE: Self = Self(33);
+    pub const VALIDATION_CACHE_EXT: Self = Self(33);
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
@@ -1663,6 +1638,8 @@ impl VendorId {
     pub const CODEPLAY: Self = Self(0x1_0004);
     #[doc = "Mesa vendor ID"]
     pub const MESA: Self = Self(0x1_0005);
+    #[doc = "PoCL vendor ID"]
+    pub const POCL: Self = Self(0x1_0006);
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
@@ -1704,7 +1681,7 @@ impl DriverId {
     #[doc = "Mesa"]
     pub const MESA_LLVMPIPE: Self = Self(13);
     #[doc = "MoltenVK"]
-    pub const MOLTEN: Self = Self(14);
+    pub const MOLTENVK: Self = Self(14);
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]

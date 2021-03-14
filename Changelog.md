@@ -6,6 +6,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] - ReleaseDate
 
+## [0.32.0] - 2020-07-03
+
+### Added
+
+- Khr raytracing support
+- `VK_NV_device_diagnostics_config` device extension
+- Add `VK_KHR_deferred_host_operations` extension support
+- Expose header version and extension spec version constants
+- Provide Vulkan library loader from custom path
+
+### Changed
+
+- Removed deprecated experimental raytracing extension
+- Update Vulkan-Headers to 1.2.168
+- Update libloading from 0.6 to 0.7
+
+### Fixed
+
+- Turn c_void-returning functions into Rust ()
+- Use best guess for ggp extension types
+- Use raw pointers to static-sized arrays in FFI signatures
+- rename parameter of `get_physical_device_surface_support`
+
+
 ## [0.31.0] - 2020-05-10
 
 ### Added
@@ -126,6 +150,7 @@ flags: vk::CommandPoolCreateFlags::RESET_COMMAND_BUFFER_BIT,
 can write to aligned memory.
 
 
-[Unreleased]: https://github.com/MaikKlein/ash/compare/0.31.0...HEAD
+[Unreleased]: https://github.com/MaikKlein/ash/compare/0.32.0...HEAD
+[0.32.0]: https://github.com/MaikKlein/ash/releases/tag/0.32.0
 [0.31.0]: https://github.com/MaikKlein/ash/releases/tag/0.31.0
 [0.30.0]: https://github.com/MaikKlein/ash/releases/tag/0.30.0

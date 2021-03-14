@@ -32,12 +32,17 @@ impl Surface {
     pub unsafe fn get_physical_device_surface_support(
         &self,
         physical_device: vk::PhysicalDevice,
-        queue_index: u32,
+        queue_family_index: u32,
         surface: vk::SurfaceKHR,
     ) -> VkResult<bool> {
         let mut b = mem::zeroed();
         self.surface_fn
-            .get_physical_device_surface_support_khr(physical_device, queue_index, surface, &mut b)
+            .get_physical_device_surface_support_khr(
+                physical_device,
+                queue_family_index,
+                surface,
+                &mut b,
+            )
             .result_with_success(b > 0)
     }
 
