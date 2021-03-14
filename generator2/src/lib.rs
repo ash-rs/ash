@@ -224,12 +224,13 @@ impl<'spec> Context<'spec> {
                 .map(|(_, a)| a)
                 .collect();
 
+        // TODO: Remove vendor ext yay nay?
         // Remove vendor ext
-        if let Some(ext) = name_str.last() {
-            if name_str.len() > 1 && self.tags.contains(ext) {
-                let _ = name_str.pop();
-            }
-        }
+        // if let Some(ext) = name_str.last() {
+        //     if name_str.len() > 1 && self.tags.contains(ext) {
+        //         let _ = name_str.pop();
+        //     }
+        // }
 
         // Remove trailing BIT
         if let Some(&"BIT") = name_str.last() {

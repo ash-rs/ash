@@ -100,6 +100,30 @@ pub struct Field<'spec> {
     pub variable: CVariableDecl<'spec>,
 }
 
+impl<'spec> Field<'spec> {
+    pub fn default_value(&self, ctx: &Context) -> String {
+        self.default_value.map_or_else(
+            || {
+                match self.variable.ty.decoration {
+                    CDecoration::None => "Default::default()",
+                    CDecoration::PointerToConst => "::std::ptr::null()",
+                    _ => "::std::ptr::null_mut()",
+                }
+                .into()
+            },
+            |default_value_str| match self.variable.ty.name {
+                "VkStructureType" => {
+                    format!(
+                        "StructureType::{}",
+                        ctx.rust_enum_variant_name("VkStructureType", default_value_str)
+                    )
+                }
+                value => unimplemented!("Please add support for the following value {}", value),
+            },
+        )
+    }
+}
+
 pub fn write_type<'spec>(
     ctx: &Context,
     ty: &'spec Type<'spec>,
@@ -193,6 +217,7 @@ pub fn derive_debug(ctx: &Context, ty: &Type<'_>, w: &mut dyn Write) -> Result<(
 }
 
 pub fn derive_default(ctx: &Context, ty: &Type<'_>, w: &mut dyn Write) -> Result<(), Error> {
+    // Can't derive default for unions
     if ty.is_union() {
         return Ok(());
     }
@@ -204,9 +229,9 @@ pub fn derive_default(ctx: &Context, ty: &Type<'_>, w: &mut dyn Write) -> Result
         .map(|field| {
             let field_name = ctx.rust_field_name(field.variable.name);
             format!(
-                "{name}: {ty}::default(),",
+                "{name}: {default},",
                 name = field_name,
-                ty = ctx.rust_type_name(field.variable.ty.name),
+                default = field.default_value(ctx),
             )
         })
         .collect();

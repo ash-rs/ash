@@ -7,6 +7,24 @@ use std::{
     path::Path,
 };
 
+pub enum ExtensionSupport {
+    Disabled,
+    Vulkan,
+}
+
+impl ExtensionSupport {
+    pub fn from_extension(ext: &vk::Extension) -> Self {
+        match ext.supported.as_ref().map(String::as_str) {
+            Some("disabled") => Self::Disabled,
+            Some("vulkan") => Self::Vulkan,
+            unknown => panic!(
+                "Unknown support: {:?}. Please extend this enum to include the unknown flag",
+                unknown
+            ),
+        }
+    }
+}
+
 pub fn generate_extensions(ctx: &Context) -> Result<(), Error> {
     create_dir_all(ctx.output_path)?;
     let extesions_dir = ctx.output_path.join("extensions");
@@ -22,6 +40,13 @@ pub fn generate_extension(
     dir: &Path,
     extension: &vk::Extension,
 ) -> Result<(), Error> {
+    let support = ExtensionSupport::from_extension(extension);
+    // Only generate vulkan extensions
+    if !matches!(support, ExtensionSupport::Vulkan) {
+        return Ok(());
+    }
+
+    println!("{:#?}", extension);
     let extension_name_path = extension.name.to_snake_case();
     let extension_path = dir.join(extension_name_path).with_extension("rs");
     let mut w = File::create(extension_path)?;
@@ -69,12 +94,14 @@ pub fn generate_extension(
         }
     }
 
-    extensions_command_iter(extension).filter_map(|(name, comment)| {
-        let cmd = ctx.commands_by_name.get(name)?;
-        Some((cmd, comment))
-    }).for_each(|(cmd, comment)|{
-        println!("{:#?}", cmd);
-    });
+    extensions_command_iter(extension)
+        .filter_map(|(name, comment)| {
+            let cmd = ctx.commands_by_name.get(name)?;
+            Some((cmd, comment))
+        })
+        .for_each(|(cmd, comment)| {
+            println!("{:#?}", cmd);
+        });
 
     Ok(())
 }
