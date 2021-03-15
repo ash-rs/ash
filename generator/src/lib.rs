@@ -369,7 +369,10 @@ pub fn platform_specific_types() -> TokenStream {
         pub type LPCWSTR = *const u16;
         #[allow(non_camel_case_types)]
         pub type zx_handle_t = u32;
-
+        #[allow(non_camel_case_types)]
+        pub type _screen_context = c_void;
+        #[allow(non_camel_case_types)]
+        pub type _screen_window = c_void;
         // FIXME: Platform specific types that should come from a library id:0
         // typedefs are only here so that the code compiles for now
         #[allow(non_camel_case_types)]
@@ -457,7 +460,7 @@ impl quote::ToTokens for Constant {
                 tokens.extend(rexpr.parse::<TokenStream>());
             }
             Constant::BitPos(pos) => {
-                let value = 1 << pos;
+                let value = (1 as u64) << pos;
                 let bit_string = format!("{:b}", value);
                 let bit_string = interleave_number('_', 4, &bit_string);
                 syn::LitInt::new(&format!("0b{}", bit_string), Span::call_site()).to_tokens(tokens);
@@ -497,7 +500,7 @@ impl Constant {
         match *self {
             Constant::Number(n) => Some(ConstVal::U64(n as u64)),
             Constant::Hex(ref hex) => u64::from_str_radix(&hex, 16).ok().map(ConstVal::U64),
-            Constant::BitPos(pos) => Some(ConstVal::U64((1 << pos) as u64)),
+            Constant::BitPos(pos) => Some(ConstVal::U64((1 as u64) << (pos as u64))),
             _ => None,
         }
     }
@@ -1408,21 +1411,43 @@ pub fn generate_enum<'a>(
         let bit_string = format!("{:b}", all_bits);
         let bit_string = interleave_number('_', 4, &bit_string);
         let all_bits_term = syn::LitInt::new(&format!("0b{}", bit_string), Span::call_site());
+        let is_flag64 = constants
+            .iter()
+            .filter_map(|constant| Constant::from_constant(constant).value())
+            .any(|i| {
+                if let ConstVal::U64(x) = i {
+                    x > u32::MAX as u64
+                } else {
+                    false
+                }
+            }); //Todo there has to be a better way th check byte size
 
         if bitflags_cache.contains(&ident) {
             EnumType::Bitflags(quote! {})
         } else {
             let impl_bitflags = bitflags_impl_block(ident.clone(), &_enum.name, &constants);
             bitflags_cache.insert(ident.clone());
-            let q = quote! {
-                #[repr(transparent)]
-                #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
-                #[doc = #khronos_link]
-                pub struct #ident(pub(crate) Flags);
-                vk_bitflags_wrapped!(#ident, #all_bits_term, Flags);
-                #impl_bitflags
-            };
-            EnumType::Bitflags(q)
+            if is_flag64 {
+                let q = quote! {
+                    #[repr(transparent)]
+                    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+                    #[doc = #khronos_link]
+                    pub struct #ident(pub(crate) Flags64);
+                    vk_bitflags_wrapped!(#ident, #all_bits_term, Flags64);
+                    #impl_bitflags
+                };
+                EnumType::Bitflags(q)
+            } else {
+                let q = quote! {
+                    #[repr(transparent)]
+                    #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+                    #[doc = #khronos_link]
+                    pub struct #ident(pub(crate) Flags);
+                    vk_bitflags_wrapped!(#ident, #all_bits_term, Flags);
+                    #impl_bitflags
+                };
+                EnumType::Bitflags(q)
+            }
         }
     } else {
         let (struct_attribute, special_quote) = match _name.as_str() {
@@ -2037,6 +2062,7 @@ pub fn generate_struct(
         quote!()
     };
     let khronos_link = khronos_link(&_struct.name);
+
     quote! {
         #[repr(C)]
         #[derive(Copy, Clone, #default_str #dbg_str #manual_derive_tokens)]
@@ -2301,14 +2327,14 @@ pub fn generate_const_debugs(
                 } else {
                     let ident = &value.ident;
                     let name = ident.to_string();
-                    Some(quote! { (#ty::#ident.0, #name) })
+                    Some(quote! { (#ty::#ident.0 as u64, #name) })
                 }
             });
             quote! {
                 impl fmt::Debug for #ty {
                     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-                        const KNOWN: &[(Flags, &str)] = &[#(#cases),*];
-                        debug_flags(f, KNOWN, self.0)
+                        const KNOWN: &[(Flags64, &str)] = &[#(#cases),*];
+                        debug_flags64(f, KNOWN, self.0 as u64)
                     }
                 }
             }
@@ -2357,7 +2383,23 @@ pub fn generate_const_debugs(
             }
             Ok(())
         }
-
+        pub(crate) fn debug_flags64(f: &mut fmt::Formatter, known: &[(Flags64, &'static str)], value: Flags64) -> fmt::Result {
+            let mut first = true;
+            let mut accum = value;
+            for (bit, name) in known {
+                if *bit != 0 && accum & *bit == *bit {
+                    if !first { f.write_str(" | ")?; }
+                    f.write_str(name)?;
+                    first = false;
+                    accum &= !bit;
+                }
+            }
+            if accum != 0 {
+                if !first { f.write_str(" | ")?; }
+                write!(f, "{:b}", accum)?;
+            }
+            Ok(())
+        }
         #(#impls)*
     }
 }
@@ -2629,6 +2671,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_xml: &Path, src_dir: P) {
         use crate::vk::bitflags::*;
         use crate::vk::constants::*;
         use crate::vk::enums::*;
+
         #(#definition_code)*
     };
 
