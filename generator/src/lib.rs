@@ -370,7 +370,10 @@ pub fn platform_specific_types() -> TokenStream {
         pub type LPCWSTR = *const u16;
         #[allow(non_camel_case_types)]
         pub type zx_handle_t = u32;
-
+        #[allow(non_camel_case_types)]
+        pub type _screen_context = c_void;
+        #[allow(non_camel_case_types)]
+        pub type _screen_window = c_void;
         // FIXME: Platform specific types that should come from a library id:0
         // typedefs are only here so that the code compiles for now
         #[allow(non_camel_case_types)]
