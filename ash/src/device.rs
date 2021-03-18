@@ -1902,15 +1902,11 @@ pub trait DeviceV1_0 {
     unsafe fn get_image_subresource_layout(
         &self,
         image: vk::Image,
-        subresource: vk::ImageSubresource,
+        subresource: &vk::ImageSubresource,
     ) -> vk::SubresourceLayout {
         let mut layout = mem::zeroed();
-        self.fp_v1_0().get_image_subresource_layout(
-            self.handle(),
-            image,
-            &subresource,
-            &mut layout,
-        );
+        self.fp_v1_0()
+            .get_image_subresource_layout(self.handle(), image, subresource, &mut layout);
         layout
     }
 
