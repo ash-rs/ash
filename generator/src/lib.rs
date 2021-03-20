@@ -404,6 +404,9 @@ pub trait ConstantExt {
     fn constant(&self, enum_name: &str) -> Constant;
     fn variant_ident(&self, enum_name: &str) -> Ident;
     fn notation(&self) -> Option<&str>;
+    fn is_alias(&self) -> bool {
+        false
+    }
 }
 
 impl ConstantExt for vkxml::ExtensionEnum {
@@ -429,6 +432,9 @@ impl ConstantExt for vk_parse::Enum {
     }
     fn notation(&self) -> Option<&str> {
         self.comment.as_deref()
+    }
+    fn is_alias(&self) -> bool {
+        matches!(self.spec, vk_parse::EnumSpec::Alias { .. })
     }
 }
 
@@ -1430,7 +1436,7 @@ pub fn generate_enum<'a>(
         const_cache.insert(constant.name.as_str());
         values.push(ConstantMatchInfo {
             ident: constant.variant_ident(name),
-            is_alias: false,
+            is_alias: constant.is_alias(),
         });
     }
     const_values.insert(ident.clone(), values);

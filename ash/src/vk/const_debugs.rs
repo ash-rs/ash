@@ -537,7 +537,6 @@ impl fmt::Debug for ColorSpaceKHR {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
             Self::SRGB_NONLINEAR => Some("SRGB_NONLINEAR"),
-            Self::COLORSPACE_SRGB_NONLINEAR => Some("COLORSPACE_SRGB_NONLINEAR"),
             Self::DISPLAY_P3_NONLINEAR_EXT => Some("DISPLAY_P3_NONLINEAR_EXT"),
             Self::EXTENDED_SRGB_LINEAR_EXT => Some("EXTENDED_SRGB_LINEAR_EXT"),
             Self::DISPLAY_P3_LINEAR_EXT => Some("DISPLAY_P3_LINEAR_EXT"),
@@ -830,11 +829,9 @@ impl fmt::Debug for DebugReportObjectTypeEXT {
             Self::SURFACE_KHR => Some("SURFACE_KHR"),
             Self::SWAPCHAIN_KHR => Some("SWAPCHAIN_KHR"),
             Self::DEBUG_REPORT_CALLBACK_EXT => Some("DEBUG_REPORT_CALLBACK_EXT"),
-            Self::DEBUG_REPORT => Some("DEBUG_REPORT"),
             Self::DISPLAY_KHR => Some("DISPLAY_KHR"),
             Self::DISPLAY_MODE_KHR => Some("DISPLAY_MODE_KHR"),
             Self::VALIDATION_CACHE_EXT => Some("VALIDATION_CACHE_EXT"),
-            Self::VALIDATION_CACHE => Some("VALIDATION_CACHE"),
             Self::SAMPLER_YCBCR_CONVERSION => Some("SAMPLER_YCBCR_CONVERSION"),
             Self::DESCRIPTOR_UPDATE_TEMPLATE => Some("DESCRIPTOR_UPDATE_TEMPLATE"),
             Self::ACCELERATION_STRUCTURE_KHR => Some("ACCELERATION_STRUCTURE_KHR"),
@@ -1380,10 +1377,6 @@ impl fmt::Debug for ExternalSemaphoreHandleTypeFlags {
             (
                 ExternalSemaphoreHandleTypeFlags::D3D12_FENCE.0,
                 "D3D12_FENCE",
-            ),
-            (
-                ExternalSemaphoreHandleTypeFlags::D3D11_FENCE.0,
-                "D3D11_FENCE",
             ),
             (ExternalSemaphoreHandleTypeFlags::SYNC_FD.0, "SYNC_FD"),
             (
@@ -2386,9 +2379,6 @@ impl fmt::Debug for PerformanceCounterScopeKHR {
             Self::COMMAND_BUFFER => Some("COMMAND_BUFFER"),
             Self::RENDER_PASS => Some("RENDER_PASS"),
             Self::COMMAND => Some("COMMAND"),
-            Self::QUERY_SCOPE_COMMAND_BUFFER => Some("QUERY_SCOPE_COMMAND_BUFFER"),
-            Self::QUERY_SCOPE_RENDER_PASS => Some("QUERY_SCOPE_RENDER_PASS"),
-            Self::QUERY_SCOPE_COMMAND => Some("QUERY_SCOPE_COMMAND"),
             _ => None,
         };
         if let Some(x) = name {
@@ -3503,10 +3493,6 @@ impl fmt::Debug for StencilFaceFlags {
             (StencilFaceFlags::FRONT.0, "FRONT"),
             (StencilFaceFlags::BACK.0, "BACK"),
             (StencilFaceFlags::FRONT_AND_BACK.0, "FRONT_AND_BACK"),
-            (
-                StencilFaceFlags::STENCIL_FRONT_AND_BACK.0,
-                "STENCIL_FRONT_AND_BACK",
-            ),
         ];
         debug_flags(f, KNOWN, self.0)
     }
