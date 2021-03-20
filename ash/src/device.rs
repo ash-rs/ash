@@ -1593,6 +1593,22 @@ pub trait DeviceV1_0 {
         err_code.result_with_success(data)
     }
 
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkMergePipelineCaches.html>"]
+    unsafe fn merge_pipeline_caches(
+        &self,
+        dst_cache: vk::PipelineCache,
+        src_caches: &[vk::PipelineCache],
+    ) -> VkResult<()> {
+        self.fp_v1_0()
+            .merge_pipeline_caches(
+                self.handle(),
+                dst_cache,
+                src_caches.len() as u32,
+                src_caches.as_ptr(),
+            )
+            .into()
+    }
+
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkMapMemory.html>"]
     unsafe fn map_memory(
         &self,
@@ -1754,6 +1770,18 @@ pub trait DeviceV1_0 {
     ) -> VkResult<()> {
         self.fp_v1_0()
             .queue_submit(queue, submits.len() as u32, submits.as_ptr(), fence)
+            .into()
+    }
+
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkQueueBindSparse.html>"]
+    unsafe fn queue_bind_sparse(
+        &self,
+        queue: vk::Queue,
+        bind_info: &[vk::BindSparseInfo],
+        fence: vk::Fence,
+    ) -> VkResult<()> {
+        self.fp_v1_0()
+            .queue_bind_sparse(queue, bind_info.len() as u32, bind_info.as_ptr(), fence)
             .into()
     }
 
@@ -1975,6 +2003,14 @@ pub trait DeviceV1_0 {
         self.fp_v1_0()
             .bind_image_memory(self.handle(), image, device_memory, offset)
             .into()
+    }
+
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetRenderAreaGranularity.html>"]
+    unsafe fn get_render_area_granularity(&self, render_pass: vk::RenderPass) -> vk::Extent2D {
+        let mut granularity = mem::zeroed();
+        self.fp_v1_0()
+            .get_render_area_granularity(self.handle(), render_pass, &mut granularity);
+        granularity
     }
 }
 

@@ -7,35 +7,35 @@ use std::ffi::CStr;
 use std::mem;
 
 #[derive(Clone)]
-pub struct MacOSSurface {
+pub struct ViSurface {
     handle: vk::Instance,
-    macos_surface_fn: vk::MvkMacosSurfaceFn,
+    vi_surface_fn: vk::NnViSurfaceFn,
 }
 
-impl MacOSSurface {
-    pub fn new<E: EntryV1_0, I: InstanceV1_0>(entry: &E, instance: &I) -> MacOSSurface {
-        let surface_fn = vk::MvkMacosSurfaceFn::load(|name| unsafe {
+impl ViSurface {
+    pub fn new<E: EntryV1_0, I: InstanceV1_0>(entry: &E, instance: &I) -> ViSurface {
+        let surface_fn = vk::NnViSurfaceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });
-        MacOSSurface {
+        ViSurface {
             handle: instance.handle(),
-            macos_surface_fn: surface_fn,
+            vi_surface_fn: surface_fn,
         }
     }
 
     pub fn name() -> &'static CStr {
-        vk::MvkMacosSurfaceFn::name()
+        vk::NnViSurfaceFn::name()
     }
 
-    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateMacOSSurfaceMVK.html>"]
-    pub unsafe fn create_mac_os_surface(
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateViSurfaceNN.html>"]
+    pub unsafe fn create_vi_surface(
         &self,
-        create_info: &vk::MacOSSurfaceCreateInfoMVK,
+        create_info: &vk::ViSurfaceCreateInfoNN,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<vk::SurfaceKHR> {
         let mut surface = mem::zeroed();
-        self.macos_surface_fn
-            .create_mac_os_surface_mvk(
+        self.vi_surface_fn
+            .create_vi_surface_nn(
                 self.handle,
                 create_info,
                 allocation_callbacks.as_raw_ptr(),
@@ -44,8 +44,8 @@ impl MacOSSurface {
             .result_with_success(surface)
     }
 
-    pub fn fp(&self) -> &vk::MvkMacosSurfaceFn {
-        &self.macos_surface_fn
+    pub fn fp(&self) -> &vk::NnViSurfaceFn {
+        &self.vi_surface_fn
     }
 
     pub fn instance(&self) -> vk::Instance {
