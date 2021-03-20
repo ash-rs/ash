@@ -46,10 +46,10 @@ impl EntryCustom<Arc<Library>> {
     /// `dlopen`ing native libraries is inherently unsafe. The safety guidelines
     /// for [`Library::new`] and [`Library::get`] apply here.
     ///
-    /// ```rust,no_run
+    /// ```no_run
     /// use ash::{vk, Entry, version::EntryV1_0};
-    /// # fn main() -> Result<(), Box<std::error::Error>> {
-    /// let entry = Entry::new()?;
+    /// # fn main() -> Result<(), Box<dyn std::error::Error>> {
+    /// let entry = unsafe { Entry::new() }?;
     /// let app_info = vk::ApplicationInfo {
     ///     api_version: vk::make_version(1, 0, 0),
     ///     ..Default::default()
@@ -62,7 +62,7 @@ impl EntryCustom<Arc<Library>> {
     /// # Ok(()) }
     /// ```
     pub unsafe fn new() -> Result<Entry, LoadingError> {
-        Self::with_library(&LIB_PATH)
+        Self::with_library(LIB_PATH)
     }
 
     /// Load Vulkan library at `path`
@@ -70,7 +70,7 @@ impl EntryCustom<Arc<Library>> {
     /// # Safety
     /// `dlopen`ing native libraries is inherently unsafe. The safety guidelines
     /// for [`Library::new`] and [`Library::get`] apply here.
-    pub unsafe fn with_library(path: &impl AsRef<OsStr>) -> Result<Entry, LoadingError> {
+    pub unsafe fn with_library(path: impl AsRef<OsStr>) -> Result<Entry, LoadingError> {
         let lib = Library::new(path).map_err(LoadingError).map(Arc::new)?;
 
         Ok(Self::new_custom(lib, |vk_lib, name| {
