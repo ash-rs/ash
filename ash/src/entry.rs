@@ -258,7 +258,7 @@ impl vk::StaticFn {
 pub struct MissingEntryPoint;
 impl std::fmt::Display for MissingEntryPoint {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::result::Result<(), std::fmt::Error> {
-        write!(f, "missing Vulkan entry point")
+        write!(f, "Cannot load `vkGetInstanceProcAddr` symbol from library")
     }
 }
 impl std::error::Error for MissingEntryPoint {}
