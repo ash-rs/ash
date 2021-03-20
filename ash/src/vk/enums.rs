@@ -1128,7 +1128,7 @@ impl ColorSpaceKHR {
 }
 impl ColorSpaceKHR {
     pub const SRGB_NONLINEAR: Self = Self(0);
-    #[doc = "Backwards-compatible alias containing a typo"]
+    #[deprecated = "Backwards-compatible alias containing a typo"]
     pub const COLORSPACE_SRGB_NONLINEAR: Self = Self::SRGB_NONLINEAR;
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
@@ -1191,12 +1191,12 @@ impl DebugReportObjectTypeEXT {
     pub const SURFACE_KHR: Self = Self(26);
     pub const SWAPCHAIN_KHR: Self = Self(27);
     pub const DEBUG_REPORT_CALLBACK_EXT: Self = Self(28);
-    #[doc = "Backwards-compatible alias containing a typo"]
+    #[deprecated = "Backwards-compatible alias containing a typo"]
     pub const DEBUG_REPORT: Self = Self::DEBUG_REPORT_CALLBACK_EXT;
     pub const DISPLAY_KHR: Self = Self(29);
     pub const DISPLAY_MODE_KHR: Self = Self(30);
     pub const VALIDATION_CACHE_EXT: Self = Self(33);
-    #[doc = "Backwards-compatible alias containing a typo"]
+    #[deprecated = "Backwards-compatible alias containing a typo"]
     pub const VALIDATION_CACHE: Self = Self::VALIDATION_CACHE_EXT;
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]

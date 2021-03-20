@@ -1370,8 +1370,10 @@ pub fn bitflags_impl_block(
 
     let notations = constants.iter().map(|constant| {
         constant.notation().map(|n| {
-            quote! {
-                #[doc = #n]
+            if n.to_lowercase().contains("backwards") {
+                quote!(#[deprecated = #n])
+            } else {
+                quote!(#[doc = #n])
             }
         })
     });

@@ -496,7 +496,7 @@ impl StencilFaceFlags {
     pub const BACK: Self = Self(0b10);
     #[doc = "Front and back faces"]
     pub const FRONT_AND_BACK: Self = Self(0x0000_0003);
-    #[doc = "Alias for backwards compatibility"]
+    #[deprecated = "Alias for backwards compatibility"]
     pub const STENCIL_FRONT_AND_BACK: Self = Self::FRONT_AND_BACK;
 }
 #[repr(transparent)]
@@ -746,7 +746,7 @@ pub struct SurfaceCounterFlagsEXT(pub(crate) Flags);
 vk_bitflags_wrapped!(SurfaceCounterFlagsEXT, 0b1, Flags);
 impl SurfaceCounterFlagsEXT {
     pub const VBLANK: Self = Self(0b1);
-    #[doc = "Backwards-compatible alias containing a typo"]
+    #[deprecated = "Backwards-compatible alias containing a typo"]
     pub const VBLANK: Self = Self::VBLANK;
 }
 #[repr(transparent)]
@@ -925,10 +925,10 @@ pub struct PerformanceCounterDescriptionFlagsKHR(pub(crate) Flags);
 vk_bitflags_wrapped!(PerformanceCounterDescriptionFlagsKHR, 0b11, Flags);
 impl PerformanceCounterDescriptionFlagsKHR {
     pub const PERFORMANCE_IMPACTING: Self = Self(0b1);
-    #[doc = "Backwards-compatible alias containing a typo"]
+    #[deprecated = "Backwards-compatible alias containing a typo"]
     pub const PERFORMANCE_IMPACTING: Self = Self::PERFORMANCE_IMPACTING;
     pub const CONCURRENTLY_IMPACTED: Self = Self(0b10);
-    #[doc = "Backwards-compatible alias containing a typo"]
+    #[deprecated = "Backwards-compatible alias containing a typo"]
     pub const CONCURRENTLY_IMPACTED: Self = Self::CONCURRENTLY_IMPACTED;
 }
 #[repr(transparent)]
