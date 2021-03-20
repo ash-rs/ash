@@ -245,7 +245,7 @@ impl vk::StaticFn {
                 let cname = CStr::from_bytes_with_nul_unchecked(ENTRY_POINT);
                 let val = _f(cname);
                 if val.is_null() {
-                    return Err(MissingEntryPoint(&ENTRY_POINT[..ENTRY_POINT.len() - 1]));
+                    return Err(MissingEntryPoint);
                 } else {
                     ::std::mem::transmute(val)
                 }
@@ -255,16 +255,10 @@ impl vk::StaticFn {
 }
 
 #[derive(Clone, Debug)]
-pub struct MissingEntryPoint(&'static [u8]); // Slice without the NUL terminator
+pub struct MissingEntryPoint;
 impl std::fmt::Display for MissingEntryPoint {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::result::Result<(), std::fmt::Error> {
-        unsafe {
-            write!(
-                f,
-                "missing Vulkan entry point: {}",
-                std::str::from_utf8_unchecked(self.0)
-            )
-        }
+        write!(f, "missing Vulkan entry point")
     }
 }
 impl std::error::Error for MissingEntryPoint {}
