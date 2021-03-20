@@ -5,10 +5,10 @@
 //!
 //! ## Examples
 //!
-//! ```rust,no_run
+//! ```no_run
 //! use ash::{vk, Entry, version::EntryV1_0};
 //! # fn main() -> Result<(), Box<dyn std::error::Error>> {
-//! let entry = unsafe { Entry::new()? };
+//! let entry = unsafe { Entry::new() }?;
 //! let app_info = vk::ApplicationInfo {
 //!     api_version: vk::make_version(1, 0, 0),
 //!     ..Default::default()

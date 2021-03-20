@@ -62,10 +62,10 @@ impl EntryCustom<Arc<Library>> {
     /// `dlopen`ing native libraries is inherently unsafe. The safety guidelines
     /// for [`Library::new`] and [`Library::get`] apply here.
     ///
-    /// ```rust,no_run
+    /// ```no_run
     /// use ash::{vk, Entry, version::EntryV1_0};
-    /// # fn main() -> Result<(), Box<std::error::Error>> {
-    /// let entry = unsafe { Entry::new()? };
+    /// # fn main() -> Result<(), Box<dyn std::error::Error>> {
+    /// let entry = unsafe { Entry::new() }?;
     /// let app_info = vk::ApplicationInfo {
     ///     api_version: vk::make_version(1, 0, 0),
     ///     ..Default::default()
