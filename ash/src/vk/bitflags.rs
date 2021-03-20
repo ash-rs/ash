@@ -746,8 +746,6 @@ pub struct SurfaceCounterFlagsEXT(pub(crate) Flags);
 vk_bitflags_wrapped!(SurfaceCounterFlagsEXT, 0b1, Flags);
 impl SurfaceCounterFlagsEXT {
     pub const VBLANK: Self = Self(0b1);
-    #[deprecated = "Backwards-compatible alias containing a typo"]
-    pub const VBLANK: Self = Self::VBLANK;
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -925,11 +923,7 @@ pub struct PerformanceCounterDescriptionFlagsKHR(pub(crate) Flags);
 vk_bitflags_wrapped!(PerformanceCounterDescriptionFlagsKHR, 0b11, Flags);
 impl PerformanceCounterDescriptionFlagsKHR {
     pub const PERFORMANCE_IMPACTING: Self = Self(0b1);
-    #[deprecated = "Backwards-compatible alias containing a typo"]
-    pub const PERFORMANCE_IMPACTING: Self = Self::PERFORMANCE_IMPACTING;
     pub const CONCURRENTLY_IMPACTED: Self = Self(0b10);
-    #[deprecated = "Backwards-compatible alias containing a typo"]
-    pub const CONCURRENTLY_IMPACTED: Self = Self::CONCURRENTLY_IMPACTED;
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]

@@ -2373,14 +2373,6 @@ impl fmt::Debug for PerformanceCounterDescriptionFlagsKHR {
                 "PERFORMANCE_IMPACTING",
             ),
             (
-                PerformanceCounterDescriptionFlagsKHR::PERFORMANCE_IMPACTING.0,
-                "PERFORMANCE_IMPACTING",
-            ),
-            (
-                PerformanceCounterDescriptionFlagsKHR::CONCURRENTLY_IMPACTED.0,
-                "CONCURRENTLY_IMPACTED",
-            ),
-            (
                 PerformanceCounterDescriptionFlagsKHR::CONCURRENTLY_IMPACTED.0,
                 "CONCURRENTLY_IMPACTED",
             ),
@@ -4650,10 +4642,7 @@ impl fmt::Debug for SubpassDescriptionFlags {
 }
 impl fmt::Debug for SurfaceCounterFlagsEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        const KNOWN: &[(Flags, &str)] = &[
-            (SurfaceCounterFlagsEXT::VBLANK.0, "VBLANK"),
-            (SurfaceCounterFlagsEXT::VBLANK.0, "VBLANK"),
-        ];
+        const KNOWN: &[(Flags, &str)] = &[(SurfaceCounterFlagsEXT::VBLANK.0, "VBLANK")];
         debug_flags(f, KNOWN, self.0)
     }
 }
