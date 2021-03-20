@@ -401,13 +401,13 @@ impl ConstVal {
     }
 }
 pub trait ConstantExt {
-    fn constant(&self) -> Constant;
+    fn constant(&self, enum_name: &str) -> Constant;
     fn variant_ident(&self, enum_name: &str) -> Ident;
     fn notation(&self) -> Option<&str>;
 }
 
 impl ConstantExt for vkxml::ExtensionEnum {
-    fn constant(&self) -> Constant {
+    fn constant(&self, _enum_name: &str) -> Constant {
         Constant::from_extension_enum(self).unwrap()
     }
     fn variant_ident(&self, enum_name: &str) -> Ident {
@@ -418,8 +418,22 @@ impl ConstantExt for vkxml::ExtensionEnum {
     }
 }
 
+impl ConstantExt for vk_parse::Enum {
+    fn constant(&self, enum_name: &str) -> Constant {
+        Constant::from_vk_parse_enum_spec(&self.spec, Some(enum_name), None)
+            .unwrap()
+            .0
+    }
+    fn variant_ident(&self, enum_name: &str) -> Ident {
+        variant_ident(enum_name, &self.name)
+    }
+    fn notation(&self) -> Option<&str> {
+        self.comment.as_deref()
+    }
+}
+
 impl ConstantExt for vkxml::Constant {
-    fn constant(&self) -> Constant {
+    fn constant(&self, _enum_name: &str) -> Constant {
         Constant::from_constant(self)
     }
     fn variant_ident(&self, enum_name: &str) -> Ident {
@@ -533,6 +547,53 @@ impl Constant {
             .as_ref()
             .map(|e| Constant::CExpr(e.clone()));
         number.or(hex).or(bitpos).or(expr).expect("")
+    }
+
+    /// Returns (Constant, optional base type, is_alias)
+    pub fn from_vk_parse_enum_spec(
+        spec: &vk_parse::EnumSpec,
+        enum_name: Option<&str>,
+        extension_number: Option<i64>,
+    ) -> Option<(Self, Option<String>, bool)> {
+        use vk_parse::EnumSpec;
+
+        match spec {
+            EnumSpec::Bitpos { bitpos, extends } => {
+                Some((Self::BitPos(*bitpos as u32), extends.clone(), false))
+            }
+            EnumSpec::Offset {
+                offset,
+                extends,
+                extnumber,
+                dir: positive,
+            } => {
+                let ext_base = 1_000_000_000;
+                let ext_block_size = 1000;
+                let extnumber = extnumber
+                    .or(extension_number)
+                    .expect("Need an extension number");
+                let value = ext_base + (extnumber - 1) * ext_block_size + offset;
+                let value = if *positive { value } else { -value };
+                Some((Self::Number(value as i32), Some(extends.clone()), false))
+            }
+            EnumSpec::Value { value, extends } => {
+                let value = value
+                    .strip_prefix("0x")
+                    .map(|hex| Self::Hex(hex.to_owned()))
+                    .or_else(|| value.parse::<i32>().ok().map(Self::Number))?;
+                Some((value, extends.clone(), false))
+            }
+            EnumSpec::Alias { alias, extends } => {
+                let base_type = extends.as_deref().or(enum_name)?;
+                let key = variant_ident(base_type, &alias);
+                if key == "DISPATCH_BASE" {
+                    None
+                } else {
+                    Some((Self::Alias(key), Some(base_type.to_owned()), true))
+                }
+            }
+            _ => None,
+        }
     }
 }
 
@@ -1007,7 +1068,7 @@ pub struct ExtensionConstant<'a> {
     pub constant: Constant,
 }
 impl<'a> ConstantExt for ExtensionConstant<'a> {
-    fn constant(&self) -> Constant {
+    fn constant(&self, _enum_name: &str) -> Constant {
         self.constant.clone()
     }
     fn variant_ident(&self, enum_name: &str) -> Ident {
@@ -1025,7 +1086,6 @@ pub fn generate_extension_constants<'a>(
     const_cache: &mut HashSet<&'a str, impl BuildHasher>,
     const_values: &mut BTreeMap<Ident, Vec<ConstantMatchInfo>>,
 ) -> TokenStream {
-    use vk_parse::EnumSpec;
     let items = extension_items
         .iter()
         .filter_map(|item| match item {
@@ -1034,52 +1094,16 @@ pub fn generate_extension_constants<'a>(
         })
         .flat_map(|iter| iter);
     let enum_tokens = items.filter_map(|item| match item {
-        vk_parse::InterfaceItem::Enum(_enum) => {
-            if const_cache.contains(_enum.name.as_str()) {
+        vk_parse::InterfaceItem::Enum(enum_) => {
+            if const_cache.contains(enum_.name.as_str()) {
                 return None;
             }
 
-            let (constant, extends, is_alias) = match &_enum.spec {
-                EnumSpec::Bitpos { bitpos, extends } => {
-                    Some((Constant::BitPos(*bitpos as u32), extends.clone(), false))
-                }
-                EnumSpec::Offset {
-                    offset,
-                    extends,
-                    extnumber,
-                    dir: positive,
-                } => {
-                    let ext_base = 1_000_000_000;
-                    let ext_block_size = 1000;
-                    let extnumber = extnumber.unwrap_or_else(|| extension_number);
-                    let value = ext_base + (extnumber - 1) * ext_block_size + offset;
-                    let value = if *positive { value } else { -value };
-                    Some((Constant::Number(value as i32), Some(extends.clone()), false))
-                }
-                EnumSpec::Value { value, extends } => {
-                    if let (Some(extends), Ok(value)) = (extends, value.parse::<i32>()) {
-                        Some((Constant::Number(value), Some(extends.clone()), false))
-                    } else {
-                        None
-                    }
-                }
-                EnumSpec::Alias { alias, extends } => {
-                    if let Some(extends) = extends {
-                        let key = variant_ident(&extends, &alias);
-                        if key == "DISPATCH_BASE" {
-                            None
-                        } else {
-                            Some((Constant::Alias(key), Some(extends.clone()), true))
-                        }
-                    } else {
-                        None
-                    }
-                }
-                _ => None,
-            }?;
+            let (constant, extends, is_alias) =
+                Constant::from_vk_parse_enum_spec(&enum_.spec, None, Some(extension_number))?;
             let extends = extends?;
             let ext_constant = ExtensionConstant {
-                name: &_enum.name,
+                name: &enum_.name,
                 constant,
             };
             let ident = name_to_tokens(&extends);
@@ -1097,7 +1121,7 @@ pub fn generate_extension_constants<'a>(
                 #impl_block
             };
 
-            const_cache.insert(_enum.name.as_str());
+            const_cache.insert(enum_.name.as_str());
             Some(q)
         }
         _ => None,
@@ -1334,7 +1358,7 @@ pub fn bitflags_impl_block(
         .iter()
         .map(|constant| {
             let variant_ident = constant.variant_ident(enum_name);
-            let constant = constant.constant();
+            let constant = constant.constant(enum_name);
             let tokens = if let Constant::Alias(_) = &constant {
                 quote!(#constant)
             } else {
@@ -1370,19 +1394,20 @@ pub fn bitflags_impl_block(
 }
 
 pub fn generate_enum<'a>(
-    _enum: &'a vkxml::Enumeration,
+    enum_: &'a vk_parse::Enums,
     const_cache: &mut HashSet<&'a str, impl BuildHasher>,
     const_values: &mut BTreeMap<Ident, Vec<ConstantMatchInfo>>,
     bitflags_cache: &mut HashSet<Ident, impl BuildHasher>,
 ) -> EnumType {
-    let name = &_enum.name[2..];
-    let _name = name.replace("FlagBits", "Flags");
+    let name = enum_.name.as_ref().unwrap();
+    let clean_name = name.strip_prefix("Vk").unwrap();
+    let _name = clean_name.replace("FlagBits", "Flags");
     let ident = format_ident!("{}", _name.as_str());
-    let constants: Vec<_> = _enum
-        .elements
+    let constants: Vec<_> = enum_
+        .children
         .iter()
         .filter_map(|elem| match *elem {
-            vkxml::EnumerationElement::Enum(ref constant) => Some(constant),
+            vk_parse::EnumsChild::Enum(ref constant) => Some(constant),
             _ => None,
         })
         .collect_vec();
@@ -1390,19 +1415,19 @@ pub fn generate_enum<'a>(
     for constant in &constants {
         const_cache.insert(constant.name.as_str());
         values.push(ConstantMatchInfo {
-            ident: constant.variant_ident(&_enum.name),
+            ident: constant.variant_ident(name),
             is_alias: false,
         });
     }
     const_values.insert(ident.clone(), values);
 
-    let khronos_link = khronos_link(&_enum.name);
+    let khronos_link = khronos_link(name);
 
-    if name.contains("Bit") {
+    if clean_name.contains("Bit") {
         let ident = format_ident!("{}", _name.as_str());
         let all_bits = constants
             .iter()
-            .filter_map(|constant| Constant::from_constant(constant).value())
+            .filter_map(|constant| constant.constant(name).value())
             .fold(0, |acc, next| acc | next.bits());
         let bit_string = format!("{:b}", all_bits);
         let bit_string = interleave_number('_', 4, &bit_string);
@@ -1411,7 +1436,7 @@ pub fn generate_enum<'a>(
         if bitflags_cache.contains(&ident) {
             EnumType::Bitflags(quote! {})
         } else {
-            let impl_bitflags = bitflags_impl_block(ident.clone(), &_enum.name, &constants);
+            let impl_bitflags = bitflags_impl_block(ident.clone(), name, &constants);
             bitflags_cache.insert(ident.clone());
             let q = quote! {
                 #[repr(transparent)]
@@ -1426,11 +1451,11 @@ pub fn generate_enum<'a>(
     } else {
         let (struct_attribute, special_quote) = match _name.as_str() {
             //"StructureType" => generate_structure_type(&_name, _enum, create_info_constants),
-            "Result" => (quote!(#[must_use]), generate_result(ident.clone(), _enum)),
+            "Result" => (quote!(#[must_use]), generate_result(ident.clone(), enum_)),
             _ => (quote!(), quote!()),
         };
 
-        let impl_block = bitflags_impl_block(ident.clone(), &_enum.name, &constants);
+        let impl_block = bitflags_impl_block(ident.clone(), name, &constants);
         let enum_quote = quote! {
             #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
             #[repr(transparent)]
@@ -1452,19 +1477,19 @@ pub fn generate_enum<'a>(
     }
 }
 
-pub fn generate_result(ident: Ident, _enum: &vkxml::Enumeration) -> TokenStream {
-    let notation = _enum.elements.iter().filter_map(|elem| {
+pub fn generate_result(ident: Ident, enum_: &vk_parse::Enums) -> TokenStream {
+    let notation = enum_.children.iter().filter_map(|elem| {
         let (variant_name, notation) = match *elem {
-            vkxml::EnumerationElement::Enum(ref constant) => (
+            vk_parse::EnumsChild::Enum(ref constant) => (
                 constant.name.as_str(),
-                constant.notation.as_deref().unwrap_or(""),
+                constant.comment.as_deref().unwrap_or(""),
             ),
             _ => {
                 return None;
             }
         };
 
-        let variant_ident = variant_ident(&_enum.name, variant_name);
+        let variant_ident = variant_ident(&enum_.name.as_ref().unwrap(), variant_name);
         Some(quote! {
             #ident::#variant_ident => Some(#notation)
         })
@@ -2461,21 +2486,6 @@ pub fn write_source_code<P: AsRef<Path>>(vk_xml: &Path, src_dir: P) {
         .flat_map(|definitions| definitions.elements.iter())
         .collect();
 
-    let enums: Vec<&vkxml::Enumeration> = spec
-        .elements
-        .iter()
-        .filter_map(|elem| match elem {
-            vkxml::RegistryElement::Enums(ref enums) => Some(enums),
-            _ => None,
-        })
-        .flat_map(|enums| {
-            enums.elements.iter().filter_map(|_enum| match *_enum {
-                vkxml::EnumsElement::Enumeration(ref e) => Some(e),
-                _ => None,
-            })
-        })
-        .collect();
-
     let constants: Vec<&vkxml::Constant> = spec
         .elements
         .iter()
@@ -2492,8 +2502,13 @@ pub fn write_source_code<P: AsRef<Path>>(vk_xml: &Path, src_dir: P) {
 
     let mut const_values: BTreeMap<Ident, Vec<ConstantMatchInfo>> = BTreeMap::new();
 
-    let (enum_code, bitflags_code) = enums
-        .into_iter()
+    let (enum_code, bitflags_code) = spec2
+        .0
+        .iter()
+        .filter_map(|item| match item {
+            vk_parse::RegistryChild::Enums(ref enums) if enums.kind.is_some() => Some(enums),
+            _ => None,
+        })
         .map(|e| generate_enum(e, &mut const_cache, &mut const_values, &mut bitflags_cache))
         .fold((Vec::new(), Vec::new()), |mut acc, elem| {
             match elem {

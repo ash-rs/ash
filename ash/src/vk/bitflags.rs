@@ -496,6 +496,8 @@ impl StencilFaceFlags {
     pub const BACK: Self = Self(0b10);
     #[doc = "Front and back faces"]
     pub const FRONT_AND_BACK: Self = Self(0x0000_0003);
+    #[doc = "Alias for backwards compatibility"]
+    pub const STENCIL_FRONT_AND_BACK: Self = Self::FRONT_AND_BACK;
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -689,6 +691,7 @@ impl ExternalSemaphoreHandleTypeFlags {
     pub const OPAQUE_WIN32: Self = Self(0b10);
     pub const OPAQUE_WIN32_KMT: Self = Self(0b100);
     pub const D3D12_FENCE: Self = Self(0b1000);
+    pub const D3D11_FENCE: Self = Self::D3D12_FENCE;
     pub const SYNC_FD: Self = Self(0b1_0000);
 }
 #[repr(transparent)]
@@ -743,6 +746,8 @@ pub struct SurfaceCounterFlagsEXT(pub(crate) Flags);
 vk_bitflags_wrapped!(SurfaceCounterFlagsEXT, 0b1, Flags);
 impl SurfaceCounterFlagsEXT {
     pub const VBLANK: Self = Self(0b1);
+    #[doc = "Backwards-compatible alias containing a typo"]
+    pub const VBLANK: Self = Self::VBLANK;
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -920,7 +925,11 @@ pub struct PerformanceCounterDescriptionFlagsKHR(pub(crate) Flags);
 vk_bitflags_wrapped!(PerformanceCounterDescriptionFlagsKHR, 0b11, Flags);
 impl PerformanceCounterDescriptionFlagsKHR {
     pub const PERFORMANCE_IMPACTING: Self = Self(0b1);
+    #[doc = "Backwards-compatible alias containing a typo"]
+    pub const PERFORMANCE_IMPACTING: Self = Self::PERFORMANCE_IMPACTING;
     pub const CONCURRENTLY_IMPACTED: Self = Self(0b10);
+    #[doc = "Backwards-compatible alias containing a typo"]
+    pub const CONCURRENTLY_IMPACTED: Self = Self::CONCURRENTLY_IMPACTED;
 }
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
