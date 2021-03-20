@@ -9,7 +9,7 @@ use std::os::raw::*;
 pub const API_VERSION_1_0: u32 = crate::vk::make_version(1, 0, 0);
 pub const API_VERSION_1_1: u32 = crate::vk::make_version(1, 1, 0);
 pub const API_VERSION_1_2: u32 = crate::vk::make_version(1, 2, 0);
-pub const HEADER_VERSION: u32 = 171u32;
+pub const HEADER_VERSION: u32 = 172u32;
 pub const HEADER_VERSION_COMPLETE: u32 = crate::vk::make_version(1, 2, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkSampleMask.html>"]
 pub type SampleMask = u32;

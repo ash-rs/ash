@@ -26098,3 +26098,26 @@ impl ExtExtension388Fn {
         ExtExtension388Fn {}
     }
 }
+impl ExtExtension389Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_389\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+pub struct ExtExtension389Fn {}
+unsafe impl Send for ExtExtension389Fn {}
+unsafe impl Sync for ExtExtension389Fn {}
+impl ::std::clone::Clone for ExtExtension389Fn {
+    fn clone(&self) -> Self {
+        ExtExtension389Fn {}
+    }
+}
+impl ExtExtension389Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        ExtExtension389Fn {}
+    }
+}
