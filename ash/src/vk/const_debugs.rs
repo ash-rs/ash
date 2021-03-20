@@ -3487,6 +3487,12 @@ impl fmt::Debug for ScopeNV {
         }
     }
 }
+impl fmt::Debug for ScreenSurfaceCreateFlagsQNX {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        const KNOWN: &[(Flags, &str)] = &[];
+        debug_flags(f, KNOWN, self.0)
+    }
+}
 impl fmt::Debug for SemaphoreCreateFlags {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[];

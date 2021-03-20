@@ -25776,12 +25776,41 @@ impl QnxScreenSurfaceFn {
     }
     pub const SPEC_VERSION: u32 = 1u32;
 }
-pub struct QnxScreenSurfaceFn {}
+#[allow(non_camel_case_types)]
+pub type PFN_vkCreateScreenSurfaceQNX = extern "system" fn(
+    instance: Instance,
+    p_create_info: *const ScreenSurfaceCreateInfoQNX,
+    p_allocator: *const AllocationCallbacks,
+    p_surface: *mut SurfaceKHR,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetPhysicalDeviceScreenPresentationSupportQNX = extern "system" fn(
+    physical_device: PhysicalDevice,
+    queue_family_index: u32,
+    window: *mut _screen_window,
+) -> Bool32;
+pub struct QnxScreenSurfaceFn {
+    pub create_screen_surface_qnx: extern "system" fn(
+        instance: Instance,
+        p_create_info: *const ScreenSurfaceCreateInfoQNX,
+        p_allocator: *const AllocationCallbacks,
+        p_surface: *mut SurfaceKHR,
+    ) -> Result,
+    pub get_physical_device_screen_presentation_support_qnx: extern "system" fn(
+        physical_device: PhysicalDevice,
+        queue_family_index: u32,
+        window: *mut _screen_window,
+    ) -> Bool32,
+}
 unsafe impl Send for QnxScreenSurfaceFn {}
 unsafe impl Sync for QnxScreenSurfaceFn {}
 impl ::std::clone::Clone for QnxScreenSurfaceFn {
     fn clone(&self) -> Self {
-        QnxScreenSurfaceFn {}
+        QnxScreenSurfaceFn {
+            create_screen_surface_qnx: self.create_screen_surface_qnx,
+            get_physical_device_screen_presentation_support_qnx: self
+                .get_physical_device_screen_presentation_support_qnx,
+        }
     }
 }
 impl QnxScreenSurfaceFn {
@@ -25789,7 +25818,73 @@ impl QnxScreenSurfaceFn {
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        QnxScreenSurfaceFn {}
+        QnxScreenSurfaceFn {
+            create_screen_surface_qnx: unsafe {
+                extern "system" fn create_screen_surface_qnx(
+                    _instance: Instance,
+                    _p_create_info: *const ScreenSurfaceCreateInfoQNX,
+                    _p_allocator: *const AllocationCallbacks,
+                    _p_surface: *mut SurfaceKHR,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(create_screen_surface_qnx)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCreateScreenSurfaceQNX\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    create_screen_surface_qnx
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_physical_device_screen_presentation_support_qnx: unsafe {
+                extern "system" fn get_physical_device_screen_presentation_support_qnx(
+                    _physical_device: PhysicalDevice,
+                    _queue_family_index: u32,
+                    _window: *mut _screen_window,
+                ) -> Bool32 {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_physical_device_screen_presentation_support_qnx)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkGetPhysicalDeviceScreenPresentationSupportQNX\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    get_physical_device_screen_presentation_support_qnx
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateScreenSurfaceQNX.html>"]
+    pub unsafe fn create_screen_surface_qnx(
+        &self,
+        instance: Instance,
+        p_create_info: *const ScreenSurfaceCreateInfoQNX,
+        p_allocator: *const AllocationCallbacks,
+        p_surface: *mut SurfaceKHR,
+    ) -> Result {
+        (self.create_screen_surface_qnx)(instance, p_create_info, p_allocator, p_surface)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceScreenPresentationSupportQNX.html>"]
+    pub unsafe fn get_physical_device_screen_presentation_support_qnx(
+        &self,
+        physical_device: PhysicalDevice,
+        queue_family_index: u32,
+        window: *mut _screen_window,
+    ) -> Bool32 {
+        (self.get_physical_device_screen_presentation_support_qnx)(
+            physical_device,
+            queue_family_index,
+            window,
+        )
     }
 }
 #[doc = "Generated from 'VK_QNX_screen_surface'"]
@@ -25978,5 +26073,28 @@ impl KhrExtension387Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         KhrExtension387Fn {}
+    }
+}
+impl ExtExtension388Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_388\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+pub struct ExtExtension388Fn {}
+unsafe impl Send for ExtExtension388Fn {}
+unsafe impl Sync for ExtExtension388Fn {}
+impl ::std::clone::Clone for ExtExtension388Fn {
+    fn clone(&self) -> Self {
+        ExtExtension388Fn {}
+    }
+}
+impl ExtExtension388Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        ExtExtension388Fn {}
     }
 }

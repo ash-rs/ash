@@ -9,7 +9,7 @@ use std::os::raw::*;
 pub const API_VERSION_1_0: u32 = crate::vk::make_version(1, 0, 0);
 pub const API_VERSION_1_1: u32 = crate::vk::make_version(1, 1, 0);
 pub const API_VERSION_1_2: u32 = crate::vk::make_version(1, 2, 0);
-pub const HEADER_VERSION: u32 = 170u32;
+pub const HEADER_VERSION: u32 = 171u32;
 pub const HEADER_VERSION_COMPLETE: u32 = crate::vk::make_version(1, 2, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkSampleMask.html>"]
 pub type SampleMask = u32;
@@ -188,6 +188,11 @@ vk_bitflags_wrapped!(StreamDescriptorSurfaceCreateFlagsGGP, 0b0, Flags);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkHeadlessSurfaceCreateFlagsEXT.html>"]
 pub struct HeadlessSurfaceCreateFlagsEXT(pub(crate) Flags);
 vk_bitflags_wrapped!(HeadlessSurfaceCreateFlagsEXT, 0b0, Flags);
+#[repr(transparent)]
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkScreenSurfaceCreateFlagsQNX.html>"]
+pub struct ScreenSurfaceCreateFlagsQNX(pub(crate) Flags);
+vk_bitflags_wrapped!(ScreenSurfaceCreateFlagsQNX, 0b0, Flags);
 #[repr(transparent)]
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkCommandPoolTrimFlags.html>"]
@@ -10910,6 +10915,86 @@ impl<'a> StreamDescriptorSurfaceCreateInfoGGPBuilder<'a> {
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> StreamDescriptorSurfaceCreateInfoGGP {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkScreenSurfaceCreateInfoQNX.html>"]
+pub struct ScreenSurfaceCreateInfoQNX {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub flags: ScreenSurfaceCreateFlagsQNX,
+    pub context: *mut _screen_context,
+    pub window: *mut _screen_window,
+}
+impl ::std::default::Default for ScreenSurfaceCreateInfoQNX {
+    fn default() -> ScreenSurfaceCreateInfoQNX {
+        ScreenSurfaceCreateInfoQNX {
+            s_type: StructureType::SCREEN_SURFACE_CREATE_INFO_QNX,
+            p_next: ::std::ptr::null(),
+            flags: ScreenSurfaceCreateFlagsQNX::default(),
+            context: ::std::ptr::null_mut(),
+            window: ::std::ptr::null_mut(),
+        }
+    }
+}
+impl ScreenSurfaceCreateInfoQNX {
+    pub fn builder<'a>() -> ScreenSurfaceCreateInfoQNXBuilder<'a> {
+        ScreenSurfaceCreateInfoQNXBuilder {
+            inner: ScreenSurfaceCreateInfoQNX::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct ScreenSurfaceCreateInfoQNXBuilder<'a> {
+    inner: ScreenSurfaceCreateInfoQNX,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+pub unsafe trait ExtendsScreenSurfaceCreateInfoQNX {}
+impl<'a> ::std::ops::Deref for ScreenSurfaceCreateInfoQNXBuilder<'a> {
+    type Target = ScreenSurfaceCreateInfoQNX;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ScreenSurfaceCreateInfoQNXBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> ScreenSurfaceCreateInfoQNXBuilder<'a> {
+    pub fn flags(mut self, flags: ScreenSurfaceCreateFlagsQNX) -> Self {
+        self.inner.flags = flags;
+        self
+    }
+    pub fn context(mut self, context: &'a mut _screen_context) -> Self {
+        self.inner.context = context;
+        self
+    }
+    pub fn window(mut self, window: &'a mut _screen_window) -> Self {
+        self.inner.window = window;
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsScreenSurfaceCreateInfoQNX>(mut self, next: &'a mut T) -> Self {
+        unsafe {
+            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> ScreenSurfaceCreateInfoQNX {
         self.inner
     }
 }
