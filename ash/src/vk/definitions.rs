@@ -9,7 +9,7 @@ use std::os::raw::*;
 pub const API_VERSION_1_0: u32 = crate::vk::make_version(1, 0, 0);
 pub const API_VERSION_1_1: u32 = crate::vk::make_version(1, 1, 0);
 pub const API_VERSION_1_2: u32 = crate::vk::make_version(1, 2, 0);
-pub const HEADER_VERSION: u32 = 172u32;
+pub const HEADER_VERSION: u32 = 173u32;
 pub const HEADER_VERSION_COMPLETE: u32 = crate::vk::make_version(1, 2, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkSampleMask.html>"]
 pub type SampleMask = u32;
@@ -15397,6 +15397,215 @@ impl<'a> ExportMemoryWin32HandleInfoKHRBuilder<'a> {
 }
 #[repr(C)]
 #[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkImportMemoryZirconHandleInfoFUCHSIA.html>"]
+pub struct ImportMemoryZirconHandleInfoFUCHSIA {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub handle_type: ExternalMemoryHandleTypeFlags,
+    pub handle: zx_handle_t,
+}
+impl ::std::default::Default for ImportMemoryZirconHandleInfoFUCHSIA {
+    fn default() -> ImportMemoryZirconHandleInfoFUCHSIA {
+        ImportMemoryZirconHandleInfoFUCHSIA {
+            s_type: StructureType::IMPORT_MEMORY_ZIRCON_HANDLE_INFO_FUCHSIA,
+            p_next: ::std::ptr::null(),
+            handle_type: ExternalMemoryHandleTypeFlags::default(),
+            handle: zx_handle_t::default(),
+        }
+    }
+}
+impl ImportMemoryZirconHandleInfoFUCHSIA {
+    pub fn builder<'a>() -> ImportMemoryZirconHandleInfoFUCHSIABuilder<'a> {
+        ImportMemoryZirconHandleInfoFUCHSIABuilder {
+            inner: ImportMemoryZirconHandleInfoFUCHSIA::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct ImportMemoryZirconHandleInfoFUCHSIABuilder<'a> {
+    inner: ImportMemoryZirconHandleInfoFUCHSIA,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsMemoryAllocateInfo for ImportMemoryZirconHandleInfoFUCHSIABuilder<'_> {}
+unsafe impl ExtendsMemoryAllocateInfo for ImportMemoryZirconHandleInfoFUCHSIA {}
+impl<'a> ::std::ops::Deref for ImportMemoryZirconHandleInfoFUCHSIABuilder<'a> {
+    type Target = ImportMemoryZirconHandleInfoFUCHSIA;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ImportMemoryZirconHandleInfoFUCHSIABuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> ImportMemoryZirconHandleInfoFUCHSIABuilder<'a> {
+    pub fn handle_type(mut self, handle_type: ExternalMemoryHandleTypeFlags) -> Self {
+        self.inner.handle_type = handle_type;
+        self
+    }
+    pub fn handle(mut self, handle: zx_handle_t) -> Self {
+        self.inner.handle = handle;
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> ImportMemoryZirconHandleInfoFUCHSIA {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkMemoryZirconHandlePropertiesFUCHSIA.html>"]
+pub struct MemoryZirconHandlePropertiesFUCHSIA {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub memory_type_bits: u32,
+}
+impl ::std::default::Default for MemoryZirconHandlePropertiesFUCHSIA {
+    fn default() -> MemoryZirconHandlePropertiesFUCHSIA {
+        MemoryZirconHandlePropertiesFUCHSIA {
+            s_type: StructureType::MEMORY_ZIRCON_HANDLE_PROPERTIES_FUCHSIA,
+            p_next: ::std::ptr::null_mut(),
+            memory_type_bits: u32::default(),
+        }
+    }
+}
+impl MemoryZirconHandlePropertiesFUCHSIA {
+    pub fn builder<'a>() -> MemoryZirconHandlePropertiesFUCHSIABuilder<'a> {
+        MemoryZirconHandlePropertiesFUCHSIABuilder {
+            inner: MemoryZirconHandlePropertiesFUCHSIA::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct MemoryZirconHandlePropertiesFUCHSIABuilder<'a> {
+    inner: MemoryZirconHandlePropertiesFUCHSIA,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+pub unsafe trait ExtendsMemoryZirconHandlePropertiesFUCHSIA {}
+impl<'a> ::std::ops::Deref for MemoryZirconHandlePropertiesFUCHSIABuilder<'a> {
+    type Target = MemoryZirconHandlePropertiesFUCHSIA;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for MemoryZirconHandlePropertiesFUCHSIABuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> MemoryZirconHandlePropertiesFUCHSIABuilder<'a> {
+    pub fn memory_type_bits(mut self, memory_type_bits: u32) -> Self {
+        self.inner.memory_type_bits = memory_type_bits;
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsMemoryZirconHandlePropertiesFUCHSIA>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        unsafe {
+            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> MemoryZirconHandlePropertiesFUCHSIA {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkMemoryGetZirconHandleInfoFUCHSIA.html>"]
+pub struct MemoryGetZirconHandleInfoFUCHSIA {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub memory: DeviceMemory,
+    pub handle_type: ExternalMemoryHandleTypeFlags,
+}
+impl ::std::default::Default for MemoryGetZirconHandleInfoFUCHSIA {
+    fn default() -> MemoryGetZirconHandleInfoFUCHSIA {
+        MemoryGetZirconHandleInfoFUCHSIA {
+            s_type: StructureType::MEMORY_GET_ZIRCON_HANDLE_INFO_FUCHSIA,
+            p_next: ::std::ptr::null(),
+            memory: DeviceMemory::default(),
+            handle_type: ExternalMemoryHandleTypeFlags::default(),
+        }
+    }
+}
+impl MemoryGetZirconHandleInfoFUCHSIA {
+    pub fn builder<'a>() -> MemoryGetZirconHandleInfoFUCHSIABuilder<'a> {
+        MemoryGetZirconHandleInfoFUCHSIABuilder {
+            inner: MemoryGetZirconHandleInfoFUCHSIA::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct MemoryGetZirconHandleInfoFUCHSIABuilder<'a> {
+    inner: MemoryGetZirconHandleInfoFUCHSIA,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+pub unsafe trait ExtendsMemoryGetZirconHandleInfoFUCHSIA {}
+impl<'a> ::std::ops::Deref for MemoryGetZirconHandleInfoFUCHSIABuilder<'a> {
+    type Target = MemoryGetZirconHandleInfoFUCHSIA;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for MemoryGetZirconHandleInfoFUCHSIABuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> MemoryGetZirconHandleInfoFUCHSIABuilder<'a> {
+    pub fn memory(mut self, memory: DeviceMemory) -> Self {
+        self.inner.memory = memory;
+        self
+    }
+    pub fn handle_type(mut self, handle_type: ExternalMemoryHandleTypeFlags) -> Self {
+        self.inner.handle_type = handle_type;
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsMemoryGetZirconHandleInfoFUCHSIA>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        unsafe {
+            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> MemoryGetZirconHandleInfoFUCHSIA {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkMemoryWin32HandlePropertiesKHR.html>"]
 pub struct MemoryWin32HandlePropertiesKHR {
     pub s_type: StructureType,
@@ -16505,6 +16714,172 @@ impl<'a> SemaphoreGetFdInfoKHRBuilder<'a> {
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> SemaphoreGetFdInfoKHR {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkImportSemaphoreZirconHandleInfoFUCHSIA.html>"]
+pub struct ImportSemaphoreZirconHandleInfoFUCHSIA {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub semaphore: Semaphore,
+    pub flags: SemaphoreImportFlags,
+    pub handle_type: ExternalSemaphoreHandleTypeFlags,
+    pub zircon_handle: zx_handle_t,
+}
+impl ::std::default::Default for ImportSemaphoreZirconHandleInfoFUCHSIA {
+    fn default() -> ImportSemaphoreZirconHandleInfoFUCHSIA {
+        ImportSemaphoreZirconHandleInfoFUCHSIA {
+            s_type: StructureType::IMPORT_SEMAPHORE_ZIRCON_HANDLE_INFO_FUCHSIA,
+            p_next: ::std::ptr::null(),
+            semaphore: Semaphore::default(),
+            flags: SemaphoreImportFlags::default(),
+            handle_type: ExternalSemaphoreHandleTypeFlags::default(),
+            zircon_handle: zx_handle_t::default(),
+        }
+    }
+}
+impl ImportSemaphoreZirconHandleInfoFUCHSIA {
+    pub fn builder<'a>() -> ImportSemaphoreZirconHandleInfoFUCHSIABuilder<'a> {
+        ImportSemaphoreZirconHandleInfoFUCHSIABuilder {
+            inner: ImportSemaphoreZirconHandleInfoFUCHSIA::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct ImportSemaphoreZirconHandleInfoFUCHSIABuilder<'a> {
+    inner: ImportSemaphoreZirconHandleInfoFUCHSIA,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+pub unsafe trait ExtendsImportSemaphoreZirconHandleInfoFUCHSIA {}
+impl<'a> ::std::ops::Deref for ImportSemaphoreZirconHandleInfoFUCHSIABuilder<'a> {
+    type Target = ImportSemaphoreZirconHandleInfoFUCHSIA;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for ImportSemaphoreZirconHandleInfoFUCHSIABuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> ImportSemaphoreZirconHandleInfoFUCHSIABuilder<'a> {
+    pub fn semaphore(mut self, semaphore: Semaphore) -> Self {
+        self.inner.semaphore = semaphore;
+        self
+    }
+    pub fn flags(mut self, flags: SemaphoreImportFlags) -> Self {
+        self.inner.flags = flags;
+        self
+    }
+    pub fn handle_type(mut self, handle_type: ExternalSemaphoreHandleTypeFlags) -> Self {
+        self.inner.handle_type = handle_type;
+        self
+    }
+    pub fn zircon_handle(mut self, zircon_handle: zx_handle_t) -> Self {
+        self.inner.zircon_handle = zircon_handle;
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsImportSemaphoreZirconHandleInfoFUCHSIA>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        unsafe {
+            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> ImportSemaphoreZirconHandleInfoFUCHSIA {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkSemaphoreGetZirconHandleInfoFUCHSIA.html>"]
+pub struct SemaphoreGetZirconHandleInfoFUCHSIA {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub semaphore: Semaphore,
+    pub handle_type: ExternalSemaphoreHandleTypeFlags,
+}
+impl ::std::default::Default for SemaphoreGetZirconHandleInfoFUCHSIA {
+    fn default() -> SemaphoreGetZirconHandleInfoFUCHSIA {
+        SemaphoreGetZirconHandleInfoFUCHSIA {
+            s_type: StructureType::SEMAPHORE_GET_ZIRCON_HANDLE_INFO_FUCHSIA,
+            p_next: ::std::ptr::null(),
+            semaphore: Semaphore::default(),
+            handle_type: ExternalSemaphoreHandleTypeFlags::default(),
+        }
+    }
+}
+impl SemaphoreGetZirconHandleInfoFUCHSIA {
+    pub fn builder<'a>() -> SemaphoreGetZirconHandleInfoFUCHSIABuilder<'a> {
+        SemaphoreGetZirconHandleInfoFUCHSIABuilder {
+            inner: SemaphoreGetZirconHandleInfoFUCHSIA::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct SemaphoreGetZirconHandleInfoFUCHSIABuilder<'a> {
+    inner: SemaphoreGetZirconHandleInfoFUCHSIA,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+pub unsafe trait ExtendsSemaphoreGetZirconHandleInfoFUCHSIA {}
+impl<'a> ::std::ops::Deref for SemaphoreGetZirconHandleInfoFUCHSIABuilder<'a> {
+    type Target = SemaphoreGetZirconHandleInfoFUCHSIA;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for SemaphoreGetZirconHandleInfoFUCHSIABuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> SemaphoreGetZirconHandleInfoFUCHSIABuilder<'a> {
+    pub fn semaphore(mut self, semaphore: Semaphore) -> Self {
+        self.inner.semaphore = semaphore;
+        self
+    }
+    pub fn handle_type(mut self, handle_type: ExternalSemaphoreHandleTypeFlags) -> Self {
+        self.inner.handle_type = handle_type;
+        self
+    }
+    #[doc = r" Prepends the given extension struct between the root and the first pointer. This"]
+    #[doc = r" method only exists on structs that can be passed to a function directly. Only"]
+    #[doc = r" valid extension structs can be pushed into the chain."]
+    #[doc = r" If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the"]
+    #[doc = r" chain will look like `A -> D -> B -> C`."]
+    pub fn push_next<T: ExtendsSemaphoreGetZirconHandleInfoFUCHSIA>(
+        mut self,
+        next: &'a mut T,
+    ) -> Self {
+        unsafe {
+            let next_ptr = next as *mut T as *mut BaseOutStructure;
+            let last_next = ptr_chain_iter(next).last().unwrap();
+            (*last_next).p_next = self.inner.p_next as _;
+            self.inner.p_next = next_ptr as _;
+        }
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> SemaphoreGetZirconHandleInfoFUCHSIA {
         self.inner
     }
 }

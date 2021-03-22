@@ -2763,12 +2763,16 @@ impl QueueFlags {
     pub const RESERVED_6_KHR: Self = Self(0b100_0000);
 }
 #[doc = "Generated from 'VK_AMD_extension_24'"]
-impl PipelineStageFlags {
-    pub const RESERVED_27_KHR: Self = Self(0b1000_0000_0000_0000_0000_0000_0000);
+impl PipelineStageFlags2KHR {
+    pub const RESERVED_26: Self = Self(0b100_0000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_AMD_extension_24'"]
-impl AccessFlags {
-    pub const RESERVED_30_KHR: Self = Self(0b100_0000_0000_0000_0000_0000_0000_0000);
+impl AccessFlags2KHR {
+    pub const RESERVED_READ_35: Self = Self(0b1000_0000_0000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_AMD_extension_24'"]
+impl AccessFlags2KHR {
+    pub const RESERVED_WRITE_36: Self = Self(0b1_0000_0000_0000_0000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_AMD_extension_24'"]
 impl BufferUsageFlags {
@@ -2830,16 +2834,16 @@ impl QueueFlags {
     pub const RESERVED_5_KHR: Self = Self(0b10_0000);
 }
 #[doc = "Generated from 'VK_AMD_extension_25'"]
-impl PipelineStageFlags {
-    pub const RESERVED_26_KHR: Self = Self(0b100_0000_0000_0000_0000_0000_0000);
+impl PipelineStageFlags2KHR {
+    pub const RESERVED_27: Self = Self(0b1000_0000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_AMD_extension_25'"]
-impl AccessFlags {
-    pub const RESERVED_28_KHR: Self = Self(0b1_0000_0000_0000_0000_0000_0000_0000);
+impl AccessFlags2KHR {
+    pub const RESERVED_READ_37: Self = Self(0b10_0000_0000_0000_0000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_AMD_extension_25'"]
-impl AccessFlags {
-    pub const RESERVED_29_KHR: Self = Self(0b10_0000_0000_0000_0000_0000_0000_0000);
+impl AccessFlags2KHR {
+    pub const RESERVED_WRITE_38: Self = Self(0b100_0000_0000_0000_0000_0000_0000_0000_0000_0000);
 }
 #[doc = "Generated from 'VK_AMD_extension_25'"]
 impl BufferUsageFlags {
@@ -25419,51 +25423,263 @@ impl FuchsiaExtension364Fn {
         FuchsiaExtension364Fn {}
     }
 }
-impl FuchsiaExtension365Fn {
+impl FuchsiaExternalMemoryFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_FUCHSIA_extension_365\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_FUCHSIA_external_memory\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
-pub struct FuchsiaExtension365Fn {}
-unsafe impl Send for FuchsiaExtension365Fn {}
-unsafe impl Sync for FuchsiaExtension365Fn {}
-impl ::std::clone::Clone for FuchsiaExtension365Fn {
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetMemoryZirconHandleFUCHSIA = extern "system" fn(
+    device: Device,
+    p_get_zircon_handle_info: *const MemoryGetZirconHandleInfoFUCHSIA,
+    p_zircon_handle: *mut zx_handle_t,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetMemoryZirconHandlePropertiesFUCHSIA = extern "system" fn(
+    device: Device,
+    handle_type: ExternalMemoryHandleTypeFlags,
+    zircon_handle: zx_handle_t,
+    p_memory_zircon_handle_properties: *mut MemoryZirconHandlePropertiesFUCHSIA,
+) -> Result;
+pub struct FuchsiaExternalMemoryFn {
+    pub get_memory_zircon_handle_fuchsia: extern "system" fn(
+        device: Device,
+        p_get_zircon_handle_info: *const MemoryGetZirconHandleInfoFUCHSIA,
+        p_zircon_handle: *mut zx_handle_t,
+    ) -> Result,
+    pub get_memory_zircon_handle_properties_fuchsia: extern "system" fn(
+        device: Device,
+        handle_type: ExternalMemoryHandleTypeFlags,
+        zircon_handle: zx_handle_t,
+        p_memory_zircon_handle_properties: *mut MemoryZirconHandlePropertiesFUCHSIA,
+    ) -> Result,
+}
+unsafe impl Send for FuchsiaExternalMemoryFn {}
+unsafe impl Sync for FuchsiaExternalMemoryFn {}
+impl ::std::clone::Clone for FuchsiaExternalMemoryFn {
     fn clone(&self) -> Self {
-        FuchsiaExtension365Fn {}
+        FuchsiaExternalMemoryFn {
+            get_memory_zircon_handle_fuchsia: self.get_memory_zircon_handle_fuchsia,
+            get_memory_zircon_handle_properties_fuchsia: self
+                .get_memory_zircon_handle_properties_fuchsia,
+        }
     }
 }
-impl FuchsiaExtension365Fn {
+impl FuchsiaExternalMemoryFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        FuchsiaExtension365Fn {}
+        FuchsiaExternalMemoryFn {
+            get_memory_zircon_handle_fuchsia: unsafe {
+                extern "system" fn get_memory_zircon_handle_fuchsia(
+                    _device: Device,
+                    _p_get_zircon_handle_info: *const MemoryGetZirconHandleInfoFUCHSIA,
+                    _p_zircon_handle: *mut zx_handle_t,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_memory_zircon_handle_fuchsia)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkGetMemoryZirconHandleFUCHSIA\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    get_memory_zircon_handle_fuchsia
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_memory_zircon_handle_properties_fuchsia: unsafe {
+                extern "system" fn get_memory_zircon_handle_properties_fuchsia(
+                    _device: Device,
+                    _handle_type: ExternalMemoryHandleTypeFlags,
+                    _zircon_handle: zx_handle_t,
+                    _p_memory_zircon_handle_properties: *mut MemoryZirconHandlePropertiesFUCHSIA,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_memory_zircon_handle_properties_fuchsia)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkGetMemoryZirconHandlePropertiesFUCHSIA\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    get_memory_zircon_handle_properties_fuchsia
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetMemoryZirconHandleFUCHSIA.html>"]
+    pub unsafe fn get_memory_zircon_handle_fuchsia(
+        &self,
+        device: Device,
+        p_get_zircon_handle_info: *const MemoryGetZirconHandleInfoFUCHSIA,
+        p_zircon_handle: *mut zx_handle_t,
+    ) -> Result {
+        (self.get_memory_zircon_handle_fuchsia)(device, p_get_zircon_handle_info, p_zircon_handle)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetMemoryZirconHandlePropertiesFUCHSIA.html>"]
+    pub unsafe fn get_memory_zircon_handle_properties_fuchsia(
+        &self,
+        device: Device,
+        handle_type: ExternalMemoryHandleTypeFlags,
+        zircon_handle: zx_handle_t,
+        p_memory_zircon_handle_properties: *mut MemoryZirconHandlePropertiesFUCHSIA,
+    ) -> Result {
+        (self.get_memory_zircon_handle_properties_fuchsia)(
+            device,
+            handle_type,
+            zircon_handle,
+            p_memory_zircon_handle_properties,
+        )
     }
 }
-impl FuchsiaExtension366Fn {
+#[doc = "Generated from 'VK_FUCHSIA_external_memory'"]
+impl StructureType {
+    pub const IMPORT_MEMORY_ZIRCON_HANDLE_INFO_FUCHSIA: Self = Self(1_000_364_000);
+}
+#[doc = "Generated from 'VK_FUCHSIA_external_memory'"]
+impl StructureType {
+    pub const MEMORY_ZIRCON_HANDLE_PROPERTIES_FUCHSIA: Self = Self(1_000_364_001);
+}
+#[doc = "Generated from 'VK_FUCHSIA_external_memory'"]
+impl StructureType {
+    pub const MEMORY_GET_ZIRCON_HANDLE_INFO_FUCHSIA: Self = Self(1_000_364_002);
+}
+#[doc = "Generated from 'VK_FUCHSIA_external_memory'"]
+impl ExternalMemoryHandleTypeFlags {
+    pub const ZIRCON_VMO_FUCHSIA: Self = Self(0b1000_0000_0000);
+}
+impl FuchsiaExternalSemaphoreFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_FUCHSIA_extension_366\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_FUCHSIA_external_semaphore\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
-pub struct FuchsiaExtension366Fn {}
-unsafe impl Send for FuchsiaExtension366Fn {}
-unsafe impl Sync for FuchsiaExtension366Fn {}
-impl ::std::clone::Clone for FuchsiaExtension366Fn {
+#[allow(non_camel_case_types)]
+pub type PFN_vkImportSemaphoreZirconHandleFUCHSIA = extern "system" fn(
+    device: Device,
+    p_import_semaphore_zircon_handle_info: *const ImportSemaphoreZirconHandleInfoFUCHSIA,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetSemaphoreZirconHandleFUCHSIA = extern "system" fn(
+    device: Device,
+    p_get_zircon_handle_info: *const SemaphoreGetZirconHandleInfoFUCHSIA,
+    p_zircon_handle: *mut zx_handle_t,
+) -> Result;
+pub struct FuchsiaExternalSemaphoreFn {
+    pub import_semaphore_zircon_handle_fuchsia: extern "system" fn(
+        device: Device,
+        p_import_semaphore_zircon_handle_info: *const ImportSemaphoreZirconHandleInfoFUCHSIA,
+    ) -> Result,
+    pub get_semaphore_zircon_handle_fuchsia: extern "system" fn(
+        device: Device,
+        p_get_zircon_handle_info: *const SemaphoreGetZirconHandleInfoFUCHSIA,
+        p_zircon_handle: *mut zx_handle_t,
+    ) -> Result,
+}
+unsafe impl Send for FuchsiaExternalSemaphoreFn {}
+unsafe impl Sync for FuchsiaExternalSemaphoreFn {}
+impl ::std::clone::Clone for FuchsiaExternalSemaphoreFn {
     fn clone(&self) -> Self {
-        FuchsiaExtension366Fn {}
+        FuchsiaExternalSemaphoreFn {
+            import_semaphore_zircon_handle_fuchsia: self.import_semaphore_zircon_handle_fuchsia,
+            get_semaphore_zircon_handle_fuchsia: self.get_semaphore_zircon_handle_fuchsia,
+        }
     }
 }
-impl FuchsiaExtension366Fn {
+impl FuchsiaExternalSemaphoreFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        FuchsiaExtension366Fn {}
+        FuchsiaExternalSemaphoreFn {
+            import_semaphore_zircon_handle_fuchsia: unsafe {
+                extern "system" fn import_semaphore_zircon_handle_fuchsia(
+                    _device: Device,
+                    _p_import_semaphore_zircon_handle_info : * const ImportSemaphoreZirconHandleInfoFUCHSIA,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(import_semaphore_zircon_handle_fuchsia)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkImportSemaphoreZirconHandleFUCHSIA\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    import_semaphore_zircon_handle_fuchsia
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_semaphore_zircon_handle_fuchsia: unsafe {
+                extern "system" fn get_semaphore_zircon_handle_fuchsia(
+                    _device: Device,
+                    _p_get_zircon_handle_info: *const SemaphoreGetZirconHandleInfoFUCHSIA,
+                    _p_zircon_handle: *mut zx_handle_t,
+                ) -> Result {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_semaphore_zircon_handle_fuchsia)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkGetSemaphoreZirconHandleFUCHSIA\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    get_semaphore_zircon_handle_fuchsia
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
     }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkImportSemaphoreZirconHandleFUCHSIA.html>"]
+    pub unsafe fn import_semaphore_zircon_handle_fuchsia(
+        &self,
+        device: Device,
+        p_import_semaphore_zircon_handle_info: *const ImportSemaphoreZirconHandleInfoFUCHSIA,
+    ) -> Result {
+        (self.import_semaphore_zircon_handle_fuchsia)(device, p_import_semaphore_zircon_handle_info)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetSemaphoreZirconHandleFUCHSIA.html>"]
+    pub unsafe fn get_semaphore_zircon_handle_fuchsia(
+        &self,
+        device: Device,
+        p_get_zircon_handle_info: *const SemaphoreGetZirconHandleInfoFUCHSIA,
+        p_zircon_handle: *mut zx_handle_t,
+    ) -> Result {
+        (self.get_semaphore_zircon_handle_fuchsia)(
+            device,
+            p_get_zircon_handle_info,
+            p_zircon_handle,
+        )
+    }
+}
+#[doc = "Generated from 'VK_FUCHSIA_external_semaphore'"]
+impl StructureType {
+    pub const IMPORT_SEMAPHORE_ZIRCON_HANDLE_INFO_FUCHSIA: Self = Self(1_000_365_000);
+}
+#[doc = "Generated from 'VK_FUCHSIA_external_semaphore'"]
+impl StructureType {
+    pub const SEMAPHORE_GET_ZIRCON_HANDLE_INFO_FUCHSIA: Self = Self(1_000_365_001);
+}
+#[doc = "Generated from 'VK_FUCHSIA_external_semaphore'"]
+impl ExternalSemaphoreHandleTypeFlags {
+    pub const ZIRCON_EVENT_FUCHSIA: Self = Self(0b1000_0000);
 }
 impl FuchsiaExtension367Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -26119,5 +26335,74 @@ impl ExtExtension389Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         ExtExtension389Fn {}
+    }
+}
+impl ExtExtension390Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_390\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+pub struct ExtExtension390Fn {}
+unsafe impl Send for ExtExtension390Fn {}
+unsafe impl Sync for ExtExtension390Fn {}
+impl ::std::clone::Clone for ExtExtension390Fn {
+    fn clone(&self) -> Self {
+        ExtExtension390Fn {}
+    }
+}
+impl ExtExtension390Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        ExtExtension390Fn {}
+    }
+}
+impl ExtExtension391Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_391\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+pub struct ExtExtension391Fn {}
+unsafe impl Send for ExtExtension391Fn {}
+unsafe impl Sync for ExtExtension391Fn {}
+impl ::std::clone::Clone for ExtExtension391Fn {
+    fn clone(&self) -> Self {
+        ExtExtension391Fn {}
+    }
+}
+impl ExtExtension391Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        ExtExtension391Fn {}
+    }
+}
+impl ExtExtension392Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_392\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+pub struct ExtExtension392Fn {}
+unsafe impl Send for ExtExtension392Fn {}
+unsafe impl Sync for ExtExtension392Fn {}
+impl ::std::clone::Clone for ExtExtension392Fn {
+    fn clone(&self) -> Self {
+        ExtExtension392Fn {}
+    }
+}
+impl ExtExtension392Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        ExtExtension392Fn {}
     }
 }
