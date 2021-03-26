@@ -437,7 +437,7 @@ pub enum Constant {
     BitPos(u32),
     CExpr(vkxml::CExpression),
     Text(String),
-    Alias(Ident, Ident),
+    Alias(Ident),
 }
 
 impl quote::ToTokens for Constant {
@@ -462,7 +462,7 @@ impl quote::ToTokens for Constant {
                 let bit_string = interleave_number('_', 4, &bit_string);
                 syn::LitInt::new(&format!("0b{}", bit_string), Span::call_site()).to_tokens(tokens);
             }
-            Constant::Alias(ref base, ref value) => tokens.extend(quote!(#base::#value)),
+            Constant::Alias(ref value) => tokens.extend(quote!(Self::#value)),
         }
     }
 }
@@ -1065,12 +1065,11 @@ pub fn generate_extension_constants<'a>(
                 }
                 EnumSpec::Alias { alias, extends } => {
                     if let Some(extends) = extends {
-                        let ident = name_to_tokens(&extends);
                         let key = variant_ident(&extends, &alias);
                         if key == "DISPATCH_BASE" {
                             None
                         } else {
-                            Some((Constant::Alias(ident, key), Some(extends.clone()), true))
+                            Some((Constant::Alias(key), Some(extends.clone()), true))
                         }
                     } else {
                         None
@@ -1336,7 +1335,7 @@ pub fn bitflags_impl_block(
         .map(|constant| {
             let variant_ident = constant.variant_ident(enum_name);
             let constant = constant.constant();
-            let tokens = if let Constant::Alias(_, _) = &constant {
+            let tokens = if let Constant::Alias(_) = &constant {
                 quote!(#constant)
             } else {
                 quote!(Self(#constant))
