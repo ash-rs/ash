@@ -1,23 +1,23 @@
 #![allow(dead_code)]
 use crate::prelude::*;
-use crate::version::{DeviceV1_1, InstanceV1_1};
+use crate::version::{DeviceV1_0, InstanceV1_0};
 use crate::vk;
 use crate::RawPtr;
 use std::ffi::CStr;
 use std::mem;
 
 #[derive(Clone)]
-pub struct CreateRenderPass2KHR {
+pub struct CreateRenderPass2 {
     handle: vk::Device,
     khr_create_renderpass2_fn: vk::KhrCreateRenderpass2Fn,
 }
 
-impl CreateRenderPass2KHR {
-    pub fn new<I: InstanceV1_1, D: DeviceV1_1>(instance: &I, device: &D) -> CreateRenderPass2KHR {
+impl CreateRenderPass2 {
+    pub fn new<I: InstanceV1_0, D: DeviceV1_0>(instance: &I, device: &D) -> CreateRenderPass2 {
         let khr_create_renderpass2_fn = vk::KhrCreateRenderpass2Fn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
-        CreateRenderPass2KHR {
+        CreateRenderPass2 {
             handle: device.handle(),
             khr_create_renderpass2_fn,
         }
@@ -28,7 +28,7 @@ impl CreateRenderPass2KHR {
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateRenderPass2.html>"]
-    unsafe fn create_render_pass2(
+    pub unsafe fn create_render_pass2(
         &self,
         create_info: &vk::RenderPassCreateInfo2,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
@@ -45,7 +45,7 @@ impl CreateRenderPass2KHR {
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdBeginRenderPass2.html>"]
-    unsafe fn cmd_begin_render_pass2(
+    pub unsafe fn cmd_begin_render_pass2(
         &self,
         command_buffer: vk::CommandBuffer,
         render_pass_begin_info: &vk::RenderPassBeginInfo,
@@ -59,7 +59,7 @@ impl CreateRenderPass2KHR {
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdNextSubpass2.html>"]
-    unsafe fn cmd_next_subpass2(
+    pub unsafe fn cmd_next_subpass2(
         &self,
         command_buffer: vk::CommandBuffer,
         subpass_begin_info: &vk::SubpassBeginInfo,
@@ -70,7 +70,7 @@ impl CreateRenderPass2KHR {
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdEndRenderPass2.html>"]
-    unsafe fn cmd_end_render_pass2(
+    pub unsafe fn cmd_end_render_pass2(
         &self,
         command_buffer: vk::CommandBuffer,
         subpass_end_info: &vk::SubpassEndInfo,

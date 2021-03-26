@@ -1,6 +1,7 @@
 pub use self::acceleration_structure::AccelerationStructure;
 pub use self::android_surface::AndroidSurface;
 pub use self::buffer_device_address::BufferDeviceAddress;
+pub use self::create_render_pass2::CreateRenderPass2;
 pub use self::deferred_host_operations::DeferredHostOperations;
 pub use self::display::Display;
 pub use self::display_swapchain::DisplaySwapchain;
