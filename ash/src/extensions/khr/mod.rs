@@ -1,6 +1,7 @@
 pub use self::acceleration_structure::AccelerationStructure;
 pub use self::android_surface::AndroidSurface;
 pub use self::buffer_device_address::BufferDeviceAddress;
+pub use self::create_render_pass2::CreateRenderPass2;
 pub use self::deferred_host_operations::DeferredHostOperations;
 pub use self::display::Display;
 pub use self::display_swapchain::DisplaySwapchain;
@@ -24,6 +25,7 @@ pub use self::xlib_surface::XlibSurface;
 mod acceleration_structure;
 mod android_surface;
 mod buffer_device_address;
+mod create_render_pass2;
 mod deferred_host_operations;
 mod display;
 mod display_swapchain;
