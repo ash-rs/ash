@@ -24,6 +24,7 @@ pub use self::xlib_surface::XlibSurface;
 mod acceleration_structure;
 mod android_surface;
 mod buffer_device_address;
+mod create_render_pass2;
 mod deferred_host_operations;
 mod display;
 mod display_swapchain;
