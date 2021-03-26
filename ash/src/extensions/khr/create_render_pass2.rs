@@ -65,8 +65,11 @@ impl CreateRenderPass2 {
         subpass_begin_info: &vk::SubpassBeginInfo,
         subpass_end_info: &vk::SubpassEndInfo,
     ) {
-        self.khr_create_renderpass2_fn
-            .cmd_next_subpass2_khr(command_buffer, subpass_begin_info, subpass_end_info);
+        self.khr_create_renderpass2_fn.cmd_next_subpass2_khr(
+            command_buffer,
+            subpass_begin_info,
+            subpass_end_info,
+        );
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdEndRenderPass2.html>"]
