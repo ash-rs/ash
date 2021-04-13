@@ -2,7 +2,10 @@
 
 use heck::{CamelCase, ShoutySnakeCase, SnakeCase};
 use itertools::Itertools;
-use nom::{alt, do_parse, map, named, one_of, opt, tag, take_while1, terminated};
+use nom::{
+    alt, character::complete::digit1, delimited, do_parse, map, named, one_of, opt, pair, preceded,
+    tag, terminated,
+};
 use once_cell::sync::Lazy;
 use proc_macro2::{Delimiter, Group, Literal, Span, TokenStream, TokenTree};
 use quote::*;
@@ -39,41 +42,44 @@ impl quote::ToTokens for CType {
 named!(ctype<&str, CType>,
     alt!(
         tag!("ULL") => { |_| CType::U64 } |
-        tag!("U") => { |_| CType::U32  }
+        tag!("U") => { |_| CType::U32 }
     )
 );
+
 named!(cexpr<&str, (CType, String)>,
-       alt!(
-           map!(cfloat, |f| (CType::Float, format!("{:.2}", f))) |
-           inverse_number
-       )
+    alt!(
+        map!(cfloat, |f| (CType::Float, format!("{:.2}", f))) |
+        inverse_number
+    )
+);
+
+named!(decimal_number<&str, (CType, String)>,
+    do_parse!(
+        num: digit1 >>
+        typ: ctype >>
+        ((typ, num.to_string()))
+    )
 );
 
 named!(inverse_number<&str, (CType, String)>,
-    do_parse!(
-        tag!("(")>>
-        tag!("~") >>
-        s: take_while1!(|c: char| c.is_digit(10)) >>
-        ctype: ctype >>
-        minus_num: opt!(
-            do_parse!(
-                tag!("-") >>
-                n: take_while1!(|c: char| c.is_digit(10)) >>
-                (n)
-            )
-        ) >>
-        tag!(")") >>
-        (
-            {
-                let expr = if let Some(minus) = minus_num {
-                    format!("!{}-{}", s, minus)
-                }
-                else{
-                    format!("!{}", s)
-                };
-                (ctype, expr)
+    map!(
+        delimited!(
+            tag!("("),
+            pair!(
+                preceded!(tag!("~"), decimal_number),
+                opt!(preceded!(tag!("-"), digit1))
+            ),
+            tag!(")")
+        ),
+        |((ctyp, num), minus_num)| {
+            let expr = if let Some(minus) = minus_num {
+                format!("!{}-{}", num, minus)
             }
-        )
+            else{
+                format!("!{}", num)
+            };
+            (ctyp, expr)
+        }
     )
 );
 
