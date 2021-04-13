@@ -3,9 +3,10 @@
 use heck::{CamelCase, ShoutySnakeCase, SnakeCase};
 use itertools::Itertools;
 use nom::{
-    alt,
-    character::complete::{digit1, hex_digit1},
-    complete, delimited, do_parse, map, named, one_of, opt, pair, preceded, tag, terminated, value,
+    alt, char,
+    character::complete::{digit1, hex_digit1, multispace1},
+    complete, delimited, do_parse, many1, map, named, none_of, one_of, opt, pair, preceded, tag,
+    terminated, value,
 };
 use once_cell::sync::Lazy;
 use proc_macro2::{Delimiter, Group, Literal, Span, TokenStream, TokenTree};
@@ -104,6 +105,23 @@ named!(inverse_number<&str, (CType, String)>,
 
 named!(cfloat<&str, f32>,
     terminated!(nom::number::complete::float, one_of!("fF"))
+);
+
+// Like a C string, but does not support quote escaping and expects at least one character.
+// If needed, use https://github.com/Geal/nom/blob/8e09f0c3029d32421b5b69fb798cef6855d0c8df/tests/json.rs#L61-L81
+named!(c_include_string<&str, String>,
+    delimited!(
+        char!('"'),
+        map!(
+            many1!(none_of!("\"")),
+            |chars| chars.iter().map(char::to_string).join("")
+        ),
+        char!('"')
+    )
+);
+
+named!(c_include<&str, String>,
+    preceded!(tag!("#include"), preceded!(multispace1, c_include_string))
 );
 
 fn khronos_link<S: Display + ?Sized>(name: &S) -> Literal {
@@ -2493,6 +2511,62 @@ pub fn generate_const_debugs(const_values: &BTreeMap<Ident, ConstantTypeInfo>) -
         #(#impls)*
     }
 }
+pub fn extract_native_types(registry: &vk_parse::Registry) -> (Vec<(String, String)>, Vec<String>) {
+    // Not a HashMap so that headers are processed in order of definition:
+    let mut header_includes = vec![];
+    let mut header_types = vec![];
+
+    let types = registry
+        .0
+        .iter()
+        .filter_map(|item| match item {
+            vk_parse::RegistryChild::Types(ref ty) => {
+                Some(ty.children.iter().filter_map(|child| match child {
+                    vk_parse::TypesChild::Type(ty) => Some(ty),
+                    _ => None,
+                }))
+            }
+            _ => None,
+        })
+        .flatten();
+
+    for ty in types {
+        match ty.category.as_deref() {
+            Some("include") => {
+                // `category="include"` lacking an `#include` directive are generally "irrelevant" system headers.
+                if let vk_parse::TypeSpec::Code(code) = &ty.spec {
+                    let name = ty
+                        .name
+                        .clone()
+                        .expect("Include type must provide header name");
+                    assert!(
+                        header_includes
+                            .iter()
+                            .all(|(other_name, _)| other_name != &name),
+                        "Header `{}` being redefined",
+                        name
+                    );
+
+                    let (rem, path) = c_include(&code.code)
+                        .expect("Failed to parse `#include` from `category=\"include\"` directive");
+                    assert!(rem.is_empty());
+                    header_includes.push((name, path));
+                }
+            }
+            Some(_) => {}
+            None => {
+                if let Some(header_name) = ty.requires.clone() {
+                    if header_includes.iter().any(|(name, _)| name == &header_name) {
+                        // Omit types from system and other headers
+                        header_types.push(ty.name.clone().expect("Type must have a name"));
+                    }
+                }
+            }
+        };
+    }
+
+    (header_includes, header_types)
+}
 pub fn generate_aliases_of_types(
     types: &vk_parse::Types,
     ty_cache: &mut HashSet<Ident, impl BuildHasher>,
@@ -2519,10 +2593,11 @@ pub fn generate_aliases_of_types(
         #(#aliases)*
     }
 }
-pub fn write_source_code<P: AsRef<Path>>(vk_xml: &Path, src_dir: P) {
+pub fn write_source_code<P: AsRef<Path>>(vk_headers_dir: &Path, src_dir: P) {
+    let vk_xml = vk_headers_dir.join("registry/vk.xml");
     use std::fs::File;
     use std::io::Write;
-    let (spec2, _errors) = vk_parse::parse_file(vk_xml).expect("Invalid xml file");
+    let (spec2, _errors) = vk_parse::parse_file(&vk_xml).expect("Invalid xml file");
     let extensions: &Vec<vk_parse::Extension> = spec2
         .0
         .iter()
@@ -2544,7 +2619,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_xml: &Path, src_dir: P) {
         })
         .collect();
 
-    let spec = vk_parse::parse_file_as_vkxml(vk_xml).expect("Invalid xml file.");
+    let spec = vk_parse::parse_file_as_vkxml(&vk_xml).expect("Invalid xml file.");
     let cmd_aliases: HashMap<String, String> = spec2
         .0
         .iter()
@@ -2743,11 +2818,12 @@ pub fn write_source_code<P: AsRef<Path>>(vk_xml: &Path, src_dir: P) {
         use std::fmt;
         use std::os::raw::*;
         use crate::vk::{Handle, ptr_chain_iter};
-        use crate::vk::platform_types::*;
         use crate::vk::aliases::*;
         use crate::vk::bitflags::*;
         use crate::vk::constants::*;
         use crate::vk::enums::*;
+        use crate::vk::native::*;
+        use crate::vk::platform_types::*;
         #(#definition_code)*
     };
 
@@ -2825,6 +2901,9 @@ pub fn write_source_code<P: AsRef<Path>>(vk_xml: &Path, src_dir: P) {
         pub use feature_extensions::*;
         mod features;
         pub use features::*;
+        /// Native bindings from Vulkan headers, generated by bindgen
+        #[allow(nonstandard_style)]
+        pub mod native;
         mod platform_types;
         pub use platform_types::*;
 
@@ -2857,4 +2936,41 @@ pub fn write_source_code<P: AsRef<Path>>(vk_xml: &Path, src_dir: P) {
     write!(&mut vk_aliases_file, "{}", aliases).expect("Unable to write vk/aliases.rs");
     write!(&mut vk_rs_file, "{} {}", vk_rs_clippy_lints, vk_rs_code)
         .expect("Unable to write vk.rs");
+
+    let vk_include = vk_headers_dir.join("include");
+
+    let mut bindings = bindgen::Builder::default()
+        .clang_arg(format!(
+            "-I{}",
+            vk_include.to_str().expect("Valid UTF8 string")
+        ))
+        .clang_arg(format!(
+            "-I{}",
+            vk_include
+                .join("vulkan")
+                .to_str()
+                .expect("Valid UTF8 string")
+        ));
+
+    let (header_includes, header_types) = extract_native_types(&spec2);
+
+    for (_name, path) in header_includes {
+        let path = if path == "vk_platform.h" {
+            // Fix broken path, https://github.com/KhronosGroup/Vulkan-Docs/pull/1538
+            vk_include.join("vulkan").join(path)
+        } else {
+            vk_include.join(path)
+        };
+        bindings = bindings.header(path.to_str().expect("Valid UTF8 string"));
+    }
+
+    for typ in header_types {
+        bindings = bindings.allowlist_type(typ);
+    }
+
+    bindings
+        .generate()
+        .expect("Unable to generate native bindings")
+        .write_to_file(vk_dir.join("native.rs"))
+        .expect("Couldn't write native bindings!");
 }
