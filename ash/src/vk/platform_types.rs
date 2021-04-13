@@ -24,10 +24,19 @@ pub type LPCWSTR = *const u16;
 #[allow(non_camel_case_types)]
 pub type zx_handle_t = u32;
 #[allow(non_camel_case_types)]
+pub type _screen_context = c_void;
+#[allow(non_camel_case_types)]
+pub type _screen_window = c_void;
+// FIXME: Platform specific types that should come from a library id:0
+// typedefs are only here so that the code compiles for now
+#[allow(non_camel_case_types)]
 pub type SECURITY_ATTRIBUTES = ();
+// Opaque types
 pub type ANativeWindow = c_void;
 pub type AHardwareBuffer = c_void;
 pub type CAMetalLayer = c_void;
+// This definition is behind an NDA with a best effort guess from
+// https://github.com/google/gapid/commit/22aafebec4638c6aaa77667096bca30f6e842d95#diff-ab3ab4a7d89b4fc8a344ff4e9332865f268ea1669ee379c1b516a954ecc2e7a6R20-R21
 pub type GgpStreamDescriptor = u32;
 pub type GgpFrameToken = u64;
 pub type IDirectFB = c_void;

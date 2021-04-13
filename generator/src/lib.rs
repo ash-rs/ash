@@ -344,52 +344,6 @@ fn is_opaque_type(ty: &str) -> bool {
     )
 }
 
-pub fn platform_specific_types() -> TokenStream {
-    quote! {
-        pub type RROutput = c_ulong;
-        pub type VisualID = c_uint;
-        pub type Display = *const c_void;
-        pub type Window = c_ulong;
-        #[allow(non_camel_case_types)]
-        pub type xcb_connection_t = c_void;
-        #[allow(non_camel_case_types)]
-        pub type xcb_window_t = u32;
-        #[allow(non_camel_case_types)]
-        pub type xcb_visualid_t = u32;
-        pub type MirConnection = *const c_void;
-        pub type MirSurface = *const c_void;
-        pub type HINSTANCE = *const c_void;
-        pub type HWND = *const c_void;
-        #[allow(non_camel_case_types)]
-        pub type wl_display = c_void;
-        #[allow(non_camel_case_types)]
-        pub type wl_surface = c_void;
-        pub type HANDLE = *mut c_void;
-        pub type HMONITOR = HANDLE;
-        pub type DWORD = c_ulong;
-        pub type LPCWSTR = *const u16;
-        #[allow(non_camel_case_types)]
-        pub type zx_handle_t = u32;
-        #[allow(non_camel_case_types)]
-        pub type _screen_context = c_void;
-        #[allow(non_camel_case_types)]
-        pub type _screen_window = c_void;
-        // FIXME: Platform specific types that should come from a library id:0
-        // typedefs are only here so that the code compiles for now
-        #[allow(non_camel_case_types)]
-        pub type SECURITY_ATTRIBUTES = ();
-        // Opaque types
-        pub type ANativeWindow = c_void;
-        pub type AHardwareBuffer = c_void;
-        pub type CAMetalLayer = c_void;
-        // This definition is behind an NDA with a best effort guess from
-        // https://github.com/google/gapid/commit/22aafebec4638c6aaa77667096bca30f6e842d95#diff-ab3ab4a7d89b4fc8a344ff4e9332865f268ea1669ee379c1b516a954ecc2e7a6R20-R21
-        pub type GgpStreamDescriptor = u32;
-        pub type GgpFrameToken = u64;
-        pub type IDirectFB = c_void;
-        pub type IDirectFBSurface = c_void;
-    }
-}
 #[derive(Debug, Copy, Clone)]
 pub enum ConstVal {
     U32(u32),
@@ -2655,7 +2609,6 @@ pub fn write_source_code<P: AsRef<Path>>(vk_xml: &Path, src_dir: P) {
     let handle_nondispatchable_macro = handle_nondispatchable_macro();
     let define_handle_macro = define_handle_macro();
     let version_macros = vk_version_macros();
-    let platform_specific_types = platform_specific_types();
 
     let ptr_chain_code = quote! {
         /// Iterates through the pointer chain. Includes the item that is passed into the function.
@@ -2694,8 +2647,6 @@ pub fn write_source_code<P: AsRef<Path>>(vk_xml: &Path, src_dir: P) {
     let mut vk_features_file = File::create(vk_dir.join("features.rs")).expect("vk/features.rs");
     let mut vk_definitions_file =
         File::create(vk_dir.join("definitions.rs")).expect("vk/definitions.rs");
-    let mut vk_platform_types_file =
-        File::create(vk_dir.join("platform_types.rs")).expect("vk/platform_types.rs");
     let mut vk_enums_file = File::create(vk_dir.join("enums.rs")).expect("vk/enums.rs");
     let mut vk_bitflags_file = File::create(vk_dir.join("bitflags.rs")).expect("vk/bitflags.rs");
     let mut vk_constants_file = File::create(vk_dir.join("constants.rs")).expect("vk/constants.rs");
@@ -2773,11 +2724,6 @@ pub fn write_source_code<P: AsRef<Path>>(vk_xml: &Path, src_dir: P) {
         #(#aliases)*
     };
 
-    let platform_types_code = quote! {
-        use std::os::raw::*;
-        #platform_specific_types
-    };
-
     // These are defined outside of `quote!` because rustfmt doesn't seem
     // to format them correctly when they contain extra spaces.
     let vk_rs_clippy_lints = r#"
@@ -2819,8 +2765,6 @@ pub fn write_source_code<P: AsRef<Path>>(vk_xml: &Path, src_dir: P) {
     };
 
     write!(&mut vk_macros_file, "{}", macros_code).expect("Unable to write vk/macros.rs");
-    write!(&mut vk_platform_types_file, "{}", platform_types_code)
-        .expect("Unable to write to vk/platform_types.rs");
     write!(&mut vk_features_file, "{}", feature_code).expect("Unable to write vk/features.rs");
     write!(&mut vk_definitions_file, "{}", definition_code)
         .expect("Unable to write vk/definitions.rs");
