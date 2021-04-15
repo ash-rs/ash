@@ -16,25 +16,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Khr raytracing support
+- Final KHR RayTracing support (`VK_KHR_ray_tracing_pipeline`, `VK_KHR_ray_query` and `VK_KHR_acceleration_structure` device extensions)
 - `VK_NV_device_diagnostics_config` device extension
-- Add `VK_KHR_deferred_host_operations` extension support
+- `VK_KHR_deferred_host_operations` device extension
 - Expose header version and extension spec version constants
 - Provide Vulkan library loader from custom path
 
 ### Changed
 
-- Removed deprecated experimental raytracing extension
+- Removed deprecated experimental `VK_KHR_ray_tracing` extension
 - Update Vulkan-Headers to 1.2.168
 - Update libloading from 0.6 to 0.7
 
 ### Fixed
 
-- Turn c_void-returning functions into Rust ()
+- Turn `c_void`-returning functions into Rust `()`
 - Use best guess for ggp extension types
 - Use raw pointers to static-sized arrays in FFI signatures
 - rename parameter of `get_physical_device_surface_support`
-
 
 ## [0.31.0] - 2020-05-10
 
