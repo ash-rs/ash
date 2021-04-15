@@ -489,7 +489,7 @@ impl Device {
             .result_with_success(event)
     }
 
-    /// Returns true if the event was set, and false if the event was reset, otherwise it will
+    /// Returns [`true`] if the event was set, and [`false`] if the event was reset, otherwise it will
     /// return the error code.
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetEventStatus.html>"]
     pub unsafe fn get_event_status(&self, event: vk::Event) -> VkResult<bool> {

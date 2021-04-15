@@ -246,9 +246,9 @@ impl Instance {
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateDevice.html>"]
     ///
     /// # Safety
-    /// In order for the created `Device` to be valid for the duration of its
-    /// usage, the `Instance` this was called on must be dropped later than the
-    /// resulting `Device`.
+    /// In order for the created [`Device`] to be valid for the duration of its
+    /// usage, the [`Instance`] this was called on must be dropped later than the
+    /// resulting [`Device`].
     pub unsafe fn create_device(
         &self,
         physical_device: vk::PhysicalDevice,

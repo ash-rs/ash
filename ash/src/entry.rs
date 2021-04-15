@@ -10,7 +10,12 @@ use std::os::raw::c_char;
 use std::os::raw::c_void;
 use std::ptr;
 
-/// Function loader
+/// Holds a custom type `L` to load symbols from (usually a handle to a `dlopen`ed library),
+/// the [`vkGetInstanceProcAddr`][vk::StaticFn::get_instance_proc_addr()] loader function from
+/// this library (in [`vk::StaticFn`]), and Vulkan's "entry point" functions (resolved with `NULL`
+/// `instance`) as listed in [`vkGetInstanceProcAddr`'s description].
+///
+/// [`vkGetInstanceProcAddr`'s description]: https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetInstanceProcAddr.html#_description
 #[derive(Clone)]
 pub struct EntryCustom<L> {
     static_fn: vk::StaticFn,
@@ -95,9 +100,9 @@ impl<L> EntryCustom<L> {
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCreateInstance.html>"]
     ///
     /// # Safety
-    /// In order for the created `Instance` to be valid for the duration of its
-    /// usage, the `Entry` this was called on must be dropped later than the
-    /// resulting `Instance`.
+    /// In order for the created [`Instance`] to be valid for the duration of its
+    /// usage, the [`Entry`](Self) this was called on must be dropped later than the
+    /// resulting [`Instance`].
     pub unsafe fn create_instance(
         &self,
         create_info: &vk::InstanceCreateInfo,
@@ -170,6 +175,8 @@ impl<L> EntryCustom<L> {
 
     #[deprecated = "This function is unavailable and therefore panics on Vulkan 1.0, please use `try_enumerate_instance_version` instead"]
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkEnumerateInstanceVersion.html>"]
+    ///
+    /// Please use [`Self::try_enumerate_instance_version`] instead.
     pub fn enumerate_instance_version(&self) -> VkResult<u32> {
         unsafe {
             let mut api_version = 0;
