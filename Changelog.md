@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased] - ReleaseDate
 
+## [0.32.1] - 2021-03-29
+
+### Added
+
+- `VK_KHR_create_renderpass2` device extension
+
 ## [0.32.0] - 2021-03-07
 
 ### Added
