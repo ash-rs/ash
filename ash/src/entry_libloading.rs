@@ -22,9 +22,6 @@ const LIB_PATH: &str = "libvulkan.so";
 #[cfg(any(target_os = "macos", target_os = "ios"))]
 const LIB_PATH: &str = "libvulkan.dylib";
 
-/// Function loader
-pub type Entry = EntryCustom<Arc<Library>>;
-
 #[derive(Debug)]
 pub enum LoadingError {
     LibraryLoadFailure(libloading::Error),
@@ -55,7 +52,10 @@ impl From<MissingEntryPoint> for LoadingError {
     }
 }
 
-impl EntryCustom<Arc<Library>> {
+/// Default function loader
+pub type Entry = EntryCustom<Arc<Library>>;
+
+impl Entry {
     /// Load default Vulkan library for the current platform
     ///
     /// # Safety
