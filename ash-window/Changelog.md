@@ -1,6 +1,12 @@
 ### Changelog
 
-## [Unreleased]
+## [0.6.0]
+
+### Changed
+
+- Bumped `ash` version to [`0.32`](https://github.com/MaikKlein/ash/releases/tag/0.32.0)
+
+## [0.5.0]
 
 ### Changed
 - `impl HasRawWindowHandle` to `dyn HasRawWindowHandle`
@@ -30,3 +36,6 @@
 
 ## Version 0.1.0
 Initial release for `raw-window-handle = "0.3"` with Windows, Linux, Android, MacOS/iOS support.
+
+[0.6.0]: https://github.com/MaikKlein/ash/releases/tag/ash-window-0.6.0
+[0.5.0]: https://github.com/MaikKlein/ash/releases/tag/ash-window-0.5.0

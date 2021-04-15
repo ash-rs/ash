@@ -157,6 +157,7 @@ can write to aligned memory.
 
 
 [Unreleased]: https://github.com/MaikKlein/ash/compare/0.32.0...HEAD
+[0.32.1]: https://github.com/MaikKlein/ash/releases/tag/0.32.1
 [0.32.0]: https://github.com/MaikKlein/ash/releases/tag/0.32.0
 [0.31.0]: https://github.com/MaikKlein/ash/releases/tag/0.31.0
 [0.30.0]: https://github.com/MaikKlein/ash/releases/tag/0.30.0
