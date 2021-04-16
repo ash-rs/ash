@@ -1733,7 +1733,7 @@ pub fn derive_setters(
             // Unique cases
             if name == "pCode" {
                 return Some(quote!{
-                    pub fn code(mut self, code: &'a [u32]) -> #name_builder<'a> {
+                    pub fn code(mut self, code: &'a [u32]) -> Self {
                         self.inner.code_size = code.len() * 4;
                         self.inner.p_code = code.as_ptr() as *const u32;
                         self
@@ -1743,7 +1743,7 @@ pub fn derive_setters(
 
             if name == "pSampleMask" {
                 return Some(quote!{
-                    pub fn sample_mask(mut self, sample_mask: &'a [SampleMask]) -> #name_builder<'a> {
+                    pub fn sample_mask(mut self, sample_mask: &'a [SampleMask]) -> Self {
                         self.inner.p_sample_mask = sample_mask.as_ptr() as *const SampleMask;
                         self
                     }
@@ -1752,7 +1752,7 @@ pub fn derive_setters(
 
             if name == "ppGeometries" {
                 return Some(quote!{
-                    pub fn geometries_ptrs(mut self, geometries: &'a [*const AccelerationStructureGeometryKHR]) -> #name_builder<'a> {
+                    pub fn geometries_ptrs(mut self, geometries: &'a [*const AccelerationStructureGeometryKHR]) -> Self {
                         self.inner.geometry_count = geometries.len() as _;
                         self.inner.pp_geometries = geometries.as_ptr();
                         self
@@ -1767,7 +1767,7 @@ pub fn derive_setters(
                 assert!(field.null_terminate);
                 assert_eq!(field.size, None);
                 return Some(quote!{
-                    pub fn #param_ident_short(mut self, #param_ident_short: &'a ::std::ffi::CStr) -> #name_builder<'a> {
+                    pub fn #param_ident_short(mut self, #param_ident_short: &'a ::std::ffi::CStr) -> Self {
                         self.inner.#param_ident = #param_ident_short.as_ptr();
                         self
                     }
@@ -1812,7 +1812,7 @@ pub fn derive_setters(
                         };
 
                         return Some(quote! {
-                            pub fn #param_ident_short(mut self, #param_ident_short: &'a #mutable #slice_param_ty_tokens) -> #name_builder<'a> {
+                            pub fn #param_ident_short(mut self, #param_ident_short: &'a #mutable #slice_param_ty_tokens) -> Self {
                                 #set_size_stmt
                                 self.inner.#param_ident = #param_ident_short#ptr;
                                 self
@@ -1825,7 +1825,7 @@ pub fn derive_setters(
 
         if field.basetype == "VkBool32" {
             return Some(quote!{
-                pub fn #param_ident_short(mut self, #param_ident_short: bool) -> #name_builder<'a> {
+                pub fn #param_ident_short(mut self, #param_ident_short: bool) -> Self {
                     self.inner.#param_ident = #param_ident_short.into();
                     self
                 }
@@ -1840,7 +1840,7 @@ pub fn derive_setters(
         };
 
         Some(quote!{
-            pub fn #param_ident_short(mut self, #param_ident_short: #param_ty_tokens) -> #name_builder<'a> {
+            pub fn #param_ident_short(mut self, #param_ident_short: #param_ty_tokens) -> Self {
                 self.inner.#param_ident = #param_ident_short;
                 self
             }
@@ -1869,7 +1869,7 @@ pub fn derive_setters(
             /// valid extension structs can be pushed into the chain.
             /// If the chain looks like `A -> B -> C`, and you call `builder.push_next(&mut D)`, then the
             /// chain will look like `A -> D -> B -> C`.
-            pub fn push_next<T: #extends_name>(mut self, next: &'a mut T) -> #name_builder<'a> {
+            pub fn push_next<T: #extends_name>(mut self, next: &'a mut T) -> Self {
                 unsafe{
                     let next_ptr = next as *mut T as *mut BaseOutStructure;
                     // `next` here can contain a pointer chain. This means that we must correctly
