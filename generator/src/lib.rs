@@ -1959,7 +1959,7 @@ pub fn derive_setters(
         })
     });
 
-    let extends_name = name_to_tokens(&format!("Extends{}", name));
+    let extends_name = format_ident!("Extends{}", name);
 
     let root_structs: Vec<Ident> = _struct
         .extends
@@ -1968,13 +1968,15 @@ pub fn derive_setters(
             extends
                 .split(',')
                 .filter(|extend| root_struct_names.contains(*extend))
-                .map(|extends| name_to_tokens(&format!("Extends{}", name_to_tokens(&extends))))
+                .map(|extends| format_ident!("Extends{}", name_to_tokens(extends)))
                 .collect()
         })
         .unwrap_or_else(Vec::new);
 
+    let is_root_struct = has_next && root_structs.is_empty();
+
     // We only implement a next methods for root structs with a `pnext` field.
-    let next_function = if has_next && root_structs.is_empty() {
+    let next_function = if is_root_struct {
         quote! {
             /// Prepends the given extension struct between the root and the first pointer. This
             /// method only exists on structs that can be passed to a function directly. Only
@@ -2001,27 +2003,22 @@ pub fn derive_setters(
             }
         }
     } else {
-        quote! {}
+        quote!()
     };
 
-    // Root structs come with their own trait that structs that extends this struct will
-    // implement
-    let next_trait = if has_next && _struct.extends.is_none() {
-        quote! {
-            pub unsafe trait #extends_name {
-            }
-        }
+    // Root structs come with their own trait that structs that extend
+    // this struct will implement
+    let next_trait = if is_root_struct {
+        quote!(pub unsafe trait #extends_name {})
     } else {
-        quote! {}
+        quote!()
     };
 
     // If the struct extends something we need to implement the trait.
     let impl_extend_trait = root_structs.iter().map(|extends| {
         quote! {
-            unsafe impl #extends for #name_builder<'_> {
-            }
-            unsafe impl #extends for #name {
-            }
+            unsafe impl #extends for #name_builder<'_> {}
+            unsafe impl #extends for #name {}
         }
     });
 
