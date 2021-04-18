@@ -1,6 +1,6 @@
 #![allow(dead_code)]
-use crate::version::{DeviceV1_0, InstanceV1_0};
 use crate::vk;
+use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 use std::ptr;
@@ -12,7 +12,7 @@ pub struct GetMemoryRequirements2 {
 }
 
 impl GetMemoryRequirements2 {
-    pub fn new<I: InstanceV1_0, D: DeviceV1_0>(instance: &I, device: &D) -> GetMemoryRequirements2 {
+    pub fn new(instance: &Instance, device: &Device) -> GetMemoryRequirements2 {
         let get_memory_requirements2_fn = vk::KhrGetMemoryRequirements2Fn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });

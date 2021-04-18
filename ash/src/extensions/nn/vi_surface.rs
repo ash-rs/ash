@@ -1,8 +1,8 @@
 #![allow(dead_code)]
 use crate::prelude::*;
-use crate::version::{EntryV1_0, InstanceV1_0};
 use crate::vk;
 use crate::RawPtr;
+use crate::{EntryCustom, Instance};
 use std::ffi::CStr;
 use std::mem;
 
@@ -13,7 +13,7 @@ pub struct ViSurface {
 }
 
 impl ViSurface {
-    pub fn new<E: EntryV1_0, I: InstanceV1_0>(entry: &E, instance: &I) -> ViSurface {
+    pub fn new<L>(entry: &EntryCustom<L>, instance: &Instance) -> ViSurface {
         let surface_fn = vk::NnViSurfaceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });

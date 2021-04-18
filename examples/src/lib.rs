@@ -6,8 +6,8 @@ use ash::extensions::{
     khr::{Surface, Swapchain},
 };
 
-pub use ash::version::{DeviceV1_0, EntryV1_0, InstanceV1_0};
-use ash::{vk, Device, Entry, Instance};
+use ash::{vk, Entry};
+pub use ash::{Device, EntryCustom, Instance};
 use std::borrow::Cow;
 use std::cell::RefCell;
 use std::default::Default;
@@ -29,8 +29,8 @@ macro_rules! offset_of {
 /// is executed. That way we can delay the waiting for the fences by 1 frame which is good for performance.
 /// Make sure to create the fence in a signaled state on the first use.
 #[allow(clippy::too_many_arguments)]
-pub fn record_submit_commandbuffer<D: DeviceV1_0, F: FnOnce(&D, vk::CommandBuffer)>(
-    device: &D,
+pub fn record_submit_commandbuffer<F: FnOnce(&Device, vk::CommandBuffer)>(
+    device: &Device,
     command_buffer: vk::CommandBuffer,
     command_buffer_reuse_fence: vk::Fence,
     submit_queue: vk::Queue,

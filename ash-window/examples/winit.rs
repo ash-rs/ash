@@ -5,7 +5,7 @@
 //!
 //! On instance extensions platform specific extensions need to be enabled.
 
-use ash::{version::EntryV1_0, vk};
+use ash::vk;
 use std::error::Error;
 
 fn main() -> Result<(), Box<dyn Error>> {
