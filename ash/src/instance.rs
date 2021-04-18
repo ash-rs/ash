@@ -15,27 +15,6 @@ pub struct Instance {
     pub(crate) instance_fn_1_0: vk::InstanceFnV1_0,
     pub(crate) instance_fn_1_1: vk::InstanceFnV1_1,
     pub(crate) instance_fn_1_2: vk::InstanceFnV1_2,
-
-    pub(crate) ext_debug_report_fn: vk::ExtDebugReportFn,
-    pub(crate) ext_debug_utils_fn: vk::ExtDebugUtilsFn,
-    pub(crate) ext_metal_surface_fn: vk::ExtMetalSurfaceFn,
-    pub(crate) ext_tooling_info_fn: vk::ExtToolingInfoFn,
-
-    pub(crate) khr_android_surface_fn: vk::KhrAndroidSurfaceFn,
-    pub(crate) khr_display_fn: vk::KhrDisplayFn,
-    pub(crate) khr_get_physical_device_properties2_fn: vk::KhrGetPhysicalDeviceProperties2Fn,
-    pub(crate) khr_pipeline_executable_properties_fn: vk::KhrPipelineExecutablePropertiesFn,
-    pub(crate) khr_surface_fn: vk::KhrSurfaceFn,
-    pub(crate) khr_timeline_semaphore_fn: vk::KhrTimelineSemaphoreFn,
-    pub(crate) khr_wayland_surface_fn: vk::KhrWaylandSurfaceFn,
-    pub(crate) khr_win32_surface_fn: vk::KhrWin32SurfaceFn,
-    pub(crate) khr_xcb_surface_fn: vk::KhrXcbSurfaceFn,
-    pub(crate) khr_xlib_surface_fn: vk::KhrXlibSurfaceFn,
-
-    pub(crate) mvk_ios_surface_fn: vk::MvkIosSurfaceFn,
-    pub(crate) mvk_macos_surface_fn: vk::MvkMacosSurfaceFn,
-
-    pub(crate) nn_vi_surface_fn: vk::NnViSurfaceFn,
 }
 
 impl Instance {
@@ -50,31 +29,6 @@ impl Instance {
             instance_fn_1_0: vk::InstanceFnV1_0::load(load_fn),
             instance_fn_1_1: vk::InstanceFnV1_1::load(load_fn),
             instance_fn_1_2: vk::InstanceFnV1_2::load(load_fn),
-
-            ext_debug_report_fn: vk::ExtDebugReportFn::load(load_fn),
-            ext_debug_utils_fn: vk::ExtDebugUtilsFn::load(load_fn),
-            ext_metal_surface_fn: vk::ExtMetalSurfaceFn::load(load_fn),
-            ext_tooling_info_fn: vk::ExtToolingInfoFn::load(load_fn),
-
-            khr_android_surface_fn: vk::KhrAndroidSurfaceFn::load(load_fn),
-            khr_display_fn: vk::KhrDisplayFn::load(load_fn),
-            khr_get_physical_device_properties2_fn: vk::KhrGetPhysicalDeviceProperties2Fn::load(
-                load_fn,
-            ),
-            khr_pipeline_executable_properties_fn: vk::KhrPipelineExecutablePropertiesFn::load(
-                load_fn,
-            ),
-            khr_surface_fn: vk::KhrSurfaceFn::load(load_fn),
-            khr_timeline_semaphore_fn: vk::KhrTimelineSemaphoreFn::load(load_fn),
-            khr_wayland_surface_fn: vk::KhrWaylandSurfaceFn::load(load_fn),
-            khr_win32_surface_fn: vk::KhrWin32SurfaceFn::load(load_fn),
-            khr_xcb_surface_fn: vk::KhrXcbSurfaceFn::load(load_fn),
-            khr_xlib_surface_fn: vk::KhrXlibSurfaceFn::load(load_fn),
-
-            mvk_ios_surface_fn: vk::MvkIosSurfaceFn::load(load_fn),
-            mvk_macos_surface_fn: vk::MvkMacosSurfaceFn::load(load_fn),
-
-            nn_vi_surface_fn: vk::NnViSurfaceFn::load(load_fn),
         }
     }
 
@@ -83,7 +37,7 @@ impl Instance {
     }
 }
 
-// Vulkan core 1.2
+/// Vulkan core 1.2
 #[allow(non_camel_case_types)]
 impl Instance {
     pub fn fp_v1_2(&self) -> &vk::InstanceFnV1_2 {
@@ -91,7 +45,7 @@ impl Instance {
     }
 }
 
-// Vulkan core 1.1
+/// Vulkan core 1.1
 #[allow(non_camel_case_types)]
 impl Instance {
     pub fn fp_v1_1(&self) -> &vk::InstanceFnV1_1 {
@@ -283,7 +237,7 @@ impl Instance {
     }
 }
 
-// Vulkan core 1.0
+/// Vulkan core 1.0
 #[allow(non_camel_case_types)]
 impl Instance {
     pub fn fp_v1_0(&self) -> &vk::InstanceFnV1_0 {
