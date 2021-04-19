@@ -1812,7 +1812,7 @@ impl ExtDebugReportFn {
         ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_debug_report\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 9u32;
+    pub const SPEC_VERSION: u32 = 10u32;
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkCreateDebugReportCallbackEXT = unsafe extern "system" fn(
@@ -3081,7 +3081,7 @@ impl KhrVideoEncodeQueueFn {
         ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_video_encode_queue\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 1u32;
+    pub const SPEC_VERSION: u32 = 2u32;
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdEncodeVideoKHR = unsafe extern "system" fn(
@@ -15056,7 +15056,7 @@ impl ExtCalibratedTimestampsFn {
         ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_calibrated_timestamps\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 1u32;
+    pub const SPEC_VERSION: u32 = 2u32;
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetPhysicalDeviceCalibrateableTimeDomainsEXT = unsafe extern "system" fn(
@@ -22223,7 +22223,7 @@ impl QcomRotatedCopyCommandsFn {
         ::std::ffi::CStr::from_bytes_with_nul(b"VK_QCOM_rotated_copy_commands\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
 pub struct QcomRotatedCopyCommandsFn {}
@@ -23736,24 +23736,202 @@ impl ExtExtension377Fn {
         ExtExtension377Fn {}
     }
 }
-impl NvExtension378Fn {
+impl ExtExtendedDynamicState2Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_378\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extended_dynamic_state2\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetPatchControlPointsEXT =
+    unsafe extern "system" fn(command_buffer: CommandBuffer, patch_control_points: u32);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetRasterizerDiscardEnableEXT =
+    unsafe extern "system" fn(command_buffer: CommandBuffer, rasterizer_discard_enable: Bool32);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetDepthBiasEnableEXT =
+    unsafe extern "system" fn(command_buffer: CommandBuffer, depth_bias_enable: Bool32);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetLogicOpEXT =
+    unsafe extern "system" fn(command_buffer: CommandBuffer, logic_op: LogicOp);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetPrimitiveRestartEnableEXT =
+    unsafe extern "system" fn(command_buffer: CommandBuffer, primitive_restart_enable: Bool32);
 #[derive(Clone)]
-pub struct NvExtension378Fn {}
-unsafe impl Send for NvExtension378Fn {}
-unsafe impl Sync for NvExtension378Fn {}
-impl NvExtension378Fn {
+pub struct ExtExtendedDynamicState2Fn {
+    pub cmd_set_patch_control_points_ext: PFN_vkCmdSetPatchControlPointsEXT,
+    pub cmd_set_rasterizer_discard_enable_ext: PFN_vkCmdSetRasterizerDiscardEnableEXT,
+    pub cmd_set_depth_bias_enable_ext: PFN_vkCmdSetDepthBiasEnableEXT,
+    pub cmd_set_logic_op_ext: PFN_vkCmdSetLogicOpEXT,
+    pub cmd_set_primitive_restart_enable_ext: PFN_vkCmdSetPrimitiveRestartEnableEXT,
+}
+unsafe impl Send for ExtExtendedDynamicState2Fn {}
+unsafe impl Sync for ExtExtendedDynamicState2Fn {}
+impl ExtExtendedDynamicState2Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        NvExtension378Fn {}
+        ExtExtendedDynamicState2Fn {
+            cmd_set_patch_control_points_ext: unsafe {
+                unsafe extern "system" fn cmd_set_patch_control_points_ext(
+                    _command_buffer: CommandBuffer,
+                    _patch_control_points: u32,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_patch_control_points_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdSetPatchControlPointsEXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_patch_control_points_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_rasterizer_discard_enable_ext: unsafe {
+                unsafe extern "system" fn cmd_set_rasterizer_discard_enable_ext(
+                    _command_buffer: CommandBuffer,
+                    _rasterizer_discard_enable: Bool32,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_rasterizer_discard_enable_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdSetRasterizerDiscardEnableEXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_rasterizer_discard_enable_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_depth_bias_enable_ext: unsafe {
+                unsafe extern "system" fn cmd_set_depth_bias_enable_ext(
+                    _command_buffer: CommandBuffer,
+                    _depth_bias_enable: Bool32,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_depth_bias_enable_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdSetDepthBiasEnableEXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_depth_bias_enable_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_logic_op_ext: unsafe {
+                unsafe extern "system" fn cmd_set_logic_op_ext(
+                    _command_buffer: CommandBuffer,
+                    _logic_op: LogicOp,
+                ) {
+                    panic!(concat!("Unable to load ", stringify!(cmd_set_logic_op_ext)))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdSetLogicOpEXT\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_logic_op_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_set_primitive_restart_enable_ext: unsafe {
+                unsafe extern "system" fn cmd_set_primitive_restart_enable_ext(
+                    _command_buffer: CommandBuffer,
+                    _primitive_restart_enable: Bool32,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_set_primitive_restart_enable_ext)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdSetPrimitiveRestartEnableEXT\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_primitive_restart_enable_ext
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
     }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetPatchControlPointsEXT.html>"]
+    pub unsafe fn cmd_set_patch_control_points_ext(
+        &self,
+        command_buffer: CommandBuffer,
+        patch_control_points: u32,
+    ) {
+        (self.cmd_set_patch_control_points_ext)(command_buffer, patch_control_points)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetRasterizerDiscardEnableEXT.html>"]
+    pub unsafe fn cmd_set_rasterizer_discard_enable_ext(
+        &self,
+        command_buffer: CommandBuffer,
+        rasterizer_discard_enable: Bool32,
+    ) {
+        (self.cmd_set_rasterizer_discard_enable_ext)(command_buffer, rasterizer_discard_enable)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetDepthBiasEnableEXT.html>"]
+    pub unsafe fn cmd_set_depth_bias_enable_ext(
+        &self,
+        command_buffer: CommandBuffer,
+        depth_bias_enable: Bool32,
+    ) {
+        (self.cmd_set_depth_bias_enable_ext)(command_buffer, depth_bias_enable)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetLogicOpEXT.html>"]
+    pub unsafe fn cmd_set_logic_op_ext(&self, command_buffer: CommandBuffer, logic_op: LogicOp) {
+        (self.cmd_set_logic_op_ext)(command_buffer, logic_op)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetPrimitiveRestartEnableEXT.html>"]
+    pub unsafe fn cmd_set_primitive_restart_enable_ext(
+        &self,
+        command_buffer: CommandBuffer,
+        primitive_restart_enable: Bool32,
+    ) {
+        (self.cmd_set_primitive_restart_enable_ext)(command_buffer, primitive_restart_enable)
+    }
+}
+#[doc = "Generated from 'VK_EXT_extended_dynamic_state2'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_2_FEATURES_EXT: Self = Self(1_000_377_000);
+}
+#[doc = "Generated from 'VK_EXT_extended_dynamic_state2'"]
+impl DynamicState {
+    pub const PATCH_CONTROL_POINTS_EXT: Self = Self(1_000_377_000);
+}
+#[doc = "Generated from 'VK_EXT_extended_dynamic_state2'"]
+impl DynamicState {
+    pub const RASTERIZER_DISCARD_ENABLE_EXT: Self = Self(1_000_377_001);
+}
+#[doc = "Generated from 'VK_EXT_extended_dynamic_state2'"]
+impl DynamicState {
+    pub const DEPTH_BIAS_ENABLE_EXT: Self = Self(1_000_377_002);
+}
+#[doc = "Generated from 'VK_EXT_extended_dynamic_state2'"]
+impl DynamicState {
+    pub const LOGIC_OP_EXT: Self = Self(1_000_377_003);
+}
+#[doc = "Generated from 'VK_EXT_extended_dynamic_state2'"]
+impl DynamicState {
+    pub const PRIMITIVE_RESTART_ENABLE_EXT: Self = Self(1_000_377_004);
 }
 impl QnxScreenSurfaceFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -24199,5 +24377,24 @@ impl ExtExtension394Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         ExtExtension394Fn {}
+    }
+}
+impl KhrExtension395Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_extension_395\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct KhrExtension395Fn {}
+unsafe impl Send for KhrExtension395Fn {}
+unsafe impl Sync for KhrExtension395Fn {}
+impl KhrExtension395Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        KhrExtension395Fn {}
     }
 }

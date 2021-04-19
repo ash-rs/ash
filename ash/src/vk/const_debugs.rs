@@ -1335,6 +1335,11 @@ impl fmt::Debug for DynamicState {
             Self::STENCIL_TEST_ENABLE_EXT => Some("STENCIL_TEST_ENABLE_EXT"),
             Self::STENCIL_OP_EXT => Some("STENCIL_OP_EXT"),
             Self::VERTEX_INPUT_EXT => Some("VERTEX_INPUT_EXT"),
+            Self::PATCH_CONTROL_POINTS_EXT => Some("PATCH_CONTROL_POINTS_EXT"),
+            Self::RASTERIZER_DISCARD_ENABLE_EXT => Some("RASTERIZER_DISCARD_ENABLE_EXT"),
+            Self::DEPTH_BIAS_ENABLE_EXT => Some("DEPTH_BIAS_ENABLE_EXT"),
+            Self::LOGIC_OP_EXT => Some("LOGIC_OP_EXT"),
+            Self::PRIMITIVE_RESTART_ENABLE_EXT => Some("PRIMITIVE_RESTART_ENABLE_EXT"),
             Self::COLOR_WRITE_ENABLE_EXT => Some("COLOR_WRITE_ENABLE_EXT"),
             _ => None,
         };
@@ -4715,6 +4720,9 @@ impl fmt::Debug for StructureType {
             }
             Self::SEMAPHORE_GET_ZIRCON_HANDLE_INFO_FUCHSIA => {
                 Some("SEMAPHORE_GET_ZIRCON_HANDLE_INFO_FUCHSIA")
+            }
+            Self::PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_2_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_2_FEATURES_EXT")
             }
             Self::SCREEN_SURFACE_CREATE_INFO_QNX => Some("SCREEN_SURFACE_CREATE_INFO_QNX"),
             Self::PHYSICAL_DEVICE_COLOR_WRITE_ENABLE_FEATURES_EXT => {

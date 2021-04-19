@@ -53,7 +53,7 @@ pub const API_VERSION_1_0: u32 = make_api_version(0, 1, 0, 0);
 pub const API_VERSION_1_1: u32 = make_api_version(0, 1, 1, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VK_API_VERSION_1_2.html>"]
 pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
-pub const HEADER_VERSION: u32 = 175u32;
+pub const HEADER_VERSION: u32 = 176u32;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 2, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkSampleMask.html>"]
@@ -41093,6 +41093,80 @@ impl<'a> PhysicalDeviceExtendedDynamicStateFeaturesEXTBuilder<'a> {
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceExtendedDynamicStateFeaturesEXT {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPhysicalDeviceExtendedDynamicState2FeaturesEXT.html>"]
+pub struct PhysicalDeviceExtendedDynamicState2FeaturesEXT {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub extended_dynamic_state2: Bool32,
+    pub extended_dynamic_state2_logic_op: Bool32,
+    pub extended_dynamic_state2_patch_control_points: Bool32,
+}
+impl ::std::default::Default for PhysicalDeviceExtendedDynamicState2FeaturesEXT {
+    fn default() -> PhysicalDeviceExtendedDynamicState2FeaturesEXT {
+        PhysicalDeviceExtendedDynamicState2FeaturesEXT {
+            s_type: StructureType::PHYSICAL_DEVICE_EXTENDED_DYNAMIC_STATE_2_FEATURES_EXT,
+            p_next: ::std::ptr::null_mut(),
+            extended_dynamic_state2: Bool32::default(),
+            extended_dynamic_state2_logic_op: Bool32::default(),
+            extended_dynamic_state2_patch_control_points: Bool32::default(),
+        }
+    }
+}
+impl PhysicalDeviceExtendedDynamicState2FeaturesEXT {
+    pub fn builder<'a>() -> PhysicalDeviceExtendedDynamicState2FeaturesEXTBuilder<'a> {
+        PhysicalDeviceExtendedDynamicState2FeaturesEXTBuilder {
+            inner: PhysicalDeviceExtendedDynamicState2FeaturesEXT::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct PhysicalDeviceExtendedDynamicState2FeaturesEXTBuilder<'a> {
+    inner: PhysicalDeviceExtendedDynamicState2FeaturesEXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceExtendedDynamicState2FeaturesEXTBuilder<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceExtendedDynamicState2FeaturesEXT {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceExtendedDynamicState2FeaturesEXTBuilder<'a> {
+    type Target = PhysicalDeviceExtendedDynamicState2FeaturesEXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceExtendedDynamicState2FeaturesEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> PhysicalDeviceExtendedDynamicState2FeaturesEXTBuilder<'a> {
+    pub fn extended_dynamic_state2(mut self, extended_dynamic_state2: bool) -> Self {
+        self.inner.extended_dynamic_state2 = extended_dynamic_state2.into();
+        self
+    }
+    pub fn extended_dynamic_state2_logic_op(
+        mut self,
+        extended_dynamic_state2_logic_op: bool,
+    ) -> Self {
+        self.inner.extended_dynamic_state2_logic_op = extended_dynamic_state2_logic_op.into();
+        self
+    }
+    pub fn extended_dynamic_state2_patch_control_points(
+        mut self,
+        extended_dynamic_state2_patch_control_points: bool,
+    ) -> Self {
+        self.inner.extended_dynamic_state2_patch_control_points =
+            extended_dynamic_state2_patch_control_points.into();
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> PhysicalDeviceExtendedDynamicState2FeaturesEXT {
         self.inner
     }
 }
