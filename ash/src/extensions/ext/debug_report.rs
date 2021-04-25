@@ -13,11 +13,11 @@ pub struct DebugReport {
 }
 
 impl DebugReport {
-    pub fn new<E: EntryV1_0, I: InstanceV1_0>(entry: &E, instance: &I) -> DebugReport {
+    pub fn new<E: EntryV1_0, I: InstanceV1_0>(entry: &E, instance: &I) -> Self {
         let debug_report_fn = vk::ExtDebugReportFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });
-        DebugReport {
+        Self {
             handle: instance.handle(),
             debug_report_fn,
         }

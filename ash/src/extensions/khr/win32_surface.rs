@@ -13,11 +13,11 @@ pub struct Win32Surface {
 }
 
 impl Win32Surface {
-    pub fn new<E: EntryV1_0, I: InstanceV1_0>(entry: &E, instance: &I) -> Win32Surface {
+    pub fn new<E: EntryV1_0, I: InstanceV1_0>(entry: &E, instance: &I) -> Self {
         let surface_fn = vk::KhrWin32SurfaceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });
-        Win32Surface {
+        Self {
             handle: instance.handle(),
             win32_surface_fn: surface_fn,
         }

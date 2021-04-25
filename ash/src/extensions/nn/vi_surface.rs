@@ -13,11 +13,11 @@ pub struct ViSurface {
 }
 
 impl ViSurface {
-    pub fn new<E: EntryV1_0, I: InstanceV1_0>(entry: &E, instance: &I) -> ViSurface {
+    pub fn new<E: EntryV1_0, I: InstanceV1_0>(entry: &E, instance: &I) -> Self {
         let surface_fn = vk::NnViSurfaceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });
-        ViSurface {
+        Self {
             handle: instance.handle(),
             vi_surface_fn: surface_fn,
         }
