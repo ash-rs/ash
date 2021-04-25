@@ -435,4 +435,23 @@ pub trait InstanceV1_0 {
         data.set_len(num as usize);
         err_code.result_with_success(data)
     }
+
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkEnumerateDeviceLayerProperties.html>"]
+    unsafe fn enumerate_device_layer_properties(
+        &self,
+        device: vk::PhysicalDevice,
+    ) -> VkResult<Vec<vk::LayerProperties>> {
+        let mut num = 0;
+        self.fp_v1_0()
+            .enumerate_device_layer_properties(device, &mut num, ptr::null_mut())
+            .result()?;
+        let mut data = Vec::with_capacity(num as usize);
+        let err_code = self.fp_v1_0().enumerate_device_layer_properties(
+            device,
+            &mut num,
+            data.as_mut_ptr(),
+        );
+        data.set_len(num as usize);
+        err_code.result_with_success(data)
+    }
 }
