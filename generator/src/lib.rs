@@ -1535,7 +1535,9 @@ pub fn generate_result(ident: Ident, enum_: &vk_parse::Enums) -> TokenStream {
                 if let Some(x) = name {
                     fmt.write_str(x)
                 } else {
-                    self.0.fmt(fmt)
+                    // If we don't have a nice message to show, call the generated `Debug` impl
+                    // which includes *all* enum variants, including those from extensions.
+                    <Self as fmt::Debug>::fmt(&self, fmt)
                 }
             }
         }
