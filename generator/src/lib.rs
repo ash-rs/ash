@@ -1318,6 +1318,19 @@ pub enum EnumType {
     Enum(TokenStream),
 }
 
+fn is_enum_variant_with_typo(variant_name: &str) -> bool {
+    // All these names are aliases and make little sense in our
+    // enum structure, they are better omitted entirely.
+    matches!(
+        variant_name,
+        "VK_STENCIL_FRONT_AND_BACK"
+            | "VK_COLORSPACE_SRGB_NONLINEAR"
+            | "VK_QUERY_SCOPE_COMMAND_BUFFER"
+            | "VK_QUERY_SCOPE_RENDER_PASS"
+            | "VK_QUERY_SCOPE_COMMAND"
+    )
+}
+
 pub fn variant_ident(enum_name: &str, variant_name: &str) -> Ident {
     let variant_name = variant_name.to_uppercase();
     let _name = enum_name.replace("FlagBits", "");
@@ -1334,14 +1347,23 @@ pub fn variant_ident(enum_name: &str, variant_name: &str) -> Ident {
         .cloned()
         .unwrap_or("");
     let struct_name = struct_name.strip_suffix(vendor).unwrap();
-    let new_variant_name = variant_name
-        .strip_prefix(struct_name)
-        .unwrap_or_else(|| variant_name.strip_prefix("VK").unwrap());
+    let variant_name = variant_name
+        .strip_suffix(vendor)
+        .unwrap_or_else(|| variant_name.as_str());
+
+    let new_variant_name = variant_name.strip_prefix(struct_name).unwrap_or_else(|| {
+        if enum_name == "VkResult" || is_enum_variant_with_typo(variant_name) {
+            variant_name.strip_prefix("VK").unwrap()
+        } else {
+            panic!(
+                "Failed to strip {} prefix from enum variant {}",
+                struct_name, variant_name
+            )
+        }
+    });
+
     // Both of the above strip_prefix leave a leading `_`:
     let new_variant_name = new_variant_name.strip_prefix("_").unwrap();
-    let new_variant_name = new_variant_name
-        .strip_suffix(vendor)
-        .unwrap_or(new_variant_name);
     // Replace _BIT anywhere in the string, also works when there's a trailing
     // vendor extension in the variant name that's not in the enum/type name:
     let new_variant_name = new_variant_name.replace("_BIT", "");
