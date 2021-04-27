@@ -1515,21 +1515,12 @@ pub fn generate_result(ident: Ident, enum_: &vk_parse::Enums) -> TokenStream {
         })
     });
 
-    let notation2 = notation.clone();
     quote! {
-        impl ::std::error::Error for #ident {
-            fn description(&self) -> &str {
-                let name = match *self {
-                    #(#notation),*,
-                    _ => None,
-                };
-                name.unwrap_or("unknown error")
-            }
-        }
+        impl ::std::error::Error for #ident {}
         impl fmt::Display for #ident {
             fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
                 let name = match *self {
-                    #(#notation2),*,
+                    #(#notation),*,
                     _ => None,
                 };
                 if let Some(x) = name {
