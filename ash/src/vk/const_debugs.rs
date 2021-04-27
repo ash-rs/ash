@@ -2350,7 +2350,12 @@ impl fmt::Debug for PeerMemoryFeatureFlags {
 }
 impl fmt::Debug for PerformanceConfigurationTypeINTEL {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        let name = match * self { Self :: PERFORMANCE_CONFIGURATION_TYPE_COMMAND_QUEUE_METRICS_DISCOVERY_ACTIVATED_INTEL => Some ("PERFORMANCE_CONFIGURATION_TYPE_COMMAND_QUEUE_METRICS_DISCOVERY_ACTIVATED_INTEL") , _ => None , } ;
+        let name = match *self {
+            Self::COMMAND_QUEUE_METRICS_DISCOVERY_ACTIVATED => {
+                Some("COMMAND_QUEUE_METRICS_DISCOVERY_ACTIVATED")
+            }
+            _ => None,
+        };
         if let Some(x) = name {
             f.write_str(x)
         } else {
@@ -2432,12 +2437,8 @@ impl fmt::Debug for PerformanceCounterUnitKHR {
 impl fmt::Debug for PerformanceOverrideTypeINTEL {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::PERFORMANCE_OVERRIDE_TYPE_NULL_HARDWARE_INTEL => {
-                Some("PERFORMANCE_OVERRIDE_TYPE_NULL_HARDWARE_INTEL")
-            }
-            Self::PERFORMANCE_OVERRIDE_TYPE_FLUSH_GPU_CACHES_INTEL => {
-                Some("PERFORMANCE_OVERRIDE_TYPE_FLUSH_GPU_CACHES_INTEL")
-            }
+            Self::NULL_HARDWARE => Some("NULL_HARDWARE"),
+            Self::FLUSH_GPU_CACHES => Some("FLUSH_GPU_CACHES"),
             _ => None,
         };
         if let Some(x) = name {
@@ -2450,12 +2451,8 @@ impl fmt::Debug for PerformanceOverrideTypeINTEL {
 impl fmt::Debug for PerformanceParameterTypeINTEL {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::PERFORMANCE_PARAMETER_TYPE_HW_COUNTERS_SUPPORTED_INTEL => {
-                Some("PERFORMANCE_PARAMETER_TYPE_HW_COUNTERS_SUPPORTED_INTEL")
-            }
-            Self::PERFORMANCE_PARAMETER_TYPE_STREAM_MARKER_VALIDS_INTEL => {
-                Some("PERFORMANCE_PARAMETER_TYPE_STREAM_MARKER_VALIDS_INTEL")
-            }
+            Self::HW_COUNTERS_SUPPORTED => Some("HW_COUNTERS_SUPPORTED"),
+            Self::STREAM_MARKER_VALIDS => Some("STREAM_MARKER_VALIDS"),
             _ => None,
         };
         if let Some(x) = name {
@@ -2468,17 +2465,11 @@ impl fmt::Debug for PerformanceParameterTypeINTEL {
 impl fmt::Debug for PerformanceValueTypeINTEL {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::PERFORMANCE_VALUE_TYPE_UINT32_INTEL => {
-                Some("PERFORMANCE_VALUE_TYPE_UINT32_INTEL")
-            }
-            Self::PERFORMANCE_VALUE_TYPE_UINT64_INTEL => {
-                Some("PERFORMANCE_VALUE_TYPE_UINT64_INTEL")
-            }
-            Self::PERFORMANCE_VALUE_TYPE_FLOAT_INTEL => Some("PERFORMANCE_VALUE_TYPE_FLOAT_INTEL"),
-            Self::PERFORMANCE_VALUE_TYPE_BOOL_INTEL => Some("PERFORMANCE_VALUE_TYPE_BOOL_INTEL"),
-            Self::PERFORMANCE_VALUE_TYPE_STRING_INTEL => {
-                Some("PERFORMANCE_VALUE_TYPE_STRING_INTEL")
-            }
+            Self::UINT32 => Some("UINT32"),
+            Self::UINT64 => Some("UINT64"),
+            Self::FLOAT => Some("FLOAT"),
+            Self::BOOL => Some("BOOL"),
+            Self::STRING => Some("STRING"),
             _ => None,
         };
         if let Some(x) = name {
@@ -3000,9 +2991,7 @@ impl fmt::Debug for QueryPoolCreateFlags {
 impl fmt::Debug for QueryPoolSamplingModeINTEL {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let name = match *self {
-            Self::QUERY_POOL_SAMPLING_MODE_MANUAL_INTEL => {
-                Some("QUERY_POOL_SAMPLING_MODE_MANUAL_INTEL")
-            }
+            Self::MANUAL => Some("MANUAL"),
             _ => None,
         };
         if let Some(x) = name {
