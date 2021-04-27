@@ -1,11 +1,12 @@
 #![recursion_limit = "256"]
 
-use nom::{alt, char, do_parse, map, named, opt, tag, take_while1, terminated};
-use quote::*;
-
 use heck::{CamelCase, ShoutySnakeCase, SnakeCase};
 use itertools::Itertools;
+use nom::{alt, char, do_parse, map, named, opt, tag, take_while1, terminated};
+use once_cell::sync::Lazy;
 use proc_macro2::{Delimiter, Group, Literal, Span, TokenStream, TokenTree};
+use quote::*;
+use regex::Regex;
 use std::collections::{BTreeMap, HashMap, HashSet};
 use std::fmt::Display;
 use std::hash::BuildHasher;
@@ -1333,6 +1334,8 @@ fn is_enum_variant_with_typo(variant_name: &str) -> bool {
     )
 }
 
+static TRAILING_NUMBER: Lazy<Regex> = Lazy::new(|| Regex::new("(\\d+)$").unwrap());
+
 pub fn variant_ident(enum_name: &str, variant_name: &str) -> Ident {
     let variant_name = variant_name.to_uppercase();
     let _name = enum_name.replace("FlagBits", "");
@@ -1349,20 +1352,23 @@ pub fn variant_ident(enum_name: &str, variant_name: &str) -> Ident {
         .cloned()
         .unwrap_or("");
     let struct_name = struct_name.strip_suffix(vendor).unwrap();
+    let struct_name = TRAILING_NUMBER.replace(struct_name, "_$1");
     let variant_name = variant_name
         .strip_suffix(vendor)
         .unwrap_or_else(|| variant_name.as_str());
 
-    let new_variant_name = variant_name.strip_prefix(struct_name).unwrap_or_else(|| {
-        if enum_name == "VkResult" || is_enum_variant_with_typo(variant_name) {
-            variant_name.strip_prefix("VK").unwrap()
-        } else {
-            panic!(
-                "Failed to strip {} prefix from enum variant {}",
-                struct_name, variant_name
-            )
-        }
-    });
+    let new_variant_name = variant_name
+        .strip_prefix(struct_name.as_ref())
+        .unwrap_or_else(|| {
+            if enum_name == "VkResult" || is_enum_variant_with_typo(variant_name) {
+                variant_name.strip_prefix("VK").unwrap()
+            } else {
+                panic!(
+                    "Failed to strip {} prefix from enum variant {}",
+                    struct_name, variant_name
+                )
+            }
+        });
 
     // Both of the above strip_prefix leave a leading `_`:
     let new_variant_name = new_variant_name.strip_prefix("_").unwrap();
