@@ -13,11 +13,11 @@ pub struct IOSSurface {
 }
 
 impl IOSSurface {
-    pub fn new<E: EntryV1_0, I: InstanceV1_0>(entry: &E, instance: &I) -> IOSSurface {
+    pub fn new<E: EntryV1_0, I: InstanceV1_0>(entry: &E, instance: &I) -> Self {
         let surface_fn = vk::MvkIosSurfaceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });
-        IOSSurface {
+        Self {
             handle: instance.handle(),
             ios_surface_fn: surface_fn,
         }

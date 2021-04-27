@@ -12,11 +12,11 @@ pub struct GetMemoryRequirements2 {
 }
 
 impl GetMemoryRequirements2 {
-    pub fn new<I: InstanceV1_0, D: DeviceV1_0>(instance: &I, device: &D) -> GetMemoryRequirements2 {
+    pub fn new<I: InstanceV1_0, D: DeviceV1_0>(instance: &I, device: &D) -> Self {
         let get_memory_requirements2_fn = vk::KhrGetMemoryRequirements2Fn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
-        GetMemoryRequirements2 {
+        Self {
             handle: device.handle(),
             get_memory_requirements2_fn,
         }

@@ -11,15 +11,12 @@ pub struct DeviceDiagnosticCheckpoints {
 }
 
 impl DeviceDiagnosticCheckpoints {
-    pub fn new<I: InstanceV1_0, D: DeviceV1_0>(
-        instance: &I,
-        device: &D,
-    ) -> DeviceDiagnosticCheckpoints {
+    pub fn new<I: InstanceV1_0, D: DeviceV1_0>(instance: &I, device: &D) -> Self {
         let device_diagnostic_checkpoints_fn =
             vk::NvDeviceDiagnosticCheckpointsFn::load(|name| unsafe {
                 mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
             });
-        DeviceDiagnosticCheckpoints {
+        Self {
             device_diagnostic_checkpoints_fn,
         }
     }

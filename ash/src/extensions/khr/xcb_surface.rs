@@ -13,11 +13,11 @@ pub struct XcbSurface {
 }
 
 impl XcbSurface {
-    pub fn new<E: EntryV1_0, I: InstanceV1_0>(entry: &E, instance: &I) -> XcbSurface {
+    pub fn new<E: EntryV1_0, I: InstanceV1_0>(entry: &E, instance: &I) -> Self {
         let surface_fn = vk::KhrXcbSurfaceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });
-        XcbSurface {
+        Self {
             handle: instance.handle(),
             xcb_surface_fn: surface_fn,
         }
