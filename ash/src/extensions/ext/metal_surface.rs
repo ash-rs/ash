@@ -13,11 +13,11 @@ pub struct MetalSurface {
 }
 
 impl MetalSurface {
-    pub fn new<E: EntryV1_0, I: InstanceV1_0>(entry: &E, instance: &I) -> MetalSurface {
+    pub fn new<E: EntryV1_0, I: InstanceV1_0>(entry: &E, instance: &I) -> Self {
         let surface_fn = vk::ExtMetalSurfaceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });
-        MetalSurface {
+        Self {
             handle: instance.handle(),
             metal_surface_fn: surface_fn,
         }

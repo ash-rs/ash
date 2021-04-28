@@ -12,12 +12,11 @@ pub struct PushDescriptor {
 }
 
 impl PushDescriptor {
-    pub fn new<I: InstanceV1_0, D: DeviceV1_0>(instance: &I, device: &D) -> PushDescriptor {
+    pub fn new<I: InstanceV1_0, D: DeviceV1_0>(instance: &I, device: &D) -> Self {
         let push_descriptors_fn = vk::KhrPushDescriptorFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
-
-        PushDescriptor {
+        Self {
             handle: instance.handle(),
             push_descriptors_fn,
         }

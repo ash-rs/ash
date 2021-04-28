@@ -11,11 +11,11 @@ pub struct BufferDeviceAddress {
 }
 
 impl BufferDeviceAddress {
-    pub fn new<I: InstanceV1_0, D: DeviceV1_0>(instance: &I, device: &D) -> BufferDeviceAddress {
+    pub fn new<I: InstanceV1_0, D: DeviceV1_0>(instance: &I, device: &D) -> Self {
         let fns = vk::KhrBufferDeviceAddressFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
-        BufferDeviceAddress {
+        Self {
             handle: device.handle(),
             fns,
         }

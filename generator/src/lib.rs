@@ -1515,27 +1515,20 @@ pub fn generate_result(ident: Ident, enum_: &vk_parse::Enums) -> TokenStream {
         })
     });
 
-    let notation2 = notation.clone();
     quote! {
-        impl ::std::error::Error for #ident {
-            fn description(&self) -> &str {
-                let name = match *self {
-                    #(#notation),*,
-                    _ => None,
-                };
-                name.unwrap_or("unknown error")
-            }
-        }
+        impl ::std::error::Error for #ident {}
         impl fmt::Display for #ident {
             fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
                 let name = match *self {
-                    #(#notation2),*,
+                    #(#notation),*,
                     _ => None,
                 };
                 if let Some(x) = name {
                     fmt.write_str(x)
                 } else {
-                    self.0.fmt(fmt)
+                    // If we don't have a nice message to show, call the generated `Debug` impl
+                    // which includes *all* enum variants, including those from extensions.
+                    <Self as fmt::Debug>::fmt(&self, fmt)
                 }
             }
         }

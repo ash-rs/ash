@@ -13,16 +13,12 @@ pub struct PipelineExecutableProperties {
 }
 
 impl PipelineExecutableProperties {
-    pub fn new<E: EntryV1_0, I: InstanceV1_0>(
-        entry: &E,
-        instance: &I,
-    ) -> PipelineExecutableProperties {
+    pub fn new<E: EntryV1_0, I: InstanceV1_0>(entry: &E, instance: &I) -> Self {
         let pipeline_executable_properties_fn =
             vk::KhrPipelineExecutablePropertiesFn::load(|name| unsafe {
                 mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
             });
-
-        PipelineExecutableProperties {
+        Self {
             handle: instance.handle(),
             pipeline_executable_properties_fn,
         }

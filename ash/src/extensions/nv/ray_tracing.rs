@@ -13,11 +13,11 @@ pub struct RayTracing {
 }
 
 impl RayTracing {
-    pub fn new<I: InstanceV1_0, D: DeviceV1_0>(instance: &I, device: &D) -> RayTracing {
+    pub fn new<I: InstanceV1_0, D: DeviceV1_0>(instance: &I, device: &D) -> Self {
         let ray_tracing_fn = vk::NvRayTracingFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
-        RayTracing {
+        Self {
             handle: device.handle(),
             ray_tracing_fn,
         }
