@@ -89,7 +89,7 @@ impl GetPhysicalDeviceProperties2 {
         &self,
         physical_device: vk::PhysicalDevice,
     ) -> usize {
-        let mut count = mem::zeroed();
+        let mut count = 0;
         self.get_physical_device_properties2_fn
             .get_physical_device_queue_family_properties2_khr(
                 physical_device,
@@ -119,7 +119,7 @@ impl GetPhysicalDeviceProperties2 {
         physical_device: vk::PhysicalDevice,
         format_info: &vk::PhysicalDeviceSparseImageFormatInfo2KHR,
     ) -> usize {
-        let mut count = mem::zeroed();
+        let mut count = 0;
         self.get_physical_device_properties2_fn
             .get_physical_device_sparse_image_format_properties2_khr(
                 physical_device,

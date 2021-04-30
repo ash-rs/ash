@@ -35,7 +35,7 @@ impl Surface {
         queue_family_index: u32,
         surface: vk::SurfaceKHR,
     ) -> VkResult<bool> {
-        let mut b = mem::zeroed();
+        let mut b = 0;
         self.surface_fn
             .get_physical_device_surface_support_khr(
                 physical_device,

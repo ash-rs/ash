@@ -301,7 +301,7 @@ impl Device {
         &self,
         info: &vk::ImageSparseMemoryRequirementsInfo2,
     ) -> usize {
-        let mut count = mem::zeroed();
+        let mut count = 0;
         self.device_fn_1_1.get_image_sparse_memory_requirements2(
             self.handle(),
             info,
