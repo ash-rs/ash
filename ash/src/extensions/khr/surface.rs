@@ -14,7 +14,7 @@ pub struct Surface {
 }
 
 impl Surface {
-    pub fn new<L>(entry: &EntryCustom<L>, instance: &Instance) -> Surface {
+    pub fn new<L>(entry: &EntryCustom<L>, instance: &Instance) -> Self {
         let surface_fn = vk::KhrSurfaceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });

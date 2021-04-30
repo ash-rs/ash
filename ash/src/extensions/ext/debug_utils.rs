@@ -12,7 +12,7 @@ pub struct DebugUtils {
 }
 
 impl DebugUtils {
-    pub fn new<L>(entry: &EntryCustom<L>, instance: &Instance) -> DebugUtils {
+    pub fn new<L>(entry: &EntryCustom<L>, instance: &Instance) -> Self {
         let debug_utils_fn = vk::ExtDebugUtilsFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });

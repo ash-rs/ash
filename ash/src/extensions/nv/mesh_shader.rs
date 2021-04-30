@@ -10,7 +10,7 @@ pub struct MeshShader {
 }
 
 impl MeshShader {
-    pub fn new(instance: &Instance, device: &Device) -> MeshShader {
+    pub fn new(instance: &Instance, device: &Device) -> Self {
         let mesh_shader_fn = vk::NvMeshShaderFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });

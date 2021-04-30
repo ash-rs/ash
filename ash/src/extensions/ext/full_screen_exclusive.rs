@@ -13,7 +13,7 @@ pub struct FullScreenExclusive {
 }
 
 impl FullScreenExclusive {
-    pub fn new(instance: &Instance, device: &Device) -> FullScreenExclusive {
+    pub fn new(instance: &Instance, device: &Device) -> Self {
         let full_screen_exclusive_fn = vk::ExtFullScreenExclusiveFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });

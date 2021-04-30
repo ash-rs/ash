@@ -13,7 +13,7 @@ pub struct CreateRenderPass2 {
 }
 
 impl CreateRenderPass2 {
-    pub fn new(instance: &Instance, device: &Device) -> CreateRenderPass2 {
+    pub fn new(instance: &Instance, device: &Device) -> Self {
         let khr_create_renderpass2_fn = vk::KhrCreateRenderpass2Fn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });

@@ -13,7 +13,7 @@ pub struct DisplaySwapchain {
 }
 
 impl DisplaySwapchain {
-    pub fn new(instance: &Instance, device: &Device) -> DisplaySwapchain {
+    pub fn new(instance: &Instance, device: &Device) -> Self {
         let swapchain_fn = vk::KhrDisplaySwapchainFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });

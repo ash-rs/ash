@@ -13,7 +13,7 @@ pub struct XlibSurface {
 }
 
 impl XlibSurface {
-    pub fn new<L>(entry: &EntryCustom<L>, instance: &Instance) -> XlibSurface {
+    pub fn new<L>(entry: &EntryCustom<L>, instance: &Instance) -> Self {
         let surface_fn = vk::KhrXlibSurfaceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });

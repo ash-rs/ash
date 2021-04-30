@@ -14,7 +14,7 @@ pub struct Swapchain {
 }
 
 impl Swapchain {
-    pub fn new(instance: &Instance, device: &Device) -> Swapchain {
+    pub fn new(instance: &Instance, device: &Device) -> Self {
         let swapchain_fn = vk::KhrSwapchainFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });

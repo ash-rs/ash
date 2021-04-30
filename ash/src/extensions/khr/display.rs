@@ -13,7 +13,7 @@ pub struct Display {
 }
 
 impl Display {
-    pub fn new<L>(entry: &EntryCustom<L>, instance: &Instance) -> Display {
+    pub fn new<L>(entry: &EntryCustom<L>, instance: &Instance) -> Self {
         let display_fn = vk::KhrDisplayFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });

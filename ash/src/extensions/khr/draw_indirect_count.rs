@@ -11,7 +11,7 @@ pub struct DrawIndirectCount {
 }
 
 impl DrawIndirectCount {
-    pub fn new(instance: &Instance, device: &Device) -> DrawIndirectCount {
+    pub fn new(instance: &Instance, device: &Device) -> Self {
         let draw_indirect_count_fn = vk::KhrDrawIndirectCountFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });

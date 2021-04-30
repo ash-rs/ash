@@ -13,7 +13,7 @@ pub struct ToolingInfo {
 }
 
 impl ToolingInfo {
-    pub fn new<L>(entry: &EntryCustom<L>, instance: &Instance) -> ToolingInfo {
+    pub fn new<L>(entry: &EntryCustom<L>, instance: &Instance) -> Self {
         let tooling_info_fn = vk::ExtToolingInfoFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });

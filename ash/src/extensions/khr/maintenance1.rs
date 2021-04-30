@@ -11,7 +11,7 @@ pub struct Maintenance1 {
 }
 
 impl Maintenance1 {
-    pub fn new(instance: &Instance, device: &Device) -> Maintenance1 {
+    pub fn new(instance: &Instance, device: &Device) -> Self {
         let fns = vk::KhrMaintenance1Fn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });

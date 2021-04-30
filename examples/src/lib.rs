@@ -279,7 +279,7 @@ impl ExampleBase {
                         })
                         .next()
                 })
-                .filter_map(|v| v)
+                .flatten()
                 .next()
                 .expect("Couldn't find suitable device.");
             let queue_family_index = queue_family_index as u32;

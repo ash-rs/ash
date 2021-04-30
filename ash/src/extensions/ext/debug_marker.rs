@@ -11,7 +11,7 @@ pub struct DebugMarker {
 }
 
 impl DebugMarker {
-    pub fn new(instance: &Instance, device: &Device) -> DebugMarker {
+    pub fn new(instance: &Instance, device: &Device) -> Self {
         let debug_marker_fn = vk::ExtDebugMarkerFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });

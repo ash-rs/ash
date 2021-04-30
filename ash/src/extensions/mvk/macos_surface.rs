@@ -13,7 +13,7 @@ pub struct MacOSSurface {
 }
 
 impl MacOSSurface {
-    pub fn new<L>(entry: &EntryCustom<L>, instance: &Instance) -> MacOSSurface {
+    pub fn new<L>(entry: &EntryCustom<L>, instance: &Instance) -> Self {
         let surface_fn = vk::MvkMacosSurfaceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });

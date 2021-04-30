@@ -12,7 +12,7 @@ pub struct TimelineSemaphore {
 }
 
 impl TimelineSemaphore {
-    pub fn new<L>(entry: &EntryCustom<L>, instance: &Instance) -> TimelineSemaphore {
+    pub fn new<L>(entry: &EntryCustom<L>, instance: &Instance) -> Self {
         let timeline_semaphore_fn = vk::KhrTimelineSemaphoreFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });
