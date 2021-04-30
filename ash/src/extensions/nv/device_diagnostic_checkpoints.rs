@@ -1,6 +1,6 @@
 #![allow(dead_code)]
-use crate::version::{DeviceV1_0, InstanceV1_0};
 use crate::vk;
+use crate::{Device, Instance};
 use std::ffi::CStr;
 use std::mem;
 use std::os::raw::c_void;
@@ -11,7 +11,7 @@ pub struct DeviceDiagnosticCheckpoints {
 }
 
 impl DeviceDiagnosticCheckpoints {
-    pub fn new<I: InstanceV1_0, D: DeviceV1_0>(instance: &I, device: &D) -> Self {
+    pub fn new(instance: &Instance, device: &Device) -> Self {
         let device_diagnostic_checkpoints_fn =
             vk::NvDeviceDiagnosticCheckpointsFn::load(|name| unsafe {
                 mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))

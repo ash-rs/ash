@@ -63,7 +63,7 @@ impl EntryCustom<Arc<Library>> {
     /// for [`Library::new`] and [`Library::get`] apply here.
     ///
     /// ```no_run
-    /// use ash::{vk, Entry, version::EntryV1_0};
+    /// use ash::{vk, Entry};
     /// # fn main() -> Result<(), Box<dyn std::error::Error>> {
     /// let entry = unsafe { Entry::new() }?;
     /// let app_info = vk::ApplicationInfo {

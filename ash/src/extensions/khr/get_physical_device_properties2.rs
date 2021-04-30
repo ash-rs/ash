@@ -1,7 +1,7 @@
 #![allow(dead_code)]
 use crate::prelude::*;
-use crate::version::{EntryV1_0, InstanceV1_0};
 use crate::vk;
+use crate::{EntryCustom, Instance};
 use std::ffi::CStr;
 use std::mem;
 use std::ptr;
@@ -13,7 +13,7 @@ pub struct GetPhysicalDeviceProperties2 {
 }
 
 impl GetPhysicalDeviceProperties2 {
-    pub fn new<E: EntryV1_0, I: InstanceV1_0>(entry: &E, instance: &I) -> Self {
+    pub fn new<L>(entry: &EntryCustom<L>, instance: &Instance) -> Self {
         let get_physical_device_properties2_fn =
             vk::KhrGetPhysicalDeviceProperties2Fn::load(|name| unsafe {
                 mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
