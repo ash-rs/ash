@@ -15,8 +15,7 @@ impl DrawIndirectCount {
         let draw_indirect_count_fn = vk::KhrDrawIndirectCountFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
-
-        DrawIndirectCount {
+        Self {
             handle: device.handle(),
             draw_indirect_count_fn,
         }

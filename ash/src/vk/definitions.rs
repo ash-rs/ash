@@ -41669,10 +41669,10 @@ impl<'a> AccelerationStructureBuildGeometryInfoKHRBuilder<'a> {
     }
     pub fn geometries_ptrs(
         mut self,
-        geometries: &'a [*const AccelerationStructureGeometryKHR],
+        geometries: &'a [&'a AccelerationStructureGeometryKHR],
     ) -> Self {
         self.inner.geometry_count = geometries.len() as _;
-        self.inner.pp_geometries = geometries.as_ptr();
+        self.inner.pp_geometries = geometries.as_ptr() as *const *const _;
         self
     }
     pub fn scratch_data(mut self, scratch_data: DeviceOrHostAddressKHR) -> Self {

@@ -17,7 +17,7 @@ impl FullScreenExclusive {
         let full_screen_exclusive_fn = vk::ExtFullScreenExclusiveFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
-        FullScreenExclusive {
+        Self {
             handle: device.handle(),
             full_screen_exclusive_fn,
         }

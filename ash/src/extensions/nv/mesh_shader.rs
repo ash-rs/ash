@@ -14,8 +14,9 @@ impl MeshShader {
         let mesh_shader_fn = vk::NvMeshShaderFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
-        MeshShader { mesh_shader_fn }
+        Self { mesh_shader_fn }
     }
+
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdDrawMeshTasksNV.html>"]
     pub unsafe fn cmd_draw_mesh_tasks(
         &self,
@@ -26,6 +27,7 @@ impl MeshShader {
         self.mesh_shader_fn
             .cmd_draw_mesh_tasks_nv(command_buffer, task_count, first_task);
     }
+
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdDrawMeshTasksIndirectNV.html>"]
     pub unsafe fn cmd_draw_mesh_tasks_indirect(
         &self,
@@ -43,6 +45,7 @@ impl MeshShader {
             stride,
         );
     }
+
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdDrawMeshTasksIndirectCountNV.html>"]
     pub unsafe fn cmd_draw_mesh_tasks_indirect_count(
         &self,
@@ -64,6 +67,7 @@ impl MeshShader {
             stride,
         );
     }
+
     pub fn name() -> &'static CStr {
         vk::NvMeshShaderFn::name()
     }

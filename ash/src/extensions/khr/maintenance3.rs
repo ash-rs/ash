@@ -15,7 +15,7 @@ impl Maintenance3 {
         let fns = vk::KhrMaintenance3Fn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
-        Maintenance3 {
+        Self {
             handle: device.handle(),
             fns,
         }

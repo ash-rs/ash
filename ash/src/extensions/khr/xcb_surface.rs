@@ -17,7 +17,7 @@ impl XcbSurface {
         let surface_fn = vk::KhrXcbSurfaceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });
-        XcbSurface {
+        Self {
             handle: instance.handle(),
             xcb_surface_fn: surface_fn,
         }

@@ -18,7 +18,7 @@ impl GetPhysicalDeviceProperties2 {
             vk::KhrGetPhysicalDeviceProperties2Fn::load(|name| unsafe {
                 mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
             });
-        GetPhysicalDeviceProperties2 {
+        Self {
             handle: instance.handle(),
             get_physical_device_properties2_fn,
         }

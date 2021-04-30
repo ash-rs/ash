@@ -17,7 +17,7 @@ impl Display {
         let display_fn = vk::KhrDisplayFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });
-        Display {
+        Self {
             handle: instance.handle(),
             display_fn,
         }

@@ -17,7 +17,7 @@ impl RayTracing {
         let ray_tracing_fn = vk::NvRayTracingFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
-        RayTracing {
+        Self {
             handle: device.handle(),
             ray_tracing_fn,
         }

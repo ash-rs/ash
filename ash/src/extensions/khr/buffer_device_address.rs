@@ -15,7 +15,7 @@ impl BufferDeviceAddress {
         let fns = vk::KhrBufferDeviceAddressFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
-        BufferDeviceAddress {
+        Self {
             handle: device.handle(),
             fns,
         }

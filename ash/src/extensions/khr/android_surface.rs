@@ -17,7 +17,7 @@ impl AndroidSurface {
         let surface_fn = vk::KhrAndroidSurfaceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });
-        AndroidSurface {
+        Self {
             handle: instance.handle(),
             android_surface_fn: surface_fn,
         }

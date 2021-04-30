@@ -18,7 +18,7 @@ impl Surface {
         let surface_fn = vk::KhrSurfaceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });
-        Surface {
+        Self {
             handle: instance.handle(),
             surface_fn,
         }

@@ -18,8 +18,7 @@ impl PipelineExecutableProperties {
             vk::KhrPipelineExecutablePropertiesFn::load(|name| unsafe {
                 mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
             });
-
-        PipelineExecutableProperties {
+        Self {
             handle: instance.handle(),
             pipeline_executable_properties_fn,
         }

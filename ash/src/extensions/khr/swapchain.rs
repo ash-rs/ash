@@ -18,7 +18,7 @@ impl Swapchain {
         let swapchain_fn = vk::KhrSwapchainFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
-        Swapchain {
+        Self {
             handle: device.handle(),
             swapchain_fn,
         }

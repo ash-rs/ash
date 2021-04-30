@@ -17,7 +17,7 @@ impl MetalSurface {
         let surface_fn = vk::ExtMetalSurfaceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });
-        MetalSurface {
+        Self {
             handle: instance.handle(),
             metal_surface_fn: surface_fn,
         }

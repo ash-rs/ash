@@ -16,8 +16,7 @@ impl PushDescriptor {
         let push_descriptors_fn = vk::KhrPushDescriptorFn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
-
-        PushDescriptor {
+        Self {
             handle: instance.handle(),
             push_descriptors_fn,
         }

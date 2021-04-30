@@ -16,7 +16,7 @@ impl GetMemoryRequirements2 {
         let get_memory_requirements2_fn = vk::KhrGetMemoryRequirements2Fn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
-        GetMemoryRequirements2 {
+        Self {
             handle: device.handle(),
             get_memory_requirements2_fn,
         }

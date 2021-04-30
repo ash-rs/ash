@@ -17,7 +17,7 @@ impl CreateRenderPass2 {
         let khr_create_renderpass2_fn = vk::KhrCreateRenderpass2Fn::load(|name| unsafe {
             mem::transmute(instance.get_device_proc_addr(device.handle(), name.as_ptr()))
         });
-        CreateRenderPass2 {
+        Self {
             handle: device.handle(),
             khr_create_renderpass2_fn,
         }

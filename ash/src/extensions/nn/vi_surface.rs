@@ -17,7 +17,7 @@ impl ViSurface {
         let surface_fn = vk::NnViSurfaceFn::load(|name| unsafe {
             mem::transmute(entry.get_instance_proc_addr(instance.handle(), name.as_ptr()))
         });
-        ViSurface {
+        Self {
             handle: instance.handle(),
             vi_surface_fn: surface_fn,
         }
