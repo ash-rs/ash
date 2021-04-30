@@ -2090,4 +2090,38 @@ impl Device {
         );
         granularity
     }
+
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetDeviceMemoryCommitment.html>"]
+    pub unsafe fn get_device_memory_commitment(&self, memory: vk::DeviceMemory) -> vk::DeviceSize {
+        let mut committed_memory_in_bytes = 0;
+        self.device_fn_1_0.get_device_memory_commitment(
+            self.handle(),
+            memory,
+            &mut committed_memory_in_bytes,
+        );
+        committed_memory_in_bytes
+    }
+
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetImageSparseMemoryRequirements.html>"]
+    pub unsafe fn get_image_sparse_memory_requirements(
+        &self,
+        image: vk::Image,
+    ) -> Vec<vk::SparseImageMemoryRequirements> {
+        let mut count = 0;
+        self.device_fn_1_0.get_image_sparse_memory_requirements(
+            self.handle(),
+            image,
+            &mut count,
+            ptr::null_mut(),
+        );
+        let mut data = Vec::with_capacity(count as usize);
+        self.device_fn_1_0.get_image_sparse_memory_requirements(
+            self.handle(),
+            image,
+            &mut count,
+            data.as_mut_ptr(),
+        );
+        data.set_len(count as usize);
+        data
+    }
 }

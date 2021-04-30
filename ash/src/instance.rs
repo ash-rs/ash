@@ -413,4 +413,61 @@ impl Instance {
         data.set_len(num as usize);
         err_code.result_with_success(data)
     }
+
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkEnumerateDeviceLayerProperties.html>"]
+    pub unsafe fn enumerate_device_layer_properties(
+        &self,
+        device: vk::PhysicalDevice,
+    ) -> VkResult<Vec<vk::LayerProperties>> {
+        let mut count = 0;
+        self.instance_fn_1_0
+            .enumerate_device_layer_properties(device, &mut count, ptr::null_mut())
+            .result()?;
+        let mut data = Vec::with_capacity(count as usize);
+        let err_code = self.instance_fn_1_0.enumerate_device_layer_properties(
+            device,
+            &mut count,
+            data.as_mut_ptr(),
+        );
+        data.set_len(count as usize);
+        err_code.result_with_success(data)
+    }
+
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceSparseImageFormatProperties.html>"]
+    pub unsafe fn get_physical_device_sparse_image_format_properties(
+        &self,
+        physical_device: vk::PhysicalDevice,
+        format: vk::Format,
+        typ: vk::ImageType,
+        samples: vk::SampleCountFlags,
+        usage: vk::ImageUsageFlags,
+        tiling: vk::ImageTiling,
+    ) -> Vec<vk::SparseImageFormatProperties> {
+        let mut count = 0;
+        self.instance_fn_1_0
+            .get_physical_device_sparse_image_format_properties(
+                physical_device,
+                format,
+                typ,
+                samples,
+                usage,
+                tiling,
+                &mut count,
+                ptr::null_mut(),
+            );
+        let mut data = Vec::with_capacity(count as usize);
+        self.instance_fn_1_0
+            .get_physical_device_sparse_image_format_properties(
+                physical_device,
+                format,
+                typ,
+                samples,
+                usage,
+                tiling,
+                &mut count,
+                data.as_mut_ptr(),
+            );
+        data.set_len(count as usize);
+        data
+    }
 }
