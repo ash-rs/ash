@@ -53,7 +53,7 @@ impl Instance {
     }
 
     pub unsafe fn enumerate_physical_device_groups_len(&self) -> VkResult<usize> {
-        let mut group_count = mem::zeroed();
+        let mut group_count = 0;
         self.instance_fn_1_1
             .enumerate_physical_device_groups(self.handle(), &mut group_count, ptr::null_mut())
             .result_with_success(group_count as usize)
@@ -256,7 +256,7 @@ impl Instance {
         create_info: &vk::DeviceCreateInfo,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> VkResult<Device> {
-        let mut device: vk::Device = mem::zeroed();
+        let mut device = mem::zeroed();
         self.instance_fn_1_0
             .create_device(
                 physical_device,
@@ -380,17 +380,17 @@ impl Instance {
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkEnumeratePhysicalDevices.html>"]
     pub unsafe fn enumerate_physical_devices(&self) -> VkResult<Vec<vk::PhysicalDevice>> {
-        let mut num = mem::zeroed();
+        let mut count = 0;
         self.instance_fn_1_0
-            .enumerate_physical_devices(self.handle(), &mut num, ptr::null_mut())
+            .enumerate_physical_devices(self.handle(), &mut count, ptr::null_mut())
             .result()?;
-        let mut physical_devices = Vec::<vk::PhysicalDevice>::with_capacity(num as usize);
+        let mut physical_devices = Vec::<vk::PhysicalDevice>::with_capacity(count as usize);
         let err_code = self.instance_fn_1_0.enumerate_physical_devices(
             self.handle(),
-            &mut num,
+            &mut count,
             physical_devices.as_mut_ptr(),
         );
-        physical_devices.set_len(num as usize);
+        physical_devices.set_len(count as usize);
         err_code.result_with_success(physical_devices)
     }
 
@@ -399,18 +399,18 @@ impl Instance {
         &self,
         device: vk::PhysicalDevice,
     ) -> VkResult<Vec<vk::ExtensionProperties>> {
-        let mut num = 0;
+        let mut count = 0;
         self.instance_fn_1_0
-            .enumerate_device_extension_properties(device, ptr::null(), &mut num, ptr::null_mut())
+            .enumerate_device_extension_properties(device, ptr::null(), &mut count, ptr::null_mut())
             .result()?;
-        let mut data = Vec::with_capacity(num as usize);
+        let mut data = Vec::with_capacity(count as usize);
         let err_code = self.instance_fn_1_0.enumerate_device_extension_properties(
             device,
             ptr::null(),
-            &mut num,
+            &mut count,
             data.as_mut_ptr(),
         );
-        data.set_len(num as usize);
+        data.set_len(count as usize);
         err_code.result_with_success(data)
     }
 

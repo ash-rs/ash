@@ -103,7 +103,7 @@ impl<L> EntryCustom<L> {
         create_info: &vk::InstanceCreateInfo,
         allocation_callbacks: Option<&vk::AllocationCallbacks>,
     ) -> Result<Instance, InstanceError> {
-        let mut instance: vk::Instance = mem::zeroed();
+        let mut instance = mem::zeroed();
         self.entry_fn_1_0
             .create_instance(
                 create_info,
@@ -118,15 +118,15 @@ impl<L> EntryCustom<L> {
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkEnumerateInstanceLayerProperties.html>"]
     pub fn enumerate_instance_layer_properties(&self) -> VkResult<Vec<vk::LayerProperties>> {
         unsafe {
-            let mut num = 0;
+            let mut count = 0;
             self.entry_fn_1_0
-                .enumerate_instance_layer_properties(&mut num, ptr::null_mut())
+                .enumerate_instance_layer_properties(&mut count, ptr::null_mut())
                 .result()?;
-            let mut v = Vec::with_capacity(num as usize);
+            let mut v = Vec::with_capacity(count as usize);
             let err_code = self
                 .entry_fn_1_0
-                .enumerate_instance_layer_properties(&mut num, v.as_mut_ptr());
-            v.set_len(num as usize);
+                .enumerate_instance_layer_properties(&mut count, v.as_mut_ptr());
+            v.set_len(count as usize);
             err_code.result_with_success(v)
         }
     }
@@ -136,17 +136,17 @@ impl<L> EntryCustom<L> {
         &self,
     ) -> VkResult<Vec<vk::ExtensionProperties>> {
         unsafe {
-            let mut num = 0;
+            let mut count = 0;
             self.entry_fn_1_0
-                .enumerate_instance_extension_properties(ptr::null(), &mut num, ptr::null_mut())
+                .enumerate_instance_extension_properties(ptr::null(), &mut count, ptr::null_mut())
                 .result()?;
-            let mut data = Vec::with_capacity(num as usize);
+            let mut data = Vec::with_capacity(count as usize);
             let err_code = self.entry_fn_1_0.enumerate_instance_extension_properties(
                 ptr::null(),
-                &mut num,
+                &mut count,
                 data.as_mut_ptr(),
             );
-            data.set_len(num as usize);
+            data.set_len(count as usize);
             err_code.result_with_success(data)
         }
     }

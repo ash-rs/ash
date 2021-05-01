@@ -43,7 +43,7 @@ impl FullScreenExclusive {
         physical_device: vk::PhysicalDevice,
         surface_info: &vk::PhysicalDeviceSurfaceInfo2KHR,
     ) -> VkResult<Vec<vk::PresentModeKHR>> {
-        let mut count = mem::zeroed();
+        let mut count = 0;
         self.full_screen_exclusive_fn
             .get_physical_device_surface_present_modes2_ext(
                 physical_device,

@@ -50,7 +50,7 @@ impl GetMemoryRequirements2 {
         &self,
         info: &vk::ImageSparseMemoryRequirementsInfo2KHR,
     ) -> usize {
-        let mut count = mem::zeroed();
+        let mut count = 0;
         self.get_memory_requirements2_fn
             .get_image_sparse_memory_requirements2_khr(
                 self.handle,
