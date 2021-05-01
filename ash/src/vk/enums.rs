@@ -2004,8 +2004,7 @@ impl PerformanceConfigurationTypeINTEL {
     }
 }
 impl PerformanceConfigurationTypeINTEL {
-    pub const PERFORMANCE_CONFIGURATION_TYPE_COMMAND_QUEUE_METRICS_DISCOVERY_ACTIVATED_INTEL: Self =
-        Self(0);
+    pub const COMMAND_QUEUE_METRICS_DISCOVERY_ACTIVATED: Self = Self(0);
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
@@ -2020,7 +2019,7 @@ impl QueryPoolSamplingModeINTEL {
     }
 }
 impl QueryPoolSamplingModeINTEL {
-    pub const QUERY_POOL_SAMPLING_MODE_MANUAL_INTEL: Self = Self(0);
+    pub const MANUAL: Self = Self(0);
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
@@ -2035,8 +2034,8 @@ impl PerformanceOverrideTypeINTEL {
     }
 }
 impl PerformanceOverrideTypeINTEL {
-    pub const PERFORMANCE_OVERRIDE_TYPE_NULL_HARDWARE_INTEL: Self = Self(0);
-    pub const PERFORMANCE_OVERRIDE_TYPE_FLUSH_GPU_CACHES_INTEL: Self = Self(1);
+    pub const NULL_HARDWARE: Self = Self(0);
+    pub const FLUSH_GPU_CACHES: Self = Self(1);
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
@@ -2051,8 +2050,8 @@ impl PerformanceParameterTypeINTEL {
     }
 }
 impl PerformanceParameterTypeINTEL {
-    pub const PERFORMANCE_PARAMETER_TYPE_HW_COUNTERS_SUPPORTED_INTEL: Self = Self(0);
-    pub const PERFORMANCE_PARAMETER_TYPE_STREAM_MARKER_VALIDS_INTEL: Self = Self(1);
+    pub const HW_COUNTERS_SUPPORTED: Self = Self(0);
+    pub const STREAM_MARKER_VALIDS: Self = Self(1);
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
@@ -2067,11 +2066,11 @@ impl PerformanceValueTypeINTEL {
     }
 }
 impl PerformanceValueTypeINTEL {
-    pub const PERFORMANCE_VALUE_TYPE_UINT32_INTEL: Self = Self(0);
-    pub const PERFORMANCE_VALUE_TYPE_UINT64_INTEL: Self = Self(1);
-    pub const PERFORMANCE_VALUE_TYPE_FLOAT_INTEL: Self = Self(2);
-    pub const PERFORMANCE_VALUE_TYPE_BOOL_INTEL: Self = Self(3);
-    pub const PERFORMANCE_VALUE_TYPE_STRING_INTEL: Self = Self(4);
+    pub const UINT32: Self = Self(0);
+    pub const UINT64: Self = Self(1);
+    pub const FLOAT: Self = Self(2);
+    pub const BOOL: Self = Self(3);
+    pub const STRING: Self = Self(4);
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
