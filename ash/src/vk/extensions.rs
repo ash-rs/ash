@@ -18122,24 +18122,37 @@ impl StructureType {
     pub const PHYSICAL_DEVICE_UNIFORM_BUFFER_STANDARD_LAYOUT_FEATURES_KHR: Self =
         Self::PHYSICAL_DEVICE_UNIFORM_BUFFER_STANDARD_LAYOUT_FEATURES;
 }
-impl ExtExtension255Fn {
+impl ExtProvokingVertexFn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_extension_255\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_EXT_provoking_vertex\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
 #[derive(Clone)]
-pub struct ExtExtension255Fn {}
-unsafe impl Send for ExtExtension255Fn {}
-unsafe impl Sync for ExtExtension255Fn {}
-impl ExtExtension255Fn {
+pub struct ExtProvokingVertexFn {}
+unsafe impl Send for ExtProvokingVertexFn {}
+unsafe impl Sync for ExtProvokingVertexFn {}
+impl ExtProvokingVertexFn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        ExtExtension255Fn {}
+        ExtProvokingVertexFn {}
     }
+}
+#[doc = "Generated from 'VK_EXT_provoking_vertex'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_PROVOKING_VERTEX_FEATURES_EXT: Self = Self(1_000_254_000);
+}
+#[doc = "Generated from 'VK_EXT_provoking_vertex'"]
+impl StructureType {
+    pub const PIPELINE_RASTERIZATION_PROVOKING_VERTEX_STATE_CREATE_INFO_EXT: Self =
+        Self(1_000_254_001);
+}
+#[doc = "Generated from 'VK_EXT_provoking_vertex'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_PROVOKING_VERTEX_PROPERTIES_EXT: Self = Self(1_000_254_002);
 }
 impl ExtFullScreenExclusiveFn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -23618,12 +23631,12 @@ impl NvExtension372Fn {
     }
 }
 #[doc = "Generated from 'VK_NV_extension_372'"]
-impl BufferCreateFlags {
-    pub const RESERVED_5_NV: Self = Self(0b10_0000);
+impl MemoryPropertyFlags {
+    pub const RESERVED_8_NV: Self = Self(0b1_0000_0000);
 }
 #[doc = "Generated from 'VK_NV_extension_372'"]
-impl ImageCreateFlags {
-    pub const RESERVED_15_NV: Self = Self(0b1000_0000_0000_0000);
+impl ExternalMemoryHandleTypeFlags {
+    pub const RESERVED_12_NV: Self = Self(0b1_0000_0000_0000);
 }
 impl NvExtension373Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -24396,5 +24409,62 @@ impl KhrExtension395Fn {
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
         KhrExtension395Fn {}
+    }
+}
+impl KhrExtension396Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_extension_396\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct KhrExtension396Fn {}
+unsafe impl Send for KhrExtension396Fn {}
+unsafe impl Sync for KhrExtension396Fn {}
+impl KhrExtension396Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        KhrExtension396Fn {}
+    }
+}
+impl NvExtension397Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_397\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct NvExtension397Fn {}
+unsafe impl Send for NvExtension397Fn {}
+unsafe impl Sync for NvExtension397Fn {}
+impl NvExtension397Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        NvExtension397Fn {}
+    }
+}
+impl NvExtension398Fn {
+    pub fn name() -> &'static ::std::ffi::CStr {
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_NV_extension_398\0")
+            .expect("Wrong extension string")
+    }
+    pub const SPEC_VERSION: u32 = 0u32;
+}
+#[derive(Clone)]
+pub struct NvExtension398Fn {}
+unsafe impl Send for NvExtension398Fn {}
+unsafe impl Sync for NvExtension398Fn {}
+impl NvExtension398Fn {
+    pub fn load<F>(mut _f: F) -> Self
+    where
+        F: FnMut(&::std::ffi::CStr) -> *const c_void,
+    {
+        NvExtension398Fn {}
     }
 }

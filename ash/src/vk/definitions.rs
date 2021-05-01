@@ -53,7 +53,7 @@ pub const API_VERSION_1_0: u32 = make_api_version(0, 1, 0, 0);
 pub const API_VERSION_1_1: u32 = make_api_version(0, 1, 1, 0);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VK_API_VERSION_1_2.html>"]
 pub const API_VERSION_1_2: u32 = make_api_version(0, 1, 2, 0);
-pub const HEADER_VERSION: u32 = 176u32;
+pub const HEADER_VERSION: u32 = 177u32;
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VK_HEADER_VERSION_COMPLETE.html>"]
 pub const HEADER_VERSION_COMPLETE: u32 = make_api_version(0, 1, 2, HEADER_VERSION);
 #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkSampleMask.html>"]
@@ -41130,6 +41130,11 @@ pub struct PhysicalDeviceExtendedDynamicState2FeaturesEXTBuilder<'a> {
     inner: PhysicalDeviceExtendedDynamicState2FeaturesEXT,
     marker: ::std::marker::PhantomData<&'a ()>,
 }
+unsafe impl ExtendsPhysicalDeviceFeatures2
+    for PhysicalDeviceExtendedDynamicState2FeaturesEXTBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceExtendedDynamicState2FeaturesEXT {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceExtendedDynamicState2FeaturesEXTBuilder<'_> {}
 unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceExtendedDynamicState2FeaturesEXT {}
 impl<'a> ::std::ops::Deref for PhysicalDeviceExtendedDynamicState2FeaturesEXTBuilder<'a> {
@@ -48611,6 +48616,208 @@ impl<'a> PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXTBuilder<'a> {
     #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
     #[doc = r" so references to builders can be passed directly to Vulkan functions."]
     pub fn build(self) -> PhysicalDeviceYcbcr2Plane444FormatsFeaturesEXT {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPhysicalDeviceProvokingVertexFeaturesEXT.html>"]
+pub struct PhysicalDeviceProvokingVertexFeaturesEXT {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub provoking_vertex_last: Bool32,
+    pub transform_feedback_preserves_provoking_vertex: Bool32,
+}
+impl ::std::default::Default for PhysicalDeviceProvokingVertexFeaturesEXT {
+    fn default() -> PhysicalDeviceProvokingVertexFeaturesEXT {
+        PhysicalDeviceProvokingVertexFeaturesEXT {
+            s_type: StructureType::PHYSICAL_DEVICE_PROVOKING_VERTEX_FEATURES_EXT,
+            p_next: ::std::ptr::null_mut(),
+            provoking_vertex_last: Bool32::default(),
+            transform_feedback_preserves_provoking_vertex: Bool32::default(),
+        }
+    }
+}
+impl PhysicalDeviceProvokingVertexFeaturesEXT {
+    pub fn builder<'a>() -> PhysicalDeviceProvokingVertexFeaturesEXTBuilder<'a> {
+        PhysicalDeviceProvokingVertexFeaturesEXTBuilder {
+            inner: PhysicalDeviceProvokingVertexFeaturesEXT::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct PhysicalDeviceProvokingVertexFeaturesEXTBuilder<'a> {
+    inner: PhysicalDeviceProvokingVertexFeaturesEXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceProvokingVertexFeaturesEXTBuilder<'_> {}
+unsafe impl ExtendsPhysicalDeviceFeatures2 for PhysicalDeviceProvokingVertexFeaturesEXT {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceProvokingVertexFeaturesEXTBuilder<'_> {}
+unsafe impl ExtendsDeviceCreateInfo for PhysicalDeviceProvokingVertexFeaturesEXT {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceProvokingVertexFeaturesEXTBuilder<'a> {
+    type Target = PhysicalDeviceProvokingVertexFeaturesEXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceProvokingVertexFeaturesEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> PhysicalDeviceProvokingVertexFeaturesEXTBuilder<'a> {
+    pub fn provoking_vertex_last(mut self, provoking_vertex_last: bool) -> Self {
+        self.inner.provoking_vertex_last = provoking_vertex_last.into();
+        self
+    }
+    pub fn transform_feedback_preserves_provoking_vertex(
+        mut self,
+        transform_feedback_preserves_provoking_vertex: bool,
+    ) -> Self {
+        self.inner.transform_feedback_preserves_provoking_vertex =
+            transform_feedback_preserves_provoking_vertex.into();
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> PhysicalDeviceProvokingVertexFeaturesEXT {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPhysicalDeviceProvokingVertexPropertiesEXT.html>"]
+pub struct PhysicalDeviceProvokingVertexPropertiesEXT {
+    pub s_type: StructureType,
+    pub p_next: *mut c_void,
+    pub provoking_vertex_mode_per_pipeline: Bool32,
+    pub transform_feedback_preserves_triangle_fan_provoking_vertex: Bool32,
+}
+impl ::std::default::Default for PhysicalDeviceProvokingVertexPropertiesEXT {
+    fn default() -> PhysicalDeviceProvokingVertexPropertiesEXT {
+        PhysicalDeviceProvokingVertexPropertiesEXT {
+            s_type: StructureType::PHYSICAL_DEVICE_PROVOKING_VERTEX_PROPERTIES_EXT,
+            p_next: ::std::ptr::null_mut(),
+            provoking_vertex_mode_per_pipeline: Bool32::default(),
+            transform_feedback_preserves_triangle_fan_provoking_vertex: Bool32::default(),
+        }
+    }
+}
+impl PhysicalDeviceProvokingVertexPropertiesEXT {
+    pub fn builder<'a>() -> PhysicalDeviceProvokingVertexPropertiesEXTBuilder<'a> {
+        PhysicalDeviceProvokingVertexPropertiesEXTBuilder {
+            inner: PhysicalDeviceProvokingVertexPropertiesEXT::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct PhysicalDeviceProvokingVertexPropertiesEXTBuilder<'a> {
+    inner: PhysicalDeviceProvokingVertexPropertiesEXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsPhysicalDeviceProperties2
+    for PhysicalDeviceProvokingVertexPropertiesEXTBuilder<'_>
+{
+}
+unsafe impl ExtendsPhysicalDeviceProperties2 for PhysicalDeviceProvokingVertexPropertiesEXT {}
+impl<'a> ::std::ops::Deref for PhysicalDeviceProvokingVertexPropertiesEXTBuilder<'a> {
+    type Target = PhysicalDeviceProvokingVertexPropertiesEXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut for PhysicalDeviceProvokingVertexPropertiesEXTBuilder<'a> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> PhysicalDeviceProvokingVertexPropertiesEXTBuilder<'a> {
+    pub fn provoking_vertex_mode_per_pipeline(
+        mut self,
+        provoking_vertex_mode_per_pipeline: bool,
+    ) -> Self {
+        self.inner.provoking_vertex_mode_per_pipeline = provoking_vertex_mode_per_pipeline.into();
+        self
+    }
+    pub fn transform_feedback_preserves_triangle_fan_provoking_vertex(
+        mut self,
+        transform_feedback_preserves_triangle_fan_provoking_vertex: bool,
+    ) -> Self {
+        self.inner
+            .transform_feedback_preserves_triangle_fan_provoking_vertex =
+            transform_feedback_preserves_triangle_fan_provoking_vertex.into();
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> PhysicalDeviceProvokingVertexPropertiesEXT {
+        self.inner
+    }
+}
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPipelineRasterizationProvokingVertexStateCreateInfoEXT.html>"]
+pub struct PipelineRasterizationProvokingVertexStateCreateInfoEXT {
+    pub s_type: StructureType,
+    pub p_next: *const c_void,
+    pub provoking_vertex_mode: ProvokingVertexModeEXT,
+}
+impl ::std::default::Default for PipelineRasterizationProvokingVertexStateCreateInfoEXT {
+    fn default() -> PipelineRasterizationProvokingVertexStateCreateInfoEXT {
+        PipelineRasterizationProvokingVertexStateCreateInfoEXT {
+            s_type: StructureType::PIPELINE_RASTERIZATION_PROVOKING_VERTEX_STATE_CREATE_INFO_EXT,
+            p_next: ::std::ptr::null(),
+            provoking_vertex_mode: ProvokingVertexModeEXT::default(),
+        }
+    }
+}
+impl PipelineRasterizationProvokingVertexStateCreateInfoEXT {
+    pub fn builder<'a>() -> PipelineRasterizationProvokingVertexStateCreateInfoEXTBuilder<'a> {
+        PipelineRasterizationProvokingVertexStateCreateInfoEXTBuilder {
+            inner: PipelineRasterizationProvokingVertexStateCreateInfoEXT::default(),
+            marker: ::std::marker::PhantomData,
+        }
+    }
+}
+#[repr(transparent)]
+pub struct PipelineRasterizationProvokingVertexStateCreateInfoEXTBuilder<'a> {
+    inner: PipelineRasterizationProvokingVertexStateCreateInfoEXT,
+    marker: ::std::marker::PhantomData<&'a ()>,
+}
+unsafe impl ExtendsPipelineRasterizationStateCreateInfo
+    for PipelineRasterizationProvokingVertexStateCreateInfoEXTBuilder<'_>
+{
+}
+unsafe impl ExtendsPipelineRasterizationStateCreateInfo
+    for PipelineRasterizationProvokingVertexStateCreateInfoEXT
+{
+}
+impl<'a> ::std::ops::Deref for PipelineRasterizationProvokingVertexStateCreateInfoEXTBuilder<'a> {
+    type Target = PipelineRasterizationProvokingVertexStateCreateInfoEXT;
+    fn deref(&self) -> &Self::Target {
+        &self.inner
+    }
+}
+impl<'a> ::std::ops::DerefMut
+    for PipelineRasterizationProvokingVertexStateCreateInfoEXTBuilder<'a>
+{
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.inner
+    }
+}
+impl<'a> PipelineRasterizationProvokingVertexStateCreateInfoEXTBuilder<'a> {
+    pub fn provoking_vertex_mode(mut self, provoking_vertex_mode: ProvokingVertexModeEXT) -> Self {
+        self.inner.provoking_vertex_mode = provoking_vertex_mode;
+        self
+    }
+    #[doc = r" Calling build will **discard** all the lifetime information. Only call this if"]
+    #[doc = r" necessary! Builders implement `Deref` targeting their corresponding Vulkan struct,"]
+    #[doc = r" so references to builders can be passed directly to Vulkan functions."]
+    pub fn build(self) -> PipelineRasterizationProvokingVertexStateCreateInfoEXT {
         self.inner
     }
 }

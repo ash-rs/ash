@@ -481,7 +481,6 @@ impl fmt::Debug for BufferCreateFlags {
             (BufferCreateFlags::SPARSE_BINDING.0, "SPARSE_BINDING"),
             (BufferCreateFlags::SPARSE_RESIDENCY.0, "SPARSE_RESIDENCY"),
             (BufferCreateFlags::SPARSE_ALIASED.0, "SPARSE_ALIASED"),
-            (BufferCreateFlags::RESERVED_5_NV.0, "RESERVED_5_NV"),
             (BufferCreateFlags::PROTECTED.0, "PROTECTED"),
             (
                 BufferCreateFlags::DEVICE_ADDRESS_CAPTURE_REPLAY.0,
@@ -1455,6 +1454,10 @@ impl fmt::Debug for ExternalMemoryHandleTypeFlags {
                 ExternalMemoryHandleTypeFlags::ZIRCON_VMO_FUCHSIA.0,
                 "ZIRCON_VMO_FUCHSIA",
             ),
+            (
+                ExternalMemoryHandleTypeFlags::RESERVED_12_NV.0,
+                "RESERVED_12_NV",
+            ),
         ];
         debug_flags(f, KNOWN, self.0)
     }
@@ -2060,7 +2063,6 @@ impl fmt::Debug for ImageCreateFlags {
                 "SAMPLE_LOCATIONS_COMPATIBLE_DEPTH_EXT",
             ),
             (ImageCreateFlags::SUBSAMPLED_EXT.0, "SUBSAMPLED_EXT"),
-            (ImageCreateFlags::RESERVED_15_NV.0, "RESERVED_15_NV"),
             (ImageCreateFlags::ALIAS.0, "ALIAS"),
             (
                 ImageCreateFlags::SPLIT_INSTANCE_BIND_REGIONS.0,
@@ -2440,6 +2442,7 @@ impl fmt::Debug for MemoryPropertyFlags {
                 MemoryPropertyFlags::DEVICE_UNCACHED_AMD.0,
                 "DEVICE_UNCACHED_AMD",
             ),
+            (MemoryPropertyFlags::RESERVED_8_NV.0, "RESERVED_8_NV"),
             (MemoryPropertyFlags::PROTECTED.0, "PROTECTED"),
         ];
         debug_flags(f, KNOWN, self.0)
@@ -3177,6 +3180,20 @@ impl fmt::Debug for PrivateDataSlotCreateFlagsEXT {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         const KNOWN: &[(Flags, &str)] = &[];
         debug_flags(f, KNOWN, self.0)
+    }
+}
+impl fmt::Debug for ProvokingVertexModeEXT {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let name = match *self {
+            Self::FIRST_VERTEX => Some("FIRST_VERTEX"),
+            Self::LAST_VERTEX => Some("LAST_VERTEX"),
+            _ => None,
+        };
+        if let Some(x) = name {
+            f.write_str(x)
+        } else {
+            self.0.fmt(f)
+        }
     }
 }
 impl fmt::Debug for QueryControlFlags {
@@ -4512,6 +4529,15 @@ impl fmt::Debug for StructureType {
             }
             Self::PHYSICAL_DEVICE_YCBCR_IMAGE_ARRAYS_FEATURES_EXT => {
                 Some("PHYSICAL_DEVICE_YCBCR_IMAGE_ARRAYS_FEATURES_EXT")
+            }
+            Self::PHYSICAL_DEVICE_PROVOKING_VERTEX_FEATURES_EXT => {
+                Some("PHYSICAL_DEVICE_PROVOKING_VERTEX_FEATURES_EXT")
+            }
+            Self::PIPELINE_RASTERIZATION_PROVOKING_VERTEX_STATE_CREATE_INFO_EXT => {
+                Some("PIPELINE_RASTERIZATION_PROVOKING_VERTEX_STATE_CREATE_INFO_EXT")
+            }
+            Self::PHYSICAL_DEVICE_PROVOKING_VERTEX_PROPERTIES_EXT => {
+                Some("PHYSICAL_DEVICE_PROVOKING_VERTEX_PROPERTIES_EXT")
             }
             Self::SURFACE_FULL_SCREEN_EXCLUSIVE_INFO_EXT => {
                 Some("SURFACE_FULL_SCREEN_EXCLUSIVE_INFO_EXT")
