@@ -1650,6 +1650,8 @@ impl DriverId {
     pub const MESA_LLVMPIPE: Self = Self(13);
     #[doc = "MoltenVK"]
     pub const MOLTENVK: Self = Self(14);
+    #[doc = "Core Avionics & Industrial Inc."]
+    pub const COREAVI_PROPRIETARY: Self = Self(15);
 }
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
 #[repr(transparent)]
@@ -2185,4 +2187,21 @@ impl FragmentShadingRateTypeNV {
 impl FragmentShadingRateTypeNV {
     pub const FRAGMENT_SIZE: Self = Self(0);
     pub const ENUMS: Self = Self(1);
+}
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Default)]
+#[repr(transparent)]
+#[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkQueryResultStatusKHR.html>"]
+pub struct QueryResultStatusKHR(pub(crate) i32);
+impl QueryResultStatusKHR {
+    pub const fn from_raw(x: i32) -> Self {
+        QueryResultStatusKHR(x)
+    }
+    pub const fn as_raw(self) -> i32 {
+        self.0
+    }
+}
+impl QueryResultStatusKHR {
+    pub const ERROR: Self = Self(-1);
+    pub const NOT_READY: Self = Self(0);
+    pub const COMPLETE: Self = Self(1);
 }
