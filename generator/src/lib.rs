@@ -1208,15 +1208,24 @@ pub fn generate_define(define: &vkxml::Define) -> TokenStream {
         .as_ref()
         .map_or(false, |c| c.contains("DEPRECATED"));
 
-    if name == "NULL_HANDLE" || deprecated {
+    if name == "NULL_HANDLE" {
         quote!()
     } else if let Some(value) = &define.value {
         str::parse::<u32>(value).map_or(quote!(), |v| quote!(pub const #ident: u32 = #v;))
     } else if let Some(c_expr) = &define.c_expression {
         if define.defref.contains(&"VK_MAKE_VERSION".to_string()) {
+            let link = khronos_link(&define.name);
             let c_expr = convert_c_expression(c_expr);
+            let deprecated = deprecated.then(|| {
+                let comment = &define.comment;
+                quote!(#[deprecated = #comment])
+            });
 
-            quote!(pub const #ident: u32 = #c_expr;)
+            quote!(
+                #deprecated
+                #[doc = #link]
+                pub const #ident: u32 = #c_expr;
+            )
         } else {
             quote!()
         }
