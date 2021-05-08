@@ -23254,28 +23254,526 @@ impl AmdExtension314Fn {
         AmdExtension314Fn {}
     }
 }
-impl AmdExtension315Fn {
+impl KhrSynchronization2Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
-        ::std::ffi::CStr::from_bytes_with_nul(b"VK_AMD_extension_315\0")
+        ::std::ffi::CStr::from_bytes_with_nul(b"VK_KHR_synchronization2\0")
             .expect("Wrong extension string")
     }
-    pub const SPEC_VERSION: u32 = 0u32;
+    pub const SPEC_VERSION: u32 = 1u32;
 }
-pub struct AmdExtension315Fn {}
-unsafe impl Send for AmdExtension315Fn {}
-unsafe impl Sync for AmdExtension315Fn {}
-impl ::std::clone::Clone for AmdExtension315Fn {
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdSetEvent2KHR = extern "system" fn(
+    command_buffer: CommandBuffer,
+    event: Event,
+    p_dependency_info: *const DependencyInfoKHR,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdResetEvent2KHR = extern "system" fn(
+    command_buffer: CommandBuffer,
+    event: Event,
+    stage_mask: PipelineStageFlags2KHR,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdWaitEvents2KHR = extern "system" fn(
+    command_buffer: CommandBuffer,
+    event_count: u32,
+    p_events: *const Event,
+    p_dependency_infos: *const DependencyInfoKHR,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdPipelineBarrier2KHR =
+    extern "system" fn(command_buffer: CommandBuffer, p_dependency_info: *const DependencyInfoKHR);
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdWriteTimestamp2KHR = extern "system" fn(
+    command_buffer: CommandBuffer,
+    stage: PipelineStageFlags2KHR,
+    query_pool: QueryPool,
+    query: u32,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkQueueSubmit2KHR = extern "system" fn(
+    queue: Queue,
+    submit_count: u32,
+    p_submits: *const SubmitInfo2KHR,
+    fence: Fence,
+) -> Result;
+#[allow(non_camel_case_types)]
+pub type PFN_vkCmdWriteBufferMarker2AMD = extern "system" fn(
+    command_buffer: CommandBuffer,
+    stage: PipelineStageFlags2KHR,
+    dst_buffer: Buffer,
+    dst_offset: DeviceSize,
+    marker: u32,
+);
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetQueueCheckpointData2NV = extern "system" fn(
+    queue: Queue,
+    p_checkpoint_data_count: *mut u32,
+    p_checkpoint_data: *mut CheckpointData2NV,
+);
+pub struct KhrSynchronization2Fn {
+    pub cmd_set_event2_khr: extern "system" fn(
+        command_buffer: CommandBuffer,
+        event: Event,
+        p_dependency_info: *const DependencyInfoKHR,
+    ),
+    pub cmd_reset_event2_khr: extern "system" fn(
+        command_buffer: CommandBuffer,
+        event: Event,
+        stage_mask: PipelineStageFlags2KHR,
+    ),
+    pub cmd_wait_events2_khr: extern "system" fn(
+        command_buffer: CommandBuffer,
+        event_count: u32,
+        p_events: *const Event,
+        p_dependency_infos: *const DependencyInfoKHR,
+    ),
+    pub cmd_pipeline_barrier2_khr: extern "system" fn(
+        command_buffer: CommandBuffer,
+        p_dependency_info: *const DependencyInfoKHR,
+    ),
+    pub cmd_write_timestamp2_khr: extern "system" fn(
+        command_buffer: CommandBuffer,
+        stage: PipelineStageFlags2KHR,
+        query_pool: QueryPool,
+        query: u32,
+    ),
+    pub queue_submit2_khr: extern "system" fn(
+        queue: Queue,
+        submit_count: u32,
+        p_submits: *const SubmitInfo2KHR,
+        fence: Fence,
+    ) -> Result,
+    pub cmd_write_buffer_marker2_amd: extern "system" fn(
+        command_buffer: CommandBuffer,
+        stage: PipelineStageFlags2KHR,
+        dst_buffer: Buffer,
+        dst_offset: DeviceSize,
+        marker: u32,
+    ),
+    pub get_queue_checkpoint_data2_nv: extern "system" fn(
+        queue: Queue,
+        p_checkpoint_data_count: *mut u32,
+        p_checkpoint_data: *mut CheckpointData2NV,
+    ),
+}
+unsafe impl Send for KhrSynchronization2Fn {}
+unsafe impl Sync for KhrSynchronization2Fn {}
+impl ::std::clone::Clone for KhrSynchronization2Fn {
     fn clone(&self) -> Self {
-        AmdExtension315Fn {}
+        KhrSynchronization2Fn {
+            cmd_set_event2_khr: self.cmd_set_event2_khr,
+            cmd_reset_event2_khr: self.cmd_reset_event2_khr,
+            cmd_wait_events2_khr: self.cmd_wait_events2_khr,
+            cmd_pipeline_barrier2_khr: self.cmd_pipeline_barrier2_khr,
+            cmd_write_timestamp2_khr: self.cmd_write_timestamp2_khr,
+            queue_submit2_khr: self.queue_submit2_khr,
+            cmd_write_buffer_marker2_amd: self.cmd_write_buffer_marker2_amd,
+            get_queue_checkpoint_data2_nv: self.get_queue_checkpoint_data2_nv,
+        }
     }
 }
-impl AmdExtension315Fn {
+impl KhrSynchronization2Fn {
     pub fn load<F>(mut _f: F) -> Self
     where
         F: FnMut(&::std::ffi::CStr) -> *const c_void,
     {
-        AmdExtension315Fn {}
+        KhrSynchronization2Fn {
+            cmd_set_event2_khr: unsafe {
+                extern "system" fn cmd_set_event2_khr(
+                    _command_buffer: CommandBuffer,
+                    _event: Event,
+                    _p_dependency_info: *const DependencyInfoKHR,
+                ) {
+                    panic!(concat!("Unable to load ", stringify!(cmd_set_event2_khr)))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdSetEvent2KHR\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_set_event2_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_reset_event2_khr: unsafe {
+                extern "system" fn cmd_reset_event2_khr(
+                    _command_buffer: CommandBuffer,
+                    _event: Event,
+                    _stage_mask: PipelineStageFlags2KHR,
+                ) {
+                    panic!(concat!("Unable to load ", stringify!(cmd_reset_event2_khr)))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdResetEvent2KHR\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_reset_event2_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_wait_events2_khr: unsafe {
+                extern "system" fn cmd_wait_events2_khr(
+                    _command_buffer: CommandBuffer,
+                    _event_count: u32,
+                    _p_events: *const Event,
+                    _p_dependency_infos: *const DependencyInfoKHR,
+                ) {
+                    panic!(concat!("Unable to load ", stringify!(cmd_wait_events2_khr)))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdWaitEvents2KHR\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_wait_events2_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_pipeline_barrier2_khr: unsafe {
+                extern "system" fn cmd_pipeline_barrier2_khr(
+                    _command_buffer: CommandBuffer,
+                    _p_dependency_info: *const DependencyInfoKHR,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_pipeline_barrier2_khr)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdPipelineBarrier2KHR\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_pipeline_barrier2_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_write_timestamp2_khr: unsafe {
+                extern "system" fn cmd_write_timestamp2_khr(
+                    _command_buffer: CommandBuffer,
+                    _stage: PipelineStageFlags2KHR,
+                    _query_pool: QueryPool,
+                    _query: u32,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_write_timestamp2_khr)
+                    ))
+                }
+                let cname =
+                    ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkCmdWriteTimestamp2KHR\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_write_timestamp2_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            queue_submit2_khr: unsafe {
+                extern "system" fn queue_submit2_khr(
+                    _queue: Queue,
+                    _submit_count: u32,
+                    _p_submits: *const SubmitInfo2KHR,
+                    _fence: Fence,
+                ) -> Result {
+                    panic!(concat!("Unable to load ", stringify!(queue_submit2_khr)))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkQueueSubmit2KHR\0");
+                let val = _f(cname);
+                if val.is_null() {
+                    queue_submit2_khr
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            cmd_write_buffer_marker2_amd: unsafe {
+                extern "system" fn cmd_write_buffer_marker2_amd(
+                    _command_buffer: CommandBuffer,
+                    _stage: PipelineStageFlags2KHR,
+                    _dst_buffer: Buffer,
+                    _dst_offset: DeviceSize,
+                    _marker: u32,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(cmd_write_buffer_marker2_amd)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkCmdWriteBufferMarker2AMD\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    cmd_write_buffer_marker2_amd
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+            get_queue_checkpoint_data2_nv: unsafe {
+                extern "system" fn get_queue_checkpoint_data2_nv(
+                    _queue: Queue,
+                    _p_checkpoint_data_count: *mut u32,
+                    _p_checkpoint_data: *mut CheckpointData2NV,
+                ) {
+                    panic!(concat!(
+                        "Unable to load ",
+                        stringify!(get_queue_checkpoint_data2_nv)
+                    ))
+                }
+                let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(
+                    b"vkGetQueueCheckpointData2NV\0",
+                );
+                let val = _f(cname);
+                if val.is_null() {
+                    get_queue_checkpoint_data2_nv
+                } else {
+                    ::std::mem::transmute(val)
+                }
+            },
+        }
     }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdSetEvent2KHR.html>"]
+    pub unsafe fn cmd_set_event2_khr(
+        &self,
+        command_buffer: CommandBuffer,
+        event: Event,
+        p_dependency_info: *const DependencyInfoKHR,
+    ) {
+        (self.cmd_set_event2_khr)(command_buffer, event, p_dependency_info)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdResetEvent2KHR.html>"]
+    pub unsafe fn cmd_reset_event2_khr(
+        &self,
+        command_buffer: CommandBuffer,
+        event: Event,
+        stage_mask: PipelineStageFlags2KHR,
+    ) {
+        (self.cmd_reset_event2_khr)(command_buffer, event, stage_mask)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdWaitEvents2KHR.html>"]
+    pub unsafe fn cmd_wait_events2_khr(
+        &self,
+        command_buffer: CommandBuffer,
+        event_count: u32,
+        p_events: *const Event,
+        p_dependency_infos: *const DependencyInfoKHR,
+    ) {
+        (self.cmd_wait_events2_khr)(command_buffer, event_count, p_events, p_dependency_infos)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdPipelineBarrier2KHR.html>"]
+    pub unsafe fn cmd_pipeline_barrier2_khr(
+        &self,
+        command_buffer: CommandBuffer,
+        p_dependency_info: *const DependencyInfoKHR,
+    ) {
+        (self.cmd_pipeline_barrier2_khr)(command_buffer, p_dependency_info)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdWriteTimestamp2KHR.html>"]
+    pub unsafe fn cmd_write_timestamp2_khr(
+        &self,
+        command_buffer: CommandBuffer,
+        stage: PipelineStageFlags2KHR,
+        query_pool: QueryPool,
+        query: u32,
+    ) {
+        (self.cmd_write_timestamp2_khr)(command_buffer, stage, query_pool, query)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkQueueSubmit2KHR.html>"]
+    pub unsafe fn queue_submit2_khr(
+        &self,
+        queue: Queue,
+        submit_count: u32,
+        p_submits: *const SubmitInfo2KHR,
+        fence: Fence,
+    ) -> Result {
+        (self.queue_submit2_khr)(queue, submit_count, p_submits, fence)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdWriteBufferMarker2AMD.html>"]
+    pub unsafe fn cmd_write_buffer_marker2_amd(
+        &self,
+        command_buffer: CommandBuffer,
+        stage: PipelineStageFlags2KHR,
+        dst_buffer: Buffer,
+        dst_offset: DeviceSize,
+        marker: u32,
+    ) {
+        (self.cmd_write_buffer_marker2_amd)(command_buffer, stage, dst_buffer, dst_offset, marker)
+    }
+    #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetQueueCheckpointData2NV.html>"]
+    pub unsafe fn get_queue_checkpoint_data2_nv(
+        &self,
+        queue: Queue,
+        p_checkpoint_data_count: *mut u32,
+        p_checkpoint_data: *mut CheckpointData2NV,
+    ) {
+        (self.get_queue_checkpoint_data2_nv)(queue, p_checkpoint_data_count, p_checkpoint_data)
+    }
+}
+#[doc = "Generated from 'VK_KHR_synchronization2'"]
+impl StructureType {
+    pub const MEMORY_BARRIER_2_KHR: Self = Self(1_000_314_000);
+}
+#[doc = "Generated from 'VK_KHR_synchronization2'"]
+impl StructureType {
+    pub const BUFFER_MEMORY_BARRIER_2_KHR: Self = Self(1_000_314_001);
+}
+#[doc = "Generated from 'VK_KHR_synchronization2'"]
+impl StructureType {
+    pub const IMAGE_MEMORY_BARRIER_2_KHR: Self = Self(1_000_314_002);
+}
+#[doc = "Generated from 'VK_KHR_synchronization2'"]
+impl StructureType {
+    pub const DEPENDENCY_INFO_KHR: Self = Self(1_000_314_003);
+}
+#[doc = "Generated from 'VK_KHR_synchronization2'"]
+impl StructureType {
+    pub const SUBMIT_INFO_2_KHR: Self = Self(1_000_314_004);
+}
+#[doc = "Generated from 'VK_KHR_synchronization2'"]
+impl StructureType {
+    pub const SEMAPHORE_SUBMIT_INFO_KHR: Self = Self(1_000_314_005);
+}
+#[doc = "Generated from 'VK_KHR_synchronization2'"]
+impl StructureType {
+    pub const COMMAND_BUFFER_SUBMIT_INFO_KHR: Self = Self(1_000_314_006);
+}
+#[doc = "Generated from 'VK_KHR_synchronization2'"]
+impl StructureType {
+    pub const PHYSICAL_DEVICE_SYNCHRONIZATION_2_FEATURES_KHR: Self = Self(1_000_314_007);
+}
+#[doc = "Generated from 'VK_KHR_synchronization2'"]
+impl EventCreateFlags {
+    pub const DEVICE_ONLY_KHR: Self = Self(0b1);
+}
+#[doc = "Generated from 'VK_KHR_synchronization2'"]
+impl ImageLayout {
+    pub const READ_ONLY_OPTIMAL_KHR: Self = Self(1_000_314_000);
+}
+#[doc = "Generated from 'VK_KHR_synchronization2'"]
+impl ImageLayout {
+    pub const ATTACHMENT_OPTIMAL_KHR: Self = Self(1_000_314_001);
+}
+#[doc = "Generated from 'VK_KHR_synchronization2'"]
+impl PipelineStageFlags {
+    pub const NONE_KHR: Self = Self(0);
+}
+#[doc = "Generated from 'VK_KHR_synchronization2'"]
+impl AccessFlags {
+    pub const NONE_KHR: Self = Self(0);
+}
+#[doc = "Generated from 'VK_KHR_synchronization2'"]
+impl PipelineStageFlags2KHR {
+    pub const TRANSFORM_FEEDBACK_EXT: Self = Self(0b1_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_synchronization2'"]
+impl AccessFlags2KHR {
+    pub const TRANSFORM_FEEDBACK_WRITE_EXT: Self = Self(0b10_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_synchronization2'"]
+impl AccessFlags2KHR {
+    pub const TRANSFORM_FEEDBACK_COUNTER_READ_EXT: Self = Self(0b100_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_synchronization2'"]
+impl AccessFlags2KHR {
+    pub const TRANSFORM_FEEDBACK_COUNTER_WRITE_EXT: Self =
+        Self(0b1000_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_synchronization2'"]
+impl PipelineStageFlags2KHR {
+    pub const CONDITIONAL_RENDERING_EXT: Self = Self(0b100_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_synchronization2'"]
+impl AccessFlags2KHR {
+    pub const CONDITIONAL_RENDERING_READ_EXT: Self = Self(0b1_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_synchronization2'"]
+impl PipelineStageFlags2KHR {
+    pub const COMMAND_PREPROCESS_NV: Self = Self(0b10_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_synchronization2'"]
+impl AccessFlags2KHR {
+    pub const COMMAND_PREPROCESS_READ_NV: Self = Self(0b10_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_synchronization2'"]
+impl AccessFlags2KHR {
+    pub const COMMAND_PREPROCESS_WRITE_NV: Self = Self(0b100_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_synchronization2'"]
+impl PipelineStageFlags2KHR {
+    pub const FRAGMENT_SHADING_RATE_ATTACHMENT: Self = Self(0b100_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_synchronization2'"]
+impl AccessFlags2KHR {
+    pub const FRAGMENT_SHADING_RATE_ATTACHMENT_READ: Self = Self(0b1000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_synchronization2'"]
+impl PipelineStageFlags2KHR {
+    pub const SHADING_RATE_IMAGE_NV: Self = Self::FRAGMENT_SHADING_RATE_ATTACHMENT;
+}
+#[doc = "Generated from 'VK_KHR_synchronization2'"]
+impl AccessFlags2KHR {
+    pub const SHADING_RATE_IMAGE_READ_NV: Self = Self::FRAGMENT_SHADING_RATE_ATTACHMENT_READ;
+}
+#[doc = "Generated from 'VK_KHR_synchronization2'"]
+impl PipelineStageFlags2KHR {
+    pub const ACCELERATION_STRUCTURE_BUILD: Self = Self(0b10_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_synchronization2'"]
+impl AccessFlags2KHR {
+    pub const ACCELERATION_STRUCTURE_READ: Self = Self(0b10_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_synchronization2'"]
+impl AccessFlags2KHR {
+    pub const ACCELERATION_STRUCTURE_WRITE: Self = Self(0b100_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_synchronization2'"]
+impl PipelineStageFlags2KHR {
+    pub const RAY_TRACING_SHADER: Self = Self(0b10_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_synchronization2'"]
+impl PipelineStageFlags2KHR {
+    pub const RAY_TRACING_SHADER_NV: Self = Self::RAY_TRACING_SHADER;
+}
+#[doc = "Generated from 'VK_KHR_synchronization2'"]
+impl PipelineStageFlags2KHR {
+    pub const ACCELERATION_STRUCTURE_BUILD_NV: Self = Self::ACCELERATION_STRUCTURE_BUILD;
+}
+#[doc = "Generated from 'VK_KHR_synchronization2'"]
+impl AccessFlags2KHR {
+    pub const ACCELERATION_STRUCTURE_READ_NV: Self = Self::ACCELERATION_STRUCTURE_READ;
+}
+#[doc = "Generated from 'VK_KHR_synchronization2'"]
+impl AccessFlags2KHR {
+    pub const ACCELERATION_STRUCTURE_WRITE_NV: Self = Self::ACCELERATION_STRUCTURE_WRITE;
+}
+#[doc = "Generated from 'VK_KHR_synchronization2'"]
+impl PipelineStageFlags2KHR {
+    pub const FRAGMENT_DENSITY_PROCESS_EXT: Self = Self(0b1000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_synchronization2'"]
+impl AccessFlags2KHR {
+    pub const FRAGMENT_DENSITY_MAP_READ_EXT: Self = Self(0b1_0000_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_synchronization2'"]
+impl AccessFlags2KHR {
+    pub const COLOR_ATTACHMENT_READ_NONCOHERENT_EXT: Self = Self(0b1000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_synchronization2'"]
+impl PipelineStageFlags2KHR {
+    pub const TASK_SHADER_NV: Self = Self(0b1000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_synchronization2'"]
+impl PipelineStageFlags2KHR {
+    pub const MESH_SHADER_NV: Self = Self(0b1_0000_0000_0000_0000_0000);
+}
+#[doc = "Generated from 'VK_KHR_synchronization2'"]
+impl StructureType {
+    pub const QUEUE_FAMILY_CHECKPOINT_PROPERTIES_2_NV: Self = Self(1_000_314_008);
+}
+#[doc = "Generated from 'VK_KHR_synchronization2'"]
+impl StructureType {
+    pub const CHECKPOINT_DATA_2_NV: Self = Self(1_000_314_009);
 }
 impl AmdExtension316Fn {
     pub fn name() -> &'static ::std::ffi::CStr {
@@ -23645,6 +24143,10 @@ impl BuildAccelerationStructureFlagsKHR {
 #[doc = "Generated from 'VK_NV_extension_328'"]
 impl AccelerationStructureCreateFlagsKHR {
     pub const RESERVED_2_NV: Self = Self(0b100);
+}
+#[doc = "Generated from 'VK_NV_extension_328'"]
+impl PipelineCreateFlags {
+    pub const RESERVED_20_NV: Self = Self(0b1_0000_0000_0000_0000_0000);
 }
 impl NvExtension329Fn {
     pub fn name() -> &'static ::std::ffi::CStr {

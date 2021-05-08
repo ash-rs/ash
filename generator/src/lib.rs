@@ -1,11 +1,12 @@
 #![recursion_limit = "256"]
 
-use nom::{alt, char, do_parse, map, named, opt, tag, take_while1, terminated};
-use quote::*;
-
 use heck::{CamelCase, ShoutySnakeCase, SnakeCase};
 use itertools::Itertools;
+use nom::{alt, char, do_parse, map, named, opt, tag, take_while1, terminated};
+use once_cell::sync::Lazy;
 use proc_macro2::{Delimiter, Group, Literal, Span, TokenStream, TokenTree};
+use quote::*;
+use regex::Regex;
 use std::collections::{BTreeMap, HashMap, HashSet};
 use std::fmt::Display;
 use std::hash::BuildHasher;
@@ -477,7 +478,7 @@ impl quote::ToTokens for Constant {
                 tokens.extend(rexpr.parse::<TokenStream>());
             }
             Constant::BitPos(pos) => {
-                let value = 1 << pos;
+                let value = 1u64 << pos;
                 let bit_string = format!("{:b}", value);
                 let bit_string = interleave_number('_', 4, &bit_string);
                 syn::LitInt::new(&format!("0b{}", bit_string), Span::call_site()).to_tokens(tokens);
@@ -517,7 +518,7 @@ impl Constant {
         match *self {
             Constant::Number(n) => Some(ConstVal::U64(n as u64)),
             Constant::Hex(ref hex) => u64::from_str_radix(&hex, 16).ok().map(ConstVal::U64),
-            Constant::BitPos(pos) => Some(ConstVal::U64((1 << pos) as u64)),
+            Constant::BitPos(pos) => Some(ConstVal::U64(1u64 << pos)),
             _ => None,
         }
     }
@@ -1090,7 +1091,7 @@ pub fn generate_extension_constants<'a>(
     extension_number: i64,
     extension_items: &'a [vk_parse::ExtensionChild],
     const_cache: &mut HashSet<&'a str, impl BuildHasher>,
-    const_values: &mut BTreeMap<Ident, Vec<ConstantMatchInfo>>,
+    const_values: &mut BTreeMap<Ident, ConstantTypeInfo>,
 ) -> TokenStream {
     let items = extension_items
         .iter()
@@ -1116,6 +1117,7 @@ pub fn generate_extension_constants<'a>(
             const_values
                 .get_mut(&ident)
                 .unwrap()
+                .values
                 .push(ConstantMatchInfo {
                     ident: ext_constant.variant_ident(&extends),
                     is_alias,
@@ -1214,7 +1216,7 @@ pub fn generate_extension<'a>(
     extension: &'a vk_parse::Extension,
     cmd_map: &CommandMap<'a>,
     const_cache: &mut HashSet<&'a str, impl BuildHasher>,
-    const_values: &mut BTreeMap<Ident, Vec<ConstantMatchInfo>>,
+    const_values: &mut BTreeMap<Ident, ConstantTypeInfo>,
     cmd_aliases: &HashMap<String, String, impl BuildHasher>,
     fn_cache: &mut HashSet<&'a str, impl BuildHasher>,
 ) -> Option<TokenStream> {
@@ -1285,7 +1287,7 @@ pub fn generate_typedef(typedef: &vkxml::Typedef) -> TokenStream {
 pub fn generate_bitmask(
     bitmask: &vkxml::Bitmask,
     bitflags_cache: &mut HashSet<Ident, impl BuildHasher>,
-    const_values: &mut BTreeMap<Ident, Vec<ConstantMatchInfo>>,
+    const_values: &mut BTreeMap<Ident, ConstantTypeInfo>,
 ) -> Option<TokenStream> {
     // Workaround for empty bitmask
     if bitmask.name.is_empty() {
@@ -1302,14 +1304,15 @@ pub fn generate_bitmask(
         return None;
     };
     bitflags_cache.insert(ident.clone());
-    const_values.insert(ident.clone(), Vec::new());
+    const_values.insert(ident.clone(), Default::default());
     let khronos_link = khronos_link(&bitmask.name);
+    let type_ = name_to_tokens(&bitmask.basetype);
     Some(quote! {
         #[repr(transparent)]
         #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
         #[doc = #khronos_link]
-        pub struct #ident(pub(crate) Flags);
-        vk_bitflags_wrapped!(#ident, 0b0, Flags);
+        pub struct #ident(pub(crate) #type_);
+        vk_bitflags_wrapped!(#ident, 0b0, #type_);
     })
 }
 
@@ -1331,6 +1334,8 @@ fn is_enum_variant_with_typo(variant_name: &str) -> bool {
     )
 }
 
+static TRAILING_NUMBER: Lazy<Regex> = Lazy::new(|| Regex::new("(\\d+)$").unwrap());
+
 pub fn variant_ident(enum_name: &str, variant_name: &str) -> Ident {
     let variant_name = variant_name.to_uppercase();
     let _name = enum_name.replace("FlagBits", "");
@@ -1347,20 +1352,23 @@ pub fn variant_ident(enum_name: &str, variant_name: &str) -> Ident {
         .cloned()
         .unwrap_or("");
     let struct_name = struct_name.strip_suffix(vendor).unwrap();
+    let struct_name = TRAILING_NUMBER.replace(struct_name, "_$1");
     let variant_name = variant_name
         .strip_suffix(vendor)
         .unwrap_or_else(|| variant_name.as_str());
 
-    let new_variant_name = variant_name.strip_prefix(struct_name).unwrap_or_else(|| {
-        if enum_name == "VkResult" || is_enum_variant_with_typo(variant_name) {
-            variant_name.strip_prefix("VK").unwrap()
-        } else {
-            panic!(
-                "Failed to strip {} prefix from enum variant {}",
-                struct_name, variant_name
-            )
-        }
-    });
+    let new_variant_name = variant_name
+        .strip_prefix(struct_name.as_ref())
+        .unwrap_or_else(|| {
+            if enum_name == "VkResult" || is_enum_variant_with_typo(variant_name) {
+                variant_name.strip_prefix("VK").unwrap()
+            } else {
+                panic!(
+                    "Failed to strip {} prefix from enum variant {}",
+                    struct_name, variant_name
+                )
+            }
+        });
 
     // Both of the above strip_prefix leave a leading `_`:
     let new_variant_name = new_variant_name.strip_prefix("_").unwrap();
@@ -1428,7 +1436,7 @@ pub fn bitflags_impl_block(
 pub fn generate_enum<'a>(
     enum_: &'a vk_parse::Enums,
     const_cache: &mut HashSet<&'a str, impl BuildHasher>,
-    const_values: &mut BTreeMap<Ident, Vec<ConstantMatchInfo>>,
+    const_values: &mut BTreeMap<Ident, ConstantTypeInfo>,
     bitflags_cache: &mut HashSet<Ident, impl BuildHasher>,
 ) -> EnumType {
     let name = enum_.name.as_ref().unwrap();
@@ -1463,7 +1471,13 @@ pub fn generate_enum<'a>(
             is_alias: constant.is_alias(),
         });
     }
-    const_values.insert(ident.clone(), values);
+    const_values.insert(
+        ident.clone(),
+        ConstantTypeInfo {
+            values,
+            bitwidth: enum_.bitwidth,
+        },
+    );
 
     let khronos_link = khronos_link(name);
 
@@ -1473,6 +1487,12 @@ pub fn generate_enum<'a>(
             .iter()
             .filter_map(|constant| constant.constant(name).value())
             .fold(0, |acc, next| acc | next.bits());
+
+        let type_ = if enum_.bitwidth == Some(64u32) {
+            quote!(Flags64)
+        } else {
+            quote!(Flags)
+        };
         let bit_string = format!("{:b}", all_bits);
         let bit_string = interleave_number('_', 4, &bit_string);
         let all_bits_term = syn::LitInt::new(&format!("0b{}", bit_string), Span::call_site());
@@ -1486,8 +1506,8 @@ pub fn generate_enum<'a>(
                 #[repr(transparent)]
                 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
                 #[doc = #khronos_link]
-                pub struct #ident(pub(crate) Flags);
-                vk_bitflags_wrapped!(#ident, #all_bits_term, Flags);
+                pub struct #ident(pub(crate) #type_);
+                vk_bitflags_wrapped!(#ident, #all_bits_term, #type_);
                 #impl_bitflags
             };
             EnumType::Bitflags(q)
@@ -2204,7 +2224,7 @@ pub fn generate_definition(
     union_types: &HashSet<&str, impl BuildHasher>,
     root_structs: &HashSet<String, impl BuildHasher>,
     bitflags_cache: &mut HashSet<Ident, impl BuildHasher>,
-    const_values: &mut BTreeMap<Ident, Vec<ConstantMatchInfo>>,
+    const_values: &mut BTreeMap<Ident, ConstantTypeInfo>,
 ) -> Option<TokenStream> {
     match *definition {
         vkxml::DefinitionsElement::Define(ref define) => Some(generate_define(define)),
@@ -2329,7 +2349,7 @@ pub fn generate_constant<'a>(
 pub fn generate_feature_extension<'a>(
     registry: &'a vk_parse::Registry,
     const_cache: &mut HashSet<&'a str, impl BuildHasher>,
-    const_values: &mut BTreeMap<Ident, Vec<ConstantMatchInfo>>,
+    const_values: &mut BTreeMap<Ident, ConstantTypeInfo>,
 ) -> TokenStream {
     let constants = registry.0.iter().filter_map(|item| match item {
         vk_parse::RegistryChild::Feature(feature) => Some(generate_extension_constants(
@@ -2351,10 +2371,15 @@ pub struct ConstantMatchInfo {
     pub is_alias: bool,
 }
 
-pub fn generate_const_debugs(
-    const_values: &BTreeMap<Ident, Vec<ConstantMatchInfo>>,
-) -> TokenStream {
+#[derive(Default)]
+pub struct ConstantTypeInfo {
+    values: Vec<ConstantMatchInfo>,
+    bitwidth: Option<u32>,
+}
+
+pub fn generate_const_debugs(const_values: &BTreeMap<Ident, ConstantTypeInfo>) -> TokenStream {
     let impls = const_values.iter().map(|(ty, values)| {
+        let ConstantTypeInfo { values, bitwidth } = values;
         if ty.to_string().contains("Flags") {
             let cases = values.iter().filter_map(|value| {
                 if value.is_alias {
@@ -2365,10 +2390,17 @@ pub fn generate_const_debugs(
                     Some(quote! { (#ty::#ident.0, #name) })
                 }
             });
+
+            let type_ = if bitwidth == &Some(64u32) {
+                quote!(Flags64)
+            } else {
+                quote!(Flags)
+            };
+
             quote! {
                 impl fmt::Debug for #ty {
                     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-                        const KNOWN: &[(Flags, &str)] = &[#(#cases),*];
+                        const KNOWN: &[(#type_, &str)] = &[#(#cases),*];
                         debug_flags(f, KNOWN, self.0)
                     }
                 }
@@ -2401,19 +2433,28 @@ pub fn generate_const_debugs(
         }
     });
     quote! {
-        pub(crate) fn debug_flags(f: &mut fmt::Formatter, known: &[(Flags, &'static str)], value: Flags) -> fmt::Result {
+        pub(crate) fn debug_flags<Value: Into<u64> + Copy>(
+            f: &mut fmt::Formatter,
+            known: &[(Value, &'static str)],
+            value: Value,
+        ) -> fmt::Result {
             let mut first = true;
-            let mut accum = value;
-            for (bit, name) in known {
-                if *bit != 0 && accum & *bit == *bit {
-                    if !first { f.write_str(" | ")?; }
+            let mut accum = value.into();
+            for &(bit, name) in known {
+                let bit = bit.into();
+                if bit != 0 && accum & bit == bit {
+                    if !first {
+                        f.write_str(" | ")?;
+                    }
                     f.write_str(name)?;
                     first = false;
                     accum &= !bit;
                 }
             }
             if accum != 0 {
-                if !first { f.write_str(" | ")?; }
+                if !first {
+                    f.write_str(" | ")?;
+                }
                 write!(f, "{:b}", accum)?;
             }
             Ok(())
@@ -2537,7 +2578,7 @@ pub fn write_source_code<P: AsRef<Path>>(vk_xml: &Path, src_dir: P) {
     let mut bitflags_cache = HashSet::new();
     let mut const_cache = HashSet::new();
 
-    let mut const_values: BTreeMap<Ident, Vec<ConstantMatchInfo>> = BTreeMap::new();
+    let mut const_values: BTreeMap<Ident, ConstantTypeInfo> = BTreeMap::new();
 
     let (enum_code, bitflags_code) = spec2
         .0
