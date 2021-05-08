@@ -73,12 +73,13 @@ impl Synchronization2 {
         events: &[vk::Event],
         dependency_infos: &[vk::DependencyInfoKHR],
     ) {
+        assert_eq!(events.len(), dependency_infos.len());
         self.synchronization2_fn.cmd_wait_events2_khr(
             command_buffer,
             events.len() as u32,
             events.as_ptr(),
             dependency_infos.as_ptr(),
-        );
+        )
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkCmdWriteTimestamp2KHR.html>"]
