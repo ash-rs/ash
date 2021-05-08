@@ -1,4 +1,3 @@
-#![allow(dead_code)]
 use crate::vk;
 use crate::{Device, Instance};
 use std::ffi::CStr;
@@ -27,7 +26,7 @@ impl GetMemoryRequirements2 {
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetBufferMemoryRequirements2KHR.html>"]
-    unsafe fn get_buffer_memory_requirements2(
+    pub unsafe fn get_buffer_memory_requirements2(
         &self,
         info: &vk::BufferMemoryRequirementsInfo2KHR,
         memory_requirements: &mut vk::MemoryRequirements2KHR,
@@ -37,7 +36,7 @@ impl GetMemoryRequirements2 {
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetImageMemoryRequirements2KHR.html>"]
-    unsafe fn get_image_memory_requirements2(
+    pub unsafe fn get_image_memory_requirements2(
         &self,
         info: &vk::ImageMemoryRequirementsInfo2KHR,
         memory_requirements: &mut vk::MemoryRequirements2KHR,
@@ -46,7 +45,7 @@ impl GetMemoryRequirements2 {
             .get_image_memory_requirements2_khr(self.handle, info, memory_requirements);
     }
 
-    unsafe fn get_image_sparse_memory_requirements2_len(
+    pub unsafe fn get_image_sparse_memory_requirements2_len(
         &self,
         info: &vk::ImageSparseMemoryRequirementsInfo2KHR,
     ) -> usize {
@@ -62,7 +61,7 @@ impl GetMemoryRequirements2 {
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetImageSparseMemoryRequirements2KHR.html>"]
-    unsafe fn get_image_sparse_memory_requirements2(
+    pub unsafe fn get_image_sparse_memory_requirements2(
         &self,
         info: &vk::ImageSparseMemoryRequirementsInfo2KHR,
         sparse_memory_requirements: &mut [vk::SparseImageMemoryRequirements2KHR],
