@@ -1,7 +1,6 @@
+use crate::prelude::*;
 use crate::vk;
 use crate::{Device, Instance};
-
-use crate::prelude::*;
 use std::ffi::CStr;
 use std::mem;
 
