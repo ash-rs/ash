@@ -1,4 +1,3 @@
-#![allow(dead_code)]
 use crate::vk;
 use crate::{Device, Instance};
 use std::ffi::c_void;

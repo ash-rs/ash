@@ -1,4 +1,3 @@
-#![allow(dead_code)]
 use crate::prelude::*;
 use crate::{vk, RawPtr};
 use crate::{EntryCustom, Instance};

@@ -1,4 +1,3 @@
-#![allow(dead_code)]
 use crate::device::Device;
 use crate::prelude::*;
 use crate::vk;
