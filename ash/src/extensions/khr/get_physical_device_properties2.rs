@@ -1,4 +1,3 @@
-#![allow(dead_code)]
 use crate::prelude::*;
 use crate::vk;
 use crate::{EntryCustom, Instance};
@@ -29,7 +28,7 @@ impl GetPhysicalDeviceProperties2 {
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceFeatures2KHR.html>"]
-    unsafe fn get_physical_device_features2(
+    pub unsafe fn get_physical_device_features2(
         &self,
         physical_device: vk::PhysicalDevice,
         features: &mut vk::PhysicalDeviceFeatures2KHR,
@@ -39,7 +38,7 @@ impl GetPhysicalDeviceProperties2 {
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceFormatProperties2KHR.html>"]
-    unsafe fn get_physical_device_format_properties2(
+    pub unsafe fn get_physical_device_format_properties2(
         &self,
         physical_device: vk::PhysicalDevice,
         format: vk::Format,
@@ -50,7 +49,7 @@ impl GetPhysicalDeviceProperties2 {
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceImageFormatProperties2KHR.html>"]
-    unsafe fn get_physical_device_image_format_properties2(
+    pub unsafe fn get_physical_device_image_format_properties2(
         &self,
         physical_device: vk::PhysicalDevice,
         image_format_info: &vk::PhysicalDeviceImageFormatInfo2KHR,
@@ -66,7 +65,7 @@ impl GetPhysicalDeviceProperties2 {
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceMemoryProperties2KHR.html>"]
-    unsafe fn get_physical_device_memory_properties2(
+    pub unsafe fn get_physical_device_memory_properties2(
         &self,
         physical_device: vk::PhysicalDevice,
         memory_properties: &mut vk::PhysicalDeviceMemoryProperties2KHR,
@@ -76,7 +75,7 @@ impl GetPhysicalDeviceProperties2 {
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceProperties2KHR.html>"]
-    unsafe fn get_physical_device_properties2(
+    pub unsafe fn get_physical_device_properties2(
         &self,
         physical_device: vk::PhysicalDevice,
         properties: &mut vk::PhysicalDeviceProperties2KHR,
@@ -85,7 +84,7 @@ impl GetPhysicalDeviceProperties2 {
             .get_physical_device_properties2_khr(physical_device, properties);
     }
 
-    unsafe fn get_physical_device_queue_family_properties2_len(
+    pub unsafe fn get_physical_device_queue_family_properties2_len(
         &self,
         physical_device: vk::PhysicalDevice,
     ) -> usize {
@@ -100,7 +99,7 @@ impl GetPhysicalDeviceProperties2 {
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceQueueFamilyProperties2KHR.html>"]
-    unsafe fn get_physical_device_queue_family_properties2(
+    pub unsafe fn get_physical_device_queue_family_properties2(
         &self,
         physical_device: vk::PhysicalDevice,
         queue_family_properties: &mut [vk::QueueFamilyProperties2KHR],
@@ -114,7 +113,7 @@ impl GetPhysicalDeviceProperties2 {
             );
     }
 
-    unsafe fn get_physical_device_sparse_image_format_properties2_len(
+    pub unsafe fn get_physical_device_sparse_image_format_properties2_len(
         &self,
         physical_device: vk::PhysicalDevice,
         format_info: &vk::PhysicalDeviceSparseImageFormatInfo2KHR,
@@ -131,7 +130,7 @@ impl GetPhysicalDeviceProperties2 {
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetPhysicalDeviceSparseImageFormatProperties2KHR.html>"]
-    unsafe fn get_physical_device_sparse_image_format_properties2(
+    pub unsafe fn get_physical_device_sparse_image_format_properties2(
         &self,
         physical_device: vk::PhysicalDevice,
         format_info: &vk::PhysicalDeviceSparseImageFormatInfo2KHR,
