@@ -1,4 +1,3 @@
-#![allow(dead_code)]
 use crate::vk;
 use crate::{Device, Instance};
 use std::ffi::CStr;
@@ -22,7 +21,7 @@ impl BufferDeviceAddress {
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetBufferDeviceAddressKHR.html>"]
-    unsafe fn get_buffer_device_address(
+    pub unsafe fn get_buffer_device_address(
         &self,
         info: &vk::BufferDeviceAddressInfoKHR,
     ) -> vk::DeviceAddress {
@@ -30,7 +29,7 @@ impl BufferDeviceAddress {
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetBufferOpaqueCaptureAddressKHR.html>"]
-    unsafe fn get_buffer_opaque_capture_address(
+    pub unsafe fn get_buffer_opaque_capture_address(
         &self,
         info: &vk::BufferDeviceAddressInfoKHR,
     ) -> u64 {
@@ -39,7 +38,7 @@ impl BufferDeviceAddress {
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetDeviceMemoryOpaqueCaptureAddressKHR.html>"]
-    unsafe fn get_device_memory_opaque_capture_address(
+    pub unsafe fn get_device_memory_opaque_capture_address(
         &self,
         info: &vk::DeviceMemoryOpaqueCaptureAddressInfoKHR,
     ) -> u64 {
