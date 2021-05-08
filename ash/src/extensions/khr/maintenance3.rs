@@ -1,4 +1,3 @@
-#![allow(dead_code)]
 use crate::vk;
 use crate::{Device, Instance};
 use std::ffi::CStr;
@@ -26,7 +25,7 @@ impl Maintenance3 {
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkGetDescriptorSetLayoutSupportKHR.html>"]
-    unsafe fn get_descriptor_set_layout_support(
+    pub unsafe fn get_descriptor_set_layout_support(
         &self,
         create_info: &vk::DescriptorSetLayoutCreateInfo,
         out: &mut vk::DescriptorSetLayoutSupportKHR,

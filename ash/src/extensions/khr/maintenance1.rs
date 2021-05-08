@@ -1,4 +1,3 @@
-#![allow(dead_code)]
 use crate::vk;
 use crate::{Device, Instance};
 use std::ffi::CStr;
@@ -26,7 +25,7 @@ impl Maintenance1 {
     }
 
     #[doc = "<https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/vkTrimCommandPoolKHR.html>"]
-    unsafe fn trim_command_pool(
+    pub unsafe fn trim_command_pool(
         &self,
         command_pool: vk::CommandPool,
         flags: vk::CommandPoolTrimFlagsKHR,
