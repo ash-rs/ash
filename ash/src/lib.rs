@@ -14,7 +14,7 @@
 //! # fn main() -> Result<(), Box<dyn std::error::Error>> {
 //! let entry = unsafe { Entry::new() }?;
 //! let app_info = vk::ApplicationInfo {
-//!     api_version: vk::make_version(1, 0, 0),
+//!     api_version: vk::make_api_version(0, 1, 0, 0),
 //!     ..Default::default()
 //! };
 //! let create_info = vk::InstanceCreateInfo {
