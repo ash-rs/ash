@@ -27,10 +27,8 @@ pub type zx_handle_t = u32;
 pub type _screen_context = c_void;
 #[allow(non_camel_case_types)]
 pub type _screen_window = c_void;
-// FIXME: Platform specific types that should come from a library id:0
-// typedefs are only here so that the code compiles for now
 #[allow(non_camel_case_types)]
-pub type SECURITY_ATTRIBUTES = ();
+pub type SECURITY_ATTRIBUTES = c_void;
 // Opaque types
 pub type ANativeWindow = c_void;
 pub type AHardwareBuffer = c_void;
