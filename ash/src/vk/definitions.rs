@@ -5672,8 +5672,17 @@ impl<'a> PipelineMultisampleStateCreateInfoBuilder<'a> {
         self.inner.min_sample_shading = min_sample_shading;
         self
     }
+    #[doc = r" Sets `p_sample_mask` to `null` if the slice is empty. The mask will"]
+    #[doc = r" be treated as if it has all bits set to `1`."]
+    #[doc = r""]
+    #[doc = r" See <https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkPipelineMultisampleStateCreateInfo.html#_description>"]
+    #[doc = r" for more details."]
     pub fn sample_mask(mut self, sample_mask: &'a [SampleMask]) -> Self {
-        self.inner.p_sample_mask = sample_mask.as_ptr() as *const SampleMask;
+        self.inner.p_sample_mask = if sample_mask.is_empty() {
+            std::ptr::null()
+        } else {
+            sample_mask.as_ptr() as *const SampleMask
+        };
         self
     }
     pub fn alpha_to_coverage_enable(mut self, alpha_to_coverage_enable: bool) -> Self {
