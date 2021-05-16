@@ -173,22 +173,28 @@ pub struct ExampleBase {
 
 impl ExampleBase {
     pub fn render_loop<F: Fn()>(&self, f: F) {
-        use winit::*;
-        self.events_loop.borrow_mut().run_forever(|event| {
-            f();
+        use winit::{event::*, event_loop::ControlFlow};
+        self.events_loop.borrow_mut().run_return(|event, _, control_flow| {
             match event {
+                Event::RedrawRequested(_) => {
+                    f();
+                    *control_flow = ControlFlow::Poll;
+                }
+                Event::MainEventsCleared => {
+                    self.window.request_redraw();
+                }
                 Event::WindowEvent { event, .. } => match event {
                     WindowEvent::KeyboardInput { input, .. } => {
                         if let Some(VirtualKeyCode::Escape) = input.virtual_keycode {
-                            ControlFlow::Break
-                        } else {
-                            ControlFlow::Continue
+                            *control_flow = ControlFlow::Exit;
                         }
                     }
-                    WindowEvent::CloseRequested => winit::ControlFlow::Break,
-                    _ => ControlFlow::Continue,
+                    WindowEvent::CloseRequested => {
+                        *control_flow = ControlFlow::Exit;
+                    },
+                    _ => {},
                 },
-                _ => ControlFlow::Continue,
+                _ => (),
             }
         });
     }
