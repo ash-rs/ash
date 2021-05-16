@@ -9,7 +9,7 @@ use ash::extensions::{
 use ash::{vk, Entry};
 pub use ash::{Device, EntryCustom, Instance};
 
-use winit::{event, event_loop, window, dpi};
+use winit::{event, event_loop, window};
 
 use std::borrow::Cow;
 use std::cell::RefCell;
@@ -178,6 +178,7 @@ impl ExampleBase {
     pub fn render_loop<F: Fn()>(&self, f: F) {
         use event::*;
         use event_loop::ControlFlow;
+        use winit::platform::run_return::EventLoopExtRunReturn;
         self.event_loop.borrow_mut().run_return(|event, _, control_flow| {
             match event {
                 Event::RedrawRequested(_) => {
@@ -208,7 +209,7 @@ impl ExampleBase {
             let event_loop = event_loop::EventLoop::new();
             let window = window::WindowBuilder::new()
                 .with_title("Ash - Example")
-                .with_dimensions(dpi::LogicalSize::new(
+                .with_inner_size(winit::dpi::LogicalSize::new(
                     f64::from(window_width),
                     f64::from(window_height),
                 ))
