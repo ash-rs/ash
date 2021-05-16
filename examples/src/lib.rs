@@ -179,8 +179,9 @@ impl ExampleBase {
         use event::*;
         use event_loop::ControlFlow;
         use winit::platform::run_return::EventLoopExtRunReturn;
-        self.event_loop.borrow_mut().run_return(|event, _, control_flow| {
-            match event {
+        self.event_loop
+            .borrow_mut()
+            .run_return(|event, _, control_flow| match event {
                 Event::RedrawRequested(_) => {
                     f();
                     *control_flow = ControlFlow::Poll;
@@ -196,12 +197,11 @@ impl ExampleBase {
                     }
                     WindowEvent::CloseRequested => {
                         *control_flow = ControlFlow::Exit;
-                    },
-                    _ => {},
+                    }
+                    _ => {}
                 },
                 _ => (),
-            }
-        });
+            });
     }
 
     pub fn new(window_width: u32, window_height: u32) -> Self {
