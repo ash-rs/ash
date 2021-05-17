@@ -4,10 +4,10 @@ use crate::vk::enums::*;
 use std::os::raw::*;
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetInstanceProcAddr =
-    extern "system" fn(instance: Instance, p_name: *const c_char) -> PFN_vkVoidFunction;
+    unsafe extern "system" fn(instance: Instance, p_name: *const c_char) -> PFN_vkVoidFunction;
 pub struct StaticFn {
     pub get_instance_proc_addr:
-        extern "system" fn(instance: Instance, p_name: *const c_char) -> PFN_vkVoidFunction,
+        unsafe extern "system" fn(instance: Instance, p_name: *const c_char) -> PFN_vkVoidFunction,
 }
 unsafe impl Send for StaticFn {}
 unsafe impl Sync for StaticFn {}
@@ -25,7 +25,7 @@ impl StaticFn {
     {
         StaticFn {
             get_instance_proc_addr: unsafe {
-                extern "system" fn get_instance_proc_addr(
+                unsafe extern "system" fn get_instance_proc_addr(
                     _instance: Instance,
                     _p_name: *const c_char,
                 ) -> PFN_vkVoidFunction {
@@ -55,32 +55,34 @@ impl StaticFn {
     }
 }
 #[allow(non_camel_case_types)]
-pub type PFN_vkCreateInstance = extern "system" fn(
+pub type PFN_vkCreateInstance = unsafe extern "system" fn(
     p_create_info: *const InstanceCreateInfo,
     p_allocator: *const AllocationCallbacks,
     p_instance: *mut Instance,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkEnumerateInstanceExtensionProperties = extern "system" fn(
+pub type PFN_vkEnumerateInstanceExtensionProperties = unsafe extern "system" fn(
     p_layer_name: *const c_char,
     p_property_count: *mut u32,
     p_properties: *mut ExtensionProperties,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkEnumerateInstanceLayerProperties =
-    extern "system" fn(p_property_count: *mut u32, p_properties: *mut LayerProperties) -> Result;
+pub type PFN_vkEnumerateInstanceLayerProperties = unsafe extern "system" fn(
+    p_property_count: *mut u32,
+    p_properties: *mut LayerProperties,
+) -> Result;
 pub struct EntryFnV1_0 {
-    pub create_instance: extern "system" fn(
+    pub create_instance: unsafe extern "system" fn(
         p_create_info: *const InstanceCreateInfo,
         p_allocator: *const AllocationCallbacks,
         p_instance: *mut Instance,
     ) -> Result,
-    pub enumerate_instance_extension_properties: extern "system" fn(
+    pub enumerate_instance_extension_properties: unsafe extern "system" fn(
         p_layer_name: *const c_char,
         p_property_count: *mut u32,
         p_properties: *mut ExtensionProperties,
     ) -> Result,
-    pub enumerate_instance_layer_properties: extern "system" fn(
+    pub enumerate_instance_layer_properties: unsafe extern "system" fn(
         p_property_count: *mut u32,
         p_properties: *mut LayerProperties,
     ) -> Result,
@@ -103,7 +105,7 @@ impl EntryFnV1_0 {
     {
         EntryFnV1_0 {
             create_instance: unsafe {
-                extern "system" fn create_instance(
+                unsafe extern "system" fn create_instance(
                     _p_create_info: *const InstanceCreateInfo,
                     _p_allocator: *const AllocationCallbacks,
                     _p_instance: *mut Instance,
@@ -119,7 +121,7 @@ impl EntryFnV1_0 {
                 }
             },
             enumerate_instance_extension_properties: unsafe {
-                extern "system" fn enumerate_instance_extension_properties(
+                unsafe extern "system" fn enumerate_instance_extension_properties(
                     _p_layer_name: *const c_char,
                     _p_property_count: *mut u32,
                     _p_properties: *mut ExtensionProperties,
@@ -140,7 +142,7 @@ impl EntryFnV1_0 {
                 }
             },
             enumerate_instance_layer_properties: unsafe {
-                extern "system" fn enumerate_instance_layer_properties(
+                unsafe extern "system" fn enumerate_instance_layer_properties(
                     _p_property_count: *mut u32,
                     _p_properties: *mut LayerProperties,
                 ) -> Result {
@@ -190,24 +192,26 @@ impl EntryFnV1_0 {
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyInstance =
-    extern "system" fn(instance: Instance, p_allocator: *const AllocationCallbacks);
+    unsafe extern "system" fn(instance: Instance, p_allocator: *const AllocationCallbacks);
 #[allow(non_camel_case_types)]
-pub type PFN_vkEnumeratePhysicalDevices = extern "system" fn(
+pub type PFN_vkEnumeratePhysicalDevices = unsafe extern "system" fn(
     instance: Instance,
     p_physical_device_count: *mut u32,
     p_physical_devices: *mut PhysicalDevice,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkGetPhysicalDeviceFeatures =
-    extern "system" fn(physical_device: PhysicalDevice, p_features: *mut PhysicalDeviceFeatures);
+pub type PFN_vkGetPhysicalDeviceFeatures = unsafe extern "system" fn(
+    physical_device: PhysicalDevice,
+    p_features: *mut PhysicalDeviceFeatures,
+);
 #[allow(non_camel_case_types)]
-pub type PFN_vkGetPhysicalDeviceFormatProperties = extern "system" fn(
+pub type PFN_vkGetPhysicalDeviceFormatProperties = unsafe extern "system" fn(
     physical_device: PhysicalDevice,
     format: Format,
     p_format_properties: *mut FormatProperties,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkGetPhysicalDeviceImageFormatProperties = extern "system" fn(
+pub type PFN_vkGetPhysicalDeviceImageFormatProperties = unsafe extern "system" fn(
     physical_device: PhysicalDevice,
     format: Format,
     ty: ImageType,
@@ -217,46 +221,46 @@ pub type PFN_vkGetPhysicalDeviceImageFormatProperties = extern "system" fn(
     p_image_format_properties: *mut ImageFormatProperties,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkGetPhysicalDeviceProperties = extern "system" fn(
+pub type PFN_vkGetPhysicalDeviceProperties = unsafe extern "system" fn(
     physical_device: PhysicalDevice,
     p_properties: *mut PhysicalDeviceProperties,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkGetPhysicalDeviceQueueFamilyProperties = extern "system" fn(
+pub type PFN_vkGetPhysicalDeviceQueueFamilyProperties = unsafe extern "system" fn(
     physical_device: PhysicalDevice,
     p_queue_family_property_count: *mut u32,
     p_queue_family_properties: *mut QueueFamilyProperties,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkGetPhysicalDeviceMemoryProperties = extern "system" fn(
+pub type PFN_vkGetPhysicalDeviceMemoryProperties = unsafe extern "system" fn(
     physical_device: PhysicalDevice,
     p_memory_properties: *mut PhysicalDeviceMemoryProperties,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetDeviceProcAddr =
-    extern "system" fn(device: Device, p_name: *const c_char) -> PFN_vkVoidFunction;
+    unsafe extern "system" fn(device: Device, p_name: *const c_char) -> PFN_vkVoidFunction;
 #[allow(non_camel_case_types)]
-pub type PFN_vkCreateDevice = extern "system" fn(
+pub type PFN_vkCreateDevice = unsafe extern "system" fn(
     physical_device: PhysicalDevice,
     p_create_info: *const DeviceCreateInfo,
     p_allocator: *const AllocationCallbacks,
     p_device: *mut Device,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkEnumerateDeviceExtensionProperties = extern "system" fn(
+pub type PFN_vkEnumerateDeviceExtensionProperties = unsafe extern "system" fn(
     physical_device: PhysicalDevice,
     p_layer_name: *const c_char,
     p_property_count: *mut u32,
     p_properties: *mut ExtensionProperties,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkEnumerateDeviceLayerProperties = extern "system" fn(
+pub type PFN_vkEnumerateDeviceLayerProperties = unsafe extern "system" fn(
     physical_device: PhysicalDevice,
     p_property_count: *mut u32,
     p_properties: *mut LayerProperties,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkGetPhysicalDeviceSparseImageFormatProperties = extern "system" fn(
+pub type PFN_vkGetPhysicalDeviceSparseImageFormatProperties = unsafe extern "system" fn(
     physical_device: PhysicalDevice,
     format: Format,
     ty: ImageType,
@@ -268,22 +272,22 @@ pub type PFN_vkGetPhysicalDeviceSparseImageFormatProperties = extern "system" fn
 );
 pub struct InstanceFnV1_0 {
     pub destroy_instance:
-        extern "system" fn(instance: Instance, p_allocator: *const AllocationCallbacks),
-    pub enumerate_physical_devices: extern "system" fn(
+        unsafe extern "system" fn(instance: Instance, p_allocator: *const AllocationCallbacks),
+    pub enumerate_physical_devices: unsafe extern "system" fn(
         instance: Instance,
         p_physical_device_count: *mut u32,
         p_physical_devices: *mut PhysicalDevice,
     ) -> Result,
-    pub get_physical_device_features: extern "system" fn(
+    pub get_physical_device_features: unsafe extern "system" fn(
         physical_device: PhysicalDevice,
         p_features: *mut PhysicalDeviceFeatures,
     ),
-    pub get_physical_device_format_properties: extern "system" fn(
+    pub get_physical_device_format_properties: unsafe extern "system" fn(
         physical_device: PhysicalDevice,
         format: Format,
         p_format_properties: *mut FormatProperties,
     ),
-    pub get_physical_device_image_format_properties: extern "system" fn(
+    pub get_physical_device_image_format_properties: unsafe extern "system" fn(
         physical_device: PhysicalDevice,
         format: Format,
         ty: ImageType,
@@ -292,39 +296,39 @@ pub struct InstanceFnV1_0 {
         flags: ImageCreateFlags,
         p_image_format_properties: *mut ImageFormatProperties,
     ) -> Result,
-    pub get_physical_device_properties: extern "system" fn(
+    pub get_physical_device_properties: unsafe extern "system" fn(
         physical_device: PhysicalDevice,
         p_properties: *mut PhysicalDeviceProperties,
     ),
-    pub get_physical_device_queue_family_properties: extern "system" fn(
+    pub get_physical_device_queue_family_properties: unsafe extern "system" fn(
         physical_device: PhysicalDevice,
         p_queue_family_property_count: *mut u32,
         p_queue_family_properties: *mut QueueFamilyProperties,
     ),
-    pub get_physical_device_memory_properties: extern "system" fn(
+    pub get_physical_device_memory_properties: unsafe extern "system" fn(
         physical_device: PhysicalDevice,
         p_memory_properties: *mut PhysicalDeviceMemoryProperties,
     ),
     pub get_device_proc_addr:
-        extern "system" fn(device: Device, p_name: *const c_char) -> PFN_vkVoidFunction,
-    pub create_device: extern "system" fn(
+        unsafe extern "system" fn(device: Device, p_name: *const c_char) -> PFN_vkVoidFunction,
+    pub create_device: unsafe extern "system" fn(
         physical_device: PhysicalDevice,
         p_create_info: *const DeviceCreateInfo,
         p_allocator: *const AllocationCallbacks,
         p_device: *mut Device,
     ) -> Result,
-    pub enumerate_device_extension_properties: extern "system" fn(
+    pub enumerate_device_extension_properties: unsafe extern "system" fn(
         physical_device: PhysicalDevice,
         p_layer_name: *const c_char,
         p_property_count: *mut u32,
         p_properties: *mut ExtensionProperties,
     ) -> Result,
-    pub enumerate_device_layer_properties: extern "system" fn(
+    pub enumerate_device_layer_properties: unsafe extern "system" fn(
         physical_device: PhysicalDevice,
         p_property_count: *mut u32,
         p_properties: *mut LayerProperties,
     ) -> Result,
-    pub get_physical_device_sparse_image_format_properties: extern "system" fn(
+    pub get_physical_device_sparse_image_format_properties: unsafe extern "system" fn(
         physical_device: PhysicalDevice,
         format: Format,
         ty: ImageType,
@@ -366,7 +370,7 @@ impl InstanceFnV1_0 {
     {
         InstanceFnV1_0 {
             destroy_instance: unsafe {
-                extern "system" fn destroy_instance(
+                unsafe extern "system" fn destroy_instance(
                     _instance: Instance,
                     _p_allocator: *const AllocationCallbacks,
                 ) {
@@ -381,7 +385,7 @@ impl InstanceFnV1_0 {
                 }
             },
             enumerate_physical_devices: unsafe {
-                extern "system" fn enumerate_physical_devices(
+                unsafe extern "system" fn enumerate_physical_devices(
                     _instance: Instance,
                     _p_physical_device_count: *mut u32,
                     _p_physical_devices: *mut PhysicalDevice,
@@ -402,7 +406,7 @@ impl InstanceFnV1_0 {
                 }
             },
             get_physical_device_features: unsafe {
-                extern "system" fn get_physical_device_features(
+                unsafe extern "system" fn get_physical_device_features(
                     _physical_device: PhysicalDevice,
                     _p_features: *mut PhysicalDeviceFeatures,
                 ) {
@@ -422,7 +426,7 @@ impl InstanceFnV1_0 {
                 }
             },
             get_physical_device_format_properties: unsafe {
-                extern "system" fn get_physical_device_format_properties(
+                unsafe extern "system" fn get_physical_device_format_properties(
                     _physical_device: PhysicalDevice,
                     _format: Format,
                     _p_format_properties: *mut FormatProperties,
@@ -443,7 +447,7 @@ impl InstanceFnV1_0 {
                 }
             },
             get_physical_device_image_format_properties: unsafe {
-                extern "system" fn get_physical_device_image_format_properties(
+                unsafe extern "system" fn get_physical_device_image_format_properties(
                     _physical_device: PhysicalDevice,
                     _format: Format,
                     _ty: ImageType,
@@ -468,7 +472,7 @@ impl InstanceFnV1_0 {
                 }
             },
             get_physical_device_properties: unsafe {
-                extern "system" fn get_physical_device_properties(
+                unsafe extern "system" fn get_physical_device_properties(
                     _physical_device: PhysicalDevice,
                     _p_properties: *mut PhysicalDeviceProperties,
                 ) {
@@ -488,7 +492,7 @@ impl InstanceFnV1_0 {
                 }
             },
             get_physical_device_queue_family_properties: unsafe {
-                extern "system" fn get_physical_device_queue_family_properties(
+                unsafe extern "system" fn get_physical_device_queue_family_properties(
                     _physical_device: PhysicalDevice,
                     _p_queue_family_property_count: *mut u32,
                     _p_queue_family_properties: *mut QueueFamilyProperties,
@@ -509,7 +513,7 @@ impl InstanceFnV1_0 {
                 }
             },
             get_physical_device_memory_properties: unsafe {
-                extern "system" fn get_physical_device_memory_properties(
+                unsafe extern "system" fn get_physical_device_memory_properties(
                     _physical_device: PhysicalDevice,
                     _p_memory_properties: *mut PhysicalDeviceMemoryProperties,
                 ) {
@@ -529,7 +533,7 @@ impl InstanceFnV1_0 {
                 }
             },
             get_device_proc_addr: unsafe {
-                extern "system" fn get_device_proc_addr(
+                unsafe extern "system" fn get_device_proc_addr(
                     _device: Device,
                     _p_name: *const c_char,
                 ) -> PFN_vkVoidFunction {
@@ -545,7 +549,7 @@ impl InstanceFnV1_0 {
                 }
             },
             create_device: unsafe {
-                extern "system" fn create_device(
+                unsafe extern "system" fn create_device(
                     _physical_device: PhysicalDevice,
                     _p_create_info: *const DeviceCreateInfo,
                     _p_allocator: *const AllocationCallbacks,
@@ -562,7 +566,7 @@ impl InstanceFnV1_0 {
                 }
             },
             enumerate_device_extension_properties: unsafe {
-                extern "system" fn enumerate_device_extension_properties(
+                unsafe extern "system" fn enumerate_device_extension_properties(
                     _physical_device: PhysicalDevice,
                     _p_layer_name: *const c_char,
                     _p_property_count: *mut u32,
@@ -584,7 +588,7 @@ impl InstanceFnV1_0 {
                 }
             },
             enumerate_device_layer_properties: unsafe {
-                extern "system" fn enumerate_device_layer_properties(
+                unsafe extern "system" fn enumerate_device_layer_properties(
                     _physical_device: PhysicalDevice,
                     _p_property_count: *mut u32,
                     _p_properties: *mut LayerProperties,
@@ -605,7 +609,7 @@ impl InstanceFnV1_0 {
                 }
             },
             get_physical_device_sparse_image_format_properties: unsafe {
-                extern "system" fn get_physical_device_sparse_image_format_properties(
+                unsafe extern "system" fn get_physical_device_sparse_image_format_properties(
                     _physical_device: PhysicalDevice,
                     _format: Format,
                     _ty: ImageType,
@@ -784,40 +788,40 @@ impl InstanceFnV1_0 {
 }
 #[allow(non_camel_case_types)]
 pub type PFN_vkDestroyDevice =
-    extern "system" fn(device: Device, p_allocator: *const AllocationCallbacks);
+    unsafe extern "system" fn(device: Device, p_allocator: *const AllocationCallbacks);
 #[allow(non_camel_case_types)]
-pub type PFN_vkGetDeviceQueue = extern "system" fn(
+pub type PFN_vkGetDeviceQueue = unsafe extern "system" fn(
     device: Device,
     queue_family_index: u32,
     queue_index: u32,
     p_queue: *mut Queue,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkQueueSubmit = extern "system" fn(
+pub type PFN_vkQueueSubmit = unsafe extern "system" fn(
     queue: Queue,
     submit_count: u32,
     p_submits: *const SubmitInfo,
     fence: Fence,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkQueueWaitIdle = extern "system" fn(queue: Queue) -> Result;
+pub type PFN_vkQueueWaitIdle = unsafe extern "system" fn(queue: Queue) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkDeviceWaitIdle = extern "system" fn(device: Device) -> Result;
+pub type PFN_vkDeviceWaitIdle = unsafe extern "system" fn(device: Device) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkAllocateMemory = extern "system" fn(
+pub type PFN_vkAllocateMemory = unsafe extern "system" fn(
     device: Device,
     p_allocate_info: *const MemoryAllocateInfo,
     p_allocator: *const AllocationCallbacks,
     p_memory: *mut DeviceMemory,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkFreeMemory = extern "system" fn(
+pub type PFN_vkFreeMemory = unsafe extern "system" fn(
     device: Device,
     memory: DeviceMemory,
     p_allocator: *const AllocationCallbacks,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkMapMemory = extern "system" fn(
+pub type PFN_vkMapMemory = unsafe extern "system" fn(
     device: Device,
     memory: DeviceMemory,
     offset: DeviceSize,
@@ -826,82 +830,85 @@ pub type PFN_vkMapMemory = extern "system" fn(
     pp_data: *mut *mut c_void,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkUnmapMemory = extern "system" fn(device: Device, memory: DeviceMemory);
+pub type PFN_vkUnmapMemory = unsafe extern "system" fn(device: Device, memory: DeviceMemory);
 #[allow(non_camel_case_types)]
-pub type PFN_vkFlushMappedMemoryRanges = extern "system" fn(
+pub type PFN_vkFlushMappedMemoryRanges = unsafe extern "system" fn(
     device: Device,
     memory_range_count: u32,
     p_memory_ranges: *const MappedMemoryRange,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkInvalidateMappedMemoryRanges = extern "system" fn(
+pub type PFN_vkInvalidateMappedMemoryRanges = unsafe extern "system" fn(
     device: Device,
     memory_range_count: u32,
     p_memory_ranges: *const MappedMemoryRange,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkGetDeviceMemoryCommitment = extern "system" fn(
+pub type PFN_vkGetDeviceMemoryCommitment = unsafe extern "system" fn(
     device: Device,
     memory: DeviceMemory,
     p_committed_memory_in_bytes: *mut DeviceSize,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkBindBufferMemory = extern "system" fn(
+pub type PFN_vkBindBufferMemory = unsafe extern "system" fn(
     device: Device,
     buffer: Buffer,
     memory: DeviceMemory,
     memory_offset: DeviceSize,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkBindImageMemory = extern "system" fn(
+pub type PFN_vkBindImageMemory = unsafe extern "system" fn(
     device: Device,
     image: Image,
     memory: DeviceMemory,
     memory_offset: DeviceSize,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkGetBufferMemoryRequirements = extern "system" fn(
+pub type PFN_vkGetBufferMemoryRequirements = unsafe extern "system" fn(
     device: Device,
     buffer: Buffer,
     p_memory_requirements: *mut MemoryRequirements,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkGetImageMemoryRequirements = extern "system" fn(
+pub type PFN_vkGetImageMemoryRequirements = unsafe extern "system" fn(
     device: Device,
     image: Image,
     p_memory_requirements: *mut MemoryRequirements,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkGetImageSparseMemoryRequirements = extern "system" fn(
+pub type PFN_vkGetImageSparseMemoryRequirements = unsafe extern "system" fn(
     device: Device,
     image: Image,
     p_sparse_memory_requirement_count: *mut u32,
     p_sparse_memory_requirements: *mut SparseImageMemoryRequirements,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkQueueBindSparse = extern "system" fn(
+pub type PFN_vkQueueBindSparse = unsafe extern "system" fn(
     queue: Queue,
     bind_info_count: u32,
     p_bind_info: *const BindSparseInfo,
     fence: Fence,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkCreateFence = extern "system" fn(
+pub type PFN_vkCreateFence = unsafe extern "system" fn(
     device: Device,
     p_create_info: *const FenceCreateInfo,
     p_allocator: *const AllocationCallbacks,
     p_fence: *mut Fence,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkDestroyFence =
-    extern "system" fn(device: Device, fence: Fence, p_allocator: *const AllocationCallbacks);
+pub type PFN_vkDestroyFence = unsafe extern "system" fn(
+    device: Device,
+    fence: Fence,
+    p_allocator: *const AllocationCallbacks,
+);
 #[allow(non_camel_case_types)]
 pub type PFN_vkResetFences =
-    extern "system" fn(device: Device, fence_count: u32, p_fences: *const Fence) -> Result;
+    unsafe extern "system" fn(device: Device, fence_count: u32, p_fences: *const Fence) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkGetFenceStatus = extern "system" fn(device: Device, fence: Fence) -> Result;
+pub type PFN_vkGetFenceStatus = unsafe extern "system" fn(device: Device, fence: Fence) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkWaitForFences = extern "system" fn(
+pub type PFN_vkWaitForFences = unsafe extern "system" fn(
     device: Device,
     fence_count: u32,
     p_fences: *const Fence,
@@ -909,49 +916,52 @@ pub type PFN_vkWaitForFences = extern "system" fn(
     timeout: u64,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkCreateSemaphore = extern "system" fn(
+pub type PFN_vkCreateSemaphore = unsafe extern "system" fn(
     device: Device,
     p_create_info: *const SemaphoreCreateInfo,
     p_allocator: *const AllocationCallbacks,
     p_semaphore: *mut Semaphore,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkDestroySemaphore = extern "system" fn(
+pub type PFN_vkDestroySemaphore = unsafe extern "system" fn(
     device: Device,
     semaphore: Semaphore,
     p_allocator: *const AllocationCallbacks,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCreateEvent = extern "system" fn(
+pub type PFN_vkCreateEvent = unsafe extern "system" fn(
     device: Device,
     p_create_info: *const EventCreateInfo,
     p_allocator: *const AllocationCallbacks,
     p_event: *mut Event,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkDestroyEvent =
-    extern "system" fn(device: Device, event: Event, p_allocator: *const AllocationCallbacks);
+pub type PFN_vkDestroyEvent = unsafe extern "system" fn(
+    device: Device,
+    event: Event,
+    p_allocator: *const AllocationCallbacks,
+);
 #[allow(non_camel_case_types)]
-pub type PFN_vkGetEventStatus = extern "system" fn(device: Device, event: Event) -> Result;
+pub type PFN_vkGetEventStatus = unsafe extern "system" fn(device: Device, event: Event) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkSetEvent = extern "system" fn(device: Device, event: Event) -> Result;
+pub type PFN_vkSetEvent = unsafe extern "system" fn(device: Device, event: Event) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkResetEvent = extern "system" fn(device: Device, event: Event) -> Result;
+pub type PFN_vkResetEvent = unsafe extern "system" fn(device: Device, event: Event) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkCreateQueryPool = extern "system" fn(
+pub type PFN_vkCreateQueryPool = unsafe extern "system" fn(
     device: Device,
     p_create_info: *const QueryPoolCreateInfo,
     p_allocator: *const AllocationCallbacks,
     p_query_pool: *mut QueryPool,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkDestroyQueryPool = extern "system" fn(
+pub type PFN_vkDestroyQueryPool = unsafe extern "system" fn(
     device: Device,
     query_pool: QueryPool,
     p_allocator: *const AllocationCallbacks,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkGetQueryPoolResults = extern "system" fn(
+pub type PFN_vkGetQueryPoolResults = unsafe extern "system" fn(
     device: Device,
     query_pool: QueryPool,
     first_query: u32,
@@ -962,100 +972,106 @@ pub type PFN_vkGetQueryPoolResults = extern "system" fn(
     flags: QueryResultFlags,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkCreateBuffer = extern "system" fn(
+pub type PFN_vkCreateBuffer = unsafe extern "system" fn(
     device: Device,
     p_create_info: *const BufferCreateInfo,
     p_allocator: *const AllocationCallbacks,
     p_buffer: *mut Buffer,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkDestroyBuffer =
-    extern "system" fn(device: Device, buffer: Buffer, p_allocator: *const AllocationCallbacks);
+pub type PFN_vkDestroyBuffer = unsafe extern "system" fn(
+    device: Device,
+    buffer: Buffer,
+    p_allocator: *const AllocationCallbacks,
+);
 #[allow(non_camel_case_types)]
-pub type PFN_vkCreateBufferView = extern "system" fn(
+pub type PFN_vkCreateBufferView = unsafe extern "system" fn(
     device: Device,
     p_create_info: *const BufferViewCreateInfo,
     p_allocator: *const AllocationCallbacks,
     p_view: *mut BufferView,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkDestroyBufferView = extern "system" fn(
+pub type PFN_vkDestroyBufferView = unsafe extern "system" fn(
     device: Device,
     buffer_view: BufferView,
     p_allocator: *const AllocationCallbacks,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCreateImage = extern "system" fn(
+pub type PFN_vkCreateImage = unsafe extern "system" fn(
     device: Device,
     p_create_info: *const ImageCreateInfo,
     p_allocator: *const AllocationCallbacks,
     p_image: *mut Image,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkDestroyImage =
-    extern "system" fn(device: Device, image: Image, p_allocator: *const AllocationCallbacks);
+pub type PFN_vkDestroyImage = unsafe extern "system" fn(
+    device: Device,
+    image: Image,
+    p_allocator: *const AllocationCallbacks,
+);
 #[allow(non_camel_case_types)]
-pub type PFN_vkGetImageSubresourceLayout = extern "system" fn(
+pub type PFN_vkGetImageSubresourceLayout = unsafe extern "system" fn(
     device: Device,
     image: Image,
     p_subresource: *const ImageSubresource,
     p_layout: *mut SubresourceLayout,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCreateImageView = extern "system" fn(
+pub type PFN_vkCreateImageView = unsafe extern "system" fn(
     device: Device,
     p_create_info: *const ImageViewCreateInfo,
     p_allocator: *const AllocationCallbacks,
     p_view: *mut ImageView,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkDestroyImageView = extern "system" fn(
+pub type PFN_vkDestroyImageView = unsafe extern "system" fn(
     device: Device,
     image_view: ImageView,
     p_allocator: *const AllocationCallbacks,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCreateShaderModule = extern "system" fn(
+pub type PFN_vkCreateShaderModule = unsafe extern "system" fn(
     device: Device,
     p_create_info: *const ShaderModuleCreateInfo,
     p_allocator: *const AllocationCallbacks,
     p_shader_module: *mut ShaderModule,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkDestroyShaderModule = extern "system" fn(
+pub type PFN_vkDestroyShaderModule = unsafe extern "system" fn(
     device: Device,
     shader_module: ShaderModule,
     p_allocator: *const AllocationCallbacks,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCreatePipelineCache = extern "system" fn(
+pub type PFN_vkCreatePipelineCache = unsafe extern "system" fn(
     device: Device,
     p_create_info: *const PipelineCacheCreateInfo,
     p_allocator: *const AllocationCallbacks,
     p_pipeline_cache: *mut PipelineCache,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkDestroyPipelineCache = extern "system" fn(
+pub type PFN_vkDestroyPipelineCache = unsafe extern "system" fn(
     device: Device,
     pipeline_cache: PipelineCache,
     p_allocator: *const AllocationCallbacks,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkGetPipelineCacheData = extern "system" fn(
+pub type PFN_vkGetPipelineCacheData = unsafe extern "system" fn(
     device: Device,
     pipeline_cache: PipelineCache,
     p_data_size: *mut usize,
     p_data: *mut c_void,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkMergePipelineCaches = extern "system" fn(
+pub type PFN_vkMergePipelineCaches = unsafe extern "system" fn(
     device: Device,
     dst_cache: PipelineCache,
     src_cache_count: u32,
     p_src_caches: *const PipelineCache,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkCreateGraphicsPipelines = extern "system" fn(
+pub type PFN_vkCreateGraphicsPipelines = unsafe extern "system" fn(
     device: Device,
     pipeline_cache: PipelineCache,
     create_info_count: u32,
@@ -1064,7 +1080,7 @@ pub type PFN_vkCreateGraphicsPipelines = extern "system" fn(
     p_pipelines: *mut Pipeline,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkCreateComputePipelines = extern "system" fn(
+pub type PFN_vkCreateComputePipelines = unsafe extern "system" fn(
     device: Device,
     pipeline_cache: PipelineCache,
     create_info_count: u32,
@@ -1073,78 +1089,84 @@ pub type PFN_vkCreateComputePipelines = extern "system" fn(
     p_pipelines: *mut Pipeline,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkDestroyPipeline =
-    extern "system" fn(device: Device, pipeline: Pipeline, p_allocator: *const AllocationCallbacks);
+pub type PFN_vkDestroyPipeline = unsafe extern "system" fn(
+    device: Device,
+    pipeline: Pipeline,
+    p_allocator: *const AllocationCallbacks,
+);
 #[allow(non_camel_case_types)]
-pub type PFN_vkCreatePipelineLayout = extern "system" fn(
+pub type PFN_vkCreatePipelineLayout = unsafe extern "system" fn(
     device: Device,
     p_create_info: *const PipelineLayoutCreateInfo,
     p_allocator: *const AllocationCallbacks,
     p_pipeline_layout: *mut PipelineLayout,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkDestroyPipelineLayout = extern "system" fn(
+pub type PFN_vkDestroyPipelineLayout = unsafe extern "system" fn(
     device: Device,
     pipeline_layout: PipelineLayout,
     p_allocator: *const AllocationCallbacks,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCreateSampler = extern "system" fn(
+pub type PFN_vkCreateSampler = unsafe extern "system" fn(
     device: Device,
     p_create_info: *const SamplerCreateInfo,
     p_allocator: *const AllocationCallbacks,
     p_sampler: *mut Sampler,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkDestroySampler =
-    extern "system" fn(device: Device, sampler: Sampler, p_allocator: *const AllocationCallbacks);
+pub type PFN_vkDestroySampler = unsafe extern "system" fn(
+    device: Device,
+    sampler: Sampler,
+    p_allocator: *const AllocationCallbacks,
+);
 #[allow(non_camel_case_types)]
-pub type PFN_vkCreateDescriptorSetLayout = extern "system" fn(
+pub type PFN_vkCreateDescriptorSetLayout = unsafe extern "system" fn(
     device: Device,
     p_create_info: *const DescriptorSetLayoutCreateInfo,
     p_allocator: *const AllocationCallbacks,
     p_set_layout: *mut DescriptorSetLayout,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkDestroyDescriptorSetLayout = extern "system" fn(
+pub type PFN_vkDestroyDescriptorSetLayout = unsafe extern "system" fn(
     device: Device,
     descriptor_set_layout: DescriptorSetLayout,
     p_allocator: *const AllocationCallbacks,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCreateDescriptorPool = extern "system" fn(
+pub type PFN_vkCreateDescriptorPool = unsafe extern "system" fn(
     device: Device,
     p_create_info: *const DescriptorPoolCreateInfo,
     p_allocator: *const AllocationCallbacks,
     p_descriptor_pool: *mut DescriptorPool,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkDestroyDescriptorPool = extern "system" fn(
+pub type PFN_vkDestroyDescriptorPool = unsafe extern "system" fn(
     device: Device,
     descriptor_pool: DescriptorPool,
     p_allocator: *const AllocationCallbacks,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkResetDescriptorPool = extern "system" fn(
+pub type PFN_vkResetDescriptorPool = unsafe extern "system" fn(
     device: Device,
     descriptor_pool: DescriptorPool,
     flags: DescriptorPoolResetFlags,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkAllocateDescriptorSets = extern "system" fn(
+pub type PFN_vkAllocateDescriptorSets = unsafe extern "system" fn(
     device: Device,
     p_allocate_info: *const DescriptorSetAllocateInfo,
     p_descriptor_sets: *mut DescriptorSet,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkFreeDescriptorSets = extern "system" fn(
+pub type PFN_vkFreeDescriptorSets = unsafe extern "system" fn(
     device: Device,
     descriptor_pool: DescriptorPool,
     descriptor_set_count: u32,
     p_descriptor_sets: *const DescriptorSet,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkUpdateDescriptorSets = extern "system" fn(
+pub type PFN_vkUpdateDescriptorSets = unsafe extern "system" fn(
     device: Device,
     descriptor_write_count: u32,
     p_descriptor_writes: *const WriteDescriptorSet,
@@ -1152,100 +1174,107 @@ pub type PFN_vkUpdateDescriptorSets = extern "system" fn(
     p_descriptor_copies: *const CopyDescriptorSet,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCreateFramebuffer = extern "system" fn(
+pub type PFN_vkCreateFramebuffer = unsafe extern "system" fn(
     device: Device,
     p_create_info: *const FramebufferCreateInfo,
     p_allocator: *const AllocationCallbacks,
     p_framebuffer: *mut Framebuffer,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkDestroyFramebuffer = extern "system" fn(
+pub type PFN_vkDestroyFramebuffer = unsafe extern "system" fn(
     device: Device,
     framebuffer: Framebuffer,
     p_allocator: *const AllocationCallbacks,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCreateRenderPass = extern "system" fn(
+pub type PFN_vkCreateRenderPass = unsafe extern "system" fn(
     device: Device,
     p_create_info: *const RenderPassCreateInfo,
     p_allocator: *const AllocationCallbacks,
     p_render_pass: *mut RenderPass,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkDestroyRenderPass = extern "system" fn(
+pub type PFN_vkDestroyRenderPass = unsafe extern "system" fn(
     device: Device,
     render_pass: RenderPass,
     p_allocator: *const AllocationCallbacks,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkGetRenderAreaGranularity =
-    extern "system" fn(device: Device, render_pass: RenderPass, p_granularity: *mut Extent2D);
+pub type PFN_vkGetRenderAreaGranularity = unsafe extern "system" fn(
+    device: Device,
+    render_pass: RenderPass,
+    p_granularity: *mut Extent2D,
+);
 #[allow(non_camel_case_types)]
-pub type PFN_vkCreateCommandPool = extern "system" fn(
+pub type PFN_vkCreateCommandPool = unsafe extern "system" fn(
     device: Device,
     p_create_info: *const CommandPoolCreateInfo,
     p_allocator: *const AllocationCallbacks,
     p_command_pool: *mut CommandPool,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkDestroyCommandPool = extern "system" fn(
+pub type PFN_vkDestroyCommandPool = unsafe extern "system" fn(
     device: Device,
     command_pool: CommandPool,
     p_allocator: *const AllocationCallbacks,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkResetCommandPool = extern "system" fn(
+pub type PFN_vkResetCommandPool = unsafe extern "system" fn(
     device: Device,
     command_pool: CommandPool,
     flags: CommandPoolResetFlags,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkAllocateCommandBuffers = extern "system" fn(
+pub type PFN_vkAllocateCommandBuffers = unsafe extern "system" fn(
     device: Device,
     p_allocate_info: *const CommandBufferAllocateInfo,
     p_command_buffers: *mut CommandBuffer,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkFreeCommandBuffers = extern "system" fn(
+pub type PFN_vkFreeCommandBuffers = unsafe extern "system" fn(
     device: Device,
     command_pool: CommandPool,
     command_buffer_count: u32,
     p_command_buffers: *const CommandBuffer,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkBeginCommandBuffer = extern "system" fn(
+pub type PFN_vkBeginCommandBuffer = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     p_begin_info: *const CommandBufferBeginInfo,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkEndCommandBuffer = extern "system" fn(command_buffer: CommandBuffer) -> Result;
+pub type PFN_vkEndCommandBuffer =
+    unsafe extern "system" fn(command_buffer: CommandBuffer) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkResetCommandBuffer =
-    extern "system" fn(command_buffer: CommandBuffer, flags: CommandBufferResetFlags) -> Result;
+pub type PFN_vkResetCommandBuffer = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    flags: CommandBufferResetFlags,
+) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdBindPipeline = extern "system" fn(
+pub type PFN_vkCmdBindPipeline = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     pipeline_bind_point: PipelineBindPoint,
     pipeline: Pipeline,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdSetViewport = extern "system" fn(
+pub type PFN_vkCmdSetViewport = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     first_viewport: u32,
     viewport_count: u32,
     p_viewports: *const Viewport,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdSetScissor = extern "system" fn(
+pub type PFN_vkCmdSetScissor = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     first_scissor: u32,
     scissor_count: u32,
     p_scissors: *const Rect2D,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdSetLineWidth = extern "system" fn(command_buffer: CommandBuffer, line_width: f32);
+pub type PFN_vkCmdSetLineWidth =
+    unsafe extern "system" fn(command_buffer: CommandBuffer, line_width: f32);
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdSetDepthBias = extern "system" fn(
+pub type PFN_vkCmdSetDepthBias = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     depth_bias_constant_factor: f32,
     depth_bias_clamp: f32,
@@ -1253,24 +1282,33 @@ pub type PFN_vkCmdSetDepthBias = extern "system" fn(
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdSetBlendConstants =
-    extern "system" fn(command_buffer: CommandBuffer, blend_constants: *const [f32; 4]);
+    unsafe extern "system" fn(command_buffer: CommandBuffer, blend_constants: *const [f32; 4]);
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdSetDepthBounds =
-    extern "system" fn(command_buffer: CommandBuffer, min_depth_bounds: f32, max_depth_bounds: f32);
+pub type PFN_vkCmdSetDepthBounds = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    min_depth_bounds: f32,
+    max_depth_bounds: f32,
+);
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdSetStencilCompareMask = extern "system" fn(
+pub type PFN_vkCmdSetStencilCompareMask = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     face_mask: StencilFaceFlags,
     compare_mask: u32,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdSetStencilWriteMask =
-    extern "system" fn(command_buffer: CommandBuffer, face_mask: StencilFaceFlags, write_mask: u32);
+pub type PFN_vkCmdSetStencilWriteMask = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    face_mask: StencilFaceFlags,
+    write_mask: u32,
+);
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdSetStencilReference =
-    extern "system" fn(command_buffer: CommandBuffer, face_mask: StencilFaceFlags, reference: u32);
+pub type PFN_vkCmdSetStencilReference = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    face_mask: StencilFaceFlags,
+    reference: u32,
+);
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdBindDescriptorSets = extern "system" fn(
+pub type PFN_vkCmdBindDescriptorSets = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     pipeline_bind_point: PipelineBindPoint,
     layout: PipelineLayout,
@@ -1281,14 +1319,14 @@ pub type PFN_vkCmdBindDescriptorSets = extern "system" fn(
     p_dynamic_offsets: *const u32,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdBindIndexBuffer = extern "system" fn(
+pub type PFN_vkCmdBindIndexBuffer = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     buffer: Buffer,
     offset: DeviceSize,
     index_type: IndexType,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdBindVertexBuffers = extern "system" fn(
+pub type PFN_vkCmdBindVertexBuffers = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     first_binding: u32,
     binding_count: u32,
@@ -1296,7 +1334,7 @@ pub type PFN_vkCmdBindVertexBuffers = extern "system" fn(
     p_offsets: *const DeviceSize,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdDraw = extern "system" fn(
+pub type PFN_vkCmdDraw = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     vertex_count: u32,
     instance_count: u32,
@@ -1304,7 +1342,7 @@ pub type PFN_vkCmdDraw = extern "system" fn(
     first_instance: u32,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdDrawIndexed = extern "system" fn(
+pub type PFN_vkCmdDrawIndexed = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     index_count: u32,
     instance_count: u32,
@@ -1313,7 +1351,7 @@ pub type PFN_vkCmdDrawIndexed = extern "system" fn(
     first_instance: u32,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdDrawIndirect = extern "system" fn(
+pub type PFN_vkCmdDrawIndirect = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     buffer: Buffer,
     offset: DeviceSize,
@@ -1321,7 +1359,7 @@ pub type PFN_vkCmdDrawIndirect = extern "system" fn(
     stride: u32,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdDrawIndexedIndirect = extern "system" fn(
+pub type PFN_vkCmdDrawIndexedIndirect = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     buffer: Buffer,
     offset: DeviceSize,
@@ -1329,7 +1367,7 @@ pub type PFN_vkCmdDrawIndexedIndirect = extern "system" fn(
     stride: u32,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdDispatch = extern "system" fn(
+pub type PFN_vkCmdDispatch = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     group_count_x: u32,
     group_count_y: u32,
@@ -1337,9 +1375,9 @@ pub type PFN_vkCmdDispatch = extern "system" fn(
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdDispatchIndirect =
-    extern "system" fn(command_buffer: CommandBuffer, buffer: Buffer, offset: DeviceSize);
+    unsafe extern "system" fn(command_buffer: CommandBuffer, buffer: Buffer, offset: DeviceSize);
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdCopyBuffer = extern "system" fn(
+pub type PFN_vkCmdCopyBuffer = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     src_buffer: Buffer,
     dst_buffer: Buffer,
@@ -1347,7 +1385,7 @@ pub type PFN_vkCmdCopyBuffer = extern "system" fn(
     p_regions: *const BufferCopy,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdCopyImage = extern "system" fn(
+pub type PFN_vkCmdCopyImage = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     src_image: Image,
     src_image_layout: ImageLayout,
@@ -1357,7 +1395,7 @@ pub type PFN_vkCmdCopyImage = extern "system" fn(
     p_regions: *const ImageCopy,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdBlitImage = extern "system" fn(
+pub type PFN_vkCmdBlitImage = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     src_image: Image,
     src_image_layout: ImageLayout,
@@ -1368,7 +1406,7 @@ pub type PFN_vkCmdBlitImage = extern "system" fn(
     filter: Filter,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdCopyBufferToImage = extern "system" fn(
+pub type PFN_vkCmdCopyBufferToImage = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     src_buffer: Buffer,
     dst_image: Image,
@@ -1377,7 +1415,7 @@ pub type PFN_vkCmdCopyBufferToImage = extern "system" fn(
     p_regions: *const BufferImageCopy,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdCopyImageToBuffer = extern "system" fn(
+pub type PFN_vkCmdCopyImageToBuffer = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     src_image: Image,
     src_image_layout: ImageLayout,
@@ -1386,7 +1424,7 @@ pub type PFN_vkCmdCopyImageToBuffer = extern "system" fn(
     p_regions: *const BufferImageCopy,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdUpdateBuffer = extern "system" fn(
+pub type PFN_vkCmdUpdateBuffer = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     dst_buffer: Buffer,
     dst_offset: DeviceSize,
@@ -1394,7 +1432,7 @@ pub type PFN_vkCmdUpdateBuffer = extern "system" fn(
     p_data: *const c_void,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdFillBuffer = extern "system" fn(
+pub type PFN_vkCmdFillBuffer = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     dst_buffer: Buffer,
     dst_offset: DeviceSize,
@@ -1402,7 +1440,7 @@ pub type PFN_vkCmdFillBuffer = extern "system" fn(
     data: u32,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdClearColorImage = extern "system" fn(
+pub type PFN_vkCmdClearColorImage = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     image: Image,
     image_layout: ImageLayout,
@@ -1411,7 +1449,7 @@ pub type PFN_vkCmdClearColorImage = extern "system" fn(
     p_ranges: *const ImageSubresourceRange,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdClearDepthStencilImage = extern "system" fn(
+pub type PFN_vkCmdClearDepthStencilImage = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     image: Image,
     image_layout: ImageLayout,
@@ -1420,7 +1458,7 @@ pub type PFN_vkCmdClearDepthStencilImage = extern "system" fn(
     p_ranges: *const ImageSubresourceRange,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdClearAttachments = extern "system" fn(
+pub type PFN_vkCmdClearAttachments = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     attachment_count: u32,
     p_attachments: *const ClearAttachment,
@@ -1428,7 +1466,7 @@ pub type PFN_vkCmdClearAttachments = extern "system" fn(
     p_rects: *const ClearRect,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdResolveImage = extern "system" fn(
+pub type PFN_vkCmdResolveImage = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     src_image: Image,
     src_image_layout: ImageLayout,
@@ -1438,13 +1476,19 @@ pub type PFN_vkCmdResolveImage = extern "system" fn(
     p_regions: *const ImageResolve,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdSetEvent =
-    extern "system" fn(command_buffer: CommandBuffer, event: Event, stage_mask: PipelineStageFlags);
+pub type PFN_vkCmdSetEvent = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    event: Event,
+    stage_mask: PipelineStageFlags,
+);
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdResetEvent =
-    extern "system" fn(command_buffer: CommandBuffer, event: Event, stage_mask: PipelineStageFlags);
+pub type PFN_vkCmdResetEvent = unsafe extern "system" fn(
+    command_buffer: CommandBuffer,
+    event: Event,
+    stage_mask: PipelineStageFlags,
+);
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdWaitEvents = extern "system" fn(
+pub type PFN_vkCmdWaitEvents = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     event_count: u32,
     p_events: *const Event,
@@ -1458,7 +1502,7 @@ pub type PFN_vkCmdWaitEvents = extern "system" fn(
     p_image_memory_barriers: *const ImageMemoryBarrier,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdPipelineBarrier = extern "system" fn(
+pub type PFN_vkCmdPipelineBarrier = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     src_stage_mask: PipelineStageFlags,
     dst_stage_mask: PipelineStageFlags,
@@ -1471,7 +1515,7 @@ pub type PFN_vkCmdPipelineBarrier = extern "system" fn(
     p_image_memory_barriers: *const ImageMemoryBarrier,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdBeginQuery = extern "system" fn(
+pub type PFN_vkCmdBeginQuery = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     query_pool: QueryPool,
     query: u32,
@@ -1479,23 +1523,23 @@ pub type PFN_vkCmdBeginQuery = extern "system" fn(
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdEndQuery =
-    extern "system" fn(command_buffer: CommandBuffer, query_pool: QueryPool, query: u32);
+    unsafe extern "system" fn(command_buffer: CommandBuffer, query_pool: QueryPool, query: u32);
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdResetQueryPool = extern "system" fn(
+pub type PFN_vkCmdResetQueryPool = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     query_pool: QueryPool,
     first_query: u32,
     query_count: u32,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdWriteTimestamp = extern "system" fn(
+pub type PFN_vkCmdWriteTimestamp = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     pipeline_stage: PipelineStageFlags,
     query_pool: QueryPool,
     query: u32,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdCopyQueryPoolResults = extern "system" fn(
+pub type PFN_vkCmdCopyQueryPoolResults = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     query_pool: QueryPool,
     first_query: u32,
@@ -1506,7 +1550,7 @@ pub type PFN_vkCmdCopyQueryPoolResults = extern "system" fn(
     flags: QueryResultFlags,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdPushConstants = extern "system" fn(
+pub type PFN_vkCmdPushConstants = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     layout: PipelineLayout,
     stage_flags: ShaderStageFlags,
@@ -1515,50 +1559,51 @@ pub type PFN_vkCmdPushConstants = extern "system" fn(
     p_values: *const c_void,
 );
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdBeginRenderPass = extern "system" fn(
+pub type PFN_vkCmdBeginRenderPass = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     p_render_pass_begin: *const RenderPassBeginInfo,
     contents: SubpassContents,
 );
 #[allow(non_camel_case_types)]
 pub type PFN_vkCmdNextSubpass =
-    extern "system" fn(command_buffer: CommandBuffer, contents: SubpassContents);
+    unsafe extern "system" fn(command_buffer: CommandBuffer, contents: SubpassContents);
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdEndRenderPass = extern "system" fn(command_buffer: CommandBuffer);
+pub type PFN_vkCmdEndRenderPass = unsafe extern "system" fn(command_buffer: CommandBuffer);
 #[allow(non_camel_case_types)]
-pub type PFN_vkCmdExecuteCommands = extern "system" fn(
+pub type PFN_vkCmdExecuteCommands = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     command_buffer_count: u32,
     p_command_buffers: *const CommandBuffer,
 );
 pub struct DeviceFnV1_0 {
-    pub destroy_device: extern "system" fn(device: Device, p_allocator: *const AllocationCallbacks),
-    pub get_device_queue: extern "system" fn(
+    pub destroy_device:
+        unsafe extern "system" fn(device: Device, p_allocator: *const AllocationCallbacks),
+    pub get_device_queue: unsafe extern "system" fn(
         device: Device,
         queue_family_index: u32,
         queue_index: u32,
         p_queue: *mut Queue,
     ),
-    pub queue_submit: extern "system" fn(
+    pub queue_submit: unsafe extern "system" fn(
         queue: Queue,
         submit_count: u32,
         p_submits: *const SubmitInfo,
         fence: Fence,
     ) -> Result,
-    pub queue_wait_idle: extern "system" fn(queue: Queue) -> Result,
-    pub device_wait_idle: extern "system" fn(device: Device) -> Result,
-    pub allocate_memory: extern "system" fn(
+    pub queue_wait_idle: unsafe extern "system" fn(queue: Queue) -> Result,
+    pub device_wait_idle: unsafe extern "system" fn(device: Device) -> Result,
+    pub allocate_memory: unsafe extern "system" fn(
         device: Device,
         p_allocate_info: *const MemoryAllocateInfo,
         p_allocator: *const AllocationCallbacks,
         p_memory: *mut DeviceMemory,
     ) -> Result,
-    pub free_memory: extern "system" fn(
+    pub free_memory: unsafe extern "system" fn(
         device: Device,
         memory: DeviceMemory,
         p_allocator: *const AllocationCallbacks,
     ),
-    pub map_memory: extern "system" fn(
+    pub map_memory: unsafe extern "system" fn(
         device: Device,
         memory: DeviceMemory,
         offset: DeviceSize,
@@ -1566,108 +1611,117 @@ pub struct DeviceFnV1_0 {
         flags: MemoryMapFlags,
         pp_data: *mut *mut c_void,
     ) -> Result,
-    pub unmap_memory: extern "system" fn(device: Device, memory: DeviceMemory),
-    pub flush_mapped_memory_ranges: extern "system" fn(
+    pub unmap_memory: unsafe extern "system" fn(device: Device, memory: DeviceMemory),
+    pub flush_mapped_memory_ranges: unsafe extern "system" fn(
         device: Device,
         memory_range_count: u32,
         p_memory_ranges: *const MappedMemoryRange,
     ) -> Result,
-    pub invalidate_mapped_memory_ranges: extern "system" fn(
+    pub invalidate_mapped_memory_ranges: unsafe extern "system" fn(
         device: Device,
         memory_range_count: u32,
         p_memory_ranges: *const MappedMemoryRange,
     ) -> Result,
-    pub get_device_memory_commitment: extern "system" fn(
+    pub get_device_memory_commitment: unsafe extern "system" fn(
         device: Device,
         memory: DeviceMemory,
         p_committed_memory_in_bytes: *mut DeviceSize,
     ),
-    pub bind_buffer_memory: extern "system" fn(
+    pub bind_buffer_memory: unsafe extern "system" fn(
         device: Device,
         buffer: Buffer,
         memory: DeviceMemory,
         memory_offset: DeviceSize,
     ) -> Result,
-    pub bind_image_memory: extern "system" fn(
+    pub bind_image_memory: unsafe extern "system" fn(
         device: Device,
         image: Image,
         memory: DeviceMemory,
         memory_offset: DeviceSize,
     ) -> Result,
-    pub get_buffer_memory_requirements: extern "system" fn(
+    pub get_buffer_memory_requirements: unsafe extern "system" fn(
         device: Device,
         buffer: Buffer,
         p_memory_requirements: *mut MemoryRequirements,
     ),
-    pub get_image_memory_requirements: extern "system" fn(
+    pub get_image_memory_requirements: unsafe extern "system" fn(
         device: Device,
         image: Image,
         p_memory_requirements: *mut MemoryRequirements,
     ),
-    pub get_image_sparse_memory_requirements: extern "system" fn(
+    pub get_image_sparse_memory_requirements: unsafe extern "system" fn(
         device: Device,
         image: Image,
         p_sparse_memory_requirement_count: *mut u32,
         p_sparse_memory_requirements: *mut SparseImageMemoryRequirements,
     ),
-    pub queue_bind_sparse: extern "system" fn(
+    pub queue_bind_sparse: unsafe extern "system" fn(
         queue: Queue,
         bind_info_count: u32,
         p_bind_info: *const BindSparseInfo,
         fence: Fence,
     ) -> Result,
-    pub create_fence: extern "system" fn(
+    pub create_fence: unsafe extern "system" fn(
         device: Device,
         p_create_info: *const FenceCreateInfo,
         p_allocator: *const AllocationCallbacks,
         p_fence: *mut Fence,
     ) -> Result,
-    pub destroy_fence:
-        extern "system" fn(device: Device, fence: Fence, p_allocator: *const AllocationCallbacks),
-    pub reset_fences:
-        extern "system" fn(device: Device, fence_count: u32, p_fences: *const Fence) -> Result,
-    pub get_fence_status: extern "system" fn(device: Device, fence: Fence) -> Result,
-    pub wait_for_fences: extern "system" fn(
+    pub destroy_fence: unsafe extern "system" fn(
+        device: Device,
+        fence: Fence,
+        p_allocator: *const AllocationCallbacks,
+    ),
+    pub reset_fences: unsafe extern "system" fn(
+        device: Device,
+        fence_count: u32,
+        p_fences: *const Fence,
+    ) -> Result,
+    pub get_fence_status: unsafe extern "system" fn(device: Device, fence: Fence) -> Result,
+    pub wait_for_fences: unsafe extern "system" fn(
         device: Device,
         fence_count: u32,
         p_fences: *const Fence,
         wait_all: Bool32,
         timeout: u64,
     ) -> Result,
-    pub create_semaphore: extern "system" fn(
+    pub create_semaphore: unsafe extern "system" fn(
         device: Device,
         p_create_info: *const SemaphoreCreateInfo,
         p_allocator: *const AllocationCallbacks,
         p_semaphore: *mut Semaphore,
     ) -> Result,
-    pub destroy_semaphore: extern "system" fn(
+    pub destroy_semaphore: unsafe extern "system" fn(
         device: Device,
         semaphore: Semaphore,
         p_allocator: *const AllocationCallbacks,
     ),
-    pub create_event: extern "system" fn(
+    pub create_event: unsafe extern "system" fn(
         device: Device,
         p_create_info: *const EventCreateInfo,
         p_allocator: *const AllocationCallbacks,
         p_event: *mut Event,
     ) -> Result,
-    pub destroy_event:
-        extern "system" fn(device: Device, event: Event, p_allocator: *const AllocationCallbacks),
-    pub get_event_status: extern "system" fn(device: Device, event: Event) -> Result,
-    pub set_event: extern "system" fn(device: Device, event: Event) -> Result,
-    pub reset_event: extern "system" fn(device: Device, event: Event) -> Result,
-    pub create_query_pool: extern "system" fn(
+    pub destroy_event: unsafe extern "system" fn(
+        device: Device,
+        event: Event,
+        p_allocator: *const AllocationCallbacks,
+    ),
+    pub get_event_status: unsafe extern "system" fn(device: Device, event: Event) -> Result,
+    pub set_event: unsafe extern "system" fn(device: Device, event: Event) -> Result,
+    pub reset_event: unsafe extern "system" fn(device: Device, event: Event) -> Result,
+    pub create_query_pool: unsafe extern "system" fn(
         device: Device,
         p_create_info: *const QueryPoolCreateInfo,
         p_allocator: *const AllocationCallbacks,
         p_query_pool: *mut QueryPool,
     ) -> Result,
-    pub destroy_query_pool: extern "system" fn(
+    pub destroy_query_pool: unsafe extern "system" fn(
         device: Device,
         query_pool: QueryPool,
         p_allocator: *const AllocationCallbacks,
     ),
-    pub get_query_pool_results: extern "system" fn(
+    pub get_query_pool_results: unsafe extern "system" fn(
         device: Device,
         query_pool: QueryPool,
         first_query: u32,
@@ -1677,85 +1731,91 @@ pub struct DeviceFnV1_0 {
         stride: DeviceSize,
         flags: QueryResultFlags,
     ) -> Result,
-    pub create_buffer: extern "system" fn(
+    pub create_buffer: unsafe extern "system" fn(
         device: Device,
         p_create_info: *const BufferCreateInfo,
         p_allocator: *const AllocationCallbacks,
         p_buffer: *mut Buffer,
     ) -> Result,
-    pub destroy_buffer:
-        extern "system" fn(device: Device, buffer: Buffer, p_allocator: *const AllocationCallbacks),
-    pub create_buffer_view: extern "system" fn(
+    pub destroy_buffer: unsafe extern "system" fn(
+        device: Device,
+        buffer: Buffer,
+        p_allocator: *const AllocationCallbacks,
+    ),
+    pub create_buffer_view: unsafe extern "system" fn(
         device: Device,
         p_create_info: *const BufferViewCreateInfo,
         p_allocator: *const AllocationCallbacks,
         p_view: *mut BufferView,
     ) -> Result,
-    pub destroy_buffer_view: extern "system" fn(
+    pub destroy_buffer_view: unsafe extern "system" fn(
         device: Device,
         buffer_view: BufferView,
         p_allocator: *const AllocationCallbacks,
     ),
-    pub create_image: extern "system" fn(
+    pub create_image: unsafe extern "system" fn(
         device: Device,
         p_create_info: *const ImageCreateInfo,
         p_allocator: *const AllocationCallbacks,
         p_image: *mut Image,
     ) -> Result,
-    pub destroy_image:
-        extern "system" fn(device: Device, image: Image, p_allocator: *const AllocationCallbacks),
-    pub get_image_subresource_layout: extern "system" fn(
+    pub destroy_image: unsafe extern "system" fn(
+        device: Device,
+        image: Image,
+        p_allocator: *const AllocationCallbacks,
+    ),
+    pub get_image_subresource_layout: unsafe extern "system" fn(
         device: Device,
         image: Image,
         p_subresource: *const ImageSubresource,
         p_layout: *mut SubresourceLayout,
     ),
-    pub create_image_view: extern "system" fn(
+    pub create_image_view: unsafe extern "system" fn(
         device: Device,
         p_create_info: *const ImageViewCreateInfo,
         p_allocator: *const AllocationCallbacks,
         p_view: *mut ImageView,
     ) -> Result,
-    pub destroy_image_view: extern "system" fn(
+    pub destroy_image_view: unsafe extern "system" fn(
         device: Device,
         image_view: ImageView,
         p_allocator: *const AllocationCallbacks,
     ),
-    pub create_shader_module: extern "system" fn(
+    pub create_shader_module: unsafe extern "system" fn(
         device: Device,
         p_create_info: *const ShaderModuleCreateInfo,
         p_allocator: *const AllocationCallbacks,
         p_shader_module: *mut ShaderModule,
     ) -> Result,
-    pub destroy_shader_module: extern "system" fn(
+    pub destroy_shader_module: unsafe extern "system" fn(
         device: Device,
         shader_module: ShaderModule,
         p_allocator: *const AllocationCallbacks,
     ),
-    pub create_pipeline_cache: extern "system" fn(
+    pub create_pipeline_cache: unsafe extern "system" fn(
         device: Device,
         p_create_info: *const PipelineCacheCreateInfo,
         p_allocator: *const AllocationCallbacks,
         p_pipeline_cache: *mut PipelineCache,
     ) -> Result,
-    pub destroy_pipeline_cache: extern "system" fn(
+    pub destroy_pipeline_cache: unsafe extern "system" fn(
         device: Device,
         pipeline_cache: PipelineCache,
         p_allocator: *const AllocationCallbacks,
     ),
-    pub get_pipeline_cache_data: extern "system" fn(
+    pub get_pipeline_cache_data: unsafe extern "system" fn(
         device: Device,
         pipeline_cache: PipelineCache,
         p_data_size: *mut usize,
         p_data: *mut c_void,
     ) -> Result,
-    pub merge_pipeline_caches: extern "system" fn(
+    pub merge_pipeline_caches: unsafe extern "system" fn(
         device: Device,
         dst_cache: PipelineCache,
         src_cache_count: u32,
         p_src_caches: *const PipelineCache,
     ) -> Result,
-    pub create_graphics_pipelines: extern "system" fn(
+    pub create_graphics_pipelines: unsafe extern "system" fn(
         device: Device,
         pipeline_cache: PipelineCache,
         create_info_count: u32,
@@ -1763,7 +1823,7 @@ pub struct DeviceFnV1_0 {
         p_allocator: *const AllocationCallbacks,
         p_pipelines: *mut Pipeline,
     ) -> Result,
-    pub create_compute_pipelines: extern "system" fn(
+    pub create_compute_pipelines: unsafe extern "system" fn(
         device: Device,
         pipeline_cache: PipelineCache,
         create_info_count: u32,
@@ -1771,183 +1831,189 @@ pub struct DeviceFnV1_0 {
         p_allocator: *const AllocationCallbacks,
         p_pipelines: *mut Pipeline,
     ) -> Result,
-    pub destroy_pipeline: extern "system" fn(
+    pub destroy_pipeline: unsafe extern "system" fn(
         device: Device,
         pipeline: Pipeline,
         p_allocator: *const AllocationCallbacks,
     ),
-    pub create_pipeline_layout: extern "system" fn(
+    pub create_pipeline_layout: unsafe extern "system" fn(
         device: Device,
         p_create_info: *const PipelineLayoutCreateInfo,
         p_allocator: *const AllocationCallbacks,
         p_pipeline_layout: *mut PipelineLayout,
     ) -> Result,
-    pub destroy_pipeline_layout: extern "system" fn(
+    pub destroy_pipeline_layout: unsafe extern "system" fn(
         device: Device,
         pipeline_layout: PipelineLayout,
         p_allocator: *const AllocationCallbacks,
     ),
-    pub create_sampler: extern "system" fn(
+    pub create_sampler: unsafe extern "system" fn(
         device: Device,
         p_create_info: *const SamplerCreateInfo,
         p_allocator: *const AllocationCallbacks,
         p_sampler: *mut Sampler,
     ) -> Result,
-    pub destroy_sampler: extern "system" fn(
+    pub destroy_sampler: unsafe extern "system" fn(
         device: Device,
         sampler: Sampler,
         p_allocator: *const AllocationCallbacks,
     ),
-    pub create_descriptor_set_layout: extern "system" fn(
+    pub create_descriptor_set_layout: unsafe extern "system" fn(
         device: Device,
         p_create_info: *const DescriptorSetLayoutCreateInfo,
         p_allocator: *const AllocationCallbacks,
         p_set_layout: *mut DescriptorSetLayout,
     ) -> Result,
-    pub destroy_descriptor_set_layout: extern "system" fn(
+    pub destroy_descriptor_set_layout: unsafe extern "system" fn(
         device: Device,
         descriptor_set_layout: DescriptorSetLayout,
         p_allocator: *const AllocationCallbacks,
     ),
-    pub create_descriptor_pool: extern "system" fn(
+    pub create_descriptor_pool: unsafe extern "system" fn(
         device: Device,
         p_create_info: *const DescriptorPoolCreateInfo,
         p_allocator: *const AllocationCallbacks,
         p_descriptor_pool: *mut DescriptorPool,
     ) -> Result,
-    pub destroy_descriptor_pool: extern "system" fn(
+    pub destroy_descriptor_pool: unsafe extern "system" fn(
         device: Device,
         descriptor_pool: DescriptorPool,
         p_allocator: *const AllocationCallbacks,
     ),
-    pub reset_descriptor_pool: extern "system" fn(
+    pub reset_descriptor_pool: unsafe extern "system" fn(
         device: Device,
         descriptor_pool: DescriptorPool,
         flags: DescriptorPoolResetFlags,
     ) -> Result,
-    pub allocate_descriptor_sets: extern "system" fn(
+    pub allocate_descriptor_sets: unsafe extern "system" fn(
         device: Device,
         p_allocate_info: *const DescriptorSetAllocateInfo,
         p_descriptor_sets: *mut DescriptorSet,
     ) -> Result,
-    pub free_descriptor_sets: extern "system" fn(
+    pub free_descriptor_sets: unsafe extern "system" fn(
         device: Device,
         descriptor_pool: DescriptorPool,
         descriptor_set_count: u32,
         p_descriptor_sets: *const DescriptorSet,
     ) -> Result,
-    pub update_descriptor_sets: extern "system" fn(
+    pub update_descriptor_sets: unsafe extern "system" fn(
         device: Device,
         descriptor_write_count: u32,
         p_descriptor_writes: *const WriteDescriptorSet,
         descriptor_copy_count: u32,
         p_descriptor_copies: *const CopyDescriptorSet,
     ),
-    pub create_framebuffer: extern "system" fn(
+    pub create_framebuffer: unsafe extern "system" fn(
         device: Device,
         p_create_info: *const FramebufferCreateInfo,
         p_allocator: *const AllocationCallbacks,
         p_framebuffer: *mut Framebuffer,
     ) -> Result,
-    pub destroy_framebuffer: extern "system" fn(
+    pub destroy_framebuffer: unsafe extern "system" fn(
         device: Device,
         framebuffer: Framebuffer,
         p_allocator: *const AllocationCallbacks,
     ),
-    pub create_render_pass: extern "system" fn(
+    pub create_render_pass: unsafe extern "system" fn(
         device: Device,
         p_create_info: *const RenderPassCreateInfo,
         p_allocator: *const AllocationCallbacks,
         p_render_pass: *mut RenderPass,
     ) -> Result,
-    pub destroy_render_pass: extern "system" fn(
+    pub destroy_render_pass: unsafe extern "system" fn(
         device: Device,
         render_pass: RenderPass,
         p_allocator: *const AllocationCallbacks,
     ),
-    pub get_render_area_granularity:
-        extern "system" fn(device: Device, render_pass: RenderPass, p_granularity: *mut Extent2D),
-    pub create_command_pool: extern "system" fn(
+    pub get_render_area_granularity: unsafe extern "system" fn(
+        device: Device,
+        render_pass: RenderPass,
+        p_granularity: *mut Extent2D,
+    ),
+    pub create_command_pool: unsafe extern "system" fn(
         device: Device,
         p_create_info: *const CommandPoolCreateInfo,
         p_allocator: *const AllocationCallbacks,
         p_command_pool: *mut CommandPool,
     ) -> Result,
-    pub destroy_command_pool: extern "system" fn(
+    pub destroy_command_pool: unsafe extern "system" fn(
         device: Device,
         command_pool: CommandPool,
         p_allocator: *const AllocationCallbacks,
     ),
-    pub reset_command_pool: extern "system" fn(
+    pub reset_command_pool: unsafe extern "system" fn(
         device: Device,
         command_pool: CommandPool,
         flags: CommandPoolResetFlags,
     ) -> Result,
-    pub allocate_command_buffers: extern "system" fn(
+    pub allocate_command_buffers: unsafe extern "system" fn(
         device: Device,
         p_allocate_info: *const CommandBufferAllocateInfo,
         p_command_buffers: *mut CommandBuffer,
     ) -> Result,
-    pub free_command_buffers: extern "system" fn(
+    pub free_command_buffers: unsafe extern "system" fn(
         device: Device,
         command_pool: CommandPool,
         command_buffer_count: u32,
         p_command_buffers: *const CommandBuffer,
     ),
-    pub begin_command_buffer: extern "system" fn(
+    pub begin_command_buffer: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
         p_begin_info: *const CommandBufferBeginInfo,
     ) -> Result,
-    pub end_command_buffer: extern "system" fn(command_buffer: CommandBuffer) -> Result,
-    pub reset_command_buffer:
-        extern "system" fn(command_buffer: CommandBuffer, flags: CommandBufferResetFlags) -> Result,
-    pub cmd_bind_pipeline: extern "system" fn(
+    pub end_command_buffer: unsafe extern "system" fn(command_buffer: CommandBuffer) -> Result,
+    pub reset_command_buffer: unsafe extern "system" fn(
+        command_buffer: CommandBuffer,
+        flags: CommandBufferResetFlags,
+    ) -> Result,
+    pub cmd_bind_pipeline: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
         pipeline_bind_point: PipelineBindPoint,
         pipeline: Pipeline,
     ),
-    pub cmd_set_viewport: extern "system" fn(
+    pub cmd_set_viewport: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
         first_viewport: u32,
         viewport_count: u32,
         p_viewports: *const Viewport,
     ),
-    pub cmd_set_scissor: extern "system" fn(
+    pub cmd_set_scissor: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
         first_scissor: u32,
         scissor_count: u32,
         p_scissors: *const Rect2D,
     ),
-    pub cmd_set_line_width: extern "system" fn(command_buffer: CommandBuffer, line_width: f32),
-    pub cmd_set_depth_bias: extern "system" fn(
+    pub cmd_set_line_width:
+        unsafe extern "system" fn(command_buffer: CommandBuffer, line_width: f32),
+    pub cmd_set_depth_bias: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
         depth_bias_constant_factor: f32,
         depth_bias_clamp: f32,
         depth_bias_slope_factor: f32,
     ),
     pub cmd_set_blend_constants:
-        extern "system" fn(command_buffer: CommandBuffer, blend_constants: *const [f32; 4]),
-    pub cmd_set_depth_bounds: extern "system" fn(
+        unsafe extern "system" fn(command_buffer: CommandBuffer, blend_constants: *const [f32; 4]),
+    pub cmd_set_depth_bounds: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
         min_depth_bounds: f32,
         max_depth_bounds: f32,
     ),
-    pub cmd_set_stencil_compare_mask: extern "system" fn(
+    pub cmd_set_stencil_compare_mask: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
         face_mask: StencilFaceFlags,
         compare_mask: u32,
     ),
-    pub cmd_set_stencil_write_mask: extern "system" fn(
+    pub cmd_set_stencil_write_mask: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
         face_mask: StencilFaceFlags,
         write_mask: u32,
     ),
-    pub cmd_set_stencil_reference: extern "system" fn(
+    pub cmd_set_stencil_reference: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
         face_mask: StencilFaceFlags,
         reference: u32,
     ),
-    pub cmd_bind_descriptor_sets: extern "system" fn(
+    pub cmd_bind_descriptor_sets: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
         pipeline_bind_point: PipelineBindPoint,
         layout: PipelineLayout,
@@ -1957,27 +2023,27 @@ pub struct DeviceFnV1_0 {
         dynamic_offset_count: u32,
         p_dynamic_offsets: *const u32,
     ),
-    pub cmd_bind_index_buffer: extern "system" fn(
+    pub cmd_bind_index_buffer: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
         buffer: Buffer,
         offset: DeviceSize,
         index_type: IndexType,
     ),
-    pub cmd_bind_vertex_buffers: extern "system" fn(
+    pub cmd_bind_vertex_buffers: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
         first_binding: u32,
         binding_count: u32,
         p_buffers: *const Buffer,
         p_offsets: *const DeviceSize,
     ),
-    pub cmd_draw: extern "system" fn(
+    pub cmd_draw: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
         vertex_count: u32,
         instance_count: u32,
         first_vertex: u32,
         first_instance: u32,
     ),
-    pub cmd_draw_indexed: extern "system" fn(
+    pub cmd_draw_indexed: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
         index_count: u32,
         instance_count: u32,
@@ -1985,36 +2051,39 @@ pub struct DeviceFnV1_0 {
         vertex_offset: i32,
         first_instance: u32,
     ),
-    pub cmd_draw_indirect: extern "system" fn(
+    pub cmd_draw_indirect: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
         buffer: Buffer,
         offset: DeviceSize,
         draw_count: u32,
         stride: u32,
     ),
-    pub cmd_draw_indexed_indirect: extern "system" fn(
+    pub cmd_draw_indexed_indirect: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
         buffer: Buffer,
         offset: DeviceSize,
         draw_count: u32,
         stride: u32,
     ),
-    pub cmd_dispatch: extern "system" fn(
+    pub cmd_dispatch: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
         group_count_x: u32,
         group_count_y: u32,
         group_count_z: u32,
     ),
-    pub cmd_dispatch_indirect:
-        extern "system" fn(command_buffer: CommandBuffer, buffer: Buffer, offset: DeviceSize),
-    pub cmd_copy_buffer: extern "system" fn(
+    pub cmd_dispatch_indirect: unsafe extern "system" fn(
+        command_buffer: CommandBuffer,
+        buffer: Buffer,
+        offset: DeviceSize,
+    ),
+    pub cmd_copy_buffer: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
         src_buffer: Buffer,
         dst_buffer: Buffer,
         region_count: u32,
         p_regions: *const BufferCopy,
     ),
-    pub cmd_copy_image: extern "system" fn(
+    pub cmd_copy_image: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
         src_image: Image,
         src_image_layout: ImageLayout,
@@ -2023,7 +2092,7 @@ pub struct DeviceFnV1_0 {
         region_count: u32,
         p_regions: *const ImageCopy,
     ),
-    pub cmd_blit_image: extern "system" fn(
+    pub cmd_blit_image: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
         src_image: Image,
         src_image_layout: ImageLayout,
@@ -2033,7 +2102,7 @@ pub struct DeviceFnV1_0 {
         p_regions: *const ImageBlit,
         filter: Filter,
     ),
-    pub cmd_copy_buffer_to_image: extern "system" fn(
+    pub cmd_copy_buffer_to_image: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
         src_buffer: Buffer,
         dst_image: Image,
@@ -2041,7 +2110,7 @@ pub struct DeviceFnV1_0 {
         region_count: u32,
         p_regions: *const BufferImageCopy,
     ),
-    pub cmd_copy_image_to_buffer: extern "system" fn(
+    pub cmd_copy_image_to_buffer: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
         src_image: Image,
         src_image_layout: ImageLayout,
@@ -2049,21 +2118,21 @@ pub struct DeviceFnV1_0 {
         region_count: u32,
         p_regions: *const BufferImageCopy,
     ),
-    pub cmd_update_buffer: extern "system" fn(
+    pub cmd_update_buffer: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
         dst_buffer: Buffer,
         dst_offset: DeviceSize,
         data_size: DeviceSize,
         p_data: *const c_void,
     ),
-    pub cmd_fill_buffer: extern "system" fn(
+    pub cmd_fill_buffer: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
         dst_buffer: Buffer,
         dst_offset: DeviceSize,
         size: DeviceSize,
         data: u32,
     ),
-    pub cmd_clear_color_image: extern "system" fn(
+    pub cmd_clear_color_image: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
         image: Image,
         image_layout: ImageLayout,
@@ -2071,7 +2140,7 @@ pub struct DeviceFnV1_0 {
         range_count: u32,
         p_ranges: *const ImageSubresourceRange,
     ),
-    pub cmd_clear_depth_stencil_image: extern "system" fn(
+    pub cmd_clear_depth_stencil_image: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
         image: Image,
         image_layout: ImageLayout,
@@ -2079,14 +2148,14 @@ pub struct DeviceFnV1_0 {
         range_count: u32,
         p_ranges: *const ImageSubresourceRange,
     ),
-    pub cmd_clear_attachments: extern "system" fn(
+    pub cmd_clear_attachments: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
         attachment_count: u32,
         p_attachments: *const ClearAttachment,
         rect_count: u32,
         p_rects: *const ClearRect,
     ),
-    pub cmd_resolve_image: extern "system" fn(
+    pub cmd_resolve_image: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
         src_image: Image,
         src_image_layout: ImageLayout,
@@ -2095,17 +2164,17 @@ pub struct DeviceFnV1_0 {
         region_count: u32,
         p_regions: *const ImageResolve,
     ),
-    pub cmd_set_event: extern "system" fn(
+    pub cmd_set_event: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
         event: Event,
         stage_mask: PipelineStageFlags,
     ),
-    pub cmd_reset_event: extern "system" fn(
+    pub cmd_reset_event: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
         event: Event,
         stage_mask: PipelineStageFlags,
     ),
-    pub cmd_wait_events: extern "system" fn(
+    pub cmd_wait_events: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
         event_count: u32,
         p_events: *const Event,
@@ -2118,7 +2187,7 @@ pub struct DeviceFnV1_0 {
         image_memory_barrier_count: u32,
         p_image_memory_barriers: *const ImageMemoryBarrier,
     ),
-    pub cmd_pipeline_barrier: extern "system" fn(
+    pub cmd_pipeline_barrier: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
         src_stage_mask: PipelineStageFlags,
         dst_stage_mask: PipelineStageFlags,
@@ -2130,27 +2199,27 @@ pub struct DeviceFnV1_0 {
         image_memory_barrier_count: u32,
         p_image_memory_barriers: *const ImageMemoryBarrier,
     ),
-    pub cmd_begin_query: extern "system" fn(
+    pub cmd_begin_query: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
         query_pool: QueryPool,
         query: u32,
         flags: QueryControlFlags,
     ),
     pub cmd_end_query:
-        extern "system" fn(command_buffer: CommandBuffer, query_pool: QueryPool, query: u32),
-    pub cmd_reset_query_pool: extern "system" fn(
+        unsafe extern "system" fn(command_buffer: CommandBuffer, query_pool: QueryPool, query: u32),
+    pub cmd_reset_query_pool: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
         query_pool: QueryPool,
         first_query: u32,
         query_count: u32,
     ),
-    pub cmd_write_timestamp: extern "system" fn(
+    pub cmd_write_timestamp: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
         pipeline_stage: PipelineStageFlags,
         query_pool: QueryPool,
         query: u32,
     ),
-    pub cmd_copy_query_pool_results: extern "system" fn(
+    pub cmd_copy_query_pool_results: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
         query_pool: QueryPool,
         first_query: u32,
@@ -2160,7 +2229,7 @@ pub struct DeviceFnV1_0 {
         stride: DeviceSize,
         flags: QueryResultFlags,
     ),
-    pub cmd_push_constants: extern "system" fn(
+    pub cmd_push_constants: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
         layout: PipelineLayout,
         stage_flags: ShaderStageFlags,
@@ -2168,15 +2237,15 @@ pub struct DeviceFnV1_0 {
         size: u32,
         p_values: *const c_void,
     ),
-    pub cmd_begin_render_pass: extern "system" fn(
+    pub cmd_begin_render_pass: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
         p_render_pass_begin: *const RenderPassBeginInfo,
         contents: SubpassContents,
     ),
     pub cmd_next_subpass:
-        extern "system" fn(command_buffer: CommandBuffer, contents: SubpassContents),
-    pub cmd_end_render_pass: extern "system" fn(command_buffer: CommandBuffer),
-    pub cmd_execute_commands: extern "system" fn(
+        unsafe extern "system" fn(command_buffer: CommandBuffer, contents: SubpassContents),
+    pub cmd_end_render_pass: unsafe extern "system" fn(command_buffer: CommandBuffer),
+    pub cmd_execute_commands: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
         command_buffer_count: u32,
         p_command_buffers: *const CommandBuffer,
@@ -2317,7 +2386,7 @@ impl DeviceFnV1_0 {
     {
         DeviceFnV1_0 {
             destroy_device: unsafe {
-                extern "system" fn destroy_device(
+                unsafe extern "system" fn destroy_device(
                     _device: Device,
                     _p_allocator: *const AllocationCallbacks,
                 ) {
@@ -2332,7 +2401,7 @@ impl DeviceFnV1_0 {
                 }
             },
             get_device_queue: unsafe {
-                extern "system" fn get_device_queue(
+                unsafe extern "system" fn get_device_queue(
                     _device: Device,
                     _queue_family_index: u32,
                     _queue_index: u32,
@@ -2349,7 +2418,7 @@ impl DeviceFnV1_0 {
                 }
             },
             queue_submit: unsafe {
-                extern "system" fn queue_submit(
+                unsafe extern "system" fn queue_submit(
                     _queue: Queue,
                     _submit_count: u32,
                     _p_submits: *const SubmitInfo,
@@ -2366,7 +2435,7 @@ impl DeviceFnV1_0 {
                 }
             },
             queue_wait_idle: unsafe {
-                extern "system" fn queue_wait_idle(_queue: Queue) -> Result {
+                unsafe extern "system" fn queue_wait_idle(_queue: Queue) -> Result {
                     panic!(concat!("Unable to load ", stringify!(queue_wait_idle)))
                 }
                 let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkQueueWaitIdle\0");
@@ -2378,7 +2447,7 @@ impl DeviceFnV1_0 {
                 }
             },
             device_wait_idle: unsafe {
-                extern "system" fn device_wait_idle(_device: Device) -> Result {
+                unsafe extern "system" fn device_wait_idle(_device: Device) -> Result {
                     panic!(concat!("Unable to load ", stringify!(device_wait_idle)))
                 }
                 let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkDeviceWaitIdle\0");
@@ -2390,7 +2459,7 @@ impl DeviceFnV1_0 {
                 }
             },
             allocate_memory: unsafe {
-                extern "system" fn allocate_memory(
+                unsafe extern "system" fn allocate_memory(
                     _device: Device,
                     _p_allocate_info: *const MemoryAllocateInfo,
                     _p_allocator: *const AllocationCallbacks,
@@ -2407,7 +2476,7 @@ impl DeviceFnV1_0 {
                 }
             },
             free_memory: unsafe {
-                extern "system" fn free_memory(
+                unsafe extern "system" fn free_memory(
                     _device: Device,
                     _memory: DeviceMemory,
                     _p_allocator: *const AllocationCallbacks,
@@ -2423,7 +2492,7 @@ impl DeviceFnV1_0 {
                 }
             },
             map_memory: unsafe {
-                extern "system" fn map_memory(
+                unsafe extern "system" fn map_memory(
                     _device: Device,
                     _memory: DeviceMemory,
                     _offset: DeviceSize,
@@ -2442,7 +2511,7 @@ impl DeviceFnV1_0 {
                 }
             },
             unmap_memory: unsafe {
-                extern "system" fn unmap_memory(_device: Device, _memory: DeviceMemory) {
+                unsafe extern "system" fn unmap_memory(_device: Device, _memory: DeviceMemory) {
                     panic!(concat!("Unable to load ", stringify!(unmap_memory)))
                 }
                 let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkUnmapMemory\0");
@@ -2454,7 +2523,7 @@ impl DeviceFnV1_0 {
                 }
             },
             flush_mapped_memory_ranges: unsafe {
-                extern "system" fn flush_mapped_memory_ranges(
+                unsafe extern "system" fn flush_mapped_memory_ranges(
                     _device: Device,
                     _memory_range_count: u32,
                     _p_memory_ranges: *const MappedMemoryRange,
@@ -2474,7 +2543,7 @@ impl DeviceFnV1_0 {
                 }
             },
             invalidate_mapped_memory_ranges: unsafe {
-                extern "system" fn invalidate_mapped_memory_ranges(
+                unsafe extern "system" fn invalidate_mapped_memory_ranges(
                     _device: Device,
                     _memory_range_count: u32,
                     _p_memory_ranges: *const MappedMemoryRange,
@@ -2495,7 +2564,7 @@ impl DeviceFnV1_0 {
                 }
             },
             get_device_memory_commitment: unsafe {
-                extern "system" fn get_device_memory_commitment(
+                unsafe extern "system" fn get_device_memory_commitment(
                     _device: Device,
                     _memory: DeviceMemory,
                     _p_committed_memory_in_bytes: *mut DeviceSize,
@@ -2516,7 +2585,7 @@ impl DeviceFnV1_0 {
                 }
             },
             bind_buffer_memory: unsafe {
-                extern "system" fn bind_buffer_memory(
+                unsafe extern "system" fn bind_buffer_memory(
                     _device: Device,
                     _buffer: Buffer,
                     _memory: DeviceMemory,
@@ -2534,7 +2603,7 @@ impl DeviceFnV1_0 {
                 }
             },
             bind_image_memory: unsafe {
-                extern "system" fn bind_image_memory(
+                unsafe extern "system" fn bind_image_memory(
                     _device: Device,
                     _image: Image,
                     _memory: DeviceMemory,
@@ -2551,7 +2620,7 @@ impl DeviceFnV1_0 {
                 }
             },
             get_buffer_memory_requirements: unsafe {
-                extern "system" fn get_buffer_memory_requirements(
+                unsafe extern "system" fn get_buffer_memory_requirements(
                     _device: Device,
                     _buffer: Buffer,
                     _p_memory_requirements: *mut MemoryRequirements,
@@ -2572,7 +2641,7 @@ impl DeviceFnV1_0 {
                 }
             },
             get_image_memory_requirements: unsafe {
-                extern "system" fn get_image_memory_requirements(
+                unsafe extern "system" fn get_image_memory_requirements(
                     _device: Device,
                     _image: Image,
                     _p_memory_requirements: *mut MemoryRequirements,
@@ -2593,7 +2662,7 @@ impl DeviceFnV1_0 {
                 }
             },
             get_image_sparse_memory_requirements: unsafe {
-                extern "system" fn get_image_sparse_memory_requirements(
+                unsafe extern "system" fn get_image_sparse_memory_requirements(
                     _device: Device,
                     _image: Image,
                     _p_sparse_memory_requirement_count: *mut u32,
@@ -2615,7 +2684,7 @@ impl DeviceFnV1_0 {
                 }
             },
             queue_bind_sparse: unsafe {
-                extern "system" fn queue_bind_sparse(
+                unsafe extern "system" fn queue_bind_sparse(
                     _queue: Queue,
                     _bind_info_count: u32,
                     _p_bind_info: *const BindSparseInfo,
@@ -2632,7 +2701,7 @@ impl DeviceFnV1_0 {
                 }
             },
             create_fence: unsafe {
-                extern "system" fn create_fence(
+                unsafe extern "system" fn create_fence(
                     _device: Device,
                     _p_create_info: *const FenceCreateInfo,
                     _p_allocator: *const AllocationCallbacks,
@@ -2649,7 +2718,7 @@ impl DeviceFnV1_0 {
                 }
             },
             destroy_fence: unsafe {
-                extern "system" fn destroy_fence(
+                unsafe extern "system" fn destroy_fence(
                     _device: Device,
                     _fence: Fence,
                     _p_allocator: *const AllocationCallbacks,
@@ -2665,7 +2734,7 @@ impl DeviceFnV1_0 {
                 }
             },
             reset_fences: unsafe {
-                extern "system" fn reset_fences(
+                unsafe extern "system" fn reset_fences(
                     _device: Device,
                     _fence_count: u32,
                     _p_fences: *const Fence,
@@ -2681,7 +2750,10 @@ impl DeviceFnV1_0 {
                 }
             },
             get_fence_status: unsafe {
-                extern "system" fn get_fence_status(_device: Device, _fence: Fence) -> Result {
+                unsafe extern "system" fn get_fence_status(
+                    _device: Device,
+                    _fence: Fence,
+                ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(get_fence_status)))
                 }
                 let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkGetFenceStatus\0");
@@ -2693,7 +2765,7 @@ impl DeviceFnV1_0 {
                 }
             },
             wait_for_fences: unsafe {
-                extern "system" fn wait_for_fences(
+                unsafe extern "system" fn wait_for_fences(
                     _device: Device,
                     _fence_count: u32,
                     _p_fences: *const Fence,
@@ -2711,7 +2783,7 @@ impl DeviceFnV1_0 {
                 }
             },
             create_semaphore: unsafe {
-                extern "system" fn create_semaphore(
+                unsafe extern "system" fn create_semaphore(
                     _device: Device,
                     _p_create_info: *const SemaphoreCreateInfo,
                     _p_allocator: *const AllocationCallbacks,
@@ -2728,7 +2800,7 @@ impl DeviceFnV1_0 {
                 }
             },
             destroy_semaphore: unsafe {
-                extern "system" fn destroy_semaphore(
+                unsafe extern "system" fn destroy_semaphore(
                     _device: Device,
                     _semaphore: Semaphore,
                     _p_allocator: *const AllocationCallbacks,
@@ -2745,7 +2817,7 @@ impl DeviceFnV1_0 {
                 }
             },
             create_event: unsafe {
-                extern "system" fn create_event(
+                unsafe extern "system" fn create_event(
                     _device: Device,
                     _p_create_info: *const EventCreateInfo,
                     _p_allocator: *const AllocationCallbacks,
@@ -2762,7 +2834,7 @@ impl DeviceFnV1_0 {
                 }
             },
             destroy_event: unsafe {
-                extern "system" fn destroy_event(
+                unsafe extern "system" fn destroy_event(
                     _device: Device,
                     _event: Event,
                     _p_allocator: *const AllocationCallbacks,
@@ -2778,7 +2850,10 @@ impl DeviceFnV1_0 {
                 }
             },
             get_event_status: unsafe {
-                extern "system" fn get_event_status(_device: Device, _event: Event) -> Result {
+                unsafe extern "system" fn get_event_status(
+                    _device: Device,
+                    _event: Event,
+                ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(get_event_status)))
                 }
                 let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkGetEventStatus\0");
@@ -2790,7 +2865,7 @@ impl DeviceFnV1_0 {
                 }
             },
             set_event: unsafe {
-                extern "system" fn set_event(_device: Device, _event: Event) -> Result {
+                unsafe extern "system" fn set_event(_device: Device, _event: Event) -> Result {
                     panic!(concat!("Unable to load ", stringify!(set_event)))
                 }
                 let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkSetEvent\0");
@@ -2802,7 +2877,7 @@ impl DeviceFnV1_0 {
                 }
             },
             reset_event: unsafe {
-                extern "system" fn reset_event(_device: Device, _event: Event) -> Result {
+                unsafe extern "system" fn reset_event(_device: Device, _event: Event) -> Result {
                     panic!(concat!("Unable to load ", stringify!(reset_event)))
                 }
                 let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(b"vkResetEvent\0");
@@ -2814,7 +2889,7 @@ impl DeviceFnV1_0 {
                 }
             },
             create_query_pool: unsafe {
-                extern "system" fn create_query_pool(
+                unsafe extern "system" fn create_query_pool(
                     _device: Device,
                     _p_create_info: *const QueryPoolCreateInfo,
                     _p_allocator: *const AllocationCallbacks,
@@ -2831,7 +2906,7 @@ impl DeviceFnV1_0 {
                 }
             },
             destroy_query_pool: unsafe {
-                extern "system" fn destroy_query_pool(
+                unsafe extern "system" fn destroy_query_pool(
                     _device: Device,
                     _query_pool: QueryPool,
                     _p_allocator: *const AllocationCallbacks,
@@ -2848,7 +2923,7 @@ impl DeviceFnV1_0 {
                 }
             },
             get_query_pool_results: unsafe {
-                extern "system" fn get_query_pool_results(
+                unsafe extern "system" fn get_query_pool_results(
                     _device: Device,
                     _query_pool: QueryPool,
                     _first_query: u32,
@@ -2873,7 +2948,7 @@ impl DeviceFnV1_0 {
                 }
             },
             create_buffer: unsafe {
-                extern "system" fn create_buffer(
+                unsafe extern "system" fn create_buffer(
                     _device: Device,
                     _p_create_info: *const BufferCreateInfo,
                     _p_allocator: *const AllocationCallbacks,
@@ -2890,7 +2965,7 @@ impl DeviceFnV1_0 {
                 }
             },
             destroy_buffer: unsafe {
-                extern "system" fn destroy_buffer(
+                unsafe extern "system" fn destroy_buffer(
                     _device: Device,
                     _buffer: Buffer,
                     _p_allocator: *const AllocationCallbacks,
@@ -2906,7 +2981,7 @@ impl DeviceFnV1_0 {
                 }
             },
             create_buffer_view: unsafe {
-                extern "system" fn create_buffer_view(
+                unsafe extern "system" fn create_buffer_view(
                     _device: Device,
                     _p_create_info: *const BufferViewCreateInfo,
                     _p_allocator: *const AllocationCallbacks,
@@ -2924,7 +2999,7 @@ impl DeviceFnV1_0 {
                 }
             },
             destroy_buffer_view: unsafe {
-                extern "system" fn destroy_buffer_view(
+                unsafe extern "system" fn destroy_buffer_view(
                     _device: Device,
                     _buffer_view: BufferView,
                     _p_allocator: *const AllocationCallbacks,
@@ -2941,7 +3016,7 @@ impl DeviceFnV1_0 {
                 }
             },
             create_image: unsafe {
-                extern "system" fn create_image(
+                unsafe extern "system" fn create_image(
                     _device: Device,
                     _p_create_info: *const ImageCreateInfo,
                     _p_allocator: *const AllocationCallbacks,
@@ -2958,7 +3033,7 @@ impl DeviceFnV1_0 {
                 }
             },
             destroy_image: unsafe {
-                extern "system" fn destroy_image(
+                unsafe extern "system" fn destroy_image(
                     _device: Device,
                     _image: Image,
                     _p_allocator: *const AllocationCallbacks,
@@ -2974,7 +3049,7 @@ impl DeviceFnV1_0 {
                 }
             },
             get_image_subresource_layout: unsafe {
-                extern "system" fn get_image_subresource_layout(
+                unsafe extern "system" fn get_image_subresource_layout(
                     _device: Device,
                     _image: Image,
                     _p_subresource: *const ImageSubresource,
@@ -2996,7 +3071,7 @@ impl DeviceFnV1_0 {
                 }
             },
             create_image_view: unsafe {
-                extern "system" fn create_image_view(
+                unsafe extern "system" fn create_image_view(
                     _device: Device,
                     _p_create_info: *const ImageViewCreateInfo,
                     _p_allocator: *const AllocationCallbacks,
@@ -3013,7 +3088,7 @@ impl DeviceFnV1_0 {
                 }
             },
             destroy_image_view: unsafe {
-                extern "system" fn destroy_image_view(
+                unsafe extern "system" fn destroy_image_view(
                     _device: Device,
                     _image_view: ImageView,
                     _p_allocator: *const AllocationCallbacks,
@@ -3030,7 +3105,7 @@ impl DeviceFnV1_0 {
                 }
             },
             create_shader_module: unsafe {
-                extern "system" fn create_shader_module(
+                unsafe extern "system" fn create_shader_module(
                     _device: Device,
                     _p_create_info: *const ShaderModuleCreateInfo,
                     _p_allocator: *const AllocationCallbacks,
@@ -3048,7 +3123,7 @@ impl DeviceFnV1_0 {
                 }
             },
             destroy_shader_module: unsafe {
-                extern "system" fn destroy_shader_module(
+                unsafe extern "system" fn destroy_shader_module(
                     _device: Device,
                     _shader_module: ShaderModule,
                     _p_allocator: *const AllocationCallbacks,
@@ -3068,7 +3143,7 @@ impl DeviceFnV1_0 {
                 }
             },
             create_pipeline_cache: unsafe {
-                extern "system" fn create_pipeline_cache(
+                unsafe extern "system" fn create_pipeline_cache(
                     _device: Device,
                     _p_create_info: *const PipelineCacheCreateInfo,
                     _p_allocator: *const AllocationCallbacks,
@@ -3089,7 +3164,7 @@ impl DeviceFnV1_0 {
                 }
             },
             destroy_pipeline_cache: unsafe {
-                extern "system" fn destroy_pipeline_cache(
+                unsafe extern "system" fn destroy_pipeline_cache(
                     _device: Device,
                     _pipeline_cache: PipelineCache,
                     _p_allocator: *const AllocationCallbacks,
@@ -3109,7 +3184,7 @@ impl DeviceFnV1_0 {
                 }
             },
             get_pipeline_cache_data: unsafe {
-                extern "system" fn get_pipeline_cache_data(
+                unsafe extern "system" fn get_pipeline_cache_data(
                     _device: Device,
                     _pipeline_cache: PipelineCache,
                     _p_data_size: *mut usize,
@@ -3130,7 +3205,7 @@ impl DeviceFnV1_0 {
                 }
             },
             merge_pipeline_caches: unsafe {
-                extern "system" fn merge_pipeline_caches(
+                unsafe extern "system" fn merge_pipeline_caches(
                     _device: Device,
                     _dst_cache: PipelineCache,
                     _src_cache_count: u32,
@@ -3151,7 +3226,7 @@ impl DeviceFnV1_0 {
                 }
             },
             create_graphics_pipelines: unsafe {
-                extern "system" fn create_graphics_pipelines(
+                unsafe extern "system" fn create_graphics_pipelines(
                     _device: Device,
                     _pipeline_cache: PipelineCache,
                     _create_info_count: u32,
@@ -3174,7 +3249,7 @@ impl DeviceFnV1_0 {
                 }
             },
             create_compute_pipelines: unsafe {
-                extern "system" fn create_compute_pipelines(
+                unsafe extern "system" fn create_compute_pipelines(
                     _device: Device,
                     _pipeline_cache: PipelineCache,
                     _create_info_count: u32,
@@ -3197,7 +3272,7 @@ impl DeviceFnV1_0 {
                 }
             },
             destroy_pipeline: unsafe {
-                extern "system" fn destroy_pipeline(
+                unsafe extern "system" fn destroy_pipeline(
                     _device: Device,
                     _pipeline: Pipeline,
                     _p_allocator: *const AllocationCallbacks,
@@ -3213,7 +3288,7 @@ impl DeviceFnV1_0 {
                 }
             },
             create_pipeline_layout: unsafe {
-                extern "system" fn create_pipeline_layout(
+                unsafe extern "system" fn create_pipeline_layout(
                     _device: Device,
                     _p_create_info: *const PipelineLayoutCreateInfo,
                     _p_allocator: *const AllocationCallbacks,
@@ -3234,7 +3309,7 @@ impl DeviceFnV1_0 {
                 }
             },
             destroy_pipeline_layout: unsafe {
-                extern "system" fn destroy_pipeline_layout(
+                unsafe extern "system" fn destroy_pipeline_layout(
                     _device: Device,
                     _pipeline_layout: PipelineLayout,
                     _p_allocator: *const AllocationCallbacks,
@@ -3254,7 +3329,7 @@ impl DeviceFnV1_0 {
                 }
             },
             create_sampler: unsafe {
-                extern "system" fn create_sampler(
+                unsafe extern "system" fn create_sampler(
                     _device: Device,
                     _p_create_info: *const SamplerCreateInfo,
                     _p_allocator: *const AllocationCallbacks,
@@ -3271,7 +3346,7 @@ impl DeviceFnV1_0 {
                 }
             },
             destroy_sampler: unsafe {
-                extern "system" fn destroy_sampler(
+                unsafe extern "system" fn destroy_sampler(
                     _device: Device,
                     _sampler: Sampler,
                     _p_allocator: *const AllocationCallbacks,
@@ -3287,7 +3362,7 @@ impl DeviceFnV1_0 {
                 }
             },
             create_descriptor_set_layout: unsafe {
-                extern "system" fn create_descriptor_set_layout(
+                unsafe extern "system" fn create_descriptor_set_layout(
                     _device: Device,
                     _p_create_info: *const DescriptorSetLayoutCreateInfo,
                     _p_allocator: *const AllocationCallbacks,
@@ -3309,7 +3384,7 @@ impl DeviceFnV1_0 {
                 }
             },
             destroy_descriptor_set_layout: unsafe {
-                extern "system" fn destroy_descriptor_set_layout(
+                unsafe extern "system" fn destroy_descriptor_set_layout(
                     _device: Device,
                     _descriptor_set_layout: DescriptorSetLayout,
                     _p_allocator: *const AllocationCallbacks,
@@ -3330,7 +3405,7 @@ impl DeviceFnV1_0 {
                 }
             },
             create_descriptor_pool: unsafe {
-                extern "system" fn create_descriptor_pool(
+                unsafe extern "system" fn create_descriptor_pool(
                     _device: Device,
                     _p_create_info: *const DescriptorPoolCreateInfo,
                     _p_allocator: *const AllocationCallbacks,
@@ -3351,7 +3426,7 @@ impl DeviceFnV1_0 {
                 }
             },
             destroy_descriptor_pool: unsafe {
-                extern "system" fn destroy_descriptor_pool(
+                unsafe extern "system" fn destroy_descriptor_pool(
                     _device: Device,
                     _descriptor_pool: DescriptorPool,
                     _p_allocator: *const AllocationCallbacks,
@@ -3371,7 +3446,7 @@ impl DeviceFnV1_0 {
                 }
             },
             reset_descriptor_pool: unsafe {
-                extern "system" fn reset_descriptor_pool(
+                unsafe extern "system" fn reset_descriptor_pool(
                     _device: Device,
                     _descriptor_pool: DescriptorPool,
                     _flags: DescriptorPoolResetFlags,
@@ -3391,7 +3466,7 @@ impl DeviceFnV1_0 {
                 }
             },
             allocate_descriptor_sets: unsafe {
-                extern "system" fn allocate_descriptor_sets(
+                unsafe extern "system" fn allocate_descriptor_sets(
                     _device: Device,
                     _p_allocate_info: *const DescriptorSetAllocateInfo,
                     _p_descriptor_sets: *mut DescriptorSet,
@@ -3411,7 +3486,7 @@ impl DeviceFnV1_0 {
                 }
             },
             free_descriptor_sets: unsafe {
-                extern "system" fn free_descriptor_sets(
+                unsafe extern "system" fn free_descriptor_sets(
                     _device: Device,
                     _descriptor_pool: DescriptorPool,
                     _descriptor_set_count: u32,
@@ -3429,7 +3504,7 @@ impl DeviceFnV1_0 {
                 }
             },
             update_descriptor_sets: unsafe {
-                extern "system" fn update_descriptor_sets(
+                unsafe extern "system" fn update_descriptor_sets(
                     _device: Device,
                     _descriptor_write_count: u32,
                     _p_descriptor_writes: *const WriteDescriptorSet,
@@ -3451,7 +3526,7 @@ impl DeviceFnV1_0 {
                 }
             },
             create_framebuffer: unsafe {
-                extern "system" fn create_framebuffer(
+                unsafe extern "system" fn create_framebuffer(
                     _device: Device,
                     _p_create_info: *const FramebufferCreateInfo,
                     _p_allocator: *const AllocationCallbacks,
@@ -3469,7 +3544,7 @@ impl DeviceFnV1_0 {
                 }
             },
             destroy_framebuffer: unsafe {
-                extern "system" fn destroy_framebuffer(
+                unsafe extern "system" fn destroy_framebuffer(
                     _device: Device,
                     _framebuffer: Framebuffer,
                     _p_allocator: *const AllocationCallbacks,
@@ -3486,7 +3561,7 @@ impl DeviceFnV1_0 {
                 }
             },
             create_render_pass: unsafe {
-                extern "system" fn create_render_pass(
+                unsafe extern "system" fn create_render_pass(
                     _device: Device,
                     _p_create_info: *const RenderPassCreateInfo,
                     _p_allocator: *const AllocationCallbacks,
@@ -3504,7 +3579,7 @@ impl DeviceFnV1_0 {
                 }
             },
             destroy_render_pass: unsafe {
-                extern "system" fn destroy_render_pass(
+                unsafe extern "system" fn destroy_render_pass(
                     _device: Device,
                     _render_pass: RenderPass,
                     _p_allocator: *const AllocationCallbacks,
@@ -3521,7 +3596,7 @@ impl DeviceFnV1_0 {
                 }
             },
             get_render_area_granularity: unsafe {
-                extern "system" fn get_render_area_granularity(
+                unsafe extern "system" fn get_render_area_granularity(
                     _device: Device,
                     _render_pass: RenderPass,
                     _p_granularity: *mut Extent2D,
@@ -3542,7 +3617,7 @@ impl DeviceFnV1_0 {
                 }
             },
             create_command_pool: unsafe {
-                extern "system" fn create_command_pool(
+                unsafe extern "system" fn create_command_pool(
                     _device: Device,
                     _p_create_info: *const CommandPoolCreateInfo,
                     _p_allocator: *const AllocationCallbacks,
@@ -3560,7 +3635,7 @@ impl DeviceFnV1_0 {
                 }
             },
             destroy_command_pool: unsafe {
-                extern "system" fn destroy_command_pool(
+                unsafe extern "system" fn destroy_command_pool(
                     _device: Device,
                     _command_pool: CommandPool,
                     _p_allocator: *const AllocationCallbacks,
@@ -3577,7 +3652,7 @@ impl DeviceFnV1_0 {
                 }
             },
             reset_command_pool: unsafe {
-                extern "system" fn reset_command_pool(
+                unsafe extern "system" fn reset_command_pool(
                     _device: Device,
                     _command_pool: CommandPool,
                     _flags: CommandPoolResetFlags,
@@ -3594,7 +3669,7 @@ impl DeviceFnV1_0 {
                 }
             },
             allocate_command_buffers: unsafe {
-                extern "system" fn allocate_command_buffers(
+                unsafe extern "system" fn allocate_command_buffers(
                     _device: Device,
                     _p_allocate_info: *const CommandBufferAllocateInfo,
                     _p_command_buffers: *mut CommandBuffer,
@@ -3614,7 +3689,7 @@ impl DeviceFnV1_0 {
                 }
             },
             free_command_buffers: unsafe {
-                extern "system" fn free_command_buffers(
+                unsafe extern "system" fn free_command_buffers(
                     _device: Device,
                     _command_pool: CommandPool,
                     _command_buffer_count: u32,
@@ -3632,7 +3707,7 @@ impl DeviceFnV1_0 {
                 }
             },
             begin_command_buffer: unsafe {
-                extern "system" fn begin_command_buffer(
+                unsafe extern "system" fn begin_command_buffer(
                     _command_buffer: CommandBuffer,
                     _p_begin_info: *const CommandBufferBeginInfo,
                 ) -> Result {
@@ -3648,7 +3723,9 @@ impl DeviceFnV1_0 {
                 }
             },
             end_command_buffer: unsafe {
-                extern "system" fn end_command_buffer(_command_buffer: CommandBuffer) -> Result {
+                unsafe extern "system" fn end_command_buffer(
+                    _command_buffer: CommandBuffer,
+                ) -> Result {
                     panic!(concat!("Unable to load ", stringify!(end_command_buffer)))
                 }
                 let cname =
@@ -3661,7 +3738,7 @@ impl DeviceFnV1_0 {
                 }
             },
             reset_command_buffer: unsafe {
-                extern "system" fn reset_command_buffer(
+                unsafe extern "system" fn reset_command_buffer(
                     _command_buffer: CommandBuffer,
                     _flags: CommandBufferResetFlags,
                 ) -> Result {
@@ -3677,7 +3754,7 @@ impl DeviceFnV1_0 {
                 }
             },
             cmd_bind_pipeline: unsafe {
-                extern "system" fn cmd_bind_pipeline(
+                unsafe extern "system" fn cmd_bind_pipeline(
                     _command_buffer: CommandBuffer,
                     _pipeline_bind_point: PipelineBindPoint,
                     _pipeline: Pipeline,
@@ -3693,7 +3770,7 @@ impl DeviceFnV1_0 {
                 }
             },
             cmd_set_viewport: unsafe {
-                extern "system" fn cmd_set_viewport(
+                unsafe extern "system" fn cmd_set_viewport(
                     _command_buffer: CommandBuffer,
                     _first_viewport: u32,
                     _viewport_count: u32,
@@ -3710,7 +3787,7 @@ impl DeviceFnV1_0 {
                 }
             },
             cmd_set_scissor: unsafe {
-                extern "system" fn cmd_set_scissor(
+                unsafe extern "system" fn cmd_set_scissor(
                     _command_buffer: CommandBuffer,
                     _first_scissor: u32,
                     _scissor_count: u32,
@@ -3727,7 +3804,7 @@ impl DeviceFnV1_0 {
                 }
             },
             cmd_set_line_width: unsafe {
-                extern "system" fn cmd_set_line_width(
+                unsafe extern "system" fn cmd_set_line_width(
                     _command_buffer: CommandBuffer,
                     _line_width: f32,
                 ) {
@@ -3742,7 +3819,7 @@ impl DeviceFnV1_0 {
                 }
             },
             cmd_set_depth_bias: unsafe {
-                extern "system" fn cmd_set_depth_bias(
+                unsafe extern "system" fn cmd_set_depth_bias(
                     _command_buffer: CommandBuffer,
                     _depth_bias_constant_factor: f32,
                     _depth_bias_clamp: f32,
@@ -3759,7 +3836,7 @@ impl DeviceFnV1_0 {
                 }
             },
             cmd_set_blend_constants: unsafe {
-                extern "system" fn cmd_set_blend_constants(
+                unsafe extern "system" fn cmd_set_blend_constants(
                     _command_buffer: CommandBuffer,
                     _blend_constants: *const [f32; 4],
                 ) {
@@ -3778,7 +3855,7 @@ impl DeviceFnV1_0 {
                 }
             },
             cmd_set_depth_bounds: unsafe {
-                extern "system" fn cmd_set_depth_bounds(
+                unsafe extern "system" fn cmd_set_depth_bounds(
                     _command_buffer: CommandBuffer,
                     _min_depth_bounds: f32,
                     _max_depth_bounds: f32,
@@ -3795,7 +3872,7 @@ impl DeviceFnV1_0 {
                 }
             },
             cmd_set_stencil_compare_mask: unsafe {
-                extern "system" fn cmd_set_stencil_compare_mask(
+                unsafe extern "system" fn cmd_set_stencil_compare_mask(
                     _command_buffer: CommandBuffer,
                     _face_mask: StencilFaceFlags,
                     _compare_mask: u32,
@@ -3816,7 +3893,7 @@ impl DeviceFnV1_0 {
                 }
             },
             cmd_set_stencil_write_mask: unsafe {
-                extern "system" fn cmd_set_stencil_write_mask(
+                unsafe extern "system" fn cmd_set_stencil_write_mask(
                     _command_buffer: CommandBuffer,
                     _face_mask: StencilFaceFlags,
                     _write_mask: u32,
@@ -3836,7 +3913,7 @@ impl DeviceFnV1_0 {
                 }
             },
             cmd_set_stencil_reference: unsafe {
-                extern "system" fn cmd_set_stencil_reference(
+                unsafe extern "system" fn cmd_set_stencil_reference(
                     _command_buffer: CommandBuffer,
                     _face_mask: StencilFaceFlags,
                     _reference: u32,
@@ -3856,7 +3933,7 @@ impl DeviceFnV1_0 {
                 }
             },
             cmd_bind_descriptor_sets: unsafe {
-                extern "system" fn cmd_bind_descriptor_sets(
+                unsafe extern "system" fn cmd_bind_descriptor_sets(
                     _command_buffer: CommandBuffer,
                     _pipeline_bind_point: PipelineBindPoint,
                     _layout: PipelineLayout,
@@ -3881,7 +3958,7 @@ impl DeviceFnV1_0 {
                 }
             },
             cmd_bind_index_buffer: unsafe {
-                extern "system" fn cmd_bind_index_buffer(
+                unsafe extern "system" fn cmd_bind_index_buffer(
                     _command_buffer: CommandBuffer,
                     _buffer: Buffer,
                     _offset: DeviceSize,
@@ -3902,7 +3979,7 @@ impl DeviceFnV1_0 {
                 }
             },
             cmd_bind_vertex_buffers: unsafe {
-                extern "system" fn cmd_bind_vertex_buffers(
+                unsafe extern "system" fn cmd_bind_vertex_buffers(
                     _command_buffer: CommandBuffer,
                     _first_binding: u32,
                     _binding_count: u32,
@@ -3924,7 +4001,7 @@ impl DeviceFnV1_0 {
                 }
             },
             cmd_draw: unsafe {
-                extern "system" fn cmd_draw(
+                unsafe extern "system" fn cmd_draw(
                     _command_buffer: CommandBuffer,
                     _vertex_count: u32,
                     _instance_count: u32,
@@ -3942,7 +4019,7 @@ impl DeviceFnV1_0 {
                 }
             },
             cmd_draw_indexed: unsafe {
-                extern "system" fn cmd_draw_indexed(
+                unsafe extern "system" fn cmd_draw_indexed(
                     _command_buffer: CommandBuffer,
                     _index_count: u32,
                     _instance_count: u32,
@@ -3961,7 +4038,7 @@ impl DeviceFnV1_0 {
                 }
             },
             cmd_draw_indirect: unsafe {
-                extern "system" fn cmd_draw_indirect(
+                unsafe extern "system" fn cmd_draw_indirect(
                     _command_buffer: CommandBuffer,
                     _buffer: Buffer,
                     _offset: DeviceSize,
@@ -3979,7 +4056,7 @@ impl DeviceFnV1_0 {
                 }
             },
             cmd_draw_indexed_indirect: unsafe {
-                extern "system" fn cmd_draw_indexed_indirect(
+                unsafe extern "system" fn cmd_draw_indexed_indirect(
                     _command_buffer: CommandBuffer,
                     _buffer: Buffer,
                     _offset: DeviceSize,
@@ -4001,7 +4078,7 @@ impl DeviceFnV1_0 {
                 }
             },
             cmd_dispatch: unsafe {
-                extern "system" fn cmd_dispatch(
+                unsafe extern "system" fn cmd_dispatch(
                     _command_buffer: CommandBuffer,
                     _group_count_x: u32,
                     _group_count_y: u32,
@@ -4018,7 +4095,7 @@ impl DeviceFnV1_0 {
                 }
             },
             cmd_dispatch_indirect: unsafe {
-                extern "system" fn cmd_dispatch_indirect(
+                unsafe extern "system" fn cmd_dispatch_indirect(
                     _command_buffer: CommandBuffer,
                     _buffer: Buffer,
                     _offset: DeviceSize,
@@ -4038,7 +4115,7 @@ impl DeviceFnV1_0 {
                 }
             },
             cmd_copy_buffer: unsafe {
-                extern "system" fn cmd_copy_buffer(
+                unsafe extern "system" fn cmd_copy_buffer(
                     _command_buffer: CommandBuffer,
                     _src_buffer: Buffer,
                     _dst_buffer: Buffer,
@@ -4056,7 +4133,7 @@ impl DeviceFnV1_0 {
                 }
             },
             cmd_copy_image: unsafe {
-                extern "system" fn cmd_copy_image(
+                unsafe extern "system" fn cmd_copy_image(
                     _command_buffer: CommandBuffer,
                     _src_image: Image,
                     _src_image_layout: ImageLayout,
@@ -4076,7 +4153,7 @@ impl DeviceFnV1_0 {
                 }
             },
             cmd_blit_image: unsafe {
-                extern "system" fn cmd_blit_image(
+                unsafe extern "system" fn cmd_blit_image(
                     _command_buffer: CommandBuffer,
                     _src_image: Image,
                     _src_image_layout: ImageLayout,
@@ -4097,7 +4174,7 @@ impl DeviceFnV1_0 {
                 }
             },
             cmd_copy_buffer_to_image: unsafe {
-                extern "system" fn cmd_copy_buffer_to_image(
+                unsafe extern "system" fn cmd_copy_buffer_to_image(
                     _command_buffer: CommandBuffer,
                     _src_buffer: Buffer,
                     _dst_image: Image,
@@ -4120,7 +4197,7 @@ impl DeviceFnV1_0 {
                 }
             },
             cmd_copy_image_to_buffer: unsafe {
-                extern "system" fn cmd_copy_image_to_buffer(
+                unsafe extern "system" fn cmd_copy_image_to_buffer(
                     _command_buffer: CommandBuffer,
                     _src_image: Image,
                     _src_image_layout: ImageLayout,
@@ -4143,7 +4220,7 @@ impl DeviceFnV1_0 {
                 }
             },
             cmd_update_buffer: unsafe {
-                extern "system" fn cmd_update_buffer(
+                unsafe extern "system" fn cmd_update_buffer(
                     _command_buffer: CommandBuffer,
                     _dst_buffer: Buffer,
                     _dst_offset: DeviceSize,
@@ -4161,7 +4238,7 @@ impl DeviceFnV1_0 {
                 }
             },
             cmd_fill_buffer: unsafe {
-                extern "system" fn cmd_fill_buffer(
+                unsafe extern "system" fn cmd_fill_buffer(
                     _command_buffer: CommandBuffer,
                     _dst_buffer: Buffer,
                     _dst_offset: DeviceSize,
@@ -4179,7 +4256,7 @@ impl DeviceFnV1_0 {
                 }
             },
             cmd_clear_color_image: unsafe {
-                extern "system" fn cmd_clear_color_image(
+                unsafe extern "system" fn cmd_clear_color_image(
                     _command_buffer: CommandBuffer,
                     _image: Image,
                     _image_layout: ImageLayout,
@@ -4202,7 +4279,7 @@ impl DeviceFnV1_0 {
                 }
             },
             cmd_clear_depth_stencil_image: unsafe {
-                extern "system" fn cmd_clear_depth_stencil_image(
+                unsafe extern "system" fn cmd_clear_depth_stencil_image(
                     _command_buffer: CommandBuffer,
                     _image: Image,
                     _image_layout: ImageLayout,
@@ -4226,7 +4303,7 @@ impl DeviceFnV1_0 {
                 }
             },
             cmd_clear_attachments: unsafe {
-                extern "system" fn cmd_clear_attachments(
+                unsafe extern "system" fn cmd_clear_attachments(
                     _command_buffer: CommandBuffer,
                     _attachment_count: u32,
                     _p_attachments: *const ClearAttachment,
@@ -4248,7 +4325,7 @@ impl DeviceFnV1_0 {
                 }
             },
             cmd_resolve_image: unsafe {
-                extern "system" fn cmd_resolve_image(
+                unsafe extern "system" fn cmd_resolve_image(
                     _command_buffer: CommandBuffer,
                     _src_image: Image,
                     _src_image_layout: ImageLayout,
@@ -4268,7 +4345,7 @@ impl DeviceFnV1_0 {
                 }
             },
             cmd_set_event: unsafe {
-                extern "system" fn cmd_set_event(
+                unsafe extern "system" fn cmd_set_event(
                     _command_buffer: CommandBuffer,
                     _event: Event,
                     _stage_mask: PipelineStageFlags,
@@ -4284,7 +4361,7 @@ impl DeviceFnV1_0 {
                 }
             },
             cmd_reset_event: unsafe {
-                extern "system" fn cmd_reset_event(
+                unsafe extern "system" fn cmd_reset_event(
                     _command_buffer: CommandBuffer,
                     _event: Event,
                     _stage_mask: PipelineStageFlags,
@@ -4300,7 +4377,7 @@ impl DeviceFnV1_0 {
                 }
             },
             cmd_wait_events: unsafe {
-                extern "system" fn cmd_wait_events(
+                unsafe extern "system" fn cmd_wait_events(
                     _command_buffer: CommandBuffer,
                     _event_count: u32,
                     _p_events: *const Event,
@@ -4324,7 +4401,7 @@ impl DeviceFnV1_0 {
                 }
             },
             cmd_pipeline_barrier: unsafe {
-                extern "system" fn cmd_pipeline_barrier(
+                unsafe extern "system" fn cmd_pipeline_barrier(
                     _command_buffer: CommandBuffer,
                     _src_stage_mask: PipelineStageFlags,
                     _dst_stage_mask: PipelineStageFlags,
@@ -4348,7 +4425,7 @@ impl DeviceFnV1_0 {
                 }
             },
             cmd_begin_query: unsafe {
-                extern "system" fn cmd_begin_query(
+                unsafe extern "system" fn cmd_begin_query(
                     _command_buffer: CommandBuffer,
                     _query_pool: QueryPool,
                     _query: u32,
@@ -4365,7 +4442,7 @@ impl DeviceFnV1_0 {
                 }
             },
             cmd_end_query: unsafe {
-                extern "system" fn cmd_end_query(
+                unsafe extern "system" fn cmd_end_query(
                     _command_buffer: CommandBuffer,
                     _query_pool: QueryPool,
                     _query: u32,
@@ -4381,7 +4458,7 @@ impl DeviceFnV1_0 {
                 }
             },
             cmd_reset_query_pool: unsafe {
-                extern "system" fn cmd_reset_query_pool(
+                unsafe extern "system" fn cmd_reset_query_pool(
                     _command_buffer: CommandBuffer,
                     _query_pool: QueryPool,
                     _first_query: u32,
@@ -4399,7 +4476,7 @@ impl DeviceFnV1_0 {
                 }
             },
             cmd_write_timestamp: unsafe {
-                extern "system" fn cmd_write_timestamp(
+                unsafe extern "system" fn cmd_write_timestamp(
                     _command_buffer: CommandBuffer,
                     _pipeline_stage: PipelineStageFlags,
                     _query_pool: QueryPool,
@@ -4417,7 +4494,7 @@ impl DeviceFnV1_0 {
                 }
             },
             cmd_copy_query_pool_results: unsafe {
-                extern "system" fn cmd_copy_query_pool_results(
+                unsafe extern "system" fn cmd_copy_query_pool_results(
                     _command_buffer: CommandBuffer,
                     _query_pool: QueryPool,
                     _first_query: u32,
@@ -4442,7 +4519,7 @@ impl DeviceFnV1_0 {
                 }
             },
             cmd_push_constants: unsafe {
-                extern "system" fn cmd_push_constants(
+                unsafe extern "system" fn cmd_push_constants(
                     _command_buffer: CommandBuffer,
                     _layout: PipelineLayout,
                     _stage_flags: ShaderStageFlags,
@@ -4462,7 +4539,7 @@ impl DeviceFnV1_0 {
                 }
             },
             cmd_begin_render_pass: unsafe {
-                extern "system" fn cmd_begin_render_pass(
+                unsafe extern "system" fn cmd_begin_render_pass(
                     _command_buffer: CommandBuffer,
                     _p_render_pass_begin: *const RenderPassBeginInfo,
                     _contents: SubpassContents,
@@ -4482,7 +4559,7 @@ impl DeviceFnV1_0 {
                 }
             },
             cmd_next_subpass: unsafe {
-                extern "system" fn cmd_next_subpass(
+                unsafe extern "system" fn cmd_next_subpass(
                     _command_buffer: CommandBuffer,
                     _contents: SubpassContents,
                 ) {
@@ -4497,7 +4574,7 @@ impl DeviceFnV1_0 {
                 }
             },
             cmd_end_render_pass: unsafe {
-                extern "system" fn cmd_end_render_pass(_command_buffer: CommandBuffer) {
+                unsafe extern "system" fn cmd_end_render_pass(_command_buffer: CommandBuffer) {
                     panic!(concat!("Unable to load ", stringify!(cmd_end_render_pass)))
                 }
                 let cname =
@@ -4510,7 +4587,7 @@ impl DeviceFnV1_0 {
                 }
             },
             cmd_execute_commands: unsafe {
-                extern "system" fn cmd_execute_commands(
+                unsafe extern "system" fn cmd_execute_commands(
                     _command_buffer: CommandBuffer,
                     _command_buffer_count: u32,
                     _p_command_buffers: *const CommandBuffer,
@@ -5852,9 +5929,10 @@ impl DeviceFnV1_0 {
     }
 }
 #[allow(non_camel_case_types)]
-pub type PFN_vkEnumerateInstanceVersion = extern "system" fn(p_api_version: *mut u32) -> Result;
+pub type PFN_vkEnumerateInstanceVersion =
+    unsafe extern "system" fn(p_api_version: *mut u32) -> Result;
 pub struct EntryFnV1_1 {
-    pub enumerate_instance_version: extern "system" fn(p_api_version: *mut u32) -> Result,
+    pub enumerate_instance_version: unsafe extern "system" fn(p_api_version: *mut u32) -> Result,
 }
 unsafe impl Send for EntryFnV1_1 {}
 unsafe impl Sync for EntryFnV1_1 {}
@@ -5872,7 +5950,9 @@ impl EntryFnV1_1 {
     {
         EntryFnV1_1 {
             enumerate_instance_version: unsafe {
-                extern "system" fn enumerate_instance_version(_p_api_version: *mut u32) -> Result {
+                unsafe extern "system" fn enumerate_instance_version(
+                    _p_api_version: *mut u32,
+                ) -> Result {
                     panic!(concat!(
                         "Unable to load ",
                         stringify!(enumerate_instance_version)
@@ -5896,55 +5976,55 @@ impl EntryFnV1_1 {
     }
 }
 pub struct InstanceFnV1_1 {
-    pub enumerate_physical_device_groups: extern "system" fn(
+    pub enumerate_physical_device_groups: unsafe extern "system" fn(
         instance: Instance,
         p_physical_device_group_count: *mut u32,
         p_physical_device_group_properties: *mut PhysicalDeviceGroupProperties,
     ) -> Result,
-    pub get_physical_device_features2: extern "system" fn(
+    pub get_physical_device_features2: unsafe extern "system" fn(
         physical_device: PhysicalDevice,
         p_features: *mut PhysicalDeviceFeatures2,
     ),
-    pub get_physical_device_properties2: extern "system" fn(
+    pub get_physical_device_properties2: unsafe extern "system" fn(
         physical_device: PhysicalDevice,
         p_properties: *mut PhysicalDeviceProperties2,
     ),
-    pub get_physical_device_format_properties2: extern "system" fn(
+    pub get_physical_device_format_properties2: unsafe extern "system" fn(
         physical_device: PhysicalDevice,
         format: Format,
         p_format_properties: *mut FormatProperties2,
     ),
-    pub get_physical_device_image_format_properties2: extern "system" fn(
+    pub get_physical_device_image_format_properties2: unsafe extern "system" fn(
         physical_device: PhysicalDevice,
         p_image_format_info: *const PhysicalDeviceImageFormatInfo2,
         p_image_format_properties: *mut ImageFormatProperties2,
     ) -> Result,
-    pub get_physical_device_queue_family_properties2: extern "system" fn(
+    pub get_physical_device_queue_family_properties2: unsafe extern "system" fn(
         physical_device: PhysicalDevice,
         p_queue_family_property_count: *mut u32,
         p_queue_family_properties: *mut QueueFamilyProperties2,
     ),
-    pub get_physical_device_memory_properties2: extern "system" fn(
+    pub get_physical_device_memory_properties2: unsafe extern "system" fn(
         physical_device: PhysicalDevice,
         p_memory_properties: *mut PhysicalDeviceMemoryProperties2,
     ),
-    pub get_physical_device_sparse_image_format_properties2: extern "system" fn(
+    pub get_physical_device_sparse_image_format_properties2: unsafe extern "system" fn(
         physical_device: PhysicalDevice,
         p_format_info: *const PhysicalDeviceSparseImageFormatInfo2,
         p_property_count: *mut u32,
         p_properties: *mut SparseImageFormatProperties2,
     ),
-    pub get_physical_device_external_buffer_properties: extern "system" fn(
+    pub get_physical_device_external_buffer_properties: unsafe extern "system" fn(
         physical_device: PhysicalDevice,
         p_external_buffer_info: *const PhysicalDeviceExternalBufferInfo,
         p_external_buffer_properties: *mut ExternalBufferProperties,
     ),
-    pub get_physical_device_external_fence_properties: extern "system" fn(
+    pub get_physical_device_external_fence_properties: unsafe extern "system" fn(
         physical_device: PhysicalDevice,
         p_external_fence_info: *const PhysicalDeviceExternalFenceInfo,
         p_external_fence_properties: *mut ExternalFenceProperties,
     ),
-    pub get_physical_device_external_semaphore_properties: extern "system" fn(
+    pub get_physical_device_external_semaphore_properties: unsafe extern "system" fn(
         physical_device: PhysicalDevice,
         p_external_semaphore_info: *const PhysicalDeviceExternalSemaphoreInfo,
         p_external_semaphore_properties: *mut ExternalSemaphoreProperties,
@@ -5982,7 +6062,7 @@ impl InstanceFnV1_1 {
     {
         InstanceFnV1_1 {
             enumerate_physical_device_groups: unsafe {
-                extern "system" fn enumerate_physical_device_groups(
+                unsafe extern "system" fn enumerate_physical_device_groups(
                     _instance: Instance,
                     _p_physical_device_group_count: *mut u32,
                     _p_physical_device_group_properties: *mut PhysicalDeviceGroupProperties,
@@ -6003,7 +6083,7 @@ impl InstanceFnV1_1 {
                 }
             },
             get_physical_device_features2: unsafe {
-                extern "system" fn get_physical_device_features2(
+                unsafe extern "system" fn get_physical_device_features2(
                     _physical_device: PhysicalDevice,
                     _p_features: *mut PhysicalDeviceFeatures2,
                 ) {
@@ -6023,7 +6103,7 @@ impl InstanceFnV1_1 {
                 }
             },
             get_physical_device_properties2: unsafe {
-                extern "system" fn get_physical_device_properties2(
+                unsafe extern "system" fn get_physical_device_properties2(
                     _physical_device: PhysicalDevice,
                     _p_properties: *mut PhysicalDeviceProperties2,
                 ) {
@@ -6043,7 +6123,7 @@ impl InstanceFnV1_1 {
                 }
             },
             get_physical_device_format_properties2: unsafe {
-                extern "system" fn get_physical_device_format_properties2(
+                unsafe extern "system" fn get_physical_device_format_properties2(
                     _physical_device: PhysicalDevice,
                     _format: Format,
                     _p_format_properties: *mut FormatProperties2,
@@ -6064,7 +6144,7 @@ impl InstanceFnV1_1 {
                 }
             },
             get_physical_device_image_format_properties2: unsafe {
-                extern "system" fn get_physical_device_image_format_properties2(
+                unsafe extern "system" fn get_physical_device_image_format_properties2(
                     _physical_device: PhysicalDevice,
                     _p_image_format_info: *const PhysicalDeviceImageFormatInfo2,
                     _p_image_format_properties: *mut ImageFormatProperties2,
@@ -6085,7 +6165,7 @@ impl InstanceFnV1_1 {
                 }
             },
             get_physical_device_queue_family_properties2: unsafe {
-                extern "system" fn get_physical_device_queue_family_properties2(
+                unsafe extern "system" fn get_physical_device_queue_family_properties2(
                     _physical_device: PhysicalDevice,
                     _p_queue_family_property_count: *mut u32,
                     _p_queue_family_properties: *mut QueueFamilyProperties2,
@@ -6106,7 +6186,7 @@ impl InstanceFnV1_1 {
                 }
             },
             get_physical_device_memory_properties2: unsafe {
-                extern "system" fn get_physical_device_memory_properties2(
+                unsafe extern "system" fn get_physical_device_memory_properties2(
                     _physical_device: PhysicalDevice,
                     _p_memory_properties: *mut PhysicalDeviceMemoryProperties2,
                 ) {
@@ -6126,7 +6206,7 @@ impl InstanceFnV1_1 {
                 }
             },
             get_physical_device_sparse_image_format_properties2: unsafe {
-                extern "system" fn get_physical_device_sparse_image_format_properties2(
+                unsafe extern "system" fn get_physical_device_sparse_image_format_properties2(
                     _physical_device: PhysicalDevice,
                     _p_format_info: *const PhysicalDeviceSparseImageFormatInfo2,
                     _p_property_count: *mut u32,
@@ -6148,7 +6228,7 @@ impl InstanceFnV1_1 {
                 }
             },
             get_physical_device_external_buffer_properties: unsafe {
-                extern "system" fn get_physical_device_external_buffer_properties(
+                unsafe extern "system" fn get_physical_device_external_buffer_properties(
                     _physical_device: PhysicalDevice,
                     _p_external_buffer_info: *const PhysicalDeviceExternalBufferInfo,
                     _p_external_buffer_properties: *mut ExternalBufferProperties,
@@ -6169,7 +6249,7 @@ impl InstanceFnV1_1 {
                 }
             },
             get_physical_device_external_fence_properties: unsafe {
-                extern "system" fn get_physical_device_external_fence_properties(
+                unsafe extern "system" fn get_physical_device_external_fence_properties(
                     _physical_device: PhysicalDevice,
                     _p_external_fence_info: *const PhysicalDeviceExternalFenceInfo,
                     _p_external_fence_properties: *mut ExternalFenceProperties,
@@ -6190,7 +6270,7 @@ impl InstanceFnV1_1 {
                 }
             },
             get_physical_device_external_semaphore_properties: unsafe {
-                extern "system" fn get_physical_device_external_semaphore_properties(
+                unsafe extern "system" fn get_physical_device_external_semaphore_properties(
                     _physical_device: PhysicalDevice,
                     _p_external_semaphore_info: *const PhysicalDeviceExternalSemaphoreInfo,
                     _p_external_semaphore_properties: *mut ExternalSemaphoreProperties,
@@ -6340,31 +6420,32 @@ impl InstanceFnV1_1 {
     }
 }
 #[allow(non_camel_case_types)]
-pub type PFN_vkGetDeviceQueue2 = extern "system" fn(
+pub type PFN_vkGetDeviceQueue2 = unsafe extern "system" fn(
     device: Device,
     bind_info_count: u32,
     p_bind_infos: *const BindBufferMemoryInfo,
 ) -> Result;
 pub struct DeviceFnV1_1 {
-    pub bind_buffer_memory2: extern "system" fn(
+    pub bind_buffer_memory2: unsafe extern "system" fn(
         device: Device,
         bind_info_count: u32,
         p_bind_infos: *const BindBufferMemoryInfo,
     ) -> Result,
-    pub bind_image_memory2: extern "system" fn(
+    pub bind_image_memory2: unsafe extern "system" fn(
         device: Device,
         bind_info_count: u32,
         p_bind_infos: *const BindImageMemoryInfo,
     ) -> Result,
-    pub get_device_group_peer_memory_features: extern "system" fn(
+    pub get_device_group_peer_memory_features: unsafe extern "system" fn(
         device: Device,
         heap_index: u32,
         local_device_index: u32,
         remote_device_index: u32,
         p_peer_memory_features: *mut PeerMemoryFeatureFlags,
     ),
-    pub cmd_set_device_mask: extern "system" fn(command_buffer: CommandBuffer, device_mask: u32),
-    pub cmd_dispatch_base: extern "system" fn(
+    pub cmd_set_device_mask:
+        unsafe extern "system" fn(command_buffer: CommandBuffer, device_mask: u32),
+    pub cmd_dispatch_base: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
         base_group_x: u32,
         base_group_y: u32,
@@ -6373,58 +6454,61 @@ pub struct DeviceFnV1_1 {
         group_count_y: u32,
         group_count_z: u32,
     ),
-    pub get_image_memory_requirements2: extern "system" fn(
+    pub get_image_memory_requirements2: unsafe extern "system" fn(
         device: Device,
         p_info: *const ImageMemoryRequirementsInfo2,
         p_memory_requirements: *mut MemoryRequirements2,
     ),
-    pub get_buffer_memory_requirements2: extern "system" fn(
+    pub get_buffer_memory_requirements2: unsafe extern "system" fn(
         device: Device,
         p_info: *const BufferMemoryRequirementsInfo2,
         p_memory_requirements: *mut MemoryRequirements2,
     ),
-    pub get_image_sparse_memory_requirements2: extern "system" fn(
+    pub get_image_sparse_memory_requirements2: unsafe extern "system" fn(
         device: Device,
         p_info: *const ImageSparseMemoryRequirementsInfo2,
         p_sparse_memory_requirement_count: *mut u32,
         p_sparse_memory_requirements: *mut SparseImageMemoryRequirements2,
     ),
-    pub trim_command_pool:
-        extern "system" fn(device: Device, command_pool: CommandPool, flags: CommandPoolTrimFlags),
-    pub get_device_queue2: extern "system" fn(
+    pub trim_command_pool: unsafe extern "system" fn(
+        device: Device,
+        command_pool: CommandPool,
+        flags: CommandPoolTrimFlags,
+    ),
+    pub get_device_queue2: unsafe extern "system" fn(
         device: Device,
         p_queue_info: *const DeviceQueueInfo2,
         p_queue: *mut Queue,
     ),
-    pub create_sampler_ycbcr_conversion: extern "system" fn(
+    pub create_sampler_ycbcr_conversion: unsafe extern "system" fn(
         device: Device,
         p_create_info: *const SamplerYcbcrConversionCreateInfo,
         p_allocator: *const AllocationCallbacks,
         p_ycbcr_conversion: *mut SamplerYcbcrConversion,
     ) -> Result,
-    pub destroy_sampler_ycbcr_conversion: extern "system" fn(
+    pub destroy_sampler_ycbcr_conversion: unsafe extern "system" fn(
         device: Device,
         ycbcr_conversion: SamplerYcbcrConversion,
         p_allocator: *const AllocationCallbacks,
     ),
-    pub create_descriptor_update_template: extern "system" fn(
+    pub create_descriptor_update_template: unsafe extern "system" fn(
         device: Device,
         p_create_info: *const DescriptorUpdateTemplateCreateInfo,
         p_allocator: *const AllocationCallbacks,
         p_descriptor_update_template: *mut DescriptorUpdateTemplate,
     ) -> Result,
-    pub destroy_descriptor_update_template: extern "system" fn(
+    pub destroy_descriptor_update_template: unsafe extern "system" fn(
         device: Device,
         descriptor_update_template: DescriptorUpdateTemplate,
         p_allocator: *const AllocationCallbacks,
     ),
-    pub update_descriptor_set_with_template: extern "system" fn(
+    pub update_descriptor_set_with_template: unsafe extern "system" fn(
         device: Device,
         descriptor_set: DescriptorSet,
         descriptor_update_template: DescriptorUpdateTemplate,
         p_data: *const c_void,
     ),
-    pub get_descriptor_set_layout_support: extern "system" fn(
+    pub get_descriptor_set_layout_support: unsafe extern "system" fn(
         device: Device,
         p_create_info: *const DescriptorSetLayoutCreateInfo,
         p_support: *mut DescriptorSetLayoutSupport,
@@ -6461,7 +6545,7 @@ impl DeviceFnV1_1 {
     {
         DeviceFnV1_1 {
             bind_buffer_memory2: unsafe {
-                extern "system" fn bind_buffer_memory2(
+                unsafe extern "system" fn bind_buffer_memory2(
                     _device: Device,
                     _bind_info_count: u32,
                     _p_bind_infos: *const BindBufferMemoryInfo,
@@ -6478,7 +6562,7 @@ impl DeviceFnV1_1 {
                 }
             },
             bind_image_memory2: unsafe {
-                extern "system" fn bind_image_memory2(
+                unsafe extern "system" fn bind_image_memory2(
                     _device: Device,
                     _bind_info_count: u32,
                     _p_bind_infos: *const BindImageMemoryInfo,
@@ -6495,7 +6579,7 @@ impl DeviceFnV1_1 {
                 }
             },
             get_device_group_peer_memory_features: unsafe {
-                extern "system" fn get_device_group_peer_memory_features(
+                unsafe extern "system" fn get_device_group_peer_memory_features(
                     _device: Device,
                     _heap_index: u32,
                     _local_device_index: u32,
@@ -6518,7 +6602,7 @@ impl DeviceFnV1_1 {
                 }
             },
             cmd_set_device_mask: unsafe {
-                extern "system" fn cmd_set_device_mask(
+                unsafe extern "system" fn cmd_set_device_mask(
                     _command_buffer: CommandBuffer,
                     _device_mask: u32,
                 ) {
@@ -6534,7 +6618,7 @@ impl DeviceFnV1_1 {
                 }
             },
             cmd_dispatch_base: unsafe {
-                extern "system" fn cmd_dispatch_base(
+                unsafe extern "system" fn cmd_dispatch_base(
                     _command_buffer: CommandBuffer,
                     _base_group_x: u32,
                     _base_group_y: u32,
@@ -6554,7 +6638,7 @@ impl DeviceFnV1_1 {
                 }
             },
             get_image_memory_requirements2: unsafe {
-                extern "system" fn get_image_memory_requirements2(
+                unsafe extern "system" fn get_image_memory_requirements2(
                     _device: Device,
                     _p_info: *const ImageMemoryRequirementsInfo2,
                     _p_memory_requirements: *mut MemoryRequirements2,
@@ -6575,7 +6659,7 @@ impl DeviceFnV1_1 {
                 }
             },
             get_buffer_memory_requirements2: unsafe {
-                extern "system" fn get_buffer_memory_requirements2(
+                unsafe extern "system" fn get_buffer_memory_requirements2(
                     _device: Device,
                     _p_info: *const BufferMemoryRequirementsInfo2,
                     _p_memory_requirements: *mut MemoryRequirements2,
@@ -6596,7 +6680,7 @@ impl DeviceFnV1_1 {
                 }
             },
             get_image_sparse_memory_requirements2: unsafe {
-                extern "system" fn get_image_sparse_memory_requirements2(
+                unsafe extern "system" fn get_image_sparse_memory_requirements2(
                     _device: Device,
                     _p_info: *const ImageSparseMemoryRequirementsInfo2,
                     _p_sparse_memory_requirement_count: *mut u32,
@@ -6618,7 +6702,7 @@ impl DeviceFnV1_1 {
                 }
             },
             trim_command_pool: unsafe {
-                extern "system" fn trim_command_pool(
+                unsafe extern "system" fn trim_command_pool(
                     _device: Device,
                     _command_pool: CommandPool,
                     _flags: CommandPoolTrimFlags,
@@ -6634,7 +6718,7 @@ impl DeviceFnV1_1 {
                 }
             },
             get_device_queue2: unsafe {
-                extern "system" fn get_device_queue2(
+                unsafe extern "system" fn get_device_queue2(
                     _device: Device,
                     _p_queue_info: *const DeviceQueueInfo2,
                     _p_queue: *mut Queue,
@@ -6650,7 +6734,7 @@ impl DeviceFnV1_1 {
                 }
             },
             create_sampler_ycbcr_conversion: unsafe {
-                extern "system" fn create_sampler_ycbcr_conversion(
+                unsafe extern "system" fn create_sampler_ycbcr_conversion(
                     _device: Device,
                     _p_create_info: *const SamplerYcbcrConversionCreateInfo,
                     _p_allocator: *const AllocationCallbacks,
@@ -6672,7 +6756,7 @@ impl DeviceFnV1_1 {
                 }
             },
             destroy_sampler_ycbcr_conversion: unsafe {
-                extern "system" fn destroy_sampler_ycbcr_conversion(
+                unsafe extern "system" fn destroy_sampler_ycbcr_conversion(
                     _device: Device,
                     _ycbcr_conversion: SamplerYcbcrConversion,
                     _p_allocator: *const AllocationCallbacks,
@@ -6693,7 +6777,7 @@ impl DeviceFnV1_1 {
                 }
             },
             create_descriptor_update_template: unsafe {
-                extern "system" fn create_descriptor_update_template(
+                unsafe extern "system" fn create_descriptor_update_template(
                     _device: Device,
                     _p_create_info: *const DescriptorUpdateTemplateCreateInfo,
                     _p_allocator: *const AllocationCallbacks,
@@ -6715,7 +6799,7 @@ impl DeviceFnV1_1 {
                 }
             },
             destroy_descriptor_update_template: unsafe {
-                extern "system" fn destroy_descriptor_update_template(
+                unsafe extern "system" fn destroy_descriptor_update_template(
                     _device: Device,
                     _descriptor_update_template: DescriptorUpdateTemplate,
                     _p_allocator: *const AllocationCallbacks,
@@ -6736,7 +6820,7 @@ impl DeviceFnV1_1 {
                 }
             },
             update_descriptor_set_with_template: unsafe {
-                extern "system" fn update_descriptor_set_with_template(
+                unsafe extern "system" fn update_descriptor_set_with_template(
                     _device: Device,
                     _descriptor_set: DescriptorSet,
                     _descriptor_update_template: DescriptorUpdateTemplate,
@@ -6758,7 +6842,7 @@ impl DeviceFnV1_1 {
                 }
             },
             get_descriptor_set_layout_support: unsafe {
-                extern "system" fn get_descriptor_set_layout_support(
+                unsafe extern "system" fn get_descriptor_set_layout_support(
                     _device: Device,
                     _p_create_info: *const DescriptorSetLayoutCreateInfo,
                     _p_support: *mut DescriptorSetLayoutSupport,
@@ -6997,7 +7081,7 @@ impl InstanceFnV1_2 {
     }
 }
 pub struct DeviceFnV1_2 {
-    pub cmd_draw_indirect_count: extern "system" fn(
+    pub cmd_draw_indirect_count: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
         buffer: Buffer,
         offset: DeviceSize,
@@ -7006,7 +7090,7 @@ pub struct DeviceFnV1_2 {
         max_draw_count: u32,
         stride: u32,
     ),
-    pub cmd_draw_indexed_indirect_count: extern "system" fn(
+    pub cmd_draw_indexed_indirect_count: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
         buffer: Buffer,
         offset: DeviceSize,
@@ -7015,46 +7099,53 @@ pub struct DeviceFnV1_2 {
         max_draw_count: u32,
         stride: u32,
     ),
-    pub create_render_pass2: extern "system" fn(
+    pub create_render_pass2: unsafe extern "system" fn(
         device: Device,
         p_create_info: *const RenderPassCreateInfo2,
         p_allocator: *const AllocationCallbacks,
         p_render_pass: *mut RenderPass,
     ) -> Result,
-    pub cmd_begin_render_pass2: extern "system" fn(
+    pub cmd_begin_render_pass2: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
         p_render_pass_begin: *const RenderPassBeginInfo,
         p_subpass_begin_info: *const SubpassBeginInfo,
     ),
-    pub cmd_next_subpass2: extern "system" fn(
+    pub cmd_next_subpass2: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
         p_subpass_begin_info: *const SubpassBeginInfo,
         p_subpass_end_info: *const SubpassEndInfo,
     ),
-    pub cmd_end_render_pass2: extern "system" fn(
+    pub cmd_end_render_pass2: unsafe extern "system" fn(
         command_buffer: CommandBuffer,
         p_subpass_end_info: *const SubpassEndInfo,
     ),
-    pub reset_query_pool: extern "system" fn(
+    pub reset_query_pool: unsafe extern "system" fn(
         device: Device,
         query_pool: QueryPool,
         first_query: u32,
         query_count: u32,
     ),
-    pub get_semaphore_counter_value:
-        extern "system" fn(device: Device, semaphore: Semaphore, p_value: *mut u64) -> Result,
-    pub wait_semaphores: extern "system" fn(
+    pub get_semaphore_counter_value: unsafe extern "system" fn(
+        device: Device,
+        semaphore: Semaphore,
+        p_value: *mut u64,
+    ) -> Result,
+    pub wait_semaphores: unsafe extern "system" fn(
         device: Device,
         p_wait_info: *const SemaphoreWaitInfo,
         timeout: u64,
     ) -> Result,
-    pub signal_semaphore:
-        extern "system" fn(device: Device, p_signal_info: *const SemaphoreSignalInfo) -> Result,
-    pub get_buffer_device_address:
-        extern "system" fn(device: Device, p_info: *const BufferDeviceAddressInfo) -> DeviceAddress,
+    pub signal_semaphore: unsafe extern "system" fn(
+        device: Device,
+        p_signal_info: *const SemaphoreSignalInfo,
+    ) -> Result,
+    pub get_buffer_device_address: unsafe extern "system" fn(
+        device: Device,
+        p_info: *const BufferDeviceAddressInfo,
+    ) -> DeviceAddress,
     pub get_buffer_opaque_capture_address:
-        extern "system" fn(device: Device, p_info: *const BufferDeviceAddressInfo) -> u64,
-    pub get_device_memory_opaque_capture_address: extern "system" fn(
+        unsafe extern "system" fn(device: Device, p_info: *const BufferDeviceAddressInfo) -> u64,
+    pub get_device_memory_opaque_capture_address: unsafe extern "system" fn(
         device: Device,
         p_info: *const DeviceMemoryOpaqueCaptureAddressInfo,
     ) -> u64,
@@ -7087,7 +7178,7 @@ impl DeviceFnV1_2 {
     {
         DeviceFnV1_2 {
             cmd_draw_indirect_count: unsafe {
-                extern "system" fn cmd_draw_indirect_count(
+                unsafe extern "system" fn cmd_draw_indirect_count(
                     _command_buffer: CommandBuffer,
                     _buffer: Buffer,
                     _offset: DeviceSize,
@@ -7111,7 +7202,7 @@ impl DeviceFnV1_2 {
                 }
             },
             cmd_draw_indexed_indirect_count: unsafe {
-                extern "system" fn cmd_draw_indexed_indirect_count(
+                unsafe extern "system" fn cmd_draw_indexed_indirect_count(
                     _command_buffer: CommandBuffer,
                     _buffer: Buffer,
                     _offset: DeviceSize,
@@ -7136,7 +7227,7 @@ impl DeviceFnV1_2 {
                 }
             },
             create_render_pass2: unsafe {
-                extern "system" fn create_render_pass2(
+                unsafe extern "system" fn create_render_pass2(
                     _device: Device,
                     _p_create_info: *const RenderPassCreateInfo2,
                     _p_allocator: *const AllocationCallbacks,
@@ -7154,7 +7245,7 @@ impl DeviceFnV1_2 {
                 }
             },
             cmd_begin_render_pass2: unsafe {
-                extern "system" fn cmd_begin_render_pass2(
+                unsafe extern "system" fn cmd_begin_render_pass2(
                     _command_buffer: CommandBuffer,
                     _p_render_pass_begin: *const RenderPassBeginInfo,
                     _p_subpass_begin_info: *const SubpassBeginInfo,
@@ -7174,7 +7265,7 @@ impl DeviceFnV1_2 {
                 }
             },
             cmd_next_subpass2: unsafe {
-                extern "system" fn cmd_next_subpass2(
+                unsafe extern "system" fn cmd_next_subpass2(
                     _command_buffer: CommandBuffer,
                     _p_subpass_begin_info: *const SubpassBeginInfo,
                     _p_subpass_end_info: *const SubpassEndInfo,
@@ -7190,7 +7281,7 @@ impl DeviceFnV1_2 {
                 }
             },
             cmd_end_render_pass2: unsafe {
-                extern "system" fn cmd_end_render_pass2(
+                unsafe extern "system" fn cmd_end_render_pass2(
                     _command_buffer: CommandBuffer,
                     _p_subpass_end_info: *const SubpassEndInfo,
                 ) {
@@ -7206,7 +7297,7 @@ impl DeviceFnV1_2 {
                 }
             },
             reset_query_pool: unsafe {
-                extern "system" fn reset_query_pool(
+                unsafe extern "system" fn reset_query_pool(
                     _device: Device,
                     _query_pool: QueryPool,
                     _first_query: u32,
@@ -7223,7 +7314,7 @@ impl DeviceFnV1_2 {
                 }
             },
             get_semaphore_counter_value: unsafe {
-                extern "system" fn get_semaphore_counter_value(
+                unsafe extern "system" fn get_semaphore_counter_value(
                     _device: Device,
                     _semaphore: Semaphore,
                     _p_value: *mut u64,
@@ -7244,7 +7335,7 @@ impl DeviceFnV1_2 {
                 }
             },
             wait_semaphores: unsafe {
-                extern "system" fn wait_semaphores(
+                unsafe extern "system" fn wait_semaphores(
                     _device: Device,
                     _p_wait_info: *const SemaphoreWaitInfo,
                     _timeout: u64,
@@ -7260,7 +7351,7 @@ impl DeviceFnV1_2 {
                 }
             },
             signal_semaphore: unsafe {
-                extern "system" fn signal_semaphore(
+                unsafe extern "system" fn signal_semaphore(
                     _device: Device,
                     _p_signal_info: *const SemaphoreSignalInfo,
                 ) -> Result {
@@ -7275,7 +7366,7 @@ impl DeviceFnV1_2 {
                 }
             },
             get_buffer_device_address: unsafe {
-                extern "system" fn get_buffer_device_address(
+                unsafe extern "system" fn get_buffer_device_address(
                     _device: Device,
                     _p_info: *const BufferDeviceAddressInfo,
                 ) -> DeviceAddress {
@@ -7294,7 +7385,7 @@ impl DeviceFnV1_2 {
                 }
             },
             get_buffer_opaque_capture_address: unsafe {
-                extern "system" fn get_buffer_opaque_capture_address(
+                unsafe extern "system" fn get_buffer_opaque_capture_address(
                     _device: Device,
                     _p_info: *const BufferDeviceAddressInfo,
                 ) -> u64 {
@@ -7314,7 +7405,7 @@ impl DeviceFnV1_2 {
                 }
             },
             get_device_memory_opaque_capture_address: unsafe {
-                extern "system" fn get_device_memory_opaque_capture_address(
+                unsafe extern "system" fn get_device_memory_opaque_capture_address(
                     _device: Device,
                     _p_info: *const DeviceMemoryOpaqueCaptureAddressInfo,
                 ) -> u64 {

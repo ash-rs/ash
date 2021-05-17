@@ -969,12 +969,12 @@ fn generate_function_pointers<'a>(
     quote! {
         #(
             #[allow(non_camel_case_types)]
-            pub type #pfn_names_ref = extern "system" fn(#(#signature_params_ref),*) #return_types_ref;
+            pub type #pfn_names_ref = unsafe extern "system" fn(#(#signature_params_ref),*) #return_types_ref;
         )*
 
         pub struct #ident {
             #(
-                pub #names_ref: extern "system" fn(#expanded_params_ref) #return_types_ref,
+                pub #names_ref: unsafe extern "system" fn(#expanded_params_ref) #return_types_ref,
             )*
         }
 
@@ -996,7 +996,7 @@ fn generate_function_pointers<'a>(
                     #(
                         #names_ref: unsafe {
 
-                            extern "system" fn #names_ref (#expanded_params_unused) #return_types_ref {
+                            unsafe extern "system" fn #names_ref (#expanded_params_unused) #return_types_ref {
                                 panic!(concat!("Unable to load ", stringify!(#names_ref)))
                             }
                             let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(#raw_names_ref);
