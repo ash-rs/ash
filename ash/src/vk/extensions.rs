@@ -14662,21 +14662,12 @@ pub type PFN_vkCreateRayTracingPipelinesNV = unsafe extern "system" fn(
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetAccelerationStructureHandleNV = unsafe extern "system" fn(
     device: Device,
-    pipeline: Pipeline,
-    first_group: u32,
-    group_count: u32,
-    data_size: usize,
-    p_data: *mut c_void,
-) -> Result;
-#[allow(non_camel_case_types)]
-pub type PFN_vkCmdWriteAccelerationStructuresPropertiesNV = unsafe extern "system" fn(
-    device: Device,
     acceleration_structure: AccelerationStructureNV,
     data_size: usize,
     p_data: *mut c_void,
 ) -> Result;
 #[allow(non_camel_case_types)]
-pub type PFN_vkCompileDeferredNV = unsafe extern "system" fn(
+pub type PFN_vkCmdWriteAccelerationStructuresPropertiesNV = unsafe extern "system" fn(
     command_buffer: CommandBuffer,
     acceleration_structure_count: u32,
     p_acceleration_structures: *const AccelerationStructureNV,
@@ -14684,6 +14675,9 @@ pub type PFN_vkCompileDeferredNV = unsafe extern "system" fn(
     query_pool: QueryPool,
     first_query: u32,
 );
+#[allow(non_camel_case_types)]
+pub type PFN_vkCompileDeferredNV =
+    unsafe extern "system" fn(device: Device, pipeline: Pipeline, shader: u32) -> Result;
 pub struct NvRayTracingFn {
     pub create_acceleration_structure_nv: unsafe extern "system" fn(
         device: Device,
@@ -20051,13 +20045,13 @@ impl KhrBufferDeviceAddressFn {
     pub const SPEC_VERSION: u32 = 1u32;
 }
 #[allow(non_camel_case_types)]
-pub type PFN_vkGetBufferOpaqueCaptureAddress = unsafe extern "system" fn(
-    device: Device,
-    p_info: *const BufferDeviceAddressInfo,
-) -> DeviceAddress;
-#[allow(non_camel_case_types)]
-pub type PFN_vkGetDeviceMemoryOpaqueCaptureAddress =
+pub type PFN_vkGetBufferOpaqueCaptureAddress =
     unsafe extern "system" fn(device: Device, p_info: *const BufferDeviceAddressInfo) -> u64;
+#[allow(non_camel_case_types)]
+pub type PFN_vkGetDeviceMemoryOpaqueCaptureAddress = unsafe extern "system" fn(
+    device: Device,
+    p_info: *const DeviceMemoryOpaqueCaptureAddressInfo,
+) -> u64;
 pub struct KhrBufferDeviceAddressFn {
     pub get_buffer_device_address_khr: unsafe extern "system" fn(
         device: Device,

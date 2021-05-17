@@ -6422,9 +6422,9 @@ impl InstanceFnV1_1 {
 #[allow(non_camel_case_types)]
 pub type PFN_vkGetDeviceQueue2 = unsafe extern "system" fn(
     device: Device,
-    bind_info_count: u32,
-    p_bind_infos: *const BindBufferMemoryInfo,
-) -> Result;
+    p_queue_info: *const DeviceQueueInfo2,
+    p_queue: *mut Queue,
+);
 pub struct DeviceFnV1_1 {
     pub bind_buffer_memory2: unsafe extern "system" fn(
         device: Device,

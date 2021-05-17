@@ -934,9 +934,8 @@ fn generate_function_pointers<'a>(
         .iter()
         .map(|cmd| format_ident!("PFN_{}", cmd.name))
         .collect();
-    let pfn_names_ref = &pfn_names;
 
-    let signature_params: Vec<Vec<_>> = commands
+    let pfn_signature_params: Vec<Vec<_>> = commands_pfn
         .iter()
         .map(|cmd| {
             let params: Vec<_> = cmd
@@ -951,7 +950,20 @@ fn generate_function_pointers<'a>(
             params
         })
         .collect();
-    let signature_params_ref = &signature_params;
+    assert_eq!(pfn_names.len(), pfn_signature_params.len());
+
+    let pfn_return_types: Vec<_> = commands_pfn
+        .iter()
+        .map(|cmd| {
+            if cmd.return_type.is_void() {
+                quote!()
+            } else {
+                let ret_ty_tokens = cmd.return_type.type_tokens(true);
+                quote!(-> #ret_ty_tokens)
+            }
+        })
+        .collect();
+    assert_eq!(pfn_names.len(), pfn_return_types.len());
 
     let return_types: Vec<_> = commands
         .iter()
@@ -969,7 +981,7 @@ fn generate_function_pointers<'a>(
     quote! {
         #(
             #[allow(non_camel_case_types)]
-            pub type #pfn_names_ref = unsafe extern "system" fn(#(#signature_params_ref),*) #return_types_ref;
+            pub type #pfn_names = unsafe extern "system" fn(#(#pfn_signature_params),*) #pfn_return_types;
         )*
 
         pub struct #ident {
