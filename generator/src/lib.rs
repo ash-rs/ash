@@ -920,7 +920,7 @@ fn generate_function_pointers<'a>(
         .iter()
         .map(|inner_params| {
             let inner_params_iter = inner_params.iter().map(|&(ref param_name, ref param_ty)| {
-                let unused_name = format_ident!("{}", format!("_{}", param_name).as_str());
+                let unused_name = format_ident!("_{}", param_name);
                 quote! {#unused_name: #param_ty}
             });
             quote! {
@@ -932,7 +932,7 @@ fn generate_function_pointers<'a>(
 
     let pfn_names: Vec<_> = commands_pfn
         .iter()
-        .map(|cmd| format_ident!("{}", format!("PFN_{}", cmd.name.as_str())))
+        .map(|cmd| format_ident!("PFN_{}", cmd.name))
         .collect();
     let pfn_names_ref = &pfn_names;
 
@@ -1331,7 +1331,7 @@ pub fn variant_ident(enum_name: &str, variant_name: &str) -> Ident {
         .map(|c| c.is_digit(10))
         .unwrap_or(false);
     if is_digit {
-        format_ident!("{}", format!("TYPE_{}", new_variant_name).as_str())
+        format_ident!("TYPE_{}", new_variant_name)
     } else {
         format_ident!("{}", new_variant_name)
     }
@@ -2257,19 +2257,19 @@ pub fn generate_feature<'a>(
         quote! {}
     };
     let entry = generate_function_pointers(
-        format_ident!("{}", format!("EntryFnV{}", version).as_str()),
+        format_ident!("EntryFnV{}", version),
         &entry_commands,
         &HashMap::new(),
         fn_cache,
     );
     let instance = generate_function_pointers(
-        format_ident!("{}", format!("InstanceFnV{}", version).as_str()),
+        format_ident!("InstanceFnV{}", version),
         &instance_commands,
         &HashMap::new(),
         fn_cache,
     );
     let device = generate_function_pointers(
-        format_ident!("{}", format!("DeviceFnV{}", version).as_str()),
+        format_ident!("DeviceFnV{}", version),
         &device_commands,
         &HashMap::new(),
         fn_cache,
