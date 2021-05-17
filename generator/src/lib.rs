@@ -933,13 +933,16 @@ fn generate_function_pointers<'a>(
     struct CommandToMember<'a>(&'a Command);
     impl<'a> quote::ToTokens for CommandToMember<'a> {
         fn to_tokens(&self, tokens: &mut TokenStream) {
+            let type_name = &self.0.type_name;
+            let type_name = if self.0.type_needs_defining {
+                // Type is defined in local scope
+                quote!(#type_name)
+            } else {
+                // Type is usually defined in another module
+                quote!(crate::vk::#type_name)
+            };
             let function_name_rust = &self.0.function_name_rust;
-            let parameters = &self.0.parameters;
-            let returns = &self.0.returns;
-            quote!(
-                pub #function_name_rust: unsafe extern "system" fn(#parameters) #returns
-            )
-            .to_tokens(tokens)
+            quote!(pub #function_name_rust: #type_name).to_tokens(tokens)
         }
     }
 

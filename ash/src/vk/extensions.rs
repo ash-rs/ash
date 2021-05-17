@@ -45,34 +45,12 @@ pub type PFN_vkGetPhysicalDeviceSurfacePresentModesKHR = unsafe extern "system" 
 ) -> Result;
 #[derive(Clone)]
 pub struct KhrSurfaceFn {
-    pub destroy_surface_khr: unsafe extern "system" fn(
-        instance: Instance,
-        surface: SurfaceKHR,
-        p_allocator: *const AllocationCallbacks,
-    ),
-    pub get_physical_device_surface_support_khr: unsafe extern "system" fn(
-        physical_device: PhysicalDevice,
-        queue_family_index: u32,
-        surface: SurfaceKHR,
-        p_supported: *mut Bool32,
-    ) -> Result,
-    pub get_physical_device_surface_capabilities_khr: unsafe extern "system" fn(
-        physical_device: PhysicalDevice,
-        surface: SurfaceKHR,
-        p_surface_capabilities: *mut SurfaceCapabilitiesKHR,
-    ) -> Result,
-    pub get_physical_device_surface_formats_khr: unsafe extern "system" fn(
-        physical_device: PhysicalDevice,
-        surface: SurfaceKHR,
-        p_surface_format_count: *mut u32,
-        p_surface_formats: *mut SurfaceFormatKHR,
-    ) -> Result,
-    pub get_physical_device_surface_present_modes_khr: unsafe extern "system" fn(
-        physical_device: PhysicalDevice,
-        surface: SurfaceKHR,
-        p_present_mode_count: *mut u32,
-        p_present_modes: *mut PresentModeKHR,
-    ) -> Result,
+    pub destroy_surface_khr: PFN_vkDestroySurfaceKHR,
+    pub get_physical_device_surface_support_khr: PFN_vkGetPhysicalDeviceSurfaceSupportKHR,
+    pub get_physical_device_surface_capabilities_khr: PFN_vkGetPhysicalDeviceSurfaceCapabilitiesKHR,
+    pub get_physical_device_surface_formats_khr: PFN_vkGetPhysicalDeviceSurfaceFormatsKHR,
+    pub get_physical_device_surface_present_modes_khr:
+        PFN_vkGetPhysicalDeviceSurfacePresentModesKHR,
 }
 unsafe impl Send for KhrSurfaceFn {}
 unsafe impl Sync for KhrSurfaceFn {}
@@ -333,53 +311,15 @@ pub type PFN_vkAcquireNextImage2KHR = unsafe extern "system" fn(
 ) -> Result;
 #[derive(Clone)]
 pub struct KhrSwapchainFn {
-    pub create_swapchain_khr: unsafe extern "system" fn(
-        device: Device,
-        p_create_info: *const SwapchainCreateInfoKHR,
-        p_allocator: *const AllocationCallbacks,
-        p_swapchain: *mut SwapchainKHR,
-    ) -> Result,
-    pub destroy_swapchain_khr: unsafe extern "system" fn(
-        device: Device,
-        swapchain: SwapchainKHR,
-        p_allocator: *const AllocationCallbacks,
-    ),
-    pub get_swapchain_images_khr: unsafe extern "system" fn(
-        device: Device,
-        swapchain: SwapchainKHR,
-        p_swapchain_image_count: *mut u32,
-        p_swapchain_images: *mut Image,
-    ) -> Result,
-    pub acquire_next_image_khr: unsafe extern "system" fn(
-        device: Device,
-        swapchain: SwapchainKHR,
-        timeout: u64,
-        semaphore: Semaphore,
-        fence: Fence,
-        p_image_index: *mut u32,
-    ) -> Result,
-    pub queue_present_khr:
-        unsafe extern "system" fn(queue: Queue, p_present_info: *const PresentInfoKHR) -> Result,
-    pub get_device_group_present_capabilities_khr: unsafe extern "system" fn(
-        device: Device,
-        p_device_group_present_capabilities: *mut DeviceGroupPresentCapabilitiesKHR,
-    ) -> Result,
-    pub get_device_group_surface_present_modes_khr: unsafe extern "system" fn(
-        device: Device,
-        surface: SurfaceKHR,
-        p_modes: *mut DeviceGroupPresentModeFlagsKHR,
-    ) -> Result,
-    pub get_physical_device_present_rectangles_khr: unsafe extern "system" fn(
-        physical_device: PhysicalDevice,
-        surface: SurfaceKHR,
-        p_rect_count: *mut u32,
-        p_rects: *mut Rect2D,
-    ) -> Result,
-    pub acquire_next_image2_khr: unsafe extern "system" fn(
-        device: Device,
-        p_acquire_info: *const AcquireNextImageInfoKHR,
-        p_image_index: *mut u32,
-    ) -> Result,
+    pub create_swapchain_khr: PFN_vkCreateSwapchainKHR,
+    pub destroy_swapchain_khr: PFN_vkDestroySwapchainKHR,
+    pub get_swapchain_images_khr: PFN_vkGetSwapchainImagesKHR,
+    pub acquire_next_image_khr: PFN_vkAcquireNextImageKHR,
+    pub queue_present_khr: PFN_vkQueuePresentKHR,
+    pub get_device_group_present_capabilities_khr: PFN_vkGetDeviceGroupPresentCapabilitiesKHR,
+    pub get_device_group_surface_present_modes_khr: PFN_vkGetDeviceGroupSurfacePresentModesKHR,
+    pub get_physical_device_present_rectangles_khr: PFN_vkGetPhysicalDevicePresentRectanglesKHR,
+    pub acquire_next_image2_khr: PFN_vkAcquireNextImage2KHR,
 }
 unsafe impl Send for KhrSwapchainFn {}
 unsafe impl Sync for KhrSwapchainFn {}
@@ -782,47 +722,14 @@ pub type PFN_vkCreateDisplayPlaneSurfaceKHR = unsafe extern "system" fn(
 ) -> Result;
 #[derive(Clone)]
 pub struct KhrDisplayFn {
-    pub get_physical_device_display_properties_khr: unsafe extern "system" fn(
-        physical_device: PhysicalDevice,
-        p_property_count: *mut u32,
-        p_properties: *mut DisplayPropertiesKHR,
-    ) -> Result,
-    pub get_physical_device_display_plane_properties_khr: unsafe extern "system" fn(
-        physical_device: PhysicalDevice,
-        p_property_count: *mut u32,
-        p_properties: *mut DisplayPlanePropertiesKHR,
-    ) -> Result,
-    pub get_display_plane_supported_displays_khr: unsafe extern "system" fn(
-        physical_device: PhysicalDevice,
-        plane_index: u32,
-        p_display_count: *mut u32,
-        p_displays: *mut DisplayKHR,
-    ) -> Result,
-    pub get_display_mode_properties_khr: unsafe extern "system" fn(
-        physical_device: PhysicalDevice,
-        display: DisplayKHR,
-        p_property_count: *mut u32,
-        p_properties: *mut DisplayModePropertiesKHR,
-    ) -> Result,
-    pub create_display_mode_khr: unsafe extern "system" fn(
-        physical_device: PhysicalDevice,
-        display: DisplayKHR,
-        p_create_info: *const DisplayModeCreateInfoKHR,
-        p_allocator: *const AllocationCallbacks,
-        p_mode: *mut DisplayModeKHR,
-    ) -> Result,
-    pub get_display_plane_capabilities_khr: unsafe extern "system" fn(
-        physical_device: PhysicalDevice,
-        mode: DisplayModeKHR,
-        plane_index: u32,
-        p_capabilities: *mut DisplayPlaneCapabilitiesKHR,
-    ) -> Result,
-    pub create_display_plane_surface_khr: unsafe extern "system" fn(
-        instance: Instance,
-        p_create_info: *const DisplaySurfaceCreateInfoKHR,
-        p_allocator: *const AllocationCallbacks,
-        p_surface: *mut SurfaceKHR,
-    ) -> Result,
+    pub get_physical_device_display_properties_khr: PFN_vkGetPhysicalDeviceDisplayPropertiesKHR,
+    pub get_physical_device_display_plane_properties_khr:
+        PFN_vkGetPhysicalDeviceDisplayPlanePropertiesKHR,
+    pub get_display_plane_supported_displays_khr: PFN_vkGetDisplayPlaneSupportedDisplaysKHR,
+    pub get_display_mode_properties_khr: PFN_vkGetDisplayModePropertiesKHR,
+    pub create_display_mode_khr: PFN_vkCreateDisplayModeKHR,
+    pub get_display_plane_capabilities_khr: PFN_vkGetDisplayPlaneCapabilitiesKHR,
+    pub create_display_plane_surface_khr: PFN_vkCreateDisplayPlaneSurfaceKHR,
 }
 unsafe impl Send for KhrDisplayFn {}
 unsafe impl Sync for KhrDisplayFn {}
@@ -1112,13 +1019,7 @@ pub type PFN_vkCreateSharedSwapchainsKHR = unsafe extern "system" fn(
 ) -> Result;
 #[derive(Clone)]
 pub struct KhrDisplaySwapchainFn {
-    pub create_shared_swapchains_khr: unsafe extern "system" fn(
-        device: Device,
-        swapchain_count: u32,
-        p_create_infos: *const SwapchainCreateInfoKHR,
-        p_allocator: *const AllocationCallbacks,
-        p_swapchains: *mut SwapchainKHR,
-    ) -> Result,
+    pub create_shared_swapchains_khr: PFN_vkCreateSharedSwapchainsKHR,
 }
 unsafe impl Send for KhrDisplaySwapchainFn {}
 unsafe impl Sync for KhrDisplaySwapchainFn {}
@@ -1202,18 +1103,9 @@ pub type PFN_vkGetPhysicalDeviceXlibPresentationSupportKHR = unsafe extern "syst
 ) -> Bool32;
 #[derive(Clone)]
 pub struct KhrXlibSurfaceFn {
-    pub create_xlib_surface_khr: unsafe extern "system" fn(
-        instance: Instance,
-        p_create_info: *const XlibSurfaceCreateInfoKHR,
-        p_allocator: *const AllocationCallbacks,
-        p_surface: *mut SurfaceKHR,
-    ) -> Result,
-    pub get_physical_device_xlib_presentation_support_khr: unsafe extern "system" fn(
-        physical_device: PhysicalDevice,
-        queue_family_index: u32,
-        dpy: *mut Display,
-        visual_id: VisualID,
-    ) -> Bool32,
+    pub create_xlib_surface_khr: PFN_vkCreateXlibSurfaceKHR,
+    pub get_physical_device_xlib_presentation_support_khr:
+        PFN_vkGetPhysicalDeviceXlibPresentationSupportKHR,
 }
 unsafe impl Send for KhrXlibSurfaceFn {}
 unsafe impl Sync for KhrXlibSurfaceFn {}
@@ -1321,18 +1213,9 @@ pub type PFN_vkGetPhysicalDeviceXcbPresentationSupportKHR = unsafe extern "syste
 ) -> Bool32;
 #[derive(Clone)]
 pub struct KhrXcbSurfaceFn {
-    pub create_xcb_surface_khr: unsafe extern "system" fn(
-        instance: Instance,
-        p_create_info: *const XcbSurfaceCreateInfoKHR,
-        p_allocator: *const AllocationCallbacks,
-        p_surface: *mut SurfaceKHR,
-    ) -> Result,
-    pub get_physical_device_xcb_presentation_support_khr: unsafe extern "system" fn(
-        physical_device: PhysicalDevice,
-        queue_family_index: u32,
-        connection: *mut xcb_connection_t,
-        visual_id: xcb_visualid_t,
-    ) -> Bool32,
+    pub create_xcb_surface_khr: PFN_vkCreateXcbSurfaceKHR,
+    pub get_physical_device_xcb_presentation_support_khr:
+        PFN_vkGetPhysicalDeviceXcbPresentationSupportKHR,
 }
 unsafe impl Send for KhrXcbSurfaceFn {}
 unsafe impl Sync for KhrXcbSurfaceFn {}
@@ -1440,18 +1323,9 @@ pub type PFN_vkGetPhysicalDeviceWaylandPresentationSupportKHR = unsafe extern "s
     -> Bool32;
 #[derive(Clone)]
 pub struct KhrWaylandSurfaceFn {
-    pub create_wayland_surface_khr: unsafe extern "system" fn(
-        instance: Instance,
-        p_create_info: *const WaylandSurfaceCreateInfoKHR,
-        p_allocator: *const AllocationCallbacks,
-        p_surface: *mut SurfaceKHR,
-    ) -> Result,
-    pub get_physical_device_wayland_presentation_support_khr: unsafe extern "system" fn(
-        physical_device: PhysicalDevice,
-        queue_family_index: u32,
-        display: *mut wl_display,
-    )
-        -> Bool32,
+    pub create_wayland_surface_khr: PFN_vkCreateWaylandSurfaceKHR,
+    pub get_physical_device_wayland_presentation_support_khr:
+        PFN_vkGetPhysicalDeviceWaylandPresentationSupportKHR,
 }
 unsafe impl Send for KhrWaylandSurfaceFn {}
 unsafe impl Sync for KhrWaylandSurfaceFn {}
@@ -1568,12 +1442,7 @@ pub type PFN_vkCreateAndroidSurfaceKHR = unsafe extern "system" fn(
 ) -> Result;
 #[derive(Clone)]
 pub struct KhrAndroidSurfaceFn {
-    pub create_android_surface_khr: unsafe extern "system" fn(
-        instance: Instance,
-        p_create_info: *const AndroidSurfaceCreateInfoKHR,
-        p_allocator: *const AllocationCallbacks,
-        p_surface: *mut SurfaceKHR,
-    ) -> Result,
+    pub create_android_surface_khr: PFN_vkCreateAndroidSurfaceKHR,
 }
 unsafe impl Send for KhrAndroidSurfaceFn {}
 unsafe impl Sync for KhrAndroidSurfaceFn {}
@@ -1640,17 +1509,9 @@ pub type PFN_vkGetPhysicalDeviceWin32PresentationSupportKHR =
     unsafe extern "system" fn(physical_device: PhysicalDevice, queue_family_index: u32) -> Bool32;
 #[derive(Clone)]
 pub struct KhrWin32SurfaceFn {
-    pub create_win32_surface_khr: unsafe extern "system" fn(
-        instance: Instance,
-        p_create_info: *const Win32SurfaceCreateInfoKHR,
-        p_allocator: *const AllocationCallbacks,
-        p_surface: *mut SurfaceKHR,
-    ) -> Result,
-    pub get_physical_device_win32_presentation_support_khr: unsafe extern "system" fn(
-        physical_device: PhysicalDevice,
-        queue_family_index: u32,
-    )
-        -> Bool32,
+    pub create_win32_surface_khr: PFN_vkCreateWin32SurfaceKHR,
+    pub get_physical_device_win32_presentation_support_khr:
+        PFN_vkGetPhysicalDeviceWin32PresentationSupportKHR,
 }
 unsafe impl Send for KhrWin32SurfaceFn {}
 unsafe impl Sync for KhrWin32SurfaceFn {}
@@ -1770,34 +1631,10 @@ pub type PFN_vkGetSwapchainGrallocUsage2ANDROID = unsafe extern "system" fn(
 ) -> Result;
 #[derive(Clone)]
 pub struct AndroidNativeBufferFn {
-    pub get_swapchain_gralloc_usage_android: unsafe extern "system" fn(
-        device: Device,
-        format: Format,
-        image_usage: ImageUsageFlags,
-        gralloc_usage: *mut c_int,
-    ) -> Result,
-    pub acquire_image_android: unsafe extern "system" fn(
-        device: Device,
-        image: Image,
-        native_fence_fd: c_int,
-        semaphore: Semaphore,
-        fence: Fence,
-    ) -> Result,
-    pub queue_signal_release_image_android: unsafe extern "system" fn(
-        queue: Queue,
-        wait_semaphore_count: u32,
-        p_wait_semaphores: *const Semaphore,
-        image: Image,
-        p_native_fence_fd: *mut c_int,
-    ) -> Result,
-    pub get_swapchain_gralloc_usage2_android: unsafe extern "system" fn(
-        device: Device,
-        format: Format,
-        image_usage: ImageUsageFlags,
-        swapchain_image_usage: SwapchainImageUsageFlagsANDROID,
-        gralloc_consumer_usage: *mut u64,
-        gralloc_producer_usage: *mut u64,
-    ) -> Result,
+    pub get_swapchain_gralloc_usage_android: PFN_vkGetSwapchainGrallocUsageANDROID,
+    pub acquire_image_android: PFN_vkAcquireImageANDROID,
+    pub queue_signal_release_image_android: PFN_vkQueueSignalReleaseImageANDROID,
+    pub get_swapchain_gralloc_usage2_android: PFN_vkGetSwapchainGrallocUsage2ANDROID,
 }
 unsafe impl Send for AndroidNativeBufferFn {}
 unsafe impl Sync for AndroidNativeBufferFn {}
@@ -2003,27 +1840,9 @@ pub type PFN_vkDebugReportMessageEXT = unsafe extern "system" fn(
 );
 #[derive(Clone)]
 pub struct ExtDebugReportFn {
-    pub create_debug_report_callback_ext: unsafe extern "system" fn(
-        instance: Instance,
-        p_create_info: *const DebugReportCallbackCreateInfoEXT,
-        p_allocator: *const AllocationCallbacks,
-        p_callback: *mut DebugReportCallbackEXT,
-    ) -> Result,
-    pub destroy_debug_report_callback_ext: unsafe extern "system" fn(
-        instance: Instance,
-        callback: DebugReportCallbackEXT,
-        p_allocator: *const AllocationCallbacks,
-    ),
-    pub debug_report_message_ext: unsafe extern "system" fn(
-        instance: Instance,
-        flags: DebugReportFlagsEXT,
-        object_type: DebugReportObjectTypeEXT,
-        object: u64,
-        location: usize,
-        message_code: i32,
-        p_layer_prefix: *const c_char,
-        p_message: *const c_char,
-    ),
+    pub create_debug_report_callback_ext: PFN_vkCreateDebugReportCallbackEXT,
+    pub destroy_debug_report_callback_ext: PFN_vkDestroyDebugReportCallbackEXT,
+    pub debug_report_message_ext: PFN_vkDebugReportMessageEXT,
 }
 unsafe impl Send for ExtDebugReportFn {}
 unsafe impl Sync for ExtDebugReportFn {}
@@ -2415,23 +2234,11 @@ pub type PFN_vkCmdDebugMarkerInsertEXT = unsafe extern "system" fn(
 );
 #[derive(Clone)]
 pub struct ExtDebugMarkerFn {
-    pub debug_marker_set_object_tag_ext: unsafe extern "system" fn(
-        device: Device,
-        p_tag_info: *const DebugMarkerObjectTagInfoEXT,
-    ) -> Result,
-    pub debug_marker_set_object_name_ext: unsafe extern "system" fn(
-        device: Device,
-        p_name_info: *const DebugMarkerObjectNameInfoEXT,
-    ) -> Result,
-    pub cmd_debug_marker_begin_ext: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        p_marker_info: *const DebugMarkerMarkerInfoEXT,
-    ),
-    pub cmd_debug_marker_end_ext: unsafe extern "system" fn(command_buffer: CommandBuffer),
-    pub cmd_debug_marker_insert_ext: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        p_marker_info: *const DebugMarkerMarkerInfoEXT,
-    ),
+    pub debug_marker_set_object_tag_ext: PFN_vkDebugMarkerSetObjectTagEXT,
+    pub debug_marker_set_object_name_ext: PFN_vkDebugMarkerSetObjectNameEXT,
+    pub cmd_debug_marker_begin_ext: PFN_vkCmdDebugMarkerBeginEXT,
+    pub cmd_debug_marker_end_ext: PFN_vkCmdDebugMarkerEndEXT,
+    pub cmd_debug_marker_insert_ext: PFN_vkCmdDebugMarkerInsertEXT,
 }
 unsafe impl Send for ExtDebugMarkerFn {}
 unsafe impl Sync for ExtDebugMarkerFn {}
@@ -2848,50 +2655,12 @@ pub type PFN_vkCmdDrawIndirectByteCountEXT = unsafe extern "system" fn(
 );
 #[derive(Clone)]
 pub struct ExtTransformFeedbackFn {
-    pub cmd_bind_transform_feedback_buffers_ext: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        first_binding: u32,
-        binding_count: u32,
-        p_buffers: *const Buffer,
-        p_offsets: *const DeviceSize,
-        p_sizes: *const DeviceSize,
-    ),
-    pub cmd_begin_transform_feedback_ext: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        first_counter_buffer: u32,
-        counter_buffer_count: u32,
-        p_counter_buffers: *const Buffer,
-        p_counter_buffer_offsets: *const DeviceSize,
-    ),
-    pub cmd_end_transform_feedback_ext: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        first_counter_buffer: u32,
-        counter_buffer_count: u32,
-        p_counter_buffers: *const Buffer,
-        p_counter_buffer_offsets: *const DeviceSize,
-    ),
-    pub cmd_begin_query_indexed_ext: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        query_pool: QueryPool,
-        query: u32,
-        flags: QueryControlFlags,
-        index: u32,
-    ),
-    pub cmd_end_query_indexed_ext: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        query_pool: QueryPool,
-        query: u32,
-        index: u32,
-    ),
-    pub cmd_draw_indirect_byte_count_ext: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        instance_count: u32,
-        first_instance: u32,
-        counter_buffer: Buffer,
-        counter_buffer_offset: DeviceSize,
-        counter_offset: u32,
-        vertex_stride: u32,
-    ),
+    pub cmd_bind_transform_feedback_buffers_ext: PFN_vkCmdBindTransformFeedbackBuffersEXT,
+    pub cmd_begin_transform_feedback_ext: PFN_vkCmdBeginTransformFeedbackEXT,
+    pub cmd_end_transform_feedback_ext: PFN_vkCmdEndTransformFeedbackEXT,
+    pub cmd_begin_query_indexed_ext: PFN_vkCmdBeginQueryIndexedEXT,
+    pub cmd_end_query_indexed_ext: PFN_vkCmdEndQueryIndexedEXT,
+    pub cmd_draw_indirect_byte_count_ext: PFN_vkCmdDrawIndirectByteCountEXT,
 }
 unsafe impl Send for ExtTransformFeedbackFn {}
 unsafe impl Sync for ExtTransformFeedbackFn {}
@@ -3215,13 +2984,8 @@ pub type PFN_vkGetImageViewAddressNVX = unsafe extern "system" fn(
 ) -> Result;
 #[derive(Clone)]
 pub struct NvxImageViewHandleFn {
-    pub get_image_view_handle_nvx:
-        unsafe extern "system" fn(device: Device, p_info: *const ImageViewHandleInfoNVX) -> u32,
-    pub get_image_view_address_nvx: unsafe extern "system" fn(
-        device: Device,
-        image_view: ImageView,
-        p_properties: *mut ImageViewAddressPropertiesNVX,
-    ) -> Result,
+    pub get_image_view_handle_nvx: PFN_vkGetImageViewHandleNVX,
+    pub get_image_view_address_nvx: PFN_vkGetImageViewAddressNVX,
 }
 unsafe impl Send for NvxImageViewHandleFn {}
 unsafe impl Sync for NvxImageViewHandleFn {}
@@ -3365,24 +3129,8 @@ pub type PFN_vkCmdDrawIndexedIndirectCount = unsafe extern "system" fn(
 );
 #[derive(Clone)]
 pub struct AmdDrawIndirectCountFn {
-    pub cmd_draw_indirect_count_amd: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        buffer: Buffer,
-        offset: DeviceSize,
-        count_buffer: Buffer,
-        count_buffer_offset: DeviceSize,
-        max_draw_count: u32,
-        stride: u32,
-    ),
-    pub cmd_draw_indexed_indirect_count_amd: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        buffer: Buffer,
-        offset: DeviceSize,
-        count_buffer: Buffer,
-        count_buffer_offset: DeviceSize,
-        max_draw_count: u32,
-        stride: u32,
-    ),
+    pub cmd_draw_indirect_count_amd: PFN_vkCmdDrawIndirectCount,
+    pub cmd_draw_indexed_indirect_count_amd: PFN_vkCmdDrawIndexedIndirectCount,
 }
 unsafe impl Send for AmdDrawIndirectCountFn {}
 unsafe impl Sync for AmdDrawIndirectCountFn {}
@@ -3660,14 +3408,7 @@ pub type PFN_vkGetShaderInfoAMD = unsafe extern "system" fn(
 ) -> Result;
 #[derive(Clone)]
 pub struct AmdShaderInfoFn {
-    pub get_shader_info_amd: unsafe extern "system" fn(
-        device: Device,
-        pipeline: Pipeline,
-        shader_stage: ShaderStageFlags,
-        info_type: ShaderInfoTypeAMD,
-        p_info_size: *mut usize,
-        p_info: *mut c_void,
-    ) -> Result,
+    pub get_shader_info_amd: PFN_vkGetShaderInfoAMD,
 }
 unsafe impl Send for AmdShaderInfoFn {}
 unsafe impl Sync for AmdShaderInfoFn {}
@@ -3849,12 +3590,7 @@ pub type PFN_vkCreateStreamDescriptorSurfaceGGP = unsafe extern "system" fn(
 ) -> Result;
 #[derive(Clone)]
 pub struct GgpStreamDescriptorSurfaceFn {
-    pub create_stream_descriptor_surface_ggp: unsafe extern "system" fn(
-        instance: Instance,
-        p_create_info: *const StreamDescriptorSurfaceCreateInfoGGP,
-        p_allocator: *const AllocationCallbacks,
-        p_surface: *mut SurfaceKHR,
-    ) -> Result,
+    pub create_stream_descriptor_surface_ggp: PFN_vkCreateStreamDescriptorSurfaceGGP,
 }
 unsafe impl Send for GgpStreamDescriptorSurfaceFn {}
 unsafe impl Sync for GgpStreamDescriptorSurfaceFn {}
@@ -4086,16 +3822,7 @@ pub type PFN_vkGetPhysicalDeviceExternalImageFormatPropertiesNV =
 #[derive(Clone)]
 pub struct NvExternalMemoryCapabilitiesFn {
     pub get_physical_device_external_image_format_properties_nv:
-        unsafe extern "system" fn(
-            physical_device: PhysicalDevice,
-            format: Format,
-            ty: ImageType,
-            tiling: ImageTiling,
-            usage: ImageUsageFlags,
-            flags: ImageCreateFlags,
-            external_handle_type: ExternalMemoryHandleTypeFlagsNV,
-            p_external_image_format_properties: *mut ExternalImageFormatPropertiesNV,
-        ) -> Result,
+        PFN_vkGetPhysicalDeviceExternalImageFormatPropertiesNV,
 }
 unsafe impl Send for NvExternalMemoryCapabilitiesFn {}
 unsafe impl Sync for NvExternalMemoryCapabilitiesFn {}
@@ -4200,12 +3927,7 @@ pub type PFN_vkGetMemoryWin32HandleNV = unsafe extern "system" fn(
 ) -> Result;
 #[derive(Clone)]
 pub struct NvExternalMemoryWin32Fn {
-    pub get_memory_win32_handle_nv: unsafe extern "system" fn(
-        device: Device,
-        memory: DeviceMemory,
-        handle_type: ExternalMemoryHandleTypeFlagsNV,
-        p_handle: *mut HANDLE,
-    ) -> Result,
+    pub get_memory_win32_handle_nv: PFN_vkGetMemoryWin32HandleNV,
 }
 unsafe impl Send for NvExternalMemoryWin32Fn {}
 unsafe impl Sync for NvExternalMemoryWin32Fn {}
@@ -4329,39 +4051,16 @@ pub type PFN_vkGetPhysicalDeviceSparseImageFormatProperties2 = unsafe extern "sy
 );
 #[derive(Clone)]
 pub struct KhrGetPhysicalDeviceProperties2Fn {
-    pub get_physical_device_features2_khr: unsafe extern "system" fn(
-        physical_device: PhysicalDevice,
-        p_features: *mut PhysicalDeviceFeatures2,
-    ),
-    pub get_physical_device_properties2_khr: unsafe extern "system" fn(
-        physical_device: PhysicalDevice,
-        p_properties: *mut PhysicalDeviceProperties2,
-    ),
-    pub get_physical_device_format_properties2_khr: unsafe extern "system" fn(
-        physical_device: PhysicalDevice,
-        format: Format,
-        p_format_properties: *mut FormatProperties2,
-    ),
-    pub get_physical_device_image_format_properties2_khr: unsafe extern "system" fn(
-        physical_device: PhysicalDevice,
-        p_image_format_info: *const PhysicalDeviceImageFormatInfo2,
-        p_image_format_properties: *mut ImageFormatProperties2,
-    ) -> Result,
-    pub get_physical_device_queue_family_properties2_khr: unsafe extern "system" fn(
-        physical_device: PhysicalDevice,
-        p_queue_family_property_count: *mut u32,
-        p_queue_family_properties: *mut QueueFamilyProperties2,
-    ),
-    pub get_physical_device_memory_properties2_khr: unsafe extern "system" fn(
-        physical_device: PhysicalDevice,
-        p_memory_properties: *mut PhysicalDeviceMemoryProperties2,
-    ),
-    pub get_physical_device_sparse_image_format_properties2_khr: unsafe extern "system" fn(
-        physical_device: PhysicalDevice,
-        p_format_info: *const PhysicalDeviceSparseImageFormatInfo2,
-        p_property_count: *mut u32,
-        p_properties: *mut SparseImageFormatProperties2,
-    ),
+    pub get_physical_device_features2_khr: PFN_vkGetPhysicalDeviceFeatures2,
+    pub get_physical_device_properties2_khr: PFN_vkGetPhysicalDeviceProperties2,
+    pub get_physical_device_format_properties2_khr: PFN_vkGetPhysicalDeviceFormatProperties2,
+    pub get_physical_device_image_format_properties2_khr:
+        PFN_vkGetPhysicalDeviceImageFormatProperties2,
+    pub get_physical_device_queue_family_properties2_khr:
+        PFN_vkGetPhysicalDeviceQueueFamilyProperties2,
+    pub get_physical_device_memory_properties2_khr: PFN_vkGetPhysicalDeviceMemoryProperties2,
+    pub get_physical_device_sparse_image_format_properties2_khr:
+        PFN_vkGetPhysicalDeviceSparseImageFormatProperties2,
 }
 unsafe impl Send for KhrGetPhysicalDeviceProperties2Fn {}
 unsafe impl Sync for KhrGetPhysicalDeviceProperties2Fn {}
@@ -4666,44 +4365,16 @@ pub type PFN_vkCmdDispatchBase = unsafe extern "system" fn(
 );
 #[derive(Clone)]
 pub struct KhrDeviceGroupFn {
-    pub get_device_group_peer_memory_features_khr: unsafe extern "system" fn(
-        device: Device,
-        heap_index: u32,
-        local_device_index: u32,
-        remote_device_index: u32,
-        p_peer_memory_features: *mut PeerMemoryFeatureFlags,
-    ),
-    pub cmd_set_device_mask_khr:
-        unsafe extern "system" fn(command_buffer: CommandBuffer, device_mask: u32),
-    pub cmd_dispatch_base_khr: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        base_group_x: u32,
-        base_group_y: u32,
-        base_group_z: u32,
-        group_count_x: u32,
-        group_count_y: u32,
-        group_count_z: u32,
-    ),
-    pub get_device_group_present_capabilities_khr: unsafe extern "system" fn(
-        device: Device,
-        p_device_group_present_capabilities: *mut DeviceGroupPresentCapabilitiesKHR,
-    ) -> Result,
-    pub get_device_group_surface_present_modes_khr: unsafe extern "system" fn(
-        device: Device,
-        surface: SurfaceKHR,
-        p_modes: *mut DeviceGroupPresentModeFlagsKHR,
-    ) -> Result,
-    pub get_physical_device_present_rectangles_khr: unsafe extern "system" fn(
-        physical_device: PhysicalDevice,
-        surface: SurfaceKHR,
-        p_rect_count: *mut u32,
-        p_rects: *mut Rect2D,
-    ) -> Result,
-    pub acquire_next_image2_khr: unsafe extern "system" fn(
-        device: Device,
-        p_acquire_info: *const AcquireNextImageInfoKHR,
-        p_image_index: *mut u32,
-    ) -> Result,
+    pub get_device_group_peer_memory_features_khr: PFN_vkGetDeviceGroupPeerMemoryFeatures,
+    pub cmd_set_device_mask_khr: PFN_vkCmdSetDeviceMask,
+    pub cmd_dispatch_base_khr: PFN_vkCmdDispatchBase,
+    pub get_device_group_present_capabilities_khr:
+        crate::vk::PFN_vkGetDeviceGroupPresentCapabilitiesKHR,
+    pub get_device_group_surface_present_modes_khr:
+        crate::vk::PFN_vkGetDeviceGroupSurfacePresentModesKHR,
+    pub get_physical_device_present_rectangles_khr:
+        crate::vk::PFN_vkGetPhysicalDevicePresentRectanglesKHR,
+    pub acquire_next_image2_khr: crate::vk::PFN_vkAcquireNextImage2KHR,
 }
 unsafe impl Send for KhrDeviceGroupFn {}
 unsafe impl Sync for KhrDeviceGroupFn {}
@@ -5054,12 +4725,7 @@ pub type PFN_vkCreateViSurfaceNN = unsafe extern "system" fn(
 ) -> Result;
 #[derive(Clone)]
 pub struct NnViSurfaceFn {
-    pub create_vi_surface_nn: unsafe extern "system" fn(
-        instance: Instance,
-        p_create_info: *const ViSurfaceCreateInfoNN,
-        p_allocator: *const AllocationCallbacks,
-        p_surface: *mut SurfaceKHR,
-    ) -> Result,
+    pub create_vi_surface_nn: PFN_vkCreateViSurfaceNN,
 }
 unsafe impl Send for NnViSurfaceFn {}
 unsafe impl Sync for NnViSurfaceFn {}
@@ -5301,11 +4967,7 @@ pub type PFN_vkTrimCommandPool = unsafe extern "system" fn(
 );
 #[derive(Clone)]
 pub struct KhrMaintenance1Fn {
-    pub trim_command_pool_khr: unsafe extern "system" fn(
-        device: Device,
-        command_pool: CommandPool,
-        flags: CommandPoolTrimFlags,
-    ),
+    pub trim_command_pool_khr: PFN_vkTrimCommandPool,
 }
 unsafe impl Send for KhrMaintenance1Fn {}
 unsafe impl Sync for KhrMaintenance1Fn {}
@@ -5378,11 +5040,7 @@ pub type PFN_vkEnumeratePhysicalDeviceGroups = unsafe extern "system" fn(
 ) -> Result;
 #[derive(Clone)]
 pub struct KhrDeviceGroupCreationFn {
-    pub enumerate_physical_device_groups_khr: unsafe extern "system" fn(
-        instance: Instance,
-        p_physical_device_group_count: *mut u32,
-        p_physical_device_group_properties: *mut PhysicalDeviceGroupProperties,
-    ) -> Result,
+    pub enumerate_physical_device_groups_khr: PFN_vkEnumeratePhysicalDeviceGroups,
 }
 unsafe impl Send for KhrDeviceGroupCreationFn {}
 unsafe impl Sync for KhrDeviceGroupCreationFn {}
@@ -5456,11 +5114,8 @@ pub type PFN_vkGetPhysicalDeviceExternalBufferProperties = unsafe extern "system
 );
 #[derive(Clone)]
 pub struct KhrExternalMemoryCapabilitiesFn {
-    pub get_physical_device_external_buffer_properties_khr: unsafe extern "system" fn(
-        physical_device: PhysicalDevice,
-        p_external_buffer_info: *const PhysicalDeviceExternalBufferInfo,
-        p_external_buffer_properties: *mut ExternalBufferProperties,
-    ),
+    pub get_physical_device_external_buffer_properties_khr:
+        PFN_vkGetPhysicalDeviceExternalBufferProperties,
 }
 unsafe impl Send for KhrExternalMemoryCapabilitiesFn {}
 unsafe impl Sync for KhrExternalMemoryCapabilitiesFn {}
@@ -5627,17 +5282,8 @@ pub type PFN_vkGetMemoryWin32HandlePropertiesKHR = unsafe extern "system" fn(
 ) -> Result;
 #[derive(Clone)]
 pub struct KhrExternalMemoryWin32Fn {
-    pub get_memory_win32_handle_khr: unsafe extern "system" fn(
-        device: Device,
-        p_get_win32_handle_info: *const MemoryGetWin32HandleInfoKHR,
-        p_handle: *mut HANDLE,
-    ) -> Result,
-    pub get_memory_win32_handle_properties_khr: unsafe extern "system" fn(
-        device: Device,
-        handle_type: ExternalMemoryHandleTypeFlags,
-        handle: HANDLE,
-        p_memory_win32_handle_properties: *mut MemoryWin32HandlePropertiesKHR,
-    ) -> Result,
+    pub get_memory_win32_handle_khr: PFN_vkGetMemoryWin32HandleKHR,
+    pub get_memory_win32_handle_properties_khr: PFN_vkGetMemoryWin32HandlePropertiesKHR,
 }
 unsafe impl Send for KhrExternalMemoryWin32Fn {}
 unsafe impl Sync for KhrExternalMemoryWin32Fn {}
@@ -5754,17 +5400,8 @@ pub type PFN_vkGetMemoryFdPropertiesKHR = unsafe extern "system" fn(
 ) -> Result;
 #[derive(Clone)]
 pub struct KhrExternalMemoryFdFn {
-    pub get_memory_fd_khr: unsafe extern "system" fn(
-        device: Device,
-        p_get_fd_info: *const MemoryGetFdInfoKHR,
-        p_fd: *mut c_int,
-    ) -> Result,
-    pub get_memory_fd_properties_khr: unsafe extern "system" fn(
-        device: Device,
-        handle_type: ExternalMemoryHandleTypeFlags,
-        fd: c_int,
-        p_memory_fd_properties: *mut MemoryFdPropertiesKHR,
-    ) -> Result,
+    pub get_memory_fd_khr: PFN_vkGetMemoryFdKHR,
+    pub get_memory_fd_properties_khr: PFN_vkGetMemoryFdPropertiesKHR,
 }
 unsafe impl Send for KhrExternalMemoryFdFn {}
 unsafe impl Sync for KhrExternalMemoryFdFn {}
@@ -5884,11 +5521,8 @@ pub type PFN_vkGetPhysicalDeviceExternalSemaphoreProperties = unsafe extern "sys
 );
 #[derive(Clone)]
 pub struct KhrExternalSemaphoreCapabilitiesFn {
-    pub get_physical_device_external_semaphore_properties_khr: unsafe extern "system" fn(
-        physical_device: PhysicalDevice,
-        p_external_semaphore_info: *const PhysicalDeviceExternalSemaphoreInfo,
-        p_external_semaphore_properties: *mut ExternalSemaphoreProperties,
-    ),
+    pub get_physical_device_external_semaphore_properties_khr:
+        PFN_vkGetPhysicalDeviceExternalSemaphoreProperties,
 }
 unsafe impl Send for KhrExternalSemaphoreCapabilitiesFn {}
 unsafe impl Sync for KhrExternalSemaphoreCapabilitiesFn {}
@@ -6019,15 +5653,8 @@ pub type PFN_vkGetSemaphoreWin32HandleKHR = unsafe extern "system" fn(
 ) -> Result;
 #[derive(Clone)]
 pub struct KhrExternalSemaphoreWin32Fn {
-    pub import_semaphore_win32_handle_khr: unsafe extern "system" fn(
-        device: Device,
-        p_import_semaphore_win32_handle_info: *const ImportSemaphoreWin32HandleInfoKHR,
-    ) -> Result,
-    pub get_semaphore_win32_handle_khr: unsafe extern "system" fn(
-        device: Device,
-        p_get_win32_handle_info: *const SemaphoreGetWin32HandleInfoKHR,
-        p_handle: *mut HANDLE,
-    ) -> Result,
+    pub import_semaphore_win32_handle_khr: PFN_vkImportSemaphoreWin32HandleKHR,
+    pub get_semaphore_win32_handle_khr: PFN_vkGetSemaphoreWin32HandleKHR,
 }
 unsafe impl Send for KhrExternalSemaphoreWin32Fn {}
 unsafe impl Sync for KhrExternalSemaphoreWin32Fn {}
@@ -6134,15 +5761,8 @@ pub type PFN_vkGetSemaphoreFdKHR = unsafe extern "system" fn(
 ) -> Result;
 #[derive(Clone)]
 pub struct KhrExternalSemaphoreFdFn {
-    pub import_semaphore_fd_khr: unsafe extern "system" fn(
-        device: Device,
-        p_import_semaphore_fd_info: *const ImportSemaphoreFdInfoKHR,
-    ) -> Result,
-    pub get_semaphore_fd_khr: unsafe extern "system" fn(
-        device: Device,
-        p_get_fd_info: *const SemaphoreGetFdInfoKHR,
-        p_fd: *mut c_int,
-    ) -> Result,
+    pub import_semaphore_fd_khr: PFN_vkImportSemaphoreFdKHR,
+    pub get_semaphore_fd_khr: PFN_vkGetSemaphoreFdKHR,
 }
 unsafe impl Send for KhrExternalSemaphoreFdFn {}
 unsafe impl Sync for KhrExternalSemaphoreFdFn {}
@@ -6242,21 +5862,8 @@ pub type PFN_vkCmdPushDescriptorSetWithTemplateKHR = unsafe extern "system" fn(
 );
 #[derive(Clone)]
 pub struct KhrPushDescriptorFn {
-    pub cmd_push_descriptor_set_khr: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        pipeline_bind_point: PipelineBindPoint,
-        layout: PipelineLayout,
-        set: u32,
-        descriptor_write_count: u32,
-        p_descriptor_writes: *const WriteDescriptorSet,
-    ),
-    pub cmd_push_descriptor_set_with_template_khr: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        descriptor_update_template: DescriptorUpdateTemplate,
-        layout: PipelineLayout,
-        set: u32,
-        p_data: *const c_void,
-    ),
+    pub cmd_push_descriptor_set_khr: PFN_vkCmdPushDescriptorSetKHR,
+    pub cmd_push_descriptor_set_with_template_khr: PFN_vkCmdPushDescriptorSetWithTemplateKHR,
 }
 unsafe impl Send for KhrPushDescriptorFn {}
 unsafe impl Sync for KhrPushDescriptorFn {}
@@ -6380,11 +5987,8 @@ pub type PFN_vkCmdEndConditionalRenderingEXT =
     unsafe extern "system" fn(command_buffer: CommandBuffer);
 #[derive(Clone)]
 pub struct ExtConditionalRenderingFn {
-    pub cmd_begin_conditional_rendering_ext: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        p_conditional_rendering_begin: *const ConditionalRenderingBeginInfoEXT,
-    ),
-    pub cmd_end_conditional_rendering_ext: unsafe extern "system" fn(command_buffer: CommandBuffer),
+    pub cmd_begin_conditional_rendering_ext: PFN_vkCmdBeginConditionalRenderingEXT,
+    pub cmd_end_conditional_rendering_ext: PFN_vkCmdEndConditionalRenderingEXT,
 }
 unsafe impl Send for ExtConditionalRenderingFn {}
 unsafe impl Sync for ExtConditionalRenderingFn {}
@@ -6577,30 +6181,11 @@ pub type PFN_vkUpdateDescriptorSetWithTemplate = unsafe extern "system" fn(
 );
 #[derive(Clone)]
 pub struct KhrDescriptorUpdateTemplateFn {
-    pub create_descriptor_update_template_khr: unsafe extern "system" fn(
-        device: Device,
-        p_create_info: *const DescriptorUpdateTemplateCreateInfo,
-        p_allocator: *const AllocationCallbacks,
-        p_descriptor_update_template: *mut DescriptorUpdateTemplate,
-    ) -> Result,
-    pub destroy_descriptor_update_template_khr: unsafe extern "system" fn(
-        device: Device,
-        descriptor_update_template: DescriptorUpdateTemplate,
-        p_allocator: *const AllocationCallbacks,
-    ),
-    pub update_descriptor_set_with_template_khr: unsafe extern "system" fn(
-        device: Device,
-        descriptor_set: DescriptorSet,
-        descriptor_update_template: DescriptorUpdateTemplate,
-        p_data: *const c_void,
-    ),
-    pub cmd_push_descriptor_set_with_template_khr: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        descriptor_update_template: DescriptorUpdateTemplate,
-        layout: PipelineLayout,
-        set: u32,
-        p_data: *const c_void,
-    ),
+    pub create_descriptor_update_template_khr: PFN_vkCreateDescriptorUpdateTemplate,
+    pub destroy_descriptor_update_template_khr: PFN_vkDestroyDescriptorUpdateTemplate,
+    pub update_descriptor_set_with_template_khr: PFN_vkUpdateDescriptorSetWithTemplate,
+    pub cmd_push_descriptor_set_with_template_khr:
+        crate::vk::PFN_vkCmdPushDescriptorSetWithTemplateKHR,
 }
 unsafe impl Send for KhrDescriptorUpdateTemplateFn {}
 unsafe impl Sync for KhrDescriptorUpdateTemplateFn {}
@@ -6813,12 +6398,7 @@ pub type PFN_vkCmdSetViewportWScalingNV = unsafe extern "system" fn(
 );
 #[derive(Clone)]
 pub struct NvClipSpaceWScalingFn {
-    pub cmd_set_viewport_w_scaling_nv: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        first_viewport: u32,
-        viewport_count: u32,
-        p_viewport_w_scalings: *const ViewportWScalingNV,
-    ),
+    pub cmd_set_viewport_w_scaling_nv: PFN_vkCmdSetViewportWScalingNV,
 }
 unsafe impl Send for NvClipSpaceWScalingFn {}
 unsafe impl Sync for NvClipSpaceWScalingFn {}
@@ -6888,8 +6468,7 @@ pub type PFN_vkReleaseDisplayEXT =
     unsafe extern "system" fn(physical_device: PhysicalDevice, display: DisplayKHR) -> Result;
 #[derive(Clone)]
 pub struct ExtDirectModeDisplayFn {
-    pub release_display_ext:
-        unsafe extern "system" fn(physical_device: PhysicalDevice, display: DisplayKHR) -> Result,
+    pub release_display_ext: PFN_vkReleaseDisplayEXT,
 }
 unsafe impl Send for ExtDirectModeDisplayFn {}
 unsafe impl Sync for ExtDirectModeDisplayFn {}
@@ -6948,17 +6527,8 @@ pub type PFN_vkGetRandROutputDisplayEXT = unsafe extern "system" fn(
 ) -> Result;
 #[derive(Clone)]
 pub struct ExtAcquireXlibDisplayFn {
-    pub acquire_xlib_display_ext: unsafe extern "system" fn(
-        physical_device: PhysicalDevice,
-        dpy: *mut Display,
-        display: DisplayKHR,
-    ) -> Result,
-    pub get_rand_r_output_display_ext: unsafe extern "system" fn(
-        physical_device: PhysicalDevice,
-        dpy: *mut Display,
-        rr_output: RROutput,
-        p_display: *mut DisplayKHR,
-    ) -> Result,
+    pub acquire_xlib_display_ext: PFN_vkAcquireXlibDisplayEXT,
+    pub get_rand_r_output_display_ext: PFN_vkGetRandROutputDisplayEXT,
 }
 unsafe impl Send for ExtAcquireXlibDisplayFn {}
 unsafe impl Sync for ExtAcquireXlibDisplayFn {}
@@ -7047,11 +6617,8 @@ pub type PFN_vkGetPhysicalDeviceSurfaceCapabilities2EXT = unsafe extern "system"
 ) -> Result;
 #[derive(Clone)]
 pub struct ExtDisplaySurfaceCounterFn {
-    pub get_physical_device_surface_capabilities2_ext: unsafe extern "system" fn(
-        physical_device: PhysicalDevice,
-        surface: SurfaceKHR,
-        p_surface_capabilities: *mut SurfaceCapabilities2EXT,
-    ) -> Result,
+    pub get_physical_device_surface_capabilities2_ext:
+        PFN_vkGetPhysicalDeviceSurfaceCapabilities2EXT,
 }
 unsafe impl Send for ExtDisplaySurfaceCounterFn {}
 unsafe impl Sync for ExtDisplaySurfaceCounterFn {}
@@ -7143,30 +6710,10 @@ pub type PFN_vkGetSwapchainCounterEXT = unsafe extern "system" fn(
 ) -> Result;
 #[derive(Clone)]
 pub struct ExtDisplayControlFn {
-    pub display_power_control_ext: unsafe extern "system" fn(
-        device: Device,
-        display: DisplayKHR,
-        p_display_power_info: *const DisplayPowerInfoEXT,
-    ) -> Result,
-    pub register_device_event_ext: unsafe extern "system" fn(
-        device: Device,
-        p_device_event_info: *const DeviceEventInfoEXT,
-        p_allocator: *const AllocationCallbacks,
-        p_fence: *mut Fence,
-    ) -> Result,
-    pub register_display_event_ext: unsafe extern "system" fn(
-        device: Device,
-        display: DisplayKHR,
-        p_display_event_info: *const DisplayEventInfoEXT,
-        p_allocator: *const AllocationCallbacks,
-        p_fence: *mut Fence,
-    ) -> Result,
-    pub get_swapchain_counter_ext: unsafe extern "system" fn(
-        device: Device,
-        swapchain: SwapchainKHR,
-        counter: SurfaceCounterFlagsEXT,
-        p_counter_value: *mut u64,
-    ) -> Result,
+    pub display_power_control_ext: PFN_vkDisplayPowerControlEXT,
+    pub register_device_event_ext: PFN_vkRegisterDeviceEventEXT,
+    pub register_display_event_ext: PFN_vkRegisterDisplayEventEXT,
+    pub get_swapchain_counter_ext: PFN_vkGetSwapchainCounterEXT,
 }
 unsafe impl Send for ExtDisplayControlFn {}
 unsafe impl Sync for ExtDisplayControlFn {}
@@ -7347,17 +6894,8 @@ pub type PFN_vkGetPastPresentationTimingGOOGLE = unsafe extern "system" fn(
 ) -> Result;
 #[derive(Clone)]
 pub struct GoogleDisplayTimingFn {
-    pub get_refresh_cycle_duration_google: unsafe extern "system" fn(
-        device: Device,
-        swapchain: SwapchainKHR,
-        p_display_timing_properties: *mut RefreshCycleDurationGOOGLE,
-    ) -> Result,
-    pub get_past_presentation_timing_google: unsafe extern "system" fn(
-        device: Device,
-        swapchain: SwapchainKHR,
-        p_presentation_timing_count: *mut u32,
-        p_presentation_timings: *mut PastPresentationTimingGOOGLE,
-    ) -> Result,
+    pub get_refresh_cycle_duration_google: PFN_vkGetRefreshCycleDurationGOOGLE,
+    pub get_past_presentation_timing_google: PFN_vkGetPastPresentationTimingGOOGLE,
 }
 unsafe impl Send for GoogleDisplayTimingFn {}
 unsafe impl Sync for GoogleDisplayTimingFn {}
@@ -7569,12 +7107,7 @@ pub type PFN_vkCmdSetDiscardRectangleEXT = unsafe extern "system" fn(
 );
 #[derive(Clone)]
 pub struct ExtDiscardRectanglesFn {
-    pub cmd_set_discard_rectangle_ext: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        first_discard_rectangle: u32,
-        discard_rectangle_count: u32,
-        p_discard_rectangles: *const Rect2D,
-    ),
+    pub cmd_set_discard_rectangle_ext: PFN_vkCmdSetDiscardRectangleEXT,
 }
 unsafe impl Send for ExtDiscardRectanglesFn {}
 unsafe impl Sync for ExtDiscardRectanglesFn {}
@@ -7823,12 +7356,7 @@ pub type PFN_vkSetHdrMetadataEXT = unsafe extern "system" fn(
 );
 #[derive(Clone)]
 pub struct ExtHdrMetadataFn {
-    pub set_hdr_metadata_ext: unsafe extern "system" fn(
-        device: Device,
-        swapchain_count: u32,
-        p_swapchains: *const SwapchainKHR,
-        p_metadata: *const HdrMetadataEXT,
-    ),
+    pub set_hdr_metadata_ext: PFN_vkSetHdrMetadataEXT,
 }
 unsafe impl Send for ExtHdrMetadataFn {}
 unsafe impl Sync for ExtHdrMetadataFn {}
@@ -7985,26 +7513,10 @@ pub type PFN_vkCmdEndRenderPass2 = unsafe extern "system" fn(
 );
 #[derive(Clone)]
 pub struct KhrCreateRenderpass2Fn {
-    pub create_render_pass2_khr: unsafe extern "system" fn(
-        device: Device,
-        p_create_info: *const RenderPassCreateInfo2,
-        p_allocator: *const AllocationCallbacks,
-        p_render_pass: *mut RenderPass,
-    ) -> Result,
-    pub cmd_begin_render_pass2_khr: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        p_render_pass_begin: *const RenderPassBeginInfo,
-        p_subpass_begin_info: *const SubpassBeginInfo,
-    ),
-    pub cmd_next_subpass2_khr: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        p_subpass_begin_info: *const SubpassBeginInfo,
-        p_subpass_end_info: *const SubpassEndInfo,
-    ),
-    pub cmd_end_render_pass2_khr: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        p_subpass_end_info: *const SubpassEndInfo,
-    ),
+    pub create_render_pass2_khr: PFN_vkCreateRenderPass2,
+    pub cmd_begin_render_pass2_khr: PFN_vkCmdBeginRenderPass2,
+    pub cmd_next_subpass2_khr: PFN_vkCmdNextSubpass2,
+    pub cmd_end_render_pass2_khr: PFN_vkCmdEndRenderPass2,
 }
 unsafe impl Send for KhrCreateRenderpass2Fn {}
 unsafe impl Sync for KhrCreateRenderpass2Fn {}
@@ -8192,8 +7704,7 @@ pub type PFN_vkGetSwapchainStatusKHR =
     unsafe extern "system" fn(device: Device, swapchain: SwapchainKHR) -> Result;
 #[derive(Clone)]
 pub struct KhrSharedPresentableImageFn {
-    pub get_swapchain_status_khr:
-        unsafe extern "system" fn(device: Device, swapchain: SwapchainKHR) -> Result,
+    pub get_swapchain_status_khr: PFN_vkGetSwapchainStatusKHR,
 }
 unsafe impl Send for KhrSharedPresentableImageFn {}
 unsafe impl Sync for KhrSharedPresentableImageFn {}
@@ -8264,11 +7775,8 @@ pub type PFN_vkGetPhysicalDeviceExternalFenceProperties = unsafe extern "system"
 );
 #[derive(Clone)]
 pub struct KhrExternalFenceCapabilitiesFn {
-    pub get_physical_device_external_fence_properties_khr: unsafe extern "system" fn(
-        physical_device: PhysicalDevice,
-        p_external_fence_info: *const PhysicalDeviceExternalFenceInfo,
-        p_external_fence_properties: *mut ExternalFenceProperties,
-    ),
+    pub get_physical_device_external_fence_properties_khr:
+        PFN_vkGetPhysicalDeviceExternalFenceProperties,
 }
 unsafe impl Send for KhrExternalFenceCapabilitiesFn {}
 unsafe impl Sync for KhrExternalFenceCapabilitiesFn {}
@@ -8395,15 +7903,8 @@ pub type PFN_vkGetFenceWin32HandleKHR = unsafe extern "system" fn(
 ) -> Result;
 #[derive(Clone)]
 pub struct KhrExternalFenceWin32Fn {
-    pub import_fence_win32_handle_khr: unsafe extern "system" fn(
-        device: Device,
-        p_import_fence_win32_handle_info: *const ImportFenceWin32HandleInfoKHR,
-    ) -> Result,
-    pub get_fence_win32_handle_khr: unsafe extern "system" fn(
-        device: Device,
-        p_get_win32_handle_info: *const FenceGetWin32HandleInfoKHR,
-        p_handle: *mut HANDLE,
-    ) -> Result,
+    pub import_fence_win32_handle_khr: PFN_vkImportFenceWin32HandleKHR,
+    pub get_fence_win32_handle_khr: PFN_vkGetFenceWin32HandleKHR,
 }
 unsafe impl Send for KhrExternalFenceWin32Fn {}
 unsafe impl Sync for KhrExternalFenceWin32Fn {}
@@ -8505,15 +8006,8 @@ pub type PFN_vkGetFenceFdKHR = unsafe extern "system" fn(
 ) -> Result;
 #[derive(Clone)]
 pub struct KhrExternalFenceFdFn {
-    pub import_fence_fd_khr: unsafe extern "system" fn(
-        device: Device,
-        p_import_fence_fd_info: *const ImportFenceFdInfoKHR,
-    ) -> Result,
-    pub get_fence_fd_khr: unsafe extern "system" fn(
-        device: Device,
-        p_get_fd_info: *const FenceGetFdInfoKHR,
-        p_fd: *mut c_int,
-    ) -> Result,
+    pub import_fence_fd_khr: PFN_vkImportFenceFdKHR,
+    pub get_fence_fd_khr: PFN_vkGetFenceFdKHR,
 }
 unsafe impl Send for KhrExternalFenceFdFn {}
 unsafe impl Sync for KhrExternalFenceFdFn {}
@@ -8614,24 +8108,11 @@ pub type PFN_vkReleaseProfilingLockKHR = unsafe extern "system" fn(device: Devic
 #[derive(Clone)]
 pub struct KhrPerformanceQueryFn {
     pub enumerate_physical_device_queue_family_performance_query_counters_khr:
-        unsafe extern "system" fn(
-            physical_device: PhysicalDevice,
-            queue_family_index: u32,
-            p_counter_count: *mut u32,
-            p_counters: *mut PerformanceCounterKHR,
-            p_counter_descriptions: *mut PerformanceCounterDescriptionKHR,
-        ) -> Result,
+        PFN_vkEnumeratePhysicalDeviceQueueFamilyPerformanceQueryCountersKHR,
     pub get_physical_device_queue_family_performance_query_passes_khr:
-        unsafe extern "system" fn(
-            physical_device: PhysicalDevice,
-            p_performance_query_create_info: *const QueryPoolPerformanceCreateInfoKHR,
-            p_num_passes: *mut u32,
-        ),
-    pub acquire_profiling_lock_khr: unsafe extern "system" fn(
-        device: Device,
-        p_info: *const AcquireProfilingLockInfoKHR,
-    ) -> Result,
-    pub release_profiling_lock_khr: unsafe extern "system" fn(device: Device),
+        PFN_vkGetPhysicalDeviceQueueFamilyPerformanceQueryPassesKHR,
+    pub acquire_profiling_lock_khr: PFN_vkAcquireProfilingLockKHR,
+    pub release_profiling_lock_khr: PFN_vkReleaseProfilingLockKHR,
 }
 unsafe impl Send for KhrPerformanceQueryFn {}
 unsafe impl Sync for KhrPerformanceQueryFn {}
@@ -8912,17 +8393,9 @@ pub type PFN_vkGetPhysicalDeviceSurfaceFormats2KHR = unsafe extern "system" fn(
 ) -> Result;
 #[derive(Clone)]
 pub struct KhrGetSurfaceCapabilities2Fn {
-    pub get_physical_device_surface_capabilities2_khr: unsafe extern "system" fn(
-        physical_device: PhysicalDevice,
-        p_surface_info: *const PhysicalDeviceSurfaceInfo2KHR,
-        p_surface_capabilities: *mut SurfaceCapabilities2KHR,
-    ) -> Result,
-    pub get_physical_device_surface_formats2_khr: unsafe extern "system" fn(
-        physical_device: PhysicalDevice,
-        p_surface_info: *const PhysicalDeviceSurfaceInfo2KHR,
-        p_surface_format_count: *mut u32,
-        p_surface_formats: *mut SurfaceFormat2KHR,
-    ) -> Result,
+    pub get_physical_device_surface_capabilities2_khr:
+        PFN_vkGetPhysicalDeviceSurfaceCapabilities2KHR,
+    pub get_physical_device_surface_formats2_khr: PFN_vkGetPhysicalDeviceSurfaceFormats2KHR,
 }
 unsafe impl Send for KhrGetSurfaceCapabilities2Fn {}
 unsafe impl Sync for KhrGetSurfaceCapabilities2Fn {}
@@ -9081,27 +8554,11 @@ pub type PFN_vkGetDisplayPlaneCapabilities2KHR = unsafe extern "system" fn(
 ) -> Result;
 #[derive(Clone)]
 pub struct KhrGetDisplayProperties2Fn {
-    pub get_physical_device_display_properties2_khr: unsafe extern "system" fn(
-        physical_device: PhysicalDevice,
-        p_property_count: *mut u32,
-        p_properties: *mut DisplayProperties2KHR,
-    ) -> Result,
-    pub get_physical_device_display_plane_properties2_khr: unsafe extern "system" fn(
-        physical_device: PhysicalDevice,
-        p_property_count: *mut u32,
-        p_properties: *mut DisplayPlaneProperties2KHR,
-    ) -> Result,
-    pub get_display_mode_properties2_khr: unsafe extern "system" fn(
-        physical_device: PhysicalDevice,
-        display: DisplayKHR,
-        p_property_count: *mut u32,
-        p_properties: *mut DisplayModeProperties2KHR,
-    ) -> Result,
-    pub get_display_plane_capabilities2_khr: unsafe extern "system" fn(
-        physical_device: PhysicalDevice,
-        p_display_plane_info: *const DisplayPlaneInfo2KHR,
-        p_capabilities: *mut DisplayPlaneCapabilities2KHR,
-    ) -> Result,
+    pub get_physical_device_display_properties2_khr: PFN_vkGetPhysicalDeviceDisplayProperties2KHR,
+    pub get_physical_device_display_plane_properties2_khr:
+        PFN_vkGetPhysicalDeviceDisplayPlaneProperties2KHR,
+    pub get_display_mode_properties2_khr: PFN_vkGetDisplayModeProperties2KHR,
+    pub get_display_plane_capabilities2_khr: PFN_vkGetDisplayPlaneCapabilities2KHR,
 }
 unsafe impl Send for KhrGetDisplayProperties2Fn {}
 unsafe impl Sync for KhrGetDisplayProperties2Fn {}
@@ -9289,12 +8746,7 @@ pub type PFN_vkCreateIOSSurfaceMVK = unsafe extern "system" fn(
 ) -> Result;
 #[derive(Clone)]
 pub struct MvkIosSurfaceFn {
-    pub create_ios_surface_mvk: unsafe extern "system" fn(
-        instance: Instance,
-        p_create_info: *const IOSSurfaceCreateInfoMVK,
-        p_allocator: *const AllocationCallbacks,
-        p_surface: *mut SurfaceKHR,
-    ) -> Result,
+    pub create_ios_surface_mvk: PFN_vkCreateIOSSurfaceMVK,
 }
 unsafe impl Send for MvkIosSurfaceFn {}
 unsafe impl Sync for MvkIosSurfaceFn {}
@@ -9358,12 +8810,7 @@ pub type PFN_vkCreateMacOSSurfaceMVK = unsafe extern "system" fn(
 ) -> Result;
 #[derive(Clone)]
 pub struct MvkMacosSurfaceFn {
-    pub create_mac_os_surface_mvk: unsafe extern "system" fn(
-        instance: Instance,
-        p_create_info: *const MacOSSurfaceCreateInfoMVK,
-        p_allocator: *const AllocationCallbacks,
-        p_surface: *mut SurfaceKHR,
-    ) -> Result,
+    pub create_mac_os_surface_mvk: PFN_vkCreateMacOSSurfaceMVK,
 }
 unsafe impl Send for MvkMacosSurfaceFn {}
 unsafe impl Sync for MvkMacosSurfaceFn {}
@@ -9557,45 +9004,17 @@ pub type PFN_vkSubmitDebugUtilsMessageEXT = unsafe extern "system" fn(
 );
 #[derive(Clone)]
 pub struct ExtDebugUtilsFn {
-    pub set_debug_utils_object_name_ext: unsafe extern "system" fn(
-        device: Device,
-        p_name_info: *const DebugUtilsObjectNameInfoEXT,
-    ) -> Result,
-    pub set_debug_utils_object_tag_ext: unsafe extern "system" fn(
-        device: Device,
-        p_tag_info: *const DebugUtilsObjectTagInfoEXT,
-    ) -> Result,
-    pub queue_begin_debug_utils_label_ext:
-        unsafe extern "system" fn(queue: Queue, p_label_info: *const DebugUtilsLabelEXT),
-    pub queue_end_debug_utils_label_ext: unsafe extern "system" fn(queue: Queue),
-    pub queue_insert_debug_utils_label_ext:
-        unsafe extern "system" fn(queue: Queue, p_label_info: *const DebugUtilsLabelEXT),
-    pub cmd_begin_debug_utils_label_ext: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        p_label_info: *const DebugUtilsLabelEXT,
-    ),
-    pub cmd_end_debug_utils_label_ext: unsafe extern "system" fn(command_buffer: CommandBuffer),
-    pub cmd_insert_debug_utils_label_ext: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        p_label_info: *const DebugUtilsLabelEXT,
-    ),
-    pub create_debug_utils_messenger_ext: unsafe extern "system" fn(
-        instance: Instance,
-        p_create_info: *const DebugUtilsMessengerCreateInfoEXT,
-        p_allocator: *const AllocationCallbacks,
-        p_messenger: *mut DebugUtilsMessengerEXT,
-    ) -> Result,
-    pub destroy_debug_utils_messenger_ext: unsafe extern "system" fn(
-        instance: Instance,
-        messenger: DebugUtilsMessengerEXT,
-        p_allocator: *const AllocationCallbacks,
-    ),
-    pub submit_debug_utils_message_ext: unsafe extern "system" fn(
-        instance: Instance,
-        message_severity: DebugUtilsMessageSeverityFlagsEXT,
-        message_types: DebugUtilsMessageTypeFlagsEXT,
-        p_callback_data: *const DebugUtilsMessengerCallbackDataEXT,
-    ),
+    pub set_debug_utils_object_name_ext: PFN_vkSetDebugUtilsObjectNameEXT,
+    pub set_debug_utils_object_tag_ext: PFN_vkSetDebugUtilsObjectTagEXT,
+    pub queue_begin_debug_utils_label_ext: PFN_vkQueueBeginDebugUtilsLabelEXT,
+    pub queue_end_debug_utils_label_ext: PFN_vkQueueEndDebugUtilsLabelEXT,
+    pub queue_insert_debug_utils_label_ext: PFN_vkQueueInsertDebugUtilsLabelEXT,
+    pub cmd_begin_debug_utils_label_ext: PFN_vkCmdBeginDebugUtilsLabelEXT,
+    pub cmd_end_debug_utils_label_ext: PFN_vkCmdEndDebugUtilsLabelEXT,
+    pub cmd_insert_debug_utils_label_ext: PFN_vkCmdInsertDebugUtilsLabelEXT,
+    pub create_debug_utils_messenger_ext: PFN_vkCreateDebugUtilsMessengerEXT,
+    pub destroy_debug_utils_messenger_ext: PFN_vkDestroyDebugUtilsMessengerEXT,
+    pub submit_debug_utils_message_ext: PFN_vkSubmitDebugUtilsMessageEXT,
 }
 unsafe impl Send for ExtDebugUtilsFn {}
 unsafe impl Sync for ExtDebugUtilsFn {}
@@ -9966,16 +9385,9 @@ pub type PFN_vkGetMemoryAndroidHardwareBufferANDROID = unsafe extern "system" fn
 ) -> Result;
 #[derive(Clone)]
 pub struct AndroidExternalMemoryAndroidHardwareBufferFn {
-    pub get_android_hardware_buffer_properties_android: unsafe extern "system" fn(
-        device: Device,
-        buffer: *const AHardwareBuffer,
-        p_properties: *mut AndroidHardwareBufferPropertiesANDROID,
-    ) -> Result,
-    pub get_memory_android_hardware_buffer_android: unsafe extern "system" fn(
-        device: Device,
-        p_info: *const MemoryGetAndroidHardwareBufferInfoANDROID,
-        p_buffer: *mut *mut AHardwareBuffer,
-    ) -> Result,
+    pub get_android_hardware_buffer_properties_android:
+        PFN_vkGetAndroidHardwareBufferPropertiesANDROID,
+    pub get_memory_android_hardware_buffer_android: PFN_vkGetMemoryAndroidHardwareBufferANDROID,
 }
 unsafe impl Send for AndroidExternalMemoryAndroidHardwareBufferFn {}
 unsafe impl Sync for AndroidExternalMemoryAndroidHardwareBufferFn {}
@@ -10389,15 +9801,9 @@ pub type PFN_vkGetPhysicalDeviceMultisamplePropertiesEXT = unsafe extern "system
 );
 #[derive(Clone)]
 pub struct ExtSampleLocationsFn {
-    pub cmd_set_sample_locations_ext: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        p_sample_locations_info: *const SampleLocationsInfoEXT,
-    ),
-    pub get_physical_device_multisample_properties_ext: unsafe extern "system" fn(
-        physical_device: PhysicalDevice,
-        samples: SampleCountFlags,
-        p_multisample_properties: *mut MultisamplePropertiesEXT,
-    ),
+    pub cmd_set_sample_locations_ext: PFN_vkCmdSetSampleLocationsEXT,
+    pub get_physical_device_multisample_properties_ext:
+        PFN_vkGetPhysicalDeviceMultisamplePropertiesEXT,
 }
 unsafe impl Send for ExtSampleLocationsFn {}
 unsafe impl Sync for ExtSampleLocationsFn {}
@@ -10547,22 +9953,9 @@ pub type PFN_vkGetImageSparseMemoryRequirements2 = unsafe extern "system" fn(
 );
 #[derive(Clone)]
 pub struct KhrGetMemoryRequirements2Fn {
-    pub get_image_memory_requirements2_khr: unsafe extern "system" fn(
-        device: Device,
-        p_info: *const ImageMemoryRequirementsInfo2,
-        p_memory_requirements: *mut MemoryRequirements2,
-    ),
-    pub get_buffer_memory_requirements2_khr: unsafe extern "system" fn(
-        device: Device,
-        p_info: *const BufferMemoryRequirementsInfo2,
-        p_memory_requirements: *mut MemoryRequirements2,
-    ),
-    pub get_image_sparse_memory_requirements2_khr: unsafe extern "system" fn(
-        device: Device,
-        p_info: *const ImageSparseMemoryRequirementsInfo2,
-        p_sparse_memory_requirement_count: *mut u32,
-        p_sparse_memory_requirements: *mut SparseImageMemoryRequirements2,
-    ),
+    pub get_image_memory_requirements2_khr: PFN_vkGetImageMemoryRequirements2,
+    pub get_buffer_memory_requirements2_khr: PFN_vkGetBufferMemoryRequirements2,
+    pub get_image_sparse_memory_requirements2_khr: PFN_vkGetImageSparseMemoryRequirements2,
 }
 unsafe impl Send for KhrGetMemoryRequirements2Fn {}
 unsafe impl Sync for KhrGetMemoryRequirements2Fn {}
@@ -11077,99 +10470,29 @@ pub type PFN_vkGetAccelerationStructureBuildSizesKHR = unsafe extern "system" fn
 );
 #[derive(Clone)]
 pub struct KhrAccelerationStructureFn {
-    pub create_acceleration_structure_khr: unsafe extern "system" fn(
-        device: Device,
-        p_create_info: *const AccelerationStructureCreateInfoKHR,
-        p_allocator: *const AllocationCallbacks,
-        p_acceleration_structure: *mut AccelerationStructureKHR,
-    ) -> Result,
-    pub destroy_acceleration_structure_khr: unsafe extern "system" fn(
-        device: Device,
-        acceleration_structure: AccelerationStructureKHR,
-        p_allocator: *const AllocationCallbacks,
-    ),
-    pub cmd_build_acceleration_structures_khr: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        info_count: u32,
-        p_infos: *const AccelerationStructureBuildGeometryInfoKHR,
-        pp_build_range_infos: *const *const AccelerationStructureBuildRangeInfoKHR,
-    ),
-    pub cmd_build_acceleration_structures_indirect_khr: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        info_count: u32,
-        p_infos: *const AccelerationStructureBuildGeometryInfoKHR,
-        p_indirect_device_addresses: *const DeviceAddress,
-        p_indirect_strides: *const u32,
-        pp_max_primitive_counts: *const *const u32,
-    ),
-    pub build_acceleration_structures_khr: unsafe extern "system" fn(
-        device: Device,
-        deferred_operation: DeferredOperationKHR,
-        info_count: u32,
-        p_infos: *const AccelerationStructureBuildGeometryInfoKHR,
-        pp_build_range_infos: *const *const AccelerationStructureBuildRangeInfoKHR,
-    ) -> Result,
-    pub copy_acceleration_structure_khr: unsafe extern "system" fn(
-        device: Device,
-        deferred_operation: DeferredOperationKHR,
-        p_info: *const CopyAccelerationStructureInfoKHR,
-    ) -> Result,
-    pub copy_acceleration_structure_to_memory_khr: unsafe extern "system" fn(
-        device: Device,
-        deferred_operation: DeferredOperationKHR,
-        p_info: *const CopyAccelerationStructureToMemoryInfoKHR,
-    ) -> Result,
-    pub copy_memory_to_acceleration_structure_khr: unsafe extern "system" fn(
-        device: Device,
-        deferred_operation: DeferredOperationKHR,
-        p_info: *const CopyMemoryToAccelerationStructureInfoKHR,
-    ) -> Result,
-    pub write_acceleration_structures_properties_khr: unsafe extern "system" fn(
-        device: Device,
-        acceleration_structure_count: u32,
-        p_acceleration_structures: *const AccelerationStructureKHR,
-        query_type: QueryType,
-        data_size: usize,
-        p_data: *mut c_void,
-        stride: usize,
-    ) -> Result,
-    pub cmd_copy_acceleration_structure_khr: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        p_info: *const CopyAccelerationStructureInfoKHR,
-    ),
-    pub cmd_copy_acceleration_structure_to_memory_khr: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        p_info: *const CopyAccelerationStructureToMemoryInfoKHR,
-    ),
-    pub cmd_copy_memory_to_acceleration_structure_khr: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        p_info: *const CopyMemoryToAccelerationStructureInfoKHR,
-    ),
-    pub get_acceleration_structure_device_address_khr: unsafe extern "system" fn(
-        device: Device,
-        p_info: *const AccelerationStructureDeviceAddressInfoKHR,
-    )
-        -> DeviceAddress,
-    pub cmd_write_acceleration_structures_properties_khr: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        acceleration_structure_count: u32,
-        p_acceleration_structures: *const AccelerationStructureKHR,
-        query_type: QueryType,
-        query_pool: QueryPool,
-        first_query: u32,
-    ),
-    pub get_device_acceleration_structure_compatibility_khr: unsafe extern "system" fn(
-        device: Device,
-        p_version_info: *const AccelerationStructureVersionInfoKHR,
-        p_compatibility: *mut AccelerationStructureCompatibilityKHR,
-    ),
-    pub get_acceleration_structure_build_sizes_khr: unsafe extern "system" fn(
-        device: Device,
-        build_type: AccelerationStructureBuildTypeKHR,
-        p_build_info: *const AccelerationStructureBuildGeometryInfoKHR,
-        p_max_primitive_counts: *const u32,
-        p_size_info: *mut AccelerationStructureBuildSizesInfoKHR,
-    ),
+    pub create_acceleration_structure_khr: PFN_vkCreateAccelerationStructureKHR,
+    pub destroy_acceleration_structure_khr: PFN_vkDestroyAccelerationStructureKHR,
+    pub cmd_build_acceleration_structures_khr: PFN_vkCmdBuildAccelerationStructuresKHR,
+    pub cmd_build_acceleration_structures_indirect_khr:
+        PFN_vkCmdBuildAccelerationStructuresIndirectKHR,
+    pub build_acceleration_structures_khr: PFN_vkBuildAccelerationStructuresKHR,
+    pub copy_acceleration_structure_khr: PFN_vkCopyAccelerationStructureKHR,
+    pub copy_acceleration_structure_to_memory_khr: PFN_vkCopyAccelerationStructureToMemoryKHR,
+    pub copy_memory_to_acceleration_structure_khr: PFN_vkCopyMemoryToAccelerationStructureKHR,
+    pub write_acceleration_structures_properties_khr:
+        PFN_vkWriteAccelerationStructuresPropertiesKHR,
+    pub cmd_copy_acceleration_structure_khr: PFN_vkCmdCopyAccelerationStructureKHR,
+    pub cmd_copy_acceleration_structure_to_memory_khr:
+        PFN_vkCmdCopyAccelerationStructureToMemoryKHR,
+    pub cmd_copy_memory_to_acceleration_structure_khr:
+        PFN_vkCmdCopyMemoryToAccelerationStructureKHR,
+    pub get_acceleration_structure_device_address_khr:
+        PFN_vkGetAccelerationStructureDeviceAddressKHR,
+    pub cmd_write_acceleration_structures_properties_khr:
+        PFN_vkCmdWriteAccelerationStructuresPropertiesKHR,
+    pub get_device_acceleration_structure_compatibility_khr:
+        PFN_vkGetDeviceAccelerationStructureCompatibilityKHR,
+    pub get_acceleration_structure_build_sizes_khr: PFN_vkGetAccelerationStructureBuildSizesKHR,
 }
 unsafe impl Send for KhrAccelerationStructureFn {}
 unsafe impl Sync for KhrAccelerationStructureFn {}
@@ -11912,58 +11235,14 @@ pub type PFN_vkCmdSetRayTracingPipelineStackSizeKHR =
     unsafe extern "system" fn(command_buffer: CommandBuffer, pipeline_stack_size: u32);
 #[derive(Clone)]
 pub struct KhrRayTracingPipelineFn {
-    pub cmd_trace_rays_khr: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        p_raygen_shader_binding_table: *const StridedDeviceAddressRegionKHR,
-        p_miss_shader_binding_table: *const StridedDeviceAddressRegionKHR,
-        p_hit_shader_binding_table: *const StridedDeviceAddressRegionKHR,
-        p_callable_shader_binding_table: *const StridedDeviceAddressRegionKHR,
-        width: u32,
-        height: u32,
-        depth: u32,
-    ),
-    pub create_ray_tracing_pipelines_khr: unsafe extern "system" fn(
-        device: Device,
-        deferred_operation: DeferredOperationKHR,
-        pipeline_cache: PipelineCache,
-        create_info_count: u32,
-        p_create_infos: *const RayTracingPipelineCreateInfoKHR,
-        p_allocator: *const AllocationCallbacks,
-        p_pipelines: *mut Pipeline,
-    ) -> Result,
-    pub get_ray_tracing_shader_group_handles_khr: unsafe extern "system" fn(
-        device: Device,
-        pipeline: Pipeline,
-        first_group: u32,
-        group_count: u32,
-        data_size: usize,
-        p_data: *mut c_void,
-    ) -> Result,
+    pub cmd_trace_rays_khr: PFN_vkCmdTraceRaysKHR,
+    pub create_ray_tracing_pipelines_khr: PFN_vkCreateRayTracingPipelinesKHR,
+    pub get_ray_tracing_shader_group_handles_khr: PFN_vkGetRayTracingShaderGroupHandlesKHR,
     pub get_ray_tracing_capture_replay_shader_group_handles_khr:
-        unsafe extern "system" fn(
-            device: Device,
-            pipeline: Pipeline,
-            first_group: u32,
-            group_count: u32,
-            data_size: usize,
-            p_data: *mut c_void,
-        ) -> Result,
-    pub cmd_trace_rays_indirect_khr: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        p_raygen_shader_binding_table: *const StridedDeviceAddressRegionKHR,
-        p_miss_shader_binding_table: *const StridedDeviceAddressRegionKHR,
-        p_hit_shader_binding_table: *const StridedDeviceAddressRegionKHR,
-        p_callable_shader_binding_table: *const StridedDeviceAddressRegionKHR,
-        indirect_device_address: DeviceAddress,
-    ),
-    pub get_ray_tracing_shader_group_stack_size_khr: unsafe extern "system" fn(
-        device: Device,
-        pipeline: Pipeline,
-        group: u32,
-        group_shader: ShaderGroupShaderKHR,
-    ) -> DeviceSize,
-    pub cmd_set_ray_tracing_pipeline_stack_size_khr:
-        unsafe extern "system" fn(command_buffer: CommandBuffer, pipeline_stack_size: u32),
+        PFN_vkGetRayTracingCaptureReplayShaderGroupHandlesKHR,
+    pub cmd_trace_rays_indirect_khr: PFN_vkCmdTraceRaysIndirectKHR,
+    pub get_ray_tracing_shader_group_stack_size_khr: PFN_vkGetRayTracingShaderGroupStackSizeKHR,
+    pub cmd_set_ray_tracing_pipeline_stack_size_khr: PFN_vkCmdSetRayTracingPipelineStackSizeKHR,
 }
 unsafe impl Send for KhrRayTracingPipelineFn {}
 unsafe impl Sync for KhrRayTracingPipelineFn {}
@@ -12499,17 +11778,8 @@ pub type PFN_vkDestroySamplerYcbcrConversion = unsafe extern "system" fn(
 );
 #[derive(Clone)]
 pub struct KhrSamplerYcbcrConversionFn {
-    pub create_sampler_ycbcr_conversion_khr: unsafe extern "system" fn(
-        device: Device,
-        p_create_info: *const SamplerYcbcrConversionCreateInfo,
-        p_allocator: *const AllocationCallbacks,
-        p_ycbcr_conversion: *mut SamplerYcbcrConversion,
-    ) -> Result,
-    pub destroy_sampler_ycbcr_conversion_khr: unsafe extern "system" fn(
-        device: Device,
-        ycbcr_conversion: SamplerYcbcrConversion,
-        p_allocator: *const AllocationCallbacks,
-    ),
+    pub create_sampler_ycbcr_conversion_khr: PFN_vkCreateSamplerYcbcrConversion,
+    pub destroy_sampler_ycbcr_conversion_khr: PFN_vkDestroySamplerYcbcrConversion,
 }
 unsafe impl Send for KhrSamplerYcbcrConversionFn {}
 unsafe impl Sync for KhrSamplerYcbcrConversionFn {}
@@ -12882,16 +12152,8 @@ pub type PFN_vkBindImageMemory2 = unsafe extern "system" fn(
 ) -> Result;
 #[derive(Clone)]
 pub struct KhrBindMemory2Fn {
-    pub bind_buffer_memory2_khr: unsafe extern "system" fn(
-        device: Device,
-        bind_info_count: u32,
-        p_bind_infos: *const BindBufferMemoryInfo,
-    ) -> Result,
-    pub bind_image_memory2_khr: unsafe extern "system" fn(
-        device: Device,
-        bind_info_count: u32,
-        p_bind_infos: *const BindImageMemoryInfo,
-    ) -> Result,
+    pub bind_buffer_memory2_khr: PFN_vkBindBufferMemory2,
+    pub bind_image_memory2_khr: PFN_vkBindImageMemory2,
 }
 unsafe impl Send for KhrBindMemory2Fn {}
 unsafe impl Sync for KhrBindMemory2Fn {}
@@ -12989,11 +12251,7 @@ pub type PFN_vkGetImageDrmFormatModifierPropertiesEXT = unsafe extern "system" f
 ) -> Result;
 #[derive(Clone)]
 pub struct ExtImageDrmFormatModifierFn {
-    pub get_image_drm_format_modifier_properties_ext: unsafe extern "system" fn(
-        device: Device,
-        image: Image,
-        p_properties: *mut ImageDrmFormatModifierPropertiesEXT,
-    ) -> Result,
+    pub get_image_drm_format_modifier_properties_ext: PFN_vkGetImageDrmFormatModifierPropertiesEXT,
 }
 unsafe impl Send for ExtImageDrmFormatModifierFn {}
 unsafe impl Sync for ExtImageDrmFormatModifierFn {}
@@ -13135,29 +12393,10 @@ pub type PFN_vkGetValidationCacheDataEXT = unsafe extern "system" fn(
 ) -> Result;
 #[derive(Clone)]
 pub struct ExtValidationCacheFn {
-    pub create_validation_cache_ext: unsafe extern "system" fn(
-        device: Device,
-        p_create_info: *const ValidationCacheCreateInfoEXT,
-        p_allocator: *const AllocationCallbacks,
-        p_validation_cache: *mut ValidationCacheEXT,
-    ) -> Result,
-    pub destroy_validation_cache_ext: unsafe extern "system" fn(
-        device: Device,
-        validation_cache: ValidationCacheEXT,
-        p_allocator: *const AllocationCallbacks,
-    ),
-    pub merge_validation_caches_ext: unsafe extern "system" fn(
-        device: Device,
-        dst_cache: ValidationCacheEXT,
-        src_cache_count: u32,
-        p_src_caches: *const ValidationCacheEXT,
-    ) -> Result,
-    pub get_validation_cache_data_ext: unsafe extern "system" fn(
-        device: Device,
-        validation_cache: ValidationCacheEXT,
-        p_data_size: *mut usize,
-        p_data: *mut c_void,
-    ) -> Result,
+    pub create_validation_cache_ext: PFN_vkCreateValidationCacheEXT,
+    pub destroy_validation_cache_ext: PFN_vkDestroyValidationCacheEXT,
+    pub merge_validation_caches_ext: PFN_vkMergeValidationCachesEXT,
+    pub get_validation_cache_data_ext: PFN_vkGetValidationCacheDataEXT,
 }
 unsafe impl Send for ExtValidationCacheFn {}
 unsafe impl Sync for ExtValidationCacheFn {}
@@ -13455,23 +12694,9 @@ pub type PFN_vkCmdSetCoarseSampleOrderNV = unsafe extern "system" fn(
 );
 #[derive(Clone)]
 pub struct NvShadingRateImageFn {
-    pub cmd_bind_shading_rate_image_nv: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        image_view: ImageView,
-        image_layout: ImageLayout,
-    ),
-    pub cmd_set_viewport_shading_rate_palette_nv: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        first_viewport: u32,
-        viewport_count: u32,
-        p_shading_rate_palettes: *const ShadingRatePaletteNV,
-    ),
-    pub cmd_set_coarse_sample_order_nv: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        sample_order_type: CoarseSampleOrderTypeNV,
-        custom_sample_order_count: u32,
-        p_custom_sample_orders: *const CoarseSampleOrderCustomNV,
-    ),
+    pub cmd_bind_shading_rate_image_nv: PFN_vkCmdBindShadingRateImageNV,
+    pub cmd_set_viewport_shading_rate_palette_nv: PFN_vkCmdSetViewportShadingRatePaletteNV,
+    pub cmd_set_coarse_sample_order_nv: PFN_vkCmdSetCoarseSampleOrderNV,
 }
 unsafe impl Send for NvShadingRateImageFn {}
 unsafe impl Sync for NvShadingRateImageFn {}
@@ -13728,93 +12953,21 @@ pub type PFN_vkCompileDeferredNV =
     unsafe extern "system" fn(device: Device, pipeline: Pipeline, shader: u32) -> Result;
 #[derive(Clone)]
 pub struct NvRayTracingFn {
-    pub create_acceleration_structure_nv: unsafe extern "system" fn(
-        device: Device,
-        p_create_info: *const AccelerationStructureCreateInfoNV,
-        p_allocator: *const AllocationCallbacks,
-        p_acceleration_structure: *mut AccelerationStructureNV,
-    ) -> Result,
-    pub destroy_acceleration_structure_nv: unsafe extern "system" fn(
-        device: Device,
-        acceleration_structure: AccelerationStructureNV,
-        p_allocator: *const AllocationCallbacks,
-    ),
-    pub get_acceleration_structure_memory_requirements_nv: unsafe extern "system" fn(
-        device: Device,
-        p_info: *const AccelerationStructureMemoryRequirementsInfoNV,
-        p_memory_requirements: *mut MemoryRequirements2KHR,
-    ),
-    pub bind_acceleration_structure_memory_nv: unsafe extern "system" fn(
-        device: Device,
-        bind_info_count: u32,
-        p_bind_infos: *const BindAccelerationStructureMemoryInfoNV,
-    ) -> Result,
-    pub cmd_build_acceleration_structure_nv: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        p_info: *const AccelerationStructureInfoNV,
-        instance_data: Buffer,
-        instance_offset: DeviceSize,
-        update: Bool32,
-        dst: AccelerationStructureNV,
-        src: AccelerationStructureNV,
-        scratch: Buffer,
-        scratch_offset: DeviceSize,
-    ),
-    pub cmd_copy_acceleration_structure_nv: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        dst: AccelerationStructureNV,
-        src: AccelerationStructureNV,
-        mode: CopyAccelerationStructureModeKHR,
-    ),
-    pub cmd_trace_rays_nv: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        raygen_shader_binding_table_buffer: Buffer,
-        raygen_shader_binding_offset: DeviceSize,
-        miss_shader_binding_table_buffer: Buffer,
-        miss_shader_binding_offset: DeviceSize,
-        miss_shader_binding_stride: DeviceSize,
-        hit_shader_binding_table_buffer: Buffer,
-        hit_shader_binding_offset: DeviceSize,
-        hit_shader_binding_stride: DeviceSize,
-        callable_shader_binding_table_buffer: Buffer,
-        callable_shader_binding_offset: DeviceSize,
-        callable_shader_binding_stride: DeviceSize,
-        width: u32,
-        height: u32,
-        depth: u32,
-    ),
-    pub create_ray_tracing_pipelines_nv: unsafe extern "system" fn(
-        device: Device,
-        pipeline_cache: PipelineCache,
-        create_info_count: u32,
-        p_create_infos: *const RayTracingPipelineCreateInfoNV,
-        p_allocator: *const AllocationCallbacks,
-        p_pipelines: *mut Pipeline,
-    ) -> Result,
-    pub get_ray_tracing_shader_group_handles_nv: unsafe extern "system" fn(
-        device: Device,
-        pipeline: Pipeline,
-        first_group: u32,
-        group_count: u32,
-        data_size: usize,
-        p_data: *mut c_void,
-    ) -> Result,
-    pub get_acceleration_structure_handle_nv: unsafe extern "system" fn(
-        device: Device,
-        acceleration_structure: AccelerationStructureNV,
-        data_size: usize,
-        p_data: *mut c_void,
-    ) -> Result,
-    pub cmd_write_acceleration_structures_properties_nv: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        acceleration_structure_count: u32,
-        p_acceleration_structures: *const AccelerationStructureNV,
-        query_type: QueryType,
-        query_pool: QueryPool,
-        first_query: u32,
-    ),
-    pub compile_deferred_nv:
-        unsafe extern "system" fn(device: Device, pipeline: Pipeline, shader: u32) -> Result,
+    pub create_acceleration_structure_nv: PFN_vkCreateAccelerationStructureNV,
+    pub destroy_acceleration_structure_nv: PFN_vkDestroyAccelerationStructureNV,
+    pub get_acceleration_structure_memory_requirements_nv:
+        PFN_vkGetAccelerationStructureMemoryRequirementsNV,
+    pub bind_acceleration_structure_memory_nv: PFN_vkBindAccelerationStructureMemoryNV,
+    pub cmd_build_acceleration_structure_nv: PFN_vkCmdBuildAccelerationStructureNV,
+    pub cmd_copy_acceleration_structure_nv: PFN_vkCmdCopyAccelerationStructureNV,
+    pub cmd_trace_rays_nv: PFN_vkCmdTraceRaysNV,
+    pub create_ray_tracing_pipelines_nv: PFN_vkCreateRayTracingPipelinesNV,
+    pub get_ray_tracing_shader_group_handles_nv:
+        crate::vk::PFN_vkGetRayTracingShaderGroupHandlesKHR,
+    pub get_acceleration_structure_handle_nv: PFN_vkGetAccelerationStructureHandleNV,
+    pub cmd_write_acceleration_structures_properties_nv:
+        PFN_vkCmdWriteAccelerationStructuresPropertiesNV,
+    pub compile_deferred_nv: PFN_vkCompileDeferredNV,
 }
 unsafe impl Send for NvRayTracingFn {}
 unsafe impl Sync for NvRayTracingFn {}
@@ -14557,11 +13710,7 @@ pub type PFN_vkGetDescriptorSetLayoutSupport = unsafe extern "system" fn(
 );
 #[derive(Clone)]
 pub struct KhrMaintenance3Fn {
-    pub get_descriptor_set_layout_support_khr: unsafe extern "system" fn(
-        device: Device,
-        p_create_info: *const DescriptorSetLayoutCreateInfo,
-        p_support: *mut DescriptorSetLayoutSupport,
-    ),
+    pub get_descriptor_set_layout_support_khr: PFN_vkGetDescriptorSetLayoutSupport,
 }
 unsafe impl Send for KhrMaintenance3Fn {}
 unsafe impl Sync for KhrMaintenance3Fn {}
@@ -14622,24 +13771,8 @@ impl KhrDrawIndirectCountFn {
 }
 #[derive(Clone)]
 pub struct KhrDrawIndirectCountFn {
-    pub cmd_draw_indirect_count_khr: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        buffer: Buffer,
-        offset: DeviceSize,
-        count_buffer: Buffer,
-        count_buffer_offset: DeviceSize,
-        max_draw_count: u32,
-        stride: u32,
-    ),
-    pub cmd_draw_indexed_indirect_count_khr: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        buffer: Buffer,
-        offset: DeviceSize,
-        count_buffer: Buffer,
-        count_buffer_offset: DeviceSize,
-        max_draw_count: u32,
-        stride: u32,
-    ),
+    pub cmd_draw_indirect_count_khr: crate::vk::PFN_vkCmdDrawIndirectCount,
+    pub cmd_draw_indexed_indirect_count_khr: crate::vk::PFN_vkCmdDrawIndexedIndirectCount,
 }
 unsafe impl Send for KhrDrawIndirectCountFn {}
 unsafe impl Sync for KhrDrawIndirectCountFn {}
@@ -14965,12 +14098,7 @@ pub type PFN_vkGetMemoryHostPointerPropertiesEXT = unsafe extern "system" fn(
 ) -> Result;
 #[derive(Clone)]
 pub struct ExtExternalMemoryHostFn {
-    pub get_memory_host_pointer_properties_ext: unsafe extern "system" fn(
-        device: Device,
-        handle_type: ExternalMemoryHandleTypeFlags,
-        p_host_pointer: *const c_void,
-        p_memory_host_pointer_properties: *mut MemoryHostPointerPropertiesEXT,
-    ) -> Result,
+    pub get_memory_host_pointer_properties_ext: PFN_vkGetMemoryHostPointerPropertiesEXT,
 }
 unsafe impl Send for ExtExternalMemoryHostFn {}
 unsafe impl Sync for ExtExternalMemoryHostFn {}
@@ -15057,13 +14185,7 @@ pub type PFN_vkCmdWriteBufferMarkerAMD = unsafe extern "system" fn(
 );
 #[derive(Clone)]
 pub struct AmdBufferMarkerFn {
-    pub cmd_write_buffer_marker_amd: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        pipeline_stage: PipelineStageFlags,
-        dst_buffer: Buffer,
-        dst_offset: DeviceSize,
-        marker: u32,
-    ),
+    pub cmd_write_buffer_marker_amd: PFN_vkCmdWriteBufferMarkerAMD,
 }
 unsafe impl Send for AmdBufferMarkerFn {}
 unsafe impl Sync for AmdBufferMarkerFn {}
@@ -15227,19 +14349,9 @@ pub type PFN_vkGetCalibratedTimestampsEXT = unsafe extern "system" fn(
 ) -> Result;
 #[derive(Clone)]
 pub struct ExtCalibratedTimestampsFn {
-    pub get_physical_device_calibrateable_time_domains_ext: unsafe extern "system" fn(
-        physical_device: PhysicalDevice,
-        p_time_domain_count: *mut u32,
-        p_time_domains: *mut TimeDomainEXT,
-    )
-        -> Result,
-    pub get_calibrated_timestamps_ext: unsafe extern "system" fn(
-        device: Device,
-        timestamp_count: u32,
-        p_timestamp_infos: *const CalibratedTimestampInfoEXT,
-        p_timestamps: *mut u64,
-        p_max_deviation: *mut u64,
-    ) -> Result,
+    pub get_physical_device_calibrateable_time_domains_ext:
+        PFN_vkGetPhysicalDeviceCalibrateableTimeDomainsEXT,
+    pub get_calibrated_timestamps_ext: PFN_vkGetCalibratedTimestampsEXT,
 }
 unsafe impl Send for ExtCalibratedTimestampsFn {}
 unsafe impl Sync for ExtCalibratedTimestampsFn {}
@@ -15826,24 +14938,9 @@ pub type PFN_vkCmdDrawMeshTasksIndirectCountNV = unsafe extern "system" fn(
 );
 #[derive(Clone)]
 pub struct NvMeshShaderFn {
-    pub cmd_draw_mesh_tasks_nv:
-        unsafe extern "system" fn(command_buffer: CommandBuffer, task_count: u32, first_task: u32),
-    pub cmd_draw_mesh_tasks_indirect_nv: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        buffer: Buffer,
-        offset: DeviceSize,
-        draw_count: u32,
-        stride: u32,
-    ),
-    pub cmd_draw_mesh_tasks_indirect_count_nv: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        buffer: Buffer,
-        offset: DeviceSize,
-        count_buffer: Buffer,
-        count_buffer_offset: DeviceSize,
-        max_draw_count: u32,
-        stride: u32,
-    ),
+    pub cmd_draw_mesh_tasks_nv: PFN_vkCmdDrawMeshTasksNV,
+    pub cmd_draw_mesh_tasks_indirect_nv: PFN_vkCmdDrawMeshTasksIndirectNV,
+    pub cmd_draw_mesh_tasks_indirect_count_nv: PFN_vkCmdDrawMeshTasksIndirectCountNV,
 }
 unsafe impl Send for NvMeshShaderFn {}
 unsafe impl Sync for NvMeshShaderFn {}
@@ -16051,12 +15148,7 @@ pub type PFN_vkCmdSetExclusiveScissorNV = unsafe extern "system" fn(
 );
 #[derive(Clone)]
 pub struct NvScissorExclusiveFn {
-    pub cmd_set_exclusive_scissor_nv: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        first_exclusive_scissor: u32,
-        exclusive_scissor_count: u32,
-        p_exclusive_scissors: *const Rect2D,
-    ),
+    pub cmd_set_exclusive_scissor_nv: PFN_vkCmdSetExclusiveScissorNV,
 }
 unsafe impl Send for NvScissorExclusiveFn {}
 unsafe impl Sync for NvScissorExclusiveFn {}
@@ -16136,15 +15228,8 @@ pub type PFN_vkGetQueueCheckpointDataNV = unsafe extern "system" fn(
 );
 #[derive(Clone)]
 pub struct NvDeviceDiagnosticCheckpointsFn {
-    pub cmd_set_checkpoint_nv: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        p_checkpoint_marker: *const c_void,
-    ),
-    pub get_queue_checkpoint_data_nv: unsafe extern "system" fn(
-        queue: Queue,
-        p_checkpoint_data_count: *mut u32,
-        p_checkpoint_data: *mut CheckpointDataNV,
-    ),
+    pub cmd_set_checkpoint_nv: PFN_vkCmdSetCheckpointNV,
+    pub get_queue_checkpoint_data_nv: PFN_vkGetQueueCheckpointDataNV,
 }
 unsafe impl Send for NvDeviceDiagnosticCheckpointsFn {}
 unsafe impl Sync for NvDeviceDiagnosticCheckpointsFn {}
@@ -16243,20 +15328,9 @@ pub type PFN_vkSignalSemaphore =
     unsafe extern "system" fn(device: Device, p_signal_info: *const SemaphoreSignalInfo) -> Result;
 #[derive(Clone)]
 pub struct KhrTimelineSemaphoreFn {
-    pub get_semaphore_counter_value_khr: unsafe extern "system" fn(
-        device: Device,
-        semaphore: Semaphore,
-        p_value: *mut u64,
-    ) -> Result,
-    pub wait_semaphores_khr: unsafe extern "system" fn(
-        device: Device,
-        p_wait_info: *const SemaphoreWaitInfo,
-        timeout: u64,
-    ) -> Result,
-    pub signal_semaphore_khr: unsafe extern "system" fn(
-        device: Device,
-        p_signal_info: *const SemaphoreSignalInfo,
-    ) -> Result,
+    pub get_semaphore_counter_value_khr: PFN_vkGetSemaphoreCounterValue,
+    pub wait_semaphores_khr: PFN_vkWaitSemaphores,
+    pub signal_semaphore_khr: PFN_vkSignalSemaphore,
 }
 unsafe impl Send for KhrTimelineSemaphoreFn {}
 unsafe impl Sync for KhrTimelineSemaphoreFn {}
@@ -16480,41 +15554,15 @@ pub type PFN_vkGetPerformanceParameterINTEL = unsafe extern "system" fn(
 ) -> Result;
 #[derive(Clone)]
 pub struct IntelPerformanceQueryFn {
-    pub initialize_performance_api_intel: unsafe extern "system" fn(
-        device: Device,
-        p_initialize_info: *const InitializePerformanceApiInfoINTEL,
-    ) -> Result,
-    pub uninitialize_performance_api_intel: unsafe extern "system" fn(device: Device),
-    pub cmd_set_performance_marker_intel: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        p_marker_info: *const PerformanceMarkerInfoINTEL,
-    ) -> Result,
-    pub cmd_set_performance_stream_marker_intel: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        p_marker_info: *const PerformanceStreamMarkerInfoINTEL,
-    ) -> Result,
-    pub cmd_set_performance_override_intel: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        p_override_info: *const PerformanceOverrideInfoINTEL,
-    ) -> Result,
-    pub acquire_performance_configuration_intel: unsafe extern "system" fn(
-        device: Device,
-        p_acquire_info: *const PerformanceConfigurationAcquireInfoINTEL,
-        p_configuration: *mut PerformanceConfigurationINTEL,
-    ) -> Result,
-    pub release_performance_configuration_intel: unsafe extern "system" fn(
-        device: Device,
-        configuration: PerformanceConfigurationINTEL,
-    ) -> Result,
-    pub queue_set_performance_configuration_intel: unsafe extern "system" fn(
-        queue: Queue,
-        configuration: PerformanceConfigurationINTEL,
-    ) -> Result,
-    pub get_performance_parameter_intel: unsafe extern "system" fn(
-        device: Device,
-        parameter: PerformanceParameterTypeINTEL,
-        p_value: *mut PerformanceValueINTEL,
-    ) -> Result,
+    pub initialize_performance_api_intel: PFN_vkInitializePerformanceApiINTEL,
+    pub uninitialize_performance_api_intel: PFN_vkUninitializePerformanceApiINTEL,
+    pub cmd_set_performance_marker_intel: PFN_vkCmdSetPerformanceMarkerINTEL,
+    pub cmd_set_performance_stream_marker_intel: PFN_vkCmdSetPerformanceStreamMarkerINTEL,
+    pub cmd_set_performance_override_intel: PFN_vkCmdSetPerformanceOverrideINTEL,
+    pub acquire_performance_configuration_intel: PFN_vkAcquirePerformanceConfigurationINTEL,
+    pub release_performance_configuration_intel: PFN_vkReleasePerformanceConfigurationINTEL,
+    pub queue_set_performance_configuration_intel: PFN_vkQueueSetPerformanceConfigurationINTEL,
+    pub get_performance_parameter_intel: PFN_vkGetPerformanceParameterINTEL,
 }
 unsafe impl Send for IntelPerformanceQueryFn {}
 unsafe impl Sync for IntelPerformanceQueryFn {}
@@ -16875,11 +15923,7 @@ pub type PFN_vkSetLocalDimmingAMD = unsafe extern "system" fn(
 );
 #[derive(Clone)]
 pub struct AmdDisplayNativeHdrFn {
-    pub set_local_dimming_amd: unsafe extern "system" fn(
-        device: Device,
-        swap_chain: SwapchainKHR,
-        local_dimming_enable: Bool32,
-    ),
+    pub set_local_dimming_amd: PFN_vkSetLocalDimmingAMD,
 }
 unsafe impl Send for AmdDisplayNativeHdrFn {}
 unsafe impl Sync for AmdDisplayNativeHdrFn {}
@@ -16949,12 +15993,7 @@ pub type PFN_vkCreateImagePipeSurfaceFUCHSIA = unsafe extern "system" fn(
 ) -> Result;
 #[derive(Clone)]
 pub struct FuchsiaImagepipeSurfaceFn {
-    pub create_image_pipe_surface_fuchsia: unsafe extern "system" fn(
-        instance: Instance,
-        p_create_info: *const ImagePipeSurfaceCreateInfoFUCHSIA,
-        p_allocator: *const AllocationCallbacks,
-        p_surface: *mut SurfaceKHR,
-    ) -> Result,
+    pub create_image_pipe_surface_fuchsia: PFN_vkCreateImagePipeSurfaceFUCHSIA,
 }
 unsafe impl Send for FuchsiaImagepipeSurfaceFn {}
 unsafe impl Sync for FuchsiaImagepipeSurfaceFn {}
@@ -17061,12 +16100,7 @@ pub type PFN_vkCreateMetalSurfaceEXT = unsafe extern "system" fn(
 ) -> Result;
 #[derive(Clone)]
 pub struct ExtMetalSurfaceFn {
-    pub create_metal_surface_ext: unsafe extern "system" fn(
-        instance: Instance,
-        p_create_info: *const MetalSurfaceCreateInfoEXT,
-        p_allocator: *const AllocationCallbacks,
-        p_surface: *mut SurfaceKHR,
-    ) -> Result,
+    pub create_metal_surface_ext: PFN_vkCreateMetalSurfaceEXT,
 }
 unsafe impl Send for ExtMetalSurfaceFn {}
 unsafe impl Sync for ExtMetalSurfaceFn {}
@@ -17365,16 +16399,9 @@ pub type PFN_vkCmdSetFragmentShadingRateKHR = unsafe extern "system" fn(
 );
 #[derive(Clone)]
 pub struct KhrFragmentShadingRateFn {
-    pub get_physical_device_fragment_shading_rates_khr: unsafe extern "system" fn(
-        physical_device: PhysicalDevice,
-        p_fragment_shading_rate_count: *mut u32,
-        p_fragment_shading_rates: *mut PhysicalDeviceFragmentShadingRateKHR,
-    ) -> Result,
-    pub cmd_set_fragment_shading_rate_khr: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        p_fragment_size: *const Extent2D,
-        combiner_ops: *const [FragmentShadingRateCombinerOpKHR; 2],
-    ),
+    pub get_physical_device_fragment_shading_rates_khr:
+        PFN_vkGetPhysicalDeviceFragmentShadingRatesKHR,
+    pub cmd_set_fragment_shading_rate_khr: PFN_vkCmdSetFragmentShadingRateKHR,
 }
 unsafe impl Send for KhrFragmentShadingRateFn {}
 unsafe impl Sync for KhrFragmentShadingRateFn {}
@@ -17905,10 +16932,7 @@ pub type PFN_vkGetBufferDeviceAddress = unsafe extern "system" fn(
 ) -> DeviceAddress;
 #[derive(Clone)]
 pub struct ExtBufferDeviceAddressFn {
-    pub get_buffer_device_address_ext: unsafe extern "system" fn(
-        device: Device,
-        p_info: *const BufferDeviceAddressInfo,
-    ) -> DeviceAddress,
+    pub get_buffer_device_address_ext: PFN_vkGetBufferDeviceAddress,
 }
 unsafe impl Send for ExtBufferDeviceAddressFn {}
 unsafe impl Sync for ExtBufferDeviceAddressFn {}
@@ -17993,11 +17017,7 @@ pub type PFN_vkGetPhysicalDeviceToolPropertiesEXT = unsafe extern "system" fn(
 ) -> Result;
 #[derive(Clone)]
 pub struct ExtToolingInfoFn {
-    pub get_physical_device_tool_properties_ext: unsafe extern "system" fn(
-        physical_device: PhysicalDevice,
-        p_tool_count: *mut u32,
-        p_tool_properties: *mut PhysicalDeviceToolPropertiesEXT,
-    ) -> Result,
+    pub get_physical_device_tool_properties_ext: PFN_vkGetPhysicalDeviceToolPropertiesEXT,
 }
 unsafe impl Send for ExtToolingInfoFn {}
 unsafe impl Sync for ExtToolingInfoFn {}
@@ -18137,12 +17157,8 @@ pub type PFN_vkGetPhysicalDeviceCooperativeMatrixPropertiesNV = unsafe extern "s
     -> Result;
 #[derive(Clone)]
 pub struct NvCooperativeMatrixFn {
-    pub get_physical_device_cooperative_matrix_properties_nv: unsafe extern "system" fn(
-        physical_device: PhysicalDevice,
-        p_property_count: *mut u32,
-        p_properties: *mut CooperativeMatrixPropertiesNV,
-    )
-        -> Result,
+    pub get_physical_device_cooperative_matrix_properties_nv:
+        PFN_vkGetPhysicalDeviceCooperativeMatrixPropertiesNV,
 }
 unsafe impl Send for NvCooperativeMatrixFn {}
 unsafe impl Sync for NvCooperativeMatrixFn {}
@@ -18218,11 +17234,7 @@ pub type PFN_vkGetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV =
 #[derive(Clone)]
 pub struct NvCoverageReductionModeFn {
     pub get_physical_device_supported_framebuffer_mixed_samples_combinations_nv:
-        unsafe extern "system" fn(
-            physical_device: PhysicalDevice,
-            p_combination_count: *mut u32,
-            p_combinations: *mut FramebufferMixedSamplesCombinationNV,
-        ) -> Result,
+        PFN_vkGetPhysicalDeviceSupportedFramebufferMixedSamplesCombinationsNV,
 }
 unsafe impl Send for NvCoverageReductionModeFn {}
 unsafe impl Sync for NvCoverageReductionModeFn {}
@@ -18400,21 +17412,11 @@ pub type PFN_vkGetDeviceGroupSurfacePresentModes2EXT = unsafe extern "system" fn
 ) -> Result;
 #[derive(Clone)]
 pub struct ExtFullScreenExclusiveFn {
-    pub get_physical_device_surface_present_modes2_ext: unsafe extern "system" fn(
-        physical_device: PhysicalDevice,
-        p_surface_info: *const PhysicalDeviceSurfaceInfo2KHR,
-        p_present_mode_count: *mut u32,
-        p_present_modes: *mut PresentModeKHR,
-    ) -> Result,
-    pub acquire_full_screen_exclusive_mode_ext:
-        unsafe extern "system" fn(device: Device, swapchain: SwapchainKHR) -> Result,
-    pub release_full_screen_exclusive_mode_ext:
-        unsafe extern "system" fn(device: Device, swapchain: SwapchainKHR) -> Result,
-    pub get_device_group_surface_present_modes2_ext: unsafe extern "system" fn(
-        device: Device,
-        p_surface_info: *const PhysicalDeviceSurfaceInfo2KHR,
-        p_modes: *mut DeviceGroupPresentModeFlagsKHR,
-    ) -> Result,
+    pub get_physical_device_surface_present_modes2_ext:
+        PFN_vkGetPhysicalDeviceSurfacePresentModes2EXT,
+    pub acquire_full_screen_exclusive_mode_ext: PFN_vkAcquireFullScreenExclusiveModeEXT,
+    pub release_full_screen_exclusive_mode_ext: PFN_vkReleaseFullScreenExclusiveModeEXT,
+    pub get_device_group_surface_present_modes2_ext: PFN_vkGetDeviceGroupSurfacePresentModes2EXT,
 }
 unsafe impl Send for ExtFullScreenExclusiveFn {}
 unsafe impl Sync for ExtFullScreenExclusiveFn {}
@@ -18582,12 +17584,7 @@ pub type PFN_vkCreateHeadlessSurfaceEXT = unsafe extern "system" fn(
 ) -> Result;
 #[derive(Clone)]
 pub struct ExtHeadlessSurfaceFn {
-    pub create_headless_surface_ext: unsafe extern "system" fn(
-        instance: Instance,
-        p_create_info: *const HeadlessSurfaceCreateInfoEXT,
-        p_allocator: *const AllocationCallbacks,
-        p_surface: *mut SurfaceKHR,
-    ) -> Result,
+    pub create_headless_surface_ext: PFN_vkCreateHeadlessSurfaceEXT,
 }
 unsafe impl Send for ExtHeadlessSurfaceFn {}
 unsafe impl Sync for ExtHeadlessSurfaceFn {}
@@ -18653,16 +17650,9 @@ pub type PFN_vkGetDeviceMemoryOpaqueCaptureAddress = unsafe extern "system" fn(
 ) -> u64;
 #[derive(Clone)]
 pub struct KhrBufferDeviceAddressFn {
-    pub get_buffer_device_address_khr: unsafe extern "system" fn(
-        device: Device,
-        p_info: *const BufferDeviceAddressInfo,
-    ) -> DeviceAddress,
-    pub get_buffer_opaque_capture_address_khr:
-        unsafe extern "system" fn(device: Device, p_info: *const BufferDeviceAddressInfo) -> u64,
-    pub get_device_memory_opaque_capture_address_khr: unsafe extern "system" fn(
-        device: Device,
-        p_info: *const DeviceMemoryOpaqueCaptureAddressInfo,
-    ) -> u64,
+    pub get_buffer_device_address_khr: crate::vk::PFN_vkGetBufferDeviceAddress,
+    pub get_buffer_opaque_capture_address_khr: PFN_vkGetBufferOpaqueCaptureAddress,
+    pub get_device_memory_opaque_capture_address_khr: PFN_vkGetDeviceMemoryOpaqueCaptureAddress,
 }
 unsafe impl Send for KhrBufferDeviceAddressFn {}
 unsafe impl Sync for KhrBufferDeviceAddressFn {}
@@ -18838,11 +17828,7 @@ pub type PFN_vkCmdSetLineStippleEXT = unsafe extern "system" fn(
 );
 #[derive(Clone)]
 pub struct ExtLineRasterizationFn {
-    pub cmd_set_line_stipple_ext: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        line_stipple_factor: u32,
-        line_stipple_pattern: u16,
-    ),
+    pub cmd_set_line_stipple_ext: PFN_vkCmdSetLineStippleEXT,
 }
 unsafe impl Send for ExtLineRasterizationFn {}
 unsafe impl Sync for ExtLineRasterizationFn {}
@@ -18939,12 +17925,7 @@ pub type PFN_vkResetQueryPool = unsafe extern "system" fn(
 );
 #[derive(Clone)]
 pub struct ExtHostQueryResetFn {
-    pub reset_query_pool_ext: unsafe extern "system" fn(
-        device: Device,
-        query_pool: QueryPool,
-        first_query: u32,
-        query_count: u32,
-    ),
+    pub reset_query_pool_ext: PFN_vkResetQueryPool,
 }
 unsafe impl Send for ExtHostQueryResetFn {}
 unsafe impl Sync for ExtHostQueryResetFn {}
@@ -19157,51 +18138,18 @@ pub type PFN_vkCmdSetStencilOpEXT = unsafe extern "system" fn(
 );
 #[derive(Clone)]
 pub struct ExtExtendedDynamicStateFn {
-    pub cmd_set_cull_mode_ext:
-        unsafe extern "system" fn(command_buffer: CommandBuffer, cull_mode: CullModeFlags),
-    pub cmd_set_front_face_ext:
-        unsafe extern "system" fn(command_buffer: CommandBuffer, front_face: FrontFace),
-    pub cmd_set_primitive_topology_ext: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        primitive_topology: PrimitiveTopology,
-    ),
-    pub cmd_set_viewport_with_count_ext: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        viewport_count: u32,
-        p_viewports: *const Viewport,
-    ),
-    pub cmd_set_scissor_with_count_ext: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        scissor_count: u32,
-        p_scissors: *const Rect2D,
-    ),
-    pub cmd_bind_vertex_buffers2_ext: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        first_binding: u32,
-        binding_count: u32,
-        p_buffers: *const Buffer,
-        p_offsets: *const DeviceSize,
-        p_sizes: *const DeviceSize,
-        p_strides: *const DeviceSize,
-    ),
-    pub cmd_set_depth_test_enable_ext:
-        unsafe extern "system" fn(command_buffer: CommandBuffer, depth_test_enable: Bool32),
-    pub cmd_set_depth_write_enable_ext:
-        unsafe extern "system" fn(command_buffer: CommandBuffer, depth_write_enable: Bool32),
-    pub cmd_set_depth_compare_op_ext:
-        unsafe extern "system" fn(command_buffer: CommandBuffer, depth_compare_op: CompareOp),
-    pub cmd_set_depth_bounds_test_enable_ext:
-        unsafe extern "system" fn(command_buffer: CommandBuffer, depth_bounds_test_enable: Bool32),
-    pub cmd_set_stencil_test_enable_ext:
-        unsafe extern "system" fn(command_buffer: CommandBuffer, stencil_test_enable: Bool32),
-    pub cmd_set_stencil_op_ext: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        face_mask: StencilFaceFlags,
-        fail_op: StencilOp,
-        pass_op: StencilOp,
-        depth_fail_op: StencilOp,
-        compare_op: CompareOp,
-    ),
+    pub cmd_set_cull_mode_ext: PFN_vkCmdSetCullModeEXT,
+    pub cmd_set_front_face_ext: PFN_vkCmdSetFrontFaceEXT,
+    pub cmd_set_primitive_topology_ext: PFN_vkCmdSetPrimitiveTopologyEXT,
+    pub cmd_set_viewport_with_count_ext: PFN_vkCmdSetViewportWithCountEXT,
+    pub cmd_set_scissor_with_count_ext: PFN_vkCmdSetScissorWithCountEXT,
+    pub cmd_bind_vertex_buffers2_ext: PFN_vkCmdBindVertexBuffers2EXT,
+    pub cmd_set_depth_test_enable_ext: PFN_vkCmdSetDepthTestEnableEXT,
+    pub cmd_set_depth_write_enable_ext: PFN_vkCmdSetDepthWriteEnableEXT,
+    pub cmd_set_depth_compare_op_ext: PFN_vkCmdSetDepthCompareOpEXT,
+    pub cmd_set_depth_bounds_test_enable_ext: PFN_vkCmdSetDepthBoundsTestEnableEXT,
+    pub cmd_set_stencil_test_enable_ext: PFN_vkCmdSetStencilTestEnableEXT,
+    pub cmd_set_stencil_op_ext: PFN_vkCmdSetStencilOpEXT,
 }
 unsafe impl Send for ExtExtendedDynamicStateFn {}
 unsafe impl Sync for ExtExtendedDynamicStateFn {}
@@ -19665,22 +18613,11 @@ pub type PFN_vkDeferredOperationJoinKHR =
     unsafe extern "system" fn(device: Device, operation: DeferredOperationKHR) -> Result;
 #[derive(Clone)]
 pub struct KhrDeferredHostOperationsFn {
-    pub create_deferred_operation_khr: unsafe extern "system" fn(
-        device: Device,
-        p_allocator: *const AllocationCallbacks,
-        p_deferred_operation: *mut DeferredOperationKHR,
-    ) -> Result,
-    pub destroy_deferred_operation_khr: unsafe extern "system" fn(
-        device: Device,
-        operation: DeferredOperationKHR,
-        p_allocator: *const AllocationCallbacks,
-    ),
-    pub get_deferred_operation_max_concurrency_khr:
-        unsafe extern "system" fn(device: Device, operation: DeferredOperationKHR) -> u32,
-    pub get_deferred_operation_result_khr:
-        unsafe extern "system" fn(device: Device, operation: DeferredOperationKHR) -> Result,
-    pub deferred_operation_join_khr:
-        unsafe extern "system" fn(device: Device, operation: DeferredOperationKHR) -> Result,
+    pub create_deferred_operation_khr: PFN_vkCreateDeferredOperationKHR,
+    pub destroy_deferred_operation_khr: PFN_vkDestroyDeferredOperationKHR,
+    pub get_deferred_operation_max_concurrency_khr: PFN_vkGetDeferredOperationMaxConcurrencyKHR,
+    pub get_deferred_operation_result_khr: PFN_vkGetDeferredOperationResultKHR,
+    pub deferred_operation_join_khr: PFN_vkDeferredOperationJoinKHR,
 }
 unsafe impl Send for KhrDeferredHostOperationsFn {}
 unsafe impl Sync for KhrDeferredHostOperationsFn {}
@@ -19888,25 +18825,10 @@ pub type PFN_vkGetPipelineExecutableInternalRepresentationsKHR =
     ) -> Result;
 #[derive(Clone)]
 pub struct KhrPipelineExecutablePropertiesFn {
-    pub get_pipeline_executable_properties_khr: unsafe extern "system" fn(
-        device: Device,
-        p_pipeline_info: *const PipelineInfoKHR,
-        p_executable_count: *mut u32,
-        p_properties: *mut PipelineExecutablePropertiesKHR,
-    ) -> Result,
-    pub get_pipeline_executable_statistics_khr: unsafe extern "system" fn(
-        device: Device,
-        p_executable_info: *const PipelineExecutableInfoKHR,
-        p_statistic_count: *mut u32,
-        p_statistics: *mut PipelineExecutableStatisticKHR,
-    ) -> Result,
-    pub get_pipeline_executable_internal_representations_khr: unsafe extern "system" fn(
-        device: Device,
-        p_executable_info: *const PipelineExecutableInfoKHR,
-        p_internal_representation_count: *mut u32,
-        p_internal_representations: *mut PipelineExecutableInternalRepresentationKHR,
-    )
-        -> Result,
+    pub get_pipeline_executable_properties_khr: PFN_vkGetPipelineExecutablePropertiesKHR,
+    pub get_pipeline_executable_statistics_khr: PFN_vkGetPipelineExecutableStatisticsKHR,
+    pub get_pipeline_executable_internal_representations_khr:
+        PFN_vkGetPipelineExecutableInternalRepresentationsKHR,
 }
 unsafe impl Send for KhrPipelineExecutablePropertiesFn {}
 unsafe impl Sync for KhrPipelineExecutablePropertiesFn {}
@@ -20247,37 +19169,13 @@ pub type PFN_vkDestroyIndirectCommandsLayoutNV = unsafe extern "system" fn(
 );
 #[derive(Clone)]
 pub struct NvDeviceGeneratedCommandsFn {
-    pub get_generated_commands_memory_requirements_nv: unsafe extern "system" fn(
-        device: Device,
-        p_info: *const GeneratedCommandsMemoryRequirementsInfoNV,
-        p_memory_requirements: *mut MemoryRequirements2,
-    ),
-    pub cmd_preprocess_generated_commands_nv: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        p_generated_commands_info: *const GeneratedCommandsInfoNV,
-    ),
-    pub cmd_execute_generated_commands_nv: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        is_preprocessed: Bool32,
-        p_generated_commands_info: *const GeneratedCommandsInfoNV,
-    ),
-    pub cmd_bind_pipeline_shader_group_nv: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        pipeline_bind_point: PipelineBindPoint,
-        pipeline: Pipeline,
-        group_index: u32,
-    ),
-    pub create_indirect_commands_layout_nv: unsafe extern "system" fn(
-        device: Device,
-        p_create_info: *const IndirectCommandsLayoutCreateInfoNV,
-        p_allocator: *const AllocationCallbacks,
-        p_indirect_commands_layout: *mut IndirectCommandsLayoutNV,
-    ) -> Result,
-    pub destroy_indirect_commands_layout_nv: unsafe extern "system" fn(
-        device: Device,
-        indirect_commands_layout: IndirectCommandsLayoutNV,
-        p_allocator: *const AllocationCallbacks,
-    ),
+    pub get_generated_commands_memory_requirements_nv:
+        PFN_vkGetGeneratedCommandsMemoryRequirementsNV,
+    pub cmd_preprocess_generated_commands_nv: PFN_vkCmdPreprocessGeneratedCommandsNV,
+    pub cmd_execute_generated_commands_nv: PFN_vkCmdExecuteGeneratedCommandsNV,
+    pub cmd_bind_pipeline_shader_group_nv: PFN_vkCmdBindPipelineShaderGroupNV,
+    pub create_indirect_commands_layout_nv: PFN_vkCreateIndirectCommandsLayoutNV,
+    pub destroy_indirect_commands_layout_nv: PFN_vkDestroyIndirectCommandsLayoutNV,
 }
 unsafe impl Send for NvDeviceGeneratedCommandsFn {}
 unsafe impl Sync for NvDeviceGeneratedCommandsFn {}
@@ -21088,31 +19986,10 @@ pub type PFN_vkGetPrivateDataEXT = unsafe extern "system" fn(
 );
 #[derive(Clone)]
 pub struct ExtPrivateDataFn {
-    pub create_private_data_slot_ext: unsafe extern "system" fn(
-        device: Device,
-        p_create_info: *const PrivateDataSlotCreateInfoEXT,
-        p_allocator: *const AllocationCallbacks,
-        p_private_data_slot: *mut PrivateDataSlotEXT,
-    ) -> Result,
-    pub destroy_private_data_slot_ext: unsafe extern "system" fn(
-        device: Device,
-        private_data_slot: PrivateDataSlotEXT,
-        p_allocator: *const AllocationCallbacks,
-    ),
-    pub set_private_data_ext: unsafe extern "system" fn(
-        device: Device,
-        object_type: ObjectType,
-        object_handle: u64,
-        private_data_slot: PrivateDataSlotEXT,
-        data: u64,
-    ) -> Result,
-    pub get_private_data_ext: unsafe extern "system" fn(
-        device: Device,
-        object_type: ObjectType,
-        object_handle: u64,
-        private_data_slot: PrivateDataSlotEXT,
-        p_data: *mut u64,
-    ),
+    pub create_private_data_slot_ext: PFN_vkCreatePrivateDataSlotEXT,
+    pub destroy_private_data_slot_ext: PFN_vkDestroyPrivateDataSlotEXT,
+    pub set_private_data_ext: PFN_vkSetPrivateDataEXT,
+    pub get_private_data_ext: PFN_vkGetPrivateDataEXT,
 }
 unsafe impl Send for ExtPrivateDataFn {}
 unsafe impl Sync for ExtPrivateDataFn {}
@@ -21721,50 +20598,14 @@ pub type PFN_vkGetQueueCheckpointData2NV = unsafe extern "system" fn(
 );
 #[derive(Clone)]
 pub struct KhrSynchronization2Fn {
-    pub cmd_set_event2_khr: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        event: Event,
-        p_dependency_info: *const DependencyInfoKHR,
-    ),
-    pub cmd_reset_event2_khr: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        event: Event,
-        stage_mask: PipelineStageFlags2KHR,
-    ),
-    pub cmd_wait_events2_khr: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        event_count: u32,
-        p_events: *const Event,
-        p_dependency_infos: *const DependencyInfoKHR,
-    ),
-    pub cmd_pipeline_barrier2_khr: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        p_dependency_info: *const DependencyInfoKHR,
-    ),
-    pub cmd_write_timestamp2_khr: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        stage: PipelineStageFlags2KHR,
-        query_pool: QueryPool,
-        query: u32,
-    ),
-    pub queue_submit2_khr: unsafe extern "system" fn(
-        queue: Queue,
-        submit_count: u32,
-        p_submits: *const SubmitInfo2KHR,
-        fence: Fence,
-    ) -> Result,
-    pub cmd_write_buffer_marker2_amd: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        stage: PipelineStageFlags2KHR,
-        dst_buffer: Buffer,
-        dst_offset: DeviceSize,
-        marker: u32,
-    ),
-    pub get_queue_checkpoint_data2_nv: unsafe extern "system" fn(
-        queue: Queue,
-        p_checkpoint_data_count: *mut u32,
-        p_checkpoint_data: *mut CheckpointData2NV,
-    ),
+    pub cmd_set_event2_khr: PFN_vkCmdSetEvent2KHR,
+    pub cmd_reset_event2_khr: PFN_vkCmdResetEvent2KHR,
+    pub cmd_wait_events2_khr: PFN_vkCmdWaitEvents2KHR,
+    pub cmd_pipeline_barrier2_khr: PFN_vkCmdPipelineBarrier2KHR,
+    pub cmd_write_timestamp2_khr: PFN_vkCmdWriteTimestamp2KHR,
+    pub queue_submit2_khr: PFN_vkQueueSubmit2KHR,
+    pub cmd_write_buffer_marker2_amd: PFN_vkCmdWriteBufferMarker2AMD,
+    pub get_queue_checkpoint_data2_nv: PFN_vkGetQueueCheckpointData2NV,
 }
 unsafe impl Send for KhrSynchronization2Fn {}
 unsafe impl Sync for KhrSynchronization2Fn {}
@@ -22399,11 +21240,7 @@ pub type PFN_vkCmdSetFragmentShadingRateEnumNV = unsafe extern "system" fn(
 );
 #[derive(Clone)]
 pub struct NvFragmentShadingRateEnumsFn {
-    pub cmd_set_fragment_shading_rate_enum_nv: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        shading_rate: FragmentShadingRateNV,
-        combiner_ops: *const [FragmentShadingRateCombinerOpKHR; 2],
-    ),
+    pub cmd_set_fragment_shading_rate_enum_nv: PFN_vkCmdSetFragmentShadingRateEnumNV,
 }
 unsafe impl Send for NvFragmentShadingRateEnumsFn {}
 unsafe impl Sync for NvFragmentShadingRateEnumsFn {}
@@ -22724,30 +21561,12 @@ pub type PFN_vkCmdResolveImage2KHR = unsafe extern "system" fn(
 );
 #[derive(Clone)]
 pub struct KhrCopyCommands2Fn {
-    pub cmd_copy_buffer2_khr: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        p_copy_buffer_info: *const CopyBufferInfo2KHR,
-    ),
-    pub cmd_copy_image2_khr: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        p_copy_image_info: *const CopyImageInfo2KHR,
-    ),
-    pub cmd_copy_buffer_to_image2_khr: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        p_copy_buffer_to_image_info: *const CopyBufferToImageInfo2KHR,
-    ),
-    pub cmd_copy_image_to_buffer2_khr: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        p_copy_image_to_buffer_info: *const CopyImageToBufferInfo2KHR,
-    ),
-    pub cmd_blit_image2_khr: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        p_blit_image_info: *const BlitImageInfo2KHR,
-    ),
-    pub cmd_resolve_image2_khr: unsafe extern "system" fn(
-        command_buffer: CommandBuffer,
-        p_resolve_image_info: *const ResolveImageInfo2KHR,
-    ),
+    pub cmd_copy_buffer2_khr: PFN_vkCmdCopyBuffer2KHR,
+    pub cmd_copy_image2_khr: PFN_vkCmdCopyImage2KHR,
+    pub cmd_copy_buffer_to_image2_khr: PFN_vkCmdCopyBufferToImage2KHR,
+    pub cmd_copy_image_to_buffer2_khr: PFN_vkCmdCopyImageToBuffer2KHR,
+    pub cmd_blit_image2_khr: PFN_vkCmdBlitImage2KHR,
+    pub cmd_resolve_image2_khr: PFN_vkCmdResolveImage2KHR,
 }
 unsafe impl Send for KhrCopyCommands2Fn {}
 unsafe impl Sync for KhrCopyCommands2Fn {}
@@ -23122,13 +21941,8 @@ pub type PFN_vkGetWinrtDisplayNV = unsafe extern "system" fn(
 ) -> Result;
 #[derive(Clone)]
 pub struct NvAcquireWinrtDisplayFn {
-    pub acquire_winrt_display_nv:
-        unsafe extern "system" fn(physical_device: PhysicalDevice, display: DisplayKHR) -> Result,
-    pub get_winrt_display_nv: unsafe extern "system" fn(
-        physical_device: PhysicalDevice,
-        device_relative_id: u32,
-        p_display: *mut DisplayKHR,
-    ) -> Result,
+    pub acquire_winrt_display_nv: PFN_vkAcquireWinrtDisplayNV,
+    pub get_winrt_display_nv: PFN_vkGetWinrtDisplayNV,
 }
 unsafe impl Send for NvAcquireWinrtDisplayFn {}
 unsafe impl Sync for NvAcquireWinrtDisplayFn {}
@@ -23217,18 +22031,9 @@ pub type PFN_vkGetPhysicalDeviceDirectFBPresentationSupportEXT =
     ) -> Bool32;
 #[derive(Clone)]
 pub struct ExtDirectfbSurfaceFn {
-    pub create_direct_fb_surface_ext: unsafe extern "system" fn(
-        instance: Instance,
-        p_create_info: *const DirectFBSurfaceCreateInfoEXT,
-        p_allocator: *const AllocationCallbacks,
-        p_surface: *mut SurfaceKHR,
-    ) -> Result,
-    pub get_physical_device_direct_fb_presentation_support_ext: unsafe extern "system" fn(
-        physical_device: PhysicalDevice,
-        queue_family_index: u32,
-        dfb: *mut IDirectFB,
-    )
-        -> Bool32,
+    pub create_direct_fb_surface_ext: PFN_vkCreateDirectFBSurfaceEXT,
+    pub get_physical_device_direct_fb_presentation_support_ext:
+        PFN_vkGetPhysicalDeviceDirectFBPresentationSupportEXT,
 }
 unsafe impl Send for ExtDirectfbSurfaceFn {}
 unsafe impl Sync for ExtDirectfbSurfaceFn {}
@@ -23638,17 +22443,8 @@ pub type PFN_vkGetMemoryZirconHandlePropertiesFUCHSIA = unsafe extern "system" f
 ) -> Result;
 #[derive(Clone)]
 pub struct FuchsiaExternalMemoryFn {
-    pub get_memory_zircon_handle_fuchsia: unsafe extern "system" fn(
-        device: Device,
-        p_get_zircon_handle_info: *const MemoryGetZirconHandleInfoFUCHSIA,
-        p_zircon_handle: *mut zx_handle_t,
-    ) -> Result,
-    pub get_memory_zircon_handle_properties_fuchsia: unsafe extern "system" fn(
-        device: Device,
-        handle_type: ExternalMemoryHandleTypeFlags,
-        zircon_handle: zx_handle_t,
-        p_memory_zircon_handle_properties: *mut MemoryZirconHandlePropertiesFUCHSIA,
-    ) -> Result,
+    pub get_memory_zircon_handle_fuchsia: PFN_vkGetMemoryZirconHandleFUCHSIA,
+    pub get_memory_zircon_handle_properties_fuchsia: PFN_vkGetMemoryZirconHandlePropertiesFUCHSIA,
 }
 unsafe impl Send for FuchsiaExternalMemoryFn {}
 unsafe impl Sync for FuchsiaExternalMemoryFn {}
@@ -23764,15 +22560,8 @@ pub type PFN_vkGetSemaphoreZirconHandleFUCHSIA = unsafe extern "system" fn(
 ) -> Result;
 #[derive(Clone)]
 pub struct FuchsiaExternalSemaphoreFn {
-    pub import_semaphore_zircon_handle_fuchsia: unsafe extern "system" fn(
-        device: Device,
-        p_import_semaphore_zircon_handle_info: *const ImportSemaphoreZirconHandleInfoFUCHSIA,
-    ) -> Result,
-    pub get_semaphore_zircon_handle_fuchsia: unsafe extern "system" fn(
-        device: Device,
-        p_get_zircon_handle_info: *const SemaphoreGetZirconHandleInfoFUCHSIA,
-        p_zircon_handle: *mut zx_handle_t,
-    ) -> Result,
+    pub import_semaphore_zircon_handle_fuchsia: PFN_vkImportSemaphoreZirconHandleFUCHSIA,
+    pub get_semaphore_zircon_handle_fuchsia: PFN_vkGetSemaphoreZirconHandleFUCHSIA,
 }
 unsafe impl Send for FuchsiaExternalSemaphoreFn {}
 unsafe impl Sync for FuchsiaExternalSemaphoreFn {}
@@ -24137,18 +22926,9 @@ pub type PFN_vkGetPhysicalDeviceScreenPresentationSupportQNX = unsafe extern "sy
 ) -> Bool32;
 #[derive(Clone)]
 pub struct QnxScreenSurfaceFn {
-    pub create_screen_surface_qnx: unsafe extern "system" fn(
-        instance: Instance,
-        p_create_info: *const ScreenSurfaceCreateInfoQNX,
-        p_allocator: *const AllocationCallbacks,
-        p_surface: *mut SurfaceKHR,
-    ) -> Result,
-    pub get_physical_device_screen_presentation_support_qnx: unsafe extern "system" fn(
-        physical_device: PhysicalDevice,
-        queue_family_index: u32,
-        window: *mut _screen_window,
-    )
-        -> Bool32,
+    pub create_screen_surface_qnx: PFN_vkCreateScreenSurfaceQNX,
+    pub get_physical_device_screen_presentation_support_qnx:
+        PFN_vkGetPhysicalDeviceScreenPresentationSupportQNX,
 }
 unsafe impl Send for QnxScreenSurfaceFn {}
 unsafe impl Sync for QnxScreenSurfaceFn {}
