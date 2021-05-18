@@ -604,7 +604,7 @@ pub trait CommandExt {
 
 impl CommandExt for vkxml::Command {
     fn command_ident(&self) -> Ident {
-        format_ident!("{}", &self.name[2..].to_snake_case())
+        format_ident!("{}", self.name.strip_prefix("vk").unwrap().to_snake_case())
     }
 
     fn function_type(&self) -> FunctionType {
@@ -837,31 +837,15 @@ fn generate_function_pointers<'a>(
 ) -> TokenStream {
     // Commands can have duplicates inside them because they are declared per features. But we only
     // really want to generate one function pointer.
-    let commands = {
-        let mut cache = HashSet::new();
-        let mut cmd_vec: Vec<&vkxml::Command> = Vec::new();
-        for cmd in commands {
-            let name = cmd.name.as_str();
-            if !cache.contains(name) {
-                cmd_vec.push(cmd);
-                cache.insert(name);
-            }
-        }
-        cmd_vec
-    };
+    let commands = commands
+        .iter()
+        .unique_by(|cmd| cmd.name.as_str())
+        .collect::<Vec<_>>();
     // PFN function pointers are global and can not have duplicates. This can happen because there
     // are aliases to commands
     let commands_pfn: Vec<_> = commands
         .iter()
-        .filter(|cmd| {
-            let ident = cmd.name.as_str();
-            if !fn_cache.contains(ident) {
-                fn_cache.insert(ident);
-                true
-            } else {
-                false
-            }
-        })
+        .filter(|cmd| fn_cache.insert(cmd.name.as_str()))
         .collect();
 
     let function_name_raw = |name: &str| -> String {
@@ -872,8 +856,11 @@ fn generate_function_pointers<'a>(
         }
     };
     let function_name = |name: &str| -> Ident {
-        let fn_name = function_name_raw(&name);
-        format_ident!("{}", fn_name[2..].to_snake_case().as_str())
+        let fn_name = function_name_raw(name);
+        format_ident!(
+            "{}",
+            fn_name.strip_prefix("vk").unwrap().to_snake_case().as_str()
+        )
     };
     let names: Vec<_> = commands
         .iter()
@@ -933,7 +920,7 @@ fn generate_function_pointers<'a>(
         .iter()
         .map(|inner_params| {
             let inner_params_iter = inner_params.iter().map(|&(ref param_name, ref param_ty)| {
-                let unused_name = format_ident!("{}", format!("_{}", param_name).as_str());
+                let unused_name = format_ident!("_{}", param_name);
                 quote! {#unused_name: #param_ty}
             });
             quote! {
@@ -945,7 +932,7 @@ fn generate_function_pointers<'a>(
 
     let pfn_names: Vec<_> = commands_pfn
         .iter()
-        .map(|cmd| format_ident!("{}", format!("PFN_{}", cmd.name.as_str())))
+        .map(|cmd| format_ident!("PFN_{}", cmd.name))
         .collect();
     let pfn_names_ref = &pfn_names;
 
@@ -1065,7 +1052,7 @@ pub fn generate_extension_constants<'a>(
         .flat_map(|iter| iter);
     let enum_tokens = items.filter_map(|item| match item {
         vk_parse::InterfaceItem::Enum(enum_) => {
-            if const_cache.contains(enum_.name.as_str()) {
+            if !const_cache.insert(enum_.name.as_str()) {
                 return None;
             }
 
@@ -1092,7 +1079,6 @@ pub fn generate_extension_constants<'a>(
                 #impl_block
             };
 
-            const_cache.insert(enum_.name.as_str());
             Some(q)
         }
         _ => None,
@@ -1134,8 +1120,10 @@ pub fn generate_extension_commands<'a>(
             }
         });
 
-    let name = format!("{}Fn", extension_name.to_camel_case());
-    let ident = format_ident!("{}", &name[2..]);
+    let ident = format_ident!(
+        "{}Fn",
+        extension_name.to_camel_case().strip_prefix("Vk").unwrap()
+    );
     let fp = generate_function_pointers(ident.clone(), &commands, &aliases, fn_cache);
     let byte_name = format!("{}\0", extension_name);
 
@@ -1261,12 +1249,11 @@ pub fn generate_bitmask(
         return None;
     }
 
-    let name = &bitmask.name[2..];
+    let name = bitmask.name.strip_prefix("Vk").unwrap();
     let ident = format_ident!("{}", name);
-    if bitflags_cache.contains(&ident) {
+    if !bitflags_cache.insert(ident.clone()) {
         return None;
     };
-    bitflags_cache.insert(ident.clone());
     const_values.insert(ident.clone(), Default::default());
     let khronos_link = khronos_link(&bitmask.name);
     let type_ = name_to_tokens(&bitmask.basetype);
@@ -1344,7 +1331,7 @@ pub fn variant_ident(enum_name: &str, variant_name: &str) -> Ident {
         .map(|c| c.is_digit(10))
         .unwrap_or(false);
     if is_digit {
-        format_ident!("{}", format!("TYPE_{}", new_variant_name).as_str())
+        format_ident!("TYPE_{}", new_variant_name)
     } else {
         format_ident!("{}", new_variant_name)
     }
@@ -1460,11 +1447,10 @@ pub fn generate_enum<'a>(
         let bit_string = interleave_number('_', 4, &bit_string);
         let all_bits_term = syn::LitInt::new(&format!("0b{}", bit_string), Span::call_site());
 
-        if bitflags_cache.contains(&ident) {
+        if !bitflags_cache.insert(ident.clone()) {
             EnumType::Bitflags(quote! {})
         } else {
             let impl_bitflags = bitflags_impl_block(ident.clone(), name, &constants);
-            bitflags_cache.insert(ident.clone());
             let q = quote! {
                 #[repr(transparent)]
                 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -2110,7 +2096,7 @@ pub fn generate_handle(handle: &vkxml::Handle) -> Option<TokenStream> {
     let khronos_link = khronos_link(&handle.name);
     let tokens = match handle.ty {
         vkxml::HandleType::Dispatch => {
-            let name = &handle.name[2..];
+            let name = handle.name.strip_prefix("Vk").unwrap();
             let ty = format_ident!("{}", name.to_shouty_snake_case());
             let name = format_ident!("{}", name);
             quote! {
@@ -2118,7 +2104,7 @@ pub fn generate_handle(handle: &vkxml::Handle) -> Option<TokenStream> {
             }
         }
         vkxml::HandleType::NoDispatch => {
-            let name = &handle.name[2..];
+            let name = handle.name.strip_prefix("Vk").unwrap();
             let ty = format_ident!("{}", name.to_shouty_snake_case());
             let name = format_ident!("{}", name);
             quote! {
@@ -2271,19 +2257,19 @@ pub fn generate_feature<'a>(
         quote! {}
     };
     let entry = generate_function_pointers(
-        format_ident!("{}", format!("EntryFnV{}", version).as_str()),
+        format_ident!("EntryFnV{}", version),
         &entry_commands,
         &HashMap::new(),
         fn_cache,
     );
     let instance = generate_function_pointers(
-        format_ident!("{}", format!("InstanceFnV{}", version).as_str()),
+        format_ident!("InstanceFnV{}", version),
         &instance_commands,
         &HashMap::new(),
         fn_cache,
     );
     let device = generate_function_pointers(
-        format_ident!("{}", format!("DeviceFnV{}", version).as_str()),
+        format_ident!("DeviceFnV{}", version),
         &device_commands,
         &HashMap::new(),
         fn_cache,
@@ -2448,10 +2434,9 @@ pub fn generate_aliases_of_types(
         })
         .filter_map(|(name, alias)| {
             let name_ident = name_to_tokens(name);
-            if ty_cache.contains(&name_ident) {
+            if !ty_cache.insert(name_ident.clone()) {
                 return None;
             };
-            ty_cache.insert(name_ident.clone());
             let alias_ident = name_to_tokens(alias);
             let tokens = quote! {
                 pub type #name_ident = #alias_ident;
