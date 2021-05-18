@@ -841,48 +841,37 @@ fn generate_function_pointers<'a>(
         .iter()
         .unique_by(|cmd| cmd.name.as_str())
         .collect::<Vec<_>>();
-    // PFN function pointers are global and can not have duplicates. This can happen because there
-    // are aliases to commands
-    let commands_pfn: Vec<_> = commands
-        .iter()
-        .filter(|cmd| fn_cache.insert(cmd.name.as_str()))
-        .collect();
 
-    let function_name_raw = |name: &str| -> String {
-        if let Some(alias_name) = aliases.get(name) {
-            alias_name.to_string()
-        } else {
-            name.to_string()
-        }
-    };
-    let function_name = |name: &str| -> Ident {
-        let fn_name = function_name_raw(name);
-        format_ident!(
-            "{}",
-            fn_name.strip_prefix("vk").unwrap().to_snake_case().as_str()
-        )
-    };
-    let names: Vec<_> = commands
-        .iter()
-        .map(|cmd| function_name(&cmd.name))
-        .collect();
-    let names_ref = &names;
-    let raw_names: Vec<_> = commands
+    struct Command {
+        type_needs_defining: bool,
+        type_name: Ident,
+        function_name_c: String,
+        function_name_rust: Ident,
+        parameter_names: TokenStream,
+        parameters: TokenStream,
+        parameters_unused: TokenStream,
+        returns: TokenStream,
+    }
+
+    let commands = commands
         .iter()
         .map(|cmd| {
-            let byt = std::ffi::CString::new(function_name_raw(cmd.name.as_str())).unwrap();
-            Literal::byte_string(byt.to_bytes_with_nul())
-        })
-        .collect();
-    let raw_names_ref = &raw_names;
-    let khronos_links: Vec<_> = commands
-        .iter()
-        .map(|cmd| khronos_link(&function_name_raw(cmd.name.as_str())))
-        .collect();
+            let type_name = format_ident!("PFN_{}", cmd.name);
 
-    let params: Vec<Vec<(Ident, TokenStream)>> = commands
-        .iter()
-        .map(|cmd| {
+            let function_name_c = if let Some(alias_name) = aliases.get(&cmd.name) {
+                alias_name.to_string()
+            } else {
+                cmd.name.to_string()
+            };
+            let function_name_rust = format_ident!(
+                "{}",
+                function_name_c
+                    .strip_prefix("vk")
+                    .unwrap()
+                    .to_snake_case()
+                    .as_str()
+            );
+
             let params: Vec<_> = cmd
                 .param
                 .iter()
@@ -892,103 +881,128 @@ fn generate_function_pointers<'a>(
                     (name, ty)
                 })
                 .collect();
-            params
-        })
-        .collect();
 
-    let params_names: Vec<Vec<_>> = params
-        .iter()
-        .map(|inner_params| {
-            inner_params
+            let params_iter = params.iter().map(|(param_name, _)| param_name);
+            let parameter_names = quote!(#(#params_iter,)*);
+
+            let params_iter = params
                 .iter()
-                .map(|(param_name, _)| param_name.clone())
-                .collect()
-        })
-        .collect();
-    let expanded_params: Vec<_> = params
-        .iter()
-        .map(|inner_params| {
-            let inner_params_iter = inner_params.iter().map(|&(ref param_name, ref param_ty)| {
-                quote! {#param_name: #param_ty}
-            });
-            quote! {
-                #(#inner_params_iter,)*
-            }
-        })
-        .collect();
-    let expanded_params_unused: Vec<_> = params
-        .iter()
-        .map(|inner_params| {
-            let inner_params_iter = inner_params.iter().map(|&(ref param_name, ref param_ty)| {
+                .map(|(param_name, param_ty)| quote!(#param_name: #param_ty));
+            let parameters = quote!(#(#params_iter,)*);
+
+            let params_iter = params.iter().map(|(param_name, param_ty)| {
                 let unused_name = format_ident!("_{}", param_name);
-                quote! {#unused_name: #param_ty}
+                quote!(#unused_name: #param_ty)
             });
-            quote! {
-                #(#inner_params_iter,)*
+            let parameters_unused = quote!(#(#params_iter,)*);
+
+            Command {
+                // PFN function pointers are global and can not have duplicates.
+                // This can happen because there are aliases to commands
+                type_needs_defining: fn_cache.insert(cmd.name.as_str()),
+                type_name,
+                function_name_c,
+                function_name_rust,
+                parameter_names,
+                parameters,
+                parameters_unused,
+                returns: if cmd.return_type.is_void() {
+                    quote!()
+                } else {
+                    let ret_ty_tokens = cmd.return_type.type_tokens(true);
+                    quote!(-> #ret_ty_tokens)
+                },
             }
         })
-        .collect();
-    let expanded_params_ref = &expanded_params;
+        .collect::<Vec<_>>();
 
-    let pfn_names: Vec<_> = commands_pfn
-        .iter()
-        .map(|cmd| format_ident!("PFN_{}", cmd.name))
-        .collect();
+    struct CommandToType<'a>(&'a Command);
+    impl<'a> quote::ToTokens for CommandToType<'a> {
+        fn to_tokens(&self, tokens: &mut TokenStream) {
+            let type_name = &self.0.type_name;
+            let parameters = &self.0.parameters;
+            let returns = &self.0.returns;
+            quote!(
+                #[allow(non_camel_case_types)]
+                pub type #type_name = unsafe extern "system" fn(#parameters) #returns;
+            )
+            .to_tokens(tokens)
+        }
+    }
 
-    let pfn_signature_params: Vec<Vec<_>> = commands_pfn
-        .iter()
-        .map(|cmd| {
-            let params: Vec<_> = cmd
-                .param
-                .iter()
-                .map(|field| {
-                    let name = field.param_ident();
-                    let ty = field.type_tokens(true);
-                    quote! { #name: #ty }
-                })
-                .collect();
-            params
-        })
-        .collect();
-    assert_eq!(pfn_names.len(), pfn_signature_params.len());
+    struct CommandToMember<'a>(&'a Command);
+    impl<'a> quote::ToTokens for CommandToMember<'a> {
+        fn to_tokens(&self, tokens: &mut TokenStream) {
+            let function_name_rust = &self.0.function_name_rust;
+            let parameters = &self.0.parameters;
+            let returns = &self.0.returns;
+            quote!(
+                pub #function_name_rust: unsafe extern "system" fn(#parameters) #returns
+            )
+            .to_tokens(tokens)
+        }
+    }
 
-    let pfn_return_types: Vec<_> = commands_pfn
-        .iter()
-        .map(|cmd| {
-            if cmd.return_type.is_void() {
-                quote!()
-            } else {
-                let ret_ty_tokens = cmd.return_type.type_tokens(true);
-                quote!(-> #ret_ty_tokens)
-            }
-        })
-        .collect();
-    assert_eq!(pfn_names.len(), pfn_return_types.len());
+    struct CommandToLoader<'a>(&'a Command);
+    impl<'a> quote::ToTokens for CommandToLoader<'a> {
+        fn to_tokens(&self, tokens: &mut TokenStream) {
+            let function_name_rust = &self.0.function_name_rust;
+            let parameters_unused = &self.0.parameters_unused;
+            let returns = &self.0.returns;
 
-    let return_types: Vec<_> = commands
+            let byte_function_name =
+                Literal::byte_string(format!("{}\0", self.0.function_name_c).as_bytes());
+
+            quote!(
+                #function_name_rust: unsafe {
+                    unsafe extern "system" fn #function_name_rust (#parameters_unused) #returns {
+                        panic!(concat!("Unable to load ", stringify!(#function_name_rust)))
+                    }
+                    let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(#byte_function_name);
+                    let val = _f(cname);
+                    if val.is_null() {
+                        #function_name_rust
+                    } else {
+                        ::std::mem::transmute(val)
+                    }
+                }
+            )
+            .to_tokens(tokens)
+        }
+    }
+
+    struct CommandToBody<'a>(&'a Command);
+    impl<'a> quote::ToTokens for CommandToBody<'a> {
+        fn to_tokens(&self, tokens: &mut TokenStream) {
+            let function_name_rust = &self.0.function_name_rust;
+            let parameters = &self.0.parameters;
+            let parameter_names = &self.0.parameter_names;
+            let returns = &self.0.returns;
+            let khronos_link = khronos_link(&self.0.function_name_c);
+            quote!(
+                #[doc = #khronos_link]
+                pub unsafe fn #function_name_rust(&self, #parameters) #returns {
+                    (self.#function_name_rust)(#parameter_names)
+                }
+            )
+            .to_tokens(tokens)
+        }
+    }
+
+    let pfn_typedefs = commands
         .iter()
-        .map(|cmd| {
-            if cmd.return_type.is_void() {
-                quote!()
-            } else {
-                let ret_ty_tokens = cmd.return_type.type_tokens(true);
-                quote!(-> #ret_ty_tokens)
-            }
-        })
-        .collect();
-    let return_types_ref = &return_types;
+        .filter(|pfn| pfn.type_needs_defining)
+        .map(|pfn| CommandToType(pfn));
+    let members = commands.iter().map(|pfn| CommandToMember(pfn));
+    let loaders = commands.iter().map(|pfn| CommandToLoader(pfn));
+    let bodies = commands.iter().map(|pfn| CommandToBody(pfn));
 
     quote! {
-        #(
-            #[allow(non_camel_case_types)]
-            pub type #pfn_names = unsafe extern "system" fn(#(#pfn_signature_params),*) #pfn_return_types;
-        )*
+        #(#pfn_typedefs)*
 
         #[derive(Clone)]
         pub struct #ident {
-            #(
-                pub #names_ref: unsafe extern "system" fn(#expanded_params_ref) #return_types_ref,
-            )*
+            #(#members,)*
         }
 
         unsafe impl Send for #ident {}
@@ -999,30 +1013,10 @@ fn generate_function_pointers<'a>(
                 where F: FnMut(&::std::ffi::CStr) -> *const c_void
             {
                 #ident {
-                    #(
-                        #names_ref: unsafe {
-
-                            unsafe extern "system" fn #names_ref (#expanded_params_unused) #return_types_ref {
-                                panic!(concat!("Unable to load ", stringify!(#names_ref)))
-                            }
-                            let cname = ::std::ffi::CStr::from_bytes_with_nul_unchecked(#raw_names_ref);
-                            let val = _f(cname);
-                            if val.is_null(){
-                                #names_ref
-                            }
-                            else{
-                                ::std::mem::transmute(val)
-                            }
-                        },
-                    )*
+                    #(#loaders,)*
                 }
             }
-            #(
-                #[doc = #khronos_links]
-                pub unsafe fn #names_ref(&self, #expanded_params_ref) #return_types_ref {
-                    (self.#names)(#(#params_names,)*)
-                }
-            )*
+            #(#bodies)*
         }
     }
 }
