@@ -984,6 +984,7 @@ fn generate_function_pointers<'a>(
             pub type #pfn_names = unsafe extern "system" fn(#(#pfn_signature_params),*) #pfn_return_types;
         )*
 
+        #[derive(Clone)]
         pub struct #ident {
             #(
                 pub #names_ref: unsafe extern "system" fn(#expanded_params_ref) #return_types_ref,
@@ -993,13 +994,6 @@ fn generate_function_pointers<'a>(
         unsafe impl Send for #ident {}
         unsafe impl Sync for #ident {}
 
-        impl ::std::clone::Clone for #ident {
-            fn clone(&self) -> Self {
-                #ident{
-                    #(#names: self.#names,)*
-                }
-            }
-        }
         impl #ident {
             pub fn load<F>(mut _f: F) -> Self
                 where F: FnMut(&::std::ffi::CStr) -> *const c_void
